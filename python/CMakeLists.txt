@@ -83,19 +83,23 @@ if(STUBGEN)
     set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>")
   endif()
 
+  set(GEN_STUBS_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/generate_stubs.sh")
+
   add_custom_command(TARGET ${PYBIND_LIBNAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E env
-      "PYTHONPATH=${PYTHONPATH}"
-      "LD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{LD_LIBRARY_PATH}" # Linux
-      "DYLD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{DYLD_LIBRARY_PATH}" # MacOS
-      ${STUBGEN} -o "${CMAKE_CURRENT_SOURCE_DIR}/pybmad" "${PYBIND_LIBNAME}" --ignore-all-errors
+    COMMAND ${CMAKE_COMMAND} -E env
+    "PYTHONPATH=${PYTHONPATH}"
+    "LD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{LD_LIBRARY_PATH}" # Linux
+    "DYLD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{DYLD_LIBRARY_PATH}" # MacOS
 
-      COMMENT "Generating Python Stubs for ${PYBIND_LIBNAME}"
-      VERBATIM
-  )
+    "${GEN_STUBS_SCRIPT}"
+    "${PYBIND_LIBNAME}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/pybmad"
+    "${STUBGEN}"
 
-  # Install the generated stubs (.pyi files)
+    COMMENT "Generating and processing Python Stubs for ${PYBIND_LIBNAME}"
+    VERBATIM
+)
   install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/pybmad/"
-            DESTINATION pybmad
-            FILES_MATCHING PATTERN "*.pyi")
+          DESTINATION pybmad
+          FILES_MATCHING PATTERN "*.pyi")
 endif()

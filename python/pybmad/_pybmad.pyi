@@ -5,7 +5,7 @@ from __future__ import annotations
 import collections.abc
 import enum
 import typing
-__all__: list[str] = ['A0', 'A0_ELEC', 'A21', 'A21_ELEC', 'ABS', 'ABSOLUTE', 'ABSOLUTE_TIME_TRACKING', 'AB_MULTIPOLE', 'ACCORDION_EDGE', 'ACOS', 'ACOSH', 'ACOTH', 'AC_KICKER', 'ALIAS', 'ALIVE', 'ALL', 'ALL_CONTROL_VAR', 'ALL_GROUPS', 'ALPHA_A', 'ALPHA_A0', 'ALPHA_A1', 'ALPHA_ANGLE', 'ALPHA_A_OUT', 'ALPHA_A_STORED', 'ALPHA_A_STRONG', 'ALPHA_B', 'ALPHA_B0', 'ALPHA_B1', 'ALPHA_B_OUT', 'ALPHA_B_STORED', 'ALPHA_B_STRONG', 'AMPERSAND', 'AMP_VS_TIME', 'ANCHOR_BEGINNING', 'ANCHOR_CENTER', 'ANCHOR_END', 'ANGLE', 'ANGLE_OUT_MAX', 'ANOMALOUS_MAG_MOMENT_DEUTERON', 'ANOMALOUS_MAG_MOMENT_ELECTRON', 'ANOMALOUS_MAG_MOMENT_HE3', 'ANOMALOUS_MAG_MOMENT_MUON', 'ANOMALOUS_MAG_MOMENT_NEUTRON', 'ANOMALOUS_MAG_MOMENT_PROTON', 'ANOMALOUS_MOMENT_OF', 'ANTIMUON', 'ANTIPARTICLE', 'ANTIPROTON', 'ANTI_ATOM', 'ANTI_DEUTERON', 'ANTI_HELION', 'ANTI_NEUTRON', 'ANTI_REF_PARTICLE', 'APERTURE', 'APERTURE_AT', 'APERTURE_TYPE', 'AREA_DENSITY', 'AREA_DENSITY_USED', 'ARG_COUNT', 'ARROW', 'ASCII', 'ASIN', 'ASINH', 'ATAN', 'ATAN2', 'ATANH', 'ATOMIC_MASS_UNIT', 'ATTRIBUTE_GROUP', 'AUTO', 'AUTOSCALE_AMPLITUDE', 'AUTOSCALE_PHASE', 'AUTO_APERTURE', 'AVERAGE', 'AbMultipoleKick', 'AcKickerFreqStruct', 'AcKickerFreqStructAlloc1D', 'AcKickerFreqStructArray1D', 'AcKickerStruct', 'AcKickerTimeStruct', 'AcKickerTimeStructAlloc1D', 'AcKickerTimeStructArray1D', 'ActionToXyz', 'AddSuperimpose', 'AllEncompassingStruct', 'AnormalModeStruct', 'ApertureParamStruct', 'AperturePointStruct', 'AperturePointStructAlloc1D', 'AperturePointStructArray1D', 'ApertureScanStruct', 'ApertureScanStructAlloc1D', 'ApertureScanStructArray1D', 'ApfftCorr', 'AttributeFree1', 'AttributeFree2', 'AttributeFree3', 'AttributeIndex1', 'AttributeIndex2', 'B0', 'B0_ELEC', 'B1_GRADIENT', 'B21', 'B21_ELEC', 'B2_GRADIENT', 'B3_GRADIENT', 'BASIC_BEND', 'BBI_CONST', 'BEAMBEAM', 'BEGINNING_ELE', 'BENDS', 'BEND_TILT', 'BETA_A', 'BETA_A0', 'BETA_A1', 'BETA_A_OUT', 'BETA_A_STORED', 'BETA_A_STRONG', 'BETA_B', 'BETA_B0', 'BETA_B1', 'BETA_B_OUT', 'BETA_B_STORED', 'BETA_B_STRONG', 'BINARY', 'BLACK', 'BLANK', 'BLUE', 'BL_HKICK', 'BL_KICK', 'BL_VKICK', 'BMAD_INC_VERSION', 'BMAD_STANDARD', 'BOTH_ENDS', 'BRAGG_ANGLE', 'BRAGG_ANGLE_IN', 'BRAGG_ANGLE_OUT', 'BRAGG_DIFFRACTED', 'BS_FIELD', 'B_FIELD', 'B_FIELD_ERR', 'B_FIELD_TOT', 'B_MAX', 'B_PARAM', 'BbiKick', 'BbuBeamStruct', 'BbuParamStruct', 'BbuStageStruct', 'BbuStageStructAlloc1D', 'BbuStageStructArray1D', 'BeamInitStruct', 'BeamStruct', 'BeamTilts', 'BicubicCmplxCoefStruct', 'BicubicCmplxCoefStructArray3D', 'BicubicCmplxEval', 'BmadCommonStruct', 'BmadNormalFormStruct', 'BmadParser', 'BookkeepingStateStruct', 'BoolAlloc1D', 'BoolArray1D', 'BoolArray2D', 'BoolArray3D', 'BpmPhaseCouplingStruct', 'BracketIndexForSpline', 'BranchStruct', 'BranchStructAlloc1D', 'BranchStructArray1D', 'BunchParamsStruct', 'BunchParamsStructAlloc1D', 'BunchParamsStructArray1D', 'BunchStruct', 'BunchStructAlloc1D', 'BunchStructArray1D', 'BunchTrackStruct', 'BunchTrackStructAlloc1D', 'BunchTrackStructArray1D', 'C11_MAT0', 'C11_MAT1', 'C12_MAT0', 'C12_MAT1', 'C21_MAT0', 'C21_MAT1', 'C22_MAT0', 'C22_MAT1', 'CANNOT_FIND', 'CAPILLARY', 'CARTESIAN_MAP', 'CATHODE_FFT_3D', 'CAVITY_TYPE', 'CEILING', 'CENTER_PT', 'CHAMBER_WALL', 'CHARGE', 'CHARGE_OF', 'CHECK_SUM', 'CIRCLE_DOT_SYM', 'CIRCLE_FILLED_SYM', 'CIRCLE_PLUS_SYM', 'CIRCLE_SYM', 'CLASSICAL_RADIUS_FACTOR', 'CLEAR', 'CLOSED', 'CMAT_11', 'CMAT_11_STORED', 'CMAT_12', 'CMAT_12_STORED', 'CMAT_21', 'CMAT_21_STORED', 'CMAT_22', 'CMAT_22_STORED', 'COHERENT', 'COLON', 'COMMA', 'COMPOUND', 'CONSTANT', 'CONSTANT_REF_ENERGY', 'CONTINUOUS', 'CONTROL_GROUP', 'CONTROL_LORD', 'CONTROL_VAR', 'CONVERTER', 'COS', 'COSH', 'COT', 'COTH', 'COUPLER_ANGLE', 'COUPLER_AT', 'COUPLER_PHASE', 'COUPLER_STRENGTH', 'CRAB_CAVITY', 'CRAB_TILT', 'CRAB_X1', 'CRAB_X2', 'CRAB_X3', 'CRAB_X4', 'CRAB_X5', 'CREATE_JUMBO_SLAVE', 'CRITICAL_ANGLE', 'CRITICAL_ANGLE_FACTOR', 'CROSSING_TIME', 'CROSS_HATCHED', 'CRUNCH', 'CRUNCH_CALIB', 'CRYSTAL', 'CRYSTAL_TYPE', 'CSC', 'CSR_DS_STEP', 'CSR_METHOD', 'CUBIC', 'CURLY_BRACKETS', 'CURRENT', 'CURVATURE', 'CURVE', 'CUSTOM', 'CUSTOM_APERTURE', 'CUSTOM_ATTRIBUTE0', 'CUSTOM_ATTRIBUTE_NUM', 'CYAN', 'CYCLES', 'CYLINDRICAL_MAP', 'C_LIGHT', 'CalcEmittancesAndTwissFromSigmaMatrix', 'CalcWallRadius', 'CartesianMapStruct', 'CartesianMapStructAlloc1D', 'CartesianMapStructArray1D', 'CartesianMapTerm1Struct', 'CartesianMapTerm1StructAlloc1D', 'CartesianMapTerm1StructArray1D', 'CartesianMapTermStruct', 'CheckIfSInBounds', 'ChromCalc', 'ComplexAlloc1D', 'ComplexArray1D', 'ComplexArray2D', 'ComplexArray3D', 'ComplexTaylorStruct', 'ComplexTaylorStructAlloc1D', 'ComplexTaylorStructArray1D', 'ComplexTaylorTermStruct', 'ComplexTaylorTermStructAlloc1D', 'ComplexTaylorTermStructArray1D', 'ComplexTaylorToMat6', 'ControlRamp1Struct', 'ControlRamp1StructAlloc1D', 'ControlRamp1StructArray1D', 'ControlStruct', 'ControlStructAlloc1D', 'ControlStructArray1D', 'ControlVar1Struct', 'ControlVar1StructAlloc1D', 'ControlVar1StructArray1D', 'ControllerStruct', 'ConvertCoords', 'ConvertPcTo', 'ConvertTotalEnergyTo', 'ConverterDistributionParser', 'CoordArrayStruct', 'CoordArrayStructAlloc1D', 'CoordArrayStructArray1D', 'CoordStruct', 'CoordStructAlloc1D', 'CoordStructArray1D', 'CoordsFloorToCurvilinear', 'CoordsFloorToLocalCurvilinear', 'CreateElementSlice', 'CreatePlanarWigglerModel', 'CylindricalMapStruct', 'CylindricalMapStructAlloc1D', 'CylindricalMapStructArray1D', 'CylindricalMapTerm1Struct', 'CylindricalMapTerm1StructAlloc1D', 'CylindricalMapTerm1StructArray1D', 'CylindricalMapTermStruct', 'D1_THICKNESS', 'D2_THICKNESS', 'DALPHA_DPZ_A', 'DALPHA_DPZ_A_STORED', 'DALPHA_DPZ_B', 'DALPHA_DPZ_B_STORED', 'DARK_GREY', 'DARWIN_WIDTH_PI', 'DARWIN_WIDTH_SIGMA', 'DASHED', 'DASH_DOT', 'DASH_DOT3', 'DBETA_DPZ_A', 'DBETA_DPZ_A_STORED', 'DBETA_DPZ_B', 'DBETA_DPZ_B_STORED', 'DBRAGG_ANGLE_DE', 'DB_FIELD', 'DCMAT_DPZ_11_STORED', 'DCMAT_DPZ_12_STORED', 'DCMAT_DPZ_21_STORED', 'DCMAT_DPZ_22_STORED', 'DEFAULT_TRACKING_SPECIES', 'DEF_BMAD_COM', 'DEF_LINE', 'DEF_MAD_BEAM', 'DEF_PARAMETER', 'DEF_PARTICLE_START', 'DEF_PTC_COM', 'DEF_SPACE_CHARGE_COM', 'DEGREES', 'DELTA_E_REF', 'DELTA_REF_TIME', 'DELTA_REF_TIME_USER_SET', 'DELTA_TIME', 'DENSITY', 'DENSITY_USED', 'DESCRIP', 'DETAP_DPZ_X', 'DETAP_DPZ_X_STORED', 'DETAP_DPZ_Y', 'DETAP_DPZ_Y_STORED', 'DETA_DPZ_X', 'DETA_DPZ_X_STORED', 'DETA_DPZ_Y', 'DETA_DPZ_Y_STORED', 'DETA_DS_MASTER', 'DETECTOR', 'DEUTERON', 'DE_ETA_MEAS', 'DFLT_DRAW', 'DFLT_SET', 'DG', 'DIAMOND_SYM', 'DIFFRACTION_PLATE', 'DIRECTION', 'DISPATCH', 'DISTRIBUTION', 'DIVIDE', 'DOTTED', 'DOT_SYM', 'DOUBLE_COLON', 'DOWNSTREAM', 'DOWNSTREAM_COORD_DIR', 'DOWNSTREAM_END', 'DPHI_A', 'DPHI_B', 'DPHI_ORIGIN', 'DPSI_ORIGIN', 'DRIFT', 'DRIFT_KICK', 'DS_PHOTON_SLICE', 'DS_SLICE', 'DS_STEP', 'DTHETA_ORIGIN', 'DTHICKNESS_DX', 'DT_MAX', 'DX_ORIGIN', 'DY_ORIGIN', 'DZ_ORIGIN', 'D_SPACING', 'E1', 'E1_GRADIENT', 'E2', 'E2_CENTER', 'E2_GRADIENT', 'E2_PROBABILITY', 'E3_GRADIENT', 'ECOLLIMATOR', 'ELECTRIC', 'ELECTRIC_DIPOLE_MOMENT', 'ELECTRON', 'ELEC_MULTIPOLE', 'ELE_ORIGIN', 'ELLIPTICAL', 'ELSEPARATOR', 'EMITTANCE_A', 'EMITTANCE_B', 'EMITTANCE_Z', 'EMIT_FRACTION', 'EM_FIELD', 'END_EDGE', 'END_STACK', 'ENERGY_DISTRIBUTION', 'ENERGY_PROBABILITY_CURVE', 'ENTRANCE_END', 'EPS_STEP_SCALE', 'EQUAL', 'ETAP_A', 'ETAP_B', 'ETAP_X', 'ETAP_X0', 'ETAP_X1', 'ETAP_X_OUT', 'ETAP_X_STORED', 'ETAP_Y', 'ETAP_Y0', 'ETAP_Y1', 'ETAP_Y_OUT', 'ETAP_Y_STORED', 'ETA_A', 'ETA_B', 'ETA_X', 'ETA_X0', 'ETA_X1', 'ETA_X_OUT', 'ETA_X_STORED', 'ETA_Y', 'ETA_Y0', 'ETA_Y1', 'ETA_Y_OUT', 'ETA_Y_STORED', 'ETA_Z', 'EXACT_MISALIGN', 'EXACT_MODEL', 'EXACT_MULTIPOLES', 'EXIT_END', 'EXP', 'E_CENTER', 'E_CENTER_RELATIVE_TO_REF', 'E_CHARGE', 'E_FIELD', 'E_FIELD_X', 'E_FIELD_Y', 'E_GUN', 'E_LOSS', 'E_MASS', 'E_PHOTON', 'E_TOT', 'E_TOT_OFFSET', 'E_TOT_REF_INIT', 'E_TOT_SET', 'E_TOT_START', 'E_TOT_STRONG', 'EigenDecomp6mat', 'EleAttribute', 'EleKey', 'EleMisalignmentLSCalc', 'ElePointerStruct', 'ElePointerStructAlloc1D', 'ElePointerStructArray1D', 'EleStruct', 'EleStructAlloc1D', 'EleStructArray1D', 'EleToFibre', 'EleToTaylor', 'ElecMultipoleField', 'ElementAtSBranch', 'ElementAtSLat', 'EllipseBeamInitStruct', 'EllipseBeamInitStructAlloc1D', 'EllipseBeamInitStructArray1D', 'EmFieldCalc', 'EmFieldStruct', 'EmFieldStructAlloc1D', 'EmFieldStructArray1D', 'EmTaylorStruct', 'EmTaylorStructAlloc1D', 'EmTaylorStructArray1D', 'EmTaylorTermStruct', 'EmTaylorTermStructAlloc1D', 'EmTaylorTermStructArray1D', 'Emit6d', 'EnvelopeRadintsIbs', 'EvaluateArrayIndex', 'EvaluateLogical', 'ExpectThis', 'ExpressionAtomStruct', 'ExpressionAtomStructAlloc1D', 'ExpressionAtomStructArray1D', 'ExpressionStackValue', 'ExpressionStringToStack', 'ExpressionStringToTree', 'ExpressionTreeStruct', 'ExpressionTreeStructAlloc1D', 'ExpressionTreeStructArray1D', 'ExpressionValue', 'FACTORIAL', 'FALSE_', 'FALSE_INT', 'FAMILY_QU', 'FAMILY_SQ', 'FAMILY_X', 'FAMILY_Y', 'FB1', 'FB2', 'FCharArray1D', 'FEEDBACK', 'FFT_3D', 'FIDUCIAL', 'FIDUCIAL_PT', 'FIELDMAP', 'FIELD_AUTOSCALE', 'FIELD_CALC', 'FIELD_LORD', 'FIELD_MASTER', 'FIELD_OVERLAPS', 'FIELD_SCALE_FACTOR', 'FIELD_X', 'FIELD_Y', 'FILLED_ARROW_HEAD', 'FINAL_CHARGE', 'FINE_STRUCTURE_CONSTANT', 'FINT', 'FINTX', 'FIRST_PASS', 'FIRST_TRACK_EDGE', 'FIXED_STEP_RUNGE_KUTTA', 'FIXED_STEP_TIME_RUNGE_KUTTA', 'FIXER', 'FLEXIBLE', 'FLOOR', 'FLOOR_POSITION_GROUP', 'FLOOR_SHIFT', 'FOCAL_STRENGTH', 'FOIL', 'FORK', 'FORWARD_DIFFRACTED', 'FOURPI', 'FQ1', 'FQ2', 'FREE', 'FREQUENCIES', 'FRINGE_AT', 'FRINGE_TYPE', 'FULL', 'FUNCTION', 'FUNC_PARENS', 'F_FACTOR', 'Fibre', 'FindElementEnds', 'FindMatchingFieldmap', 'FloorAnglesToWMat', 'FloorPositionStruct', 'FloorWMatToAngles', 'FormDigestedBmadFileName', 'FourierAmplitude', 'G', 'GANG', 'GAP', 'GAUSSIAN', 'GBendingStrengthFromEmField', 'GEN_GRAD_MAP', 'GEOMETRY', 'GIRDER', 'GIRDER_LORD', 'GKICKER', 'GOVERNOR', 'GRADIENT', 'GRADIENT_ERR', 'GRADIENT_TOT', 'GRAZE_ANGLE', 'GRAZE_ANGLE_IN', 'GRAZE_ANGLE_OUT', 'GREEN', 'GRID_FIELD', 'GROUP', 'GROUP_LORD', 'G_ERR', 'G_MAX', 'G_TOT', 'GenGrad1Struct', 'GenGrad1StructAlloc1D', 'GenGrad1StructArray1D', 'GenGradMapStruct', 'GenGradMapStructAlloc1D', 'GenGradMapStructArray1D', 'GetEmitFromSigmaMat', 'GptToParticleBunch', 'GridBeamInitStruct', 'GridBeamInitStructAlloc1D', 'GridBeamInitStructArray1D', 'GridFieldPt1Struct', 'GridFieldPt1StructArray3D', 'GridFieldPtStruct', 'GridFieldStruct', 'GridFieldStructAlloc1D', 'GridFieldStructArray1D', 'H1', 'H2', 'HARD_EDGE_ONLY', 'HARMON', 'HARMON_MASTER', 'HATCHED', 'HDF5', 'HELICAL_MODEL', 'HELION', 'HGAP', 'HGAPX', 'HIGHLAND', 'HIGH_ENERGY_SPACE_CHARGE_ON', 'HKICK', 'HKICKER', 'HORIZONTALLY_PURE', 'HYBRID', 'HYPER_X', 'HYPER_XY', 'HYPER_Y', 'H_BAR_PLANCK', 'H_DISPLACE', 'H_PLANCK', 'HighEnergySpaceChargeStruct', 'IDENTITY', 'IMPACTT', 'INCLUDE_KICKS', 'INCOHERENT', 'INHERIT_FROM_FORK', 'INIT_NEEDED', 'INPUT_ELE', 'INSIDE', 'INSTRUMENT', 'INT', 'INTEGRATOR_ORDER', 'INTERPOLATION', 'INT_GARBAGE', 'INVALID', 'INVALID_NAME', 'IN_BETWEEN', 'IN_STOP_BAND', 'IS_INTEGER', 'IS_LOGICAL', 'IS_MOSAIC', 'IS_ON', 'IS_REAL', 'IS_STRING', 'IS_STRUCT', 'IS_SWITCH', 'IX_BRANCH', 'IX_FIXER', 'IX_SLICE_SLAVE', 'IX_TO_BRANCH', 'IX_TO_ELEMENT', 'InitBeamDistribution', 'InitBunchDistribution', 'InitPhotonIntegProb', 'Int8Alloc1D', 'Int8Array1D', 'IntAlloc1D', 'IntArray1D', 'IntArray2D', 'IntArray3D', 'Interval1CoefStruct', 'Interval1CoefStructAlloc1D', 'Interval1CoefStructArray1D', 'K0L', 'K0SL', 'K1', 'K1X', 'K1Y', 'K2', 'K21L', 'K21SL', 'K3', 'KICK', 'KICK0', 'KICKER', 'KS', 'KX', 'KickVectorCalc', 'KvBeamInitStruct', 'L', 'LATTICE', 'LATTICE_TYPE', 'LB_SUBATOMIC', 'LCAVITY', 'LEADING', 'LENS', 'LIGHT_GREEN', 'LIGHT_GREY', 'LINEAR', 'LINEAR_EDGE', 'LIVE_BRANCH', 'LOG', 'LONGITUDINAL_MODE', 'LORD_DEFINED', 'LORD_PAD1', 'LORD_PAD2', 'LOST', 'LOST_NEG_X', 'LOST_NEG_X_APERTURE', 'LOST_NEG_Y', 'LOST_NEG_Y_APERTURE', 'LOST_POS_X', 'LOST_POS_X_APERTURE', 'LOST_POS_Y', 'LOST_POS_Y_APERTURE', 'LOST_PZ', 'LOST_PZ_APERTURE', 'LOST_Z', 'LOST_Z_APERTURE', 'LR_FREQ_SPREAD', 'LR_SELF_WAKE_ON', 'LR_WAKE', 'LR_WAKE_FILE', 'LYNCH_DAHL', 'L_ACTIVE', 'L_CHORD', 'L_FUNC_PARENS', 'L_PARENS', 'L_PERIOD', 'L_RECTANGLE', 'L_SAGITTA', 'L_SOFT_EDGE', 'LatEleLocStruct', 'LatEleLocStructAlloc1D', 'LatEleLocStructArray1D', 'LatEleOrder1Struct', 'LatEleOrder1StructAlloc1D', 'LatEleOrder1StructArray1D', 'LatEleOrderArrayStruct', 'LatEleOrderArrayStructAlloc1D', 'LatEleOrderArrayStructArray1D', 'LatEleOrderStruct', 'LatParamStruct', 'LatStruct', 'LatStructAlloc1D', 'LatStructArray1D', 'Layout', 'LinacNormalModeStruct', 'LinearCoef', 'LoadParseLine', 'MACHINE', 'MAD', 'MAGENTA', 'MAGNETIC', 'MAGNUS', 'MARKER', 'MASK', 'MASK_PLATE', 'MASS_OF', 'MAT6_CALC_METHOD', 'MAT6_GROUP', 'MATCH', 'MATCH_ORBIT', 'MATCH_TWISS', 'MATERIAL_TYPE', 'MATRIX', 'MATRIX_KICK', 'MAX', 'MAX_FRINGE_ORDER', 'MAYBE', 'MEAN_EXCITATION_ENERGY', 'MIN', 'MINOR_SLAVE', 'MINUS', 'MIRROR', 'MIXED', 'MODE', 'MODE_FLIP', 'MODE_FLIP0', 'MODE_FLIP1', 'MODE_FLIP_STORED', 'MODULO', 'MONITOR', 'MOSAIC_ANGLE_RMS_IN_PLANE', 'MOSAIC_ANGLE_RMS_OUT_PLANE', 'MOSAIC_DIFFRACTION_NUM', 'MOSAIC_THICKNESS', 'MOVING_FORWARD', 'MULTILAYER_MIRROR', 'MULTIPASS_LORD', 'MULTIPASS_REF_ENERGY', 'MULTIPASS_SLAVE', 'MULTIPOLE', 'MULTIPOLES_ON', 'MULTIPOLE_SOURCE', 'MULTIPOLE_SYMMETRY', 'MUON', 'MU_0_VAC', 'M_DEUTERON', 'M_ELECTRON', 'M_HELION', 'M_MUON', 'M_NEUTRON', 'M_PION_0', 'M_PION_CHARGED', 'M_PROTON', 'MadEnergyStruct', 'MadMapStruct', 'MadTmfoc', 'MakeGMats', 'MakeHvbp', 'MakeMadMap', 'MakeMat6', 'MakeMat6Bmad', 'MakeMat6BmadPhoton', 'MakeMat6Tracking', 'MakeN', 'MakePbrh', 'MakeSmatFromAbc', 'MakeVMats', 'MatSympDecouple', 'MatchEleToMat6', 'Mode3Struct', 'ModeInfoStruct', 'MultiTurnTrackingAnalysis', 'Multipole1AbToKt', 'Multipole1KtToAb', 'MultipoleEleToAb', 'NAVY_BLUE', 'NEUTRON', 'NEW_BRANCH', 'NINT', 'NO', 'NOISE', 'NONE', 'NONE_PT', 'NON_SYMPLECTIC', 'NORMAL', 'NOT_A_LORD', 'NOT_SET', 'NOWHERE', 'NO_APERTURE', 'NO_CLOSED_ORBIT', 'NO_COMPLETE_ORBIT', 'NO_DELIM', 'NO_END', 'NO_END_MARKER', 'NO_FIELD', 'NO_FILL', 'NO_MISALIGNMENT', 'NULL_ELE', 'NUMERIC', 'NUM_ELE_ATTRIB', 'NUM_ELE_ATTRIB_EXTENDED', 'NUM_STEPS', 'N_AVOGADRO', 'N_CELL', 'N_KEY', 'N_PART', 'N_PARTICLE', 'N_PERIOD', 'N_PLANE', 'N_POLE_MAXX', 'N_RF_STEPS', 'N_SAMPLE', 'N_SLICE', 'N_SLICE_SPLINE', 'N_VAR_MAX', 'NametableStruct', 'NormalFormTaylors', 'NormalMode3Calc', 'NormalModesStruct', 'OCTUPOLE', 'OFF', 'OFFSET_MOVES_APERTURE', 'OFF_AND_SAVE', 'OK', 'OLD_ASCII', 'OLD_CONTROL_VAR', 'OLD_CONTROL_VAR_OFFSET', 'OLD_INTEGRATOR', 'ON', 'ONE_DIM', 'ONE_FILE', 'OPAL', 'OPAQUE', 'OPEN', 'ORANGE', 'ORIGIN_ELE', 'ORIGIN_ELE_REF_PT', 'OSC_AMPLITUDE', 'OUTLINE_ARROW_HEAD', 'OUTPUT_ELE', 'OUTSIDE', 'OVERLAY', 'OVERLAY_LORD', 'OdeintBmad', 'OdeintBmadTime', 'OffsetParticle', 'OpenBinaryFile', 'OrbitAmplitudeCalc', 'OrderEvecsByNSimilarity', 'P0C', 'P0C_REF_INIT', 'P0C_SET', 'P0C_START', 'P88', 'P89', 'P90', 'PARENS', 'PARTICLE', 'PATCH', 'PATCH_PROBLEM', 'PC_OUT_MAX', 'PC_OUT_MIN', 'PC_STRONG', 'PENDELLOSUNG_PERIOD_PI', 'PENDELLOSUNG_PERIOD_SIGMA', 'PHASE_TROMBONE', 'PHASE_X', 'PHASE_Y', 'PHI0', 'PHI0_AUTOSCALE', 'PHI0_ERR', 'PHI0_MAX', 'PHI0_MULTIPASS', 'PHI_A', 'PHI_A_STORED', 'PHI_B', 'PHI_B_STORED', 'PHI_POSITION', 'PHOTON', 'PHOTON_FORK', 'PHOTON_INIT', 'PHOTON_TYPE', 'PHYSICAL_SOURCE', 'PI', 'PICKUP', 'PION_0', 'PION_MINUS', 'PION_PLUS', 'PIPE', 'PIXEL', 'PLANAR_MODEL', 'PLUS', 'PLUS_SYM', 'POLARITY', 'POLARIZED', 'POSITRON', 'POWER', 'PRE_BORN', 'PRINT_PAGE_LONG_LEN', 'PRINT_PAGE_SHORT_LEN', 'PROTON', 'PROVISIONAL', 'PSI_ANGLE', 'PSI_POSITION', 'PTC_CANONICAL_COORDS', 'PTC_FIELD_GEOMETRY', 'PTC_FRINGE_GEOMETRY', 'PTC_INTEGRATION_TYPE', 'PTC_STANDARD', 'PURPLE', 'PX', 'PX0', 'PX1', 'PX_APERTURE_CENTER', 'PX_APERTURE_WIDTH2', 'PX_KICK', 'PX_REF', 'PX_STORED', 'PY', 'PY0', 'PY1', 'PY_APERTURE_CENTER', 'PY_APERTURE_WIDTH2', 'PY_KICK', 'PY_REF', 'PY_STORED', 'PZ', 'PZ0', 'PZ1', 'PZ_APERTURE_CENTER', 'PZ_APERTURE_WIDTH2', 'PZ_KICK', 'PZ_REF', 'PZ_STORED', 'P_MASS', 'ParseIntegerList2', 'ParseRealList', 'ParseRealList2', 'ParserFastComplexRead', 'ParserFastRealRead', 'PhotonAbsorptionAndPhaseShift', 'PhotonElementStruct', 'PhotonMaterialStruct', 'PhotonReflectSurfaceStruct', 'PhotonReflectTableStruct', 'PhotonReflectTableStructAlloc1D', 'PhotonReflectTableStructArray1D', 'PhotonReflection', 'PhotonReflectivity', 'PhotonTargetStruct', 'PixelDetecStruct', 'PixelPtStruct', 'PixelPtStructArray2D', 'PointerToElementAtS', 'PointerToLord', 'PointerToMultipassLord', 'PointerToSlave', 'PointerToSuperLord', 'PointerToWall3d', 'PreTrackerStruct', 'ProjectEmitToXyz', 'PtcCheckForLostParticle', 'PtcEmitCalc', 'PtcNormalFormStruct', 'PtcSpinCalc', 'PtcTrackAll', 'QUADRUPOLE', 'QUAD_TILT', 'QpAxisStruct', 'QpLegendStruct', 'QpLineStruct', 'QpPointStruct', 'QpRectStruct', 'QpSymbolStruct', 'QuatToAxisAngle', 'R0_ELEC', 'R0_MAG', 'RADIANS', 'RADIANS_OVER_2PI', 'RADIATION_LENGTH', 'RADIATION_LENGTH_USED', 'RADIUS', 'RAD_INT_GROUP', 'RAMPER', 'RAMPER_LORD', 'RAN', 'RAN_GAUSS', 'RAN_SEED', 'RBEND', 'RCOLLIMATOR', 'REAL_GARBAGE', 'RECALC', 'RECTANGULAR', 'RED', 'REDDISH_PURPLE', 'RED_CROSS_SYM', 'REFERENCE', 'REFER_TO_LORDS', 'REFLECTION', 'REFLECTIVITY_TABLE', 'REF_CAP_GAMMA', 'REF_COORDS', 'REF_ENERGY_GROUP', 'REF_ORBIT', 'REF_ORBIT_FOLLOWS', 'REF_ORIGIN', 'REF_PARTICLE', 'REF_SPECIES', 'REF_TILT', 'REF_TILT_TOT', 'REF_TIME', 'REF_TIME_START', 'REF_WAVELENGTH', 'RELATIVE', 'REPETITION_FREQUENCY', 'RESTORE_STATE', 'RFCAVITY', 'RF_BEND', 'RF_FREQUENCY', 'RF_WAVELENGTH', 'RHO', 'RIPKEN_KICK', 'RMS', 'ROLL', 'ROLL_TOT', 'ROOT', 'ROTATIONALLY_SYMMETRIC_RZ', 'RUNGE_KUTTA', 'R_E', 'R_P', 'R_PARENS', 'R_SOLENOID', 'Rad1DampAndStocMats', 'RadDampAndStocMats', 'RadInt1Struct', 'RadInt1StructAlloc1D', 'RadInt1StructArray1D', 'RadIntAllEleStruct', 'RadIntBranchStruct', 'RadIntBranchStructAlloc1D', 'RadIntBranchStructArray1D', 'RadMapEleStruct', 'RadMapStruct', 'RadiationIntegrals', 'RamperLordStruct', 'RamperLordStructAlloc1D', 'RamperLordStructArray1D', 'RanGaussConverter', 'RandomStateStruct', 'ReadBeamAscii', 'ReadBeamFile', 'Real16Alloc1D', 'Real16Array1D', 'RealAlloc1D', 'RealArray1D', 'RealArray2D', 'RealArray3D', 'ResonanceHStruct', 'ResonanceHStructAlloc1D', 'ResonanceHStructArray1D', 'RfEleStruct', 'RfStairStepStruct', 'RfStairStepStructAlloc1D', 'RfStairStepStructArray1D', 'SAD_FULL', 'SAD_MULT', 'SAMPLE', 'SAVE_STATE', 'SBEND', 'SCALE_FIELD_TO_ONE', 'SCALE_MULTIPOLES', 'SCATTER_METHOD', 'SCATTER_TEST', 'SEC', 'SECOND_TRACK_EDGE', 'SECTOR', 'SEXTUPOLE', 'SHIFTED_TO_RELATIVE', 'SHORT', 'SIGN', 'SIG_E', 'SIG_E2', 'SIG_PZ', 'SIG_VX', 'SIG_VY', 'SIG_X', 'SIG_Y', 'SIG_Z', 'SIN', 'SINC', 'SINH', 'SLAVE', 'SLICE', 'SLICE_SLAVE', 'SMALL_REL_CHANGE', 'SOFT_EDGE', 'SOFT_EDGE_ONLY', 'SOLENOID', 'SOLID', 'SOLID_FILL', 'SOL_QUAD', 'SPACE_CHARGE_METHOD', 'SPATIAL_DISTRIBUTION', 'SPECIES', 'SPECIES_CONST', 'SPECIES_OUT', 'SPECIES_STRONG', 'SPHERICAL', 'SPIN_DN_DPZ_X', 'SPIN_DN_DPZ_Y', 'SPIN_DN_DPZ_Z', 'SPIN_FRINGE_ON', 'SPIN_INTEGRATION', 'SPIN_TRACKING_METHOD', 'SPIN_X', 'SPIN_X_STORED', 'SPIN_Y', 'SPIN_Y_STORED', 'SPIN_Z', 'SPIN_Z_STORED', 'SPLIT_ID', 'SPRINT', 'SQRT', 'SQRT_2', 'SQRT_3', 'SQUARE_BRACKETS', 'SQUARE_CONCAVE_SYM', 'SQUARE_FILLED_SYM', 'SQUARE_SYM', 'SR_WAKE', 'SR_WAKE_FILE', 'STALE', 'STANDARD', 'STANDING_WAVE', 'STAR5_FILLED_SYM', 'STAR5_SYM', 'START_EDGE', 'START_END', 'STAR_OF_DAVID_SYM', 'STEADY_STATE_3D', 'STRAIGHT', 'SUM', 'SUPERIMPOSE', 'SUPER_LORD', 'SUPER_OFFSET', 'SUPER_OK', 'SUPER_SLAVE', 'SURFACE', 'SYMMETRY', 'SYMPLECTIFY', 'SYMP_LIE_BMAD', 'SYMP_LIE_PTC', 'S_ABORT', 'S_AND_FLOOR_POSITION_GROUP', 'S_BLANK', 'S_DINFO', 'S_DWARN', 'S_ERROR', 'S_FATAL', 'S_IMPORTANT', 'S_INFO', 'S_LONG', 'S_NOOUTPUT', 'S_PLANE', 'S_POSITION', 'S_POSITION_GROUP', 'S_SUCCESS', 'S_TWISS_REF', 'S_WARN', 'SetEleAttribute', 'SetEleStatusStale', 'SpaceChargeCommonStruct', 'SpinAxisStruct', 'SpinMat8ResonanceStrengths', 'SpinMatToEigen', 'SpinOrbitMap1Struct', 'SpinOrbitMap1StructAlloc1D', 'SpinOrbitMap1StructArray1D', 'SpinPolarStruct', 'SpinQuatResonanceStrengths', 'SplineAkimaInterpolate', 'SplineEvaluate', 'SplineStruct', 'SplineStructAlloc1D', 'SplineStructArray1D', 'SplitLat', 'StrongBeamSigmaCalc', 'StrongBeamStruct', 'SummationRdtStruct', 'SummationRdtStructAlloc1D', 'SummationRdtStructArray1D', 'SuperBicubicInterpolation', 'SuperPolint', 'SurfaceCurvatureStruct', 'SurfaceDisplacementPtStruct', 'SurfaceDisplacementPtStructArray2D', 'SurfaceDisplacementStruct', 'SurfaceHMisalignPtStruct', 'SurfaceHMisalignPtStructArray2D', 'SurfaceHMisalignStruct', 'SurfaceSegmentedPtStruct', 'SurfaceSegmentedPtStructArray2D', 'SurfaceSegmentedStruct', 'T', 'T0', 'T21', 'T6ToB123', 'TAN', 'TANH', 'TAYLOR', 'TAYLOR_MAP_INCLUDES_OFFSETS', 'TAYLOR_OFFSET', 'TAYLOR_ORDER', 'TERM', 'THETA_POSITION', 'THICKNESS', 'THICK_MULTIPOLE', 'TILT', 'TILT_CALIB', 'TILT_CORR', 'TILT_TOT', 'TIMES', 'TIMES_SYM', 'TIME_RUNGE_KUTTA', 'TO_ELEMENT', 'TO_LINE', 'TRACKING', 'TRACKING_METHOD', 'TRAILING', 'TRANSMISSION', 'TRANSPARENT', 'TRANSVERSE_KICK', 'TRANSVERSE_SIGMA_CUT', 'TRAVELING_WAVE', 'TRIANGLE_FILLED_SYM', 'TRIANGLE_SYM', 'TRUE_', 'TRUE_INT', 'TT', 'TWISS_PROPAGATE_FAILURE', 'TWOPI', 'TYPE', 'T_OFFSET', 'TaoBeamBranchStruct', 'TaoBeamUniStruct', 'TaoBuildingWallOrientationStruct', 'TaoBuildingWallPointStruct', 'TaoBuildingWallPointStructAlloc1D', 'TaoBuildingWallPointStructArray1D', 'TaoBuildingWallSectionStruct', 'TaoBuildingWallSectionStructAlloc1D', 'TaoBuildingWallSectionStructArray1D', 'TaoBuildingWallStruct', 'TaoCmdHistoryStruct', 'TaoCmdHistoryStructAlloc1D', 'TaoCmdHistoryStructArray1D', 'TaoCommonStruct', 'TaoCurveColorStruct', 'TaoCurveOrbitStruct', 'TaoCurveRmsCalc', 'TaoCurveStruct', 'TaoCurveStructAlloc1D', 'TaoCurveStructArray1D', 'TaoD1DataStruct', 'TaoD1DataStructAlloc1D', 'TaoD1DataStructArray1D', 'TaoD2DataStruct', 'TaoD2DataStructAlloc1D', 'TaoD2DataStructArray1D', 'TaoDataStruct', 'TaoDataStructAlloc1D', 'TaoDataStructArray1D', 'TaoDataVarComponentStruct', 'TaoDataVarComponentStructAlloc1D', 'TaoDataVarComponentStructArray1D', 'TaoDatumIntegrate', 'TaoDrawingStruct', 'TaoDynamicApertureStruct', 'TaoEleGeometryWithMisalignments', 'TaoElePointerStruct', 'TaoElePointerStructAlloc1D', 'TaoElePointerStructArray1D', 'TaoEleShapeInfo', 'TaoEleShapeStruct', 'TaoEleShapeStructAlloc1D', 'TaoEleShapeStructArray1D', 'TaoEvalFloorOrbit', 'TaoEvalNodeStruct', 'TaoEvalNodeStructAlloc1D', 'TaoEvalNodeStructArray1D', 'TaoEvaluateADatum', 'TaoEvaluateDatumAtS', 'TaoExpressionInfoStruct', 'TaoExpressionInfoStructAlloc1D', 'TaoExpressionInfoStructArray1D', 'TaoFindPlotRegion', 'TaoFloorPlanStruct', 'TaoFloorToScreen', 'TaoGetOptVars', 'TaoGlobalStruct', 'TaoGraphSMinMaxCalc', 'TaoGraphStruct', 'TaoGraphStructAlloc1D', 'TaoGraphStructArray1D', 'TaoHistogramStruct', 'TaoInitStruct', 'TaoInjectBeam', 'TaoLatSigmaStruct', 'TaoLatSigmaStructAlloc1D', 'TaoLatSigmaStructArray1D', 'TaoLatticeBranchStruct', 'TaoLatticeBranchStructAlloc1D', 'TaoLatticeBranchStructArray1D', 'TaoLatticeCalc', 'TaoLatticeStruct', 'TaoModelBranchStruct', 'TaoModelBranchStructAlloc1D', 'TaoModelBranchStructArray1D', 'TaoModelElementStruct', 'TaoModelElementStructAlloc1D', 'TaoModelElementStructArray1D', 'TaoParamValueAtS', 'TaoParseElementParamStr', 'TaoPickUniverse', 'TaoPingScaleStruct', 'TaoPlotCacheStruct', 'TaoPlotCacheStructAlloc1D', 'TaoPlotCacheStructArray1D', 'TaoPlotPageStruct', 'TaoPlotRegionStruct', 'TaoPlotRegionStructAlloc1D', 'TaoPlotRegionStructArray1D', 'TaoPlotStruct', 'TaoPlotStructAlloc1D', 'TaoPlotStructArray1D', 'TaoPointerToDatumEle', 'TaoPointerToEleShape', 'TaoPointerToUniverses', 'TaoScaleGraph', 'TaoSetIntegerValue', 'TaoSetLogicalValue', 'TaoSetQpAxisStruct', 'TaoSetQpPointStruct', 'TaoSetQpRectStruct', 'TaoSetRealValue', 'TaoShapePatternPointStruct', 'TaoShapePatternPointStructAlloc1D', 'TaoShapePatternPointStructArray1D', 'TaoShapePatternStruct', 'TaoShapePatternStructAlloc1D', 'TaoShapePatternStructArray1D', 'TaoSpinDnDpzStruct', 'TaoSpinEleStruct', 'TaoSpinEleStructAlloc1D', 'TaoSpinEleStructArray1D', 'TaoSpinMapStruct', 'TaoSpinPolarizationStruct', 'TaoSuperUniverseStruct', 'TaoTitleStruct', 'TaoToPhaseAndCouplingReading', 'TaoToReal', 'TaoTrackingEleIndex', 'TaoUniverseCalcStruct', 'TaoUniversePointerStruct', 'TaoUniversePointerStructAlloc1D', 'TaoUniversePointerStructArray1D', 'TaoUniverseStruct', 'TaoUniverseStructAlloc1D', 'TaoUniverseStructArray1D', 'TaoV1VarStruct', 'TaoV1VarStructAlloc1D', 'TaoV1VarStructArray1D', 'TaoVarSlaveStruct', 'TaoVarSlaveStructAlloc1D', 'TaoVarSlaveStructArray1D', 'TaoVarStruct', 'TaoVarStructAlloc1D', 'TaoVarStructArray1D', 'TaoWaveKickPtStruct', 'TaoWaveKickPtStructAlloc1D', 'TaoWaveKickPtStructArray1D', 'TaoWaveStruct', 'TargetPointStruct', 'TargetPointStructAlloc1D', 'TargetPointStructArray1D', 'TargetRotMats', 'TaylorStruct', 'TaylorStructAlloc1D', 'TaylorStructArray1D', 'TaylorTermStruct', 'TaylorTermStructAlloc1D', 'TaylorTermStructArray1D', 'TestBunchStructScalar', 'TestCharacterScalar', 'TestComplexScalar', 'TestInteger8Scalar', 'TestIntegerScalar', 'TestLogicalScalar', 'TestReal16Scalar', 'TestRealScalar', 'TestSubStruct', 'TestSubStructAlloc1D', 'TestSubStructArray1D', 'TestSubStructArray2D', 'TestSubStructArray3D', 'TestSubSubStruct', 'ToEtaReading', 'ToOrbitReading', 'ToPhaseAndCouplingReading', 'Track1', 'Track1Bmad', 'Track1RungeKutta', 'Track1Spin', 'Track1TimeRungeKutta', 'TrackABeambeam', 'TrackAPatch', 'TrackAZeroLengthElement', 'TrackAll', 'TrackFromSToS', 'TrackPointStruct', 'TrackPointStructAlloc1D', 'TrackPointStructArray1D', 'TrackStruct', 'TrackUntilDead', 'TrackingRadMapSetup', 'TransferMapFromSToS', 'TricubicCmplxCoefStruct', 'TricubicCmplxCoefStructArray3D', 'TricubicCmplxEval', 'Twiss1Propagate', 'TwissAndTrackFromSToS', 'TwissAndTrackIntraEle', 'TwissAtElement', 'TwissFromTracking', 'TwissStruct', 'UB_SUBATOMIC', 'UNARY_MINUS', 'UNARY_PLUS', 'UNDIFFRACTED', 'UNDULATOR', 'UNIFORM', 'UNKNOWN', 'UNPOLARIZED', 'UNSTABLE', 'UNSTABLE_A', 'UNSTABLE_B', 'UPSTREAM', 'UPSTREAM_COORD_DIR', 'UPSTREAM_END', 'USER_SET', 'USER_SETS_LENGTH', 'USE_REFLECTIVITY_TABLE', 'V1_UNITCELL', 'V2_UNITCELL', 'VAL1', 'VAL10', 'VAL11', 'VAL12', 'VAL2', 'VAL3', 'VAL4', 'VAL5', 'VAL6', 'VAL7', 'VAL8', 'VAL9', 'VAR', 'VARIABLE', 'VAR_OFFSET', 'VELOCITY_DISTRIBUTION', 'VERTICALLY_PURE', 'VERTICAL_BAR', 'VERTICAL_KICK', 'VKICK', 'VKICKER', 'VOLTAGE', 'VOLTAGE_ERR', 'VOLTAGE_TOT', 'V_DISPLACE', 'V_UNITCELL', 'WALL', 'WALL3D', 'WALL_END', 'WALL_START', 'WALL_TRANSITION', 'WHITE', 'WIGGLER', 'WIGGLERS', 'WMatToAxisAngle', 'WRAP_SUPERIMPOSE', 'WakeLrModeStruct', 'WakeLrModeStructAlloc1D', 'WakeLrModeStructArray1D', 'WakeLrStruct', 'WakeSrModeStruct', 'WakeSrModeStructAlloc1D', 'WakeSrModeStructArray1D', 'WakeSrStruct', 'WakeSrZLongStruct', 'WakeStruct', 'Wall3DSectionStruct', 'Wall3DSectionStructAlloc1D', 'Wall3DSectionStructArray1D', 'Wall3DStruct', 'Wall3DStructAlloc1D', 'Wall3DStructArray1D', 'Wall3DVertexStruct', 'Wall3DVertexStructAlloc1D', 'Wall3DVertexStructArray1D', 'Wall3dDRadius', 'WriteAstraFieldGridFile', 'WriteAstraFieldGridFile3d', 'WriteGptFieldGridFile1d', 'WriteGptFieldGridFile2d', 'WriteGptFieldGridFile3d', 'WriteLatticeInScibmad', 'WriteOpalFieldGridFile', 'X', 'X0', 'X1', 'X1_EDGE', 'X1_LIMIT', 'X2_EDGE', 'X2_LIMIT', 'XFER_MAT_CALC_FAILURE', 'XY', 'XYZ', 'XY_AXIS', 'X_AXIS', 'X_DISPERSION_CALIB', 'X_DISPERSION_ERR', 'X_GAIN_CALIB', 'X_GAIN_ERR', 'X_INVARIANT', 'X_KICK', 'X_KNOT', 'X_LEADING', 'X_LIMIT', 'X_OFFSET', 'X_OFFSET_CALIB', 'X_OFFSET_MULT', 'X_OFFSET_TOT', 'X_PITCH', 'X_PITCH_TOT', 'X_PLANE', 'X_POLARIZATION', 'X_POSITION', 'X_QUAD', 'X_REF', 'X_STORED', 'X_SYMBOL_SYM', 'X_TRAILING', 'XyDispStruct', 'Y', 'Y0', 'Y1', 'Y1_EDGE', 'Y1_LIMIT', 'Y2_EDGE', 'Y2_LIMIT', 'YELLOW', 'YELLOW_GREEN', 'YES', 'Y_AXIS', 'Y_DISPERSION_CALIB', 'Y_DISPERSION_ERR', 'Y_GAIN_CALIB', 'Y_GAIN_ERR', 'Y_KICK', 'Y_KNOT', 'Y_LEADING', 'Y_LIMIT', 'Y_OFFSET', 'Y_OFFSET_CALIB', 'Y_OFFSET_MULT', 'Y_OFFSET_TOT', 'Y_PITCH', 'Y_PITCH_TOT', 'Y_PLANE', 'Y_POLARIZATION', 'Y_POSITION', 'Y_QUAD', 'Y_REF', 'Y_STORED', 'Y_TRAILING', 'Z', 'Z0', 'Z1', 'ZAtSurface', 'ZERO', 'Z_APERTURE_CENTER', 'Z_APERTURE_WIDTH2', 'Z_AXIS', 'Z_KICK', 'Z_OFFSET', 'Z_OFFSET_TOT', 'Z_PLANE', 'Z_POSITION', 'Z_REF', 'Z_STORED', 'ab_multipole_kick', 'ab_multipole_kicks', 'absolute_photon_position', 'absolute_time_tracking', 'ac_kicker_amp', 'action_to_xyz', 'add_lattice_control_structs', 'add_superimpose', 'add_this_multipass', 'add_this_taylor_term', 'adjust_super_slave_names', 'allocate_branch_array', 'allocate_lat_ele_array', 'allocate_thread_states', 'angle_between_polars', 'angle_to_canonical_coords', 'anomalous_moment_of', 'antiparticle', 'aperture_bookkeeper', 'apfft', 'apfft_corr', 'apfft_ext', 'apply_all_rampers', 'apply_energy_kick', 'apply_patch_to_ptc_fibre', 'apply_rampers_to_slave', 'array_re_str', 'asinc', 'assert_equal', 'astra_max_field_reference', 'at_this_ele_end', 'atomic_number', 'atomic_species_id', 'attribute_bookkeeper', 'attribute_free', 'attribute_index', 'attribute_name', 'attribute_type', 'attribute_units', 'autoscale_phase_and_amp', 'average_twiss', 'axis_angle_to_quat', 'axis_angle_to_w_mat', 'bbi_kick', 'bbi_slice_calc', 'bbu_add_a_bunch', 'bbu_hom_voltage_calc', 'bbu_remove_head_bunch', 'bbu_setup', 'bbu_track_a_stage', 'bbu_track_all', 'beam_envelope_ibs', 'beam_equal_beam', 'beam_init_setup', 'beam_tilts', 'beambeam_fibre_setup', 'bend_edge_kick', 'bend_exact_multipole_field', 'bend_length_has_been_set', 'bend_photon_e_rel_init', 'bend_photon_energy_integ_prob', 'bend_photon_energy_normalized_probability', 'bend_photon_init', 'bend_photon_polarization_init', 'bend_photon_vert_angle_init', 'bend_shift', 'bend_vert_angle_integ_prob', 'bicubic_cmplx_eval', 'bin_index', 'bin_x_center', 'bit_set', 'bl_via_vlassov', 'bmad_parser', 'bmad_parser2', 'bmad_patch_parameters_to_ptc', 'bp_set_ran_status', 'bracket_index_for_spline', 'branch_equal_branch', 'branch_name', 'branch_to_ptc_m_u', 'bunch_equal_bunch', 'c_to_cbar', 'calc_bunch_params', 'calc_bunch_params_slice', 'calc_bunch_params_z_slice', 'calc_bunch_sigma_matrix_etc', 'calc_emittances_and_twiss_from_sigma_matrix', 'calc_file_number', 'calc_spin_params', 'calc_super_slave_key', 'calc_wall_radius', 'calc_z_tune', 'canonical_to_angle_coords', 'cbar_to_c', 'change_file_number', 'charge_of', 'charge_to_mass_of', 'check_aperture_limit', 'check_controller_controls', 'check_for_superimpose_problem', 'check_if_s_in_bounds', 'check_rf_freq', 'choose_quads_for_set_tune', 'chrom_calc', 'chrom_tune', 'classical_radius', 'clear_lat_1turn_mats', 'clear_taylor_maps_from_elements', 'closed_orbit_calc', 'closed_orbit_from_tracking', 'cmplx_re_str', 'coarse_frequency_estimate', 'combine_consecutive_elements', 'complex_error_function', 'complex_taylor_clean', 'complex_taylor_coef', 'complex_taylor_equal_complex_taylor', 'complex_taylor_exponent_index', 'complex_taylor_make_unit', 'complex_taylor_to_mat6', 'complex_taylors_equal_complex_taylors', 'compute_slave_coupler', 'concat_ele_taylor', 'concat_taylor', 'concat_transfer_mat', 'control_bookkeeper', 'convert_bend_exact_multipole', 'convert_coords', 'convert_field_ele_to_lab', 'convert_local_cartesian_to_local_curvilinear', 'convert_local_curvilinear_to_local_cartesian', 'convert_particle_coordinates_s_to_t', 'convert_particle_coordinates_t_to_s', 'convert_pc_to', 'convert_total_energy_to', 'converter_distribution_parser', 'coord_equal_coord', 'coord_state_name', 'coords_body_to_local', 'coords_body_to_rel_exit', 'coords_curvilinear_to_floor', 'coords_floor_to_curvilinear', 'coords_floor_to_local_curvilinear', 'coords_floor_to_relative', 'coords_local_curvilinear_to_body', 'coords_local_curvilinear_to_floor', 'coords_relative_to_floor', 'cos_one', 'cosc', 'coulombfun', 'count_lines_in_file', 'create_a_spline', 'create_concatenated_wall3d', 'create_element_slice', 'create_field_overlap', 'create_girder', 'create_group', 'create_lat_ele_nametable', 'create_overlay', 'create_planar_wiggler_model', 'create_ramper', 'create_sol_quad_model', 'create_unique_ele_names', 'create_wiggler_cartesian_map', 'cross_product', 'crystal_attribute_bookkeeper', 'crystal_h_misalign', 'crystal_type_to_crystal_params', 'custom_attribute_ubound_index', 'damping_matrix_d', 'date_and_time_stamp', 'deallocate_ele_pointers', 'deallocate_expression_tree', 'deallocate_lat_pointers', 'default_tracking_species', 'destfixedwindowls', 'detab', 'detector_pixel_pt', 'diffraction_plate_or_mask_hit_spot', 'diffusion_matrix_b', 'display_size_and_resolution', 'distance_to_aperture', 'dj_bessel', 'djb_hash', 'djb_str_hash', 'do_mode_flip', 'downcase_string', 'dpc_given_de', 'drift_and_pipe_track_methods_adjustment', 'drift_multipass_name_correction', 'drift_orbit_time', 'drift_particle_to_s', 'drift_particle_to_t', 'dspline_len', 'dynamic_aperture_point', 'dynamic_aperture_scan', 'e_accel_field', 'e_crit_photon', 'eigen_decomp_6mat', 'ele_compute_ref_energy_and_time', 'ele_equal_ele', 'ele_equals_ele', 'ele_finalizer', 'ele_full_name', 'ele_geometry', 'ele_geometry_with_misalignments', 'ele_has_constant_ds_dt_ref', 'ele_has_nonzero_kick', 'ele_has_nonzero_offset', 'ele_is_monitor', 'ele_loc', 'ele_loc_name', 'ele_misalignment_l_s_calc', 'ele_nametable_index', 'ele_order_calc', 'ele_reference_energy_correction', 'ele_rf_step_index', 'ele_to_fibre', 'ele_to_ptc_magnetic_bn_an', 'ele_to_spin_taylor', 'ele_to_taylor', 'ele_unique_name', 'ele_value_has_changed', 'ele_vec_equal_ele_vec', 'elec_multipole_field', 'element_at_s', 'element_slice_iterator', 'ellipinc_test', 'em_field_calc', 'em_field_derivatives', 'em_field_kick_vector_time', 'em_field_plus_em_field', 'em_taylor_equal_em_taylor', 'em_taylors_equal_em_taylors', 'emit_6d', 'end_akima_spline_calc', 'entering_element', 'envelope_radints', 'envelope_radints_ibs', 'eq_ac_kicker', 'eq_ac_kicker_freq', 'eq_ac_kicker_time', 'eq_anormal_mode', 'eq_aperture_param', 'eq_aperture_point', 'eq_aperture_scan', 'eq_beam', 'eq_beam_init', 'eq_bmad_common', 'eq_bookkeeping_state', 'eq_bpm_phase_coupling', 'eq_branch', 'eq_bunch', 'eq_bunch_params', 'eq_cartesian_map', 'eq_cartesian_map_term', 'eq_cartesian_map_term1', 'eq_complex_taylor', 'eq_complex_taylor_term', 'eq_control', 'eq_control_ramp1', 'eq_control_var1', 'eq_controller', 'eq_coord', 'eq_coord_array', 'eq_cylindrical_map', 'eq_cylindrical_map_term', 'eq_cylindrical_map_term1', 'eq_ele', 'eq_ellipse_beam_init', 'eq_em_field', 'eq_em_taylor', 'eq_em_taylor_term', 'eq_expression_atom', 'eq_floor_position', 'eq_gen_grad1', 'eq_gen_grad_map', 'eq_grid_beam_init', 'eq_grid_field', 'eq_grid_field_pt', 'eq_grid_field_pt1', 'eq_high_energy_space_charge', 'eq_interval1_coef', 'eq_kv_beam_init', 'eq_lat', 'eq_lat_ele_loc', 'eq_lat_param', 'eq_linac_normal_mode', 'eq_mode3', 'eq_mode_info', 'eq_normal_modes', 'eq_photon_element', 'eq_photon_material', 'eq_photon_reflect_surface', 'eq_photon_reflect_table', 'eq_photon_target', 'eq_pixel_detec', 'eq_pixel_pt', 'eq_pre_tracker', 'eq_rad_int1', 'eq_rad_int_all_ele', 'eq_rad_int_branch', 'eq_rad_map', 'eq_rad_map_ele', 'eq_ramper_lord', 'eq_space_charge_common', 'eq_spin_polar', 'eq_spline', 'eq_strong_beam', 'eq_surface_curvature', 'eq_surface_displacement', 'eq_surface_displacement_pt', 'eq_surface_h_misalign', 'eq_surface_h_misalign_pt', 'eq_surface_segmented', 'eq_surface_segmented_pt', 'eq_target_point', 'eq_taylor', 'eq_taylor_term', 'eq_track', 'eq_track_point', 'eq_twiss', 'eq_wake', 'eq_wake_lr', 'eq_wake_lr_mode', 'eq_wake_sr', 'eq_wake_sr_mode', 'eq_wake_sr_z_long', 'eq_wall3d', 'eq_wall3d_section', 'eq_wall3d_vertex', 'eq_xy_disp', 'equal_sign_here', 'equivalent_taylor_attributes', 'err_exit', 'etdiv', 'evaluate_array_index', 'evaluate_logical', 'exact_bend_edge_kick', 'exp_bessi0', 'expect_one_of', 'expect_this', 'expression_stack_to_string', 'expression_stack_value', 'expression_string_to_stack', 'expression_string_to_tree', 'expression_tree_to_string', 'expression_value', 'factorial', 'faddeeva_function', 'fft1', 'fft_1d', 'fibre_to_ele', 'field_attribute_free', 'file_directorizer', 'file_get', 'file_get_open', 'file_suffixer', 'finalize_reflectivity_table', 'find_element_ends', 'find_fwhm', 'find_location', 'find_matching_fieldmap', 'find_normalization', 'fine_frequency_estimate', 'fixedwindowls', 'floor_angles_to_w_mat', 'floor_w_mat_to_angles', 'form_complex_taylor', 'form_digested_bmad_file_name', 'fourier_amplitude', 'fringe_here', 'g_bend_from_em_field', 'g_bending_strength_from_em_field', 'g_integrals_calc', 'gamma_ref', 'gen_complete_elliptic', 'gen_grad1_to_em_taylor', 'gen_grad_at_s_to_em_taylor', 'gen_grad_field', 'get_bl_from_fwhm', 'get_bmad_com', 'get_called_file', 'get_emit_from_sigma_mat', 'get_file_number', 'get_file_time_stamp', 'get_next_word', 'get_slave_list', 'get_space_charge_com', 'get_super_universe', 'gpt_field_grid_scaling', 'gpt_max_field_reference', 'gpt_to_particle_bunch', 'gradient_shift_sr_wake', 'grid_field_interpolate', 'hanhan', 'hard_multipole_edge_kick', 'has_attribute', 'has_curvature', 'has_orientation_attributes', 'hdf5_write_beam', 'hdf5_write_grid_field', 'hom_voltage', 'hwang_bend_edge_kick', 'i_bessel', 'i_bessel_extended', 'ibs_matrix_c', 'igfcoulombfun', 'igfexfun', 'igfeyfun', 'igfezfun', 'increment_file_number', 'index_nocase', 'init_attribute_name1', 'init_attribute_name_array', 'init_beam_distribution', 'init_bmad', 'init_bmad_parser_common', 'init_bunch_distribution', 'init_complex_taylor_series', 'init_coord', 'init_custom', 'init_ele', 'init_em_taylor_series', 'init_lat', 'init_multipole_cache', 'init_photon_from_a_photon_init_ele', 'init_photon_integ_prob', 'init_spin_distribution', 'init_surface_segment', 'init_taylor_series', 'init_wake', 'initfixedwindowls', 'insert_element', 'insert_phase_trombone', 'int_str', 'integrand_base', 'integrate_max', 'integrate_min', 'integrate_psi', 'integrated_mats', 'integration_timer', 'interpolated_fft', 'interpolated_fft_gsl', 'ion_kick', 'is_alphabetic', 'is_attribute', 'is_decreasing_sequence', 'is_false', 'is_increasing_sequence', 'is_integer', 'is_logical', 'is_real', 'is_subatomic_species', 'is_true', 'j_bessel', 'key_name_to_key_index', 'kick_vector_calc', 'kill_complex_taylor', 'kill_ptc_layouts', 'kill_taylor', 'kind_name', 'knot_interpolate', 'knots_to_string', 'lafun', 'lat_compute_ref_energy_and_time', 'lat_ele_locator', 'lat_equal_lat', 'lat_geometry', 'lat_make_mat6', 'lat_sanity_check', 'lat_to_ptc_layout', 'lat_vec_equal_lat_vec', 'lattice_bookkeeper', 'lcavity_rf_step_setup', 'linear_bend_edge_kick', 'linear_coef', 'linear_fit', 'linear_fit_2d', 'linear_to_spin_taylor', 'load_parse_line', 'logic_str', 'logical_to_python', 'lord_edge_aligned', 'low_energy_z_correction', 'lunget', 'mad_add_offsets_and_multipoles', 'mad_concat_map2', 'mad_drift', 'mad_elsep', 'mad_map_to_taylor', 'mad_quadrupole', 'mad_rfcavity', 'mad_sbend', 'mad_sbend_body', 'mad_sbend_fringe', 'mad_sextupole', 'mad_solenoid', 'mad_tmfoc', 'mad_tmsymm', 'mad_tmtilt', 'mad_track1', 'make_g2_mats', 'make_g_mats', 'make_hvbp', 'make_hybrid_lat', 'make_legal_comment', 'make_mad_map', 'make_mat6', 'make_mat6_bmad', 'make_mat6_bmad_photon', 'make_mat6_high_energy_space_charge', 'make_mat6_mad', 'make_mat6_symp_lie_ptc', 'make_mat6_taylor', 'make_mat6_tracking', 'make_n', 'make_pbrh', 'make_smat_from_abc', 'make_unit_mad_map', 'make_v', 'make_v_mats', 'makeup_control_slave', 'makeup_group_lord', 'makeup_multipass_slave', 'makeup_super_slave', 'makeup_super_slave1', 'map1_inverse', 'map1_make_unit', 'map1_times_map1', 'map_to_angle_coords', 'mark_patch_regions', 'mass_of', 'master_parameter_value', 'mat4_multipole', 'mat6_add_offsets', 'mat6_add_pitch', 'mat6_to_complex_taylor', 'mat_symp_decouple', 'match_ele_to_mat6', 'match_reg', 'match_wild', 'maximize_projection', 'mexp', 'mfft1', 'milli_sleep', 'misalign_ptc_fibre', 'momentum_compaction', 'multi_turn_tracking_analysis', 'multilayer_type_to_multilayer_params', 'multipass_chain', 'multipole1_ab_to_kt', 'multipole1_kt_to_ab', 'multipole_ab_to_kt', 'multipole_ele_to_ab', 'multipole_ele_to_kt', 'multipole_init', 'multipole_kick', 'multipole_kick_mat', 'multipole_kicks', 'multipole_kt_to_ab', 'multipole_spin_tracking', 'mytan', 'n_attrib_string_max_len', 'n_bins_automatic', 'n_choose_k', 'n_spline_create', 'naff', 'nametable_add', 'nametable_bracket_indexx', 'nametable_change1', 'nametable_init', 'nametable_remove', 'new_control', 'nint_chk', 'normal_form_complex_taylors', 'normal_form_taylors', 'normal_mode3_calc', 'normal_mode_dispersion', 'normalize_evecs', 'num_field_eles', 'num_lords', 'odeint_bmad', 'odeint_bmad_time', 'offset_particle', 'offset_photon', 'omega_to_quat', 'one_turn_mat_at_ele', 'open_binary_file', 'openpmd_species_name', 'orbit_amplitude_calc', 'orbit_reference_energy_correction', 'orbit_to_floor_phase_space', 'orbit_to_local_curvilinear', 'orbit_too_large', 'order_evecs_by_n_similarity', 'order_evecs_by_plane_dominance', 'order_evecs_by_tune', 'order_particles_in_z', 'order_super_lord_slaves', 'ordinal_str', 'osc_alloc_freespace_array', 'osc_alloc_image_array', 'osc_alloc_rectpipe_arrays', 'osc_getgrnpipe', 'osc_read_rectpipe_grn', 'osc_write_rectpipe_grn', 'parse_cartesian_map', 'parse_cylindrical_map', 'parse_fortran_format', 'parse_gen_grad_map', 'parse_grid_field', 'parse_integer_list', 'parse_integer_list2', 'parse_real_list', 'parse_real_list2', 'parser_add_constant', 'parser_call_check', 'parser_fast_complex_read', 'parser_fast_integer_read', 'parser_fast_real_read', 'parser_file_stack', 'parser_get_integer', 'parser_get_logical', 'parser_identify_fork_to_element', 'parser_init_custom_elements', 'parser_print_line', 'parser_read_lr_wake', 'parser_read_old_format_lr_wake', 'parser_read_old_format_sr_wake', 'parser_read_sr_wake', 'parser_transfer_control_struct', 'particle_in_global_frame', 'particle_is_moving_backwards', 'particle_is_moving_forward', 'particle_rf_time', 'patch_flips_propagation_direction', 'patch_length', 'photon_absorption_and_phase_shift', 'photon_add_to_detector_statistics', 'photon_reflection', 'photon_reflection_std_surface_init', 'photon_reflectivity', 'photon_target_corner_calc', 'photon_target_setup', 'photon_type', 'physical_ele_end', 'point_photon_emission', 'pointer_to_branch', 'pointer_to_ele', 'pointer_to_element_at_s', 'pointer_to_fibre', 'pointer_to_field_ele', 'pointer_to_girder', 'pointer_to_lord', 'pointer_to_multipass_lord', 'pointer_to_next_ele', 'pointer_to_ran_state', 'pointer_to_slave', 'pointer_to_super_lord', 'pointer_to_surface_displacement_pt', 'pointer_to_surface_segmented_pt', 'pointer_to_wake_ele', 'pointer_to_wall3d', 'polar_to_spinor', 'polar_to_vec', 'poly_eval', 'probability_funct', 'projdd', 'project_emit_to_xyz', 'psi_prime_sca', 'ptc_bookkeeper', 'ptc_calculate_tracking_step_size', 'ptc_check_for_lost_particle', 'ptc_closed_orbit_calc', 'ptc_emit_calc', 'ptc_layouts_resplit', 'ptc_one_turn_mat_and_closed_orbit_calc', 'ptc_ran_seed_put', 'ptc_set_rf_state_for_c_normal', 'ptc_set_taylor_order_if_needed', 'ptc_spin_calc', 'ptc_track_all', 'ptc_transfer_map_with_spin', 'pwd_mat', 'quadratic_roots', 'quat_conj', 'quat_inverse', 'quat_mul', 'quat_rotate', 'quat_to_axis_angle', 'quat_to_omega', 'quat_to_w_mat', 'query_string', 'quote', 'rad1_damp_and_stoc_mats', 'rad_damp_and_stoc_mats', 'rad_g_integrals', 'radiation_integrals', 'radiation_map_setup', 'ramper_slave_setup', 'ramper_value', 'ran_default_state', 'ran_engine', 'ran_gauss_converter', 'ran_gauss_scalar', 'ran_gauss_vector', 'ran_seed_get', 'ran_seed_put', 'ran_uniform', 'randomize_lr_wake_frequencies', 'rchomp', 're_allocate', 're_allocate_eles', 're_associate_node_array', 're_str', 'read_beam_ascii', 'read_beam_file', 'read_binary_cartesian_map', 'read_binary_cylindrical_map', 'read_binary_grid_field', 'read_surface_reflection_file', 'real_num_fortran_format', 'real_path', 'real_str', 'real_to_string', 'reallocate_beam', 'reallocate_bp_com_const', 'reallocate_bunch', 'reallocate_control', 'reallocate_coord', 'reallocate_expression_stack', 'reallocate_spline', 'rel_tracking_charge_to_mass', 'relative_mode_flip', 'release_rad_int_cache', 'remove_constant_taylor', 'remove_dead_from_bunch', 'remove_eles_from_lat', 'remove_lord_slave_link', 'reverse_lat', 'rf_cav_names', 'rf_coupler_kick', 'rf_is_on', 'rf_ref_time_offset', 'rfun', 'rk_adaptive_time_step', 'rk_time_step1', 'rms_value', 'rot_2d', 'rotate3', 'rotate_em_field', 'rotate_field_zx', 'rotate_for_curved_surface', 'rotate_spin', 'rotate_spin_a_step', 'rotate_spin_given_field', 'rotate_vec', 'rotate_vec_given_axis_angle', 'rp8', 'run_timer', 's_body_calc', 's_calc', 'sad_mult_hard_bend_edge_kick', 'sad_soft_bend_edge_kick', 'save_a_beam_step', 'save_a_bunch_step', 'save_a_step', 'sbend_body_with_k1_map', 'sc_adaptive_step', 'sc_step', 'set_active_fixer', 'set_custom_attribute_name', 'set_ele_attribute', 'set_ele_defaults', 'set_ele_name', 'set_ele_real_attribute', 'set_ele_status_stale', 'set_flags_for_changed_attribute', 'set_fringe_on_off', 'set_lords_status_stale', 'set_on_off', 'set_orbit_to_zero', 'set_parameter', 'set_ptc', 'set_ptc_base_state', 'set_ptc_com_pointers', 'set_ptc_quiet', 'set_ptc_verbose', 'set_pwd_ele', 'set_species_charge', 'set_status_flags', 'set_tune', 'set_tune_3d', 'set_twiss', 'set_z_tune', 'settable_dep_var_bookkeeping', 'setup_high_energy_space_charge_calc', 'sigma_mat_ptc_to_bmad', 'significant_difference', 'sinc', 'sincc', 'sinhx_x', 'skip_ele_blender', 'skip_header', 'slice_lattice', 'soft_quadrupole_edge_kick', 'sol_quad_mat6_calc', 'solve_psi_adaptive', 'solve_psi_fixed_steps', 'sort_complex_taylor_terms', 'species_id', 'species_id_from_openpmd', 'species_name', 'species_of', 'spin_dn_dpz_from_mat8', 'spin_dn_dpz_from_qmap', 'spin_map1_normalize', 'spin_mat8_resonance_strengths', 'spin_mat_to_eigen', 'spin_of', 'spin_omega', 'spin_quat_resonance_strengths', 'spin_taylor_to_linear', 'spinor_to_polar', 'spinor_to_vec', 'spline1', 'spline_akima', 'spline_akima_interpolate', 'spline_evaluate', 'spline_fit_orbit', 'split_lat', 'sprint_spin_taylor_map', 'sqrt_alpha', 'sqrt_one', 'sr_longitudinal_wake_particle', 'sr_transverse_wake_particle', 'sr_z_long_wake', 'srdt_calc', 'srdt_lsq_solution', 'start_branch_at', 'str_count', 'str_downcase', 'str_first_in_set', 'str_first_not_in_set', 'str_last_in_set', 'str_last_not_in_set', 'str_match_wild', 'str_substitute', 'str_upcase', 'stream_ele_end', 'string_attrib', 'string_to_int', 'string_to_real', 'string_trim', 'string_trim2', 'strong_beam_sigma_calc', 'strong_beam_strength', 'super_bicubic_coef', 'super_bicubic_interpolation', 'super_polint', 'super_poly', 'super_sobseq', 'super_sort', 'surface_grid_displacement', 'symp_lie_bmad', 'system_command', 't6_to_b123', 'tao_abort_command_file', 'tao_add_to_normal_mode_h_array', 'tao_alias_cmd', 'tao_allocate_data_array', 'tao_allocate_v1_var', 'tao_allocate_var_array', 'tao_beam_emit_calc', 'tao_beam_track', 'tao_beam_track_endpoint', 'tao_branch_index', 'tao_calc_data_at_s_pts', 'tao_cbar_wave_anal', 'tao_change_ele', 'tao_change_tune', 'tao_change_var', 'tao_change_z_tune', 'tao_chrom_calc_needed', 'tao_clear_cmd', 'tao_clip_cmd', 'tao_close_command_file', 'tao_cmd_history_record', 'tao_command', 'tao_constraint_type_name', 'tao_control_tree_list', 'tao_count_strings', 'tao_create_plot_window', 'tao_curve_beam_ellipse_setup', 'tao_curve_check_universe', 'tao_curve_data_setup', 'tao_curve_datum_calc', 'tao_curve_ele_ref', 'tao_curve_ix_uni', 'tao_curve_name', 'tao_curve_rms_calc', 'tao_d2_d1_name', 'tao_d2_data_stuffit', 'tao_data_check', 'tao_data_coupling_init', 'tao_data_sanity_check', 'tao_data_type_substitute', 'tao_data_useit_plot_calc', 'tao_datum_has_associated_ele', 'tao_datum_integrate', 'tao_datum_name', 'tao_datum_s_position', 'tao_de_optimizer', 'tao_deallocate_plot_cache', 'tao_deallocate_tree', 'tao_destroy_plot_window', 'tao_dmerit_calc', 'tao_dmodel_dvar_calc', 'tao_do_wire_scan', 'tao_draw_beam_chamber_wall', 'tao_draw_curve_data', 'tao_draw_ele_for_floor_plan', 'tao_draw_floor_plan', 'tao_draw_graph_axes', 'tao_draw_histogram_data', 'tao_draw_lat_layout', 'tao_draw_plots', 'tao_ele_geometry_with_misalignments', 'tao_ele_shape_info', 'tao_eval_floor_orbit', 'tao_evaluate_a_datum', 'tao_evaluate_datum_at_s', 'tao_evaluate_element_parameters', 'tao_evaluate_expression', 'tao_evaluate_expression_new', 'tao_evaluate_expression_old', 'tao_evaluate_lat_or_beam_data', 'tao_evaluate_stack_old', 'tao_evaluate_tree', 'tao_evaluate_tune', 'tao_expression_hash_substitute', 'tao_expression_tree_to_string', 'tao_find_plot_region', 'tao_fixer', 'tao_floor_to_screen', 'tao_floor_to_screen_coords', 'tao_geodesic_lm_optimizer', 'tao_get_data', 'tao_get_opt_vars', 'tao_get_user_input', 'tao_graph_controller_setup', 'tao_graph_data_setup', 'tao_graph_data_slice_setup', 'tao_graph_dynamic_aperture_setup', 'tao_graph_histogram_setup', 'tao_graph_name', 'tao_graph_phase_space_setup', 'tao_graph_s_min_max_calc', 'tao_graph_setup', 'tao_init', 'tao_init_beam_in_universe', 'tao_init_beams', 'tao_init_data', 'tao_init_data_end_stuff', 'tao_init_data_in_universe', 'tao_init_dynamic_aperture', 'tao_init_find_elements', 'tao_init_global', 'tao_init_lattice', 'tao_init_plotting', 'tao_init_variables', 'tao_inject_beam', 'tao_inject_particle', 'tao_is_valid_name', 'tao_json_cmd', 'tao_key_info_to_str', 'tao_lat_bookkeeper', 'tao_lat_emit_calc', 'tao_lat_sigma_calc_needed', 'tao_lat_sigma_track', 'tao_lattice_branches_equal_tao_lattice_branches', 'tao_lattice_calc', 'tao_lattice_equal_tao_lattice', 'tao_limit_calc', 'tao_lm_optimizer', 'tao_lmdif_optimizer', 'tao_load_this_datum', 'tao_locate_all_elements', 'tao_locate_elements', 'tao_mark_lattice_ele', 'tao_merit', 'tao_next_word', 'tao_one_turn_map_calc_needed', 'tao_open_file', 'tao_open_scratch_file', 'tao_optimization_status', 'tao_orbit_beta_wave_anal', 'tao_oreint_building_wall_pt', 'tao_param_value_at_s', 'tao_param_value_routine', 'tao_parse_command_args', 'tao_parse_element_param_str', 'tao_particle_data_value', 'tao_pause_cmd', 'tao_phase_space_axis_index', 'tao_phase_wave_anal', 'tao_pick_universe', 'tao_pipe_cmd', 'tao_place_cmd', 'tao_plot_cmd', 'tao_plot_data', 'tao_plot_histogram', 'tao_plot_key_table', 'tao_plot_setup', 'tao_plot_struct_transfer', 'tao_plot_wave', 'tao_pointer_to_building_wall_shape', 'tao_pointer_to_datum', 'tao_pointer_to_datum_ele', 'tao_pointer_to_ele_shape', 'tao_pointer_to_tao_lat', 'tao_pointer_to_universe', 'tao_pointer_to_universes', 'tao_pointer_to_var_in_lattice', 'tao_pointer_to_var_in_lattice2', 'tao_print_command_line_info', 'tao_ptc_normal_form', 'tao_python_cmd', 'tao_quiet_set', 'tao_rad_int_calc_needed', 'tao_re_allocate_expression_info', 'tao_re_associate_node_array', 'tao_re_execute', 'tao_read_cmd', 'tao_read_phase_space_index', 'tao_regression_test', 'tao_remove_blank_characters', 'tao_run_cmd', 'tao_scale_cmd', 'tao_scale_graph', 'tao_scale_ping_data', 'tao_scale_plot', 'tao_scratch_values_calc', 'tao_set_beam_cmd', 'tao_set_beam_init_cmd', 'tao_set_bmad_com_cmd', 'tao_set_branch_cmd', 'tao_set_calculate_cmd', 'tao_set_curve_cmd', 'tao_set_curve_invalid', 'tao_set_data_cmd', 'tao_set_data_useit_opt', 'tao_set_default_cmd', 'tao_set_drawing_cmd', 'tao_set_dynamic_aperture_cmd', 'tao_set_elements_cmd', 'tao_set_floor_plan_axis_label', 'tao_set_geodesic_lm_cmd', 'tao_set_global_cmd', 'tao_set_graph_cmd', 'tao_set_integer_value', 'tao_set_invalid', 'tao_set_key_cmd', 'tao_set_lattice_cmd', 'tao_set_logical_value', 'tao_set_openmp_n_threads', 'tao_set_opt_vars', 'tao_set_opti_de_param_cmd', 'tao_set_particle_start_cmd', 'tao_set_plot_cmd', 'tao_set_plot_page_cmd', 'tao_set_ptc_com_cmd', 'tao_set_qp_axis_struct', 'tao_set_qp_point_struct', 'tao_set_qp_rect_struct', 'tao_set_ran_state_cmd', 'tao_set_real_value', 'tao_set_region_cmd', 'tao_set_space_charge_com_cmd', 'tao_set_symbolic_number_cmd', 'tao_set_tune_cmd', 'tao_set_universe_cmd', 'tao_set_var_cmd', 'tao_set_var_model_value', 'tao_set_var_useit_opt', 'tao_set_wave_cmd', 'tao_set_z_tune_cmd', 'tao_setup_key_table', 'tao_shape_init', 'tao_show_cmd', 'tao_show_constraints', 'tao_single_mode', 'tao_single_track', 'tao_spin_matrices_calc_needed', 'tao_spin_tracking_turn_on', 'tao_split_component', 'tao_srdt_calc_needed', 'tao_subin_uni_number', 'tao_svd_optimizer', 'tao_symbol_import_from_lat', 'tao_taper_cmd', 'tao_to_change_number', 'tao_to_int', 'tao_to_phase_and_coupling_reading', 'tao_to_real', 'tao_too_many_particles_lost', 'tao_top10_derivative_print', 'tao_top10_merit_categories_print', 'tao_top_level', 'tao_tracking_ele_index', 'tao_turn_on_special_calcs_if_needed_for_plotting', 'tao_type_expression_tree', 'tao_uni_atsign_index', 'tao_universe_index', 'tao_use_data', 'tao_use_var', 'tao_user_is_terminating_optimization', 'tao_var1_name', 'tao_var_attrib_name', 'tao_var_check', 'tao_var_repoint', 'tao_var_target_calc', 'tao_var_useit_plot_calc', 'tao_var_write', 'tao_veto_vars_with_zero_dmodel', 'tao_wave_analysis', 'tao_wave_cmd', 'tao_wave_fit', 'tao_write_cmd', 'tao_x_axis_cmd', 'tao_x_scale_cmd', 'tao_x_scale_graph', 'tao_x_scale_plot', 'taper_mag_strengths', 'target_min_max_calc', 'target_rot_mats', 'taylor_equal_taylor', 'taylor_inverse', 'taylor_propagate1', 'taylor_to_mad_map', 'taylors_equal_taylors', 'test_bunch_struct_array', 'test_bunch_struct_scalar', 'test_character_scalar', 'test_complex_array', 'test_complex_scalar', 'test_integer8_array', 'test_integer8_scalar', 'test_integer_array', 'test_integer_scalar', 'test_logical_array', 'test_logical_scalar', 'test_real16_array', 'test_real16_scalar', 'test_real_array', 'test_real_scalar', 'tilt_coords', 'tilt_coords_photon', 'tilt_mat6', 'to_eta_reading', 'to_fieldmap_coords', 'to_orbit_reading', 'to_phase_and_coupling_reading', 'to_photon_angle_coords', 'to_str', 'to_surface_coords', 'touschek_lifetime', 'touschek_rate1', 'touschek_rate1_zap', 'track1', 'track1_beam', 'track1_bmad', 'track1_bmad_photon', 'track1_bunch', 'track1_bunch_csr', 'track1_bunch_csr3d', 'track1_bunch_hom', 'track1_bunch_space_charge', 'track1_crystal', 'track1_diffraction_plate_or_mask', 'track1_high_energy_space_charge', 'track1_lens', 'track1_linear', 'track1_lr_wake', 'track1_mad', 'track1_mirror', 'track1_mosaic_crystal', 'track1_multilayer_mirror', 'track1_radiation', 'track1_radiation_center', 'track1_runge_kutta', 'track1_sample', 'track1_spin', 'track1_spin_integration', 'track1_spin_taylor', 'track1_sr_wake', 'track1_symp_lie_ptc', 'track1_taylor', 'track1_time_runge_kutta', 'track_a_beambeam', 'track_a_bend', 'track_a_bend_photon', 'track_a_capillary', 'track_a_converter', 'track_a_crab_cavity', 'track_a_drift', 'track_a_drift_photon', 'track_a_foil', 'track_a_gkicker', 'track_a_lcavity', 'track_a_lcavity_old', 'track_a_mask', 'track_a_match', 'track_a_patch', 'track_a_patch_photon', 'track_a_pickup', 'track_a_quadrupole', 'track_a_rfcavity', 'track_a_sad_mult', 'track_a_sol_quad', 'track_a_thick_multipole', 'track_a_wiggler', 'track_a_zero_length_element', 'track_all', 'track_beam', 'track_bunch', 'track_bunch_time', 'track_bunch_to_s', 'track_bunch_to_t', 'track_complex_taylor', 'track_from_s_to_s', 'track_many', 'track_to_surface', 'track_until_dead', 'tracking_rad_map_setup', 'transfer_ac_kick', 'transfer_branch', 'transfer_branch_parameters', 'transfer_branches', 'transfer_ele', 'transfer_ele_taylor', 'transfer_eles', 'transfer_fieldmap', 'transfer_fixer_params', 'transfer_lat', 'transfer_lat_parameters', 'transfer_map_calc', 'transfer_map_from_s_to_s', 'transfer_mat2_from_twiss', 'transfer_mat_from_twiss', 'transfer_matrix_calc', 'transfer_twiss', 'transfer_wake', 'tricubic_cmplx_eval', 'truncate_complex_taylor_to_order', 'twiss1_propagate', 'twiss3_at_start', 'twiss3_from_twiss2', 'twiss3_propagate1', 'twiss3_propagate_all', 'twiss_and_track', 'twiss_and_track_at_s', 'twiss_and_track_from_s_to_s', 'twiss_and_track_intra_ele', 'twiss_at_element', 'twiss_at_start', 'twiss_from_tracking', 'twiss_propagate1', 'twiss_propagate_all', 'twiss_to_1_turn_mat', 'type_coord', 'type_expression_tree', 'type_ptc_layout', 'type_this_file', 'upcase_string', 'update_ele_from_fibre', 'update_fibre_from_ele', 'update_floor_angles', 'valid_field_calc', 'valid_fringe_type', 'valid_mat6_calc_method', 'valid_spin_tracking_method', 'valid_tracking_method', 'value_of_attribute', 'value_to_line', 'vec_to_polar', 'vec_to_spinor', 'verify_valid_name', 'virtual_memory_usage', 'w_mat_for_bend_angle', 'w_mat_for_tilt', 'w_mat_for_x_pitch', 'w_mat_for_y_pitch', 'w_mat_to_axis_angle', 'w_mat_to_quat', 'wall3d_d_radius', 'wall3d_initializer', 'wall3d_section_initializer', 'wall3d_to_position', 'word_len', 'word_read', 'word_to_value', 'write_ascii_beam_file', 'write_astra_bend', 'write_astra_field_grid_file', 'write_astra_field_grid_file_3d', 'write_beam_file', 'write_beam_floor_positions', 'write_binary_cartesian_map', 'write_binary_cylindrical_map', 'write_binary_grid_field', 'write_blender_ele', 'write_blender_lat_layout', 'write_bmad_lattice_file', 'write_bunch_by_bunch_info', 'write_gpt_field_grid_file_1d', 'write_gpt_field_grid_file_2d', 'write_gpt_field_grid_file_3d', 'write_lat_line', 'write_lattice_in_elegant_format', 'write_lattice_in_foreign_format', 'write_lattice_in_mad_format', 'write_lattice_in_sad_format', 'write_lattice_in_scibmad', 'write_line_element', 'write_opal_field_grid_file', 'write_opal_lattice_file', 'write_time_particle_distribution', 'x0_radiation_length', 'xlafun', 'xraylib_nist_compound', 'ylafun', 'z_at_surface', 'zero_ele_kicks', 'zero_ele_offsets', 'zero_lr_wakes_in_lat', 'zlafun']
+__all__: list[str] = ['A0', 'A0_ELEC', 'A21', 'A21_ELEC', 'ABS', 'ABSOLUTE', 'ABSOLUTE_TIME_TRACKING', 'AB_MULTIPOLE', 'ACCORDION_EDGE', 'ACOS', 'ACOSH', 'ACOTH', 'AC_KICKER', 'ALIAS', 'ALIVE', 'ALL', 'ALL_CONTROL_VAR', 'ALL_GROUPS', 'ALPHA_A', 'ALPHA_A0', 'ALPHA_A1', 'ALPHA_ANGLE', 'ALPHA_A_OUT', 'ALPHA_A_STORED', 'ALPHA_A_STRONG', 'ALPHA_B', 'ALPHA_B0', 'ALPHA_B1', 'ALPHA_B_OUT', 'ALPHA_B_STORED', 'ALPHA_B_STRONG', 'AMPERSAND', 'AMP_VS_TIME', 'ANCHOR_BEGINNING', 'ANCHOR_CENTER', 'ANCHOR_END', 'ANGLE', 'ANGLE_OUT_MAX', 'ANOMALOUS_MAG_MOMENT_DEUTERON', 'ANOMALOUS_MAG_MOMENT_ELECTRON', 'ANOMALOUS_MAG_MOMENT_HE3', 'ANOMALOUS_MAG_MOMENT_MUON', 'ANOMALOUS_MAG_MOMENT_NEUTRON', 'ANOMALOUS_MAG_MOMENT_PROTON', 'ANOMALOUS_MOMENT_OF', 'ANTIMUON', 'ANTIPARTICLE', 'ANTIPROTON', 'ANTI_ATOM', 'ANTI_DEUTERON', 'ANTI_HELION', 'ANTI_NEUTRON', 'ANTI_REF_PARTICLE', 'APERTURE', 'APERTURE_AT', 'APERTURE_TYPE', 'AREA_DENSITY', 'AREA_DENSITY_USED', 'ARG_COUNT', 'ARROW', 'ASCII', 'ASIN', 'ASINH', 'ATAN', 'ATAN2', 'ATANH', 'ATOMIC_MASS_UNIT', 'ATTRIBUTE_GROUP', 'AUTO', 'AUTOSCALE_AMPLITUDE', 'AUTOSCALE_PHASE', 'AUTO_APERTURE', 'AVERAGE', 'AbMultipoleKick', 'AcKickerFreqStruct', 'AcKickerFreqStructAlloc1D', 'AcKickerFreqStructArray1D', 'AcKickerStruct', 'AcKickerTimeStruct', 'AcKickerTimeStructAlloc1D', 'AcKickerTimeStructArray1D', 'ActionToXyz', 'AddSuperimpose', 'AllEncompassingStruct', 'AnormalModeStruct', 'ApertureParamStruct', 'AperturePointStruct', 'AperturePointStructAlloc1D', 'AperturePointStructArray1D', 'ApertureScanStruct', 'ApertureScanStructAlloc1D', 'ApertureScanStructArray1D', 'ApfftCorr', 'AttributeFree1', 'AttributeFree2', 'AttributeFree3', 'AttributeIndex1', 'AttributeIndex2', 'B0', 'B0_ELEC', 'B1_GRADIENT', 'B21', 'B21_ELEC', 'B2_GRADIENT', 'B3_GRADIENT', 'BASIC_BEND', 'BBI_CONST', 'BEAMBEAM', 'BEGINNING_ELE', 'BENDS', 'BEND_TILT', 'BETA_A', 'BETA_A0', 'BETA_A1', 'BETA_A_OUT', 'BETA_A_STORED', 'BETA_A_STRONG', 'BETA_B', 'BETA_B0', 'BETA_B1', 'BETA_B_OUT', 'BETA_B_STORED', 'BETA_B_STRONG', 'BINARY', 'BLACK', 'BLANK', 'BLUE', 'BL_HKICK', 'BL_KICK', 'BL_VKICK', 'BMAD_INC_VERSION', 'BMAD_STANDARD', 'BOTH_ENDS', 'BRAGG_ANGLE', 'BRAGG_ANGLE_IN', 'BRAGG_ANGLE_OUT', 'BRAGG_DIFFRACTED', 'BS_FIELD', 'B_FIELD', 'B_FIELD_ERR', 'B_FIELD_TOT', 'B_MAX', 'B_PARAM', 'BbiKick', 'BbuBeamStruct', 'BbuParamStruct', 'BbuStageStruct', 'BbuStageStructAlloc1D', 'BbuStageStructArray1D', 'BeamInitStruct', 'BeamStruct', 'BeamTilts', 'BicubicCmplxCoefStruct', 'BicubicCmplxCoefStructArray3D', 'BicubicCmplxEval', 'BmadCommonStruct', 'BmadNormalFormStruct', 'BmadParser', 'BookkeepingStateStruct', 'BoolAlloc1D', 'BoolArray1D', 'BoolArray2D', 'BoolArray3D', 'BpmPhaseCouplingStruct', 'BracketIndexForSpline', 'BranchStruct', 'BranchStructAlloc1D', 'BranchStructArray1D', 'BunchParamsStruct', 'BunchParamsStructAlloc1D', 'BunchParamsStructArray1D', 'BunchStruct', 'BunchStructAlloc1D', 'BunchStructArray1D', 'BunchTrackStruct', 'BunchTrackStructAlloc1D', 'BunchTrackStructArray1D', 'C11_MAT0', 'C11_MAT1', 'C12_MAT0', 'C12_MAT1', 'C21_MAT0', 'C21_MAT1', 'C22_MAT0', 'C22_MAT1', 'CANNOT_FIND', 'CAPILLARY', 'CARTESIAN_MAP', 'CATHODE_FFT_3D', 'CAVITY_TYPE', 'CEILING', 'CENTER_PT', 'CHAMBER_WALL', 'CHARGE', 'CHARGE_OF', 'CHECK_SUM', 'CIRCLE_DOT_SYM', 'CIRCLE_FILLED_SYM', 'CIRCLE_PLUS_SYM', 'CIRCLE_SYM', 'CLASSICAL_RADIUS_FACTOR', 'CLEAR', 'CLOSED', 'CMAT_11', 'CMAT_11_STORED', 'CMAT_12', 'CMAT_12_STORED', 'CMAT_21', 'CMAT_21_STORED', 'CMAT_22', 'CMAT_22_STORED', 'COHERENT', 'COLON', 'COMMA', 'COMPOUND', 'CONSTANT', 'CONSTANT_REF_ENERGY', 'CONTINUOUS', 'CONTROL_GROUP', 'CONTROL_LORD', 'CONTROL_VAR', 'CONVERTER', 'COS', 'COSH', 'COT', 'COTH', 'COUPLER_ANGLE', 'COUPLER_AT', 'COUPLER_PHASE', 'COUPLER_STRENGTH', 'CRAB_CAVITY', 'CRAB_TILT', 'CRAB_X1', 'CRAB_X2', 'CRAB_X3', 'CRAB_X4', 'CRAB_X5', 'CREATE_JUMBO_SLAVE', 'CRITICAL_ANGLE', 'CRITICAL_ANGLE_FACTOR', 'CROSSING_TIME', 'CROSS_HATCHED', 'CRUNCH', 'CRUNCH_CALIB', 'CRYSTAL', 'CRYSTAL_TYPE', 'CSC', 'CSR_DS_STEP', 'CSR_METHOD', 'CUBIC', 'CURLY_BRACKETS', 'CURRENT', 'CURVATURE', 'CURVE', 'CUSTOM', 'CUSTOM_APERTURE', 'CUSTOM_ATTRIBUTE0', 'CUSTOM_ATTRIBUTE_NUM', 'CYAN', 'CYCLES', 'CYLINDRICAL_MAP', 'C_LIGHT', 'CalcEmittancesAndTwissFromSigmaMatrix', 'CalcWallRadius', 'CartesianMapStruct', 'CartesianMapStructAlloc1D', 'CartesianMapStructArray1D', 'CartesianMapTerm1Struct', 'CartesianMapTerm1StructAlloc1D', 'CartesianMapTerm1StructArray1D', 'CartesianMapTermStruct', 'CheckIfSInBounds', 'ChromCalc', 'ComplexAlloc1D', 'ComplexArray1D', 'ComplexArray2D', 'ComplexArray3D', 'ComplexTaylorStruct', 'ComplexTaylorStructAlloc1D', 'ComplexTaylorStructArray1D', 'ComplexTaylorTermStruct', 'ComplexTaylorTermStructAlloc1D', 'ComplexTaylorTermStructArray1D', 'ComplexTaylorToMat6', 'ControlRamp1Struct', 'ControlRamp1StructAlloc1D', 'ControlRamp1StructArray1D', 'ControlStruct', 'ControlStructAlloc1D', 'ControlStructArray1D', 'ControlVar1Struct', 'ControlVar1StructAlloc1D', 'ControlVar1StructArray1D', 'ControllerStruct', 'ConvertCoords', 'ConvertPcTo', 'ConvertTotalEnergyTo', 'ConverterDistributionParser', 'CoordArrayStruct', 'CoordArrayStructAlloc1D', 'CoordArrayStructArray1D', 'CoordStruct', 'CoordStructAlloc1D', 'CoordStructArray1D', 'CoordsFloorToCurvilinear', 'CoordsFloorToLocalCurvilinear', 'CreateElementSlice', 'CreatePlanarWigglerModel', 'CylindricalMapStruct', 'CylindricalMapStructAlloc1D', 'CylindricalMapStructArray1D', 'CylindricalMapTerm1Struct', 'CylindricalMapTerm1StructAlloc1D', 'CylindricalMapTerm1StructArray1D', 'CylindricalMapTermStruct', 'D1_THICKNESS', 'D2_THICKNESS', 'DALPHA_DPZ_A', 'DALPHA_DPZ_A_STORED', 'DALPHA_DPZ_B', 'DALPHA_DPZ_B_STORED', 'DARK_GREY', 'DARWIN_WIDTH_PI', 'DARWIN_WIDTH_SIGMA', 'DASHED', 'DASH_DOT', 'DASH_DOT3', 'DBETA_DPZ_A', 'DBETA_DPZ_A_STORED', 'DBETA_DPZ_B', 'DBETA_DPZ_B_STORED', 'DBRAGG_ANGLE_DE', 'DB_FIELD', 'DCMAT_DPZ_11_STORED', 'DCMAT_DPZ_12_STORED', 'DCMAT_DPZ_21_STORED', 'DCMAT_DPZ_22_STORED', 'DEFAULT_TRACKING_SPECIES', 'DEF_BMAD_COM', 'DEF_LINE', 'DEF_MAD_BEAM', 'DEF_PARAMETER', 'DEF_PARTICLE_START', 'DEF_PTC_COM', 'DEF_SPACE_CHARGE_COM', 'DEGREES', 'DELTA_E_REF', 'DELTA_REF_TIME', 'DELTA_REF_TIME_USER_SET', 'DELTA_TIME', 'DENSITY', 'DENSITY_USED', 'DESCRIP', 'DETAP_DPZ_X', 'DETAP_DPZ_X_STORED', 'DETAP_DPZ_Y', 'DETAP_DPZ_Y_STORED', 'DETA_DPZ_X', 'DETA_DPZ_X_STORED', 'DETA_DPZ_Y', 'DETA_DPZ_Y_STORED', 'DETA_DS_MASTER', 'DETECTOR', 'DEUTERON', 'DE_ETA_MEAS', 'DFLT_DRAW', 'DFLT_SET', 'DG', 'DIAMOND_SYM', 'DIFFRACTION_PLATE', 'DIRECTION', 'DISPATCH', 'DISTRIBUTION', 'DIVIDE', 'DOTTED', 'DOT_SYM', 'DOUBLE_COLON', 'DOWNSTREAM', 'DOWNSTREAM_COORD_DIR', 'DOWNSTREAM_END', 'DPHI_A', 'DPHI_B', 'DPHI_ORIGIN', 'DPSI_ORIGIN', 'DRIFT', 'DRIFT_KICK', 'DS_PHOTON_SLICE', 'DS_SLICE', 'DS_STEP', 'DTHETA_ORIGIN', 'DTHICKNESS_DX', 'DT_MAX', 'DX_ORIGIN', 'DY_ORIGIN', 'DZ_ORIGIN', 'D_SPACING', 'E1', 'E1_GRADIENT', 'E2', 'E2_CENTER', 'E2_GRADIENT', 'E2_PROBABILITY', 'E3_GRADIENT', 'ECOLLIMATOR', 'ELECTRIC', 'ELECTRIC_DIPOLE_MOMENT', 'ELECTRON', 'ELEC_MULTIPOLE', 'ELE_ORIGIN', 'ELLIPTICAL', 'ELSEPARATOR', 'EMITTANCE_A', 'EMITTANCE_B', 'EMITTANCE_Z', 'EMIT_FRACTION', 'EM_FIELD', 'END_EDGE', 'END_STACK', 'ENERGY_DISTRIBUTION', 'ENERGY_PROBABILITY_CURVE', 'ENTRANCE_END', 'EPS_STEP_SCALE', 'EQUAL', 'ETAP_A', 'ETAP_B', 'ETAP_X', 'ETAP_X0', 'ETAP_X1', 'ETAP_X_OUT', 'ETAP_X_STORED', 'ETAP_Y', 'ETAP_Y0', 'ETAP_Y1', 'ETAP_Y_OUT', 'ETAP_Y_STORED', 'ETA_A', 'ETA_B', 'ETA_X', 'ETA_X0', 'ETA_X1', 'ETA_X_OUT', 'ETA_X_STORED', 'ETA_Y', 'ETA_Y0', 'ETA_Y1', 'ETA_Y_OUT', 'ETA_Y_STORED', 'ETA_Z', 'EXACT_MISALIGN', 'EXACT_MODEL', 'EXACT_MULTIPOLES', 'EXIT_END', 'EXP', 'E_CENTER', 'E_CENTER_RELATIVE_TO_REF', 'E_CHARGE', 'E_FIELD', 'E_FIELD_X', 'E_FIELD_Y', 'E_GUN', 'E_LOSS', 'E_MASS', 'E_PHOTON', 'E_TOT', 'E_TOT_OFFSET', 'E_TOT_REF_INIT', 'E_TOT_SET', 'E_TOT_START', 'E_TOT_STRONG', 'EigenDecomp6mat', 'EleAttribute', 'EleKey', 'EleMisalignmentLSCalc', 'ElePointerStruct', 'ElePointerStructAlloc1D', 'ElePointerStructArray1D', 'EleStruct', 'EleStructAlloc1D', 'EleStructArray1D', 'EleToFibre', 'EleToTaylor', 'ElecMultipoleField', 'ElementAtSBranch', 'ElementAtSLat', 'EllipseBeamInitStruct', 'EllipseBeamInitStructAlloc1D', 'EllipseBeamInitStructArray1D', 'EmFieldCalc', 'EmFieldStruct', 'EmFieldStructAlloc1D', 'EmFieldStructArray1D', 'EmTaylorStruct', 'EmTaylorStructAlloc1D', 'EmTaylorStructArray1D', 'EmTaylorTermStruct', 'EmTaylorTermStructAlloc1D', 'EmTaylorTermStructArray1D', 'Emit6d', 'EnvelopeRadintsIbs', 'EvaluateArrayIndex', 'EvaluateLogical', 'ExpectThis', 'ExpressionAtomStruct', 'ExpressionAtomStructAlloc1D', 'ExpressionAtomStructArray1D', 'ExpressionStackValue', 'ExpressionStringToStack', 'ExpressionStringToTree', 'ExpressionTreeStruct', 'ExpressionTreeStructAlloc1D', 'ExpressionTreeStructArray1D', 'ExpressionValue', 'FACTORIAL', 'FALSE_', 'FALSE_INT', 'FAMILY_QU', 'FAMILY_SQ', 'FAMILY_X', 'FAMILY_Y', 'FB1', 'FB2', 'FCharArray1D', 'FEEDBACK', 'FFT_3D', 'FIDUCIAL', 'FIDUCIAL_PT', 'FIELDMAP', 'FIELD_AUTOSCALE', 'FIELD_CALC', 'FIELD_LORD', 'FIELD_MASTER', 'FIELD_OVERLAPS', 'FIELD_SCALE_FACTOR', 'FIELD_X', 'FIELD_Y', 'FILLED_ARROW_HEAD', 'FINAL_CHARGE', 'FINE_STRUCTURE_CONSTANT', 'FINT', 'FINTX', 'FIRST_PASS', 'FIRST_TRACK_EDGE', 'FIXED_STEP_RUNGE_KUTTA', 'FIXED_STEP_TIME_RUNGE_KUTTA', 'FIXER', 'FLEXIBLE', 'FLOOR', 'FLOOR_POSITION_GROUP', 'FLOOR_SHIFT', 'FOCAL_STRENGTH', 'FOIL', 'FORK', 'FORWARD_DIFFRACTED', 'FOURPI', 'FQ1', 'FQ2', 'FREE', 'FREQUENCIES', 'FRINGE_AT', 'FRINGE_TYPE', 'FULL', 'FUNCTION', 'FUNC_PARENS', 'F_FACTOR', 'Fibre', 'FindElementEnds', 'FindMatchingFieldmap', 'FloorAnglesToWMat', 'FloorPositionStruct', 'FloorWMatToAngles', 'FormDigestedBmadFileName', 'FourierAmplitude', 'G', 'GANG', 'GAP', 'GAUSSIAN', 'GBendingStrengthFromEmField', 'GEN_GRAD_MAP', 'GEOMETRY', 'GIRDER', 'GIRDER_LORD', 'GKICKER', 'GOVERNOR', 'GRADIENT', 'GRADIENT_ERR', 'GRADIENT_TOT', 'GRAZE_ANGLE', 'GRAZE_ANGLE_IN', 'GRAZE_ANGLE_OUT', 'GREEN', 'GRID_FIELD', 'GROUP', 'GROUP_LORD', 'G_ERR', 'G_MAX', 'G_TOT', 'GenGrad1Struct', 'GenGrad1StructAlloc1D', 'GenGrad1StructArray1D', 'GenGradMapStruct', 'GenGradMapStructAlloc1D', 'GenGradMapStructArray1D', 'GetEmitFromSigmaMat', 'GptToParticleBunch', 'GridBeamInitStruct', 'GridBeamInitStructAlloc1D', 'GridBeamInitStructArray1D', 'GridFieldPt1Struct', 'GridFieldPt1StructArray3D', 'GridFieldPtStruct', 'GridFieldStruct', 'GridFieldStructAlloc1D', 'GridFieldStructArray1D', 'H1', 'H2', 'HARD_EDGE_ONLY', 'HARMON', 'HARMON_MASTER', 'HATCHED', 'HDF5', 'HELICAL_MODEL', 'HELION', 'HGAP', 'HGAPX', 'HIGHLAND', 'HIGH_ENERGY_SPACE_CHARGE_ON', 'HKICK', 'HKICKER', 'HORIZONTALLY_PURE', 'HYBRID', 'HYPER_X', 'HYPER_XY', 'HYPER_Y', 'H_BAR_PLANCK', 'H_DISPLACE', 'H_PLANCK', 'HighEnergySpaceChargeStruct', 'IDENTITY', 'IMPACTT', 'INCLUDE_KICKS', 'INCOHERENT', 'INHERIT_FROM_FORK', 'INIT_NEEDED', 'INPUT_ELE', 'INSIDE', 'INSTRUMENT', 'INT', 'INTEGRATOR_ORDER', 'INTERPOLATION', 'INT_GARBAGE', 'INVALID', 'INVALID_NAME', 'IN_BETWEEN', 'IN_STOP_BAND', 'IS_INTEGER', 'IS_LOGICAL', 'IS_MOSAIC', 'IS_ON', 'IS_REAL', 'IS_STRING', 'IS_STRUCT', 'IS_SWITCH', 'IX_BRANCH', 'IX_FIXER', 'IX_SLICE_SLAVE', 'IX_TO_BRANCH', 'IX_TO_ELEMENT', 'InitBeamDistribution', 'InitBunchDistribution', 'InitPhotonIntegProb', 'Int8Alloc1D', 'Int8Array1D', 'IntAlloc1D', 'IntArray1D', 'IntArray2D', 'IntArray3D', 'Interval1CoefStruct', 'Interval1CoefStructAlloc1D', 'Interval1CoefStructArray1D', 'K0L', 'K0SL', 'K1', 'K1X', 'K1Y', 'K2', 'K21L', 'K21SL', 'K3', 'KICK', 'KICK0', 'KICKER', 'KS', 'KX', 'KickVectorCalc', 'KvBeamInitStruct', 'L', 'LATTICE', 'LATTICE_TYPE', 'LB_SUBATOMIC', 'LCAVITY', 'LEADING', 'LENS', 'LIGHT_GREEN', 'LIGHT_GREY', 'LINEAR', 'LINEAR_EDGE', 'LIVE_BRANCH', 'LOG', 'LONGITUDINAL_MODE', 'LORD_DEFINED', 'LORD_PAD1', 'LORD_PAD2', 'LOST', 'LOST_NEG_X', 'LOST_NEG_X_APERTURE', 'LOST_NEG_Y', 'LOST_NEG_Y_APERTURE', 'LOST_POS_X', 'LOST_POS_X_APERTURE', 'LOST_POS_Y', 'LOST_POS_Y_APERTURE', 'LOST_PZ', 'LOST_PZ_APERTURE', 'LOST_Z', 'LOST_Z_APERTURE', 'LR_FREQ_SPREAD', 'LR_SELF_WAKE_ON', 'LR_WAKE', 'LR_WAKE_FILE', 'LYNCH_DAHL', 'L_ACTIVE', 'L_CHORD', 'L_FUNC_PARENS', 'L_PARENS', 'L_PERIOD', 'L_RECTANGLE', 'L_SAGITTA', 'L_SOFT_EDGE', 'LatEleLocStruct', 'LatEleLocStructAlloc1D', 'LatEleLocStructArray1D', 'LatEleOrder1Struct', 'LatEleOrder1StructAlloc1D', 'LatEleOrder1StructArray1D', 'LatEleOrderArrayStruct', 'LatEleOrderArrayStructAlloc1D', 'LatEleOrderArrayStructArray1D', 'LatEleOrderStruct', 'LatParamStruct', 'LatStruct', 'LatStructAlloc1D', 'LatStructArray1D', 'Layout', 'LinacNormalModeStruct', 'LinearCoef', 'LoadParseLine', 'MACHINE', 'MAD', 'MAGENTA', 'MAGNETIC', 'MAGNUS', 'MARKER', 'MASK', 'MASK_PLATE', 'MASS_OF', 'MAT6_CALC_METHOD', 'MAT6_GROUP', 'MATCH', 'MATCH_ORBIT', 'MATCH_TWISS', 'MATERIAL_TYPE', 'MATRIX', 'MATRIX_KICK', 'MAX', 'MAX_FRINGE_ORDER', 'MAYBE', 'MEAN_EXCITATION_ENERGY', 'MIN', 'MINOR_SLAVE', 'MINUS', 'MIRROR', 'MIXED', 'MODE', 'MODE_FLIP', 'MODE_FLIP0', 'MODE_FLIP1', 'MODE_FLIP_STORED', 'MODULO', 'MONITOR', 'MOSAIC_ANGLE_RMS_IN_PLANE', 'MOSAIC_ANGLE_RMS_OUT_PLANE', 'MOSAIC_DIFFRACTION_NUM', 'MOSAIC_THICKNESS', 'MOVING_FORWARD', 'MULTILAYER_MIRROR', 'MULTIPASS_LORD', 'MULTIPASS_REF_ENERGY', 'MULTIPASS_SLAVE', 'MULTIPOLE', 'MULTIPOLES_ON', 'MULTIPOLE_SOURCE', 'MULTIPOLE_SYMMETRY', 'MUON', 'MU_0_VAC', 'M_DEUTERON', 'M_ELECTRON', 'M_HELION', 'M_MUON', 'M_NEUTRON', 'M_PION_0', 'M_PION_CHARGED', 'M_PROTON', 'MadEnergyStruct', 'MadMapStruct', 'MadTmfoc', 'MakeGMats', 'MakeHvbp', 'MakeMadMap', 'MakeMat6', 'MakeMat6Bmad', 'MakeMat6BmadPhoton', 'MakeMat6Tracking', 'MakeN', 'MakePbrh', 'MakeSmatFromAbc', 'MakeVMats', 'MatSympDecouple', 'MatchEleToMat6', 'Mode3Struct', 'ModeInfoStruct', 'MultiTurnTrackingAnalysis', 'Multipole1AbToKt', 'Multipole1KtToAb', 'MultipoleEleToAb', 'NAVY_BLUE', 'NEUTRON', 'NEW_BRANCH', 'NINT', 'NO', 'NOISE', 'NONE', 'NONE_PT', 'NON_SYMPLECTIC', 'NORMAL', 'NOT_A_LORD', 'NOT_SET', 'NOWHERE', 'NO_APERTURE', 'NO_CLOSED_ORBIT', 'NO_COMPLETE_ORBIT', 'NO_DELIM', 'NO_END', 'NO_END_MARKER', 'NO_FIELD', 'NO_FILL', 'NO_MISALIGNMENT', 'NULL_ELE', 'NUMERIC', 'NUM_ELE_ATTRIB', 'NUM_ELE_ATTRIB_EXTENDED', 'NUM_STEPS', 'N_AVOGADRO', 'N_CELL', 'N_KEY', 'N_PART', 'N_PARTICLE', 'N_PERIOD', 'N_PLANE', 'N_POLE_MAXX', 'N_RF_STEPS', 'N_SAMPLE', 'N_SLICE', 'N_SLICE_SPLINE', 'N_VAR_MAX', 'NametableStruct', 'NormalFormTaylors', 'NormalMode3Calc', 'NormalModesStruct', 'OCTUPOLE', 'OFF', 'OFFSET_MOVES_APERTURE', 'OFF_AND_SAVE', 'OK', 'OLD_ASCII', 'OLD_CONTROL_VAR', 'OLD_CONTROL_VAR_OFFSET', 'OLD_INTEGRATOR', 'ON', 'ONE_DIM', 'ONE_FILE', 'OPAL', 'OPAQUE', 'OPEN', 'ORANGE', 'ORIGIN_ELE', 'ORIGIN_ELE_REF_PT', 'OSC_AMPLITUDE', 'OUTLINE_ARROW_HEAD', 'OUTPUT_ELE', 'OUTSIDE', 'OVERLAY', 'OVERLAY_LORD', 'OdeintBmad', 'OdeintBmadTime', 'OffsetParticle', 'OpenBinaryFile', 'OrbitAmplitudeCalc', 'OrderEvecsByNSimilarity', 'P0C', 'P0C_REF_INIT', 'P0C_SET', 'P0C_START', 'P88', 'P89', 'P90', 'PARENS', 'PARTICLE', 'PATCH', 'PATCH_PROBLEM', 'PC_OUT_MAX', 'PC_OUT_MIN', 'PC_STRONG', 'PENDELLOSUNG_PERIOD_PI', 'PENDELLOSUNG_PERIOD_SIGMA', 'PHASE_TROMBONE', 'PHASE_X', 'PHASE_Y', 'PHI0', 'PHI0_AUTOSCALE', 'PHI0_ERR', 'PHI0_MAX', 'PHI0_MULTIPASS', 'PHI_A', 'PHI_A_STORED', 'PHI_B', 'PHI_B_STORED', 'PHI_POSITION', 'PHOTON', 'PHOTON_FORK', 'PHOTON_INIT', 'PHOTON_TYPE', 'PHYSICAL_SOURCE', 'PI', 'PICKUP', 'PION_0', 'PION_MINUS', 'PION_PLUS', 'PIPE', 'PIXEL', 'PLANAR_MODEL', 'PLUS', 'PLUS_SYM', 'POLARITY', 'POLARIZED', 'POSITRON', 'POWER', 'PRE_BORN', 'PRINT_PAGE_LONG_LEN', 'PRINT_PAGE_SHORT_LEN', 'PROTON', 'PROVISIONAL', 'PSI_ANGLE', 'PSI_POSITION', 'PTC_CANONICAL_COORDS', 'PTC_FIELD_GEOMETRY', 'PTC_FRINGE_GEOMETRY', 'PTC_INTEGRATION_TYPE', 'PTC_STANDARD', 'PURPLE', 'PX', 'PX0', 'PX1', 'PX_APERTURE_CENTER', 'PX_APERTURE_WIDTH2', 'PX_KICK', 'PX_REF', 'PX_STORED', 'PY', 'PY0', 'PY1', 'PY_APERTURE_CENTER', 'PY_APERTURE_WIDTH2', 'PY_KICK', 'PY_REF', 'PY_STORED', 'PZ', 'PZ0', 'PZ1', 'PZ_APERTURE_CENTER', 'PZ_APERTURE_WIDTH2', 'PZ_KICK', 'PZ_REF', 'PZ_STORED', 'P_MASS', 'ParseIntegerList2', 'ParseRealList', 'ParseRealList2', 'ParserFastComplexRead', 'ParserFastRealRead', 'PhotonAbsorptionAndPhaseShift', 'PhotonElementStruct', 'PhotonMaterialStruct', 'PhotonReflectSurfaceStruct', 'PhotonReflectTableStruct', 'PhotonReflectTableStructAlloc1D', 'PhotonReflectTableStructArray1D', 'PhotonReflection', 'PhotonReflectivity', 'PhotonTargetStruct', 'PixelDetecStruct', 'PixelPtStruct', 'PixelPtStructArray2D', 'PointerToElementAtS', 'PointerToLord', 'PointerToMultipassLord', 'PointerToSlave', 'PointerToSuperLord', 'PointerToWall3d', 'PreTrackerStruct', 'ProjectEmitToXyz', 'PtcCheckForLostParticle', 'PtcEmitCalc', 'PtcNormalFormStruct', 'PtcSpinCalc', 'PtcTrackAll', 'QUADRUPOLE', 'QUAD_TILT', 'QpAxisStruct', 'QpLegendStruct', 'QpLineStruct', 'QpPointStruct', 'QpRectStruct', 'QpSymbolStruct', 'QuatToAxisAngle', 'R0_ELEC', 'R0_MAG', 'RADIANS', 'RADIANS_OVER_2PI', 'RADIATION_LENGTH', 'RADIATION_LENGTH_USED', 'RADIUS', 'RAD_INT_GROUP', 'RAMPER', 'RAMPER_LORD', 'RAN', 'RAN_GAUSS', 'RAN_SEED', 'RBEND', 'RCOLLIMATOR', 'REAL_GARBAGE', 'RECALC', 'RECTANGULAR', 'RED', 'REDDISH_PURPLE', 'RED_CROSS_SYM', 'REFERENCE', 'REFER_TO_LORDS', 'REFLECTION', 'REFLECTIVITY_TABLE', 'REF_CAP_GAMMA', 'REF_COORDS', 'REF_ENERGY_GROUP', 'REF_ORBIT', 'REF_ORBIT_FOLLOWS', 'REF_ORIGIN', 'REF_PARTICLE', 'REF_SPECIES', 'REF_TILT', 'REF_TILT_TOT', 'REF_TIME', 'REF_TIME_START', 'REF_WAVELENGTH', 'RELATIVE', 'REPETITION_FREQUENCY', 'RESTORE_STATE', 'RFCAVITY', 'RF_BEND', 'RF_FREQUENCY', 'RF_WAVELENGTH', 'RHO', 'RIPKEN_KICK', 'RMS', 'ROLL', 'ROLL_TOT', 'ROOT', 'ROTATIONALLY_SYMMETRIC_RZ', 'RUNGE_KUTTA', 'R_E', 'R_P', 'R_PARENS', 'R_SOLENOID', 'Rad1DampAndStocMats', 'RadDampAndStocMats', 'RadInt1Struct', 'RadInt1StructAlloc1D', 'RadInt1StructArray1D', 'RadIntAllEleStruct', 'RadIntBranchStruct', 'RadIntBranchStructAlloc1D', 'RadIntBranchStructArray1D', 'RadMapEleStruct', 'RadMapStruct', 'RadiationIntegrals', 'RamperLordStruct', 'RamperLordStructAlloc1D', 'RamperLordStructArray1D', 'RanGaussConverter', 'RandomStateStruct', 'ReadBeamAscii', 'ReadBeamFile', 'Real16Alloc1D', 'Real16Array1D', 'RealAlloc1D', 'RealArray1D', 'RealArray2D', 'RealArray3D', 'ResonanceHStruct', 'ResonanceHStructAlloc1D', 'ResonanceHStructArray1D', 'RfEleStruct', 'RfStairStepStruct', 'RfStairStepStructAlloc1D', 'RfStairStepStructArray1D', 'SAD_FULL', 'SAD_MULT', 'SAMPLE', 'SAVE_STATE', 'SBEND', 'SCALE_FIELD_TO_ONE', 'SCALE_MULTIPOLES', 'SCATTER_METHOD', 'SCATTER_TEST', 'SEC', 'SECOND_TRACK_EDGE', 'SECTOR', 'SEXTUPOLE', 'SHIFTED_TO_RELATIVE', 'SHORT', 'SIGN', 'SIG_E', 'SIG_E2', 'SIG_PZ', 'SIG_VX', 'SIG_VY', 'SIG_X', 'SIG_Y', 'SIG_Z', 'SIN', 'SINC', 'SINH', 'SLAVE', 'SLICE', 'SLICE_SLAVE', 'SMALL_REL_CHANGE', 'SOFT_EDGE', 'SOFT_EDGE_ONLY', 'SOLENOID', 'SOLID', 'SOLID_FILL', 'SOL_QUAD', 'SPACE_CHARGE_METHOD', 'SPATIAL_DISTRIBUTION', 'SPECIES', 'SPECIES_CONST', 'SPECIES_OUT', 'SPECIES_STRONG', 'SPHERICAL', 'SPIN_DN_DPZ_X', 'SPIN_DN_DPZ_Y', 'SPIN_DN_DPZ_Z', 'SPIN_FRINGE_ON', 'SPIN_INTEGRATION', 'SPIN_TRACKING_METHOD', 'SPIN_X', 'SPIN_X_STORED', 'SPIN_Y', 'SPIN_Y_STORED', 'SPIN_Z', 'SPIN_Z_STORED', 'SPLIT_ID', 'SPRINT', 'SQRT', 'SQRT_2', 'SQRT_3', 'SQUARE_BRACKETS', 'SQUARE_CONCAVE_SYM', 'SQUARE_FILLED_SYM', 'SQUARE_SYM', 'SR_WAKE', 'SR_WAKE_FILE', 'STALE', 'STANDARD', 'STANDING_WAVE', 'STAR5_FILLED_SYM', 'STAR5_SYM', 'START_EDGE', 'START_END', 'STAR_OF_DAVID_SYM', 'STEADY_STATE_3D', 'STRAIGHT', 'SUM', 'SUPERIMPOSE', 'SUPER_LORD', 'SUPER_OFFSET', 'SUPER_OK', 'SUPER_SLAVE', 'SURFACE', 'SYMMETRY', 'SYMPLECTIFY', 'SYMP_LIE_BMAD', 'SYMP_LIE_PTC', 'S_ABORT', 'S_AND_FLOOR_POSITION_GROUP', 'S_BLANK', 'S_DINFO', 'S_DWARN', 'S_ERROR', 'S_FATAL', 'S_IMPORTANT', 'S_INFO', 'S_LONG', 'S_NOOUTPUT', 'S_PLANE', 'S_POSITION', 'S_POSITION_GROUP', 'S_SUCCESS', 'S_TWISS_REF', 'S_WARN', 'SetEleAttribute', 'SetEleStatusStale', 'SpaceChargeCommonStruct', 'SpinAxisStruct', 'SpinMat8ResonanceStrengths', 'SpinMatToEigen', 'SpinOrbitMap1Struct', 'SpinOrbitMap1StructAlloc1D', 'SpinOrbitMap1StructArray1D', 'SpinPolarStruct', 'SpinQuatResonanceStrengths', 'SplineAkimaInterpolate', 'SplineEvaluate', 'SplineStruct', 'SplineStructAlloc1D', 'SplineStructArray1D', 'SplitLat', 'StrongBeamSigmaCalc', 'StrongBeamStruct', 'SummationRdtStruct', 'SummationRdtStructAlloc1D', 'SummationRdtStructArray1D', 'SuperBicubicInterpolation', 'SuperPolint', 'SurfaceCurvatureStruct', 'SurfaceDisplacementPtStruct', 'SurfaceDisplacementPtStructArray2D', 'SurfaceDisplacementStruct', 'SurfaceHMisalignPtStruct', 'SurfaceHMisalignPtStructArray2D', 'SurfaceHMisalignStruct', 'SurfaceSegmentedPtStruct', 'SurfaceSegmentedPtStructArray2D', 'SurfaceSegmentedStruct', 'T', 'T0', 'T21', 'T6ToB123', 'TAN', 'TANH', 'TAYLOR', 'TAYLOR_MAP_INCLUDES_OFFSETS', 'TAYLOR_OFFSET', 'TAYLOR_ORDER', 'TERM', 'THETA_POSITION', 'THICKNESS', 'THICK_MULTIPOLE', 'TILT', 'TILT_CALIB', 'TILT_CORR', 'TILT_TOT', 'TIMES', 'TIMES_SYM', 'TIME_RUNGE_KUTTA', 'TO_ELEMENT', 'TO_LINE', 'TRACKING', 'TRACKING_METHOD', 'TRAILING', 'TRANSMISSION', 'TRANSPARENT', 'TRANSVERSE_KICK', 'TRANSVERSE_SIGMA_CUT', 'TRAVELING_WAVE', 'TRIANGLE_FILLED_SYM', 'TRIANGLE_SYM', 'TRUE_', 'TRUE_INT', 'TT', 'TWISS_PROPAGATE_FAILURE', 'TWOPI', 'TYPE', 'T_OFFSET', 'TaoBeamBranchStruct', 'TaoBeamUniStruct', 'TaoBuildingWallOrientationStruct', 'TaoBuildingWallPointStruct', 'TaoBuildingWallPointStructAlloc1D', 'TaoBuildingWallPointStructArray1D', 'TaoBuildingWallSectionStruct', 'TaoBuildingWallSectionStructAlloc1D', 'TaoBuildingWallSectionStructArray1D', 'TaoBuildingWallStruct', 'TaoCmdHistoryStruct', 'TaoCmdHistoryStructAlloc1D', 'TaoCmdHistoryStructArray1D', 'TaoCommonStruct', 'TaoCurveColorStruct', 'TaoCurveOrbitStruct', 'TaoCurveRmsCalc', 'TaoCurveStruct', 'TaoCurveStructAlloc1D', 'TaoCurveStructArray1D', 'TaoD1DataStruct', 'TaoD1DataStructAlloc1D', 'TaoD1DataStructArray1D', 'TaoD2DataStruct', 'TaoD2DataStructAlloc1D', 'TaoD2DataStructArray1D', 'TaoDataStruct', 'TaoDataStructAlloc1D', 'TaoDataStructArray1D', 'TaoDataVarComponentStruct', 'TaoDataVarComponentStructAlloc1D', 'TaoDataVarComponentStructArray1D', 'TaoDatumIntegrate', 'TaoDrawingStruct', 'TaoDynamicApertureStruct', 'TaoEleGeometryWithMisalignments', 'TaoElePointerStruct', 'TaoElePointerStructAlloc1D', 'TaoElePointerStructArray1D', 'TaoEleShapeInfo', 'TaoEleShapeStruct', 'TaoEleShapeStructAlloc1D', 'TaoEleShapeStructArray1D', 'TaoEvalFloorOrbit', 'TaoEvalNodeStruct', 'TaoEvalNodeStructAlloc1D', 'TaoEvalNodeStructArray1D', 'TaoEvaluateADatum', 'TaoEvaluateDatumAtS', 'TaoExpressionInfoStruct', 'TaoExpressionInfoStructAlloc1D', 'TaoExpressionInfoStructArray1D', 'TaoFindPlotRegion', 'TaoFloorPlanStruct', 'TaoFloorToScreen', 'TaoGetOptVars', 'TaoGlobalStruct', 'TaoGraphSMinMaxCalc', 'TaoGraphStruct', 'TaoGraphStructAlloc1D', 'TaoGraphStructArray1D', 'TaoHistogramStruct', 'TaoInitStruct', 'TaoInjectBeam', 'TaoLatSigmaStruct', 'TaoLatSigmaStructAlloc1D', 'TaoLatSigmaStructArray1D', 'TaoLatticeBranchStruct', 'TaoLatticeBranchStructAlloc1D', 'TaoLatticeBranchStructArray1D', 'TaoLatticeCalc', 'TaoLatticeStruct', 'TaoModelBranchStruct', 'TaoModelBranchStructAlloc1D', 'TaoModelBranchStructArray1D', 'TaoModelElementStruct', 'TaoModelElementStructAlloc1D', 'TaoModelElementStructArray1D', 'TaoParamValueAtS', 'TaoParseElementParamStr', 'TaoPickUniverse', 'TaoPingScaleStruct', 'TaoPlotCacheStruct', 'TaoPlotCacheStructAlloc1D', 'TaoPlotCacheStructArray1D', 'TaoPlotPageStruct', 'TaoPlotRegionStruct', 'TaoPlotRegionStructAlloc1D', 'TaoPlotRegionStructArray1D', 'TaoPlotStruct', 'TaoPlotStructAlloc1D', 'TaoPlotStructArray1D', 'TaoPointerToDatumEle', 'TaoPointerToEleShape', 'TaoPointerToUniverses', 'TaoScaleGraph', 'TaoSetIntegerValue', 'TaoSetLogicalValue', 'TaoSetQpAxisStruct', 'TaoSetQpPointStruct', 'TaoSetQpRectStruct', 'TaoSetRealValue', 'TaoShapePatternPointStruct', 'TaoShapePatternPointStructAlloc1D', 'TaoShapePatternPointStructArray1D', 'TaoShapePatternStruct', 'TaoShapePatternStructAlloc1D', 'TaoShapePatternStructArray1D', 'TaoSpinDnDpzStruct', 'TaoSpinEleStruct', 'TaoSpinEleStructAlloc1D', 'TaoSpinEleStructArray1D', 'TaoSpinMapStruct', 'TaoSpinPolarizationStruct', 'TaoSuperUniverseStruct', 'TaoTitleStruct', 'TaoToPhaseAndCouplingReading', 'TaoToReal', 'TaoTrackingEleIndex', 'TaoUniverseCalcStruct', 'TaoUniversePointerStruct', 'TaoUniversePointerStructAlloc1D', 'TaoUniversePointerStructArray1D', 'TaoUniverseStruct', 'TaoUniverseStructAlloc1D', 'TaoUniverseStructArray1D', 'TaoV1VarStruct', 'TaoV1VarStructAlloc1D', 'TaoV1VarStructArray1D', 'TaoVarSlaveStruct', 'TaoVarSlaveStructAlloc1D', 'TaoVarSlaveStructArray1D', 'TaoVarStruct', 'TaoVarStructAlloc1D', 'TaoVarStructArray1D', 'TaoWaveKickPtStruct', 'TaoWaveKickPtStructAlloc1D', 'TaoWaveKickPtStructArray1D', 'TaoWaveStruct', 'TargetPointStruct', 'TargetPointStructAlloc1D', 'TargetPointStructArray1D', 'TargetRotMats', 'TaylorStruct', 'TaylorStructAlloc1D', 'TaylorStructArray1D', 'TaylorTermStruct', 'TaylorTermStructAlloc1D', 'TaylorTermStructArray1D', 'TestBunchStructScalar', 'TestCharacterScalar', 'TestComplexScalar', 'TestInteger8Scalar', 'TestIntegerScalar', 'TestLogicalScalar', 'TestReal16Scalar', 'TestRealScalar', 'TestSubStruct', 'TestSubStructAlloc1D', 'TestSubStructArray1D', 'TestSubStructArray2D', 'TestSubStructArray3D', 'TestSubSubStruct', 'ToEtaReading', 'ToOrbitReading', 'ToPhaseAndCouplingReading', 'Track1', 'Track1Bmad', 'Track1RungeKutta', 'Track1Spin', 'Track1TimeRungeKutta', 'TrackABeambeam', 'TrackAPatch', 'TrackAZeroLengthElement', 'TrackAll', 'TrackFromSToS', 'TrackPointStruct', 'TrackPointStructAlloc1D', 'TrackPointStructArray1D', 'TrackStruct', 'TrackUntilDead', 'TrackingRadMapSetup', 'TransferMapFromSToS', 'TricubicCmplxCoefStruct', 'TricubicCmplxCoefStructArray3D', 'TricubicCmplxEval', 'Twiss1Propagate', 'TwissAndTrackFromSToS', 'TwissAndTrackIntraEle', 'TwissAtElement', 'TwissFromTracking', 'TwissStruct', 'UB_SUBATOMIC', 'UNARY_MINUS', 'UNARY_PLUS', 'UNDIFFRACTED', 'UNDULATOR', 'UNIFORM', 'UNKNOWN', 'UNPOLARIZED', 'UNSTABLE', 'UNSTABLE_A', 'UNSTABLE_B', 'UPSTREAM', 'UPSTREAM_COORD_DIR', 'UPSTREAM_END', 'USER_SET', 'USER_SETS_LENGTH', 'USE_REFLECTIVITY_TABLE', 'V1_UNITCELL', 'V2_UNITCELL', 'VAL1', 'VAL10', 'VAL11', 'VAL12', 'VAL2', 'VAL3', 'VAL4', 'VAL5', 'VAL6', 'VAL7', 'VAL8', 'VAL9', 'VAR', 'VARIABLE', 'VAR_OFFSET', 'VELOCITY_DISTRIBUTION', 'VERTICALLY_PURE', 'VERTICAL_BAR', 'VERTICAL_KICK', 'VKICK', 'VKICKER', 'VOLTAGE', 'VOLTAGE_ERR', 'VOLTAGE_TOT', 'V_DISPLACE', 'V_UNITCELL', 'WALL', 'WALL3D', 'WALL_END', 'WALL_START', 'WALL_TRANSITION', 'WHITE', 'WIGGLER', 'WIGGLERS', 'WMatToAxisAngle', 'WRAP_SUPERIMPOSE', 'WakeLrModeStruct', 'WakeLrModeStructAlloc1D', 'WakeLrModeStructArray1D', 'WakeLrStruct', 'WakeSrModeStruct', 'WakeSrModeStructAlloc1D', 'WakeSrModeStructArray1D', 'WakeSrStruct', 'WakeSrZLongStruct', 'WakeStruct', 'Wall3DSectionStruct', 'Wall3DSectionStructAlloc1D', 'Wall3DSectionStructArray1D', 'Wall3DStruct', 'Wall3DStructAlloc1D', 'Wall3DStructArray1D', 'Wall3DVertexStruct', 'Wall3DVertexStructAlloc1D', 'Wall3DVertexStructArray1D', 'Wall3dDRadius', 'WriteAstraFieldGridFile', 'WriteAstraFieldGridFile3d', 'WriteGptFieldGridFile1d', 'WriteGptFieldGridFile2d', 'WriteGptFieldGridFile3d', 'WriteLatticeInScibmad', 'WriteOpalFieldGridFile', 'X', 'X0', 'X1', 'X1_EDGE', 'X1_LIMIT', 'X2_EDGE', 'X2_LIMIT', 'XFER_MAT_CALC_FAILURE', 'XY', 'XYZ', 'XY_AXIS', 'X_AXIS', 'X_DISPERSION_CALIB', 'X_DISPERSION_ERR', 'X_GAIN_CALIB', 'X_GAIN_ERR', 'X_INVARIANT', 'X_KICK', 'X_KNOT', 'X_LEADING', 'X_LIMIT', 'X_OFFSET', 'X_OFFSET_CALIB', 'X_OFFSET_MULT', 'X_OFFSET_TOT', 'X_PITCH', 'X_PITCH_TOT', 'X_PLANE', 'X_POLARIZATION', 'X_POSITION', 'X_QUAD', 'X_REF', 'X_STORED', 'X_SYMBOL_SYM', 'X_TRAILING', 'XyDispStruct', 'Y', 'Y0', 'Y1', 'Y1_EDGE', 'Y1_LIMIT', 'Y2_EDGE', 'Y2_LIMIT', 'YELLOW', 'YELLOW_GREEN', 'YES', 'Y_AXIS', 'Y_DISPERSION_CALIB', 'Y_DISPERSION_ERR', 'Y_GAIN_CALIB', 'Y_GAIN_ERR', 'Y_KICK', 'Y_KNOT', 'Y_LEADING', 'Y_LIMIT', 'Y_OFFSET', 'Y_OFFSET_CALIB', 'Y_OFFSET_MULT', 'Y_OFFSET_TOT', 'Y_PITCH', 'Y_PITCH_TOT', 'Y_PLANE', 'Y_POLARIZATION', 'Y_POSITION', 'Y_QUAD', 'Y_REF', 'Y_STORED', 'Y_TRAILING', 'Z', 'Z0', 'Z1', 'ZAtSurface', 'ZERO', 'Z_APERTURE_CENTER', 'Z_APERTURE_WIDTH2', 'Z_AXIS', 'Z_KICK', 'Z_OFFSET', 'Z_OFFSET_TOT', 'Z_PLANE', 'Z_POSITION', 'Z_REF', 'Z_STORED', 'ab_multipole_kick', 'ab_multipole_kicks', 'absolute_photon_position', 'absolute_time_tracking', 'ac_kicker_amp', 'action_to_xyz', 'add_lattice_control_structs', 'add_superimpose', 'add_this_multipass', 'add_this_taylor_term', 'adjust_super_slave_names', 'allocate_branch_array', 'allocate_lat_ele_array', 'allocate_thread_states', 'angle_between_polars', 'angle_to_canonical_coords', 'anomalous_moment_of', 'antiparticle', 'aperture_bookkeeper', 'apfft', 'apfft_corr', 'apfft_ext', 'apply_all_rampers', 'apply_energy_kick', 'apply_patch_to_ptc_fibre', 'apply_rampers_to_slave', 'array_re_str', 'asinc', 'assert_equal', 'astra_max_field_reference', 'at_this_ele_end', 'atomic_number', 'atomic_species_id', 'attribute_bookkeeper', 'attribute_free', 'attribute_index', 'attribute_name', 'attribute_type', 'attribute_units', 'autoscale_phase_and_amp', 'average_twiss', 'axis_angle_to_quat', 'axis_angle_to_w_mat', 'bbi_kick', 'bbi_slice_calc', 'bbu_add_a_bunch', 'bbu_hom_voltage_calc', 'bbu_remove_head_bunch', 'bbu_setup', 'bbu_track_a_stage', 'bbu_track_all', 'beam_envelope_ibs', 'beam_equal_beam', 'beam_init_setup', 'beam_tilts', 'beambeam_fibre_setup', 'bend_edge_kick', 'bend_exact_multipole_field', 'bend_length_has_been_set', 'bend_photon_e_rel_init', 'bend_photon_energy_integ_prob', 'bend_photon_energy_normalized_probability', 'bend_photon_init', 'bend_photon_polarization_init', 'bend_photon_vert_angle_init', 'bend_shift', 'bend_vert_angle_integ_prob', 'bicubic_cmplx_eval', 'bin_index', 'bin_x_center', 'bit_set', 'bl_via_vlassov', 'bmad_parser', 'bmad_parser2', 'bmad_patch_parameters_to_ptc', 'bp_set_ran_status', 'bracket_index_for_spline', 'branch_equal_branch', 'branch_name', 'branch_to_ptc_m_u', 'bunch_equal_bunch', 'c_to_cbar', 'calc_bunch_params', 'calc_bunch_params_slice', 'calc_bunch_params_z_slice', 'calc_bunch_sigma_matrix_etc', 'calc_emittances_and_twiss_from_sigma_matrix', 'calc_file_number', 'calc_spin_params', 'calc_super_slave_key', 'calc_wall_radius', 'calc_z_tune', 'canonical_to_angle_coords', 'cbar_to_c', 'change_file_number', 'charge_of', 'charge_to_mass_of', 'check_aperture_limit', 'check_controller_controls', 'check_for_superimpose_problem', 'check_if_s_in_bounds', 'check_rf_freq', 'choose_quads_for_set_tune', 'chrom_calc', 'chrom_tune', 'classical_radius', 'clear_lat_1turn_mats', 'clear_taylor_maps_from_elements', 'closed_orbit_calc', 'closed_orbit_from_tracking', 'cmplx_re_str', 'coarse_frequency_estimate', 'combine_consecutive_elements', 'complex_error_function', 'complex_taylor_clean', 'complex_taylor_coef', 'complex_taylor_equal_complex_taylor', 'complex_taylor_exponent_index', 'complex_taylor_make_unit', 'complex_taylor_to_mat6', 'complex_taylors_equal_complex_taylors', 'compute_slave_coupler', 'concat_ele_taylor', 'concat_taylor', 'concat_transfer_mat', 'control_bookkeeper', 'convert_bend_exact_multipole', 'convert_coords', 'convert_field_ele_to_lab', 'convert_local_cartesian_to_local_curvilinear', 'convert_local_curvilinear_to_local_cartesian', 'convert_particle_coordinates_s_to_t', 'convert_particle_coordinates_t_to_s', 'convert_pc_to', 'convert_total_energy_to', 'converter_distribution_parser', 'coord_equal_coord', 'coord_state_name', 'coords_body_to_local', 'coords_body_to_rel_exit', 'coords_curvilinear_to_floor', 'coords_floor_to_curvilinear', 'coords_floor_to_local_curvilinear', 'coords_floor_to_relative', 'coords_local_curvilinear_to_body', 'coords_local_curvilinear_to_floor', 'coords_relative_to_floor', 'cos_one', 'cosc', 'coulombfun', 'create_a_spline', 'create_concatenated_wall3d', 'create_element_slice', 'create_field_overlap', 'create_girder', 'create_group', 'create_lat_ele_nametable', 'create_overlay', 'create_planar_wiggler_model', 'create_ramper', 'create_sol_quad_model', 'create_unique_ele_names', 'create_wiggler_cartesian_map', 'cross_product', 'crystal_attribute_bookkeeper', 'crystal_h_misalign', 'crystal_type_to_crystal_params', 'custom_attribute_ubound_index', 'damping_matrix_d', 'date_and_time_stamp', 'deallocate_ele_pointers', 'deallocate_expression_tree', 'deallocate_lat_pointers', 'default_tracking_species', 'destfixedwindowls', 'detab', 'detector_pixel_pt', 'diffraction_plate_or_mask_hit_spot', 'diffusion_matrix_b', 'display_size_and_resolution', 'distance_to_aperture', 'dj_bessel', 'djb_hash', 'djb_str_hash', 'do_mode_flip', 'downcase_string', 'dpc_given_de', 'drift_and_pipe_track_methods_adjustment', 'drift_multipass_name_correction', 'drift_orbit_time', 'drift_particle_to_s', 'drift_particle_to_t', 'dspline_len', 'dynamic_aperture_point', 'dynamic_aperture_scan', 'e_accel_field', 'e_crit_photon', 'eigen_decomp_6mat', 'ele_compute_ref_energy_and_time', 'ele_equal_ele', 'ele_equals_ele', 'ele_finalizer', 'ele_full_name', 'ele_geometry', 'ele_geometry_with_misalignments', 'ele_has_constant_ds_dt_ref', 'ele_has_nonzero_kick', 'ele_has_nonzero_offset', 'ele_is_monitor', 'ele_loc', 'ele_loc_name', 'ele_misalignment_l_s_calc', 'ele_nametable_index', 'ele_order_calc', 'ele_reference_energy_correction', 'ele_rf_step_index', 'ele_to_fibre', 'ele_to_ptc_magnetic_bn_an', 'ele_to_spin_taylor', 'ele_to_taylor', 'ele_unique_name', 'ele_value_has_changed', 'ele_vec_equal_ele_vec', 'elec_multipole_field', 'element_at_s', 'element_slice_iterator', 'ellipinc_test', 'em_field_calc', 'em_field_derivatives', 'em_field_kick_vector_time', 'em_field_plus_em_field', 'em_taylor_equal_em_taylor', 'em_taylors_equal_em_taylors', 'emit_6d', 'end_akima_spline_calc', 'entering_element', 'envelope_radints', 'envelope_radints_ibs', 'eq_ac_kicker', 'eq_ac_kicker_freq', 'eq_ac_kicker_time', 'eq_anormal_mode', 'eq_aperture_param', 'eq_aperture_point', 'eq_aperture_scan', 'eq_beam', 'eq_beam_init', 'eq_bmad_common', 'eq_bookkeeping_state', 'eq_bpm_phase_coupling', 'eq_branch', 'eq_bunch', 'eq_bunch_params', 'eq_cartesian_map', 'eq_cartesian_map_term', 'eq_cartesian_map_term1', 'eq_complex_taylor', 'eq_complex_taylor_term', 'eq_control', 'eq_control_ramp1', 'eq_control_var1', 'eq_controller', 'eq_coord', 'eq_coord_array', 'eq_cylindrical_map', 'eq_cylindrical_map_term', 'eq_cylindrical_map_term1', 'eq_ele', 'eq_ellipse_beam_init', 'eq_em_field', 'eq_em_taylor', 'eq_em_taylor_term', 'eq_expression_atom', 'eq_floor_position', 'eq_gen_grad1', 'eq_gen_grad_map', 'eq_grid_beam_init', 'eq_grid_field', 'eq_grid_field_pt', 'eq_grid_field_pt1', 'eq_high_energy_space_charge', 'eq_interval1_coef', 'eq_kv_beam_init', 'eq_lat', 'eq_lat_ele_loc', 'eq_lat_param', 'eq_linac_normal_mode', 'eq_mode3', 'eq_mode_info', 'eq_normal_modes', 'eq_photon_element', 'eq_photon_material', 'eq_photon_reflect_surface', 'eq_photon_reflect_table', 'eq_photon_target', 'eq_pixel_detec', 'eq_pixel_pt', 'eq_pre_tracker', 'eq_rad_int1', 'eq_rad_int_all_ele', 'eq_rad_int_branch', 'eq_rad_map', 'eq_rad_map_ele', 'eq_ramper_lord', 'eq_space_charge_common', 'eq_spin_polar', 'eq_spline', 'eq_strong_beam', 'eq_surface_curvature', 'eq_surface_displacement', 'eq_surface_displacement_pt', 'eq_surface_h_misalign', 'eq_surface_h_misalign_pt', 'eq_surface_segmented', 'eq_surface_segmented_pt', 'eq_target_point', 'eq_taylor', 'eq_taylor_term', 'eq_track', 'eq_track_point', 'eq_twiss', 'eq_wake', 'eq_wake_lr', 'eq_wake_lr_mode', 'eq_wake_sr', 'eq_wake_sr_mode', 'eq_wake_sr_z_long', 'eq_wall3d', 'eq_wall3d_section', 'eq_wall3d_vertex', 'eq_xy_disp', 'equal_sign_here', 'equivalent_taylor_attributes', 'err_exit', 'etdiv', 'evaluate_array_index', 'evaluate_logical', 'exact_bend_edge_kick', 'exp_bessi0', 'expect_one_of', 'expect_this', 'expression_stack_to_string', 'expression_stack_value', 'expression_string_to_stack', 'expression_string_to_tree', 'expression_tree_to_string', 'expression_value', 'factorial', 'faddeeva_function', 'fft1', 'fft_1d', 'fibre_to_ele', 'field_attribute_free', 'file_directorizer', 'file_get', 'file_get_open', 'file_suffixer', 'finalize_reflectivity_table', 'find_element_ends', 'find_fwhm', 'find_location', 'find_matching_fieldmap', 'find_normalization', 'fine_frequency_estimate', 'fixedwindowls', 'floor_angles_to_w_mat', 'floor_w_mat_to_angles', 'form_complex_taylor', 'form_digested_bmad_file_name', 'fourier_amplitude', 'fringe_here', 'g_bend_from_em_field', 'g_bending_strength_from_em_field', 'g_integrals_calc', 'gamma_ref', 'gen_complete_elliptic', 'gen_grad1_to_em_taylor', 'gen_grad_at_s_to_em_taylor', 'gen_grad_field', 'get_bl_from_fwhm', 'get_bmad_com', 'get_called_file', 'get_emit_from_sigma_mat', 'get_file_number', 'get_file_time_stamp', 'get_next_word', 'get_slave_list', 'get_space_charge_com', 'get_super_universe', 'gpt_field_grid_scaling', 'gpt_max_field_reference', 'gpt_to_particle_bunch', 'gradient_shift_sr_wake', 'grid_field_interpolate', 'hanhan', 'hard_multipole_edge_kick', 'has_attribute', 'has_curvature', 'has_orientation_attributes', 'hdf5_write_beam', 'hdf5_write_grid_field', 'hom_voltage', 'hwang_bend_edge_kick', 'i_bessel', 'i_bessel_extended', 'ibs_matrix_c', 'igfcoulombfun', 'igfexfun', 'igfeyfun', 'igfezfun', 'increment_file_number', 'index_nocase', 'init_attribute_name1', 'init_attribute_name_array', 'init_beam_distribution', 'init_bmad', 'init_bmad_parser_common', 'init_bunch_distribution', 'init_complex_taylor_series', 'init_coord', 'init_custom', 'init_ele', 'init_em_taylor_series', 'init_lat', 'init_multipole_cache', 'init_photon_from_a_photon_init_ele', 'init_photon_integ_prob', 'init_spin_distribution', 'init_surface_segment', 'init_taylor_series', 'init_wake', 'initfixedwindowls', 'insert_element', 'insert_phase_trombone', 'int_str', 'integrand_base', 'integrate_max', 'integrate_min', 'integrate_psi', 'integrated_mats', 'integration_timer', 'interpolated_fft', 'interpolated_fft_gsl', 'ion_kick', 'is_alphabetic', 'is_attribute', 'is_decreasing_sequence', 'is_false', 'is_increasing_sequence', 'is_integer', 'is_logical', 'is_real', 'is_subatomic_species', 'is_true', 'j_bessel', 'key_name_to_key_index', 'kick_vector_calc', 'kill_complex_taylor', 'kill_ptc_layouts', 'kill_taylor', 'kind_name', 'knot_interpolate', 'knots_to_string', 'lafun', 'lat_compute_ref_energy_and_time', 'lat_ele_locator', 'lat_equal_lat', 'lat_geometry', 'lat_make_mat6', 'lat_sanity_check', 'lat_to_ptc_layout', 'lat_vec_equal_lat_vec', 'lattice_bookkeeper', 'lcavity_rf_step_setup', 'linear_bend_edge_kick', 'linear_coef', 'linear_fit', 'linear_fit_2d', 'linear_to_spin_taylor', 'load_parse_line', 'logic_str', 'logical_to_python', 'lord_edge_aligned', 'low_energy_z_correction', 'lunget', 'mad_add_offsets_and_multipoles', 'mad_concat_map2', 'mad_drift', 'mad_elsep', 'mad_map_to_taylor', 'mad_quadrupole', 'mad_rfcavity', 'mad_sbend', 'mad_sbend_body', 'mad_sbend_fringe', 'mad_sextupole', 'mad_solenoid', 'mad_tmfoc', 'mad_tmsymm', 'mad_tmtilt', 'mad_track1', 'make_g2_mats', 'make_g_mats', 'make_hvbp', 'make_hybrid_lat', 'make_legal_comment', 'make_mad_map', 'make_mat6', 'make_mat6_bmad', 'make_mat6_bmad_photon', 'make_mat6_high_energy_space_charge', 'make_mat6_mad', 'make_mat6_symp_lie_ptc', 'make_mat6_taylor', 'make_mat6_tracking', 'make_n', 'make_pbrh', 'make_smat_from_abc', 'make_unit_mad_map', 'make_v', 'make_v_mats', 'makeup_control_slave', 'makeup_group_lord', 'makeup_multipass_slave', 'makeup_super_slave', 'makeup_super_slave1', 'map1_inverse', 'map1_make_unit', 'map1_times_map1', 'map_to_angle_coords', 'mark_patch_regions', 'mass_of', 'master_parameter_value', 'mat4_multipole', 'mat6_add_offsets', 'mat6_add_pitch', 'mat6_to_complex_taylor', 'mat_symp_decouple', 'match_ele_to_mat6', 'match_reg', 'match_wild', 'maximize_projection', 'mexp', 'mfft1', 'milli_sleep', 'misalign_ptc_fibre', 'momentum_compaction', 'multi_turn_tracking_analysis', 'multilayer_type_to_multilayer_params', 'multipass_chain', 'multipole1_ab_to_kt', 'multipole1_kt_to_ab', 'multipole_ab_to_kt', 'multipole_ele_to_ab', 'multipole_ele_to_kt', 'multipole_init', 'multipole_kick', 'multipole_kick_mat', 'multipole_kicks', 'multipole_kt_to_ab', 'multipole_spin_tracking', 'mytan', 'n_attrib_string_max_len', 'n_bins_automatic', 'n_choose_k', 'n_spline_create', 'naff', 'nametable_add', 'nametable_bracket_indexx', 'nametable_change1', 'nametable_init', 'nametable_remove', 'new_control', 'nint_chk', 'normal_form_complex_taylors', 'normal_form_taylors', 'normal_mode3_calc', 'normal_mode_dispersion', 'normalize_evecs', 'num_field_eles', 'num_lords', 'odeint_bmad', 'odeint_bmad_time', 'offset_particle', 'offset_photon', 'omega_to_quat', 'one_turn_mat_at_ele', 'open_binary_file', 'openpmd_species_name', 'orbit_amplitude_calc', 'orbit_reference_energy_correction', 'orbit_to_floor_phase_space', 'orbit_to_local_curvilinear', 'orbit_too_large', 'order_evecs_by_n_similarity', 'order_evecs_by_plane_dominance', 'order_evecs_by_tune', 'order_particles_in_z', 'order_super_lord_slaves', 'ordinal_str', 'osc_alloc_freespace_array', 'osc_alloc_image_array', 'osc_alloc_rectpipe_arrays', 'osc_getgrnpipe', 'osc_read_rectpipe_grn', 'osc_write_rectpipe_grn', 'parse_cartesian_map', 'parse_cylindrical_map', 'parse_fortran_format', 'parse_gen_grad_map', 'parse_grid_field', 'parse_integer_list', 'parse_integer_list2', 'parse_real_list', 'parse_real_list2', 'parser_add_constant', 'parser_call_check', 'parser_fast_complex_read', 'parser_fast_integer_read', 'parser_fast_real_read', 'parser_file_stack', 'parser_get_integer', 'parser_get_logical', 'parser_identify_fork_to_element', 'parser_init_custom_elements', 'parser_print_line', 'parser_read_lr_wake', 'parser_read_old_format_lr_wake', 'parser_read_old_format_sr_wake', 'parser_read_sr_wake', 'parser_transfer_control_struct', 'particle_in_global_frame', 'particle_is_moving_backwards', 'particle_is_moving_forward', 'particle_rf_time', 'patch_flips_propagation_direction', 'patch_length', 'photon_absorption_and_phase_shift', 'photon_add_to_detector_statistics', 'photon_reflection', 'photon_reflection_std_surface_init', 'photon_reflectivity', 'photon_target_corner_calc', 'photon_target_setup', 'photon_type', 'physical_ele_end', 'point_photon_emission', 'pointer_to_branch', 'pointer_to_ele', 'pointer_to_element_at_s', 'pointer_to_fibre', 'pointer_to_field_ele', 'pointer_to_girder', 'pointer_to_lord', 'pointer_to_multipass_lord', 'pointer_to_next_ele', 'pointer_to_ran_state', 'pointer_to_slave', 'pointer_to_super_lord', 'pointer_to_surface_displacement_pt', 'pointer_to_surface_segmented_pt', 'pointer_to_wake_ele', 'pointer_to_wall3d', 'polar_to_spinor', 'polar_to_vec', 'poly_eval', 'probability_funct', 'projdd', 'project_emit_to_xyz', 'psi_prime_sca', 'ptc_bookkeeper', 'ptc_calculate_tracking_step_size', 'ptc_check_for_lost_particle', 'ptc_closed_orbit_calc', 'ptc_emit_calc', 'ptc_layouts_resplit', 'ptc_one_turn_mat_and_closed_orbit_calc', 'ptc_ran_seed_put', 'ptc_set_rf_state_for_c_normal', 'ptc_set_taylor_order_if_needed', 'ptc_spin_calc', 'ptc_track_all', 'ptc_transfer_map_with_spin', 'pwd_mat', 'quadratic_roots', 'quat_conj', 'quat_inverse', 'quat_mul', 'quat_rotate', 'quat_to_axis_angle', 'quat_to_omega', 'quat_to_w_mat', 'query_string', 'quote', 'rad1_damp_and_stoc_mats', 'rad_damp_and_stoc_mats', 'rad_g_integrals', 'radiation_integrals', 'radiation_map_setup', 'ramper_slave_setup', 'ramper_value', 'ran_default_state', 'ran_engine', 'ran_gauss_converter', 'ran_gauss_scalar', 'ran_gauss_vector', 'ran_seed_get', 'ran_seed_put', 'ran_uniform', 'randomize_lr_wake_frequencies', 'rchomp', 're_allocate', 're_allocate_eles', 're_associate_node_array', 're_str', 'read_beam_ascii', 'read_beam_file', 'read_binary_cartesian_map', 'read_binary_cylindrical_map', 'read_binary_grid_field', 'read_surface_reflection_file', 'real_num_fortran_format', 'real_path', 'real_str', 'real_to_string', 'reallocate_beam', 'reallocate_bp_com_const', 'reallocate_bunch', 'reallocate_control', 'reallocate_coord', 'reallocate_expression_stack', 'reallocate_spline', 'rel_tracking_charge_to_mass', 'relative_mode_flip', 'release_rad_int_cache', 'remove_constant_taylor', 'remove_dead_from_bunch', 'remove_eles_from_lat', 'remove_lord_slave_link', 'reverse_lat', 'rf_cav_names', 'rf_coupler_kick', 'rf_is_on', 'rf_ref_time_offset', 'rfun', 'rk_adaptive_time_step', 'rk_time_step1', 'rms_value', 'rot_2d', 'rotate3', 'rotate_em_field', 'rotate_field_zx', 'rotate_for_curved_surface', 'rotate_spin', 'rotate_spin_a_step', 'rotate_spin_given_field', 'rotate_vec', 'rotate_vec_given_axis_angle', 'rp8', 'run_timer', 's_body_calc', 's_calc', 'sad_mult_hard_bend_edge_kick', 'sad_soft_bend_edge_kick', 'save_a_beam_step', 'save_a_bunch_step', 'save_a_step', 'sbend_body_with_k1_map', 'sc_adaptive_step', 'sc_step', 'set_active_fixer', 'set_custom_attribute_name', 'set_ele_attribute', 'set_ele_defaults', 'set_ele_name', 'set_ele_real_attribute', 'set_ele_status_stale', 'set_flags_for_changed_attribute', 'set_fringe_on_off', 'set_lords_status_stale', 'set_on_off', 'set_orbit_to_zero', 'set_parameter', 'set_ptc', 'set_ptc_base_state', 'set_ptc_com_pointers', 'set_ptc_quiet', 'set_ptc_verbose', 'set_pwd_ele', 'set_species_charge', 'set_status_flags', 'set_tune', 'set_tune_3d', 'set_twiss', 'set_z_tune', 'settable_dep_var_bookkeeping', 'setup_high_energy_space_charge_calc', 'sigma_mat_ptc_to_bmad', 'significant_difference', 'sinc', 'sincc', 'sinhx_x', 'skip_ele_blender', 'skip_header', 'slice_lattice', 'soft_quadrupole_edge_kick', 'sol_quad_mat6_calc', 'solve_psi_adaptive', 'solve_psi_fixed_steps', 'sort_complex_taylor_terms', 'species_id', 'species_id_from_openpmd', 'species_name', 'species_of', 'spin_dn_dpz_from_mat8', 'spin_dn_dpz_from_qmap', 'spin_map1_normalize', 'spin_mat8_resonance_strengths', 'spin_mat_to_eigen', 'spin_of', 'spin_omega', 'spin_quat_resonance_strengths', 'spin_taylor_to_linear', 'spinor_to_polar', 'spinor_to_vec', 'spline1', 'spline_akima', 'spline_akima_interpolate', 'spline_evaluate', 'spline_fit_orbit', 'split_lat', 'sprint_spin_taylor_map', 'sqrt_alpha', 'sqrt_one', 'sr_longitudinal_wake_particle', 'sr_transverse_wake_particle', 'sr_z_long_wake', 'srdt_calc', 'srdt_lsq_solution', 'start_branch_at', 'str_count', 'str_downcase', 'str_first_in_set', 'str_first_not_in_set', 'str_last_in_set', 'str_last_not_in_set', 'str_match_wild', 'str_substitute', 'str_upcase', 'stream_ele_end', 'string_attrib', 'string_to_int', 'string_to_real', 'string_trim', 'string_trim2', 'strong_beam_sigma_calc', 'strong_beam_strength', 'super_bicubic_coef', 'super_bicubic_interpolation', 'super_polint', 'super_poly', 'super_sobseq', 'super_sort', 'surface_grid_displacement', 'symp_lie_bmad', 'system_command', 't6_to_b123', 'tao_abort_command_file', 'tao_add_to_normal_mode_h_array', 'tao_alias_cmd', 'tao_allocate_data_array', 'tao_allocate_v1_var', 'tao_allocate_var_array', 'tao_beam_emit_calc', 'tao_beam_track', 'tao_beam_track_endpoint', 'tao_branch_index', 'tao_calc_data_at_s_pts', 'tao_cbar_wave_anal', 'tao_change_ele', 'tao_change_tune', 'tao_change_var', 'tao_change_z_tune', 'tao_chrom_calc_needed', 'tao_clear_cmd', 'tao_clip_cmd', 'tao_close_command_file', 'tao_cmd_history_record', 'tao_command', 'tao_constraint_type_name', 'tao_control_tree_list', 'tao_count_strings', 'tao_create_plot_window', 'tao_curve_beam_ellipse_setup', 'tao_curve_check_universe', 'tao_curve_data_setup', 'tao_curve_datum_calc', 'tao_curve_ele_ref', 'tao_curve_ix_uni', 'tao_curve_name', 'tao_curve_rms_calc', 'tao_d2_d1_name', 'tao_d2_data_stuffit', 'tao_data_check', 'tao_data_coupling_init', 'tao_data_sanity_check', 'tao_data_type_substitute', 'tao_data_useit_plot_calc', 'tao_datum_has_associated_ele', 'tao_datum_integrate', 'tao_datum_name', 'tao_datum_s_position', 'tao_de_optimizer', 'tao_deallocate_plot_cache', 'tao_deallocate_tree', 'tao_destroy_plot_window', 'tao_dmerit_calc', 'tao_dmodel_dvar_calc', 'tao_do_wire_scan', 'tao_draw_beam_chamber_wall', 'tao_draw_curve_data', 'tao_draw_ele_for_floor_plan', 'tao_draw_floor_plan', 'tao_draw_graph_axes', 'tao_draw_histogram_data', 'tao_draw_lat_layout', 'tao_draw_plots', 'tao_ele_geometry_with_misalignments', 'tao_ele_shape_info', 'tao_eval_floor_orbit', 'tao_evaluate_a_datum', 'tao_evaluate_datum_at_s', 'tao_evaluate_element_parameters', 'tao_evaluate_expression', 'tao_evaluate_expression_new', 'tao_evaluate_expression_old', 'tao_evaluate_lat_or_beam_data', 'tao_evaluate_stack_old', 'tao_evaluate_tree', 'tao_evaluate_tune', 'tao_expression_hash_substitute', 'tao_expression_tree_to_string', 'tao_find_plot_region', 'tao_fixer', 'tao_floor_to_screen', 'tao_floor_to_screen_coords', 'tao_geodesic_lm_optimizer', 'tao_get_data', 'tao_get_opt_vars', 'tao_get_user_input', 'tao_graph_controller_setup', 'tao_graph_data_setup', 'tao_graph_data_slice_setup', 'tao_graph_dynamic_aperture_setup', 'tao_graph_histogram_setup', 'tao_graph_name', 'tao_graph_phase_space_setup', 'tao_graph_s_min_max_calc', 'tao_graph_setup', 'tao_init', 'tao_init_beam_in_universe', 'tao_init_beams', 'tao_init_data', 'tao_init_data_end_stuff', 'tao_init_data_in_universe', 'tao_init_dynamic_aperture', 'tao_init_find_elements', 'tao_init_global', 'tao_init_lattice', 'tao_init_plotting', 'tao_init_variables', 'tao_inject_beam', 'tao_inject_particle', 'tao_is_valid_name', 'tao_json_cmd', 'tao_key_info_to_str', 'tao_lat_bookkeeper', 'tao_lat_emit_calc', 'tao_lat_sigma_calc_needed', 'tao_lat_sigma_track', 'tao_lattice_branches_equal_tao_lattice_branches', 'tao_lattice_calc', 'tao_lattice_equal_tao_lattice', 'tao_limit_calc', 'tao_lm_optimizer', 'tao_lmdif_optimizer', 'tao_load_this_datum', 'tao_locate_all_elements', 'tao_locate_elements', 'tao_mark_lattice_ele', 'tao_merit', 'tao_next_word', 'tao_one_turn_map_calc_needed', 'tao_open_file', 'tao_open_scratch_file', 'tao_optimization_status', 'tao_orbit_beta_wave_anal', 'tao_oreint_building_wall_pt', 'tao_param_value_at_s', 'tao_param_value_routine', 'tao_parse_command_args', 'tao_parse_element_param_str', 'tao_particle_data_value', 'tao_pause_cmd', 'tao_phase_space_axis_index', 'tao_phase_wave_anal', 'tao_pick_universe', 'tao_pipe_cmd', 'tao_place_cmd', 'tao_plot_cmd', 'tao_plot_data', 'tao_plot_histogram', 'tao_plot_key_table', 'tao_plot_setup', 'tao_plot_struct_transfer', 'tao_plot_wave', 'tao_pointer_to_building_wall_shape', 'tao_pointer_to_datum', 'tao_pointer_to_datum_ele', 'tao_pointer_to_ele_shape', 'tao_pointer_to_tao_lat', 'tao_pointer_to_universe', 'tao_pointer_to_universes', 'tao_pointer_to_var_in_lattice', 'tao_pointer_to_var_in_lattice2', 'tao_print_command_line_info', 'tao_ptc_normal_form', 'tao_python_cmd', 'tao_quiet_set', 'tao_rad_int_calc_needed', 'tao_re_allocate_expression_info', 'tao_re_associate_node_array', 'tao_re_execute', 'tao_read_cmd', 'tao_read_phase_space_index', 'tao_regression_test', 'tao_remove_blank_characters', 'tao_run_cmd', 'tao_scale_cmd', 'tao_scale_graph', 'tao_scale_ping_data', 'tao_scale_plot', 'tao_scratch_values_calc', 'tao_set_beam_cmd', 'tao_set_beam_init_cmd', 'tao_set_bmad_com_cmd', 'tao_set_branch_cmd', 'tao_set_calculate_cmd', 'tao_set_curve_cmd', 'tao_set_curve_invalid', 'tao_set_data_cmd', 'tao_set_data_useit_opt', 'tao_set_default_cmd', 'tao_set_drawing_cmd', 'tao_set_dynamic_aperture_cmd', 'tao_set_elements_cmd', 'tao_set_floor_plan_axis_label', 'tao_set_geodesic_lm_cmd', 'tao_set_global_cmd', 'tao_set_graph_cmd', 'tao_set_integer_value', 'tao_set_invalid', 'tao_set_key_cmd', 'tao_set_lattice_cmd', 'tao_set_logical_value', 'tao_set_openmp_n_threads', 'tao_set_opt_vars', 'tao_set_opti_de_param_cmd', 'tao_set_particle_start_cmd', 'tao_set_plot_cmd', 'tao_set_plot_page_cmd', 'tao_set_ptc_com_cmd', 'tao_set_qp_axis_struct', 'tao_set_qp_point_struct', 'tao_set_qp_rect_struct', 'tao_set_ran_state_cmd', 'tao_set_real_value', 'tao_set_region_cmd', 'tao_set_space_charge_com_cmd', 'tao_set_symbolic_number_cmd', 'tao_set_tune_cmd', 'tao_set_universe_cmd', 'tao_set_var_cmd', 'tao_set_var_model_value', 'tao_set_var_useit_opt', 'tao_set_wave_cmd', 'tao_set_z_tune_cmd', 'tao_setup_key_table', 'tao_shape_init', 'tao_show_cmd', 'tao_show_constraints', 'tao_single_mode', 'tao_single_track', 'tao_spin_matrices_calc_needed', 'tao_spin_tracking_turn_on', 'tao_split_component', 'tao_srdt_calc_needed', 'tao_subin_uni_number', 'tao_svd_optimizer', 'tao_symbol_import_from_lat', 'tao_taper_cmd', 'tao_to_change_number', 'tao_to_int', 'tao_to_phase_and_coupling_reading', 'tao_to_real', 'tao_too_many_particles_lost', 'tao_top10_derivative_print', 'tao_top10_merit_categories_print', 'tao_top_level', 'tao_tracking_ele_index', 'tao_turn_on_special_calcs_if_needed_for_plotting', 'tao_type_expression_tree', 'tao_uni_atsign_index', 'tao_universe_index', 'tao_use_data', 'tao_use_var', 'tao_user_is_terminating_optimization', 'tao_var1_name', 'tao_var_attrib_name', 'tao_var_check', 'tao_var_repoint', 'tao_var_target_calc', 'tao_var_useit_plot_calc', 'tao_var_write', 'tao_veto_vars_with_zero_dmodel', 'tao_wave_analysis', 'tao_wave_cmd', 'tao_wave_fit', 'tao_write_cmd', 'tao_x_axis_cmd', 'tao_x_scale_cmd', 'tao_x_scale_graph', 'tao_x_scale_plot', 'taper_mag_strengths', 'target_min_max_calc', 'target_rot_mats', 'taylor_equal_taylor', 'taylor_inverse', 'taylor_propagate1', 'taylor_to_mad_map', 'taylors_equal_taylors', 'test_bunch_struct_array', 'test_bunch_struct_scalar', 'test_character_scalar', 'test_complex_array', 'test_complex_scalar', 'test_integer8_array', 'test_integer8_scalar', 'test_integer_array', 'test_integer_scalar', 'test_logical_array', 'test_logical_scalar', 'test_real16_array', 'test_real16_scalar', 'test_real_array', 'test_real_scalar', 'tilt_coords', 'tilt_coords_photon', 'tilt_mat6', 'to_eta_reading', 'to_fieldmap_coords', 'to_orbit_reading', 'to_phase_and_coupling_reading', 'to_photon_angle_coords', 'to_str', 'to_surface_coords', 'touschek_lifetime', 'touschek_rate1', 'touschek_rate1_zap', 'track1', 'track1_beam', 'track1_bmad', 'track1_bmad_photon', 'track1_bunch', 'track1_bunch_csr', 'track1_bunch_csr3d', 'track1_bunch_hom', 'track1_bunch_space_charge', 'track1_crystal', 'track1_diffraction_plate_or_mask', 'track1_high_energy_space_charge', 'track1_lens', 'track1_linear', 'track1_lr_wake', 'track1_mad', 'track1_mirror', 'track1_mosaic_crystal', 'track1_multilayer_mirror', 'track1_radiation', 'track1_radiation_center', 'track1_runge_kutta', 'track1_sample', 'track1_spin', 'track1_spin_integration', 'track1_spin_taylor', 'track1_sr_wake', 'track1_symp_lie_ptc', 'track1_taylor', 'track1_time_runge_kutta', 'track_a_beambeam', 'track_a_bend', 'track_a_bend_photon', 'track_a_capillary', 'track_a_converter', 'track_a_crab_cavity', 'track_a_drift', 'track_a_drift_photon', 'track_a_foil', 'track_a_gkicker', 'track_a_lcavity', 'track_a_lcavity_old', 'track_a_mask', 'track_a_match', 'track_a_patch', 'track_a_patch_photon', 'track_a_pickup', 'track_a_quadrupole', 'track_a_rfcavity', 'track_a_sad_mult', 'track_a_sol_quad', 'track_a_thick_multipole', 'track_a_wiggler', 'track_a_zero_length_element', 'track_all', 'track_beam', 'track_bunch', 'track_bunch_time', 'track_bunch_to_s', 'track_bunch_to_t', 'track_complex_taylor', 'track_from_s_to_s', 'track_many', 'track_to_surface', 'track_until_dead', 'tracking_rad_map_setup', 'transfer_ac_kick', 'transfer_branch', 'transfer_branch_parameters', 'transfer_branches', 'transfer_ele', 'transfer_ele_taylor', 'transfer_eles', 'transfer_fieldmap', 'transfer_fixer_params', 'transfer_lat', 'transfer_lat_parameters', 'transfer_map_calc', 'transfer_map_from_s_to_s', 'transfer_mat2_from_twiss', 'transfer_mat_from_twiss', 'transfer_matrix_calc', 'transfer_twiss', 'transfer_wake', 'tricubic_cmplx_eval', 'truncate_complex_taylor_to_order', 'twiss1_propagate', 'twiss3_at_start', 'twiss3_from_twiss2', 'twiss3_propagate1', 'twiss3_propagate_all', 'twiss_and_track', 'twiss_and_track_at_s', 'twiss_and_track_from_s_to_s', 'twiss_and_track_intra_ele', 'twiss_at_element', 'twiss_at_start', 'twiss_from_tracking', 'twiss_propagate1', 'twiss_propagate_all', 'twiss_to_1_turn_mat', 'type_coord', 'type_expression_tree', 'type_ptc_layout', 'type_this_file', 'upcase_string', 'update_ele_from_fibre', 'update_fibre_from_ele', 'update_floor_angles', 'valid_field_calc', 'valid_fringe_type', 'valid_mat6_calc_method', 'valid_spin_tracking_method', 'valid_tracking_method', 'value_of_attribute', 'value_to_line', 'vec_to_polar', 'vec_to_spinor', 'verify_valid_name', 'virtual_memory_usage', 'w_mat_for_bend_angle', 'w_mat_for_tilt', 'w_mat_for_x_pitch', 'w_mat_for_y_pitch', 'w_mat_to_axis_angle', 'w_mat_to_quat', 'wall3d_d_radius', 'wall3d_initializer', 'wall3d_section_initializer', 'wall3d_to_position', 'word_len', 'word_read', 'word_to_value', 'write_ascii_beam_file', 'write_astra_bend', 'write_astra_field_grid_file', 'write_astra_field_grid_file_3d', 'write_beam_file', 'write_beam_floor_positions', 'write_binary_cartesian_map', 'write_binary_cylindrical_map', 'write_binary_grid_field', 'write_blender_ele', 'write_blender_lat_layout', 'write_bmad_lattice_file', 'write_bunch_by_bunch_info', 'write_gpt_field_grid_file_1d', 'write_gpt_field_grid_file_2d', 'write_gpt_field_grid_file_3d', 'write_lat_line', 'write_lattice_in_elegant_format', 'write_lattice_in_foreign_format', 'write_lattice_in_mad_format', 'write_lattice_in_sad_format', 'write_lattice_in_scibmad', 'write_line_element', 'write_opal_field_grid_file', 'write_opal_lattice_file', 'write_time_particle_distribution', 'x0_radiation_length', 'xlafun', 'xraylib_nist_compound', 'ylafun', 'z_at_surface', 'zero_ele_kicks', 'zero_ele_offsets', 'zero_lr_wakes_in_lat', 'zlafun']
 class AbMultipoleKick:
     """
     ab_multipole_kick return type
@@ -391,7 +391,7 @@ class AllEncompassingStruct:
     def real_rp_3d_ptr(self) -> RealArray3D:
         ...
     @property
-    def type_0d_ptr(self) -> _pybmad.TestSubStruct | None:
+    def type_0d_ptr(self) -> TestSubStruct | None:
         ...
     @type_0d_ptr.setter
     def type_0d_ptr(self, arg1: TestSubStruct) -> None:
@@ -1553,7 +1553,7 @@ class BmadNormalFormStruct:
     def dhdj(self) -> TaylorStructArray1D:
         ...
     @property
-    def ele_origin(self) -> _pybmad.EleStruct | None:
+    def ele_origin(self) -> EleStruct | None:
         ...
     @ele_origin.setter
     def ele_origin(self, arg1: EleStruct) -> None:
@@ -1883,7 +1883,7 @@ class BranchStruct:
     def ix_to_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def lat(self) -> _pybmad.LatStruct | None:
+    def lat(self) -> LatStruct | None:
         ...
     @lat.setter
     def lat(self, arg1: LatStruct) -> None:
@@ -2375,7 +2375,7 @@ class CartesianMapStruct:
     def master_parameter(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def ptr(self) -> _pybmad.CartesianMapTermStruct | None:
+    def ptr(self) -> CartesianMapTermStruct | None:
         ...
     @ptr.setter
     def ptr(self, arg1: CartesianMapTermStruct) -> None:
@@ -3536,7 +3536,7 @@ class CylindricalMapStruct:
     def phi0_fieldmap(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def ptr(self) -> _pybmad.CylindricalMapTermStruct | None:
+    def ptr(self) -> CylindricalMapTermStruct | None:
         ...
     @ptr.setter
     def ptr(self, arg1: CylindricalMapTermStruct) -> None:
@@ -3889,7 +3889,7 @@ class ElePointerStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele(self) -> _pybmad.EleStruct | None:
+    def ele(self) -> EleStruct | None:
         ...
     @ele.setter
     def ele(self, arg1: EleStruct) -> None:
@@ -3993,7 +3993,7 @@ class EleStruct:
     def a_pole_elec(self) -> RealArray1D:
         ...
     @property
-    def ac_kick(self) -> _pybmad.AcKickerStruct | None:
+    def ac_kick(self) -> AcKickerStruct | None:
         ...
     @ac_kick.setter
     def ac_kick(self, arg1: AcKickerStruct) -> None:
@@ -4017,7 +4017,7 @@ class EleStruct:
     def b_pole_elec(self) -> RealArray1D:
         ...
     @property
-    def branch(self) -> _pybmad.BranchStruct | None:
+    def branch(self) -> BranchStruct | None:
         ...
     @branch.setter
     def branch(self, arg1: BranchStruct) -> None:
@@ -4029,7 +4029,7 @@ class EleStruct:
     def cartesian_map(self) -> CartesianMapStructArray1D:
         ...
     @property
-    def control(self) -> _pybmad.ControllerStruct | None:
+    def control(self) -> ControllerStruct | None:
         ...
     @control.setter
     def control(self, arg1: ControllerStruct) -> None:
@@ -4068,7 +4068,7 @@ class EleStruct:
     def grid_field(self) -> GridFieldStructArray1D:
         ...
     @property
-    def high_energy_space_charge(self) -> _pybmad.HighEnergySpaceChargeStruct | None:
+    def high_energy_space_charge(self) -> HighEnergySpaceChargeStruct | None:
         ...
     @high_energy_space_charge.setter
     def high_energy_space_charge(self, arg1: HighEnergySpaceChargeStruct) -> None:
@@ -4128,7 +4128,7 @@ class EleStruct:
     def key(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def lord(self) -> _pybmad.EleStruct | None:
+    def lord(self) -> EleStruct | None:
         ...
     @lord.setter
     def lord(self, arg1: EleStruct) -> None:
@@ -4149,7 +4149,7 @@ class EleStruct:
     def mat6_calc_method(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def mode3(self) -> _pybmad.Mode3Struct | None:
+    def mode3(self) -> Mode3Struct | None:
         ...
     @mode3.setter
     def mode3(self, arg1: Mode3Struct) -> None:
@@ -4194,13 +4194,13 @@ class EleStruct:
     def orientation(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def photon(self) -> _pybmad.PhotonElementStruct | None:
+    def photon(self) -> PhotonElementStruct | None:
         ...
     @photon.setter
     def photon(self, arg1: PhotonElementStruct) -> None:
         ...
     @property
-    def ptc_fibre(self) -> _pybmad.Fibre | None:
+    def ptc_fibre(self) -> Fibre | None:
         ...
     @ptc_fibre.setter
     def ptc_fibre(self, arg1: Fibre) -> None:
@@ -4215,7 +4215,7 @@ class EleStruct:
     def r(self) -> RealArray3D:
         ...
     @property
-    def rad_map(self) -> _pybmad.RadMapEleStruct | None:
+    def rad_map(self) -> RadMapEleStruct | None:
         ...
     @rad_map.setter
     def rad_map(self, arg1: RadMapEleStruct) -> None:
@@ -4233,7 +4233,7 @@ class EleStruct:
     def ref_time(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def rf(self) -> _pybmad.RfEleStruct | None:
+    def rf(self) -> RfEleStruct | None:
         ...
     @rf.setter
     def rf(self, arg1: RfEleStruct) -> None:
@@ -4299,7 +4299,7 @@ class EleStruct:
     def vec0(self) -> RealArray1D:
         ...
     @property
-    def wake(self) -> _pybmad.WakeStruct | None:
+    def wake(self) -> WakeStruct | None:
         ...
     @wake.setter
     def wake(self, arg1: WakeStruct) -> None:
@@ -5118,31 +5118,31 @@ class Fibre:
     def MASS(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def N(self) -> _pybmad.Fibre | None:
+    def N(self) -> Fibre | None:
         ...
     @N.setter
     def N(self, arg1: Fibre) -> None:
         ...
     @property
-    def NEXT(self) -> _pybmad.Fibre | None:
+    def NEXT(self) -> Fibre | None:
         ...
     @NEXT.setter
     def NEXT(self, arg1: Fibre) -> None:
         ...
     @property
-    def P(self) -> _pybmad.Fibre | None:
+    def P(self) -> Fibre | None:
         ...
     @P.setter
     def P(self, arg1: Fibre) -> None:
         ...
     @property
-    def PARENT_LAYOUT(self) -> _pybmad.Layout | None:
+    def PARENT_LAYOUT(self) -> Layout | None:
         ...
     @PARENT_LAYOUT.setter
     def PARENT_LAYOUT(self, arg1: Layout) -> None:
         ...
     @property
-    def PREVIOUS(self) -> _pybmad.Fibre | None:
+    def PREVIOUS(self) -> Fibre | None:
         ...
     @PREVIOUS.setter
     def PREVIOUS(self, arg1: Fibre) -> None:
@@ -5744,7 +5744,7 @@ class GridFieldStruct:
     def phi0_fieldmap(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def ptr(self) -> _pybmad.GridFieldPtStruct | None:
+    def ptr(self) -> GridFieldPtStruct | None:
         ...
     @ptr.setter
     def ptr(self, arg1: GridFieldPtStruct) -> None:
@@ -6512,13 +6512,13 @@ class LatStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def a(self) -> _pybmad.ModeInfoStruct | None:
+    def a(self) -> ModeInfoStruct | None:
         ...
     @a.setter
     def a(self, arg1: ModeInfoStruct) -> None:
         ...
     @property
-    def b(self) -> _pybmad.ModeInfoStruct | None:
+    def b(self) -> ModeInfoStruct | None:
         ...
     @b.setter
     def b(self, arg1: ModeInfoStruct) -> None:
@@ -6578,13 +6578,13 @@ class LatStruct:
     def n_ic_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def param(self) -> _pybmad.LatParamStruct | None:
+    def param(self) -> LatParamStruct | None:
         ...
     @param.setter
     def param(self, arg1: LatParamStruct) -> None:
         ...
     @property
-    def particle_start(self) -> _pybmad.CoordStruct | None:
+    def particle_start(self) -> CoordStruct | None:
         ...
     @particle_start.setter
     def particle_start(self, arg1: CoordStruct) -> None:
@@ -6611,7 +6611,7 @@ class LatStruct:
     def version(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def z(self) -> _pybmad.ModeInfoStruct | None:
+    def z(self) -> ModeInfoStruct | None:
         ...
     @z.setter
     def z(self, arg1: ModeInfoStruct) -> None:
@@ -6675,13 +6675,13 @@ class Layout:
     def __repr__(self) -> str:
         ...
     @property
-    def END(self) -> _pybmad.Fibre | None:
+    def END(self) -> Fibre | None:
         ...
     @END.setter
     def END(self, arg1: Fibre) -> None:
         ...
     @property
-    def END_GROUND(self) -> _pybmad.Fibre | None:
+    def END_GROUND(self) -> Fibre | None:
         ...
     @END_GROUND.setter
     def END_GROUND(self, arg1: Fibre) -> None:
@@ -6699,7 +6699,7 @@ class Layout:
     def INDEX(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def LAST(self) -> _pybmad.Fibre | None:
+    def LAST(self) -> Fibre | None:
         ...
     @LAST.setter
     def LAST(self, arg1: Fibre) -> None:
@@ -6717,7 +6717,7 @@ class Layout:
     def N(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def NEXT(self) -> _pybmad.Layout | None:
+    def NEXT(self) -> Layout | None:
         ...
     @NEXT.setter
     def NEXT(self, arg1: Layout) -> None:
@@ -6729,19 +6729,19 @@ class Layout:
     def NTHIN(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def PREVIOUS(self) -> _pybmad.Layout | None:
+    def PREVIOUS(self) -> Layout | None:
         ...
     @PREVIOUS.setter
     def PREVIOUS(self, arg1: Layout) -> None:
         ...
     @property
-    def START(self) -> _pybmad.Fibre | None:
+    def START(self) -> Fibre | None:
         ...
     @START.setter
     def START(self, arg1: Fibre) -> None:
         ...
     @property
-    def START_GROUND(self) -> _pybmad.Fibre | None:
+    def START_GROUND(self) -> Fibre | None:
         ...
     @START_GROUND.setter
     def START_GROUND(self, arg1: Fibre) -> None:
@@ -8152,7 +8152,7 @@ class PtcNormalFormStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele_origin(self) -> _pybmad.EleStruct | None:
+    def ele_origin(self) -> EleStruct | None:
         ...
     @ele_origin.setter
     def ele_origin(self, arg1: EleStruct) -> None:
@@ -10813,7 +10813,7 @@ class TaoCurveStruct:
     def err_symb(self) -> RealArray1D:
         ...
     @property
-    def g(self) -> _pybmad.TaoGraphStruct | None:
+    def g(self) -> TaoGraphStruct | None:
         ...
     @g.setter
     def g(self, arg1: TaoGraphStruct) -> None:
@@ -10945,7 +10945,7 @@ class TaoD1DataStruct:
     def d(self) -> ...:
         ...
     @property
-    def d2(self) -> _pybmad.TaoD2DataStruct | None:
+    def d2(self) -> TaoD2DataStruct | None:
         ...
     @d2.setter
     def d2(self, arg1: TaoD2DataStruct) -> None:
@@ -11127,7 +11127,7 @@ class TaoDataStruct:
     def base_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def d1(self) -> _pybmad.TaoD1DataStruct | None:
+    def d1(self) -> TaoD1DataStruct | None:
         ...
     @d1.setter
     def d1(self, arg1: TaoD1DataStruct) -> None:
@@ -11796,7 +11796,7 @@ class TaoExpressionInfoStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele(self) -> _pybmad.EleStruct | None:
+    def ele(self) -> EleStruct | None:
         ...
     @ele.setter
     def ele(self, arg1: EleStruct) -> None:
@@ -12211,7 +12211,7 @@ class TaoGraphStruct:
     def ix_universe(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def p(self) -> _pybmad.TaoPlotStruct | None:
+    def p(self) -> TaoPlotStruct | None:
         ...
     @p.setter
     def p(self, arg1: TaoPlotStruct) -> None:
@@ -12549,7 +12549,7 @@ class TaoLatticeBranchStruct:
     def spin_ele(self) -> TaoSpinEleStructArray1D:
         ...
     @property
-    def tao_lat(self) -> _pybmad.TaoLatticeStruct | None:
+    def tao_lat(self) -> TaoLatticeStruct | None:
         ...
     @tao_lat.setter
     def tao_lat(self, arg1: TaoLatticeStruct) -> None:
@@ -13150,7 +13150,7 @@ class TaoPlotStruct:
     def n_curve_pts(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def r(self) -> _pybmad.TaoPlotRegionStruct | None:
+    def r(self) -> TaoPlotRegionStruct | None:
         ...
     @r.setter
     def r(self, arg1: TaoPlotRegionStruct) -> None:
@@ -13866,7 +13866,7 @@ class TaoUniversePointerStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def u(self) -> _pybmad.TaoUniverseStruct | None:
+    def u(self) -> TaoUniverseStruct | None:
         ...
     @u.setter
     def u(self, arg1: TaoUniverseStruct) -> None:
@@ -13941,7 +13941,7 @@ class TaoUniverseStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def base(self) -> _pybmad.TaoLatticeStruct | None:
+    def base(self) -> TaoLatticeStruct | None:
         ...
     @base.setter
     def base(self, arg1: TaoLatticeStruct) -> None:
@@ -13956,7 +13956,7 @@ class TaoUniverseStruct:
     def data(self) -> TaoDataStructArray1D:
         ...
     @property
-    def design(self) -> _pybmad.TaoLatticeStruct | None:
+    def design(self) -> TaoLatticeStruct | None:
         ...
     @design.setter
     def design(self, arg1: TaoLatticeStruct) -> None:
@@ -13968,7 +13968,7 @@ class TaoUniverseStruct:
     def ix_uni(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def model(self) -> _pybmad.TaoLatticeStruct | None:
+    def model(self) -> TaoLatticeStruct | None:
         ...
     @model.setter
     def model(self, arg1: TaoLatticeStruct) -> None:
@@ -14359,7 +14359,7 @@ class TaoVarStruct:
     def step(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def v1(self) -> _pybmad.TaoV1VarStruct | None:
+    def v1(self) -> TaoV1VarStruct | None:
         ...
     @v1.setter
     def v1(self, arg1: TaoV1VarStruct) -> None:
@@ -14436,7 +14436,7 @@ class TaoWaveKickPtStruct:
     def amp(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def ele(self) -> _pybmad.EleStruct | None:
+    def ele(self) -> EleStruct | None:
         ...
     @ele.setter
     def ele(self, arg1: EleStruct) -> None:
@@ -14578,7 +14578,7 @@ class TaoWaveStruct:
     def coef_ba(self) -> RealArray1D:
         ...
     @property
-    def d1_dat(self) -> _pybmad.TaoD1DataStruct | None:
+    def d1_dat(self) -> TaoD1DataStruct | None:
         ...
     @d1_dat.setter
     def d1_dat(self, arg1: TaoD1DataStruct) -> None:
@@ -14668,7 +14668,7 @@ class TaoWaveStruct:
     def n_kick(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def region(self) -> _pybmad.TaoPlotRegionStruct | None:
+    def region(self) -> TaoPlotRegionStruct | None:
         ...
     @region.setter
     def region(self, arg1: TaoPlotRegionStruct) -> None:
@@ -16323,7 +16323,7 @@ class Wall3DSectionStruct:
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def surface(self) -> _pybmad.PhotonReflectSurfaceStruct | None:
+    def surface(self) -> PhotonReflectSurfaceStruct | None:
         ...
     @surface.setter
     def surface(self, arg1: PhotonReflectSurfaceStruct) -> None:
@@ -17022,7 +17022,7 @@ def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.S
     super_ele_out : EleStruct
         Pointer to the super element in the lattice.
     """
-def add_this_multipass(lat: LatStruct, m_slaves: LatEleLocStructArray1D, lord_in: _pybmad.EleStruct | None = None) -> None:
+def add_this_multipass(lat: LatStruct, m_slaves: LatEleLocStructArray1D, lord_in: EleStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -17666,7 +17666,7 @@ def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: boo
     -----
     Overloaded versions:
     """
-def attribute_type(attrib_name: str, ele: _pybmad.EleStruct | None = None) -> int:
+def attribute_type(attrib_name: str, ele: EleStruct | None = None) -> int:
     """
     Function attribute_type (attrib_name, ele) result (attrib_type)
     
@@ -17924,7 +17924,7 @@ def beam_equal_beam(beam1: BeamStruct, beam2: BeamStruct) -> None:
     beam1 : 
     beam2 : 
     """
-def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typing.SupportsInt, modes: _pybmad.NormalModesStruct | None = None, err_flag: bool | None = None, beam_init_set: BeamInitStruct) -> None:
+def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typing.SupportsInt, modes: NormalModesStruct | None = None, err_flag: bool | None = None, beam_init_set: BeamInitStruct) -> None:
     """
     Parameters
     ----------
@@ -18414,7 +18414,7 @@ def bmad_parser(lat_file: str, make_mats6: bool | None = None, use_line: str | N
         List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
         documentation.
     """
-def bmad_parser2(lat_file: str, lat: LatStruct, orbit: _pybmad.CoordStructArray1D | None = None, make_mats6: bool | None = None, err_flag: bool | None = None, parse_lat: _pybmad.LatStruct | None = None) -> None:
+def bmad_parser2(lat_file: str, lat: LatStruct, orbit: CoordStructArray1D | None = None, make_mats6: bool | None = None, err_flag: bool | None = None, parse_lat: LatStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -18527,7 +18527,7 @@ def c_to_cbar(ele: EleStruct) -> typing.Annotated[list[typing.Annotated[list[flo
     cbar_mat : float
         Cbar matrix.
     """
-def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error: bool, print_err: bool | None = None, n_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
+def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error: bool, print_err: bool | None = None, n_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, is_time_coords: bool | None = None, ele: EleStruct | None = None) -> None:
     """
     Subroutine calc_bunch_params (bunch, bunch_params, error, print_err, n_mat, is_time_coords, ele)
     
@@ -18558,7 +18558,7 @@ def calc_bunch_params(bunch: BunchStruct, bunch_params: BunchParamsStruct, error
         N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
         51.).
     """
-def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, plane: typing.SupportsInt, slice_center: typing.SupportsFloat, slice_spread: typing.SupportsFloat, err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
+def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, plane: typing.SupportsInt, slice_center: typing.SupportsFloat, slice_spread: typing.SupportsFloat, err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: EleStruct | None = None) -> None:
     """
     subroutine calc_bunch_params_slice (bunch, bunch_params, plane, slice_center, slice_spread, err, print_err, is_time_coords, ele)
     
@@ -18585,7 +18585,7 @@ def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct,
     err : bool
         Set True if there is an error.
     """
-def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, slice_bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> None:
+def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct, slice_bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], err: bool, print_err: bool | None = None, is_time_coords: bool | None = None, ele: EleStruct | None = None) -> None:
     """
     subroutine calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds, err, print_err, is_time_coords, ele)
     
@@ -18612,7 +18612,7 @@ def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruc
     err : bool
         Set True if there is an error.
     """
-def calc_bunch_sigma_matrix_etc(particle: CoordStructArray1D, charge: RealArray1D, is_time_coords: bool | None = None, ele: _pybmad.EleStruct | None = None) -> BunchParamsStruct:
+def calc_bunch_sigma_matrix_etc(particle: CoordStructArray1D, charge: RealArray1D, is_time_coords: bool | None = None, ele: EleStruct | None = None) -> BunchParamsStruct:
     """
     Subroutine calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, ele)
     
@@ -18794,7 +18794,7 @@ def charge_to_mass_of(species: typing.SupportsInt) -> float:
     charge_mass_ratio : float
         particle charge to mass ratio. (1/eV)
     """
-def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.SupportsInt, param: LatParamStruct, old_orb: _pybmad.CoordStruct | None = None, check_momentum: bool | None = None) -> None:
+def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.SupportsInt, param: LatParamStruct, old_orb: CoordStruct | None = None, check_momentum: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -18825,7 +18825,7 @@ def check_controller_controls(ele_key: typing.SupportsInt, contrl: ControlStruct
     err : bool
         Set true if there is a problem. False otherwise.
     """
-def check_for_superimpose_problem(branch: BranchStruct, super_ele: EleStruct, err_flag: bool, ref_ele: _pybmad.EleStruct | None = None, wrap: bool) -> None:
+def check_for_superimpose_problem(branch: BranchStruct, super_ele: EleStruct, err_flag: bool, ref_ele: EleStruct | None = None, wrap: bool) -> None:
     """
     Subroutine check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap)
     
@@ -18878,7 +18878,7 @@ def choose_quads_for_set_tune(branch: BranchStruct, dk1: RealAlloc1D, eles: EleP
     err_flag : bool
         Set True if there is not one quad with positive dk1 and one quad with negative dk1.
     """
-def chrom_calc(lat: LatStruct, delta_e: typing.SupportsFloat, pz: typing.SupportsFloat | None = None, low_E_orb: _pybmad.CoordStructAlloc1D | None = None, high_E_orb: _pybmad.CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, orb0: _pybmad.CoordStruct | None = None) -> ChromCalc:
+def chrom_calc(lat: LatStruct, delta_e: typing.SupportsFloat, pz: typing.SupportsFloat | None = None, low_E_orb: CoordStructAlloc1D | None = None, high_E_orb: CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, orb0: CoordStruct | None = None) -> ChromCalc:
     """
     Parameters
     ----------
@@ -18984,7 +18984,7 @@ def closed_orbit_calc(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typ
         Print error message if calc does not converge? Default is True. Note: Condition messages like no RF
         voltage with i_dim = 6 will always be printed.
     """
-def closed_orbit_from_tracking(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typing.SupportsInt, eps_rel: _pybmad.RealArray1D | None = None, eps_abs: _pybmad.RealArray1D | None = None, init_guess: _pybmad.CoordStruct | None = None) -> bool:
+def closed_orbit_from_tracking(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typing.SupportsInt, eps_rel: RealArray1D | None = None, eps_abs: RealArray1D | None = None, init_guess: CoordStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -19174,7 +19174,7 @@ def complex_taylor_make_unit(complex_taylor: ComplexTaylorStructArray1D) -> None
     complex_taylor : ComplexTaylorStruct
         Unit complex_taylor map .
     """
-def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: ComplexArray1D, r_out: _pybmad.ComplexArray1D | None = None) -> ComplexTaylorToMat6:
+def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: ComplexArray1D, r_out: ComplexArray1D | None = None) -> ComplexTaylorToMat6:
     """
     Subroutine complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r_out)
     
@@ -19210,7 +19210,7 @@ def compute_slave_coupler(slave: EleStruct) -> None:
     
     This routine is not meant for general use.
     """
-def concat_ele_taylor(orb_taylor: TaylorStructArray1D, ele: EleStruct, err_flag: bool, spin_taylor: _pybmad.TaylorStructArray1D | None = None) -> None:
+def concat_ele_taylor(orb_taylor: TaylorStructArray1D, ele: EleStruct, err_flag: bool, spin_taylor: TaylorStructArray1D | None = None) -> None:
     """
     Subroutine concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor)
     
@@ -19283,7 +19283,7 @@ def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.
     mat_out : float
         Map from s0 to s2
     """
-def control_bookkeeper(lat: LatStruct, ele: _pybmad.EleStruct | None = None, err_flag: bool | None = None) -> None:
+def control_bookkeeper(lat: LatStruct, ele: EleStruct | None = None, err_flag: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -19675,13 +19675,6 @@ def coulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Suppo
     gam : 
     res : 
     """
-def count_lines_in_file(file_name: str) -> int:
-    """
-    Parameters
-    ----------
-    file_name : 
-    lines : 
-    """
 def create_a_spline(r0: RealArray1D, r1: RealArray1D, slope0: typing.SupportsFloat, slope1: typing.SupportsFloat) -> SplineStruct:
     """
     Function create_a_spline (r0, r1, slope0, slope1) result (spline)
@@ -19732,7 +19725,7 @@ def create_concatenated_wall3d(lat: LatStruct, err: bool) -> None:
     err_flag : bool
         Set True if there is an error, false otherwise.
     """
-def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offset: typing.SupportsFloat, param: LatParamStruct, include_upstream_end: bool, include_downstream_end: bool, old_slice: _pybmad.EleStruct | None = None, orb_in: _pybmad.CoordStruct | None = None) -> CreateElementSlice:
+def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offset: typing.SupportsFloat, param: LatParamStruct, include_upstream_end: bool, include_downstream_end: bool, old_slice: EleStruct | None = None, orb_in: CoordStruct | None = None) -> CreateElementSlice:
     """
     Parameters
     ----------
@@ -20592,7 +20585,7 @@ def ele_rf_step_index(E_ref: typing.SupportsFloat, s_rel: typing.SupportsFloat, 
         RF cavity.
     ix_step : 
     """
-def ele_to_fibre(ele: EleStruct, use_offsets: bool, integ_order: typing.SupportsInt | None = None, steps: typing.SupportsInt | None = None, for_layout: bool | None = None, ref_in: _pybmad.CoordStruct | None = None) -> EleToFibre:
+def ele_to_fibre(ele: EleStruct, use_offsets: bool, integ_order: typing.SupportsInt | None = None, steps: typing.SupportsInt | None = None, for_layout: bool | None = None, ref_in: CoordStruct | None = None) -> EleToFibre:
     """
     Parameters
     ----------
@@ -20653,7 +20646,7 @@ def ele_to_spin_taylor(ele: EleStruct, param: LatParamStruct, orb0: CoordStruct)
     orb0 : CoordStruct
         Starting ref coords.
     """
-def ele_to_taylor(ele: EleStruct, orb0: _pybmad.CoordStruct | None = None, taylor_map_includes_offsets: bool | None = None, include_damping: bool | None = None) -> EleToTaylor:
+def ele_to_taylor(ele: EleStruct, orb0: CoordStruct | None = None, taylor_map_includes_offsets: bool | None = None, include_damping: bool | None = None) -> EleToTaylor:
     """
     Parameters
     ----------
@@ -20894,7 +20887,7 @@ def element_slice_iterator(ele: EleStruct, param: LatParamStruct, i_slice: typin
     """
 def ellipinc_test() -> None:
     ...
-def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None, use_overlap: bool | None = None, grid_allow_s_out_of_bounds: bool | None = None, rf_time: typing.SupportsFloat | None = None, used_eles: _pybmad.ElePointerStructAlloc1D | None = None, print_err: bool | None = None, original_ele: _pybmad.EleStruct | None = None) -> EmFieldCalc:
+def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None, use_overlap: bool | None = None, grid_allow_s_out_of_bounds: bool | None = None, rf_time: typing.SupportsFloat | None = None, used_eles: ElePointerStructAlloc1D | None = None, print_err: bool | None = None, original_ele: EleStruct | None = None) -> EmFieldCalc:
     """
     Parameters
     ----------
@@ -20969,7 +20962,7 @@ def em_field_derivatives(ele: EleStruct, param: LatParamStruct, s_pos: typing.Su
     dfield : EmFieldStruct
         E and B field derivatives. dfield.E and dfield.B are not touched.
     """
-def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orbit: CoordStruct, err_flag: bool, print_err: bool | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
+def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orbit: CoordStruct, err_flag: bool, print_err: bool | None = None, extra_field: EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
     """
     Subroutine em_field_kick_vector_time (ele, param, rf_time, orbit, dvec_dt, err_flag, print_err, extra_field))
     
@@ -21019,7 +21012,7 @@ def em_taylors_equal_em_taylors(em_taylor1: EmTaylorStructArray1D, em_taylor2: E
     em_taylor1 : 
     em_taylor2 : 
     """
-def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: _pybmad.CoordStructArray1D | None = None) -> Emit6d:
+def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: CoordStructArray1D | None = None) -> Emit6d:
     """
     Subroutine emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, closed_orbit, rad_int_by_ele)
     
@@ -22092,7 +22085,7 @@ def expression_stack_to_string(stack: ExpressionAtomStructArray1D, polish: bool 
     str : unknown
         : Expression in string form.
     """
-def expression_stack_value(stack: ExpressionAtomStructArray1D, var: _pybmad.ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionStackValue:
+def expression_stack_value(stack: ExpressionAtomStructArray1D, var: ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionStackValue:
     """
     Function expression_stack_value (stack, err_flag, err_str, var, use_old) result (value)
     
@@ -22201,7 +22194,7 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> E
     compound vars with children "atan" "()" The funciton argument of a species related function like "He++" in the
     construct "mass_of(He++)" will not get split will get marked as a species_const$.
     """
-def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: _pybmad.ExpressionTreeStruct | None = None) -> str:
+def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: ExpressionTreeStruct | None = None) -> str:
     """
     Function expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
     
@@ -22224,7 +22217,7 @@ def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | N
     str_out : unknown
         Expression string.
     """
-def expression_value(expression: str, var: _pybmad.ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionValue:
+def expression_value(expression: str, var: ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionValue:
     """
     Function expression_value (expression, err_flag, err_str, var, use_old) result (value)
     
@@ -22542,7 +22535,7 @@ def floor_angles_to_w_mat(theta: typing.SupportsFloat, phi: typing.SupportsFloat
     w_mat_inv : float
         Inverse Orientation matrix.
     """
-def floor_w_mat_to_angles(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], floor0: _pybmad.FloorPositionStruct | None = None) -> FloorWMatToAngles:
+def floor_w_mat_to_angles(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], floor0: FloorPositionStruct | None = None) -> FloorWMatToAngles:
     """
     Parameters
     ----------
@@ -23043,7 +23036,7 @@ def has_orientation_attributes(ele: EleStruct) -> bool:
     Related routines:
     has_attribute function.
     """
-def hdf5_write_beam(file_name: str, bunches: BunchStructArray1D, append: bool, error: bool, lat: _pybmad.LatStruct | None = None, alive_only: bool | None = None) -> None:
+def hdf5_write_beam(file_name: str, bunches: BunchStructArray1D, append: bool, error: bool, lat: LatStruct | None = None, alive_only: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -23228,7 +23221,7 @@ def init_attribute_name_array() -> None:
     Private routine to initialize the attribute name array used by routines
     in attribute_mod. Not meant for general use.
     """
-def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, modes: _pybmad.NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBeamDistribution:
+def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, modes: NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBeamDistribution:
     """
     Subroutine init_beam_distribution (ele, param, beam_init, beam, err_flag, modes, beam_init_set,
                                                                         print_p0c_shift_warning, conserve_momentum)
@@ -23275,13 +23268,13 @@ def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Bea
     """
 def init_bmad() -> None:
     ...
-def init_bmad_parser_common(lat: _pybmad.LatStruct | None = None) -> None:
+def init_bmad_parser_common(lat: LatStruct | None = None) -> None:
     """
     Parameters
     ----------
     lat : 
     """
-def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, ix_bunch: typing.SupportsInt, modes: _pybmad.NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBunchDistribution:
+def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, ix_bunch: typing.SupportsInt, modes: NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBunchDistribution:
     """
     Subroutine init_bunch_distribution (ele, param, beam_init, ix_bunch, bunch, err_flag, modes, beam_init_used,
                                                                              print_p0c_shift_warning, conserve_momentum)
@@ -23362,7 +23355,7 @@ def init_complex_taylor_series(complex_taylor: ComplexTaylorStruct, n_term: typi
         If True then save any old terms when complex_taylor is resized. Default is False.
     """
 @typing.overload
-def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> None:
+def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], ele: EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> None:
     """
     Subroutine init_coord (...)
     
@@ -23429,7 +23422,7 @@ def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[
     Overloaded versions:
     """
 @typing.overload
-def init_coord(orb_in: CoordStruct, ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> CoordStruct:
+def init_coord(orb_in: CoordStruct, ele: EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> CoordStruct:
     """
     Subroutine init_coord (...)
     
@@ -23499,7 +23492,7 @@ def init_coord(orb_in: CoordStruct, ele: _pybmad.EleStruct | None = None, elemen
     Overloaded versions:
     """
 @typing.overload
-def init_coord(orb: CoordStruct, ele: _pybmad.EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> None:
+def init_coord(orb: CoordStruct, ele: EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> None:
     """
     Subroutine init_coord (...)
     
@@ -23571,7 +23564,7 @@ def init_custom(lat: LatStruct) -> None:
     ----------
     lat : 
     """
-def init_ele(key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, branch: _pybmad.BranchStruct | None = None) -> EleStruct:
+def init_ele(key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, branch: BranchStruct | None = None) -> EleStruct:
     """
     Parameters
     ----------
@@ -23750,7 +23743,7 @@ def initfixedwindowls(N: typing.SupportsInt, dt: typing.SupportsFloat, order: ty
         Order of derivative to be returned. Set der=0 to obtain the fit. <return value>  -- INTEGER: id of
         windowLS instance created.
     """
-def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None, orbit: _pybmad.CoordStructAlloc1D | None = None) -> None:
+def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None, orbit: CoordStructAlloc1D | None = None) -> None:
     """
     Parameters
     ----------
@@ -24291,7 +24284,7 @@ def lat_geometry(lat: LatStruct) -> None:
     lat : LatStruct
         The lattice. .ele(0).floor  -- Floor_position_struct: The starting point for the calculations.
     """
-def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_orb: _pybmad.CoordStructArray1D | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
+def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_orb: CoordStructArray1D | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
     Parameters
     ----------
@@ -24866,7 +24859,7 @@ def make_hvbp(N: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     Hbar : float
         mat_symp_conj(B).H.B
     """
-def make_hybrid_lat(lat_in: LatStruct, use_taylor: bool | None = None, orb0_arr: _pybmad.CoordArrayStructArray1D | None = None) -> LatStruct:
+def make_hybrid_lat(lat_in: LatStruct, use_taylor: bool | None = None, orb0_arr: CoordArrayStructArray1D | None = None) -> LatStruct:
     """
     Parameters
     ----------
@@ -24908,7 +24901,7 @@ def make_mad_map(ele: EleStruct, param: LatParamStruct) -> MakeMadMap:
     map : MadMapStruct
         Structure holding the transfer map.
     """
-def make_mat6(ele: EleStruct, param: LatParamStruct, start_orb: _pybmad.CoordStruct | None = None) -> MakeMat6:
+def make_mat6(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct | None = None) -> MakeMat6:
     """
     Parameters
     ----------
@@ -25531,7 +25524,7 @@ def multilayer_type_to_multilayer_params(ele: EleStruct) -> bool:
     err_flag : bool
         Set True if multilayer type is unrecognized. False otherwise.
     """
-def multipass_chain(ele: EleStruct, ix_pass: typing.SupportsInt, n_links: typing.SupportsInt, chain_ele: _pybmad.ElePointerStructAlloc1D | None = None, use_super_lord: bool | None = None) -> None:
+def multipass_chain(ele: EleStruct, ix_pass: typing.SupportsInt, n_links: typing.SupportsInt, chain_ele: ElePointerStructAlloc1D | None = None, use_super_lord: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -25881,7 +25874,7 @@ def nint_chk(re_val: typing.SupportsFloat) -> int:
     int_val : int
         Output nearest integer.
     """
-def normal_form_complex_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool, F: _pybmad.ComplexTaylorStructArray1D | None = None, L: _pybmad.ComplexTaylorStructArray1D | None = None, A: _pybmad.TaylorStructArray1D | None = None, A_inverse: _pybmad.TaylorStructArray1D | None = None, order: typing.SupportsInt | None = None) -> None:
+def normal_form_complex_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool, F: ComplexTaylorStructArray1D | None = None, L: ComplexTaylorStructArray1D | None = None, A: TaylorStructArray1D | None = None, A_inverse: TaylorStructArray1D | None = None, order: typing.SupportsInt | None = None) -> None:
     """
     Parameters
     ----------
@@ -26048,7 +26041,7 @@ def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_bo
     track : TrackStruct
         Structure holding the track information.
     """
-def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, track: _pybmad.TrackStruct | None = None, t_end: typing.SupportsFloat | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> OdeintBmadTime:
+def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, track: TrackStruct | None = None, t_end: typing.SupportsFloat | None = None, extra_field: EmFieldStruct | None = None) -> OdeintBmadTime:
     """
     Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
     
@@ -26941,7 +26934,7 @@ def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloa
     err_flag : bool
         Set true if material not recognized.
     """
-def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, ele: EleStruct, ix_pt: typing.SupportsInt | None = None, iy_pt: typing.SupportsInt | None = None, pixel_pt: _pybmad.PixelPtStruct | None = None) -> None:
+def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, ele: EleStruct, ix_pt: typing.SupportsInt | None = None, iy_pt: typing.SupportsInt | None = None, pixel_pt: PixelPtStruct | None = None) -> None:
     """
     Subroutine photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt, iy_pt, pixel_pt)
     
@@ -27543,7 +27536,7 @@ def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None =
         If True then fork at any fork element. Default is False.
     next_ele : 
     """
-def pointer_to_ran_state(ran_state: _pybmad.RandomStateStruct | None = None, ix_thread: typing.SupportsInt | None = None) -> RandomStateStruct:
+def pointer_to_ran_state(ran_state: RandomStateStruct | None = None, ix_thread: typing.SupportsInt | None = None) -> RandomStateStruct:
     """
     Function pointer_to_ran_state(ran_state, ix_thread) result (ran_state_ptr)
     
@@ -27821,7 +27814,7 @@ def ptc_bookkeeper(lat: LatStruct) -> None:
     lat : LatStruct
         Bmad lattice.
     """
-def ptc_calculate_tracking_step_size(ptc_layout: Layout, kl_max: typing.SupportsFloat, ds_max: typing.SupportsFloat | None = None, even_steps: _pybmad.BoolAlloc1D | None = None, r_typical: typing.SupportsFloat | None = None, dx_tol_bend: typing.SupportsFloat | None = None, use_2nd_order: bool | None = None, crossover: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None, crossover_wiggler: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None) -> None:
+def ptc_calculate_tracking_step_size(ptc_layout: Layout, kl_max: typing.SupportsFloat, ds_max: typing.SupportsFloat | None = None, even_steps: BoolAlloc1D | None = None, r_typical: typing.SupportsFloat | None = None, dx_tol_bend: typing.SupportsFloat | None = None, use_2nd_order: bool | None = None, crossover: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None, crossover_wiggler: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None) -> None:
     """
     Subroutine ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max,
                                     even_steps, r_typical, dx_tol_bend, use_2nd_order)
@@ -28309,7 +28302,7 @@ def quote(str: str, q_str: str) -> None:
     str : 
     q_str : 
     """
-def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in: CoordStruct, orb_out: CoordStruct, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat, ele0: _pybmad.EleStruct | None = None) -> Rad1DampAndStocMats:
+def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in: CoordStruct, orb_out: CoordStruct, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat, ele0: EleStruct | None = None) -> Rad1DampAndStocMats:
     """
     Subroutine rad1_damp_and_stoc_mats (ele, include_opening_angle, orb_in, orb_out, rad_map, g2_tol, g3_tol, err_flag, ele0, rad_int1)
     
@@ -28342,7 +28335,7 @@ def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in:
     rad_int1 : RadInt1Struct
         Radiation integrals
     """
-def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_angle: bool, closed_orbit: _pybmad.CoordStructArray1D | None = None) -> RadDampAndStocMats:
+def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_angle: bool, closed_orbit: CoordStructArray1D | None = None) -> RadDampAndStocMats:
     """
     Subroutine rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rmap, mode, xfer_nodamp_mat, err_flag, closed_orbit, rad_int_branch)
     
@@ -28444,7 +28437,7 @@ def radiation_integrals(lat: LatStruct, orbit: CoordStructArray1D, ix_cache: typ
         lin_norm_emit values are running sums from the beginning of the lattice and include the beginning
         emittance stored in lat.a.emit and lat.b.emit.
     """
-def radiation_map_setup(ele: EleStruct, ref_orbit_in: _pybmad.CoordStruct | None = None) -> bool:
+def radiation_map_setup(ele: EleStruct, ref_orbit_in: CoordStruct | None = None) -> bool:
     """
     Subroutine radiation_map_setup (ele, err_flag, ref_orbit_in)
     
@@ -28487,7 +28480,7 @@ def ramper_value(ramper: EleStruct, r1: ControlRamp1Struct, value: typing.Suppor
         Set True if there is an error, False otherwise.
     value : 
     """
-def ran_default_state(set_state: _pybmad.RandomStateStruct | None = None) -> RandomStateStruct:
+def ran_default_state(set_state: RandomStateStruct | None = None) -> RandomStateStruct:
     """
     Subroutine ran_default_state (set_state, get_state)
     
@@ -28504,7 +28497,7 @@ def ran_default_state(set_state: _pybmad.RandomStateStruct | None = None) -> Ran
     get_state : RandomStateStruct
         Returns the state of the default generator.
     """
-def ran_engine(set: str | None = None, get: str | None = None, ran_state: _pybmad.RandomStateStruct | None = None) -> None:
+def ran_engine(set: str | None = None, get: str | None = None, ran_state: RandomStateStruct | None = None) -> None:
     """
     Subroutine ran_engine (set, get, ran_state)
     
@@ -28522,7 +28515,7 @@ def ran_engine(set: str | None = None, get: str | None = None, ran_state: _pybma
     ran_state : RandomStateStruct, optional
         Internal state. See the ran_seed_put documentation for more details.
     """
-def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFloat | None = None, ran_state: _pybmad.RandomStateStruct | None = None) -> RanGaussConverter:
+def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFloat | None = None, ran_state: RandomStateStruct | None = None) -> RanGaussConverter:
     """
     Subroutine ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, ran_state)
     
@@ -28560,7 +28553,7 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
     get_sigma_cut : float
         Get the current (before any set) sigma cutoff.
     """
-def ran_gauss_scalar(ran_state: _pybmad.RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None, index_quasi: typing.SupportsInt | None = None) -> float:
+def ran_gauss_scalar(ran_state: RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None, index_quasi: typing.SupportsInt | None = None) -> float:
     """
     Subroutine ran_gauss (harvest, ran_state, sigma_cut)
     
@@ -28592,7 +28585,7 @@ def ran_gauss_scalar(ran_state: _pybmad.RandomStateStruct | None = None, sigma_c
     -----
     Overloaded versions:
     """
-def ran_gauss_vector(harvest: RealArray1D, ran_state: _pybmad.RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None) -> None:
+def ran_gauss_vector(harvest: RealArray1D, ran_state: RandomStateStruct | None = None, sigma_cut: typing.SupportsFloat | None = None) -> None:
     """
     Subroutine ran_gauss (harvest, ran_state, sigma_cut)
     
@@ -28662,7 +28655,7 @@ def ran_seed_put(seed: typing.SupportsInt, mpi_offset: typing.SupportsInt | None
         random numbers.
     """
 @typing.overload
-def ran_uniform(ran_state: _pybmad.RandomStateStruct | None = None, index_quasi: typing.SupportsInt | None = None) -> float:
+def ran_uniform(ran_state: RandomStateStruct | None = None, index_quasi: typing.SupportsInt | None = None) -> float:
     """
     Subroutine ran_uniform (harvest, ran_state)
     
@@ -28694,7 +28687,7 @@ def ran_uniform(ran_state: _pybmad.RandomStateStruct | None = None, index_quasi:
     Overloaded versions:
     """
 @typing.overload
-def ran_uniform(harvest: RealArray1D, ran_state: _pybmad.RandomStateStruct | None = None) -> None:
+def ran_uniform(harvest: RealArray1D, ran_state: RandomStateStruct | None = None) -> None:
     """
     Subroutine ran_uniform (harvest, ran_state)
     
@@ -28854,7 +28847,7 @@ def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ReadBeamAscii:
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
-def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: _pybmad.EleStruct | None = None, print_mom_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> ReadBeamFile:
+def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: EleStruct | None = None, print_mom_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> ReadBeamFile:
     """
     Subroutine read_beam_file (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
     
@@ -29341,7 +29334,7 @@ def rfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFlo
     j : 
     res : 
     """
-def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, dt_try: typing.SupportsFloat, dt_did: typing.SupportsFloat, dt_next: typing.SupportsFloat, err_flag: bool, extra_field: _pybmad.EmFieldStruct | None = None) -> None:
+def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, dt_try: typing.SupportsFloat, dt_did: typing.SupportsFloat, dt_next: typing.SupportsFloat, err_flag: bool, extra_field: EmFieldStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -29356,7 +29349,7 @@ def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruc
     err_flag : 
     extra_field : 
     """
-def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orb: CoordStruct, dt: typing.SupportsFloat, new_orb: CoordStruct, dr_dt: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None, err_flag: bool, print_err: bool | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
+def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orb: CoordStruct, dt: typing.SupportsFloat, new_orb: CoordStruct, dr_dt: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None, err_flag: bool, print_err: bool | None = None, extra_field: EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
     """
     Parameters
     ----------
@@ -29372,7 +29365,7 @@ def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.Support
     print_err : 
     extra_field : 
     """
-def rms_value(val_arr: RealArray1D, good_val: _pybmad.BoolAlloc1D | None = None, rms_val: typing.SupportsFloat) -> float:
+def rms_value(val_arr: RealArray1D, good_val: BoolAlloc1D | None = None, rms_val: typing.SupportsFloat) -> float:
     """
     Parameters
     ----------
@@ -29623,7 +29616,7 @@ def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: 
     t0 : float, optional
         Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole. Must be present if k0l is.
     """
-def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: _pybmad.BunchTrackStructArray1D | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
+def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: BunchTrackStructArray1D | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -29639,7 +29632,7 @@ def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: _pybmad.Bun
         Default is False. If True, input beam is using time coordinates in which case there will be a conversion
         to s-coords before bunch_params are computed. Ouput:
     """
-def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: _pybmad.BunchTrackStruct | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
+def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: BunchTrackStruct | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -29655,7 +29648,7 @@ def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: _pybmad.B
         Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
         to s-coords before bunch_params are computed. Ouput:
     """
-def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local_ref_frame: bool, orb: CoordStruct, s_rel: typing.SupportsFloat, save_field: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, rf_time: typing.SupportsFloat | None = None, strong_beam: _pybmad.StrongBeamStruct | None = None) -> None:
+def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local_ref_frame: bool, orb: CoordStruct, s_rel: typing.SupportsFloat, save_field: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, rf_time: typing.SupportsFloat | None = None, strong_beam: StrongBeamStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -30118,7 +30111,7 @@ def set_lords_status_stale(ele: EleStruct, stat_group: typing.SupportsInt, contr
         Do not use. For coordinating recursion. ele.lat    -- Lat_struct: Lattice with status flags of lords of
         ele set.
     """
-def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.SupportsInt, orb: _pybmad.CoordStructArray1D | None = None, use_ref_orb: bool | None = None, ix_branch: typing.SupportsInt | None = None, saved_values: _pybmad.RealAlloc1D | None = None, attribute: str | None = None, set_val: typing.SupportsInt | None = None) -> None:
+def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.SupportsInt, orb: CoordStructArray1D | None = None, use_ref_orb: bool | None = None, ix_branch: typing.SupportsInt | None = None, saved_values: RealAlloc1D | None = None, attribute: str | None = None, set_val: typing.SupportsInt | None = None) -> None:
     """
     Parameters
     ----------
@@ -30389,7 +30382,7 @@ def settable_dep_var_bookkeeping(ele: EleStruct) -> None:
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
     """
-def setup_high_energy_space_charge_calc(calc_on: bool, branch: BranchStruct, n_part: typing.SupportsFloat, mode: NormalModesStruct, beam_init: _pybmad.BeamInitStruct | None = None, closed_orb: _pybmad.CoordStructArray1D | None = None) -> None:
+def setup_high_energy_space_charge_calc(calc_on: bool, branch: BranchStruct, n_part: typing.SupportsFloat, mode: NormalModesStruct, beam_init: BeamInitStruct | None = None, closed_orb: CoordStructArray1D | None = None) -> None:
     """
     Subroutine setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, beam_init, closed_orb)
     
@@ -31102,7 +31095,7 @@ def sr_z_long_wake(ele: EleStruct, bunch: BunchStruct, z_ave: typing.SupportsFlo
     orbit : CoordStruct
         Ending particle coords.
     """
-def srdt_calc(lat: LatStruct, order: typing.SupportsInt, n_slices_gen_opt: typing.SupportsInt | None = None, n_slices_sxt_opt: typing.SupportsInt | None = None, per_ele_out: _pybmad.SummationRdtStructAlloc1D | None = None) -> SummationRdtStruct:
+def srdt_calc(lat: LatStruct, order: typing.SupportsInt, n_slices_gen_opt: typing.SupportsInt | None = None, n_slices_sxt_opt: typing.SupportsInt | None = None, per_ele_out: SummationRdtStructAlloc1D | None = None) -> SummationRdtStruct:
     """
     Subroutine srdt_calc(lat, srdt_sums, order, n_slices_gen_opt, n_slices_sxt_opt)
     
@@ -31455,7 +31448,7 @@ def super_poly(x: typing.SupportsFloat, coeffs: RealArray1D) -> float:
     value : float
         Polynomial value.
     """
-def super_sobseq(x: RealArray1D, ran_state: _pybmad.RandomStateStruct | None = None) -> None:
+def super_sobseq(x: RealArray1D, ran_state: RandomStateStruct | None = None) -> None:
     """
     Subroutine super_sobseq (x, ran_state)
     
@@ -31980,7 +31973,7 @@ def tao_data_coupling_init(branch: BranchStruct) -> None:
     branch : BranchStruct
         New lattice branch.
     """
-def tao_data_sanity_check(datum: TaoDataStruct, print_err: bool, default_data_type: str, uni: _pybmad.TaoUniverseStruct | None = None, is_valid: bool) -> None:
+def tao_data_sanity_check(datum: TaoDataStruct, print_err: bool, default_data_type: str, uni: TaoUniverseStruct | None = None, is_valid: bool) -> None:
     """
     Parameters
     ----------
@@ -32429,7 +32422,7 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
     value : float
         Datum value.
     """
-def tao_evaluate_element_parameters(param_name: str, values: RealAlloc1D, print_err: bool, dflt_ele: _pybmad.EleStruct | None = None, dflt_source: str, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, eval_point: typing.SupportsInt | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None) -> bool:
+def tao_evaluate_element_parameters(param_name: str, values: RealAlloc1D, print_err: bool, dflt_ele: EleStruct | None = None, dflt_source: str, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, eval_point: typing.SupportsInt | None = None, info: TaoExpressionInfoStructAlloc1D | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32452,7 +32445,7 @@ def tao_evaluate_element_parameters(param_name: str, values: RealAlloc1D, print_
     eval_point : 
     info : unknown
     """
-def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
+def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32501,7 +32494,7 @@ def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_goo
         If present, check to see that the expression does not depend upon a datum that will be evaluated after
         this datum. If so, this is an error.
     """
-def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
+def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32550,7 +32543,7 @@ def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use
         If present, check to see that the expression does not depend upon a datum that will be evaluated after
         this datum. If so, this is an error.
     """
-def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: _pybmad.TaoExpressionInfoStructAlloc1D | None = None, stack: _pybmad.TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> bool:
+def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32599,7 +32592,7 @@ def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use
         If present, check to see that the expression does not depend upon a datum that will be evaluated after
         this datum. If so, this is an error.
     """
-def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err: bool, default_source: str, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None) -> bool:
+def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err: bool, default_source: str, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None) -> bool:
     """
     ! private tao_scratch_values_calc, tao_eval_floor_orbit, tao_ele_geometry_with_misalignments
     
@@ -32643,7 +32636,7 @@ def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err
     values : float
         Array of datum valuse.
     """
-def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: _pybmad.TaoExpressionInfoStructAlloc1D | None = None) -> bool:
+def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: TaoExpressionInfoStructAlloc1D | None = None) -> bool:
     """
     Subroutine tao_evaluate_stack_old (stack, n_size_in, use_good_user, value, info, err_flag, print_err, expression)
     
@@ -32674,7 +32667,7 @@ def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.Su
     err_flag : bool
         True on error. False otherwise
     """
-def tao_evaluate_tree(tao_tree: TaoEvalNodeStruct, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: _pybmad.TaoExpressionInfoStructAlloc1D | None = None) -> bool:
+def tao_evaluate_tree(tao_tree: TaoEvalNodeStruct, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: TaoExpressionInfoStructAlloc1D | None = None) -> bool:
     """
     Parameters
     ----------
@@ -32706,7 +32699,7 @@ def tao_evaluate_tune(q_str: str, q0: typing.SupportsFloat, delta_input: bool, q
         If true then qa_str and qb_str are deltas from present tune. Outut:
     q_val : 
     """
-def tao_expression_hash_substitute(expression_in: str, eval_ele: _pybmad.EleStruct | None = None) -> str:
+def tao_expression_hash_substitute(expression_in: str, eval_ele: EleStruct | None = None) -> str:
     """
     Subroutine tao_expression_hash_substitute(expression_in, expression_out, eval_ele)
     
@@ -32730,7 +32723,7 @@ def tao_expression_hash_substitute(expression_in: str, eval_ele: _pybmad.EleStru
     expression_out : unknown
         Expression with substitutions made.
     """
-def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: _pybmad.TaoEvalNodeStruct | None = None) -> str:
+def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: TaoEvalNodeStruct | None = None) -> str:
     """
     Function tao_expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
     
@@ -32817,7 +32810,7 @@ def tao_geodesic_lm_optimizer() -> bool:
     abort : bool
         Set True if an user stop signal detected.
     """
-def tao_get_data(data_value: _pybmad.RealAlloc1D | None = None, data_weight: _pybmad.RealAlloc1D | None = None, data_meas_value: _pybmad.RealAlloc1D | None = None, data_ix_dModel: _pybmad.IntAlloc1D | None = None) -> None:
+def tao_get_data(data_value: RealAlloc1D | None = None, data_weight: RealAlloc1D | None = None, data_meas_value: RealAlloc1D | None = None, data_ix_dModel: IntAlloc1D | None = None) -> None:
     """
     Subroutine tao_get_data (data_value, data_weight, data_meas_value, dat_ix_dModel)
     
@@ -32836,7 +32829,7 @@ def tao_get_data(data_value: _pybmad.RealAlloc1D | None = None, data_weight: _py
     data_ix_dModel : int
         Data ix_dModel indices
     """
-def tao_get_opt_vars(var_value: _pybmad.RealAlloc1D | None = None, var_step: _pybmad.RealAlloc1D | None = None, var_delta: _pybmad.RealAlloc1D | None = None, var_weight: _pybmad.RealAlloc1D | None = None, var_ix: _pybmad.IntAlloc1D | None = None) -> TaoGetOptVars:
+def tao_get_opt_vars(var_value: RealAlloc1D | None = None, var_step: RealAlloc1D | None = None, var_delta: RealAlloc1D | None = None, var_weight: RealAlloc1D | None = None, var_ix: IntAlloc1D | None = None) -> TaoGetOptVars:
     """
     Parameters
     ----------
@@ -33245,7 +33238,7 @@ def tao_lmdif_optimizer() -> bool:
     abort : bool
         Set True if an user stop signal detected or there is a problem with calculating the merit function.
     """
-def tao_load_this_datum(vec: RealArray1D, ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum_value: typing.SupportsFloat, valid_value: bool, datum: TaoDataStruct, branch: BranchStruct, why_invalid: str | None = None, good: _pybmad.BoolAlloc1D | None = None) -> None:
+def tao_load_this_datum(vec: RealArray1D, ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum_value: typing.SupportsFloat, valid_value: bool, datum: TaoDataStruct, branch: BranchStruct, why_invalid: str | None = None, good: BoolAlloc1D | None = None) -> None:
     """
     Parameters
     ----------
@@ -33410,7 +33403,7 @@ def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct
         Data_type is malformed.
     value : 
     """
-def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, stack: TaoEvalNodeStruct, err_flag: bool, print_err: bool, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: _pybmad.EleStruct | None = None, dflt_ele_start: _pybmad.EleStruct | None = None, dflt_ele: _pybmad.EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: _pybmad.CoordStruct | None = None, datum: _pybmad.TaoDataStruct | None = None) -> None:
+def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, stack: TaoEvalNodeStruct, err_flag: bool, print_err: bool, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -34152,7 +34145,7 @@ def tao_set_data_cmd(who_str: str, value_str: str, silent: bool | None = None) -
     value_str : unknown
         What value to set it to.
     """
-def tao_set_data_useit_opt(data: _pybmad.TaoDataStructArray1D | None = None) -> None:
+def tao_set_data_useit_opt(data: TaoDataStructArray1D | None = None) -> None:
     """
     Parameters
     ----------
@@ -35111,7 +35104,7 @@ def tao_wave_cmd(curve_name: str, plot_place: str, err_flag: bool) -> None:
     plot_place : 
         Character(*) place on plot page to put the wave plot.
     """
-def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.SupportsInt, coef: RealArray1D, rms: RealArray1D, f1: RealArray1D, f2: _pybmad.RealArray1D | None = None, f3: _pybmad.RealArray1D | None = None, f4: _pybmad.RealArray1D | None = None) -> None:
+def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.SupportsInt, coef: RealArray1D, rms: RealArray1D, f1: RealArray1D, f2: RealArray1D | None = None, f3: RealArray1D | None = None, f4: RealArray1D | None = None) -> None:
     """
     Subroutine tao_wave_fit (curve, ix1, n_dat, coef, rms, f1, f2, f3, f4)
     
@@ -35225,7 +35218,7 @@ def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_
     have_scaled : bool
         Has a graph been scaled?
     """
-def taper_mag_strengths(lat: LatStruct, ref_lat: _pybmad.LatStruct | None = None, except: str | None = None, err_flag: bool | None = None) -> None:
+def taper_mag_strengths(lat: LatStruct, ref_lat: LatStruct | None = None, except: str | None = None, err_flag: bool | None = None) -> None:
     """
     Parameters
     ----------
@@ -35302,7 +35295,7 @@ def taylor_inverse(taylor_in: TaylorStructArray1D, taylor_inv: TaylorStructArray
     err : bool
         Set True if there is no inverse. If not present then print an error message.
     """
-def taylor_propagate1(orb_taylor: TaylorStructArray1D, ele: EleStruct, param: LatParamStruct, ref_in: _pybmad.CoordStruct | None = None, spin_taylor: _pybmad.TaylorStructArray1D | None = None) -> bool:
+def taylor_propagate1(orb_taylor: TaylorStructArray1D, ele: EleStruct, param: LatParamStruct, ref_in: CoordStruct | None = None, spin_taylor: TaylorStructArray1D | None = None) -> bool:
     """
     Subroutine taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, spin_taylor)
     
@@ -35359,7 +35352,7 @@ def taylors_equal_taylors(taylor1: TaylorStructArray1D, taylor2: TaylorStructArr
     taylor1 : 
     taylor2 : 
     """
-def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructArray1D, arr_out: BunchStructAlloc1D, arr_in_opt: _pybmad.BunchStructArray1D | None = None, arr_inout_opt: _pybmad.BunchStructArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructArray1D, arr_out: BunchStructAlloc1D, arr_in_opt: BunchStructArray1D | None = None, arr_inout_opt: BunchStructArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35370,7 +35363,7 @@ def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructAr
       arr_in_opt : 
       arr_inout_opt : 
     """
-def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in_opt: _pybmad.BunchStruct | None = None, val_inout_opt: _pybmad.BunchStruct | None = None) -> TestBunchStructScalar:
+def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in_opt: BunchStruct | None = None, val_inout_opt: BunchStruct | None = None) -> TestBunchStructScalar:
     """
     Parameters
       ----------
@@ -35392,7 +35385,7 @@ def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = 
       val_in_opt : 
       val_inout_opt : 
     """
-def test_complex_array(arr_in: ComplexArray1D, arr_inout: ComplexArray1D, arr_out: ComplexAlloc1D, arr_in_opt: _pybmad.ComplexArray1D | None = None, arr_inout_opt: _pybmad.ComplexArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_complex_array(arr_in: ComplexArray1D, arr_inout: ComplexArray1D, arr_out: ComplexAlloc1D, arr_in_opt: ComplexArray1D | None = None, arr_inout_opt: ComplexArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35414,7 +35407,7 @@ def test_complex_scalar(val_in: complex, val_inout: complex, val_in_opt: complex
       val_in_opt : 
       val_inout_opt : 
     """
-def test_integer8_array(arr_in: Int8Array1D, arr_inout: Int8Array1D, arr_out: Int8Alloc1D, arr_in_opt: _pybmad.Int8Array1D | None = None, arr_inout_opt: _pybmad.Int8Array1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_integer8_array(arr_in: Int8Array1D, arr_inout: Int8Array1D, arr_out: Int8Alloc1D, arr_in_opt: Int8Array1D | None = None, arr_inout_opt: Int8Array1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35436,7 +35429,7 @@ def test_integer8_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsI
       val_in_opt : 
       val_inout_opt : 
     """
-def test_integer_array(arr_in: IntArray1D, arr_inout: IntArray1D, arr_out: IntAlloc1D, arr_in_opt: _pybmad.IntArray1D | None = None, arr_inout_opt: _pybmad.IntArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_integer_array(arr_in: IntArray1D, arr_inout: IntArray1D, arr_out: IntAlloc1D, arr_in_opt: IntArray1D | None = None, arr_inout_opt: IntArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35458,7 +35451,7 @@ def test_integer_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsIn
       val_in_opt : 
       val_inout_opt : 
     """
-def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_out: BoolAlloc1D, arr_in_opt: _pybmad.BoolAlloc1D | None = None, arr_inout_opt: _pybmad.BoolAlloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_out: BoolAlloc1D, arr_in_opt: BoolAlloc1D | None = None, arr_inout_opt: BoolAlloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35480,7 +35473,7 @@ def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None =
       val_in_opt : 
       val_inout_opt : 
     """
-def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_out: Real16Alloc1D, arr_in_opt: _pybmad.Real16Alloc1D | None = None, arr_inout_opt: _pybmad.Real16Alloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_out: Real16Alloc1D, arr_in_opt: Real16Alloc1D | None = None, arr_inout_opt: Real16Alloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35502,7 +35495,7 @@ def test_real16_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsF
       val_in_opt : 
       val_inout_opt : 
     """
-def test_real_array(arr_in: RealArray1D, arr_inout: RealArray1D, arr_out: RealAlloc1D, arr_in_opt: _pybmad.RealArray1D | None = None, arr_inout_opt: _pybmad.RealArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
+def test_real_array(arr_in: RealArray1D, arr_inout: RealArray1D, arr_out: RealAlloc1D, arr_in_opt: RealArray1D | None = None, arr_inout_opt: RealArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
     Parameters
       ----------
@@ -35818,7 +35811,7 @@ def touschek_rate1_zap(mode: NormalModesStruct, rate: typing.SupportsFloat, lat:
     ix : 
     s : 
     """
-def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track: _pybmad.TrackStruct | None = None, ignore_radiation: bool | None = None, make_map1: bool | None = None, init_to_edge: bool | None = None) -> Track1:
+def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track: TrackStruct | None = None, ignore_radiation: bool | None = None, make_map1: bool | None = None, init_to_edge: bool | None = None) -> Track1:
     """
     Parameters
     ----------
@@ -35847,7 +35840,7 @@ def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track:
         Default is True. If True then force the tracked particle to begin at the element's edge. See above. Do not
         use this argument unless you know what you are doing.
     """
-def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None) -> bool:
+def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None) -> bool:
     """
     Subroutine track1_beam (beam, ele, err, centroid, direction)
     
@@ -35907,7 +35900,7 @@ def track1_bmad_photon(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
-def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
+def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
     Subroutine track1_bunch (bunch, ele, err, centroid, direction, bunch_track)
     
@@ -35935,7 +35928,7 @@ def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: _pybmad.CoordStru
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
-def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
+def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
     Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
     
@@ -35965,7 +35958,7 @@ def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructAr
     err : bool
         Set true if there is an error. EG: Too many particles lost.
     """
-def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
+def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
     Subroutine track1_bunch_csr3d (bunch, ele, centroid, err, bunch_track)
     
@@ -35999,7 +35992,7 @@ def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStruct
     err : bool
         Set true if there is an error. EG: Too many particles lost.
     """
-def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> None:
+def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.SupportsInt | None = None, bunch_track: BunchTrackStruct | None = None) -> None:
     """
     Subroutine track1_bunch_hom (bunch, ele, direction, bunch_track)
     
@@ -36019,7 +36012,7 @@ def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.Suppo
         This parameter is an input/output and is modified in-place. As an output: Track information appended to
         track.
     """
-def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_s: bool | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
+def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_s: bool | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -36347,7 +36340,7 @@ def track1_symp_lie_ptc(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     track : TrackStruct
         Structure holding the track information.
     """
-def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: _pybmad.TaylorStructArray1D | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: TaylorStructArray1D | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
     Parameters
     ----------
@@ -36813,7 +36806,7 @@ def track_a_zero_length_element(orbit: CoordStruct, ele: EleStruct, param: LatPa
     track : TrackStruct
         Structure holding the track information.
     """
-def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, orbit0: _pybmad.CoordStructAlloc1D | None = None, init_lost: bool | None = None) -> TrackAll:
+def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, orbit0: CoordStructAlloc1D | None = None, init_lost: bool | None = None) -> TrackAll:
     """
     Parameters
     ----------
@@ -36834,7 +36827,7 @@ def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.Suppo
     init_lost : bool
         Default if False. If True, initialize orbit(N) terms that are not tracked through due to particle loss.
     """
-def track_beam(lat: LatStruct, beam: BeamStruct, ele1: _pybmad.EleStruct | None = None, ele2: _pybmad.EleStruct | None = None, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_tracks: _pybmad.BunchTrackStructArray1D | None = None) -> bool:
+def track_beam(lat: LatStruct, beam: BeamStruct, ele1: EleStruct | None = None, ele2: EleStruct | None = None, centroid: CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_tracks: BunchTrackStructArray1D | None = None) -> bool:
     """
     Subroutine track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks)
     
@@ -36869,7 +36862,7 @@ def track_beam(lat: LatStruct, beam: BeamStruct, ele1: _pybmad.EleStruct | None 
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
-def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: _pybmad.EleStruct | None = None, ele2: _pybmad.EleStruct | None = None, centroid: _pybmad.CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
+def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = None, ele2: EleStruct | None = None, centroid: CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
     Subroutine track_bunch (lat, bunch, ele1, ele2, err, centroid, direction, bunch_track)
     
@@ -36906,7 +36899,7 @@ def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: _pybmad.EleStruct | No
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
-def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.SupportsFloat, s_end: typing.SupportsFloat, dt_step: _pybmad.RealArray1D | None = None, extra_field: _pybmad.EmFieldStructArray1D | None = None) -> None:
+def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.SupportsFloat, s_end: typing.SupportsFloat, dt_step: RealArray1D | None = None, extra_field: EmFieldStructArray1D | None = None) -> None:
     """
     Parameters
     ----------
@@ -36979,7 +36972,7 @@ def track_complex_taylor(start_orb: ComplexArray1D, complex_taylor: ComplexTaylo
     end_orb : complex
         Ending coords.
     """
-def track_from_s_to_s(lat: LatStruct, s_start: typing.SupportsFloat, s_end: typing.SupportsFloat, orbit_start: CoordStruct, all_orb: _pybmad.CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, ix_ele_end: typing.SupportsInt | None = None) -> TrackFromSToS:
+def track_from_s_to_s(lat: LatStruct, s_start: typing.SupportsFloat, s_end: typing.SupportsFloat, orbit_start: CoordStruct, all_orb: CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, ix_ele_end: typing.SupportsInt | None = None) -> TrackFromSToS:
     """
     Parameters
     ----------
@@ -37148,7 +37141,7 @@ def transfer_fieldmap(ele_in: EleStruct, who: typing.SupportsInt) -> EleStruct:
     who : int
         Possibilities are: all$, cartesian_map$, cylindrical_map$, or grid_field$
     """
-def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: _pybmad.CoordStruct | None = None, who: str | None = None) -> bool:
+def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: CoordStruct | None = None, who: str | None = None) -> bool:
     """
     Function transfer_fixer_params(fixer, to_stored, orbit, who) result (is_ok)
     
@@ -37189,7 +37182,7 @@ def transfer_lat_parameters(lat_in: LatStruct) -> LatStruct:
     lat_out : LatStruct
         Output lat with parameters set.
     """
-def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, ref_orb: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: _pybmad.TaylorStructArray1D | None = None) -> bool:
+def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, ref_orb: CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: TaylorStructArray1D | None = None) -> bool:
     """
     Parameters
     ----------
@@ -37222,7 +37215,7 @@ def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.
         Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
         This parameter is an input/output and is modified in-place. As an output: Quaternion spin map.
     """
-def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typing.SupportsFloat | None = None, s2: typing.SupportsFloat | None = None, ref_orb_in: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: _pybmad.TaylorStructArray1D | None = None) -> TransferMapFromSToS:
+def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typing.SupportsFloat | None = None, s2: typing.SupportsFloat | None = None, ref_orb_in: CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: TaylorStructArray1D | None = None) -> TransferMapFromSToS:
     """
     Subroutine transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref_orb_out, ix_branch,
                                              one_turn, unit_start, err_flag, concat_if_possible, spin_map)
@@ -37544,7 +37537,7 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
 @typing.overload
-def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None, calc_chrom: bool | None = None, orb_start: _pybmad.CoordStruct | None = None) -> int:
+def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None, calc_chrom: bool | None = None, orb_start: CoordStruct | None = None) -> int:
     """
     Subroutine twiss_and_track
     
@@ -37610,7 +37603,7 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
     status : int
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
-def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: _pybmad.EleStruct | None = None, orb: _pybmad.CoordStructArray1D | None = None, orb_at_s: _pybmad.CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, use_last: bool | None = None, compute_floor_coords: bool | None = None) -> bool:
+def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: EleStruct | None = None, orb: CoordStructArray1D | None = None, orb_at_s: CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, use_last: bool | None = None, compute_floor_coords: bool | None = None) -> bool:
     """
     Subroutine twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, use_last, compute_floor_coords)
     
@@ -37663,7 +37656,7 @@ def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: _pyb
     err : bool
         Set True if there is a problem in the calculation, False otherwise.
     """
-def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, s_end: typing.SupportsFloat, ele_start: _pybmad.EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None) -> TwissAndTrackFromSToS:
+def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, s_end: typing.SupportsFloat, ele_start: EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None) -> TwissAndTrackFromSToS:
     """
     Parameters
     ----------
@@ -37688,7 +37681,7 @@ def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, 
     compute_twiss : bool, optional
         Default True. If False, to save a little time, do not compute Twiss parameters.
     """
-def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: typing.SupportsFloat, l_end: typing.SupportsFloat, track_upstream_end: bool, track_downstream_end: bool, orbit_start: _pybmad.CoordStruct | None = None, ele_start: _pybmad.EleStruct | None = None, ele_end: _pybmad.EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None, reuse_ele_end: bool | None = None) -> TwissAndTrackIntraEle:
+def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: typing.SupportsFloat, l_end: typing.SupportsFloat, track_upstream_end: bool, track_downstream_end: bool, orbit_start: CoordStruct | None = None, ele_start: EleStruct | None = None, ele_end: EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None, reuse_ele_end: bool | None = None) -> TwissAndTrackIntraEle:
     """
     Parameters
     ----------
@@ -37757,7 +37750,7 @@ def twiss_at_start(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, 
     type_out : bool, optional
         If True (the default), print an error message If the 1-turn matrix is unstable.
     """
-def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: _pybmad.RealArray1D | None = None) -> TwissFromTracking:
+def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: RealArray1D | None = None) -> TwissFromTracking:
     """
     Parameters
     ----------
@@ -37889,7 +37882,7 @@ def update_fibre_from_ele(ele: EleStruct) -> bool:
         Set True if a call to survey will be needed. Calling survey is avoided in this routine to save time if
         multiple elements are being updated.
     """
-def update_floor_angles(floor: FloorPositionStruct, floor0: _pybmad.FloorPositionStruct | None = None) -> None:
+def update_floor_angles(floor: FloorPositionStruct, floor0: FloorPositionStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -38240,7 +38233,7 @@ def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsI
     out_str : 
     ignore_interior : 
     """
-def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_flag: bool, ele: _pybmad.EleStruct | None = None) -> None:
+def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_flag: bool, ele: EleStruct | None = None) -> None:
     """
     Parameters
     ----------
@@ -38339,7 +38332,7 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typin
     err : bool
         Set True if, say a file could not be opened.
     """
-def write_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = None, file_format: typing.SupportsInt | None = None, lat: _pybmad.LatStruct | None = None, alive_only: bool | None = None) -> None:
+def write_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = None, file_format: typing.SupportsInt | None = None, lat: LatStruct | None = None, alive_only: bool | None = None) -> None:
     """
     Subroutine write_beam_file (file_name, beam, new_file, file_format, lat, alive_only)
     
@@ -38445,7 +38438,7 @@ def write_blender_lat_layout(file_name: str, lat: LatStruct) -> None:
     file_name : 
     lat : 
     """
-def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.SupportsInt | None = None, orbit0: _pybmad.CoordStruct | None = None) -> bool:
+def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.SupportsInt | None = None, orbit0: CoordStruct | None = None) -> bool:
     """
     Parameters
     ----------
@@ -38589,7 +38582,7 @@ def write_lat_line(line: str, iu: typing.SupportsInt, end_is_neigh: bool, do_spl
     scibmad : bool, optional
         Default False. If True then do not include "&" line continuation
     """
-def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
+def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
     Parameters
     ----------
@@ -38616,7 +38609,7 @@ def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbi
     err : bool
         Set True if, say a file could not be opened.
     """
-def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
+def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
     Parameters
     ----------
@@ -38645,7 +38638,7 @@ def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatS
     err : bool
         Set True if, say a file could not be opened.
     """
-def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: _pybmad.CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
+def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
     Parameters
     ----------
@@ -38747,7 +38740,7 @@ def write_opal_lattice_file(opal_file_unit: typing.SupportsInt, lat: LatStruct) 
     err : bool
         Set True if, say a file could not be opened.
     """
-def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: BunchStruct, ele: EleStruct, style: str | None = None, branch: _pybmad.BranchStruct | None = None, format: str | None = None) -> bool:
+def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: BunchStruct, ele: EleStruct, style: str | None = None, branch: BranchStruct | None = None, format: str | None = None) -> bool:
     """
     Subroutine write_time_particle_distribution  (time_file_unit, bunch, ele, style, branch, format, err)
     
