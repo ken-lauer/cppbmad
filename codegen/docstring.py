@@ -287,56 +287,6 @@ def type_information_to_python_type(dt: TypeInformation) -> str:
 separator_regex = re.compile(r"^!\-+$")
 
 
-def _split_comment_blocks(comments: str) -> list[tuple[int, str]]:
-    """Split the comments into separate blocks based on separator lines or empty lines.
-    Returns a list of tuples containing the starting line number and the block text."""
-
-    lines = comments.split("\n")
-    blocks = []
-    current_block = []
-    block_start_line = 0  # Track the starting line number of the current block
-
-    i = 0
-    while i < len(lines):
-        line = lines[i].strip()
-
-        if separator_regex.match(line):
-            if current_block:
-                blocks.append((block_start_line, "\n".join(current_block)))
-                current_block = []
-
-            while i < len(lines) and separator_regex.match(lines[i].strip()):
-                i += 1
-
-            # Update block_start_line for the next block
-            block_start_line = i + 1
-            continue
-
-        if not line and current_block and i + 1 < len(lines):
-            next_line = lines[i + 1].strip()
-            if (
-                not next_line
-                or next_line.startswith("!+")
-                or next_line.lower().startswith("function")
-                or next_line.lower().startswith("subroutine")
-            ):
-                blocks.append((block_start_line, "\n".join(current_block)))
-                current_block = []
-                block_start_line = i + 2  # Update start line for next block
-
-        if not current_block and len(current_block) == 0:
-            # If this is the first line of a new block, update the start line
-            block_start_line = i + 1
-
-        current_block.append(lines[i])
-        i += 1
-
-    if current_block:
-        blocks.append((block_start_line, "\n".join(current_block)))
-
-    return blocks
-
-
 def _extract_related_routines(line: str) -> list[str]:
     """Extract related routine names from a line."""
 
@@ -345,6 +295,44 @@ def _extract_related_routines(line: str) -> list[str]:
 
     related = [name.strip() for name in re.split(r"[,\s]+", line) if name.strip()]
     return [name for name in related if name and name.lower() not in {"and", "or", "see", "also"}]
+
+
+def split_param_names(name: str) -> list[str]:
+    """
+    Split a string of parameter names, optionally containing array dimensions,
+    into a list of pure parameter names.
+    """
+    if not name:
+        return []
+
+    chunks: list[str] = []
+    current_chunk: list[str] = []
+    paren_depth = 0
+
+    for char in name:
+        if char == "(":
+            paren_depth += 1
+            current_chunk.append(char)
+        elif char == ")":
+            paren_depth -= 1
+            current_chunk.append(char)
+        elif char == "," and paren_depth == 0:
+            chunks.append("".join(current_chunk).strip())
+            current_chunk = []
+        else:
+            current_chunk.append(char)
+
+    if current_chunk:
+        chunks.append("".join(current_chunk).strip())
+
+    cleaned_names: list[str] = []
+
+    for chunk in chunks:
+        base_name = chunk.split("(", 1)[0].strip()
+        if base_name:
+            cleaned_names.append(base_name)
+
+    return cleaned_names
 
 
 def parse_routine_comment_block(
@@ -442,7 +430,7 @@ def parse_routine_comment_block(
     )
 
     current_section = "description"
-    current_param = None
+    current_params = []
 
     i = lines.index(definition_line) + 1
 
@@ -493,16 +481,14 @@ def parse_routine_comment_block(
                 i += 1
 
         elif current_section in {"inputs", "outputs"}:
-            param_match = re.match(r"^(\w+)(?:\s*\(.*?\))?\s*--\s*(.*?)$", line)
-            param_name = None
-            param_desc = ""
-            if param_match:
-                param_name = param_match.group(1)
-                param_desc = param_match.group(2)
+            if "--" in line:
+                param_name, param_desc = [part.strip() for part in line.split("--", 1)]
             elif "--" in next_line:
-                if m := re.match(r"^!\s{3,4}(\S+)$", lines[i]):
-                    param_name = m.groups()[0]
-                    param_desc = next_line
+                param_name = line.strip()
+                param_desc = ""
+            else:
+                param_name = ""
+                param_desc = ""
 
             if param_name:
                 data_type = None
@@ -513,33 +499,36 @@ def parse_routine_comment_block(
 
                 is_optional = "optional" in param_desc.lower()
 
-                param = DocstringParameter(
-                    name=param_name,
-                    description=param_desc,
-                    data_type=data_type,
-                    is_optional=is_optional,
-                    is_input=current_section == "inputs",
-                    is_output=current_section == "outputs",
-                )
+                current_params = []
+                for name in split_param_names(param_name):
+                    param = DocstringParameter(
+                        name=name,
+                        description=param_desc,
+                        data_type=data_type,
+                        is_optional=is_optional,
+                        is_input=current_section == "inputs",
+                        is_output=current_section == "outputs",
+                    )
 
-                if current_section == "inputs":
-                    docstring.inputs.append(param)
-                else:
-                    existing_arg = docstring.arguments_by_name.get(param_name, None)
-                    if existing_arg:
-                        existing_arg.is_output = True
-                        desc = param.description.strip()
-                        if ":" in desc:
-                            desc = desc.split(":")[1].strip()
-                        if desc not in existing_arg.description:
-                            existing_arg.description += f"\nThis parameter is an input/output and is modified in-place. As an output: {desc}"
+                    if current_section == "inputs":
+                        docstring.inputs.append(param)
                     else:
-                        docstring.outputs.append(param)
+                        existing_arg = docstring.arguments_by_name.get(param.name, None)
+                        if existing_arg:
+                            existing_arg.is_output = True
+                            desc = param.description.strip()
+                            if ":" in desc:
+                                desc = desc.split(":")[1].strip()
+                            if desc not in existing_arg.description:
+                                existing_arg.description += f"\nThis parameter is an input/output and is modified in-place. As an output: {desc}"
+                        else:
+                            docstring.outputs.append(param)
+                    current_params.append(param)
 
-                current_param = param
-            elif current_param:
-                if line not in current_param.description:
-                    current_param.description += " " + line
+            elif current_params:
+                for current_param in current_params:
+                    if line not in current_param.description:
+                        current_param.description += " " + line
 
             i += 1
         elif current_section == "related":
