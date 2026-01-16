@@ -373,13 +373,18 @@ class FortranRoutine:
             "sequence",  # ?
             "contains",  # ?
             "procedure next_in_branch",  # ?
+            "call",
         }
         # Brute force it!
         arguments = {}
         expected_args = {arg.lower() for arg in self.arg_names_with_result}
         for body_line in self.body[1:]:
             line, comment = body_line.split_comment("!")
-            if line.lower() in skips:
+            if not line or line.lower() in skips:
+                continue
+
+            start = line.split()[0].lower()
+            if start in skips:
                 continue
             try:
                 for decl in parse_declaration(line):
