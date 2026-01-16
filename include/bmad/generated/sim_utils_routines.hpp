@@ -897,7 +897,7 @@ extern "C" bool fortran_pointer_to_ran_state(
     int *ix_thread /* 0D_NOT_integer in */,
     void *ran_state_ptr /* 0D_PTR_type out */
 );
-RandomStateStruct pointer_to_ran_state(
+std::optional<RandomStateStruct> pointer_to_ran_state(
     optional_ref<RandomStateStruct> ran_state = std::nullopt,
     std::optional<int> ix_thread = std::nullopt
 );

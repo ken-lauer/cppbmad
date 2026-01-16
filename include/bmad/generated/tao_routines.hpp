@@ -117,7 +117,7 @@ extern "C" bool fortran_tao_beam_track_endpoint(
     void *u /* 0D_NOT_type in */,
     void *ele /* 0D_PTR_type out */
 );
-EleStruct tao_beam_track_endpoint(
+std::optional<EleStruct> tao_beam_track_endpoint(
     std::string ele_id,
     LatStruct &lat,
     std::string branch_str,
@@ -490,7 +490,7 @@ extern "C" void fortran_tao_ele_shape_info(
     int *ix_shape_min /* 0D_NOT_integer in */
 );
 struct TaoEleShapeInfo {
-  TaoEleShapeStruct e_shape;
+  std::optional<TaoEleShapeStruct> e_shape;
   std::string label_name;
 };
 Tao::TaoEleShapeInfo tao_ele_shape_info(
@@ -828,7 +828,7 @@ extern "C" void fortran_tao_find_plot_region(
 );
 struct TaoFindPlotRegion {
   bool err;
-  TaoPlotRegionStruct region;
+  std::optional<TaoPlotRegionStruct> region;
 };
 Tao::TaoFindPlotRegion
 tao_find_plot_region(std::string where, std::optional<bool> print_flag = std::nullopt);
@@ -1515,7 +1515,7 @@ extern "C" bool fortran_tao_pointer_to_building_wall_shape(
     const char *wall_name /* 0D_NOT_character in */,
     void *e_shape /* 0D_PTR_type out */
 );
-TaoEleShapeStruct tao_pointer_to_building_wall_shape(std::string wall_name);
+std::optional<TaoEleShapeStruct> tao_pointer_to_building_wall_shape(std::string wall_name);
 extern "C" bool fortran_tao_pointer_to_datum(
     void *d1 /* 0D_NOT_type in */,
     const char *ele_name /* 0D_NOT_character in */,
@@ -1535,7 +1535,7 @@ extern "C" bool fortran_tao_pointer_to_datum_ele(
 struct TaoPointerToDatumEle {
   bool valid;
   std::string why_invalid;
-  EleStruct ele;
+  std::optional<EleStruct> ele;
 };
 Tao::TaoPointerToDatumEle tao_pointer_to_datum_ele(
     LatStruct &lat,
@@ -1556,7 +1556,7 @@ extern "C" bool fortran_tao_pointer_to_ele_shape(
 struct TaoPointerToEleShape {
   std::string dat_var_name;
   double dat_var_value;
-  TaoEleShapeStruct e_shape;
+  std::optional<TaoEleShapeStruct> e_shape;
 };
 Tao::TaoPointerToEleShape tao_pointer_to_ele_shape(
     int ix_uni,
@@ -1569,21 +1569,21 @@ extern "C" bool fortran_tao_pointer_to_tao_lat(
     int *lat_type /* 0D_NOT_integer in */,
     void *tao_lat /* 0D_PTR_type out */
 );
-TaoLatticeStruct
+std::optional<TaoLatticeStruct>
 tao_pointer_to_tao_lat(TaoUniverseStruct &u, std::optional<int> lat_type = std::nullopt);
 extern "C" bool fortran_tao_pointer_to_universe_int(
     int &ix_uni /* 0D_NOT_integer in */,
     bool *neg2_to_default /* 0D_NOT_logical in */,
     void *u /* 0D_PTR_type out */
 );
-TaoUniverseStruct
+std::optional<TaoUniverseStruct>
 tao_pointer_to_universe(int ix_uni, std::optional<bool> neg2_to_default = std::nullopt);
 extern "C" bool fortran_tao_pointer_to_universe_str(
     const char *string /* 0D_NOT_character in */,
     bool *neg2_to_default /* 0D_NOT_logical in */,
     void *u /* 0D_PTR_type out */
 );
-TaoUniverseStruct
+std::optional<TaoUniverseStruct>
 tao_pointer_to_universe(std::string string, std::optional<bool> neg2_to_default = std::nullopt);
 extern "C" void fortran_tao_pointer_to_universes(
     const char *name_in /* 0D_NOT_character in */,

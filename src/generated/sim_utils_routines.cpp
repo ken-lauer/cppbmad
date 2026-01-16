@@ -1254,7 +1254,7 @@ void SimUtils::parse_fortran_format(
       /* int& */ digits
   );
 }
-RandomStateStruct SimUtils::pointer_to_ran_state(
+std::optional<RandomStateStruct> SimUtils::pointer_to_ran_state(
     optional_ref<RandomStateStruct> ran_state,
     std::optional<int> ix_thread
 ) {
@@ -1273,7 +1273,9 @@ RandomStateStruct SimUtils::pointer_to_ran_state(
       /* int* */ _ix_thread,
       /* void* */ &_ran_state_ptr
   );
-  return std::move(RandomStateStruct(_ran_state_ptr));
+  return std::move(
+      (_ran_state_ptr ? std::make_optional<RandomStateStruct>(_ran_state_ptr) : std::nullopt)
+  );
 }
 double SimUtils::poly_eval(FArray1D<Real> &poly, double x, std::optional<bool> diff_coef) {
   // poly: in NOT (CppWrapperGeneralArgumentArray) (['0:'])

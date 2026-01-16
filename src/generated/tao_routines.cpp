@@ -133,7 +133,7 @@ bool Tao::tao_beam_track(
   );
   return _calc_ok;
 }
-EleStruct Tao::tao_beam_track_endpoint(
+std::optional<EleStruct> Tao::tao_beam_track_endpoint(
     std::string ele_id,
     LatStruct &lat,
     std::string branch_str,
@@ -152,7 +152,7 @@ EleStruct Tao::tao_beam_track_endpoint(
       /* void* */ u.get_fortran_ptr(),
       /* void* */ &_ele
   );
-  return std::move(EleStruct(_ele));
+  return std::move((_ele ? std::make_optional<EleStruct>(_ele) : std::nullopt));
 }
 int Tao::tao_branch_index(int ix_branch) {
   int _ix_this{};
@@ -683,7 +683,10 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
       /* double& */ y2,
       /* int* */ _ix_shape_min
   );
-  return TaoEleShapeInfo{std::move(TaoEleShapeStruct(_e_shape)), _label_name};
+  return TaoEleShapeInfo{
+      std::move((_e_shape ? std::make_optional<TaoEleShapeStruct>(_e_shape) : std::nullopt)),
+      _label_name
+  };
 }
 Tao::TaoEvalFloorOrbit Tao::tao_eval_floor_orbit(
     TaoDataStruct &datum,
@@ -1276,7 +1279,10 @@ Tao::tao_find_plot_region(std::string where, std::optional<bool> print_flag) {
       /* void* */ &_region,
       /* bool* */ _print_flag
   );
-  return TaoFindPlotRegion{_err, std::move(TaoPlotRegionStruct(_region))};
+  return TaoFindPlotRegion{
+      _err,
+      std::move((_region ? std::make_optional<TaoPlotRegionStruct>(_region) : std::nullopt))
+  };
 }
 void Tao::tao_fixer(std::string switch_, std::string word1, std::string word2) {
   auto _switch_ = switch_.c_str();
@@ -2168,11 +2174,11 @@ TaoPlotStruct Tao::tao_plot_struct_transfer(TaoPlotStruct &plot_in) {
 void Tao::tao_plot_wave(TaoPlotStruct &plot, TaoGraphStruct &graph) {
   fortran_tao_plot_wave(/* void* */ plot.get_fortran_ptr(), /* void* */ graph.get_fortran_ptr());
 }
-TaoEleShapeStruct Tao::tao_pointer_to_building_wall_shape(std::string wall_name) {
+std::optional<TaoEleShapeStruct> Tao::tao_pointer_to_building_wall_shape(std::string wall_name) {
   auto _wall_name = wall_name.c_str();
   void *_e_shape;
   fortran_tao_pointer_to_building_wall_shape(/* const char* */ _wall_name, /* void* */ &_e_shape);
-  return std::move(TaoEleShapeStruct(_e_shape));
+  return std::move((_e_shape ? std::make_optional<TaoEleShapeStruct>(_e_shape) : std::nullopt));
 }
 void Tao::tao_pointer_to_datum(
     TaoD1DataStruct &d1,
@@ -2215,7 +2221,11 @@ Tao::TaoPointerToDatumEle Tao::tao_pointer_to_datum_ele(
       /* bool* */ _print_err,
       /* void* */ &_ele
   );
-  return TaoPointerToDatumEle{_valid, _why_invalid, std::move(EleStruct(_ele))};
+  return TaoPointerToDatumEle{
+      _valid,
+      _why_invalid,
+      std::move((_ele ? std::make_optional<EleStruct>(_ele) : std::nullopt))
+  };
 }
 Tao::TaoPointerToEleShape Tao::tao_pointer_to_ele_shape(
     int ix_uni,
@@ -2251,10 +2261,11 @@ Tao::TaoPointerToEleShape Tao::tao_pointer_to_ele_shape(
   return TaoPointerToEleShape{
       _dat_var_name,
       _dat_var_value,
-      std::move(TaoEleShapeStruct(_e_shape))
+      std::move((_e_shape ? std::make_optional<TaoEleShapeStruct>(_e_shape) : std::nullopt))
   };
 }
-TaoLatticeStruct Tao::tao_pointer_to_tao_lat(TaoUniverseStruct &u, std::optional<int> lat_type) {
+std::optional<TaoLatticeStruct>
+Tao::tao_pointer_to_tao_lat(TaoUniverseStruct &u, std::optional<int> lat_type) {
   int lat_type_lvalue;
   auto *_lat_type{&lat_type_lvalue};
   if (lat_type.has_value()) {
@@ -2268,9 +2279,10 @@ TaoLatticeStruct Tao::tao_pointer_to_tao_lat(TaoUniverseStruct &u, std::optional
       /* int* */ _lat_type,
       /* void* */ &_tao_lat
   );
-  return std::move(TaoLatticeStruct(_tao_lat));
+  return std::move((_tao_lat ? std::make_optional<TaoLatticeStruct>(_tao_lat) : std::nullopt));
 }
-TaoUniverseStruct Tao::tao_pointer_to_universe(int ix_uni, std::optional<bool> neg2_to_default) {
+std::optional<TaoUniverseStruct>
+Tao::tao_pointer_to_universe(int ix_uni, std::optional<bool> neg2_to_default) {
   bool neg2_to_default_lvalue;
   auto *_neg2_to_default{&neg2_to_default_lvalue};
   if (neg2_to_default.has_value()) {
@@ -2284,9 +2296,9 @@ TaoUniverseStruct Tao::tao_pointer_to_universe(int ix_uni, std::optional<bool> n
       /* bool* */ _neg2_to_default,
       /* void* */ &_u
   );
-  return std::move(TaoUniverseStruct(_u));
+  return std::move((_u ? std::make_optional<TaoUniverseStruct>(_u) : std::nullopt));
 }
-TaoUniverseStruct
+std::optional<TaoUniverseStruct>
 Tao::tao_pointer_to_universe(std::string string, std::optional<bool> neg2_to_default) {
   auto _string = string.c_str();
   bool neg2_to_default_lvalue;
@@ -2302,7 +2314,7 @@ Tao::tao_pointer_to_universe(std::string string, std::optional<bool> neg2_to_def
       /* bool* */ _neg2_to_default,
       /* void* */ &_u
   );
-  return std::move(TaoUniverseStruct(_u));
+  return std::move((_u ? std::make_optional<TaoUniverseStruct>(_u) : std::nullopt));
 }
 Tao::TaoPointerToUniverses Tao::tao_pointer_to_universes(
     std::string name_in,

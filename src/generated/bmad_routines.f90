@@ -5348,8 +5348,7 @@ subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status
   if (.not. c_associated(ele0)) return
   call c_f_pointer(ele0, f_ele0)
   ! out: f_ele1 0D_PTR_type
-  if (.not. c_associated(ele1)) return
-  call c_f_pointer(ele1, f_ele1)
+  if (c_associated(ele1))   call c_f_pointer(ele1, f_ele1)
   f_local_coords = coords_floor_to_curvilinear(f_floor_coords, f_ele0, f_ele1, f_status, &
       f_w_mat)
 
@@ -7443,12 +7442,7 @@ subroutine fortran_ele_to_fibre (ele, ptc_fibre, use_offsets, err_flag, integ_or
   endif
   call c_f_pointer(ele, f_ele)
   ! out: f_ptc_fibre 0D_PTR_type
-  if (.not. c_associated(ptc_fibre)) then
-    call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_ptr = .true.
-    return
-  endif
-  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  if (c_associated(ptc_fibre))   call c_f_pointer(ptc_fibre, f_ptc_fibre)
   ! in: f_use_offsets 0D_NOT_logical
   f_use_offsets = use_offsets
   ! in: f_integ_order 0D_NOT_integer
@@ -11931,11 +11925,9 @@ subroutine fortran_find_element_ends (ele, ele1, ele2, ix_multipass) bind(c)
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
   ! out: f_ele1 0D_PTR_type
-  if (.not. c_associated(ele1)) return
-  call c_f_pointer(ele1, f_ele1)
+  if (c_associated(ele1))   call c_f_pointer(ele1, f_ele1)
   ! out: f_ele2 0D_PTR_type
-  if (.not. c_associated(ele2)) return
-  call c_f_pointer(ele2, f_ele2)
+  if (c_associated(ele2))   call c_f_pointer(ele2, f_ele2)
   ! in: f_ix_multipass 0D_NOT_integer
   if (c_associated(ix_multipass)) then
     call c_f_pointer(ix_multipass, f_ix_multipass_ptr)
@@ -12015,8 +12007,7 @@ subroutine fortran_find_matching_fieldmap (file_name, ele, fm_type, match_ele, i
   ! in: f_fm_type 0D_NOT_integer
   f_fm_type = fm_type
   ! out: f_match_ele 0D_PTR_type
-  if (.not. c_associated(match_ele)) return
-  call c_f_pointer(match_ele, f_match_ele)
+  if (c_associated(match_ele))   call c_f_pointer(match_ele, f_match_ele)
   ! in: f_ignore_slaves 0D_NOT_logical
   if (c_associated(ignore_slaves)) then
     call c_f_pointer(ignore_slaves, f_ignore_slaves_ptr)
@@ -14454,8 +14445,7 @@ subroutine fortran_init_wake (wake, n_sr_long, n_sr_trans, n_sr_z, n_lr_mode, al
   type(wake_struct), pointer :: f_wake
   ! ** End of parameters **
   ! out: f_wake 0D_PTR_type
-  if (.not. c_associated(wake)) return
-  call c_f_pointer(wake, f_wake)
+  if (c_associated(wake))   call c_f_pointer(wake, f_wake)
   ! in: f_n_sr_long 0D_NOT_integer
   f_n_sr_long = n_sr_long
   ! in: f_n_sr_trans 0D_NOT_integer
@@ -17562,8 +17552,7 @@ subroutine fortran_misalign_ptc_fibre (ele, use_offsets, ptc_fibre, for_layout) 
   ! in: f_use_offsets 0D_NOT_logical
   f_use_offsets = use_offsets
   ! out: f_ptc_fibre 0D_PTR_type
-  if (.not. c_associated(ptc_fibre)) return
-  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  if (c_associated(ptc_fibre))   call c_f_pointer(ptc_fibre, f_ptc_fibre)
   ! in: f_for_layout 0D_NOT_logical
   f_for_layout = for_layout
   call misalign_ptc_fibre(f_ele, f_use_offsets, f_ptc_fibre, f_for_layout)
@@ -22773,8 +22762,7 @@ subroutine fortran_ptc_check_for_lost_particle (state, ptc_fibre, do_reset) bind
   type(fibre), pointer :: f_ptc_fibre
   ! ** End of parameters **
   ! out: f_ptc_fibre 0D_PTR_type
-  if (.not. c_associated(ptc_fibre)) return
-  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  if (c_associated(ptc_fibre))   call c_f_pointer(ptc_fibre, f_ptc_fibre)
   ! in: f_do_reset 0D_NOT_logical
   f_do_reset = do_reset
   call ptc_check_for_lost_particle(f_state, f_ptc_fibre, f_do_reset)
@@ -31875,8 +31863,7 @@ subroutine fortran_transfer_ac_kick (ac_in, ac_out) bind(c)
   if (.not. c_associated(ac_in)) return
   call c_f_pointer(ac_in, f_ac_in)
   ! out: f_ac_out 0D_PTR_type
-  if (.not. c_associated(ac_out)) return
-  call c_f_pointer(ac_out, f_ac_out)
+  if (c_associated(ac_out))   call c_f_pointer(ac_out, f_ac_out)
   call transfer_ac_kick(f_ac_in, f_ac_out)
 
   ! out: f_ac_out 0D_PTR_type
@@ -32610,8 +32597,7 @@ subroutine fortran_transfer_wake (wake_in, wake_out) bind(c)
   if (.not. c_associated(wake_in)) return
   call c_f_pointer(wake_in, f_wake_in)
   ! out: f_wake_out 0D_PTR_type
-  if (.not. c_associated(wake_out)) return
-  call c_f_pointer(wake_out, f_wake_out)
+  if (c_associated(wake_out))   call c_f_pointer(wake_out, f_wake_out)
   call transfer_wake(f_wake_in, f_wake_out)
 
   ! out: f_wake_out 0D_PTR_type

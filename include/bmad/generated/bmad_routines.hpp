@@ -123,7 +123,7 @@ extern "C" void fortran_add_superimpose(
 );
 struct AddSuperimpose {
   bool err_flag;
-  EleStruct super_ele_out;
+  std::optional<EleStruct> super_ele_out;
 };
 Bmad::AddSuperimpose add_superimpose(
     LatStruct &lat,
@@ -1412,7 +1412,7 @@ extern "C" bool fortran_coords_floor_to_curvilinear(
     void *local_coords /* 0D_NOT_type out */
 );
 struct CoordsFloorToCurvilinear {
-  EleStruct ele1;
+  std::optional<EleStruct> ele1;
   int status;
   std::optional<FixedArray2D<Real, 3, 3>> w_mat;
   FloorPositionStruct local_coords;
@@ -1988,7 +1988,7 @@ extern "C" void fortran_ele_to_fibre(
     void *ref_in /* 0D_NOT_type in */
 );
 struct EleToFibre {
-  Fibre ptc_fibre;
+  std::optional<Fibre> ptc_fibre;
   bool err_flag;
 };
 Bmad::EleToFibre ele_to_fibre(
@@ -3139,8 +3139,8 @@ extern "C" void fortran_find_element_ends(
     int *ix_multipass /* 0D_NOT_integer in */
 );
 struct FindElementEnds {
-  EleStruct ele1;
-  EleStruct ele2;
+  std::optional<EleStruct> ele1;
+  std::optional<EleStruct> ele2;
 };
 Bmad::FindElementEnds
 find_element_ends(EleStruct &ele, std::optional<int> ix_multipass = std::nullopt);
@@ -3159,7 +3159,7 @@ extern "C" void fortran_find_matching_fieldmap(
     bool *ignore_slaves /* 0D_NOT_logical in */
 );
 struct FindMatchingFieldmap {
-  EleStruct match_ele;
+  std::optional<EleStruct> match_ele;
   int ix_field;
 };
 Bmad::FindMatchingFieldmap find_matching_fieldmap(
@@ -3911,7 +3911,7 @@ extern "C" void fortran_init_wake(
     int &n_lr_mode /* 0D_NOT_integer in */,
     bool *always_allocate /* 0D_NOT_logical in */
 );
-WakeStruct init_wake(
+std::optional<WakeStruct> init_wake(
     int n_sr_long,
     int n_sr_trans,
     int n_sr_z,
@@ -4730,7 +4730,7 @@ extern "C" void fortran_misalign_ptc_fibre(
     void *ptc_fibre /* 0D_PTR_type out */,
     bool &for_layout /* 0D_NOT_logical in */
 );
-Fibre misalign_ptc_fibre(EleStruct &ele, bool use_offsets, bool for_layout);
+std::optional<Fibre> misalign_ptc_fibre(EleStruct &ele, bool use_offsets, bool for_layout);
 extern "C" bool fortran_momentum_compaction(
     void *branch /* 0D_NOT_type in */,
     double &mom_comp /* 0D_NOT_real out */
@@ -5932,7 +5932,7 @@ extern "C" bool fortran_pointer_to_branch_given_ele(
     void *ele /* 0D_NOT_type in */,
     void *branch_ptr /* 0D_PTR_type out */
 );
-BranchStruct pointer_to_branch(EleStruct &ele);
+std::optional<BranchStruct> pointer_to_branch(EleStruct &ele);
 extern "C" bool fortran_pointer_to_branch_given_name(
     const char *branch_name /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type in */,
@@ -5940,7 +5940,7 @@ extern "C" bool fortran_pointer_to_branch_given_name(
     int *blank_branch /* 0D_NOT_integer in */,
     void *branch_ptr /* 0D_PTR_type out */
 );
-BranchStruct pointer_to_branch(
+std::optional<BranchStruct> pointer_to_branch(
     std::string branch_name,
     LatStruct &lat,
     std::optional<bool> parameter_is_branch0 = std::nullopt,
@@ -5952,25 +5952,26 @@ extern "C" bool fortran_pointer_to_ele1(
     int *ix_branch /* 0D_NOT_integer in */,
     void *ele_ptr /* 0D_PTR_type out */
 );
-EleStruct pointer_to_ele(LatStruct &lat, int ix_ele, std::optional<int> ix_branch = std::nullopt);
+std::optional<EleStruct>
+pointer_to_ele(LatStruct &lat, int ix_ele, std::optional<int> ix_branch = std::nullopt);
 extern "C" bool fortran_pointer_to_ele2(
     void *lat /* 0D_NOT_type in */,
     void *ele_loc /* 0D_NOT_type in */,
     void *ele_ptr /* 0D_PTR_type out */
 );
-EleStruct pointer_to_ele(LatStruct &lat, LatEleLocStruct &ele_loc);
+std::optional<EleStruct> pointer_to_ele(LatStruct &lat, LatEleLocStruct &ele_loc);
 extern "C" bool fortran_pointer_to_ele3(
     void *lat /* 0D_NOT_type in */,
     const char *ele_name /* 0D_NOT_character in */,
     void *ele_ptr /* 0D_PTR_type out */
 );
-EleStruct pointer_to_ele(LatStruct &lat, std::string ele_name);
+std::optional<EleStruct> pointer_to_ele(LatStruct &lat, std::string ele_name);
 extern "C" bool fortran_pointer_to_ele4(
     void *lat /* 0D_NOT_type in */,
     void *foreign_ele /* 0D_NOT_type in */,
     void *ele_ptr /* 0D_PTR_type out */
 );
-EleStruct pointer_to_ele(LatStruct &lat, EleStruct &foreign_ele);
+std::optional<EleStruct> pointer_to_ele(LatStruct &lat, EleStruct &foreign_ele);
 
 // Skipped unusable routine pointer_to_ele_multipole:
 // - Routine in configuration skip list
@@ -5988,7 +5989,7 @@ struct PointerToElementAtS {
   bool err_flag;
   double s_eff;
   CoordStruct position;
-  EleStruct ele;
+  std::optional<EleStruct> ele;
 };
 Bmad::PointerToElementAtS pointer_to_element_at_s(
     BranchStruct &branch,
@@ -5998,7 +5999,7 @@ Bmad::PointerToElementAtS pointer_to_element_at_s(
 );
 extern "C" bool
 fortran_pointer_to_fibre(void *ele /* 0D_NOT_type in */, void *assoc_fibre /* 0D_PTR_type out */);
-Fibre pointer_to_fibre(EleStruct &ele);
+std::optional<Fibre> pointer_to_fibre(EleStruct &ele);
 extern "C" bool fortran_pointer_to_field_ele(
     void *ele /* 0D_NOT_type in */,
     int &ix_field_ele /* 0D_NOT_integer in */,
@@ -6007,7 +6008,7 @@ extern "C" bool fortran_pointer_to_field_ele(
 );
 struct PointerToFieldEle {
   double dz_offset;
-  EleStruct field_ele;
+  std::optional<EleStruct> field_ele;
 };
 Bmad::PointerToFieldEle pointer_to_field_ele(EleStruct &ele, int ix_field_ele);
 extern "C" bool fortran_pointer_to_girder(
@@ -6017,7 +6018,7 @@ extern "C" bool fortran_pointer_to_girder(
 );
 struct PointerToGirder {
   int ix_slave_back;
-  EleStruct girder;
+  std::optional<EleStruct> girder;
 };
 Bmad::PointerToGirder pointer_to_girder(EleStruct &ele);
 
@@ -6034,11 +6035,11 @@ extern "C" bool fortran_pointer_to_lord(
     void *lord_ptr /* 0D_PTR_type out */
 );
 struct PointerToLord {
-  ControlStruct control;
+  std::optional<ControlStruct> control;
   int ix_slave_back;
   int ix_control;
   int ix_ic;
-  EleStruct lord_ptr;
+  std::optional<EleStruct> lord_ptr;
 };
 Bmad::PointerToLord
 pointer_to_lord(EleStruct &slave, int ix_lord, std::optional<int> lord_type = std::nullopt);
@@ -6050,8 +6051,8 @@ extern "C" bool fortran_pointer_to_multipass_lord(
 );
 struct PointerToMultipassLord {
   int ix_pass;
-  EleStruct super_lord;
-  EleStruct multi_lord;
+  std::optional<EleStruct> super_lord;
+  std::optional<EleStruct> multi_lord;
 };
 Bmad::PointerToMultipassLord pointer_to_multipass_lord(EleStruct &ele);
 extern "C" bool fortran_pointer_to_next_ele(
@@ -6079,11 +6080,11 @@ extern "C" bool fortran_pointer_to_slave(
     void *slave_ptr /* 0D_PTR_type out */
 );
 struct PointerToSlave {
-  ControlStruct control;
+  std::optional<ControlStruct> control;
   int ix_lord_back;
   int ix_control;
   int ix_ic;
-  EleStruct slave_ptr;
+  std::optional<EleStruct> slave_ptr;
 };
 Bmad::PointerToSlave
 pointer_to_slave(EleStruct &lord, int ix_slave, std::optional<int> lord_type = std::nullopt);
@@ -6097,11 +6098,11 @@ extern "C" bool fortran_pointer_to_super_lord(
     void *lord_ptr /* 0D_PTR_type out */
 );
 struct PointerToSuperLord {
-  ControlStruct control;
+  std::optional<ControlStruct> control;
   int ix_slave_back;
   int ix_control;
   int ix_ic;
-  EleStruct lord_ptr;
+  std::optional<EleStruct> lord_ptr;
 };
 Bmad::PointerToSuperLord
 pointer_to_super_lord(EleStruct &slave, std::optional<int> lord_type = std::nullopt);
@@ -6117,7 +6118,7 @@ extern "C" bool fortran_pointer_to_surface_displacement_pt(
     double *yy /* 0D_NOT_real in */,
     void *pt /* 0D_PTR_type out */
 );
-SurfaceDisplacementPtStruct pointer_to_surface_displacement_pt(
+std::optional<SurfaceDisplacementPtStruct> pointer_to_surface_displacement_pt(
     EleStruct &ele,
     bool nearest,
     double x,
@@ -6140,7 +6141,7 @@ extern "C" bool fortran_pointer_to_surface_segmented_pt(
     double *yy /* 0D_NOT_real in */,
     void *pt /* 0D_PTR_type out */
 );
-SurfaceSegmentedPtStruct pointer_to_surface_segmented_pt(
+std::optional<SurfaceSegmentedPtStruct> pointer_to_surface_segmented_pt(
     EleStruct &ele,
     bool nearest,
     double x,
@@ -6158,7 +6159,7 @@ extern "C" bool fortran_pointer_to_wake_ele(
 );
 struct PointerToWakeEle {
   double delta_s;
-  EleStruct wake_ele;
+  std::optional<EleStruct> wake_ele;
 };
 Bmad::PointerToWakeEle pointer_to_wake_ele(EleStruct &ele);
 extern "C" bool fortran_pointer_to_wall3d(
@@ -6171,7 +6172,7 @@ extern "C" bool fortran_pointer_to_wall3d(
 struct PointerToWall3d {
   double ds_offset;
   bool is_branch_wall;
-  Wall3dStruct wall3d;
+  std::optional<Wall3dStruct> wall3d;
 };
 Bmad::PointerToWall3d pointer_to_wall3d(EleStruct &ele, std::optional<int> ix_wall = std::nullopt);
 
@@ -6254,7 +6255,7 @@ extern "C" void fortran_ptc_check_for_lost_particle(
 );
 struct PtcCheckForLostParticle {
   int state;
-  Fibre ptc_fibre;
+  std::optional<Fibre> ptc_fibre;
 };
 Bmad::PtcCheckForLostParticle ptc_check_for_lost_particle(bool do_reset);
 extern "C" void fortran_ptc_closed_orbit_calc(
@@ -8350,7 +8351,7 @@ extern "C" void fortran_track1_taylor(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track1_taylor(
+std::optional<FixedArray2D<Real, 6, 6>> track1_taylor(
     CoordStruct &orbit,
     EleStruct &ele,
     std::optional<TaylorStructArray1D> taylor = std::nullopt,
@@ -8427,7 +8428,7 @@ extern "C" void fortran_track_a_converter(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_converter(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_converter(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8440,7 +8441,7 @@ extern "C" void fortran_track_a_crab_cavity(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_crab_cavity(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_crab_cavity(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8477,7 +8478,7 @@ extern "C" void fortran_track_a_foil(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_foil(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_foil(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8532,7 +8533,7 @@ extern "C" void fortran_track_a_mask(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_mask(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_mask(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8546,7 +8547,7 @@ extern "C" void fortran_track_a_match(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_match(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_match(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8595,7 +8596,7 @@ extern "C" void fortran_track_a_pickup(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_pickup(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_pickup(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8609,7 +8610,7 @@ extern "C" void fortran_track_a_quadrupole(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_quadrupole(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_quadrupole(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8622,7 +8623,7 @@ extern "C" void fortran_track_a_rfcavity(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_rfcavity(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_rfcavity(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8649,7 +8650,7 @@ extern "C" void fortran_track_a_sol_quad(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_sol_quad(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_sol_quad(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8676,7 +8677,7 @@ extern "C" void fortran_track_a_wiggler(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real out */,
     bool *make_matrix /* 0D_NOT_logical in */
 );
-FixedArray2D<Real, 6, 6> track_a_wiggler(
+std::optional<FixedArray2D<Real, 6, 6>> track_a_wiggler(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -8868,7 +8869,7 @@ struct TrackingRadMapSetup {
 Bmad::TrackingRadMapSetup tracking_rad_map_setup(EleStruct &ele, double tollerance, int ref_edge);
 extern "C" void
 fortran_transfer_ac_kick(void *ac_in /* 0D_PTR_type in */, void *ac_out /* 0D_PTR_type out */);
-AcKickerStruct transfer_ac_kick(AcKickerStruct &ac_in);
+std::optional<AcKickerStruct> transfer_ac_kick(AcKickerStruct &ac_in);
 extern "C" void
 fortran_transfer_branch(void *branch1 /* 0D_NOT_type in */, void *branch2 /* 0D_NOT_type out */);
 BranchStruct transfer_branch(BranchStruct &branch1);
@@ -9026,7 +9027,7 @@ extern "C" void fortran_transfer_twiss(
 EleStruct transfer_twiss(EleStruct &ele_in, std::optional<bool> reverse = std::nullopt);
 extern "C" void
 fortran_transfer_wake(void *wake_in /* 0D_PTR_type in */, void *wake_out /* 0D_PTR_type out */);
-WakeStruct transfer_wake(WakeStruct &wake_in);
+std::optional<WakeStruct> transfer_wake(WakeStruct &wake_in);
 
 // Skipped unusable routine transfer_wall3d:
 // - Routine in configuration skip list

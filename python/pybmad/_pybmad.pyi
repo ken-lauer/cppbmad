@@ -216,7 +216,7 @@ class AddSuperimpose:
     def err_flag(self) -> bool:
         ...
     @property
-    def super_ele_out(self) -> EleStruct:
+    def super_ele_out(self) -> EleStruct | None:
         ...
 class AllEncompassingStruct:
     """
@@ -3456,7 +3456,7 @@ class CoordsFloorToCurvilinear:
     def __len__(self) -> int:
         ...
     @property
-    def ele1(self) -> EleStruct:
+    def ele1(self) -> EleStruct | None:
         ...
     @property
     def local_coords(self) -> FloorPositionStruct:
@@ -4425,7 +4425,7 @@ class EleToFibre:
     def err_flag(self) -> bool:
         ...
     @property
-    def ptc_fibre(self) -> Fibre:
+    def ptc_fibre(self) -> Fibre | None:
         ...
 class EleToTaylor:
     """
@@ -5227,10 +5227,10 @@ class FindElementEnds:
     def __len__(self) -> int:
         ...
     @property
-    def ele1(self) -> EleStruct:
+    def ele1(self) -> EleStruct | None:
         ...
     @property
-    def ele2(self) -> EleStruct:
+    def ele2(self) -> EleStruct | None:
         ...
 class FindMatchingFieldmap:
     """
@@ -5244,7 +5244,7 @@ class FindMatchingFieldmap:
     def ix_field(self) -> int:
         ...
     @property
-    def match_ele(self) -> EleStruct:
+    def match_ele(self) -> EleStruct | None:
         ...
 class FloorAnglesToWMat:
     """
@@ -8041,7 +8041,7 @@ class PointerToElementAtS:
     def __len__(self) -> int:
         ...
     @property
-    def ele(self) -> EleStruct:
+    def ele(self) -> EleStruct | None:
         ...
     @property
     def err_flag(self) -> bool:
@@ -8064,7 +8064,7 @@ class PointerToFieldEle:
     def dz_offset(self) -> float:
         ...
     @property
-    def field_ele(self) -> EleStruct:
+    def field_ele(self) -> EleStruct | None:
         ...
 class PointerToGirder:
     """
@@ -8075,7 +8075,7 @@ class PointerToGirder:
     def __len__(self) -> int:
         ...
     @property
-    def girder(self) -> EleStruct:
+    def girder(self) -> EleStruct | None:
         ...
     @property
     def ix_slave_back(self) -> int:
@@ -8089,7 +8089,7 @@ class PointerToLord:
     def __len__(self) -> int:
         ...
     @property
-    def control(self) -> ControlStruct:
+    def control(self) -> ControlStruct | None:
         ...
     @property
     def ix_control(self) -> int:
@@ -8101,7 +8101,7 @@ class PointerToLord:
     def ix_slave_back(self) -> int:
         ...
     @property
-    def lord_ptr(self) -> EleStruct:
+    def lord_ptr(self) -> EleStruct | None:
         ...
 class PointerToMultipassLord:
     """
@@ -8115,10 +8115,10 @@ class PointerToMultipassLord:
     def ix_pass(self) -> int:
         ...
     @property
-    def multi_lord(self) -> EleStruct:
+    def multi_lord(self) -> EleStruct | None:
         ...
     @property
-    def super_lord(self) -> EleStruct:
+    def super_lord(self) -> EleStruct | None:
         ...
 class PointerToSlave:
     """
@@ -8129,7 +8129,7 @@ class PointerToSlave:
     def __len__(self) -> int:
         ...
     @property
-    def control(self) -> ControlStruct:
+    def control(self) -> ControlStruct | None:
         ...
     @property
     def ix_control(self) -> int:
@@ -8141,7 +8141,7 @@ class PointerToSlave:
     def ix_lord_back(self) -> int:
         ...
     @property
-    def slave_ptr(self) -> EleStruct:
+    def slave_ptr(self) -> EleStruct | None:
         ...
 class PointerToSuperLord:
     """
@@ -8152,7 +8152,7 @@ class PointerToSuperLord:
     def __len__(self) -> int:
         ...
     @property
-    def control(self) -> ControlStruct:
+    def control(self) -> ControlStruct | None:
         ...
     @property
     def ix_control(self) -> int:
@@ -8164,7 +8164,7 @@ class PointerToSuperLord:
     def ix_slave_back(self) -> int:
         ...
     @property
-    def lord_ptr(self) -> EleStruct:
+    def lord_ptr(self) -> EleStruct | None:
         ...
 class PointerToWakeEle:
     """
@@ -8178,7 +8178,7 @@ class PointerToWakeEle:
     def delta_s(self) -> float:
         ...
     @property
-    def wake_ele(self) -> EleStruct:
+    def wake_ele(self) -> EleStruct | None:
         ...
 class PointerToWall3d:
     """
@@ -8195,7 +8195,7 @@ class PointerToWall3d:
     def is_branch_wall(self) -> bool:
         ...
     @property
-    def wall3d(self) -> Wall3DStruct:
+    def wall3d(self) -> Wall3DStruct | None:
         ...
 class PreTrackerStruct:
     """
@@ -8254,7 +8254,7 @@ class PtcCheckForLostParticle:
     def __len__(self) -> int:
         ...
     @property
-    def ptc_fibre(self) -> Fibre:
+    def ptc_fibre(self) -> Fibre | None:
         ...
     @property
     def state(self) -> int:
@@ -11740,7 +11740,7 @@ class TaoEleShapeInfo:
     def __len__(self) -> int:
         ...
     @property
-    def e_shape(self) -> TaoEleShapeStruct:
+    def e_shape(self) -> TaoEleShapeStruct | None:
         ...
     @property
     def label_name(self) -> str:
@@ -12054,7 +12054,7 @@ class TaoFindPlotRegion:
     def err(self) -> bool:
         ...
     @property
-    def region(self) -> TaoPlotRegionStruct:
+    def region(self) -> TaoPlotRegionStruct | None:
         ...
 class TaoFloorPlanStruct:
     """
@@ -13444,7 +13444,7 @@ class TaoPointerToDatumEle:
     def __len__(self) -> int:
         ...
     @property
-    def ele(self) -> EleStruct:
+    def ele(self) -> EleStruct | None:
         ...
     @property
     def valid(self) -> bool:
@@ -13467,7 +13467,7 @@ class TaoPointerToEleShape:
     def dat_var_value(self) -> float:
         ...
     @property
-    def e_shape(self) -> TaoEleShapeStruct:
+    def e_shape(self) -> TaoEleShapeStruct | None:
         ...
 class TaoPointerToUniverses:
     """
@@ -24026,7 +24026,7 @@ def init_taylor_series(bmad_taylor: TaylorStruct, n_term: typing.SupportsInt, sa
         If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
         Default is False.
     """
-def init_wake(n_sr_long: typing.SupportsInt, n_sr_trans: typing.SupportsInt, n_sr_z: typing.SupportsInt, n_lr_mode: typing.SupportsInt, always_allocate: bool | None = None) -> WakeStruct:
+def init_wake(n_sr_long: typing.SupportsInt, n_sr_trans: typing.SupportsInt, n_sr_z: typing.SupportsInt, n_lr_mode: typing.SupportsInt, always_allocate: bool | None = None) -> WakeStruct | None:
     """
     Parameters
     ----------
@@ -25779,7 +25779,7 @@ def milli_sleep(milli_sec: typing.SupportsInt) -> None:
     ----------
     milli_sec : 
     """
-def misalign_ptc_fibre(ele: EleStruct, use_offsets: bool, for_layout: bool) -> Fibre:
+def misalign_ptc_fibre(ele: EleStruct, use_offsets: bool, for_layout: bool) -> Fibre | None:
     """
     Subroutine misalign_ptc_fibre (ele, use_offsets, ptc_fibre, for_layout)
     
@@ -27455,7 +27455,7 @@ def point_photon_emission(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
         Rotation matrix for curved surface.
     """
 @typing.overload
-def pointer_to_branch(ele: EleStruct) -> BranchStruct:
+def pointer_to_branch(ele: EleStruct) -> BranchStruct | None:
     """
     Function pointer_to_branch
     
@@ -27498,7 +27498,7 @@ def pointer_to_branch(ele: EleStruct) -> BranchStruct:
     Overloaded versions:
     """
 @typing.overload
-def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bool | None = None, blank_branch: typing.SupportsInt | None = None) -> BranchStruct:
+def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bool | None = None, blank_branch: typing.SupportsInt | None = None) -> BranchStruct | None:
     """
     Function pointer_to_branch
     
@@ -27541,7 +27541,7 @@ def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bo
     Overloaded versions:
     """
 @typing.overload
-def pointer_to_ele(lat: LatStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None) -> EleStruct:
+def pointer_to_ele(lat: LatStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None) -> EleStruct | None:
     """
     Function pointer_to_ele (...)
     
@@ -27591,7 +27591,7 @@ def pointer_to_ele(lat: LatStruct, ix_ele: typing.SupportsInt, ix_branch: typing
     Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
     """
 @typing.overload
-def pointer_to_ele(lat: LatStruct, ele_loc: LatEleLocStruct) -> EleStruct:
+def pointer_to_ele(lat: LatStruct, ele_loc: LatEleLocStruct) -> EleStruct | None:
     """
     Function pointer_to_ele (...)
     
@@ -27641,7 +27641,7 @@ def pointer_to_ele(lat: LatStruct, ele_loc: LatEleLocStruct) -> EleStruct:
     Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
     """
 @typing.overload
-def pointer_to_ele(lat: LatStruct, ele_name: str) -> EleStruct:
+def pointer_to_ele(lat: LatStruct, ele_name: str) -> EleStruct | None:
     """
     Function pointer_to_ele (...)
     
@@ -27691,7 +27691,7 @@ def pointer_to_ele(lat: LatStruct, ele_name: str) -> EleStruct:
     Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
     """
 @typing.overload
-def pointer_to_ele(lat: LatStruct, foreign_ele: EleStruct) -> EleStruct:
+def pointer_to_ele(lat: LatStruct, foreign_ele: EleStruct) -> EleStruct | None:
     """
     Function pointer_to_ele (...)
     
@@ -27798,7 +27798,7 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     If there are multiple elements that are at the given s position due to the presence of an element with a
     negative length which of the possible elements is actually chosen is ill-defined.
     """
-def pointer_to_fibre(ele: EleStruct) -> Fibre:
+def pointer_to_fibre(ele: EleStruct) -> Fibre | None:
     """
     Parameters
     ----------
@@ -27885,7 +27885,7 @@ def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None =
     next_ele : EleStruct
         Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
     """
-def pointer_to_ran_state(ran_state: RandomStateStruct | None = None, ix_thread: typing.SupportsInt | None = None) -> RandomStateStruct:
+def pointer_to_ran_state(ran_state: RandomStateStruct | None = None, ix_thread: typing.SupportsInt | None = None) -> RandomStateStruct | None:
     """
     Function pointer_to_ran_state(ran_state, ix_thread) result (ran_state_ptr)
     
@@ -27966,7 +27966,7 @@ def pointer_to_super_lord(slave: EleStruct, lord_type: typing.SupportsInt | None
     lord_ptr : EleStruct
         Pointer to the lord.
     """
-def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, extend_grid: bool | None = None, xx: typing.SupportsFloat | None = None, yy: typing.SupportsFloat | None = None) -> SurfaceDisplacementPtStruct:
+def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, extend_grid: bool | None = None, xx: typing.SupportsFloat | None = None, yy: typing.SupportsFloat | None = None) -> SurfaceDisplacementPtStruct | None:
     """
     Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
     
@@ -27992,7 +27992,7 @@ def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.
         optional: Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set
         to be on the nearest grid boundary point.
     """
-def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, extend_grid: bool | None = None, xx: typing.SupportsFloat | None = None, yy: typing.SupportsFloat | None = None) -> SurfaceSegmentedPtStruct:
+def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, extend_grid: bool | None = None, xx: typing.SupportsFloat | None = None, yy: typing.SupportsFloat | None = None) -> SurfaceSegmentedPtStruct | None:
     """
     Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
     
@@ -32027,7 +32027,7 @@ def tao_beam_track(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct, ix_branch: t
     calc_ok : bool
         Set True if there were no problems, False otherwise.
     """
-def tao_beam_track_endpoint(ele_id: str, lat: LatStruct, branch_str: str, where: str, u: TaoUniverseStruct) -> EleStruct:
+def tao_beam_track_endpoint(ele_id: str, lat: LatStruct, branch_str: str, where: str, u: TaoUniverseStruct) -> EleStruct | None:
     """
     Parameters
     ----------
@@ -34013,7 +34013,7 @@ def tao_plot_wave(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     graph : TaoGraphStruct
         Graph to plot.
     """
-def tao_pointer_to_building_wall_shape(wall_name: str) -> TaoEleShapeStruct:
+def tao_pointer_to_building_wall_shape(wall_name: str) -> TaoEleShapeStruct | None:
     """
     Parameters
     ----------
@@ -34085,7 +34085,7 @@ def tao_pointer_to_ele_shape(ix_uni: typing.SupportsInt, ele: EleStruct, ele_sha
     e_shape : TaoEleShapeStruct
         Associated shape. Nullified if there is no associated shape.
     """
-def tao_pointer_to_tao_lat(u: TaoUniverseStruct, lat_type: typing.SupportsInt | None = None) -> TaoLatticeStruct:
+def tao_pointer_to_tao_lat(u: TaoUniverseStruct, lat_type: typing.SupportsInt | None = None) -> TaoLatticeStruct | None:
     """
     Parameters
     ----------
@@ -34097,7 +34097,7 @@ def tao_pointer_to_tao_lat(u: TaoUniverseStruct, lat_type: typing.SupportsInt | 
         Tao_lat pointer. Points to u.model, u.design, or u.base
     """
 @typing.overload
-def tao_pointer_to_universe(ix_uni: typing.SupportsInt, neg2_to_default: bool | None = None) -> TaoUniverseStruct:
+def tao_pointer_to_universe(ix_uni: typing.SupportsInt, neg2_to_default: bool | None = None) -> TaoUniverseStruct | None:
     """
     Function tao_pointer_to_universe (...) result (u)
     
@@ -34128,7 +34128,7 @@ def tao_pointer_to_universe(ix_uni: typing.SupportsInt, neg2_to_default: bool | 
         Universe pointer. u will be nullified if there is an error and an error message will be printed.
     """
 @typing.overload
-def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) -> TaoUniverseStruct:
+def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) -> TaoUniverseStruct | None:
     """
     Function tao_pointer_to_universe (...) result (u)
     
@@ -36747,7 +36747,7 @@ def track1_symp_lie_ptc(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     track : TrackStruct
         Structure holding the track information.
     """
-def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: TaylorStructArray1D | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: TaylorStructArray1D | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -36859,7 +36859,7 @@ def track_a_capillary(orb: CoordStruct, ele: EleStruct) -> None:
     ele : EleStruct
         Capillary element
     """
-def track_a_converter(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_converter(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -36875,7 +36875,7 @@ def track_a_converter(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct,
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
     """
-def track_a_crab_cavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_crab_cavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -36929,7 +36929,7 @@ def track_a_drift_photon(orb: CoordStruct, length: typing.SupportsFloat, phase_r
         If true then E field phase shift is relative to ref particle. -- logical: If true then E field phase shift
         is relative to ref particle.
     """
-def track_a_foil(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_foil(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -36999,7 +36999,7 @@ def track_a_lcavity_old(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
     """
-def track_a_mask(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_mask(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -37015,7 +37015,7 @@ def track_a_mask(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
     """
-def track_a_match(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_match(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -37081,7 +37081,7 @@ def track_a_patch_photon(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool
         If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
         of assuming that the particle is at the patch edge.
     """
-def track_a_pickup(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_pickup(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -37098,7 +37098,7 @@ def track_a_pickup(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, er
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
     """
-def track_a_quadrupole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_quadrupole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -37114,7 +37114,7 @@ def track_a_quadrupole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
     """
-def track_a_rfcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_rfcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -37147,7 +37147,7 @@ def track_a_sad_mult(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
     """
-def track_a_sol_quad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_sol_quad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -37181,7 +37181,7 @@ def track_a_thick_multipole(orbit: CoordStruct, ele: EleStruct, param: LatParamS
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
     """
-def track_a_wiggler(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
+def track_a_wiggler(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
     Parameters
     ----------
@@ -37476,7 +37476,7 @@ def tracking_rad_map_setup(ele: EleStruct, tollerance: typing.SupportsFloat, ref
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
-def transfer_ac_kick(ac_in: AcKickerStruct) -> AcKickerStruct:
+def transfer_ac_kick(ac_in: AcKickerStruct) -> AcKickerStruct | None:
     """
     Parameters
     ----------
@@ -37736,7 +37736,7 @@ def transfer_twiss(ele_in: EleStruct, reverse: bool | None = None) -> EleStruct:
     reverse : bool, optional
         Reverse alpha and coupling as if particle is going in the reversed direction? Default is False.
     """
-def transfer_wake(wake_in: WakeStruct) -> WakeStruct:
+def transfer_wake(wake_in: WakeStruct) -> WakeStruct | None:
     """
     Parameters
     ----------

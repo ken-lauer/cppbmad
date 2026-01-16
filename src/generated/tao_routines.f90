@@ -1932,8 +1932,7 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
     f_ele_shapes => null()
   endif
   ! out: f_e_shape 0D_PTR_type
-  if (.not. c_associated(e_shape)) return
-  call c_f_pointer(e_shape, f_e_shape)
+  if (c_associated(e_shape))   call c_f_pointer(e_shape, f_e_shape)
   ! in: f_y1 0D_NOT_real
   f_y1 = y1
   ! in: f_y2 0D_NOT_real
@@ -3034,8 +3033,7 @@ subroutine fortran_tao_find_plot_region (err, where, region, print_flag) bind(c)
   call c_f_pointer(where, f_where_ptr, [huge(0)])
   call to_f_str(f_where_ptr, f_where)
   ! out: f_region 0D_PTR_type
-  if (.not. c_associated(region)) return
-  call c_f_pointer(region, f_region)
+  if (c_associated(region))   call c_f_pointer(region, f_region)
   ! in: f_print_flag 0D_NOT_logical
   if (c_associated(print_flag)) then
     call c_f_pointer(print_flag, f_print_flag_ptr)

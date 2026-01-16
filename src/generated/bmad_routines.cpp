@@ -289,7 +289,10 @@ Bmad::AddSuperimpose Bmad::add_superimpose(
       /* bool* */ _mangle_slave_names,
       /* bool* */ _wrap
   );
-  return AddSuperimpose{_err_flag, std::move(EleStruct(_super_ele_out))};
+  return AddSuperimpose{
+      _err_flag,
+      std::move((_super_ele_out ? std::make_optional<EleStruct>(_super_ele_out) : std::nullopt))
+  };
 }
 void Bmad::add_this_multipass(
     LatStruct &lat,
@@ -2569,7 +2572,7 @@ Bmad::coords_floor_to_curvilinear(FloorPositionStruct &floor_coords, EleStruct &
   );
   vec_to_matrix(_w_mat_vec, w_mat);
   return CoordsFloorToCurvilinear{
-      std::move(EleStruct(_ele1)),
+      std::move((_ele1 ? std::make_optional<EleStruct>(_ele1) : std::nullopt)),
       _status,
       w_mat,
       std::move(_local_coords)
@@ -3534,7 +3537,10 @@ Bmad::EleToFibre Bmad::ele_to_fibre(
       /* bool* */ _for_layout,
       /* void* */ _ref_in
   );
-  return EleToFibre{std::move(Fibre(_ptc_fibre)), _err_flag};
+  return EleToFibre{
+      std::move((_ptc_fibre ? std::make_optional<Fibre>(_ptc_fibre) : std::nullopt)),
+      _err_flag
+  };
 }
 int Bmad::ele_to_ptc_magnetic_bn_an(EleStruct &ele, FArray1D<Real> &bn, FArray1D<Real> &an) {
   // bn: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
@@ -5226,7 +5232,10 @@ Bmad::FindElementEnds Bmad::find_element_ends(EleStruct &ele, std::optional<int>
       /* void* */ &_ele2,
       /* int* */ _ix_multipass
   );
-  return FindElementEnds{std::move(EleStruct(_ele1)), std::move(EleStruct(_ele2))};
+  return FindElementEnds{
+      std::move((_ele1 ? std::make_optional<EleStruct>(_ele1) : std::nullopt)),
+      std::move((_ele2 ? std::make_optional<EleStruct>(_ele2) : std::nullopt))
+  };
 }
 double Bmad::find_fwhm(double bound, FixedArray1D<Real, 8> args) {
   // args: in NOT (CppWrapperGeneralArgumentArray) (['1:8'])
@@ -5266,7 +5275,10 @@ Bmad::FindMatchingFieldmap Bmad::find_matching_fieldmap(
       /* int& */ _ix_field,
       /* bool* */ _ignore_slaves
   );
-  return FindMatchingFieldmap{std::move(EleStruct(_match_ele)), _ix_field};
+  return FindMatchingFieldmap{
+      std::move((_match_ele ? std::make_optional<EleStruct>(_match_ele) : std::nullopt)),
+      _ix_field
+  };
 }
 double Bmad::find_normalization(double bound, double p0, FixedArray1D<Real, 8> args) {
   // args: in NOT (CppWrapperGeneralArgumentArray) (['1:8'])
@@ -6548,7 +6560,7 @@ void Bmad::init_taylor_series(TaylorStruct &bmad_taylor, int n_term, std::option
       /* bool* */ _save_old
   );
 }
-WakeStruct Bmad::init_wake(
+std::optional<WakeStruct> Bmad::init_wake(
     int n_sr_long,
     int n_sr_trans,
     int n_sr_z,
@@ -6571,7 +6583,7 @@ WakeStruct Bmad::init_wake(
       /* int& */ n_lr_mode,
       /* bool* */ _always_allocate
   );
-  return std::move(WakeStruct(_wake));
+  return std::move((_wake ? std::make_optional<WakeStruct>(_wake) : std::nullopt));
 }
 void Bmad::insert_element(
     LatStruct &lat,
@@ -8053,7 +8065,7 @@ int Bmad::mfft1(FArray1D<Real> &a, FArray1D<Real> &b, FArray1D<Int> &n, int ndim
   );
   return _ierr;
 }
-Fibre Bmad::misalign_ptc_fibre(EleStruct &ele, bool use_offsets, bool for_layout) {
+std::optional<Fibre> Bmad::misalign_ptc_fibre(EleStruct &ele, bool use_offsets, bool for_layout) {
   void *_ptc_fibre;
   fortran_misalign_ptc_fibre(
       /* void* */ ele.get_fortran_ptr(),
@@ -8061,7 +8073,7 @@ Fibre Bmad::misalign_ptc_fibre(EleStruct &ele, bool use_offsets, bool for_layout
       /* void* */ &_ptc_fibre,
       /* bool& */ for_layout
   );
-  return std::move(Fibre(_ptc_fibre));
+  return std::move((_ptc_fibre ? std::make_optional<Fibre>(_ptc_fibre) : std::nullopt));
 }
 double Bmad::momentum_compaction(BranchStruct &branch) {
   double _mom_comp{};
@@ -10151,12 +10163,12 @@ void Bmad::point_photon_emission(
       /* Bmad::array_descriptor_t& */ _w_to_surface_desc
   );
 }
-BranchStruct Bmad::pointer_to_branch(EleStruct &ele) {
+std::optional<BranchStruct> Bmad::pointer_to_branch(EleStruct &ele) {
   void *_branch_ptr;
   fortran_pointer_to_branch_given_ele(/* void* */ ele.get_fortran_ptr(), /* void* */ &_branch_ptr);
-  return std::move(BranchStruct(_branch_ptr));
+  return std::move((_branch_ptr ? std::make_optional<BranchStruct>(_branch_ptr) : std::nullopt));
 }
-BranchStruct Bmad::pointer_to_branch(
+std::optional<BranchStruct> Bmad::pointer_to_branch(
     std::string branch_name,
     LatStruct &lat,
     std::optional<bool> parameter_is_branch0,
@@ -10185,9 +10197,10 @@ BranchStruct Bmad::pointer_to_branch(
       /* int* */ _blank_branch,
       /* void* */ &_branch_ptr
   );
-  return std::move(BranchStruct(_branch_ptr));
+  return std::move((_branch_ptr ? std::make_optional<BranchStruct>(_branch_ptr) : std::nullopt));
 }
-EleStruct Bmad::pointer_to_ele(LatStruct &lat, int ix_ele, std::optional<int> ix_branch) {
+std::optional<EleStruct>
+Bmad::pointer_to_ele(LatStruct &lat, int ix_ele, std::optional<int> ix_branch) {
   int ix_branch_lvalue;
   auto *_ix_branch{&ix_branch_lvalue};
   if (ix_branch.has_value()) {
@@ -10202,18 +10215,18 @@ EleStruct Bmad::pointer_to_ele(LatStruct &lat, int ix_ele, std::optional<int> ix
       /* int* */ _ix_branch,
       /* void* */ &_ele_ptr
   );
-  return std::move(EleStruct(_ele_ptr));
+  return std::move((_ele_ptr ? std::make_optional<EleStruct>(_ele_ptr) : std::nullopt));
 }
-EleStruct Bmad::pointer_to_ele(LatStruct &lat, LatEleLocStruct &ele_loc) {
+std::optional<EleStruct> Bmad::pointer_to_ele(LatStruct &lat, LatEleLocStruct &ele_loc) {
   void *_ele_ptr;
   fortran_pointer_to_ele2(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ ele_loc.get_fortran_ptr(),
       /* void* */ &_ele_ptr
   );
-  return std::move(EleStruct(_ele_ptr));
+  return std::move((_ele_ptr ? std::make_optional<EleStruct>(_ele_ptr) : std::nullopt));
 }
-EleStruct Bmad::pointer_to_ele(LatStruct &lat, std::string ele_name) {
+std::optional<EleStruct> Bmad::pointer_to_ele(LatStruct &lat, std::string ele_name) {
   auto _ele_name = ele_name.c_str();
   void *_ele_ptr;
   fortran_pointer_to_ele3(
@@ -10221,16 +10234,16 @@ EleStruct Bmad::pointer_to_ele(LatStruct &lat, std::string ele_name) {
       /* const char* */ _ele_name,
       /* void* */ &_ele_ptr
   );
-  return std::move(EleStruct(_ele_ptr));
+  return std::move((_ele_ptr ? std::make_optional<EleStruct>(_ele_ptr) : std::nullopt));
 }
-EleStruct Bmad::pointer_to_ele(LatStruct &lat, EleStruct &foreign_ele) {
+std::optional<EleStruct> Bmad::pointer_to_ele(LatStruct &lat, EleStruct &foreign_ele) {
   void *_ele_ptr;
   fortran_pointer_to_ele4(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ foreign_ele.get_fortran_ptr(),
       /* void* */ &_ele_ptr
   );
-  return std::move(EleStruct(_ele_ptr));
+  return std::move((_ele_ptr ? std::make_optional<EleStruct>(_ele_ptr) : std::nullopt));
 }
 Bmad::PointerToElementAtS Bmad::pointer_to_element_at_s(
     BranchStruct &branch,
@@ -10259,12 +10272,17 @@ Bmad::PointerToElementAtS Bmad::pointer_to_element_at_s(
       /* bool* */ _print_err,
       /* void* */ &_ele
   );
-  return PointerToElementAtS{_err_flag, _s_eff, std::move(_position), std::move(EleStruct(_ele))};
+  return PointerToElementAtS{
+      _err_flag,
+      _s_eff,
+      std::move(_position),
+      std::move((_ele ? std::make_optional<EleStruct>(_ele) : std::nullopt))
+  };
 }
-Fibre Bmad::pointer_to_fibre(EleStruct &ele) {
+std::optional<Fibre> Bmad::pointer_to_fibre(EleStruct &ele) {
   void *_assoc_fibre;
   fortran_pointer_to_fibre(/* void* */ ele.get_fortran_ptr(), /* void* */ &_assoc_fibre);
-  return std::move(Fibre(_assoc_fibre));
+  return std::move((_assoc_fibre ? std::make_optional<Fibre>(_assoc_fibre) : std::nullopt));
 }
 Bmad::PointerToFieldEle Bmad::pointer_to_field_ele(EleStruct &ele, int ix_field_ele) {
   double _dz_offset{};
@@ -10275,7 +10293,10 @@ Bmad::PointerToFieldEle Bmad::pointer_to_field_ele(EleStruct &ele, int ix_field_
       /* double& */ _dz_offset,
       /* void* */ &_field_ele
   );
-  return PointerToFieldEle{_dz_offset, std::move(EleStruct(_field_ele))};
+  return PointerToFieldEle{
+      _dz_offset,
+      std::move((_field_ele ? std::make_optional<EleStruct>(_field_ele) : std::nullopt))
+  };
 }
 Bmad::PointerToGirder Bmad::pointer_to_girder(EleStruct &ele) {
   int _ix_slave_back{};
@@ -10285,7 +10306,10 @@ Bmad::PointerToGirder Bmad::pointer_to_girder(EleStruct &ele) {
       /* int& */ _ix_slave_back,
       /* void* */ &_girder
   );
-  return PointerToGirder{_ix_slave_back, std::move(EleStruct(_girder))};
+  return PointerToGirder{
+      _ix_slave_back,
+      std::move((_girder ? std::make_optional<EleStruct>(_girder) : std::nullopt))
+  };
 }
 Bmad::PointerToLord
 Bmad::pointer_to_lord(EleStruct &slave, int ix_lord, std::optional<int> lord_type) {
@@ -10312,11 +10336,11 @@ Bmad::pointer_to_lord(EleStruct &slave, int ix_lord, std::optional<int> lord_typ
       /* void* */ &_lord_ptr
   );
   return PointerToLord{
-      std::move(ControlStruct(_control)),
+      std::move((_control ? std::make_optional<ControlStruct>(_control) : std::nullopt)),
       _ix_slave_back,
       _ix_control,
       _ix_ic,
-      std::move(EleStruct(_lord_ptr))
+      std::move((_lord_ptr ? std::make_optional<EleStruct>(_lord_ptr) : std::nullopt))
   };
 }
 Bmad::PointerToMultipassLord Bmad::pointer_to_multipass_lord(EleStruct &ele) {
@@ -10331,8 +10355,8 @@ Bmad::PointerToMultipassLord Bmad::pointer_to_multipass_lord(EleStruct &ele) {
   );
   return PointerToMultipassLord{
       _ix_pass,
-      std::move(EleStruct(_super_lord)),
-      std::move(EleStruct(_multi_lord))
+      std::move((_super_lord ? std::make_optional<EleStruct>(_super_lord) : std::nullopt)),
+      std::move((_multi_lord ? std::make_optional<EleStruct>(_multi_lord) : std::nullopt))
   };
 }
 void Bmad::pointer_to_next_ele(
@@ -10397,11 +10421,11 @@ Bmad::pointer_to_slave(EleStruct &lord, int ix_slave, std::optional<int> lord_ty
       /* void* */ &_slave_ptr
   );
   return PointerToSlave{
-      std::move(ControlStruct(_control)),
+      std::move((_control ? std::make_optional<ControlStruct>(_control) : std::nullopt)),
       _ix_lord_back,
       _ix_control,
       _ix_ic,
-      std::move(EleStruct(_slave_ptr))
+      std::move((_slave_ptr ? std::make_optional<EleStruct>(_slave_ptr) : std::nullopt))
   };
 }
 Bmad::PointerToSuperLord
@@ -10428,14 +10452,14 @@ Bmad::pointer_to_super_lord(EleStruct &slave, std::optional<int> lord_type) {
       /* void* */ &_lord_ptr
   );
   return PointerToSuperLord{
-      std::move(ControlStruct(_control)),
+      std::move((_control ? std::make_optional<ControlStruct>(_control) : std::nullopt)),
       _ix_slave_back,
       _ix_control,
       _ix_ic,
-      std::move(EleStruct(_lord_ptr))
+      std::move((_lord_ptr ? std::make_optional<EleStruct>(_lord_ptr) : std::nullopt))
   };
 }
-SurfaceDisplacementPtStruct Bmad::pointer_to_surface_displacement_pt(
+std::optional<SurfaceDisplacementPtStruct> Bmad::pointer_to_surface_displacement_pt(
     EleStruct &ele,
     bool nearest,
     double x,
@@ -10494,9 +10518,9 @@ SurfaceDisplacementPtStruct Bmad::pointer_to_surface_displacement_pt(
       /* double* */ _yy,
       /* void* */ &_pt
   );
-  return std::move(SurfaceDisplacementPtStruct(_pt));
+  return std::move((_pt ? std::make_optional<SurfaceDisplacementPtStruct>(_pt) : std::nullopt));
 }
-SurfaceSegmentedPtStruct Bmad::pointer_to_surface_segmented_pt(
+std::optional<SurfaceSegmentedPtStruct> Bmad::pointer_to_surface_segmented_pt(
     EleStruct &ele,
     bool nearest,
     double x,
@@ -10555,7 +10579,7 @@ SurfaceSegmentedPtStruct Bmad::pointer_to_surface_segmented_pt(
       /* double* */ _yy,
       /* void* */ &_pt
   );
-  return std::move(SurfaceSegmentedPtStruct(_pt));
+  return std::move((_pt ? std::make_optional<SurfaceSegmentedPtStruct>(_pt) : std::nullopt));
 }
 Bmad::PointerToWakeEle Bmad::pointer_to_wake_ele(EleStruct &ele) {
   double _delta_s{};
@@ -10565,7 +10589,10 @@ Bmad::PointerToWakeEle Bmad::pointer_to_wake_ele(EleStruct &ele) {
       /* double& */ _delta_s,
       /* void* */ &_wake_ele
   );
-  return PointerToWakeEle{_delta_s, std::move(EleStruct(_wake_ele))};
+  return PointerToWakeEle{
+      _delta_s,
+      std::move((_wake_ele ? std::make_optional<EleStruct>(_wake_ele) : std::nullopt))
+  };
 }
 Bmad::PointerToWall3d Bmad::pointer_to_wall3d(EleStruct &ele, std::optional<int> ix_wall) {
   int ix_wall_lvalue;
@@ -10585,7 +10612,11 @@ Bmad::PointerToWall3d Bmad::pointer_to_wall3d(EleStruct &ele, std::optional<int>
       /* bool& */ _is_branch_wall,
       /* void* */ &_wall3d
   );
-  return PointerToWall3d{_ds_offset, _is_branch_wall, std::move(Wall3dStruct(_wall3d))};
+  return PointerToWall3d{
+      _ds_offset,
+      _is_branch_wall,
+      std::move((_wall3d ? std::make_optional<Wall3dStruct>(_wall3d) : std::nullopt))
+  };
 }
 FixedArray1D<Complex, 2> Bmad::polar_to_spinor(SpinPolarStruct &polar) {
   // spinor: out NOT (CppWrapperGeneralArgumentArray) (['2'])
@@ -10727,7 +10758,10 @@ Bmad::PtcCheckForLostParticle Bmad::ptc_check_for_lost_particle(bool do_reset) {
       /* void* */ &_ptc_fibre,
       /* bool& */ do_reset
   );
-  return PtcCheckForLostParticle{_state, std::move(Fibre(_ptc_fibre))};
+  return PtcCheckForLostParticle{
+      _state,
+      std::move((_ptc_fibre ? std::make_optional<Fibre>(_ptc_fibre) : std::nullopt))
+  };
 }
 void Bmad::ptc_closed_orbit_calc(
     BranchStruct &branch,
@@ -14495,7 +14529,7 @@ TrackStruct Bmad::track1_symp_lie_ptc(CoordStruct &orbit, EleStruct &ele, LatPar
   );
   return std::move(_track);
 }
-FixedArray2D<Real, 6, 6> Bmad::track1_taylor(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track1_taylor(
     CoordStruct &orbit,
     EleStruct &ele,
     std::optional<TaylorStructArray1D> taylor,
@@ -14644,7 +14678,7 @@ void Bmad::track_a_bend_photon(CoordStruct &orb, EleStruct &ele, double length) 
 void Bmad::track_a_capillary(CoordStruct &orb, EleStruct &ele) {
   fortran_track_a_capillary(/* void* */ orb.get_fortran_ptr(), /* void* */ ele.get_fortran_ptr());
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_converter(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_converter(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -14673,7 +14707,7 @@ FixedArray2D<Real, 6, 6> Bmad::track_a_converter(
   vec_to_matrix(_mat6_vec, mat6);
   return mat6;
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_crab_cavity(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_crab_cavity(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -14768,7 +14802,7 @@ void Bmad::track_a_drift_photon(CoordStruct &orb, double length, bool phase_rela
       /* bool& */ phase_relative_to_ref
   );
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_foil(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_foil(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -14899,7 +14933,7 @@ void Bmad::track_a_lcavity_old(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_mask(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_mask(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -14928,7 +14962,7 @@ FixedArray2D<Real, 6, 6> Bmad::track_a_mask(
   vec_to_matrix(_mat6_vec, mat6);
   return mat6;
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_match(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_match(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -15042,7 +15076,7 @@ void Bmad::track_a_patch_photon(
       /* bool* */ _use_z_pos
   );
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_pickup(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_pickup(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -15080,7 +15114,7 @@ FixedArray2D<Real, 6, 6> Bmad::track_a_pickup(
   vec_to_matrix(_mat6_vec, mat6);
   return mat6;
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_quadrupole(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_quadrupole(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -15109,7 +15143,7 @@ FixedArray2D<Real, 6, 6> Bmad::track_a_quadrupole(
   vec_to_matrix(_mat6_vec, mat6);
   return mat6;
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_rfcavity(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_rfcavity(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -15172,7 +15206,7 @@ void Bmad::track_a_sad_mult(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_sol_quad(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_sol_quad(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -15235,7 +15269,7 @@ void Bmad::track_a_thick_multipole(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
-FixedArray2D<Real, 6, 6> Bmad::track_a_wiggler(
+std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_wiggler(
     CoordStruct &orbit,
     EleStruct &ele,
     LatParamStruct &param,
@@ -15604,11 +15638,11 @@ Bmad::tracking_rad_map_setup(EleStruct &ele, double tollerance, int ref_edge) {
   );
   return TrackingRadMapSetup{std::move(_rad_map), _err_flag};
 }
-AcKickerStruct Bmad::transfer_ac_kick(AcKickerStruct &ac_in) {
+std::optional<AcKickerStruct> Bmad::transfer_ac_kick(AcKickerStruct &ac_in) {
   auto _ac_in = &ac_in; // input, required, pointer
   void *_ac_out;
   fortran_transfer_ac_kick(/* void* */ &ac_in, /* void* */ &_ac_out);
-  return std::move(AcKickerStruct(_ac_out));
+  return std::move((_ac_out ? std::make_optional<AcKickerStruct>(_ac_out) : std::nullopt));
 }
 BranchStruct Bmad::transfer_branch(BranchStruct &branch1) {
   BranchStruct _branch2;
@@ -16041,11 +16075,11 @@ EleStruct Bmad::transfer_twiss(EleStruct &ele_in, std::optional<bool> reverse) {
   );
   return std::move(_ele_out);
 }
-WakeStruct Bmad::transfer_wake(WakeStruct &wake_in) {
+std::optional<WakeStruct> Bmad::transfer_wake(WakeStruct &wake_in) {
   auto _wake_in = &wake_in; // input, required, pointer
   void *_wake_out;
   fortran_transfer_wake(/* void* */ &wake_in, /* void* */ &_wake_out);
-  return std::move(WakeStruct(_wake_out));
+  return std::move((_wake_out ? std::make_optional<WakeStruct>(_wake_out) : std::nullopt));
 }
 void Bmad::truncate_complex_taylor_to_order(
     ComplexTaylorStructArray1D complex_taylor_in,
