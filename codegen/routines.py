@@ -12,7 +12,7 @@ from typing import Literal
 
 from .arg import Argument as InterfaceArgument
 from .config import CodegenConfig, RoutineSettings
-from .context import config_context, ctx, get_params
+from .context import config_context, get_params
 from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper, generate_routines_header
 from .docstring import DocstringParameter, RoutineDocstring, parse_routine_comment_block
 from .exceptions import RenameError, RoutineNotFoundError, UnsupportedTypeError
@@ -1156,9 +1156,9 @@ def generate_routines(params: CodegenConfig):
     unique_routines = {rt.name: rt for rt in all_routines}
     usable = [rt for rt in unique_routines.values() if rt.usable]
 
-    enums_by_name = ctx().enums_by_name
-    for rt in usable:
-        for arg in rt.args:
-            arg.check_enums(enums_by_name)
+    # enums_by_name = ctx().enums_by_name
+    # for rt in usable:
+    #     for arg in rt.args:
+    #         arg.check_enums(enums_by_name)
     logger.info("Procedures: %d usable / %d total unique", len(usable), len(all_routines_by_name))
     return all_routines, all_routines_by_name

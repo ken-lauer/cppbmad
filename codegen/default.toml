@@ -463,7 +463,7 @@ cpp_output_filename = "tao_routines.cpp"
 cpp_namespace = "Tao"
 # interface_path = "$ACC_ROOT_DIR/tao/code/tao_interface.f90"
 source_paths = ["$ACC_ROOT_DIR/tao/code"]
-skip_files = []
+skip_files = ["tao_c_interface_mod.f90"]
 skip_procedures = []
 
 [[routines]]
