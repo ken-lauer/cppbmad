@@ -929,7 +929,7 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
         if best_option.docstring:
             missing_arg_names = [
                 name
-                for name in best_option.declared_argument_list
+                for name in best_option.arg_names_with_result
                 if name.lower() not in best_option.docstring.arguments_by_name
                 or best_option.docstring.arguments_by_name[name.lower()].guessed
             ]
