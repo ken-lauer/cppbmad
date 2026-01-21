@@ -819,6 +819,7 @@ contains
       is_allocated = .true.
       sz = size(ctr%data)
       js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
       elem_size = storage_size(ctr%data(js)) / 8
       d_ptr = c_loc(ctr%data(js))
     else
@@ -890,6 +891,7 @@ contains
       is_allocated = .true.
       sz = size(ctr%data)
       js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
       elem_size = storage_size(ctr%data(js)) / 8
       d_ptr = c_loc(ctr%data(js))
     else
@@ -961,6 +963,7 @@ contains
       is_allocated = .true.
       sz = size(ctr%data)
       js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
       elem_size = storage_size(ctr%data(js)) / 8
       d_ptr = c_loc(ctr%data(js))
     else
@@ -1032,6 +1035,7 @@ contains
       is_allocated = .true.
       sz = size(ctr%data)
       js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
       elem_size = storage_size(ctr%data(js)) / 8
       d_ptr = c_loc(ctr%data(js))
     else
@@ -1103,6 +1107,7 @@ contains
       is_allocated = .true.
       sz = size(ctr%data)
       js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
       elem_size = storage_size(ctr%data(js)) / 8
       d_ptr = c_loc(ctr%data(js))
     else
@@ -1174,6 +1179,7 @@ contains
       is_allocated = .true.
       sz = size(ctr%data)
       js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
       elem_size = storage_size(ctr%data(js)) / 8
       d_ptr = c_loc(ctr%data(js))
     else
@@ -1387,6 +1393,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine spline_struct_set_coef(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='spline_struct_set_coef')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(spline_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%coef = val
     endif
   end subroutine
 
@@ -2453,6 +2475,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine photon_reflect_table_struct_set_angle(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='photon_reflect_table_struct_set_angle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(photon_reflect_table_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%angle)) then
+         if ((size(struct_obj%angle, 1) /= shape(1))) deallocate(struct_obj%angle)
+      endif
+      if (.not. allocated(struct_obj%angle)) allocate(struct_obj%angle(shape(1)))
+      struct_obj%angle = val
+    endif
+  end subroutine
+
   ! photon_reflect_table_struct%energy: 1D_ALLOC_real
 
   subroutine photon_reflect_table_struct_get_energy_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -2476,6 +2518,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine photon_reflect_table_struct_set_energy(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='photon_reflect_table_struct_set_energy')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(photon_reflect_table_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%energy)) then
+         if ((size(struct_obj%energy, 1) /= shape(1))) deallocate(struct_obj%energy)
+      endif
+      if (.not. allocated(struct_obj%energy)) allocate(struct_obj%energy(shape(1)))
+      struct_obj%energy = val
     endif
   end subroutine
 
@@ -2540,6 +2602,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine photon_reflect_table_struct_set_p_reflect(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='photon_reflect_table_struct_set_p_reflect')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(photon_reflect_table_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%p_reflect)) then
+         if ((size(struct_obj%p_reflect, 1) /= shape(1)) .or. (size(struct_obj%p_reflect, 2) /= shape(2))) deallocate(struct_obj%p_reflect)
+      endif
+      if (.not. allocated(struct_obj%p_reflect)) allocate(struct_obj%p_reflect(shape(1), shape(2)))
+      struct_obj%p_reflect = val
+    endif
+  end subroutine
+
   ! photon_reflect_table_struct%max_energy: 0D_NOT_real
 
   subroutine photon_reflect_table_struct_get_max_energy(struct_obj_ptr, value_out) bind(c, name='photon_reflect_table_struct_get_max_energy')
@@ -2585,6 +2667,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine photon_reflect_table_struct_set_p_reflect_scratch(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='photon_reflect_table_struct_set_p_reflect_scratch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(photon_reflect_table_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%p_reflect_scratch)) then
+         if ((size(struct_obj%p_reflect_scratch, 1) /= shape(1))) deallocate(struct_obj%p_reflect_scratch)
+      endif
+      if (.not. allocated(struct_obj%p_reflect_scratch)) allocate(struct_obj%p_reflect_scratch(shape(1)))
+      struct_obj%p_reflect_scratch = val
+    endif
+  end subroutine
+
   ! photon_reflect_table_struct%bragg_angle: 1D_ALLOC_real
 
   subroutine photon_reflect_table_struct_get_bragg_angle_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -2608,6 +2710,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine photon_reflect_table_struct_set_bragg_angle(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='photon_reflect_table_struct_set_bragg_angle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(photon_reflect_table_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%bragg_angle)) then
+         if ((size(struct_obj%bragg_angle, 1) /= shape(1))) deallocate(struct_obj%bragg_angle)
+      endif
+      if (.not. allocated(struct_obj%bragg_angle)) allocate(struct_obj%bragg_angle(shape(1)))
+      struct_obj%bragg_angle = val
     endif
   end subroutine
 
@@ -3050,6 +3172,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine coord_struct_set_vec(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='coord_struct_set_vec')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(coord_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%vec = val
+    endif
+  end subroutine
+
   ! coord_struct%s: 0D_NOT_real
 
   subroutine coord_struct_get_s(struct_obj_ptr, value_out) bind(c, name='coord_struct_get_s')
@@ -3114,6 +3252,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine coord_struct_set_spin(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='coord_struct_set_spin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(coord_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%spin = val
+    endif
+  end subroutine
+
   ! coord_struct%field: 1D_NOT_real
 
   subroutine coord_struct_get_field_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -3140,6 +3294,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine coord_struct_set_field(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='coord_struct_set_field')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(coord_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%field = val
+    endif
+  end subroutine
+
   ! coord_struct%phase: 1D_NOT_real
 
   subroutine coord_struct_get_phase_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -3163,6 +3333,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine coord_struct_set_phase(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='coord_struct_set_phase')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(coord_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%phase = val
     endif
   end subroutine
 
@@ -4249,6 +4435,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine wake_sr_z_long_struct_set_w(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wake_sr_z_long_struct_set_w')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wake_sr_z_long_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%w)) then
+         if ((size(struct_obj%w, 1) /= shape(1))) deallocate(struct_obj%w)
+      endif
+      if (.not. allocated(struct_obj%w)) allocate(struct_obj%w(shape(1)))
+      struct_obj%w = val
+    endif
+  end subroutine
+
   ! wake_sr_z_long_struct%fw: 1D_ALLOC_complex
 
   subroutine wake_sr_z_long_struct_get_fw_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -4272,6 +4478,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine wake_sr_z_long_struct_set_fw(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wake_sr_z_long_struct_set_fw')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wake_sr_z_long_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%fw)) then
+         if ((size(struct_obj%fw, 1) /= shape(1))) deallocate(struct_obj%fw)
+      endif
+      if (.not. allocated(struct_obj%fw)) allocate(struct_obj%fw(shape(1)))
+      struct_obj%fw = val
     endif
   end subroutine
 
@@ -4301,6 +4527,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine wake_sr_z_long_struct_set_fbunch(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wake_sr_z_long_struct_set_fbunch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wake_sr_z_long_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%fbunch)) then
+         if ((size(struct_obj%fbunch, 1) /= shape(1))) deallocate(struct_obj%fbunch)
+      endif
+      if (.not. allocated(struct_obj%fbunch)) allocate(struct_obj%fbunch(shape(1)))
+      struct_obj%fbunch = val
+    endif
+  end subroutine
+
   ! wake_sr_z_long_struct%w_out: 1D_ALLOC_complex
 
   subroutine wake_sr_z_long_struct_get_w_out_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -4324,6 +4570,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine wake_sr_z_long_struct_set_w_out(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wake_sr_z_long_struct_set_w_out')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wake_sr_z_long_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%w_out)) then
+         if ((size(struct_obj%w_out, 1) /= shape(1))) deallocate(struct_obj%w_out)
+      endif
+      if (.not. allocated(struct_obj%w_out)) allocate(struct_obj%w_out(shape(1)))
+      struct_obj%w_out = val
     endif
   end subroutine
 
@@ -6208,6 +6474,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine taylor_term_struct_set_expn(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='taylor_term_struct_set_expn')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(taylor_term_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%expn = val
+    endif
+  end subroutine
+
   !! taylor_struct
 
     function allocate_fortran_taylor_struct(n, element_size) result(ptr) bind(c)
@@ -6541,6 +6823,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine em_taylor_term_struct_set_expn(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='em_taylor_term_struct_set_expn')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(em_taylor_term_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%expn = val
     endif
   end subroutine
 
@@ -7370,6 +7668,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine cartesian_map_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='cartesian_map_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(cartesian_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
+    endif
+  end subroutine
+
   ! cartesian_map_struct%master_parameter: 0D_NOT_integer
 
   subroutine cartesian_map_struct_get_master_parameter(struct_obj_ptr, value_out) bind(c, name='cartesian_map_struct_get_master_parameter')
@@ -8111,6 +8425,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine cylindrical_map_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='cylindrical_map_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(cylindrical_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
+    endif
+  end subroutine
+
   ! cylindrical_map_struct%ptr: 0D_PTR_type
 
   subroutine cylindrical_map_struct_get_ptr(struct_obj_ptr, ptr_out) bind(c, name='cylindrical_map_struct_get_ptr')
@@ -8293,6 +8623,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine bicubic_cmplx_coef_struct_set_coef(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bicubic_cmplx_coef_struct_set_coef')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(bicubic_cmplx_coef_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%coef = val
+    endif
+  end subroutine
+
   ! bicubic_cmplx_coef_struct%i_box: 1D_NOT_integer
 
   subroutine bicubic_cmplx_coef_struct_get_i_box_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -8316,6 +8662,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine bicubic_cmplx_coef_struct_set_i_box(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bicubic_cmplx_coef_struct_set_i_box')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bicubic_cmplx_coef_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%i_box = val
     endif
   end subroutine
 
@@ -8478,6 +8840,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tricubic_cmplx_coef_struct_set_coef(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tricubic_cmplx_coef_struct_set_coef')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(tricubic_cmplx_coef_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%coef = val
+    endif
+  end subroutine
+
   ! tricubic_cmplx_coef_struct%i_box: 1D_NOT_integer
 
   subroutine tricubic_cmplx_coef_struct_get_i_box_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -8501,6 +8879,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tricubic_cmplx_coef_struct_set_i_box(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tricubic_cmplx_coef_struct_set_i_box')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tricubic_cmplx_coef_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%i_box = val
     endif
   end subroutine
 
@@ -8652,6 +9046,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine grid_field_pt1_struct_set_E(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='grid_field_pt1_struct_set_E')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(grid_field_pt1_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%E = val
+    endif
+  end subroutine
+
   ! grid_field_pt1_struct%B: 1D_NOT_complex
 
   subroutine grid_field_pt1_struct_get_B_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -8675,6 +9085,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine grid_field_pt1_struct_set_B(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='grid_field_pt1_struct_set_B')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(grid_field_pt1_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%B = val
     endif
   end subroutine
 
@@ -9186,6 +9612,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine grid_field_struct_set_dr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='grid_field_struct_set_dr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(grid_field_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%dr = val
+    endif
+  end subroutine
+
   ! grid_field_struct%r0: 1D_NOT_real
 
   subroutine grid_field_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -9209,6 +9651,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine grid_field_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='grid_field_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(grid_field_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
     endif
   end subroutine
 
@@ -9484,6 +9942,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine floor_position_struct_set_r(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='floor_position_struct_set_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(floor_position_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r = val
+    endif
+  end subroutine
+
   ! floor_position_struct%w: 2D_NOT_real
 
   subroutine floor_position_struct_get_w_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -9514,6 +9988,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine floor_position_struct_set_w(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='floor_position_struct_set_w')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(floor_position_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%w = val
     endif
   end subroutine
 
@@ -10667,6 +11157,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine mode3_struct_set_v(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='mode3_struct_set_v')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(mode3_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%v = val
+    endif
+  end subroutine
+
   ! mode3_struct%a: 0D_NOT_type
 
   subroutine mode3_struct_get_a(struct_obj_ptr, ptr_out) bind(c, name='mode3_struct_get_a')
@@ -11213,6 +11719,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine rad_map_struct_set_ref_orb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='rad_map_struct_set_ref_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(rad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%ref_orb = val
+    endif
+  end subroutine
+
   ! rad_map_struct%damp_dmat: 2D_NOT_real
 
   subroutine rad_map_struct_get_damp_dmat_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -11246,6 +11768,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine rad_map_struct_set_damp_dmat(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='rad_map_struct_set_damp_dmat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(rad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%damp_dmat = val
+    endif
+  end subroutine
+
   ! rad_map_struct%xfer_damp_vec: 1D_NOT_real
 
   subroutine rad_map_struct_get_xfer_damp_vec_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -11269,6 +11807,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine rad_map_struct_set_xfer_damp_vec(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='rad_map_struct_set_xfer_damp_vec')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(rad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%xfer_damp_vec = val
     endif
   end subroutine
 
@@ -11305,6 +11859,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine rad_map_struct_set_xfer_damp_mat(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='rad_map_struct_set_xfer_damp_mat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(rad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%xfer_damp_mat = val
+    endif
+  end subroutine
+
   ! rad_map_struct%stoc_mat: 2D_NOT_real
 
   subroutine rad_map_struct_get_stoc_mat_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -11335,6 +11905,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine rad_map_struct_set_stoc_mat(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='rad_map_struct_set_stoc_mat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(rad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%stoc_mat = val
     endif
   end subroutine
 
@@ -11733,6 +12319,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine gen_grad1_struct_set_deriv(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='gen_grad1_struct_set_deriv')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(gen_grad1_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%deriv)) then
+         if ((size(struct_obj%deriv, 1) /= shape(1)) .or. (size(struct_obj%deriv, 2) /= shape(2))) deallocate(struct_obj%deriv)
+      endif
+      if (.not. allocated(struct_obj%deriv)) allocate(struct_obj%deriv(shape(1), shape(2)))
+      struct_obj%deriv = val
+    endif
+  end subroutine
+
   !! gen_grad_map_struct
 
     function allocate_fortran_gen_grad_map_struct(n, element_size) result(ptr) bind(c)
@@ -12029,6 +12635,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine gen_grad_map_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='gen_grad_map_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(gen_grad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
     endif
   end subroutine
 
@@ -12473,6 +13095,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine surface_segmented_struct_set_dr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='surface_segmented_struct_set_dr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(surface_segmented_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%dr = val
+    endif
+  end subroutine
+
   ! surface_segmented_struct%r0: 1D_NOT_real
 
   subroutine surface_segmented_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -12496,6 +13134,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine surface_segmented_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='surface_segmented_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(surface_segmented_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
     endif
   end subroutine
 
@@ -12937,6 +13591,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine surface_h_misalign_struct_set_dr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='surface_h_misalign_struct_set_dr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(surface_h_misalign_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%dr = val
+    endif
+  end subroutine
+
   ! surface_h_misalign_struct%r0: 1D_NOT_real
 
   subroutine surface_h_misalign_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -12960,6 +13630,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine surface_h_misalign_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='surface_h_misalign_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(surface_h_misalign_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
     endif
   end subroutine
 
@@ -13401,6 +14087,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine surface_displacement_struct_set_dr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='surface_displacement_struct_set_dr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(surface_displacement_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%dr = val
+    endif
+  end subroutine
+
   ! surface_displacement_struct%r0: 1D_NOT_real
 
   subroutine surface_displacement_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -13424,6 +14126,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine surface_displacement_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='surface_displacement_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(surface_displacement_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
     endif
   end subroutine
 
@@ -13610,6 +14328,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine target_point_struct_set_r(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='target_point_struct_set_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(target_point_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r = val
+    endif
+  end subroutine
+
   !! surface_curvature_struct
 
     function allocate_fortran_surface_curvature_struct(n, element_size) result(ptr) bind(c)
@@ -13765,6 +14499,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine surface_curvature_struct_set_xy(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='surface_curvature_struct_set_xy')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(surface_curvature_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%xy = val
+    endif
+  end subroutine
+
   ! surface_curvature_struct%spherical: 0D_NOT_real
 
   subroutine surface_curvature_struct_get_spherical(struct_obj_ptr, value_out) bind(c, name='surface_curvature_struct_get_spherical')
@@ -13807,6 +14557,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine surface_curvature_struct_set_elliptical(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='surface_curvature_struct_set_elliptical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(surface_curvature_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%elliptical = val
     endif
   end subroutine
 
@@ -14321,6 +15087,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine photon_material_struct_set_h_norm(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='photon_material_struct_set_h_norm')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(photon_material_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%h_norm = val
+    endif
+  end subroutine
+
   ! photon_material_struct%l_ref: 1D_NOT_real
 
   subroutine photon_material_struct_get_l_ref_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -14344,6 +15126,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine photon_material_struct_set_l_ref(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='photon_material_struct_set_l_ref')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(photon_material_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%l_ref = val
     endif
   end subroutine
 
@@ -14609,6 +15407,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine pixel_pt_struct_set_orbit(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='pixel_pt_struct_set_orbit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(pixel_pt_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%orbit = val
+    endif
+  end subroutine
+
   ! pixel_pt_struct%orbit_rms: 1D_NOT_real
 
   subroutine pixel_pt_struct_get_orbit_rms_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -14632,6 +15446,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine pixel_pt_struct_set_orbit_rms(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='pixel_pt_struct_set_orbit_rms')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(pixel_pt_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%orbit_rms = val
     endif
   end subroutine
 
@@ -14661,6 +15491,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine pixel_pt_struct_set_init_orbit(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='pixel_pt_struct_set_init_orbit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(pixel_pt_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%init_orbit = val
+    endif
+  end subroutine
+
   ! pixel_pt_struct%init_orbit_rms: 1D_NOT_real
 
   subroutine pixel_pt_struct_get_init_orbit_rms_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -14684,6 +15530,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine pixel_pt_struct_set_init_orbit_rms(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='pixel_pt_struct_set_init_orbit_rms')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(pixel_pt_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%init_orbit_rms = val
     endif
   end subroutine
 
@@ -14835,6 +15697,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine pixel_detec_struct_set_dr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='pixel_detec_struct_set_dr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(pixel_detec_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%dr = val
+    endif
+  end subroutine
+
   ! pixel_detec_struct%r0: 1D_NOT_real
 
   subroutine pixel_detec_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -14858,6 +15736,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine pixel_detec_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='pixel_detec_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(pixel_detec_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
     endif
   end subroutine
 
@@ -15334,6 +16228,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine photon_element_struct_set_integrated_init_energy_prob(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='photon_element_struct_set_integrated_init_energy_prob')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(photon_element_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%integrated_init_energy_prob)) then
+         if ((size(struct_obj%integrated_init_energy_prob, 1) /= shape(1))) deallocate(struct_obj%integrated_init_energy_prob)
+      endif
+      if (.not. allocated(struct_obj%integrated_init_energy_prob)) allocate(struct_obj%integrated_init_energy_prob(shape(1)))
+      struct_obj%integrated_init_energy_prob = val
     endif
   end subroutine
 
@@ -16041,6 +16955,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine wall3d_section_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wall3d_section_struct_set_r0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wall3d_section_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r0 = val
+    endif
+  end subroutine
+
   ! wall3d_section_struct%dx0_ds: 0D_NOT_real
 
   subroutine wall3d_section_struct_get_dx0_ds(struct_obj_ptr, value_out) bind(c, name='wall3d_section_struct_get_dx0_ds')
@@ -16105,6 +17035,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine wall3d_section_struct_set_x0_coef(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wall3d_section_struct_set_x0_coef')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wall3d_section_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%x0_coef = val
+    endif
+  end subroutine
+
   ! wall3d_section_struct%y0_coef: 1D_NOT_real
 
   subroutine wall3d_section_struct_get_y0_coef_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -16128,6 +17074,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine wall3d_section_struct_set_y0_coef(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wall3d_section_struct_set_y0_coef')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wall3d_section_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%y0_coef = val
     endif
   end subroutine
 
@@ -16176,6 +17138,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine wall3d_section_struct_set_p1_coef(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wall3d_section_struct_set_p1_coef')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wall3d_section_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%p1_coef = val
+    endif
+  end subroutine
+
   ! wall3d_section_struct%p2_coef: 1D_NOT_real
 
   subroutine wall3d_section_struct_get_p2_coef_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -16199,6 +17177,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine wall3d_section_struct_set_p2_coef(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='wall3d_section_struct_set_p2_coef')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(wall3d_section_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%p2_coef = val
     endif
   end subroutine
 
@@ -16902,6 +17896,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine control_struct_set_y_knot(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='control_struct_set_y_knot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(control_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%y_knot)) then
+         if ((size(struct_obj%y_knot, 1) /= shape(1))) deallocate(struct_obj%y_knot)
+      endif
+      if (.not. allocated(struct_obj%y_knot)) allocate(struct_obj%y_knot(shape(1)))
+      struct_obj%y_knot = val
+    endif
+  end subroutine
+
   ! control_struct%stack: 1D_ALLOC_type
 
   subroutine control_struct_get_stack_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -17383,6 +18397,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine control_ramp1_struct_set_y_knot(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='control_ramp1_struct_set_y_knot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(control_ramp1_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%y_knot)) then
+         if ((size(struct_obj%y_knot, 1) /= shape(1))) deallocate(struct_obj%y_knot)
+      endif
+      if (.not. allocated(struct_obj%y_knot)) allocate(struct_obj%y_knot(shape(1)))
+      struct_obj%y_knot = val
+    endif
+  end subroutine
+
   ! control_ramp1_struct%stack: 1D_ALLOC_type
 
   subroutine control_ramp1_struct_get_stack_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -17718,6 +18752,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine controller_struct_set_x_knot(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='controller_struct_set_x_knot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(controller_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%x_knot)) then
+         if ((size(struct_obj%x_knot, 1) /= shape(1))) deallocate(struct_obj%x_knot)
+      endif
+      if (.not. allocated(struct_obj%x_knot)) allocate(struct_obj%x_knot(shape(1)))
+      struct_obj%x_knot = val
+    endif
+  end subroutine
+
   !! ellipse_beam_init_struct
 
     function allocate_fortran_ellipse_beam_init_struct(n, element_size) result(ptr) bind(c)
@@ -18042,6 +19096,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine kv_beam_init_struct_set_part_per_phi(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='kv_beam_init_struct_set_part_per_phi')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(kv_beam_init_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%part_per_phi = val
     endif
   end subroutine
 
@@ -18521,6 +19591,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine beam_init_struct_set_spin(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='beam_init_struct_set_spin')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(beam_init_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%spin = val
+    endif
+  end subroutine
+
   ! beam_init_struct%ellipse: 1D_NOT_type
 
   subroutine beam_init_struct_get_ellipse_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -18624,6 +19710,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine beam_init_struct_set_center_jitter(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='beam_init_struct_set_center_jitter')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(beam_init_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%center_jitter = val
+    endif
+  end subroutine
+
   ! beam_init_struct%emit_jitter: 1D_NOT_real
 
   subroutine beam_init_struct_get_emit_jitter_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -18647,6 +19749,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine beam_init_struct_set_emit_jitter(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='beam_init_struct_set_emit_jitter')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(beam_init_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%emit_jitter = val
     endif
   end subroutine
 
@@ -18938,6 +20056,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine beam_init_struct_set_center(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='beam_init_struct_set_center')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(beam_init_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%center = val
     endif
   end subroutine
 
@@ -19418,6 +20552,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine lat_param_struct_set_t1_with_RF(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='lat_param_struct_set_t1_with_RF')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(lat_param_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%t1_with_RF = val
+    endif
+  end subroutine
+
   ! lat_param_struct%t1_no_RF: 2D_NOT_real
 
   subroutine lat_param_struct_get_t1_no_RF_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -19448,6 +20598,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine lat_param_struct_set_t1_no_RF(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='lat_param_struct_set_t1_no_RF')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(lat_param_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%t1_no_RF = val
     endif
   end subroutine
 
@@ -20312,6 +21478,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine anormal_mode_struct_set_synch_int(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='anormal_mode_struct_set_synch_int')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(anormal_mode_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%synch_int = val
+    endif
+  end subroutine
+
   ! anormal_mode_struct%j_damp: 0D_NOT_real
 
   subroutine anormal_mode_struct_get_j_damp(struct_obj_ptr, value_out) bind(c, name='anormal_mode_struct_get_j_damp')
@@ -20791,6 +21973,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine normal_modes_struct_set_synch_int(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='normal_modes_struct_set_synch_int')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(normal_modes_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%synch_int = val
+    endif
+  end subroutine
+
   ! normal_modes_struct%sigE_E: 0D_NOT_real
 
   subroutine normal_modes_struct_get_sigE_E(struct_obj_ptr, value_out) bind(c, name='normal_modes_struct_get_sigE_E')
@@ -21175,6 +22373,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine em_field_struct_set_E(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='em_field_struct_set_E')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(em_field_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%E = val
+    endif
+  end subroutine
+
   ! em_field_struct%B: 1D_NOT_real
 
   subroutine em_field_struct_get_B_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -21198,6 +22412,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine em_field_struct_set_B(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='em_field_struct_set_B')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(em_field_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%B = val
     endif
   end subroutine
 
@@ -21234,6 +22464,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine em_field_struct_set_dE(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='em_field_struct_set_dE')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(em_field_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%dE = val
+    endif
+  end subroutine
+
   ! em_field_struct%dB: 2D_NOT_real
 
   subroutine em_field_struct_get_dB_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -21264,6 +22510,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine em_field_struct_set_dB(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='em_field_struct_set_dB')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(em_field_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%dB = val
     endif
   end subroutine
 
@@ -21328,6 +22590,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine em_field_struct_set_A(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='em_field_struct_set_A')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(em_field_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%A = val
     endif
   end subroutine
 
@@ -21835,6 +23113,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine track_point_struct_set_vec0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='track_point_struct_set_vec0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(track_point_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%vec0 = val
+    endif
+  end subroutine
+
   ! track_point_struct%mat6: 2D_NOT_real
 
   subroutine track_point_struct_get_mat6_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -21865,6 +23159,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine track_point_struct_set_mat6(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='track_point_struct_set_mat6')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(track_point_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%mat6 = val
     endif
   end subroutine
 
@@ -22394,6 +23704,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine space_charge_common_struct_set_space_charge_mesh_size(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='space_charge_common_struct_set_space_charge_mesh_size')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(space_charge_common_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%space_charge_mesh_size = val
+    endif
+  end subroutine
+
   ! space_charge_common_struct%csr3d_mesh_size: 1D_NOT_integer
 
   subroutine space_charge_common_struct_get_csr3d_mesh_size_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -22417,6 +23743,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine space_charge_common_struct_set_csr3d_mesh_size(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='space_charge_common_struct_set_csr3d_mesh_size')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(space_charge_common_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%csr3d_mesh_size = val
     endif
   end subroutine
 
@@ -22726,6 +24068,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine bmad_common_struct_set_d_orb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bmad_common_struct_set_d_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bmad_common_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%d_orb = val
     endif
   end subroutine
 
@@ -25462,6 +26820,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine ele_struct_set_spin_taylor_ref_orb_in(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_spin_taylor_ref_orb_in')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%spin_taylor_ref_orb_in = val
+    endif
+  end subroutine
+
   ! ele_struct%spin_taylor: 1D_NOT_type
 
   subroutine ele_struct_get_spin_taylor_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -25767,6 +27141,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine ele_struct_set_value(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%value = val
+    endif
+  end subroutine
+
   ! ele_struct%old_value: 1D_NOT_real
 
   subroutine ele_struct_get_old_value_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -25790,6 +27180,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine ele_struct_set_old_value(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_old_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%old_value = val
     endif
   end subroutine
 
@@ -25826,6 +27232,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine ele_struct_set_spin_q(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_spin_q')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%spin_q = val
+    endif
+  end subroutine
+
   ! ele_struct%vec0: 1D_NOT_real
 
   subroutine ele_struct_get_vec0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -25849,6 +27271,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine ele_struct_set_vec0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_vec0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%vec0 = val
     endif
   end subroutine
 
@@ -25885,6 +27323,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine ele_struct_set_mat6(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_mat6')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%mat6 = val
+    endif
+  end subroutine
+
   ! ele_struct%c_mat: 2D_NOT_real
 
   subroutine ele_struct_get_c_mat_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -25918,6 +27372,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine ele_struct_set_c_mat(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_c_mat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%c_mat = val
+    endif
+  end subroutine
+
   ! ele_struct%dc_mat_dpz: 2D_NOT_real
 
   subroutine ele_struct_get_dc_mat_dpz_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -25948,6 +27418,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine ele_struct_set_dc_mat_dpz(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_dc_mat_dpz')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%dc_mat_dpz = val
     endif
   end subroutine
 
@@ -26053,6 +27539,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine ele_struct_set_a_pole(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_a_pole')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%a_pole)) then
+        if ((size(struct_obj%a_pole, 1) == shape(1))) then
+           struct_obj%a_pole = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! ele_struct%b_pole: 1D_PTR_real
 
   subroutine ele_struct_get_b_pole_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -26076,6 +27582,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine ele_struct_set_b_pole(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_b_pole')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%b_pole)) then
+        if ((size(struct_obj%b_pole, 1) == shape(1))) then
+           struct_obj%b_pole = val
+        endif
+      endif
     endif
   end subroutine
 
@@ -26105,6 +27631,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine ele_struct_set_a_pole_elec(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_a_pole_elec')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%a_pole_elec)) then
+        if ((size(struct_obj%a_pole_elec, 1) == shape(1))) then
+           struct_obj%a_pole_elec = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! ele_struct%b_pole_elec: 1D_PTR_real
 
   subroutine ele_struct_get_b_pole_elec_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -26131,6 +27677,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine ele_struct_set_b_pole_elec(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_b_pole_elec')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%b_pole_elec)) then
+        if ((size(struct_obj%b_pole_elec, 1) == shape(1))) then
+           struct_obj%b_pole_elec = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! ele_struct%custom: 1D_PTR_real
 
   subroutine ele_struct_get_custom_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -26154,6 +27720,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine ele_struct_set_custom(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_custom')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%custom)) then
+        if ((size(struct_obj%custom, 1) == shape(1))) then
+           struct_obj%custom = val
+        endif
+      endif
     endif
   end subroutine
 
@@ -26191,6 +27777,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine ele_struct_set_r(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ele_struct_set_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%r)) then
+        if ((size(struct_obj%r, 1) == shape(1)) .and. (size(struct_obj%r, 2) == shape(2)) .and. (size(struct_obj%r, 3) == shape(3))) then
+           struct_obj%r = val
+        endif
+      endif
     endif
   end subroutine
 
@@ -27099,6 +28705,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine complex_taylor_term_struct_set_expn(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='complex_taylor_term_struct_set_expn')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(complex_taylor_term_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%expn = val
     endif
   end subroutine
 
@@ -28387,6 +30009,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine lat_struct_set_custom(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='lat_struct_set_custom')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(lat_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%custom)) then
+         if ((size(struct_obj%custom, 1) /= shape(1))) deallocate(struct_obj%custom)
+      endif
+      if (.not. allocated(struct_obj%custom)) allocate(struct_obj%custom(shape(1)))
+      struct_obj%custom = val
+    endif
+  end subroutine
+
   ! lat_struct%version: 0D_NOT_integer
 
   subroutine lat_struct_get_version(struct_obj_ptr, value_out) bind(c, name='lat_struct_get_version')
@@ -28536,6 +30178,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine lat_struct_set_ic(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='lat_struct_set_ic')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(lat_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%ic)) then
+         if ((size(struct_obj%ic, 1) /= shape(1))) deallocate(struct_obj%ic)
+      endif
+      if (.not. allocated(struct_obj%ic)) allocate(struct_obj%ic(shape(1)))
+      struct_obj%ic = val
     endif
   end subroutine
 
@@ -28769,6 +30431,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine bunch_struct_set_ix_z(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bunch_struct_set_ix_z')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bunch_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%ix_z)) then
+         if ((size(struct_obj%ix_z, 1) /= shape(1))) deallocate(struct_obj%ix_z)
+      endif
+      if (.not. allocated(struct_obj%ix_z)) allocate(struct_obj%ix_z(shape(1)))
+      struct_obj%ix_z = val
     endif
   end subroutine
 
@@ -29302,6 +30984,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine bunch_params_struct_set_sigma(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bunch_params_struct_set_sigma')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(bunch_params_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%sigma = val
+    endif
+  end subroutine
+
   ! bunch_params_struct%rel_max: 1D_NOT_real
 
   subroutine bunch_params_struct_get_rel_max_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -29328,6 +31026,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine bunch_params_struct_set_rel_max(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bunch_params_struct_set_rel_max')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bunch_params_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%rel_max = val
+    endif
+  end subroutine
+
   ! bunch_params_struct%rel_min: 1D_NOT_real
 
   subroutine bunch_params_struct_get_rel_min_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -29351,6 +31065,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine bunch_params_struct_set_rel_min(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bunch_params_struct_set_rel_min')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bunch_params_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%rel_min = val
     endif
   end subroutine
 
@@ -31039,6 +32769,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine nametable_struct_set_index(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='nametable_struct_set_index')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(nametable_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%index)) then
+         if ((size(struct_obj%index, 1) /= shape(1))) deallocate(struct_obj%index)
+      endif
+      if (.not. allocated(struct_obj%index)) allocate(struct_obj%index(shape(1)))
+      struct_obj%index = val
+    endif
+  end subroutine
+
   ! nametable_struct%n_min: 0D_NOT_integer
 
   subroutine nametable_struct_get_n_min(struct_obj_ptr, value_out) bind(c, name='nametable_struct_get_n_min')
@@ -31225,6 +32975,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_spin_dn_dpz_struct_set_vec(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_dn_dpz_struct_set_vec')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_spin_dn_dpz_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%vec = val
+    endif
+  end subroutine
+
   ! tao_spin_dn_dpz_struct%partial: 2D_NOT_real
 
   subroutine tao_spin_dn_dpz_struct_get_partial_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -31258,6 +33024,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_spin_dn_dpz_struct_set_partial(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_dn_dpz_struct_set_partial')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_spin_dn_dpz_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%partial = val
+    endif
+  end subroutine
+
   ! tao_spin_dn_dpz_struct%partial2: 2D_NOT_real
 
   subroutine tao_spin_dn_dpz_struct_get_partial2_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -31288,6 +33070,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_spin_dn_dpz_struct_set_partial2(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_dn_dpz_struct_set_partial2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_spin_dn_dpz_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%partial2 = val
     endif
   end subroutine
 
@@ -31615,6 +33413,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine spin_orbit_map1_struct_set_orb_mat(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='spin_orbit_map1_struct_set_orb_mat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(spin_orbit_map1_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%orb_mat = val
+    endif
+  end subroutine
+
   ! spin_orbit_map1_struct%vec0: 1D_NOT_real
 
   subroutine spin_orbit_map1_struct_get_vec0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -31638,6 +33452,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine spin_orbit_map1_struct_set_vec0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='spin_orbit_map1_struct_set_vec0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(spin_orbit_map1_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%vec0 = val
     endif
   end subroutine
 
@@ -31671,6 +33501,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine spin_orbit_map1_struct_set_spin_q(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='spin_orbit_map1_struct_set_spin_q')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(spin_orbit_map1_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%spin_q = val
     endif
   end subroutine
 
@@ -31822,6 +33668,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine spin_axis_struct_set_l(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='spin_axis_struct_set_l')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(spin_axis_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%l = val
+    endif
+  end subroutine
+
   ! spin_axis_struct%n0: 1D_NOT_real
 
   subroutine spin_axis_struct_get_n0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -31848,6 +33710,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine spin_axis_struct_set_n0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='spin_axis_struct_set_n0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(spin_axis_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%n0 = val
+    endif
+  end subroutine
+
   ! spin_axis_struct%m: 1D_NOT_real
 
   subroutine spin_axis_struct_get_m_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -31871,6 +33749,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine spin_axis_struct_set_m(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='spin_axis_struct_set_m')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(spin_axis_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%m = val
     endif
   end subroutine
 
@@ -32046,6 +33940,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine ptc_normal_form_struct_set_orb0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='ptc_normal_form_struct_set_orb0')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(ptc_normal_form_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%orb0 = val
     endif
   end subroutine
 
@@ -34205,6 +36115,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_curve_struct_set_x_line(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_x_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%x_line)) then
+         if ((size(struct_obj%x_line, 1) /= shape(1))) deallocate(struct_obj%x_line)
+      endif
+      if (.not. allocated(struct_obj%x_line)) allocate(struct_obj%x_line(shape(1)))
+      struct_obj%x_line = val
+    endif
+  end subroutine
+
   ! tao_curve_struct%y_line: 1D_ALLOC_real
 
   subroutine tao_curve_struct_get_y_line_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -34228,6 +36158,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_y_line(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_y_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%y_line)) then
+         if ((size(struct_obj%y_line, 1) /= shape(1))) deallocate(struct_obj%y_line)
+      endif
+      if (.not. allocated(struct_obj%y_line)) allocate(struct_obj%y_line(shape(1)))
+      struct_obj%y_line = val
     endif
   end subroutine
 
@@ -34257,6 +36207,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_curve_struct_set_y2_line(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_y2_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%y2_line)) then
+         if ((size(struct_obj%y2_line, 1) /= shape(1))) deallocate(struct_obj%y2_line)
+      endif
+      if (.not. allocated(struct_obj%y2_line)) allocate(struct_obj%y2_line(shape(1)))
+      struct_obj%y2_line = val
+    endif
+  end subroutine
+
   ! tao_curve_struct%ix_line: 1D_ALLOC_integer
 
   subroutine tao_curve_struct_get_ix_line_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -34280,6 +36250,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_ix_line(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_ix_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%ix_line)) then
+         if ((size(struct_obj%ix_line, 1) /= shape(1))) deallocate(struct_obj%ix_line)
+      endif
+      if (.not. allocated(struct_obj%ix_line)) allocate(struct_obj%ix_line(shape(1)))
+      struct_obj%ix_line = val
     endif
   end subroutine
 
@@ -34309,6 +36299,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_curve_struct_set_x_symb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_x_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%x_symb)) then
+         if ((size(struct_obj%x_symb, 1) /= shape(1))) deallocate(struct_obj%x_symb)
+      endif
+      if (.not. allocated(struct_obj%x_symb)) allocate(struct_obj%x_symb(shape(1)))
+      struct_obj%x_symb = val
+    endif
+  end subroutine
+
   ! tao_curve_struct%y_symb: 1D_ALLOC_real
 
   subroutine tao_curve_struct_get_y_symb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -34332,6 +36342,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_y_symb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_y_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%y_symb)) then
+         if ((size(struct_obj%y_symb, 1) /= shape(1))) deallocate(struct_obj%y_symb)
+      endif
+      if (.not. allocated(struct_obj%y_symb)) allocate(struct_obj%y_symb(shape(1)))
+      struct_obj%y_symb = val
     endif
   end subroutine
 
@@ -34361,6 +36391,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_curve_struct_set_z_symb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_z_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%z_symb)) then
+         if ((size(struct_obj%z_symb, 1) /= shape(1))) deallocate(struct_obj%z_symb)
+      endif
+      if (.not. allocated(struct_obj%z_symb)) allocate(struct_obj%z_symb(shape(1)))
+      struct_obj%z_symb = val
+    endif
+  end subroutine
+
   ! tao_curve_struct%err_symb: 1D_ALLOC_real
 
   subroutine tao_curve_struct_get_err_symb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -34384,6 +36434,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_err_symb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_err_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%err_symb)) then
+         if ((size(struct_obj%err_symb, 1) /= shape(1))) deallocate(struct_obj%err_symb)
+      endif
+      if (.not. allocated(struct_obj%err_symb)) allocate(struct_obj%err_symb(shape(1)))
+      struct_obj%err_symb = val
     endif
   end subroutine
 
@@ -34413,6 +36483,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_curve_struct_set_symb_size(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_symb_size')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%symb_size)) then
+         if ((size(struct_obj%symb_size, 1) /= shape(1))) deallocate(struct_obj%symb_size)
+      endif
+      if (.not. allocated(struct_obj%symb_size)) allocate(struct_obj%symb_size(shape(1)))
+      struct_obj%symb_size = val
+    endif
+  end subroutine
+
   ! tao_curve_struct%ix_symb: 1D_ALLOC_integer
 
   subroutine tao_curve_struct_get_ix_symb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -34436,6 +36526,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_curve_struct_set_ix_symb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_curve_struct_set_ix_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_curve_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%ix_symb)) then
+         if ((size(struct_obj%ix_symb, 1) /= shape(1))) deallocate(struct_obj%ix_symb)
+      endif
+      if (.not. allocated(struct_obj%ix_symb)) allocate(struct_obj%ix_symb(shape(1)))
+      struct_obj%ix_symb = val
     endif
   end subroutine
 
@@ -35874,6 +37984,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_lat_sigma_struct_set_mat(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_lat_sigma_struct_set_mat')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_lat_sigma_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%mat = val
+    endif
+  end subroutine
+
   !! tao_spin_ele_struct
 
     function allocate_fortran_tao_spin_ele_struct(n, element_size) result(ptr) bind(c)
@@ -36043,6 +38169,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_spin_ele_struct_set_orb_eigen_val(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_ele_struct_set_orb_eigen_val')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_spin_ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%orb_eigen_val = val
+    endif
+  end subroutine
+
   ! tao_spin_ele_struct%orb_eigen_vec: 2D_NOT_real
 
   subroutine tao_spin_ele_struct_get_orb_eigen_vec_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -36076,6 +38218,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_spin_ele_struct_set_orb_eigen_vec(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_ele_struct_set_orb_eigen_vec')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_spin_ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%orb_eigen_vec = val
+    endif
+  end subroutine
+
   ! tao_spin_ele_struct%spin_eigen_vec: 2D_NOT_real
 
   subroutine tao_spin_ele_struct_get_spin_eigen_vec_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -36106,6 +38264,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_spin_ele_struct_set_spin_eigen_vec(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_ele_struct_set_spin_eigen_vec')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_spin_ele_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%spin_eigen_vec = val
     endif
   end subroutine
 
@@ -36516,6 +38690,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_spin_polarization_struct_set_pol_limit_dk_partial(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_polarization_struct_set_pol_limit_dk_partial')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_spin_polarization_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%pol_limit_dk_partial = val
+    endif
+  end subroutine
+
   ! tao_spin_polarization_struct%pol_limit_dk_partial2: 1D_NOT_real
 
   subroutine tao_spin_polarization_struct_get_pol_limit_dk_partial2_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -36539,6 +38729,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_spin_polarization_struct_set_pol_limit_dk_partial2(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_polarization_struct_set_pol_limit_dk_partial2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_spin_polarization_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%pol_limit_dk_partial2 = val
     endif
   end subroutine
 
@@ -36606,6 +38812,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_spin_polarization_struct_set_depol_rate_partial(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_polarization_struct_set_depol_rate_partial')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_spin_polarization_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%depol_rate_partial = val
+    endif
+  end subroutine
+
   ! tao_spin_polarization_struct%depol_rate_partial2: 1D_NOT_real
 
   subroutine tao_spin_polarization_struct_get_depol_rate_partial2_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -36629,6 +38851,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_spin_polarization_struct_set_depol_rate_partial2(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_polarization_struct_set_depol_rate_partial2')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_spin_polarization_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%depol_rate_partial2 = val
     endif
   end subroutine
 
@@ -39573,6 +41811,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_graph_struct_set_box(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_graph_struct_set_box')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_graph_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%box = val
+    endif
+  end subroutine
+
   ! tao_graph_struct%ix_branch: 0D_NOT_integer
 
   subroutine tao_graph_struct_get_ix_branch(struct_obj_ptr, value_out) bind(c, name='tao_graph_struct_get_ix_branch')
@@ -40458,6 +42712,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_plot_region_struct_set_location(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_plot_region_struct_set_location')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_plot_region_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%location = val
+    endif
+  end subroutine
+
   ! tao_plot_region_struct%visible: 0D_NOT_logical
 
   subroutine tao_plot_region_struct_get_visible(struct_obj_ptr, value_out) bind(c, name='tao_plot_region_struct_get_visible')
@@ -40977,6 +43247,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_super_universe_struct_set_key(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_super_universe_struct_set_key')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_super_universe_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%key)) then
+         if ((size(struct_obj%key, 1) /= shape(1))) deallocate(struct_obj%key)
+      endif
+      if (.not. allocated(struct_obj%key)) allocate(struct_obj%key(shape(1)))
+      struct_obj%key = val
     endif
   end subroutine
 
@@ -42969,6 +45259,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_dynamic_aperture_struct_set_pz(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_dynamic_aperture_struct_set_pz')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_dynamic_aperture_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%pz)) then
+         if ((size(struct_obj%pz, 1) /= shape(1))) deallocate(struct_obj%pz)
+      endif
+      if (.not. allocated(struct_obj%pz)) allocate(struct_obj%pz(shape(1)))
+      struct_obj%pz = val
+    endif
+  end subroutine
+
   ! tao_dynamic_aperture_struct%ellipse_scale: 0D_NOT_real
 
   subroutine tao_dynamic_aperture_struct_get_ellipse_scale(struct_obj_ptr, value_out) bind(c, name='tao_dynamic_aperture_struct_get_ellipse_scale')
@@ -43528,6 +45838,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_spin_map_struct_set_mat8(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_spin_map_struct_set_mat8')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_spin_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%mat8 = val
     endif
   end subroutine
 
@@ -45756,6 +48082,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_eval_node_struct_set_value(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_eval_node_struct_set_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_eval_node_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%value)) then
+         if ((size(struct_obj%value, 1) /= shape(1))) deallocate(struct_obj%value)
+      endif
+      if (.not. allocated(struct_obj%value)) allocate(struct_obj%value(shape(1)))
+      struct_obj%value = val
     endif
   end subroutine
 
@@ -51852,6 +54198,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_common_struct_set_covar(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_common_struct_set_covar')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_common_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%covar)) then
+         if ((size(struct_obj%covar, 1) /= shape(1)) .or. (size(struct_obj%covar, 2) /= shape(2))) deallocate(struct_obj%covar)
+      endif
+      if (.not. allocated(struct_obj%covar)) allocate(struct_obj%covar(shape(1), shape(2)))
+      struct_obj%covar = val
+    endif
+  end subroutine
+
   ! tao_common_struct%alpha: 2D_ALLOC_real
 
   subroutine tao_common_struct_get_alpha_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -51882,6 +54248,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_common_struct_set_alpha(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_common_struct_set_alpha')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_common_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%alpha)) then
+         if ((size(struct_obj%alpha, 1) /= shape(1)) .or. (size(struct_obj%alpha, 2) /= shape(2))) deallocate(struct_obj%alpha)
+      endif
+      if (.not. allocated(struct_obj%alpha)) allocate(struct_obj%alpha(shape(1), shape(2)))
+      struct_obj%alpha = val
     endif
   end subroutine
 
@@ -52379,7 +54765,48 @@ contains
     struct_obj%add_measurement_noise = value_in
   end subroutine
 
-  ! skipped tao_common_struct%is_err_message_printed: Unsupported type: 1D_NOT_logical
+  ! tao_common_struct%is_err_message_printed: 1D_NOT_logical
+
+  subroutine tao_common_struct_get_is_err_message_printed_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='tao_common_struct_get_is_err_message_printed_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%is_err_message_printed)) then
+      data_ptr = c_loc(struct_obj%is_err_message_printed(lbound(struct_obj%is_err_message_printed, 1)))
+      bounds(1) = int(lbound(struct_obj%is_err_message_printed, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%is_err_message_printed, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_common_struct_set_is_err_message_printed(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_common_struct_set_is_err_message_printed')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_common_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%is_err_message_printed = (val .ne. 0)
+    endif
+  end subroutine
+
   ! tao_common_struct%command_arg_has_been_executed: 0D_NOT_logical
 
   subroutine tao_common_struct_get_command_arg_has_been_executed(struct_obj_ptr, value_out) bind(c, name='tao_common_struct_get_command_arg_has_been_executed')
@@ -52985,6 +55412,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_plot_page_struct_set_size(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_plot_page_struct_set_size')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_plot_page_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%size = val
     endif
   end subroutine
 
@@ -54545,6 +56988,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_wave_struct_set_amp_a(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_wave_struct_set_amp_a')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_wave_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%amp_a = val
+    endif
+  end subroutine
+
   ! tao_wave_struct%amp_b: 1D_NOT_real
 
   subroutine tao_wave_struct_get_amp_b_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -54568,6 +57027,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_amp_b(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_wave_struct_set_amp_b')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_wave_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%amp_b = val
     endif
   end subroutine
 
@@ -54597,6 +57072,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_wave_struct_set_amp_ba(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_wave_struct_set_amp_ba')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_wave_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%amp_ba = val
+    endif
+  end subroutine
+
   ! tao_wave_struct%coef_a: 1D_NOT_real
 
   subroutine tao_wave_struct_get_coef_a_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -54620,6 +57111,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_coef_a(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_wave_struct_set_coef_a')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_wave_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%coef_a = val
     endif
   end subroutine
 
@@ -54649,6 +57156,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_wave_struct_set_coef_b(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_wave_struct_set_coef_b')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_wave_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%coef_b = val
+    endif
+  end subroutine
+
   ! tao_wave_struct%coef_ba: 1D_NOT_real
 
   subroutine tao_wave_struct_get_coef_ba_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -54672,6 +57195,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_coef_ba(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_wave_struct_set_coef_ba')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_wave_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%coef_ba = val
     endif
   end subroutine
 
@@ -54926,6 +57465,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine tao_wave_struct_set_ix_data(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_wave_struct_set_ix_data')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(tao_wave_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%ix_data)) then
+         if ((size(struct_obj%ix_data, 1) /= shape(1))) deallocate(struct_obj%ix_data)
+      endif
+      if (.not. allocated(struct_obj%ix_data)) allocate(struct_obj%ix_data(shape(1)))
+      struct_obj%ix_data = val
     endif
   end subroutine
 
@@ -55963,6 +58522,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine tao_universe_struct_set_dModel_dVar(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='tao_universe_struct_set_dModel_dVar')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(tao_universe_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%dModel_dVar)) then
+         if ((size(struct_obj%dModel_dVar, 1) /= shape(1)) .or. (size(struct_obj%dModel_dVar, 2) /= shape(2))) deallocate(struct_obj%dModel_dVar)
+      endif
+      if (.not. allocated(struct_obj%dModel_dVar)) allocate(struct_obj%dModel_dVar(shape(1), shape(2)))
+      struct_obj%dModel_dVar = val
+    endif
+  end subroutine
+
   ! tao_universe_struct%ix_uni: 0D_NOT_integer
 
   subroutine tao_universe_struct_get_ix_uni(struct_obj_ptr, value_out) bind(c, name='tao_universe_struct_get_ix_uni')
@@ -56461,6 +59040,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine mad_map_struct_set_k(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='mad_map_struct_set_k')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(mad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%k = val
+    endif
+  end subroutine
+
   ! mad_map_struct%r: 2D_NOT_real
 
   subroutine mad_map_struct_get_r_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -56491,6 +59086,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine mad_map_struct_set_r(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='mad_map_struct_set_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(mad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%r = val
     endif
   end subroutine
 
@@ -56528,6 +59139,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine mad_map_struct_set_t(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='mad_map_struct_set_t')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(mad_map_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%t = val
     endif
   end subroutine
 
@@ -56843,7 +59470,48 @@ contains
     struct_obj%in_sobseq = value_in
   end subroutine
 
-  ! skipped random_state_struct%ix_sobseq: Unsupported type: 1D_NOT_integer8
+  ! random_state_struct%ix_sobseq: 1D_NOT_integer8
+
+  subroutine random_state_struct_get_ix_sobseq_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='random_state_struct_get_ix_sobseq_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(random_state_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%ix_sobseq)) then
+      data_ptr = c_loc(struct_obj%ix_sobseq(lbound(struct_obj%ix_sobseq, 1)))
+      bounds(1) = int(lbound(struct_obj%ix_sobseq, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%ix_sobseq, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine random_state_struct_set_ix_sobseq(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='random_state_struct_set_ix_sobseq')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(random_state_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%ix_sobseq = val
+    endif
+  end subroutine
+
   ! random_state_struct%x_sobseq: 1D_NOT_real
 
   subroutine random_state_struct_get_x_sobseq_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -56867,6 +59535,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine random_state_struct_set_x_sobseq(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='random_state_struct_set_x_sobseq')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(random_state_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%x_sobseq = val
     endif
   end subroutine
 
@@ -57170,6 +59854,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine bbu_stage_struct_set_ave_orb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bbu_stage_struct_set_ave_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bbu_stage_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%ave_orb = val
+    endif
+  end subroutine
+
   ! bbu_stage_struct%rms_orb: 1D_NOT_real
 
   subroutine bbu_stage_struct_get_rms_orb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -57193,6 +59893,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_rms_orb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bbu_stage_struct_set_rms_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bbu_stage_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%rms_orb = val
     endif
   end subroutine
 
@@ -57222,6 +59938,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine bbu_stage_struct_set_min_orb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bbu_stage_struct_set_min_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bbu_stage_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%min_orb = val
+    endif
+  end subroutine
+
   ! bbu_stage_struct%max_orb: 1D_NOT_real
 
   subroutine bbu_stage_struct_get_max_orb_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -57245,6 +59977,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine bbu_stage_struct_set_max_orb(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bbu_stage_struct_set_max_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bbu_stage_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%max_orb = val
     endif
   end subroutine
 
@@ -57468,6 +60216,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine bbu_beam_struct_set_ix_ele_bunch(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bbu_beam_struct_set_ix_ele_bunch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bbu_beam_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%ix_ele_bunch)) then
+         if ((size(struct_obj%ix_ele_bunch, 1) /= shape(1))) deallocate(struct_obj%ix_ele_bunch)
+      endif
+      if (.not. allocated(struct_obj%ix_ele_bunch)) allocate(struct_obj%ix_ele_bunch(shape(1)))
+      struct_obj%ix_ele_bunch = val
     endif
   end subroutine
 
@@ -58440,6 +61208,22 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine bbu_param_struct_set_ramp_pattern(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='bbu_param_struct_set_ramp_pattern')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(bbu_param_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%ramp_pattern = val
     endif
   end subroutine
 
@@ -59658,6 +62442,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_real_rp_1d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_1d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%real_rp_1d = val
+    endif
+  end subroutine
+
   ! all_encompassing_struct%real_rp_2d: 2D_NOT_real
 
   subroutine all_encompassing_struct_get_real_rp_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -59688,6 +62488,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_rp_2d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_2d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%real_rp_2d = val
     endif
   end subroutine
 
@@ -59725,6 +62541,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_rp_3d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_3d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%real_rp_3d = val
     endif
   end subroutine
 
@@ -59779,6 +62611,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_real_rp_1d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_1d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%real_rp_1d_ptr)) then
+        if ((size(struct_obj%real_rp_1d_ptr, 1) == shape(1))) then
+           struct_obj%real_rp_1d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! all_encompassing_struct%real_rp_2d_ptr: 2D_PTR_real
 
   subroutine all_encompassing_struct_get_real_rp_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -59809,6 +62661,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_rp_2d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_2d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%real_rp_2d_ptr)) then
+        if ((size(struct_obj%real_rp_2d_ptr, 1) == shape(1)) .and. (size(struct_obj%real_rp_2d_ptr, 2) == shape(2))) then
+           struct_obj%real_rp_2d_ptr = val
+        endif
+      endif
     endif
   end subroutine
 
@@ -59849,6 +62721,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_real_rp_3d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_3d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%real_rp_3d_ptr)) then
+        if ((size(struct_obj%real_rp_3d_ptr, 1) == shape(1)) .and. (size(struct_obj%real_rp_3d_ptr, 2) == shape(2)) .and. (size(struct_obj%real_rp_3d_ptr, 3) == shape(3))) then
+           struct_obj%real_rp_3d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! all_encompassing_struct%real_rp_1d_alloc: 1D_ALLOC_real
 
   subroutine all_encompassing_struct_get_real_rp_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -59872,6 +62764,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_rp_1d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%real_rp_1d_alloc)) then
+         if ((size(struct_obj%real_rp_1d_alloc, 1) /= shape(1))) deallocate(struct_obj%real_rp_1d_alloc)
+      endif
+      if (.not. allocated(struct_obj%real_rp_1d_alloc)) allocate(struct_obj%real_rp_1d_alloc(shape(1)))
+      struct_obj%real_rp_1d_alloc = val
     endif
   end subroutine
 
@@ -59905,6 +62817,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_rp_2d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_2d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%real_rp_2d_alloc)) then
+         if ((size(struct_obj%real_rp_2d_alloc, 1) /= shape(1)) .or. (size(struct_obj%real_rp_2d_alloc, 2) /= shape(2))) deallocate(struct_obj%real_rp_2d_alloc)
+      endif
+      if (.not. allocated(struct_obj%real_rp_2d_alloc)) allocate(struct_obj%real_rp_2d_alloc(shape(1), shape(2)))
+      struct_obj%real_rp_2d_alloc = val
     endif
   end subroutine
 
@@ -59942,6 +62874,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_rp_3d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_rp_3d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%real_rp_3d_alloc)) then
+         if ((size(struct_obj%real_rp_3d_alloc, 1) /= shape(1)) .or. (size(struct_obj%real_rp_3d_alloc, 2) /= shape(2)) .or. (size(struct_obj%real_rp_3d_alloc, 3) /= shape(3))) deallocate(struct_obj%real_rp_3d_alloc)
+      endif
+      if (.not. allocated(struct_obj%real_rp_3d_alloc)) allocate(struct_obj%real_rp_3d_alloc(shape(1), shape(2), shape(3)))
+      struct_obj%real_rp_3d_alloc = val
     endif
   end subroutine
 
@@ -59990,6 +62942,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_real_dp_1d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_1d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%real_dp_1d = val
+    endif
+  end subroutine
+
   ! all_encompassing_struct%real_dp_2d: 2D_NOT_real
 
   subroutine all_encompassing_struct_get_real_dp_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -60020,6 +62988,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_dp_2d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_2d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%real_dp_2d = val
     endif
   end subroutine
 
@@ -60057,6 +63041,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_dp_3d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_3d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%real_dp_3d = val
     endif
   end subroutine
 
@@ -60111,6 +63111,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_real_dp_1d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_1d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%real_dp_1d_ptr)) then
+        if ((size(struct_obj%real_dp_1d_ptr, 1) == shape(1))) then
+           struct_obj%real_dp_1d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! all_encompassing_struct%real_dp_2d_ptr: 2D_PTR_real
 
   subroutine all_encompassing_struct_get_real_dp_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -60141,6 +63161,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_dp_2d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_2d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%real_dp_2d_ptr)) then
+        if ((size(struct_obj%real_dp_2d_ptr, 1) == shape(1)) .and. (size(struct_obj%real_dp_2d_ptr, 2) == shape(2))) then
+           struct_obj%real_dp_2d_ptr = val
+        endif
+      endif
     endif
   end subroutine
 
@@ -60181,6 +63221,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_real_dp_3d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_3d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%real_dp_3d_ptr)) then
+        if ((size(struct_obj%real_dp_3d_ptr, 1) == shape(1)) .and. (size(struct_obj%real_dp_3d_ptr, 2) == shape(2)) .and. (size(struct_obj%real_dp_3d_ptr, 3) == shape(3))) then
+           struct_obj%real_dp_3d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! all_encompassing_struct%real_dp_1d_alloc: 1D_ALLOC_real
 
   subroutine all_encompassing_struct_get_real_dp_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -60204,6 +63264,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_dp_1d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%real_dp_1d_alloc)) then
+         if ((size(struct_obj%real_dp_1d_alloc, 1) /= shape(1))) deallocate(struct_obj%real_dp_1d_alloc)
+      endif
+      if (.not. allocated(struct_obj%real_dp_1d_alloc)) allocate(struct_obj%real_dp_1d_alloc(shape(1)))
+      struct_obj%real_dp_1d_alloc = val
     endif
   end subroutine
 
@@ -60237,6 +63317,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_dp_2d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_2d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%real_dp_2d_alloc)) then
+         if ((size(struct_obj%real_dp_2d_alloc, 1) /= shape(1)) .or. (size(struct_obj%real_dp_2d_alloc, 2) /= shape(2))) deallocate(struct_obj%real_dp_2d_alloc)
+      endif
+      if (.not. allocated(struct_obj%real_dp_2d_alloc)) allocate(struct_obj%real_dp_2d_alloc(shape(1), shape(2)))
+      struct_obj%real_dp_2d_alloc = val
     endif
   end subroutine
 
@@ -60274,6 +63374,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_real_dp_3d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_real_dp_3d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%real_dp_3d_alloc)) then
+         if ((size(struct_obj%real_dp_3d_alloc, 1) /= shape(1)) .or. (size(struct_obj%real_dp_3d_alloc, 2) /= shape(2)) .or. (size(struct_obj%real_dp_3d_alloc, 3) /= shape(3))) deallocate(struct_obj%real_dp_3d_alloc)
+      endif
+      if (.not. allocated(struct_obj%real_dp_3d_alloc)) allocate(struct_obj%real_dp_3d_alloc(shape(1), shape(2), shape(3)))
+      struct_obj%real_dp_3d_alloc = val
     endif
   end subroutine
 
@@ -60322,6 +63442,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_complex_dp_1d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_1d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%complex_dp_1d = val
+    endif
+  end subroutine
+
   ! all_encompassing_struct%complex_dp_2d: 2D_NOT_complex
 
   subroutine all_encompassing_struct_get_complex_dp_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -60352,6 +63488,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_complex_dp_2d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_2d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%complex_dp_2d = val
     endif
   end subroutine
 
@@ -60392,6 +63544,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_complex_dp_3d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_3d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%complex_dp_3d = val
+    endif
+  end subroutine
+
   ! all_encompassing_struct%complex_dp_1d_ptr: 1D_PTR_complex
 
   subroutine all_encompassing_struct_get_complex_dp_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -60415,6 +63583,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_complex_dp_1d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_1d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%complex_dp_1d_ptr)) then
+        if ((size(struct_obj%complex_dp_1d_ptr, 1) == shape(1))) then
+           struct_obj%complex_dp_1d_ptr = val
+        endif
+      endif
     endif
   end subroutine
 
@@ -60448,6 +63636,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_complex_dp_2d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_2d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%complex_dp_2d_ptr)) then
+        if ((size(struct_obj%complex_dp_2d_ptr, 1) == shape(1)) .and. (size(struct_obj%complex_dp_2d_ptr, 2) == shape(2))) then
+           struct_obj%complex_dp_2d_ptr = val
+        endif
+      endif
     endif
   end subroutine
 
@@ -60488,6 +63696,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_complex_dp_3d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_3d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%complex_dp_3d_ptr)) then
+        if ((size(struct_obj%complex_dp_3d_ptr, 1) == shape(1)) .and. (size(struct_obj%complex_dp_3d_ptr, 2) == shape(2)) .and. (size(struct_obj%complex_dp_3d_ptr, 3) == shape(3))) then
+           struct_obj%complex_dp_3d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! all_encompassing_struct%complex_dp_1d_alloc: 1D_ALLOC_complex
 
   subroutine all_encompassing_struct_get_complex_dp_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -60511,6 +63739,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_complex_dp_1d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%complex_dp_1d_alloc)) then
+         if ((size(struct_obj%complex_dp_1d_alloc, 1) /= shape(1))) deallocate(struct_obj%complex_dp_1d_alloc)
+      endif
+      if (.not. allocated(struct_obj%complex_dp_1d_alloc)) allocate(struct_obj%complex_dp_1d_alloc(shape(1)))
+      struct_obj%complex_dp_1d_alloc = val
     endif
   end subroutine
 
@@ -60544,6 +63792,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_complex_dp_2d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_2d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%complex_dp_2d_alloc)) then
+         if ((size(struct_obj%complex_dp_2d_alloc, 1) /= shape(1)) .or. (size(struct_obj%complex_dp_2d_alloc, 2) /= shape(2))) deallocate(struct_obj%complex_dp_2d_alloc)
+      endif
+      if (.not. allocated(struct_obj%complex_dp_2d_alloc)) allocate(struct_obj%complex_dp_2d_alloc(shape(1), shape(2)))
+      struct_obj%complex_dp_2d_alloc = val
     endif
   end subroutine
 
@@ -60581,6 +63849,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_complex_dp_3d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_complex_dp_3d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    complex(c_double_complex), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%complex_dp_3d_alloc)) then
+         if ((size(struct_obj%complex_dp_3d_alloc, 1) /= shape(1)) .or. (size(struct_obj%complex_dp_3d_alloc, 2) /= shape(2)) .or. (size(struct_obj%complex_dp_3d_alloc, 3) /= shape(3))) deallocate(struct_obj%complex_dp_3d_alloc)
+      endif
+      if (.not. allocated(struct_obj%complex_dp_3d_alloc)) allocate(struct_obj%complex_dp_3d_alloc(shape(1), shape(2), shape(3)))
+      struct_obj%complex_dp_3d_alloc = val
     endif
   end subroutine
 
@@ -60629,6 +63917,22 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_int_1d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_1d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%int_1d = val
+    endif
+  end subroutine
+
   ! all_encompassing_struct%int_2d: 2D_NOT_integer
 
   subroutine all_encompassing_struct_get_int_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -60659,6 +63963,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int_2d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_2d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%int_2d = val
     endif
   end subroutine
 
@@ -60696,6 +64016,22 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int_3d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_3d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%int_3d = val
     endif
   end subroutine
 
@@ -60750,6 +64086,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_int_1d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_1d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%int_1d_ptr)) then
+        if ((size(struct_obj%int_1d_ptr, 1) == shape(1))) then
+           struct_obj%int_1d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! all_encompassing_struct%int_2d_ptr: 2D_PTR_integer
 
   subroutine all_encompassing_struct_get_int_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
@@ -60780,6 +64136,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int_2d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_2d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%int_2d_ptr)) then
+        if ((size(struct_obj%int_2d_ptr, 1) == shape(1)) .and. (size(struct_obj%int_2d_ptr, 2) == shape(2))) then
+           struct_obj%int_2d_ptr = val
+        endif
+      endif
     endif
   end subroutine
 
@@ -60820,6 +64196,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_int_3d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_3d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%int_3d_ptr)) then
+        if ((size(struct_obj%int_3d_ptr, 1) == shape(1)) .and. (size(struct_obj%int_3d_ptr, 2) == shape(2)) .and. (size(struct_obj%int_3d_ptr, 3) == shape(3))) then
+           struct_obj%int_3d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
   ! all_encompassing_struct%int_1d_alloc: 1D_ALLOC_integer
 
   subroutine all_encompassing_struct_get_int_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -60843,6 +64239,26 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int_1d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%int_1d_alloc)) then
+         if ((size(struct_obj%int_1d_alloc, 1) /= shape(1))) deallocate(struct_obj%int_1d_alloc)
+      endif
+      if (.not. allocated(struct_obj%int_1d_alloc)) allocate(struct_obj%int_1d_alloc(shape(1)))
+      struct_obj%int_1d_alloc = val
     endif
   end subroutine
 
@@ -60876,6 +64292,26 @@ contains
       bounds = 0_c_int
       strides = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int_2d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_2d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%int_2d_alloc)) then
+         if ((size(struct_obj%int_2d_alloc, 1) /= shape(1)) .or. (size(struct_obj%int_2d_alloc, 2) /= shape(2))) deallocate(struct_obj%int_2d_alloc)
+      endif
+      if (.not. allocated(struct_obj%int_2d_alloc)) allocate(struct_obj%int_2d_alloc(shape(1), shape(2)))
+      struct_obj%int_2d_alloc = val
     endif
   end subroutine
 
@@ -60916,6 +64352,26 @@ contains
     endif
   end subroutine
 
+
+  subroutine all_encompassing_struct_set_int_3d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int_3d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%int_3d_alloc)) then
+         if ((size(struct_obj%int_3d_alloc, 1) /= shape(1)) .or. (size(struct_obj%int_3d_alloc, 2) /= shape(2)) .or. (size(struct_obj%int_3d_alloc, 3) /= shape(3))) deallocate(struct_obj%int_3d_alloc)
+      endif
+      if (.not. allocated(struct_obj%int_3d_alloc)) allocate(struct_obj%int_3d_alloc(shape(1), shape(2), shape(3)))
+      struct_obj%int_3d_alloc = val
+    endif
+  end subroutine
+
   ! all_encompassing_struct%int8_0d: 0D_NOT_integer8
 
   subroutine all_encompassing_struct_get_int8_0d(struct_obj_ptr, value_out) bind(c, name='all_encompassing_struct_get_int8_0d')
@@ -60935,9 +64391,150 @@ contains
     struct_obj%int8_0d = value_in
   end subroutine
 
-  ! skipped all_encompassing_struct%int8_1d: Unsupported type: 1D_NOT_integer8
-  ! skipped all_encompassing_struct%int8_2d: Unsupported type: 2D_NOT_integer8
-  ! skipped all_encompassing_struct%int8_3d: Unsupported type: 3D_NOT_integer8
+  ! all_encompassing_struct%int8_1d: 1D_NOT_integer8
+
+  subroutine all_encompassing_struct_get_int8_1d_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_1d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%int8_1d)) then
+      data_ptr = c_loc(struct_obj%int8_1d(lbound(struct_obj%int8_1d, 1)))
+      bounds(1) = int(lbound(struct_obj%int8_1d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_1d, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_1d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_1d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%int8_1d = val
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int8_2d: 2D_NOT_integer8
+
+  subroutine all_encompassing_struct_get_int8_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_2d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%int8_2d)) then
+      data_ptr = c_loc(struct_obj%int8_2d(lbound(struct_obj%int8_2d, 1), lbound(struct_obj%int8_2d, 2)))
+      bounds(1) = int(lbound(struct_obj%int8_2d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_2d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int8_2d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int8_2d, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_2d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_2d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%int8_2d = val
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int8_3d: 3D_NOT_integer8
+
+  subroutine all_encompassing_struct_get_int8_3d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_3d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%int8_3d)) then
+      data_ptr = c_loc(struct_obj%int8_3d(lbound(struct_obj%int8_3d, 1), lbound(struct_obj%int8_3d, 2), lbound(struct_obj%int8_3d, 3)))
+      bounds(1) = int(lbound(struct_obj%int8_3d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_3d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int8_3d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int8_3d, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%int8_3d, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%int8_3d, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_3d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_3d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%int8_3d = val
+    endif
+  end subroutine
+
   ! all_encompassing_struct%int8_0d_ptr: 0D_PTR_integer8
 
   subroutine all_encompassing_struct_get_int8_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_int8_0d_ptr')
@@ -60963,12 +64560,318 @@ contains
     endif
   end subroutine
 
-  ! skipped all_encompassing_struct%int8_1d_ptr: Unsupported type: 1D_PTR_integer8
-  ! skipped all_encompassing_struct%int8_2d_ptr: Unsupported type: 2D_PTR_integer8
-  ! skipped all_encompassing_struct%int8_3d_ptr: Unsupported type: 3D_PTR_integer8
-  ! skipped all_encompassing_struct%int8_1d_alloc: Unsupported type: 1D_ALLOC_integer8
-  ! skipped all_encompassing_struct%int8_2d_alloc: Unsupported type: 2D_ALLOC_integer8
-  ! skipped all_encompassing_struct%int8_3d_alloc: Unsupported type: 3D_ALLOC_integer8
+  ! all_encompassing_struct%int8_1d_ptr: 1D_PTR_integer8
+
+  subroutine all_encompassing_struct_get_int8_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_1d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%int8_1d_ptr) .and. is_contiguous(struct_obj%int8_1d_ptr)) then
+      data_ptr = c_loc(struct_obj%int8_1d_ptr(lbound(struct_obj%int8_1d_ptr, 1)))
+      bounds(1) = int(lbound(struct_obj%int8_1d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_1d_ptr, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_1d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_1d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%int8_1d_ptr)) then
+        if ((size(struct_obj%int8_1d_ptr, 1) == shape(1))) then
+           struct_obj%int8_1d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int8_2d_ptr: 2D_PTR_integer8
+
+  subroutine all_encompassing_struct_get_int8_2d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_2d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%int8_2d_ptr) .and. is_contiguous(struct_obj%int8_2d_ptr)) then
+      data_ptr = c_loc(struct_obj%int8_2d_ptr(lbound(struct_obj%int8_2d_ptr, 1), lbound(struct_obj%int8_2d_ptr, 2)))
+      bounds(1) = int(lbound(struct_obj%int8_2d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_2d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int8_2d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int8_2d_ptr, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_2d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_2d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%int8_2d_ptr)) then
+        if ((size(struct_obj%int8_2d_ptr, 1) == shape(1)) .and. (size(struct_obj%int8_2d_ptr, 2) == shape(2))) then
+           struct_obj%int8_2d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int8_3d_ptr: 3D_PTR_integer8
+
+  subroutine all_encompassing_struct_get_int8_3d_ptr_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_3d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%int8_3d_ptr) .and. is_contiguous(struct_obj%int8_3d_ptr)) then
+      data_ptr = c_loc(struct_obj%int8_3d_ptr(lbound(struct_obj%int8_3d_ptr, 1), lbound(struct_obj%int8_3d_ptr, 2), lbound(struct_obj%int8_3d_ptr, 3)))
+      bounds(1) = int(lbound(struct_obj%int8_3d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_3d_ptr, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int8_3d_ptr, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int8_3d_ptr, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%int8_3d_ptr, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%int8_3d_ptr, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_3d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_3d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%int8_3d_ptr)) then
+        if ((size(struct_obj%int8_3d_ptr, 1) == shape(1)) .and. (size(struct_obj%int8_3d_ptr, 2) == shape(2)) .and. (size(struct_obj%int8_3d_ptr, 3) == shape(3))) then
+           struct_obj%int8_3d_ptr = val
+        endif
+      endif
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int8_1d_alloc: 1D_ALLOC_integer8
+
+  subroutine all_encompassing_struct_get_int8_1d_alloc_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_1d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%int8_1d_alloc) .and. is_contiguous(struct_obj%int8_1d_alloc)) then
+      data_ptr = c_loc(struct_obj%int8_1d_alloc(lbound(struct_obj%int8_1d_alloc, 1)))
+      bounds(1) = int(lbound(struct_obj%int8_1d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_1d_alloc, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_1d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%int8_1d_alloc)) then
+         if ((size(struct_obj%int8_1d_alloc, 1) /= shape(1))) deallocate(struct_obj%int8_1d_alloc)
+      endif
+      if (.not. allocated(struct_obj%int8_1d_alloc)) allocate(struct_obj%int8_1d_alloc(shape(1)))
+      struct_obj%int8_1d_alloc = val
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int8_2d_alloc: 2D_ALLOC_integer8
+
+  subroutine all_encompassing_struct_get_int8_2d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_2d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%int8_2d_alloc) .and. is_contiguous(struct_obj%int8_2d_alloc)) then
+      data_ptr = c_loc(struct_obj%int8_2d_alloc(lbound(struct_obj%int8_2d_alloc, 1), lbound(struct_obj%int8_2d_alloc, 2)))
+      bounds(1) = int(lbound(struct_obj%int8_2d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_2d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int8_2d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int8_2d_alloc, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_2d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_2d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%int8_2d_alloc)) then
+         if ((size(struct_obj%int8_2d_alloc, 1) /= shape(1)) .or. (size(struct_obj%int8_2d_alloc, 2) /= shape(2))) deallocate(struct_obj%int8_2d_alloc)
+      endif
+      if (.not. allocated(struct_obj%int8_2d_alloc)) allocate(struct_obj%int8_2d_alloc(shape(1), shape(2)))
+      struct_obj%int8_2d_alloc = val
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%int8_3d_alloc: 3D_ALLOC_integer8
+
+  subroutine all_encompassing_struct_get_int8_3d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_int8_3d_alloc_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%int8_3d_alloc) .and. is_contiguous(struct_obj%int8_3d_alloc)) then
+      data_ptr = c_loc(struct_obj%int8_3d_alloc(lbound(struct_obj%int8_3d_alloc, 1), lbound(struct_obj%int8_3d_alloc, 2), lbound(struct_obj%int8_3d_alloc, 3)))
+      bounds(1) = int(lbound(struct_obj%int8_3d_alloc, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%int8_3d_alloc, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%int8_3d_alloc, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%int8_3d_alloc, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%int8_3d_alloc, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%int8_3d_alloc, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_int8_3d_alloc(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_int8_3d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int64_t), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%int8_3d_alloc)) then
+         if ((size(struct_obj%int8_3d_alloc, 1) /= shape(1)) .or. (size(struct_obj%int8_3d_alloc, 2) /= shape(2)) .or. (size(struct_obj%int8_3d_alloc, 3) /= shape(3))) deallocate(struct_obj%int8_3d_alloc)
+      endif
+      if (.not. allocated(struct_obj%int8_3d_alloc)) allocate(struct_obj%int8_3d_alloc(shape(1), shape(2), shape(3)))
+      struct_obj%int8_3d_alloc = val
+    endif
+  end subroutine
+
   ! all_encompassing_struct%logical_0d: 0D_NOT_logical
 
   subroutine all_encompassing_struct_get_logical_0d(struct_obj_ptr, value_out) bind(c, name='all_encompassing_struct_get_logical_0d')
@@ -60988,9 +64891,150 @@ contains
     struct_obj%logical_0d = value_in
   end subroutine
 
-  ! skipped all_encompassing_struct%logical_1d: Unsupported type: 1D_NOT_logical
-  ! skipped all_encompassing_struct%logical_2d: Unsupported type: 2D_NOT_logical
-  ! skipped all_encompassing_struct%logical_3d: Unsupported type: 3D_NOT_logical
+  ! all_encompassing_struct%logical_1d: 1D_NOT_logical
+
+  subroutine all_encompassing_struct_get_logical_1d_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_logical_1d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%logical_1d)) then
+      data_ptr = c_loc(struct_obj%logical_1d(lbound(struct_obj%logical_1d, 1)))
+      bounds(1) = int(lbound(struct_obj%logical_1d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%logical_1d, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_logical_1d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_logical_1d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%logical_1d = (val .ne. 0)
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%logical_2d: 2D_NOT_logical
+
+  subroutine all_encompassing_struct_get_logical_2d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_logical_2d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(4), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(2), intent(out) :: strides
+    integer :: d1
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%logical_2d)) then
+      data_ptr = c_loc(struct_obj%logical_2d(lbound(struct_obj%logical_2d, 1), lbound(struct_obj%logical_2d, 2)))
+      bounds(1) = int(lbound(struct_obj%logical_2d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%logical_2d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%logical_2d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%logical_2d, 2), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      strides(2) = d1
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_logical_2d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_logical_2d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(2), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%logical_2d = (val .ne. 0)
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%logical_3d: 3D_NOT_logical
+
+  subroutine all_encompassing_struct_get_logical_3d_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_logical_3d_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(6), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), dimension(3), intent(out) :: strides
+    integer :: d1, d2
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%logical_3d)) then
+      data_ptr = c_loc(struct_obj%logical_3d(lbound(struct_obj%logical_3d, 1), lbound(struct_obj%logical_3d, 2), lbound(struct_obj%logical_3d, 3)))
+      bounds(1) = int(lbound(struct_obj%logical_3d, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%logical_3d, 1), c_int)
+      bounds(3) = int(lbound(struct_obj%logical_3d, 2), c_int)
+      bounds(4) = int(ubound(struct_obj%logical_3d, 2), c_int)
+      bounds(5) = int(lbound(struct_obj%logical_3d, 3), c_int)
+      bounds(6) = int(ubound(struct_obj%logical_3d, 3), c_int)
+      strides(1) = 1_c_int
+      d1 = bounds(2) - bounds(1) + 1
+      d2 = bounds(4) - bounds(3) + 1
+      strides(2) = d1
+      strides(3) = d1 * d2
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      strides = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_logical_3d(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_logical_3d')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(3), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:,:,:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%logical_3d = (val .ne. 0)
+    endif
+  end subroutine
+
   ! all_encompassing_struct%logical_0d_ptr: 0D_PTR_logical
 
   subroutine all_encompassing_struct_get_logical_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_logical_0d_ptr')

@@ -208,6 +208,8 @@ FixedArray2D<Real, 3, 3> SimUtils::axis_angle_to_w_mat(FixedArray1D<Real, 3> axi
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   fortran_axis_angle_to_w_mat(
       /* Bmad::array_descriptor_t& */ _axis_desc,
       /* double& */ angle,
@@ -241,7 +243,7 @@ int SimUtils::bin_index(double x, double bin1_x_min, double bin_delta) {
   );
   return _ix_bin;
 }
-void SimUtils::bin_x_center(int ix_bin, double bin1_x_min, double bin_delta, double x_center) {
+void SimUtils::bin_x_center(int &ix_bin, double bin1_x_min, double bin_delta, double x_center) {
   fortran_bin_x_center(
       /* int& */ ix_bin,
       /* double& */ bin1_x_min,
@@ -249,7 +251,7 @@ void SimUtils::bin_x_center(int ix_bin, double bin1_x_min, double bin_delta, dou
       /* double& */ x_center
   );
 }
-void SimUtils::bit_set(int word, int pos, bool set_to_1) {
+void SimUtils::bit_set(int &word, int pos, bool set_to_1) {
   fortran_bit_set(/* int& */ word, /* int& */ pos, /* bool& */ set_to_1);
 }
 SimUtils::BracketIndexForSpline SimUtils::bracket_index_for_spline(
@@ -512,6 +514,8 @@ void SimUtils::faddeeva_function(
   _dw_desc.rank = 2;
   double _dw_vec[2 * 2];
   _dw_desc.data_ptr = _dw_vec;
+  _dw_desc.dims[0] = 2;
+  _dw_desc.dims[1] = 2;
   matrix_to_vec(dw, _dw_vec);
   fortran_faddeeva_function(
       /* Bmad::array_descriptor_t& */ _z_desc,
@@ -1717,6 +1721,8 @@ FixedArray2D<Real, 3, 3> SimUtils::quat_to_w_mat(FixedArray1D<Real, 4> quat) {
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   fortran_quat_to_w_mat(
       /* Bmad::array_descriptor_t& */ _quat_desc,
       /* Bmad::array_descriptor_t& */ _w_mat_desc
@@ -2510,6 +2516,8 @@ FixedArray2D<Real, 4, 4> SimUtils::super_bicubic_coef(
   FixedArray2D<Real, 4, 4> c;
   double _c_vec[4 * 4];
   _c_desc.data_ptr = _c_vec;
+  _c_desc.dims[0] = 4;
+  _c_desc.dims[1] = 4;
   fortran_super_bicubic_coef(
       /* Bmad::array_descriptor_t& */ _y_desc,
       /* Bmad::array_descriptor_t& */ _y1_desc,
@@ -2687,6 +2695,8 @@ SimUtils::WMatToAxisAngle SimUtils::w_mat_to_axis_angle(FixedArray2D<Real, 3, 3>
   _w_mat_desc.rank = 2;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   matrix_to_vec(w_mat, _w_mat_vec);
   // axis: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _axis_desc;
@@ -2708,6 +2718,8 @@ FixedArray1D<Real, 4> SimUtils::w_mat_to_quat(FixedArray2D<Real, 3, 3> w_mat) {
   _w_mat_desc.rank = 2;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   matrix_to_vec(w_mat, _w_mat_vec);
   // quat: out NOT (CppWrapperGeneralArgumentArray) (['0:3'])
   Bmad::array_descriptor_t _quat_desc;

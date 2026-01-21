@@ -242,17 +242,36 @@ err_flag : bool
     Set to true if something went wrong.  Otherwise set to false.
 )"""
   );
+  py::class_<Bmad::GetNextWord, std::unique_ptr<Bmad::GetNextWord>>(
+      m,
+      "GetNextWord",
+      "get_next_word return type"
+  )
+      .def_readonly("ix_word", &Bmad::GetNextWord::ix_word)
+      .def_readonly("delim", &Bmad::GetNextWord::delim)
+      .def_readonly("delim_found", &Bmad::GetNextWord::delim_found)
+      .def_readonly("err_flag", &Bmad::GetNextWord::err_flag)
+      .def("__len__", [](const Bmad::GetNextWord &) { return 4; })
+      .def("__getitem__", [](const Bmad::GetNextWord &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.ix_word);
+        if (i == 1)
+          return py::cast(s.delim);
+        if (i == 2)
+          return py::cast(s.delim_found);
+        if (i == 3)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "get_next_word",
       &Bmad::get_next_word,
       py::arg("word"),
-      py::arg("ix_word"),
       py::arg("delim_list"),
-      py::arg("delim"),
-      py::arg("delim_found"),
       py::arg("upper_case_word") = py::none(),
       py::arg("call_check") = py::none(),
-      py::arg("err_flag") = py::none(),
       R"""(Subroutine get_next_word (word, ix_word, delim_list, delim, delim_found, upper_case_word, call_check, err_flag)
 
 Subroutine to get the next word from the input stream.
@@ -270,7 +289,9 @@ upper_case_word : bool, optional
 upper case. Default is True. : 
 call_check : bool, optional
     If present and True then check for 'call::<filename>' construct. Default is False.
-Output : 
+
+Returns
+-------
 ix_word : int
     length of word argument
 delim : unknown
@@ -278,7 +299,7 @@ delim : unknown
 delim_found : bool
     Set true if a delimiter found. A delimiter
 may not be found if the end of the line is reached first. : 
-err_flag : bool, optional
+err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );

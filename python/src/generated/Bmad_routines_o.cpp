@@ -4,6 +4,50 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
+PyOdeintBmadTime python_odeint_bmad_time(
+    CoordStruct &orb,
+    EleStruct &ele,
+    LatParamStruct &param,
+    int t_dir,
+    double rf_time,
+    optional_ref<TrackStruct> track = std::nullopt,
+    std::optional<double> t_end = std::nullopt,
+    optional_ref<EmFieldStruct> extra_field = std::nullopt
+) {
+  auto _result = Bmad::odeint_bmad_time(orb, ele, param, t_dir, rf_time, track, t_end, extra_field);
+  auto py_result{PyOdeintBmadTime{_result, rf_time}};
+  return py_result;
+}
+PyOffsetParticle python_offset_particle(
+    EleStruct &ele,
+    bool set,
+    CoordStruct &orbit,
+    std::optional<bool> set_tilt = std::nullopt,
+    std::optional<bool> set_hvkicks = std::nullopt,
+    std::optional<int> drift_to_edge = std::nullopt,
+    std::optional<double> s_pos = std::nullopt,
+    std::optional<bool> set_spin = std::nullopt,
+    std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
+    std::optional<bool> make_matrix = std::nullopt,
+    std::optional<double> time = std::nullopt
+) {
+  auto _result = Bmad::offset_particle(
+      ele,
+      set,
+      orbit,
+      set_tilt,
+      set_hvkicks,
+      drift_to_edge,
+      s_pos,
+      set_spin,
+      mat6,
+      make_matrix,
+      make_opt_ref(time)
+  );
+  auto py_result{PyOffsetParticle{_result, time}};
+  return py_result;
+}
+
 void init_Bmad_routines_o(py::module &m) {
   py::class_<Bmad::OdeintBmad, std::unique_ptr<Bmad::OdeintBmad>>(
       m,
@@ -34,68 +78,71 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Subroutine odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, track, mat6, make_matrix)
 
-Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
-Recipes.  See the NR book for more details.
+  Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
+  Recipes.  See the NR book for more details.
 
-Notice that this routine has an two tolerances:
-  bmad_com%rel_tol_adaptive_tracking
-  bmad_com%abs_tol_adaptive_tracking
+  Notice that this routine has an two tolerances:
+    bmad_com%rel_tol_adaptive_tracking
+    bmad_com%abs_tol_adaptive_tracking
 
-Note: For elements where the reference energy is not constant (lcavity, etc.), and
-with elements where the reference particle does not follow the reference trajectory (wigglers for example),
-the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
+  Note: For elements where the reference energy is not constant (lcavity, etc.), and
+  with elements where the reference particle does not follow the reference trajectory (wigglers for example),
+  the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
 
-Parameters
-----------
-orbit : CoordStruct
-    Starting coords: (x, px, y, py, z, delta) in element body coords.
-    This parameter is an input/output and is modified in-place. As an output: Ending coords
-ele : EleStruct
-    Element to track through.
-param : LatParamStruct
-    Lattice parameters.
-s1_body : float
-    Starting point relative to physical entrance.
-s2_body : float
-    Ending point relative physical entrance.
-mat6 : float, optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
-    through the element.
-make_matrix : bool, optional
-    If True then make the 6x6 transfer matrix.
+  Parameters
+  ----------
+  orbit : CoordStruct
+      Starting coords: (x, px, y, py, z, delta) in element body coords.
+      This parameter is an input/output and is modified in-place. As an output: Ending coords
+  ele : EleStruct
+      Element to track through.
+  param : LatParamStruct
+      Lattice parameters.
+  s1_body : float
+      Starting point relative to physical entrance.
+  s2_body : float
+      Ending point relative physical entrance.
+  mat6 : float, optional
+      Transfer matrix before the element.
+      This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
+      through the element.
+  make_matrix : bool, optional
+      If True then make the 6x6 transfer matrix.
 
-Returns
--------
-err_flag : bool
-    Set True if there is an error. False otherwise. Note: a particle getting
-lost : 
-for example hitting an aperture : 
-is *not* an error. : 
-track : TrackStruct
-    Structure holding the track information.
-)"""
+  Returns
+  -------
+  err_flag : bool
+      Set True if there is an error. False otherwise. Note: a particle getting
+  lost : 
+  for example hitting an aperture : 
+  is *not* an error. : 
+  track : TrackStruct
+      Structure holding the track information.
+  )"""
   );
-  py::class_<Bmad::OdeintBmadTime, std::unique_ptr<Bmad::OdeintBmadTime>>(
+  py::class_<PyOdeintBmadTime, std::unique_ptr<PyOdeintBmadTime>>(
       m,
       "OdeintBmadTime",
       "odeint_bmad_time return type"
   )
-      .def_readonly("err_flag", &Bmad::OdeintBmadTime::err_flag)
-      .def_readonly("dt_step", &Bmad::OdeintBmadTime::dt_step)
-      .def("__len__", [](const Bmad::OdeintBmadTime &) { return 2; })
-      .def("__getitem__", [](const Bmad::OdeintBmadTime &s, int i) -> py::object {
+      .def_readonly("err_flag", &PyOdeintBmadTime::err_flag)
+      .def_readonly("dt_step", &PyOdeintBmadTime::dt_step)
+      .def_readonly("rf_time", &PyOdeintBmadTime::rf_time)
+      .def("__len__", [](const PyOdeintBmadTime &) { return 3; })
+      .def("__getitem__", [](const PyOdeintBmadTime &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.err_flag);
         if (i == 1)
           return py::cast(s.dt_step);
+        if (i == 2)
+          return py::cast(s.rf_time);
         throw py::index_error();
       });
   m.def(
       "odeint_bmad_time",
-      &Bmad::odeint_bmad_time,
+      &python_odeint_bmad_time,
       py::arg("orb"),
       py::arg("ele"),
       py::arg("param"),
@@ -106,67 +153,70 @@ track : TrackStruct
       py::arg("extra_field") = py::none(),
       R"""(Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
 
-Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
-Recipes.  See the NR book for more details.
+  Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
+  Recipes.  See the NR book for more details.
 
-Tracking is done until the particle is lost or exits the element.
+  Tracking is done until the particle is lost or exits the element.
 
-Parameters
-----------
-orb : CoordStruct
-    Starting coords: (x, px, y, py, s, ps) [t-based]
-    This parameter is an input/output and is modified in-place. As an output: Ending coords
-ele : EleStruct
-    Element to track through.
-%tracking_method : unknown
-    BMAD does no supply em_field_custom. == custom$ then use em_field_custom
-/= custom$ then use em_field_standard : 
-param : LatParamStruct
-    Beam parameters.
-t_dir : float
-    Direction of time travel = +/-1. Can be negative for patches. Will be -1 if element has a negative length.
-rf_time : float
-    Time relative to RF clock.
-    This parameter is an input/output and is modified in-place. As an output: Updated time.
-track : TrackStruct, optional
-    Structure holding the track information.
-%save_track : bool
-    Set True if track is to be saved.
-t_end : float, optional
-    If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
-    The time orb.t at which tracking stops
-may be less than this if the particle gets to the end of the element : 
-extra_field : EmFieldStruct, optional
-    Static field to be added to the element field. Eg used with space charge.
+  Parameters
+  ----------
+  orb : CoordStruct
+      Starting coords: (x, px, y, py, s, ps) [t-based]
+      This parameter is an input/output and is modified in-place. As an output: Ending coords
+  ele : EleStruct
+      Element to track through.
+  %tracking_method : unknown
+      BMAD does no supply em_field_custom. == custom$ then use em_field_custom
+  /= custom$ then use em_field_standard : 
+  param : LatParamStruct
+      Beam parameters.
+  t_dir : float
+      Direction of time travel = +/-1. Can be negative for patches. Will be -1 if element has a negative length.
+  rf_time : float
+      Time relative to RF clock.
+      This parameter is an input/output and is modified in-place. As an output: Updated time.
+  track : TrackStruct, optional
+      Structure holding the track information.
+  %save_track : bool
+      Set True if track is to be saved.
+  t_end : float, optional
+      If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
+      The time orb.t at which tracking stops
+  may be less than this if the particle gets to the end of the element : 
+  extra_field : EmFieldStruct, optional
+      Static field to be added to the element field. Eg used with space charge.
 
-Returns
--------
-err_flag : bool
-    Set True if there is an error. False otherwise.
-dt_step : float
-    Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
-)"""
+  Returns
+  -------
+  err_flag : bool
+      Set True if there is an error. False otherwise.
+  dt_step : float
+      Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
+  )"""
   );
-  py::class_<Bmad::OffsetParticle, std::unique_ptr<Bmad::OffsetParticle>>(
+  py::class_<PyOffsetParticle, std::unique_ptr<PyOffsetParticle>>(
       m,
       "OffsetParticle",
       "offset_particle return type"
   )
-      .def_readonly("s_out", &Bmad::OffsetParticle::s_out)
-      .def_readonly("spin_qrot", &Bmad::OffsetParticle::spin_qrot)
-      .def("__len__", [](const Bmad::OffsetParticle &) { return 2; })
-      .def("__getitem__", [](const Bmad::OffsetParticle &s, int i) -> py::object {
+      .def_readonly("s_out", &PyOffsetParticle::s_out)
+      .def_readonly("spin_qrot", &PyOffsetParticle::spin_qrot)
+      .def_readonly("time", &PyOffsetParticle::time)
+      .def("__len__", [](const PyOffsetParticle &) { return 3; })
+      .def("__getitem__", [](const PyOffsetParticle &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.s_out);
         if (i == 1)
           return py::cast(s.spin_qrot);
+        if (i == 2)
+          return py::cast(s.time);
         throw py::index_error();
       });
   m.def(
       "offset_particle",
-      &Bmad::offset_particle,
+      &python_offset_particle,
       py::arg("ele"),
       py::arg("set"),
       py::arg("orbit"),
@@ -179,40 +229,40 @@ dt_step : float
       py::arg("make_matrix") = py::none(),
       py::arg("time") = py::none(),
       R"""(Parameters
-----------
-ele : EleStruct
-    Element
-set : bool
-    T (= set$)   -> Translate from lab coords to the local element coords.
-orbit : CoordStruct
-    Coordinates of the particle.
-    This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
-set_tilt : bool, optional
-    Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends.
-set_hvkicks : bool, optional
-    Default is True.
-drift_to_edge : int, optional
-    no$             -> Do not propagate (drift) particle. no$ is default if s_pos is present. upstream_end$
-    -> Propagate to upsteam edge. This is default if set = set$ and s_pos is not present. downstream_end$ ->
-    Propagate to downsteam edge. This is default if set = unset$ and s_pos is not present.
-s_pos : float, optional
-    Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords).
-s_out : float
-    Longitudinal particle position. If set = set$: Relative to entrance end (in body coords).
-set_spin : bool, optional
-    Default if False.
-mat6 : float, optional
-    Transfer matrix before off setting.
-    This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-    after offsets applied.
-make_matrix : bool, optional
-    Propagate the transfer matrix? Default is false.
-spin_qrot : float
-    Spin rotation quaternion
-time : float, optional
-    Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
-    This parameter is an input/output and is modified in-place. As an output: Updated time.
-)"""
+  ----------
+  ele : EleStruct
+      Element
+  set : bool
+      T (= set$)   -> Translate from lab coords to the local element coords.
+  orbit : CoordStruct
+      Coordinates of the particle.
+      This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
+  set_tilt : bool, optional
+      Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends.
+  set_hvkicks : bool, optional
+      Default is True.
+  drift_to_edge : int, optional
+      no$             -> Do not propagate (drift) particle. no$ is default if s_pos is present. upstream_end$
+      -> Propagate to upsteam edge. This is default if set = set$ and s_pos is not present. downstream_end$ ->
+      Propagate to downsteam edge. This is default if set = unset$ and s_pos is not present.
+  s_pos : float, optional
+      Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords).
+  s_out : float
+      Longitudinal particle position. If set = set$: Relative to entrance end (in body coords).
+  set_spin : bool, optional
+      Default if False.
+  mat6 : float, optional
+      Transfer matrix before off setting.
+      This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
+      after offsets applied.
+  make_matrix : bool, optional
+      Propagate the transfer matrix? Default is false.
+  spin_qrot : float
+      Spin rotation quaternion
+  time : float, optional
+      Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
+      This parameter is an input/output and is modified in-place. As an output: Updated time.
+  )"""
   );
   m.def(
       "offset_photon",
@@ -223,20 +273,20 @@ time : float, optional
       py::arg("offset_position_only") = py::none(),
       py::arg("rot_mat") = py::none(),
       R"""(Parameters
-----------
-ele : EleStruct
-    Element
-orbit : CoordStruct
-    Coordinates of the particle.
-    This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
-set : bool
-    T (= set$)   -> Translate from lab coords to element coords. F (= unset$) -> Translate from element coords
-    to lab coords.
-offset_position_only : unknown, optional
-    If present and True, only offset the position coordinates.
-rot_mat : float, optional
-    Rotation matrix from starting coords to ending coords.
-)"""
+  ----------
+  ele : EleStruct
+      Element
+  orbit : CoordStruct
+      Coordinates of the particle.
+      This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
+  set : bool
+      T (= set$)   -> Translate from lab coords to element coords. F (= unset$) -> Translate from element coords
+      to lab coords.
+  offset_position_only : unknown, optional
+      If present and True, only offset the position coordinates.
+  rot_mat : float, optional
+      Rotation matrix from starting coords to ending coords.
+  )"""
   );
   m.def(
       "one_turn_mat_at_ele",
@@ -245,16 +295,16 @@ rot_mat : float, optional
       py::arg("phi_a"),
       py::arg("phi_b"),
       R"""(Parameters
-----------
-ele : EleStruct
-    Reference element.
-phi_a : float
-    "a" mode tune in radians.
-phi_b : float
-    "b" mode tune in radians.
-mat4 : float
-    1-Turn coupled matrix.
-)"""
+  ----------
+  ele : EleStruct
+      Reference element.
+  phi_a : float
+      "a" mode tune in radians.
+  phi_b : float
+      "b" mode tune in radians.
+  mat4 : float
+      1-Turn coupled matrix.
+  )"""
   );
   py::class_<Bmad::OpenBinaryFile, std::unique_ptr<Bmad::OpenBinaryFile>>(
       m,
@@ -284,26 +334,26 @@ mat4 : float
       py::arg("r_name"),
       R"""(Function open_binary_file (file_name, action, iu, r_name, iver) result (is_ok)
 
-Routine to open a binary file for reading or writing.
+  Routine to open a binary file for reading or writing.
 
-Parameters
-----------
-file_name : unknown
-    File to create.
-action : unknown
-    'READ' or 'WRITE'
-r_name : unknown
-    Calling routine name for error messages.
+  Parameters
+  ----------
+  file_name : unknown
+      File to create.
+  action : unknown
+      'READ' or 'WRITE'
+  r_name : unknown
+      Calling routine name for error messages.
 
-Returns
--------
-iu : int
-    Unit number of opened file.
-iver : int
-    Version number if action = 'READ'
-is_ok : bool
-    Open OK?
-)"""
+  Returns
+  -------
+  iu : int
+      Unit number of opened file.
+  iver : int
+      Version number if action = 'READ'
+  is_ok : bool
+      Open OK?
+  )"""
   );
   py::class_<Bmad::OrbitAmplitudeCalc, std::unique_ptr<Bmad::OrbitAmplitudeCalc>>(
       m,
@@ -334,20 +384,20 @@ is_ok : bool
       py::arg("ele"),
       py::arg("orb"),
       R"""(Parameters
-----------
-ele : EleStruct
-    Element holding the Twiss parameters,
-orb : CoordStruct
-    Orbit coordinates at the exit end of ele.
-amp_a : float
-    a-mode amplitude
-amp_b : float
-    b-mode amplitude
-amp_na : float
-    a-mode, energy normalized, amplitude.
-amp_nb : float
-    b-mode, energy normalized, amplitude.
-)"""
+  ----------
+  ele : EleStruct
+      Element holding the Twiss parameters,
+  orb : CoordStruct
+      Orbit coordinates at the exit end of ele.
+  amp_a : float
+      a-mode amplitude
+  amp_b : float
+      b-mode amplitude
+  amp_na : float
+      a-mode, energy normalized, amplitude.
+  amp_nb : float
+      b-mode, energy normalized, amplitude.
+  )"""
   );
   m.def(
       "orbit_reference_energy_correction",
@@ -357,18 +407,18 @@ amp_nb : float
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       R"""(Parameters
-----------
-orbit : CoordStruct
-    Coordinates to correct.
-p0c_new : float
-    New reference momentum.
-mat6 : float, optional
-    Transfer matrix before correction.
-    This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-    including correction.
-make_matrix : bool, optional
-    Propagate the transfer matrix? Default is false.
-)"""
+  ----------
+  orbit : CoordStruct
+      Coordinates to correct.
+  p0c_new : float
+      New reference momentum.
+  mat6 : float, optional
+      Transfer matrix before correction.
+      This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
+      including correction.
+  make_matrix : bool, optional
+      Propagate the transfer matrix? Default is false.
+  )"""
   );
   m.def(
       "orbit_to_floor_phase_space",
@@ -376,14 +426,14 @@ make_matrix : bool, optional
       py::arg("orbit"),
       py::arg("ele"),
       R"""(Parameters
-----------
-orbit : CoordStruct
-    Particle orbit in local (not element) coordinates.
-ele : EleStruct
-    Lattice element particle is in.
-floor_phase_space : float
-    Floor phase space
-)"""
+  ----------
+  orbit : CoordStruct
+      Particle orbit in local (not element) coordinates.
+  ele : EleStruct
+      Lattice element particle is in.
+  floor_phase_space : float
+      Floor phase space
+  )"""
   );
   m.def(
       "orbit_to_local_curvilinear",
@@ -393,18 +443,18 @@ floor_phase_space : float
       py::arg("z_direction") = py::none(),
       py::arg("relative_to") = py::none(),
       R"""(Parameters
-----------
-orbit : CoordStruct
-    Particle orbit in laboratory (not body) coordinates.
-ele : EleStruct
-    Lattice element particle is in.
-z_direction : int, optional
-    Set to +1 or -1.  Z-direction of particle velocity
-relative_to : int, optional
-    not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
-local_position : FloorPositionStruct
-    Position in local coordinates.
-)"""
+  ----------
+  orbit : CoordStruct
+      Particle orbit in laboratory (not body) coordinates.
+  ele : EleStruct
+      Lattice element particle is in.
+  z_direction : int, optional
+      Set to +1 or -1.  Z-direction of particle velocity
+  relative_to : int, optional
+      not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
+  local_position : FloorPositionStruct
+      Position in local coordinates.
+  )"""
   );
   py::class_<Bmad::OrbitTooLarge, std::unique_ptr<Bmad::OrbitTooLarge>>(
       m,
@@ -429,15 +479,15 @@ local_position : FloorPositionStruct
       py::arg("orbit"),
       py::arg("check_momentum") = py::none(),
       R"""(Parameters
-----------
-orbit : CoordStruct
-    Particle orbit.
-param : LatParamStruct
-check_momentum : bool, optional
-    If True (default) check the momentum.
-is_too_large : bool
-    True if orbit is too large. False otherwise.
-)"""
+  ----------
+  orbit : CoordStruct
+      Particle orbit.
+  param : LatParamStruct
+  check_momentum : bool, optional
+      If True (default) check the momentum.
+  is_too_large : bool
+      True if orbit is too large. False otherwise.
+  )"""
   );
   py::class_<Bmad::OrderEvecsByNSimilarity, std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(
       m,
@@ -464,29 +514,29 @@ is_too_large : bool
       py::arg("Nmat"),
       R"""(Subroutine order_evecs_by_N_similarity(evec, eval, mat_tunes, Nmat, err_flag)
 
-This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
-to the identity.  Nmat is supplied externally.
+  This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
+  to the identity.  Nmat is supplied externally.
 
-Parameters
-----------
-eval : complex
-    complex eigenvalues.
-evecr : complex
-    complex eigenvectors arranged down columns.
-mat_tunes : float
-    Three normal mode tunes, in radians.
-    This parameter is an input/output and is modified in-place. As an output: Ordered normal mode tunes, in
-    radians.
-Nmat : float
-    Normalized, real eigen matrix from make_N.
+  Parameters
+  ----------
+  eval : complex
+      complex eigenvalues.
+  evecr : complex
+      complex eigenvectors arranged down columns.
+  mat_tunes : float
+      Three normal mode tunes, in radians.
+      This parameter is an input/output and is modified in-place. As an output: Ordered normal mode tunes, in
+      radians.
+  Nmat : float
+      Normalized, real eigen matrix from make_N.
 
-Returns
--------
-evec : complex
-    complex eigenvectors arranged down columns.
-err_flag : bool
-    Set True if there is an error. False otherwise
-)"""
+  Returns
+  -------
+  evec : complex
+      complex eigenvectors arranged down columns.
+  err_flag : bool
+      Set True if there is an error. False otherwise
+  )"""
   );
   m.def(
       "order_evecs_by_plane_dominance",
@@ -496,24 +546,24 @@ err_flag : bool
       py::arg("mat_tunes") = py::none(),
       R"""(Subroutine order_evecs_by_plane_dominance(evec, eval, mat_tunes)
 
-This subroutine orderes the eigensystem according to which modes dominate the horizontal,
-vertical, and longitudinal planes.  This subroutine works well in machines
-that are not strongly coupled.  In machines with strong coupling, where the relation
-between the three eigenmodes a, b, c and the three lab coordinates x, y, z can change
-through the machine, this subroutine will not provide consistent ordering.
+  This subroutine orderes the eigensystem according to which modes dominate the horizontal,
+  vertical, and longitudinal planes.  This subroutine works well in machines
+  that are not strongly coupled.  In machines with strong coupling, where the relation
+  between the three eigenmodes a, b, c and the three lab coordinates x, y, z can change
+  through the machine, this subroutine will not provide consistent ordering.
 
-Parameters
-----------
-eval : complex
-    complex eigenvalues.
-    This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvalues.
-evec : complex
-    complex eigenvectors arranged down columns.
-    This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvectors.
-mat_tunes : float, optional
-    Three normal mode tunes, in radians.
-    This parameter is an input/output and is modified in-place. As an output: Reordered same as evecs.
-)"""
+  Parameters
+  ----------
+  eval : complex
+      complex eigenvalues.
+      This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvalues.
+  evec : complex
+      complex eigenvectors arranged down columns.
+      This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvectors.
+  mat_tunes : float, optional
+      Three normal mode tunes, in radians.
+      This parameter is an input/output and is modified in-place. As an output: Reordered same as evecs.
+  )"""
   );
   m.def(
       "order_evecs_by_tune",
@@ -524,27 +574,27 @@ mat_tunes : float, optional
       py::arg("abz_tunes"),
       R"""(Subroutine order_evecs_by_tune(evec, eval, mat_tunes, abz_tunes, err_flag)
 
-This subroutine orders the eigensystem by matching the tunes of the eigensystem to
-externally supplied tunes abz_tunes.  abz_tunes is in radians.
+  This subroutine orders the eigensystem by matching the tunes of the eigensystem to
+  externally supplied tunes abz_tunes.  abz_tunes is in radians.
 
-Parameters
-----------
-eval : complex
-    complex eigenvalues.
-    This parameter is an input/output and is modified in-place. As an output: Ordered eigenvalues.
-evec : complex
-    complex eigenvectors arranged down columns.
-    This parameter is an input/output and is modified in-place. As an output: Ordered eigenvectors.
-mat_tunes : float
-    Three normal mode tunes, in radians.
-abz_tunes : float
-    Tunes to order eigensystem by.
+  Parameters
+  ----------
+  eval : complex
+      complex eigenvalues.
+      This parameter is an input/output and is modified in-place. As an output: Ordered eigenvalues.
+  evec : complex
+      complex eigenvectors arranged down columns.
+      This parameter is an input/output and is modified in-place. As an output: Ordered eigenvectors.
+  mat_tunes : float
+      Three normal mode tunes, in radians.
+  abz_tunes : float
+      Tunes to order eigensystem by.
 
-Returns
--------
-err_flag : bool
-    Set to true if an error occured.
-)"""
+  Returns
+  -------
+  err_flag : bool
+      Set to true if an error occured.
+  )"""
   );
   m.def(
       "order_particles_in_z",
@@ -552,23 +602,23 @@ err_flag : bool
       py::arg("bunch"),
       R"""(Subroutine order_particles_in_z (bunch)
 
-Routine to order the particles longitudinally in terms of decreasing %vec(5).
-That is from large z (head of bunch) to small z.
-Only live particles are ordered.
+  Routine to order the particles longitudinally in terms of decreasing %vec(5).
+  That is from large z (head of bunch) to small z.
+  Only live particles are ordered.
 
-Parameters
-----------
-bunch : BunchStruct
-    collection of particles.
-%particle : 
-    Longitudinal position of j^th particle.
+  Parameters
+  ----------
+  bunch : BunchStruct
+      collection of particles.
+  %particle : 
+      Longitudinal position of j^th particle.
 
-Returns
--------
-%ix_z : unknown
-    .bunch.ix_z(1) is the particle at the bunch head. Only live particles are ordered so if particle with
-    index .bunch.ix_z(i) is dead, all particles with index .bunch.ix_z(j) with j > i are dead.
-)"""
+  Returns
+  -------
+  %ix_z : unknown
+      .bunch.ix_z(1) is the particle at the bunch head. Only live particles are ordered so if particle with
+      index .bunch.ix_z(i) is dead, all particles with index .bunch.ix_z(j) with j > i are dead.
+  )"""
   );
   m.def(
       "order_super_lord_slaves",
@@ -576,12 +626,13 @@ Returns
       py::arg("lat"),
       py::arg("ix_lord"),
       R"""(Parameters
-----------
-lat : LatStruct
-    Lat with fixed controls.
-ix_lord : int
-    Index of lord element.
-)"""
+  ----------
+  lat : LatStruct
+      Lat.
+      This parameter is an input/output and is modified in-place. As an output: Lat with fixed controls.
+  ix_lord : int
+      Index of lord element.
+  )"""
   );
   m.def(
       "osc_alloc_freespace_array",
@@ -590,11 +641,11 @@ ix_lord : int
       py::arg("nhi"),
       py::arg("npad"),
       R"""(Parameters
-----------
-nlo : 
-nhi : 
-npad : 
-)"""
+  ----------
+  nlo : 
+  nhi : 
+  npad : 
+  )"""
   );
   m.def(
       "osc_alloc_image_array",
@@ -603,11 +654,11 @@ npad :
       py::arg("nhi"),
       py::arg("npad"),
       R"""(Parameters
-----------
-nlo : 
-nhi : 
-npad : 
-)"""
+  ----------
+  nlo : 
+  nhi : 
+  npad : 
+  )"""
   );
   m.def(
       "osc_alloc_rectpipe_arrays",
@@ -616,11 +667,11 @@ npad :
       py::arg("nhi"),
       py::arg("npad"),
       R"""(Parameters
-----------
-nlo : 
-nhi : 
-npad : 
-)"""
+  ----------
+  nlo : 
+  nhi : 
+  npad : 
+  )"""
   );
   m.def(
       "osc_getgrnpipe",
@@ -632,14 +683,14 @@ npad :
       py::arg("umin"),
       py::arg("npad"),
       R"""(Parameters
-----------
-gam : 
-a : 
-b : 
-delta : 
-umin : 
-npad : 
-)"""
+  ----------
+  gam : 
+  a : 
+  b : 
+  delta : 
+  umin : 
+  npad : 
+  )"""
   );
   m.def("osc_read_rectpipe_grn", &Bmad::osc_read_rectpipe_grn, R"""()""");
   m.def(
@@ -654,15 +705,15 @@ npad :
       py::arg("nhi"),
       py::arg("gamma"),
       R"""(Parameters
-----------
-apipe : 
-bpipe : 
-delta : 
-umin : 
-umax : 
-nlo : 
-nhi : 
-gamma : 
-)"""
+  ----------
+  apipe : 
+  bpipe : 
+  delta : 
+  umin : 
+  umax : 
+  nlo : 
+  nhi : 
+  gamma : 
+  )"""
   );
 }

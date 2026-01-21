@@ -745,19 +745,21 @@ extern "C" void fortran_c_to_cbar(
 FixedArray2D<Real, 2, 2> c_to_cbar(EleStruct &ele);
 extern "C" void fortran_calc_bunch_params(
     void *bunch /* 0D_NOT_type in */,
-    void *bunch_params /* 0D_NOT_type in */,
-    bool &error /* 0D_NOT_logical in */,
+    void *bunch_params /* 0D_NOT_type out */,
+    bool &error /* 0D_NOT_logical out */,
     bool *print_err /* 0D_NOT_logical in */,
-    Bmad::array_descriptor_t &n_mat /* 2D_NOT_real in */,
+    Bmad::array_descriptor_t &n_mat /* 2D_NOT_real out */,
     bool *is_time_coords /* 0D_NOT_logical in */,
     void *ele /* 0D_NOT_type in */
 );
-void calc_bunch_params(
+struct CalcBunchParams {
+  BunchParamsStruct bunch_params;
+  bool error;
+  std::optional<FixedArray2D<Real, 6, 6>> n_mat;
+};
+Bmad::CalcBunchParams calc_bunch_params(
     BunchStruct &bunch,
-    BunchParamsStruct &bunch_params,
-    bool error,
     std::optional<bool> print_err = std::nullopt,
-    std::optional<FixedArray2D<Real, 6, 6>> n_mat = std::nullopt,
     std::optional<bool> is_time_coords = std::nullopt,
     optional_ref<EleStruct> ele = std::nullopt
 );
@@ -767,18 +769,17 @@ extern "C" void fortran_calc_bunch_params_slice(
     int &plane /* 0D_NOT_integer in */,
     double &slice_center /* 0D_NOT_real in */,
     double &slice_spread /* 0D_NOT_real in */,
-    bool &err /* 0D_NOT_logical in */,
+    bool &err /* 0D_NOT_logical out */,
     bool *print_err /* 0D_NOT_logical in */,
     bool *is_time_coords /* 0D_NOT_logical in */,
     void *ele /* 0D_NOT_type in */
 );
-void calc_bunch_params_slice(
+bool calc_bunch_params_slice(
     BunchStruct &bunch,
     BunchParamsStruct &bunch_params,
     int plane,
     double slice_center,
     double slice_spread,
-    bool err,
     std::optional<bool> print_err = std::nullopt,
     std::optional<bool> is_time_coords = std::nullopt,
     optional_ref<EleStruct> ele = std::nullopt
@@ -787,16 +788,15 @@ extern "C" void fortran_calc_bunch_params_z_slice(
     void *bunch /* 0D_NOT_type in */,
     void *bunch_params /* 0D_NOT_type inout */,
     Bmad::array_descriptor_t &slice_bounds /* 1D_NOT_real in */,
-    bool &err /* 0D_NOT_logical in */,
+    bool &err /* 0D_NOT_logical out */,
     bool *print_err /* 0D_NOT_logical in */,
     bool *is_time_coords /* 0D_NOT_logical in */,
     void *ele /* 0D_NOT_type in */
 );
-void calc_bunch_params_z_slice(
+bool calc_bunch_params_z_slice(
     BunchStruct &bunch,
     BunchParamsStruct &bunch_params,
     FixedArray1D<Real, 2> slice_bounds,
-    bool err,
     std::optional<bool> print_err = std::nullopt,
     std::optional<bool> is_time_coords = std::nullopt,
     optional_ref<EleStruct> ele = std::nullopt
@@ -975,7 +975,7 @@ bool choose_quads_for_set_tune(
 );
 extern "C" void fortran_chrom_calc(
     void *lat /* 0D_NOT_type in */,
-    double &delta_e /* 0D_NOT_real in */,
+    double &delta_e /* 0D_NOT_real inout */,
     double &chrom_a /* 0D_NOT_real out */,
     double &chrom_b /* 0D_NOT_real out */,
     bool &err_flag /* 0D_NOT_logical out */,
@@ -996,7 +996,7 @@ struct ChromCalc {
 };
 Bmad::ChromCalc chrom_calc(
     LatStruct &lat,
-    double delta_e,
+    double &delta_e,
     std::optional<double> pz = std::nullopt,
     std::optional<CoordStructAlloc1D> low_E_orb = std::nullopt,
     std::optional<CoordStructAlloc1D> high_E_orb = std::nullopt,
@@ -1005,13 +1005,13 @@ Bmad::ChromCalc chrom_calc(
 );
 extern "C" void fortran_chrom_tune(
     void *lat /* 0D_NOT_type inout */,
-    double &delta_e /* 0D_NOT_real in */,
+    double &delta_e /* 0D_NOT_real inout */,
     double &target_x /* 0D_NOT_real in */,
     double &target_y /* 0D_NOT_real in */,
     double &err_tol /* 0D_NOT_real in */,
     bool &err_flag /* 0D_NOT_logical out */
 );
-bool chrom_tune(LatStruct &lat, double delta_e, double target_x, double target_y, double err_tol);
+bool chrom_tune(LatStruct &lat, double &delta_e, double target_x, double target_y, double err_tol);
 
 // Skipped unusable routine cimp1:
 // - Untranslated type: ibs_struct (0D)
@@ -1158,15 +1158,14 @@ void compute_slave_coupler(EleStruct &slave);
 // Skipped unusable routine compute_super_lord_s:
 // - Untranslated type: parser_ele_struct (0D)
 extern "C" void fortran_concat_ele_taylor(
-    Bmad::array_descriptor_t &orb_taylor /* 1D_NOT_type in */,
+    Bmad::array_descriptor_t &orb_taylor /* 1D_NOT_type inout */,
     void *ele /* 0D_NOT_type in */,
-    bool &err_flag /* 0D_NOT_logical in */,
-    Bmad::array_descriptor_t &spin_taylor /* 1D_NOT_type in */
+    bool &err_flag /* 0D_NOT_logical out */,
+    Bmad::array_descriptor_t &spin_taylor /* 1D_NOT_type inout */
 );
-void concat_ele_taylor(
+bool concat_ele_taylor(
     TaylorStructArray1D orb_taylor,
     EleStruct &ele,
-    bool err_flag,
     std::optional<TaylorStructArray1D> spin_taylor = std::nullopt
 );
 
@@ -1177,7 +1176,7 @@ void concat_ele_taylor(
 extern "C" void fortran_concat_taylor(
     Bmad::array_descriptor_t &taylor1 /* 1D_NOT_type in */,
     Bmad::array_descriptor_t &taylor2 /* 1D_NOT_type in */,
-    Bmad::array_descriptor_t &taylor3 /* 1D_NOT_type in */
+    Bmad::array_descriptor_t &taylor3 /* 1D_NOT_type inout */
 );
 void concat_taylor(
     TaylorStructArray1D taylor1,
@@ -1214,6 +1213,9 @@ void control_bookkeeper(
 );
 
 // Skipped unusable routine conv3d:
+// - Array bounds handling: "Enum 'RILO' found in bounds 'rilo' but not in provided map."
+// - Array bounds handling: "Enum 'G1ILO' found in bounds 'g1ilo' but not in provided map."
+// - Array bounds handling: "Enum 'CILO' found in bounds 'cilo' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_convert_bend_exact_multipole(
     double &g /* 0D_NOT_real in */,
@@ -1369,30 +1371,34 @@ std::string coord_state_name(int coord_state, std::optional<bool> one_word = std
 extern "C" bool fortran_coords_body_to_local(
     void *body_position /* 0D_NOT_type in */,
     void *ele /* 0D_NOT_type in */,
-    Bmad::array_descriptor_t &w_mat /* 2D_NOT_real in */,
+    Bmad::array_descriptor_t &w_mat /* 2D_NOT_real out */,
     bool *calculate_angles /* 0D_NOT_logical in */,
-    void *local_position /* 0D_NOT_type in */
+    void *local_position /* 0D_NOT_type out */
 );
-void coords_body_to_local(
+struct CoordsBodyToLocal {
+  std::optional<FixedArray2D<Real, 3, 3>> w_mat;
+  FloorPositionStruct local_position;
+};
+Bmad::CoordsBodyToLocal coords_body_to_local(
     FloorPositionStruct &body_position,
     EleStruct &ele,
-    std::optional<FixedArray2D<Real, 3, 3>> w_mat,
-    std::optional<bool> calculate_angles,
-    FloorPositionStruct &local_position
+    std::optional<bool> calculate_angles = std::nullopt
 );
 extern "C" bool fortran_coords_body_to_rel_exit(
     void *body_position /* 0D_NOT_type in */,
     void *ele /* 0D_NOT_type in */,
-    Bmad::array_descriptor_t &w_mat /* 2D_NOT_real in */,
+    Bmad::array_descriptor_t &w_mat /* 2D_NOT_real out */,
     bool *calculate_angles /* 0D_NOT_logical in */,
-    void *rel_exit /* 0D_NOT_type in */
+    void *rel_exit /* 0D_NOT_type out */
 );
-void coords_body_to_rel_exit(
+struct CoordsBodyToRelExit {
+  std::optional<FixedArray2D<Real, 3, 3>> w_mat;
+  FloorPositionStruct rel_exit;
+};
+Bmad::CoordsBodyToRelExit coords_body_to_rel_exit(
     FloorPositionStruct &body_position,
     EleStruct &ele,
-    std::optional<FixedArray2D<Real, 3, 3>> w_mat,
-    std::optional<bool> calculate_angles,
-    FloorPositionStruct &rel_exit
+    std::optional<bool> calculate_angles = std::nullopt
 );
 extern "C" bool fortran_coords_curvilinear_to_floor(
     Bmad::array_descriptor_t &xys /* 1D_NOT_real in */,
@@ -1456,16 +1462,18 @@ FloorPositionStruct coords_floor_to_relative(
 extern "C" bool fortran_coords_local_curvilinear_to_body(
     void *local_position /* 0D_NOT_type in */,
     void *ele /* 0D_NOT_type in */,
-    Bmad::array_descriptor_t &w_mat /* 2D_NOT_real in */,
+    Bmad::array_descriptor_t &w_mat /* 2D_NOT_real out */,
     bool *calculate_angles /* 0D_NOT_logical in */,
-    void *body_position /* 0D_NOT_type in */
+    void *body_position /* 0D_NOT_type out */
 );
-void coords_local_curvilinear_to_body(
+struct CoordsLocalCurvilinearToBody {
+  std::optional<FixedArray2D<Real, 3, 3>> w_mat;
+  FloorPositionStruct body_position;
+};
+Bmad::CoordsLocalCurvilinearToBody coords_local_curvilinear_to_body(
     FloorPositionStruct &local_position,
     EleStruct &ele,
-    std::optional<FixedArray2D<Real, 3, 3>> w_mat,
-    std::optional<bool> calculate_angles,
-    FloorPositionStruct &body_position
+    std::optional<bool> calculate_angles = std::nullopt
 );
 extern "C" bool fortran_coords_local_curvilinear_to_floor(
     void *local_position /* 0D_NOT_type in */,
@@ -1621,7 +1629,7 @@ extern "C" void fortran_create_wiggler_cartesian_map(
     void *cart_map /* 0D_NOT_type out */
 );
 CartesianMapStruct create_wiggler_cartesian_map(EleStruct &ele);
-extern "C" void fortran_crystal_attribute_bookkeeper(void *ele /* 0D_NOT_type in */);
+extern "C" void fortran_crystal_attribute_bookkeeper(void *ele /* 0D_NOT_type inout */);
 void crystal_attribute_bookkeeper(EleStruct &ele);
 
 // Skipped unusable routine crystal_diffraction_field_calc:
@@ -1856,6 +1864,10 @@ struct EigenDecomp6mat {
 Bmad::EigenDecomp6mat eigen_decomp_6mat(FixedArray2D<Real, 6, 6> mat);
 
 // Skipped unusable routine eigensys:
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_ele_compute_ref_energy_and_time(
     void *ele0 /* 0D_NOT_type in */,
@@ -1915,12 +1927,12 @@ extern "C" bool fortran_ele_has_constant_ds_dt_ref(
 );
 bool ele_has_constant_ds_dt_ref(EleStruct &ele);
 extern "C" bool fortran_ele_has_nonzero_kick(
-    void *ele /* 0D_NOT_type out */,
+    void *ele /* 0D_NOT_type inout */,
     bool &has_kick /* 0D_NOT_logical in */
 );
-EleStruct ele_has_nonzero_kick(bool has_kick);
+void ele_has_nonzero_kick(EleStruct &ele, bool has_kick);
 extern "C" bool fortran_ele_has_nonzero_offset(
-    void *ele /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type in */,
     bool &has_offset /* 0D_NOT_logical out */
 );
 bool ele_has_nonzero_offset(EleStruct &ele);
@@ -2183,10 +2195,10 @@ Bmad::EmFieldCalc em_field_calc(
 // Skipped unusable routine em_field_custom_def:
 // - Routine in configuration skip list
 extern "C" void fortran_em_field_derivatives(
-    void *ele /* 0D_NOT_type inout */,
-    void *param /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type in */,
+    void *param /* 0D_NOT_type in */,
     double &s_pos /* 0D_NOT_real in */,
-    void *orbit /* 0D_NOT_type inout */,
+    void *orbit /* 0D_NOT_type in */,
     bool &local_ref_frame /* 0D_NOT_logical in */,
     void *dfield /* 0D_NOT_type out */,
     bool *grid_allow_s_out_of_bounds /* 0D_NOT_logical in */,
@@ -2920,12 +2932,21 @@ extern "C" void fortran_etdiv(
 void etdiv(double A, double B, double C, double D, double E, double F);
 
 // Skipped unusable routine ety:
+// - Array bounds handling: "Enum 'NM' found in bounds 'NM' but not in provided map."
+// - Array bounds handling: "Enum 'IGH' found in bounds 'IGH' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine ety2:
+// - Array bounds handling: "Enum 'NM' found in bounds 'NM' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'NM' found in bounds 'NM' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine etyt:
+// - Array bounds handling: "Enum 'NM' found in bounds 'NM' but not in provided map."
+// - Array bounds handling: "Enum 'IGH' found in bounds 'IGH' but not in provided map."
+// - Array bounds handling: "Enum 'NM' found in bounds 'NM' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_evaluate_array_index(
     bool &err_flag /* 0D_NOT_logical out */,
@@ -2979,7 +3000,7 @@ extern "C" bool fortran_expect_one_of(
     const char *delim_list /* 0D_NOT_character in */,
     bool &check_input_delim /* 0D_NOT_logical in */,
     const char *ele_name /* 0D_NOT_character in */,
-    const char *delim /* 0D_NOT_character in */,
+    const char *delim /* 0D_NOT_character inout */,
     bool &delim_found /* 0D_NOT_logical in */,
     bool &is_ok /* 0D_NOT_logical in */
 );
@@ -2987,7 +3008,7 @@ void expect_one_of(
     std::string delim_list,
     bool check_input_delim,
     std::string ele_name,
-    std::string delim,
+    std::string &delim,
     bool delim_found,
     bool is_ok
 );
@@ -3107,18 +3128,24 @@ extern "C" void fortran_fft1(
 int fft1(FArray1D<Real> &a, FArray1D<Real> &b, int n, int isn);
 
 // Skipped unusable routine fftconvcorr3d:
+// - Array bounds handling: "Enum 'RILO' found in bounds 'rilo' but not in provided map."
+// - Array bounds handling: "Enum 'G1ILO' found in bounds 'g1ilo' but not in provided map."
+// - Array bounds handling: "Enum 'G2ILO' found in bounds 'g2ilo' but not in provided map."
+// - Array bounds handling: "Enum 'G3ILO' found in bounds 'g3ilo' but not in provided map."
+// - Array bounds handling: "Enum 'G4ILO' found in bounds 'g4ilo' but not in provided map."
+// - Array bounds handling: "Enum 'CILO' found in bounds 'cilo' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_fibre_to_ele(
     void *ptc_fibre /* 0D_NOT_type in */,
     void *branch /* 0D_NOT_type inout */,
-    int &ix_ele /* 0D_NOT_integer in */,
+    int &ix_ele /* 0D_NOT_integer inout */,
     bool &err_flag /* 0D_NOT_logical out */,
     bool *from_mad /* 0D_NOT_logical in */
 );
 bool fibre_to_ele(
     Fibre &ptc_fibre,
     BranchStruct &branch,
-    int ix_ele,
+    int &ix_ele,
     std::optional<bool> from_mad = std::nullopt
 );
 extern "C" bool fortran_field_attribute_free(
@@ -3336,23 +3363,25 @@ Bmad::GetEmitFromSigmaMat get_emit_from_sigma_mat(
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_get_next_word(
     const char *word /* 0D_NOT_character in */,
-    int &ix_word /* 0D_NOT_integer in */,
+    int &ix_word /* 0D_NOT_integer out */,
     const char *delim_list /* 0D_NOT_character in */,
-    const char *delim /* 0D_NOT_character in */,
-    bool &delim_found /* 0D_NOT_logical in */,
+    const char *delim /* 0D_NOT_character out */,
+    bool &delim_found /* 0D_NOT_logical out */,
     bool *upper_case_word /* 0D_NOT_logical in */,
     bool *call_check /* 0D_NOT_logical in */,
-    bool *err_flag /* 0D_NOT_logical in */
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void get_next_word(
+struct GetNextWord {
+  int ix_word;
+  std::string delim;
+  bool delim_found;
+  bool err_flag;
+};
+Bmad::GetNextWord get_next_word(
     std::string word,
-    int ix_word,
     std::string delim_list,
-    std::string delim,
-    bool delim_found,
     std::optional<bool> upper_case_word = std::nullopt,
-    std::optional<bool> call_check = std::nullopt,
-    std::optional<bool> err_flag = std::nullopt
+    std::optional<bool> call_check = std::nullopt
 );
 
 // Skipped unusable routine get_opal_fieldgrid_name_and_scaling:
@@ -3378,6 +3407,8 @@ int get_slave_list(EleStruct &lord, ElePointerStructAlloc1D slaves);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine getrhotilde:
+// - Array bounds handling: "Enum 'ILO' found in bounds 'ilo' but not in provided map."
+// - Array bounds handling: "Enum 'ILO' found in bounds 'ilo' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_gpt_field_grid_scaling(
     void *ele /* 0D_NOT_type inout */,
@@ -3645,9 +3676,12 @@ void igfezfun(
 // - Untranslated type: csr_struct (0D)
 
 // Skipped unusable routine imageconvcorr3d:
+// - Array bounds handling: "Enum 'RILO' found in bounds 'rilo' but not in provided map."
+// - Array bounds handling: "Enum 'G1ILO' found in bounds 'g1ilo' but not in provided map."
+// - Array bounds handling: "Enum 'CILO' found in bounds 'cilo' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_init_attribute_name1(
-    bool &is_ok /* 0D_NOT_logical in */,
+    bool &is_ok /* 0D_NOT_logical inout */,
     int &ix_key /* 0D_NOT_integer in */,
     int &ix_attrib /* 0D_NOT_integer in */,
     const char *name /* 0D_NOT_character in */,
@@ -3655,7 +3689,7 @@ extern "C" void fortran_init_attribute_name1(
     bool *override /* 0D_NOT_logical in */
 );
 void init_attribute_name1(
-    bool is_ok,
+    bool &is_ok,
     int ix_key,
     int ix_attrib,
     std::string name,
@@ -4108,7 +4142,7 @@ extern "C" void fortran_lat_ele_locator(
     const char *loc_str /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type in */,
     void *eles /* 1D_ALLOC_type inout */,
-    int &n_loc /* 0D_NOT_integer in */,
+    int &n_loc /* 0D_NOT_integer inout */,
     bool &err /* 0D_NOT_logical out */,
     bool *above_ubound_is_err /* 0D_NOT_logical in */,
     int *ix_dflt_branch /* 0D_NOT_integer in */,
@@ -4119,7 +4153,7 @@ bool lat_ele_locator(
     std::string loc_str,
     LatStruct &lat,
     ElePointerStructAlloc1D eles,
-    int n_loc,
+    int &n_loc,
     std::optional<bool> above_ubound_is_err = std::nullopt,
     std::optional<int> ix_dflt_branch = std::nullopt,
     std::optional<bool> order_by_index = std::nullopt,
@@ -4780,15 +4814,17 @@ bool multilayer_type_to_multilayer_params(EleStruct &ele);
 // - Untranslated type: multipass_all_info_struct (0D)
 extern "C" void fortran_multipass_chain(
     void *ele /* 0D_NOT_type in */,
-    int &ix_pass /* 0D_NOT_integer in */,
-    int &n_links /* 0D_NOT_integer in */,
-    void *chain_ele /* 1D_ALLOC_type in */,
+    int &ix_pass /* 0D_NOT_integer out */,
+    int &n_links /* 0D_NOT_integer out */,
+    void *chain_ele /* 1D_ALLOC_type inout */,
     bool *use_super_lord /* 0D_NOT_logical in */
 );
-void multipass_chain(
+struct MultipassChain {
+  int ix_pass;
+  int n_links;
+};
+Bmad::MultipassChain multipass_chain(
     EleStruct &ele,
-    int ix_pass,
-    int n_links,
     std::optional<ElePointerStructAlloc1D> chain_ele = std::nullopt,
     std::optional<bool> use_super_lord = std::nullopt
 );
@@ -4963,10 +4999,10 @@ extern "C" bool fortran_n_attrib_string_max_len(int &max_len /* 0D_NOT_integer o
 int n_attrib_string_max_len();
 extern "C" void fortran_new_control(
     void *lat /* 0D_NOT_type in */,
-    int &ix_ele /* 0D_NOT_integer in */,
+    int &ix_ele /* 0D_NOT_integer out */,
     const char *ele_name /* 0D_NOT_character in */
 );
-void new_control(LatStruct &lat, int ix_ele, std::optional<std::string> ele_name = std::nullopt);
+int new_control(LatStruct &lat, std::optional<std::string> ele_name = std::nullopt);
 extern "C" bool
 fortran_nint_chk(double &re_val /* 0D_NOT_real in */, int &int_val /* 0D_NOT_integer out */);
 int nint_chk(double re_val);
@@ -5070,7 +5106,7 @@ extern "C" void fortran_odeint_bmad_time(
     void *ele /* 0D_NOT_type in */,
     void *param /* 0D_NOT_type in */,
     int &t_dir /* 0D_NOT_integer in */,
-    double &rf_time /* 0D_NOT_real in */,
+    double &rf_time /* 0D_NOT_real inout */,
     bool &err_flag /* 0D_NOT_logical out */,
     void *track /* 0D_NOT_type inout */,
     double *t_end /* 0D_NOT_real in */,
@@ -5086,7 +5122,7 @@ Bmad::OdeintBmadTime odeint_bmad_time(
     EleStruct &ele,
     LatParamStruct &param,
     int t_dir,
-    double rf_time,
+    double &rf_time,
     optional_ref<TrackStruct> track = std::nullopt,
     std::optional<double> t_end = std::nullopt,
     optional_ref<EmFieldStruct> extra_field = std::nullopt
@@ -5104,7 +5140,7 @@ extern "C" void fortran_offset_particle(
     Bmad::array_descriptor_t &mat6 /* 2D_NOT_real inout */,
     bool *make_matrix /* 0D_NOT_logical in */,
     Bmad::array_descriptor_t &spin_qrot /* 1D_NOT_real out */,
-    double *time /* 0D_NOT_real in */
+    double *time /* 0D_NOT_real inout */
 );
 struct OffsetParticle {
   double s_out;
@@ -5121,7 +5157,7 @@ Bmad::OffsetParticle offset_particle(
     std::optional<bool> set_spin = std::nullopt,
     std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
     std::optional<bool> make_matrix = std::nullopt,
-    std::optional<double> time = std::nullopt
+    optional_ref<double> time = std::nullopt
 );
 extern "C" void fortran_offset_photon(
     void *ele /* 0D_NOT_type in */,
@@ -5259,7 +5295,7 @@ bool order_evecs_by_tune(
 extern "C" void fortran_order_particles_in_z(void *bunch /* 0D_NOT_type inout */);
 void order_particles_in_z(BunchStruct &bunch);
 extern "C" void fortran_order_super_lord_slaves(
-    void *lat /* 0D_NOT_type in */,
+    void *lat /* 0D_NOT_type inout */,
     int &ix_lord /* 0D_NOT_integer in */
 );
 void order_super_lord_slaves(LatStruct &lat, int ix_lord);
@@ -5315,12 +5351,15 @@ void osc_alloc_rectpipe_arrays(
 // - Variable inout sized array: 3D_NOT_complex
 
 // Skipped unusable routine osc_getgrnfree:
+// - Array bounds handling: "Enum 'ILO_GRN' found in bounds 'ilo_grn' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine osc_getgrnimageconvcorr:
+// - Array bounds handling: "Enum 'ILO_GRN' found in bounds 'ilo_grn' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine osc_getgrnimageshift:
+// - Array bounds handling: "Enum 'ILO_GRN' found in bounds 'ilo_grn' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_osc_getgrnpipe(
     double &gam /* 0D_NOT_real in */,
@@ -6316,9 +6355,6 @@ void ptc_layouts_resplit(
 
 // Skipped unusable routine ptc_map_to_normal_form:
 // - Untranslated type: probe_8 (0D)
-// - Untranslated type: c_normal_form (0D)
-// - Untranslated type: c_taylor (1D)
-// - Untranslated type: c_taylor (0D)
 
 // Skipped unusable routine ptc_one_turn_map_at_ele:
 // - Untranslated type: probe_8 (0D)
@@ -6419,6 +6455,7 @@ FixedArray2D<Real, 6, 6>
 pwd_mat(LatStruct &lat, FixedArray2D<Real, 6, 6> t6, double inductance, double sig_z);
 
 // Skipped unusable routine qromb_rad_int:
+// - Array bounds handling: "Enum 'NUM_INT' found in bounds 'num_int' but not in provided map."
 // - Untranslated type: rad_int_track_point_struct (0D)
 // - Untranslated type: rad_int_info_struct (0D)
 
@@ -6504,7 +6541,7 @@ extern "C" void fortran_radiation_integrals(
     void *lat /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &orbit /* 1D_NOT_type in */,
     void *mode /* 0D_NOT_type out */,
-    int *ix_cache /* 0D_NOT_integer in */,
+    int *ix_cache /* 0D_NOT_integer inout */,
     int *ix_branch /* 0D_NOT_integer in */,
     void *rad_int_by_ele /* 0D_NOT_type out */
 );
@@ -6515,7 +6552,7 @@ struct RadiationIntegrals {
 Bmad::RadiationIntegrals radiation_integrals(
     LatStruct &lat,
     CoordStructArray1D orbit,
-    std::optional<int> ix_cache = std::nullopt,
+    optional_ref<int> ix_cache = std::nullopt,
     std::optional<int> ix_branch = std::nullopt
 );
 
@@ -6548,6 +6585,9 @@ extern "C" void fortran_randomize_lr_wake_frequencies(
     bool &set_done /* 0D_NOT_logical out */
 );
 bool randomize_lr_wake_frequencies(EleStruct &ele);
+
+// Skipped unusable routine rb_field:
+// - Array bounds handling: Calls in array bounds are not supported
 extern "C" bool fortran_rchomp(
     double &rel /* 0D_NOT_real in */,
     int &plc /* 0D_NOT_integer in */,
@@ -6753,8 +6793,8 @@ extern "C" bool fortran_relative_mode_flip(
     bool &func_retval__ /* 0D_NOT_logical in */
 );
 void relative_mode_flip(EleStruct &ele1, EleStruct &ele2, bool func_retval__);
-extern "C" void fortran_release_rad_int_cache(int &ix_cache /* 0D_NOT_integer in */);
-void release_rad_int_cache(int ix_cache);
+extern "C" void fortran_release_rad_int_cache(int &ix_cache /* 0D_NOT_integer inout */);
+void release_rad_int_cache(int &ix_cache);
 extern "C" void fortran_remove_constant_taylor(
     Bmad::array_descriptor_t &taylor_in /* 1D_NOT_type in */,
     Bmad::array_descriptor_t &taylor_out /* 1D_NOT_type inout */,
@@ -7082,24 +7122,24 @@ void sbend_body_with_k1_map(
 extern "C" void fortran_sc_adaptive_step(
     void *bunch /* 0D_NOT_type inout */,
     void *ele /* 0D_NOT_type in */,
-    bool &include_image /* 0D_NOT_logical in */,
+    bool &include_image /* 0D_NOT_logical inout */,
     double &t_now /* 0D_NOT_real in */,
-    double &dt_step /* 0D_NOT_real in */,
+    double &dt_step /* 0D_NOT_real inout */,
     double &dt_next /* 0D_NOT_real out */,
     Bmad::array_descriptor_t &sc_field /* 1D_NOT_type in */
 );
 double sc_adaptive_step(
     BunchStruct &bunch,
     EleStruct &ele,
-    bool include_image,
+    bool &include_image,
     double t_now,
-    double dt_step,
+    double &dt_step,
     EmFieldStructArray1D sc_field
 );
 extern "C" void fortran_sc_step(
     void *bunch /* 0D_NOT_type inout */,
     void *ele /* 0D_NOT_type in */,
-    bool &include_image /* 0D_NOT_logical in */,
+    bool &include_image /* 0D_NOT_logical inout */,
     double &t_end /* 0D_NOT_real in */,
     Bmad::array_descriptor_t &sc_field /* 1D_NOT_type in */,
     int &n_emit /* 0D_NOT_integer out */
@@ -7107,7 +7147,7 @@ extern "C" void fortran_sc_step(
 int sc_step(
     BunchStruct &bunch,
     EleStruct &ele,
-    bool include_image,
+    bool &include_image,
     double t_end,
     EmFieldStructArray1D sc_field
 );
@@ -7221,11 +7261,11 @@ void set_flags_for_changed_attribute(
     std::optional<bool> set_dependent = std::nullopt
 );
 extern "C" void fortran_set_fringe_on_off(
-    double &fringe_at /* 0D_NOT_real in */,
+    double &fringe_at /* 0D_NOT_real inout */,
     int &ele_end /* 0D_NOT_integer in */,
     int &on_or_off /* 0D_NOT_integer in */
 );
-void set_fringe_on_off(double fringe_at, int ele_end, int on_or_off);
+void set_fringe_on_off(double &fringe_at, int ele_end, int on_or_off);
 extern "C" void fortran_set_lords_status_stale(
     void *ele /* 0D_NOT_type in */,
     int &stat_group /* 0D_NOT_integer in */,
@@ -7301,9 +7341,9 @@ void set_ptc_com_pointers();
 extern "C" void fortran_set_ptc_quiet(
     int &channel /* 0D_NOT_integer in */,
     bool &set /* 0D_NOT_logical in */,
-    int &old_val /* 0D_NOT_integer in */
+    int &old_val /* 0D_NOT_integer inout */
 );
-void set_ptc_quiet(int channel, bool set, int old_val);
+void set_ptc_quiet(int channel, bool set, int &old_val);
 extern "C" void fortran_set_ptc_verbose(bool &on /* 0D_NOT_logical in */);
 void set_ptc_verbose(bool on);
 extern "C" void fortran_set_pwd_ele(
@@ -7622,9 +7662,9 @@ extern "C" bool fortran_spinor_to_polar(
 SpinPolarStruct spinor_to_polar(FixedArray1D<Complex, 2> spinor);
 extern "C" bool fortran_spinor_to_vec(
     Bmad::array_descriptor_t &spinor /* 1D_NOT_complex in */,
-    Bmad::array_descriptor_t &vec /* 1D_NOT_real in */
+    Bmad::array_descriptor_t &vec /* 1D_NOT_real out */
 );
-void spinor_to_vec(FixedArray1D<Complex, 2> spinor, FixedArray1D<Real, 3> vec);
+FixedArray1D<Real, 3> spinor_to_vec(FixedArray1D<Complex, 2> spinor);
 extern "C" void fortran_spline_fit_orbit(
     void *start_orb /* 0D_NOT_type in */,
     void *end_orb /* 0D_NOT_type in */,
@@ -7773,18 +7813,20 @@ extern "C" void fortran_surface_grid_displacement(
     void *ele /* 0D_NOT_type in */,
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
-    bool &err_flag /* 0D_NOT_logical in */,
-    double &z /* 0D_NOT_real in */,
-    Bmad::array_descriptor_t &dz_dxy /* 1D_NOT_real in */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    double &z /* 0D_NOT_real out */,
+    Bmad::array_descriptor_t &dz_dxy /* 1D_NOT_real out */,
     bool *extend_grid /* 0D_NOT_logical in */
 );
-void surface_grid_displacement(
+struct SurfaceGridDisplacement {
+  bool err_flag;
+  double z;
+  FixedArray1D<Real, 2> dz_dxy;
+};
+Bmad::SurfaceGridDisplacement surface_grid_displacement(
     EleStruct &ele,
     double x,
     double y,
-    bool err_flag,
-    double z,
-    std::optional<FixedArray1D<Real, 2>> dz_dxy = std::nullopt,
     std::optional<bool> extend_grid = std::nullopt
 );
 
@@ -7838,19 +7880,19 @@ void taper_mag_strengths(
 extern "C" void fortran_target_min_max_calc(
     Bmad::array_descriptor_t &r_corner1 /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &r_corner2 /* 1D_NOT_real in */,
-    double &y_min /* 0D_NOT_real in */,
-    double &y_max /* 0D_NOT_real in */,
-    double &phi_min /* 0D_NOT_real in */,
-    double &phi_max /* 0D_NOT_real in */,
+    double &y_min /* 0D_NOT_real inout */,
+    double &y_max /* 0D_NOT_real inout */,
+    double &phi_min /* 0D_NOT_real inout */,
+    double &phi_max /* 0D_NOT_real inout */,
     bool *initial /* 0D_NOT_logical in */
 );
 void target_min_max_calc(
     FixedArray1D<Real, 3> r_corner1,
     FixedArray1D<Real, 3> r_corner2,
-    double y_min,
-    double y_max,
-    double phi_min,
-    double phi_max,
+    double &y_min,
+    double &y_max,
+    double &phi_min,
+    double &phi_max,
     std::optional<bool> initial = std::nullopt
 );
 extern "C" void fortran_target_rot_mats(
@@ -8313,35 +8355,38 @@ extern "C" void fortran_track1_sample(
 );
 void track1_sample(EleStruct &ele, LatParamStruct &param, CoordStruct &orbit);
 extern "C" void fortran_track1_spin(
-    void *start_orb /* 0D_NOT_type inout */,
-    void *ele /* 0D_NOT_type out */,
-    void *param /* 0D_NOT_type inout */,
-    void *end_orb /* 0D_NOT_type out */,
+    void *start_orb /* 0D_NOT_type in */,
+    void *ele /* 0D_NOT_type inout */,
+    void *param /* 0D_NOT_type in */,
+    void *end_orb /* 0D_NOT_type inout */,
     bool *make_quaternion /* 0D_NOT_logical in */
 );
-struct Track1Spin {
-  EleStruct ele;
-  CoordStruct end_orb;
-};
-Bmad::Track1Spin track1_spin(
+void track1_spin(
     CoordStruct &start_orb,
+    EleStruct &ele,
     LatParamStruct &param,
+    CoordStruct &end_orb,
     std::optional<bool> make_quaternion = std::nullopt
 );
 
 // Skipped unusable routine track1_spin_custom_def:
 // - Routine in configuration skip list
 extern "C" void fortran_track1_spin_integration(
-    void *start_orb /* 0D_NOT_type inout */,
-    void *ele /* 0D_NOT_type inout */,
-    void *param /* 0D_NOT_type inout */,
-    void *end_orb /* 0D_NOT_type out */
+    void *start_orb /* 0D_NOT_type in */,
+    void *ele /* 0D_NOT_type in */,
+    void *param /* 0D_NOT_type in */,
+    void *end_orb /* 0D_NOT_type inout */
 );
-CoordStruct track1_spin_integration(CoordStruct &start_orb, EleStruct &ele, LatParamStruct &param);
+void track1_spin_integration(
+    CoordStruct &start_orb,
+    EleStruct &ele,
+    LatParamStruct &param,
+    CoordStruct &end_orb
+);
 extern "C" void fortran_track1_spin_taylor(
-    void *start_orb /* 0D_NOT_type inout */,
-    void *ele /* 0D_NOT_type inout */,
-    void *param /* 0D_NOT_type inout */,
+    void *start_orb /* 0D_NOT_type in */,
+    void *ele /* 0D_NOT_type in */,
+    void *param /* 0D_NOT_type in */,
     void *end_orb /* 0D_NOT_type out */
 );
 CoordStruct track1_spin_taylor(CoordStruct &start_orb, EleStruct &ele, LatParamStruct &param);
@@ -8375,7 +8420,7 @@ extern "C" void fortran_track1_time_runge_kutta(
     bool &err_flag /* 0D_NOT_logical out */,
     void *track /* 0D_NOT_type out */,
     double *t_end /* 0D_NOT_real in */,
-    double *dt_step /* 0D_NOT_real in */
+    double *dt_step /* 0D_NOT_real inout */
 );
 struct Track1TimeRungeKutta {
   bool err_flag;
@@ -8386,7 +8431,7 @@ Bmad::Track1TimeRungeKutta track1_time_runge_kutta(
     EleStruct &ele,
     LatParamStruct &param,
     std::optional<double> t_end = std::nullopt,
-    std::optional<double> dt_step = std::nullopt
+    optional_ref<double> dt_step = std::nullopt
 );
 
 // Skipped unusable routine track1_wake_hook_def:
@@ -8465,7 +8510,7 @@ extern "C" void fortran_track_a_drift(
     bool *make_matrix /* 0D_NOT_logical in */,
     int *ele_orientation /* 0D_NOT_integer in */,
     bool *include_ref_motion /* 0D_NOT_logical in */,
-    double *time /* 0D_NOT_real in */
+    double *time /* 0D_NOT_real inout */
 );
 void track_a_drift(
     CoordStruct &orb,
@@ -8474,7 +8519,7 @@ void track_a_drift(
     std::optional<bool> make_matrix = std::nullopt,
     std::optional<int> ele_orientation = std::nullopt,
     std::optional<bool> include_ref_motion = std::nullopt,
-    std::optional<double> time = std::nullopt
+    optional_ref<double> time = std::nullopt
 );
 extern "C" void fortran_track_a_drift_photon(
     void *orb /* 0D_NOT_type inout */,
@@ -9285,7 +9330,7 @@ extern "C" void fortran_type_coord(void *coord /* 0D_NOT_type in */);
 void type_coord(CoordStruct &coord);
 
 // Skipped unusable routine type_ele:
-// - Variable-sized in character array: 1D_ALLOC_character
+// - Variable-sized inout character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_end_stuff:
@@ -9761,14 +9806,14 @@ Bmad::WriteGptFieldGridFile3d write_gpt_field_grid_file_3d(
 // Skipped unusable routine write_gpt_lattice_file:
 // - Untranslated type: gpt_lat_param_struct (0D)
 extern "C" void fortran_write_lat_line(
-    const char *line /* 0D_NOT_character in */,
+    const char *line /* 0D_NOT_character inout */,
     int &iu /* 0D_NOT_integer in */,
     bool &end_is_neigh /* 0D_NOT_logical in */,
     bool *do_split /* 0D_NOT_logical in */,
     bool *scibmad /* 0D_NOT_logical in */
 );
 void write_lat_line(
-    std::string line,
+    std::string &line,
     int iu,
     bool end_is_neigh,
     std::optional<bool> do_split = std::nullopt,
@@ -9919,7 +9964,7 @@ int xraylib_nist_compound(std::string name);
 // - Routine in configuration skip list
 
 // Skipped unusable routine xyz_to_action:
-// - Translated arg count mismatch (unsupported?)
+// - Untranslated type: * (0D)
 extern "C" bool fortran_ylafun(
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
@@ -9943,10 +9988,10 @@ struct ZAtSurface {
 };
 Bmad::ZAtSurface
 z_at_surface(EleStruct &ele, double x, double y, std::optional<bool> extend_grid = std::nullopt);
-extern "C" void fortran_zero_ele_kicks(void *ele /* 0D_NOT_type out */);
-EleStruct zero_ele_kicks();
-extern "C" void fortran_zero_ele_offsets(void *ele /* 0D_NOT_type out */);
-EleStruct zero_ele_offsets();
+extern "C" void fortran_zero_ele_kicks(void *ele /* 0D_NOT_type inout */);
+void zero_ele_kicks(EleStruct &ele);
+extern "C" void fortran_zero_ele_offsets(void *ele /* 0D_NOT_type inout */);
+void zero_ele_offsets(EleStruct &ele);
 extern "C" void fortran_zero_lr_wakes_in_lat(void *lat /* 0D_NOT_type inout */);
 void zero_lr_wakes_in_lat(LatStruct &lat);
 extern "C" bool fortran_zlafun(

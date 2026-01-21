@@ -16,6 +16,7 @@ void spline_struct_set_y0(void *struct_obj, double value_in);
 void spline_struct_get_x1(const void *struct_obj, double *value_out);
 void spline_struct_set_x1(void *struct_obj, double value_in);
 void spline_struct_get_coef_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void spline_struct_set_coef(void *s, const void *d, const int *shape);
 void spin_polar_struct_get_polarization(const void *struct_obj, double *value_out);
 void spin_polar_struct_set_polarization(void *struct_obj, double value_in);
 void spin_polar_struct_get_theta(const void *struct_obj, double *value_out);
@@ -65,12 +66,14 @@ void photon_reflect_table_struct_get_angle_info(
     int *bounds,
     bool *is_alloc
 );
+void photon_reflect_table_struct_set_angle(void *s, const void *d, const int *shape);
 void photon_reflect_table_struct_get_energy_info(
     const void *s,
     double **d,
     int *bounds,
     bool *is_alloc
 );
+void photon_reflect_table_struct_set_energy(void *s, const void *d, const int *shape);
 
 void photon_reflect_table_struct_get_int1_info(
     const void *s,
@@ -87,6 +90,7 @@ void photon_reflect_table_struct_get_p_reflect_info(
     int *strides,
     bool *is_alloc
 );
+void photon_reflect_table_struct_set_p_reflect(void *s, const void *d, const int *shape);
 void photon_reflect_table_struct_get_max_energy(const void *struct_obj, double *value_out);
 void photon_reflect_table_struct_set_max_energy(void *struct_obj, double value_in);
 void photon_reflect_table_struct_get_p_reflect_scratch_info(
@@ -95,12 +99,14 @@ void photon_reflect_table_struct_get_p_reflect_scratch_info(
     int *bounds,
     bool *is_alloc
 );
+void photon_reflect_table_struct_set_p_reflect_scratch(void *s, const void *d, const int *shape);
 void photon_reflect_table_struct_get_bragg_angle_info(
     const void *s,
     double **d,
     int *bounds,
     bool *is_alloc
 );
+void photon_reflect_table_struct_set_bragg_angle(void *s, const void *d, const int *shape);
 void photon_reflect_surface_struct_get_name_info(const void *s, char **d, int *bounds, bool *a);
 void photon_reflect_surface_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
 void photon_reflect_surface_struct_get_description_info(
@@ -147,13 +153,17 @@ void photon_reflect_surface_struct_set_roughness_correlation_len(void *struct_ob
 void photon_reflect_surface_struct_get_ix_surface(const void *struct_obj, int *value_out);
 void photon_reflect_surface_struct_set_ix_surface(void *struct_obj, int value_in);
 void coord_struct_get_vec_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void coord_struct_set_vec(void *s, const void *d, const int *shape);
 void coord_struct_get_s(const void *struct_obj, double *value_out);
 void coord_struct_set_s(void *struct_obj, double value_in);
 void coord_struct_get_t(const void *struct_obj, long double *value_out);
 void coord_struct_set_t(void *struct_obj, long double value_in);
 void coord_struct_get_spin_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void coord_struct_set_spin(void *s, const void *d, const int *shape);
 void coord_struct_get_field_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void coord_struct_set_field(void *s, const void *d, const int *shape);
 void coord_struct_get_phase_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void coord_struct_set_phase(void *s, const void *d, const int *shape);
 void coord_struct_get_charge(const void *struct_obj, double *value_out);
 void coord_struct_set_charge(void *struct_obj, double value_in);
 void coord_struct_get_dt_ref(const void *struct_obj, double *value_out);
@@ -220,24 +230,28 @@ void expression_atom_struct_set_type(void *struct_obj, int value_in);
 void expression_atom_struct_get_value(const void *struct_obj, double *value_out);
 void expression_atom_struct_set_value(void *struct_obj, double value_in);
 void wake_sr_z_long_struct_get_w_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void wake_sr_z_long_struct_set_w(void *s, const void *d, const int *shape);
 void wake_sr_z_long_struct_get_fw_info(
     const void *s,
     std::complex<double> **d,
     int *bounds,
     bool *is_alloc
 );
+void wake_sr_z_long_struct_set_fw(void *s, const void *d, const int *shape);
 void wake_sr_z_long_struct_get_fbunch_info(
     const void *s,
     std::complex<double> **d,
     int *bounds,
     bool *is_alloc
 );
+void wake_sr_z_long_struct_set_fbunch(void *s, const void *d, const int *shape);
 void wake_sr_z_long_struct_get_w_out_info(
     const void *s,
     std::complex<double> **d,
     int *bounds,
     bool *is_alloc
 );
+void wake_sr_z_long_struct_set_w_out(void *s, const void *d, const int *shape);
 void wake_sr_z_long_struct_get_dz(const void *struct_obj, double *value_out);
 void wake_sr_z_long_struct_set_dz(void *struct_obj, double value_in);
 void wake_sr_z_long_struct_get_z0(const void *struct_obj, double *value_out);
@@ -359,6 +373,7 @@ void wake_struct_set_lr(void *struct_obj, const void *src_ptr);
 void taylor_term_struct_get_coef(const void *struct_obj, double *value_out);
 void taylor_term_struct_set_coef(void *struct_obj, double value_in);
 void taylor_term_struct_get_expn_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void taylor_term_struct_set_expn(void *s, const void *d, const int *shape);
 void taylor_struct_get_ref(const void *struct_obj, double *value_out);
 void taylor_struct_set_ref(void *struct_obj, double value_in);
 
@@ -373,6 +388,7 @@ void taylor_struct_get_term_info(
 void em_taylor_term_struct_get_coef(const void *struct_obj, double *value_out);
 void em_taylor_term_struct_set_coef(void *struct_obj, double value_in);
 void em_taylor_term_struct_get_expn_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void em_taylor_term_struct_set_expn(void *s, const void *d, const int *shape);
 void em_taylor_struct_get_ref(const void *struct_obj, double *value_out);
 void em_taylor_struct_set_ref(void *struct_obj, double value_in);
 
@@ -418,6 +434,7 @@ void cartesian_map_term_struct_get_term_info(
 void cartesian_map_struct_get_field_scale(const void *struct_obj, double *value_out);
 void cartesian_map_struct_set_field_scale(void *struct_obj, double value_in);
 void cartesian_map_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void cartesian_map_struct_set_r0(void *s, const void *d, const int *shape);
 void cartesian_map_struct_get_master_parameter(const void *struct_obj, int *value_out);
 void cartesian_map_struct_set_master_parameter(void *struct_obj, int value_in);
 void cartesian_map_struct_get_ele_anchor_pt(const void *struct_obj, int *value_out);
@@ -466,6 +483,7 @@ void cylindrical_map_struct_set_ele_anchor_pt(void *struct_obj, int value_in);
 void cylindrical_map_struct_get_dz(const void *struct_obj, double *value_out);
 void cylindrical_map_struct_set_dz(void *struct_obj, double value_in);
 void cylindrical_map_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void cylindrical_map_struct_set_r0(void *s, const void *d, const int *shape);
 void cylindrical_map_struct_get_ptr(const void *struct_obj, void **ptr_out);
 void cylindrical_map_struct_set_ptr(void *struct_obj, const void *src_ptr);
 void bicubic_cmplx_coef_struct_get_coef_info(
@@ -475,7 +493,9 @@ void bicubic_cmplx_coef_struct_get_coef_info(
     int *strides,
     bool *is_alloc
 );
+void bicubic_cmplx_coef_struct_set_coef(void *s, const void *d, const int *shape);
 void bicubic_cmplx_coef_struct_get_i_box_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void bicubic_cmplx_coef_struct_set_i_box(void *s, const void *d, const int *shape);
 void tricubic_cmplx_coef_struct_get_coef_info(
     const void *s,
     std::complex<double> **d,
@@ -483,19 +503,23 @@ void tricubic_cmplx_coef_struct_get_coef_info(
     int *strides,
     bool *is_alloc
 );
+void tricubic_cmplx_coef_struct_set_coef(void *s, const void *d, const int *shape);
 void tricubic_cmplx_coef_struct_get_i_box_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void tricubic_cmplx_coef_struct_set_i_box(void *s, const void *d, const int *shape);
 void grid_field_pt1_struct_get_E_info(
     const void *s,
     std::complex<double> **d,
     int *bounds,
     bool *is_alloc
 );
+void grid_field_pt1_struct_set_E(void *s, const void *d, const int *shape);
 void grid_field_pt1_struct_get_B_info(
     const void *s,
     std::complex<double> **d,
     int *bounds,
     bool *is_alloc
 );
+void grid_field_pt1_struct_set_B(void *s, const void *d, const int *shape);
 void grid_field_pt_struct_get_file_info(const void *s, char **d, int *bounds, bool *a);
 void grid_field_pt_struct_set_file(void *struct_obj, const char *str_ptr, int str_len);
 void grid_field_pt_struct_get_n_link(const void *struct_obj, int *value_out);
@@ -527,7 +551,9 @@ void grid_field_struct_set_ele_anchor_pt(void *struct_obj, int value_in);
 void grid_field_struct_get_interpolation_order(const void *struct_obj, int *value_out);
 void grid_field_struct_set_interpolation_order(void *struct_obj, int value_in);
 void grid_field_struct_get_dr_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void grid_field_struct_set_dr(void *s, const void *d, const int *shape);
 void grid_field_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void grid_field_struct_set_r0(void *s, const void *d, const int *shape);
 void grid_field_struct_get_curved_ref_frame(const void *struct_obj, bool *value_out);
 void grid_field_struct_set_curved_ref_frame(void *struct_obj, bool value_in);
 void grid_field_struct_get_ptr(const void *struct_obj, void **ptr_out);
@@ -552,6 +578,7 @@ void grid_field_struct_get_tri_coef_info(
 );
 
 void floor_position_struct_get_r_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void floor_position_struct_set_r(void *s, const void *d, const int *shape);
 void floor_position_struct_get_w_info(
     const void *s,
     double **d,
@@ -559,6 +586,7 @@ void floor_position_struct_get_w_info(
     int *strides,
     bool *is_alloc
 );
+void floor_position_struct_set_w(void *s, const void *d, const int *shape);
 void floor_position_struct_get_theta(const void *struct_obj, double *value_out);
 void floor_position_struct_set_theta(void *struct_obj, double value_in);
 void floor_position_struct_get_phi(const void *struct_obj, double *value_out);
@@ -626,6 +654,7 @@ void twiss_struct_set_deta_dpz(void *struct_obj, double value_in);
 void twiss_struct_get_detap_dpz(const void *struct_obj, double *value_out);
 void twiss_struct_set_detap_dpz(void *struct_obj, double value_in);
 void mode3_struct_get_v_info(const void *s, double **d, int *bounds, int *strides, bool *is_alloc);
+void mode3_struct_set_v(void *s, const void *d, const int *shape);
 void mode3_struct_get_a(const void *struct_obj, void **ptr_out);
 void mode3_struct_set_a(void *struct_obj, const void *src_ptr);
 void mode3_struct_get_b(const void *struct_obj, void **ptr_out);
@@ -655,6 +684,7 @@ void bookkeeping_state_struct_set_ptc(void *struct_obj, int value_in);
 void bookkeeping_state_struct_get_has_misalign(const void *struct_obj, bool *value_out);
 void bookkeeping_state_struct_set_has_misalign(void *struct_obj, bool value_in);
 void rad_map_struct_get_ref_orb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void rad_map_struct_set_ref_orb(void *s, const void *d, const int *shape);
 void rad_map_struct_get_damp_dmat_info(
     const void *s,
     double **d,
@@ -662,7 +692,9 @@ void rad_map_struct_get_damp_dmat_info(
     int *strides,
     bool *is_alloc
 );
+void rad_map_struct_set_damp_dmat(void *s, const void *d, const int *shape);
 void rad_map_struct_get_xfer_damp_vec_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void rad_map_struct_set_xfer_damp_vec(void *s, const void *d, const int *shape);
 void rad_map_struct_get_xfer_damp_mat_info(
     const void *s,
     double **d,
@@ -670,6 +702,7 @@ void rad_map_struct_get_xfer_damp_mat_info(
     int *strides,
     bool *is_alloc
 );
+void rad_map_struct_set_xfer_damp_mat(void *s, const void *d, const int *shape);
 void rad_map_struct_get_stoc_mat_info(
     const void *s,
     double **d,
@@ -677,6 +710,7 @@ void rad_map_struct_get_stoc_mat_info(
     int *strides,
     bool *is_alloc
 );
+void rad_map_struct_set_stoc_mat(void *s, const void *d, const int *shape);
 void rad_map_ele_struct_get_rm0(const void *struct_obj, void **ptr_out);
 void rad_map_ele_struct_set_rm0(void *struct_obj, const void *src_ptr);
 void rad_map_ele_struct_get_rm1(const void *struct_obj, void **ptr_out);
@@ -696,6 +730,7 @@ void gen_grad1_struct_get_deriv_info(
     int *strides,
     bool *is_alloc
 );
+void gen_grad1_struct_set_deriv(void *s, const void *d, const int *shape);
 void gen_grad_map_struct_get_file_info(const void *s, char **d, int *bounds, bool *a);
 void gen_grad_map_struct_set_file(void *struct_obj, const char *str_ptr, int str_len);
 
@@ -718,6 +753,7 @@ void gen_grad_map_struct_set_iz1(void *struct_obj, int value_in);
 void gen_grad_map_struct_get_dz(const void *struct_obj, double *value_out);
 void gen_grad_map_struct_set_dz(void *struct_obj, double value_in);
 void gen_grad_map_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void gen_grad_map_struct_set_r0(void *s, const void *d, const int *shape);
 void gen_grad_map_struct_get_field_scale(const void *struct_obj, double *value_out);
 void gen_grad_map_struct_set_field_scale(void *struct_obj, double value_in);
 void gen_grad_map_struct_get_master_parameter(const void *struct_obj, int *value_out);
@@ -737,7 +773,9 @@ void surface_segmented_pt_struct_set_dz_dy(void *struct_obj, double value_in);
 void surface_segmented_struct_get_active(const void *struct_obj, bool *value_out);
 void surface_segmented_struct_set_active(void *struct_obj, bool value_in);
 void surface_segmented_struct_get_dr_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void surface_segmented_struct_set_dr(void *s, const void *d, const int *shape);
 void surface_segmented_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void surface_segmented_struct_set_r0(void *s, const void *d, const int *shape);
 
 void surface_segmented_struct_get_pt_info(
     const void *s,
@@ -763,7 +801,9 @@ void surface_h_misalign_pt_struct_set_rot_t_rms(void *struct_obj, double value_i
 void surface_h_misalign_struct_get_active(const void *struct_obj, bool *value_out);
 void surface_h_misalign_struct_set_active(void *struct_obj, bool value_in);
 void surface_h_misalign_struct_get_dr_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void surface_h_misalign_struct_set_dr(void *s, const void *d, const int *shape);
 void surface_h_misalign_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void surface_h_misalign_struct_set_r0(void *s, const void *d, const int *shape);
 
 void surface_h_misalign_struct_get_pt_info(
     const void *s,
@@ -794,12 +834,14 @@ void surface_displacement_struct_get_dr_info(
     int *bounds,
     bool *is_alloc
 );
+void surface_displacement_struct_set_dr(void *s, const void *d, const int *shape);
 void surface_displacement_struct_get_r0_info(
     const void *s,
     double **d,
     int *bounds,
     bool *is_alloc
 );
+void surface_displacement_struct_set_r0(void *s, const void *d, const int *shape);
 
 void surface_displacement_struct_get_pt_info(
     const void *s,
@@ -811,6 +853,7 @@ void surface_displacement_struct_get_pt_info(
 );
 
 void target_point_struct_get_r_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void target_point_struct_set_r(void *s, const void *d, const int *shape);
 void surface_curvature_struct_get_xy_info(
     const void *s,
     double **d,
@@ -818,6 +861,7 @@ void surface_curvature_struct_get_xy_info(
     int *strides,
     bool *is_alloc
 );
+void surface_curvature_struct_set_xy(void *s, const void *d, const int *shape);
 void surface_curvature_struct_get_spherical(const void *struct_obj, double *value_out);
 void surface_curvature_struct_set_spherical(void *struct_obj, double value_in);
 void surface_curvature_struct_get_elliptical_info(
@@ -826,6 +870,7 @@ void surface_curvature_struct_get_elliptical_info(
     int *bounds,
     bool *is_alloc
 );
+void surface_curvature_struct_set_elliptical(void *s, const void *d, const int *shape);
 void surface_curvature_struct_get_has_curvature(const void *struct_obj, bool *value_out);
 void surface_curvature_struct_set_has_curvature(void *struct_obj, bool value_in);
 void photon_target_struct_get_type(const void *struct_obj, int *value_out);
@@ -858,7 +903,9 @@ void photon_material_struct_set_f_hbar(void *struct_obj, std::complex<double> va
 void photon_material_struct_get_f_hkl(const void *struct_obj, std::complex<double> *value_out);
 void photon_material_struct_set_f_hkl(void *struct_obj, std::complex<double> value_in);
 void photon_material_struct_get_h_norm_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void photon_material_struct_set_h_norm(void *s, const void *d, const int *shape);
 void photon_material_struct_get_l_ref_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void photon_material_struct_set_l_ref(void *s, const void *d, const int *shape);
 void pixel_pt_struct_get_n_photon(const void *struct_obj, int64_t *value_out);
 void pixel_pt_struct_set_n_photon(void *struct_obj, int64_t value_in);
 void pixel_pt_struct_get_E_x(const void *struct_obj, std::complex<double> *value_out);
@@ -872,16 +919,22 @@ void pixel_pt_struct_set_intensity_y(void *struct_obj, double value_in);
 void pixel_pt_struct_get_intensity(const void *struct_obj, double *value_out);
 void pixel_pt_struct_set_intensity(void *struct_obj, double value_in);
 void pixel_pt_struct_get_orbit_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void pixel_pt_struct_set_orbit(void *s, const void *d, const int *shape);
 void pixel_pt_struct_get_orbit_rms_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void pixel_pt_struct_set_orbit_rms(void *s, const void *d, const int *shape);
 void pixel_pt_struct_get_init_orbit_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void pixel_pt_struct_set_init_orbit(void *s, const void *d, const int *shape);
 void pixel_pt_struct_get_init_orbit_rms_info(
     const void *s,
     double **d,
     int *bounds,
     bool *is_alloc
 );
+void pixel_pt_struct_set_init_orbit_rms(void *s, const void *d, const int *shape);
 void pixel_detec_struct_get_dr_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void pixel_detec_struct_set_dr(void *s, const void *d, const int *shape);
 void pixel_detec_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void pixel_detec_struct_set_r0(void *s, const void *d, const int *shape);
 void pixel_detec_struct_get_n_track_tot(const void *struct_obj, int64_t *value_out);
 void pixel_detec_struct_set_n_track_tot(void *struct_obj, int64_t value_in);
 void pixel_detec_struct_get_n_hit_detec(const void *struct_obj, int64_t *value_out);
@@ -933,6 +986,11 @@ void photon_element_struct_get_integrated_init_energy_prob_info(
     int *bounds,
     bool *is_alloc
 );
+void photon_element_struct_set_integrated_init_energy_prob(
+    void *s,
+    const void *d,
+    const int *shape
+);
 void wall3d_vertex_struct_get_x(const void *struct_obj, double *value_out);
 void wall3d_vertex_struct_set_x(void *struct_obj, double value_in);
 void wall3d_vertex_struct_get_y(const void *struct_obj, double *value_out);
@@ -983,16 +1041,21 @@ void wall3d_section_struct_set_thickness(void *struct_obj, double value_in);
 void wall3d_section_struct_get_s(const void *struct_obj, double *value_out);
 void wall3d_section_struct_set_s(void *struct_obj, double value_in);
 void wall3d_section_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void wall3d_section_struct_set_r0(void *s, const void *d, const int *shape);
 void wall3d_section_struct_get_dx0_ds(const void *struct_obj, double *value_out);
 void wall3d_section_struct_set_dx0_ds(void *struct_obj, double value_in);
 void wall3d_section_struct_get_dy0_ds(const void *struct_obj, double *value_out);
 void wall3d_section_struct_set_dy0_ds(void *struct_obj, double value_in);
 void wall3d_section_struct_get_x0_coef_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void wall3d_section_struct_set_x0_coef(void *s, const void *d, const int *shape);
 void wall3d_section_struct_get_y0_coef_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void wall3d_section_struct_set_y0_coef(void *s, const void *d, const int *shape);
 void wall3d_section_struct_get_dr_ds(const void *struct_obj, double *value_out);
 void wall3d_section_struct_set_dr_ds(void *struct_obj, double value_in);
 void wall3d_section_struct_get_p1_coef_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void wall3d_section_struct_set_p1_coef(void *s, const void *d, const int *shape);
 void wall3d_section_struct_get_p2_coef_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void wall3d_section_struct_set_p2_coef(void *s, const void *d, const int *shape);
 void wall3d_struct_get_name_info(const void *s, char **d, int *bounds, bool *a);
 void wall3d_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
 void wall3d_struct_get_type(const void *struct_obj, int *value_out);
@@ -1029,6 +1092,7 @@ void ramper_lord_struct_set_attrib_ptr(void *struct_obj, double value_in);
 void control_struct_get_value(const void *struct_obj, double *value_out);
 void control_struct_set_value(void *struct_obj, double value_in);
 void control_struct_get_y_knot_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void control_struct_set_y_knot(void *s, const void *d, const int *shape);
 
 void control_struct_get_stack_info(
     const void *s,
@@ -1055,6 +1119,7 @@ void control_var1_struct_set_value(void *struct_obj, double value_in);
 void control_var1_struct_get_old_value(const void *struct_obj, double *value_out);
 void control_var1_struct_set_old_value(void *struct_obj, double value_in);
 void control_ramp1_struct_get_y_knot_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void control_ramp1_struct_set_y_knot(void *s, const void *d, const int *shape);
 
 void control_ramp1_struct_get_stack_info(
     const void *s,
@@ -1096,6 +1161,7 @@ void controller_struct_get_ramper_lord_info(
 );
 
 void controller_struct_get_x_knot_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void controller_struct_set_x_knot(void *s, const void *d, const int *shape);
 void ellipse_beam_init_struct_get_part_per_ellipse(const void *struct_obj, int *value_out);
 void ellipse_beam_init_struct_set_part_per_ellipse(void *struct_obj, int value_in);
 void ellipse_beam_init_struct_get_n_ellipse(const void *struct_obj, int *value_out);
@@ -1103,6 +1169,7 @@ void ellipse_beam_init_struct_set_n_ellipse(void *struct_obj, int value_in);
 void ellipse_beam_init_struct_get_sigma_cutoff(const void *struct_obj, double *value_out);
 void ellipse_beam_init_struct_set_sigma_cutoff(void *struct_obj, double value_in);
 void kv_beam_init_struct_get_part_per_phi_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void kv_beam_init_struct_set_part_per_phi(void *s, const void *d, const int *shape);
 void kv_beam_init_struct_get_n_I2(const void *struct_obj, int *value_out);
 void kv_beam_init_struct_set_n_I2(void *struct_obj, int value_in);
 void kv_beam_init_struct_get_A(const void *struct_obj, double *value_out);
@@ -1131,6 +1198,7 @@ void beam_init_struct_get_distribution_type_info(
 );
 
 void beam_init_struct_get_spin_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void beam_init_struct_set_spin(void *s, const void *d, const int *shape);
 
 void beam_init_struct_get_ellipse_info(
     const void *s,
@@ -1157,7 +1225,9 @@ void beam_init_struct_get_center_jitter_info(
     int *bounds,
     bool *is_alloc
 );
+void beam_init_struct_set_center_jitter(void *s, const void *d, const int *shape);
 void beam_init_struct_get_emit_jitter_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void beam_init_struct_set_emit_jitter(void *s, const void *d, const int *shape);
 void beam_init_struct_get_sig_z_jitter(const void *struct_obj, double *value_out);
 void beam_init_struct_set_sig_z_jitter(void *struct_obj, double value_in);
 void beam_init_struct_get_sig_pz_jitter(const void *struct_obj, double *value_out);
@@ -1194,6 +1264,7 @@ void beam_init_struct_set_b_emit(void *struct_obj, double value_in);
 void beam_init_struct_get_dPz_dz(const void *struct_obj, double *value_out);
 void beam_init_struct_set_dPz_dz(void *struct_obj, double value_in);
 void beam_init_struct_get_center_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void beam_init_struct_set_center(void *s, const void *d, const int *shape);
 void beam_init_struct_get_t_offset(const void *struct_obj, double *value_out);
 void beam_init_struct_set_t_offset(void *struct_obj, double value_in);
 void beam_init_struct_get_dt_bunch(const void *struct_obj, double *value_out);
@@ -1233,6 +1304,7 @@ void lat_param_struct_get_t1_with_RF_info(
     int *strides,
     bool *is_alloc
 );
+void lat_param_struct_set_t1_with_RF(void *s, const void *d, const int *shape);
 void lat_param_struct_get_t1_no_RF_info(
     const void *s,
     double **d,
@@ -1240,6 +1312,7 @@ void lat_param_struct_get_t1_no_RF_info(
     int *strides,
     bool *is_alloc
 );
+void lat_param_struct_set_t1_no_RF(void *s, const void *d, const int *shape);
 void lat_param_struct_get_spin_tune(const void *struct_obj, double *value_out);
 void lat_param_struct_set_spin_tune(void *struct_obj, double value_in);
 void lat_param_struct_get_particle(const void *struct_obj, int *value_out);
@@ -1289,6 +1362,7 @@ void anormal_mode_struct_set_emittance(void *struct_obj, double value_in);
 void anormal_mode_struct_get_emittance_no_vert(const void *struct_obj, double *value_out);
 void anormal_mode_struct_set_emittance_no_vert(void *struct_obj, double value_in);
 void anormal_mode_struct_get_synch_int_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void anormal_mode_struct_set_synch_int(void *s, const void *d, const int *shape);
 void anormal_mode_struct_get_j_damp(const void *struct_obj, double *value_out);
 void anormal_mode_struct_set_j_damp(void *struct_obj, double value_in);
 void anormal_mode_struct_get_alpha_damp(const void *struct_obj, double *value_out);
@@ -1312,6 +1386,7 @@ void linac_normal_mode_struct_set_a_emittance_end(void *struct_obj, double value
 void linac_normal_mode_struct_get_b_emittance_end(const void *struct_obj, double *value_out);
 void linac_normal_mode_struct_set_b_emittance_end(void *struct_obj, double value_in);
 void normal_modes_struct_get_synch_int_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void normal_modes_struct_set_synch_int(void *s, const void *d, const int *shape);
 void normal_modes_struct_get_sigE_E(const void *struct_obj, double *value_out);
 void normal_modes_struct_set_sigE_E(void *struct_obj, double value_in);
 void normal_modes_struct_get_sig_z(const void *struct_obj, double *value_out);
@@ -1337,7 +1412,9 @@ void normal_modes_struct_set_z(void *struct_obj, const void *src_ptr);
 void normal_modes_struct_get_lin(const void *struct_obj, void **ptr_out);
 void normal_modes_struct_set_lin(void *struct_obj, const void *src_ptr);
 void em_field_struct_get_E_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void em_field_struct_set_E(void *s, const void *d, const int *shape);
 void em_field_struct_get_B_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void em_field_struct_set_B(void *s, const void *d, const int *shape);
 void em_field_struct_get_dE_info(
     const void *s,
     double **d,
@@ -1345,6 +1422,7 @@ void em_field_struct_get_dE_info(
     int *strides,
     bool *is_alloc
 );
+void em_field_struct_set_dE(void *s, const void *d, const int *shape);
 void em_field_struct_get_dB_info(
     const void *s,
     double **d,
@@ -1352,11 +1430,13 @@ void em_field_struct_get_dB_info(
     int *strides,
     bool *is_alloc
 );
+void em_field_struct_set_dB(void *s, const void *d, const int *shape);
 void em_field_struct_get_phi(const void *struct_obj, double *value_out);
 void em_field_struct_set_phi(void *struct_obj, double value_in);
 void em_field_struct_get_phi_B(const void *struct_obj, double *value_out);
 void em_field_struct_set_phi_B(void *struct_obj, double value_in);
 void em_field_struct_get_A_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void em_field_struct_set_A(void *s, const void *d, const int *shape);
 void strong_beam_struct_get_ix_slice(const void *struct_obj, int *value_out);
 void strong_beam_struct_set_ix_slice(void *struct_obj, int value_in);
 void strong_beam_struct_get_x_center(const void *struct_obj, double *value_out);
@@ -1382,6 +1462,7 @@ void track_point_struct_set_field(void *struct_obj, const void *src_ptr);
 void track_point_struct_get_strong_beam(const void *struct_obj, void **ptr_out);
 void track_point_struct_set_strong_beam(void *struct_obj, const void *src_ptr);
 void track_point_struct_get_vec0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void track_point_struct_set_vec0(void *s, const void *d, const int *shape);
 void track_point_struct_get_mat6_info(
     const void *s,
     double **d,
@@ -1389,6 +1470,7 @@ void track_point_struct_get_mat6_info(
     int *strides,
     bool *is_alloc
 );
+void track_point_struct_set_mat6(void *s, const void *d, const int *shape);
 
 void track_struct_get_pt_info(
     const void *s,
@@ -1434,12 +1516,18 @@ void space_charge_common_struct_get_space_charge_mesh_size_info(
     int *bounds,
     bool *is_alloc
 );
+void space_charge_common_struct_set_space_charge_mesh_size(
+    void *s,
+    const void *d,
+    const int *shape
+);
 void space_charge_common_struct_get_csr3d_mesh_size_info(
     const void *s,
     int **d,
     int *bounds,
     bool *is_alloc
 );
+void space_charge_common_struct_set_csr3d_mesh_size(void *s, const void *d, const int *shape);
 void space_charge_common_struct_get_n_bin(const void *struct_obj, int *value_out);
 void space_charge_common_struct_set_n_bin(void *struct_obj, int value_in);
 void space_charge_common_struct_get_particle_bin_span(const void *struct_obj, int *value_out);
@@ -1469,6 +1557,7 @@ void space_charge_common_struct_set_diagnostic_output_file(
 void bmad_common_struct_get_max_aperture_limit(const void *struct_obj, double *value_out);
 void bmad_common_struct_set_max_aperture_limit(void *struct_obj, double value_in);
 void bmad_common_struct_get_d_orb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void bmad_common_struct_set_d_orb(void *s, const void *d, const int *shape);
 void bmad_common_struct_get_default_ds_step(const void *struct_obj, double *value_out);
 void bmad_common_struct_set_default_ds_step(void *struct_obj, double value_in);
 void bmad_common_struct_get_significant_length(const void *struct_obj, double *value_out);
@@ -1695,6 +1784,7 @@ void ele_struct_get_spin_taylor_ref_orb_in_info(
     int *bounds,
     bool *is_alloc
 );
+void ele_struct_set_spin_taylor_ref_orb_in(void *s, const void *d, const int *shape);
 
 void ele_struct_get_spin_taylor_info(
     const void *s,
@@ -1756,7 +1846,9 @@ void ele_struct_set_time_ref_orb_in(void *struct_obj, const void *src_ptr);
 void ele_struct_get_time_ref_orb_out(const void *struct_obj, void **ptr_out);
 void ele_struct_set_time_ref_orb_out(void *struct_obj, const void *src_ptr);
 void ele_struct_get_value_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ele_struct_set_value(void *s, const void *d, const int *shape);
 void ele_struct_get_old_value_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ele_struct_set_old_value(void *s, const void *d, const int *shape);
 void ele_struct_get_spin_q_info(
     const void *s,
     double **d,
@@ -1764,8 +1856,11 @@ void ele_struct_get_spin_q_info(
     int *strides,
     bool *is_alloc
 );
+void ele_struct_set_spin_q(void *s, const void *d, const int *shape);
 void ele_struct_get_vec0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ele_struct_set_vec0(void *s, const void *d, const int *shape);
 void ele_struct_get_mat6_info(const void *s, double **d, int *bounds, int *strides, bool *is_alloc);
+void ele_struct_set_mat6(void *s, const void *d, const int *shape);
 void ele_struct_get_c_mat_info(
     const void *s,
     double **d,
@@ -1773,6 +1868,7 @@ void ele_struct_get_c_mat_info(
     int *strides,
     bool *is_alloc
 );
+void ele_struct_set_c_mat(void *s, const void *d, const int *shape);
 void ele_struct_get_dc_mat_dpz_info(
     const void *s,
     double **d,
@@ -1780,6 +1876,7 @@ void ele_struct_get_dc_mat_dpz_info(
     int *strides,
     bool *is_alloc
 );
+void ele_struct_set_dc_mat_dpz(void *s, const void *d, const int *shape);
 void ele_struct_get_gamma_c(const void *struct_obj, double *value_out);
 void ele_struct_set_gamma_c(void *struct_obj, double value_in);
 void ele_struct_get_s_start(const void *struct_obj, double *value_out);
@@ -1789,11 +1886,17 @@ void ele_struct_set_s(void *struct_obj, double value_in);
 void ele_struct_get_ref_time(const void *struct_obj, double *value_out);
 void ele_struct_set_ref_time(void *struct_obj, double value_in);
 void ele_struct_get_a_pole_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ele_struct_set_a_pole(void *s, const void *d, const int *shape);
 void ele_struct_get_b_pole_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ele_struct_set_b_pole(void *s, const void *d, const int *shape);
 void ele_struct_get_a_pole_elec_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ele_struct_set_a_pole_elec(void *s, const void *d, const int *shape);
 void ele_struct_get_b_pole_elec_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ele_struct_set_b_pole_elec(void *s, const void *d, const int *shape);
 void ele_struct_get_custom_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ele_struct_set_custom(void *s, const void *d, const int *shape);
 void ele_struct_get_r_info(const void *s, double **d, int *bounds, int *strides, bool *is_alloc);
+void ele_struct_set_r(void *s, const void *d, const int *shape);
 void ele_struct_get_key(const void *struct_obj, int *value_out);
 void ele_struct_set_key(void *struct_obj, int value_in);
 void ele_struct_get_sub_key(const void *struct_obj, int *value_out);
@@ -1875,6 +1978,7 @@ void ele_struct_set_offset_moves_aperture(void *struct_obj, bool value_in);
 void complex_taylor_term_struct_get_coef(const void *struct_obj, std::complex<double> *value_out);
 void complex_taylor_term_struct_set_coef(void *struct_obj, std::complex<double> value_in);
 void complex_taylor_term_struct_get_expn_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void complex_taylor_term_struct_set_expn(void *s, const void *d, const int *shape);
 void complex_taylor_struct_get_ref(const void *struct_obj, std::complex<double> *value_out);
 void complex_taylor_struct_set_ref(void *struct_obj, std::complex<double> value_in);
 
@@ -1997,6 +2101,7 @@ void lat_struct_set_beam_init(void *struct_obj, const void *src_ptr);
 void lat_struct_get_pre_tracker(const void *struct_obj, void **ptr_out);
 void lat_struct_set_pre_tracker(void *struct_obj, const void *src_ptr);
 void lat_struct_get_custom_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void lat_struct_set_custom(void *s, const void *d, const int *shape);
 void lat_struct_get_version(const void *struct_obj, int *value_out);
 void lat_struct_set_version(void *struct_obj, int value_in);
 void lat_struct_get_n_ele_track(const void *struct_obj, int **ptr_out);
@@ -2010,6 +2115,7 @@ void lat_struct_set_n_ic_max(void *struct_obj, int value_in);
 void lat_struct_get_input_taylor_order(const void *struct_obj, int *value_out);
 void lat_struct_set_input_taylor_order(void *struct_obj, int value_in);
 void lat_struct_get_ic_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void lat_struct_set_ic(void *s, const void *d, const int *shape);
 void lat_struct_get_photon_type(const void *struct_obj, int *value_out);
 void lat_struct_set_photon_type(void *struct_obj, int value_in);
 void lat_struct_get_creation_hash(const void *struct_obj, int *value_out);
@@ -2026,6 +2132,7 @@ void bunch_struct_get_particle_info(
 );
 
 void bunch_struct_get_ix_z_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void bunch_struct_set_ix_z(void *s, const void *d, const int *shape);
 void bunch_struct_get_charge_tot(const void *struct_obj, double *value_out);
 void bunch_struct_set_charge_tot(void *struct_obj, double value_in);
 void bunch_struct_get_charge_live(const void *struct_obj, double *value_out);
@@ -2071,8 +2178,11 @@ void bunch_params_struct_get_sigma_info(
     int *strides,
     bool *is_alloc
 );
+void bunch_params_struct_set_sigma(void *s, const void *d, const int *shape);
 void bunch_params_struct_get_rel_max_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void bunch_params_struct_set_rel_max(void *s, const void *d, const int *shape);
 void bunch_params_struct_get_rel_min_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void bunch_params_struct_set_rel_min(void *s, const void *d, const int *shape);
 void bunch_params_struct_get_s(const void *struct_obj, double *value_out);
 void bunch_params_struct_set_s(void *struct_obj, double value_in);
 void bunch_params_struct_get_t(const void *struct_obj, double *value_out);
@@ -2179,11 +2289,13 @@ void nametable_struct_get_name_info(
 );
 
 void nametable_struct_get_index_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void nametable_struct_set_index(void *s, const void *d, const int *shape);
 void nametable_struct_get_n_min(const void *struct_obj, int *value_out);
 void nametable_struct_set_n_min(void *struct_obj, int value_in);
 void nametable_struct_get_n_max(const void *struct_obj, int *value_out);
 void nametable_struct_set_n_max(void *struct_obj, int value_in);
 void tao_spin_dn_dpz_struct_get_vec_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_spin_dn_dpz_struct_set_vec(void *s, const void *d, const int *shape);
 void tao_spin_dn_dpz_struct_get_partial_info(
     const void *s,
     double **d,
@@ -2191,6 +2303,7 @@ void tao_spin_dn_dpz_struct_get_partial_info(
     int *strides,
     bool *is_alloc
 );
+void tao_spin_dn_dpz_struct_set_partial(void *s, const void *d, const int *shape);
 void tao_spin_dn_dpz_struct_get_partial2_info(
     const void *s,
     double **d,
@@ -2198,6 +2311,7 @@ void tao_spin_dn_dpz_struct_get_partial2_info(
     int *strides,
     bool *is_alloc
 );
+void tao_spin_dn_dpz_struct_set_partial2(void *s, const void *d, const int *shape);
 void resonance_h_struct_get_id_info(const void *s, char **d, int *bounds, bool *a);
 void resonance_h_struct_set_id(void *struct_obj, const char *str_ptr, int str_len);
 void resonance_h_struct_get_c_val(const void *struct_obj, std::complex<double> *value_out);
@@ -2209,7 +2323,9 @@ void spin_orbit_map1_struct_get_orb_mat_info(
     int *strides,
     bool *is_alloc
 );
+void spin_orbit_map1_struct_set_orb_mat(void *s, const void *d, const int *shape);
 void spin_orbit_map1_struct_get_vec0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void spin_orbit_map1_struct_set_vec0(void *s, const void *d, const int *shape);
 void spin_orbit_map1_struct_get_spin_q_info(
     const void *s,
     double **d,
@@ -2217,12 +2333,17 @@ void spin_orbit_map1_struct_get_spin_q_info(
     int *strides,
     bool *is_alloc
 );
+void spin_orbit_map1_struct_set_spin_q(void *s, const void *d, const int *shape);
 void spin_axis_struct_get_l_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void spin_axis_struct_set_l(void *s, const void *d, const int *shape);
 void spin_axis_struct_get_n0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void spin_axis_struct_set_n0(void *s, const void *d, const int *shape);
 void spin_axis_struct_get_m_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void spin_axis_struct_set_m(void *s, const void *d, const int *shape);
 void ptc_normal_form_struct_get_ele_origin(const void *struct_obj, void **ptr_out);
 void ptc_normal_form_struct_set_ele_origin(void *struct_obj, const void *src_ptr);
 void ptc_normal_form_struct_get_orb0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void ptc_normal_form_struct_set_orb0(void *s, const void *d, const int *shape);
 void ptc_normal_form_struct_get_valid_map(const void *struct_obj, bool *value_out);
 void ptc_normal_form_struct_set_valid_map(void *struct_obj, bool value_in);
 void bmad_normal_form_struct_get_ele_origin(const void *struct_obj, void **ptr_out);
@@ -2408,15 +2529,25 @@ void tao_curve_struct_set_hist(void *struct_obj, const void *src_ptr);
 void tao_curve_struct_get_z_color(const void *struct_obj, void **ptr_out);
 void tao_curve_struct_set_z_color(void *struct_obj, const void *src_ptr);
 void tao_curve_struct_get_x_line_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_x_line(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_y_line_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_y_line(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_y2_line_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_y2_line(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_ix_line_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_ix_line(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_x_symb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_x_symb(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_y_symb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_y_symb(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_z_symb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_z_symb(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_err_symb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_err_symb(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_symb_size_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_symb_size(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_ix_symb_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_set_ix_symb(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_y_axis_scale_factor(const void *struct_obj, double *value_out);
 void tao_curve_struct_set_y_axis_scale_factor(void *struct_obj, double value_in);
 void tao_curve_struct_get_line(const void *struct_obj, void **ptr_out);
@@ -2499,6 +2630,7 @@ void tao_lat_sigma_struct_get_mat_info(
     int *strides,
     bool *is_alloc
 );
+void tao_lat_sigma_struct_set_mat(void *s, const void *d, const int *shape);
 void tao_spin_ele_struct_get_dn_dpz(const void *struct_obj, void **ptr_out);
 void tao_spin_ele_struct_set_dn_dpz(void *struct_obj, const void *src_ptr);
 void tao_spin_ele_struct_get_orb_eigen_val_info(
@@ -2507,6 +2639,7 @@ void tao_spin_ele_struct_get_orb_eigen_val_info(
     int *bounds,
     bool *is_alloc
 );
+void tao_spin_ele_struct_set_orb_eigen_val(void *s, const void *d, const int *shape);
 void tao_spin_ele_struct_get_orb_eigen_vec_info(
     const void *s,
     double **d,
@@ -2514,6 +2647,7 @@ void tao_spin_ele_struct_get_orb_eigen_vec_info(
     int *strides,
     bool *is_alloc
 );
+void tao_spin_ele_struct_set_orb_eigen_vec(void *s, const void *d, const int *shape);
 void tao_spin_ele_struct_get_spin_eigen_vec_info(
     const void *s,
     double **d,
@@ -2521,6 +2655,7 @@ void tao_spin_ele_struct_get_spin_eigen_vec_info(
     int *strides,
     bool *is_alloc
 );
+void tao_spin_ele_struct_set_spin_eigen_vec(void *s, const void *d, const int *shape);
 void tao_spin_ele_struct_get_valid(const void *struct_obj, bool *value_out);
 void tao_spin_ele_struct_set_valid(void *struct_obj, bool value_in);
 void tao_plot_cache_struct_get_ele_to_s(const void *struct_obj, void **ptr_out);
@@ -2541,11 +2676,21 @@ void tao_spin_polarization_struct_get_pol_limit_dk_partial_info(
     int *bounds,
     bool *is_alloc
 );
+void tao_spin_polarization_struct_set_pol_limit_dk_partial(
+    void *s,
+    const void *d,
+    const int *shape
+);
 void tao_spin_polarization_struct_get_pol_limit_dk_partial2_info(
     const void *s,
     double **d,
     int *bounds,
     bool *is_alloc
+);
+void tao_spin_polarization_struct_set_pol_limit_dk_partial2(
+    void *s,
+    const void *d,
+    const int *shape
 );
 void tao_spin_polarization_struct_get_pol_rate_bks(const void *struct_obj, double *value_out);
 void tao_spin_polarization_struct_set_pol_rate_bks(void *struct_obj, double value_in);
@@ -2557,12 +2702,14 @@ void tao_spin_polarization_struct_get_depol_rate_partial_info(
     int *bounds,
     bool *is_alloc
 );
+void tao_spin_polarization_struct_set_depol_rate_partial(void *s, const void *d, const int *shape);
 void tao_spin_polarization_struct_get_depol_rate_partial2_info(
     const void *s,
     double **d,
     int *bounds,
     bool *is_alloc
 );
+void tao_spin_polarization_struct_set_depol_rate_partial2(void *s, const void *d, const int *shape);
 void tao_spin_polarization_struct_get_integral_bn(const void *struct_obj, double *value_out);
 void tao_spin_polarization_struct_set_integral_bn(void *struct_obj, double value_in);
 void tao_spin_polarization_struct_get_integral_bdn(const void *struct_obj, double *value_out);
@@ -2849,6 +2996,7 @@ void tao_graph_struct_set_x_axis_scale_factor(void *struct_obj, double value_in)
 void tao_graph_struct_get_symbol_size_scale(const void *struct_obj, double *value_out);
 void tao_graph_struct_set_symbol_size_scale(void *struct_obj, double value_in);
 void tao_graph_struct_get_box_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void tao_graph_struct_set_box(void *s, const void *d, const int *shape);
 void tao_graph_struct_get_ix_branch(const void *struct_obj, int *value_out);
 void tao_graph_struct_set_ix_branch(void *struct_obj, int value_in);
 void tao_graph_struct_get_ix_universe(const void *struct_obj, int *value_out);
@@ -2920,6 +3068,7 @@ void tao_plot_region_struct_get_location_info(
     int *bounds,
     bool *is_alloc
 );
+void tao_plot_region_struct_set_location(void *s, const void *d, const int *shape);
 void tao_plot_region_struct_get_visible(const void *struct_obj, bool *value_out);
 void tao_plot_region_struct_set_visible(void *struct_obj, bool value_in);
 void tao_plot_region_struct_get_list_with_show_plot_command(
@@ -2965,6 +3114,7 @@ void tao_super_universe_struct_get_u_info(
 );
 
 void tao_super_universe_struct_get_key_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void tao_super_universe_struct_set_key(void *s, const void *d, const int *shape);
 void tao_super_universe_struct_get_building_wall(const void *struct_obj, void **ptr_out);
 void tao_super_universe_struct_set_building_wall(void *struct_obj, const void *src_ptr);
 void tao_super_universe_struct_get_wave(const void *struct_obj, void **ptr_out);
@@ -3125,6 +3275,7 @@ void tao_dynamic_aperture_struct_get_pz_info(
     int *bounds,
     bool *is_alloc
 );
+void tao_dynamic_aperture_struct_set_pz(void *s, const void *d, const int *shape);
 void tao_dynamic_aperture_struct_get_ellipse_scale(const void *struct_obj, double *value_out);
 void tao_dynamic_aperture_struct_set_ellipse_scale(void *struct_obj, double value_in);
 void tao_dynamic_aperture_struct_get_a_emit(const void *struct_obj, double *value_out);
@@ -3167,6 +3318,7 @@ void tao_spin_map_struct_get_mat8_info(
     int *strides,
     bool *is_alloc
 );
+void tao_spin_map_struct_set_mat8(void *s, const void *d, const int *shape);
 void tao_data_struct_get_ele_name_info(const void *s, char **d, int *bounds, bool *a);
 void tao_data_struct_set_ele_name(void *struct_obj, const char *str_ptr, int str_len);
 void tao_data_struct_get_ele_start_name_info(const void *s, char **d, int *bounds, bool *a);
@@ -3319,6 +3471,7 @@ void tao_eval_node_struct_set_name(void *struct_obj, const char *str_ptr, int st
 void tao_eval_node_struct_get_scale(const void *struct_obj, double *value_out);
 void tao_eval_node_struct_set_scale(void *struct_obj, double value_in);
 void tao_eval_node_struct_get_value_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_eval_node_struct_set_value(void *s, const void *d, const int *shape);
 
 void tao_eval_node_struct_get_info_info(
     const void *s,
@@ -3786,6 +3939,7 @@ void tao_common_struct_get_covar_info(
     int *strides,
     bool *is_alloc
 );
+void tao_common_struct_set_covar(void *s, const void *d, const int *shape);
 void tao_common_struct_get_alpha_info(
     const void *s,
     double **d,
@@ -3793,6 +3947,7 @@ void tao_common_struct_get_alpha_info(
     int *strides,
     bool *is_alloc
 );
+void tao_common_struct_set_alpha(void *s, const void *d, const int *shape);
 void tao_common_struct_get_dummy_target(const void *struct_obj, double *value_out);
 void tao_common_struct_set_dummy_target(void *struct_obj, double value_in);
 void tao_common_struct_get_n_alias(const void *struct_obj, int *value_out);
@@ -3851,6 +4006,13 @@ void tao_common_struct_get_lattice_calc_done(const void *struct_obj, bool *value
 void tao_common_struct_set_lattice_calc_done(void *struct_obj, bool value_in);
 void tao_common_struct_get_add_measurement_noise(const void *struct_obj, bool *value_out);
 void tao_common_struct_set_add_measurement_noise(void *struct_obj, bool value_in);
+void tao_common_struct_get_is_err_message_printed_info(
+    const void *s,
+    bool **d,
+    int *bounds,
+    bool *is_alloc
+);
+void tao_common_struct_set_is_err_message_printed(void *s, const void *d, const int *shape);
 void tao_common_struct_get_command_arg_has_been_executed(const void *struct_obj, bool *value_out);
 void tao_common_struct_set_command_arg_has_been_executed(void *struct_obj, bool value_in);
 void tao_common_struct_get_all_merit_weights_positive(const void *struct_obj, bool *value_out);
@@ -3918,6 +4080,7 @@ void tao_plot_page_struct_get_region_info(
 void tao_plot_page_struct_get_plot_display_type_info(const void *s, char **d, int *bounds, bool *a);
 void tao_plot_page_struct_set_plot_display_type(void *struct_obj, const char *str_ptr, int str_len);
 void tao_plot_page_struct_get_size_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_plot_page_struct_set_size(void *s, const void *d, const int *shape);
 void tao_plot_page_struct_get_text_height(const void *struct_obj, double *value_out);
 void tao_plot_page_struct_set_text_height(void *struct_obj, double value_in);
 void tao_plot_page_struct_get_main_title_text_scale(const void *struct_obj, double *value_out);
@@ -4034,11 +4197,17 @@ void tao_wave_struct_set_chi_c(void *struct_obj, double value_in);
 void tao_wave_struct_get_chi_ba(const void *struct_obj, double *value_out);
 void tao_wave_struct_set_chi_ba(void *struct_obj, double value_in);
 void tao_wave_struct_get_amp_a_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_wave_struct_set_amp_a(void *s, const void *d, const int *shape);
 void tao_wave_struct_get_amp_b_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_wave_struct_set_amp_b(void *s, const void *d, const int *shape);
 void tao_wave_struct_get_amp_ba_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_wave_struct_set_amp_ba(void *s, const void *d, const int *shape);
 void tao_wave_struct_get_coef_a_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_wave_struct_set_coef_a(void *s, const void *d, const int *shape);
 void tao_wave_struct_get_coef_b_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_wave_struct_set_coef_b(void *s, const void *d, const int *shape);
 void tao_wave_struct_get_coef_ba_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void tao_wave_struct_set_coef_ba(void *s, const void *d, const int *shape);
 void tao_wave_struct_get_n_func(const void *struct_obj, int *value_out);
 void tao_wave_struct_set_n_func(void *struct_obj, int value_in);
 void tao_wave_struct_get_ix_a1(const void *struct_obj, int *value_out);
@@ -4064,6 +4233,7 @@ void tao_wave_struct_set_n_b(void *struct_obj, int value_in);
 void tao_wave_struct_get_i_curve_wrap_pt(const void *struct_obj, int *value_out);
 void tao_wave_struct_set_i_curve_wrap_pt(void *struct_obj, int value_in);
 void tao_wave_struct_get_ix_data_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void tao_wave_struct_set_ix_data(void *s, const void *d, const int *shape);
 void tao_wave_struct_get_n_kick(const void *struct_obj, int *value_out);
 void tao_wave_struct_set_n_kick(void *struct_obj, int value_in);
 
@@ -4153,6 +4323,7 @@ void tao_universe_struct_get_dModel_dVar_info(
     int *strides,
     bool *is_alloc
 );
+void tao_universe_struct_set_dModel_dVar(void *s, const void *d, const int *shape);
 void tao_universe_struct_get_ix_uni(const void *struct_obj, int *value_out);
 void tao_universe_struct_set_ix_uni(void *struct_obj, int value_in);
 void tao_universe_struct_get_n_d2_data_used(const void *struct_obj, int *value_out);
@@ -4178,6 +4349,7 @@ void mad_energy_struct_set_p0c(void *struct_obj, double value_in);
 void mad_energy_struct_get_particle(const void *struct_obj, int *value_out);
 void mad_energy_struct_set_particle(void *struct_obj, int value_in);
 void mad_map_struct_get_k_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void mad_map_struct_set_k(void *s, const void *d, const int *shape);
 void mad_map_struct_get_r_info(
     const void *s,
     double **d,
@@ -4185,6 +4357,7 @@ void mad_map_struct_get_r_info(
     int *strides,
     bool *is_alloc
 );
+void mad_map_struct_set_r(void *s, const void *d, const int *shape);
 void mad_map_struct_get_t_info(
     const void *s,
     double **d,
@@ -4192,6 +4365,7 @@ void mad_map_struct_get_t_info(
     int *strides,
     bool *is_alloc
 );
+void mad_map_struct_set_t(void *s, const void *d, const int *shape);
 void random_state_struct_get_ix(const void *struct_obj, int64_t *value_out);
 void random_state_struct_set_ix(void *struct_obj, int64_t value_in);
 void random_state_struct_get_iy(const void *struct_obj, int64_t *value_out);
@@ -4212,7 +4386,15 @@ void random_state_struct_get_gauss_sigma_cut(const void *struct_obj, double *val
 void random_state_struct_set_gauss_sigma_cut(void *struct_obj, double value_in);
 void random_state_struct_get_in_sobseq(const void *struct_obj, int64_t *value_out);
 void random_state_struct_set_in_sobseq(void *struct_obj, int64_t value_in);
+void random_state_struct_get_ix_sobseq_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    bool *is_alloc
+);
+void random_state_struct_set_ix_sobseq(void *s, const void *d, const int *shape);
 void random_state_struct_get_x_sobseq_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void random_state_struct_set_x_sobseq(void *s, const void *d, const int *shape);
 void bbu_stage_struct_get_ix_ele_lr_wake(const void *struct_obj, int *value_out);
 void bbu_stage_struct_set_ix_ele_lr_wake(void *struct_obj, int value_in);
 void bbu_stage_struct_get_ix_ele_stage_end(const void *struct_obj, int *value_out);
@@ -4230,9 +4412,13 @@ void bbu_stage_struct_set_hom_voltage_max(void *struct_obj, double value_in);
 void bbu_stage_struct_get_time_at_wake_ele(const void *struct_obj, double *value_out);
 void bbu_stage_struct_set_time_at_wake_ele(void *struct_obj, double value_in);
 void bbu_stage_struct_get_ave_orb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void bbu_stage_struct_set_ave_orb(void *s, const void *d, const int *shape);
 void bbu_stage_struct_get_rms_orb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void bbu_stage_struct_set_rms_orb(void *s, const void *d, const int *shape);
 void bbu_stage_struct_get_min_orb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void bbu_stage_struct_set_min_orb(void *s, const void *d, const int *shape);
 void bbu_stage_struct_get_max_orb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void bbu_stage_struct_set_max_orb(void *s, const void *d, const int *shape);
 void bbu_stage_struct_get_n_orb(const void *struct_obj, int *value_out);
 void bbu_stage_struct_set_n_orb(void *struct_obj, int value_in);
 
@@ -4253,6 +4439,7 @@ void bbu_beam_struct_get_stage_info(
 );
 
 void bbu_beam_struct_get_ix_ele_bunch_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void bbu_beam_struct_set_ix_ele_bunch(void *s, const void *d, const int *shape);
 void bbu_beam_struct_get_ix_bunch_head(const void *struct_obj, int *value_out);
 void bbu_beam_struct_set_ix_bunch_head(void *struct_obj, int value_in);
 void bbu_beam_struct_get_ix_bunch_end(const void *struct_obj, int *value_out);
@@ -4345,6 +4532,7 @@ void bbu_param_struct_set_normalize_z_to_rf(void *struct_obj, bool value_in);
 void bbu_param_struct_get_ramp_on(const void *struct_obj, bool *value_out);
 void bbu_param_struct_set_ramp_on(void *struct_obj, bool value_in);
 void bbu_param_struct_get_ramp_pattern_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void bbu_param_struct_set_ramp_pattern(void *s, const void *d, const int *shape);
 void bbu_param_struct_get_ramp_n_start(const void *struct_obj, int *value_out);
 void bbu_param_struct_set_ramp_n_start(void *struct_obj, int value_in);
 void bbu_param_struct_get_n_ramp_pattern(const void *struct_obj, int *value_out);
@@ -4417,6 +4605,7 @@ void all_encompassing_struct_get_real_rp_1d_info(
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_1d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_2d_info(
     const void *s,
     double **d,
@@ -4424,6 +4613,7 @@ void all_encompassing_struct_get_real_rp_2d_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_2d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_3d_info(
     const void *s,
     double **d,
@@ -4431,6 +4621,7 @@ void all_encompassing_struct_get_real_rp_3d_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_3d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_0d_ptr(const void *struct_obj, double **ptr_out);
 void all_encompassing_struct_set_real_rp_0d_ptr(void *struct_obj, double value_in);
 void all_encompassing_struct_get_real_rp_1d_ptr_info(
@@ -4439,6 +4630,7 @@ void all_encompassing_struct_get_real_rp_1d_ptr_info(
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_1d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_2d_ptr_info(
     const void *s,
     double **d,
@@ -4446,6 +4638,7 @@ void all_encompassing_struct_get_real_rp_2d_ptr_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_2d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_3d_ptr_info(
     const void *s,
     double **d,
@@ -4453,12 +4646,14 @@ void all_encompassing_struct_get_real_rp_3d_ptr_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_3d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_1d_alloc_info(
     const void *s,
     double **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_2d_alloc_info(
     const void *s,
     double **d,
@@ -4466,6 +4661,7 @@ void all_encompassing_struct_get_real_rp_2d_alloc_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_2d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_3d_alloc_info(
     const void *s,
     double **d,
@@ -4473,6 +4669,7 @@ void all_encompassing_struct_get_real_rp_3d_alloc_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_rp_3d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_0d(const void *struct_obj, double *value_out);
 void all_encompassing_struct_set_real_dp_0d(void *struct_obj, double value_in);
 void all_encompassing_struct_get_real_dp_1d_info(
@@ -4481,6 +4678,7 @@ void all_encompassing_struct_get_real_dp_1d_info(
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_1d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_2d_info(
     const void *s,
     double **d,
@@ -4488,6 +4686,7 @@ void all_encompassing_struct_get_real_dp_2d_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_2d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_3d_info(
     const void *s,
     double **d,
@@ -4495,6 +4694,7 @@ void all_encompassing_struct_get_real_dp_3d_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_3d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_0d_ptr(const void *struct_obj, double **ptr_out);
 void all_encompassing_struct_set_real_dp_0d_ptr(void *struct_obj, double value_in);
 void all_encompassing_struct_get_real_dp_1d_ptr_info(
@@ -4503,6 +4703,7 @@ void all_encompassing_struct_get_real_dp_1d_ptr_info(
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_1d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_2d_ptr_info(
     const void *s,
     double **d,
@@ -4510,6 +4711,7 @@ void all_encompassing_struct_get_real_dp_2d_ptr_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_2d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_3d_ptr_info(
     const void *s,
     double **d,
@@ -4517,12 +4719,14 @@ void all_encompassing_struct_get_real_dp_3d_ptr_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_3d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_1d_alloc_info(
     const void *s,
     double **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_2d_alloc_info(
     const void *s,
     double **d,
@@ -4530,6 +4734,7 @@ void all_encompassing_struct_get_real_dp_2d_alloc_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_2d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_3d_alloc_info(
     const void *s,
     double **d,
@@ -4537,6 +4742,7 @@ void all_encompassing_struct_get_real_dp_3d_alloc_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_real_dp_3d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_0d(
     const void *struct_obj,
     std::complex<double> *value_out
@@ -4548,6 +4754,7 @@ void all_encompassing_struct_get_complex_dp_1d_info(
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_1d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_2d_info(
     const void *s,
     std::complex<double> **d,
@@ -4555,6 +4762,7 @@ void all_encompassing_struct_get_complex_dp_2d_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_2d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_3d_info(
     const void *s,
     std::complex<double> **d,
@@ -4562,12 +4770,14 @@ void all_encompassing_struct_get_complex_dp_3d_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_3d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_1d_ptr_info(
     const void *s,
     std::complex<double> **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_1d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_2d_ptr_info(
     const void *s,
     std::complex<double> **d,
@@ -4575,6 +4785,7 @@ void all_encompassing_struct_get_complex_dp_2d_ptr_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_2d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_3d_ptr_info(
     const void *s,
     std::complex<double> **d,
@@ -4582,12 +4793,14 @@ void all_encompassing_struct_get_complex_dp_3d_ptr_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_3d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_1d_alloc_info(
     const void *s,
     std::complex<double> **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_2d_alloc_info(
     const void *s,
     std::complex<double> **d,
@@ -4595,6 +4808,7 @@ void all_encompassing_struct_get_complex_dp_2d_alloc_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_2d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_3d_alloc_info(
     const void *s,
     std::complex<double> **d,
@@ -4602,9 +4816,11 @@ void all_encompassing_struct_get_complex_dp_3d_alloc_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_complex_dp_3d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_0d(const void *struct_obj, int *value_out);
 void all_encompassing_struct_set_int_0d(void *struct_obj, int value_in);
 void all_encompassing_struct_get_int_1d_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void all_encompassing_struct_set_int_1d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_2d_info(
     const void *s,
     int **d,
@@ -4612,6 +4828,7 @@ void all_encompassing_struct_get_int_2d_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_int_2d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_3d_info(
     const void *s,
     int **d,
@@ -4619,6 +4836,7 @@ void all_encompassing_struct_get_int_3d_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_int_3d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_0d_ptr(const void *struct_obj, int **ptr_out);
 void all_encompassing_struct_set_int_0d_ptr(void *struct_obj, int value_in);
 void all_encompassing_struct_get_int_1d_ptr_info(
@@ -4627,6 +4845,7 @@ void all_encompassing_struct_get_int_1d_ptr_info(
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_int_1d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_2d_ptr_info(
     const void *s,
     int **d,
@@ -4634,6 +4853,7 @@ void all_encompassing_struct_get_int_2d_ptr_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_int_2d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_3d_ptr_info(
     const void *s,
     int **d,
@@ -4641,12 +4861,14 @@ void all_encompassing_struct_get_int_3d_ptr_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_int_3d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_1d_alloc_info(
     const void *s,
     int **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_set_int_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_2d_alloc_info(
     const void *s,
     int **d,
@@ -4654,6 +4876,7 @@ void all_encompassing_struct_get_int_2d_alloc_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_int_2d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_3d_alloc_info(
     const void *s,
     int **d,
@@ -4661,12 +4884,105 @@ void all_encompassing_struct_get_int_3d_alloc_info(
     int *strides,
     bool *is_alloc
 );
+void all_encompassing_struct_set_int_3d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int8_0d(const void *struct_obj, int64_t *value_out);
 void all_encompassing_struct_set_int8_0d(void *struct_obj, int64_t value_in);
+void all_encompassing_struct_get_int8_1d_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_1d(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_int8_2d_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    int *strides,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_2d(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_int8_3d_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    int *strides,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_3d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int8_0d_ptr(const void *struct_obj, int64_t **ptr_out);
 void all_encompassing_struct_set_int8_0d_ptr(void *struct_obj, int64_t value_in);
+void all_encompassing_struct_get_int8_1d_ptr_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_1d_ptr(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_int8_2d_ptr_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    int *strides,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_2d_ptr(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_int8_3d_ptr_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    int *strides,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_3d_ptr(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_int8_1d_alloc_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_1d_alloc(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_int8_2d_alloc_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    int *strides,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_2d_alloc(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_int8_3d_alloc_info(
+    const void *s,
+    int64_t **d,
+    int *bounds,
+    int *strides,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_int8_3d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_logical_0d(const void *struct_obj, bool *value_out);
 void all_encompassing_struct_set_logical_0d(void *struct_obj, bool value_in);
+void all_encompassing_struct_get_logical_1d_info(
+    const void *s,
+    bool **d,
+    int *bounds,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_logical_1d(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_logical_2d_info(
+    const void *s,
+    bool **d,
+    int *bounds,
+    int *strides,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_logical_2d(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_logical_3d_info(
+    const void *s,
+    bool **d,
+    int *bounds,
+    int *strides,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_logical_3d(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_logical_0d_ptr(const void *struct_obj, bool **ptr_out);
 void all_encompassing_struct_set_logical_0d_ptr(void *struct_obj, bool value_in);
 void all_encompassing_struct_get_type_0d(const void *struct_obj, void **ptr_out);
@@ -10583,6 +10899,7 @@ public:
   double x1() const; // 0D_NOT_real
   void set_x1(double value);
   FArray1D<double> coef() const; // 1D_NOT_real
+  void set_coef(const std::vector<double> &v);
 };
 
 template <>
@@ -10724,13 +11041,18 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> angle() const; // 1D_ALLOC_real
+  void set_angle(const std::vector<double> &v);
   FArray1D<double> energy() const; // 1D_ALLOC_real
+  void set_energy(const std::vector<double> &v);
   Interval1CoefStructArray1D int1() const; // 1D_ALLOC_type
   FArray2D<double> p_reflect() const; // 2D_ALLOC_real
+  void set_p_reflect(const std::vector<std::vector<double>> &v);
   double max_energy() const; // 0D_NOT_real
   void set_max_energy(double value);
   FArray1D<double> p_reflect_scratch() const; // 1D_ALLOC_real
+  void set_p_reflect_scratch(const std::vector<double> &v);
   FArray1D<double> bragg_angle() const; // 1D_ALLOC_real
+  void set_bragg_angle(const std::vector<double> &v);
 };
 
 template <>
@@ -10785,13 +11107,17 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> vec() const; // 1D_NOT_real
+  void set_vec(const std::vector<double> &v);
   double s() const; // 0D_NOT_real
   void set_s(double value);
   long double t() const; // 0D_NOT_real16
   void set_t(long double value);
   FArray1D<double> spin() const; // 1D_NOT_real
+  void set_spin(const std::vector<double> &v);
   FArray1D<double> field() const; // 1D_NOT_real
+  void set_field(const std::vector<double> &v);
   FArray1D<double> phase() const; // 1D_NOT_real
+  void set_phase(const std::vector<double> &v);
   double charge() const; // 0D_NOT_real
   void set_charge(double value);
   double dt_ref() const; // 0D_NOT_real
@@ -10924,9 +11250,13 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> w() const; // 1D_ALLOC_real
+  void set_w(const std::vector<double> &v);
   FArray1D<std::complex<double>> fw() const; // 1D_ALLOC_complex
+  void set_fw(const std::vector<std::complex<double>> &v);
   FArray1D<std::complex<double>> fbunch() const; // 1D_ALLOC_complex
+  void set_fbunch(const std::vector<std::complex<double>> &v);
   FArray1D<std::complex<double>> w_out() const; // 1D_ALLOC_complex
+  void set_w_out(const std::vector<std::complex<double>> &v);
   double dz() const; // 0D_NOT_real
   void set_dz(double value);
   double z0() const; // 0D_NOT_real
@@ -11151,6 +11481,7 @@ public:
   double coef() const; // 0D_NOT_real
   void set_coef(double value);
   FArray1D<int> expn() const; // 1D_NOT_integer
+  void set_expn(const std::vector<int> &v);
 };
 
 template <>
@@ -11193,6 +11524,7 @@ public:
   double coef() const; // 0D_NOT_real
   void set_coef(double value);
   FArray1D<int> expn() const; // 1D_NOT_integer
+  void set_expn(const std::vector<int> &v);
 };
 
 template <>
@@ -11300,6 +11632,7 @@ public:
   double field_scale() const; // 0D_NOT_real
   void set_field_scale(double value);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   int master_parameter() const; // 0D_NOT_integer
   void set_master_parameter(int value);
   int ele_anchor_pt() const; // 0D_NOT_integer
@@ -11396,6 +11729,7 @@ public:
   double dz() const; // 0D_NOT_real
   void set_dz(double value);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   std::optional<CylindricalMapTermStruct> ptr() const; // 0D_PTR_type
   void set_ptr(const CylindricalMapTermStruct &src);
 };
@@ -11419,7 +11753,9 @@ public:
   using FortranProxy::operator=;
 
   FArray2D<std::complex<double>> coef() const; // 2D_NOT_complex
+  void set_coef(const std::vector<std::vector<std::complex<double>>> &v);
   FArray1D<int> i_box() const; // 1D_NOT_integer
+  void set_i_box(const std::vector<int> &v);
 };
 
 template <>
@@ -11443,7 +11779,9 @@ public:
   using FortranProxy::operator=;
 
   FArray3D<std::complex<double>> coef() const; // 3D_NOT_complex
+  void set_coef(const std::vector<std::vector<std::vector<std::complex<double>>>> &v);
   FArray1D<int> i_box() const; // 1D_NOT_integer
+  void set_i_box(const std::vector<int> &v);
 };
 
 template <>
@@ -11463,7 +11801,9 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<std::complex<double>> E() const; // 1D_NOT_complex
+  void set_E(const std::vector<std::complex<double>> &v);
   FArray1D<std::complex<double>> B() const; // 1D_NOT_complex
+  void set_B(const std::vector<std::complex<double>> &v);
 };
 
 template <>
@@ -11522,7 +11862,9 @@ public:
   int interpolation_order() const; // 0D_NOT_integer
   void set_interpolation_order(int value);
   FArray1D<double> dr() const; // 1D_NOT_real
+  void set_dr(const std::vector<double> &v);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   bool curved_ref_frame() const; // 0D_NOT_logical
   void set_curved_ref_frame(bool value);
   std::optional<GridFieldPtStruct> ptr() const; // 0D_PTR_type
@@ -11548,7 +11890,9 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> r() const; // 1D_NOT_real
+  void set_r(const std::vector<double> &v);
   FArray2D<double> w() const; // 2D_NOT_real
+  void set_w(const std::vector<std::vector<double>> &v);
   double theta() const; // 0D_NOT_real
   void set_theta(double value);
   double phi() const; // 0D_NOT_real
@@ -11692,6 +12036,7 @@ public:
   using FortranProxy::operator=;
 
   FArray2D<double> v() const; // 2D_NOT_real
+  void set_v(const std::vector<std::vector<double>> &v);
   TwissStruct a() const; // 0D_NOT_type
   void set_a(const TwissStruct &src);
   TwissStruct b() const; // 0D_NOT_type
@@ -11759,10 +12104,15 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> ref_orb() const; // 1D_NOT_real
+  void set_ref_orb(const std::vector<double> &v);
   FArray2D<double> damp_dmat() const; // 2D_NOT_real
+  void set_damp_dmat(const std::vector<std::vector<double>> &v);
   FArray1D<double> xfer_damp_vec() const; // 1D_NOT_real
+  void set_xfer_damp_vec(const std::vector<double> &v);
   FArray2D<double> xfer_damp_mat() const; // 2D_NOT_real
+  void set_xfer_damp_mat(const std::vector<std::vector<double>> &v);
   FArray2D<double> stoc_mat() const; // 2D_NOT_real
+  void set_stoc_mat(const std::vector<std::vector<double>> &v);
 };
 
 template <>
@@ -11812,6 +12162,7 @@ public:
   int n_deriv_max() const; // 0D_NOT_integer
   void set_n_deriv_max(int value);
   FArray2D<double> deriv() const; // 2D_ALLOC_real
+  void set_deriv(const std::vector<std::vector<double>> &v);
 };
 
 template <>
@@ -11844,6 +12195,7 @@ public:
   double dz() const; // 0D_NOT_real
   void set_dz(double value);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   double field_scale() const; // 0D_NOT_real
   void set_field_scale(double value);
   int master_parameter() const; // 0D_NOT_integer
@@ -11905,7 +12257,9 @@ public:
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
   FArray1D<double> dr() const; // 1D_NOT_real
+  void set_dr(const std::vector<double> &v);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   SurfaceSegmentedPtStructArray2D pt() const; // 2D_ALLOC_type
 };
 
@@ -11964,7 +12318,9 @@ public:
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
   FArray1D<double> dr() const; // 1D_NOT_real
+  void set_dr(const std::vector<double> &v);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   SurfaceHMisalignPtStructArray2D pt() const; // 2D_ALLOC_type
 };
 
@@ -12025,7 +12381,9 @@ public:
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
   FArray1D<double> dr() const; // 1D_NOT_real
+  void set_dr(const std::vector<double> &v);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   SurfaceDisplacementPtStructArray2D pt() const; // 2D_ALLOC_type
 };
 
@@ -12046,6 +12404,7 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> r() const; // 1D_NOT_real
+  void set_r(const std::vector<double> &v);
 };
 
 template <>
@@ -12067,9 +12426,11 @@ public:
   using FortranProxy::operator=;
 
   FArray2D<double> xy() const; // 2D_NOT_real
+  void set_xy(const std::vector<std::vector<double>> &v);
   double spherical() const; // 0D_NOT_real
   void set_spherical(double value);
   FArray1D<double> elliptical() const; // 1D_NOT_real
+  void set_elliptical(const std::vector<double> &v);
   bool has_curvature() const; // 0D_NOT_logical
   void set_has_curvature(bool value);
 };
@@ -12130,7 +12491,9 @@ public:
   std::complex<double> f_hkl() const; // 0D_NOT_complex
   void set_f_hkl(std::complex<double> value);
   FArray1D<double> h_norm() const; // 1D_NOT_real
+  void set_h_norm(const std::vector<double> &v);
   FArray1D<double> l_ref() const; // 1D_NOT_real
+  void set_l_ref(const std::vector<double> &v);
 };
 
 template <>
@@ -12162,9 +12525,13 @@ public:
   double intensity() const; // 0D_NOT_real
   void set_intensity(double value);
   FArray1D<double> orbit() const; // 1D_NOT_real
+  void set_orbit(const std::vector<double> &v);
   FArray1D<double> orbit_rms() const; // 1D_NOT_real
+  void set_orbit_rms(const std::vector<double> &v);
   FArray1D<double> init_orbit() const; // 1D_NOT_real
+  void set_init_orbit(const std::vector<double> &v);
   FArray1D<double> init_orbit_rms() const; // 1D_NOT_real
+  void set_init_orbit_rms(const std::vector<double> &v);
 };
 
 template <>
@@ -12184,7 +12551,9 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> dr() const; // 1D_NOT_real
+  void set_dr(const std::vector<double> &v);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   int64_t n_track_tot() const; // 0D_NOT_integer8
   void set_n_track_tot(int64_t value);
   int64_t n_hit_detec() const; // 0D_NOT_integer8
@@ -12232,6 +12601,7 @@ public:
   void set_reflectivity_table_pi(const PhotonReflectTableStruct &src);
   SplineStructArray1D init_energy_prob() const; // 1D_ALLOC_type
   FArray1D<double> integrated_init_energy_prob() const; // 1D_ALLOC_real
+  void set_integrated_init_energy_prob(const std::vector<double> &v);
 };
 
 template <>
@@ -12310,16 +12680,21 @@ public:
   double s() const; // 0D_NOT_real
   void set_s(double value);
   FArray1D<double> r0() const; // 1D_NOT_real
+  void set_r0(const std::vector<double> &v);
   double dx0_ds() const; // 0D_NOT_real
   void set_dx0_ds(double value);
   double dy0_ds() const; // 0D_NOT_real
   void set_dy0_ds(double value);
   FArray1D<double> x0_coef() const; // 1D_NOT_real
+  void set_x0_coef(const std::vector<double> &v);
   FArray1D<double> y0_coef() const; // 1D_NOT_real
+  void set_y0_coef(const std::vector<double> &v);
   double dr_ds() const; // 0D_NOT_real
   void set_dr_ds(double value);
   FArray1D<double> p1_coef() const; // 1D_NOT_real
+  void set_p1_coef(const std::vector<double> &v);
   FArray1D<double> p2_coef() const; // 1D_NOT_real
+  void set_p2_coef(const std::vector<double> &v);
 };
 
 template <>
@@ -12402,6 +12777,7 @@ public:
   double value() const; // 0D_NOT_real
   void set_value(double value);
   FArray1D<double> y_knot() const; // 1D_ALLOC_real
+  void set_y_knot(const std::vector<double> &v);
   ExpressionAtomStructArray1D stack() const; // 1D_ALLOC_type
   LatEleLocStruct slave() const; // 0D_NOT_type
   void set_slave(const LatEleLocStruct &src);
@@ -12456,6 +12832,7 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> y_knot() const; // 1D_ALLOC_real
+  void set_y_knot(const std::vector<double> &v);
   ExpressionAtomStructArray1D stack() const; // 1D_ALLOC_type
   std::string attribute() const; // 0D_NOT_character
   void set_attribute(const std::string &value);
@@ -12485,6 +12862,7 @@ public:
   ControlRamp1StructArray1D ramp() const; // 1D_ALLOC_type
   RamperLordStructArray1D ramper_lord() const; // 1D_ALLOC_type
   FArray1D<double> x_knot() const; // 1D_ALLOC_real
+  void set_x_knot(const std::vector<double> &v);
 };
 
 template <>
@@ -12530,6 +12908,7 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<int> part_per_phi() const; // 1D_NOT_integer
+  void set_part_per_phi(const std::vector<int> &v);
   int n_I2() const; // 0D_NOT_integer
   void set_n_I2(int value);
   double A() const; // 0D_NOT_real
@@ -12586,12 +12965,15 @@ public:
   void set_position_file(const std::string &value);
   FCharArray1D distribution_type() const; // 1D_NOT_character
   FArray1D<double> spin() const; // 1D_NOT_real
+  void set_spin(const std::vector<double> &v);
   EllipseBeamInitStructArray1D ellipse() const; // 1D_NOT_type
   KvBeamInitStruct KV() const; // 0D_NOT_type
   void set_KV(const KvBeamInitStruct &src);
   GridBeamInitStructArray1D grid() const; // 1D_NOT_type
   FArray1D<double> center_jitter() const; // 1D_NOT_real
+  void set_center_jitter(const std::vector<double> &v);
   FArray1D<double> emit_jitter() const; // 1D_NOT_real
+  void set_emit_jitter(const std::vector<double> &v);
   double sig_z_jitter() const; // 0D_NOT_real
   void set_sig_z_jitter(double value);
   double sig_pz_jitter() const; // 0D_NOT_real
@@ -12619,6 +13001,7 @@ public:
   double dPz_dz() const; // 0D_NOT_real
   void set_dPz_dz(double value);
   FArray1D<double> center() const; // 1D_NOT_real
+  void set_center(const std::vector<double> &v);
   double t_offset() const; // 0D_NOT_real
   void set_t_offset(double value);
   double dt_bunch() const; // 0D_NOT_real
@@ -12670,7 +13053,9 @@ public:
   double unstable_factor() const; // 0D_NOT_real
   void set_unstable_factor(double value);
   FArray2D<double> t1_with_RF() const; // 2D_NOT_real
+  void set_t1_with_RF(const std::vector<std::vector<double>> &v);
   FArray2D<double> t1_no_RF() const; // 2D_NOT_real
+  void set_t1_no_RF(const std::vector<std::vector<double>> &v);
   double spin_tune() const; // 0D_NOT_real
   void set_spin_tune(double value);
   int particle() const; // 0D_NOT_integer
@@ -12774,6 +13159,7 @@ public:
   double emittance_no_vert() const; // 0D_NOT_real
   void set_emittance_no_vert(double value);
   FArray1D<double> synch_int() const; // 1D_NOT_real
+  void set_synch_int(const std::vector<double> &v);
   double j_damp() const; // 0D_NOT_real
   void set_j_damp(double value);
   double alpha_damp() const; // 0D_NOT_real
@@ -12835,6 +13221,7 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> synch_int() const; // 1D_NOT_real
+  void set_synch_int(const std::vector<double> &v);
   double sigE_E() const; // 0D_NOT_real
   void set_sigE_E(double value);
   double sig_z() const; // 0D_NOT_real
@@ -12878,14 +13265,19 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> E() const; // 1D_NOT_real
+  void set_E(const std::vector<double> &v);
   FArray1D<double> B() const; // 1D_NOT_real
+  void set_B(const std::vector<double> &v);
   FArray2D<double> dE() const; // 2D_NOT_real
+  void set_dE(const std::vector<std::vector<double>> &v);
   FArray2D<double> dB() const; // 2D_NOT_real
+  void set_dB(const std::vector<std::vector<double>> &v);
   double phi() const; // 0D_NOT_real
   void set_phi(double value);
   double phi_B() const; // 0D_NOT_real
   void set_phi_B(double value);
   FArray1D<double> A() const; // 1D_NOT_real
+  void set_A(const std::vector<double> &v);
 };
 
 template <>
@@ -12947,7 +13339,9 @@ public:
   StrongBeamStruct strong_beam() const; // 0D_NOT_type
   void set_strong_beam(const StrongBeamStruct &src);
   FArray1D<double> vec0() const; // 1D_NOT_real
+  void set_vec0(const std::vector<double> &v);
   FArray2D<double> mat6() const; // 2D_NOT_real
+  void set_mat6(const std::vector<std::vector<double>> &v);
 };
 
 template <>
@@ -13014,7 +13408,9 @@ public:
   double particle_sigma_cutoff() const; // 0D_NOT_real
   void set_particle_sigma_cutoff(double value);
   FArray1D<int> space_charge_mesh_size() const; // 1D_NOT_integer
+  void set_space_charge_mesh_size(const std::vector<int> &v);
   FArray1D<int> csr3d_mesh_size() const; // 1D_NOT_integer
+  void set_csr3d_mesh_size(const std::vector<int> &v);
   int n_bin() const; // 0D_NOT_integer
   void set_n_bin(int value);
   int particle_bin_span() const; // 0D_NOT_integer
@@ -13050,6 +13446,7 @@ public:
   double max_aperture_limit() const; // 0D_NOT_real
   void set_max_aperture_limit(double value);
   FArray1D<double> d_orb() const; // 1D_NOT_real
+  void set_d_orb(const std::vector<double> &v);
   double default_ds_step() const; // 0D_NOT_real
   void set_default_ds_step(double value);
   double significant_length() const; // 0D_NOT_real
@@ -13343,6 +13740,7 @@ public:
   void set_rad_map(const RadMapEleStruct &src);
   TaylorStructArray1D taylor() const; // 1D_NOT_type
   FArray1D<double> spin_taylor_ref_orb_in() const; // 1D_NOT_real
+  void set_spin_taylor_ref_orb_in(const std::vector<double> &v);
   TaylorStructArray1D spin_taylor() const; // 1D_NOT_type
   std::optional<WakeStruct> wake() const; // 0D_PTR_type
   void set_wake(const WakeStruct &src);
@@ -13360,12 +13758,19 @@ public:
   CoordStruct time_ref_orb_out() const; // 0D_NOT_type
   void set_time_ref_orb_out(const CoordStruct &src);
   FArray1D<double> value() const; // 1D_NOT_real
+  void set_value(const std::vector<double> &v);
   FArray1D<double> old_value() const; // 1D_NOT_real
+  void set_old_value(const std::vector<double> &v);
   FArray2D<double> spin_q() const; // 2D_NOT_real
+  void set_spin_q(const std::vector<std::vector<double>> &v);
   FArray1D<double> vec0() const; // 1D_NOT_real
+  void set_vec0(const std::vector<double> &v);
   FArray2D<double> mat6() const; // 2D_NOT_real
+  void set_mat6(const std::vector<std::vector<double>> &v);
   FArray2D<double> c_mat() const; // 2D_NOT_real
+  void set_c_mat(const std::vector<std::vector<double>> &v);
   FArray2D<double> dc_mat_dpz() const; // 2D_NOT_real
+  void set_dc_mat_dpz(const std::vector<std::vector<double>> &v);
   double gamma_c() const; // 0D_NOT_real
   void set_gamma_c(double value);
   double s_start() const; // 0D_NOT_real
@@ -13375,11 +13780,17 @@ public:
   double ref_time() const; // 0D_NOT_real
   void set_ref_time(double value);
   FArray1D<double> a_pole() const; // 1D_PTR_real
+  void set_a_pole(const std::vector<double> &v);
   FArray1D<double> b_pole() const; // 1D_PTR_real
+  void set_b_pole(const std::vector<double> &v);
   FArray1D<double> a_pole_elec() const; // 1D_PTR_real
+  void set_a_pole_elec(const std::vector<double> &v);
   FArray1D<double> b_pole_elec() const; // 1D_PTR_real
+  void set_b_pole_elec(const std::vector<double> &v);
   FArray1D<double> custom() const; // 1D_PTR_real
+  void set_custom(const std::vector<double> &v);
   FArray3D<double> r() const; // 3D_PTR_real
+  void set_r(const std::vector<std::vector<std::vector<double>>> &v);
   int key() const; // 0D_NOT_integer
   void set_key(int value);
   int sub_key() const; // 0D_NOT_integer
@@ -13483,6 +13894,7 @@ public:
   std::complex<double> coef() const; // 0D_NOT_complex
   void set_coef(std::complex<double> value);
   FArray1D<int> expn() const; // 1D_NOT_integer
+  void set_expn(const std::vector<int> &v);
 };
 
 template <>
@@ -13604,6 +14016,7 @@ public:
   PreTrackerStruct pre_tracker() const; // 0D_NOT_type
   void set_pre_tracker(const PreTrackerStruct &src);
   FArray1D<double> custom() const; // 1D_ALLOC_real
+  void set_custom(const std::vector<double> &v);
   int version() const; // 0D_NOT_integer
   void set_version(int value);
   int *n_ele_track() const; // 0D_PTR_integer
@@ -13617,6 +14030,7 @@ public:
   int input_taylor_order() const; // 0D_NOT_integer
   void set_input_taylor_order(int value);
   FArray1D<int> ic() const; // 1D_ALLOC_integer
+  void set_ic(const std::vector<int> &v);
   int photon_type() const; // 0D_NOT_integer
   void set_photon_type(int value);
   int creation_hash() const; // 0D_NOT_integer
@@ -13643,6 +14057,7 @@ public:
 
   CoordStructArray1D particle() const; // 1D_ALLOC_type
   FArray1D<int> ix_z() const; // 1D_ALLOC_integer
+  void set_ix_z(const std::vector<int> &v);
   double charge_tot() const; // 0D_NOT_real
   void set_charge_tot(double value);
   double charge_live() const; // 0D_NOT_real
@@ -13700,8 +14115,11 @@ public:
   TwissStruct c() const; // 0D_NOT_type
   void set_c(const TwissStruct &src);
   FArray2D<double> sigma() const; // 2D_NOT_real
+  void set_sigma(const std::vector<std::vector<double>> &v);
   FArray1D<double> rel_max() const; // 1D_NOT_real
+  void set_rel_max(const std::vector<double> &v);
   FArray1D<double> rel_min() const; // 1D_NOT_real
+  void set_rel_min(const std::vector<double> &v);
   double s() const; // 0D_NOT_real
   void set_s(double value);
   double t() const; // 0D_NOT_real
@@ -13903,6 +14321,7 @@ public:
 
   FCharArray1D name() const; // 1D_ALLOC_character
   FArray1D<int> index() const; // 1D_ALLOC_integer
+  void set_index(const std::vector<int> &v);
   int n_min() const; // 0D_NOT_integer
   void set_n_min(int value);
   int n_max() const; // 0D_NOT_integer
@@ -13926,8 +14345,11 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> vec() const; // 1D_NOT_real
+  void set_vec(const std::vector<double> &v);
   FArray2D<double> partial() const; // 2D_NOT_real
+  void set_partial(const std::vector<std::vector<double>> &v);
   FArray2D<double> partial2() const; // 2D_NOT_real
+  void set_partial2(const std::vector<std::vector<double>> &v);
 };
 
 template <>
@@ -13969,8 +14391,11 @@ public:
   using FortranProxy::operator=;
 
   FArray2D<double> orb_mat() const; // 2D_NOT_real
+  void set_orb_mat(const std::vector<std::vector<double>> &v);
   FArray1D<double> vec0() const; // 1D_NOT_real
+  void set_vec0(const std::vector<double> &v);
   FArray2D<double> spin_q() const; // 2D_NOT_real
+  void set_spin_q(const std::vector<std::vector<double>> &v);
 };
 
 template <>
@@ -13990,8 +14415,11 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> l() const; // 1D_NOT_real
+  void set_l(const std::vector<double> &v);
   FArray1D<double> n0() const; // 1D_NOT_real
+  void set_n0(const std::vector<double> &v);
   FArray1D<double> m() const; // 1D_NOT_real
+  void set_m(const std::vector<double> &v);
 };
 
 template <>
@@ -14013,6 +14441,7 @@ public:
   std::optional<EleStruct> ele_origin() const; // 0D_PTR_type
   void set_ele_origin(const EleStruct &src);
   FArray1D<double> orb0() const; // 1D_NOT_real
+  void set_orb0(const std::vector<double> &v);
   bool valid_map() const; // 0D_NOT_logical
   void set_valid_map(bool value);
 };
@@ -14232,15 +14661,25 @@ public:
   TaoCurveColorStruct z_color() const; // 0D_NOT_type
   void set_z_color(const TaoCurveColorStruct &src);
   FArray1D<double> x_line() const; // 1D_ALLOC_real
+  void set_x_line(const std::vector<double> &v);
   FArray1D<double> y_line() const; // 1D_ALLOC_real
+  void set_y_line(const std::vector<double> &v);
   FArray1D<double> y2_line() const; // 1D_ALLOC_real
+  void set_y2_line(const std::vector<double> &v);
   FArray1D<int> ix_line() const; // 1D_ALLOC_integer
+  void set_ix_line(const std::vector<int> &v);
   FArray1D<double> x_symb() const; // 1D_ALLOC_real
+  void set_x_symb(const std::vector<double> &v);
   FArray1D<double> y_symb() const; // 1D_ALLOC_real
+  void set_y_symb(const std::vector<double> &v);
   FArray1D<double> z_symb() const; // 1D_ALLOC_real
+  void set_z_symb(const std::vector<double> &v);
   FArray1D<double> err_symb() const; // 1D_ALLOC_real
+  void set_err_symb(const std::vector<double> &v);
   FArray1D<double> symb_size() const; // 1D_ALLOC_real
+  void set_symb_size(const std::vector<double> &v);
   FArray1D<int> ix_symb() const; // 1D_ALLOC_integer
+  void set_ix_symb(const std::vector<int> &v);
   double y_axis_scale_factor() const; // 0D_NOT_real
   void set_y_axis_scale_factor(double value);
   QpLineStruct line() const; // 0D_NOT_type
@@ -14421,6 +14860,7 @@ public:
   using FortranProxy::operator=;
 
   FArray2D<double> mat() const; // 2D_NOT_real
+  void set_mat(const std::vector<std::vector<double>> &v);
 };
 
 template <>
@@ -14442,8 +14882,11 @@ public:
   TaoSpinDnDpzStruct dn_dpz() const; // 0D_NOT_type
   void set_dn_dpz(const TaoSpinDnDpzStruct &src);
   FArray1D<double> orb_eigen_val() const; // 1D_NOT_real
+  void set_orb_eigen_val(const std::vector<double> &v);
   FArray2D<double> orb_eigen_vec() const; // 2D_NOT_real
+  void set_orb_eigen_vec(const std::vector<std::vector<double>> &v);
   FArray2D<double> spin_eigen_vec() const; // 2D_NOT_real
+  void set_spin_eigen_vec(const std::vector<std::vector<double>> &v);
   bool valid() const; // 0D_NOT_logical
   void set_valid(bool value);
 };
@@ -14499,13 +14942,17 @@ public:
   double pol_limit_dk() const; // 0D_NOT_real
   void set_pol_limit_dk(double value);
   FArray1D<double> pol_limit_dk_partial() const; // 1D_NOT_real
+  void set_pol_limit_dk_partial(const std::vector<double> &v);
   FArray1D<double> pol_limit_dk_partial2() const; // 1D_NOT_real
+  void set_pol_limit_dk_partial2(const std::vector<double> &v);
   double pol_rate_bks() const; // 0D_NOT_real
   void set_pol_rate_bks(double value);
   double depol_rate() const; // 0D_NOT_real
   void set_depol_rate(double value);
   FArray1D<double> depol_rate_partial() const; // 1D_NOT_real
+  void set_depol_rate_partial(const std::vector<double> &v);
   FArray1D<double> depol_rate_partial2() const; // 1D_NOT_real
+  void set_depol_rate_partial2(const std::vector<double> &v);
   double integral_bn() const; // 0D_NOT_real
   void set_integral_bn(double value);
   double integral_bdn() const; // 0D_NOT_real
@@ -14807,6 +15254,7 @@ public:
   double symbol_size_scale() const; // 0D_NOT_real
   void set_symbol_size_scale(double value);
   FArray1D<int> box() const; // 1D_NOT_integer
+  void set_box(const std::vector<int> &v);
   int ix_branch() const; // 0D_NOT_integer
   void set_ix_branch(int value);
   int ix_universe() const; // 0D_NOT_integer
@@ -14901,6 +15349,7 @@ public:
   TaoPlotStruct plot() const; // 0D_NOT_type
   void set_plot(const TaoPlotStruct &src);
   FArray1D<double> location() const; // 1D_NOT_real
+  void set_location(const std::vector<double> &v);
   bool visible() const; // 0D_NOT_logical
   void set_visible(bool value);
   bool list_with_show_plot_command() const; // 0D_NOT_logical
@@ -14963,6 +15412,7 @@ public:
   TaoVarStructArray1D var() const; // 1D_ALLOC_type
   TaoUniverseStructArray1D u() const; // 1D_ALLOC_type
   FArray1D<int> key() const; // 1D_ALLOC_integer
+  void set_key(const std::vector<int> &v);
   TaoBuildingWallStruct building_wall() const; // 0D_NOT_type
   void set_building_wall(const TaoBuildingWallStruct &src);
   TaoWaveStruct wave() const; // 0D_NOT_type
@@ -15180,6 +15630,7 @@ public:
   void set_param(const ApertureParamStruct &src);
   ApertureScanStructArray1D scan() const; // 1D_ALLOC_type
   FArray1D<double> pz() const; // 1D_ALLOC_real
+  void set_pz(const std::vector<double> &v);
   double ellipse_scale() const; // 0D_NOT_real
   void set_ellipse_scale(double value);
   double a_emit() const; // 0D_NOT_real
@@ -15244,6 +15695,7 @@ public:
   int ix_branch() const; // 0D_NOT_integer
   void set_ix_branch(int value);
   FArray2D<double> mat8() const; // 2D_NOT_real
+  void set_mat8(const std::vector<std::vector<double>> &v);
 };
 
 template <>
@@ -15500,6 +15952,7 @@ public:
   double scale() const; // 0D_NOT_real
   void set_scale(double value);
   FArray1D<double> value() const; // 1D_ALLOC_real
+  void set_value(const std::vector<double> &v);
   TaoExpressionInfoStructArray1D info() const; // 1D_ALLOC_type
   TaoEvalNodeStructArray1D node() const; // 1D_PTR_type
 };
@@ -16145,7 +16598,9 @@ public:
 
   TaoPlotRegionStructArray1D plot_place_buffer() const; // 1D_ALLOC_type
   FArray2D<double> covar() const; // 2D_ALLOC_real
+  void set_covar(const std::vector<std::vector<double>> &v);
   FArray2D<double> alpha() const; // 2D_ALLOC_real
+  void set_alpha(const std::vector<std::vector<double>> &v);
   double dummy_target() const; // 0D_NOT_real
   void set_dummy_target(double value);
   int n_alias() const; // 0D_NOT_integer
@@ -16198,6 +16653,8 @@ public:
   void set_lattice_calc_done(bool value);
   bool add_measurement_noise() const; // 0D_NOT_logical
   void set_add_measurement_noise(bool value);
+  FArray1D<bool> is_err_message_printed() const; // 1D_NOT_logical
+  void set_is_err_message_printed(const std::vector<bool> &v);
   bool command_arg_has_been_executed() const; // 0D_NOT_logical
   void set_command_arg_has_been_executed(bool value);
   bool all_merit_weights_positive() const; // 0D_NOT_logical
@@ -16253,6 +16710,7 @@ public:
   std::string plot_display_type() const; // 0D_NOT_character
   void set_plot_display_type(const std::string &value);
   FArray1D<double> size() const; // 1D_NOT_real
+  void set_size(const std::vector<double> &v);
   double text_height() const; // 0D_NOT_real
   void set_text_height(double value);
   double main_title_text_scale() const; // 0D_NOT_real
@@ -16448,11 +16906,17 @@ public:
   double chi_ba() const; // 0D_NOT_real
   void set_chi_ba(double value);
   FArray1D<double> amp_a() const; // 1D_NOT_real
+  void set_amp_a(const std::vector<double> &v);
   FArray1D<double> amp_b() const; // 1D_NOT_real
+  void set_amp_b(const std::vector<double> &v);
   FArray1D<double> amp_ba() const; // 1D_NOT_real
+  void set_amp_ba(const std::vector<double> &v);
   FArray1D<double> coef_a() const; // 1D_NOT_real
+  void set_coef_a(const std::vector<double> &v);
   FArray1D<double> coef_b() const; // 1D_NOT_real
+  void set_coef_b(const std::vector<double> &v);
   FArray1D<double> coef_ba() const; // 1D_NOT_real
+  void set_coef_ba(const std::vector<double> &v);
   int n_func() const; // 0D_NOT_integer
   void set_n_func(int value);
   int ix_a1() const; // 0D_NOT_integer
@@ -16478,6 +16942,7 @@ public:
   int i_curve_wrap_pt() const; // 0D_NOT_integer
   void set_i_curve_wrap_pt(int value);
   FArray1D<int> ix_data() const; // 1D_ALLOC_integer
+  void set_ix_data(const std::vector<int> &v);
   int n_kick() const; // 0D_NOT_integer
   void set_n_kick(int value);
   TaoWaveKickPtStructArray1D kick() const; // 1D_ALLOC_type
@@ -16583,6 +17048,7 @@ public:
   TaoSpinMapStruct spin_map() const; // 0D_NOT_type
   void set_spin_map(const TaoSpinMapStruct &src);
   FArray2D<double> dModel_dVar() const; // 2D_ALLOC_real
+  void set_dModel_dVar(const std::vector<std::vector<double>> &v);
   int ix_uni() const; // 0D_NOT_integer
   void set_ix_uni(int value);
   int n_d2_data_used() const; // 0D_NOT_integer
@@ -16644,8 +17110,11 @@ public:
   using FortranProxy::operator=;
 
   FArray1D<double> k() const; // 1D_NOT_real
+  void set_k(const std::vector<double> &v);
   FArray2D<double> r() const; // 2D_NOT_real
+  void set_r(const std::vector<std::vector<double>> &v);
   FArray3D<double> t() const; // 3D_NOT_real
+  void set_t(const std::vector<std::vector<std::vector<double>>> &v);
 };
 
 template <>
@@ -16684,7 +17153,10 @@ public:
   void set_gauss_sigma_cut(double value);
   int64_t in_sobseq() const; // 0D_NOT_integer8
   void set_in_sobseq(int64_t value);
+  FArray1D<int64_t> ix_sobseq() const; // 1D_NOT_integer8
+  void set_ix_sobseq(const std::vector<int64_t> &v);
   FArray1D<double> x_sobseq() const; // 1D_NOT_real
+  void set_x_sobseq(const std::vector<double> &v);
 };
 
 template <>
@@ -16720,9 +17192,13 @@ public:
   double time_at_wake_ele() const; // 0D_NOT_real
   void set_time_at_wake_ele(double value);
   FArray1D<double> ave_orb() const; // 1D_NOT_real
+  void set_ave_orb(const std::vector<double> &v);
   FArray1D<double> rms_orb() const; // 1D_NOT_real
+  void set_rms_orb(const std::vector<double> &v);
   FArray1D<double> min_orb() const; // 1D_NOT_real
+  void set_min_orb(const std::vector<double> &v);
   FArray1D<double> max_orb() const; // 1D_NOT_real
+  void set_max_orb(const std::vector<double> &v);
   int n_orb() const; // 0D_NOT_integer
   void set_n_orb(int value);
 };
@@ -16746,6 +17222,7 @@ public:
   BunchStructArray1D bunch() const; // 1D_ALLOC_type
   BbuStageStructArray1D stage() const; // 1D_ALLOC_type
   FArray1D<int> ix_ele_bunch() const; // 1D_ALLOC_integer
+  void set_ix_ele_bunch(const std::vector<int> &v);
   int ix_bunch_head() const; // 0D_NOT_integer
   void set_ix_bunch_head(int value);
   int ix_bunch_end() const; // 0D_NOT_integer
@@ -16847,6 +17324,7 @@ public:
   bool ramp_on() const; // 0D_NOT_logical
   void set_ramp_on(bool value);
   FArray1D<double> ramp_pattern() const; // 1D_NOT_real
+  void set_ramp_pattern(const std::vector<double> &v);
   int ramp_n_start() const; // 0D_NOT_integer
   void set_ramp_n_start(int value);
   int n_ramp_pattern() const; // 0D_NOT_integer
@@ -16966,59 +17444,120 @@ public:
   double real_rp_0d() const; // 0D_NOT_real
   void set_real_rp_0d(double value);
   FArray1D<double> real_rp_1d() const; // 1D_NOT_real
+  void set_real_rp_1d(const std::vector<double> &v);
   FArray2D<double> real_rp_2d() const; // 2D_NOT_real
+  void set_real_rp_2d(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_rp_3d() const; // 3D_NOT_real
+  void set_real_rp_3d(const std::vector<std::vector<std::vector<double>>> &v);
   double *real_rp_0d_ptr() const; // 0D_PTR_real
   void set_real_rp_0d_ptr(double value);
   FArray1D<double> real_rp_1d_ptr() const; // 1D_PTR_real
+  void set_real_rp_1d_ptr(const std::vector<double> &v);
   FArray2D<double> real_rp_2d_ptr() const; // 2D_PTR_real
+  void set_real_rp_2d_ptr(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_rp_3d_ptr() const; // 3D_PTR_real
+  void set_real_rp_3d_ptr(const std::vector<std::vector<std::vector<double>>> &v);
   FArray1D<double> real_rp_1d_alloc() const; // 1D_ALLOC_real
+  void set_real_rp_1d_alloc(const std::vector<double> &v);
   FArray2D<double> real_rp_2d_alloc() const; // 2D_ALLOC_real
+  void set_real_rp_2d_alloc(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_rp_3d_alloc() const; // 3D_ALLOC_real
+  void set_real_rp_3d_alloc(const std::vector<std::vector<std::vector<double>>> &v);
   double real_dp_0d() const; // 0D_NOT_real
   void set_real_dp_0d(double value);
   FArray1D<double> real_dp_1d() const; // 1D_NOT_real
+  void set_real_dp_1d(const std::vector<double> &v);
   FArray2D<double> real_dp_2d() const; // 2D_NOT_real
+  void set_real_dp_2d(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_dp_3d() const; // 3D_NOT_real
+  void set_real_dp_3d(const std::vector<std::vector<std::vector<double>>> &v);
   double *real_dp_0d_ptr() const; // 0D_PTR_real
   void set_real_dp_0d_ptr(double value);
   FArray1D<double> real_dp_1d_ptr() const; // 1D_PTR_real
+  void set_real_dp_1d_ptr(const std::vector<double> &v);
   FArray2D<double> real_dp_2d_ptr() const; // 2D_PTR_real
+  void set_real_dp_2d_ptr(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_dp_3d_ptr() const; // 3D_PTR_real
+  void set_real_dp_3d_ptr(const std::vector<std::vector<std::vector<double>>> &v);
   FArray1D<double> real_dp_1d_alloc() const; // 1D_ALLOC_real
+  void set_real_dp_1d_alloc(const std::vector<double> &v);
   FArray2D<double> real_dp_2d_alloc() const; // 2D_ALLOC_real
+  void set_real_dp_2d_alloc(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_dp_3d_alloc() const; // 3D_ALLOC_real
+  void set_real_dp_3d_alloc(const std::vector<std::vector<std::vector<double>>> &v);
   std::complex<double> complex_dp_0d() const; // 0D_NOT_complex
   void set_complex_dp_0d(std::complex<double> value);
   FArray1D<std::complex<double>> complex_dp_1d() const; // 1D_NOT_complex
+  void set_complex_dp_1d(const std::vector<std::complex<double>> &v);
   FArray2D<std::complex<double>> complex_dp_2d() const; // 2D_NOT_complex
+  void set_complex_dp_2d(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d() const; // 3D_NOT_complex
+  void set_complex_dp_3d(const std::vector<std::vector<std::vector<std::complex<double>>>> &v);
   FArray1D<std::complex<double>> complex_dp_1d_ptr() const; // 1D_PTR_complex
+  void set_complex_dp_1d_ptr(const std::vector<std::complex<double>> &v);
   FArray2D<std::complex<double>> complex_dp_2d_ptr() const; // 2D_PTR_complex
+  void set_complex_dp_2d_ptr(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d_ptr() const; // 3D_PTR_complex
+  void set_complex_dp_3d_ptr(const std::vector<std::vector<std::vector<std::complex<double>>>> &v);
   FArray1D<std::complex<double>> complex_dp_1d_alloc() const; // 1D_ALLOC_complex
+  void set_complex_dp_1d_alloc(const std::vector<std::complex<double>> &v);
   FArray2D<std::complex<double>> complex_dp_2d_alloc() const; // 2D_ALLOC_complex
+  void set_complex_dp_2d_alloc(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d_alloc() const; // 3D_ALLOC_complex
+  void set_complex_dp_3d_alloc(const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+  );
   int int_0d() const; // 0D_NOT_integer
   void set_int_0d(int value);
   FArray1D<int> int_1d() const; // 1D_NOT_integer
+  void set_int_1d(const std::vector<int> &v);
   FArray2D<int> int_2d() const; // 2D_NOT_integer
+  void set_int_2d(const std::vector<std::vector<int>> &v);
   FArray3D<int> int_3d() const; // 3D_NOT_integer
+  void set_int_3d(const std::vector<std::vector<std::vector<int>>> &v);
   int *int_0d_ptr() const; // 0D_PTR_integer
   void set_int_0d_ptr(int value);
   FArray1D<int> int_1d_ptr() const; // 1D_PTR_integer
+  void set_int_1d_ptr(const std::vector<int> &v);
   FArray2D<int> int_2d_ptr() const; // 2D_PTR_integer
+  void set_int_2d_ptr(const std::vector<std::vector<int>> &v);
   FArray3D<int> int_3d_ptr() const; // 3D_PTR_integer
+  void set_int_3d_ptr(const std::vector<std::vector<std::vector<int>>> &v);
   FArray1D<int> int_1d_alloc() const; // 1D_ALLOC_integer
+  void set_int_1d_alloc(const std::vector<int> &v);
   FArray2D<int> int_2d_alloc() const; // 2D_ALLOC_integer
+  void set_int_2d_alloc(const std::vector<std::vector<int>> &v);
   FArray3D<int> int_3d_alloc() const; // 3D_ALLOC_integer
+  void set_int_3d_alloc(const std::vector<std::vector<std::vector<int>>> &v);
   int64_t int8_0d() const; // 0D_NOT_integer8
   void set_int8_0d(int64_t value);
+  FArray1D<int64_t> int8_1d() const; // 1D_NOT_integer8
+  void set_int8_1d(const std::vector<int64_t> &v);
+  FArray2D<int64_t> int8_2d() const; // 2D_NOT_integer8
+  void set_int8_2d(const std::vector<std::vector<int64_t>> &v);
+  FArray3D<int64_t> int8_3d() const; // 3D_NOT_integer8
+  void set_int8_3d(const std::vector<std::vector<std::vector<int64_t>>> &v);
   int64_t *int8_0d_ptr() const; // 0D_PTR_integer8
   void set_int8_0d_ptr(int64_t value);
+  FArray1D<int64_t> int8_1d_ptr() const; // 1D_PTR_integer8
+  void set_int8_1d_ptr(const std::vector<int64_t> &v);
+  FArray2D<int64_t> int8_2d_ptr() const; // 2D_PTR_integer8
+  void set_int8_2d_ptr(const std::vector<std::vector<int64_t>> &v);
+  FArray3D<int64_t> int8_3d_ptr() const; // 3D_PTR_integer8
+  void set_int8_3d_ptr(const std::vector<std::vector<std::vector<int64_t>>> &v);
+  FArray1D<int64_t> int8_1d_alloc() const; // 1D_ALLOC_integer8
+  void set_int8_1d_alloc(const std::vector<int64_t> &v);
+  FArray2D<int64_t> int8_2d_alloc() const; // 2D_ALLOC_integer8
+  void set_int8_2d_alloc(const std::vector<std::vector<int64_t>> &v);
+  FArray3D<int64_t> int8_3d_alloc() const; // 3D_ALLOC_integer8
+  void set_int8_3d_alloc(const std::vector<std::vector<std::vector<int64_t>>> &v);
   bool logical_0d() const; // 0D_NOT_logical
   void set_logical_0d(bool value);
+  FArray1D<bool> logical_1d() const; // 1D_NOT_logical
+  void set_logical_1d(const std::vector<bool> &v);
+  FArray2D<bool> logical_2d() const; // 2D_NOT_logical
+  void set_logical_2d(const std::vector<std::vector<bool>> &v);
+  FArray3D<bool> logical_3d() const; // 3D_NOT_logical
+  void set_logical_3d(const std::vector<std::vector<std::vector<bool>>> &v);
   bool *logical_0d_ptr() const; // 0D_PTR_logical
   void set_logical_0d_ptr(bool value);
   TestSubStruct type_0d() const; // 0D_NOT_type

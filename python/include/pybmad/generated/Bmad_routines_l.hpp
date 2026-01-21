@@ -10,3 +10,8 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_l(py::module &m);
+
+struct PyLatEleLocator {
+  bool err;
+  int n_loc;
+};

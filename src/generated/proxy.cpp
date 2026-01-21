@@ -22,6 +22,10 @@ void SplineStruct::set_x1(double value) { spline_struct_set_x1(fortran_ptr_, val
 FArray1D<double> SplineStruct::coef() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spline_struct_get_coef_info);
 }
+void SplineStruct::set_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spline_struct_set_coef(fortran_ptr_, v.data(), shape);
+}
 double SpinPolarStruct::polarization() const {
   double value;
   spin_polar_struct_get_polarization(fortran_ptr_, &value);
@@ -136,11 +140,19 @@ FArray1D<double> PhotonReflectTableStruct::angle() const {
       photon_reflect_table_struct_get_angle_info
   );
 }
+void PhotonReflectTableStruct::set_angle(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_reflect_table_struct_set_angle(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> PhotonReflectTableStruct::energy() const {
   return ProxyHelpers::get_array_1d<double>(
       fortran_ptr_,
       photon_reflect_table_struct_get_energy_info
   );
+}
+void PhotonReflectTableStruct::set_energy(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_reflect_table_struct_set_energy(fortran_ptr_, v.data(), shape);
 }
 Interval1CoefStructArray1D PhotonReflectTableStruct::int1() const {
   return ProxyHelpers::get_type_array_1d<Interval1CoefStructArray1D>(
@@ -153,6 +165,20 @@ FArray2D<double> PhotonReflectTableStruct::p_reflect() const {
       fortran_ptr_,
       photon_reflect_table_struct_get_p_reflect_info
   );
+}
+void PhotonReflectTableStruct::set_p_reflect(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  photon_reflect_table_struct_set_p_reflect(fortran_ptr_, flat.data(), shape);
 }
 double PhotonReflectTableStruct::max_energy() const {
   double value;
@@ -168,11 +194,19 @@ FArray1D<double> PhotonReflectTableStruct::p_reflect_scratch() const {
       photon_reflect_table_struct_get_p_reflect_scratch_info
   );
 }
+void PhotonReflectTableStruct::set_p_reflect_scratch(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_reflect_table_struct_set_p_reflect_scratch(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> PhotonReflectTableStruct::bragg_angle() const {
   return ProxyHelpers::get_array_1d<double>(
       fortran_ptr_,
       photon_reflect_table_struct_get_bragg_angle_info
   );
+}
+void PhotonReflectTableStruct::set_bragg_angle(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_reflect_table_struct_set_bragg_angle(fortran_ptr_, v.data(), shape);
 }
 std::string PhotonReflectSurfaceStruct::name() const {
   FArray1D<char> arr =
@@ -247,6 +281,10 @@ void PhotonReflectSurfaceStruct::set_ix_surface(int value) {
 FArray1D<double> CoordStruct::vec() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_vec_info);
 }
+void CoordStruct::set_vec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  coord_struct_set_vec(fortran_ptr_, v.data(), shape);
+}
 double CoordStruct::s() const {
   double value;
   coord_struct_get_s(fortran_ptr_, &value);
@@ -262,11 +300,23 @@ void CoordStruct::set_t(long double value) { coord_struct_set_t(fortran_ptr_, va
 FArray1D<double> CoordStruct::spin() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_spin_info);
 }
+void CoordStruct::set_spin(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  coord_struct_set_spin(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> CoordStruct::field() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_field_info);
 }
+void CoordStruct::set_field(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  coord_struct_set_field(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> CoordStruct::phase() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_phase_info);
+}
+void CoordStruct::set_phase(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  coord_struct_set_phase(fortran_ptr_, v.data(), shape);
 }
 double CoordStruct::charge() const {
   double value;
@@ -473,11 +523,19 @@ void ExpressionAtomStruct::set_value(double value) {
 FArray1D<double> WakeSrZLongStruct::w() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wake_sr_z_long_struct_get_w_info);
 }
+void WakeSrZLongStruct::set_w(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wake_sr_z_long_struct_set_w(fortran_ptr_, v.data(), shape);
+}
 FArray1D<std::complex<double>> WakeSrZLongStruct::fw() const {
   return ProxyHelpers::get_array_1d<std::complex<double>>(
       fortran_ptr_,
       wake_sr_z_long_struct_get_fw_info
   );
+}
+void WakeSrZLongStruct::set_fw(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wake_sr_z_long_struct_set_fw(fortran_ptr_, v.data(), shape);
 }
 FArray1D<std::complex<double>> WakeSrZLongStruct::fbunch() const {
   return ProxyHelpers::get_array_1d<std::complex<double>>(
@@ -485,11 +543,19 @@ FArray1D<std::complex<double>> WakeSrZLongStruct::fbunch() const {
       wake_sr_z_long_struct_get_fbunch_info
   );
 }
+void WakeSrZLongStruct::set_fbunch(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wake_sr_z_long_struct_set_fbunch(fortran_ptr_, v.data(), shape);
+}
 FArray1D<std::complex<double>> WakeSrZLongStruct::w_out() const {
   return ProxyHelpers::get_array_1d<std::complex<double>>(
       fortran_ptr_,
       wake_sr_z_long_struct_get_w_out_info
   );
+}
+void WakeSrZLongStruct::set_w_out(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wake_sr_z_long_struct_set_w_out(fortran_ptr_, v.data(), shape);
 }
 double WakeSrZLongStruct::dz() const {
   double value;
@@ -854,6 +920,10 @@ void TaylorTermStruct::set_coef(double value) { taylor_term_struct_set_coef(fort
 FArray1D<int> TaylorTermStruct::expn() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, taylor_term_struct_get_expn_info);
 }
+void TaylorTermStruct::set_expn(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
+}
 double TaylorStruct::ref() const {
   double value;
   taylor_struct_get_ref(fortran_ptr_, &value);
@@ -876,6 +946,10 @@ void EmTaylorTermStruct::set_coef(double value) {
 }
 FArray1D<int> EmTaylorTermStruct::expn() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, em_taylor_term_struct_get_expn_info);
+}
+void EmTaylorTermStruct::set_expn(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  em_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
 }
 double EmTaylorStruct::ref() const {
   double value;
@@ -993,6 +1067,10 @@ void CartesianMapStruct::set_field_scale(double value) {
 }
 FArray1D<double> CartesianMapStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, cartesian_map_struct_get_r0_info);
+}
+void CartesianMapStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  cartesian_map_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
 int CartesianMapStruct::master_parameter() const {
   int value;
@@ -1135,6 +1213,10 @@ void CylindricalMapStruct::set_dz(double value) {
 FArray1D<double> CylindricalMapStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, cylindrical_map_struct_get_r0_info);
 }
+void CylindricalMapStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  cylindrical_map_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
 std::optional<CylindricalMapTermStruct> CylindricalMapStruct::ptr() const {
   void *ptr;
   cylindrical_map_struct_get_ptr(fortran_ptr_, &ptr);
@@ -1151,8 +1233,26 @@ FArray2D<std::complex<double>> BicubicCmplxCoefStruct::coef() const {
       bicubic_cmplx_coef_struct_get_coef_info
   );
 }
+void BicubicCmplxCoefStruct::set_coef(const std::vector<std::vector<std::complex<double>>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<std::complex<double>> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  bicubic_cmplx_coef_struct_set_coef(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<int> BicubicCmplxCoefStruct::i_box() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, bicubic_cmplx_coef_struct_get_i_box_info);
+}
+void BicubicCmplxCoefStruct::set_i_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bicubic_cmplx_coef_struct_set_i_box(fortran_ptr_, v.data(), shape);
 }
 FArray3D<std::complex<double>> TricubicCmplxCoefStruct::coef() const {
   return ProxyHelpers::get_array_3d<std::complex<double>>(
@@ -1160,8 +1260,32 @@ FArray3D<std::complex<double>> TricubicCmplxCoefStruct::coef() const {
       tricubic_cmplx_coef_struct_get_coef_info
   );
 }
+void TricubicCmplxCoefStruct::set_coef(
+    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<std::complex<double>> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  tricubic_cmplx_coef_struct_set_coef(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<int> TricubicCmplxCoefStruct::i_box() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tricubic_cmplx_coef_struct_get_i_box_info);
+}
+void TricubicCmplxCoefStruct::set_i_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tricubic_cmplx_coef_struct_set_i_box(fortran_ptr_, v.data(), shape);
 }
 FArray1D<std::complex<double>> GridFieldPt1Struct::E() const {
   return ProxyHelpers::get_array_1d<std::complex<double>>(
@@ -1169,11 +1293,19 @@ FArray1D<std::complex<double>> GridFieldPt1Struct::E() const {
       grid_field_pt1_struct_get_E_info
   );
 }
+void GridFieldPt1Struct::set_E(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  grid_field_pt1_struct_set_E(fortran_ptr_, v.data(), shape);
+}
 FArray1D<std::complex<double>> GridFieldPt1Struct::B() const {
   return ProxyHelpers::get_array_1d<std::complex<double>>(
       fortran_ptr_,
       grid_field_pt1_struct_get_B_info
   );
+}
+void GridFieldPt1Struct::set_B(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  grid_field_pt1_struct_set_B(fortran_ptr_, v.data(), shape);
 }
 std::string GridFieldPtStruct::file() const {
   FArray1D<char> arr =
@@ -1264,8 +1396,16 @@ void GridFieldStruct::set_interpolation_order(int value) {
 FArray1D<double> GridFieldStruct::dr() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, grid_field_struct_get_dr_info);
 }
+void GridFieldStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  grid_field_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> GridFieldStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, grid_field_struct_get_r0_info);
+}
+void GridFieldStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  grid_field_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
 bool GridFieldStruct::curved_ref_frame() const {
   bool value;
@@ -1300,8 +1440,26 @@ TricubicCmplxCoefStructArray3D GridFieldStruct::tri_coef() const {
 FArray1D<double> FloorPositionStruct::r() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, floor_position_struct_get_r_info);
 }
+void FloorPositionStruct::set_r(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  floor_position_struct_set_r(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> FloorPositionStruct::w() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, floor_position_struct_get_w_info);
+}
+void FloorPositionStruct::set_w(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  floor_position_struct_set_w(fortran_ptr_, flat.data(), shape);
 }
 double FloorPositionStruct::theta() const {
   double value;
@@ -1528,6 +1686,20 @@ void TwissStruct::set_detap_dpz(double value) { twiss_struct_set_detap_dpz(fortr
 FArray2D<double> Mode3Struct::v() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, mode3_struct_get_v_info);
 }
+void Mode3Struct::set_v(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  mode3_struct_set_v(fortran_ptr_, flat.data(), shape);
+}
 TwissStruct Mode3Struct::a() const {
   void *ptr;
   mode3_struct_get_a(fortran_ptr_, &ptr);
@@ -1643,17 +1815,67 @@ void BookkeepingStateStruct::set_has_misalign(bool value) {
 FArray1D<double> RadMapStruct::ref_orb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_map_struct_get_ref_orb_info);
 }
+void RadMapStruct::set_ref_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  rad_map_struct_set_ref_orb(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> RadMapStruct::damp_dmat() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_damp_dmat_info);
+}
+void RadMapStruct::set_damp_dmat(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  rad_map_struct_set_damp_dmat(fortran_ptr_, flat.data(), shape);
 }
 FArray1D<double> RadMapStruct::xfer_damp_vec() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_map_struct_get_xfer_damp_vec_info);
 }
+void RadMapStruct::set_xfer_damp_vec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  rad_map_struct_set_xfer_damp_vec(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> RadMapStruct::xfer_damp_mat() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_xfer_damp_mat_info);
 }
+void RadMapStruct::set_xfer_damp_mat(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  rad_map_struct_set_xfer_damp_mat(fortran_ptr_, flat.data(), shape);
+}
 FArray2D<double> RadMapStruct::stoc_mat() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_stoc_mat_info);
+}
+void RadMapStruct::set_stoc_mat(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  rad_map_struct_set_stoc_mat(fortran_ptr_, flat.data(), shape);
 }
 RadMapStruct RadMapEleStruct::rm0() const {
   void *ptr;
@@ -1699,6 +1921,20 @@ void GenGrad1Struct::set_n_deriv_max(int value) {
 }
 FArray2D<double> GenGrad1Struct::deriv() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, gen_grad1_struct_get_deriv_info);
+}
+void GenGrad1Struct::set_deriv(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  gen_grad1_struct_set_deriv(fortran_ptr_, flat.data(), shape);
 }
 std::string GenGradMapStruct::file() const {
   FArray1D<char> arr =
@@ -1750,6 +1986,10 @@ double GenGradMapStruct::dz() const {
 void GenGradMapStruct::set_dz(double value) { gen_grad_map_struct_set_dz(fortran_ptr_, value); }
 FArray1D<double> GenGradMapStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, gen_grad_map_struct_get_r0_info);
+}
+void GenGradMapStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  gen_grad_map_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
 double GenGradMapStruct::field_scale() const {
   double value;
@@ -1826,8 +2066,16 @@ void SurfaceSegmentedStruct::set_active(bool value) {
 FArray1D<double> SurfaceSegmentedStruct::dr() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_segmented_struct_get_dr_info);
 }
+void SurfaceSegmentedStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_segmented_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> SurfaceSegmentedStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_segmented_struct_get_r0_info);
+}
+void SurfaceSegmentedStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_segmented_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
 SurfaceSegmentedPtStructArray2D SurfaceSegmentedStruct::pt() const {
   return ProxyHelpers::get_type_array_2d<SurfaceSegmentedPtStructArray2D>(
@@ -1894,8 +2142,16 @@ void SurfaceHMisalignStruct::set_active(bool value) {
 FArray1D<double> SurfaceHMisalignStruct::dr() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_h_misalign_struct_get_dr_info);
 }
+void SurfaceHMisalignStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_h_misalign_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> SurfaceHMisalignStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_h_misalign_struct_get_r0_info);
+}
+void SurfaceHMisalignStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_h_misalign_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
 SurfaceHMisalignPtStructArray2D SurfaceHMisalignStruct::pt() const {
   return ProxyHelpers::get_type_array_2d<SurfaceHMisalignPtStructArray2D>(
@@ -1962,8 +2218,16 @@ void SurfaceDisplacementStruct::set_active(bool value) {
 FArray1D<double> SurfaceDisplacementStruct::dr() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_displacement_struct_get_dr_info);
 }
+void SurfaceDisplacementStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_displacement_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> SurfaceDisplacementStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_displacement_struct_get_r0_info);
+}
+void SurfaceDisplacementStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_displacement_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
 SurfaceDisplacementPtStructArray2D SurfaceDisplacementStruct::pt() const {
   return ProxyHelpers::get_type_array_2d<SurfaceDisplacementPtStructArray2D>(
@@ -1974,8 +2238,26 @@ SurfaceDisplacementPtStructArray2D SurfaceDisplacementStruct::pt() const {
 FArray1D<double> TargetPointStruct::r() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, target_point_struct_get_r_info);
 }
+void TargetPointStruct::set_r(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  target_point_struct_set_r(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> SurfaceCurvatureStruct::xy() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, surface_curvature_struct_get_xy_info);
+}
+void SurfaceCurvatureStruct::set_xy(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  surface_curvature_struct_set_xy(fortran_ptr_, flat.data(), shape);
 }
 double SurfaceCurvatureStruct::spherical() const {
   double value;
@@ -1990,6 +2272,10 @@ FArray1D<double> SurfaceCurvatureStruct::elliptical() const {
       fortran_ptr_,
       surface_curvature_struct_get_elliptical_info
   );
+}
+void SurfaceCurvatureStruct::set_elliptical(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_curvature_struct_set_elliptical(fortran_ptr_, v.data(), shape);
 }
 bool SurfaceCurvatureStruct::has_curvature() const {
   bool value;
@@ -2086,8 +2372,16 @@ void PhotonMaterialStruct::set_f_hkl(std::complex<double> value) {
 FArray1D<double> PhotonMaterialStruct::h_norm() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, photon_material_struct_get_h_norm_info);
 }
+void PhotonMaterialStruct::set_h_norm(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_material_struct_set_h_norm(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> PhotonMaterialStruct::l_ref() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, photon_material_struct_get_l_ref_info);
+}
+void PhotonMaterialStruct::set_l_ref(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_material_struct_set_l_ref(fortran_ptr_, v.data(), shape);
 }
 int64_t PixelPtStruct::n_photon() const {
   int64_t value;
@@ -2140,20 +2434,44 @@ void PixelPtStruct::set_intensity(double value) {
 FArray1D<double> PixelPtStruct::orbit() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_orbit_info);
 }
+void PixelPtStruct::set_orbit(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_pt_struct_set_orbit(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> PixelPtStruct::orbit_rms() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_orbit_rms_info);
+}
+void PixelPtStruct::set_orbit_rms(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_pt_struct_set_orbit_rms(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> PixelPtStruct::init_orbit() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_init_orbit_info);
 }
+void PixelPtStruct::set_init_orbit(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_pt_struct_set_init_orbit(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> PixelPtStruct::init_orbit_rms() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_init_orbit_rms_info);
+}
+void PixelPtStruct::set_init_orbit_rms(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_pt_struct_set_init_orbit_rms(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> PixelDetecStruct::dr() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_detec_struct_get_dr_info);
 }
+void PixelDetecStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_detec_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> PixelDetecStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_detec_struct_get_r0_info);
+}
+void PixelDetecStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_detec_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
 int64_t PixelDetecStruct::n_track_tot() const {
   int64_t value;
@@ -2276,6 +2594,10 @@ FArray1D<double> PhotonElementStruct::integrated_init_energy_prob() const {
       fortran_ptr_,
       photon_element_struct_get_integrated_init_energy_prob_info
   );
+}
+void PhotonElementStruct::set_integrated_init_energy_prob(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_element_struct_set_integrated_init_energy_prob(fortran_ptr_, v.data(), shape);
 }
 double Wall3dVertexStruct::x() const {
   double value;
@@ -2436,6 +2758,10 @@ void Wall3dSectionStruct::set_s(double value) { wall3d_section_struct_set_s(fort
 FArray1D<double> Wall3dSectionStruct::r0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_r0_info);
 }
+void Wall3dSectionStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
 double Wall3dSectionStruct::dx0_ds() const {
   double value;
   wall3d_section_struct_get_dx0_ds(fortran_ptr_, &value);
@@ -2455,8 +2781,16 @@ void Wall3dSectionStruct::set_dy0_ds(double value) {
 FArray1D<double> Wall3dSectionStruct::x0_coef() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_x0_coef_info);
 }
+void Wall3dSectionStruct::set_x0_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_x0_coef(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> Wall3dSectionStruct::y0_coef() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_y0_coef_info);
+}
+void Wall3dSectionStruct::set_y0_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_y0_coef(fortran_ptr_, v.data(), shape);
 }
 double Wall3dSectionStruct::dr_ds() const {
   double value;
@@ -2469,8 +2803,16 @@ void Wall3dSectionStruct::set_dr_ds(double value) {
 FArray1D<double> Wall3dSectionStruct::p1_coef() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_p1_coef_info);
 }
+void Wall3dSectionStruct::set_p1_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_p1_coef(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> Wall3dSectionStruct::p2_coef() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_p2_coef_info);
+}
+void Wall3dSectionStruct::set_p2_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_p2_coef(fortran_ptr_, v.data(), shape);
 }
 std::string Wall3dStruct::name() const {
   FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_struct_get_name_info);
@@ -2570,6 +2912,10 @@ void ControlStruct::set_value(double value) { control_struct_set_value(fortran_p
 FArray1D<double> ControlStruct::y_knot() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, control_struct_get_y_knot_info);
 }
+void ControlStruct::set_y_knot(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  control_struct_set_y_knot(fortran_ptr_, v.data(), shape);
+}
 ExpressionAtomStructArray1D ControlStruct::stack() const {
   return ProxyHelpers::get_type_array_1d<ExpressionAtomStructArray1D>(
       fortran_ptr_,
@@ -2641,6 +2987,10 @@ void ControlVar1Struct::set_old_value(double value) {
 FArray1D<double> ControlRamp1Struct::y_knot() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, control_ramp1_struct_get_y_knot_info);
 }
+void ControlRamp1Struct::set_y_knot(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  control_ramp1_struct_set_y_knot(fortran_ptr_, v.data(), shape);
+}
 ExpressionAtomStructArray1D ControlRamp1Struct::stack() const {
   return ProxyHelpers::get_type_array_1d<ExpressionAtomStructArray1D>(
       fortran_ptr_,
@@ -2696,6 +3046,10 @@ RamperLordStructArray1D ControllerStruct::ramper_lord() const {
 FArray1D<double> ControllerStruct::x_knot() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, controller_struct_get_x_knot_info);
 }
+void ControllerStruct::set_x_knot(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  controller_struct_set_x_knot(fortran_ptr_, v.data(), shape);
+}
 int EllipseBeamInitStruct::part_per_ellipse() const {
   int value;
   ellipse_beam_init_struct_get_part_per_ellipse(fortran_ptr_, &value);
@@ -2722,6 +3076,10 @@ void EllipseBeamInitStruct::set_sigma_cutoff(double value) {
 }
 FArray1D<int> KvBeamInitStruct::part_per_phi() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, kv_beam_init_struct_get_part_per_phi_info);
+}
+void KvBeamInitStruct::set_part_per_phi(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  kv_beam_init_struct_set_part_per_phi(fortran_ptr_, v.data(), shape);
 }
 int KvBeamInitStruct::n_I2() const {
   int value;
@@ -2795,6 +3153,10 @@ FCharArray1D BeamInitStruct::distribution_type() const {
 FArray1D<double> BeamInitStruct::spin() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, beam_init_struct_get_spin_info);
 }
+void BeamInitStruct::set_spin(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  beam_init_struct_set_spin(fortran_ptr_, v.data(), shape);
+}
 EllipseBeamInitStructArray1D BeamInitStruct::ellipse() const {
   return ProxyHelpers::get_type_array_1d<EllipseBeamInitStructArray1D>(
       fortran_ptr_,
@@ -2818,8 +3180,16 @@ GridBeamInitStructArray1D BeamInitStruct::grid() const {
 FArray1D<double> BeamInitStruct::center_jitter() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, beam_init_struct_get_center_jitter_info);
 }
+void BeamInitStruct::set_center_jitter(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  beam_init_struct_set_center_jitter(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> BeamInitStruct::emit_jitter() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, beam_init_struct_get_emit_jitter_info);
+}
+void BeamInitStruct::set_emit_jitter(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  beam_init_struct_set_emit_jitter(fortran_ptr_, v.data(), shape);
 }
 double BeamInitStruct::sig_z_jitter() const {
   double value;
@@ -2927,6 +3297,10 @@ double BeamInitStruct::dPz_dz() const {
 void BeamInitStruct::set_dPz_dz(double value) { beam_init_struct_set_dPz_dz(fortran_ptr_, value); }
 FArray1D<double> BeamInitStruct::center() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, beam_init_struct_get_center_info);
+}
+void BeamInitStruct::set_center(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  beam_init_struct_set_center(fortran_ptr_, v.data(), shape);
 }
 double BeamInitStruct::t_offset() const {
   double value;
@@ -3049,8 +3423,36 @@ void LatParamStruct::set_unstable_factor(double value) {
 FArray2D<double> LatParamStruct::t1_with_RF() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, lat_param_struct_get_t1_with_RF_info);
 }
+void LatParamStruct::set_t1_with_RF(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  lat_param_struct_set_t1_with_RF(fortran_ptr_, flat.data(), shape);
+}
 FArray2D<double> LatParamStruct::t1_no_RF() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, lat_param_struct_get_t1_no_RF_info);
+}
+void LatParamStruct::set_t1_no_RF(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  lat_param_struct_set_t1_no_RF(fortran_ptr_, flat.data(), shape);
 }
 double LatParamStruct::spin_tune() const {
   double value;
@@ -3225,6 +3627,10 @@ void AnormalModeStruct::set_emittance_no_vert(double value) {
 FArray1D<double> AnormalModeStruct::synch_int() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, anormal_mode_struct_get_synch_int_info);
 }
+void AnormalModeStruct::set_synch_int(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  anormal_mode_struct_set_synch_int(fortran_ptr_, v.data(), shape);
+}
 double AnormalModeStruct::j_damp() const {
   double value;
   anormal_mode_struct_get_j_damp(fortran_ptr_, &value);
@@ -3315,6 +3721,10 @@ void LinacNormalModeStruct::set_b_emittance_end(double value) {
 }
 FArray1D<double> NormalModesStruct::synch_int() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, normal_modes_struct_get_synch_int_info);
+}
+void NormalModesStruct::set_synch_int(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  normal_modes_struct_set_synch_int(fortran_ptr_, v.data(), shape);
 }
 double NormalModesStruct::sigE_E() const {
   double value;
@@ -3415,14 +3825,50 @@ void NormalModesStruct::set_lin(const LinacNormalModeStruct &src) {
 FArray1D<double> EmFieldStruct::E() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_E_info);
 }
+void EmFieldStruct::set_E(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  em_field_struct_set_E(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> EmFieldStruct::B() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_B_info);
+}
+void EmFieldStruct::set_B(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  em_field_struct_set_B(fortran_ptr_, v.data(), shape);
 }
 FArray2D<double> EmFieldStruct::dE() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, em_field_struct_get_dE_info);
 }
+void EmFieldStruct::set_dE(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  em_field_struct_set_dE(fortran_ptr_, flat.data(), shape);
+}
 FArray2D<double> EmFieldStruct::dB() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, em_field_struct_get_dB_info);
+}
+void EmFieldStruct::set_dB(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  em_field_struct_set_dB(fortran_ptr_, flat.data(), shape);
 }
 double EmFieldStruct::phi() const {
   double value;
@@ -3438,6 +3884,10 @@ double EmFieldStruct::phi_B() const {
 void EmFieldStruct::set_phi_B(double value) { em_field_struct_set_phi_B(fortran_ptr_, value); }
 FArray1D<double> EmFieldStruct::A() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_A_info);
+}
+void EmFieldStruct::set_A(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  em_field_struct_set_A(fortran_ptr_, v.data(), shape);
 }
 int StrongBeamStruct::ix_slice() const {
   int value;
@@ -3534,8 +3984,26 @@ void TrackPointStruct::set_strong_beam(const StrongBeamStruct &src) {
 FArray1D<double> TrackPointStruct::vec0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, track_point_struct_get_vec0_info);
 }
+void TrackPointStruct::set_vec0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  track_point_struct_set_vec0(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> TrackPointStruct::mat6() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, track_point_struct_get_mat6_info);
+}
+void TrackPointStruct::set_mat6(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  track_point_struct_set_mat6(fortran_ptr_, flat.data(), shape);
 }
 TrackPointStructArray1D TrackStruct::pt() const {
   return ProxyHelpers::get_type_array_1d<TrackPointStructArray1D>(
@@ -3637,11 +4105,19 @@ FArray1D<int> SpaceChargeCommonStruct::space_charge_mesh_size() const {
       space_charge_common_struct_get_space_charge_mesh_size_info
   );
 }
+void SpaceChargeCommonStruct::set_space_charge_mesh_size(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  space_charge_common_struct_set_space_charge_mesh_size(fortran_ptr_, v.data(), shape);
+}
 FArray1D<int> SpaceChargeCommonStruct::csr3d_mesh_size() const {
   return ProxyHelpers::get_array_1d<int>(
       fortran_ptr_,
       space_charge_common_struct_get_csr3d_mesh_size_info
   );
+}
+void SpaceChargeCommonStruct::set_csr3d_mesh_size(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  space_charge_common_struct_set_csr3d_mesh_size(fortran_ptr_, v.data(), shape);
 }
 int SpaceChargeCommonStruct::n_bin() const {
   int value;
@@ -3715,6 +4191,10 @@ void BmadCommonStruct::set_max_aperture_limit(double value) {
 }
 FArray1D<double> BmadCommonStruct::d_orb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bmad_common_struct_get_d_orb_info);
+}
+void BmadCommonStruct::set_d_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bmad_common_struct_set_d_orb(fortran_ptr_, v.data(), shape);
 }
 double BmadCommonStruct::default_ds_step() const {
   double value;
@@ -4447,6 +4927,10 @@ FArray1D<double> EleStruct::spin_taylor_ref_orb_in() const {
       ele_struct_get_spin_taylor_ref_orb_in_info
   );
 }
+void EleStruct::set_spin_taylor_ref_orb_in(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_spin_taylor_ref_orb_in(fortran_ptr_, v.data(), shape);
+}
 TaylorStructArray1D EleStruct::spin_taylor() const {
   return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
       fortran_ptr_,
@@ -4528,23 +5012,91 @@ void EleStruct::set_time_ref_orb_out(const CoordStruct &src) {
 FArray1D<double> EleStruct::value() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ele_struct_get_value_info);
 }
+void EleStruct::set_value(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_value(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> EleStruct::old_value() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ele_struct_get_old_value_info);
+}
+void EleStruct::set_old_value(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_old_value(fortran_ptr_, v.data(), shape);
 }
 FArray2D<double> EleStruct::spin_q() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, ele_struct_get_spin_q_info);
 }
+void EleStruct::set_spin_q(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  ele_struct_set_spin_q(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<double> EleStruct::vec0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ele_struct_get_vec0_info);
+}
+void EleStruct::set_vec0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_vec0(fortran_ptr_, v.data(), shape);
 }
 FArray2D<double> EleStruct::mat6() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, ele_struct_get_mat6_info);
 }
+void EleStruct::set_mat6(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  ele_struct_set_mat6(fortran_ptr_, flat.data(), shape);
+}
 FArray2D<double> EleStruct::c_mat() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, ele_struct_get_c_mat_info);
 }
+void EleStruct::set_c_mat(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  ele_struct_set_c_mat(fortran_ptr_, flat.data(), shape);
+}
 FArray2D<double> EleStruct::dc_mat_dpz() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, ele_struct_get_dc_mat_dpz_info);
+}
+void EleStruct::set_dc_mat_dpz(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  ele_struct_set_dc_mat_dpz(fortran_ptr_, flat.data(), shape);
 }
 double EleStruct::gamma_c() const {
   double value;
@@ -4573,20 +5125,58 @@ void EleStruct::set_ref_time(double value) { ele_struct_set_ref_time(fortran_ptr
 FArray1D<double> EleStruct::a_pole() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ele_struct_get_a_pole_info);
 }
+void EleStruct::set_a_pole(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_a_pole(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> EleStruct::b_pole() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ele_struct_get_b_pole_info);
+}
+void EleStruct::set_b_pole(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_b_pole(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> EleStruct::a_pole_elec() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ele_struct_get_a_pole_elec_info);
 }
+void EleStruct::set_a_pole_elec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_a_pole_elec(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> EleStruct::b_pole_elec() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ele_struct_get_b_pole_elec_info);
+}
+void EleStruct::set_b_pole_elec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_b_pole_elec(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> EleStruct::custom() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ele_struct_get_custom_info);
 }
+void EleStruct::set_custom(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ele_struct_set_custom(fortran_ptr_, v.data(), shape);
+}
 FArray3D<double> EleStruct::r() const {
   return ProxyHelpers::get_array_3d<double>(fortran_ptr_, ele_struct_get_r_info);
+}
+void EleStruct::set_r(const std::vector<std::vector<std::vector<double>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<double> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  ele_struct_set_r(fortran_ptr_, flat.data(), shape);
 }
 int EleStruct::key() const {
   int value;
@@ -4848,6 +5438,10 @@ void ComplexTaylorTermStruct::set_coef(std::complex<double> value) {
 }
 FArray1D<int> ComplexTaylorTermStruct::expn() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, complex_taylor_term_struct_get_expn_info);
+}
+void ComplexTaylorTermStruct::set_expn(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  complex_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
 }
 std::complex<double> ComplexTaylorStruct::ref() const {
   std::complex<double> c_value;
@@ -5125,6 +5719,10 @@ void LatStruct::set_pre_tracker(const PreTrackerStruct &src) {
 FArray1D<double> LatStruct::custom() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, lat_struct_get_custom_info);
 }
+void LatStruct::set_custom(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  lat_struct_set_custom(fortran_ptr_, v.data(), shape);
+}
 int LatStruct::version() const {
   int value;
   lat_struct_get_version(fortran_ptr_, &value);
@@ -5166,6 +5764,10 @@ void LatStruct::set_input_taylor_order(int value) {
 FArray1D<int> LatStruct::ic() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, lat_struct_get_ic_info);
 }
+void LatStruct::set_ic(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  lat_struct_set_ic(fortran_ptr_, v.data(), shape);
+}
 int LatStruct::photon_type() const {
   int value;
   lat_struct_get_photon_type(fortran_ptr_, &value);
@@ -5194,6 +5796,10 @@ CoordStructArray1D BunchStruct::particle() const {
 }
 FArray1D<int> BunchStruct::ix_z() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, bunch_struct_get_ix_z_info);
+}
+void BunchStruct::set_ix_z(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bunch_struct_set_ix_z(fortran_ptr_, v.data(), shape);
 }
 double BunchStruct::charge_tot() const {
   double value;
@@ -5330,11 +5936,33 @@ void BunchParamsStruct::set_c(const TwissStruct &src) {
 FArray2D<double> BunchParamsStruct::sigma() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, bunch_params_struct_get_sigma_info);
 }
+void BunchParamsStruct::set_sigma(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  bunch_params_struct_set_sigma(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<double> BunchParamsStruct::rel_max() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bunch_params_struct_get_rel_max_info);
 }
+void BunchParamsStruct::set_rel_max(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bunch_params_struct_set_rel_max(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> BunchParamsStruct::rel_min() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bunch_params_struct_get_rel_min_info);
+}
+void BunchParamsStruct::set_rel_min(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bunch_params_struct_set_rel_min(fortran_ptr_, v.data(), shape);
 }
 double BunchParamsStruct::s() const {
   double value;
@@ -5636,6 +6264,10 @@ FCharArray1D NametableStruct::name() const {
 FArray1D<int> NametableStruct::index() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, nametable_struct_get_index_info);
 }
+void NametableStruct::set_index(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  nametable_struct_set_index(fortran_ptr_, v.data(), shape);
+}
 int NametableStruct::n_min() const {
   int value;
   nametable_struct_get_n_min(fortran_ptr_, &value);
@@ -5651,11 +6283,43 @@ void NametableStruct::set_n_max(int value) { nametable_struct_set_n_max(fortran_
 FArray1D<double> TaoSpinDnDpzStruct::vec() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_vec_info);
 }
+void TaoSpinDnDpzStruct::set_vec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_dn_dpz_struct_set_vec(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> TaoSpinDnDpzStruct::partial() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_partial_info);
 }
+void TaoSpinDnDpzStruct::set_partial(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_spin_dn_dpz_struct_set_partial(fortran_ptr_, flat.data(), shape);
+}
 FArray2D<double> TaoSpinDnDpzStruct::partial2() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_partial2_info);
+}
+void TaoSpinDnDpzStruct::set_partial2(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_spin_dn_dpz_struct_set_partial2(fortran_ptr_, flat.data(), shape);
 }
 std::string ResonanceHStruct::id() const {
   FArray1D<char> arr =
@@ -5676,20 +6340,64 @@ void ResonanceHStruct::set_c_val(std::complex<double> value) {
 FArray2D<double> SpinOrbitMap1Struct::orb_mat() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_get_orb_mat_info);
 }
+void SpinOrbitMap1Struct::set_orb_mat(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  spin_orbit_map1_struct_set_orb_mat(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<double> SpinOrbitMap1Struct::vec0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_orbit_map1_struct_get_vec0_info);
+}
+void SpinOrbitMap1Struct::set_vec0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_orbit_map1_struct_set_vec0(fortran_ptr_, v.data(), shape);
 }
 FArray2D<double> SpinOrbitMap1Struct::spin_q() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_get_spin_q_info);
 }
+void SpinOrbitMap1Struct::set_spin_q(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  spin_orbit_map1_struct_set_spin_q(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<double> SpinAxisStruct::l() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_l_info);
+}
+void SpinAxisStruct::set_l(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_axis_struct_set_l(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> SpinAxisStruct::n0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_n0_info);
 }
+void SpinAxisStruct::set_n0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_axis_struct_set_n0(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> SpinAxisStruct::m() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_m_info);
+}
+void SpinAxisStruct::set_m(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_axis_struct_set_m(fortran_ptr_, v.data(), shape);
 }
 std::optional<EleStruct> PtcNormalFormStruct::ele_origin() const {
   void *ptr;
@@ -5703,6 +6411,10 @@ void PtcNormalFormStruct::set_ele_origin(const EleStruct &src) {
 }
 FArray1D<double> PtcNormalFormStruct::orb0() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ptc_normal_form_struct_get_orb0_info);
+}
+void PtcNormalFormStruct::set_orb0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ptc_normal_form_struct_set_orb0(fortran_ptr_, v.data(), shape);
 }
 bool PtcNormalFormStruct::valid_map() const {
   bool value;
@@ -6165,32 +6877,72 @@ void TaoCurveStruct::set_z_color(const TaoCurveColorStruct &src) {
 FArray1D<double> TaoCurveStruct::x_line() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_curve_struct_get_x_line_info);
 }
+void TaoCurveStruct::set_x_line(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_x_line(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> TaoCurveStruct::y_line() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_curve_struct_get_y_line_info);
+}
+void TaoCurveStruct::set_y_line(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_y_line(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> TaoCurveStruct::y2_line() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_curve_struct_get_y2_line_info);
 }
+void TaoCurveStruct::set_y2_line(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_y2_line(fortran_ptr_, v.data(), shape);
+}
 FArray1D<int> TaoCurveStruct::ix_line() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tao_curve_struct_get_ix_line_info);
+}
+void TaoCurveStruct::set_ix_line(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_ix_line(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> TaoCurveStruct::x_symb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_curve_struct_get_x_symb_info);
 }
+void TaoCurveStruct::set_x_symb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_x_symb(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> TaoCurveStruct::y_symb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_curve_struct_get_y_symb_info);
+}
+void TaoCurveStruct::set_y_symb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_y_symb(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> TaoCurveStruct::z_symb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_curve_struct_get_z_symb_info);
 }
+void TaoCurveStruct::set_z_symb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_z_symb(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> TaoCurveStruct::err_symb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_curve_struct_get_err_symb_info);
+}
+void TaoCurveStruct::set_err_symb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_err_symb(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> TaoCurveStruct::symb_size() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_curve_struct_get_symb_size_info);
 }
+void TaoCurveStruct::set_symb_size(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_symb_size(fortran_ptr_, v.data(), shape);
+}
 FArray1D<int> TaoCurveStruct::ix_symb() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tao_curve_struct_get_ix_symb_info);
+}
+void TaoCurveStruct::set_ix_symb(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_curve_struct_set_ix_symb(fortran_ptr_, v.data(), shape);
 }
 double TaoCurveStruct::y_axis_scale_factor() const {
   double value;
@@ -6455,6 +7207,20 @@ LatEleOrder1StructArray1D LatEleOrderArrayStruct::ele() const {
 FArray2D<double> TaoLatSigmaStruct::mat() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_lat_sigma_struct_get_mat_info);
 }
+void TaoLatSigmaStruct::set_mat(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_lat_sigma_struct_set_mat(fortran_ptr_, flat.data(), shape);
+}
 TaoSpinDnDpzStruct TaoSpinEleStruct::dn_dpz() const {
   void *ptr;
   tao_spin_ele_struct_get_dn_dpz(fortran_ptr_, &ptr);
@@ -6469,17 +7235,49 @@ FArray1D<double> TaoSpinEleStruct::orb_eigen_val() const {
       tao_spin_ele_struct_get_orb_eigen_val_info
   );
 }
+void TaoSpinEleStruct::set_orb_eigen_val(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_ele_struct_set_orb_eigen_val(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> TaoSpinEleStruct::orb_eigen_vec() const {
   return ProxyHelpers::get_array_2d<double>(
       fortran_ptr_,
       tao_spin_ele_struct_get_orb_eigen_vec_info
   );
 }
+void TaoSpinEleStruct::set_orb_eigen_vec(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_spin_ele_struct_set_orb_eigen_vec(fortran_ptr_, flat.data(), shape);
+}
 FArray2D<double> TaoSpinEleStruct::spin_eigen_vec() const {
   return ProxyHelpers::get_array_2d<double>(
       fortran_ptr_,
       tao_spin_ele_struct_get_spin_eigen_vec_info
   );
+}
+void TaoSpinEleStruct::set_spin_eigen_vec(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_spin_ele_struct_set_spin_eigen_vec(fortran_ptr_, flat.data(), shape);
 }
 bool TaoSpinEleStruct::valid() const {
   bool value;
@@ -6539,11 +7337,19 @@ FArray1D<double> TaoSpinPolarizationStruct::pol_limit_dk_partial() const {
       tao_spin_polarization_struct_get_pol_limit_dk_partial_info
   );
 }
+void TaoSpinPolarizationStruct::set_pol_limit_dk_partial(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_polarization_struct_set_pol_limit_dk_partial(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> TaoSpinPolarizationStruct::pol_limit_dk_partial2() const {
   return ProxyHelpers::get_array_1d<double>(
       fortran_ptr_,
       tao_spin_polarization_struct_get_pol_limit_dk_partial2_info
   );
+}
+void TaoSpinPolarizationStruct::set_pol_limit_dk_partial2(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_polarization_struct_set_pol_limit_dk_partial2(fortran_ptr_, v.data(), shape);
 }
 double TaoSpinPolarizationStruct::pol_rate_bks() const {
   double value;
@@ -6567,11 +7373,19 @@ FArray1D<double> TaoSpinPolarizationStruct::depol_rate_partial() const {
       tao_spin_polarization_struct_get_depol_rate_partial_info
   );
 }
+void TaoSpinPolarizationStruct::set_depol_rate_partial(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_polarization_struct_set_depol_rate_partial(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> TaoSpinPolarizationStruct::depol_rate_partial2() const {
   return ProxyHelpers::get_array_1d<double>(
       fortran_ptr_,
       tao_spin_polarization_struct_get_depol_rate_partial2_info
   );
+}
+void TaoSpinPolarizationStruct::set_depol_rate_partial2(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_polarization_struct_set_depol_rate_partial2(fortran_ptr_, v.data(), shape);
 }
 double TaoSpinPolarizationStruct::integral_bn() const {
   double value;
@@ -7287,6 +8101,10 @@ void TaoGraphStruct::set_symbol_size_scale(double value) {
 FArray1D<int> TaoGraphStruct::box() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tao_graph_struct_get_box_info);
 }
+void TaoGraphStruct::set_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_graph_struct_set_box(fortran_ptr_, v.data(), shape);
+}
 int TaoGraphStruct::ix_branch() const {
   int value;
   tao_graph_struct_get_ix_branch(fortran_ptr_, &value);
@@ -7514,6 +8332,10 @@ void TaoPlotRegionStruct::set_plot(const TaoPlotStruct &src) {
 FArray1D<double> TaoPlotRegionStruct::location() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_plot_region_struct_get_location_info);
 }
+void TaoPlotRegionStruct::set_location(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_plot_region_struct_set_location(fortran_ptr_, v.data(), shape);
+}
 bool TaoPlotRegionStruct::visible() const {
   bool value;
   tao_plot_region_struct_get_visible(fortran_ptr_, &value);
@@ -7600,6 +8422,10 @@ TaoUniverseStructArray1D TaoSuperUniverseStruct::u() const {
 }
 FArray1D<int> TaoSuperUniverseStruct::key() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tao_super_universe_struct_get_key_info);
+}
+void TaoSuperUniverseStruct::set_key(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_super_universe_struct_set_key(fortran_ptr_, v.data(), shape);
 }
 TaoBuildingWallStruct TaoSuperUniverseStruct::building_wall() const {
   void *ptr;
@@ -8065,6 +8891,10 @@ ApertureScanStructArray1D TaoDynamicApertureStruct::scan() const {
 FArray1D<double> TaoDynamicApertureStruct::pz() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_dynamic_aperture_struct_get_pz_info);
 }
+void TaoDynamicApertureStruct::set_pz(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_dynamic_aperture_struct_set_pz(fortran_ptr_, v.data(), shape);
+}
 double TaoDynamicApertureStruct::ellipse_scale() const {
   double value;
   tao_dynamic_aperture_struct_get_ellipse_scale(fortran_ptr_, &value);
@@ -8175,6 +9005,20 @@ void TaoSpinMapStruct::set_ix_branch(int value) {
 }
 FArray2D<double> TaoSpinMapStruct::mat8() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_map_struct_get_mat8_info);
+}
+void TaoSpinMapStruct::set_mat8(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_spin_map_struct_set_mat8(fortran_ptr_, flat.data(), shape);
 }
 std::string TaoDataStruct::ele_name() const {
   FArray1D<char> arr =
@@ -8717,6 +9561,10 @@ void TaoEvalNodeStruct::set_scale(double value) {
 }
 FArray1D<double> TaoEvalNodeStruct::value() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_eval_node_struct_get_value_info);
+}
+void TaoEvalNodeStruct::set_value(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_eval_node_struct_set_value(fortran_ptr_, v.data(), shape);
 }
 TaoExpressionInfoStructArray1D TaoEvalNodeStruct::info() const {
   return ProxyHelpers::get_type_array_1d<TaoExpressionInfoStructArray1D>(
@@ -10266,8 +11114,36 @@ TaoPlotRegionStructArray1D TaoCommonStruct::plot_place_buffer() const {
 FArray2D<double> TaoCommonStruct::covar() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_common_struct_get_covar_info);
 }
+void TaoCommonStruct::set_covar(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_common_struct_set_covar(fortran_ptr_, flat.data(), shape);
+}
 FArray2D<double> TaoCommonStruct::alpha() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_common_struct_get_alpha_info);
+}
+void TaoCommonStruct::set_alpha(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_common_struct_set_alpha(fortran_ptr_, flat.data(), shape);
 }
 double TaoCommonStruct::dummy_target() const {
   double value;
@@ -10475,6 +11351,19 @@ bool TaoCommonStruct::add_measurement_noise() const {
 void TaoCommonStruct::set_add_measurement_noise(bool value) {
   tao_common_struct_set_add_measurement_noise(fortran_ptr_, value);
 }
+FArray1D<bool> TaoCommonStruct::is_err_message_printed() const {
+  return ProxyHelpers::get_array_1d<bool>(
+      fortran_ptr_,
+      tao_common_struct_get_is_err_message_printed_info
+  );
+}
+void TaoCommonStruct::set_is_err_message_printed(const std::vector<bool> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  std::vector<int> bv(v.size());
+  for (size_t i = 0; i < v.size(); ++i)
+    bv[i] = v[i] ? 1 : 0;
+  tao_common_struct_set_is_err_message_printed(fortran_ptr_, bv.data(), shape);
+}
 bool TaoCommonStruct::command_arg_has_been_executed() const {
   bool value;
   tao_common_struct_get_command_arg_has_been_executed(fortran_ptr_, &value);
@@ -10640,6 +11529,10 @@ void TaoPlotPageStruct::set_plot_display_type(const std::string &value) {
 }
 FArray1D<double> TaoPlotPageStruct::size() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_plot_page_struct_get_size_info);
+}
+void TaoPlotPageStruct::set_size(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_plot_page_struct_set_size(fortran_ptr_, v.data(), shape);
 }
 double TaoPlotPageStruct::text_height() const {
   double value;
@@ -11012,20 +11905,44 @@ void TaoWaveStruct::set_chi_ba(double value) { tao_wave_struct_set_chi_ba(fortra
 FArray1D<double> TaoWaveStruct::amp_a() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_wave_struct_get_amp_a_info);
 }
+void TaoWaveStruct::set_amp_a(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_wave_struct_set_amp_a(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> TaoWaveStruct::amp_b() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_wave_struct_get_amp_b_info);
+}
+void TaoWaveStruct::set_amp_b(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_wave_struct_set_amp_b(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> TaoWaveStruct::amp_ba() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_wave_struct_get_amp_ba_info);
 }
+void TaoWaveStruct::set_amp_ba(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_wave_struct_set_amp_ba(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> TaoWaveStruct::coef_a() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_wave_struct_get_coef_a_info);
+}
+void TaoWaveStruct::set_coef_a(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_wave_struct_set_coef_a(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> TaoWaveStruct::coef_b() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_wave_struct_get_coef_b_info);
 }
+void TaoWaveStruct::set_coef_b(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_wave_struct_set_coef_b(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> TaoWaveStruct::coef_ba() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_wave_struct_get_coef_ba_info);
+}
+void TaoWaveStruct::set_coef_ba(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_wave_struct_set_coef_ba(fortran_ptr_, v.data(), shape);
 }
 int TaoWaveStruct::n_func() const {
   int value;
@@ -11103,6 +12020,10 @@ void TaoWaveStruct::set_i_curve_wrap_pt(int value) {
 }
 FArray1D<int> TaoWaveStruct::ix_data() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tao_wave_struct_get_ix_data_info);
+}
+void TaoWaveStruct::set_ix_data(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_wave_struct_set_ix_data(fortran_ptr_, v.data(), shape);
 }
 int TaoWaveStruct::n_kick() const {
   int value;
@@ -11321,6 +12242,20 @@ void TaoUniverseStruct::set_spin_map(const TaoSpinMapStruct &src) {
 FArray2D<double> TaoUniverseStruct::dModel_dVar() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_universe_struct_get_dModel_dVar_info);
 }
+void TaoUniverseStruct::set_dModel_dVar(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  tao_universe_struct_set_dModel_dVar(fortran_ptr_, flat.data(), shape);
+}
 int TaoUniverseStruct::ix_uni() const {
   int value;
   tao_universe_struct_get_ix_uni(fortran_ptr_, &value);
@@ -11412,11 +12347,47 @@ void MadEnergyStruct::set_particle(int value) {
 FArray1D<double> MadMapStruct::k() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, mad_map_struct_get_k_info);
 }
+void MadMapStruct::set_k(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  mad_map_struct_set_k(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> MadMapStruct::r() const {
   return ProxyHelpers::get_array_2d<double>(fortran_ptr_, mad_map_struct_get_r_info);
 }
+void MadMapStruct::set_r(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  mad_map_struct_set_r(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<double> MadMapStruct::t() const {
   return ProxyHelpers::get_array_3d<double>(fortran_ptr_, mad_map_struct_get_t_info);
+}
+void MadMapStruct::set_t(const std::vector<std::vector<std::vector<double>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<double> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  mad_map_struct_set_t(fortran_ptr_, flat.data(), shape);
 }
 int64_t RandomStateStruct::ix() const {
   int64_t value;
@@ -11490,8 +12461,19 @@ int64_t RandomStateStruct::in_sobseq() const {
 void RandomStateStruct::set_in_sobseq(int64_t value) {
   random_state_struct_set_in_sobseq(fortran_ptr_, value);
 }
+FArray1D<int64_t> RandomStateStruct::ix_sobseq() const {
+  return ProxyHelpers::get_array_1d<int64_t>(fortran_ptr_, random_state_struct_get_ix_sobseq_info);
+}
+void RandomStateStruct::set_ix_sobseq(const std::vector<int64_t> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  random_state_struct_set_ix_sobseq(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> RandomStateStruct::x_sobseq() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, random_state_struct_get_x_sobseq_info);
+}
+void RandomStateStruct::set_x_sobseq(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  random_state_struct_set_x_sobseq(fortran_ptr_, v.data(), shape);
 }
 int BbuStageStruct::ix_ele_lr_wake() const {
   int value;
@@ -11558,14 +12540,30 @@ void BbuStageStruct::set_time_at_wake_ele(double value) {
 FArray1D<double> BbuStageStruct::ave_orb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_ave_orb_info);
 }
+void BbuStageStruct::set_ave_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_stage_struct_set_ave_orb(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> BbuStageStruct::rms_orb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_rms_orb_info);
+}
+void BbuStageStruct::set_rms_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_stage_struct_set_rms_orb(fortran_ptr_, v.data(), shape);
 }
 FArray1D<double> BbuStageStruct::min_orb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_min_orb_info);
 }
+void BbuStageStruct::set_min_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_stage_struct_set_min_orb(fortran_ptr_, v.data(), shape);
+}
 FArray1D<double> BbuStageStruct::max_orb() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_max_orb_info);
+}
+void BbuStageStruct::set_max_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_stage_struct_set_max_orb(fortran_ptr_, v.data(), shape);
 }
 int BbuStageStruct::n_orb() const {
   int value;
@@ -11587,6 +12585,10 @@ BbuStageStructArray1D BbuBeamStruct::stage() const {
 }
 FArray1D<int> BbuBeamStruct::ix_ele_bunch() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, bbu_beam_struct_get_ix_ele_bunch_info);
+}
+void BbuBeamStruct::set_ix_ele_bunch(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_beam_struct_set_ix_ele_bunch(fortran_ptr_, v.data(), shape);
 }
 int BbuBeamStruct::ix_bunch_head() const {
   int value;
@@ -11909,6 +12911,10 @@ void BbuParamStruct::set_ramp_on(bool value) { bbu_param_struct_set_ramp_on(fort
 FArray1D<double> BbuParamStruct::ramp_pattern() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_param_struct_get_ramp_pattern_info);
 }
+void BbuParamStruct::set_ramp_pattern(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_param_struct_set_ramp_pattern(fortran_ptr_, v.data(), shape);
+}
 int BbuParamStruct::ramp_n_start() const {
   int value;
   bbu_param_struct_get_ramp_n_start(fortran_ptr_, &value);
@@ -12147,17 +13153,53 @@ FArray1D<double> AllEncompassingStruct::real_rp_1d() const {
       all_encompassing_struct_get_real_rp_1d_info
   );
 }
+void AllEncompassingStruct::set_real_rp_1d(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_rp_1d(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> AllEncompassingStruct::real_rp_2d() const {
   return ProxyHelpers::get_array_2d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_rp_2d_info
   );
 }
+void AllEncompassingStruct::set_real_rp_2d(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_real_rp_2d(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<double> AllEncompassingStruct::real_rp_3d() const {
   return ProxyHelpers::get_array_3d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_rp_3d_info
   );
+}
+void AllEncompassingStruct::set_real_rp_3d(const std::vector<std::vector<std::vector<double>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<double> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_real_rp_3d(fortran_ptr_, flat.data(), shape);
 }
 double *AllEncompassingStruct::real_rp_0d_ptr() const {
   double *ptr;
@@ -12173,11 +13215,29 @@ FArray1D<double> AllEncompassingStruct::real_rp_1d_ptr() const {
       all_encompassing_struct_get_real_rp_1d_ptr_info
   );
 }
+void AllEncompassingStruct::set_real_rp_1d_ptr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_rp_1d_ptr(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> AllEncompassingStruct::real_rp_2d_ptr() const {
   return ProxyHelpers::get_array_2d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_rp_2d_ptr_info
   );
+}
+void AllEncompassingStruct::set_real_rp_2d_ptr(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_real_rp_2d_ptr(fortran_ptr_, flat.data(), shape);
 }
 FArray3D<double> AllEncompassingStruct::real_rp_3d_ptr() const {
   return ProxyHelpers::get_array_3d<double>(
@@ -12185,11 +13245,35 @@ FArray3D<double> AllEncompassingStruct::real_rp_3d_ptr() const {
       all_encompassing_struct_get_real_rp_3d_ptr_info
   );
 }
+void AllEncompassingStruct::set_real_rp_3d_ptr(
+    const std::vector<std::vector<std::vector<double>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<double> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_real_rp_3d_ptr(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<double> AllEncompassingStruct::real_rp_1d_alloc() const {
   return ProxyHelpers::get_array_1d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_rp_1d_alloc_info
   );
+}
+void AllEncompassingStruct::set_real_rp_1d_alloc(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_rp_1d_alloc(fortran_ptr_, v.data(), shape);
 }
 FArray2D<double> AllEncompassingStruct::real_rp_2d_alloc() const {
   return ProxyHelpers::get_array_2d<double>(
@@ -12197,11 +13281,45 @@ FArray2D<double> AllEncompassingStruct::real_rp_2d_alloc() const {
       all_encompassing_struct_get_real_rp_2d_alloc_info
   );
 }
+void AllEncompassingStruct::set_real_rp_2d_alloc(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_real_rp_2d_alloc(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<double> AllEncompassingStruct::real_rp_3d_alloc() const {
   return ProxyHelpers::get_array_3d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_rp_3d_alloc_info
   );
+}
+void AllEncompassingStruct::set_real_rp_3d_alloc(
+    const std::vector<std::vector<std::vector<double>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<double> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_real_rp_3d_alloc(fortran_ptr_, flat.data(), shape);
 }
 double AllEncompassingStruct::real_dp_0d() const {
   double value;
@@ -12217,17 +13335,53 @@ FArray1D<double> AllEncompassingStruct::real_dp_1d() const {
       all_encompassing_struct_get_real_dp_1d_info
   );
 }
+void AllEncompassingStruct::set_real_dp_1d(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_dp_1d(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> AllEncompassingStruct::real_dp_2d() const {
   return ProxyHelpers::get_array_2d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_dp_2d_info
   );
 }
+void AllEncompassingStruct::set_real_dp_2d(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_real_dp_2d(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<double> AllEncompassingStruct::real_dp_3d() const {
   return ProxyHelpers::get_array_3d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_dp_3d_info
   );
+}
+void AllEncompassingStruct::set_real_dp_3d(const std::vector<std::vector<std::vector<double>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<double> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_real_dp_3d(fortran_ptr_, flat.data(), shape);
 }
 double *AllEncompassingStruct::real_dp_0d_ptr() const {
   double *ptr;
@@ -12243,11 +13397,29 @@ FArray1D<double> AllEncompassingStruct::real_dp_1d_ptr() const {
       all_encompassing_struct_get_real_dp_1d_ptr_info
   );
 }
+void AllEncompassingStruct::set_real_dp_1d_ptr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_dp_1d_ptr(fortran_ptr_, v.data(), shape);
+}
 FArray2D<double> AllEncompassingStruct::real_dp_2d_ptr() const {
   return ProxyHelpers::get_array_2d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_dp_2d_ptr_info
   );
+}
+void AllEncompassingStruct::set_real_dp_2d_ptr(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_real_dp_2d_ptr(fortran_ptr_, flat.data(), shape);
 }
 FArray3D<double> AllEncompassingStruct::real_dp_3d_ptr() const {
   return ProxyHelpers::get_array_3d<double>(
@@ -12255,11 +13427,35 @@ FArray3D<double> AllEncompassingStruct::real_dp_3d_ptr() const {
       all_encompassing_struct_get_real_dp_3d_ptr_info
   );
 }
+void AllEncompassingStruct::set_real_dp_3d_ptr(
+    const std::vector<std::vector<std::vector<double>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<double> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_real_dp_3d_ptr(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<double> AllEncompassingStruct::real_dp_1d_alloc() const {
   return ProxyHelpers::get_array_1d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_dp_1d_alloc_info
   );
+}
+void AllEncompassingStruct::set_real_dp_1d_alloc(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_dp_1d_alloc(fortran_ptr_, v.data(), shape);
 }
 FArray2D<double> AllEncompassingStruct::real_dp_2d_alloc() const {
   return ProxyHelpers::get_array_2d<double>(
@@ -12267,11 +13463,45 @@ FArray2D<double> AllEncompassingStruct::real_dp_2d_alloc() const {
       all_encompassing_struct_get_real_dp_2d_alloc_info
   );
 }
+void AllEncompassingStruct::set_real_dp_2d_alloc(const std::vector<std::vector<double>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<double> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_real_dp_2d_alloc(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<double> AllEncompassingStruct::real_dp_3d_alloc() const {
   return ProxyHelpers::get_array_3d<double>(
       fortran_ptr_,
       all_encompassing_struct_get_real_dp_3d_alloc_info
   );
+}
+void AllEncompassingStruct::set_real_dp_3d_alloc(
+    const std::vector<std::vector<std::vector<double>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<double> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_real_dp_3d_alloc(fortran_ptr_, flat.data(), shape);
 }
 std::complex<double> AllEncompassingStruct::complex_dp_0d() const {
   std::complex<double> c_value;
@@ -12287,11 +13517,31 @@ FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d() const {
       all_encompassing_struct_get_complex_dp_1d_info
   );
 }
+void AllEncompassingStruct::set_complex_dp_1d(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_complex_dp_1d(fortran_ptr_, v.data(), shape);
+}
 FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d() const {
   return ProxyHelpers::get_array_2d<std::complex<double>>(
       fortran_ptr_,
       all_encompassing_struct_get_complex_dp_2d_info
   );
+}
+void AllEncompassingStruct::set_complex_dp_2d(
+    const std::vector<std::vector<std::complex<double>>> &v
+) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<std::complex<double>> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_complex_dp_2d(fortran_ptr_, flat.data(), shape);
 }
 FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d() const {
   return ProxyHelpers::get_array_3d<std::complex<double>>(
@@ -12299,11 +13549,35 @@ FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d() const {
       all_encompassing_struct_get_complex_dp_3d_info
   );
 }
+void AllEncompassingStruct::set_complex_dp_3d(
+    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<std::complex<double>> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_complex_dp_3d(fortran_ptr_, flat.data(), shape);
+}
 FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d_ptr() const {
   return ProxyHelpers::get_array_1d<std::complex<double>>(
       fortran_ptr_,
       all_encompassing_struct_get_complex_dp_1d_ptr_info
   );
+}
+void AllEncompassingStruct::set_complex_dp_1d_ptr(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_complex_dp_1d_ptr(fortran_ptr_, v.data(), shape);
 }
 FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d_ptr() const {
   return ProxyHelpers::get_array_2d<std::complex<double>>(
@@ -12311,11 +13585,47 @@ FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d_ptr() const 
       all_encompassing_struct_get_complex_dp_2d_ptr_info
   );
 }
+void AllEncompassingStruct::set_complex_dp_2d_ptr(
+    const std::vector<std::vector<std::complex<double>>> &v
+) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<std::complex<double>> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_complex_dp_2d_ptr(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d_ptr() const {
   return ProxyHelpers::get_array_3d<std::complex<double>>(
       fortran_ptr_,
       all_encompassing_struct_get_complex_dp_3d_ptr_info
   );
+}
+void AllEncompassingStruct::set_complex_dp_3d_ptr(
+    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<std::complex<double>> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_complex_dp_3d_ptr(fortran_ptr_, flat.data(), shape);
 }
 FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d_alloc() const {
   return ProxyHelpers::get_array_1d<std::complex<double>>(
@@ -12323,17 +13633,57 @@ FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d_alloc() cons
       all_encompassing_struct_get_complex_dp_1d_alloc_info
   );
 }
+void AllEncompassingStruct::set_complex_dp_1d_alloc(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_complex_dp_1d_alloc(fortran_ptr_, v.data(), shape);
+}
 FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d_alloc() const {
   return ProxyHelpers::get_array_2d<std::complex<double>>(
       fortran_ptr_,
       all_encompassing_struct_get_complex_dp_2d_alloc_info
   );
 }
+void AllEncompassingStruct::set_complex_dp_2d_alloc(
+    const std::vector<std::vector<std::complex<double>>> &v
+) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<std::complex<double>> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_complex_dp_2d_alloc(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d_alloc() const {
   return ProxyHelpers::get_array_3d<std::complex<double>>(
       fortran_ptr_,
       all_encompassing_struct_get_complex_dp_3d_alloc_info
   );
+}
+void AllEncompassingStruct::set_complex_dp_3d_alloc(
+    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<std::complex<double>> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_complex_dp_3d_alloc(fortran_ptr_, flat.data(), shape);
 }
 int AllEncompassingStruct::int_0d() const {
   int value;
@@ -12346,11 +13696,47 @@ void AllEncompassingStruct::set_int_0d(int value) {
 FArray1D<int> AllEncompassingStruct::int_1d() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, all_encompassing_struct_get_int_1d_info);
 }
+void AllEncompassingStruct::set_int_1d(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int_1d(fortran_ptr_, v.data(), shape);
+}
 FArray2D<int> AllEncompassingStruct::int_2d() const {
   return ProxyHelpers::get_array_2d<int>(fortran_ptr_, all_encompassing_struct_get_int_2d_info);
 }
+void AllEncompassingStruct::set_int_2d(const std::vector<std::vector<int>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<int> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_int_2d(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<int> AllEncompassingStruct::int_3d() const {
   return ProxyHelpers::get_array_3d<int>(fortran_ptr_, all_encompassing_struct_get_int_3d_info);
+}
+void AllEncompassingStruct::set_int_3d(const std::vector<std::vector<std::vector<int>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<int> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_int_3d(fortran_ptr_, flat.data(), shape);
 }
 int *AllEncompassingStruct::int_0d_ptr() const {
   int *ptr;
@@ -12363,11 +13749,47 @@ void AllEncompassingStruct::set_int_0d_ptr(int value) {
 FArray1D<int> AllEncompassingStruct::int_1d_ptr() const {
   return ProxyHelpers::get_array_1d<int>(fortran_ptr_, all_encompassing_struct_get_int_1d_ptr_info);
 }
+void AllEncompassingStruct::set_int_1d_ptr(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int_1d_ptr(fortran_ptr_, v.data(), shape);
+}
 FArray2D<int> AllEncompassingStruct::int_2d_ptr() const {
   return ProxyHelpers::get_array_2d<int>(fortran_ptr_, all_encompassing_struct_get_int_2d_ptr_info);
 }
+void AllEncompassingStruct::set_int_2d_ptr(const std::vector<std::vector<int>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<int> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_int_2d_ptr(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<int> AllEncompassingStruct::int_3d_ptr() const {
   return ProxyHelpers::get_array_3d<int>(fortran_ptr_, all_encompassing_struct_get_int_3d_ptr_info);
+}
+void AllEncompassingStruct::set_int_3d_ptr(const std::vector<std::vector<std::vector<int>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<int> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_int_3d_ptr(fortran_ptr_, flat.data(), shape);
 }
 FArray1D<int> AllEncompassingStruct::int_1d_alloc() const {
   return ProxyHelpers::get_array_1d<int>(
@@ -12375,17 +13797,53 @@ FArray1D<int> AllEncompassingStruct::int_1d_alloc() const {
       all_encompassing_struct_get_int_1d_alloc_info
   );
 }
+void AllEncompassingStruct::set_int_1d_alloc(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int_1d_alloc(fortran_ptr_, v.data(), shape);
+}
 FArray2D<int> AllEncompassingStruct::int_2d_alloc() const {
   return ProxyHelpers::get_array_2d<int>(
       fortran_ptr_,
       all_encompassing_struct_get_int_2d_alloc_info
   );
 }
+void AllEncompassingStruct::set_int_2d_alloc(const std::vector<std::vector<int>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<int> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_int_2d_alloc(fortran_ptr_, flat.data(), shape);
+}
 FArray3D<int> AllEncompassingStruct::int_3d_alloc() const {
   return ProxyHelpers::get_array_3d<int>(
       fortran_ptr_,
       all_encompassing_struct_get_int_3d_alloc_info
   );
+}
+void AllEncompassingStruct::set_int_3d_alloc(const std::vector<std::vector<std::vector<int>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<int> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_int_3d_alloc(fortran_ptr_, flat.data(), shape);
 }
 int64_t AllEncompassingStruct::int8_0d() const {
   int64_t value;
@@ -12395,6 +13853,60 @@ int64_t AllEncompassingStruct::int8_0d() const {
 void AllEncompassingStruct::set_int8_0d(int64_t value) {
   all_encompassing_struct_set_int8_0d(fortran_ptr_, value);
 }
+FArray1D<int64_t> AllEncompassingStruct::int8_1d() const {
+  return ProxyHelpers::get_array_1d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_1d_info
+  );
+}
+void AllEncompassingStruct::set_int8_1d(const std::vector<int64_t> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int8_1d(fortran_ptr_, v.data(), shape);
+}
+FArray2D<int64_t> AllEncompassingStruct::int8_2d() const {
+  return ProxyHelpers::get_array_2d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_2d_info
+  );
+}
+void AllEncompassingStruct::set_int8_2d(const std::vector<std::vector<int64_t>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<int64_t> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_int8_2d(fortran_ptr_, flat.data(), shape);
+}
+FArray3D<int64_t> AllEncompassingStruct::int8_3d() const {
+  return ProxyHelpers::get_array_3d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_3d_info
+  );
+}
+void AllEncompassingStruct::set_int8_3d(const std::vector<std::vector<std::vector<int64_t>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<int64_t> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_int8_3d(fortran_ptr_, flat.data(), shape);
+}
 int64_t *AllEncompassingStruct::int8_0d_ptr() const {
   int64_t *ptr;
   all_encompassing_struct_get_int8_0d_ptr(fortran_ptr_, &ptr);
@@ -12403,6 +13915,117 @@ int64_t *AllEncompassingStruct::int8_0d_ptr() const {
 void AllEncompassingStruct::set_int8_0d_ptr(int64_t value) {
   all_encompassing_struct_set_int8_0d_ptr(fortran_ptr_, value);
 }
+FArray1D<int64_t> AllEncompassingStruct::int8_1d_ptr() const {
+  return ProxyHelpers::get_array_1d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_1d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_int8_1d_ptr(const std::vector<int64_t> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int8_1d_ptr(fortran_ptr_, v.data(), shape);
+}
+FArray2D<int64_t> AllEncompassingStruct::int8_2d_ptr() const {
+  return ProxyHelpers::get_array_2d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_2d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_int8_2d_ptr(const std::vector<std::vector<int64_t>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<int64_t> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_int8_2d_ptr(fortran_ptr_, flat.data(), shape);
+}
+FArray3D<int64_t> AllEncompassingStruct::int8_3d_ptr() const {
+  return ProxyHelpers::get_array_3d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_3d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_int8_3d_ptr(const std::vector<std::vector<std::vector<int64_t>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<int64_t> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_int8_3d_ptr(fortran_ptr_, flat.data(), shape);
+}
+FArray1D<int64_t> AllEncompassingStruct::int8_1d_alloc() const {
+  return ProxyHelpers::get_array_1d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_1d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_int8_1d_alloc(const std::vector<int64_t> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int8_1d_alloc(fortran_ptr_, v.data(), shape);
+}
+FArray2D<int64_t> AllEncompassingStruct::int8_2d_alloc() const {
+  return ProxyHelpers::get_array_2d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_2d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_int8_2d_alloc(const std::vector<std::vector<int64_t>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<int64_t> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j]);
+    }
+  }
+  all_encompassing_struct_set_int8_2d_alloc(fortran_ptr_, flat.data(), shape);
+}
+FArray3D<int64_t> AllEncompassingStruct::int8_3d_alloc() const {
+  return ProxyHelpers::get_array_3d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_3d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_int8_3d_alloc(
+    const std::vector<std::vector<std::vector<int64_t>>> &v
+) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<int64_t> flat;
+  flat.reserve(n1 * n2 * n3);
+  // Transpose logic matches explanation in comments above: iter k, j, i.
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i]);
+      }
+    }
+  }
+  all_encompassing_struct_set_int8_3d_alloc(fortran_ptr_, flat.data(), shape);
+}
 bool AllEncompassingStruct::logical_0d() const {
   bool value;
   all_encompassing_struct_get_logical_0d(fortran_ptr_, &value);
@@ -12410,6 +14033,62 @@ bool AllEncompassingStruct::logical_0d() const {
 }
 void AllEncompassingStruct::set_logical_0d(bool value) {
   all_encompassing_struct_set_logical_0d(fortran_ptr_, value);
+}
+FArray1D<bool> AllEncompassingStruct::logical_1d() const {
+  return ProxyHelpers::get_array_1d<bool>(
+      fortran_ptr_,
+      all_encompassing_struct_get_logical_1d_info
+  );
+}
+void AllEncompassingStruct::set_logical_1d(const std::vector<bool> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  std::vector<int> bv(v.size());
+  for (size_t i = 0; i < v.size(); ++i)
+    bv[i] = v[i] ? 1 : 0;
+  all_encompassing_struct_set_logical_1d(fortran_ptr_, bv.data(), shape);
+}
+FArray2D<bool> AllEncompassingStruct::logical_2d() const {
+  return ProxyHelpers::get_array_2d<bool>(
+      fortran_ptr_,
+      all_encompassing_struct_get_logical_2d_info
+  );
+}
+void AllEncompassingStruct::set_logical_2d(const std::vector<std::vector<bool>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<int> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j] ? 1 : 0);
+    }
+  }
+  all_encompassing_struct_set_logical_2d(fortran_ptr_, flat.data(), shape);
+}
+FArray3D<bool> AllEncompassingStruct::logical_3d() const {
+  return ProxyHelpers::get_array_3d<bool>(
+      fortran_ptr_,
+      all_encompassing_struct_get_logical_3d_info
+  );
+}
+void AllEncompassingStruct::set_logical_3d(const std::vector<std::vector<std::vector<bool>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<int> flat;
+  flat.reserve(n1 * n2 * n3);
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i] ? 1 : 0);
+      }
+    }
+  }
+  all_encompassing_struct_set_logical_3d(fortran_ptr_, flat.data(), shape);
 }
 bool *AllEncompassingStruct::logical_0d_ptr() const {
   bool *ptr;

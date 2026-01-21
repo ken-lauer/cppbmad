@@ -10,3 +10,7 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_w(py::module &m);
+
+struct PyWriteLatLine {
+  std::string line;
+};

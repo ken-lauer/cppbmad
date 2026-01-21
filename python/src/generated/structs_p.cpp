@@ -64,9 +64,10 @@ void init_photon_element_struct(py::module &m, py::class_<PhotonElementStruct> &
       // PhotonElementStruct.init_energy_prob (1D_ALLOC_type - Initial energy probability density
       .def_property_readonly("init_energy_prob", &PhotonElementStruct::init_energy_prob)
       // PhotonElementStruct.integrated_init_energy_prob (1D_ALLOC_real -
-      .def_property_readonly(
+      .def_property(
           "integrated_init_energy_prob",
-          &PhotonElementStruct::integrated_init_energy_prob
+          &PhotonElementStruct::integrated_init_energy_prob,
+          &PhotonElementStruct::set_integrated_init_energy_prob
       )
 
       .def("__repr__", [](const PhotonElementStruct &self) { return to_string(self); })
@@ -106,10 +107,10 @@ void init_photon_material_struct(py::module &m, py::class_<PhotonMaterialStruct>
       // PhotonMaterialStruct.f_hkl (0D_NOT_complex - = sqrt(f_h * f_hbar)
       .def_property("f_hkl", &PhotonMaterialStruct::f_hkl, &PhotonMaterialStruct::set_f_hkl)
       // PhotonMaterialStruct.h_norm (1D_NOT_real - Normalized H vector for crystals.
-      .def_property_readonly("h_norm", &PhotonMaterialStruct::h_norm)
+      .def_property("h_norm", &PhotonMaterialStruct::h_norm, &PhotonMaterialStruct::set_h_norm)
       // PhotonMaterialStruct.l_ref (1D_NOT_real - Crystal reference orbit displacement vector in
       // element coords.
-      .def_property_readonly("l_ref", &PhotonMaterialStruct::l_ref)
+      .def_property("l_ref", &PhotonMaterialStruct::l_ref, &PhotonMaterialStruct::set_l_ref)
 
       .def("__repr__", [](const PhotonMaterialStruct &self) { return to_string(self); })
 
@@ -206,14 +207,22 @@ void init_photon_reflect_surface_struct(
 void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTableStruct> &cls) {
   cls.def(py::init<>())
       // PhotonReflectTableStruct.angle (1D_ALLOC_real - Vector of angle values for %p_reflect
-      .def_property_readonly("angle", &PhotonReflectTableStruct::angle)
+      .def_property("angle", &PhotonReflectTableStruct::angle, &PhotonReflectTableStruct::set_angle)
       // PhotonReflectTableStruct.energy (1D_ALLOC_real - Vector of energy values for %p_reflect
-      .def_property_readonly("energy", &PhotonReflectTableStruct::energy)
+      .def_property(
+          "energy",
+          &PhotonReflectTableStruct::energy,
+          &PhotonReflectTableStruct::set_energy
+      )
       // PhotonReflectTableStruct.int1 (1D_ALLOC_type -
       .def_property_readonly("int1", &PhotonReflectTableStruct::int1)
       // PhotonReflectTableStruct.p_reflect (2D_ALLOC_real - (angle, ev) probability. Log used for
       // smooth surface reflection
-      .def_property_readonly("p_reflect", &PhotonReflectTableStruct::p_reflect)
+      .def_property(
+          "p_reflect",
+          &PhotonReflectTableStruct::p_reflect,
+          &PhotonReflectTableStruct::set_p_reflect
+      )
       // PhotonReflectTableStruct.max_energy (0D_NOT_real - maximum energy for this table
       .def_property(
           "max_energy",
@@ -221,9 +230,17 @@ void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTab
           &PhotonReflectTableStruct::set_max_energy
       )
       // PhotonReflectTableStruct.p_reflect_scratch (1D_ALLOC_real - Scratch space
-      .def_property_readonly("p_reflect_scratch", &PhotonReflectTableStruct::p_reflect_scratch)
+      .def_property(
+          "p_reflect_scratch",
+          &PhotonReflectTableStruct::p_reflect_scratch,
+          &PhotonReflectTableStruct::set_p_reflect_scratch
+      )
       // PhotonReflectTableStruct.bragg_angle (1D_ALLOC_real - Bragg angle at energy values.
-      .def_property_readonly("bragg_angle", &PhotonReflectTableStruct::bragg_angle)
+      .def_property(
+          "bragg_angle",
+          &PhotonReflectTableStruct::bragg_angle,
+          &PhotonReflectTableStruct::set_bragg_angle
+      )
       .def_static(
           "new_array1d",
           [](int sz, int lbound) { return PhotonReflectTableStructAlloc1D(lbound, sz); },
@@ -294,9 +311,9 @@ void init_photon_target_struct(py::module &m, py::class_<PhotonTargetStruct> &cl
 void init_pixel_detec_struct(py::module &m, py::class_<PixelDetecStruct> &cls) {
   cls.def(py::init<>())
       // PixelDetecStruct.dr (1D_NOT_real -
-      .def_property_readonly("dr", &PixelDetecStruct::dr)
+      .def_property("dr", &PixelDetecStruct::dr, &PixelDetecStruct::set_dr)
       // PixelDetecStruct.r0 (1D_NOT_real -
-      .def_property_readonly("r0", &PixelDetecStruct::r0)
+      .def_property("r0", &PixelDetecStruct::r0, &PixelDetecStruct::set_r0)
       // PixelDetecStruct.n_track_tot (0D_NOT_integer8 - How many photons were launched from source
       // element.
       .def_property(
@@ -357,14 +374,18 @@ void init_pixel_pt_struct(py::module &m, py::class_<PixelPtStruct> &cls) {
       // PixelPtStruct.intensity (0D_NOT_real -
       .def_property("intensity", &PixelPtStruct::intensity, &PixelPtStruct::set_intensity)
       // PixelPtStruct.orbit (1D_NOT_real - x, Vx/c, y, Vy/c, dummy, E - E_ref.
-      .def_property_readonly("orbit", &PixelPtStruct::orbit)
+      .def_property("orbit", &PixelPtStruct::orbit, &PixelPtStruct::set_orbit)
       // PixelPtStruct.orbit_rms (1D_NOT_real - RMS statistics.
-      .def_property_readonly("orbit_rms", &PixelPtStruct::orbit_rms)
+      .def_property("orbit_rms", &PixelPtStruct::orbit_rms, &PixelPtStruct::set_orbit_rms)
       // PixelPtStruct.init_orbit (1D_NOT_real - Initial orbit at start of lattice statistics.
-      .def_property_readonly("init_orbit", &PixelPtStruct::init_orbit)
+      .def_property("init_orbit", &PixelPtStruct::init_orbit, &PixelPtStruct::set_init_orbit)
       // PixelPtStruct.init_orbit_rms (1D_NOT_real - Initial orbit at start of lattice RMS
       // statistics.
-      .def_property_readonly("init_orbit_rms", &PixelPtStruct::init_orbit_rms)
+      .def_property(
+          "init_orbit_rms",
+          &PixelPtStruct::init_orbit_rms,
+          &PixelPtStruct::set_init_orbit_rms
+      )
 
       .def("__repr__", [](const PixelPtStruct &self) { return to_string(self); })
 
@@ -434,7 +455,7 @@ void init_ptc_normal_form_struct(py::module &m, py::class_<PtcNormalFormStruct> 
           &PtcNormalFormStruct::set_ele_origin
       )
       // PtcNormalFormStruct.orb0 (1D_NOT_real - Closed orbit at element.
-      .def_property_readonly("orb0", &PtcNormalFormStruct::orb0)
+      .def_property("orb0", &PtcNormalFormStruct::orb0, &PtcNormalFormStruct::set_orb0)
       // PtcNormalFormStruct.valid_map (0D_NOT_logical -
       .def_property(
           "valid_map",

@@ -15,6 +15,9 @@ namespace Tao {
 // - Routine in configuration skip list
 
 // Skipped unusable routine callback:
+// - Array bounds handling: "Enum 'N' found in bounds 'n' but not in provided map."
+// - Array bounds handling: "Enum 'M' found in bounds 'm' but not in provided map."
+// - Array bounds handling: "Enum 'M' found in bounds 'm' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_integrate_max(
     int &ix_start /* 0D_NOT_integer in */,
@@ -54,6 +57,8 @@ void integrate_min(
 );
 
 // Skipped unusable routine jacobian:
+// - Array bounds handling: "Enum 'NN' found in bounds 'nn' but not in provided map."
+// - Array bounds handling: "Enum 'MM' found in bounds 'mm' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_abort_command_file(bool *force_abort /* 0D_NOT_logical in */);
 void tao_abort_command_file(std::optional<bool> force_abort = std::nullopt);
@@ -414,13 +419,13 @@ extern "C" void fortran_tao_draw_curve_data(
     void *plot /* 0D_NOT_type in */,
     void *graph /* 0D_NOT_type in */,
     void *curve /* 0D_NOT_type in */,
-    bool &have_data /* 0D_NOT_logical in */
+    bool &have_data /* 0D_NOT_logical inout */
 );
 void tao_draw_curve_data(
     TaoPlotStruct &plot,
     TaoGraphStruct &graph,
     TaoCurveStruct &curve,
-    bool have_data
+    bool &have_data
 );
 extern "C" void fortran_tao_draw_ele_for_floor_plan(
     void *plot /* 0D_NOT_type in */,
@@ -452,13 +457,13 @@ extern "C" void fortran_tao_draw_histogram_data(
     void *plot /* 0D_NOT_type in */,
     void *graph /* 0D_NOT_type in */,
     void *curve /* 0D_NOT_type in */,
-    bool &have_data /* 0D_NOT_logical in */
+    bool &have_data /* 0D_NOT_logical inout */
 );
 void tao_draw_histogram_data(
     TaoPlotStruct &plot,
     TaoGraphStruct &graph,
     TaoCurveStruct &curve,
-    bool have_data
+    bool &have_data
 );
 extern "C" void
 fortran_tao_draw_lat_layout(void *plot /* 0D_NOT_type in */, void *graph /* 0D_NOT_type in */);
@@ -487,7 +492,7 @@ extern "C" void fortran_tao_ele_shape_info(
     const char *label_name /* 0D_NOT_character out */,
     double &y1 /* 0D_NOT_real out */,
     double &y2 /* 0D_NOT_real out */,
-    int *ix_shape_min /* 0D_NOT_integer in */
+    int *ix_shape_min /* 0D_NOT_integer inout */
 );
 struct TaoEleShapeInfo {
   std::optional<TaoEleShapeStruct> e_shape;
@@ -499,7 +504,7 @@ Tao::TaoEleShapeInfo tao_ele_shape_info(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shapes,
-    std::optional<int> ix_shape_min = std::nullopt
+    optional_ref<int> ix_shape_min = std::nullopt
 );
 
 // Skipped unusable routine tao_ele_shape_input_to_struct:
@@ -1288,10 +1293,10 @@ Tao::TaoMerit tao_merit();
 // - Variable-sized in character array: 1D_NOT_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_next_word(
-    const char *line /* 0D_NOT_character in */,
+    const char *line /* 0D_NOT_character inout */,
     const char *word /* 0D_NOT_character out */
 );
-std::string tao_next_word(std::string line);
+std::string tao_next_word(std::string &line);
 extern "C" bool fortran_tao_one_turn_map_calc_needed(
     const char *data_type /* 0D_NOT_character in */,
     const char *data_source /* 0D_NOT_character in */,
@@ -1504,9 +1509,11 @@ fortran_tao_plot_wave(void *plot /* 0D_NOT_type in */, void *graph /* 0D_NOT_typ
 void tao_plot_wave(TaoPlotStruct &plot, TaoGraphStruct &graph);
 
 // Skipped unusable routine tao_point_d1_to_data:
+// - Array bounds handling: "Enum 'N_MIN' found in bounds 'n_min' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_point_v1_to_var:
+// - Array bounds handling: "Enum 'N' found in bounds 'n' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_pointer_to_branches:
@@ -1550,7 +1557,7 @@ extern "C" bool fortran_tao_pointer_to_ele_shape(
     Bmad::array_descriptor_t &ele_shape /* 1D_NOT_type in */,
     const char *dat_var_name /* 0D_NOT_character out */,
     double &dat_var_value /* 0D_NOT_real out */,
-    int *ix_shape_min /* 0D_NOT_integer in */,
+    int *ix_shape_min /* 0D_NOT_integer inout */,
     void *e_shape /* 0D_PTR_type out */
 );
 struct TaoPointerToEleShape {
@@ -1562,7 +1569,7 @@ Tao::TaoPointerToEleShape tao_pointer_to_ele_shape(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shape,
-    std::optional<int> ix_shape_min = std::nullopt
+    optional_ref<int> ix_shape_min = std::nullopt
 );
 extern "C" bool fortran_tao_pointer_to_tao_lat(
     void *u /* 0D_NOT_type in */,
@@ -1579,12 +1586,12 @@ extern "C" bool fortran_tao_pointer_to_universe_int(
 std::optional<TaoUniverseStruct>
 tao_pointer_to_universe(int ix_uni, std::optional<bool> neg2_to_default = std::nullopt);
 extern "C" bool fortran_tao_pointer_to_universe_str(
-    const char *string /* 0D_NOT_character in */,
+    const char *string /* 0D_NOT_character inout */,
     bool *neg2_to_default /* 0D_NOT_logical in */,
     void *u /* 0D_PTR_type out */
 );
 std::optional<TaoUniverseStruct>
-tao_pointer_to_universe(std::string string, std::optional<bool> neg2_to_default = std::nullopt);
+tao_pointer_to_universe(std::string &string, std::optional<bool> neg2_to_default = std::nullopt);
 extern "C" void fortran_tao_pointer_to_universes(
     const char *name_in /* 0D_NOT_character in */,
     void *unis /* 1D_ALLOC_type inout */,
@@ -1692,10 +1699,10 @@ int tao_read_phase_space_index(
     int ixc,
     std::optional<bool> print_err = std::nullopt
 );
-extern "C" void fortran_tao_regression_test();
-void tao_regression_test();
-extern "C" void fortran_tao_remove_blank_characters(const char *str /* 0D_NOT_character in */);
-void tao_remove_blank_characters(std::string str);
+extern "C" void fortran_tao_regression_test(const char *cmd_str /* 0D_NOT_character in */);
+void tao_regression_test(std::string cmd_str);
+extern "C" void fortran_tao_remove_blank_characters(const char *str /* 0D_NOT_character inout */);
+void tao_remove_blank_characters(std::string &str);
 extern "C" void fortran_tao_run_cmd(
     const char *which /* 0D_NOT_character in */,
     bool &abort /* 0D_NOT_logical out */
@@ -2078,6 +2085,7 @@ extern "C" void fortran_tao_set_space_charge_com_cmd(
 void tao_set_space_charge_com_cmd(std::string who, std::string value_str);
 
 // Skipped unusable routine tao_set_switch_value:
+// - Array bounds handling: "Enum 'L_BOUND' found in bounds 'l_bound' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_set_symbolic_number_cmd(
     const char *sym_str /* 0D_NOT_character in */,
@@ -2351,12 +2359,16 @@ void tao_var_repoint();
 
 // Skipped unusable routine tao_var_stuffit1:
 // - Untranslated type: tao_var_input (1D)
+// - Array bounds handling: "Enum 'N_VAR_MINN' found in bounds 'n_var_minn' but not in provided
+// map."
 // - Untranslated type: tao_v1_var_input (0D)
 // - 2D array handling not supported for logical: dflt_good_unis(lbound(s%u,1):) 2D_ALLOC_logical
+// - Array bounds handling: "Enum '1)' found in bounds '1)' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_var_stuffit2:
 // - 2D array handling not supported for logical: good_unis(lbound(s%u,1):) 2D_ALLOC_logical
+// - Array bounds handling: "Enum '1)' found in bounds '1)' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_var_target_calc();
 void tao_var_target_calc();

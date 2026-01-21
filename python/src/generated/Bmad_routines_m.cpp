@@ -1580,12 +1580,27 @@ err_flag : bool
     Set True if multilayer type is unrecognized. False otherwise.
 )"""
   );
+  py::class_<Bmad::MultipassChain, std::unique_ptr<Bmad::MultipassChain>>(
+      m,
+      "MultipassChain",
+      "multipass_chain return type"
+  )
+      .def_readonly("ix_pass", &Bmad::MultipassChain::ix_pass)
+      .def_readonly("n_links", &Bmad::MultipassChain::n_links)
+      .def("__len__", [](const Bmad::MultipassChain &) { return 2; })
+      .def("__getitem__", [](const Bmad::MultipassChain &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.ix_pass);
+        if (i == 1)
+          return py::cast(s.n_links);
+        throw py::index_error();
+      });
   m.def(
       "multipass_chain",
       &Bmad::multipass_chain,
       py::arg("ele"),
-      py::arg("ix_pass"),
-      py::arg("n_links"),
       py::arg("chain_ele") = py::none(),
       py::arg("use_super_lord") = py::none(),
       R"""(Parameters
@@ -1596,7 +1611,7 @@ ix_pass : int
     Multipass pass number of the input element.
 n_links : int
     Number of times the physical element is passed through.
-chain_ele : ElePointerStruct, optional
+chain_ele : ElePointerStruct
     pointers to the elements of the chain. Note: chain_ele(ix_pass).ele => ele
 use_super_lord : bool, optional
     If present and True and if ele is a super_slave, construct the chain_ele(:) array using the corresponding

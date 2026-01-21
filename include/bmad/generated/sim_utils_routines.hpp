@@ -131,10 +131,12 @@ SimUtils::BicubicCmplxEval
 bicubic_cmplx_eval(double x_norm, double y_norm, BicubicCmplxCoefStruct &bi_coef);
 
 // Skipped unusable routine bicubic_compute_cmplx_field_at_2d_box:
+// - Array bounds handling: Calls in array bounds are not supported
 // - Untranslated type: cmplx_field_at_2d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine bicubic_compute_field_at_2d_box:
+// - Array bounds handling: Calls in array bounds are not supported
 // - Untranslated type: field_at_2d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
@@ -167,23 +169,25 @@ extern "C" bool fortran_bin_index(
 );
 int bin_index(double x, double bin1_x_min, double bin_delta);
 extern "C" bool fortran_bin_x_center(
-    int &ix_bin /* 0D_NOT_integer in */,
+    int &ix_bin /* 0D_NOT_integer inout */,
     double &bin1_x_min /* 0D_NOT_real in */,
     double &bin_delta /* 0D_NOT_real in */,
     double &x_center /* 0D_NOT_real in */
 );
-void bin_x_center(int ix_bin, double bin1_x_min, double bin_delta, double x_center);
+void bin_x_center(int &ix_bin, double bin1_x_min, double bin_delta, double x_center);
 extern "C" void fortran_bit_set(
-    int &word /* 0D_NOT_integer in */,
+    int &word /* 0D_NOT_integer inout */,
     int &pos /* 0D_NOT_integer in */,
     bool &set_to_1 /* 0D_NOT_logical in */
 );
-void bit_set(int word, int pos, bool set_to_1);
+void bit_set(int &word, int pos, bool set_to_1);
 
 // Skipped unusable routine bracket_index:
+// - Array bounds handling: "Enum 'I_MIN' found in bounds 'i_min' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine bracket_index2:
+// - Array bounds handling: "Enum 'I_MIN' found in bounds 'i_min' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_bracket_index_for_spline(
     Bmad::array_descriptor_t &x_knot /* 1D_NOT_real in */,
@@ -205,6 +209,7 @@ SimUtils::BracketIndexForSpline bracket_index_for_spline(
 );
 
 // Skipped unusable routine bracket_index_int:
+// - Array bounds handling: "Enum 'I_MIN' found in bounds 'i_min' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_calc_file_number(
     const char *file_name /* 0D_NOT_character in */,
@@ -282,6 +287,7 @@ FixedArray1D<Real, 3> cross_product(FArray1D<Real> &a, FArray1D<Real> &b);
 // Skipped unusable routine da2_div:
 // - Variable in sized array: 2D_NOT_real
 // - Variable in sized array: 2D_NOT_real
+// - Array bounds handling: Calls in array bounds are not supported
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine da2_evaluate:
@@ -289,11 +295,13 @@ FixedArray1D<Real, 3> cross_product(FArray1D<Real> &a, FArray1D<Real> &b);
 
 // Skipped unusable routine da2_inverse:
 // - Variable in sized array: 2D_NOT_real
+// - Array bounds handling: Calls in array bounds are not supported
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine da2_mult:
 // - Variable in sized array: 2D_NOT_real
 // - Variable in sized array: 2D_NOT_real
+// - Array bounds handling: Calls in array bounds are not supported
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_date_and_time_stamp(
     const char *string /* 0D_NOT_character in */,
@@ -692,6 +700,8 @@ extern "C" void fortran_linear_fit_2d(
 FixedArray1D<Real, 3> linear_fit_2d(FArray1D<Real> &x, FArray1D<Real> &y, FArray1D<Real> &z);
 
 // Skipped unusable routine location_decode:
+// - Array bounds handling: "Enum 'IX_MIN' found in bounds 'ix_min' but not in provided map."
+// - Array bounds handling: "Enum 'IX_MIN' found in bounds 'ix_min' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool
 fortran_logic_str(bool &logic /* 0D_NOT_logical in */, const char *str /* 0D_NOT_character in */);
@@ -727,14 +737,17 @@ double mass_of(int species);
 
 // Skipped unusable routine mat_scale_p0:
 // - Variable in sized array: 2D_NOT_real
+// - Array bounds handling: Calls in array bounds are not supported
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine mat_symp_conj:
 // - Variable inout sized array: 2D_NOT_real
+// - Array bounds handling: Calls in array bounds are not supported
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine mat_symp_conj_i:
 // - Variable inout sized array: 2D_NOT_complex
+// - Array bounds handling: Calls in array bounds are not supported
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine mat_symp_error:
@@ -1708,10 +1721,12 @@ SimUtils::TricubicCmplxEval
 tricubic_cmplx_eval(double x_norm, double y_norm, double z_norm, TricubicCmplxCoefStruct &tri_coef);
 
 // Skipped unusable routine tricubic_compute_cmplx_field_at_3d_box:
+// - Array bounds handling: Calls in array bounds are not supported
 // - Untranslated type: cmplx_field_at_3d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tricubic_compute_field_at_3d_box:
+// - Array bounds handling: Calls in array bounds are not supported
 // - Untranslated type: field_at_3d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 

@@ -223,13 +223,13 @@ void init_wake_sr_struct(py::module &m, py::class_<WakeSrStruct> &cls) {
 void init_wake_sr_z_long_struct(py::module &m, py::class_<WakeSrZLongStruct> &cls) {
   cls.def(py::init<>())
       // WakeSrZLongStruct.w (1D_ALLOC_real - Input single particle Wake. Indexed from 1.
-      .def_property_readonly("w", &WakeSrZLongStruct::w)
+      .def_property("w", &WakeSrZLongStruct::w, &WakeSrZLongStruct::set_w)
       // WakeSrZLongStruct.fw (1D_ALLOC_complex - Fourier transform of w.
-      .def_property_readonly("fw", &WakeSrZLongStruct::fw)
+      .def_property("fw", &WakeSrZLongStruct::fw, &WakeSrZLongStruct::set_fw)
       // WakeSrZLongStruct.fbunch (1D_ALLOC_complex - Scratch space.
-      .def_property_readonly("fbunch", &WakeSrZLongStruct::fbunch)
+      .def_property("fbunch", &WakeSrZLongStruct::fbunch, &WakeSrZLongStruct::set_fbunch)
       // WakeSrZLongStruct.w_out (1D_ALLOC_complex - Scratch space.
-      .def_property_readonly("w_out", &WakeSrZLongStruct::w_out)
+      .def_property("w_out", &WakeSrZLongStruct::w_out, &WakeSrZLongStruct::set_w_out)
       // WakeSrZLongStruct.dz (0D_NOT_real - Distance between points. If zero there is no wake.
       .def_property("dz", &WakeSrZLongStruct::dz, &WakeSrZLongStruct::set_dz)
       // WakeSrZLongStruct.z0 (0D_NOT_real - Wake extent is [-z0, z0].
@@ -353,22 +353,22 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
       .def_property("s", &Wall3dSectionStruct::s, &Wall3dSectionStruct::set_s)
       // Wall3dSectionStruct.r0 (1D_NOT_real - Center of section Section-to-section spline
       // interpolation of the center of the section
-      .def_property_readonly("r0", &Wall3dSectionStruct::r0)
+      .def_property("r0", &Wall3dSectionStruct::r0, &Wall3dSectionStruct::set_r0)
       // Wall3dSectionStruct.dx0_ds (0D_NOT_real - Center of wall derivative
       .def_property("dx0_ds", &Wall3dSectionStruct::dx0_ds, &Wall3dSectionStruct::set_dx0_ds)
       // Wall3dSectionStruct.dy0_ds (0D_NOT_real - Center of wall derivative
       .def_property("dy0_ds", &Wall3dSectionStruct::dy0_ds, &Wall3dSectionStruct::set_dy0_ds)
       // Wall3dSectionStruct.x0_coef (1D_NOT_real - Spline coefs for x-center
-      .def_property_readonly("x0_coef", &Wall3dSectionStruct::x0_coef)
+      .def_property("x0_coef", &Wall3dSectionStruct::x0_coef, &Wall3dSectionStruct::set_x0_coef)
       // Wall3dSectionStruct.y0_coef (1D_NOT_real - Spline coefs for y-center Section-to_section
       // spline interpolation of the wall.
-      .def_property_readonly("y0_coef", &Wall3dSectionStruct::y0_coef)
+      .def_property("y0_coef", &Wall3dSectionStruct::y0_coef, &Wall3dSectionStruct::set_y0_coef)
       // Wall3dSectionStruct.dr_ds (0D_NOT_real - derivative of wall radius
       .def_property("dr_ds", &Wall3dSectionStruct::dr_ds, &Wall3dSectionStruct::set_dr_ds)
       // Wall3dSectionStruct.p1_coef (1D_NOT_real - Spline coefs for p0 function
-      .def_property_readonly("p1_coef", &Wall3dSectionStruct::p1_coef)
+      .def_property("p1_coef", &Wall3dSectionStruct::p1_coef, &Wall3dSectionStruct::set_p1_coef)
       // Wall3dSectionStruct.p2_coef (1D_NOT_real - Spline coefs for p1 function
-      .def_property_readonly("p2_coef", &Wall3dSectionStruct::p2_coef)
+      .def_property("p2_coef", &Wall3dSectionStruct::p2_coef, &Wall3dSectionStruct::set_p2_coef)
       .def_static(
           "new_array1d",
           [](int sz, int lbound) { return Wall3dSectionStructAlloc1D(lbound, sz); },

@@ -17,7 +17,7 @@ void init_bbu_beam_struct(py::module &m, py::class_<BbuBeamStruct> &cls) {
       // BbuBeamStruct.stage (1D_ALLOC_type -
       .def_property_readonly("stage", &BbuBeamStruct::stage)
       // BbuBeamStruct.ix_ele_bunch (1D_ALLOC_integer - element where bunch is
-      .def_property_readonly("ix_ele_bunch", &BbuBeamStruct::ix_ele_bunch)
+      .def_property("ix_ele_bunch", &BbuBeamStruct::ix_ele_bunch, &BbuBeamStruct::set_ix_ele_bunch)
       // BbuBeamStruct.ix_bunch_head (0D_NOT_integer - Index to head bunch(:)
       .def_property(
           "ix_bunch_head",
@@ -236,7 +236,11 @@ void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
       // BbuParamStruct.ramp_on (0D_NOT_logical -
       .def_property("ramp_on", &BbuParamStruct::ramp_on, &BbuParamStruct::set_ramp_on)
       // BbuParamStruct.ramp_pattern (1D_NOT_real -
-      .def_property_readonly("ramp_pattern", &BbuParamStruct::ramp_pattern)
+      .def_property(
+          "ramp_pattern",
+          &BbuParamStruct::ramp_pattern,
+          &BbuParamStruct::set_ramp_pattern
+      )
       // BbuParamStruct.ramp_n_start (0D_NOT_integer - Index of start of ramp Internal parameters
       .def_property(
           "ramp_n_start",
@@ -315,13 +319,13 @@ void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
           &BbuStageStruct::set_time_at_wake_ele
       )
       // BbuStageStruct.ave_orb (1D_NOT_real -
-      .def_property_readonly("ave_orb", &BbuStageStruct::ave_orb)
+      .def_property("ave_orb", &BbuStageStruct::ave_orb, &BbuStageStruct::set_ave_orb)
       // BbuStageStruct.rms_orb (1D_NOT_real -
-      .def_property_readonly("rms_orb", &BbuStageStruct::rms_orb)
+      .def_property("rms_orb", &BbuStageStruct::rms_orb, &BbuStageStruct::set_rms_orb)
       // BbuStageStruct.min_orb (1D_NOT_real -
-      .def_property_readonly("min_orb", &BbuStageStruct::min_orb)
+      .def_property("min_orb", &BbuStageStruct::min_orb, &BbuStageStruct::set_min_orb)
       // BbuStageStruct.max_orb (1D_NOT_real -
-      .def_property_readonly("max_orb", &BbuStageStruct::max_orb)
+      .def_property("max_orb", &BbuStageStruct::max_orb, &BbuStageStruct::set_max_orb)
       // BbuStageStruct.n_orb (0D_NOT_integer -
       .def_property("n_orb", &BbuStageStruct::n_orb, &BbuStageStruct::set_n_orb)
       .def_static(
@@ -366,7 +370,7 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
       // z-pz planes) 'ELLIPSE', 'KV', 'GRID', 'FILE', 'RAN_GAUSS' or '' = 'RAN_GAUSS'
       .def_property_readonly("distribution_type", &BeamInitStruct::distribution_type)
       // BeamInitStruct.spin (1D_NOT_real - Spin (x, y, z)
-      .def_property_readonly("spin", &BeamInitStruct::spin)
+      .def_property("spin", &BeamInitStruct::spin, &BeamInitStruct::set_spin)
       // BeamInitStruct.ellipse (1D_NOT_type - Ellipse beam distribution
       .def_property_readonly("ellipse", &BeamInitStruct::ellipse)
       // BeamInitStruct.KV (0D_NOT_type - KV beam distribution
@@ -374,10 +378,14 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
       // BeamInitStruct.grid (1D_NOT_type - Grid beam distribution
       .def_property_readonly("grid", &BeamInitStruct::grid)
       // BeamInitStruct.center_jitter (1D_NOT_real - Bunch center rms jitter
-      .def_property_readonly("center_jitter", &BeamInitStruct::center_jitter)
+      .def_property(
+          "center_jitter",
+          &BeamInitStruct::center_jitter,
+          &BeamInitStruct::set_center_jitter
+      )
       // BeamInitStruct.emit_jitter (1D_NOT_real - a and b bunch emittance rms jitter normalized to
       // emittance
-      .def_property_readonly("emit_jitter", &BeamInitStruct::emit_jitter)
+      .def_property("emit_jitter", &BeamInitStruct::emit_jitter, &BeamInitStruct::set_emit_jitter)
       // BeamInitStruct.sig_z_jitter (0D_NOT_real - bunch length RMS jitter
       .def_property(
           "sig_z_jitter",
@@ -434,7 +442,7 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
       // BeamInitStruct.dPz_dz (0D_NOT_real - Correlation of Pz with long position.
       .def_property("dPz_dz", &BeamInitStruct::dPz_dz, &BeamInitStruct::set_dPz_dz)
       // BeamInitStruct.center (1D_NOT_real - Bench phase space center offset relative to reference.
-      .def_property_readonly("center", &BeamInitStruct::center)
+      .def_property("center", &BeamInitStruct::center, &BeamInitStruct::set_center)
       // BeamInitStruct.t_offset (0D_NOT_real - Time center offset
       .def_property("t_offset", &BeamInitStruct::t_offset, &BeamInitStruct::set_t_offset)
       // BeamInitStruct.dt_bunch (0D_NOT_real - Time between bunches.
@@ -538,7 +546,7 @@ void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
           &BmadCommonStruct::set_max_aperture_limit
       )
       // BmadCommonStruct.d_orb (1D_NOT_real - Orbit deltas for the mat6 via tracking calc.
-      .def_property_readonly("d_orb", &BmadCommonStruct::d_orb)
+      .def_property("d_orb", &BmadCommonStruct::d_orb, &BmadCommonStruct::set_d_orb)
       // BmadCommonStruct.default_ds_step (0D_NOT_real - Default integration step for eles without
       // an explicit step calc.
       .def_property(
@@ -1103,11 +1111,11 @@ void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls)
       // BunchParamsStruct.c (0D_NOT_type - Normal mode twiss parameters
       .def_property("c", &BunchParamsStruct::c, &BunchParamsStruct::set_c)
       // BunchParamsStruct.sigma (2D_NOT_real - beam size matrix
-      .def_property_readonly("sigma", &BunchParamsStruct::sigma)
+      .def_property("sigma", &BunchParamsStruct::sigma, &BunchParamsStruct::set_sigma)
       // BunchParamsStruct.rel_max (1D_NOT_real - Max orbit relative to centroid. 7 -> time.
-      .def_property_readonly("rel_max", &BunchParamsStruct::rel_max)
+      .def_property("rel_max", &BunchParamsStruct::rel_max, &BunchParamsStruct::set_rel_max)
       // BunchParamsStruct.rel_min (1D_NOT_real - Min orbit relative to_centroid. 7 -> time.
-      .def_property_readonly("rel_min", &BunchParamsStruct::rel_min)
+      .def_property("rel_min", &BunchParamsStruct::rel_min, &BunchParamsStruct::set_rel_min)
       // BunchParamsStruct.s (0D_NOT_real - Longitudinal position.
       .def_property("s", &BunchParamsStruct::s, &BunchParamsStruct::set_s)
       // BunchParamsStruct.t (0D_NOT_real - Time.
@@ -1207,7 +1215,7 @@ void init_bunch_struct(py::module &m, py::class_<BunchStruct> &cls) {
       // BunchStruct.particle (1D_ALLOC_type -
       .def_property_readonly("particle", &BunchStruct::particle)
       // BunchStruct.ix_z (1D_ALLOC_integer - bunch%ix_z(1) is index of head particle, etc.
-      .def_property_readonly("ix_z", &BunchStruct::ix_z)
+      .def_property("ix_z", &BunchStruct::ix_z, &BunchStruct::set_ix_z)
       // BunchStruct.charge_tot (0D_NOT_real - Total charge in a bunch (Coul).
       .def_property("charge_tot", &BunchStruct::charge_tot, &BunchStruct::set_charge_tot)
       // BunchStruct.charge_live (0D_NOT_real - Charge of live particles (Coul).
@@ -1315,9 +1323,9 @@ void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &cls) {
 void init_bicubic_cmplx_coef_struct(py::module &m, py::class_<BicubicCmplxCoefStruct> &cls) {
   cls.def(py::init<>())
       // BicubicCmplxCoefStruct.coef (2D_NOT_complex - Coefs
-      .def_property_readonly("coef", &BicubicCmplxCoefStruct::coef)
+      .def_property("coef", &BicubicCmplxCoefStruct::coef, &BicubicCmplxCoefStruct::set_coef)
       // BicubicCmplxCoefStruct.i_box (1D_NOT_integer - index at lower box corner.
-      .def_property_readonly("i_box", &BicubicCmplxCoefStruct::i_box)
+      .def_property("i_box", &BicubicCmplxCoefStruct::i_box, &BicubicCmplxCoefStruct::set_i_box)
 
       .def("__repr__", [](const BicubicCmplxCoefStruct &self) { return to_string(self); })
 

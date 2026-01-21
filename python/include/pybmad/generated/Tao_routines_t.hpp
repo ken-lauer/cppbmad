@@ -10,3 +10,35 @@
 namespace py = pybind11;
 
 void init_Tao_routines_t(py::module &m);
+
+struct PyTaoDrawCurveData {
+  bool have_data;
+};
+struct PyTaoDrawHistogramData {
+  bool have_data;
+};
+struct PyTaoEleShapeInfo : public Tao::TaoEleShapeInfo {
+  std::optional<int> ix_shape_min;
+  PyTaoEleShapeInfo(Tao::TaoEleShapeInfo _base, std::optional<int> ix_shape_min)
+      : Tao::TaoEleShapeInfo(std::move(_base))
+      , ix_shape_min(ix_shape_min) {}
+};
+
+struct PyTaoNextWord {
+  std::string word;
+  std::string line;
+};
+struct PyTaoPointerToEleShape : public Tao::TaoPointerToEleShape {
+  std::optional<int> ix_shape_min;
+  PyTaoPointerToEleShape(Tao::TaoPointerToEleShape _base, std::optional<int> ix_shape_min)
+      : Tao::TaoPointerToEleShape(std::move(_base))
+      , ix_shape_min(ix_shape_min) {}
+};
+
+struct PyTaoPointerToUniverseStr {
+  std::optional<TaoUniverseStruct> u;
+  std::string string;
+};
+struct PyTaoRemoveBlankCharacters {
+  std::string str;
+};

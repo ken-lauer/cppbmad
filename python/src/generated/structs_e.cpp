@@ -108,7 +108,11 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
       // EleStruct.taylor (1D_NOT_type - Phase space Taylor map.
       .def_property_readonly("taylor", &EleStruct::taylor)
       // EleStruct.spin_taylor_ref_orb_in (1D_NOT_real -
-      .def_property_readonly("spin_taylor_ref_orb_in", &EleStruct::spin_taylor_ref_orb_in)
+      .def_property(
+          "spin_taylor_ref_orb_in",
+          &EleStruct::spin_taylor_ref_orb_in,
+          &EleStruct::set_spin_taylor_ref_orb_in
+      )
       // EleStruct.spin_taylor (1D_NOT_type - Quaternion Spin Taylor map.
       .def_property_readonly("spin_taylor", &EleStruct::spin_taylor)
       // EleStruct.wake (0D_PTR_type - Wakes
@@ -140,20 +144,20 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
           &EleStruct::set_time_ref_orb_out
       )
       // EleStruct.value (1D_NOT_real - attribute values.
-      .def_property_readonly("value", &EleStruct::value)
+      .def_property("value", &EleStruct::value, &EleStruct::set_value)
       // EleStruct.old_value (1D_NOT_real - Used to see if %value(:) array has changed. Note: The
       // reference orbit for spin/orbit matrices is %map_ref_orb_in/out
-      .def_property_readonly("old_value", &EleStruct::old_value)
+      .def_property("old_value", &EleStruct::old_value, &EleStruct::set_old_value)
       // EleStruct.spin_q (2D_NOT_real - 0th and 1st order Spin transport quaternion.
-      .def_property_readonly("spin_q", &EleStruct::spin_q)
+      .def_property("spin_q", &EleStruct::spin_q, &EleStruct::set_spin_q)
       // EleStruct.vec0 (1D_NOT_real - 0th order transport vector.
-      .def_property_readonly("vec0", &EleStruct::vec0)
+      .def_property("vec0", &EleStruct::vec0, &EleStruct::set_vec0)
       // EleStruct.mat6 (2D_NOT_real - 1st order transport matrix.
-      .def_property_readonly("mat6", &EleStruct::mat6)
+      .def_property("mat6", &EleStruct::mat6, &EleStruct::set_mat6)
       // EleStruct.c_mat (2D_NOT_real - 2x2 C coupling matrix
-      .def_property_readonly("c_mat", &EleStruct::c_mat)
+      .def_property("c_mat", &EleStruct::c_mat, &EleStruct::set_c_mat)
       // EleStruct.dc_mat_dpz (2D_NOT_real - d(c_mat)/dpz variation.
-      .def_property_readonly("dc_mat_dpz", &EleStruct::dc_mat_dpz)
+      .def_property("dc_mat_dpz", &EleStruct::dc_mat_dpz, &EleStruct::set_dc_mat_dpz)
       // EleStruct.gamma_c (0D_NOT_real - gamma associated with C matrix
       .def_property("gamma_c", &EleStruct::gamma_c, &EleStruct::set_gamma_c)
       // EleStruct.s_start (0D_NOT_real - longitudinal ref position at entrance_end
@@ -163,17 +167,17 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
       // EleStruct.ref_time (0D_NOT_real - Time ref particle passes exit end.
       .def_property("ref_time", &EleStruct::ref_time, &EleStruct::set_ref_time)
       // EleStruct.a_pole (1D_PTR_real - knl for multipole elements.
-      .def_property_readonly("a_pole", &EleStruct::a_pole)
+      .def_property("a_pole", &EleStruct::a_pole, &EleStruct::set_a_pole)
       // EleStruct.b_pole (1D_PTR_real - tilt for multipole elements.
-      .def_property_readonly("b_pole", &EleStruct::b_pole)
+      .def_property("b_pole", &EleStruct::b_pole, &EleStruct::set_b_pole)
       // EleStruct.a_pole_elec (1D_PTR_real - Electrostatic multipoles. ksnl for multipole elements.
-      .def_property_readonly("a_pole_elec", &EleStruct::a_pole_elec)
+      .def_property("a_pole_elec", &EleStruct::a_pole_elec, &EleStruct::set_a_pole_elec)
       // EleStruct.b_pole_elec (1D_PTR_real - Electrostatic multipoles.
-      .def_property_readonly("b_pole_elec", &EleStruct::b_pole_elec)
+      .def_property("b_pole_elec", &EleStruct::b_pole_elec, &EleStruct::set_b_pole_elec)
       // EleStruct.custom (1D_PTR_real - Custom attributes.
-      .def_property_readonly("custom", &EleStruct::custom)
+      .def_property("custom", &EleStruct::custom, &EleStruct::set_custom)
       // EleStruct.r (3D_PTR_real - For general use. Not used by Bmad.
-      .def_property_readonly("r", &EleStruct::r)
+      .def_property("r", &EleStruct::r, &EleStruct::set_r)
       // EleStruct.key (0D_NOT_integer - Element class (quadrupole, etc.).
       .def_property("key", &EleStruct::key, &EleStruct::set_key)
       // EleStruct.sub_key (0D_NOT_integer - Records bend input type.
@@ -372,19 +376,19 @@ void init_ellipse_beam_init_struct(py::module &m, py::class_<EllipseBeamInitStru
 void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
   cls.def(py::init<>())
       // EmFieldStruct.E (1D_NOT_real - electric field.
-      .def_property_readonly("E", &EmFieldStruct::E)
+      .def_property("E", &EmFieldStruct::E, &EmFieldStruct::set_E)
       // EmFieldStruct.B (1D_NOT_real - magnetic field.
-      .def_property_readonly("B", &EmFieldStruct::B)
+      .def_property("B", &EmFieldStruct::B, &EmFieldStruct::set_B)
       // EmFieldStruct.dE (2D_NOT_real - electric field gradient.
-      .def_property_readonly("dE", &EmFieldStruct::dE)
+      .def_property("dE", &EmFieldStruct::dE, &EmFieldStruct::set_dE)
       // EmFieldStruct.dB (2D_NOT_real - magnetic field gradient.
-      .def_property_readonly("dB", &EmFieldStruct::dB)
+      .def_property("dB", &EmFieldStruct::dB, &EmFieldStruct::set_dB)
       // EmFieldStruct.phi (0D_NOT_real - Electric scalar potential.
       .def_property("phi", &EmFieldStruct::phi, &EmFieldStruct::set_phi)
       // EmFieldStruct.phi_B (0D_NOT_real - Magnetic scalar potential.
       .def_property("phi_B", &EmFieldStruct::phi_B, &EmFieldStruct::set_phi_B)
       // EmFieldStruct.A (1D_NOT_real - Magnetic vector potential.
-      .def_property_readonly("A", &EmFieldStruct::A)
+      .def_property("A", &EmFieldStruct::A, &EmFieldStruct::set_A)
       .def_static(
           "new_array1d",
           [](int sz, int lbound) { return EmFieldStructAlloc1D(lbound, sz); },
@@ -456,7 +460,7 @@ void init_em_taylor_term_struct(py::module &m, py::class_<EmTaylorTermStruct> &c
       // EmTaylorTermStruct.coef (0D_NOT_real -
       .def_property("coef", &EmTaylorTermStruct::coef, &EmTaylorTermStruct::set_coef)
       // EmTaylorTermStruct.expn (1D_NOT_integer -
-      .def_property_readonly("expn", &EmTaylorTermStruct::expn)
+      .def_property("expn", &EmTaylorTermStruct::expn, &EmTaylorTermStruct::set_expn)
       .def_static(
           "new_array1d",
           [](int sz, int lbound) { return EmTaylorTermStructAlloc1D(lbound, sz); },

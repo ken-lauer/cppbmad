@@ -165,9 +165,9 @@ void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
           &LatParamStruct::set_unstable_factor
       )
       // LatParamStruct.t1_with_RF (2D_NOT_real - Full 1-turn matrix with RF on.
-      .def_property_readonly("t1_with_RF", &LatParamStruct::t1_with_RF)
+      .def_property("t1_with_RF", &LatParamStruct::t1_with_RF, &LatParamStruct::set_t1_with_RF)
       // LatParamStruct.t1_no_RF (2D_NOT_real - Full 1-turn matrix with RF off.
-      .def_property_readonly("t1_no_RF", &LatParamStruct::t1_no_RF)
+      .def_property("t1_no_RF", &LatParamStruct::t1_no_RF, &LatParamStruct::set_t1_no_RF)
       // LatParamStruct.spin_tune (0D_NOT_real - Closed orbit spin tune.
       .def_property("spin_tune", &LatParamStruct::spin_tune, &LatParamStruct::set_spin_tune)
       // LatParamStruct.particle (0D_NOT_integer - Reference particle: positron$, electron$, etc.
@@ -267,7 +267,7 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
       // LatStruct.pre_tracker (0D_NOT_type - For OPAL/IMPACT-T
       .def_property("pre_tracker", &LatStruct::pre_tracker, &LatStruct::set_pre_tracker)
       // LatStruct.custom (1D_ALLOC_real - Custom attributes.
-      .def_property_readonly("custom", &LatStruct::custom)
+      .def_property("custom", &LatStruct::custom, &LatStruct::set_custom)
       // LatStruct.version (0D_NOT_integer - Version number
       .def_property("version", &LatStruct::version, &LatStruct::set_version)
       // LatStruct.n_ele_track (0D_PTR_integer - Number of lat elements to track through.
@@ -285,7 +285,7 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
           &LatStruct::set_input_taylor_order
       )
       // LatStruct.ic (1D_ALLOC_integer - Index to %control(:) from slaves.
-      .def_property_readonly("ic", &LatStruct::ic)
+      .def_property("ic", &LatStruct::ic, &LatStruct::set_ic)
       // LatStruct.photon_type (0D_NOT_integer - Or coherent$. For X-ray simulations.
       .def_property("photon_type", &LatStruct::photon_type, &LatStruct::set_photon_type)
       // LatStruct.creation_hash (0D_NOT_integer - Set by bmad_parser. creation_hash will vary if

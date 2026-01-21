@@ -32,6 +32,8 @@ Bmad::AbMultipoleKick Bmad::ab_multipole_kick(
   FixedArray2D<Real, 2, 2> dk;
   double _dk_vec[2 * 2];
   _dk_desc.data_ptr = _dk_vec;
+  _dk_desc.dims[0] = 2;
+  _dk_desc.dims[1] = 2;
   int pole_type_lvalue;
   auto *_pole_type{&pole_type_lvalue};
   if (pole_type.has_value()) {
@@ -104,6 +106,8 @@ void Bmad::ab_multipole_kicks(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -426,6 +430,8 @@ void Bmad::apply_energy_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -813,6 +819,8 @@ Bmad::BbiKick Bmad::bbi_kick(double x, double y, FixedArray1D<Real, 2> sigma) {
   FixedArray2D<Real, 2, 2> dnk;
   double _dnk_vec[2 * 2];
   _dnk_desc.data_ptr = _dnk_vec;
+  _dnk_desc.dims[0] = 2;
+  _dnk_desc.dims[1] = 2;
   fortran_bbi_kick(
       /* double& */ x,
       /* double& */ y,
@@ -848,6 +856,8 @@ FixedArray2D<Real, 6, 6> Bmad::beam_envelope_ibs(
   _sigma_mat_desc.rank = 2;
   double _sigma_mat_vec[6 * 6];
   _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  _sigma_mat_desc.dims[0] = 6;
+  _sigma_mat_desc.dims[1] = 6;
   matrix_to_vec(sigma_mat, _sigma_mat_vec);
   // ibs_mat: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _ibs_mat_desc;
@@ -855,6 +865,8 @@ FixedArray2D<Real, 6, 6> Bmad::beam_envelope_ibs(
   FixedArray2D<Real, 6, 6> ibs_mat;
   double _ibs_mat_vec[6 * 6];
   _ibs_mat_desc.data_ptr = _ibs_mat_vec;
+  _ibs_mat_desc.dims[0] = 6;
+  _ibs_mat_desc.dims[1] = 6;
   fortran_beam_envelope_ibs(
       /* Bmad::array_descriptor_t& */ _sigma_mat_desc,
       /* Bmad::array_descriptor_t& */ _ibs_mat_desc,
@@ -901,6 +913,8 @@ Bmad::BeamTilts Bmad::beam_tilts(FixedArray2D<Real, 6, 6> S) {
   _S_desc.rank = 2;
   double _S_vec[6 * 6];
   _S_desc.data_ptr = _S_vec;
+  _S_desc.dims[0] = 6;
+  _S_desc.dims[1] = 6;
   matrix_to_vec(S, _S_vec);
   double _angle_xy{};
   double _angle_xz{};
@@ -941,6 +955,8 @@ void Bmad::bend_edge_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -1169,6 +1185,8 @@ Bmad::BendShift Bmad::bend_shift(
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   double ref_tilt_lvalue;
   auto *_ref_tilt{&ref_tilt_lvalue};
   if (ref_tilt.has_value()) {
@@ -1311,6 +1329,8 @@ void Bmad::bmad_patch_parameters_to_ptc(FixedArray1D<Real, 3> ang, FixedArray2D<
   _exi_desc.rank = 2;
   double _exi_vec[3 * 3];
   _exi_desc.data_ptr = _exi_vec;
+  _exi_desc.dims[0] = 3;
+  _exi_desc.dims[1] = 3;
   matrix_to_vec(exi, _exi_vec);
   fortran_bmad_patch_parameters_to_ptc(
       /* Bmad::array_descriptor_t& */ _ang_desc,
@@ -1346,6 +1366,8 @@ FixedArray2D<Real, 2, 2> Bmad::c_to_cbar(EleStruct &ele) {
   FixedArray2D<Real, 2, 2> cbar_mat;
   double _cbar_mat_vec[2 * 2];
   _cbar_mat_desc.data_ptr = _cbar_mat_vec;
+  _cbar_mat_desc.dims[0] = 2;
+  _cbar_mat_desc.dims[1] = 2;
   fortran_c_to_cbar(
       /* void* */ ele.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _cbar_mat_desc
@@ -1353,15 +1375,14 @@ FixedArray2D<Real, 2, 2> Bmad::c_to_cbar(EleStruct &ele) {
   vec_to_matrix(_cbar_mat_vec, cbar_mat);
   return cbar_mat;
 }
-void Bmad::calc_bunch_params(
+Bmad::CalcBunchParams Bmad::calc_bunch_params(
     BunchStruct &bunch,
-    BunchParamsStruct &bunch_params,
-    bool error,
     std::optional<bool> print_err,
-    std::optional<FixedArray2D<Real, 6, 6>> n_mat,
     std::optional<bool> is_time_coords,
     optional_ref<EleStruct> ele
 ) {
+  BunchParamsStruct _bunch_params;
+  bool _error{};
   bool print_err_lvalue;
   auto *_print_err{&print_err_lvalue};
   if (print_err.has_value()) {
@@ -1369,16 +1390,14 @@ void Bmad::calc_bunch_params(
   } else {
     _print_err = nullptr;
   }
-  // n_mat: in NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
+  // n_mat: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _n_mat_desc;
   _n_mat_desc.rank = 2;
+  FixedArray2D<Real, 6, 6> n_mat;
   double _n_mat_vec[6 * 6];
   _n_mat_desc.data_ptr = _n_mat_vec;
-  if (n_mat.has_value()) {
-    matrix_to_vec(n_mat.value(), _n_mat_vec);
-  } else {
-    _n_mat_desc.data_ptr = nullptr;
-  }
+  _n_mat_desc.dims[0] = 6;
+  _n_mat_desc.dims[1] = 6;
   bool is_time_coords_lvalue;
   auto *_is_time_coords{&is_time_coords_lvalue};
   if (is_time_coords.has_value()) {
@@ -1389,25 +1408,27 @@ void Bmad::calc_bunch_params(
   auto *_ele = ele.has_value() ? ele->get().get_fortran_ptr() : nullptr; // input, optional
   fortran_calc_bunch_params(
       /* void* */ bunch.get_fortran_ptr(),
-      /* void* */ bunch_params.get_fortran_ptr(),
-      /* bool& */ error,
+      /* void* */ _bunch_params.get_fortran_ptr(),
+      /* bool& */ _error,
       /* bool* */ _print_err,
       /* Bmad::array_descriptor_t& */ _n_mat_desc,
       /* bool* */ _is_time_coords,
       /* void* */ _ele
   );
+  vec_to_matrix(_n_mat_vec, n_mat);
+  return CalcBunchParams{std::move(_bunch_params), _error, n_mat};
 }
-void Bmad::calc_bunch_params_slice(
+bool Bmad::calc_bunch_params_slice(
     BunchStruct &bunch,
     BunchParamsStruct &bunch_params,
     int plane,
     double slice_center,
     double slice_spread,
-    bool err,
     std::optional<bool> print_err,
     std::optional<bool> is_time_coords,
     optional_ref<EleStruct> ele
 ) {
+  bool _err{};
   bool print_err_lvalue;
   auto *_print_err{&print_err_lvalue};
   if (print_err.has_value()) {
@@ -1429,17 +1450,17 @@ void Bmad::calc_bunch_params_slice(
       /* int& */ plane,
       /* double& */ slice_center,
       /* double& */ slice_spread,
-      /* bool& */ err,
+      /* bool& */ _err,
       /* bool* */ _print_err,
       /* bool* */ _is_time_coords,
       /* void* */ _ele
   );
+  return _err;
 }
-void Bmad::calc_bunch_params_z_slice(
+bool Bmad::calc_bunch_params_z_slice(
     BunchStruct &bunch,
     BunchParamsStruct &bunch_params,
     FixedArray1D<Real, 2> slice_bounds,
-    bool err,
     std::optional<bool> print_err,
     std::optional<bool> is_time_coords,
     optional_ref<EleStruct> ele
@@ -1449,6 +1470,7 @@ void Bmad::calc_bunch_params_z_slice(
   _slice_bounds_desc.rank = 1;
   _slice_bounds_desc.data_ptr = slice_bounds.data();
   _slice_bounds_desc.dims[0] = slice_bounds.size();
+  bool _err{};
   bool print_err_lvalue;
   auto *_print_err{&print_err_lvalue};
   if (print_err.has_value()) {
@@ -1468,11 +1490,12 @@ void Bmad::calc_bunch_params_z_slice(
       /* void* */ bunch.get_fortran_ptr(),
       /* void* */ bunch_params.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _slice_bounds_desc,
-      /* bool& */ err,
+      /* bool& */ _err,
       /* bool* */ _print_err,
       /* bool* */ _is_time_coords,
       /* void* */ _ele
   );
+  return _err;
 }
 BunchParamsStruct Bmad::calc_bunch_sigma_matrix_etc(
     CoordStructArray1D particle,
@@ -1518,6 +1541,8 @@ Bmad::CalcEmittancesAndTwissFromSigmaMatrix Bmad::calc_emittances_and_twiss_from
   _sigma_mat_desc.rank = 2;
   double _sigma_mat_vec[6 * 6];
   _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  _sigma_mat_desc.dims[0] = 6;
+  _sigma_mat_desc.dims[1] = 6;
   matrix_to_vec(sigma_mat, _sigma_mat_vec);
   BunchParamsStruct _bunch_params;
   bool _error{};
@@ -1534,6 +1559,8 @@ Bmad::CalcEmittancesAndTwissFromSigmaMatrix Bmad::calc_emittances_and_twiss_from
   FixedArray2D<Real, 6, 6> n_mat;
   double _n_mat_vec[6 * 6];
   _n_mat_desc.data_ptr = _n_mat_vec;
+  _n_mat_desc.dims[0] = 6;
+  _n_mat_desc.dims[1] = 6;
   fortran_calc_emittances_and_twiss_from_sigma_matrix(
       /* Bmad::array_descriptor_t& */ _sigma_mat_desc,
       /* void* */ _bunch_params.get_fortran_ptr(),
@@ -1611,6 +1638,8 @@ Bmad::cbar_to_c(FixedArray2D<Real, 2, 2> cbar_mat, TwissStruct &a, TwissStruct &
   _cbar_mat_desc.rank = 2;
   double _cbar_mat_vec[2 * 2];
   _cbar_mat_desc.data_ptr = _cbar_mat_vec;
+  _cbar_mat_desc.dims[0] = 2;
+  _cbar_mat_desc.dims[1] = 2;
   matrix_to_vec(cbar_mat, _cbar_mat_vec);
   // c_mat: out NOT (CppWrapperGeneralArgumentArray) (['2', '2'])
   Bmad::array_descriptor_t _c_mat_desc;
@@ -1618,6 +1647,8 @@ Bmad::cbar_to_c(FixedArray2D<Real, 2, 2> cbar_mat, TwissStruct &a, TwissStruct &
   FixedArray2D<Real, 2, 2> c_mat;
   double _c_mat_vec[2 * 2];
   _c_mat_desc.data_ptr = _c_mat_vec;
+  _c_mat_desc.dims[0] = 2;
+  _c_mat_desc.dims[1] = 2;
   fortran_cbar_to_c(
       /* Bmad::array_descriptor_t& */ _cbar_mat_desc,
       /* void* */ a.get_fortran_ptr(),
@@ -1728,7 +1759,7 @@ bool Bmad::choose_quads_for_set_tune(
 }
 Bmad::ChromCalc Bmad::chrom_calc(
     LatStruct &lat,
-    double delta_e,
+    double &delta_e,
     std::optional<double> pz,
     std::optional<CoordStructAlloc1D> low_E_orb,
     std::optional<CoordStructAlloc1D> high_E_orb,
@@ -1779,7 +1810,7 @@ Bmad::ChromCalc Bmad::chrom_calc(
 }
 bool Bmad::chrom_tune(
     LatStruct &lat,
-    double delta_e,
+    double &delta_e,
     double target_x,
     double target_y,
     double err_tol
@@ -2077,6 +2108,8 @@ Bmad::ComplexTaylorToMat6 Bmad::complex_taylor_to_mat6(
   FixedArray2D<Complex, 6, 6> mat6;
   std::complex<double> _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   // r_out: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _r_out_desc;
   _r_out_desc.rank = 1;
@@ -2121,19 +2154,19 @@ void Bmad::complex_taylors_equal_complex_taylors(
 void Bmad::compute_slave_coupler(EleStruct &slave) {
   fortran_compute_slave_coupler(/* void* */ slave.get_fortran_ptr());
 }
-void Bmad::concat_ele_taylor(
+bool Bmad::concat_ele_taylor(
     TaylorStructArray1D orb_taylor,
     EleStruct &ele,
-    bool err_flag,
     std::optional<TaylorStructArray1D> spin_taylor
 ) {
-  // orb_taylor: TaylorStruct in (CppWrapperTypeArgumentArray)
+  // orb_taylor: TaylorStruct inout (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _orb_taylor_desc;
   _orb_taylor_desc.rank = 1;
   _orb_taylor_desc.data_ptr = orb_taylor.data();
   _orb_taylor_desc.dims[0] = orb_taylor.size();
   _orb_taylor_desc.strides[0] = 1;
-  // spin_taylor: TaylorStruct in (CppWrapperTypeArgumentArray)
+  bool _err_flag{};
+  // spin_taylor: TaylorStruct inout (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _spin_taylor_desc;
   _spin_taylor_desc.rank = 1;
   if (spin_taylor) {
@@ -2147,9 +2180,10 @@ void Bmad::concat_ele_taylor(
   fortran_concat_ele_taylor(
       /* Bmad::array_descriptor_t& */ _orb_taylor_desc,
       /* void* */ ele.get_fortran_ptr(),
-      /* bool& */ err_flag,
+      /* bool& */ _err_flag,
       /* Bmad::array_descriptor_t& */ _spin_taylor_desc
   );
+  return _err_flag;
 }
 void Bmad::concat_taylor(
     TaylorStructArray1D taylor1,
@@ -2168,7 +2202,7 @@ void Bmad::concat_taylor(
   _taylor2_desc.data_ptr = taylor2.data();
   _taylor2_desc.dims[0] = taylor2.size();
   _taylor2_desc.strides[0] = 1;
-  // taylor3: TaylorStruct in (CppWrapperTypeArgumentArray)
+  // taylor3: TaylorStruct inout (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _taylor3_desc;
   _taylor3_desc.rank = 1;
   _taylor3_desc.data_ptr = taylor3.data();
@@ -2191,6 +2225,8 @@ Bmad::ConcatTransferMat Bmad::concat_transfer_mat(
   _mat_1_desc.rank = 2;
   double _mat_1_vec[6 * 6];
   _mat_1_desc.data_ptr = _mat_1_vec;
+  _mat_1_desc.dims[0] = 6;
+  _mat_1_desc.dims[1] = 6;
   matrix_to_vec(mat_1, _mat_1_vec);
   // vec_1: in NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _vec_1_desc;
@@ -2202,6 +2238,8 @@ Bmad::ConcatTransferMat Bmad::concat_transfer_mat(
   _mat_0_desc.rank = 2;
   double _mat_0_vec[6 * 6];
   _mat_0_desc.data_ptr = _mat_0_vec;
+  _mat_0_desc.dims[0] = 6;
+  _mat_0_desc.dims[1] = 6;
   matrix_to_vec(mat_0, _mat_0_vec);
   // vec_0: in NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _vec_0_desc;
@@ -2214,6 +2252,8 @@ Bmad::ConcatTransferMat Bmad::concat_transfer_mat(
   FixedArray2D<Real, 6, 6> mat_out;
   double _mat_out_vec[6 * 6];
   _mat_out_desc.data_ptr = _mat_out_vec;
+  _mat_out_desc.dims[0] = 6;
+  _mat_out_desc.dims[1] = 6;
   // vec_out: out NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _vec_out_desc;
   _vec_out_desc.rank = 1;
@@ -2470,23 +2510,19 @@ std::string Bmad::coord_state_name(int coord_state, std::optional<bool> one_word
   );
   return _state_str;
 }
-void Bmad::coords_body_to_local(
+Bmad::CoordsBodyToLocal Bmad::coords_body_to_local(
     FloorPositionStruct &body_position,
     EleStruct &ele,
-    std::optional<FixedArray2D<Real, 3, 3>> w_mat,
-    std::optional<bool> calculate_angles,
-    FloorPositionStruct &local_position
+    std::optional<bool> calculate_angles
 ) {
-  // w_mat: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
+  // w_mat: out NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _w_mat_desc;
   _w_mat_desc.rank = 2;
+  FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
-  if (w_mat.has_value()) {
-    matrix_to_vec(w_mat.value(), _w_mat_vec);
-  } else {
-    _w_mat_desc.data_ptr = nullptr;
-  }
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   bool calculate_angles_lvalue;
   auto *_calculate_angles{&calculate_angles_lvalue};
   if (calculate_angles.has_value()) {
@@ -2494,31 +2530,30 @@ void Bmad::coords_body_to_local(
   } else {
     _calculate_angles = nullptr;
   }
+  FloorPositionStruct _local_position;
   fortran_coords_body_to_local(
       /* void* */ body_position.get_fortran_ptr(),
       /* void* */ ele.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _w_mat_desc,
       /* bool* */ _calculate_angles,
-      /* void* */ local_position.get_fortran_ptr()
+      /* void* */ _local_position.get_fortran_ptr()
   );
+  vec_to_matrix(_w_mat_vec, w_mat);
+  return CoordsBodyToLocal{w_mat, std::move(_local_position)};
 }
-void Bmad::coords_body_to_rel_exit(
+Bmad::CoordsBodyToRelExit Bmad::coords_body_to_rel_exit(
     FloorPositionStruct &body_position,
     EleStruct &ele,
-    std::optional<FixedArray2D<Real, 3, 3>> w_mat,
-    std::optional<bool> calculate_angles,
-    FloorPositionStruct &rel_exit
+    std::optional<bool> calculate_angles
 ) {
-  // w_mat: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
+  // w_mat: out NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _w_mat_desc;
   _w_mat_desc.rank = 2;
+  FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
-  if (w_mat.has_value()) {
-    matrix_to_vec(w_mat.value(), _w_mat_vec);
-  } else {
-    _w_mat_desc.data_ptr = nullptr;
-  }
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   bool calculate_angles_lvalue;
   auto *_calculate_angles{&calculate_angles_lvalue};
   if (calculate_angles.has_value()) {
@@ -2526,13 +2561,16 @@ void Bmad::coords_body_to_rel_exit(
   } else {
     _calculate_angles = nullptr;
   }
+  FloorPositionStruct _rel_exit;
   fortran_coords_body_to_rel_exit(
       /* void* */ body_position.get_fortran_ptr(),
       /* void* */ ele.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _w_mat_desc,
       /* bool* */ _calculate_angles,
-      /* void* */ rel_exit.get_fortran_ptr()
+      /* void* */ _rel_exit.get_fortran_ptr()
   );
+  vec_to_matrix(_w_mat_vec, w_mat);
+  return CoordsBodyToRelExit{w_mat, std::move(_rel_exit)};
 }
 Bmad::CoordsCurvilinearToFloor
 Bmad::coords_curvilinear_to_floor(FixedArray1D<Real, 3> xys, BranchStruct &branch) {
@@ -2561,6 +2599,8 @@ Bmad::coords_floor_to_curvilinear(FloorPositionStruct &floor_coords, EleStruct &
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   FloorPositionStruct _local_coords;
   fortran_coords_floor_to_curvilinear(
       /* void* */ floor_coords.get_fortran_ptr(),
@@ -2590,6 +2630,8 @@ Bmad::CoordsFloorToLocalCurvilinear Bmad::coords_floor_to_local_curvilinear(
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   int relative_to_lvalue;
   auto *_relative_to{&relative_to_lvalue};
   if (relative_to.has_value()) {
@@ -2639,23 +2681,19 @@ FloorPositionStruct Bmad::coords_floor_to_relative(
   );
   return std::move(_local_position);
 }
-void Bmad::coords_local_curvilinear_to_body(
+Bmad::CoordsLocalCurvilinearToBody Bmad::coords_local_curvilinear_to_body(
     FloorPositionStruct &local_position,
     EleStruct &ele,
-    std::optional<FixedArray2D<Real, 3, 3>> w_mat,
-    std::optional<bool> calculate_angles,
-    FloorPositionStruct &body_position
+    std::optional<bool> calculate_angles
 ) {
-  // w_mat: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
+  // w_mat: out NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _w_mat_desc;
   _w_mat_desc.rank = 2;
+  FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
-  if (w_mat.has_value()) {
-    matrix_to_vec(w_mat.value(), _w_mat_vec);
-  } else {
-    _w_mat_desc.data_ptr = nullptr;
-  }
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   bool calculate_angles_lvalue;
   auto *_calculate_angles{&calculate_angles_lvalue};
   if (calculate_angles.has_value()) {
@@ -2663,13 +2701,16 @@ void Bmad::coords_local_curvilinear_to_body(
   } else {
     _calculate_angles = nullptr;
   }
+  FloorPositionStruct _body_position;
   fortran_coords_local_curvilinear_to_body(
       /* void* */ local_position.get_fortran_ptr(),
       /* void* */ ele.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _w_mat_desc,
       /* bool* */ _calculate_angles,
-      /* void* */ body_position.get_fortran_ptr()
+      /* void* */ _body_position.get_fortran_ptr()
   );
+  vec_to_matrix(_w_mat_vec, w_mat);
+  return CoordsLocalCurvilinearToBody{w_mat, std::move(_body_position)};
 }
 Bmad::CoordsLocalCurvilinearToFloor Bmad::coords_local_curvilinear_to_floor(
     FloorPositionStruct &local_position,
@@ -2691,6 +2732,8 @@ Bmad::CoordsLocalCurvilinearToFloor Bmad::coords_local_curvilinear_to_floor(
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   bool calculate_angles_lvalue;
   auto *_calculate_angles{&calculate_angles_lvalue};
   if (calculate_angles.has_value()) {
@@ -2961,6 +3004,8 @@ void Bmad::damping_matrix_d(
   _mat_desc.rank = 2;
   double _mat_vec[6 * 6];
   _mat_desc.data_ptr = _mat_vec;
+  _mat_desc.dims[0] = 6;
+  _mat_desc.dims[1] = 6;
   matrix_to_vec(mat, _mat_vec);
   fortran_damping_matrix_d(
       /* double& */ gamma,
@@ -3052,6 +3097,8 @@ void Bmad::diffusion_matrix_b(
   _mat_desc.rank = 2;
   double _mat_vec[6 * 6];
   _mat_desc.data_ptr = _mat_vec;
+  _mat_desc.dims[0] = 6;
+  _mat_desc.dims[1] = 6;
   matrix_to_vec(mat, _mat_vec);
   fortran_diffusion_matrix_b(
       /* double& */ gamma,
@@ -3244,6 +3291,8 @@ Bmad::EigenDecomp6mat Bmad::eigen_decomp_6mat(FixedArray2D<Real, 6, 6> mat) {
   _mat_desc.rank = 2;
   double _mat_vec[6 * 6];
   _mat_desc.data_ptr = _mat_vec;
+  _mat_desc.dims[0] = 6;
+  _mat_desc.dims[1] = 6;
   matrix_to_vec(mat, _mat_vec);
   // eval: out NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _eval_desc;
@@ -3257,6 +3306,8 @@ Bmad::EigenDecomp6mat Bmad::eigen_decomp_6mat(FixedArray2D<Real, 6, 6> mat) {
   FixedArray2D<Complex, 6, 6> evec;
   std::complex<double> _evec_vec[6 * 6];
   _evec_desc.data_ptr = _evec_vec;
+  _evec_desc.dims[0] = 6;
+  _evec_desc.dims[1] = 6;
   bool _err_flag{};
   // tunes: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _tunes_desc;
@@ -3367,10 +3418,8 @@ bool Bmad::ele_has_constant_ds_dt_ref(EleStruct &ele) {
   fortran_ele_has_constant_ds_dt_ref(/* void* */ ele.get_fortran_ptr(), /* bool& */ _is_const);
   return _is_const;
 }
-EleStruct Bmad::ele_has_nonzero_kick(bool has_kick) {
-  EleStruct _ele;
-  fortran_ele_has_nonzero_kick(/* void* */ _ele.get_fortran_ptr(), /* bool& */ has_kick);
-  return std::move(_ele);
+void Bmad::ele_has_nonzero_kick(EleStruct &ele, bool has_kick) {
+  fortran_ele_has_nonzero_kick(/* void* */ ele.get_fortran_ptr(), /* bool& */ has_kick);
 }
 bool Bmad::ele_has_nonzero_offset(EleStruct &ele) {
   bool _has_offset{};
@@ -3433,6 +3482,8 @@ Bmad::EleMisalignmentLSCalc Bmad::ele_misalignment_l_s_calc(EleStruct &ele) {
   FixedArray2D<Real, 3, 3> S_mis;
   double _S_mis_vec[3 * 3];
   _S_mis_desc.data_ptr = _S_mis_vec;
+  _S_mis_desc.dims[0] = 3;
+  _S_mis_desc.dims[1] = 3;
   fortran_ele_misalignment_l_s_calc(
       /* void* */ ele.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _L_mis_desc,
@@ -3465,6 +3516,8 @@ void Bmad::ele_reference_energy_correction(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -3680,6 +3733,8 @@ Bmad::ElecMultipoleField Bmad::elec_multipole_field(double a, double b, int n, C
   FixedArray2D<Real, 2, 2> dE;
   double _dE_vec[2 * 2];
   _dE_desc.data_ptr = _dE_vec;
+  _dE_desc.dims[0] = 2;
+  _dE_desc.dims[1] = 2;
   bool _compute_dE{};
   fortran_elec_multipole_field(
       /* double& */ a,
@@ -3996,6 +4051,8 @@ Bmad::Emit6d Bmad::emit_6d(
   FixedArray2D<Real, 6, 6> sigma_mat;
   double _sigma_mat_vec[6 * 6];
   _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  _sigma_mat_desc.dims[0] = 6;
+  _sigma_mat_desc.dims[1] = 6;
   // closed_orbit: CoordStruct in (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _closed_orbit_desc;
   _closed_orbit_desc.rank = 1;
@@ -4040,18 +4097,24 @@ void Bmad::envelope_radints(
   _Lambda_desc.rank = 2;
   std::complex<double> _Lambda_vec[6 * 6];
   _Lambda_desc.data_ptr = _Lambda_vec;
+  _Lambda_desc.dims[0] = 6;
+  _Lambda_desc.dims[1] = 6;
   matrix_to_vec(Lambda, _Lambda_vec);
   // Theta: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Theta_desc;
   _Theta_desc.rank = 2;
   std::complex<double> _Theta_vec[6 * 6];
   _Theta_desc.data_ptr = _Theta_vec;
+  _Theta_desc.dims[0] = 6;
+  _Theta_desc.dims[1] = 6;
   matrix_to_vec(Theta, _Theta_vec);
   // Iota: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Iota_desc;
   _Iota_desc.rank = 2;
   std::complex<double> _Iota_vec[6 * 6];
   _Iota_desc.data_ptr = _Iota_vec;
+  _Iota_desc.dims[0] = 6;
+  _Iota_desc.dims[1] = 6;
   matrix_to_vec(Iota, _Iota_vec);
   // alpha: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _alpha_desc;
@@ -4089,18 +4152,24 @@ Bmad::EnvelopeRadintsIbs Bmad::envelope_radints_ibs(
   _Lambda_desc.rank = 2;
   std::complex<double> _Lambda_vec[6 * 6];
   _Lambda_desc.data_ptr = _Lambda_vec;
+  _Lambda_desc.dims[0] = 6;
+  _Lambda_desc.dims[1] = 6;
   matrix_to_vec(Lambda, _Lambda_vec);
   // Theta: in NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Theta_desc;
   _Theta_desc.rank = 2;
   std::complex<double> _Theta_vec[6 * 6];
   _Theta_desc.data_ptr = _Theta_vec;
+  _Theta_desc.dims[0] = 6;
+  _Theta_desc.dims[1] = 6;
   matrix_to_vec(Theta, _Theta_vec);
   // Iota: in NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Iota_desc;
   _Iota_desc.rank = 2;
   std::complex<double> _Iota_vec[6 * 6];
   _Iota_desc.data_ptr = _Iota_vec;
+  _Iota_desc.dims[0] = 6;
+  _Iota_desc.dims[1] = 6;
   matrix_to_vec(Iota, _Iota_vec);
   // eles: EleStruct in (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _eles_desc;
@@ -4924,6 +4993,8 @@ void Bmad::exact_bend_edge_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -4957,13 +5028,13 @@ void Bmad::expect_one_of(
     std::string delim_list,
     bool check_input_delim,
     std::string ele_name,
-    std::string delim,
+    std::string &delim,
     bool delim_found,
     bool is_ok
 ) {
   auto _delim_list = delim_list.c_str();
   auto _ele_name = ele_name.c_str();
-  auto _delim = delim.c_str();
+  auto _delim = delim.c_str(); // ptr, inout, required
   fortran_expect_one_of(
       /* const char* */ _delim_list,
       /* bool& */ check_input_delim,
@@ -5183,7 +5254,7 @@ int Bmad::fft1(FArray1D<Real> &a, FArray1D<Real> &b, int n, int isn) {
 bool Bmad::fibre_to_ele(
     Fibre &ptc_fibre,
     BranchStruct &branch,
-    int ix_ele,
+    int &ix_ele,
     std::optional<bool> from_mad
 ) {
   bool _err_flag{};
@@ -5302,12 +5373,16 @@ Bmad::FloorAnglesToWMat Bmad::floor_angles_to_w_mat(double theta, double phi, do
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   // w_mat_inv: out NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _w_mat_inv_desc;
   _w_mat_inv_desc.rank = 2;
   FixedArray2D<Real, 3, 3> w_mat_inv;
   double _w_mat_inv_vec[3 * 3];
   _w_mat_inv_desc.data_ptr = _w_mat_inv_vec;
+  _w_mat_inv_desc.dims[0] = 3;
+  _w_mat_inv_desc.dims[1] = 3;
   fortran_floor_angles_to_w_mat(
       /* double& */ theta,
       /* double& */ phi,
@@ -5328,6 +5403,8 @@ Bmad::FloorWMatToAngles Bmad::floor_w_mat_to_angles(
   _w_mat_desc.rank = 2;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   matrix_to_vec(w_mat, _w_mat_vec);
   double _theta{};
   double _phi{};
@@ -5420,6 +5497,8 @@ Bmad::GBendingStrengthFromEmField Bmad::g_bending_strength_from_em_field(
   FixedArray2D<Real, 3, 3> dg;
   double _dg_vec[3 * 3];
   _dg_desc.data_ptr = _dg_vec;
+  _dg_desc.dims[0] = 3;
+  _dg_desc.dims[1] = 3;
   fortran_g_bending_strength_from_em_field(
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ param.get_fortran_ptr(),
@@ -5531,6 +5610,8 @@ Bmad::GetEmitFromSigmaMat Bmad::get_emit_from_sigma_mat(
   _sigma_mat_desc.rank = 2;
   double _sigma_mat_vec[6 * 6];
   _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  _sigma_mat_desc.dims[0] = 6;
+  _sigma_mat_desc.dims[1] = 6;
   matrix_to_vec(sigma_mat, _sigma_mat_vec);
   // normal: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _normal_desc;
@@ -5545,6 +5626,8 @@ Bmad::GetEmitFromSigmaMat Bmad::get_emit_from_sigma_mat(
   _Nmat_desc.data_ptr = _Nmat_vec;
   if (Nmat.has_value()) {
     matrix_to_vec(Nmat.value(), _Nmat_vec);
+    _Nmat_desc.dims[0] = 6;
+    _Nmat_desc.dims[1] = 6;
   } else {
     _Nmat_desc.data_ptr = nullptr;
   }
@@ -5557,19 +5640,17 @@ Bmad::GetEmitFromSigmaMat Bmad::get_emit_from_sigma_mat(
   );
   return GetEmitFromSigmaMat{_normal, _err_flag};
 }
-void Bmad::get_next_word(
+Bmad::GetNextWord Bmad::get_next_word(
     std::string word,
-    int ix_word,
     std::string delim_list,
-    std::string delim,
-    bool delim_found,
     std::optional<bool> upper_case_word,
-    std::optional<bool> call_check,
-    std::optional<bool> err_flag
+    std::optional<bool> call_check
 ) {
   auto _word = word.c_str();
+  int _ix_word{};
   auto _delim_list = delim_list.c_str();
-  auto _delim = delim.c_str();
+  char _delim[4096];
+  bool _delim_found{};
   bool upper_case_word_lvalue;
   auto *_upper_case_word{&upper_case_word_lvalue};
   if (upper_case_word.has_value()) {
@@ -5584,23 +5665,18 @@ void Bmad::get_next_word(
   } else {
     _call_check = nullptr;
   }
-  bool err_flag_lvalue;
-  auto *_err_flag{&err_flag_lvalue};
-  if (err_flag.has_value()) {
-    err_flag_lvalue = err_flag.value();
-  } else {
-    _err_flag = nullptr;
-  }
+  bool _err_flag{};
   fortran_get_next_word(
       /* const char* */ _word,
-      /* int& */ ix_word,
+      /* int& */ _ix_word,
       /* const char* */ _delim_list,
       /* const char* */ _delim,
-      /* bool& */ delim_found,
+      /* bool& */ _delim_found,
       /* bool* */ _upper_case_word,
       /* bool* */ _call_check,
-      /* bool* */ _err_flag
+      /* bool& */ _err_flag
   );
+  return GetNextWord{_ix_word, _delim, _delim_found, _err_flag};
 }
 int Bmad::get_slave_list(EleStruct &lord, ElePointerStructAlloc1D slaves) {
   // intent=inout allocatable type array
@@ -5722,6 +5798,8 @@ void Bmad::hard_multipole_edge_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -5828,6 +5906,8 @@ void Bmad::hwang_bend_edge_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -5863,12 +5943,16 @@ void Bmad::ibs_matrix_c(
   _sigma_mat_desc.rank = 2;
   double _sigma_mat_vec[6 * 6];
   _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  _sigma_mat_desc.dims[0] = 6;
+  _sigma_mat_desc.dims[1] = 6;
   matrix_to_vec(sigma_mat, _sigma_mat_vec);
   // ibs_mat: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _ibs_mat_desc;
   _ibs_mat_desc.rank = 2;
   double _ibs_mat_vec[6 * 6];
   _ibs_mat_desc.data_ptr = _ibs_mat_vec;
+  _ibs_mat_desc.dims[0] = 6;
+  _ibs_mat_desc.dims[1] = 6;
   matrix_to_vec(ibs_mat, _ibs_mat_vec);
   fortran_ibs_matrix_c(
       /* Bmad::array_descriptor_t& */ _sigma_mat_desc,
@@ -5967,7 +6051,7 @@ void Bmad::igfezfun(
   );
 }
 void Bmad::init_attribute_name1(
-    bool is_ok,
+    bool &is_ok,
     int ix_key,
     int ix_attrib,
     std::string name,
@@ -6661,18 +6745,24 @@ void Bmad::integrated_mats(
   _Lambda_desc.rank = 2;
   std::complex<double> _Lambda_vec[6 * 6];
   _Lambda_desc.data_ptr = _Lambda_vec;
+  _Lambda_desc.dims[0] = 6;
+  _Lambda_desc.dims[1] = 6;
   matrix_to_vec(Lambda, _Lambda_vec);
   // Theta: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Theta_desc;
   _Theta_desc.rank = 2;
   std::complex<double> _Theta_vec[6 * 6];
   _Theta_desc.data_ptr = _Theta_vec;
+  _Theta_desc.dims[0] = 6;
+  _Theta_desc.dims[1] = 6;
   matrix_to_vec(Theta, _Theta_vec);
   // Iota: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Iota_desc;
   _Iota_desc.rank = 2;
   std::complex<double> _Iota_vec[6 * 6];
   _Iota_desc.data_ptr = _Iota_vec;
+  _Iota_desc.dims[0] = 6;
+  _Iota_desc.dims[1] = 6;
   matrix_to_vec(Iota, _Iota_vec);
   fortran_integrated_mats(
       /* Bmad::array_descriptor_t& */ _eles_desc,
@@ -6892,7 +6982,7 @@ bool Bmad::lat_ele_locator(
     std::string loc_str,
     LatStruct &lat,
     ElePointerStructAlloc1D eles,
-    int n_loc,
+    int &n_loc,
     std::optional<bool> above_ubound_is_err,
     std::optional<int> ix_dflt_branch,
     std::optional<bool> order_by_index,
@@ -7039,6 +7129,8 @@ void Bmad::linear_bend_edge_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -7082,6 +7174,8 @@ TaylorStructArray1D Bmad::linear_to_spin_taylor(FixedArray2D<Real, 4, 7> q_map) 
   _q_map_desc.rank = 2;
   double _q_map_vec[4 * 7];
   _q_map_desc.data_ptr = _q_map_vec;
+  _q_map_desc.dims[0] = 4;
+  _q_map_desc.dims[1] = 7;
   matrix_to_vec(q_map, _q_map_vec);
   // spin_taylor: TaylorStruct out (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _spin_taylor_desc;
@@ -7134,6 +7228,8 @@ double Bmad::low_energy_z_correction(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -7294,6 +7390,9 @@ void Bmad::mad_tmsymm(FixedArray3D<Real, 6, 6, 6> te) {
   _te_desc.rank = 3;
   double _te_vec[6 * 6 * 6];
   _te_desc.data_ptr = _te_vec;
+  _te_desc.dims[0] = 6;
+  _te_desc.dims[1] = 6;
+  _te_desc.dims[2] = 6;
   tensor_to_vec(te, _te_vec);
   fortran_mad_tmsymm(/* Bmad::array_descriptor_t& */ _te_desc);
   vec_to_tensor(_te_vec, te);
@@ -7320,12 +7419,16 @@ void Bmad::make_g2_mats(
   _g2_mat_desc.rank = 2;
   double _g2_mat_vec[2 * 2];
   _g2_mat_desc.data_ptr = _g2_mat_vec;
+  _g2_mat_desc.dims[0] = 2;
+  _g2_mat_desc.dims[1] = 2;
   matrix_to_vec(g2_mat, _g2_mat_vec);
   // g2_inv_mat: inout NOT (CppWrapperGeneralArgumentArray) (['2', '2'])
   Bmad::array_descriptor_t _g2_inv_mat_desc;
   _g2_inv_mat_desc.rank = 2;
   double _g2_inv_mat_vec[2 * 2];
   _g2_inv_mat_desc.data_ptr = _g2_inv_mat_vec;
+  _g2_inv_mat_desc.dims[0] = 2;
+  _g2_inv_mat_desc.dims[1] = 2;
   matrix_to_vec(g2_inv_mat, _g2_inv_mat_vec);
   fortran_make_g2_mats(
       /* void* */ twiss.get_fortran_ptr(),
@@ -7342,12 +7445,16 @@ Bmad::MakeGMats Bmad::make_g_mats(EleStruct &ele) {
   FixedArray2D<Real, 4, 4> g_mat;
   double _g_mat_vec[4 * 4];
   _g_mat_desc.data_ptr = _g_mat_vec;
+  _g_mat_desc.dims[0] = 4;
+  _g_mat_desc.dims[1] = 4;
   // g_inv_mat: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _g_inv_mat_desc;
   _g_inv_mat_desc.rank = 2;
   FixedArray2D<Real, 4, 4> g_inv_mat;
   double _g_inv_mat_vec[4 * 4];
   _g_inv_mat_desc.data_ptr = _g_inv_mat_vec;
+  _g_inv_mat_desc.dims[0] = 4;
+  _g_inv_mat_desc.dims[1] = 4;
   fortran_make_g_mats(
       /* void* */ ele.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _g_mat_desc,
@@ -7363,6 +7470,8 @@ Bmad::MakeHvbp Bmad::make_hvbp(FixedArray2D<Real, 6, 6> N) {
   _N_desc.rank = 2;
   double _N_vec[6 * 6];
   _N_desc.data_ptr = _N_vec;
+  _N_desc.dims[0] = 6;
+  _N_desc.dims[1] = 6;
   matrix_to_vec(N, _N_vec);
   // B: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _B_desc;
@@ -7370,30 +7479,40 @@ Bmad::MakeHvbp Bmad::make_hvbp(FixedArray2D<Real, 6, 6> N) {
   FixedArray2D<Real, 6, 6> B;
   double _B_vec[6 * 6];
   _B_desc.data_ptr = _B_vec;
+  _B_desc.dims[0] = 6;
+  _B_desc.dims[1] = 6;
   // V: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _V_desc;
   _V_desc.rank = 2;
   FixedArray2D<Real, 6, 6> V;
   double _V_vec[6 * 6];
   _V_desc.data_ptr = _V_vec;
+  _V_desc.dims[0] = 6;
+  _V_desc.dims[1] = 6;
   // H: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _H_desc;
   _H_desc.rank = 2;
   FixedArray2D<Real, 6, 6> H;
   double _H_vec[6 * 6];
   _H_desc.data_ptr = _H_vec;
+  _H_desc.dims[0] = 6;
+  _H_desc.dims[1] = 6;
   // Vbar: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Vbar_desc;
   _Vbar_desc.rank = 2;
   FixedArray2D<Real, 6, 6> Vbar;
   double _Vbar_vec[6 * 6];
   _Vbar_desc.data_ptr = _Vbar_vec;
+  _Vbar_desc.dims[0] = 6;
+  _Vbar_desc.dims[1] = 6;
   // Hbar: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Hbar_desc;
   _Hbar_desc.rank = 2;
   FixedArray2D<Real, 6, 6> Hbar;
   double _Hbar_vec[6 * 6];
   _Hbar_desc.data_ptr = _Hbar_vec;
+  _Hbar_desc.dims[0] = 6;
+  _Hbar_desc.dims[1] = 6;
   fortran_make_hvbp(
       /* Bmad::array_descriptor_t& */ _N_desc,
       /* Bmad::array_descriptor_t& */ _B_desc,
@@ -7568,6 +7687,8 @@ Bmad::make_n(FixedArray2D<Real, 6, 6> t6, std::optional<FixedArray1D<Real, 3>> a
   _t6_desc.rank = 2;
   double _t6_vec[6 * 6];
   _t6_desc.data_ptr = _t6_vec;
+  _t6_desc.dims[0] = 6;
+  _t6_desc.dims[1] = 6;
   matrix_to_vec(t6, _t6_vec);
   // N: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _N_desc;
@@ -7575,6 +7696,8 @@ Bmad::make_n(FixedArray2D<Real, 6, 6> t6, std::optional<FixedArray1D<Real, 3>> a
   FixedArray2D<Real, 6, 6> N;
   double _N_vec[6 * 6];
   _N_desc.data_ptr = _N_vec;
+  _N_desc.dims[0] = 6;
+  _N_desc.dims[1] = 6;
   bool _err_flag{};
   // abz_tunes: in NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _abz_tunes_desc;
@@ -7598,6 +7721,8 @@ Bmad::make_n(FixedArray2D<Real, 6, 6> t6, std::optional<FixedArray1D<Real, 3>> a
   FixedArray2D<Real, 6, 6> U;
   double _U_vec[6 * 6];
   _U_desc.data_ptr = _U_vec;
+  _U_desc.dims[0] = 6;
+  _U_desc.dims[1] = 6;
   fortran_make_n(
       /* Bmad::array_descriptor_t& */ _t6_desc,
       /* Bmad::array_descriptor_t& */ _N_desc,
@@ -7616,6 +7741,8 @@ Bmad::MakePbrh Bmad::make_pbrh(FixedArray2D<Real, 6, 6> M, FixedArray1D<Real, 3>
   _M_desc.rank = 2;
   double _M_vec[6 * 6];
   _M_desc.data_ptr = _M_vec;
+  _M_desc.dims[0] = 6;
+  _M_desc.dims[1] = 6;
   matrix_to_vec(M, _M_vec);
   // P: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _P_desc;
@@ -7623,24 +7750,32 @@ Bmad::MakePbrh Bmad::make_pbrh(FixedArray2D<Real, 6, 6> M, FixedArray1D<Real, 3>
   FixedArray2D<Complex, 6, 6> P;
   std::complex<double> _P_vec[6 * 6];
   _P_desc.data_ptr = _P_vec;
+  _P_desc.dims[0] = 6;
+  _P_desc.dims[1] = 6;
   // Bp: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Bp_desc;
   _Bp_desc.rank = 2;
   FixedArray2D<Complex, 6, 6> Bp;
   std::complex<double> _Bp_vec[6 * 6];
   _Bp_desc.data_ptr = _Bp_vec;
+  _Bp_desc.dims[0] = 6;
+  _Bp_desc.dims[1] = 6;
   // R: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _R_desc;
   _R_desc.rank = 2;
   FixedArray2D<Complex, 6, 6> R;
   std::complex<double> _R_vec[6 * 6];
   _R_desc.data_ptr = _R_vec;
+  _R_desc.dims[0] = 6;
+  _R_desc.dims[1] = 6;
   // H: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _H_desc;
   _H_desc.rank = 2;
   FixedArray2D<Complex, 6, 6> H;
   std::complex<double> _H_vec[6 * 6];
   _H_desc.data_ptr = _H_vec;
+  _H_desc.dims[0] = 6;
+  _H_desc.dims[1] = 6;
   // abz_tunes: in NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _abz_tunes_desc;
   _abz_tunes_desc.rank = 1;
@@ -7667,6 +7802,8 @@ Bmad::make_smat_from_abc(FixedArray2D<Real, 6, 6> t6, NormalModesStruct &mode) {
   _t6_desc.rank = 2;
   double _t6_vec[6 * 6];
   _t6_desc.data_ptr = _t6_vec;
+  _t6_desc.dims[0] = 6;
+  _t6_desc.dims[1] = 6;
   matrix_to_vec(t6, _t6_vec);
   // sigma_mat: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _sigma_mat_desc;
@@ -7674,6 +7811,8 @@ Bmad::make_smat_from_abc(FixedArray2D<Real, 6, 6> t6, NormalModesStruct &mode) {
   FixedArray2D<Real, 6, 6> sigma_mat;
   double _sigma_mat_vec[6 * 6];
   _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  _sigma_mat_desc.dims[0] = 6;
+  _sigma_mat_desc.dims[1] = 6;
   bool _err_flag{};
   // Nout: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _Nout_desc;
@@ -7681,6 +7820,8 @@ Bmad::make_smat_from_abc(FixedArray2D<Real, 6, 6> t6, NormalModesStruct &mode) {
   FixedArray2D<Real, 6, 6> Nout;
   double _Nout_vec[6 * 6];
   _Nout_desc.data_ptr = _Nout_vec;
+  _Nout_desc.dims[0] = 6;
+  _Nout_desc.dims[1] = 6;
   fortran_make_smat_from_abc(
       /* Bmad::array_descriptor_t& */ _t6_desc,
       /* void* */ mode.get_fortran_ptr(),
@@ -7705,12 +7846,16 @@ void Bmad::make_v(
   _M_desc.rank = 2;
   double _M_vec[6 * 6];
   _M_desc.data_ptr = _M_vec;
+  _M_desc.dims[0] = 6;
+  _M_desc.dims[1] = 6;
   matrix_to_vec(M, _M_vec);
   // V: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _V_desc;
   _V_desc.rank = 2;
   std::complex<double> _V_vec[6 * 6];
   _V_desc.data_ptr = _V_vec;
+  _V_desc.dims[0] = 6;
+  _V_desc.dims[1] = 6;
   matrix_to_vec(V, _V_vec);
   // abz_tunes: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _abz_tunes_desc;
@@ -7732,12 +7877,16 @@ Bmad::MakeVMats Bmad::make_v_mats(EleStruct &ele) {
   FixedArray2D<Real, 4, 4> v_mat;
   double _v_mat_vec[4 * 4];
   _v_mat_desc.data_ptr = _v_mat_vec;
+  _v_mat_desc.dims[0] = 4;
+  _v_mat_desc.dims[1] = 4;
   // v_inv_mat: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _v_inv_mat_desc;
   _v_inv_mat_desc.rank = 2;
   FixedArray2D<Real, 4, 4> v_inv_mat;
   double _v_inv_mat_vec[4 * 4];
   _v_inv_mat_desc.data_ptr = _v_inv_mat_vec;
+  _v_inv_mat_desc.dims[0] = 4;
+  _v_inv_mat_desc.dims[1] = 4;
   fortran_make_v_mats(
       /* void* */ ele.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _v_mat_desc,
@@ -7857,6 +8006,8 @@ FixedArray2D<Real, 4, 4> Bmad::mat4_multipole(double knl, double tilt, int n, Co
   FixedArray2D<Real, 4, 4> kick_mat;
   double _kick_mat_vec[4 * 4];
   _kick_mat_desc.data_ptr = _kick_mat_vec;
+  _kick_mat_desc.dims[0] = 4;
+  _kick_mat_desc.dims[1] = 4;
   fortran_mat4_multipole(
       /* double& */ knl,
       /* double& */ tilt,
@@ -7881,6 +8032,8 @@ void Bmad::mat6_add_pitch(
   _mat6_desc.rank = 2;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   matrix_to_vec(mat6, _mat6_vec);
   fortran_mat6_add_pitch(
       /* double& */ x_pitch_tot,
@@ -7902,6 +8055,8 @@ Bmad::mat6_to_complex_taylor(FixedArray1D<Complex, 6> vec0, FixedArray2D<Complex
   _mat6_desc.rank = 2;
   std::complex<double> _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   matrix_to_vec(mat6, _mat6_vec);
   // complex_taylor: ComplexTaylorStruct out (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _complex_taylor_desc;
@@ -7925,6 +8080,8 @@ Bmad::MatSympDecouple Bmad::mat_symp_decouple(FixedArray2D<Real, 4, 4> t0, bool 
   _t0_desc.rank = 2;
   double _t0_vec[4 * 4];
   _t0_desc.data_ptr = _t0_vec;
+  _t0_desc.dims[0] = 4;
+  _t0_desc.dims[1] = 4;
   matrix_to_vec(t0, _t0_vec);
   int _stat{};
   // U: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
@@ -7933,30 +8090,40 @@ Bmad::MatSympDecouple Bmad::mat_symp_decouple(FixedArray2D<Real, 4, 4> t0, bool 
   FixedArray2D<Real, 4, 4> U;
   double _U_vec[4 * 4];
   _U_desc.data_ptr = _U_vec;
+  _U_desc.dims[0] = 4;
+  _U_desc.dims[1] = 4;
   // V: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _V_desc;
   _V_desc.rank = 2;
   FixedArray2D<Real, 4, 4> V;
   double _V_vec[4 * 4];
   _V_desc.data_ptr = _V_vec;
+  _V_desc.dims[0] = 4;
+  _V_desc.dims[1] = 4;
   // Ubar: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _Ubar_desc;
   _Ubar_desc.rank = 2;
   FixedArray2D<Real, 4, 4> Ubar;
   double _Ubar_vec[4 * 4];
   _Ubar_desc.data_ptr = _Ubar_vec;
+  _Ubar_desc.dims[0] = 4;
+  _Ubar_desc.dims[1] = 4;
   // Vbar: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _Vbar_desc;
   _Vbar_desc.rank = 2;
   FixedArray2D<Real, 4, 4> Vbar;
   double _Vbar_vec[4 * 4];
   _Vbar_desc.data_ptr = _Vbar_vec;
+  _Vbar_desc.dims[0] = 4;
+  _Vbar_desc.dims[1] = 4;
   // G: out NOT (CppWrapperGeneralArgumentArray) (['4', '4'])
   Bmad::array_descriptor_t _G_desc;
   _G_desc.rank = 2;
   FixedArray2D<Real, 4, 4> G;
   double _G_vec[4 * 4];
   _G_desc.data_ptr = _G_vec;
+  _G_desc.dims[0] = 4;
+  _G_desc.dims[1] = 4;
   TwissStruct _twiss1;
   TwissStruct _twiss2;
   double _gamma{};
@@ -8002,6 +8169,8 @@ Bmad::MatchEleToMat6 Bmad::match_ele_to_mat6(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   // vec0: out NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _vec0_desc;
   _vec0_desc.rank = 1;
@@ -8123,14 +8292,14 @@ bool Bmad::multilayer_type_to_multilayer_params(EleStruct &ele) {
   );
   return _err_flag;
 }
-void Bmad::multipass_chain(
+Bmad::MultipassChain Bmad::multipass_chain(
     EleStruct &ele,
-    int ix_pass,
-    int n_links,
     std::optional<ElePointerStructAlloc1D> chain_ele,
     std::optional<bool> use_super_lord
 ) {
-  // intent=in allocatable type array
+  int _ix_pass{};
+  int _n_links{};
+  // intent=inout allocatable type array
   auto *_chain_ele =
       chain_ele.has_value() ? chain_ele->get_fortran_ptr() : nullptr; // input, optional
   bool use_super_lord_lvalue;
@@ -8142,11 +8311,12 @@ void Bmad::multipass_chain(
   }
   fortran_multipass_chain(
       /* void* */ ele.get_fortran_ptr(),
-      /* int& */ ix_pass,
-      /* int& */ n_links,
+      /* int& */ _ix_pass,
+      /* int& */ _n_links,
       /* void* */ _chain_ele,
       /* bool* */ _use_super_lord
   );
+  return MultipassChain{_ix_pass, _n_links};
 }
 Bmad::Multipole1AbToKt Bmad::multipole1_ab_to_kt(double an, double bn, int n) {
   double _knl{};
@@ -8376,6 +8546,8 @@ FixedArray2D<Real, 6, 6> Bmad::multipole_kick_mat(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   fortran_multipole_kick_mat(
       /* Bmad::array_descriptor_t& */ _knl_desc,
       /* Bmad::array_descriptor_t& */ _tilt_desc,
@@ -8484,13 +8656,15 @@ int Bmad::n_attrib_string_max_len() {
   fortran_n_attrib_string_max_len(/* int& */ _max_len);
   return _max_len;
 }
-void Bmad::new_control(LatStruct &lat, int ix_ele, std::optional<std::string> ele_name) {
+int Bmad::new_control(LatStruct &lat, std::optional<std::string> ele_name) {
+  int _ix_ele{};
   const char *_ele_name = ele_name.has_value() ? ele_name->c_str() : nullptr;
   fortran_new_control(
       /* void* */ lat.get_fortran_ptr(),
-      /* int& */ ix_ele,
+      /* int& */ _ix_ele,
       /* const char* */ _ele_name
   );
+  return _ix_ele;
 }
 int Bmad::nint_chk(double re_val) {
   int _int_val{};
@@ -8630,6 +8804,8 @@ Bmad::NormalMode3Calc Bmad::normal_mode3_calc(
   _t6_desc.rank = 2;
   double _t6_vec[6 * 6];
   _t6_desc.data_ptr = _t6_vec;
+  _t6_desc.dims[0] = 6;
+  _t6_desc.dims[1] = 6;
   matrix_to_vec(t6, _t6_vec);
   // tune: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _tune_desc;
@@ -8643,12 +8819,16 @@ Bmad::NormalMode3Calc Bmad::normal_mode3_calc(
   FixedArray2D<Real, 6, 6> B;
   double _B_vec[6 * 6];
   _B_desc.data_ptr = _B_vec;
+  _B_desc.dims[0] = 6;
+  _B_desc.dims[1] = 6;
   // HV: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _HV_desc;
   _HV_desc.rank = 2;
   FixedArray2D<Real, 6, 6> HV;
   double _HV_vec[6 * 6];
   _HV_desc.data_ptr = _HV_vec;
+  _HV_desc.dims[0] = 6;
+  _HV_desc.dims[1] = 6;
   bool above_transition_lvalue;
   auto *_above_transition{&above_transition_lvalue};
   if (above_transition.has_value()) {
@@ -8695,6 +8875,8 @@ bool Bmad::normalize_evecs(FixedArray2D<Complex, 6, 6> evec) {
   _evec_desc.rank = 2;
   std::complex<double> _evec_vec[6 * 6];
   _evec_desc.data_ptr = _evec_vec;
+  _evec_desc.dims[0] = 6;
+  _evec_desc.dims[1] = 6;
   matrix_to_vec(evec, _evec_vec);
   bool _err_flag{};
   fortran_normalize_evecs(/* Bmad::array_descriptor_t& */ _evec_desc, /* bool& */ _err_flag);
@@ -8729,6 +8911,8 @@ Bmad::OdeintBmad Bmad::odeint_bmad(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -8759,7 +8943,7 @@ Bmad::OdeintBmadTime Bmad::odeint_bmad_time(
     EleStruct &ele,
     LatParamStruct &param,
     int t_dir,
-    double rf_time,
+    double &rf_time,
     optional_ref<TrackStruct> track,
     std::optional<double> t_end,
     optional_ref<EmFieldStruct> extra_field
@@ -8801,7 +8985,7 @@ Bmad::OffsetParticle Bmad::offset_particle(
     std::optional<bool> set_spin,
     std::optional<FixedArray2D<Real, 6, 6>> mat6,
     std::optional<bool> make_matrix,
-    std::optional<double> time
+    optional_ref<double> time
 ) {
   bool set_tilt_lvalue;
   auto *_set_tilt{&set_tilt_lvalue};
@@ -8846,6 +9030,8 @@ Bmad::OffsetParticle Bmad::offset_particle(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -8862,13 +9048,7 @@ Bmad::OffsetParticle Bmad::offset_particle(
   FixedArray1D<Real, 4> _spin_qrot;
   _spin_qrot_desc.data_ptr = _spin_qrot.data();
   _spin_qrot_desc.dims[0] = _spin_qrot.size();
-  double time_lvalue;
-  auto *_time{&time_lvalue};
-  if (time.has_value()) {
-    time_lvalue = time.value();
-  } else {
-    _time = nullptr;
-  }
+  auto *_time = time.has_value() ? &time->get() : nullptr; // inout, optional
   fortran_offset_particle(
       /* void* */ ele.get_fortran_ptr(),
       /* bool& */ set,
@@ -8909,6 +9089,8 @@ void Bmad::offset_photon(
   _rot_mat_desc.data_ptr = _rot_mat_vec;
   if (rot_mat.has_value()) {
     matrix_to_vec(rot_mat.value(), _rot_mat_vec);
+    _rot_mat_desc.dims[0] = 3;
+    _rot_mat_desc.dims[1] = 3;
   } else {
     _rot_mat_desc.data_ptr = nullptr;
   }
@@ -8927,6 +9109,8 @@ FixedArray2D<Real, 4, 4> Bmad::one_turn_mat_at_ele(EleStruct &ele, double phi_a,
   FixedArray2D<Real, 4, 4> mat4;
   double _mat4_vec[4 * 4];
   _mat4_desc.data_ptr = _mat4_vec;
+  _mat4_desc.dims[0] = 4;
+  _mat4_desc.dims[1] = 4;
   fortran_one_turn_mat_at_ele(
       /* void* */ ele.get_fortran_ptr(),
       /* double& */ phi_a,
@@ -8982,6 +9166,8 @@ void Bmad::orbit_reference_energy_correction(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -9074,6 +9260,8 @@ Bmad::OrderEvecsByNSimilarity Bmad::order_evecs_by_n_similarity(
   FixedArray2D<Complex, 6, 6> evec;
   std::complex<double> _evec_vec[6 * 6];
   _evec_desc.data_ptr = _evec_vec;
+  _evec_desc.dims[0] = 6;
+  _evec_desc.dims[1] = 6;
   // eval: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _eval_desc;
   _eval_desc.rank = 1;
@@ -9089,6 +9277,8 @@ Bmad::OrderEvecsByNSimilarity Bmad::order_evecs_by_n_similarity(
   _Nmat_desc.rank = 2;
   double _Nmat_vec[6 * 6];
   _Nmat_desc.data_ptr = _Nmat_vec;
+  _Nmat_desc.dims[0] = 6;
+  _Nmat_desc.dims[1] = 6;
   matrix_to_vec(Nmat, _Nmat_vec);
   bool _err_flag{};
   fortran_order_evecs_by_n_similarity(
@@ -9111,6 +9301,8 @@ void Bmad::order_evecs_by_plane_dominance(
   _evec_desc.rank = 2;
   std::complex<double> _evec_vec[6 * 6];
   _evec_desc.data_ptr = _evec_vec;
+  _evec_desc.dims[0] = 6;
+  _evec_desc.dims[1] = 6;
   matrix_to_vec(evec, _evec_vec);
   // eval: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _eval_desc;
@@ -9145,6 +9337,8 @@ bool Bmad::order_evecs_by_tune(
   _evec_desc.rank = 2;
   std::complex<double> _evec_vec[6 * 6];
   _evec_desc.data_ptr = _evec_vec;
+  _evec_desc.dims[0] = 6;
+  _evec_desc.dims[1] = 6;
   matrix_to_vec(evec, _evec_vec);
   // eval: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _eval_desc;
@@ -9891,6 +10085,8 @@ void Bmad::particle_in_global_frame(
   _w_mat_out_desc.data_ptr = _w_mat_out_vec;
   if (w_mat_out.has_value()) {
     matrix_to_vec(w_mat_out.value(), _w_mat_out_vec);
+    _w_mat_out_desc.dims[0] = 3;
+    _w_mat_out_desc.dims[1] = 3;
   } else {
     _w_mat_out_desc.data_ptr = nullptr;
   }
@@ -10140,6 +10336,8 @@ void Bmad::point_photon_emission(
   _w_to_surface_desc.data_ptr = _w_to_surface_vec;
   if (w_to_surface.has_value()) {
     matrix_to_vec(w_to_surface.value(), _w_to_surface_vec);
+    _w_to_surface_desc.dims[0] = 3;
+    _w_to_surface_desc.dims[1] = 3;
   } else {
     _w_to_surface_desc.data_ptr = nullptr;
   }
@@ -10734,6 +10932,8 @@ Bmad::PtcEmitCalc Bmad::ptc_emit_calc(EleStruct &ele, FixedArray2D<Real, 6, 6> s
   _sigma_mat_desc.rank = 2;
   double _sigma_mat_vec[6 * 6];
   _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  _sigma_mat_desc.dims[0] = 6;
+  _sigma_mat_desc.dims[1] = 6;
   matrix_to_vec(sigma_mat, _sigma_mat_vec);
   CoordStruct _closed_orb;
   fortran_ptc_emit_calc(
@@ -10818,6 +11018,8 @@ Bmad::PtcSpinCalc Bmad::ptc_spin_calc(EleStruct &ele, FixedArray2D<Real, 6, 6> s
   _sigma_mat_desc.rank = 2;
   double _sigma_mat_vec[6 * 6];
   _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  _sigma_mat_desc.dims[0] = 6;
+  _sigma_mat_desc.dims[1] = 6;
   matrix_to_vec(sigma_mat, _sigma_mat_vec);
   CoordStruct _closed_orb;
   fortran_ptc_spin_calc(
@@ -10912,6 +11114,8 @@ Bmad::pwd_mat(LatStruct &lat, FixedArray2D<Real, 6, 6> t6, double inductance, do
   _t6_desc.rank = 2;
   double _t6_vec[6 * 6];
   _t6_desc.data_ptr = _t6_vec;
+  _t6_desc.dims[0] = 6;
+  _t6_desc.dims[1] = 6;
   matrix_to_vec(t6, _t6_vec);
   // t6_pwd: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _t6_pwd_desc;
@@ -10919,6 +11123,8 @@ Bmad::pwd_mat(LatStruct &lat, FixedArray2D<Real, 6, 6> t6, double inductance, do
   FixedArray2D<Real, 6, 6> t6_pwd;
   double _t6_pwd_vec[6 * 6];
   _t6_pwd_desc.data_ptr = _t6_pwd_vec;
+  _t6_pwd_desc.dims[0] = 6;
+  _t6_pwd_desc.dims[1] = 6;
   fortran_pwd_mat(
       /* void* */ lat.get_fortran_ptr(),
       /* Bmad::array_descriptor_t& */ _t6_desc,
@@ -10970,6 +11176,8 @@ Bmad::RadDampAndStocMats Bmad::rad_damp_and_stoc_mats(
   FixedArray2D<Real, 6, 6> xfer_nodamp_mat;
   double _xfer_nodamp_mat_vec[6 * 6];
   _xfer_nodamp_mat_desc.data_ptr = _xfer_nodamp_mat_vec;
+  _xfer_nodamp_mat_desc.dims[0] = 6;
+  _xfer_nodamp_mat_desc.dims[1] = 6;
   bool _err_flag{};
   // closed_orbit: CoordStruct in (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _closed_orbit_desc;
@@ -11037,7 +11245,7 @@ Bmad::RadGIntegrals Bmad::rad_g_integrals(
 Bmad::RadiationIntegrals Bmad::radiation_integrals(
     LatStruct &lat,
     CoordStructArray1D orbit,
-    std::optional<int> ix_cache,
+    optional_ref<int> ix_cache,
     std::optional<int> ix_branch
 ) {
   // orbit: CoordStruct in (CppWrapperTypeArgumentArray)
@@ -11047,13 +11255,7 @@ Bmad::RadiationIntegrals Bmad::radiation_integrals(
   _orbit_desc.dims[0] = orbit.size();
   _orbit_desc.strides[0] = 1;
   NormalModesStruct _mode;
-  int ix_cache_lvalue;
-  auto *_ix_cache{&ix_cache_lvalue};
-  if (ix_cache.has_value()) {
-    ix_cache_lvalue = ix_cache.value();
-  } else {
-    _ix_cache = nullptr;
-  }
+  auto *_ix_cache = ix_cache.has_value() ? &ix_cache->get() : nullptr; // inout, optional
   int ix_branch_lvalue;
   auto *_ix_branch{&ix_branch_lvalue};
   if (ix_branch.has_value()) {
@@ -11404,7 +11606,7 @@ void Bmad::relative_mode_flip(EleStruct &ele1, EleStruct &ele2, bool func_retval
       /* bool& */ func_retval__
   );
 }
-void Bmad::release_rad_int_cache(int ix_cache) {
+void Bmad::release_rad_int_cache(int &ix_cache) {
   fortran_release_rad_int_cache(/* int& */ ix_cache);
 }
 void Bmad::remove_constant_taylor(
@@ -11493,6 +11695,8 @@ void Bmad::rf_coupler_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -11686,12 +11890,16 @@ void Bmad::rotate_em_field(
   _w_mat_desc.rank = 2;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   matrix_to_vec(w_mat, _w_mat_vec);
   // w_inv: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _w_inv_desc;
   _w_inv_desc.rank = 2;
   double _w_inv_vec[3 * 3];
   _w_inv_desc.data_ptr = _w_inv_vec;
+  _w_inv_desc.dims[0] = 3;
+  _w_inv_desc.dims[1] = 3;
   matrix_to_vec(w_inv, _w_inv_vec);
   bool calc_dfield_lvalue;
   auto *_calc_dfield{&calc_dfield_lvalue};
@@ -11729,6 +11937,8 @@ void Bmad::rotate_for_curved_surface(
   _rot_mat_desc.rank = 2;
   double _rot_mat_vec[3 * 3];
   _rot_mat_desc.data_ptr = _rot_mat_vec;
+  _rot_mat_desc.dims[0] = 3;
+  _rot_mat_desc.dims[1] = 3;
   matrix_to_vec(rot_mat, _rot_mat_vec);
   fortran_rotate_for_curved_surface(
       /* void* */ ele.get_fortran_ptr(),
@@ -11840,6 +12050,8 @@ void Bmad::sad_mult_hard_bend_edge_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -11876,6 +12088,8 @@ void Bmad::sad_soft_bend_edge_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -11995,6 +12209,8 @@ void Bmad::save_a_step(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -12045,6 +12261,8 @@ void Bmad::sbend_body_with_k1_map(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -12071,9 +12289,9 @@ void Bmad::sbend_body_with_k1_map(
 double Bmad::sc_adaptive_step(
     BunchStruct &bunch,
     EleStruct &ele,
-    bool include_image,
+    bool &include_image,
     double t_now,
-    double dt_step,
+    double &dt_step,
     EmFieldStructArray1D sc_field
 ) {
   double _dt_next{};
@@ -12097,7 +12315,7 @@ double Bmad::sc_adaptive_step(
 int Bmad::sc_step(
     BunchStruct &bunch,
     EleStruct &ele,
-    bool include_image,
+    bool &include_image,
     double t_end,
     EmFieldStructArray1D sc_field
 ) {
@@ -12307,7 +12525,7 @@ void Bmad::set_flags_for_changed_attribute(
       /* bool* */ _set_dependent
   );
 }
-void Bmad::set_fringe_on_off(double fringe_at, int ele_end, int on_or_off) {
+void Bmad::set_fringe_on_off(double &fringe_at, int ele_end, int on_or_off) {
   fortran_set_fringe_on_off(/* double& */ fringe_at, /* int& */ ele_end, /* int& */ on_or_off);
 }
 void Bmad::set_lords_status_stale(
@@ -12501,7 +12719,7 @@ bool Bmad::set_ptc_base_state(std::string component, bool set_val) {
   return _old_val;
 }
 void Bmad::set_ptc_com_pointers() { fortran_set_ptc_com_pointers(); }
-void Bmad::set_ptc_quiet(int channel, bool set, int old_val) {
+void Bmad::set_ptc_quiet(int channel, bool set, int &old_val) {
   fortran_set_ptc_quiet(/* int& */ channel, /* bool& */ set, /* int& */ old_val);
 }
 void Bmad::set_ptc_verbose(bool on) { fortran_set_ptc_verbose(/* bool& */ on); }
@@ -12639,6 +12857,8 @@ Bmad::sigma_mat_ptc_to_bmad(FixedArray2D<Real, 6, 6> sigma_mat_ptc, double beta0
   _sigma_mat_ptc_desc.rank = 2;
   double _sigma_mat_ptc_vec[6 * 6];
   _sigma_mat_ptc_desc.data_ptr = _sigma_mat_ptc_vec;
+  _sigma_mat_ptc_desc.dims[0] = 6;
+  _sigma_mat_ptc_desc.dims[1] = 6;
   matrix_to_vec(sigma_mat_ptc, _sigma_mat_ptc_vec);
   // sigma_mat_bmad: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _sigma_mat_bmad_desc;
@@ -12646,6 +12866,8 @@ Bmad::sigma_mat_ptc_to_bmad(FixedArray2D<Real, 6, 6> sigma_mat_ptc, double beta0
   FixedArray2D<Real, 6, 6> sigma_mat_bmad;
   double _sigma_mat_bmad_vec[6 * 6];
   _sigma_mat_bmad_desc.data_ptr = _sigma_mat_bmad_vec;
+  _sigma_mat_bmad_desc.dims[0] = 6;
+  _sigma_mat_bmad_desc.dims[1] = 6;
   fortran_sigma_mat_ptc_to_bmad(
       /* Bmad::array_descriptor_t& */ _sigma_mat_ptc_desc,
       /* double& */ beta0,
@@ -12720,6 +12942,8 @@ void Bmad::soft_quadrupole_edge_kick(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -12758,6 +12982,8 @@ void Bmad::sol_quad_mat6_calc(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -12846,6 +13072,8 @@ Bmad::SpinDnDpzFromMat8 Bmad::spin_dn_dpz_from_mat8(
   _mat_1turn_desc.rank = 2;
   double _mat_1turn_vec[8 * 8];
   _mat_1turn_desc.data_ptr = _mat_1turn_vec;
+  _mat_1turn_desc.dims[0] = 8;
+  _mat_1turn_desc.dims[1] = 8;
   matrix_to_vec(mat_1turn, _mat_1turn_vec);
   // dn_dpz_partial: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _dn_dpz_partial_desc;
@@ -12854,6 +13082,8 @@ Bmad::SpinDnDpzFromMat8 Bmad::spin_dn_dpz_from_mat8(
   _dn_dpz_partial_desc.data_ptr = _dn_dpz_partial_vec;
   if (dn_dpz_partial.has_value()) {
     matrix_to_vec(dn_dpz_partial.value(), _dn_dpz_partial_vec);
+    _dn_dpz_partial_desc.dims[0] = 3;
+    _dn_dpz_partial_desc.dims[1] = 3;
   } else {
     _dn_dpz_partial_desc.data_ptr = nullptr;
   }
@@ -12884,24 +13114,32 @@ Bmad::SpinDnDpzFromQmap Bmad::spin_dn_dpz_from_qmap(
   _orb_mat_desc.rank = 2;
   double _orb_mat_vec[6 * 6];
   _orb_mat_desc.data_ptr = _orb_mat_vec;
+  _orb_mat_desc.dims[0] = 6;
+  _orb_mat_desc.dims[1] = 6;
   matrix_to_vec(orb_mat, _orb_mat_vec);
   // q_map: in NOT (CppWrapperGeneralArgumentArray) (['0:3', '0:6'])
   Bmad::array_descriptor_t _q_map_desc;
   _q_map_desc.rank = 2;
   double _q_map_vec[4 * 7];
   _q_map_desc.data_ptr = _q_map_vec;
+  _q_map_desc.dims[0] = 4;
+  _q_map_desc.dims[1] = 7;
   matrix_to_vec(q_map, _q_map_vec);
   // dn_dpz_partial: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _dn_dpz_partial_desc;
   _dn_dpz_partial_desc.rank = 2;
   double _dn_dpz_partial_vec[3 * 3];
   _dn_dpz_partial_desc.data_ptr = _dn_dpz_partial_vec;
+  _dn_dpz_partial_desc.dims[0] = 3;
+  _dn_dpz_partial_desc.dims[1] = 3;
   matrix_to_vec(dn_dpz_partial, _dn_dpz_partial_vec);
   // dn_dpz_partial2: in NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _dn_dpz_partial2_desc;
   _dn_dpz_partial2_desc.rank = 2;
   double _dn_dpz_partial2_vec[3 * 3];
   _dn_dpz_partial2_desc.data_ptr = _dn_dpz_partial2_vec;
+  _dn_dpz_partial2_desc.dims[0] = 3;
+  _dn_dpz_partial2_desc.dims[1] = 3;
   matrix_to_vec(dn_dpz_partial2, _dn_dpz_partial2_vec);
   bool _error{};
   // n0: in NOT (CppWrapperGeneralArgumentArray) (['3'])
@@ -12937,6 +13175,8 @@ void Bmad::spin_map1_normalize(FixedArray2D<Real, 4, 7> spin1) {
   _spin1_desc.rank = 2;
   double _spin1_vec[4 * 7];
   _spin1_desc.data_ptr = _spin1_vec;
+  _spin1_desc.dims[0] = 4;
+  _spin1_desc.dims[1] = 7;
   matrix_to_vec(spin1, _spin1_vec);
   fortran_spin_map1_normalize(/* Bmad::array_descriptor_t& */ _spin1_desc);
   vec_to_matrix(_spin1_vec, spin1);
@@ -12955,6 +13195,8 @@ Bmad::SpinMat8ResonanceStrengths Bmad::spin_mat8_resonance_strengths(
   _mat8_desc.rank = 2;
   double _mat8_vec[6 * 6];
   _mat8_desc.data_ptr = _mat8_vec;
+  _mat8_desc.dims[0] = 6;
+  _mat8_desc.dims[1] = 6;
   matrix_to_vec(mat8, _mat8_vec);
   double _xi_sum{};
   double _xi_diff{};
@@ -12973,12 +13215,16 @@ Bmad::spin_mat_to_eigen(FixedArray2D<Real, 6, 6> orb_mat, FixedArray2D<Real, 4, 
   _orb_mat_desc.rank = 2;
   double _orb_mat_vec[6 * 6];
   _orb_mat_desc.data_ptr = _orb_mat_vec;
+  _orb_mat_desc.dims[0] = 6;
+  _orb_mat_desc.dims[1] = 6;
   matrix_to_vec(orb_mat, _orb_mat_vec);
   // spin_map: in NOT (CppWrapperGeneralArgumentArray) (['0:3', '0:6'])
   Bmad::array_descriptor_t _spin_map_desc;
   _spin_map_desc.rank = 2;
   double _spin_map_vec[4 * 7];
   _spin_map_desc.data_ptr = _spin_map_vec;
+  _spin_map_desc.dims[0] = 4;
+  _spin_map_desc.dims[1] = 7;
   matrix_to_vec(spin_map, _spin_map_vec);
   // orb_eval: out NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _orb_eval_desc;
@@ -12992,6 +13238,8 @@ Bmad::spin_mat_to_eigen(FixedArray2D<Real, 6, 6> orb_mat, FixedArray2D<Real, 4, 
   FixedArray2D<Complex, 6, 6> orb_evec;
   std::complex<double> _orb_evec_vec[6 * 6];
   _orb_evec_desc.data_ptr = _orb_evec_vec;
+  _orb_evec_desc.dims[0] = 6;
+  _orb_evec_desc.dims[1] = 6;
   // n0: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _n0_desc;
   _n0_desc.rank = 1;
@@ -13004,6 +13252,8 @@ Bmad::spin_mat_to_eigen(FixedArray2D<Real, 6, 6> orb_mat, FixedArray2D<Real, 4, 
   FixedArray2D<Complex, 6, 3> spin_evec;
   std::complex<double> _spin_evec_vec[6 * 3];
   _spin_evec_desc.data_ptr = _spin_evec_vec;
+  _spin_evec_desc.dims[0] = 6;
+  _spin_evec_desc.dims[1] = 3;
   bool _error{};
   fortran_spin_mat_to_eigen(
       /* Bmad::array_descriptor_t& */ _orb_mat_desc,
@@ -13059,6 +13309,8 @@ Bmad::SpinQuatResonanceStrengths Bmad::spin_quat_resonance_strengths(
   _spin_q_desc.rank = 2;
   double _spin_q_vec[4 * 7];
   _spin_q_desc.data_ptr = _spin_q_vec;
+  _spin_q_desc.dims[0] = 4;
+  _spin_q_desc.dims[1] = 7;
   matrix_to_vec(spin_q, _spin_q_vec);
   double _xi_sum{};
   double _xi_diff{};
@@ -13093,6 +13345,8 @@ FixedArray2D<Real, 4, 7> Bmad::spin_taylor_to_linear(
   FixedArray2D<Real, 4, 7> spin_map1;
   double _spin_map1_vec[4 * 7];
   _spin_map1_desc.data_ptr = _spin_map1_vec;
+  _spin_map1_desc.dims[0] = 4;
+  _spin_map1_desc.dims[1] = 7;
   fortran_spin_taylor_to_linear(
       /* Bmad::array_descriptor_t& */ _spin_taylor_desc,
       /* bool& */ normalize,
@@ -13116,21 +13370,23 @@ SpinPolarStruct Bmad::spinor_to_polar(FixedArray1D<Complex, 2> spinor) {
   );
   return std::move(_polar);
 }
-void Bmad::spinor_to_vec(FixedArray1D<Complex, 2> spinor, FixedArray1D<Real, 3> vec) {
+FixedArray1D<Real, 3> Bmad::spinor_to_vec(FixedArray1D<Complex, 2> spinor) {
   // spinor: in NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _spinor_desc;
   _spinor_desc.rank = 1;
   _spinor_desc.data_ptr = spinor.data();
   _spinor_desc.dims[0] = spinor.size();
-  // vec: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  // vec: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _vec_desc;
   _vec_desc.rank = 1;
-  _vec_desc.data_ptr = vec.data();
-  _vec_desc.dims[0] = vec.size();
+  FixedArray1D<Real, 3> _vec;
+  _vec_desc.data_ptr = _vec.data();
+  _vec_desc.dims[0] = _vec.size();
   fortran_spinor_to_vec(
       /* Bmad::array_descriptor_t& */ _spinor_desc,
       /* Bmad::array_descriptor_t& */ _vec_desc
   );
+  return _vec;
 }
 void Bmad::spline_fit_orbit(
     CoordStruct &start_orb,
@@ -13414,25 +13670,20 @@ double Bmad::strong_beam_strength(EleStruct &ele) {
   fortran_strong_beam_strength(/* void* */ ele.get_fortran_ptr(), /* double& */ _strength);
   return _strength;
 }
-void Bmad::surface_grid_displacement(
+Bmad::SurfaceGridDisplacement Bmad::surface_grid_displacement(
     EleStruct &ele,
     double x,
     double y,
-    bool err_flag,
-    double z,
-    std::optional<FixedArray1D<Real, 2>> dz_dxy,
     std::optional<bool> extend_grid
 ) {
-  // dz_dxy: in NOT (CppWrapperGeneralArgumentArray) (['2'])
+  bool _err_flag{};
+  double _z{};
+  // dz_dxy: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _dz_dxy_desc;
   _dz_dxy_desc.rank = 1;
-  if (dz_dxy.has_value()) {
-    _dz_dxy_desc.data_ptr = dz_dxy->data();
-    _dz_dxy_desc.dims[0] = dz_dxy->size();
-  } else {
-    _dz_dxy_desc.data_ptr = nullptr;
-    _dz_dxy_desc.dims[0] = 0;
-  }
+  FixedArray1D<Real, 2> _dz_dxy;
+  _dz_dxy_desc.data_ptr = _dz_dxy.data();
+  _dz_dxy_desc.dims[0] = _dz_dxy.size();
   bool extend_grid_lvalue;
   auto *_extend_grid{&extend_grid_lvalue};
   if (extend_grid.has_value()) {
@@ -13444,11 +13695,12 @@ void Bmad::surface_grid_displacement(
       /* void* */ ele.get_fortran_ptr(),
       /* double& */ x,
       /* double& */ y,
-      /* bool& */ err_flag,
-      /* double& */ z,
+      /* bool& */ _err_flag,
+      /* double& */ _z,
       /* Bmad::array_descriptor_t& */ _dz_dxy_desc,
       /* bool* */ _extend_grid
   );
+  return SurfaceGridDisplacement{_err_flag, _z, _dz_dxy};
 }
 TrackStruct Bmad::symp_lie_bmad(
     EleStruct &ele,
@@ -13466,6 +13718,8 @@ TrackStruct Bmad::symp_lie_bmad(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -13502,6 +13756,8 @@ Bmad::T6ToB123 Bmad::t6_to_b123(FixedArray2D<Real, 6, 6> t6, FixedArray1D<Real, 
   _t6_desc.rank = 2;
   double _t6_vec[6 * 6];
   _t6_desc.data_ptr = _t6_vec;
+  _t6_desc.dims[0] = 6;
+  _t6_desc.dims[1] = 6;
   matrix_to_vec(t6, _t6_vec);
   // abz_tunes: in NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _abz_tunes_desc;
@@ -13514,18 +13770,24 @@ Bmad::T6ToB123 Bmad::t6_to_b123(FixedArray2D<Real, 6, 6> t6, FixedArray1D<Real, 
   FixedArray2D<Real, 6, 6> B1;
   double _B1_vec[6 * 6];
   _B1_desc.data_ptr = _B1_vec;
+  _B1_desc.dims[0] = 6;
+  _B1_desc.dims[1] = 6;
   // B2: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _B2_desc;
   _B2_desc.rank = 2;
   FixedArray2D<Real, 6, 6> B2;
   double _B2_vec[6 * 6];
   _B2_desc.data_ptr = _B2_vec;
+  _B2_desc.dims[0] = 6;
+  _B2_desc.dims[1] = 6;
   // B3: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _B3_desc;
   _B3_desc.rank = 2;
   FixedArray2D<Real, 6, 6> B3;
   double _B3_vec[6 * 6];
   _B3_desc.data_ptr = _B3_vec;
+  _B3_desc.dims[0] = 6;
+  _B3_desc.dims[1] = 6;
   bool _err_flag{};
   fortran_t6_to_b123(
       /* Bmad::array_descriptor_t& */ _t6_desc,
@@ -13566,10 +13828,10 @@ void Bmad::taper_mag_strengths(
 void Bmad::target_min_max_calc(
     FixedArray1D<Real, 3> r_corner1,
     FixedArray1D<Real, 3> r_corner2,
-    double y_min,
-    double y_max,
-    double phi_min,
-    double phi_max,
+    double &y_min,
+    double &y_max,
+    double &phi_min,
+    double &phi_max,
     std::optional<bool> initial
 ) {
   // r_corner1: in NOT (CppWrapperGeneralArgumentArray) (['3'])
@@ -13611,12 +13873,16 @@ Bmad::TargetRotMats Bmad::target_rot_mats(FixedArray1D<Real, 3> r_center) {
   FixedArray2D<Real, 3, 3> w_to_target;
   double _w_to_target_vec[3 * 3];
   _w_to_target_desc.data_ptr = _w_to_target_vec;
+  _w_to_target_desc.dims[0] = 3;
+  _w_to_target_desc.dims[1] = 3;
   // w_to_ele: out NOT (CppWrapperGeneralArgumentArray) (['3', '3'])
   Bmad::array_descriptor_t _w_to_ele_desc;
   _w_to_ele_desc.rank = 2;
   FixedArray2D<Real, 3, 3> w_to_ele;
   double _w_to_ele_vec[3 * 3];
   _w_to_ele_desc.data_ptr = _w_to_ele_vec;
+  _w_to_ele_desc.dims[0] = 3;
+  _w_to_ele_desc.dims[1] = 3;
   fortran_target_rot_mats(
       /* Bmad::array_descriptor_t& */ _r_center_desc,
       /* Bmad::array_descriptor_t& */ _w_to_target_desc,
@@ -13740,6 +14006,8 @@ void Bmad::tilt_coords(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -13776,6 +14044,8 @@ void Bmad::tilt_coords_photon(
   _w_mat_desc.data_ptr = _w_mat_vec;
   if (w_mat.has_value()) {
     matrix_to_vec(w_mat.value(), _w_mat_vec);
+    _w_mat_desc.dims[0] = 3;
+    _w_mat_desc.dims[1] = 3;
   } else {
     _w_mat_desc.data_ptr = nullptr;
   }
@@ -13793,6 +14063,8 @@ void Bmad::tilt_mat6(FixedArray2D<Real, 6, 6> mat6, double tilt) {
   _mat6_desc.rank = 2;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   matrix_to_vec(mat6, _mat6_vec);
   fortran_tilt_mat6(/* Bmad::array_descriptor_t& */ _mat6_desc, /* double& */ tilt);
   vec_to_matrix(_mat6_vec, mat6);
@@ -14058,6 +14330,8 @@ Bmad::Track1Bmad Bmad::track1_bmad(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -14386,6 +14660,8 @@ Bmad::Track1RungeKutta Bmad::track1_runge_kutta(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -14416,13 +14692,13 @@ void Bmad::track1_sample(EleStruct &ele, LatParamStruct &param, CoordStruct &orb
       /* void* */ orbit.get_fortran_ptr()
   );
 }
-Bmad::Track1Spin Bmad::track1_spin(
+void Bmad::track1_spin(
     CoordStruct &start_orb,
+    EleStruct &ele,
     LatParamStruct &param,
+    CoordStruct &end_orb,
     std::optional<bool> make_quaternion
 ) {
-  EleStruct _ele;
-  CoordStruct _end_orb;
   bool make_quaternion_lvalue;
   auto *_make_quaternion{&make_quaternion_lvalue};
   if (make_quaternion.has_value()) {
@@ -14432,23 +14708,24 @@ Bmad::Track1Spin Bmad::track1_spin(
   }
   fortran_track1_spin(
       /* void* */ start_orb.get_fortran_ptr(),
-      /* void* */ _ele.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
       /* void* */ param.get_fortran_ptr(),
-      /* void* */ _end_orb.get_fortran_ptr(),
+      /* void* */ end_orb.get_fortran_ptr(),
       /* bool* */ _make_quaternion
   );
-  return Track1Spin{std::move(_ele), std::move(_end_orb)};
 }
-CoordStruct
-Bmad::track1_spin_integration(CoordStruct &start_orb, EleStruct &ele, LatParamStruct &param) {
-  CoordStruct _end_orb;
+void Bmad::track1_spin_integration(
+    CoordStruct &start_orb,
+    EleStruct &ele,
+    LatParamStruct &param,
+    CoordStruct &end_orb
+) {
   fortran_track1_spin_integration(
       /* void* */ start_orb.get_fortran_ptr(),
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ param.get_fortran_ptr(),
-      /* void* */ _end_orb.get_fortran_ptr()
+      /* void* */ end_orb.get_fortran_ptr()
   );
-  return std::move(_end_orb);
 }
 CoordStruct
 Bmad::track1_spin_taylor(CoordStruct &start_orb, EleStruct &ele, LatParamStruct &param) {
@@ -14497,6 +14774,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track1_taylor(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -14519,7 +14798,7 @@ Bmad::Track1TimeRungeKutta Bmad::track1_time_runge_kutta(
     EleStruct &ele,
     LatParamStruct &param,
     std::optional<double> t_end,
-    std::optional<double> dt_step
+    optional_ref<double> dt_step
 ) {
   bool _err_flag{};
   TrackStruct _track;
@@ -14530,13 +14809,7 @@ Bmad::Track1TimeRungeKutta Bmad::track1_time_runge_kutta(
   } else {
     _t_end = nullptr;
   }
-  double dt_step_lvalue;
-  auto *_dt_step{&dt_step_lvalue};
-  if (dt_step.has_value()) {
-    dt_step_lvalue = dt_step.value();
-  } else {
-    _dt_step = nullptr;
-  }
+  auto *_dt_step = dt_step.has_value() ? &dt_step->get() : nullptr; // inout, optional
   fortran_track1_time_runge_kutta(
       /* void* */ orbit.get_fortran_ptr(),
       /* void* */ ele.get_fortran_ptr(),
@@ -14561,6 +14834,8 @@ Bmad::TrackABeambeam Bmad::track_a_beambeam(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -14593,6 +14868,8 @@ void Bmad::track_a_bend(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -14635,6 +14912,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_converter(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -14664,6 +14943,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_crab_cavity(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -14688,7 +14969,7 @@ void Bmad::track_a_drift(
     std::optional<bool> make_matrix,
     std::optional<int> ele_orientation,
     std::optional<bool> include_ref_motion,
-    std::optional<double> time
+    optional_ref<double> time
 ) {
   // mat6: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _mat6_desc;
@@ -14697,6 +14978,8 @@ void Bmad::track_a_drift(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -14721,13 +15004,7 @@ void Bmad::track_a_drift(
   } else {
     _include_ref_motion = nullptr;
   }
-  double time_lvalue;
-  auto *_time{&time_lvalue};
-  if (time.has_value()) {
-    time_lvalue = time.value();
-  } else {
-    _time = nullptr;
-  }
+  auto *_time = time.has_value() ? &time->get() : nullptr; // inout, optional
   fortran_track_a_drift(
       /* void* */ orb.get_fortran_ptr(),
       /* double& */ length,
@@ -14759,6 +15036,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_foil(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -14790,6 +15069,8 @@ void Bmad::track_a_gkicker(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -14824,6 +15105,8 @@ void Bmad::track_a_lcavity(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -14858,6 +15141,8 @@ void Bmad::track_a_lcavity_old(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -14890,6 +15175,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_mask(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -14927,6 +15214,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_match(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -14974,6 +15263,8 @@ Bmad::TrackAPatch Bmad::track_a_patch(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -15041,6 +15332,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_pickup(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -15071,6 +15364,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_quadrupole(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -15100,6 +15395,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_rfcavity(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -15131,6 +15428,8 @@ void Bmad::track_a_sad_mult(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -15163,6 +15462,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_sol_quad(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -15194,6 +15495,8 @@ void Bmad::track_a_thick_multipole(
   _mat6_desc.data_ptr = _mat6_vec;
   if (mat6.has_value()) {
     matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
   } else {
     _mat6_desc.data_ptr = nullptr;
   }
@@ -15226,6 +15529,8 @@ std::optional<FixedArray2D<Real, 6, 6>> Bmad::track_a_wiggler(
   FixedArray2D<Real, 6, 6> mat6;
   double _mat6_vec[6 * 6];
   _mat6_desc.data_ptr = _mat6_vec;
+  _mat6_desc.dims[0] = 6;
+  _mat6_desc.dims[1] = 6;
   bool make_matrix_lvalue;
   auto *_make_matrix{&make_matrix_lvalue};
   if (make_matrix.has_value()) {
@@ -15550,6 +15855,8 @@ Bmad::track_to_surface(EleStruct &ele, CoordStruct &orbit, LatParamStruct &param
   FixedArray2D<Real, 3, 3> w_surface;
   double _w_surface_vec[3 * 3];
   _w_surface_desc.data_ptr = _w_surface_vec;
+  _w_surface_desc.dims[0] = 3;
+  _w_surface_desc.dims[1] = 3;
   fortran_track_to_surface(
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ orbit.get_fortran_ptr(),
@@ -15900,6 +16207,8 @@ FixedArray2D<Real, 2, 2> Bmad::transfer_mat2_from_twiss(TwissStruct &twiss1, Twi
   FixedArray2D<Real, 2, 2> mat;
   double _mat_vec[2 * 2];
   _mat_desc.data_ptr = _mat_vec;
+  _mat_desc.dims[0] = 2;
+  _mat_desc.dims[1] = 2;
   fortran_transfer_mat2_from_twiss(
       /* void* */ twiss1.get_fortran_ptr(),
       /* void* */ twiss2.get_fortran_ptr(),
@@ -15930,6 +16239,8 @@ FixedArray2D<Real, 6, 6> Bmad::transfer_mat_from_twiss(
   FixedArray2D<Real, 6, 6> m;
   double _m_vec[6 * 6];
   _m_desc.data_ptr = _m_vec;
+  _m_desc.dims[0] = 6;
+  _m_desc.dims[1] = 6;
   fortran_transfer_mat_from_twiss(
       /* void* */ ele1.get_fortran_ptr(),
       /* void* */ ele2.get_fortran_ptr(),
@@ -15954,6 +16265,8 @@ void Bmad::transfer_matrix_calc(
   _xfer_mat_desc.rank = 2;
   double _xfer_mat_vec[6 * 6];
   _xfer_mat_desc.data_ptr = _xfer_mat_vec;
+  _xfer_mat_desc.dims[0] = 6;
+  _xfer_mat_desc.dims[1] = 6;
   matrix_to_vec(xfer_mat, _xfer_mat_vec);
   // xfer_vec: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _xfer_vec_desc;
@@ -16060,6 +16373,8 @@ Bmad::Twiss1Propagate Bmad::twiss1_propagate(
   _mat2_desc.rank = 2;
   double _mat2_vec[2 * 2];
   _mat2_desc.data_ptr = _mat2_vec;
+  _mat2_desc.dims[0] = 2;
+  _mat2_desc.dims[1] = 2;
   matrix_to_vec(mat2, _mat2_vec);
   TwissStruct _twiss2;
   bool _err{};
@@ -16479,6 +16794,8 @@ FixedArray2D<Real, 2, 2> Bmad::twiss_to_1_turn_mat(TwissStruct &twiss, double ph
   FixedArray2D<Real, 2, 2> mat2;
   double _mat2_vec[2 * 2];
   _mat2_desc.data_ptr = _mat2_vec;
+  _mat2_desc.dims[0] = 2;
+  _mat2_desc.dims[1] = 2;
   fortran_twiss_to_1_turn_mat(
       /* void* */ twiss.get_fortran_ptr(),
       /* double& */ phi,
@@ -16732,6 +17049,8 @@ FixedArray2D<Real, 3, 3> Bmad::w_mat_for_bend_angle(
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   fortran_w_mat_for_bend_angle(
       /* double& */ angle,
       /* double& */ ref_tilt,
@@ -16755,6 +17074,8 @@ FixedArray2D<Real, 3, 3> Bmad::w_mat_for_tilt(double tilt, std::optional<bool> r
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   fortran_w_mat_for_tilt(
       /* double& */ tilt,
       /* bool* */ _return_inverse,
@@ -16778,6 +17099,8 @@ Bmad::w_mat_for_x_pitch(double x_pitch, std::optional<bool> return_inverse) {
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   fortran_w_mat_for_x_pitch(
       /* double& */ x_pitch,
       /* bool* */ _return_inverse,
@@ -16801,6 +17124,8 @@ Bmad::w_mat_for_y_pitch(double y_pitch, std::optional<bool> return_inverse) {
   FixedArray2D<Real, 3, 3> w_mat;
   double _w_mat_vec[3 * 3];
   _w_mat_desc.data_ptr = _w_mat_vec;
+  _w_mat_desc.dims[0] = 3;
+  _w_mat_desc.dims[1] = 3;
   fortran_w_mat_for_y_pitch(
       /* double& */ y_pitch,
       /* bool* */ _return_inverse,
@@ -17252,13 +17577,13 @@ Bmad::WriteGptFieldGridFile3d Bmad::write_gpt_field_grid_file_3d(
   return WriteGptFieldGridFile3d{_maxfield, _ref_time, _err};
 }
 void Bmad::write_lat_line(
-    std::string line,
+    std::string &line,
     int iu,
     bool end_is_neigh,
     std::optional<bool> do_split,
     std::optional<bool> scibmad
 ) {
-  auto _line = line.c_str();
+  auto _line = line.c_str(); // ptr, inout, required
   bool do_split_lvalue;
   auto *_do_split{&do_split_lvalue};
   if (do_split.has_value()) {
@@ -17590,15 +17915,11 @@ Bmad::z_at_surface(EleStruct &ele, double x, double y, std::optional<bool> exten
   );
   return ZAtSurface{_err_flag, _dz_dxy, _z};
 }
-EleStruct Bmad::zero_ele_kicks() {
-  EleStruct _ele;
-  fortran_zero_ele_kicks(/* void* */ _ele.get_fortran_ptr());
-  return std::move(_ele);
+void Bmad::zero_ele_kicks(EleStruct &ele) {
+  fortran_zero_ele_kicks(/* void* */ ele.get_fortran_ptr());
 }
-EleStruct Bmad::zero_ele_offsets() {
-  EleStruct _ele;
-  fortran_zero_ele_offsets(/* void* */ _ele.get_fortran_ptr());
-  return std::move(_ele);
+void Bmad::zero_ele_offsets(EleStruct &ele) {
+  fortran_zero_ele_offsets(/* void* */ ele.get_fortran_ptr());
 }
 void Bmad::zero_lr_wakes_in_lat(LatStruct &lat) {
   fortran_zero_lr_wakes_in_lat(/* void* */ lat.get_fortran_ptr());

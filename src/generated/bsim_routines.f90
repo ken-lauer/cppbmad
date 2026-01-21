@@ -318,7 +318,7 @@ subroutine fortran_logical_to_python (logic, string) bind(c)
   f_string = logical_to_python(f_logic)
 
   ! out: f_string 0D_NOT_character
-  call c_f_pointer(string, f_string_ptr, [len_trim(f_string) + 1]) ! output-only string
+  call c_f_pointer(string, f_string_ptr, [len_trim(f_string) + 1])
   call to_c_str(f_string, f_string_ptr)
 end subroutine
 subroutine fortran_rf_cav_names (lat) bind(c)
@@ -380,7 +380,7 @@ subroutine fortran_set_tune_3d (branch, target_tunes, mask, use_phase_trombone, 
   ! inout: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(target_tunes%data_ptr)) then
     call c_f_pointer(target_tunes%data_ptr, f_target_tunes_ptr, [target_tunes%dims(1)])
     f_target_tunes = f_target_tunes_ptr(:)

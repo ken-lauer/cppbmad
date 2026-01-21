@@ -374,6 +374,13 @@ subroutine fortran_ab_multipole_kick (a, b, n, ref_species, ele_orientation, coo
   ! in: f_coord 0D_NOT_type
   if (.not. c_associated(coord)) return
   call c_f_pointer(coord, f_coord)
+  !! general array (2D_NOT_real) out
+  if (c_associated(dk%data_ptr)) then
+    call c_f_pointer(dk%data_ptr, f_dk_ptr, [product(dk%dims(1:dk%rank))])
+    ! output-only
+  else
+    f_dk_ptr => null()
+  endif
   ! in: f_pole_type 0D_NOT_integer
   if (c_associated(pole_type)) then
     call c_f_pointer(pole_type, f_pole_type_ptr)
@@ -396,7 +403,7 @@ subroutine fortran_ab_multipole_kick (a, b, n, ref_species, ele_orientation, coo
   call c_f_pointer(ky, f_ky_ptr)
   f_ky_ptr = f_ky
   ! out: f_dk 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_dk', c_name='dk', python_name='dk', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=319, definition='real(rp), optional :: dk(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='dk', comment='', default=None), intent='out', description='Kick derivative: dkick(x,y)/d(x,y).', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(dk%data_ptr)) f_dk_ptr = mat2vec(f_dk, product(dk%dims(1:dk%rank)))
 end subroutine
 subroutine fortran_ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_type, scale, mat6, &
     make_matrix) bind(c)
@@ -433,14 +440,14 @@ subroutine fortran_ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_typ
   real(rp) :: f_mat6(6,6)
   real(c_double), pointer :: f_mat6_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(an%data_ptr)) then
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an(0:) => f_an_ptr
   else
     f_an_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(bn%data_ptr)) then
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn(0:) => f_bn_ptr
@@ -467,7 +474,7 @@ subroutine fortran_ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_typ
   else
     f_scale_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -595,12 +602,19 @@ subroutine fortran_action_to_xyz (ring, ix, J, X, err_flag) bind(c)
   call c_f_pointer(ring, f_ring)
   ! in: f_ix 0D_NOT_integer
   f_ix = ix
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(J%data_ptr)) then
     call c_f_pointer(J%data_ptr, f_J_ptr, [J%dims(1)])
     f_J = f_J_ptr(:)
   else
     f_J_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(X%data_ptr)) then
+    call c_f_pointer(X%data_ptr, f_X_ptr, [X%dims(1)])
+    ! output-only
+  else
+    f_X_ptr => null()
   endif
   call action_to_xyz(f_ring, f_ix, f_J, f_X, f_err_flag)
 
@@ -840,7 +854,7 @@ subroutine fortran_add_this_taylor_term (ele, i_out, coef, expn) bind(c)
   f_i_out = i_out
   ! in: f_coef 0D_NOT_real
   f_coef = coef
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(expn%data_ptr)) then
     call c_f_pointer(expn%data_ptr, f_expn_ptr, [expn%dims(1)])
     f_expn = f_expn_ptr(:)
@@ -1080,14 +1094,14 @@ subroutine fortran_apply_energy_kick (dE, orbit, ddE_dr, mat6, make_matrix) bind
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(ddE_dr%data_ptr)) then
     call c_f_pointer(ddE_dr%data_ptr, f_ddE_dr_ptr, [ddE_dr%dims(1)])
     f_ddE_dr = f_ddE_dr_ptr(:)
   else
     f_ddE_dr_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -1164,7 +1178,7 @@ subroutine fortran_array_re_str (arr, parens_in, str_out) bind(c)
   real(rp), pointer :: f_arr(:)
   real(c_double), pointer :: f_arr_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(arr%data_ptr)) then
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
@@ -1182,7 +1196,7 @@ subroutine fortran_array_re_str (arr, parens_in, str_out) bind(c)
   f_str_out = array_re_str(f_arr, f_parens_in_call_ptr)
 
   ! out: f_str_out 0D_NOT_character
-  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
+  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
 subroutine fortran_astra_max_field_reference (pt0, ele, field_value) bind(c)
@@ -1562,7 +1576,6 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   ! out: f_full_name 0D_NOT_character
   if (c_associated(full_name)) then
     call c_f_pointer(full_name, f_full_name_ptr, [huge(0)])
-    call to_f_str(f_full_name_ptr, f_full_name)
     f_full_name_call_ptr => f_full_name
   else
     f_full_name_call_ptr => null()
@@ -1587,8 +1600,10 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
       f_can_abbreviate_native_ptr, f_print_error_native_ptr)
 
   ! out: f_full_name 0D_NOT_character
-  call c_f_pointer(full_name, f_full_name_ptr, [len_trim(f_full_name) + 1]) ! output-only string
-  call to_c_str(f_full_name, f_full_name_ptr)
+  if (c_associated(full_name)) then
+    call c_f_pointer(full_name, f_full_name_ptr, [len_trim(f_full_name) + 1])
+    call to_c_str(f_full_name, f_full_name_ptr)
+  endif
   ! out: f_attrib_index 0D_NOT_integer
   call c_f_pointer(attrib_index, f_attrib_index_ptr)
   f_attrib_index_ptr = f_attrib_index
@@ -1632,7 +1647,6 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   ! out: f_full_name 0D_NOT_character
   if (c_associated(full_name)) then
     call c_f_pointer(full_name, f_full_name_ptr, [huge(0)])
-    call to_f_str(f_full_name_ptr, f_full_name)
     f_full_name_call_ptr => f_full_name
   else
     f_full_name_call_ptr => null()
@@ -1657,8 +1671,10 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
       f_can_abbreviate_native_ptr, f_print_error_native_ptr)
 
   ! out: f_full_name 0D_NOT_character
-  call c_f_pointer(full_name, f_full_name_ptr, [len_trim(f_full_name) + 1]) ! output-only string
-  call to_c_str(f_full_name, f_full_name_ptr)
+  if (c_associated(full_name)) then
+    call c_f_pointer(full_name, f_full_name_ptr, [len_trim(f_full_name) + 1])
+    call to_c_str(f_full_name, f_full_name_ptr)
+  endif
   ! out: f_attrib_index 0D_NOT_integer
   call c_f_pointer(attrib_index, f_attrib_index_ptr)
   f_attrib_index_ptr = f_attrib_index
@@ -1697,7 +1713,7 @@ subroutine fortran_attribute_name1 (key, ix_att, show_private, attrib_name) bind
   f_attrib_name = attribute_name(f_key, f_ix_att, f_show_private_native_ptr)
 
   ! out: f_attrib_name 0D_NOT_character
-  call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1]) ! output-only string
+  call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1])
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
 end subroutine
 subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind(c)
@@ -1736,7 +1752,7 @@ subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind
   f_attrib_name = attribute_name(f_ele, f_ix_att, f_show_private_native_ptr)
 
   ! out: f_attrib_name 0D_NOT_character
-  call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1]) ! output-only string
+  call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1])
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
 end subroutine
 subroutine fortran_attribute_type (attrib_name, ele, attrib_type) bind(c)
@@ -1799,7 +1815,7 @@ subroutine fortran_attribute_units (attrib_name, unrecognized_units, attrib_unit
   f_attrib_units = attribute_units(f_attrib_name, f_unrecognized_units_call_ptr)
 
   ! out: f_attrib_units 0D_NOT_character
-  call c_f_pointer(attrib_units, f_attrib_units_ptr, [len_trim(f_attrib_units) + 1]) ! output-only string
+  call c_f_pointer(attrib_units, f_attrib_units_ptr, [len_trim(f_attrib_units) + 1])
   call to_c_str(f_attrib_units, f_attrib_units_ptr)
 end subroutine
 subroutine fortran_autoscale_phase_and_amp (ele, param, err_flag, scale_phase, scale_amp, &
@@ -1904,6 +1920,9 @@ subroutine fortran_average_twiss (frac1, twiss1, twiss2, ave_twiss) bind(c)
   ! inout: f_twiss2 0D_NOT_type
   if (.not. c_associated(twiss2)) return
   call c_f_pointer(twiss2, f_twiss2)
+  ! out: f_ave_twiss 0D_NOT_type
+  if (.not. c_associated(ave_twiss)) return
+  call c_f_pointer(ave_twiss, f_ave_twiss)
   f_ave_twiss = average_twiss(f_frac1, f_twiss1, f_twiss2)
 
   ! out: f_ave_twiss 0D_NOT_type
@@ -1933,12 +1952,26 @@ subroutine fortran_bbi_kick (x, y, sigma, nk, dnk) bind(c)
   f_x = x
   ! in: f_y 0D_NOT_real
   f_y = y
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(sigma%data_ptr)) then
     call c_f_pointer(sigma%data_ptr, f_sigma_ptr, [sigma%dims(1)])
     f_sigma = f_sigma_ptr(:)
   else
     f_sigma_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(nk%data_ptr)) then
+    call c_f_pointer(nk%data_ptr, f_nk_ptr, [nk%dims(1)])
+    ! output-only
+  else
+    f_nk_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(dnk%data_ptr)) then
+    call c_f_pointer(dnk%data_ptr, f_dnk_ptr, [product(dnk%dims(1:dnk%rank))])
+    ! output-only
+  else
+    f_dnk_ptr => null()
   endif
   call bbi_kick(f_x, f_y, f_sigma, f_nk, f_dnk)
 
@@ -1948,7 +1981,7 @@ subroutine fortran_bbi_kick (x, y, sigma, nk, dnk) bind(c)
     f_nk_ptr = f_nk(:)
   endif
   ! out: f_dnk 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_dnk', c_name='dnk', python_name='dnk', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=522, definition='real(rp) x, y, sigma(2), nk(2), dnk(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='dnk', comment='', default=None), intent='out', description='derivatives of nk. EG: dnk(2,1) = dnk(2)/dy Note: xi_x = beta_x * bbi_const / sig_x     ! Horizontal tune shift parameter xi_y = beta_y * bbi_const / sig_y     ! Vertical   tune shift parameter where bbi_const = N_particles_bunch * r_e / (2 * pi * gamma * (sig_x + sig_y)) And the tune shifts are: dQ_x = xi_x = beta_x * bbi_const / sig_x dQ_y = xi_y = beta_y * bbi_const / sig_y In the calling routine, the formulas for computing the actual kicks, kick_x and kick_y, should be: kick_x = bbi_const * nk(1) ~ -4 * pi * bbi_const * x / sigma_x                        [linear region] ~ -2 * N_p * r_e * x / (gamma * sig_x * (sig_x + sig_y))   [linear region] ~ -2 * N_p * r_e * x / (gamma * (x^2 + y^2))               [far from beam] kick_y = bbi_const * nk(2) ~ -4 * pi * bbi_const * y / sigma_y                        [linear region] ~ -2 * N_p * r_e * y / (gamma * sig_y * (sig_x + sig_y))   [linear region] ~ -2 * N_p * r_e * y / (gamma * (x^2 + y^2))               [far from beam] For the beam-ion kick, assuming the ion velocity is neglegeble, the formulas are: kick_x = ion_const * nk(1) ~ -4 * pi * ion_const * x / sigma_x                             [linear region] ~ -2 * N_p * r_p * c_light * x / (sig_x * (sig_x + sig_y) * A)  [linear region] ~ -2 * N_p * r_p * c_light * x / ((x^2 + y^2) * A)              [far from beam] kick_y = ion_const * nk(2) ~ -4 * pi * ion_const * y / sigma_y                             [linear region] ~ -2 * N_p * r_p * c_light * y / (sig_y * (sig_x + sig_y) * A)  [linear region] ~ -2 * N_p * r_p * c_light * y / ((x^2 + y^2) * A)              [far from beam] ion_const = N_particles_bunch * r_p * c_light / (2 * pi * (sig_x + sig_y) * A) A = Mass of ion in AMU.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(dnk%data_ptr)) f_dnk_ptr = mat2vec(f_dnk, product(dnk%dims(1:dnk%rank)))
 end subroutine
 subroutine fortran_bbi_slice_calc (ele, n_slice, z_slice) bind(c)
 
@@ -1970,7 +2003,7 @@ subroutine fortran_bbi_slice_calc (ele, n_slice, z_slice) bind(c)
   call c_f_pointer(ele, f_ele)
   ! in: f_n_slice 0D_NOT_integer
   f_n_slice = n_slice
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(z_slice%data_ptr)) then
     call c_f_pointer(z_slice%data_ptr, f_z_slice_ptr, [z_slice%dims(1)])
     f_z_slice => f_z_slice_ptr
@@ -2004,12 +2037,19 @@ subroutine fortran_beam_envelope_ibs (sigma_mat, ibs_mat, tail_cut, tau, energy,
   real(rp) :: f_ibs_mat(6,6)
   real(c_double), pointer :: f_ibs_mat_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(sigma_mat%data_ptr)) then
     call c_f_pointer(sigma_mat%data_ptr, f_sigma_mat_ptr, [product(sigma_mat%dims(1:sigma_mat%rank))])
     call vec2mat(f_sigma_mat_ptr, f_sigma_mat)
   else
     f_sigma_mat_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(ibs_mat%data_ptr)) then
+    call c_f_pointer(ibs_mat%data_ptr, f_ibs_mat_ptr, [product(ibs_mat%dims(1:ibs_mat%rank))])
+    ! output-only
+  else
+    f_ibs_mat_ptr => null()
   endif
   ! in: f_tail_cut 0D_NOT_logical
   f_tail_cut = tail_cut
@@ -2025,7 +2065,7 @@ subroutine fortran_beam_envelope_ibs (sigma_mat, ibs_mat, tail_cut, tau, energy,
       f_species)
 
   ! out: f_ibs_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_ibs_mat', c_name='ibs_mat', python_name='ibs_mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=783, definition='real(rp) sigma_mat(6,6), ibs_mat(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='ibs_mat', comment='', default=None), intent='out', description='changes in 2nd order moments due to IBS are ibs_mat*element_length', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(ibs_mat%data_ptr)) f_ibs_mat_ptr = mat2vec(f_ibs_mat, product(ibs_mat%dims(1:ibs_mat%rank)))
 end subroutine
 subroutine fortran_beam_equal_beam (beam1, beam2) bind(c)
 
@@ -2090,6 +2130,9 @@ subroutine fortran_beam_init_setup (beam_init_in, ele, species, modes, err_flag,
   else
     f_err_flag_native_ptr => null()
   endif
+  ! out: f_beam_init_set 0D_NOT_type
+  if (.not. c_associated(beam_init_set)) return
+  call c_f_pointer(beam_init_set, f_beam_init_set)
   f_beam_init_set = beam_init_setup(f_beam_init_in, f_ele, f_species, f_modes, &
       f_err_flag_native_ptr)
 
@@ -2121,7 +2164,7 @@ subroutine fortran_beam_tilts (S, angle_xy, angle_xz, angle_yz, angle_xpz, angle
   real(rp) :: f_angle_ypz
   real(c_double), pointer :: f_angle_ypz_ptr
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(S%data_ptr)) then
     call c_f_pointer(S%data_ptr, f_S_ptr, [product(S%dims(1:S%rank))])
     call vec2mat(f_S_ptr, f_S)
@@ -2211,7 +2254,7 @@ subroutine fortran_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matr
   ! inout: f_orb 0D_NOT_type
   if (.not. c_associated(orb)) return
   call c_f_pointer(orb, f_orb)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -2609,16 +2652,26 @@ subroutine fortran_bend_shift (position1, g, delta_s, w_mat, ref_tilt, position2
   f_g = g
   ! in: f_delta_s 0D_NOT_real
   f_delta_s = delta_s
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   ! in: f_ref_tilt 0D_NOT_real
   if (c_associated(ref_tilt)) then
     call c_f_pointer(ref_tilt, f_ref_tilt_ptr)
   else
     f_ref_tilt_ptr => null()
   endif
+  ! out: f_position2 0D_NOT_type
+  if (.not. c_associated(position2)) return
+  call c_f_pointer(position2, f_position2)
   f_position2 = bend_shift(f_position1, f_g, f_delta_s, f_w_mat, f_ref_tilt_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=556, definition='real(rp), optional :: w_mat(3,3), ref_tilt', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix used in the transformation', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
   ! out: f_position2 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -2870,14 +2923,14 @@ subroutine fortran_bmad_patch_parameters_to_ptc (ang, exi) bind(c)
   real(dp) :: f_exi(3,3)
   real(c_double), pointer :: f_exi_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(ang%data_ptr)) then
     call c_f_pointer(ang%data_ptr, f_ang_ptr, [ang%dims(1)])
     f_ang = f_ang_ptr(:)
   else
     f_ang_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(exi%data_ptr)) then
     call c_f_pointer(exi%data_ptr, f_exi_ptr, [product(exi%dims(1:exi%rank))])
     call vec2mat(f_exi_ptr, f_exi)
@@ -2935,7 +2988,7 @@ subroutine fortran_branch_name (branch, name) bind(c)
   f_name = branch_name(f_branch)
 
   ! out: f_name 0D_NOT_character
-  call c_f_pointer(name, f_name_ptr, [len_trim(f_name) + 1]) ! output-only string
+  call c_f_pointer(name, f_name_ptr, [len_trim(f_name) + 1])
   call to_c_str(f_name, f_name_ptr)
 end subroutine
 subroutine fortran_branch_to_ptc_m_u (branch) bind(c)
@@ -2990,10 +3043,17 @@ subroutine fortran_c_to_cbar (ele, cbar_mat) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  !! general array (2D_NOT_real) out
+  if (c_associated(cbar_mat%data_ptr)) then
+    call c_f_pointer(cbar_mat%data_ptr, f_cbar_mat_ptr, [product(cbar_mat%dims(1:cbar_mat%rank))])
+    ! output-only
+  else
+    f_cbar_mat_ptr => null()
+  endif
   call c_to_cbar(f_ele, f_cbar_mat)
 
   ! out: f_cbar_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_cbar_mat', c_name='cbar_mat', python_name='cbar_mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=642, definition='real(rp) cbar_mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='cbar_mat', comment='', default=None), intent='out', description='Cbar matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(cbar_mat%data_ptr)) f_cbar_mat_ptr = mat2vec(f_cbar_mat, product(cbar_mat%dims(1:cbar_mat%rank)))
 end subroutine
 subroutine fortran_calc_bunch_params (bunch, bunch_params, error, print_err, n_mat, &
     is_time_coords, ele) bind(c)
@@ -3004,18 +3064,11 @@ subroutine fortran_calc_bunch_params (bunch, bunch_params, error, print_err, n_m
   ! ** In parameters **
   type(c_ptr), value :: bunch  ! 0D_NOT_type
   type(bunch_struct), pointer :: f_bunch
-  type(c_ptr), value :: bunch_params  ! 0D_NOT_type
-  type(bunch_params_struct), pointer :: f_bunch_params
-  logical(c_bool) :: error  ! 0D_NOT_logical
-  logical :: f_error
   type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_print_err
   logical, target :: f_print_err_native
   logical, pointer :: f_print_err_native_ptr
   logical(c_bool), pointer :: f_print_err_ptr
-  type(array_descriptor_t), intent(in) :: n_mat
-  real(rp) :: f_n_mat(6,6)
-  real(c_double), pointer :: f_n_mat_ptr(:)
   type(c_ptr), intent(in), value :: is_time_coords  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_is_time_coords
   logical, target :: f_is_time_coords_native
@@ -3023,15 +3076,22 @@ subroutine fortran_calc_bunch_params (bunch, bunch_params, error, print_err, n_m
   logical(c_bool), pointer :: f_is_time_coords_ptr
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
+  type(c_ptr), value :: bunch_params  ! 0D_NOT_type
+  type(bunch_params_struct), pointer :: f_bunch_params
+  type(c_ptr), intent(in), value :: error  ! 0D_NOT_logical
+  logical :: f_error
+  logical(c_bool), pointer :: f_error_ptr
+  type(array_descriptor_t), intent(in) :: n_mat
+  real(rp) :: f_n_mat(6,6)
+  real(c_double), pointer :: f_n_mat_ptr(:)
   ! ** End of parameters **
   ! in: f_bunch 0D_NOT_type
   if (.not. c_associated(bunch)) return
   call c_f_pointer(bunch, f_bunch)
-  ! in: f_bunch_params 0D_NOT_type
+  ! out: f_bunch_params 0D_NOT_type
   if (.not. c_associated(bunch_params)) return
   call c_f_pointer(bunch_params, f_bunch_params)
-  ! in: f_error 0D_NOT_logical
-  f_error = error
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -3040,10 +3100,10 @@ subroutine fortran_calc_bunch_params (bunch, bunch_params, error, print_err, n_m
   else
     f_print_err_native_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) out
   if (c_associated(n_mat%data_ptr)) then
     call c_f_pointer(n_mat%data_ptr, f_n_mat_ptr, [product(n_mat%dims(1:n_mat%rank))])
-    call vec2mat(f_n_mat_ptr, f_n_mat)
+    ! output-only
   else
     f_n_mat_ptr => null()
   endif
@@ -3060,6 +3120,13 @@ subroutine fortran_calc_bunch_params (bunch, bunch_params, error, print_err, n_m
   call calc_bunch_params(f_bunch, f_bunch_params, f_error, f_print_err_native_ptr, f_n_mat, &
       f_is_time_coords_native_ptr, f_ele)
 
+  ! out: f_bunch_params 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_error 0D_NOT_logical
+  call c_f_pointer(error, f_error_ptr)
+  f_error_ptr = f_error
+  ! out: f_n_mat 2D_NOT_real
+  if (c_associated(n_mat%data_ptr)) f_n_mat_ptr = mat2vec(f_n_mat, product(n_mat%dims(1:n_mat%rank)))
 end subroutine
 subroutine fortran_calc_bunch_params_slice (bunch, bunch_params, plane, slice_center, &
     slice_spread, err, print_err, is_time_coords, ele) bind(c)
@@ -3076,8 +3143,6 @@ subroutine fortran_calc_bunch_params_slice (bunch, bunch_params, plane, slice_ce
   real(rp) :: f_slice_center
   real(c_double) :: slice_spread  ! 0D_NOT_real
   real(rp) :: f_slice_spread
-  logical(c_bool) :: err  ! 0D_NOT_logical
-  logical :: f_err
   type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_print_err
   logical, target :: f_print_err_native
@@ -3090,6 +3155,10 @@ subroutine fortran_calc_bunch_params_slice (bunch, bunch_params, plane, slice_ce
   logical(c_bool), pointer :: f_is_time_coords_ptr
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
   ! ** Inout parameters **
   type(c_ptr), value :: bunch_params  ! 0D_NOT_type
   type(bunch_params_struct), pointer :: f_bunch_params
@@ -3106,8 +3175,6 @@ subroutine fortran_calc_bunch_params_slice (bunch, bunch_params, plane, slice_ce
   f_slice_center = slice_center
   ! in: f_slice_spread 0D_NOT_real
   f_slice_spread = slice_spread
-  ! in: f_err 0D_NOT_logical
-  f_err = err
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -3129,6 +3196,9 @@ subroutine fortran_calc_bunch_params_slice (bunch, bunch_params, plane, slice_ce
   call calc_bunch_params_slice(f_bunch, f_bunch_params, f_plane, f_slice_center, &
       f_slice_spread, f_err, f_print_err_native_ptr, f_is_time_coords_native_ptr, f_ele)
 
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds, err, &
     print_err, is_time_coords, ele) bind(c)
@@ -3142,8 +3212,6 @@ subroutine fortran_calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds,
   type(array_descriptor_t), intent(in) :: slice_bounds
   real(rp) :: f_slice_bounds(2)
   real(c_double), pointer :: f_slice_bounds_ptr(:)
-  logical(c_bool) :: err  ! 0D_NOT_logical
-  logical :: f_err
   type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_print_err
   logical, target :: f_print_err_native
@@ -3156,6 +3224,10 @@ subroutine fortran_calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds,
   logical(c_bool), pointer :: f_is_time_coords_ptr
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
   ! ** Inout parameters **
   type(c_ptr), value :: bunch_params  ! 0D_NOT_type
   type(bunch_params_struct), pointer :: f_bunch_params
@@ -3166,15 +3238,13 @@ subroutine fortran_calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds,
   ! inout: f_bunch_params 0D_NOT_type
   if (.not. c_associated(bunch_params)) return
   call c_f_pointer(bunch_params, f_bunch_params)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(slice_bounds%data_ptr)) then
     call c_f_pointer(slice_bounds%data_ptr, f_slice_bounds_ptr, [slice_bounds%dims(1)])
     f_slice_bounds = f_slice_bounds_ptr(:)
   else
     f_slice_bounds_ptr => null()
   endif
-  ! in: f_err 0D_NOT_logical
-  f_err = err
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -3196,6 +3266,9 @@ subroutine fortran_calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds,
   call calc_bunch_params_z_slice(f_bunch, f_bunch_params, f_slice_bounds, f_err, &
       f_print_err_native_ptr, f_is_time_coords_native_ptr, f_ele)
 
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, &
     ele) bind(c)
@@ -3227,7 +3300,7 @@ subroutine fortran_calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, 
   else
     f_particle => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(charge%data_ptr)) then
     call c_f_pointer(charge%data_ptr, f_charge_ptr, [charge%dims(1)])
     f_charge => f_charge_ptr
@@ -3278,7 +3351,7 @@ subroutine fortran_calc_emittances_and_twiss_from_sigma_matrix (sigma_mat, bunch
   real(rp) :: f_n_mat(6,6)
   real(c_double), pointer :: f_n_mat_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(sigma_mat%data_ptr)) then
     call c_f_pointer(sigma_mat%data_ptr, f_sigma_mat_ptr, [product(sigma_mat%dims(1:sigma_mat%rank))])
     call vec2mat(f_sigma_mat_ptr, f_sigma_mat)
@@ -3296,6 +3369,13 @@ subroutine fortran_calc_emittances_and_twiss_from_sigma_matrix (sigma_mat, bunch
   else
     f_print_err_native_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(n_mat%data_ptr)) then
+    call c_f_pointer(n_mat%data_ptr, f_n_mat_ptr, [product(n_mat%dims(1:n_mat%rank))])
+    ! output-only
+  else
+    f_n_mat_ptr => null()
+  endif
   call calc_emittances_and_twiss_from_sigma_matrix(f_sigma_mat, f_bunch_params, f_error, &
       f_print_err_native_ptr, f_n_mat)
 
@@ -3305,7 +3385,7 @@ subroutine fortran_calc_emittances_and_twiss_from_sigma_matrix (sigma_mat, bunch
   call c_f_pointer(error, f_error_ptr)
   f_error_ptr = f_error
   ! out: f_n_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_n_mat', c_name='n_mat', python_name='n_mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1448, definition='real(rp), optional :: n_mat(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='n_mat', comment='', default=None), intent='out', description='N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq 51.).', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(n_mat%data_ptr)) f_n_mat_ptr = mat2vec(f_n_mat, product(n_mat%dims(1:n_mat%rank)))
 end subroutine
 subroutine fortran_calc_spin_params (bunch, bunch_params) bind(c)
 
@@ -3482,7 +3562,7 @@ subroutine fortran_cbar_to_c (cbar_mat, a, b, c_mat) bind(c)
   real(rp) :: f_c_mat(2,2)
   real(c_double), pointer :: f_c_mat_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(cbar_mat%data_ptr)) then
     call c_f_pointer(cbar_mat%data_ptr, f_cbar_mat_ptr, [product(cbar_mat%dims(1:cbar_mat%rank))])
     call vec2mat(f_cbar_mat_ptr, f_cbar_mat)
@@ -3495,10 +3575,17 @@ subroutine fortran_cbar_to_c (cbar_mat, a, b, c_mat) bind(c)
   ! in: f_b 0D_NOT_type
   if (.not. c_associated(b)) return
   call c_f_pointer(b, f_b)
+  !! general array (2D_NOT_real) out
+  if (c_associated(c_mat%data_ptr)) then
+    call c_f_pointer(c_mat%data_ptr, f_c_mat_ptr, [product(c_mat%dims(1:c_mat%rank))])
+    ! output-only
+  else
+    f_c_mat_ptr => null()
+  endif
   call cbar_to_c(f_cbar_mat, f_a, f_b, f_c_mat)
 
   ! out: f_c_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_c_mat', c_name='c_mat', python_name='c_mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=677, definition='real(rp) cbar_mat(2,2), c_mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='c_mat', comment='', default=None), intent='out', description='C matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(c_mat%data_ptr)) f_c_mat_ptr = mat2vec(f_c_mat, product(c_mat%dims(1:c_mat%rank)))
 end subroutine
 subroutine fortran_check_aperture_limit (orb, ele, particle_at, param, old_orb, check_momentum) &
     bind(c)
@@ -3735,8 +3822,6 @@ subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low
   ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
-  real(c_double) :: delta_e  ! 0D_NOT_real
-  real(rp) :: f_delta_e
   type(c_ptr), intent(in), value :: pz  ! 0D_NOT_real
   real(c_double) :: f_pz
   real(c_double), pointer :: f_pz_ptr
@@ -3760,6 +3845,9 @@ subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low
   type(c_ptr), value :: high_E_lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_high_E_lat
   ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: delta_e  ! 0D_NOT_real
+  real(c_double) :: f_delta_e
+  real(c_double), pointer :: f_delta_e_ptr
   type(c_ptr), intent(in), value :: low_E_orb
   type(coord_struct_container_alloc), pointer :: f_low_E_orb
   type(c_ptr), intent(in), value :: high_E_orb
@@ -3772,8 +3860,12 @@ subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low
     return
   endif
   call c_f_pointer(lat, f_lat)
-  ! in: f_delta_e 0D_NOT_real
-  f_delta_e = delta_e
+  ! inout: f_delta_e 0D_NOT_real
+  if (c_associated(delta_e)) then
+    call c_f_pointer(delta_e, f_delta_e_ptr)
+  else
+    f_delta_e_ptr => null()
+  endif
   ! out: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
     call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -3802,9 +3894,11 @@ subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low
   endif
   ! in: f_orb0 0D_NOT_type
   if (c_associated(orb0))   call c_f_pointer(orb0, f_orb0)
-  call chrom_calc(f_lat, f_delta_e, f_chrom_a, f_chrom_b, f_err_flag, f_pz_ptr, f_low_E_lat, &
-      f_high_E_lat, f_low_E_orb%data, f_high_E_orb%data, f_ix_branch_ptr, f_orb0)
+  call chrom_calc(f_lat, f_delta_e_ptr, f_chrom_a, f_chrom_b, f_err_flag, f_pz_ptr, &
+      f_low_E_lat, f_high_E_lat, f_low_E_orb%data, f_high_E_orb%data, f_ix_branch_ptr, f_orb0)
 
+  ! inout: f_delta_e 0D_NOT_real
+  ! no output conversion for f_delta_e
   ! out: f_chrom_a 0D_NOT_real
   call c_f_pointer(chrom_a, f_chrom_a_ptr)
   f_chrom_a_ptr = f_chrom_a
@@ -3824,8 +3918,6 @@ subroutine fortran_chrom_tune (lat, delta_e, target_x, target_y, err_tol, err_fl
   use bmad_struct, only: lat_struct
   implicit none
   ! ** In parameters **
-  real(c_double) :: delta_e  ! 0D_NOT_real
-  real(rp) :: f_delta_e
   real(c_double) :: target_x  ! 0D_NOT_real
   real(rp) :: f_target_x
   real(c_double) :: target_y  ! 0D_NOT_real
@@ -3839,6 +3931,9 @@ subroutine fortran_chrom_tune (lat, delta_e, target_x, target_y, err_tol, err_fl
   ! ** Inout parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
+  type(c_ptr), intent(in), value :: delta_e  ! 0D_NOT_real
+  real(c_double) :: f_delta_e
+  real(c_double), pointer :: f_delta_e_ptr
   ! ** End of parameters **
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) then
@@ -3847,16 +3942,22 @@ subroutine fortran_chrom_tune (lat, delta_e, target_x, target_y, err_tol, err_fl
     return
   endif
   call c_f_pointer(lat, f_lat)
-  ! in: f_delta_e 0D_NOT_real
-  f_delta_e = delta_e
+  ! inout: f_delta_e 0D_NOT_real
+  if (c_associated(delta_e)) then
+    call c_f_pointer(delta_e, f_delta_e_ptr)
+  else
+    f_delta_e_ptr => null()
+  endif
   ! in: f_target_x 0D_NOT_real
   f_target_x = target_x
   ! in: f_target_y 0D_NOT_real
   f_target_y = target_y
   ! in: f_err_tol 0D_NOT_real
   f_err_tol = err_tol
-  call chrom_tune(f_lat, f_delta_e, f_target_x, f_target_y, f_err_tol, f_err_flag)
+  call chrom_tune(f_lat, f_delta_e_ptr, f_target_x, f_target_y, f_err_tol, f_err_flag)
 
+  ! inout: f_delta_e 0D_NOT_real
+  ! no output conversion for f_delta_e
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
@@ -4029,14 +4130,14 @@ subroutine fortran_closed_orbit_from_tracking (lat, closed_orb, i_dim, eps_rel, 
   if (c_associated(closed_orb))   call c_f_pointer(closed_orb, f_closed_orb)
   ! in: f_i_dim 0D_NOT_integer
   f_i_dim = i_dim
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(eps_rel%data_ptr)) then
     call c_f_pointer(eps_rel%data_ptr, f_eps_rel_ptr, [eps_rel%dims(1)])
     f_eps_rel => f_eps_rel_ptr
   else
     f_eps_rel_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(eps_abs%data_ptr)) then
     call c_f_pointer(eps_abs%data_ptr, f_eps_abs_ptr, [eps_abs%dims(1)])
     f_eps_abs => f_eps_abs_ptr
@@ -4074,7 +4175,7 @@ subroutine fortran_cmplx_re_str (cmp, str_out) bind(c)
   f_str_out = cmplx_re_str(f_cmp)
 
   ! out: f_str_out 0D_NOT_character
-  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
+  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
 subroutine fortran_combine_consecutive_elements (lat, error) bind(c)
@@ -4133,7 +4234,7 @@ subroutine fortran_complex_taylor_coef1 (complex_taylor, exp, coef) bind(c)
   ! in: f_complex_taylor 0D_NOT_type
   if (.not. c_associated(complex_taylor)) return
   call c_f_pointer(complex_taylor, f_complex_taylor)
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(exp%data_ptr)) then
     call c_f_pointer(exp%data_ptr, f_exp_ptr, [exp%dims(1)])
     f_exp => f_exp_ptr
@@ -4286,7 +4387,7 @@ subroutine fortran_complex_taylor_exponent_index (expn, index) bind(c)
   integer :: f_index
   integer(c_int), pointer :: f_index_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(expn%data_ptr)) then
     call c_f_pointer(expn%data_ptr, f_expn_ptr, [expn%dims(1)])
     f_expn = f_expn_ptr(:)
@@ -4346,14 +4447,28 @@ subroutine fortran_complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r
   else
     f_a_complex_taylor => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(r_in%data_ptr)) then
     call c_f_pointer(r_in%data_ptr, f_r_in_ptr, [r_in%dims(1)])
     f_r_in => f_r_in_ptr
   else
     f_r_in_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) out
+  if (c_associated(vec0%data_ptr)) then
+    call c_f_pointer(vec0%data_ptr, f_vec0_ptr, [vec0%dims(1)])
+    ! output-only
+  else
+    f_vec0_ptr => null()
+  endif
+  !! general array (2D_NOT_complex) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) inout
   if (c_associated(r_out%data_ptr)) then
     call c_f_pointer(r_out%data_ptr, f_r_out_ptr, [r_out%dims(1)])
     f_r_out => f_r_out_ptr
@@ -4368,7 +4483,7 @@ subroutine fortran_complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r
     f_vec0_ptr = f_vec0(:)
   endif
   ! out: f_mat6 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=698, definition='complex(rp), intent(out) :: mat6(6,6), vec0(6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent='out', intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='1st order transfer map (6x6 matrix).', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_complex_taylors_equal_complex_taylors (complex_taylor1, complex_taylor2) &
     bind(c)
@@ -4419,12 +4534,15 @@ subroutine fortran_concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor) bi
   use bmad_struct, only: ele_struct, taylor_struct
   implicit none
   ! ** In parameters **
-  type(array_descriptor_t), intent(in) :: orb_taylor
-  type(taylor_struct), pointer :: f_orb_taylor(:)
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  ! ** Inout parameters **
+  type(array_descriptor_t), intent(in) :: orb_taylor
+  type(taylor_struct), pointer :: f_orb_taylor(:)
   type(array_descriptor_t), intent(in) :: spin_taylor
   type(taylor_struct), pointer :: f_spin_taylor(:)
   ! ** End of parameters **
@@ -4435,10 +4553,12 @@ subroutine fortran_concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor) bi
     f_orb_taylor => null()
   endif
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
   !! type array (1D_NOT_type)
   if (c_associated(spin_taylor%data_ptr)) then
     call c_f_pointer(spin_taylor%data_ptr, f_spin_taylor, [spin_taylor%dims(1)])
@@ -4447,6 +4567,9 @@ subroutine fortran_concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor) bi
   endif
   call concat_ele_taylor(f_orb_taylor, f_ele, f_err_flag, f_spin_taylor)
 
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_concat_taylor (taylor1, taylor2, taylor3) bind(c)
 
@@ -4458,6 +4581,7 @@ subroutine fortran_concat_taylor (taylor1, taylor2, taylor3) bind(c)
   type(taylor_struct), pointer :: f_taylor1(:)
   type(array_descriptor_t), intent(in) :: taylor2
   type(taylor_struct), pointer :: f_taylor2(:)
+  ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: taylor3
   type(taylor_struct), pointer :: f_taylor3(:)
   ! ** End of parameters **
@@ -4507,38 +4631,52 @@ subroutine fortran_concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec
   real(rp) :: f_vec_out(6)
   real(c_double), pointer :: f_vec_out_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(mat_1%data_ptr)) then
     call c_f_pointer(mat_1%data_ptr, f_mat_1_ptr, [product(mat_1%dims(1:mat_1%rank))])
     call vec2mat(f_mat_1_ptr, f_mat_1)
   else
     f_mat_1_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(vec_1%data_ptr)) then
     call c_f_pointer(vec_1%data_ptr, f_vec_1_ptr, [vec_1%dims(1)])
     f_vec_1 = f_vec_1_ptr(:)
   else
     f_vec_1_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(mat_0%data_ptr)) then
     call c_f_pointer(mat_0%data_ptr, f_mat_0_ptr, [product(mat_0%dims(1:mat_0%rank))])
     call vec2mat(f_mat_0_ptr, f_mat_0)
   else
     f_mat_0_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(vec_0%data_ptr)) then
     call c_f_pointer(vec_0%data_ptr, f_vec_0_ptr, [vec_0%dims(1)])
     f_vec_0 = f_vec_0_ptr(:)
   else
     f_vec_0_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat_out%data_ptr)) then
+    call c_f_pointer(mat_out%data_ptr, f_mat_out_ptr, [product(mat_out%dims(1:mat_out%rank))])
+    ! output-only
+  else
+    f_mat_out_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(vec_out%data_ptr)) then
+    call c_f_pointer(vec_out%data_ptr, f_vec_out_ptr, [vec_out%dims(1)])
+    ! output-only
+  else
+    f_vec_out_ptr => null()
+  endif
   call concat_transfer_mat(f_mat_1, f_vec_1, f_mat_0, f_vec_0, f_mat_out, f_vec_out)
 
   ! out: f_mat_out 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat_out', c_name='mat_out', python_name='mat_out', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=564, definition='real(rp) mat_1(6,6), vec_1(6), mat_0(6,6), vec_0(6), mat_out(6,6), vec_out(6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat_out', comment='', default=None), intent='out', description='Map from s0 to s2', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat_out%data_ptr)) f_mat_out_ptr = mat2vec(f_mat_out, product(mat_out%dims(1:mat_out%rank)))
   ! out: f_vec_out 1D_NOT_real
   if (c_associated(vec_out%data_ptr)) then
     call c_f_pointer(vec_out%data_ptr, f_vec_out_ptr, [vec_out%dims(1)])
@@ -4598,14 +4736,14 @@ subroutine fortran_convert_bend_exact_multipole (g, out_type, an, bn) bind(c)
   f_g = g
   ! in: f_out_type 0D_NOT_integer
   f_out_type = out_type
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(an%data_ptr)) then
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an = f_an_ptr(:)
   else
     f_an_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(bn%data_ptr)) then
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn = f_bn_ptr(:)
@@ -4678,7 +4816,7 @@ subroutine fortran_convert_coords (in_type_str, coord_in, ele, out_type_str, coo
       f_err_flag)
 
   ! out: f_out_type_str 0D_NOT_character
-  call c_f_pointer(out_type_str, f_out_type_str_ptr, [len_trim(f_out_type_str) + 1]) ! output-only string
+  call c_f_pointer(out_type_str, f_out_type_str_ptr, [len_trim(f_out_type_str) + 1])
   call to_c_str(f_out_type_str, f_out_type_str_ptr)
   ! out: f_coord_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -5110,7 +5248,7 @@ subroutine fortran_converter_distribution_parser (ele, delim, delim_found, err_f
   call converter_distribution_parser(f_ele, f_delim, f_delim_found, f_err_flag)
 
   ! out: f_delim 0D_NOT_character
-  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
   call to_c_str(f_delim, f_delim_ptr)
   ! out: f_delim_found 0D_NOT_logical
   call c_f_pointer(delim_found, f_delim_found_ptr)
@@ -5172,7 +5310,7 @@ subroutine fortran_coord_state_name (coord_state, one_word, state_str) bind(c)
   f_state_str = coord_state_name(f_coord_state, f_one_word_native_ptr)
 
   ! out: f_state_str 0D_NOT_character
-  call c_f_pointer(state_str, f_state_str_ptr, [len_trim(f_state_str) + 1]) ! output-only string
+  call c_f_pointer(state_str, f_state_str_ptr, [len_trim(f_state_str) + 1])
   call to_c_str(f_state_str, f_state_str_ptr)
 end subroutine
 subroutine fortran_coords_body_to_local (body_position, ele, w_mat, calculate_angles, &
@@ -5186,15 +5324,15 @@ subroutine fortran_coords_body_to_local (body_position, ele, w_mat, calculate_an
   type(floor_position_struct), pointer :: f_body_position
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  type(array_descriptor_t), intent(in) :: w_mat
-  real(rp) :: f_w_mat(3,3)
-  real(c_double), pointer :: f_w_mat_ptr(:)
   type(c_ptr), intent(in), value :: calculate_angles  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_calculate_angles
   logical, target :: f_calculate_angles_native
   logical, pointer :: f_calculate_angles_native_ptr
   logical(c_bool), pointer :: f_calculate_angles_ptr
   ! ** Out parameters **
+  type(array_descriptor_t), intent(in) :: w_mat
+  real(rp) :: f_w_mat(3,3)
+  real(c_double), pointer :: f_w_mat_ptr(:)
   type(c_ptr), value :: local_position  ! 0D_NOT_type
   type(floor_position_struct), pointer :: f_local_position
   ! ** End of parameters **
@@ -5204,10 +5342,10 @@ subroutine fortran_coords_body_to_local (body_position, ele, w_mat, calculate_an
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) out
   if (c_associated(w_mat%data_ptr)) then
     call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
-    call vec2mat(f_w_mat_ptr, f_w_mat)
+    ! output-only
   else
     f_w_mat_ptr => null()
   endif
@@ -5219,9 +5357,14 @@ subroutine fortran_coords_body_to_local (body_position, ele, w_mat, calculate_an
   else
     f_calculate_angles_native_ptr => null()
   endif
+  ! out: f_local_position 0D_NOT_type
+  if (.not. c_associated(local_position)) return
+  call c_f_pointer(local_position, f_local_position)
   f_local_position = coords_body_to_local(f_body_position, f_ele, f_w_mat, &
       f_calculate_angles_native_ptr)
 
+  ! out: f_w_mat 2D_NOT_real
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5236,15 +5379,15 @@ subroutine fortran_coords_body_to_rel_exit (body_position, ele, w_mat, calculate
   type(floor_position_struct), pointer :: f_body_position
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  type(array_descriptor_t), intent(in) :: w_mat
-  real(rp) :: f_w_mat(3,3)
-  real(c_double), pointer :: f_w_mat_ptr(:)
   type(c_ptr), intent(in), value :: calculate_angles  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_calculate_angles
   logical, target :: f_calculate_angles_native
   logical, pointer :: f_calculate_angles_native_ptr
   logical(c_bool), pointer :: f_calculate_angles_ptr
   ! ** Out parameters **
+  type(array_descriptor_t), intent(in) :: w_mat
+  real(rp) :: f_w_mat(3,3)
+  real(c_double), pointer :: f_w_mat_ptr(:)
   type(c_ptr), value :: rel_exit  ! 0D_NOT_type
   type(floor_position_struct), pointer :: f_rel_exit
   ! ** End of parameters **
@@ -5254,10 +5397,10 @@ subroutine fortran_coords_body_to_rel_exit (body_position, ele, w_mat, calculate
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) out
   if (c_associated(w_mat%data_ptr)) then
     call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
-    call vec2mat(f_w_mat_ptr, f_w_mat)
+    ! output-only
   else
     f_w_mat_ptr => null()
   endif
@@ -5269,9 +5412,14 @@ subroutine fortran_coords_body_to_rel_exit (body_position, ele, w_mat, calculate
   else
     f_calculate_angles_native_ptr => null()
   endif
+  ! out: f_rel_exit 0D_NOT_type
+  if (.not. c_associated(rel_exit)) return
+  call c_f_pointer(rel_exit, f_rel_exit)
   f_rel_exit = coords_body_to_rel_exit(f_body_position, f_ele, f_w_mat, &
       f_calculate_angles_native_ptr)
 
+  ! out: f_w_mat 2D_NOT_real
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
   ! out: f_rel_exit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5293,7 +5441,7 @@ subroutine fortran_coords_curvilinear_to_floor (xys, branch, err_flag, global) b
   type(c_ptr), value :: global  ! 0D_NOT_type
   type(floor_position_struct), pointer :: f_global
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(xys%data_ptr)) then
     call c_f_pointer(xys%data_ptr, f_xys_ptr, [xys%dims(1)])
     f_xys = f_xys_ptr(:)
@@ -5307,6 +5455,13 @@ subroutine fortran_coords_curvilinear_to_floor (xys, branch, err_flag, global) b
     return
   endif
   call c_f_pointer(branch, f_branch)
+  ! out: f_global 0D_NOT_type
+  if (.not. c_associated(global)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(global, f_global)
   f_global = coords_curvilinear_to_floor(f_xys, f_branch, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
@@ -5346,6 +5501,16 @@ subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status
   call c_f_pointer(ele0, f_ele0)
   ! out: f_ele1 0D_PTR_type
   if (c_associated(ele1))   call c_f_pointer(ele1, f_ele1)
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
+  ! out: f_local_coords 0D_NOT_type
+  if (.not. c_associated(local_coords)) return
+  call c_f_pointer(local_coords, f_local_coords)
   f_local_coords = coords_floor_to_curvilinear(f_floor_coords, f_ele0, f_ele1, f_status, &
       f_w_mat)
 
@@ -5355,7 +5520,7 @@ subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status
   call c_f_pointer(status, f_status_ptr)
   f_status_ptr = f_status
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=748, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
   ! out: f_local_coords 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5389,12 +5554,22 @@ subroutine fortran_coords_floor_to_local_curvilinear (global_position, ele, stat
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   ! in: f_relative_to 0D_NOT_integer
   if (c_associated(relative_to)) then
     call c_f_pointer(relative_to, f_relative_to_ptr)
   else
     f_relative_to_ptr => null()
   endif
+  ! out: f_local_position 0D_NOT_type
+  if (.not. c_associated(local_position)) return
+  call c_f_pointer(local_position, f_local_position)
   f_local_position = coords_floor_to_local_curvilinear(f_global_position, f_ele, f_status, &
       f_w_mat, f_relative_to_ptr)
 
@@ -5402,7 +5577,7 @@ subroutine fortran_coords_floor_to_local_curvilinear (global_position, ele, stat
   call c_f_pointer(status, f_status_ptr)
   f_status_ptr = f_status
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=736, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5453,6 +5628,9 @@ subroutine fortran_coords_floor_to_relative (floor0, global_position, calculate_
   else
     f_is_delta_position_native_ptr => null()
   endif
+  ! out: f_local_position 0D_NOT_type
+  if (.not. c_associated(local_position)) return
+  call c_f_pointer(local_position, f_local_position)
   f_local_position = coords_floor_to_relative(f_floor0, f_global_position, &
       f_calculate_angles_native_ptr, f_is_delta_position_native_ptr)
 
@@ -5470,15 +5648,15 @@ subroutine fortran_coords_local_curvilinear_to_body (local_position, ele, w_mat,
   type(floor_position_struct), pointer :: f_local_position
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  type(array_descriptor_t), intent(in) :: w_mat
-  real(rp) :: f_w_mat(3,3)
-  real(c_double), pointer :: f_w_mat_ptr(:)
   type(c_ptr), intent(in), value :: calculate_angles  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_calculate_angles
   logical, target :: f_calculate_angles_native
   logical, pointer :: f_calculate_angles_native_ptr
   logical(c_bool), pointer :: f_calculate_angles_ptr
   ! ** Out parameters **
+  type(array_descriptor_t), intent(in) :: w_mat
+  real(rp) :: f_w_mat(3,3)
+  real(c_double), pointer :: f_w_mat_ptr(:)
   type(c_ptr), value :: body_position  ! 0D_NOT_type
   type(floor_position_struct), pointer :: f_body_position
   ! ** End of parameters **
@@ -5488,10 +5666,10 @@ subroutine fortran_coords_local_curvilinear_to_body (local_position, ele, w_mat,
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) out
   if (c_associated(w_mat%data_ptr)) then
     call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
-    call vec2mat(f_w_mat_ptr, f_w_mat)
+    ! output-only
   else
     f_w_mat_ptr => null()
   endif
@@ -5503,9 +5681,14 @@ subroutine fortran_coords_local_curvilinear_to_body (local_position, ele, w_mat,
   else
     f_calculate_angles_native_ptr => null()
   endif
+  ! out: f_body_position 0D_NOT_type
+  if (.not. c_associated(body_position)) return
+  call c_f_pointer(body_position, f_body_position)
   f_body_position = coords_local_curvilinear_to_body(f_local_position, f_ele, f_w_mat, &
       f_calculate_angles_native_ptr)
 
+  ! out: f_w_mat 2D_NOT_real
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
   ! out: f_body_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5554,6 +5737,13 @@ subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_bo
   else
     f_in_body_frame_native_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   ! in: f_calculate_angles 0D_NOT_logical
   if (c_associated(calculate_angles)) then
     call c_f_pointer(calculate_angles, f_calculate_angles_ptr)
@@ -5568,11 +5758,14 @@ subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_bo
   else
     f_relative_to_ptr => null()
   endif
+  ! out: f_global_position 0D_NOT_type
+  if (.not. c_associated(global_position)) return
+  call c_f_pointer(global_position, f_global_position)
   f_global_position = coords_local_curvilinear_to_floor(f_local_position, f_ele, &
       f_in_body_frame_native_ptr, f_w_mat, f_calculate_angles_native_ptr, f_relative_to_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=766, definition='real(rp), optional :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix at z, to transform vectors. v_global     = w_mat . v_local/body', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
   ! out: f_global_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -5603,7 +5796,7 @@ subroutine fortran_coords_relative_to_floor (floor0, dr, theta, phi, psi, floor1
   ! in: f_floor0 0D_NOT_type
   if (.not. c_associated(floor0)) return
   call c_f_pointer(floor0, f_floor0)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(dr%data_ptr)) then
     call c_f_pointer(dr%data_ptr, f_dr_ptr, [dr%dims(1)])
     f_dr = f_dr_ptr(:)
@@ -5628,6 +5821,9 @@ subroutine fortran_coords_relative_to_floor (floor0, dr, theta, phi, psi, floor1
   else
     f_psi_ptr => null()
   endif
+  ! out: f_floor1 0D_NOT_type
+  if (.not. c_associated(floor1)) return
+  call c_f_pointer(floor1, f_floor1)
   f_floor1 = coords_relative_to_floor(f_floor0, f_dr, f_theta_ptr, f_phi_ptr, f_psi_ptr)
 
   ! out: f_floor1 0D_NOT_type
@@ -6079,11 +6275,11 @@ subroutine fortran_crystal_attribute_bookkeeper (ele) bind(c)
   use array_desc_mod
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** In parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
-  ! in: f_ele 0D_NOT_type
+  ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
   call crystal_attribute_bookkeeper(f_ele)
@@ -6110,7 +6306,7 @@ subroutine fortran_crystal_h_misalign (ele, orbit, h_vec) bind(c)
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(h_vec%data_ptr)) then
     call c_f_pointer(h_vec%data_ptr, f_h_vec_ptr, [h_vec%dims(1)])
     f_h_vec = f_h_vec_ptr(:)
@@ -6200,10 +6396,17 @@ subroutine fortran_damping_matrix_d (gamma, g_tot, B0, B1, delta, species, mat) 
   f_delta = delta
   ! in: f_species 0D_NOT_integer
   f_species = species
+  !! general array (2D_NOT_real) inout
+  if (c_associated(mat%data_ptr)) then
+    call c_f_pointer(mat%data_ptr, f_mat_ptr, [product(mat%dims(1:mat%rank))])
+    ! output-only
+  else
+    f_mat_ptr => null()
+  endif
   f_mat = damping_matrix_d(f_gamma, f_g_tot, f_B0, f_B1, f_delta, f_species)
 
   ! out: f_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat', c_name='mat', python_name='mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=150, definition='real(rp) mat(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+  if (c_associated(mat%data_ptr)) f_mat_ptr = mat2vec(f_mat, product(mat%dims(1:mat%rank)))
 end subroutine
 subroutine fortran_deallocate_ele_pointers (ele, nullify_only, nullify_branch, dealloc_poles) &
     bind(c)
@@ -6335,6 +6538,13 @@ subroutine fortran_detector_pixel_pt (orbit, ele, ix_pix) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(ix_pix%data_ptr)) then
+    call c_f_pointer(ix_pix%data_ptr, f_ix_pix_ptr, [ix_pix%dims(1)])
+    ! output-only
+  else
+    f_ix_pix_ptr => null()
+  endif
   f_ix_pix = detector_pixel_pt(f_orbit, f_ele)
 
   ! out: f_ix_pix 1D_NOT_integer
@@ -6392,10 +6602,17 @@ subroutine fortran_diffusion_matrix_b (gamma, g_tot, species, mat) bind(c)
   f_g_tot = g_tot
   ! in: f_species 0D_NOT_integer
   f_species = species
+  !! general array (2D_NOT_real) inout
+  if (c_associated(mat%data_ptr)) then
+    call c_f_pointer(mat%data_ptr, f_mat_ptr, [product(mat%dims(1:mat%rank))])
+    ! output-only
+  else
+    f_mat_ptr => null()
+  endif
   f_mat = diffusion_matrix_b(f_gamma, f_g_tot, f_species)
 
   ! out: f_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat', c_name='mat', python_name='mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=128, definition='real(rp) mat(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+  if (c_associated(mat%data_ptr)) f_mat_ptr = mat2vec(f_mat, product(mat%dims(1:mat%rank)))
 end subroutine
 subroutine fortran_distance_to_aperture (orbit, particle_at, ele, no_aperture_here, dist) &
     bind(c)
@@ -6736,7 +6953,7 @@ subroutine fortran_dynamic_aperture_scan (aperture_scan, aperture_param, pz_star
   ! in: f_aperture_param 0D_NOT_type
   if (.not. c_associated(aperture_param)) return
   call c_f_pointer(aperture_param, f_aperture_param)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(pz_start%data_ptr)) then
     call c_f_pointer(pz_start%data_ptr, f_pz_start_ptr, [pz_start%dims(1)])
     f_pz_start => f_pz_start_ptr
@@ -6844,12 +7061,33 @@ subroutine fortran_eigen_decomp_6mat (mat, eval, evec, err_flag, tunes) bind(c)
   real(rp) :: f_tunes(3)
   real(c_double), pointer :: f_tunes_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(mat%data_ptr)) then
     call c_f_pointer(mat%data_ptr, f_mat_ptr, [product(mat%dims(1:mat%rank))])
     call vec2mat(f_mat_ptr, f_mat)
   else
     f_mat_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) out
+  if (c_associated(eval%data_ptr)) then
+    call c_f_pointer(eval%data_ptr, f_eval_ptr, [eval%dims(1)])
+    ! output-only
+  else
+    f_eval_ptr => null()
+  endif
+  !! general array (2D_NOT_complex) out
+  if (c_associated(evec%data_ptr)) then
+    call c_f_pointer(evec%data_ptr, f_evec_ptr, [product(evec%dims(1:evec%rank))])
+    ! output-only
+  else
+    f_evec_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(tunes%data_ptr)) then
+    call c_f_pointer(tunes%data_ptr, f_tunes_ptr, [tunes%dims(1)])
+    ! output-only
+  else
+    f_tunes_ptr => null()
   endif
   call eigen_decomp_6mat(f_mat, f_eval, f_evec, f_err_flag, f_tunes)
 
@@ -6859,7 +7097,7 @@ subroutine fortran_eigen_decomp_6mat (mat, eval, evec, err_flag, tunes) bind(c)
     f_eval_ptr = f_eval(:)
   endif
   ! out: f_evec 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_evec', c_name='evec', python_name='evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=459, definition='complex(rp) evec(6,6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='evec', comment='', default=None), intent='out', description='complex eigenvectors arranged down columns.', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(evec%data_ptr)) f_evec_ptr = mat2vec(f_evec, product(evec%dims(1:evec%rank)))
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
@@ -6993,7 +7231,7 @@ subroutine fortran_ele_full_name (ele, template_, str) bind(c)
   f_str = ele_full_name(f_ele, f_template_call_ptr)
 
   ! out: f_str 0D_ALLOC_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_ele_geometry (floor_start, ele, floor_end, len_scale, ignore_patch_err) &
@@ -7071,6 +7309,9 @@ subroutine fortran_ele_geometry_with_misalignments (ele, len_scale, floor) bind(
   else
     f_len_scale_ptr => null()
   endif
+  ! out: f_floor 0D_NOT_type
+  if (.not. c_associated(floor)) return
+  call c_f_pointer(floor, f_floor)
   f_floor = ele_geometry_with_misalignments(f_ele, f_len_scale_ptr)
 
   ! out: f_floor 0D_NOT_type
@@ -7104,19 +7345,18 @@ subroutine fortran_ele_has_nonzero_kick (ele, has_kick) bind(c)
   use bmad_struct, only: ele_struct
   implicit none
   ! ** Out parameters **
-  type(c_ptr), value :: ele  ! 0D_NOT_type
-  type(ele_struct), pointer :: f_ele
   type(c_ptr), intent(in), value :: has_kick  ! 0D_NOT_logical
   logical :: f_has_kick
   logical(c_bool), pointer :: f_has_kick_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
-  ! out: f_ele 0D_NOT_type
+  ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
   f_has_kick = ele_has_nonzero_kick(f_ele)
 
-  ! out: f_ele 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
   ! out: f_has_kick 0D_NOT_logical
   call c_f_pointer(has_kick, f_has_kick_ptr)
   f_has_kick_ptr = f_has_kick
@@ -7126,15 +7366,15 @@ subroutine fortran_ele_has_nonzero_offset (ele, has_offset) bind(c)
   use array_desc_mod
   use bmad_struct, only: ele_struct
   implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: has_offset  ! 0D_NOT_logical
   logical :: f_has_offset
   logical(c_bool), pointer :: f_has_offset_ptr
-  ! ** Inout parameters **
-  type(c_ptr), value :: ele  ! 0D_NOT_type
-  type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
   f_has_offset = ele_has_nonzero_offset(f_ele)
@@ -7193,6 +7433,9 @@ subroutine fortran_ele_loc (ele, loc) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  ! out: f_loc 0D_NOT_type
+  if (.not. c_associated(loc)) return
+  call c_f_pointer(loc, f_loc)
   f_loc = ele_loc(f_ele)
 
   ! out: f_loc 0D_NOT_type
@@ -7242,7 +7485,7 @@ subroutine fortran_ele_loc_name (ele, show_branch0, parens, str) bind(c)
   f_str = ele_loc_name(f_ele, f_show_branch0_native_ptr, f_parens_call_ptr)
 
   ! out: f_str 0D_NOT_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_ele_misalignment_l_s_calc (ele, L_mis, S_mis) bind(c)
@@ -7264,6 +7507,20 @@ subroutine fortran_ele_misalignment_l_s_calc (ele, L_mis, S_mis) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  !! general array (1D_NOT_real) out
+  if (c_associated(L_mis%data_ptr)) then
+    call c_f_pointer(L_mis%data_ptr, f_L_mis_ptr, [L_mis%dims(1)])
+    ! output-only
+  else
+    f_L_mis_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(S_mis%data_ptr)) then
+    call c_f_pointer(S_mis%data_ptr, f_S_mis_ptr, [product(S_mis%dims(1:S_mis%rank))])
+    ! output-only
+  else
+    f_S_mis_ptr => null()
+  endif
   call ele_misalignment_l_s_calc(f_ele, f_L_mis, f_S_mis)
 
   ! out: f_L_mis 1D_NOT_real
@@ -7272,7 +7529,7 @@ subroutine fortran_ele_misalignment_l_s_calc (ele, L_mis, S_mis) bind(c)
     f_L_mis_ptr = f_L_mis(:)
   endif
   ! out: f_S_mis 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_S_mis', c_name='S_mis', python_name='S_mis', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1163, definition='real(rp) :: L_mis(3), S_mis(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='S_mis', comment='', default=None), intent='out', description='Misalignment matrix relative to center of element', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(S_mis%data_ptr)) f_S_mis_ptr = mat2vec(f_S_mis, product(S_mis%dims(1:S_mis%rank)))
 end subroutine
 subroutine fortran_ele_nametable_index (ele, ix_nt) bind(c)
 
@@ -7350,7 +7607,7 @@ subroutine fortran_ele_reference_energy_correction (ele, orbit, particle_at, mat
   call c_f_pointer(orbit, f_orbit)
   ! in: f_particle_at 0D_NOT_integer
   f_particle_at = particle_at
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -7496,14 +7753,14 @@ subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(bn%data_ptr)) then
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn => f_bn_ptr
   else
     f_bn_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(an%data_ptr)) then
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an => f_an_ptr
@@ -7639,7 +7896,7 @@ subroutine fortran_ele_unique_name (ele, order, unique_name) bind(c)
   f_unique_name = ele_unique_name(f_ele, f_order)
 
   ! out: f_unique_name 0D_NOT_character
-  call c_f_pointer(unique_name, f_unique_name_ptr, [len_trim(f_unique_name) + 1]) ! output-only string
+  call c_f_pointer(unique_name, f_unique_name_ptr, [len_trim(f_unique_name) + 1])
   call to_c_str(f_unique_name, f_unique_name_ptr)
 end subroutine
 subroutine fortran_ele_value_has_changed (ele, list, abs_tol, set_old, has_changed) bind(c)
@@ -7667,14 +7924,14 @@ subroutine fortran_ele_value_has_changed (ele, list, abs_tol, set_old, has_chang
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(list%data_ptr)) then
     call c_f_pointer(list%data_ptr, f_list_ptr, [list%dims(1)])
     f_list => f_list_ptr
   else
     f_list_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(abs_tol%data_ptr)) then
     call c_f_pointer(abs_tol%data_ptr, f_abs_tol_ptr, [abs_tol%dims(1)])
     f_abs_tol => f_abs_tol_ptr
@@ -7753,6 +8010,13 @@ subroutine fortran_elec_multipole_field (a, b, n, coord, Ex, Ey, dE, compute_dE)
   ! in: f_coord 0D_NOT_type
   if (.not. c_associated(coord)) return
   call c_f_pointer(coord, f_coord)
+  !! general array (2D_NOT_real) out
+  if (c_associated(dE%data_ptr)) then
+    call c_f_pointer(dE%data_ptr, f_dE_ptr, [product(dE%dims(1:dE%rank))])
+    ! output-only
+  else
+    f_dE_ptr => null()
+  endif
   ! out: f_compute_dE 0D_NOT_logical
   if (c_associated(compute_dE)) then
     call c_f_pointer(compute_dE, f_compute_dE_ptr)
@@ -7768,7 +8032,7 @@ subroutine fortran_elec_multipole_field (a, b, n, coord, Ex, Ey, dE, compute_dE)
   call c_f_pointer(Ey, f_Ey_ptr)
   f_Ey_ptr = f_Ey
   ! out: f_dE 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_dE', c_name='dE', python_name='dE', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=1255, definition='real(rp), optional :: dE(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='dE', comment='', default=None), intent='out', description='Field derivatives: dfield(x,y)/d(x,y).', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(dE%data_ptr)) f_dE_ptr = mat2vec(f_dE, product(dE%dims(1:dE%rank)))
   ! out: f_compute_dE 0D_NOT_logical
   ! no output conversion for f_compute_dE
 end subroutine
@@ -8159,8 +8423,14 @@ subroutine fortran_em_field_derivatives (ele, param, s_pos, orbit, local_ref_fra
   use bmad_struct, only: coord_struct, ele_struct, em_field_struct, lat_param_struct
   implicit none
   ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: param  ! 0D_NOT_type
+  type(lat_param_struct), pointer :: f_param
   real(c_double) :: s_pos  ! 0D_NOT_real
   real(rp) :: f_s_pos
+  type(c_ptr), value :: orbit  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_orbit
   logical(c_bool) :: local_ref_frame  ! 0D_NOT_logical
   logical :: f_local_ref_frame
   type(c_ptr), intent(in), value :: grid_allow_s_out_of_bounds  ! 0D_NOT_logical
@@ -8174,23 +8444,16 @@ subroutine fortran_em_field_derivatives (ele, param, s_pos, orbit, local_ref_fra
   ! ** Out parameters **
   type(c_ptr), value :: dfield  ! 0D_NOT_type
   type(em_field_struct), pointer :: f_dfield
-  ! ** Inout parameters **
-  type(c_ptr), value :: ele  ! 0D_NOT_type
-  type(ele_struct), pointer :: f_ele
-  type(c_ptr), value :: param  ! 0D_NOT_type
-  type(lat_param_struct), pointer :: f_param
-  type(c_ptr), value :: orbit  ! 0D_NOT_type
-  type(coord_struct), pointer :: f_orbit
   ! ** End of parameters **
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_param 0D_NOT_type
+  ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
   ! in: f_s_pos 0D_NOT_real
   f_s_pos = s_pos
-  ! inout: f_orbit 0D_NOT_type
+  ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
   ! in: f_local_ref_frame 0D_NOT_logical
@@ -8258,6 +8521,13 @@ subroutine fortran_em_field_kick_vector_time (ele, param, rf_time, orbit, dvec_d
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
+  !! general array (1D_NOT_real) out
+  if (c_associated(dvec_dt%data_ptr)) then
+    call c_f_pointer(dvec_dt%data_ptr, f_dvec_dt_ptr, [dvec_dt%dims(1)])
+    ! output-only
+  else
+    f_dvec_dt_ptr => null()
+  endif
   ! in: f_err_flag 0D_NOT_logical
   f_err_flag = err_flag
   ! in: f_print_err 0D_NOT_logical
@@ -8299,6 +8569,9 @@ subroutine fortran_em_field_plus_em_field (field1, field2, field_tot) bind(c)
   ! in: f_field2 0D_NOT_type
   if (.not. c_associated(field2)) return
   call c_f_pointer(field2, f_field2)
+  ! out: f_field_tot 0D_NOT_type
+  if (.not. c_associated(field_tot)) return
+  call c_f_pointer(field_tot, f_field_tot)
   f_field_tot = em_field_plus_em_field(f_field1, f_field2)
 
   ! out: f_field_tot 0D_NOT_type
@@ -8382,6 +8655,13 @@ subroutine fortran_emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, clo
   ! out: f_mode 0D_NOT_type
   if (.not. c_associated(mode)) return
   call c_f_pointer(mode, f_mode)
+  !! general array (2D_NOT_real) out
+  if (c_associated(sigma_mat%data_ptr)) then
+    call c_f_pointer(sigma_mat%data_ptr, f_sigma_mat_ptr, [product(sigma_mat%dims(1:sigma_mat%rank))])
+    ! output-only
+  else
+    f_sigma_mat_ptr => null()
+  endif
   !! type array (1D_NOT_type)
   if (c_associated(closed_orbit%data_ptr)) then
     call c_f_pointer(closed_orbit%data_ptr, f_closed_orbit, [closed_orbit%dims(1)])
@@ -8396,7 +8676,7 @@ subroutine fortran_emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, clo
   ! out: f_mode 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_sigma_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_sigma_mat', c_name='sigma_mat', python_name='sigma_mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=65, definition='real(rp) sigma_mat(6,6), rf65, sig_s(6,6), mat6(6,6), xfer_nodamp_mat(6,6), mt(21,21), v_sig(21,1)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='sigma_mat', comment='', default=None), intent='out', description='Sigma matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(sigma_mat%data_ptr)) f_sigma_mat_ptr = mat2vec(f_sigma_mat, product(sigma_mat%dims(1:sigma_mat%rank)))
   ! out: f_rad_int_by_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -8447,35 +8727,35 @@ subroutine fortran_envelope_radints (Lambda, Theta, Iota, alpha, emit) bind(c)
   real(rp) :: f_emit(3)
   real(c_double), pointer :: f_emit_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(Lambda%data_ptr)) then
     call c_f_pointer(Lambda%data_ptr, f_Lambda_ptr, [product(Lambda%dims(1:Lambda%rank))])
     call vec2mat(f_Lambda_ptr, f_Lambda)
   else
     f_Lambda_ptr => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(Theta%data_ptr)) then
     call c_f_pointer(Theta%data_ptr, f_Theta_ptr, [product(Theta%dims(1:Theta%rank))])
     call vec2mat(f_Theta_ptr, f_Theta)
   else
     f_Theta_ptr => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(Iota%data_ptr)) then
     call c_f_pointer(Iota%data_ptr, f_Iota_ptr, [product(Iota%dims(1:Iota%rank))])
     call vec2mat(f_Iota_ptr, f_Iota)
   else
     f_Iota_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(alpha%data_ptr)) then
     call c_f_pointer(alpha%data_ptr, f_alpha_ptr, [alpha%dims(1)])
     f_alpha = f_alpha_ptr(:)
   else
     f_alpha_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(emit%data_ptr)) then
     call c_f_pointer(emit%data_ptr, f_emit_ptr, [emit%dims(1)])
     f_emit = f_emit_ptr(:)
@@ -8519,21 +8799,21 @@ subroutine fortran_envelope_radints_ibs (Lambda, Theta, Iota, eles, alpha, emit,
   real(rp) :: f_emit(3)
   real(c_double), pointer :: f_emit_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) in
   if (c_associated(Lambda%data_ptr)) then
     call c_f_pointer(Lambda%data_ptr, f_Lambda_ptr, [product(Lambda%dims(1:Lambda%rank))])
     call vec2mat(f_Lambda_ptr, f_Lambda)
   else
     f_Lambda_ptr => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) in
   if (c_associated(Theta%data_ptr)) then
     call c_f_pointer(Theta%data_ptr, f_Theta_ptr, [product(Theta%dims(1:Theta%rank))])
     call vec2mat(f_Theta_ptr, f_Theta)
   else
     f_Theta_ptr => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) in
   if (c_associated(Iota%data_ptr)) then
     call c_f_pointer(Iota%data_ptr, f_Iota_ptr, [product(Iota%dims(1:Iota%rank))])
     call vec2mat(f_Iota_ptr, f_Iota)
@@ -8545,6 +8825,20 @@ subroutine fortran_envelope_radints_ibs (Lambda, Theta, Iota, eles, alpha, emit,
     call c_f_pointer(eles%data_ptr, f_eles, [eles%dims(1)])
   else
     f_eles => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(alpha%data_ptr)) then
+    call c_f_pointer(alpha%data_ptr, f_alpha_ptr, [alpha%dims(1)])
+    ! output-only
+  else
+    f_alpha_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(emit%data_ptr)) then
+    call c_f_pointer(emit%data_ptr, f_emit_ptr, [emit%dims(1)])
+    ! output-only
+  else
+    f_emit_ptr => null()
   endif
   ! in: f_mode 0D_NOT_type
   if (.not. c_associated(mode)) return
@@ -11219,10 +11513,10 @@ subroutine fortran_evaluate_array_index (err_flag, delim_list1, word2, delim_lis
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_word2 0D_NOT_character
-  call c_f_pointer(word2, f_word2_ptr, [len_trim(f_word2) + 1]) ! output-only string
+  call c_f_pointer(word2, f_word2_ptr, [len_trim(f_word2) + 1])
   call to_c_str(f_word2, f_word2_ptr)
   ! out: f_delim2 0D_NOT_character
-  call c_f_pointer(delim2, f_delim2_ptr, [len_trim(f_delim2) + 1]) ! output-only string
+  call c_f_pointer(delim2, f_delim2_ptr, [len_trim(f_delim2) + 1])
   call to_c_str(f_delim2, f_delim2_ptr)
   ! out: f_this_index 0D_NOT_integer
   call c_f_pointer(this_index, f_this_index_ptr)
@@ -11293,7 +11587,7 @@ subroutine fortran_exact_bend_edge_kick (ele, param, particle_at, orb, mat6, mak
   ! inout: f_orb 0D_NOT_type
   if (.not. c_associated(orb)) return
   call c_f_pointer(orb, f_orb)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -11354,15 +11648,16 @@ subroutine fortran_expect_one_of (delim_list, check_input_delim, ele_name, delim
   type(c_ptr), intent(in), value :: ele_name
   character(len=4096), target :: f_ele_name
   character(kind=c_char), pointer :: f_ele_name_ptr(:)
-  type(c_ptr), intent(in), value :: delim
-  character(len=4096), target :: f_delim
-  character(kind=c_char), pointer :: f_delim_ptr(:)
   logical(c_bool) :: delim_found  ! 0D_NOT_logical
   logical :: f_delim_found
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: is_ok  ! 0D_NOT_logical
   logical :: f_is_ok
   logical(c_bool), pointer :: f_is_ok_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
   ! ** End of parameters **
   ! in: f_delim_list 0D_NOT_character
   if (.not. c_associated(delim_list)) return
@@ -11374,7 +11669,7 @@ subroutine fortran_expect_one_of (delim_list, check_input_delim, ele_name, delim
   if (.not. c_associated(ele_name)) return
   call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
   call to_f_str(f_ele_name_ptr, f_ele_name)
-  ! in: f_delim 0D_NOT_character
+  ! inout: f_delim 0D_NOT_character
   if (.not. c_associated(delim)) return
   call c_f_pointer(delim, f_delim_ptr, [huge(0)])
   call to_f_str(f_delim_ptr, f_delim)
@@ -11383,6 +11678,9 @@ subroutine fortran_expect_one_of (delim_list, check_input_delim, ele_name, delim
   f_is_ok = expect_one_of(f_delim_list, f_check_input_delim, f_ele_name, f_delim, &
       f_delim_found)
 
+  ! inout: f_delim 0D_NOT_character
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
+  call to_c_str(f_delim, f_delim_ptr)
   ! out: f_is_ok 0D_NOT_logical
   call c_f_pointer(is_ok, f_is_ok_ptr)
   f_is_ok_ptr = f_is_ok
@@ -11436,7 +11734,7 @@ subroutine fortran_expect_this (expecting, check_delim, call_check, err_str, ele
       f_delim_found)
 
   ! out: f_delim 0D_NOT_character
-  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
   call to_c_str(f_delim, f_delim_ptr)
   ! out: f_delim_found 0D_NOT_logical
   call c_f_pointer(delim_found, f_delim_found_ptr)
@@ -11480,7 +11778,7 @@ subroutine fortran_expression_stack_to_string (stack, polish, str) bind(c)
   f_str = expression_stack_to_string(f_stack, f_polish_native_ptr)
 
   ! out: f_str 0D_ALLOC_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_expression_stack_value (stack, err_flag, err_str, var, use_old, value) &
@@ -11536,7 +11834,7 @@ subroutine fortran_expression_stack_value (stack, err_flag, err_str, var, use_ol
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_err_str 0D_NOT_character
-  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1]) ! output-only string
+  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1])
   call to_c_str(f_err_str, f_err_str_ptr)
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
@@ -11585,7 +11883,7 @@ subroutine fortran_expression_string_to_stack (string, stack, n_stack, err_flag,
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_err_str 0D_NOT_character
-  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1]) ! output-only string
+  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1])
   call to_c_str(f_err_str, f_err_str_ptr)
 end subroutine
 subroutine fortran_expression_string_to_tree (string, root_tree, err_flag, err_str) bind(c)
@@ -11628,7 +11926,7 @@ subroutine fortran_expression_string_to_tree (string, root_tree, err_flag, err_s
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_err_str 0D_NOT_character
-  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1]) ! output-only string
+  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1])
   call to_c_str(f_err_str, f_err_str_ptr)
 end subroutine
 subroutine fortran_expression_tree_to_string (tree, include_root, n_node, parent, str_out) &
@@ -11678,7 +11976,7 @@ subroutine fortran_expression_tree_to_string (tree, include_root, n_node, parent
       f_parent)
 
   ! out: f_str_out 0D_ALLOC_character
-  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
+  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
 subroutine fortran_expression_value (expression, err_flag, err_str, var, use_old, value) &
@@ -11721,7 +12019,6 @@ subroutine fortran_expression_value (expression, err_flag, err_str, var, use_old
   ! out: f_err_str 0D_NOT_character
   if (c_associated(err_str)) then
     call c_f_pointer(err_str, f_err_str_ptr, [huge(0)])
-    call to_f_str(f_err_str_ptr, f_err_str)
     f_err_str_call_ptr => f_err_str
   else
     f_err_str_call_ptr => null()
@@ -11747,8 +12044,10 @@ subroutine fortran_expression_value (expression, err_flag, err_str, var, use_old
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_err_str 0D_NOT_character
-  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1]) ! output-only string
-  call to_c_str(f_err_str, f_err_str_ptr)
+  if (c_associated(err_str)) then
+    call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1])
+    call to_c_str(f_err_str, f_err_str_ptr)
+  endif
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
@@ -11774,14 +12073,14 @@ subroutine fortran_fft1 (a, b, n, isn, ierr) bind(c)
   REAL(dp), pointer :: f_b(:)
   real(c_double), pointer :: f_b_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(a%data_ptr)) then
     call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
     f_a => f_a_ptr
   else
     f_a_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b => f_b_ptr
@@ -11807,8 +12106,6 @@ subroutine fortran_fibre_to_ele (ptc_fibre, branch, ix_ele, err_flag, from_mad) 
   ! ** In parameters **
   type(c_ptr), value :: ptc_fibre  ! 0D_NOT_type
   type(fibre), pointer :: f_ptc_fibre
-  integer(c_int) :: ix_ele  ! 0D_NOT_integer
-  integer :: f_ix_ele
   type(c_ptr), intent(in), value :: from_mad  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_from_mad
   logical, target :: f_from_mad_native
@@ -11821,6 +12118,9 @@ subroutine fortran_fibre_to_ele (ptc_fibre, branch, ix_ele, err_flag, from_mad) 
   ! ** Inout parameters **
   type(c_ptr), value :: branch  ! 0D_NOT_type
   type(branch_struct), pointer :: f_branch
+  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_ele
+  integer(c_int), pointer :: f_ix_ele_ptr
   ! ** End of parameters **
   ! in: f_ptc_fibre 0D_NOT_type
   if (.not. c_associated(ptc_fibre)) then
@@ -11836,8 +12136,12 @@ subroutine fortran_fibre_to_ele (ptc_fibre, branch, ix_ele, err_flag, from_mad) 
     return
   endif
   call c_f_pointer(branch, f_branch)
-  ! in: f_ix_ele 0D_NOT_integer
-  f_ix_ele = ix_ele
+  ! inout: f_ix_ele 0D_NOT_integer
+  if (c_associated(ix_ele)) then
+    call c_f_pointer(ix_ele, f_ix_ele_ptr)
+  else
+    f_ix_ele_ptr => null()
+  endif
   ! in: f_from_mad 0D_NOT_logical
   if (c_associated(from_mad)) then
     call c_f_pointer(from_mad, f_from_mad_ptr)
@@ -11846,8 +12150,10 @@ subroutine fortran_fibre_to_ele (ptc_fibre, branch, ix_ele, err_flag, from_mad) 
   else
     f_from_mad_native_ptr => null()
   endif
-  call fibre_to_ele(f_ptc_fibre, f_branch, f_ix_ele, f_err_flag, f_from_mad_native_ptr)
+  call fibre_to_ele(f_ptc_fibre, f_branch, f_ix_ele_ptr, f_err_flag, f_from_mad_native_ptr)
 
+  ! inout: f_ix_ele 0D_NOT_integer
+  ! no output conversion for f_ix_ele
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
@@ -11955,7 +12261,7 @@ subroutine fortran_find_fwhm (bound, args, fwhm) bind(c)
   ! ** End of parameters **
   ! in: f_bound 0D_NOT_real
   f_bound = bound
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(args%data_ptr)) then
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args = f_args_ptr(:)
@@ -12043,7 +12349,7 @@ subroutine fortran_find_normalization (bound, p0, args, pnrml) bind(c)
   f_bound = bound
   ! in: f_p0 0D_NOT_real
   f_p0 = p0
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(args%data_ptr)) then
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args = f_args_ptr(:)
@@ -12081,12 +12387,26 @@ subroutine fortran_floor_angles_to_w_mat (theta, phi, psi, w_mat, w_mat_inv) bin
   f_phi = phi
   ! in: f_psi 0D_NOT_real
   f_psi = psi
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat_inv%data_ptr)) then
+    call c_f_pointer(w_mat_inv%data_ptr, f_w_mat_inv_ptr, [product(w_mat_inv%dims(1:w_mat_inv%rank))])
+    ! output-only
+  else
+    f_w_mat_inv_ptr => null()
+  endif
   call floor_angles_to_w_mat(f_theta, f_phi, f_psi, f_w_mat, f_w_mat_inv)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1332, definition='real(rp), optional :: w_mat(3,3), w_mat_inv(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Orientation matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
   ! out: f_w_mat_inv 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat_inv', c_name='w_mat_inv', python_name='w_mat_inv', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1332, definition='real(rp), optional :: w_mat(3,3), w_mat_inv(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat_inv', comment='', default=None), intent='out', description='Inverse Orientation matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat_inv%data_ptr)) f_w_mat_inv_ptr = mat2vec(f_w_mat_inv, product(w_mat_inv%dims(1:w_mat_inv%rank)))
 end subroutine
 subroutine fortran_floor_w_mat_to_angles (w_mat, theta, phi, psi, floor0) bind(c)
 
@@ -12110,7 +12430,7 @@ subroutine fortran_floor_w_mat_to_angles (w_mat, theta, phi, psi, floor0) bind(c
   real(rp) :: f_psi
   real(c_double), pointer :: f_psi_ptr
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(w_mat%data_ptr)) then
     call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
     call vec2mat(f_w_mat_ptr, f_w_mat)
@@ -12188,7 +12508,6 @@ subroutine fortran_form_digested_bmad_file_name (lat_file, digested_file, full_l
   ! out: f_full_lat_file 0D_NOT_character
   if (c_associated(full_lat_file)) then
     call c_f_pointer(full_lat_file, f_full_lat_file_ptr, [huge(0)])
-    call to_f_str(f_full_lat_file_ptr, f_full_lat_file)
     f_full_lat_file_call_ptr => f_full_lat_file
   else
     f_full_lat_file_call_ptr => null()
@@ -12205,11 +12524,13 @@ subroutine fortran_form_digested_bmad_file_name (lat_file, digested_file, full_l
       f_use_line_call_ptr)
 
   ! out: f_digested_file 0D_NOT_character
-  call c_f_pointer(digested_file, f_digested_file_ptr, [len_trim(f_digested_file) + 1]) ! output-only string
+  call c_f_pointer(digested_file, f_digested_file_ptr, [len_trim(f_digested_file) + 1])
   call to_c_str(f_digested_file, f_digested_file_ptr)
   ! out: f_full_lat_file 0D_NOT_character
-  call c_f_pointer(full_lat_file, f_full_lat_file_ptr, [len_trim(f_full_lat_file) + 1]) ! output-only string
-  call to_c_str(f_full_lat_file, f_full_lat_file_ptr)
+  if (c_associated(full_lat_file)) then
+    call c_f_pointer(full_lat_file, f_full_lat_file_ptr, [len_trim(f_full_lat_file) + 1])
+    call to_c_str(f_full_lat_file, f_full_lat_file_ptr)
+  endif
 end subroutine
 subroutine fortran_fringe_here (ele, orbit, particle_at, is_here) bind(c)
 
@@ -12261,14 +12582,14 @@ subroutine fortran_g_bend_from_em_field (b, e, orbit, g_bend) bind(c)
   real(rp) :: f_g_bend(3)
   real(c_double), pointer :: f_g_bend_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b = f_b_ptr(:)
   else
     f_b_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(e%data_ptr)) then
     call c_f_pointer(e%data_ptr, f_e_ptr, [e%dims(1)])
     f_e = f_e_ptr(:)
@@ -12278,6 +12599,13 @@ subroutine fortran_g_bend_from_em_field (b, e, orbit, g_bend) bind(c)
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
+  !! general array (1D_NOT_real) out
+  if (c_associated(g_bend%data_ptr)) then
+    call c_f_pointer(g_bend%data_ptr, f_g_bend_ptr, [g_bend%dims(1)])
+    ! output-only
+  else
+    f_g_bend_ptr => null()
+  endif
   f_g_bend = g_bend_from_em_field(f_b, f_e, f_orbit)
 
   ! out: f_g_bend 1D_NOT_real
@@ -12324,6 +12652,20 @@ subroutine fortran_g_bending_strength_from_em_field (ele, param, s_rel, orbit, l
   call c_f_pointer(orbit, f_orbit)
   ! in: f_local_ref_frame 0D_NOT_logical
   f_local_ref_frame = local_ref_frame
+  !! general array (1D_NOT_real) out
+  if (c_associated(g%data_ptr)) then
+    call c_f_pointer(g%data_ptr, f_g_ptr, [g%dims(1)])
+    ! output-only
+  else
+    f_g_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(dg%data_ptr)) then
+    call c_f_pointer(dg%data_ptr, f_dg_ptr, [product(dg%dims(1:dg%rank))])
+    ! output-only
+  else
+    f_dg_ptr => null()
+  endif
   call g_bending_strength_from_em_field(f_ele, f_param, f_s_rel, f_orbit, f_local_ref_frame, &
       f_g, f_dg)
 
@@ -12333,7 +12675,7 @@ subroutine fortran_g_bending_strength_from_em_field (ele, param, s_rel, orbit, l
     f_g_ptr = f_g(:)
   endif
   ! out: f_dg 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_dg', c_name='dg', python_name='dg', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1360, definition='real(rp), optional :: dg(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='dg', comment='', default=None), intent='out', description='dg(:)/dr gradient. Takes into account dg_x/dx in a bend due to curvilinear coords.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(dg%data_ptr)) f_dg_ptr = mat2vec(f_dg, product(dg%dims(1:dg%rank)))
 end subroutine
 subroutine fortran_g_integrals_calc (lat) bind(c)
 
@@ -12463,7 +12805,7 @@ subroutine fortran_gen_grad_field (deriv, gg, rho, theta, field) bind(c)
   type(c_ptr), value :: gg  ! 0D_NOT_type
   type(gen_grad1_struct), pointer :: f_gg
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(deriv%data_ptr)) then
     call c_f_pointer(deriv%data_ptr, f_deriv_ptr, [deriv%dims(1)])
     f_deriv(0:) => f_deriv_ptr
@@ -12477,6 +12819,13 @@ subroutine fortran_gen_grad_field (deriv, gg, rho, theta, field) bind(c)
   f_rho = rho
   ! in: f_theta 0D_NOT_real
   f_theta = theta
+  !! general array (1D_NOT_real) inout
+  if (c_associated(field%data_ptr)) then
+    call c_f_pointer(field%data_ptr, f_field_ptr, [field%dims(1)])
+    ! output-only
+  else
+    f_field_ptr => null()
+  endif
   f_field = gen_grad_field(f_deriv, f_gg, f_rho, f_theta)
 
   ! out: f_field 1D_NOT_real
@@ -12502,7 +12851,7 @@ subroutine fortran_get_bl_from_fwhm (bound, args, sigma) bind(c)
   ! ** End of parameters **
   ! in: f_bound 0D_NOT_real
   f_bound = bound
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(args%data_ptr)) then
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args = f_args_ptr(:)
@@ -12561,14 +12910,21 @@ subroutine fortran_get_emit_from_sigma_mat (sigma_mat, normal, Nmat, err_flag) b
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(sigma_mat%data_ptr)) then
     call c_f_pointer(sigma_mat%data_ptr, f_sigma_mat_ptr, [product(sigma_mat%dims(1:sigma_mat%rank))])
     call vec2mat(f_sigma_mat_ptr, f_sigma_mat)
   else
     f_sigma_mat_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (1D_NOT_real) out
+  if (c_associated(normal%data_ptr)) then
+    call c_f_pointer(normal%data_ptr, f_normal_ptr, [normal%dims(1)])
+    ! output-only
+  else
+    f_normal_ptr => null()
+  endif
+  !! general array (2D_NOT_real) in
   if (c_associated(Nmat%data_ptr)) then
     call c_f_pointer(Nmat%data_ptr, f_Nmat_ptr, [product(Nmat%dims(1:Nmat%rank))])
     call vec2mat(f_Nmat_ptr, f_Nmat)
@@ -12595,16 +12951,9 @@ subroutine fortran_get_next_word (word, ix_word, delim_list, delim, delim_found,
   type(c_ptr), intent(in), value :: word
   character(len=4096), target :: f_word
   character(kind=c_char), pointer :: f_word_ptr(:)
-  integer(c_int) :: ix_word  ! 0D_NOT_integer
-  integer :: f_ix_word
   type(c_ptr), intent(in), value :: delim_list
   character(len=4096), target :: f_delim_list
   character(kind=c_char), pointer :: f_delim_list_ptr(:)
-  type(c_ptr), intent(in), value :: delim
-  character(len=4096), target :: f_delim
-  character(kind=c_char), pointer :: f_delim_ptr(:)
-  logical(c_bool) :: delim_found  ! 0D_NOT_logical
-  logical :: f_delim_found
   type(c_ptr), intent(in), value :: upper_case_word  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_upper_case_word
   logical, target :: f_upper_case_word_native
@@ -12615,28 +12964,36 @@ subroutine fortran_get_next_word (word, ix_word, delim_list, delim, delim_found,
   logical, target :: f_call_check_native
   logical, pointer :: f_call_check_native_ptr
   logical(c_bool), pointer :: f_call_check_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ix_word  ! 0D_NOT_integer
+  integer :: f_ix_word
+  integer(c_int), pointer :: f_ix_word_ptr
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  type(c_ptr), intent(in), value :: delim_found  ! 0D_NOT_logical
+  logical :: f_delim_found
+  logical(c_bool), pointer :: f_delim_found_ptr
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_err_flag
-  logical, target :: f_err_flag_native
-  logical, pointer :: f_err_flag_native_ptr
+  logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_word 0D_NOT_character
-  if (.not. c_associated(word)) return
+  if (.not. c_associated(word)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(word, f_word_ptr, [huge(0)])
   call to_f_str(f_word_ptr, f_word)
-  ! in: f_ix_word 0D_NOT_integer
-  f_ix_word = ix_word
   ! in: f_delim_list 0D_NOT_character
-  if (.not. c_associated(delim_list)) return
+  if (.not. c_associated(delim_list)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(delim_list, f_delim_list_ptr, [huge(0)])
   call to_f_str(f_delim_list_ptr, f_delim_list)
-  ! in: f_delim 0D_NOT_character
-  if (.not. c_associated(delim)) return
-  call c_f_pointer(delim, f_delim_ptr, [huge(0)])
-  call to_f_str(f_delim_ptr, f_delim)
-  ! in: f_delim_found 0D_NOT_logical
-  f_delim_found = delim_found
   ! in: f_upper_case_word 0D_NOT_logical
   if (c_associated(upper_case_word)) then
     call c_f_pointer(upper_case_word, f_upper_case_word_ptr)
@@ -12653,17 +13010,26 @@ subroutine fortran_get_next_word (word, ix_word, delim_list, delim, delim_found,
   else
     f_call_check_native_ptr => null()
   endif
-  ! in: f_err_flag 0D_NOT_logical
+  ! out: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
     call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_native = f_err_flag_ptr
-    f_err_flag_native_ptr => f_err_flag_native
   else
-    f_err_flag_native_ptr => null()
+    f_err_flag_ptr => null()
   endif
   call get_next_word(f_word, f_ix_word, f_delim_list, f_delim, f_delim_found, &
-      f_upper_case_word_native_ptr, f_call_check_native_ptr, f_err_flag_native_ptr)
+      f_upper_case_word_native_ptr, f_call_check_native_ptr, f_err_flag)
 
+  ! out: f_ix_word 0D_NOT_integer
+  call c_f_pointer(ix_word, f_ix_word_ptr)
+  f_ix_word_ptr = f_ix_word
+  ! out: f_delim 0D_NOT_character
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
+  call to_c_str(f_delim, f_delim_ptr)
+  ! out: f_delim_found 0D_NOT_logical
+  call c_f_pointer(delim_found, f_delim_found_ptr)
+  f_delim_found_ptr = f_delim_found
+  ! out: f_err_flag 0D_NOT_logical
+  ! no output conversion for f_err_flag
 end subroutine
 subroutine fortran_get_slave_list (lord, slaves, n_slave) bind(c)
 
@@ -12945,7 +13311,7 @@ subroutine fortran_hard_multipole_edge_kick (ele, param, particle_at, orbit, mat
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -13161,7 +13527,7 @@ subroutine fortran_hwang_bend_edge_kick (ele, param, particle_at, orb, mat6, mak
   ! inout: f_orb 0D_NOT_type
   if (.not. c_associated(orb)) return
   call c_f_pointer(orb, f_orb)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -13205,7 +13571,7 @@ subroutine fortran_ibs_matrix_c (sigma_mat, tail_cut, tau, energy, n_part, speci
   real(rp) :: f_sigma_mat(6,6)
   real(c_double), pointer :: f_sigma_mat_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(sigma_mat%data_ptr)) then
     call c_f_pointer(sigma_mat%data_ptr, f_sigma_mat_ptr, [product(sigma_mat%dims(1:sigma_mat%rank))])
     call vec2mat(f_sigma_mat_ptr, f_sigma_mat)
@@ -13222,10 +13588,17 @@ subroutine fortran_ibs_matrix_c (sigma_mat, tail_cut, tau, energy, n_part, speci
   f_n_part = n_part
   ! in: f_species 0D_NOT_integer
   f_species = species
+  !! general array (2D_NOT_real) inout
+  if (c_associated(ibs_mat%data_ptr)) then
+    call c_f_pointer(ibs_mat%data_ptr, f_ibs_mat_ptr, [product(ibs_mat%dims(1:ibs_mat%rank))])
+    ! output-only
+  else
+    f_ibs_mat_ptr => null()
+  endif
   f_ibs_mat = ibs_matrix_c(f_sigma_mat, f_tail_cut, f_tau, f_energy, f_n_part, f_species)
 
   ! out: f_ibs_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_ibs_mat', c_name='ibs_mat', python_name='ibs_mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=736, definition='real(rp) sigma_mat(6,6), ibs_mat(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='ibs_mat', comment='', default=None), intent='inout', description='', doc_data_type=None, doc_is_optional=False)
+  if (c_associated(ibs_mat%data_ptr)) f_ibs_mat_ptr = mat2vec(f_ibs_mat, product(ibs_mat%dims(1:ibs_mat%rank)))
 end subroutine
 subroutine fortran_igfcoulombfun (u, v, w, gam, dx, dy, dz, res) bind(c)
 
@@ -13409,8 +13782,6 @@ subroutine fortran_init_attribute_name1 (is_ok, ix_key, ix_attrib, name, attrib_
   use array_desc_mod
   implicit none
   ! ** In parameters **
-  logical(c_bool) :: is_ok  ! 0D_NOT_logical
-  logical :: f_is_ok
   integer(c_int) :: ix_key  ! 0D_NOT_integer
   integer :: f_ix_key
   integer(c_int) :: ix_attrib  ! 0D_NOT_integer
@@ -13426,9 +13797,21 @@ subroutine fortran_init_attribute_name1 (is_ok, ix_key, ix_attrib, name, attrib_
   logical, target :: f_override_native
   logical, pointer :: f_override_native_ptr
   logical(c_bool), pointer :: f_override_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: is_ok  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_is_ok
+  logical, target :: f_is_ok_native
+  logical, pointer :: f_is_ok_native_ptr
+  logical(c_bool), pointer :: f_is_ok_ptr
   ! ** End of parameters **
-  ! in: f_is_ok 0D_NOT_logical
-  f_is_ok = is_ok
+  ! inout: f_is_ok 0D_NOT_logical
+  if (c_associated(is_ok)) then
+    call c_f_pointer(is_ok, f_is_ok_ptr)
+    f_is_ok_native = f_is_ok_ptr
+    f_is_ok_native_ptr => f_is_ok_native
+  else
+    f_is_ok_native_ptr => null()
+  endif
   ! in: f_ix_key 0D_NOT_integer
   f_ix_key = ix_key
   ! in: f_ix_attrib 0D_NOT_integer
@@ -13451,9 +13834,16 @@ subroutine fortran_init_attribute_name1 (is_ok, ix_key, ix_attrib, name, attrib_
   else
     f_override_native_ptr => null()
   endif
-  call init_attribute_name1(f_is_ok, f_ix_key, f_ix_attrib, f_name, f_attrib_state_ptr, &
-      f_override_native_ptr)
+  call init_attribute_name1(f_is_ok_native_ptr, f_ix_key, f_ix_attrib, f_name, &
+      f_attrib_state_ptr, f_override_native_ptr)
 
+  ! inout: f_is_ok 0D_NOT_logical
+  if (c_associated(is_ok)) then
+    call c_f_pointer(is_ok, f_is_ok_ptr)
+    f_is_ok_ptr = f_is_ok_native
+  else
+    ! f_is_ok unset
+  endif
 end subroutine
 subroutine fortran_init_attribute_name_array () bind(c)
 
@@ -13769,7 +14159,7 @@ subroutine fortran_init_coord1 (orb, vec, ele, element_end, particle, direction,
   ! inout: f_orb 0D_NOT_type
   if (.not. c_associated(orb)) return
   call c_f_pointer(orb, f_orb)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(vec%data_ptr)) then
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec = f_vec_ptr(:)
@@ -13816,7 +14206,7 @@ subroutine fortran_init_coord1 (orb, vec, ele, element_end, particle, direction,
   else
     f_shift_vec6_native_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(spin%data_ptr)) then
     call c_f_pointer(spin%data_ptr, f_spin_ptr, [spin%dims(1)])
     f_spin = f_spin_ptr(:)
@@ -13935,7 +14325,7 @@ subroutine fortran_init_coord2 (orb_out, orb_in, ele, element_end, particle, dir
   else
     f_shift_vec6_native_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(spin%data_ptr)) then
     call c_f_pointer(spin%data_ptr, f_spin_ptr, [spin%dims(1)])
     f_spin = f_spin_ptr(:)
@@ -14042,7 +14432,7 @@ subroutine fortran_init_coord3 (orb, ele, element_end, particle, direction, E_ph
   else
     f_shift_vec6_native_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(spin%data_ptr)) then
     call c_f_pointer(spin%data_ptr, f_spin_ptr, [spin%dims(1)])
     f_spin = f_spin_ptr(:)
@@ -14521,7 +14911,7 @@ subroutine fortran_integrand_base (t, args, func_retval__) bind(c)
   ! ** End of parameters **
   ! in: f_t 0D_NOT_real
   f_t = t
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(args%data_ptr)) then
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args => f_args_ptr
@@ -14555,7 +14945,7 @@ subroutine fortran_integrate_psi (bound, p0, args, result) bind(c)
   f_bound = bound
   ! in: f_p0 0D_NOT_real
   f_p0 = p0
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(args%data_ptr)) then
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args = f_args_ptr(:)
@@ -14602,21 +14992,21 @@ subroutine fortran_integrated_mats (eles, coos, Lambda, Theta, Iota, mode) bind(
   else
     f_coos => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(Lambda%data_ptr)) then
     call c_f_pointer(Lambda%data_ptr, f_Lambda_ptr, [product(Lambda%dims(1:Lambda%rank))])
     call vec2mat(f_Lambda_ptr, f_Lambda)
   else
     f_Lambda_ptr => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(Theta%data_ptr)) then
     call c_f_pointer(Theta%data_ptr, f_Theta_ptr, [product(Theta%dims(1:Theta%rank))])
     call vec2mat(f_Theta_ptr, f_Theta)
   else
     f_Theta_ptr => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(Iota%data_ptr)) then
     call c_f_pointer(Iota%data_ptr, f_Iota_ptr, [product(Iota%dims(1:Iota%rank))])
     call vec2mat(f_Iota_ptr, f_Iota)
@@ -14685,14 +15075,14 @@ subroutine fortran_integration_timer_fibre (a_fibre, orbit, orbit_max, tol_dp) b
   ! inout: f_a_fibre 0D_NOT_type
   if (.not. c_associated(a_fibre)) return
   call c_f_pointer(a_fibre, f_a_fibre)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(orbit%data_ptr)) then
     call c_f_pointer(orbit%data_ptr, f_orbit_ptr, [orbit%dims(1)])
     f_orbit = f_orbit_ptr(:)
   else
     f_orbit_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(orbit_max%data_ptr)) then
     call c_f_pointer(orbit_max%data_ptr, f_orbit_max_ptr, [orbit_max%dims(1)])
     f_orbit_max = f_orbit_max_ptr(:)
@@ -14732,7 +15122,7 @@ subroutine fortran_ion_kick (orbit, r_beam, n_beam_part, a_twiss, b_twiss, sig_e
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(r_beam%data_ptr)) then
     call c_f_pointer(r_beam%data_ptr, f_r_beam_ptr, [r_beam%dims(1)])
     f_r_beam = f_r_beam_ptr(:)
@@ -14749,6 +15139,13 @@ subroutine fortran_ion_kick (orbit, r_beam, n_beam_part, a_twiss, b_twiss, sig_e
   call c_f_pointer(b_twiss, f_b_twiss)
   ! in: f_sig_ee 0D_NOT_real
   f_sig_ee = sig_ee
+  !! general array (1D_NOT_real) out
+  if (c_associated(kick%data_ptr)) then
+    call c_f_pointer(kick%data_ptr, f_kick_ptr, [kick%dims(1)])
+    ! output-only
+  else
+    f_kick_ptr => null()
+  endif
   call ion_kick(f_orbit, f_r_beam, f_n_beam_part, f_a_twiss, f_b_twiss, f_sig_ee, f_kick)
 
   ! out: f_kick 1D_NOT_real
@@ -14855,6 +15252,13 @@ subroutine fortran_kick_vector_calc (ele, param, s_body, orbit, dr_ds, err, prin
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
+  !! general array (1D_NOT_real) out
+  if (c_associated(dr_ds%data_ptr)) then
+    call c_f_pointer(dr_ds%data_ptr, f_dr_ds_ptr, [dr_ds%dims(1)])
+    ! output-only
+  else
+    f_dr_ds_ptr => null()
+  endif
   ! in: f_print_err 0D_NOT_logical
   if (c_associated(print_err)) then
     call c_f_pointer(print_err, f_print_err_ptr)
@@ -14947,7 +15351,7 @@ subroutine fortran_kind_name (this_kind, kind_str) bind(c)
   f_kind_str = kind_name(f_this_kind)
 
   ! out: f_kind_str 0D_NOT_character
-  call c_f_pointer(kind_str, f_kind_str_ptr, [len_trim(f_kind_str) + 1]) ! output-only string
+  call c_f_pointer(kind_str, f_kind_str_ptr, [len_trim(f_kind_str) + 1])
   call to_c_str(f_kind_str, f_kind_str_ptr)
 end subroutine
 subroutine fortran_knot_interpolate (x_knot, y_knot, x_pt, interpolation, err_flag, y_pt) &
@@ -14974,14 +15378,14 @@ subroutine fortran_knot_interpolate (x_knot, y_knot, x_pt, interpolation, err_fl
   real(rp) :: f_y_pt
   real(c_double), pointer :: f_y_pt_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(x_knot%data_ptr)) then
     call c_f_pointer(x_knot%data_ptr, f_x_knot_ptr, [x_knot%dims(1)])
     f_x_knot => f_x_knot_ptr
   else
     f_x_knot_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y_knot%data_ptr)) then
     call c_f_pointer(y_knot%data_ptr, f_y_knot_ptr, [y_knot%dims(1)])
     f_y_knot => f_y_knot_ptr
@@ -15017,14 +15421,14 @@ subroutine fortran_knots_to_string (x_knot, y_knot, str) bind(c)
   real(rp), pointer :: f_y_knot(:)
   real(c_double), pointer :: f_y_knot_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(x_knot%data_ptr)) then
     call c_f_pointer(x_knot%data_ptr, f_x_knot_ptr, [x_knot%dims(1)])
     f_x_knot => f_x_knot_ptr
   else
     f_x_knot_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(y_knot%data_ptr)) then
     call c_f_pointer(y_knot%data_ptr, f_y_knot_ptr, [y_knot%dims(1)])
     f_y_knot => f_y_knot_ptr
@@ -15034,7 +15438,7 @@ subroutine fortran_knots_to_string (x_knot, y_knot, str) bind(c)
   f_str = knots_to_string(f_x_knot, f_y_knot)
 
   ! out: f_str 0D_ALLOC_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_lafun (x, y, z, res) bind(c)
@@ -15103,8 +15507,6 @@ subroutine fortran_lat_ele_locator (loc_str, lat, eles, n_loc, err, above_ubound
   character(kind=c_char), pointer :: f_loc_str_ptr(:)
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
-  integer(c_int) :: n_loc  ! 0D_NOT_integer
-  integer :: f_n_loc
   type(c_ptr), intent(in), value :: above_ubound_is_err  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_above_ubound_is_err
   logical, target :: f_above_ubound_is_err_native
@@ -15130,6 +15532,9 @@ subroutine fortran_lat_ele_locator (loc_str, lat, eles, n_loc, err, above_ubound
   ! ** Inout parameters **
   type(c_ptr), intent(in), value :: eles
   type(ele_pointer_struct_container_alloc), pointer :: f_eles
+  type(c_ptr), intent(in), value :: n_loc  ! 0D_NOT_integer
+  integer(c_int) :: f_n_loc
+  integer(c_int), pointer :: f_n_loc_ptr
   ! ** End of parameters **
   ! in: f_loc_str 0D_NOT_character
   if (.not. c_associated(loc_str)) return
@@ -15140,8 +15545,12 @@ subroutine fortran_lat_ele_locator (loc_str, lat, eles, n_loc, err, above_ubound
   call c_f_pointer(lat, f_lat)
   !! container type array (1D_ALLOC_type)
   if (c_associated(eles))   call c_f_pointer(eles, f_eles)
-  ! in: f_n_loc 0D_NOT_integer
-  f_n_loc = n_loc
+  ! inout: f_n_loc 0D_NOT_integer
+  if (c_associated(n_loc)) then
+    call c_f_pointer(n_loc, f_n_loc_ptr)
+  else
+    f_n_loc_ptr => null()
+  endif
   ! out: f_err 0D_NOT_logical
   if (c_associated(err)) then
     call c_f_pointer(err, f_err_ptr)
@@ -15178,10 +15587,12 @@ subroutine fortran_lat_ele_locator (loc_str, lat, eles, n_loc, err, above_ubound
   else
     f_append_eles_native_ptr => null()
   endif
-  call lat_ele_locator(f_loc_str, f_lat, f_eles%data, f_n_loc, f_err, &
+  call lat_ele_locator(f_loc_str, f_lat, f_eles%data, f_n_loc_ptr, f_err, &
       f_above_ubound_is_err_native_ptr, f_ix_dflt_branch_ptr, f_order_by_index_native_ptr, &
       f_append_eles_native_ptr)
 
+  ! inout: f_n_loc 0D_NOT_integer
+  ! no output conversion for f_n_loc
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
 end subroutine
@@ -15429,7 +15840,7 @@ subroutine fortran_linear_bend_edge_kick (ele, param, particle_at, orb, mat6, ma
   ! inout: f_orb 0D_NOT_type
   if (.not. c_associated(orb)) return
   call c_f_pointer(orb, f_orb)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -15492,7 +15903,7 @@ subroutine fortran_linear_to_spin_taylor (q_map, spin_taylor) bind(c)
   type(array_descriptor_t), intent(in) :: spin_taylor
   type(taylor_struct), pointer :: f_spin_taylor(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(q_map%data_ptr)) then
     call c_f_pointer(q_map%data_ptr, f_q_map_ptr, [product(q_map%dims(1:q_map%rank))])
     call vec2mat(f_q_map_ptr, f_q_map)
@@ -15617,7 +16028,7 @@ subroutine fortran_low_energy_z_correction (orbit, ele, ds, mat6, make_matrix, d
   call c_f_pointer(ele, f_ele)
   ! in: f_ds 0D_NOT_real
   f_ds = ds
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -16036,7 +16447,7 @@ subroutine fortran_mad_tmsymm (te) bind(c)
   real(rp) :: f_te(6,6,6)
   real(c_double), pointer :: f_te_ptr(:)
   ! ** End of parameters **
-  !! general array (3D_NOT_real)
+  !! general array (3D_NOT_real) inout
   if (c_associated(te%data_ptr)) then
     call c_f_pointer(te%data_ptr, f_te_ptr, [product(te%dims(1:te%rank))])
     call vec2tensor(f_te_ptr, f_te)
@@ -16114,14 +16525,14 @@ subroutine fortran_make_g2_mats (twiss, g2_mat, g2_inv_mat) bind(c)
   ! in: f_twiss 0D_NOT_type
   if (.not. c_associated(twiss)) return
   call c_f_pointer(twiss, f_twiss)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(g2_mat%data_ptr)) then
     call c_f_pointer(g2_mat%data_ptr, f_g2_mat_ptr, [product(g2_mat%dims(1:g2_mat%rank))])
     call vec2mat(f_g2_mat_ptr, f_g2_mat)
   else
     f_g2_mat_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(g2_inv_mat%data_ptr)) then
     call c_f_pointer(g2_inv_mat%data_ptr, f_g2_inv_mat_ptr, [product(g2_inv_mat%dims(1:g2_inv_mat%rank))])
     call vec2mat(f_g2_inv_mat_ptr, f_g2_inv_mat)
@@ -16150,12 +16561,26 @@ subroutine fortran_make_g_mats (ele, g_mat, g_inv_mat) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  !! general array (2D_NOT_real) out
+  if (c_associated(g_mat%data_ptr)) then
+    call c_f_pointer(g_mat%data_ptr, f_g_mat_ptr, [product(g_mat%dims(1:g_mat%rank))])
+    ! output-only
+  else
+    f_g_mat_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(g_inv_mat%data_ptr)) then
+    call c_f_pointer(g_inv_mat%data_ptr, f_g_inv_mat_ptr, [product(g_inv_mat%dims(1:g_inv_mat%rank))])
+    ! output-only
+  else
+    f_g_inv_mat_ptr => null()
+  endif
   call make_g_mats(f_ele, f_g_mat, f_g_inv_mat)
 
   ! out: f_g_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_g_mat', c_name='g_mat', python_name='g_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1667, definition='real(rp) g_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='g_mat', comment='', default=None), intent='out', description='Normal mode to betaless coords', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(g_mat%data_ptr)) f_g_mat_ptr = mat2vec(f_g_mat, product(g_mat%dims(1:g_mat%rank)))
   ! out: f_g_inv_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_g_inv_mat', c_name='g_inv_mat', python_name='g_inv_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1668, definition='real(rp) g_inv_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='g_inv_mat', comment='', default=None), intent='out', description='The inverse of G_MAT', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(g_inv_mat%data_ptr)) f_g_inv_mat_ptr = mat2vec(f_g_inv_mat, product(g_inv_mat%dims(1:g_inv_mat%rank)))
 end subroutine
 subroutine fortran_make_hvbp (N, B, V, H, Vbar, Hbar) bind(c)
 
@@ -16182,25 +16607,60 @@ subroutine fortran_make_hvbp (N, B, V, H, Vbar, Hbar) bind(c)
   real(rp) :: f_Hbar(6,6)
   real(c_double), pointer :: f_Hbar_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(N%data_ptr)) then
     call c_f_pointer(N%data_ptr, f_N_ptr, [product(N%dims(1:N%rank))])
     call vec2mat(f_N_ptr, f_N)
   else
     f_N_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(B%data_ptr)) then
+    call c_f_pointer(B%data_ptr, f_B_ptr, [product(B%dims(1:B%rank))])
+    ! output-only
+  else
+    f_B_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(V%data_ptr)) then
+    call c_f_pointer(V%data_ptr, f_V_ptr, [product(V%dims(1:V%rank))])
+    ! output-only
+  else
+    f_V_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(H%data_ptr)) then
+    call c_f_pointer(H%data_ptr, f_H_ptr, [product(H%dims(1:H%rank))])
+    ! output-only
+  else
+    f_H_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(Vbar%data_ptr)) then
+    call c_f_pointer(Vbar%data_ptr, f_Vbar_ptr, [product(Vbar%dims(1:Vbar%rank))])
+    ! output-only
+  else
+    f_Vbar_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(Hbar%data_ptr)) then
+    call c_f_pointer(Hbar%data_ptr, f_Hbar_ptr, [product(Hbar%dims(1:Hbar%rank))])
+    ! output-only
+  else
+    f_Hbar_ptr => null()
+  endif
   call make_hvbp(f_N, f_B, f_V, f_H, f_Vbar, f_Hbar)
 
   ! out: f_B 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_B', c_name='B', python_name='B', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=201, definition='real(rp) B(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='B', comment='', default=None), intent='out', description='Block diagonal matrix of Twiss parameters', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(B%data_ptr)) f_B_ptr = mat2vec(f_B, product(B%dims(1:B%rank)))
   ! out: f_V 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_V', c_name='V', python_name='V', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=210, definition='real(rp) V(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='V', comment='', default=None), intent='out', description='horizontal-vertical coupling information', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(V%data_ptr)) f_V_ptr = mat2vec(f_V, product(V%dims(1:V%rank)))
   ! out: f_H 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_H', c_name='H', python_name='H', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=203, definition='real(rp) H(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='H', comment='', default=None), intent='out', description='horizontal-longitudinal and vertical-longitudinal coupling information', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(H%data_ptr)) f_H_ptr = mat2vec(f_H, product(H%dims(1:H%rank)))
   ! out: f_Vbar 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Vbar', c_name='Vbar', python_name='Vbar', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=204, definition='real(rp), optional :: Vbar(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Vbar', comment='', default=None), intent='out', description='mat_symp_conj(B).V.B', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(Vbar%data_ptr)) f_Vbar_ptr = mat2vec(f_Vbar, product(Vbar%dims(1:Vbar%rank)))
   ! out: f_Hbar 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Hbar', c_name='Hbar', python_name='Hbar', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=205, definition='real(rp), optional :: Hbar(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Hbar', comment='', default=None), intent='out', description='mat_symp_conj(B).H.B', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(Hbar%data_ptr)) f_Hbar_ptr = mat2vec(f_Hbar, product(Hbar%dims(1:Hbar%rank)))
 end subroutine
 subroutine fortran_make_hybrid_lat (lat_in, lat_out, use_taylor, orb0_arr) bind(c)
 
@@ -16644,24 +17104,45 @@ subroutine fortran_make_n (t6, N, err_flag, abz_tunes, tunes_out, U) bind(c)
   real(rp) :: f_U(6,6)
   real(c_double), pointer :: f_U_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(t6%data_ptr)) then
     call c_f_pointer(t6%data_ptr, f_t6_ptr, [product(t6%dims(1:t6%rank))])
     call vec2mat(f_t6_ptr, f_t6)
   else
     f_t6_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (2D_NOT_real) out
+  if (c_associated(N%data_ptr)) then
+    call c_f_pointer(N%data_ptr, f_N_ptr, [product(N%dims(1:N%rank))])
+    ! output-only
+  else
+    f_N_ptr => null()
+  endif
+  !! general array (1D_NOT_real) in
   if (c_associated(abz_tunes%data_ptr)) then
     call c_f_pointer(abz_tunes%data_ptr, f_abz_tunes_ptr, [abz_tunes%dims(1)])
     f_abz_tunes = f_abz_tunes_ptr(:)
   else
     f_abz_tunes_ptr => null()
   endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(tunes_out%data_ptr)) then
+    call c_f_pointer(tunes_out%data_ptr, f_tunes_out_ptr, [tunes_out%dims(1)])
+    ! output-only
+  else
+    f_tunes_out_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(U%data_ptr)) then
+    call c_f_pointer(U%data_ptr, f_U_ptr, [product(U%dims(1:U%rank))])
+    ! output-only
+  else
+    f_U_ptr => null()
+  endif
   call make_n(f_t6, f_N, f_err_flag, f_abz_tunes, f_tunes_out, f_U)
 
   ! out: f_N 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_N', c_name='N', python_name='N', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=828, definition='real(rp) N(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='N', comment='', default=None), intent='out', description='X = N.J', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(N%data_ptr)) f_N_ptr = mat2vec(f_N, product(N%dims(1:N%rank)))
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
@@ -16671,7 +17152,7 @@ subroutine fortran_make_n (t6, N, err_flag, abz_tunes, tunes_out, U) bind(c)
     f_tunes_out_ptr = f_tunes_out(:)
   endif
   ! out: f_U 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_U', c_name='U', python_name='U', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=832, definition='real(rp), optional :: U(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='U', comment='', default=None), intent='out', description='U = Inverse(N).t6.N.  Block diagonal matrix of 2x2 rotation matrices.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(U%data_ptr)) f_U_ptr = mat2vec(f_U, product(U%dims(1:U%rank)))
 end subroutine
 subroutine fortran_make_pbrh (M, P, Bp, R, H, abz_tunes) bind(c)
 
@@ -16698,14 +17179,42 @@ subroutine fortran_make_pbrh (M, P, Bp, R, H, abz_tunes) bind(c)
   complex(rp) :: f_H(6,6)
   complex(c_double_complex), pointer :: f_H_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(M%data_ptr)) then
     call c_f_pointer(M%data_ptr, f_M_ptr, [product(M%dims(1:M%rank))])
     call vec2mat(f_M_ptr, f_M)
   else
     f_M_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (2D_NOT_complex) out
+  if (c_associated(P%data_ptr)) then
+    call c_f_pointer(P%data_ptr, f_P_ptr, [product(P%dims(1:P%rank))])
+    ! output-only
+  else
+    f_P_ptr => null()
+  endif
+  !! general array (2D_NOT_complex) out
+  if (c_associated(Bp%data_ptr)) then
+    call c_f_pointer(Bp%data_ptr, f_Bp_ptr, [product(Bp%dims(1:Bp%rank))])
+    ! output-only
+  else
+    f_Bp_ptr => null()
+  endif
+  !! general array (2D_NOT_complex) out
+  if (c_associated(R%data_ptr)) then
+    call c_f_pointer(R%data_ptr, f_R_ptr, [product(R%dims(1:R%rank))])
+    ! output-only
+  else
+    f_R_ptr => null()
+  endif
+  !! general array (2D_NOT_complex) out
+  if (c_associated(H%data_ptr)) then
+    call c_f_pointer(H%data_ptr, f_H_ptr, [product(H%dims(1:H%rank))])
+    ! output-only
+  else
+    f_H_ptr => null()
+  endif
+  !! general array (1D_NOT_real) in
   if (c_associated(abz_tunes%data_ptr)) then
     call c_f_pointer(abz_tunes%data_ptr, f_abz_tunes_ptr, [abz_tunes%dims(1)])
     f_abz_tunes = f_abz_tunes_ptr(:)
@@ -16715,13 +17224,13 @@ subroutine fortran_make_pbrh (M, P, Bp, R, H, abz_tunes) bind(c)
   call make_pbrh(f_M, f_P, f_Bp, f_R, f_H, f_abz_tunes)
 
   ! out: f_P 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_P', c_name='P', python_name='P', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=660, definition='complex(rp) P(6,6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='P', comment='', default=None), intent='out', description='Eqn. 97.  Phase advances.', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(P%data_ptr)) f_P_ptr = mat2vec(f_P, product(P%dims(1:P%rank)))
   ! out: f_Bp 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Bp', c_name='Bp', python_name='Bp', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=661, definition='complex(rp) Bp(6,6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Bp', comment='', default=None), intent='out', description='Eqns. 89 & 101.  Beta functions.', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(Bp%data_ptr)) f_Bp_ptr = mat2vec(f_Bp, product(Bp%dims(1:Bp%rank)))
   ! out: f_R 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_R', c_name='R', python_name='R', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=662, definition='complex(rp) R(6,6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='R', comment='', default=None), intent='out', description='Eqn. 99.  Transverse coupling.', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(R%data_ptr)) f_R_ptr = mat2vec(f_R, product(R%dims(1:R%rank)))
   ! out: f_H 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_H', c_name='H', python_name='H', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=663, definition='complex(rp) H(6,6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='H', comment='', default=None), intent='out', description='Eqn. 100.  Longitudinal coupling.', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(H%data_ptr)) f_H_ptr = mat2vec(f_H, product(H%dims(1:H%rank)))
 end subroutine
 subroutine fortran_make_smat_from_abc (t6, mode, sigma_mat, err_flag, Nout) bind(c)
 
@@ -16745,7 +17254,7 @@ subroutine fortran_make_smat_from_abc (t6, mode, sigma_mat, err_flag, Nout) bind
   real(rp) :: f_Nout(6,6)
   real(c_double), pointer :: f_Nout_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(t6%data_ptr)) then
     call c_f_pointer(t6%data_ptr, f_t6_ptr, [product(t6%dims(1:t6%rank))])
     call vec2mat(f_t6_ptr, f_t6)
@@ -16759,15 +17268,29 @@ subroutine fortran_make_smat_from_abc (t6, mode, sigma_mat, err_flag, Nout) bind
     return
   endif
   call c_f_pointer(mode, f_mode)
+  !! general array (2D_NOT_real) out
+  if (c_associated(sigma_mat%data_ptr)) then
+    call c_f_pointer(sigma_mat%data_ptr, f_sigma_mat_ptr, [product(sigma_mat%dims(1:sigma_mat%rank))])
+    ! output-only
+  else
+    f_sigma_mat_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(Nout%data_ptr)) then
+    call c_f_pointer(Nout%data_ptr, f_Nout_ptr, [product(Nout%dims(1:Nout%rank))])
+    ! output-only
+  else
+    f_Nout_ptr => null()
+  endif
   call make_smat_from_abc(f_t6, f_mode, f_sigma_mat, f_err_flag, f_Nout)
 
   ! out: f_sigma_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_sigma_mat', c_name='sigma_mat', python_name='sigma_mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1070, definition='real(rp) sigma_mat(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='sigma_mat', comment='', default=None), intent='out', description='beam envelop sigma matrix', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(sigma_mat%data_ptr)) f_sigma_mat_ptr = mat2vec(f_sigma_mat, product(sigma_mat%dims(1:sigma_mat%rank)))
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_Nout 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Nout', c_name='Nout', python_name='Nout', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1072, definition='real(rp), optional :: Nout(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Nout', comment='', default=None), intent='out', description='Contains the normalized eigenvectors that were used to make the sigma matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(Nout%data_ptr)) f_Nout_ptr = mat2vec(f_Nout, product(Nout%dims(1:Nout%rank)))
 end subroutine
 subroutine fortran_make_unit_mad_map (map) bind(c)
 
@@ -16799,21 +17322,21 @@ subroutine fortran_make_v (M, V, abz_tunes) bind(c)
   real(rp) :: f_abz_tunes(3)
   real(c_double), pointer :: f_abz_tunes_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(M%data_ptr)) then
     call c_f_pointer(M%data_ptr, f_M_ptr, [product(M%dims(1:M%rank))])
     call vec2mat(f_M_ptr, f_M)
   else
     f_M_ptr => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(V%data_ptr)) then
     call c_f_pointer(V%data_ptr, f_V_ptr, [product(V%dims(1:V%rank))])
     call vec2mat(f_V_ptr, f_V)
   else
     f_V_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(abz_tunes%data_ptr)) then
     call c_f_pointer(abz_tunes%data_ptr, f_abz_tunes_ptr, [abz_tunes%dims(1)])
     f_abz_tunes = f_abz_tunes_ptr(:)
@@ -16842,12 +17365,26 @@ subroutine fortran_make_v_mats (ele, v_mat, v_inv_mat) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  !! general array (2D_NOT_real) out
+  if (c_associated(v_mat%data_ptr)) then
+    call c_f_pointer(v_mat%data_ptr, f_v_mat_ptr, [product(v_mat%dims(1:v_mat%rank))])
+    ! output-only
+  else
+    f_v_mat_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(v_inv_mat%data_ptr)) then
+    call c_f_pointer(v_inv_mat%data_ptr, f_v_inv_mat_ptr, [product(v_inv_mat%dims(1:v_inv_mat%rank))])
+    ! output-only
+  else
+    f_v_inv_mat_ptr => null()
+  endif
   call make_v_mats(f_ele, f_v_mat, f_v_inv_mat)
 
   ! out: f_v_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_v_mat', c_name='v_mat', python_name='v_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1755, definition='real(rp), optional :: v_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='v_mat', comment='', default=None), intent='out', description='Normal mode to X-Y coords transformation', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(v_mat%data_ptr)) f_v_mat_ptr = mat2vec(f_v_mat, product(v_mat%dims(1:v_mat%rank)))
   ! out: f_v_inv_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_v_inv_mat', c_name='v_inv_mat', python_name='v_inv_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1756, definition='real(rp), optional :: v_inv_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='v_inv_mat', comment='', default=None), intent='out', description='X-Y coords to Normal mode transformation', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(v_inv_mat%data_ptr)) f_v_inv_mat_ptr = mat2vec(f_v_inv_mat, product(v_inv_mat%dims(1:v_inv_mat%rank)))
 end subroutine
 subroutine fortran_makeup_control_slave (lat, slave, err_flag) bind(c)
 
@@ -17023,6 +17560,9 @@ subroutine fortran_map1_inverse (map1, inv_map1) bind(c)
   ! in: f_map1 0D_NOT_type
   if (.not. c_associated(map1)) return
   call c_f_pointer(map1, f_map1)
+  ! out: f_inv_map1 0D_NOT_type
+  if (.not. c_associated(inv_map1)) return
+  call c_f_pointer(inv_map1, f_inv_map1)
   f_inv_map1 = map1_inverse(f_map1)
 
   ! out: f_inv_map1 0D_NOT_type
@@ -17065,6 +17605,9 @@ subroutine fortran_map1_times_map1 (map2, map1, map_out) bind(c)
   ! in: f_map1 0D_NOT_type
   if (.not. c_associated(map1)) return
   call c_f_pointer(map1, f_map1)
+  ! out: f_map_out 0D_NOT_type
+  if (.not. c_associated(map_out)) return
+  call c_f_pointer(map_out, f_map_out)
   f_map_out = map1_times_map1(f_map2, f_map1)
 
   ! out: f_map_out 0D_NOT_type
@@ -17168,10 +17711,17 @@ subroutine fortran_mat4_multipole (knl, tilt, n, orbit, kick_mat) bind(c)
   ! in: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
+  !! general array (2D_NOT_real) out
+  if (c_associated(kick_mat%data_ptr)) then
+    call c_f_pointer(kick_mat%data_ptr, f_kick_mat_ptr, [product(kick_mat%dims(1:kick_mat%rank))])
+    ! output-only
+  else
+    f_kick_mat_ptr => null()
+  endif
   call mat4_multipole(f_knl, f_tilt, f_n, f_orbit, f_kick_mat)
 
   ! out: f_kick_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_kick_mat', c_name='kick_mat', python_name='kick_mat', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1804, definition='real(rp) kick_mat(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='kick_mat', comment='', default=None), intent='out', description='Kick matrix (Jacobian) at orbit.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(kick_mat%data_ptr)) f_kick_mat_ptr = mat2vec(f_kick_mat, product(kick_mat%dims(1:kick_mat%rank)))
 end subroutine
 subroutine fortran_mat6_add_offsets (ele, param) bind(c)
 
@@ -17216,7 +17766,7 @@ subroutine fortran_mat6_add_pitch (x_pitch_tot, y_pitch_tot, orientation, mat6) 
   f_y_pitch_tot = y_pitch_tot
   ! in: f_orientation 0D_NOT_integer
   f_orientation = orientation
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -17242,14 +17792,14 @@ subroutine fortran_mat6_to_complex_taylor (vec0, mat6, complex_taylor) bind(c)
   type(array_descriptor_t), intent(in) :: complex_taylor
   type(complex_taylor_struct), pointer :: f_complex_taylor(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(vec0%data_ptr)) then
     call c_f_pointer(vec0%data_ptr, f_vec0_ptr, [vec0%dims(1)])
     f_vec0 = f_vec0_ptr(:)
   else
     f_vec0_ptr => null()
   endif
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) in
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -17306,12 +17856,47 @@ subroutine fortran_mat_symp_decouple (t0, stat, U, V, Ubar, Vbar, G, twiss1, twi
   real(rp) :: f_gamma
   real(c_double), pointer :: f_gamma_ptr
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(t0%data_ptr)) then
     call c_f_pointer(t0%data_ptr, f_t0_ptr, [product(t0%dims(1:t0%rank))])
     call vec2mat(f_t0_ptr, f_t0)
   else
     f_t0_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(U%data_ptr)) then
+    call c_f_pointer(U%data_ptr, f_U_ptr, [product(U%dims(1:U%rank))])
+    ! output-only
+  else
+    f_U_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(V%data_ptr)) then
+    call c_f_pointer(V%data_ptr, f_V_ptr, [product(V%dims(1:V%rank))])
+    ! output-only
+  else
+    f_V_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(Ubar%data_ptr)) then
+    call c_f_pointer(Ubar%data_ptr, f_Ubar_ptr, [product(Ubar%dims(1:Ubar%rank))])
+    ! output-only
+  else
+    f_Ubar_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(Vbar%data_ptr)) then
+    call c_f_pointer(Vbar%data_ptr, f_Vbar_ptr, [product(Vbar%dims(1:Vbar%rank))])
+    ! output-only
+  else
+    f_Vbar_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(G%data_ptr)) then
+    call c_f_pointer(G%data_ptr, f_G_ptr, [product(G%dims(1:G%rank))])
+    ! output-only
+  else
+    f_G_ptr => null()
   endif
   ! out: f_twiss1 0D_NOT_type
   if (.not. c_associated(twiss1)) return
@@ -17328,15 +17913,15 @@ subroutine fortran_mat_symp_decouple (t0, stat, U, V, Ubar, Vbar, G, twiss1, twi
   call c_f_pointer(stat, f_stat_ptr)
   f_stat_ptr = f_stat
   ! out: f_U 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_U', c_name='U', python_name='U', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1790, definition='real(rp) t0(4,4), U(4,4), V(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='U', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  if (c_associated(U%data_ptr)) f_U_ptr = mat2vec(f_U, product(U%dims(1:U%rank)))
   ! out: f_V 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_V', c_name='V', python_name='V', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1790, definition='real(rp) t0(4,4), U(4,4), V(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='V', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  if (c_associated(V%data_ptr)) f_V_ptr = mat2vec(f_V, product(V%dims(1:V%rank)))
   ! out: f_Ubar 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Ubar', c_name='Ubar', python_name='Ubar', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1792, definition='real(rp) Ubar(4,4), Vbar(4,4), G(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Ubar', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  if (c_associated(Ubar%data_ptr)) f_Ubar_ptr = mat2vec(f_Ubar, product(Ubar%dims(1:Ubar%rank)))
   ! out: f_Vbar 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_Vbar', c_name='Vbar', python_name='Vbar', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1792, definition='real(rp) Ubar(4,4), Vbar(4,4), G(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='Vbar', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  if (c_associated(Vbar%data_ptr)) f_Vbar_ptr = mat2vec(f_Vbar, product(Vbar%dims(1:Vbar%rank)))
   ! out: f_G 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_G', c_name='G', python_name='G', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=1792, definition='real(rp) Ubar(4,4), Vbar(4,4), G(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='G', comment='', default=None), intent='out', description='See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.', doc_data_type='unknown', doc_is_optional=False)
+  if (c_associated(G%data_ptr)) f_G_ptr = mat2vec(f_G, product(G%dims(1:G%rank)))
   ! out: f_twiss1 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_twiss2 0D_NOT_type
@@ -17391,6 +17976,20 @@ subroutine fortran_match_ele_to_mat6 (ele, start_orb, mat6, vec0, err_flag, incl
     return
   endif
   call c_f_pointer(start_orb, f_start_orb)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(vec0%data_ptr)) then
+    call c_f_pointer(vec0%data_ptr, f_vec0_ptr, [vec0%dims(1)])
+    ! output-only
+  else
+    f_vec0_ptr => null()
+  endif
   ! in: f_include_delta_time 0D_NOT_logical
   if (c_associated(include_delta_time)) then
     call c_f_pointer(include_delta_time, f_include_delta_time_ptr)
@@ -17411,7 +18010,7 @@ subroutine fortran_match_ele_to_mat6 (ele, start_orb, mat6, vec0, err_flag, incl
       f_include_delta_time_native_ptr, f_set_trombone_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1812, definition='real(rp) mat6(6,6), vec0(6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix (1st order part of xfer map).', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
   ! out: f_vec0 1D_NOT_real
   if (c_associated(vec0%data_ptr)) then
     call c_f_pointer(vec0%data_ptr, f_vec0_ptr, [vec0%dims(1)])
@@ -17469,21 +18068,21 @@ subroutine fortran_mfft1 (a, b, n, ndim, isn, ierr) bind(c)
   REAL(dp), pointer :: f_b(:)
   real(c_double), pointer :: f_b_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(a%data_ptr)) then
     call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
     f_a => f_a_ptr
   else
     f_a_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b => f_b_ptr
   else
     f_b_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(n%data_ptr)) then
     call c_f_pointer(n%data_ptr, f_n_ptr, [n%dims(1)])
     f_n => f_n_ptr
@@ -17658,25 +18257,25 @@ subroutine fortran_multipass_chain (ele, ix_pass, n_links, chain_ele, use_super_
   ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  integer(c_int) :: ix_pass  ! 0D_NOT_integer
-  integer :: f_ix_pass
-  integer(c_int) :: n_links  ! 0D_NOT_integer
-  integer :: f_n_links
-  type(c_ptr), intent(in), value :: chain_ele
-  type(ele_pointer_struct_container_alloc), pointer :: f_chain_ele
   type(c_ptr), intent(in), value :: use_super_lord  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_use_super_lord
   logical, target :: f_use_super_lord_native
   logical, pointer :: f_use_super_lord_native_ptr
   logical(c_bool), pointer :: f_use_super_lord_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ix_pass  ! 0D_NOT_integer
+  integer :: f_ix_pass
+  integer(c_int), pointer :: f_ix_pass_ptr
+  type(c_ptr), intent(in), value :: n_links  ! 0D_NOT_integer
+  integer :: f_n_links
+  integer(c_int), pointer :: f_n_links_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: chain_ele
+  type(ele_pointer_struct_container_alloc), pointer :: f_chain_ele
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! in: f_ix_pass 0D_NOT_integer
-  f_ix_pass = ix_pass
-  ! in: f_n_links 0D_NOT_integer
-  f_n_links = n_links
   !! container type array (1D_ALLOC_type)
   if (c_associated(chain_ele))   call c_f_pointer(chain_ele, f_chain_ele)
   ! in: f_use_super_lord 0D_NOT_logical
@@ -17690,6 +18289,12 @@ subroutine fortran_multipass_chain (ele, ix_pass, n_links, chain_ele, use_super_
   call multipass_chain(f_ele, f_ix_pass, f_n_links, f_chain_ele%data, &
       f_use_super_lord_native_ptr)
 
+  ! out: f_ix_pass 0D_NOT_integer
+  call c_f_pointer(ix_pass, f_ix_pass_ptr)
+  f_ix_pass_ptr = f_ix_pass
+  ! out: f_n_links 0D_NOT_integer
+  call c_f_pointer(n_links, f_n_links_ptr)
+  f_n_links_ptr = f_n_links
 end subroutine
 subroutine fortran_multipole1_ab_to_kt (an, bn, n, knl, tn) bind(c)
 
@@ -17782,28 +18387,28 @@ subroutine fortran_multipole_ab_to_kt (an, bn, knl, tn) bind(c)
   real(rp), pointer :: f_tn(:)
   real(c_double), pointer :: f_tn_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(an%data_ptr)) then
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an(0:) => f_an_ptr
   else
     f_an_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(bn%data_ptr)) then
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn(0:) => f_bn_ptr
   else
     f_bn_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(knl%data_ptr)) then
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
     f_knl_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(tn%data_ptr)) then
     call c_f_pointer(tn%data_ptr, f_tn_ptr, [tn%dims(1)])
     f_tn(0:) => f_tn_ptr
@@ -17854,6 +18459,20 @@ subroutine fortran_multipole_ele_to_ab (ele, use_ele_tilt, ix_pole_max, a, b, po
   call c_f_pointer(ele, f_ele)
   ! in: f_use_ele_tilt 0D_NOT_logical
   f_use_ele_tilt = use_ele_tilt
+  !! general array (1D_NOT_real) out
+  if (c_associated(a%data_ptr)) then
+    call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
+    ! output-only
+  else
+    f_a_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(b%data_ptr)) then
+    call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
+    ! output-only
+  else
+    f_b_ptr => null()
+  endif
   ! in: f_pole_type 0D_NOT_integer
   if (c_associated(pole_type)) then
     call c_f_pointer(pole_type, f_pole_type_ptr)
@@ -17933,14 +18552,14 @@ subroutine fortran_multipole_ele_to_kt (ele, use_ele_tilt, ix_pole_max, knl, til
   call c_f_pointer(ele, f_ele)
   ! in: f_use_ele_tilt 0D_NOT_logical
   f_use_ele_tilt = use_ele_tilt
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(knl%data_ptr)) then
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
     f_knl_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(tilt%data_ptr)) then
     call c_f_pointer(tilt%data_ptr, f_tilt_ptr, [tilt%dims(1)])
     f_tilt(0:) => f_tilt_ptr
@@ -18087,14 +18706,14 @@ subroutine fortran_multipole_kick_mat (knl, tilt, ref_species, ele, orbit, facto
   real(rp) :: f_mat6(6,6)
   real(c_double), pointer :: f_mat6_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(knl%data_ptr)) then
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
     f_knl_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(tilt%data_ptr)) then
     call c_f_pointer(tilt%data_ptr, f_tilt_ptr, [tilt%dims(1)])
     f_tilt(0:) => f_tilt_ptr
@@ -18111,10 +18730,17 @@ subroutine fortran_multipole_kick_mat (knl, tilt, ref_species, ele, orbit, facto
   call c_f_pointer(orbit, f_orbit)
   ! in: f_factor 0D_NOT_real
   f_factor = factor
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   call multipole_kick_mat(f_knl, f_tilt, f_ref_species, f_ele, f_orbit, f_factor, f_mat6)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1936, definition='real(rp) mat6(6,6), factor', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='matrix with kick values at mat6(2:4:2, 1:3:2). The rest of the matrix is untouched.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_offset) bind(c)
 
@@ -18142,14 +18768,14 @@ subroutine fortran_multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_of
   type(c_ptr), value :: orbit  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orbit
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(knl%data_ptr)) then
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
     f_knl_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(tilt%data_ptr)) then
     call c_f_pointer(tilt%data_ptr, f_tilt_ptr, [tilt%dims(1)])
     f_tilt(0:) => f_tilt_ptr
@@ -18202,35 +18828,35 @@ subroutine fortran_multipole_kt_to_ab (knl, knsl, tn, an, bn) bind(c)
   real(rp), pointer :: f_bn(:)
   real(c_double), pointer :: f_bn_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(knl%data_ptr)) then
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
     f_knl_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(knsl%data_ptr)) then
     call c_f_pointer(knsl%data_ptr, f_knsl_ptr, [knsl%dims(1)])
     f_knsl(0:) => f_knsl_ptr
   else
     f_knsl_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(tn%data_ptr)) then
     call c_f_pointer(tn%data_ptr, f_tn_ptr, [tn%dims(1)])
     f_tn(0:) => f_tn_ptr
   else
     f_tn_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(an%data_ptr)) then
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an(0:) => f_an_ptr
   else
     f_an_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(bn%data_ptr)) then
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn(0:) => f_bn_ptr
@@ -18313,18 +18939,18 @@ subroutine fortran_new_control (lat, ix_ele, ele_name) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
-  integer(c_int) :: ix_ele  ! 0D_NOT_integer
-  integer :: f_ix_ele
   type(c_ptr), intent(in), value :: ele_name
   character(len=4096), target :: f_ele_name
   character(kind=c_char), pointer :: f_ele_name_ptr(:)
   character(len=4096), pointer :: f_ele_name_call_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ix_ele  ! 0D_NOT_integer
+  integer :: f_ix_ele
+  integer(c_int), pointer :: f_ix_ele_ptr
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! in: f_ix_ele 0D_NOT_integer
-  f_ix_ele = ix_ele
   ! in: f_ele_name 0D_NOT_character
   if (c_associated(ele_name)) then
     call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
@@ -18335,6 +18961,9 @@ subroutine fortran_new_control (lat, ix_ele, ele_name) bind(c)
   endif
   call new_control(f_lat, f_ix_ele, f_ele_name_call_ptr)
 
+  ! out: f_ix_ele 0D_NOT_integer
+  call c_f_pointer(ix_ele, f_ix_ele_ptr)
+  f_ix_ele_ptr = f_ix_ele
 end subroutine
 subroutine fortran_nint_chk (re_val, int_val) bind(c)
 
@@ -18503,12 +19132,33 @@ subroutine fortran_normal_mode3_calc (t6, tune, B, HV, above_transition, abz_tun
   real(rp) :: f_t6(6,6)
   real(c_double), pointer :: f_t6_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(t6%data_ptr)) then
     call c_f_pointer(t6%data_ptr, f_t6_ptr, [product(t6%dims(1:t6%rank))])
     call vec2mat(f_t6_ptr, f_t6)
   else
     f_t6_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(tune%data_ptr)) then
+    call c_f_pointer(tune%data_ptr, f_tune_ptr, [tune%dims(1)])
+    ! output-only
+  else
+    f_tune_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(B%data_ptr)) then
+    call c_f_pointer(B%data_ptr, f_B_ptr, [product(B%dims(1:B%rank))])
+    ! output-only
+  else
+    f_B_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(HV%data_ptr)) then
+    call c_f_pointer(HV%data_ptr, f_HV_ptr, [product(HV%dims(1:HV%rank))])
+    ! output-only
+  else
+    f_HV_ptr => null()
   endif
   ! in: f_above_transition 0D_NOT_logical
   if (c_associated(above_transition)) then
@@ -18518,7 +19168,7 @@ subroutine fortran_normal_mode3_calc (t6, tune, B, HV, above_transition, abz_tun
   else
     f_above_transition_native_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(abz_tunes%data_ptr)) then
     call c_f_pointer(abz_tunes%data_ptr, f_abz_tunes_ptr, [abz_tunes%dims(1)])
     f_abz_tunes = f_abz_tunes_ptr(:)
@@ -18533,9 +19183,9 @@ subroutine fortran_normal_mode3_calc (t6, tune, B, HV, above_transition, abz_tun
     f_tune_ptr = f_tune(:)
   endif
   ! out: f_B 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_B', c_name='B', python_name='B', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=132, definition='real(rp) t6(6,6), tune(3), B(6,6), HV(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='B', comment='', default=None), intent='out', description='B is block diagonal and related to the normal mode Twiss parameters.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(B%data_ptr)) f_B_ptr = mat2vec(f_B, product(B%dims(1:B%rank)))
   ! out: f_HV 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_HV', c_name='HV', python_name='HV', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=132, definition='real(rp) t6(6,6), tune(3), B(6,6), HV(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='HV', comment='', default=None), intent='out', description='Transforms from normal mode coordinates to canonical coordinates: x = H.V.a', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(HV%data_ptr)) f_HV_ptr = mat2vec(f_HV, product(HV%dims(1:HV%rank)))
 end subroutine
 subroutine fortran_normal_mode_dispersion (ele, reverse) bind(c)
 
@@ -18579,7 +19229,7 @@ subroutine fortran_normalize_evecs (evec, err_flag) bind(c)
   complex(rp) :: f_evec(6,6)
   complex(c_double_complex), pointer :: f_evec_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(evec%data_ptr)) then
     call c_f_pointer(evec%data_ptr, f_evec_ptr, [product(evec%dims(1:evec%rank))])
     call vec2mat(f_evec_ptr, f_evec)
@@ -18700,7 +19350,7 @@ subroutine fortran_odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, t
   f_s2_body = s2_body
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -18737,8 +19387,6 @@ subroutine fortran_odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, 
   type(lat_param_struct), pointer :: f_param
   integer(c_int) :: t_dir  ! 0D_NOT_integer
   integer :: f_t_dir
-  real(c_double) :: rf_time  ! 0D_NOT_real
-  real(rp) :: f_rf_time
   type(c_ptr), intent(in), value :: t_end  ! 0D_NOT_real
   real(c_double) :: f_t_end
   real(c_double), pointer :: f_t_end_ptr
@@ -18754,6 +19402,9 @@ subroutine fortran_odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, 
   ! ** Inout parameters **
   type(c_ptr), value :: orb  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orb
+  type(c_ptr), intent(in), value :: rf_time  ! 0D_NOT_real
+  real(c_double) :: f_rf_time
+  real(c_double), pointer :: f_rf_time_ptr
   type(c_ptr), value :: track  ! 0D_NOT_type
   type(track_struct), pointer :: f_track
   ! ** End of parameters **
@@ -18780,8 +19431,12 @@ subroutine fortran_odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, 
   call c_f_pointer(param, f_param)
   ! in: f_t_dir 0D_NOT_integer
   f_t_dir = t_dir
-  ! in: f_rf_time 0D_NOT_real
-  f_rf_time = rf_time
+  ! inout: f_rf_time 0D_NOT_real
+  if (c_associated(rf_time)) then
+    call c_f_pointer(rf_time, f_rf_time_ptr)
+  else
+    f_rf_time_ptr => null()
+  endif
   ! inout: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
   ! in: f_t_end 0D_NOT_real
@@ -18798,9 +19453,11 @@ subroutine fortran_odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, 
   endif
   ! in: f_extra_field 0D_NOT_type
   if (c_associated(extra_field))   call c_f_pointer(extra_field, f_extra_field)
-  call odeint_bmad_time(f_orb, f_ele, f_param, f_t_dir, f_rf_time, f_err_flag, f_track, &
+  call odeint_bmad_time(f_orb, f_ele, f_param, f_t_dir, f_rf_time_ptr, f_err_flag, f_track, &
       f_t_end_ptr, f_dt_step, f_extra_field)
 
+  ! inout: f_rf_time 0D_NOT_real
+  ! no output conversion for f_rf_time
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
@@ -18844,9 +19501,6 @@ subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drif
   logical, target :: f_make_matrix_native
   logical, pointer :: f_make_matrix_native_ptr
   logical(c_bool), pointer :: f_make_matrix_ptr
-  type(c_ptr), intent(in), value :: time  ! 0D_NOT_real
-  real(c_double) :: f_time
-  real(c_double), pointer :: f_time_ptr
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: s_out  ! 0D_NOT_real
   real(rp) :: f_s_out
@@ -18860,6 +19514,9 @@ subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drif
   type(array_descriptor_t), intent(in) :: mat6
   real(rp) :: f_mat6(6,6)
   real(c_double), pointer :: f_mat6_ptr(:)
+  type(c_ptr), intent(in), value :: time  ! 0D_NOT_real
+  real(c_double) :: f_time
+  real(c_double), pointer :: f_time_ptr
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -18911,7 +19568,7 @@ subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drif
   else
     f_set_spin_native_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -18926,7 +19583,14 @@ subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drif
   else
     f_make_matrix_native_ptr => null()
   endif
-  ! in: f_time 0D_NOT_real
+  !! general array (1D_NOT_real) out
+  if (c_associated(spin_qrot%data_ptr)) then
+    call c_f_pointer(spin_qrot%data_ptr, f_spin_qrot_ptr, [spin_qrot%dims(1)])
+    ! output-only
+  else
+    f_spin_qrot_ptr => null()
+  endif
+  ! inout: f_time 0D_NOT_real
   if (c_associated(time)) then
     call c_f_pointer(time, f_time_ptr)
   else
@@ -18943,6 +19607,8 @@ subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drif
     call c_f_pointer(spin_qrot%data_ptr, f_spin_qrot_ptr, [spin_qrot%dims(1)])
     f_spin_qrot_ptr = f_spin_qrot(:)
   endif
+  ! inout: f_time 0D_NOT_real
+  ! no output conversion for f_time
 end subroutine
 subroutine fortran_offset_photon (ele, orbit, set, offset_position_only, rot_mat) bind(c)
 
@@ -18982,7 +19648,7 @@ subroutine fortran_offset_photon (ele, orbit, set, offset_position_only, rot_mat
   else
     f_offset_position_only_native_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(rot_mat%data_ptr)) then
     call c_f_pointer(rot_mat%data_ptr, f_rot_mat_ptr, [product(rot_mat%dims(1:rot_mat%rank))])
     call vec2mat(f_rot_mat_ptr, f_rot_mat)
@@ -19016,10 +19682,17 @@ subroutine fortran_one_turn_mat_at_ele (ele, phi_a, phi_b, mat4) bind(c)
   f_phi_a = phi_a
   ! in: f_phi_b 0D_NOT_real
   f_phi_b = phi_b
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat4%data_ptr)) then
+    call c_f_pointer(mat4%data_ptr, f_mat4_ptr, [product(mat4%dims(1:mat4%rank))])
+    ! output-only
+  else
+    f_mat4_ptr => null()
+  endif
   call one_turn_mat_at_ele(f_ele, f_phi_a, f_phi_b, f_mat4)
 
   ! out: f_mat4 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat4', c_name='mat4', python_name='mat4', type='real', kind='rp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=2004, definition='real(rp) mat4(4,4)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat4', comment='', default=None), intent='out', description='1-Turn coupled matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat4%data_ptr)) f_mat4_ptr = mat2vec(f_mat4, product(mat4%dims(1:mat4%rank)))
 end subroutine
 subroutine fortran_open_binary_file (file_name, action, iu, r_name, iver, is_ok) bind(c)
 
@@ -19161,7 +19834,7 @@ subroutine fortran_orbit_reference_energy_correction (orbit, p0c_new, mat6, make
   call c_f_pointer(orbit, f_orbit)
   ! in: f_p0c_new 0D_NOT_real
   f_p0c_new = p0c_new
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -19200,6 +19873,13 @@ subroutine fortran_orbit_to_floor_phase_space (orbit, ele, floor_phase_space) bi
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  !! general array (1D_NOT_real) out
+  if (c_associated(floor_phase_space%data_ptr)) then
+    call c_f_pointer(floor_phase_space%data_ptr, f_floor_phase_space_ptr, [floor_phase_space%dims(1)])
+    ! output-only
+  else
+    f_floor_phase_space_ptr => null()
+  endif
   f_floor_phase_space = orbit_to_floor_phase_space(f_orbit, f_ele)
 
   ! out: f_floor_phase_space 1D_NOT_real
@@ -19247,6 +19927,9 @@ subroutine fortran_orbit_to_local_curvilinear (orbit, ele, z_direction, relative
   else
     f_relative_to_ptr => null()
   endif
+  ! out: f_local_position 0D_NOT_type
+  if (.not. c_associated(local_position)) return
+  call c_f_pointer(local_position, f_local_position)
   f_local_position = orbit_to_local_curvilinear(f_orbit, f_ele, f_z_direction_ptr, &
       f_relative_to_ptr)
 
@@ -19318,21 +20001,28 @@ subroutine fortran_order_evecs_by_n_similarity (evec, eval, mat_tunes, Nmat, err
   real(rp) :: f_mat_tunes(3)
   real(c_double), pointer :: f_mat_tunes_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (2D_NOT_complex) out
+  if (c_associated(evec%data_ptr)) then
+    call c_f_pointer(evec%data_ptr, f_evec_ptr, [product(evec%dims(1:evec%rank))])
+    ! output-only
+  else
+    f_evec_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) inout
   if (c_associated(eval%data_ptr)) then
     call c_f_pointer(eval%data_ptr, f_eval_ptr, [eval%dims(1)])
     f_eval = f_eval_ptr(:)
   else
     f_eval_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(mat_tunes%data_ptr)) then
     call c_f_pointer(mat_tunes%data_ptr, f_mat_tunes_ptr, [mat_tunes%dims(1)])
     f_mat_tunes = f_mat_tunes_ptr(:)
   else
     f_mat_tunes_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(Nmat%data_ptr)) then
     call c_f_pointer(Nmat%data_ptr, f_Nmat_ptr, [product(Nmat%dims(1:Nmat%rank))])
     call vec2mat(f_Nmat_ptr, f_Nmat)
@@ -19342,7 +20032,7 @@ subroutine fortran_order_evecs_by_n_similarity (evec, eval, mat_tunes, Nmat, err
   call order_evecs_by_n_similarity(f_evec, f_eval, f_mat_tunes, f_Nmat, f_err_flag)
 
   ! out: f_evec 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_evec', c_name='evec', python_name='evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=570, definition='complex(rp) evec(6,6)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='evec', comment='', default=None), intent='out', description='complex eigenvectors arranged down columns.', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(evec%data_ptr)) f_evec_ptr = mat2vec(f_evec, product(evec%dims(1:evec%rank)))
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
@@ -19362,21 +20052,21 @@ subroutine fortran_order_evecs_by_plane_dominance (evec, eval, mat_tunes) bind(c
   real(rp) :: f_mat_tunes(3)
   real(c_double), pointer :: f_mat_tunes_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(evec%data_ptr)) then
     call c_f_pointer(evec%data_ptr, f_evec_ptr, [product(evec%dims(1:evec%rank))])
     call vec2mat(f_evec_ptr, f_evec)
   else
     f_evec_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(eval%data_ptr)) then
     call c_f_pointer(eval%data_ptr, f_eval_ptr, [eval%dims(1)])
     f_eval = f_eval_ptr(:)
   else
     f_eval_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(mat_tunes%data_ptr)) then
     call c_f_pointer(mat_tunes%data_ptr, f_mat_tunes_ptr, [mat_tunes%dims(1)])
     f_mat_tunes = f_mat_tunes_ptr(:)
@@ -19409,28 +20099,28 @@ subroutine fortran_order_evecs_by_tune (evec, eval, mat_tunes, abz_tunes, err_fl
   complex(rp) :: f_eval(6)
   complex(c_double_complex), pointer :: f_eval_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_complex)
+  !! general array (2D_NOT_complex) inout
   if (c_associated(evec%data_ptr)) then
     call c_f_pointer(evec%data_ptr, f_evec_ptr, [product(evec%dims(1:evec%rank))])
     call vec2mat(f_evec_ptr, f_evec)
   else
     f_evec_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(eval%data_ptr)) then
     call c_f_pointer(eval%data_ptr, f_eval_ptr, [eval%dims(1)])
     f_eval = f_eval_ptr(:)
   else
     f_eval_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(mat_tunes%data_ptr)) then
     call c_f_pointer(mat_tunes%data_ptr, f_mat_tunes_ptr, [mat_tunes%dims(1)])
     f_mat_tunes = f_mat_tunes_ptr(:)
   else
     f_mat_tunes_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(abz_tunes%data_ptr)) then
     call c_f_pointer(abz_tunes%data_ptr, f_abz_tunes_ptr, [abz_tunes%dims(1)])
     f_abz_tunes = f_abz_tunes_ptr(:)
@@ -19464,12 +20154,13 @@ subroutine fortran_order_super_lord_slaves (lat, ix_lord) bind(c)
   use bmad_struct, only: lat_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), value :: lat  ! 0D_NOT_type
-  type(lat_struct), pointer :: f_lat
   integer(c_int) :: ix_lord  ! 0D_NOT_integer
   integer :: f_ix_lord
+  ! ** Inout parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
   ! ** End of parameters **
-  ! in: f_lat 0D_NOT_type
+  ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
   ! in: f_ix_lord 0D_NOT_integer
@@ -19492,21 +20183,21 @@ subroutine fortran_osc_alloc_freespace_array (nlo, nhi, npad) bind(c)
   integer :: f_npad(3)
   integer(c_int), pointer :: f_npad_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(nlo%data_ptr)) then
     call c_f_pointer(nlo%data_ptr, f_nlo_ptr, [nlo%dims(1)])
     f_nlo = f_nlo_ptr(:)
   else
     f_nlo_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(nhi%data_ptr)) then
     call c_f_pointer(nhi%data_ptr, f_nhi_ptr, [nhi%dims(1)])
     f_nhi = f_nhi_ptr(:)
   else
     f_nhi_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(npad%data_ptr)) then
     call c_f_pointer(npad%data_ptr, f_npad_ptr, [npad%dims(1)])
     f_npad = f_npad_ptr(:)
@@ -19531,21 +20222,21 @@ subroutine fortran_osc_alloc_image_array (nlo, nhi, npad) bind(c)
   integer :: f_npad(3)
   integer(c_int), pointer :: f_npad_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(nlo%data_ptr)) then
     call c_f_pointer(nlo%data_ptr, f_nlo_ptr, [nlo%dims(1)])
     f_nlo = f_nlo_ptr(:)
   else
     f_nlo_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(nhi%data_ptr)) then
     call c_f_pointer(nhi%data_ptr, f_nhi_ptr, [nhi%dims(1)])
     f_nhi = f_nhi_ptr(:)
   else
     f_nhi_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(npad%data_ptr)) then
     call c_f_pointer(npad%data_ptr, f_npad_ptr, [npad%dims(1)])
     f_npad = f_npad_ptr(:)
@@ -19570,21 +20261,21 @@ subroutine fortran_osc_alloc_rectpipe_arrays (nlo, nhi, npad) bind(c)
   integer :: f_npad(3)
   integer(c_int), pointer :: f_npad_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(nlo%data_ptr)) then
     call c_f_pointer(nlo%data_ptr, f_nlo_ptr, [nlo%dims(1)])
     f_nlo = f_nlo_ptr(:)
   else
     f_nlo_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(nhi%data_ptr)) then
     call c_f_pointer(nhi%data_ptr, f_nhi_ptr, [nhi%dims(1)])
     f_nhi = f_nhi_ptr(:)
   else
     f_nhi_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(npad%data_ptr)) then
     call c_f_pointer(npad%data_ptr, f_npad_ptr, [npad%dims(1)])
     f_npad = f_npad_ptr(:)
@@ -19622,21 +20313,21 @@ subroutine fortran_osc_getgrnpipe (gam, a, b, delta, umin, npad) bind(c)
   f_a = a
   ! in: f_b 0D_NOT_real
   f_b = b
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(delta%data_ptr)) then
     call c_f_pointer(delta%data_ptr, f_delta_ptr, [delta%dims(1)])
     f_delta = f_delta_ptr(:)
   else
     f_delta_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(umin%data_ptr)) then
     call c_f_pointer(umin%data_ptr, f_umin_ptr, [umin%dims(1)])
     f_umin = f_umin_ptr(:)
   else
     f_umin_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(npad%data_ptr)) then
     call c_f_pointer(npad%data_ptr, f_npad_ptr, [npad%dims(1)])
     f_npad = f_npad_ptr(:)
@@ -19687,35 +20378,35 @@ subroutine fortran_osc_write_rectpipe_grn (apipe, bpipe, delta, umin, umax, nlo,
   f_apipe = apipe
   ! in: f_bpipe 0D_NOT_real
   f_bpipe = bpipe
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(delta%data_ptr)) then
     call c_f_pointer(delta%data_ptr, f_delta_ptr, [delta%dims(1)])
     f_delta = f_delta_ptr(:)
   else
     f_delta_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(umin%data_ptr)) then
     call c_f_pointer(umin%data_ptr, f_umin_ptr, [umin%dims(1)])
     f_umin = f_umin_ptr(:)
   else
     f_umin_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(umax%data_ptr)) then
     call c_f_pointer(umax%data_ptr, f_umax_ptr, [umax%dims(1)])
     f_umax = f_umax_ptr(:)
   else
     f_umax_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(nlo%data_ptr)) then
     call c_f_pointer(nlo%data_ptr, f_nlo_ptr, [nlo%dims(1)])
     f_nlo = f_nlo_ptr(:)
   else
     f_nlo_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(nhi%data_ptr)) then
     call c_f_pointer(nhi%data_ptr, f_nhi_ptr, [nhi%dims(1)])
     f_nhi = f_nhi_ptr(:)
@@ -19942,7 +20633,7 @@ subroutine fortran_parse_integer_list (err_str, lat, int_array, exact_size, deli
   ! inout: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(int_array%data_ptr)) then
     call c_f_pointer(int_array%data_ptr, f_int_array_ptr, [int_array%dims(1)])
     f_int_array => f_int_array_ptr
@@ -20095,7 +20786,7 @@ subroutine fortran_parse_integer_list2 (err_str, lat, int_array, num_found, deli
   call c_f_pointer(num_found, f_num_found_ptr)
   f_num_found_ptr = f_num_found
   ! out: f_delim 0D_NOT_character
-  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
   call to_c_str(f_delim, f_delim_ptr)
   ! out: f_delim_found 0D_NOT_logical
   call c_f_pointer(delim_found, f_delim_found_ptr)
@@ -20158,7 +20849,7 @@ subroutine fortran_parse_real_list (lat, err_str, real_array, exact_size, delim,
   if (.not. c_associated(err_str)) return
   call c_f_pointer(err_str, f_err_str_ptr, [huge(0)])
   call to_f_str(f_err_str_ptr, f_err_str)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(real_array%data_ptr)) then
     call c_f_pointer(real_array%data_ptr, f_real_array_ptr, [real_array%dims(1)])
     f_real_array => f_real_array_ptr
@@ -20208,7 +20899,7 @@ subroutine fortran_parse_real_list (lat, err_str, real_array, exact_size, delim,
       f_default_value_ptr, f_num_found)
 
   ! out: f_delim 0D_NOT_character
-  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
   call to_c_str(f_delim, f_delim_ptr)
   ! out: f_delim_found 0D_NOT_logical
   call c_f_pointer(delim_found, f_delim_found_ptr)
@@ -20333,7 +21024,7 @@ subroutine fortran_parse_real_list2 (lat, err_str, real_array, num_found, delim,
   call c_f_pointer(num_found, f_num_found_ptr)
   f_num_found_ptr = f_num_found
   ! out: f_delim 0D_NOT_character
-  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
   call to_c_str(f_delim, f_delim_ptr)
   ! out: f_delim_found 0D_NOT_logical
   call c_f_pointer(delim_found, f_delim_found_ptr)
@@ -20442,7 +21133,7 @@ subroutine fortran_parser_fast_complex_read (cmplx_vec, ele, delim, err_str, is_
   complex(rp), pointer :: f_cmplx_vec(:)
   complex(c_double_complex), pointer :: f_cmplx_vec_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(cmplx_vec%data_ptr)) then
     call c_f_pointer(cmplx_vec%data_ptr, f_cmplx_vec_ptr, [cmplx_vec%dims(1)])
     f_cmplx_vec => f_cmplx_vec_ptr
@@ -20459,7 +21150,7 @@ subroutine fortran_parser_fast_complex_read (cmplx_vec, ele, delim, err_str, is_
   f_is_ok = parser_fast_complex_read(f_cmplx_vec, f_ele, f_delim, f_err_str)
 
   ! out: f_delim 0D_NOT_character
-  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
   call to_c_str(f_delim, f_delim_ptr)
   ! out: f_is_ok 0D_NOT_logical
   call c_f_pointer(is_ok, f_is_ok_ptr)
@@ -20489,7 +21180,7 @@ subroutine fortran_parser_fast_integer_read (int_vec, ele, delim_wanted, err_str
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(int_vec%data_ptr)) then
     call c_f_pointer(int_vec%data_ptr, f_int_vec_ptr, [int_vec%dims(1)])
     f_int_vec => f_int_vec_ptr
@@ -20548,7 +21239,7 @@ subroutine fortran_parser_fast_real_read (real_vec, ele, end_delims, delim, err_
   real(rp), pointer :: f_real_vec(:)
   real(c_double), pointer :: f_real_vec_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(real_vec%data_ptr)) then
     call c_f_pointer(real_vec%data_ptr, f_real_vec_ptr, [real_vec%dims(1)])
     f_real_vec => f_real_vec_ptr
@@ -20584,7 +21275,7 @@ subroutine fortran_parser_fast_real_read (real_vec, ele, end_delims, delim, err_
       f_exact_size_native_ptr, f_n_real)
 
   ! out: f_delim 0D_NOT_character
-  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1]) ! output-only string
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
   call to_c_str(f_delim, f_delim_ptr)
   ! out: f_n_real 0D_NOT_integer
   ! no output conversion for f_n_real
@@ -21024,13 +21715,16 @@ subroutine fortran_particle_in_global_frame (orb, branch, in_time_coordinates, i
   else
     f_in_body_frame_native_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(w_mat_out%data_ptr)) then
     call c_f_pointer(w_mat_out%data_ptr, f_w_mat_out_ptr, [product(w_mat_out%dims(1:w_mat_out%rank))])
     call vec2mat(f_w_mat_out_ptr, f_w_mat_out)
   else
     f_w_mat_out_ptr => null()
   endif
+  ! out: f_particle 0D_NOT_type
+  if (.not. c_associated(particle)) return
+  call c_f_pointer(particle, f_particle)
   f_particle = particle_in_global_frame(f_orb, f_branch, f_in_time_coordinates_native_ptr, &
       f_in_body_frame_native_ptr, f_w_mat_out)
 
@@ -21581,7 +22275,7 @@ subroutine fortran_point_photon_emission (ele, param, orbit, direction, max_targ
   f_direction = direction
   ! in: f_max_target_area 0D_NOT_real
   f_max_target_area = max_target_area
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(w_to_surface%data_ptr)) then
     call c_f_pointer(w_to_surface%data_ptr, f_w_to_surface_ptr, [product(w_to_surface%dims(1:w_to_surface%rank))])
     call vec2mat(f_w_to_surface_ptr, f_w_to_surface)
@@ -21607,6 +22301,8 @@ subroutine fortran_pointer_to_branch_given_ele (ele, branch_ptr) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  ! out: f_branch_ptr 0D_PTR_type
+  if (c_associated(branch_ptr))   call c_f_pointer(branch_ptr, f_branch_ptr)
   f_branch_ptr => pointer_to_branch(f_ele)
 
   ! out: f_branch_ptr 0D_PTR_type
@@ -21657,6 +22353,8 @@ subroutine fortran_pointer_to_branch_given_name (branch_name, lat, parameter_is_
   else
     f_blank_branch_ptr => null()
   endif
+  ! out: f_branch_ptr 0D_PTR_type
+  if (c_associated(branch_ptr))   call c_f_pointer(branch_ptr, f_branch_ptr)
   f_branch_ptr => pointer_to_branch(f_branch_name, f_lat, f_parameter_is_branch0_native_ptr, &
       f_blank_branch_ptr)
 
@@ -21691,6 +22389,8 @@ subroutine fortran_pointer_to_ele1 (lat, ix_ele, ix_branch, ele_ptr) bind(c)
   else
     f_ix_branch_ptr => null()
   endif
+  ! out: f_ele_ptr 0D_PTR_type
+  if (c_associated(ele_ptr))   call c_f_pointer(ele_ptr, f_ele_ptr)
   f_ele_ptr => pointer_to_ele(f_lat, f_ix_ele, f_ix_branch_ptr)
 
   ! out: f_ele_ptr 0D_PTR_type
@@ -21716,6 +22416,8 @@ subroutine fortran_pointer_to_ele2 (lat, ele_loc, ele_ptr) bind(c)
   ! in: f_ele_loc 0D_NOT_type
   if (.not. c_associated(ele_loc)) return
   call c_f_pointer(ele_loc, f_ele_loc)
+  ! out: f_ele_ptr 0D_PTR_type
+  if (c_associated(ele_ptr))   call c_f_pointer(ele_ptr, f_ele_ptr)
   f_ele_ptr => pointer_to_ele(f_lat, f_ele_loc)
 
   ! out: f_ele_ptr 0D_PTR_type
@@ -21743,6 +22445,8 @@ subroutine fortran_pointer_to_ele3 (lat, ele_name, ele_ptr) bind(c)
   if (.not. c_associated(ele_name)) return
   call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
   call to_f_str(f_ele_name_ptr, f_ele_name)
+  ! out: f_ele_ptr 0D_PTR_type
+  if (c_associated(ele_ptr))   call c_f_pointer(ele_ptr, f_ele_ptr)
   f_ele_ptr => pointer_to_ele(f_lat, f_ele_name)
 
   ! out: f_ele_ptr 0D_PTR_type
@@ -21768,6 +22472,8 @@ subroutine fortran_pointer_to_ele4 (lat, foreign_ele, ele_ptr) bind(c)
   ! in: f_foreign_ele 0D_NOT_type
   if (.not. c_associated(foreign_ele)) return
   call c_f_pointer(foreign_ele, f_foreign_ele)
+  ! out: f_ele_ptr 0D_PTR_type
+  if (c_associated(ele_ptr))   call c_f_pointer(ele_ptr, f_ele_ptr)
   f_ele_ptr => pointer_to_ele(f_lat, f_foreign_ele)
 
   ! out: f_ele_ptr 0D_PTR_type
@@ -21836,6 +22542,8 @@ subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_e
   else
     f_print_err_native_ptr => null()
   endif
+  ! out: f_ele 0D_PTR_type
+  if (c_associated(ele))   call c_f_pointer(ele, f_ele)
   f_ele => pointer_to_element_at_s(f_branch, f_s, f_choose_max, f_err_flag, f_s_eff, &
       f_position, f_print_err_native_ptr)
 
@@ -21864,6 +22572,8 @@ subroutine fortran_pointer_to_fibre (ele, assoc_fibre) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  ! out: f_assoc_fibre 0D_PTR_type
+  if (c_associated(assoc_fibre))   call c_f_pointer(assoc_fibre, f_assoc_fibre)
   f_assoc_fibre => pointer_to_fibre(f_ele)
 
   ! out: f_assoc_fibre 0D_PTR_type
@@ -21897,6 +22607,8 @@ subroutine fortran_pointer_to_field_ele (ele, ix_field_ele, dz_offset, field_ele
   else
     f_dz_offset_ptr => null()
   endif
+  ! out: f_field_ele 0D_PTR_type
+  if (c_associated(field_ele))   call c_f_pointer(field_ele, f_field_ele)
   f_field_ele => pointer_to_field_ele(f_ele, f_ix_field_ele, f_dz_offset)
 
   ! out: f_dz_offset 0D_NOT_real
@@ -21928,6 +22640,8 @@ subroutine fortran_pointer_to_girder (ele, ix_slave_back, girder) bind(c)
   else
     f_ix_slave_back_ptr => null()
   endif
+  ! out: f_girder 0D_PTR_type
+  if (c_associated(girder))   call c_f_pointer(girder, f_girder)
   f_girder => pointer_to_girder(f_ele, f_ix_slave_back)
 
   ! out: f_ix_slave_back 0D_NOT_integer
@@ -21995,6 +22709,8 @@ subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord
   else
     f_ix_ic_ptr => null()
   endif
+  ! out: f_lord_ptr 0D_PTR_type
+  if (c_associated(lord_ptr))   call c_f_pointer(lord_ptr, f_lord_ptr)
   f_lord_ptr => pointer_to_lord(f_slave, f_ix_lord, f_control, f_ix_slave_back, &
       f_lord_type_ptr, f_ix_control, f_ix_ic)
 
@@ -22037,6 +22753,8 @@ subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lo
   endif
   ! out: f_super_lord 0D_PTR_type
   if (c_associated(super_lord))   call c_f_pointer(super_lord, f_super_lord)
+  ! out: f_multi_lord 0D_PTR_type
+  if (c_associated(multi_lord))   call c_f_pointer(multi_lord, f_multi_lord)
   f_multi_lord => pointer_to_multipass_lord(f_ele, f_ix_pass, f_super_lord)
 
   ! out: f_ix_pass 0D_NOT_integer
@@ -22097,6 +22815,9 @@ subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow
   else
     f_follow_fork_native_ptr => null()
   endif
+  ! out: f_next_ele 0D_PTR_type
+  if (.not. c_associated(next_ele)) return
+  call c_f_pointer(next_ele, f_next_ele)
   f_next_ele => pointer_to_next_ele(f_this_ele, f_offset_ptr, f_skip_beginning_native_ptr, &
       f_follow_fork_native_ptr)
 
@@ -22163,6 +22884,8 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   else
     f_ix_ic_ptr => null()
   endif
+  ! out: f_slave_ptr 0D_PTR_type
+  if (c_associated(slave_ptr))   call c_f_pointer(slave_ptr, f_slave_ptr)
   f_slave_ptr => pointer_to_slave(f_lord, f_ix_slave, f_control, f_lord_type_ptr, &
       f_ix_lord_back, f_ix_control, f_ix_ic)
 
@@ -22233,6 +22956,8 @@ subroutine fortran_pointer_to_super_lord (slave, control, ix_slave_back, ix_cont
   else
     f_lord_type_ptr => null()
   endif
+  ! out: f_lord_ptr 0D_PTR_type
+  if (c_associated(lord_ptr))   call c_f_pointer(lord_ptr, f_lord_ptr)
   f_lord_ptr => pointer_to_super_lord(f_slave, f_control, f_ix_slave_back, f_ix_control, &
       f_ix_ic, f_lord_type_ptr)
 
@@ -22324,6 +23049,8 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
   else
     f_yy_ptr => null()
   endif
+  ! out: f_pt 0D_PTR_type
+  if (c_associated(pt))   call c_f_pointer(pt, f_pt)
   f_pt => pointer_to_surface_displacement_pt(f_ele, f_nearest, f_x, f_y, f_ix, f_iy, &
       f_extend_grid_native_ptr, f_xx, f_yy)
 
@@ -22415,6 +23142,8 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
   else
     f_yy_ptr => null()
   endif
+  ! out: f_pt 0D_PTR_type
+  if (c_associated(pt))   call c_f_pointer(pt, f_pt)
   f_pt => pointer_to_surface_segmented_pt(f_ele, f_nearest, f_x, f_y, f_ix, f_iy, &
       f_extend_grid_native_ptr, f_xx, f_yy)
 
@@ -22453,6 +23182,8 @@ subroutine fortran_pointer_to_wake_ele (ele, delta_s, wake_ele) bind(c)
   else
     f_delta_s_ptr => null()
   endif
+  ! out: f_wake_ele 0D_PTR_type
+  if (c_associated(wake_ele))   call c_f_pointer(wake_ele, f_wake_ele)
   f_wake_ele => pointer_to_wake_ele(f_ele, f_delta_s)
 
   ! out: f_delta_s 0D_NOT_real
@@ -22502,6 +23233,8 @@ subroutine fortran_pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall, w
   else
     f_is_branch_wall_ptr => null()
   endif
+  ! out: f_wall3d 0D_PTR_type
+  if (c_associated(wall3d))   call c_f_pointer(wall3d, f_wall3d)
   f_wall3d => pointer_to_wall3d(f_ele, f_ix_wall_ptr, f_ds_offset, f_is_branch_wall)
 
   ! out: f_ds_offset 0D_NOT_real
@@ -22527,6 +23260,13 @@ subroutine fortran_polar_to_spinor (polar, spinor) bind(c)
   ! in: f_polar 0D_NOT_type
   if (.not. c_associated(polar)) return
   call c_f_pointer(polar, f_polar)
+  !! general array (1D_NOT_complex) out
+  if (c_associated(spinor%data_ptr)) then
+    call c_f_pointer(spinor%data_ptr, f_spinor_ptr, [spinor%dims(1)])
+    ! output-only
+  else
+    f_spinor_ptr => null()
+  endif
   f_spinor = polar_to_spinor(f_polar)
 
   ! out: f_spinor 1D_NOT_complex
@@ -22551,6 +23291,13 @@ subroutine fortran_polar_to_vec (polar, vec) bind(c)
   ! in: f_polar 0D_NOT_type
   if (.not. c_associated(polar)) return
   call c_f_pointer(polar, f_polar)
+  !! general array (1D_NOT_real) out
+  if (c_associated(vec%data_ptr)) then
+    call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
+    ! output-only
+  else
+    f_vec_ptr => null()
+  endif
   f_vec = polar_to_vec(f_polar)
 
   ! out: f_vec 1D_NOT_real
@@ -22623,7 +23370,7 @@ subroutine fortran_psi_prime_sca (t, p, dpdt, args) bind(c)
   f_t = t
   ! in: f_p 0D_NOT_real
   f_p = p
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(args%data_ptr)) then
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args = f_args_ptr(:)
@@ -22719,14 +23466,14 @@ subroutine fortran_ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max,
   else
     f_use_2nd_order_native_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(crossover%data_ptr)) then
     call c_f_pointer(crossover%data_ptr, f_crossover_ptr, [crossover%dims(1)])
     f_crossover = f_crossover_ptr(:)
   else
     f_crossover_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(crossover_wiggler%data_ptr)) then
     call c_f_pointer(crossover_wiggler%data_ptr, f_crossover_wiggler_ptr, [crossover_wiggler%dims(1)])
     f_crossover_wiggler = f_crossover_wiggler_ptr(:)
@@ -22822,7 +23569,7 @@ subroutine fortran_ptc_emit_calc (ele, norm_mode, sigma_mat, closed_orb) bind(c)
   ! out: f_norm_mode 0D_NOT_type
   if (.not. c_associated(norm_mode)) return
   call c_f_pointer(norm_mode, f_norm_mode)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(sigma_mat%data_ptr)) then
     call c_f_pointer(sigma_mat%data_ptr, f_sigma_mat_ptr, [product(sigma_mat%dims(1:sigma_mat%rank))])
     call vec2mat(f_sigma_mat_ptr, f_sigma_mat)
@@ -22885,14 +23632,14 @@ subroutine fortran_ptc_layouts_resplit (dKL_max, l_max, l_max_drift_only, bend_d
   else
     f_even_native_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(crossover%data_ptr)) then
     call c_f_pointer(crossover%data_ptr, f_crossover_ptr, [crossover%dims(1)])
     f_crossover = f_crossover_ptr(:)
   else
     f_crossover_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(crossover_wiggler%data_ptr)) then
     call c_f_pointer(crossover_wiggler%data_ptr, f_crossover_wiggler_ptr, [crossover_wiggler%dims(1)])
     f_crossover_wiggler = f_crossover_wiggler_ptr(:)
@@ -22986,7 +23733,7 @@ subroutine fortran_ptc_spin_calc (ele, norm_mode, sigma_mat, closed_orb) bind(c)
   ! out: f_norm_mode 0D_NOT_type
   if (.not. c_associated(norm_mode)) return
   call c_f_pointer(norm_mode, f_norm_mode)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(sigma_mat%data_ptr)) then
     call c_f_pointer(sigma_mat%data_ptr, f_sigma_mat_ptr, [product(sigma_mat%dims(1:sigma_mat%rank))])
     call vec2mat(f_sigma_mat_ptr, f_sigma_mat)
@@ -23171,7 +23918,7 @@ subroutine fortran_pwd_mat (lat, t6, inductance, sig_z, t6_pwd) bind(c)
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(t6%data_ptr)) then
     call c_f_pointer(t6%data_ptr, f_t6_ptr, [product(t6%dims(1:t6%rank))])
     call vec2mat(f_t6_ptr, f_t6)
@@ -23182,10 +23929,17 @@ subroutine fortran_pwd_mat (lat, t6, inductance, sig_z, t6_pwd) bind(c)
   f_inductance = inductance
   ! in: f_sig_z 0D_NOT_real
   f_sig_z = sig_z
+  !! general array (2D_NOT_real) out
+  if (c_associated(t6_pwd%data_ptr)) then
+    call c_f_pointer(t6_pwd%data_ptr, f_t6_pwd_ptr, [product(t6_pwd%dims(1:t6_pwd%rank))])
+    ! output-only
+  else
+    f_t6_pwd_ptr => null()
+  endif
   f_t6_pwd = pwd_mat(f_lat, f_t6, f_inductance, f_sig_z)
 
   ! out: f_t6_pwd 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_t6_pwd', c_name='t6_pwd', python_name='t6_pwd', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=682, definition='REAL(rp) t6_pwd(6,6)', type_info=TypeInformation(type='REAL', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='t6_pwd', comment='', default=None), intent='out', description='1-turn transfer matrix with PWD defocusing applied', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(t6_pwd%data_ptr)) f_t6_pwd_ptr = mat2vec(f_t6_pwd, product(t6_pwd%dims(1:t6_pwd%rank)))
 end subroutine
 subroutine fortran_rad1_damp_and_stoc_mats (ele, include_opening_angle, orb_in, orb_out, &
     rad_map, g2_tol, g3_tol, err_flag, ele0, rad_int1) bind(c)
@@ -23325,6 +24079,13 @@ subroutine fortran_rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rm
     return
   endif
   call c_f_pointer(mode, f_mode)
+  !! general array (2D_NOT_real) out
+  if (c_associated(xfer_nodamp_mat%data_ptr)) then
+    call c_f_pointer(xfer_nodamp_mat%data_ptr, f_xfer_nodamp_mat_ptr, [product(xfer_nodamp_mat%dims(1:xfer_nodamp_mat%rank))])
+    ! output-only
+  else
+    f_xfer_nodamp_mat_ptr => null()
+  endif
   !! type array (1D_NOT_type)
   if (c_associated(closed_orbit%data_ptr)) then
     call c_f_pointer(closed_orbit%data_ptr, f_closed_orbit, [closed_orbit%dims(1)])
@@ -23341,7 +24102,7 @@ subroutine fortran_rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rm
   ! out: f_mode 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_xfer_nodamp_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_xfer_nodamp_mat', c_name='xfer_nodamp_mat', python_name='xfer_nodamp_mat', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=276, definition='real(rp) sig_mat(6,6), mt(6,6), xfer_nodamp_mat(6,6), tol, length', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='xfer_nodamp_mat', comment='', default=None), intent='out', description='Transfer matrix without damping.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(xfer_nodamp_mat%data_ptr)) f_xfer_nodamp_mat_ptr = mat2vec(f_xfer_nodamp_mat, product(xfer_nodamp_mat%dims(1:xfer_nodamp_mat%rank)))
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
@@ -23390,6 +24151,13 @@ subroutine fortran_rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, 
   ! in: f_orb_out 0D_NOT_type
   if (.not. c_associated(orb_out)) return
   call c_f_pointer(orb_out, f_orb_out)
+  !! general array (1D_NOT_real) out
+  if (c_associated(int_g%data_ptr)) then
+    call c_f_pointer(int_g%data_ptr, f_int_g_ptr, [int_g%dims(1)])
+    ! output-only
+  else
+    f_int_g_ptr => null()
+  endif
   ! in: f_int_g2 0D_NOT_real
   f_int_g2 = int_g2
   ! in: f_g_tol 0D_NOT_real
@@ -23421,9 +24189,6 @@ subroutine fortran_radiation_integrals (lat, orbit, mode, ix_cache, ix_branch, r
   type(lat_struct), pointer :: f_lat
   type(array_descriptor_t), intent(in) :: orbit
   type(coord_struct), pointer :: f_orbit(:)
-  type(c_ptr), intent(in), value :: ix_cache  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_cache
-  integer(c_int), pointer :: f_ix_cache_ptr
   type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
   integer(c_int) :: f_ix_branch
   integer(c_int), pointer :: f_ix_branch_ptr
@@ -23432,6 +24197,10 @@ subroutine fortran_radiation_integrals (lat, orbit, mode, ix_cache, ix_branch, r
   type(normal_modes_struct), pointer :: f_mode
   type(c_ptr), value :: rad_int_by_ele  ! 0D_NOT_type
   type(rad_int_all_ele_struct), pointer :: f_rad_int_by_ele
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: ix_cache  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_cache
+  integer(c_int), pointer :: f_ix_cache_ptr
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
@@ -23445,7 +24214,7 @@ subroutine fortran_radiation_integrals (lat, orbit, mode, ix_cache, ix_branch, r
   ! out: f_mode 0D_NOT_type
   if (.not. c_associated(mode)) return
   call c_f_pointer(mode, f_mode)
-  ! in: f_ix_cache 0D_NOT_integer
+  ! inout: f_ix_cache 0D_NOT_integer
   if (c_associated(ix_cache)) then
     call c_f_pointer(ix_cache, f_ix_cache_ptr)
   else
@@ -23464,6 +24233,8 @@ subroutine fortran_radiation_integrals (lat, orbit, mode, ix_cache, ix_branch, r
 
   ! out: f_mode 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
+  ! inout: f_ix_cache 0D_NOT_integer
+  ! no output conversion for f_ix_cache
   ! out: f_rad_int_by_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -23615,7 +24386,7 @@ subroutine fortran_rchomp (rel, plc, out) bind(c)
   f_out = rchomp(f_rel, f_plc)
 
   ! out: f_out 0D_NOT_character
-  call c_f_pointer(out, f_out_ptr, [len_trim(f_out) + 1]) ! output-only string
+  call c_f_pointer(out, f_out_ptr, [len_trim(f_out) + 1])
   call to_c_str(f_out, f_out_ptr)
 end subroutine
 subroutine fortran_re_allocate_eles (eles, n, save_old, exact) bind(c)
@@ -23777,7 +24548,7 @@ subroutine fortran_re_str_qp (rel, str_out) bind(c)
   f_str_out = re_str(f_rel)
 
   ! out: f_str_out 0D_NOT_character
-  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
+  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
 subroutine fortran_re_str_rp (rel, str_out) bind(c)
@@ -23797,7 +24568,7 @@ subroutine fortran_re_str_rp (rel, str_out) bind(c)
   f_str_out = re_str(f_rel)
 
   ! out: f_str_out 0D_NOT_character
-  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
+  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
 subroutine fortran_read_beam_ascii (file_name, beam, beam_init, err_flag) bind(c)
@@ -24308,14 +25079,21 @@ subroutine fortran_release_rad_int_cache (ix_cache) bind(c)
 
   use array_desc_mod
   implicit none
-  ! ** In parameters **
-  integer(c_int) :: ix_cache  ! 0D_NOT_integer
-  integer :: f_ix_cache
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: ix_cache  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_cache
+  integer(c_int), pointer :: f_ix_cache_ptr
   ! ** End of parameters **
-  ! in: f_ix_cache 0D_NOT_integer
-  f_ix_cache = ix_cache
-  call release_rad_int_cache(f_ix_cache)
+  ! inout: f_ix_cache 0D_NOT_integer
+  if (c_associated(ix_cache)) then
+    call c_f_pointer(ix_cache, f_ix_cache_ptr)
+  else
+    f_ix_cache_ptr => null()
+  endif
+  call release_rad_int_cache(f_ix_cache_ptr)
 
+  ! inout: f_ix_cache 0D_NOT_integer
+  ! no output conversion for f_ix_cache
 end subroutine
 subroutine fortran_remove_constant_taylor (taylor_in, taylor_out, c0, &
     remove_higher_order_terms) bind(c)
@@ -24347,7 +25125,7 @@ subroutine fortran_remove_constant_taylor (taylor_in, taylor_out, c0, &
   else
     f_taylor_out => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(c0%data_ptr)) then
     call c_f_pointer(c0%data_ptr, f_c0_ptr, [c0%dims(1)])
     f_c0 => f_c0_ptr
@@ -24507,7 +25285,7 @@ subroutine fortran_rf_coupler_kick (ele, param, particle_at, phase, orbit, mat6,
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -24758,7 +25536,14 @@ subroutine fortran_rk_time_step1 (ele, param, rf_time, orb, dt, new_orb, r_err, 
   ! inout: f_new_orb 0D_NOT_type
   if (.not. c_associated(new_orb)) return
   call c_f_pointer(new_orb, f_new_orb)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) out
+  if (c_associated(r_err%data_ptr)) then
+    call c_f_pointer(r_err%data_ptr, f_r_err_ptr, [r_err%dims(1)])
+    ! output-only
+  else
+    f_r_err_ptr => null()
+  endif
+  !! general array (1D_NOT_real) in
   if (c_associated(dr_dt%data_ptr)) then
     call c_f_pointer(dr_dt%data_ptr, f_dr_dt_ptr, [dr_dt%dims(1)])
     f_dr_dt = f_dr_dt_ptr(:)
@@ -24802,7 +25587,7 @@ subroutine fortran_rotate3 (vec, angle, rvec) bind(c)
   real(rp) :: f_vec(3)
   real(c_double), pointer :: f_vec_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(vec%data_ptr)) then
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec = f_vec_ptr(:)
@@ -24811,6 +25596,13 @@ subroutine fortran_rotate3 (vec, angle, rvec) bind(c)
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
+  !! general array (1D_NOT_real) inout
+  if (c_associated(rvec%data_ptr)) then
+    call c_f_pointer(rvec%data_ptr, f_rvec_ptr, [rvec%dims(1)])
+    ! output-only
+  else
+    f_rvec_ptr => null()
+  endif
   f_rvec = rotate3(f_vec, f_angle)
 
   ! out: f_rvec 1D_NOT_real
@@ -24848,14 +25640,14 @@ subroutine fortran_rotate_em_field (field, w_mat, w_inv, calc_dfield, calc_poten
   ! inout: f_field 0D_NOT_type
   if (.not. c_associated(field)) return
   call c_f_pointer(field, f_field)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(w_mat%data_ptr)) then
     call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
     call vec2mat(f_w_mat_ptr, f_w_mat)
   else
     f_w_mat_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(w_inv%data_ptr)) then
     call c_f_pointer(w_inv%data_ptr, f_w_inv_ptr, [product(w_inv%dims(1:w_inv%rank))])
     call vec2mat(f_w_inv_ptr, f_w_inv)
@@ -24927,7 +25719,7 @@ subroutine fortran_rotate_for_curved_surface (ele, orbit, set, rot_mat) bind(c)
   call c_f_pointer(orbit, f_orbit)
   ! in: f_set 0D_NOT_logical
   f_set = set
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(rot_mat%data_ptr)) then
     call c_f_pointer(rot_mat%data_ptr, f_rot_mat_ptr, [product(rot_mat%dims(1:rot_mat%rank))])
     call vec2mat(f_rot_mat_ptr, f_rot_mat)
@@ -24954,19 +25746,26 @@ subroutine fortran_rotate_spin (rot_vec, spin, qrot) bind(c)
   real(rp) :: f_spin(3)
   real(c_double), pointer :: f_spin_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(rot_vec%data_ptr)) then
     call c_f_pointer(rot_vec%data_ptr, f_rot_vec_ptr, [rot_vec%dims(1)])
     f_rot_vec = f_rot_vec_ptr(:)
   else
     f_rot_vec_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(spin%data_ptr)) then
     call c_f_pointer(spin%data_ptr, f_spin_ptr, [spin%dims(1)])
     f_spin = f_spin_ptr(:)
   else
     f_spin_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(qrot%data_ptr)) then
+    call c_f_pointer(qrot%data_ptr, f_qrot_ptr, [qrot%dims(1)])
+    ! output-only
+  else
+    f_qrot_ptr => null()
   endif
   call rotate_spin(f_rot_vec, f_spin, f_qrot)
 
@@ -25032,21 +25831,21 @@ subroutine fortran_rotate_spin_given_field (orbit, sign_z_vel, BL, EL, qrot) bin
   call c_f_pointer(orbit, f_orbit)
   ! in: f_sign_z_vel 0D_NOT_integer
   f_sign_z_vel = sign_z_vel
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(BL%data_ptr)) then
     call c_f_pointer(BL%data_ptr, f_BL_ptr, [BL%dims(1)])
     f_BL = f_BL_ptr(:)
   else
     f_BL_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(EL%data_ptr)) then
     call c_f_pointer(EL%data_ptr, f_EL_ptr, [EL%dims(1)])
     f_EL = f_EL_ptr(:)
   else
     f_EL_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(qrot%data_ptr)) then
     call c_f_pointer(qrot%data_ptr, f_qrot_ptr, [qrot%dims(1)])
     f_qrot = f_qrot_ptr(:)
@@ -25134,7 +25933,7 @@ subroutine fortran_sad_mult_hard_bend_edge_kick (ele, param, particle_at, orbit,
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -25189,7 +25988,7 @@ subroutine fortran_sad_soft_bend_edge_kick (ele, param, particle_at, orb, mat6, 
   ! inout: f_orb 0D_NOT_type
   if (.not. c_associated(orb)) return
   call c_f_pointer(orb, f_orb)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -25368,7 +26167,7 @@ subroutine fortran_save_a_step (track, ele, param, local_ref_frame, orb, s_rel, 
   else
     f_save_field_native_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -25439,7 +26238,7 @@ subroutine fortran_sbend_body_with_k1_map (ele, dg, b1, param, n_step, orbit, ma
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -25467,12 +26266,8 @@ subroutine fortran_sc_adaptive_step (bunch, ele, include_image, t_now, dt_step, 
   ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  logical(c_bool) :: include_image  ! 0D_NOT_logical
-  logical :: f_include_image
   real(c_double) :: t_now  ! 0D_NOT_real
   real(rp) :: f_t_now
-  real(c_double) :: dt_step  ! 0D_NOT_real
-  real(rp) :: f_dt_step
   type(array_descriptor_t), intent(in) :: sc_field
   type(em_field_struct), pointer :: f_sc_field(:)
   ! ** Out parameters **
@@ -25482,6 +26277,14 @@ subroutine fortran_sc_adaptive_step (bunch, ele, include_image, t_now, dt_step, 
   ! ** Inout parameters **
   type(c_ptr), value :: bunch  ! 0D_NOT_type
   type(bunch_struct), pointer :: f_bunch
+  type(c_ptr), intent(in), value :: include_image  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_include_image
+  logical, target :: f_include_image_native
+  logical, pointer :: f_include_image_native_ptr
+  logical(c_bool), pointer :: f_include_image_ptr
+  type(c_ptr), intent(in), value :: dt_step  ! 0D_NOT_real
+  real(c_double) :: f_dt_step
+  real(c_double), pointer :: f_dt_step_ptr
   ! ** End of parameters **
   ! inout: f_bunch 0D_NOT_type
   if (.not. c_associated(bunch)) return
@@ -25489,21 +26292,40 @@ subroutine fortran_sc_adaptive_step (bunch, ele, include_image, t_now, dt_step, 
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! in: f_include_image 0D_NOT_logical
-  f_include_image = include_image
+  ! inout: f_include_image 0D_NOT_logical
+  if (c_associated(include_image)) then
+    call c_f_pointer(include_image, f_include_image_ptr)
+    f_include_image_native = f_include_image_ptr
+    f_include_image_native_ptr => f_include_image_native
+  else
+    f_include_image_native_ptr => null()
+  endif
   ! in: f_t_now 0D_NOT_real
   f_t_now = t_now
-  ! in: f_dt_step 0D_NOT_real
-  f_dt_step = dt_step
+  ! inout: f_dt_step 0D_NOT_real
+  if (c_associated(dt_step)) then
+    call c_f_pointer(dt_step, f_dt_step_ptr)
+  else
+    f_dt_step_ptr => null()
+  endif
   !! type array (1D_NOT_type)
   if (c_associated(sc_field%data_ptr)) then
     call c_f_pointer(sc_field%data_ptr, f_sc_field, [sc_field%dims(1)])
   else
     f_sc_field => null()
   endif
-  call sc_adaptive_step(f_bunch, f_ele, f_include_image, f_t_now, f_dt_step, f_dt_next, &
-      f_sc_field)
+  call sc_adaptive_step(f_bunch, f_ele, f_include_image_native_ptr, f_t_now, f_dt_step_ptr, &
+      f_dt_next, f_sc_field)
 
+  ! inout: f_include_image 0D_NOT_logical
+  if (c_associated(include_image)) then
+    call c_f_pointer(include_image, f_include_image_ptr)
+    f_include_image_ptr = f_include_image_native
+  else
+    ! f_include_image unset
+  endif
+  ! inout: f_dt_step 0D_NOT_real
+  ! no output conversion for f_dt_step
   ! out: f_dt_next 0D_NOT_real
   call c_f_pointer(dt_next, f_dt_next_ptr)
   f_dt_next_ptr = f_dt_next
@@ -25516,8 +26338,6 @@ subroutine fortran_sc_step (bunch, ele, include_image, t_end, sc_field, n_emit) 
   ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  logical(c_bool) :: include_image  ! 0D_NOT_logical
-  logical :: f_include_image
   real(c_double) :: t_end  ! 0D_NOT_real
   real(rp) :: f_t_end
   type(array_descriptor_t), intent(in) :: sc_field
@@ -25529,6 +26349,11 @@ subroutine fortran_sc_step (bunch, ele, include_image, t_end, sc_field, n_emit) 
   ! ** Inout parameters **
   type(c_ptr), value :: bunch  ! 0D_NOT_type
   type(bunch_struct), pointer :: f_bunch
+  type(c_ptr), intent(in), value :: include_image  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_include_image
+  logical, target :: f_include_image_native
+  logical, pointer :: f_include_image_native_ptr
+  logical(c_bool), pointer :: f_include_image_ptr
   ! ** End of parameters **
   ! inout: f_bunch 0D_NOT_type
   if (.not. c_associated(bunch)) return
@@ -25536,8 +26361,14 @@ subroutine fortran_sc_step (bunch, ele, include_image, t_end, sc_field, n_emit) 
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! in: f_include_image 0D_NOT_logical
-  f_include_image = include_image
+  ! inout: f_include_image 0D_NOT_logical
+  if (c_associated(include_image)) then
+    call c_f_pointer(include_image, f_include_image_ptr)
+    f_include_image_native = f_include_image_ptr
+    f_include_image_native_ptr => f_include_image_native
+  else
+    f_include_image_native_ptr => null()
+  endif
   ! in: f_t_end 0D_NOT_real
   f_t_end = t_end
   !! type array (1D_NOT_type)
@@ -25552,8 +26383,15 @@ subroutine fortran_sc_step (bunch, ele, include_image, t_end, sc_field, n_emit) 
   else
     f_n_emit_ptr => null()
   endif
-  call sc_step(f_bunch, f_ele, f_include_image, f_t_end, f_sc_field, f_n_emit)
+  call sc_step(f_bunch, f_ele, f_include_image_native_ptr, f_t_end, f_sc_field, f_n_emit)
 
+  ! inout: f_include_image 0D_NOT_logical
+  if (c_associated(include_image)) then
+    call c_f_pointer(include_image, f_include_image_ptr)
+    f_include_image_ptr = f_include_image_native
+  else
+    ! f_include_image unset
+  endif
   ! out: f_n_emit 0D_NOT_integer
   ! no output conversion for f_n_emit
 end subroutine
@@ -25984,21 +26822,29 @@ subroutine fortran_set_fringe_on_off (fringe_at, ele_end, on_or_off) bind(c)
   use array_desc_mod
   implicit none
   ! ** In parameters **
-  real(c_double) :: fringe_at  ! 0D_NOT_real
-  real(rp) :: f_fringe_at
   integer(c_int) :: ele_end  ! 0D_NOT_integer
   integer :: f_ele_end
   integer(c_int) :: on_or_off  ! 0D_NOT_integer
   integer :: f_on_or_off
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: fringe_at  ! 0D_NOT_real
+  real(c_double) :: f_fringe_at
+  real(c_double), pointer :: f_fringe_at_ptr
   ! ** End of parameters **
-  ! in: f_fringe_at 0D_NOT_real
-  f_fringe_at = fringe_at
+  ! inout: f_fringe_at 0D_NOT_real
+  if (c_associated(fringe_at)) then
+    call c_f_pointer(fringe_at, f_fringe_at_ptr)
+  else
+    f_fringe_at_ptr => null()
+  endif
   ! in: f_ele_end 0D_NOT_integer
   f_ele_end = ele_end
   ! in: f_on_or_off 0D_NOT_integer
   f_on_or_off = on_or_off
-  call set_fringe_on_off(f_fringe_at, f_ele_end, f_on_or_off)
+  call set_fringe_on_off(f_fringe_at_ptr, f_ele_end, f_on_or_off)
 
+  ! inout: f_fringe_at 0D_NOT_real
+  ! no output conversion for f_fringe_at
 end subroutine
 subroutine fortran_set_lords_status_stale (ele, stat_group, control_bookkeeping, flag) bind(c)
 
@@ -26290,17 +27136,25 @@ subroutine fortran_set_ptc_quiet (channel, set, old_val) bind(c)
   integer :: f_channel
   logical(c_bool) :: set  ! 0D_NOT_logical
   logical :: f_set
-  integer(c_int) :: old_val  ! 0D_NOT_integer
-  integer :: f_old_val
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: old_val  ! 0D_NOT_integer
+  integer(c_int) :: f_old_val
+  integer(c_int), pointer :: f_old_val_ptr
   ! ** End of parameters **
   ! in: f_channel 0D_NOT_integer
   f_channel = channel
   ! in: f_set 0D_NOT_logical
   f_set = set
-  ! in: f_old_val 0D_NOT_integer
-  f_old_val = old_val
-  call set_ptc_quiet(f_channel, f_set, f_old_val)
+  ! inout: f_old_val 0D_NOT_integer
+  if (c_associated(old_val)) then
+    call c_f_pointer(old_val, f_old_val_ptr)
+  else
+    f_old_val_ptr => null()
+  endif
+  call set_ptc_quiet(f_channel, f_set, f_old_val_ptr)
 
+  ! inout: f_old_val 0D_NOT_integer
+  ! no output conversion for f_old_val
 end subroutine
 subroutine fortran_set_ptc_verbose (on) bind(c)
 
@@ -26396,7 +27250,7 @@ subroutine fortran_set_tune (phi_a_set, phi_b_set, dk1, eles, branch, orb, print
   f_phi_a_set = phi_a_set
   ! in: f_phi_b_set 0D_NOT_real
   f_phi_b_set = phi_b_set
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(dk1%data_ptr)) then
     call c_f_pointer(dk1%data_ptr, f_dk1_ptr, [dk1%dims(1)])
     f_dk1 => f_dk1_ptr
@@ -26593,7 +27447,7 @@ subroutine fortran_sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad) 
   real(rp) :: f_sigma_mat_bmad(6,6)
   real(c_double), pointer :: f_sigma_mat_bmad_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(sigma_mat_ptc%data_ptr)) then
     call c_f_pointer(sigma_mat_ptc%data_ptr, f_sigma_mat_ptc_ptr, [product(sigma_mat_ptc%dims(1:sigma_mat_ptc%rank))])
     call vec2mat(f_sigma_mat_ptc_ptr, f_sigma_mat_ptc)
@@ -26602,10 +27456,17 @@ subroutine fortran_sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad) 
   endif
   ! in: f_beta0 0D_NOT_real
   f_beta0 = beta0
+  !! general array (2D_NOT_real) out
+  if (c_associated(sigma_mat_bmad%data_ptr)) then
+    call c_f_pointer(sigma_mat_bmad%data_ptr, f_sigma_mat_bmad_ptr, [product(sigma_mat_bmad%dims(1:sigma_mat_bmad%rank))])
+    ! output-only
+  else
+    f_sigma_mat_bmad_ptr => null()
+  endif
   call sigma_mat_ptc_to_bmad(f_sigma_mat_ptc, f_beta0, f_sigma_mat_bmad)
 
   ! out: f_sigma_mat_bmad 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_sigma_mat_bmad', c_name='sigma_mat_bmad', python_name='sigma_mat_bmad', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=1331, definition='real(rp) sigma_mat_bmad(6,6), sigma_mat_ptc(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='sigma_mat_bmad', comment='', default=None), intent='out', description='Bmad sigma matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(sigma_mat_bmad%data_ptr)) f_sigma_mat_bmad_ptr = mat2vec(f_sigma_mat_bmad, product(sigma_mat_bmad%dims(1:sigma_mat_bmad%rank)))
 end subroutine
 subroutine fortran_significant_difference (value1, value2, abs_tol, rel_tol, is_different) &
     bind(c)
@@ -26751,7 +27612,7 @@ subroutine fortran_soft_quadrupole_edge_kick (ele, param, particle_at, orbit, ma
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -26813,7 +27674,7 @@ subroutine fortran_sol_quad_mat6_calc (ks_in, k1_in, tilt, length, ele, orbit, m
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -26857,7 +27718,7 @@ subroutine fortran_solve_psi_adaptive (t0, t1, p0, args, p1) bind(c)
   f_t1 = t1
   ! in: f_p0 0D_NOT_real
   f_p0 = p0
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(args%data_ptr)) then
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args = f_args_ptr(:)
@@ -26898,21 +27759,21 @@ subroutine fortran_solve_psi_fixed_steps (t0, t1, p0, args, t, p) bind(c)
   f_t1 = t1
   ! in: f_p0 0D_NOT_real
   f_p0 = p0
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(args%data_ptr)) then
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args = f_args_ptr(:)
   else
     f_args_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(t%data_ptr)) then
     call c_f_pointer(t%data_ptr, f_t_ptr, [t%dims(1)])
     f_t => f_t_ptr
   else
     f_t_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(p%data_ptr)) then
     call c_f_pointer(p%data_ptr, f_p_ptr, [p%dims(1)])
     f_p => f_p_ptr
@@ -26964,19 +27825,26 @@ subroutine fortran_spin_dn_dpz_from_mat8 (mat_1turn, dn_dpz_partial, error, dn_d
   real(rp) :: f_dn_dpz(3)
   real(c_double), pointer :: f_dn_dpz_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(mat_1turn%data_ptr)) then
     call c_f_pointer(mat_1turn%data_ptr, f_mat_1turn_ptr, [product(mat_1turn%dims(1:mat_1turn%rank))])
     call vec2mat(f_mat_1turn_ptr, f_mat_1turn)
   else
     f_mat_1turn_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(dn_dpz_partial%data_ptr)) then
     call c_f_pointer(dn_dpz_partial%data_ptr, f_dn_dpz_partial_ptr, [product(dn_dpz_partial%dims(1:dn_dpz_partial%rank))])
     call vec2mat(f_dn_dpz_partial_ptr, f_dn_dpz_partial)
   else
     f_dn_dpz_partial_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(dn_dpz%data_ptr)) then
+    call c_f_pointer(dn_dpz%data_ptr, f_dn_dpz_ptr, [dn_dpz%dims(1)])
+    ! output-only
+  else
+    f_dn_dpz_ptr => null()
   endif
   f_dn_dpz = spin_dn_dpz_from_mat8(f_mat_1turn, f_dn_dpz_partial, f_error)
 
@@ -27018,40 +27886,47 @@ subroutine fortran_spin_dn_dpz_from_qmap (orb_mat, q_map, dn_dpz_partial, dn_dpz
   real(rp) :: f_dn_dpz(3)
   real(c_double), pointer :: f_dn_dpz_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(orb_mat%data_ptr)) then
     call c_f_pointer(orb_mat%data_ptr, f_orb_mat_ptr, [product(orb_mat%dims(1:orb_mat%rank))])
     call vec2mat(f_orb_mat_ptr, f_orb_mat)
   else
     f_orb_mat_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(q_map%data_ptr)) then
     call c_f_pointer(q_map%data_ptr, f_q_map_ptr, [product(q_map%dims(1:q_map%rank))])
     call vec2mat(f_q_map_ptr, f_q_map)
   else
     f_q_map_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(dn_dpz_partial%data_ptr)) then
     call c_f_pointer(dn_dpz_partial%data_ptr, f_dn_dpz_partial_ptr, [product(dn_dpz_partial%dims(1:dn_dpz_partial%rank))])
     call vec2mat(f_dn_dpz_partial_ptr, f_dn_dpz_partial)
   else
     f_dn_dpz_partial_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(dn_dpz_partial2%data_ptr)) then
     call c_f_pointer(dn_dpz_partial2%data_ptr, f_dn_dpz_partial2_ptr, [product(dn_dpz_partial2%dims(1:dn_dpz_partial2%rank))])
     call vec2mat(f_dn_dpz_partial2_ptr, f_dn_dpz_partial2)
   else
     f_dn_dpz_partial2_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(n0%data_ptr)) then
     call c_f_pointer(n0%data_ptr, f_n0_ptr, [n0%dims(1)])
     f_n0 = f_n0_ptr(:)
   else
     f_n0_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(dn_dpz%data_ptr)) then
+    call c_f_pointer(dn_dpz%data_ptr, f_dn_dpz_ptr, [dn_dpz%dims(1)])
+    ! output-only
+  else
+    f_dn_dpz_ptr => null()
   endif
   f_dn_dpz = spin_dn_dpz_from_qmap(f_orb_mat, f_q_map, f_dn_dpz_partial, f_dn_dpz_partial2, &
       f_error, f_n0)
@@ -27074,7 +27949,7 @@ subroutine fortran_spin_map1_normalize (spin1) bind(c)
   real(rp) :: f_spin1(0:3,0:6)
   real(c_double), pointer :: f_spin1_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(spin1%data_ptr)) then
     call c_f_pointer(spin1%data_ptr, f_spin1_ptr, [product(spin1%dims(1:spin1%rank))])
     call vec2mat(f_spin1_ptr, f_spin1)
@@ -27103,14 +27978,14 @@ subroutine fortran_spin_mat8_resonance_strengths (orb_evec, mat8, xi_sum, xi_dif
   real(rp) :: f_xi_diff
   real(c_double), pointer :: f_xi_diff_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(orb_evec%data_ptr)) then
     call c_f_pointer(orb_evec%data_ptr, f_orb_evec_ptr, [orb_evec%dims(1)])
     f_orb_evec = f_orb_evec_ptr(:)
   else
     f_orb_evec_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(mat8%data_ptr)) then
     call c_f_pointer(mat8%data_ptr, f_mat8_ptr, [product(mat8%dims(1:mat8%rank))])
     call vec2mat(f_mat8_ptr, f_mat8)
@@ -27155,19 +28030,47 @@ subroutine fortran_spin_mat_to_eigen (orb_mat, spin_map, orb_eval, orb_evec, n0,
   logical :: f_error
   logical(c_bool), pointer :: f_error_ptr
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(orb_mat%data_ptr)) then
     call c_f_pointer(orb_mat%data_ptr, f_orb_mat_ptr, [product(orb_mat%dims(1:orb_mat%rank))])
     call vec2mat(f_orb_mat_ptr, f_orb_mat)
   else
     f_orb_mat_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(spin_map%data_ptr)) then
     call c_f_pointer(spin_map%data_ptr, f_spin_map_ptr, [product(spin_map%dims(1:spin_map%rank))])
     call vec2mat(f_spin_map_ptr, f_spin_map)
   else
     f_spin_map_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) out
+  if (c_associated(orb_eval%data_ptr)) then
+    call c_f_pointer(orb_eval%data_ptr, f_orb_eval_ptr, [orb_eval%dims(1)])
+    ! output-only
+  else
+    f_orb_eval_ptr => null()
+  endif
+  !! general array (2D_NOT_complex) out
+  if (c_associated(orb_evec%data_ptr)) then
+    call c_f_pointer(orb_evec%data_ptr, f_orb_evec_ptr, [product(orb_evec%dims(1:orb_evec%rank))])
+    ! output-only
+  else
+    f_orb_evec_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(n0%data_ptr)) then
+    call c_f_pointer(n0%data_ptr, f_n0_ptr, [n0%dims(1)])
+    ! output-only
+  else
+    f_n0_ptr => null()
+  endif
+  !! general array (2D_NOT_complex) out
+  if (c_associated(spin_evec%data_ptr)) then
+    call c_f_pointer(spin_evec%data_ptr, f_spin_evec_ptr, [product(spin_evec%dims(1:spin_evec%rank))])
+    ! output-only
+  else
+    f_spin_evec_ptr => null()
   endif
   call spin_mat_to_eigen(f_orb_mat, f_spin_map, f_orb_eval, f_orb_evec, f_n0, f_spin_evec, &
       f_error)
@@ -27178,14 +28081,14 @@ subroutine fortran_spin_mat_to_eigen (orb_mat, spin_map, orb_eval, orb_evec, n0,
     f_orb_eval_ptr = f_orb_eval(:)
   endif
   ! out: f_orb_evec 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_orb_evec', c_name='orb_evec', python_name='orb_evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2751, definition='complex(rp) orb_eval(6), orb_evec(6,6), spin_evec(6,3)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='orb_evec', comment='', default=None), intent='out', description='Orbital eigenvectors. orb_evec(j,:) is the j^th vector.', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(orb_evec%data_ptr)) f_orb_evec_ptr = mat2vec(f_orb_evec, product(orb_evec%dims(1:orb_evec%rank)))
   ! out: f_n0 1D_NOT_real
   if (c_associated(n0%data_ptr)) then
     call c_f_pointer(n0%data_ptr, f_n0_ptr, [n0%dims(1)])
     f_n0_ptr = f_n0(:)
   endif
   ! out: f_spin_evec 2D_NOT_complex
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_spin_evec', c_name='spin_evec', python_name='spin_evec', type='complex', kind='rp', pointer_type='NOT', array=['6', '3'], init_value=None, comment='', member=StructureMember(line=2751, definition='complex(rp) orb_eval(6), orb_evec(6,6), spin_evec(6,3)', type_info=TypeInformation(type='complex', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='spin_evec', comment='', default=None), intent='out', description='Spin eigenvectors. spin_evec(j,:) is the j^th vector.', doc_data_type='complex', doc_is_optional=False)
+  if (c_associated(spin_evec%data_ptr)) f_spin_evec_ptr = mat2vec(f_spin_evec, product(spin_evec%dims(1:spin_evec%rank)))
   ! out: f_error 0D_NOT_logical
   call c_f_pointer(error, f_error_ptr)
   f_error_ptr = f_error
@@ -27229,6 +28132,13 @@ subroutine fortran_spin_omega (field, orbit, sign_z_vel, phase_space_coords, ome
   else
     f_phase_space_coords_native_ptr => null()
   endif
+  !! general array (1D_NOT_real) inout
+  if (c_associated(omega%data_ptr)) then
+    call c_f_pointer(omega%data_ptr, f_omega_ptr, [omega%dims(1)])
+    ! output-only
+  else
+    f_omega_ptr => null()
+  endif
   f_omega = spin_omega(f_field, f_orbit, f_sign_z_vel, f_phase_space_coords_native_ptr)
 
   ! out: f_omega 1D_NOT_real
@@ -27256,14 +28166,14 @@ subroutine fortran_spin_quat_resonance_strengths (orb_evec, spin_q, xi_sum, xi_d
   real(rp) :: f_xi_diff
   real(c_double), pointer :: f_xi_diff_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(orb_evec%data_ptr)) then
     call c_f_pointer(orb_evec%data_ptr, f_orb_evec_ptr, [orb_evec%dims(1)])
     f_orb_evec = f_orb_evec_ptr(:)
   else
     f_orb_evec_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(spin_q%data_ptr)) then
     call c_f_pointer(spin_q%data_ptr, f_spin_q_ptr, [product(spin_q%dims(1:spin_q%rank))])
     call vec2mat(f_spin_q_ptr, f_spin_q)
@@ -27308,7 +28218,7 @@ subroutine fortran_spin_taylor_to_linear (spin_taylor, normalize, dref_orb, is_o
   endif
   ! in: f_normalize 0D_NOT_logical
   f_normalize = normalize
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(dref_orb%data_ptr)) then
     call c_f_pointer(dref_orb%data_ptr, f_dref_orb_ptr, [dref_orb%dims(1)])
     f_dref_orb = f_dref_orb_ptr(:)
@@ -27317,10 +28227,17 @@ subroutine fortran_spin_taylor_to_linear (spin_taylor, normalize, dref_orb, is_o
   endif
   ! in: f_is_on 0D_NOT_logical
   f_is_on = is_on
+  !! general array (2D_NOT_real) out
+  if (c_associated(spin_map1%data_ptr)) then
+    call c_f_pointer(spin_map1%data_ptr, f_spin_map1_ptr, [product(spin_map1%dims(1:spin_map1%rank))])
+    ! output-only
+  else
+    f_spin_map1_ptr => null()
+  endif
   f_spin_map1 = spin_taylor_to_linear(f_spin_taylor, f_normalize, f_dref_orb, f_is_on)
 
   ! out: f_spin_map1 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_spin_map1', c_name='spin_map1', python_name='spin_map1', type='real', kind='rp', pointer_type='NOT', array=['0:3', '0:6'], init_value=None, comment='', member=StructureMember(line=2784, definition='real(rp) dref_orb(6), spin_map1(0:3,0:6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='0:3,0:6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='spin_map1', comment='', default=None), intent='out', description='First order spin map.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(spin_map1%data_ptr)) f_spin_map1_ptr = mat2vec(f_spin_map1, product(spin_map1%dims(1:spin_map1%rank)))
 end subroutine
 subroutine fortran_spinor_to_polar (spinor, polar) bind(c)
 
@@ -27335,13 +28252,16 @@ subroutine fortran_spinor_to_polar (spinor, polar) bind(c)
   type(c_ptr), value :: polar  ! 0D_NOT_type
   type(spin_polar_struct), pointer :: f_polar
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(spinor%data_ptr)) then
     call c_f_pointer(spinor%data_ptr, f_spinor_ptr, [spinor%dims(1)])
     f_spinor = f_spinor_ptr(:)
   else
     f_spinor_ptr => null()
   endif
+  ! out: f_polar 0D_NOT_type
+  if (.not. c_associated(polar)) return
+  call c_f_pointer(polar, f_polar)
   f_polar = spinor_to_polar(f_spinor)
 
   ! out: f_polar 0D_NOT_type
@@ -27360,12 +28280,19 @@ subroutine fortran_spinor_to_vec (spinor, vec) bind(c)
   real(rp) :: f_vec(3)
   real(c_double), pointer :: f_vec_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(spinor%data_ptr)) then
     call c_f_pointer(spinor%data_ptr, f_spinor_ptr, [spinor%dims(1)])
     f_spinor = f_spinor_ptr(:)
   else
     f_spinor_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(vec%data_ptr)) then
+    call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
+    ! output-only
+  else
+    f_vec_ptr => null()
   endif
   f_vec = spinor_to_vec(f_spinor)
 
@@ -27398,14 +28325,14 @@ subroutine fortran_spline_fit_orbit (start_orb, end_orb, spline_x, spline_y) bin
   ! in: f_end_orb 0D_NOT_type
   if (.not. c_associated(end_orb)) return
   call c_f_pointer(end_orb, f_end_orb)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(spline_x%data_ptr)) then
     call c_f_pointer(spline_x%data_ptr, f_spline_x_ptr, [spline_x%dims(1)])
     f_spline_x = f_spline_x_ptr(:)
   else
     f_spline_x_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(spline_y%data_ptr)) then
     call c_f_pointer(spline_y%data_ptr, f_spline_y_ptr, [spline_y%dims(1)])
     f_spline_y = f_spline_y_ptr(:)
@@ -27547,7 +28474,7 @@ subroutine fortran_sprint_spin_taylor_map (ele, start_orbit) bind(c)
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(start_orbit%data_ptr)) then
     call c_f_pointer(start_orbit%data_ptr, f_start_orbit_ptr, [start_orbit%dims(1)])
     f_start_orbit = f_start_orbit_ptr(:)
@@ -27709,7 +28636,7 @@ subroutine fortran_srdt_lsq_solution (lat, var_indexes, ls_soln, n_slices_gen_op
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(var_indexes%data_ptr)) then
     call c_f_pointer(var_indexes%data_ptr, f_var_indexes_ptr, [var_indexes%dims(1)])
     f_var_indexes => f_var_indexes_ptr
@@ -27742,7 +28669,7 @@ subroutine fortran_srdt_lsq_solution (lat, var_indexes, ls_soln, n_slices_gen_op
   else
     f_chrom_set_y_opt_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(weight_in%data_ptr)) then
     call c_f_pointer(weight_in%data_ptr, f_weight_in_ptr, [weight_in%dims(1)])
     f_weight_in = f_weight_in_ptr(:)
@@ -27837,7 +28764,7 @@ subroutine fortran_string_attrib (attrib_name, ele, attrib_value) bind(c)
   call string_attrib(f_attrib_name, f_ele, f_attrib_value)
 
   ! out: f_attrib_value 0D_NOT_character
-  call c_f_pointer(attrib_value, f_attrib_value_ptr, [len_trim(f_attrib_value) + 1]) ! output-only string
+  call c_f_pointer(attrib_value, f_attrib_value_ptr, [len_trim(f_attrib_value) + 1])
   call to_c_str(f_attrib_value, f_attrib_value_ptr)
 end subroutine
 subroutine fortran_strong_beam_sigma_calc (ele, s_pos, sigma, bbi_const, dsigma_ds) bind(c)
@@ -27866,6 +28793,20 @@ subroutine fortran_strong_beam_sigma_calc (ele, s_pos, sigma, bbi_const, dsigma_
   call c_f_pointer(ele, f_ele)
   ! in: f_s_pos 0D_NOT_real
   f_s_pos = s_pos
+  !! general array (1D_NOT_real) out
+  if (c_associated(sigma%data_ptr)) then
+    call c_f_pointer(sigma%data_ptr, f_sigma_ptr, [sigma%dims(1)])
+    ! output-only
+  else
+    f_sigma_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(dsigma_ds%data_ptr)) then
+    call c_f_pointer(dsigma_ds%data_ptr, f_dsigma_ds_ptr, [dsigma_ds%dims(1)])
+    ! output-only
+  else
+    f_dsigma_ds_ptr => null()
+  endif
   call strong_beam_sigma_calc(f_ele, f_s_pos, f_sigma, f_bbi_const, f_dsigma_ds)
 
   ! out: f_sigma 1D_NOT_real
@@ -27917,34 +28858,37 @@ subroutine fortran_surface_grid_displacement (ele, x, y, err_flag, z, dz_dxy, ex
   real(rp) :: f_x
   real(c_double) :: y  ! 0D_NOT_real
   real(rp) :: f_y
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
-  logical :: f_err_flag
-  real(c_double) :: z  ! 0D_NOT_real
-  real(rp) :: f_z
-  type(array_descriptor_t), intent(in) :: dz_dxy
-  real(rp) :: f_dz_dxy(2)
-  real(c_double), pointer :: f_dz_dxy_ptr(:)
   type(c_ptr), intent(in), value :: extend_grid  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_extend_grid
   logical, target :: f_extend_grid_native
   logical, pointer :: f_extend_grid_native_ptr
   logical(c_bool), pointer :: f_extend_grid_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: z  ! 0D_NOT_real
+  real(rp) :: f_z
+  real(c_double), pointer :: f_z_ptr
+  type(array_descriptor_t), intent(in) :: dz_dxy
+  real(rp) :: f_dz_dxy(2)
+  real(c_double), pointer :: f_dz_dxy_ptr(:)
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
   ! in: f_x 0D_NOT_real
   f_x = x
   ! in: f_y 0D_NOT_real
   f_y = y
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
-  ! in: f_z 0D_NOT_real
-  f_z = z
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) out
   if (c_associated(dz_dxy%data_ptr)) then
     call c_f_pointer(dz_dxy%data_ptr, f_dz_dxy_ptr, [dz_dxy%dims(1)])
-    f_dz_dxy = f_dz_dxy_ptr(:)
+    ! output-only
   else
     f_dz_dxy_ptr => null()
   endif
@@ -27959,6 +28903,17 @@ subroutine fortran_surface_grid_displacement (ele, x, y, err_flag, z, dz_dxy, ex
   call surface_grid_displacement(f_ele, f_x, f_y, f_err_flag, f_z, f_dz_dxy, &
       f_extend_grid_native_ptr)
 
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+  ! out: f_z 0D_NOT_real
+  call c_f_pointer(z, f_z_ptr)
+  f_z_ptr = f_z
+  ! out: f_dz_dxy 1D_NOT_real
+  if (c_associated(dz_dxy%data_ptr)) then
+    call c_f_pointer(dz_dxy%data_ptr, f_dz_dxy_ptr, [dz_dxy%dims(1)])
+    f_dz_dxy_ptr = f_dz_dxy(:)
+  endif
 end subroutine
 subroutine fortran_symp_lie_bmad (ele, param, orbit, track, mat6, make_matrix, offset_ele) &
     bind(c)
@@ -28002,7 +28957,7 @@ subroutine fortran_symp_lie_bmad (ele, param, orbit, track, mat6, make_matrix, o
   call c_f_pointer(orbit, f_orbit)
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -28056,28 +29011,49 @@ subroutine fortran_t6_to_b123 (t6, abz_tunes, B1, B2, B3, err_flag) bind(c)
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(t6%data_ptr)) then
     call c_f_pointer(t6%data_ptr, f_t6_ptr, [product(t6%dims(1:t6%rank))])
     call vec2mat(f_t6_ptr, f_t6)
   else
     f_t6_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(abz_tunes%data_ptr)) then
     call c_f_pointer(abz_tunes%data_ptr, f_abz_tunes_ptr, [abz_tunes%dims(1)])
     f_abz_tunes = f_abz_tunes_ptr(:)
   else
     f_abz_tunes_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(B1%data_ptr)) then
+    call c_f_pointer(B1%data_ptr, f_B1_ptr, [product(B1%dims(1:B1%rank))])
+    ! output-only
+  else
+    f_B1_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(B2%data_ptr)) then
+    call c_f_pointer(B2%data_ptr, f_B2_ptr, [product(B2%dims(1:B2%rank))])
+    ! output-only
+  else
+    f_B2_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(B3%data_ptr)) then
+    call c_f_pointer(B3%data_ptr, f_B3_ptr, [product(B3%dims(1:B3%rank))])
+    ! output-only
+  else
+    f_B3_ptr => null()
+  endif
   call t6_to_b123(f_t6, f_abz_tunes, f_B1, f_B2, f_B3, f_err_flag)
 
   ! out: f_B1 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_B1', c_name='B1', python_name='B1', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=53, definition='real(rp) B1(6,6), B2(6,6), B3(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='B1', comment='', default=None), intent='out', description='Beta matrix associated with a-mode.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(B1%data_ptr)) f_B1_ptr = mat2vec(f_B1, product(B1%dims(1:B1%rank)))
   ! out: f_B2 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_B2', c_name='B2', python_name='B2', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=53, definition='real(rp) B1(6,6), B2(6,6), B3(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='B2', comment='', default=None), intent='out', description='Beta matrix associated with b-mode.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(B2%data_ptr)) f_B2_ptr = mat2vec(f_B2, product(B2%dims(1:B2%rank)))
   ! out: f_B3 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_B3', c_name='B3', python_name='B3', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=53, definition='real(rp) B1(6,6), B2(6,6), B3(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='B3', comment='', default=None), intent='out', description='Beta matrix associated with c-mode.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(B3%data_ptr)) f_B3_ptr = mat2vec(f_B3, product(B3%dims(1:B3%rank)))
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
@@ -28139,42 +29115,63 @@ subroutine fortran_target_min_max_calc (r_corner1, r_corner2, y_min, y_max, phi_
   type(array_descriptor_t), intent(in) :: r_corner2
   real(rp) :: f_r_corner2(3)
   real(c_double), pointer :: f_r_corner2_ptr(:)
-  real(c_double) :: y_min  ! 0D_NOT_real
-  real(rp) :: f_y_min
-  real(c_double) :: y_max  ! 0D_NOT_real
-  real(rp) :: f_y_max
-  real(c_double) :: phi_min  ! 0D_NOT_real
-  real(rp) :: f_phi_min
-  real(c_double) :: phi_max  ! 0D_NOT_real
-  real(rp) :: f_phi_max
   type(c_ptr), intent(in), value :: initial  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_initial
   logical, target :: f_initial_native
   logical, pointer :: f_initial_native_ptr
   logical(c_bool), pointer :: f_initial_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: y_min  ! 0D_NOT_real
+  real(c_double) :: f_y_min
+  real(c_double), pointer :: f_y_min_ptr
+  type(c_ptr), intent(in), value :: y_max  ! 0D_NOT_real
+  real(c_double) :: f_y_max
+  real(c_double), pointer :: f_y_max_ptr
+  type(c_ptr), intent(in), value :: phi_min  ! 0D_NOT_real
+  real(c_double) :: f_phi_min
+  real(c_double), pointer :: f_phi_min_ptr
+  type(c_ptr), intent(in), value :: phi_max  ! 0D_NOT_real
+  real(c_double) :: f_phi_max
+  real(c_double), pointer :: f_phi_max_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(r_corner1%data_ptr)) then
     call c_f_pointer(r_corner1%data_ptr, f_r_corner1_ptr, [r_corner1%dims(1)])
     f_r_corner1 = f_r_corner1_ptr(:)
   else
     f_r_corner1_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(r_corner2%data_ptr)) then
     call c_f_pointer(r_corner2%data_ptr, f_r_corner2_ptr, [r_corner2%dims(1)])
     f_r_corner2 = f_r_corner2_ptr(:)
   else
     f_r_corner2_ptr => null()
   endif
-  ! in: f_y_min 0D_NOT_real
-  f_y_min = y_min
-  ! in: f_y_max 0D_NOT_real
-  f_y_max = y_max
-  ! in: f_phi_min 0D_NOT_real
-  f_phi_min = phi_min
-  ! in: f_phi_max 0D_NOT_real
-  f_phi_max = phi_max
+  ! inout: f_y_min 0D_NOT_real
+  if (c_associated(y_min)) then
+    call c_f_pointer(y_min, f_y_min_ptr)
+  else
+    f_y_min_ptr => null()
+  endif
+  ! inout: f_y_max 0D_NOT_real
+  if (c_associated(y_max)) then
+    call c_f_pointer(y_max, f_y_max_ptr)
+  else
+    f_y_max_ptr => null()
+  endif
+  ! inout: f_phi_min 0D_NOT_real
+  if (c_associated(phi_min)) then
+    call c_f_pointer(phi_min, f_phi_min_ptr)
+  else
+    f_phi_min_ptr => null()
+  endif
+  ! inout: f_phi_max 0D_NOT_real
+  if (c_associated(phi_max)) then
+    call c_f_pointer(phi_max, f_phi_max_ptr)
+  else
+    f_phi_max_ptr => null()
+  endif
   ! in: f_initial 0D_NOT_logical
   if (c_associated(initial)) then
     call c_f_pointer(initial, f_initial_ptr)
@@ -28183,9 +29180,17 @@ subroutine fortran_target_min_max_calc (r_corner1, r_corner2, y_min, y_max, phi_
   else
     f_initial_native_ptr => null()
   endif
-  call target_min_max_calc(f_r_corner1, f_r_corner2, f_y_min, f_y_max, f_phi_min, f_phi_max, &
-      f_initial_native_ptr)
+  call target_min_max_calc(f_r_corner1, f_r_corner2, f_y_min_ptr, f_y_max_ptr, f_phi_min_ptr, &
+      f_phi_max_ptr, f_initial_native_ptr)
 
+  ! inout: f_y_min 0D_NOT_real
+  ! no output conversion for f_y_min
+  ! inout: f_y_max 0D_NOT_real
+  ! no output conversion for f_y_max
+  ! inout: f_phi_min 0D_NOT_real
+  ! no output conversion for f_phi_min
+  ! inout: f_phi_max 0D_NOT_real
+  ! no output conversion for f_phi_max
 end subroutine
 subroutine fortran_target_rot_mats (r_center, w_to_target, w_to_ele) bind(c)
 
@@ -28203,19 +29208,33 @@ subroutine fortran_target_rot_mats (r_center, w_to_target, w_to_ele) bind(c)
   real(rp) :: f_w_to_ele(3,3)
   real(c_double), pointer :: f_w_to_ele_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(r_center%data_ptr)) then
     call c_f_pointer(r_center%data_ptr, f_r_center_ptr, [r_center%dims(1)])
     f_r_center = f_r_center_ptr(:)
   else
     f_r_center_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_to_target%data_ptr)) then
+    call c_f_pointer(w_to_target%data_ptr, f_w_to_target_ptr, [product(w_to_target%dims(1:w_to_target%rank))])
+    ! output-only
+  else
+    f_w_to_target_ptr => null()
+  endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_to_ele%data_ptr)) then
+    call c_f_pointer(w_to_ele%data_ptr, f_w_to_ele_ptr, [product(w_to_ele%dims(1:w_to_ele%rank))])
+    ! output-only
+  else
+    f_w_to_ele_ptr => null()
+  endif
   call target_rot_mats(f_r_center, f_w_to_target, f_w_to_ele)
 
   ! out: f_w_to_target 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_to_target', c_name='w_to_target', python_name='w_to_target', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1140, definition='real(rp) r_center(3), w_to_target(3,3), w_to_ele(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_to_target', comment='', default=None), intent='out', description='Rotation matrix from ele to target coords.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_to_target%data_ptr)) f_w_to_target_ptr = mat2vec(f_w_to_target, product(w_to_target%dims(1:w_to_target%rank)))
   ! out: f_w_to_ele 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_to_ele', c_name='w_to_ele', python_name='w_to_ele', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=1140, definition='real(rp) r_center(3), w_to_target(3,3), w_to_ele(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_to_ele', comment='', default=None), intent='out', description='Rotation matrix from target to ele coords.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_to_ele%data_ptr)) f_w_to_ele_ptr = mat2vec(f_w_to_ele, product(w_to_ele%dims(1:w_to_ele%rank)))
 end subroutine
 subroutine fortran_taylor_equal_taylor (taylor1, taylor2) bind(c)
 
@@ -28415,14 +29434,14 @@ subroutine fortran_tilt_coords (tilt_val, coord, mat6, make_matrix) bind(c)
   ! ** End of parameters **
   ! in: f_tilt_val 0D_NOT_real
   f_tilt_val = tilt_val
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(coord%data_ptr)) then
     call c_f_pointer(coord%data_ptr, f_coord_ptr, [coord%dims(1)])
     f_coord => f_coord_ptr
   else
     f_coord_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -28457,14 +29476,14 @@ subroutine fortran_tilt_coords_photon (tilt_val, coord, w_mat) bind(c)
   ! ** End of parameters **
   ! in: f_tilt_val 0D_NOT_real
   f_tilt_val = tilt_val
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(coord%data_ptr)) then
     call c_f_pointer(coord%data_ptr, f_coord_ptr, [coord%dims(1)])
     f_coord => f_coord_ptr
   else
     f_coord_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(w_mat%data_ptr)) then
     call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
     call vec2mat(f_w_mat_ptr, f_w_mat)
@@ -28486,7 +29505,7 @@ subroutine fortran_tilt_mat6 (mat6, tilt) bind(c)
   real(rp) :: f_mat6(6,6)
   real(c_double), pointer :: f_mat6_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -28521,7 +29540,7 @@ subroutine fortran_to_eta_reading (eta_actual, ele, axis, add_noise, reading, er
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(eta_actual%data_ptr)) then
     call c_f_pointer(eta_actual%data_ptr, f_eta_actual_ptr, [eta_actual%dims(1)])
     f_eta_actual => f_eta_actual_ptr
@@ -28587,7 +29606,7 @@ subroutine fortran_to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0
   f_s_body = s_body
   ! in: f_ele_anchor_pt 0D_NOT_integer
   f_ele_anchor_pt = ele_anchor_pt
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(r0%data_ptr)) then
     call c_f_pointer(r0%data_ptr, f_r0_ptr, [r0%dims(1)])
     f_r0 = f_r0_ptr(:)
@@ -28706,6 +29725,9 @@ subroutine fortran_to_photon_angle_coords (orb_in, ele, orb_out) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  ! out: f_orb_out 0D_NOT_type
+  if (.not. c_associated(orb_out)) return
+  call c_f_pointer(orb_out, f_orb_out)
   f_orb_out = to_photon_angle_coords(f_orb_in, f_ele)
 
   ! out: f_orb_out 0D_NOT_type
@@ -29062,7 +30084,7 @@ subroutine fortran_track1_bmad (orbit, ele, param, err_flag, track, mat6, make_m
   endif
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -29769,7 +30791,7 @@ subroutine fortran_track1_runge_kutta (orbit, ele, param, err_flag, track, mat6,
   call c_f_pointer(param, f_param)
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -29825,32 +30847,31 @@ subroutine fortran_track1_spin (start_orb, ele, param, end_orb, make_quaternion)
   use bmad_struct, only: coord_struct, ele_struct, lat_param_struct
   implicit none
   ! ** In parameters **
+  type(c_ptr), value :: start_orb  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_start_orb
+  type(c_ptr), value :: param  ! 0D_NOT_type
+  type(lat_param_struct), pointer :: f_param
   type(c_ptr), intent(in), value :: make_quaternion  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_make_quaternion
   logical, target :: f_make_quaternion_native
   logical, pointer :: f_make_quaternion_native_ptr
   logical(c_bool), pointer :: f_make_quaternion_ptr
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: end_orb  ! 0D_NOT_type
   type(coord_struct), pointer :: f_end_orb
-  ! ** Inout parameters **
-  type(c_ptr), value :: start_orb  ! 0D_NOT_type
-  type(coord_struct), pointer :: f_start_orb
-  type(c_ptr), value :: param  ! 0D_NOT_type
-  type(lat_param_struct), pointer :: f_param
   ! ** End of parameters **
-  ! inout: f_start_orb 0D_NOT_type
+  ! in: f_start_orb 0D_NOT_type
   if (.not. c_associated(start_orb)) return
   call c_f_pointer(start_orb, f_start_orb)
-  ! out: f_ele 0D_NOT_type
+  ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_param 0D_NOT_type
+  ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  ! out: f_end_orb 0D_NOT_type
+  ! inout: f_end_orb 0D_NOT_type
   if (.not. c_associated(end_orb)) return
   call c_f_pointer(end_orb, f_end_orb)
   ! in: f_make_quaternion 0D_NOT_logical
@@ -29863,67 +30884,61 @@ subroutine fortran_track1_spin (start_orb, ele, param, end_orb, make_quaternion)
   endif
   call track1_spin(f_start_orb, f_ele, f_param, f_end_orb, f_make_quaternion_native_ptr)
 
-  ! out: f_ele 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
-  ! out: f_end_orb 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_track1_spin_integration (start_orb, ele, param, end_orb) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct, lat_param_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: end_orb  ! 0D_NOT_type
-  type(coord_struct), pointer :: f_end_orb
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: start_orb  ! 0D_NOT_type
   type(coord_struct), pointer :: f_start_orb
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: param  ! 0D_NOT_type
   type(lat_param_struct), pointer :: f_param
+  ! ** Inout parameters **
+  type(c_ptr), value :: end_orb  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_end_orb
   ! ** End of parameters **
-  ! inout: f_start_orb 0D_NOT_type
+  ! in: f_start_orb 0D_NOT_type
   if (.not. c_associated(start_orb)) return
   call c_f_pointer(start_orb, f_start_orb)
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_param 0D_NOT_type
+  ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  ! out: f_end_orb 0D_NOT_type
+  ! inout: f_end_orb 0D_NOT_type
   if (.not. c_associated(end_orb)) return
   call c_f_pointer(end_orb, f_end_orb)
   call track1_spin_integration(f_start_orb, f_ele, f_param, f_end_orb)
 
-  ! out: f_end_orb 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_track1_spin_taylor (start_orb, ele, param, end_orb) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct, lat_param_struct
   implicit none
-  ! ** Out parameters **
-  type(c_ptr), value :: end_orb  ! 0D_NOT_type
-  type(coord_struct), pointer :: f_end_orb
-  ! ** Inout parameters **
+  ! ** In parameters **
   type(c_ptr), value :: start_orb  ! 0D_NOT_type
   type(coord_struct), pointer :: f_start_orb
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: param  ! 0D_NOT_type
   type(lat_param_struct), pointer :: f_param
+  ! ** Out parameters **
+  type(c_ptr), value :: end_orb  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_end_orb
   ! ** End of parameters **
-  ! inout: f_start_orb 0D_NOT_type
+  ! in: f_start_orb 0D_NOT_type
   if (.not. c_associated(start_orb)) return
   call c_f_pointer(start_orb, f_start_orb)
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! inout: f_param 0D_NOT_type
+  ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
   ! out: f_end_orb 0D_NOT_type
@@ -30023,6 +31038,13 @@ subroutine fortran_track1_taylor (orbit, ele, taylor, mat6, make_matrix) bind(c)
   else
     f_taylor => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30034,7 +31056,7 @@ subroutine fortran_track1_taylor (orbit, ele, taylor, mat6, make_matrix) bind(c)
   call track1_taylor(f_orbit, f_ele, f_taylor, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3267, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track1_time_runge_kutta (orbit, ele, param, err_flag, track, t_end, dt_step) &
     bind(c)
@@ -30050,9 +31072,6 @@ subroutine fortran_track1_time_runge_kutta (orbit, ele, param, err_flag, track, 
   type(c_ptr), intent(in), value :: t_end  ! 0D_NOT_real
   real(c_double) :: f_t_end
   real(c_double), pointer :: f_t_end_ptr
-  type(c_ptr), intent(in), value :: dt_step  ! 0D_NOT_real
-  real(c_double) :: f_dt_step
-  real(c_double), pointer :: f_dt_step_ptr
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
@@ -30062,6 +31081,9 @@ subroutine fortran_track1_time_runge_kutta (orbit, ele, param, err_flag, track, 
   ! ** Inout parameters **
   type(c_ptr), value :: orbit  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orbit
+  type(c_ptr), intent(in), value :: dt_step  ! 0D_NOT_real
+  real(c_double) :: f_dt_step
+  real(c_double), pointer :: f_dt_step_ptr
   ! ** End of parameters **
   ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) then
@@ -30092,7 +31114,7 @@ subroutine fortran_track1_time_runge_kutta (orbit, ele, param, err_flag, track, 
   else
     f_t_end_ptr => null()
   endif
-  ! in: f_dt_step 0D_NOT_real
+  ! inout: f_dt_step 0D_NOT_real
   if (c_associated(dt_step)) then
     call c_f_pointer(dt_step, f_dt_step_ptr)
   else
@@ -30106,6 +31128,8 @@ subroutine fortran_track1_time_runge_kutta (orbit, ele, param, err_flag, track, 
   f_err_flag_ptr = f_err_flag
   ! out: f_track 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
+  ! inout: f_dt_step 0D_NOT_real
+  ! no output conversion for f_dt_step
 end subroutine
 subroutine fortran_track_a_beambeam (orbit, ele, param, track, mat6, make_matrix) bind(c)
 
@@ -30143,6 +31167,13 @@ subroutine fortran_track_a_beambeam (orbit, ele, param, track, mat6, make_matrix
   call c_f_pointer(param, f_param)
   ! out: f_track 0D_NOT_type
   if (c_associated(track))   call c_f_pointer(track, f_track)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30156,7 +31187,7 @@ subroutine fortran_track_a_beambeam (orbit, ele, param, track, mat6, make_matrix
   ! out: f_track 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2912, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_bend (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30189,7 +31220,7 @@ subroutine fortran_track_a_bend (orbit, ele, param, mat6, make_matrix) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -30285,6 +31316,13 @@ subroutine fortran_track_a_converter (orbit, ele, param, mat6, make_matrix) bind
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30296,7 +31334,7 @@ subroutine fortran_track_a_converter (orbit, ele, param, mat6, make_matrix) bind
   call track_a_converter(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2932, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_crab_cavity (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30330,6 +31368,13 @@ subroutine fortran_track_a_crab_cavity (orbit, ele, param, mat6, make_matrix) bi
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30341,7 +31386,7 @@ subroutine fortran_track_a_crab_cavity (orbit, ele, param, mat6, make_matrix) bi
   call track_a_crab_cavity(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=2942, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_drift (orb, length, mat6, make_matrix, ele_orientation, &
     include_ref_motion, time) bind(c)
@@ -30365,22 +31410,22 @@ subroutine fortran_track_a_drift (orb, length, mat6, make_matrix, ele_orientatio
   logical, target :: f_include_ref_motion_native
   logical, pointer :: f_include_ref_motion_native_ptr
   logical(c_bool), pointer :: f_include_ref_motion_ptr
-  type(c_ptr), intent(in), value :: time  ! 0D_NOT_real
-  real(c_double) :: f_time
-  real(c_double), pointer :: f_time_ptr
   ! ** Inout parameters **
   type(c_ptr), value :: orb  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orb
   type(array_descriptor_t), intent(in) :: mat6
   real(rp) :: f_mat6(6,6)
   real(c_double), pointer :: f_mat6_ptr(:)
+  type(c_ptr), intent(in), value :: time  ! 0D_NOT_real
+  real(c_double) :: f_time
+  real(c_double), pointer :: f_time_ptr
   ! ** End of parameters **
   ! inout: f_orb 0D_NOT_type
   if (.not. c_associated(orb)) return
   call c_f_pointer(orb, f_orb)
   ! in: f_length 0D_NOT_real
   f_length = length
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -30409,7 +31454,7 @@ subroutine fortran_track_a_drift (orb, length, mat6, make_matrix, ele_orientatio
   else
     f_include_ref_motion_native_ptr => null()
   endif
-  ! in: f_time 0D_NOT_real
+  ! inout: f_time 0D_NOT_real
   if (c_associated(time)) then
     call c_f_pointer(time, f_time_ptr)
   else
@@ -30418,6 +31463,8 @@ subroutine fortran_track_a_drift (orb, length, mat6, make_matrix, ele_orientatio
   call track_a_drift(f_orb, f_length, f_mat6, f_make_matrix_native_ptr, f_ele_orientation_ptr, &
       f_include_ref_motion_native_ptr, f_time_ptr)
 
+  ! inout: f_time 0D_NOT_real
+  ! no output conversion for f_time
 end subroutine
 subroutine fortran_track_a_drift_photon (orb, length, phase_relative_to_ref) bind(c)
 
@@ -30475,6 +31522,13 @@ subroutine fortran_track_a_foil (orbit, ele, param, mat6, make_matrix) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30486,7 +31540,7 @@ subroutine fortran_track_a_foil (orbit, ele, param, mat6, make_matrix) bind(c)
   call track_a_foil(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3079, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_gkicker (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30519,7 +31573,7 @@ subroutine fortran_track_a_gkicker (orbit, ele, param, mat6, make_matrix) bind(c
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -30568,7 +31622,7 @@ subroutine fortran_track_a_lcavity (orbit, ele, param, mat6, make_matrix) bind(c
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -30617,7 +31671,7 @@ subroutine fortran_track_a_lcavity_old (orbit, ele, param, mat6, make_matrix) bi
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -30667,6 +31721,13 @@ subroutine fortran_track_a_mask (orbit, ele, param, mat6, make_matrix) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30678,7 +31739,7 @@ subroutine fortran_track_a_mask (orbit, ele, param, mat6, make_matrix) bind(c)
   call track_a_mask(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3000, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_match (orbit, ele, param, err_flag, mat6, make_matrix) bind(c)
 
@@ -30725,6 +31786,13 @@ subroutine fortran_track_a_match (orbit, ele, param, err_flag, mat6, make_matrix
   else
     f_err_flag_native_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30737,7 +31805,7 @@ subroutine fortran_track_a_match (orbit, ele, param, err_flag, mat6, make_matrix
       f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3010, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_patch (ele, orbit, drift_to_exit, s_ent, ds_ref, track_spin, mat6, &
     make_matrix) bind(c)
@@ -30811,6 +31879,13 @@ subroutine fortran_track_a_patch (ele, orbit, drift_to_exit, s_ent, ds_ref, trac
   else
     f_track_spin_native_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30827,7 +31902,7 @@ subroutine fortran_track_a_patch (ele, orbit, drift_to_exit, s_ent, ds_ref, trac
   ! out: f_ds_ref 0D_NOT_real
   ! no output conversion for f_ds_ref
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3029, definition='real(rp), optional :: mat6(6,6), s_ent, ds_ref', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_patch_photon (ele, orbit, drift_to_exit, use_z_pos) bind(c)
 
@@ -30921,6 +31996,13 @@ subroutine fortran_track_a_pickup (orbit, ele, param, err_flag, mat6, make_matri
   else
     f_err_flag_native_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30933,7 +32015,7 @@ subroutine fortran_track_a_pickup (orbit, ele, param, err_flag, mat6, make_matri
       f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3020, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_quadrupole (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -30967,6 +32049,13 @@ subroutine fortran_track_a_quadrupole (orbit, ele, param, mat6, make_matrix) bin
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -30978,7 +32067,7 @@ subroutine fortran_track_a_quadrupole (orbit, ele, param, mat6, make_matrix) bin
   call track_a_quadrupole(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3039, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_rfcavity (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -31012,6 +32101,13 @@ subroutine fortran_track_a_rfcavity (orbit, ele, param, mat6, make_matrix) bind(
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -31023,7 +32119,7 @@ subroutine fortran_track_a_rfcavity (orbit, ele, param, mat6, make_matrix) bind(
   call track_a_rfcavity(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3049, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_sad_mult (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -31056,7 +32152,7 @@ subroutine fortran_track_a_sad_mult (orbit, ele, param, mat6, make_matrix) bind(
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -31106,6 +32202,13 @@ subroutine fortran_track_a_sol_quad (orbit, ele, param, mat6, make_matrix) bind(
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -31117,7 +32220,7 @@ subroutine fortran_track_a_sol_quad (orbit, ele, param, mat6, make_matrix) bind(
   call track_a_sol_quad(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3069, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_thick_multipole (orbit, ele, param, mat6, make_matrix) bind(c)
 
@@ -31150,7 +32253,7 @@ subroutine fortran_track_a_thick_multipole (orbit, ele, param, mat6, make_matrix
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
     call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
     call vec2mat(f_mat6_ptr, f_mat6)
@@ -31200,6 +32303,13 @@ subroutine fortran_track_a_wiggler (orbit, ele, param, mat6, make_matrix) bind(c
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    ! output-only
+  else
+    f_mat6_ptr => null()
+  endif
   ! in: f_make_matrix 0D_NOT_logical
   if (c_associated(make_matrix)) then
     call c_f_pointer(make_matrix, f_make_matrix_ptr)
@@ -31211,7 +32321,7 @@ subroutine fortran_track_a_wiggler (orbit, ele, param, mat6, make_matrix) bind(c
   call track_a_wiggler(f_orbit, f_ele, f_param, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_mat6 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat6', c_name='mat6', python_name='mat6', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3099, definition='real(rp), optional :: mat6(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=True, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat6', comment='', default=None), intent='out', description='Transfer matrix through the element.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
 subroutine fortran_track_a_zero_length_element (orbit, ele, param, err_flag, track) bind(c)
 
@@ -31492,7 +32602,7 @@ subroutine fortran_track_bunch_time (bunch, branch, t_end, s_end, dt_step, extra
   f_t_end = t_end
   ! in: f_s_end 0D_NOT_real
   f_s_end = s_end
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(dt_step%data_ptr)) then
     call c_f_pointer(dt_step%data_ptr, f_dt_step_ptr, [dt_step%dims(1)])
     f_dt_step => f_dt_step_ptr
@@ -31574,7 +32684,7 @@ subroutine fortran_track_complex_taylor (start_orb, complex_taylor, end_orb) bin
   complex(rp), pointer :: f_end_orb(:)
   complex(c_double_complex), pointer :: f_end_orb_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(start_orb%data_ptr)) then
     call c_f_pointer(start_orb%data_ptr, f_start_orb_ptr, [start_orb%dims(1)])
     f_start_orb => f_start_orb_ptr
@@ -31587,7 +32697,7 @@ subroutine fortran_track_complex_taylor (start_orb, complex_taylor, end_orb) bin
   else
     f_complex_taylor => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(end_orb%data_ptr)) then
     call c_f_pointer(end_orb%data_ptr, f_end_orb_ptr, [end_orb%dims(1)])
     f_end_orb => f_end_orb_ptr
@@ -31755,10 +32865,17 @@ subroutine fortran_track_to_surface (ele, orbit, param, w_surface) bind(c)
   ! in: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_surface%data_ptr)) then
+    call c_f_pointer(w_surface%data_ptr, f_w_surface_ptr, [product(w_surface%dims(1:w_surface%rank))])
+    ! output-only
+  else
+    f_w_surface_ptr => null()
+  endif
   call track_to_surface(f_ele, f_orbit, f_param, f_w_surface)
 
   ! out: f_w_surface 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_surface', c_name='w_surface', python_name='w_surface', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3160, definition='real(rp) :: w_surface(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_surface', comment='', default=None), intent='out', description='real(rp), rotation matrix to transform to surface coords.', doc_data_type=None, doc_is_optional=False)
+  if (c_associated(w_surface%data_ptr)) f_w_surface_ptr = mat2vec(f_w_surface, product(w_surface%dims(1:w_surface%rank)))
 end subroutine
 subroutine fortran_track_until_dead (start_orb, lat, end_orb, track) bind(c)
 
@@ -32409,10 +33526,17 @@ subroutine fortran_transfer_mat2_from_twiss (twiss1, twiss2, mat) bind(c)
   ! in: f_twiss2 0D_NOT_type
   if (.not. c_associated(twiss2)) return
   call c_f_pointer(twiss2, f_twiss2)
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat%data_ptr)) then
+    call c_f_pointer(mat%data_ptr, f_mat_ptr, [product(mat%dims(1:mat%rank))])
+    ! output-only
+  else
+    f_mat_ptr => null()
+  endif
   call transfer_mat2_from_twiss(f_twiss1, f_twiss2, f_mat)
 
   ! out: f_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat', c_name='mat', python_name='mat', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=3388, definition='real(rp) mat(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat', comment='', default=None), intent='out', description='Transfer matrix between the two points.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat%data_ptr)) f_mat_ptr = mat2vec(f_mat, product(mat%dims(1:mat%rank)))
 end subroutine
 subroutine fortran_transfer_mat_from_twiss (ele1, ele2, orb1, orb2, m) bind(c)
 
@@ -32441,24 +33565,31 @@ subroutine fortran_transfer_mat_from_twiss (ele1, ele2, orb1, orb2, m) bind(c)
   ! in: f_ele2 0D_NOT_type
   if (.not. c_associated(ele2)) return
   call c_f_pointer(ele2, f_ele2)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(orb1%data_ptr)) then
     call c_f_pointer(orb1%data_ptr, f_orb1_ptr, [orb1%dims(1)])
     f_orb1 = f_orb1_ptr(:)
   else
     f_orb1_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(orb2%data_ptr)) then
     call c_f_pointer(orb2%data_ptr, f_orb2_ptr, [orb2%dims(1)])
     f_orb2 = f_orb2_ptr(:)
   else
     f_orb2_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(m%data_ptr)) then
+    call c_f_pointer(m%data_ptr, f_m_ptr, [product(m%dims(1:m%rank))])
+    ! output-only
+  else
+    f_m_ptr => null()
+  endif
   call transfer_mat_from_twiss(f_ele1, f_ele2, f_orb1, f_orb2, f_m)
 
   ! out: f_m 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_m', c_name='m', python_name='m', type='real', kind='rp', pointer_type='NOT', array=['6', '6'], init_value=None, comment='', member=StructureMember(line=3381, definition='real(rp) m(6,6)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='6,6', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='m', comment='', default=None), intent='out', description='Transfer matrix between the two points.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(m%data_ptr)) f_m_ptr = mat2vec(f_m, product(m%dims(1:m%rank)))
 end subroutine
 subroutine fortran_transfer_matrix_calc (lat, xfer_mat, xfer_vec, ix1, ix2, ix_branch, &
     one_turn) bind(c)
@@ -32494,14 +33625,14 @@ subroutine fortran_transfer_matrix_calc (lat, xfer_mat, xfer_vec, ix1, ix2, ix_b
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(xfer_mat%data_ptr)) then
     call c_f_pointer(xfer_mat%data_ptr, f_xfer_mat_ptr, [product(xfer_mat%dims(1:xfer_mat%rank))])
     call vec2mat(f_xfer_mat_ptr, f_xfer_mat)
   else
     f_xfer_mat_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(xfer_vec%data_ptr)) then
     call c_f_pointer(xfer_vec%data_ptr, f_xfer_vec_ptr, [xfer_vec%dims(1)])
     f_xfer_vec = f_xfer_vec_ptr(:)
@@ -32653,7 +33784,7 @@ subroutine fortran_twiss1_propagate (twiss1, mat2, ele_key, length, twiss2, err)
   ! in: f_twiss1 0D_NOT_type
   if (.not. c_associated(twiss1)) return
   call c_f_pointer(twiss1, f_twiss1)
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(mat2%data_ptr)) then
     call c_f_pointer(mat2%data_ptr, f_mat2_ptr, [product(mat2%dims(1:mat2%rank))])
     call vec2mat(f_mat2_ptr, f_mat2)
@@ -32704,6 +33835,13 @@ subroutine fortran_twiss3_at_start (lat, err_flag, ix_branch, tune3) bind(c)
     call c_f_pointer(ix_branch, f_ix_branch_ptr)
   else
     f_ix_branch_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(tune3%data_ptr)) then
+    call c_f_pointer(tune3%data_ptr, f_tune3_ptr, [tune3%dims(1)])
+    ! output-only
+  else
+    f_tune3_ptr => null()
   endif
   call twiss3_at_start(f_lat, f_err_flag, f_ix_branch_ptr, f_tune3)
 
@@ -33306,7 +34444,7 @@ subroutine fortran_twiss_from_tracking (lat, ref_orb0, symp_err, err_flag, d_orb
     return
   endif
   call c_f_pointer(ref_orb0, f_ref_orb0)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(d_orb%data_ptr)) then
     call c_f_pointer(d_orb%data_ptr, f_d_orb_ptr, [d_orb%dims(1)])
     f_d_orb => f_d_orb_ptr
@@ -33455,10 +34593,17 @@ subroutine fortran_twiss_to_1_turn_mat (twiss, phi, mat2) bind(c)
   call c_f_pointer(twiss, f_twiss)
   ! in: f_phi 0D_NOT_real
   f_phi = phi
+  !! general array (2D_NOT_real) out
+  if (c_associated(mat2%data_ptr)) then
+    call c_f_pointer(mat2%data_ptr, f_mat2_ptr, [product(mat2%dims(1:mat2%rank))])
+    ! output-only
+  else
+    f_mat2_ptr => null()
+  endif
   call twiss_to_1_turn_mat(f_twiss, f_phi, f_mat2)
 
   ! out: f_mat2 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_mat2', c_name='mat2', python_name='mat2', type='real', kind='rp', pointer_type='NOT', array=['2', '2'], init_value=None, comment='', member=StructureMember(line=3520, definition='real(rp) phi, mat2(2,2)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='2,2', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='mat2', comment='', default=None), intent='out', description='1-turn matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(mat2%data_ptr)) f_mat2_ptr = mat2vec(f_mat2, product(mat2%dims(1:mat2%rank)))
 end subroutine
 subroutine fortran_type_coord (coord) bind(c)
 
@@ -33858,7 +35003,7 @@ subroutine fortran_vec_to_polar (vec, phase, polar) bind(c)
   type(c_ptr), value :: polar  ! 0D_NOT_type
   type(spin_polar_struct), pointer :: f_polar
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(vec%data_ptr)) then
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec = f_vec_ptr(:)
@@ -33871,6 +35016,9 @@ subroutine fortran_vec_to_polar (vec, phase, polar) bind(c)
   else
     f_phase_ptr => null()
   endif
+  ! out: f_polar 0D_NOT_type
+  if (.not. c_associated(polar)) return
+  call c_f_pointer(polar, f_polar)
   f_polar = vec_to_polar(f_vec, f_phase_ptr)
 
   ! out: f_polar 0D_NOT_type
@@ -33892,7 +35040,7 @@ subroutine fortran_vec_to_spinor (vec, phase, spinor) bind(c)
   complex(rp) :: f_spinor(2)
   complex(c_double_complex), pointer :: f_spinor_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(vec%data_ptr)) then
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec = f_vec_ptr(:)
@@ -33904,6 +35052,13 @@ subroutine fortran_vec_to_spinor (vec, phase, spinor) bind(c)
     call c_f_pointer(phase, f_phase_ptr)
   else
     f_phase_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) out
+  if (c_associated(spinor%data_ptr)) then
+    call c_f_pointer(spinor%data_ptr, f_spinor_ptr, [spinor%dims(1)])
+    ! output-only
+  else
+    f_spinor_ptr => null()
   endif
   f_spinor = vec_to_spinor(f_vec, f_phase_ptr)
 
@@ -33989,17 +35144,24 @@ subroutine fortran_w_mat_for_bend_angle (angle, ref_tilt, r_vec, w_mat) bind(c)
   f_angle = angle
   ! in: f_ref_tilt 0D_NOT_real
   f_ref_tilt = ref_tilt
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(r_vec%data_ptr)) then
     call c_f_pointer(r_vec%data_ptr, f_r_vec_ptr, [r_vec%dims(1)])
     f_r_vec = f_r_vec_ptr(:)
   else
     f_r_vec_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   f_w_mat = w_mat_for_bend_angle(f_angle, f_ref_tilt, f_r_vec)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3662, definition='real(rp) angle, ref_tilt, w_mat(3,3), t_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='W matrix', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
 subroutine fortran_w_mat_for_tilt (tilt, return_inverse, w_mat) bind(c)
 
@@ -34028,10 +35190,17 @@ subroutine fortran_w_mat_for_tilt (tilt, return_inverse, w_mat) bind(c)
   else
     f_return_inverse_native_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   f_w_mat = w_mat_for_tilt(f_tilt, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3686, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Transformation matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
 subroutine fortran_w_mat_for_x_pitch (x_pitch, return_inverse, w_mat) bind(c)
 
@@ -34060,10 +35229,17 @@ subroutine fortran_w_mat_for_x_pitch (x_pitch, return_inverse, w_mat) bind(c)
   else
     f_return_inverse_native_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   f_w_mat = w_mat_for_x_pitch(f_x_pitch, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3670, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Transformation matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
 subroutine fortran_w_mat_for_y_pitch (y_pitch, return_inverse, w_mat) bind(c)
 
@@ -34092,10 +35268,17 @@ subroutine fortran_w_mat_for_y_pitch (y_pitch, return_inverse, w_mat) bind(c)
   else
     f_return_inverse_native_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   f_w_mat = w_mat_for_y_pitch(f_y_pitch, f_return_inverse_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=3678, definition='real(rp) :: w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Transformation matrix.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
 subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no_wall_here, &
     origin, radius_wall, err_flag, d_radius) bind(c)
@@ -34135,7 +35318,7 @@ subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no
   real(rp) :: f_d_radius
   real(c_double), pointer :: f_d_radius_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(position%data_ptr)) then
     call c_f_pointer(position%data_ptr, f_position_ptr, [position%dims(1)])
     f_position => f_position_ptr
@@ -34155,6 +35338,13 @@ subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no
   else
     f_ix_wall_ptr => null()
   endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(perp%data_ptr)) then
+    call c_f_pointer(perp%data_ptr, f_perp_ptr, [perp%dims(1)])
+    ! output-only
+  else
+    f_perp_ptr => null()
+  endif
   ! out: f_ix_section 0D_NOT_integer
   if (c_associated(ix_section)) then
     call c_f_pointer(ix_section, f_ix_section_ptr)
@@ -34166,6 +35356,13 @@ subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no
     call c_f_pointer(no_wall_here, f_no_wall_here_ptr)
   else
     f_no_wall_here_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(origin%data_ptr)) then
+    call c_f_pointer(origin%data_ptr, f_origin_ptr, [origin%dims(1)])
+    ! output-only
+  else
+    f_origin_ptr => null()
   endif
   ! out: f_radius_wall 0D_NOT_real
   if (c_associated(radius_wall)) then
@@ -34269,6 +35466,13 @@ subroutine fortran_wall3d_to_position (orbit, ele, position) bind(c)
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  !! general array (1D_NOT_real) out
+  if (c_associated(position%data_ptr)) then
+    call c_f_pointer(position%data_ptr, f_position_ptr, [position%dims(1)])
+    ! output-only
+  else
+    f_position_ptr => null()
+  endif
   f_position = wall3d_to_position(f_orbit, f_ele)
 
   ! out: f_position 1D_NOT_real
@@ -34392,28 +35596,28 @@ subroutine fortran_write_astra_bend (iu, strength, id, d1, d2, d3, d4) bind(c)
   f_strength = strength
   ! in: f_id 0D_NOT_integer
   f_id = id
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(d1%data_ptr)) then
     call c_f_pointer(d1%data_ptr, f_d1_ptr, [d1%dims(1)])
     f_d1 = f_d1_ptr(:)
   else
     f_d1_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(d2%data_ptr)) then
     call c_f_pointer(d2%data_ptr, f_d2_ptr, [d2%dims(1)])
     f_d2 = f_d2_ptr(:)
   else
     f_d2_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(d3%data_ptr)) then
     call c_f_pointer(d3%data_ptr, f_d3_ptr, [d3%dims(1)])
     f_d3 = f_d3_ptr(:)
   else
     f_d3_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(d4%data_ptr)) then
     call c_f_pointer(d4%data_ptr, f_d4_ptr, [d4%dims(1)])
     f_d4 = f_d4_ptr(:)
@@ -35007,9 +36211,6 @@ subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, scibmad) bi
   use array_desc_mod
   implicit none
   ! ** In parameters **
-  type(c_ptr), intent(in), value :: line
-  character(len=4096), target :: f_line
-  character(kind=c_char), pointer :: f_line_ptr(:)
   integer(c_int) :: iu  ! 0D_NOT_integer
   integer :: f_iu
   logical(c_bool) :: end_is_neigh  ! 0D_NOT_logical
@@ -35024,8 +36225,12 @@ subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, scibmad) bi
   logical, target :: f_scibmad_native
   logical, pointer :: f_scibmad_native_ptr
   logical(c_bool), pointer :: f_scibmad_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
   ! ** End of parameters **
-  ! in: f_line 0D_NOT_character
+  ! inout: f_line 0D_NOT_character
   if (.not. c_associated(line)) return
   call c_f_pointer(line, f_line_ptr, [huge(0)])
   call to_f_str(f_line_ptr, f_line)
@@ -35052,6 +36257,9 @@ subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, scibmad) bi
   call write_lat_line(f_line, f_iu, f_end_is_neigh, f_do_split_native_ptr, &
       f_scibmad_native_ptr)
 
+  ! inout: f_line 0D_NOT_character
+  call c_f_pointer(line, f_line_ptr, [len_trim(f_line) + 1])
+  call to_c_str(f_line, f_line_ptr)
 end subroutine
 subroutine fortran_write_lattice_in_elegant_format (out_file_name, lat, ref_orbit, &
     use_matrix_model, include_apertures, dr12_drift_max, ix_branch, err) bind(c)
@@ -35414,7 +36622,7 @@ subroutine fortran_write_lattice_in_scibmad (scibmad_file, lat, err_flag) bind(c
   call write_lattice_in_scibmad(f_scibmad_file, f_lat, f_err_flag)
 
   ! out: f_scibmad_file 0D_NOT_character
-  call c_f_pointer(scibmad_file, f_scibmad_file_ptr, [len_trim(f_scibmad_file) + 1]) ! output-only string
+  call c_f_pointer(scibmad_file, f_scibmad_file_ptr, [len_trim(f_scibmad_file) + 1])
   call to_c_str(f_scibmad_file, f_scibmad_file_ptr)
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
@@ -35717,6 +36925,13 @@ subroutine fortran_z_at_surface (ele, x, y, err_flag, extend_grid, dz_dxy, z) bi
   else
     f_extend_grid_native_ptr => null()
   endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(dz_dxy%data_ptr)) then
+    call c_f_pointer(dz_dxy%data_ptr, f_dz_dxy_ptr, [dz_dxy%dims(1)])
+    ! output-only
+  else
+    f_dz_dxy_ptr => null()
+  endif
   f_z = z_at_surface(f_ele, f_x, f_y, f_err_flag, f_extend_grid_native_ptr, f_dz_dxy)
 
   ! out: f_err_flag 0D_NOT_logical
@@ -35736,34 +36951,30 @@ subroutine fortran_zero_ele_kicks (ele) bind(c)
   use array_desc_mod
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
-  ! out: f_ele 0D_NOT_type
+  ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
   call zero_ele_kicks(f_ele)
 
-  ! out: f_ele 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_zero_ele_offsets (ele) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
+  ! ** Inout parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
-  ! out: f_ele 0D_NOT_type
+  ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
   call zero_ele_offsets(f_ele)
 
-  ! out: f_ele 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_zero_lr_wakes_in_lat (lat) bind(c)
 

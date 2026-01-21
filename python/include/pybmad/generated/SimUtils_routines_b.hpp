@@ -10,3 +10,10 @@
 namespace py = pybind11;
 
 void init_SimUtils_routines_b(py::module &m);
+
+struct PyBinXCenter {
+  int ix_bin;
+};
+struct PyBitSet {
+  int word;
+};

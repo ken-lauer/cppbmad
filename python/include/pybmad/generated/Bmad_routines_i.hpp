@@ -10,3 +10,7 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_i(py::module &m);
+
+struct PyInitAttributeName1 {
+  bool is_ok;
+};

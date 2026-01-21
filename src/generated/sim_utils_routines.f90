@@ -144,14 +144,14 @@ subroutine fortran_apfft (rdata_in, bounds, window, phase, diag) bind(c)
   real(rp) :: f_bounds(2)
   real(c_double), pointer :: f_bounds_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(rdata_in%data_ptr)) then
     call c_f_pointer(rdata_in%data_ptr, f_rdata_in_ptr, [rdata_in%dims(1)])
     f_rdata_in => f_rdata_in_ptr
   else
     f_rdata_in_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(bounds%data_ptr)) then
     call c_f_pointer(bounds%data_ptr, f_bounds_ptr, [bounds%dims(1)])
     f_bounds = f_bounds_ptr(:)
@@ -201,14 +201,14 @@ subroutine fortran_apfft_corr (rdata_in, bounds, window, phase, amp, freq, diag)
   real(rp) :: f_freq
   real(c_double), pointer :: f_freq_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(rdata_in%data_ptr)) then
     call c_f_pointer(rdata_in%data_ptr, f_rdata_in_ptr, [rdata_in%dims(1)])
     f_rdata_in => f_rdata_in_ptr
   else
     f_rdata_in_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(bounds%data_ptr)) then
     call c_f_pointer(bounds%data_ptr, f_bounds_ptr, [bounds%dims(1)])
     f_bounds = f_bounds_ptr(:)
@@ -262,14 +262,14 @@ subroutine fortran_apfft_ext (rdata, bounds, window, phase, amp, freq, diag) bin
   real(rp) :: f_bounds(2)
   real(c_double), pointer :: f_bounds_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(rdata%data_ptr)) then
     call c_f_pointer(rdata%data_ptr, f_rdata_ptr, [rdata%dims(1)])
     f_rdata => f_rdata_ptr
   else
     f_rdata_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(bounds%data_ptr)) then
     call c_f_pointer(bounds%data_ptr, f_bounds_ptr, [bounds%dims(1)])
     f_bounds = f_bounds_ptr(:)
@@ -340,7 +340,7 @@ subroutine fortran_assert_equal (int_arr, err_str, ival) bind(c)
   integer :: f_ival
   integer(c_int), pointer :: f_ival_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(int_arr%data_ptr)) then
     call c_f_pointer(int_arr%data_ptr, f_int_arr_ptr, [int_arr%dims(1)])
     f_int_arr => f_int_arr_ptr
@@ -424,7 +424,7 @@ subroutine fortran_axis_angle_to_quat (axis, angle, quat) bind(c)
   real(rp) :: f_quat(0:3)
   real(c_double), pointer :: f_quat_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(axis%data_ptr)) then
     call c_f_pointer(axis%data_ptr, f_axis_ptr, [axis%dims(1)])
     f_axis = f_axis_ptr(:)
@@ -433,6 +433,13 @@ subroutine fortran_axis_angle_to_quat (axis, angle, quat) bind(c)
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
+  !! general array (1D_NOT_real) out
+  if (c_associated(quat%data_ptr)) then
+    call c_f_pointer(quat%data_ptr, f_quat_ptr, [quat%dims(1)])
+    ! output-only
+  else
+    f_quat_ptr => null()
+  endif
   f_quat = axis_angle_to_quat(f_axis, f_angle)
 
   ! out: f_quat 1D_NOT_real
@@ -456,7 +463,7 @@ subroutine fortran_axis_angle_to_w_mat (axis, angle, w_mat) bind(c)
   real(rp) :: f_w_mat(3,3)
   real(c_double), pointer :: f_w_mat_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(axis%data_ptr)) then
     call c_f_pointer(axis%data_ptr, f_axis_ptr, [axis%dims(1)])
     f_axis = f_axis_ptr(:)
@@ -465,10 +472,17 @@ subroutine fortran_axis_angle_to_w_mat (axis, angle, w_mat) bind(c)
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   call axis_angle_to_w_mat(f_axis, f_angle, f_w_mat)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=236, definition='real(rp) w_mat(3,3), axis(3), angle', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Rotation matrix', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
 subroutine fortran_bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy, f_val) bind(c)
 
@@ -555,8 +569,6 @@ subroutine fortran_bin_x_center (ix_bin, bin1_x_min, bin_delta, x_center) bind(c
   use array_desc_mod
   implicit none
   ! ** In parameters **
-  integer(c_int) :: ix_bin  ! 0D_NOT_integer
-  integer :: f_ix_bin
   real(c_double) :: bin1_x_min  ! 0D_NOT_real
   real(rp) :: f_bin1_x_min
   real(c_double) :: bin_delta  ! 0D_NOT_real
@@ -565,15 +577,25 @@ subroutine fortran_bin_x_center (ix_bin, bin1_x_min, bin_delta, x_center) bind(c
   type(c_ptr), intent(in), value :: x_center  ! 0D_NOT_real
   real(rp) :: f_x_center
   real(c_double), pointer :: f_x_center_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: ix_bin  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_bin
+  integer(c_int), pointer :: f_ix_bin_ptr
   ! ** End of parameters **
-  ! in: f_ix_bin 0D_NOT_integer
-  f_ix_bin = ix_bin
+  ! inout: f_ix_bin 0D_NOT_integer
+  if (c_associated(ix_bin)) then
+    call c_f_pointer(ix_bin, f_ix_bin_ptr)
+  else
+    f_ix_bin_ptr => null()
+  endif
   ! in: f_bin1_x_min 0D_NOT_real
   f_bin1_x_min = bin1_x_min
   ! in: f_bin_delta 0D_NOT_real
   f_bin_delta = bin_delta
-  f_x_center = bin_x_center(f_ix_bin, f_bin1_x_min, f_bin_delta)
+  f_x_center = bin_x_center(f_ix_bin_ptr, f_bin1_x_min, f_bin_delta)
 
+  ! inout: f_ix_bin 0D_NOT_integer
+  ! no output conversion for f_ix_bin
   ! out: f_x_center 0D_NOT_real
   call c_f_pointer(x_center, f_x_center_ptr)
   f_x_center_ptr = f_x_center
@@ -583,21 +605,29 @@ subroutine fortran_bit_set (word, pos, set_to_1) bind(c)
   use array_desc_mod
   implicit none
   ! ** In parameters **
-  integer(c_int) :: word  ! 0D_NOT_integer
-  integer :: f_word
   integer(c_int) :: pos  ! 0D_NOT_integer
   integer :: f_pos
   logical(c_bool) :: set_to_1  ! 0D_NOT_logical
   logical :: f_set_to_1
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: word  ! 0D_NOT_integer
+  integer(c_int) :: f_word
+  integer(c_int), pointer :: f_word_ptr
   ! ** End of parameters **
-  ! in: f_word 0D_NOT_integer
-  f_word = word
+  ! inout: f_word 0D_NOT_integer
+  if (c_associated(word)) then
+    call c_f_pointer(word, f_word_ptr)
+  else
+    f_word_ptr => null()
+  endif
   ! in: f_pos 0D_NOT_integer
   f_pos = pos
   ! in: f_set_to_1 0D_NOT_logical
   f_set_to_1 = set_to_1
-  call bit_set(f_word, f_pos, f_set_to_1)
+  call bit_set(f_word_ptr, f_pos, f_set_to_1)
 
+  ! inout: f_word 0D_NOT_integer
+  ! no output conversion for f_word
 end subroutine
 subroutine fortran_bracket_index_for_spline (x_knot, x, ix0, strict, print_err, ok) bind(c)
 
@@ -627,7 +657,7 @@ subroutine fortran_bracket_index_for_spline (x_knot, x, ix0, strict, print_err, 
   logical :: f_ok
   logical(c_bool), pointer :: f_ok_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(x_knot%data_ptr)) then
     call c_f_pointer(x_knot%data_ptr, f_x_knot_ptr, [x_knot%dims(1)])
     f_x_knot => f_x_knot_ptr
@@ -777,7 +807,7 @@ subroutine fortran_coarse_frequency_estimate (data, error, frequency) bind(c)
   real(rp) :: f_frequency
   real(c_double), pointer :: f_frequency_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(data%data_ptr)) then
     call c_f_pointer(data%data_ptr, f_data_ptr, [data%dims(1)])
     f_data => f_data_ptr
@@ -892,14 +922,14 @@ subroutine fortran_create_a_spline (r0, r1, slope0, slope1, spline) bind(c)
   type(c_ptr), value :: spline  ! 0D_NOT_type
   type(spline_struct), pointer :: f_spline
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(r0%data_ptr)) then
     call c_f_pointer(r0%data_ptr, f_r0_ptr, [r0%dims(1)])
     f_r0 => f_r0_ptr
   else
     f_r0_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(r1%data_ptr)) then
     call c_f_pointer(r1%data_ptr, f_r1_ptr, [r1%dims(1)])
     f_r1 => f_r1_ptr
@@ -910,6 +940,9 @@ subroutine fortran_create_a_spline (r0, r1, slope0, slope1, spline) bind(c)
   f_slope0 = slope0
   ! in: f_slope1 0D_NOT_real
   f_slope1 = slope1
+  ! out: f_spline 0D_NOT_type
+  if (.not. c_associated(spline)) return
+  call c_f_pointer(spline, f_spline)
   f_spline = create_a_spline(f_r0, f_r1, f_slope0, f_slope1)
 
   ! out: f_spline 0D_NOT_type
@@ -931,19 +964,26 @@ subroutine fortran_cross_product (a, b, c) bind(c)
   real(rp) :: f_c(3)
   real(c_double), pointer :: f_c_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(a%data_ptr)) then
     call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
     f_a => f_a_ptr
   else
     f_a_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b => f_b_ptr
   else
     f_b_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(c%data_ptr)) then
+    call c_f_pointer(c%data_ptr, f_c_ptr, [c%dims(1)])
+    ! output-only
+  else
+    f_c_ptr => null()
   endif
   f_c = cross_product(f_a, f_b)
 
@@ -1130,7 +1170,7 @@ subroutine fortran_djb_str_hash (in_str, hash_str) bind(c)
   f_hash_str = djb_str_hash(f_in_str)
 
   ! out: f_hash_str 0D_NOT_character
-  call c_f_pointer(hash_str, f_hash_str_ptr, [len_trim(f_hash_str) + 1]) ! output-only string
+  call c_f_pointer(hash_str, f_hash_str_ptr, [len_trim(f_hash_str) + 1])
   call to_c_str(f_hash_str, f_hash_str_ptr)
 end subroutine
 subroutine fortran_downcase_string (string) bind(c)
@@ -1228,21 +1268,21 @@ subroutine fortran_faddeeva_function (z, w, dw) bind(c)
   real(rp) :: f_dw(2,2)
   real(c_double), pointer :: f_dw_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(z%data_ptr)) then
     call c_f_pointer(z%data_ptr, f_z_ptr, [z%dims(1)])
     f_z = f_z_ptr(:)
   else
     f_z_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(w%data_ptr)) then
     call c_f_pointer(w%data_ptr, f_w_ptr, [w%dims(1)])
     f_w = f_w_ptr(:)
   else
     f_w_ptr => null()
   endif
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) inout
   if (c_associated(dw%data_ptr)) then
     call c_f_pointer(dw%data_ptr, f_dw_ptr, [product(dw%dims(1:dw%rank))])
     call vec2mat(f_dw_ptr, f_dw)
@@ -1264,7 +1304,7 @@ subroutine fortran_fft_1d (arr, isign) bind(c)
   complex(rp), pointer :: f_arr(:)
   complex(c_double_complex), pointer :: f_arr_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(arr%data_ptr)) then
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
@@ -1429,7 +1469,7 @@ subroutine fortran_find_location_int (arr, value, ix_match) bind(c)
   integer, pointer :: f_arr(:)
   integer(c_int), pointer :: f_arr_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(arr%data_ptr)) then
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
@@ -1484,7 +1524,7 @@ subroutine fortran_find_location_real (arr, value, ix_match) bind(c)
   integer :: f_ix_match
   integer(c_int), pointer :: f_ix_match_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(arr%data_ptr)) then
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
@@ -1512,7 +1552,7 @@ subroutine fortran_fine_frequency_estimate (data, frequency) bind(c)
   real(rp) :: f_frequency
   real(c_double), pointer :: f_frequency_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(data%data_ptr)) then
     call c_f_pointer(data%data_ptr, f_data_ptr, [data%dims(1)])
     f_data => f_data_ptr
@@ -1574,7 +1614,7 @@ subroutine fortran_fourier_amplitude (data, frequency, cos_amp, sin_amp, dcos_am
   real(rp) :: f_dsin_amp
   real(c_double), pointer :: f_dsin_amp_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(data%data_ptr)) then
     call c_f_pointer(data%data_ptr, f_data_ptr, [data%dims(1)])
     f_data => f_data_ptr
@@ -1717,7 +1757,7 @@ subroutine fortran_hanhan (N, hh) bind(c)
   ! ** End of parameters **
   ! in: f_N 0D_NOT_integer
   f_N = N
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(hh%data_ptr)) then
     call c_f_pointer(hh%data_ptr, f_hh_ptr, [hh%dims(1)])
     f_hh => f_hh_ptr
@@ -1894,7 +1934,7 @@ subroutine fortran_int_str (int_, width, str) bind(c)
   f_str = int_str(f_int, f_width_ptr)
 
   ! out: f_str 0D_ALLOC_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index, &
@@ -1920,7 +1960,7 @@ subroutine fortran_interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump
   complex(rp), pointer :: f_cdata(:)
   complex(c_double_complex), pointer :: f_cdata_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(cdata%data_ptr)) then
     call c_f_pointer(cdata%data_ptr, f_cdata_ptr, [cdata%dims(1)])
     f_cdata => f_cdata_ptr
@@ -1971,7 +2011,7 @@ subroutine fortran_interpolated_fft_gsl (cdata, calc_ok, opt_dump_spectrum, opt_
   complex(rp), pointer :: f_cdata(:)
   complex(c_double_complex), pointer :: f_cdata_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(cdata%data_ptr)) then
     call c_f_pointer(cdata%data_ptr, f_cdata_ptr, [cdata%dims(1)])
     f_cdata => f_cdata_ptr
@@ -2052,7 +2092,7 @@ subroutine fortran_is_decreasing_sequence (array, strict, is_decreasing) bind(c)
   logical :: f_is_decreasing
   logical(c_bool), pointer :: f_is_decreasing_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(array%data_ptr)) then
     call c_f_pointer(array%data_ptr, f_array_ptr, [array%dims(1)])
     f_array => f_array_ptr
@@ -2111,7 +2151,7 @@ subroutine fortran_is_increasing_sequence (array, strict, is_increasing) bind(c)
   logical :: f_is_increasing
   logical(c_bool), pointer :: f_is_increasing_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(array%data_ptr)) then
     call c_f_pointer(array%data_ptr, f_array_ptr, [array%dims(1)])
     f_array => f_array_ptr
@@ -2353,14 +2393,14 @@ subroutine fortran_linear_fit (x, y, n_data, a, b, sig_a, sig_b) bind(c)
   real(rp), pointer :: f_y(:)
   real(c_double), pointer :: f_y_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(x%data_ptr)) then
     call c_f_pointer(x%data_ptr, f_x_ptr, [x%dims(1)])
     f_x => f_x_ptr
   else
     f_x_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(y%data_ptr)) then
     call c_f_pointer(y%data_ptr, f_y_ptr, [y%dims(1)])
     f_y => f_y_ptr
@@ -2399,26 +2439,33 @@ subroutine fortran_linear_fit_2d (x, y, z, coef) bind(c)
   real(rp) :: f_coef(3)
   real(c_double), pointer :: f_coef_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(x%data_ptr)) then
     call c_f_pointer(x%data_ptr, f_x_ptr, [x%dims(1)])
     f_x => f_x_ptr
   else
     f_x_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y%data_ptr)) then
     call c_f_pointer(y%data_ptr, f_y_ptr, [y%dims(1)])
     f_y => f_y_ptr
   else
     f_y_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(z%data_ptr)) then
     call c_f_pointer(z%data_ptr, f_z_ptr, [z%dims(1)])
     f_z => f_z_ptr
   else
     f_z_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(coef%data_ptr)) then
+    call c_f_pointer(coef%data_ptr, f_coef_ptr, [coef%dims(1)])
+    ! output-only
+  else
+    f_coef_ptr => null()
   endif
   call linear_fit_2d(f_x, f_y, f_z, f_coef)
 
@@ -2445,7 +2492,7 @@ subroutine fortran_logic_str (logic, str) bind(c)
   f_str = logic_str(f_logic)
 
   ! out: f_str 0D_NOT_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_lunget (func_retval__) bind(c)
@@ -2584,7 +2631,7 @@ subroutine fortran_maximize_projection (seed, cdata, func_retval__) bind(c)
   ! ** End of parameters **
   ! in: f_seed 0D_NOT_real
   f_seed = seed
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(cdata%data_ptr)) then
     call c_f_pointer(cdata%data_ptr, f_cdata_ptr, [cdata%dims(1)])
     f_cdata => f_cdata_ptr
@@ -2672,14 +2719,14 @@ subroutine fortran_n_spline_create (deriv0, deriv1, x1, n_spline) bind(c)
   real(rp), pointer :: f_n_spline(:)
   real(c_double), pointer :: f_n_spline_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(deriv0%data_ptr)) then
     call c_f_pointer(deriv0%data_ptr, f_deriv0_ptr, [deriv0%dims(1)])
     f_deriv0(0:) => f_deriv0_ptr
   else
     f_deriv0_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(deriv1%data_ptr)) then
     call c_f_pointer(deriv1%data_ptr, f_deriv1_ptr, [deriv1%dims(1)])
     f_deriv1(0:) => f_deriv1_ptr
@@ -2688,7 +2735,7 @@ subroutine fortran_n_spline_create (deriv0, deriv1, x1, n_spline) bind(c)
   endif
   ! in: f_x1 0D_NOT_real
   f_x1 = x1
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(n_spline%data_ptr)) then
     call c_f_pointer(n_spline%data_ptr, f_n_spline_ptr, [n_spline%dims(1)])
     f_n_spline(0:) => f_n_spline_ptr
@@ -2722,21 +2769,21 @@ subroutine fortran_naff (cdata, freqs, amps, opt_dump_spectra, opt_zero_first) b
   complex(rp), pointer :: f_amps(:)
   complex(c_double_complex), pointer :: f_amps_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(cdata%data_ptr)) then
     call c_f_pointer(cdata%data_ptr, f_cdata_ptr, [cdata%dims(1)])
     f_cdata => f_cdata_ptr
   else
     f_cdata_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(freqs%data_ptr)) then
     call c_f_pointer(freqs%data_ptr, f_freqs_ptr, [freqs%dims(1)])
     f_freqs => f_freqs_ptr
   else
     f_freqs_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(amps%data_ptr)) then
     call c_f_pointer(amps%data_ptr, f_amps_ptr, [amps%dims(1)])
     f_amps => f_amps_ptr
@@ -2920,12 +2967,19 @@ subroutine fortran_omega_to_quat (omega, quat) bind(c)
   real(rp) :: f_quat(0:3)
   real(c_double), pointer :: f_quat_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(omega%data_ptr)) then
     call c_f_pointer(omega%data_ptr, f_omega_ptr, [omega%dims(1)])
     f_omega = f_omega_ptr(:)
   else
     f_omega_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(quat%data_ptr)) then
+    call c_f_pointer(quat%data_ptr, f_quat_ptr, [quat%dims(1)])
+    ! output-only
+  else
+    f_quat_ptr => null()
   endif
   f_quat = omega_to_quat(f_omega)
 
@@ -2952,7 +3006,7 @@ subroutine fortran_openpmd_species_name (species, pmd_name) bind(c)
   f_pmd_name = openpmd_species_name(f_species)
 
   ! out: f_pmd_name 0D_NOT_character
-  call c_f_pointer(pmd_name, f_pmd_name_ptr, [len_trim(f_pmd_name) + 1]) ! output-only string
+  call c_f_pointer(pmd_name, f_pmd_name_ptr, [len_trim(f_pmd_name) + 1])
   call to_c_str(f_pmd_name, f_pmd_name_ptr)
 end subroutine
 subroutine fortran_ordinal_str (n, str) bind(c)
@@ -2972,7 +3026,7 @@ subroutine fortran_ordinal_str (n, str) bind(c)
   f_str = ordinal_str(f_n)
 
   ! out: f_str 0D_ALLOC_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_parse_fortran_format (format_str, n_repeat, power, descrip, width, digits) &
@@ -3038,6 +3092,8 @@ subroutine fortran_pointer_to_ran_state (ran_state, ix_thread, ran_state_ptr) bi
   else
     f_ix_thread_ptr => null()
   endif
+  ! out: f_ran_state_ptr 0D_PTR_type
+  if (c_associated(ran_state_ptr))   call c_f_pointer(ran_state_ptr, f_ran_state_ptr)
   f_ran_state_ptr => pointer_to_ran_state(f_ran_state, f_ix_thread_ptr)
 
   ! out: f_ran_state_ptr 0D_PTR_type
@@ -3063,7 +3119,7 @@ subroutine fortran_poly_eval (poly, x, diff_coef, y) bind(c)
   real(rp) :: f_y
   real(c_double), pointer :: f_y_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(poly%data_ptr)) then
     call c_f_pointer(poly%data_ptr, f_poly_ptr, [poly%dims(1)])
     f_poly(0:) => f_poly_ptr
@@ -3122,14 +3178,14 @@ subroutine fortran_projdd (a, b, func_retval__) bind(c)
   complex(rp), pointer :: f_b(:)
   complex(c_double_complex), pointer :: f_b_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(a%data_ptr)) then
     call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
     f_a => f_a_ptr
   else
     f_a_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b => f_b_ptr
@@ -3155,12 +3211,19 @@ subroutine fortran_quadratic_roots (coefs, root) bind(c)
   complex(rp) :: f_root(2)
   complex(c_double_complex), pointer :: f_root_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(coefs%data_ptr)) then
     call c_f_pointer(coefs%data_ptr, f_coefs_ptr, [coefs%dims(1)])
     f_coefs = f_coefs_ptr(:)
   else
     f_coefs_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) out
+  if (c_associated(root%data_ptr)) then
+    call c_f_pointer(root%data_ptr, f_root_ptr, [root%dims(1)])
+    ! output-only
+  else
+    f_root_ptr => null()
   endif
   f_root = quadratic_roots(f_coefs)
 
@@ -3183,12 +3246,19 @@ subroutine fortran_quat_conj_complex (q_in, q_out) bind(c)
   complex(rp) :: f_q_out(0:3)
   complex(c_double_complex), pointer :: f_q_out_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(q_in%data_ptr)) then
     call c_f_pointer(q_in%data_ptr, f_q_in_ptr, [q_in%dims(1)])
     f_q_in = f_q_in_ptr(:)
   else
     f_q_in_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) out
+  if (c_associated(q_out%data_ptr)) then
+    call c_f_pointer(q_out%data_ptr, f_q_out_ptr, [q_out%dims(1)])
+    ! output-only
+  else
+    f_q_out_ptr => null()
   endif
   f_q_out = quat_conj(f_q_in)
 
@@ -3211,12 +3281,19 @@ subroutine fortran_quat_conj_real (q_in, q_out) bind(c)
   real(rp) :: f_q_out(0:3)
   real(c_double), pointer :: f_q_out_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(q_in%data_ptr)) then
     call c_f_pointer(q_in%data_ptr, f_q_in_ptr, [q_in%dims(1)])
     f_q_in = f_q_in_ptr(:)
   else
     f_q_in_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(q_out%data_ptr)) then
+    call c_f_pointer(q_out%data_ptr, f_q_out_ptr, [q_out%dims(1)])
+    ! output-only
+  else
+    f_q_out_ptr => null()
   endif
   f_q_out = quat_conj(f_q_in)
 
@@ -3239,12 +3316,19 @@ subroutine fortran_quat_inverse (q_in, q_out) bind(c)
   real(rp) :: f_q_out(0:3)
   real(c_double), pointer :: f_q_out_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(q_in%data_ptr)) then
     call c_f_pointer(q_in%data_ptr, f_q_in_ptr, [q_in%dims(1)])
     f_q_in = f_q_in_ptr(:)
   else
     f_q_in_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(q_out%data_ptr)) then
+    call c_f_pointer(q_out%data_ptr, f_q_out_ptr, [q_out%dims(1)])
+    ! output-only
+  else
+    f_q_out_ptr => null()
   endif
   f_q_out = quat_inverse(f_q_in)
 
@@ -3292,68 +3376,75 @@ subroutine fortran_quat_mul_complex (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) 
   complex(rp) :: f_q8(0:3)
   complex(c_double_complex), pointer :: f_q8_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(q1%data_ptr)) then
     call c_f_pointer(q1%data_ptr, f_q1_ptr, [q1%dims(1)])
     f_q1 = f_q1_ptr(:)
   else
     f_q1_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(q2%data_ptr)) then
     call c_f_pointer(q2%data_ptr, f_q2_ptr, [q2%dims(1)])
     f_q2 = f_q2_ptr(:)
   else
     f_q2_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(q3%data_ptr)) then
     call c_f_pointer(q3%data_ptr, f_q3_ptr, [q3%dims(1)])
     f_q3 = f_q3_ptr(:)
   else
     f_q3_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(q4%data_ptr)) then
     call c_f_pointer(q4%data_ptr, f_q4_ptr, [q4%dims(1)])
     f_q4 = f_q4_ptr(:)
   else
     f_q4_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(q5%data_ptr)) then
     call c_f_pointer(q5%data_ptr, f_q5_ptr, [q5%dims(1)])
     f_q5 = f_q5_ptr(:)
   else
     f_q5_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(q6%data_ptr)) then
     call c_f_pointer(q6%data_ptr, f_q6_ptr, [q6%dims(1)])
     f_q6 = f_q6_ptr(:)
   else
     f_q6_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(q7%data_ptr)) then
     call c_f_pointer(q7%data_ptr, f_q7_ptr, [q7%dims(1)])
     f_q7 = f_q7_ptr(:)
   else
     f_q7_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(q8%data_ptr)) then
     call c_f_pointer(q8%data_ptr, f_q8_ptr, [q8%dims(1)])
     f_q8 = f_q8_ptr(:)
   else
     f_q8_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(q9%data_ptr)) then
     call c_f_pointer(q9%data_ptr, f_q9_ptr, [q9%dims(1)])
     f_q9 = f_q9_ptr(:)
   else
     f_q9_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) out
+  if (c_associated(q_out%data_ptr)) then
+    call c_f_pointer(q_out%data_ptr, f_q_out_ptr, [q_out%dims(1)])
+    ! output-only
+  else
+    f_q_out_ptr => null()
   endif
   f_q_out = quat_mul(f_q1, f_q2, f_q3, f_q4, f_q5, f_q6, f_q7, f_q8, f_q9)
 
@@ -3401,68 +3492,75 @@ subroutine fortran_quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) bin
   real(rp) :: f_q8(0:3)
   real(c_double), pointer :: f_q8_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(q1%data_ptr)) then
     call c_f_pointer(q1%data_ptr, f_q1_ptr, [q1%dims(1)])
     f_q1 = f_q1_ptr(:)
   else
     f_q1_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(q2%data_ptr)) then
     call c_f_pointer(q2%data_ptr, f_q2_ptr, [q2%dims(1)])
     f_q2 = f_q2_ptr(:)
   else
     f_q2_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(q3%data_ptr)) then
     call c_f_pointer(q3%data_ptr, f_q3_ptr, [q3%dims(1)])
     f_q3 = f_q3_ptr(:)
   else
     f_q3_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(q4%data_ptr)) then
     call c_f_pointer(q4%data_ptr, f_q4_ptr, [q4%dims(1)])
     f_q4 = f_q4_ptr(:)
   else
     f_q4_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(q5%data_ptr)) then
     call c_f_pointer(q5%data_ptr, f_q5_ptr, [q5%dims(1)])
     f_q5 = f_q5_ptr(:)
   else
     f_q5_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(q6%data_ptr)) then
     call c_f_pointer(q6%data_ptr, f_q6_ptr, [q6%dims(1)])
     f_q6 = f_q6_ptr(:)
   else
     f_q6_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(q7%data_ptr)) then
     call c_f_pointer(q7%data_ptr, f_q7_ptr, [q7%dims(1)])
     f_q7 = f_q7_ptr(:)
   else
     f_q7_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(q8%data_ptr)) then
     call c_f_pointer(q8%data_ptr, f_q8_ptr, [q8%dims(1)])
     f_q8 = f_q8_ptr(:)
   else
     f_q8_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(q9%data_ptr)) then
     call c_f_pointer(q9%data_ptr, f_q9_ptr, [q9%dims(1)])
     f_q9 = f_q9_ptr(:)
   else
     f_q9_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(q_out%data_ptr)) then
+    call c_f_pointer(q_out%data_ptr, f_q_out_ptr, [q_out%dims(1)])
+    ! output-only
+  else
+    f_q_out_ptr => null()
   endif
   f_q_out = quat_mul(f_q1, f_q2, f_q3, f_q4, f_q5, f_q6, f_q7, f_q8, f_q9)
 
@@ -3488,19 +3586,26 @@ subroutine fortran_quat_rotate_complex (quat, vec_in, vec_out) bind(c)
   complex(rp) :: f_vec_out(3)
   complex(c_double_complex), pointer :: f_vec_out_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(quat%data_ptr)) then
     call c_f_pointer(quat%data_ptr, f_quat_ptr, [quat%dims(1)])
     f_quat = f_quat_ptr(:)
   else
     f_quat_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(vec_in%data_ptr)) then
     call c_f_pointer(vec_in%data_ptr, f_vec_in_ptr, [vec_in%dims(1)])
     f_vec_in = f_vec_in_ptr(:)
   else
     f_vec_in_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) out
+  if (c_associated(vec_out%data_ptr)) then
+    call c_f_pointer(vec_out%data_ptr, f_vec_out_ptr, [vec_out%dims(1)])
+    ! output-only
+  else
+    f_vec_out_ptr => null()
   endif
   f_vec_out = quat_rotate(f_quat, f_vec_in)
 
@@ -3526,19 +3631,26 @@ subroutine fortran_quat_rotate_real (quat, vec_in, vec_out) bind(c)
   real(rp) :: f_vec_out(3)
   real(c_double), pointer :: f_vec_out_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(quat%data_ptr)) then
     call c_f_pointer(quat%data_ptr, f_quat_ptr, [quat%dims(1)])
     f_quat = f_quat_ptr(:)
   else
     f_quat_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(vec_in%data_ptr)) then
     call c_f_pointer(vec_in%data_ptr, f_vec_in_ptr, [vec_in%dims(1)])
     f_vec_in = f_vec_in_ptr(:)
   else
     f_vec_in_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(vec_out%data_ptr)) then
+    call c_f_pointer(vec_out%data_ptr, f_vec_out_ptr, [vec_out%dims(1)])
+    ! output-only
+  else
+    f_vec_out_ptr => null()
   endif
   f_vec_out = quat_rotate(f_quat, f_vec_in)
 
@@ -3564,12 +3676,19 @@ subroutine fortran_quat_to_axis_angle (quat, axis, angle) bind(c)
   real(rp) :: f_angle
   real(c_double), pointer :: f_angle_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(quat%data_ptr)) then
     call c_f_pointer(quat%data_ptr, f_quat_ptr, [quat%dims(1)])
     f_quat = f_quat_ptr(:)
   else
     f_quat_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(axis%data_ptr)) then
+    call c_f_pointer(axis%data_ptr, f_axis_ptr, [axis%dims(1)])
+    ! output-only
+  else
+    f_axis_ptr => null()
   endif
   call quat_to_axis_angle(f_quat, f_axis, f_angle)
 
@@ -3595,12 +3714,19 @@ subroutine fortran_quat_to_omega (quat, omega) bind(c)
   real(rp) :: f_omega(3)
   real(c_double), pointer :: f_omega_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(quat%data_ptr)) then
     call c_f_pointer(quat%data_ptr, f_quat_ptr, [quat%dims(1)])
     f_quat = f_quat_ptr(:)
   else
     f_quat_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(omega%data_ptr)) then
+    call c_f_pointer(omega%data_ptr, f_omega_ptr, [omega%dims(1)])
+    ! output-only
+  else
+    f_omega_ptr => null()
   endif
   f_omega = quat_to_omega(f_quat)
 
@@ -3623,17 +3749,24 @@ subroutine fortran_quat_to_w_mat (quat, w_mat) bind(c)
   real(rp) :: f_w_mat(3,3)
   real(c_double), pointer :: f_w_mat_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(quat%data_ptr)) then
     call c_f_pointer(quat%data_ptr, f_quat_ptr, [quat%dims(1)])
     f_quat = f_quat_ptr(:)
   else
     f_quat_ptr => null()
   endif
+  !! general array (2D_NOT_real) out
+  if (c_associated(w_mat%data_ptr)) then
+    call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
+    ! output-only
+  else
+    f_w_mat_ptr => null()
+  endif
   f_w_mat = quat_to_w_mat(f_quat)
 
   ! out: f_w_mat 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_w_mat', c_name='w_mat', python_name='w_mat', type='real', kind='rp', pointer_type='NOT', array=['3', '3'], init_value=None, comment='', member=StructureMember(line=186, definition='real(rp) quat(0:3), w_mat(3,3)', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='3,3', external=False, intent=None, intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='rp', static=False, target=False, value=False, volatile=False, attributes=()), name='w_mat', comment='', default=None), intent='out', description='Rotation matrix', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
 subroutine fortran_query_string (query_str, upcase, return_str, ix, ios) bind(c)
 
@@ -3690,7 +3823,7 @@ subroutine fortran_quote (str, q_str) bind(c)
   f_q_str = quote(f_str)
 
   ! out: f_q_str 0D_ALLOC_character
-  call c_f_pointer(q_str, f_q_str_ptr, [len_trim(f_q_str) + 1]) ! output-only string
+  call c_f_pointer(q_str, f_q_str_ptr, [len_trim(f_q_str) + 1])
   call to_c_str(f_q_str, f_q_str_ptr)
 end subroutine
 subroutine fortran_ran_default_state (set_state, get_state) bind(c)
@@ -3794,7 +3927,6 @@ subroutine fortran_ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, 
   ! out: f_get 0D_NOT_character
   if (c_associated(get)) then
     call c_f_pointer(get, f_get_ptr, [huge(0)])
-    call to_f_str(f_get_ptr, f_get)
     f_get_call_ptr => f_get
   else
     f_get_call_ptr => null()
@@ -3811,8 +3943,10 @@ subroutine fortran_ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, 
       f_get_sigma_cut, f_ran_state)
 
   ! out: f_get 0D_NOT_character
-  call c_f_pointer(get, f_get_ptr, [len_trim(f_get) + 1]) ! output-only string
-  call to_c_str(f_get, f_get_ptr)
+  if (c_associated(get)) then
+    call c_f_pointer(get, f_get_ptr, [len_trim(f_get) + 1])
+    call to_c_str(f_get, f_get_ptr)
+  endif
   ! out: f_get_sigma_cut 0D_NOT_real
   ! no output conversion for f_get_sigma_cut
 end subroutine
@@ -3871,7 +4005,7 @@ subroutine fortran_ran_gauss_vector (harvest, ran_state, sigma_cut) bind(c)
   real(rp), pointer :: f_harvest(:)
   real(c_double), pointer :: f_harvest_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(harvest%data_ptr)) then
     call c_f_pointer(harvest%data_ptr, f_harvest_ptr, [harvest%dims(1)])
     f_harvest => f_harvest_ptr
@@ -3969,7 +4103,7 @@ subroutine fortran_ran_uniform_vector (harvest, ran_state) bind(c)
   real(rp), pointer :: f_harvest(:)
   real(c_double), pointer :: f_harvest_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(harvest%data_ptr)) then
     call c_f_pointer(harvest%data_ptr, f_harvest_ptr, [harvest%dims(1)])
     f_harvest => f_harvest_ptr
@@ -4011,7 +4145,7 @@ subroutine fortran_real_num_fortran_format (number, width, n_blanks, fmt_str) bi
   f_fmt_str = real_num_fortran_format(f_number, f_width, f_n_blanks_ptr)
 
   ! out: f_fmt_str 0D_NOT_character
-  call c_f_pointer(fmt_str, f_fmt_str_ptr, [len_trim(f_fmt_str) + 1]) ! output-only string
+  call c_f_pointer(fmt_str, f_fmt_str_ptr, [len_trim(f_fmt_str) + 1])
   call to_c_str(f_fmt_str, f_fmt_str_ptr)
 end subroutine
 subroutine fortran_real_path (path_in, path_out, is_ok) bind(c)
@@ -4079,7 +4213,7 @@ subroutine fortran_real_str (r_num, n_signif, n_decimal, str) bind(c)
   f_str = real_str(f_r_num, f_n_signif_ptr, f_n_decimal_ptr)
 
   ! out: f_str 0D_ALLOC_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_real_to_string (real_num, width, n_signif, n_decimal, str) bind(c)
@@ -4121,7 +4255,7 @@ subroutine fortran_real_to_string (real_num, width, n_signif, n_decimal, str) bi
   f_str = real_to_string(f_real_num, f_width, f_n_signif_ptr, f_n_decimal_ptr)
 
   ! out: f_str 0D_NOT_character
-  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1]) ! output-only string
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_reallocate_spline (spline, n, n_min, exact) bind(c)
@@ -4183,7 +4317,7 @@ subroutine fortran_rms_value (val_arr, good_val, ave_val, rms_val) bind(c)
   real(rp) :: f_rms_val
   real(c_double), pointer :: f_rms_val_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(val_arr%data_ptr)) then
     call c_f_pointer(val_arr%data_ptr, f_val_arr_ptr, [val_arr%dims(1)])
     f_val_arr => f_val_arr_ptr
@@ -4221,7 +4355,7 @@ subroutine fortran_rot_2d (vec_in, angle, vec_out) bind(c)
   real(rp) :: f_vec_out(2)
   real(c_double), pointer :: f_vec_out_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(vec_in%data_ptr)) then
     call c_f_pointer(vec_in%data_ptr, f_vec_in_ptr, [vec_in%dims(1)])
     f_vec_in = f_vec_in_ptr(:)
@@ -4230,6 +4364,13 @@ subroutine fortran_rot_2d (vec_in, angle, vec_out) bind(c)
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
+  !! general array (1D_NOT_real) out
+  if (c_associated(vec_out%data_ptr)) then
+    call c_f_pointer(vec_out%data_ptr, f_vec_out_ptr, [vec_out%dims(1)])
+    ! output-only
+  else
+    f_vec_out_ptr => null()
+  endif
   f_vec_out = rot_2d(f_vec_in, f_angle)
 
   ! out: f_vec_out 1D_NOT_real
@@ -4252,7 +4393,7 @@ subroutine fortran_rotate_vec (vec, axis, angle) bind(c)
   real(rp), pointer :: f_vec(:)
   real(c_double), pointer :: f_vec_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(vec%data_ptr)) then
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec => f_vec_ptr
@@ -4284,14 +4425,14 @@ subroutine fortran_rotate_vec_given_axis_angle (vec_in, axis, angle, vec_out) bi
   real(rp) :: f_vec_out(3)
   real(c_double), pointer :: f_vec_out_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(vec_in%data_ptr)) then
     call c_f_pointer(vec_in%data_ptr, f_vec_in_ptr, [vec_in%dims(1)])
     f_vec_in = f_vec_in_ptr(:)
   else
     f_vec_in_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(axis%data_ptr)) then
     call c_f_pointer(axis%data_ptr, f_axis_ptr, [axis%dims(1)])
     f_axis => f_axis_ptr
@@ -4300,6 +4441,13 @@ subroutine fortran_rotate_vec_given_axis_angle (vec_in, axis, angle, vec_out) bi
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
+  !! general array (1D_NOT_real) out
+  if (c_associated(vec_out%data_ptr)) then
+    call c_f_pointer(vec_out%data_ptr, f_vec_out_ptr, [vec_out%dims(1)])
+    ! output-only
+  else
+    f_vec_out_ptr => null()
+  endif
   f_vec_out = rotate_vec_given_axis_angle(f_vec_in, f_axis, f_angle)
 
   ! out: f_vec_out 1D_NOT_real
@@ -4651,7 +4799,7 @@ subroutine fortran_species_name (species, name) bind(c)
   f_name = species_name(f_species)
 
   ! out: f_name 0D_NOT_character
-  call c_f_pointer(name, f_name_ptr, [len_trim(f_name) + 1]) ! output-only string
+  call c_f_pointer(name, f_name_ptr, [len_trim(f_name) + 1])
   call to_c_str(f_name, f_name_ptr)
 end subroutine
 subroutine fortran_species_of (mass, charge, species) bind(c)
@@ -4791,14 +4939,14 @@ subroutine fortran_spline_akima_interpolate (x_knot, y_knot, x, ok, y, dy) bind(
   real(rp) :: f_dy
   real(c_double), pointer :: f_dy_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(x_knot%data_ptr)) then
     call c_f_pointer(x_knot%data_ptr, f_x_knot_ptr, [x_knot%dims(1)])
     f_x_knot => f_x_knot_ptr
   else
     f_x_knot_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y_knot%data_ptr)) then
     call c_f_pointer(y_knot%data_ptr, f_y_knot_ptr, [y_knot%dims(1)])
     f_y_knot => f_y_knot_ptr
@@ -4983,7 +5131,7 @@ subroutine fortran_str_downcase (dst, src) bind(c)
   call str_downcase(f_dst, f_src)
 
   ! out: f_dst 0D_NOT_character
-  call c_f_pointer(dst, f_dst_ptr, [len_trim(f_dst) + 1]) ! output-only string
+  call c_f_pointer(dst, f_dst_ptr, [len_trim(f_dst) + 1])
   call to_c_str(f_dst, f_dst_ptr)
 end subroutine
 subroutine fortran_str_first_in_set (line, set, ignore_clauses, ix_match) bind(c)
@@ -5237,7 +5385,7 @@ subroutine fortran_str_upcase (dst, src) bind(c)
   call str_upcase(f_dst, f_src)
 
   ! out: f_dst 0D_NOT_character
-  call c_f_pointer(dst, f_dst_ptr, [len_trim(f_dst) + 1]) ! output-only string
+  call c_f_pointer(dst, f_dst_ptr, [len_trim(f_dst) + 1])
   call to_c_str(f_dst, f_dst_ptr)
 end subroutine
 subroutine fortran_string_to_int (line, default_, err_flag, err_print_flag, value) bind(c)
@@ -5426,28 +5574,28 @@ subroutine fortran_super_bicubic_coef (y, y1, y2, y12, d1, d2, c) bind(c)
   real(dp) :: f_c(4,4)
   real(c_double), pointer :: f_c_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y%data_ptr)) then
     call c_f_pointer(y%data_ptr, f_y_ptr, [y%dims(1)])
     f_y = f_y_ptr(:)
   else
     f_y_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y1%data_ptr)) then
     call c_f_pointer(y1%data_ptr, f_y1_ptr, [y1%dims(1)])
     f_y1 = f_y1_ptr(:)
   else
     f_y1_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y2%data_ptr)) then
     call c_f_pointer(y2%data_ptr, f_y2_ptr, [y2%dims(1)])
     f_y2 = f_y2_ptr(:)
   else
     f_y2_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y12%data_ptr)) then
     call c_f_pointer(y12%data_ptr, f_y12_ptr, [y12%dims(1)])
     f_y12 = f_y12_ptr(:)
@@ -5458,10 +5606,17 @@ subroutine fortran_super_bicubic_coef (y, y1, y2, y12, d1, d2, c) bind(c)
   f_d1 = d1
   ! in: f_d2 0D_NOT_real
   f_d2 = d2
+  !! general array (2D_NOT_real) out
+  if (c_associated(c%data_ptr)) then
+    call c_f_pointer(c%data_ptr, f_c_ptr, [product(c%dims(1:c%rank))])
+    ! output-only
+  else
+    f_c_ptr => null()
+  endif
   call super_bicubic_coef(f_y, f_y1, f_y2, f_y12, f_d1, f_d2, f_c)
 
   ! out: f_c 2D_NOT_real
-! TODO general output array 2D RoutineArg(is_component=True, f_name='f_c', c_name='c', python_name='c', type='real', kind='dp', pointer_type='NOT', array=['4', '4'], init_value=None, comment='', member=StructureMember(line=118, definition='real(dp), dimension(4,4), intent(out) :: c', type_info=TypeInformation(type='real', allocatable=False, asynchronous=False, bind=None, contiguous=False, dimension='4,4', external=False, intent='out', intrinsic=False, optional=False, parameter=False, pointer=False, private=False, protected=False, public=False, save=False, kind='dp', static=False, target=False, value=False, volatile=False, attributes=()), name='c', comment='', default=None), intent='out', description='Coefficients.', doc_data_type='float', doc_is_optional=False)
+  if (c_associated(c%data_ptr)) f_c_ptr = mat2vec(f_c, product(c%dims(1:c%rank)))
 end subroutine
 subroutine fortran_super_bicubic_interpolation (y, y1, y2, y12, x1l, x1u, x2l, x2u, x1, x2, &
     ansy, ansy1, ansy2) bind(c)
@@ -5504,28 +5659,28 @@ subroutine fortran_super_bicubic_interpolation (y, y1, y2, y12, x1l, x1u, x2l, x
   real(rp) :: f_ansy2
   real(c_double), pointer :: f_ansy2_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y%data_ptr)) then
     call c_f_pointer(y%data_ptr, f_y_ptr, [y%dims(1)])
     f_y = f_y_ptr(:)
   else
     f_y_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y1%data_ptr)) then
     call c_f_pointer(y1%data_ptr, f_y1_ptr, [y1%dims(1)])
     f_y1 = f_y1_ptr(:)
   else
     f_y1_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y2%data_ptr)) then
     call c_f_pointer(y2%data_ptr, f_y2_ptr, [y2%dims(1)])
     f_y2 = f_y2_ptr(:)
   else
     f_y2_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(y12%data_ptr)) then
     call c_f_pointer(y12%data_ptr, f_y12_ptr, [y12%dims(1)])
     f_y12 = f_y12_ptr(:)
@@ -5578,14 +5733,14 @@ subroutine fortran_super_polint (xa, ya, x, y, dy) bind(c)
   real(rp) :: f_dy
   real(c_double), pointer :: f_dy_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(xa%data_ptr)) then
     call c_f_pointer(xa%data_ptr, f_xa_ptr, [xa%dims(1)])
     f_xa => f_xa_ptr
   else
     f_xa_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(ya%data_ptr)) then
     call c_f_pointer(ya%data_ptr, f_ya_ptr, [ya%dims(1)])
     f_ya => f_ya_ptr
@@ -5620,7 +5775,7 @@ subroutine fortran_super_poly (x, coeffs, value) bind(c)
   ! ** End of parameters **
   ! in: f_x 0D_NOT_real
   f_x = x
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(coeffs%data_ptr)) then
     call c_f_pointer(coeffs%data_ptr, f_coeffs_ptr, [coeffs%dims(1)])
     f_coeffs => f_coeffs_ptr
@@ -5645,7 +5800,7 @@ subroutine fortran_super_sobseq (x, ran_state) bind(c)
   type(c_ptr), value :: ran_state  ! 0D_NOT_type
   type(random_state_struct), pointer :: f_ran_state
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(x%data_ptr)) then
     call c_f_pointer(x%data_ptr, f_x_ptr, [x%dims(1)])
     f_x => f_x_ptr
@@ -5666,7 +5821,7 @@ subroutine fortran_super_sort (arr) bind(c)
   integer, pointer :: f_arr(:)
   integer(c_int), pointer :: f_arr_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(arr%data_ptr)) then
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
@@ -5731,7 +5886,7 @@ subroutine fortran_to_str (num, max_signif, string) bind(c)
   f_string = to_str(f_num, f_max_signif_ptr)
 
   ! out: f_string 0D_ALLOC_character
-  call c_f_pointer(string, f_string_ptr, [len_trim(f_string) + 1]) ! output-only string
+  call c_f_pointer(string, f_string_ptr, [len_trim(f_string) + 1])
   call to_c_str(f_string, f_string_ptr)
 end subroutine
 subroutine fortran_tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx, df_dy, df_dz, &
@@ -5866,12 +6021,19 @@ subroutine fortran_w_mat_to_axis_angle (w_mat, axis, angle) bind(c)
   real(rp) :: f_angle
   real(c_double), pointer :: f_angle_ptr
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(w_mat%data_ptr)) then
     call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
     call vec2mat(f_w_mat_ptr, f_w_mat)
   else
     f_w_mat_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(axis%data_ptr)) then
+    call c_f_pointer(axis%data_ptr, f_axis_ptr, [axis%dims(1)])
+    ! output-only
+  else
+    f_axis_ptr => null()
   endif
   call w_mat_to_axis_angle(f_w_mat, f_axis, f_angle)
 
@@ -5897,12 +6059,19 @@ subroutine fortran_w_mat_to_quat (w_mat, quat) bind(c)
   real(rp) :: f_quat(0:3)
   real(c_double), pointer :: f_quat_ptr(:)
   ! ** End of parameters **
-  !! general array (2D_NOT_real)
+  !! general array (2D_NOT_real) in
   if (c_associated(w_mat%data_ptr)) then
     call c_f_pointer(w_mat%data_ptr, f_w_mat_ptr, [product(w_mat%dims(1:w_mat%rank))])
     call vec2mat(f_w_mat_ptr, f_w_mat)
   else
     f_w_mat_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(quat%data_ptr)) then
+    call c_f_pointer(quat%data_ptr, f_quat_ptr, [quat%dims(1)])
+    ! output-only
+  else
+    f_quat_ptr => null()
   endif
   f_quat = w_mat_to_quat(f_w_mat)
 

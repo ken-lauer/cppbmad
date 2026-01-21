@@ -10,3 +10,8 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_f(py::module &m);
+
+struct PyFibreToEle {
+  bool err_flag;
+  int ix_ele;
+};

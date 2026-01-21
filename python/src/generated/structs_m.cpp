@@ -13,7 +13,7 @@ namespace py = pybind11;
 void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
   cls.def(py::init<>())
       // Mode3Struct.v (2D_NOT_real -
-      .def_property_readonly("v", &Mode3Struct::v)
+      .def_property("v", &Mode3Struct::v, &Mode3Struct::set_v)
       // Mode3Struct.a (0D_NOT_type -
       .def_property("a", &Mode3Struct::a, &Mode3Struct::set_a)
       // Mode3Struct.b (0D_NOT_type -
@@ -124,11 +124,11 @@ void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
 void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
   cls.def(py::init<>())
       // MadMapStruct.k (1D_NOT_real - 0th order map.
-      .def_property_readonly("k", &MadMapStruct::k)
+      .def_property("k", &MadMapStruct::k, &MadMapStruct::set_k)
       // MadMapStruct.r (2D_NOT_real - 1st order map.
-      .def_property_readonly("r", &MadMapStruct::r)
+      .def_property("r", &MadMapStruct::r, &MadMapStruct::set_r)
       // MadMapStruct.t (3D_NOT_real - 2nd order map.
-      .def_property_readonly("t", &MadMapStruct::t)
+      .def_property("t", &MadMapStruct::t, &MadMapStruct::set_t)
 
       .def("__repr__", [](const MadMapStruct &self) { return to_string(self); })
 

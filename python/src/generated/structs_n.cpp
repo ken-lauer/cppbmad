@@ -13,7 +13,7 @@ namespace py = pybind11;
 void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls) {
   cls.def(py::init<>())
       // NormalModesStruct.synch_int (1D_NOT_real - Synchrotron integrals I0, I1, I2, and I3
-      .def_property_readonly("synch_int", &NormalModesStruct::synch_int)
+      .def_property("synch_int", &NormalModesStruct::synch_int, &NormalModesStruct::set_synch_int)
       // NormalModesStruct.sigE_E (0D_NOT_real - SigmaE/E
       .def_property("sigE_E", &NormalModesStruct::sigE_E, &NormalModesStruct::set_sigE_E)
       // NormalModesStruct.sig_z (0D_NOT_real - Sigma_Z
@@ -84,7 +84,7 @@ void init_nametable_struct(py::module &m, py::class_<NametableStruct> &cls) {
       .def_property_readonly("name", &NametableStruct::name)
       // NametableStruct.index (1D_ALLOC_integer - Sorted index for names(:) array.
       // names(an_index(i)) is in alphabetical order.
-      .def_property_readonly("index", &NametableStruct::index)
+      .def_property("index", &NametableStruct::index, &NametableStruct::set_index)
       // NametableStruct.n_min (0D_NOT_integer - Set to 0 for use in a lattice.
       .def_property("n_min", &NametableStruct::n_min, &NametableStruct::set_n_min)
       // NametableStruct.n_max (0D_NOT_integer - Use only names(n_min:n_max) part of array.

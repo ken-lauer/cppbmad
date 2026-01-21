@@ -13,9 +13,9 @@ namespace py = pybind11;
 void init_floor_position_struct(py::module &m, py::class_<FloorPositionStruct> &cls) {
   cls.def(py::init<>())
       // FloorPositionStruct.r (1D_NOT_real - (x, y, z) offset from origin
-      .def_property_readonly("r", &FloorPositionStruct::r)
+      .def_property("r", &FloorPositionStruct::r, &FloorPositionStruct::set_r)
       // FloorPositionStruct.w (2D_NOT_real - W matrix. Columns are unit vectors of the frame axes.
-      .def_property_readonly("w", &FloorPositionStruct::w)
+      .def_property("w", &FloorPositionStruct::w, &FloorPositionStruct::set_w)
       // FloorPositionStruct.theta (0D_NOT_real - angular orientation consistent with W matrix
       .def_property("theta", &FloorPositionStruct::theta, &FloorPositionStruct::set_theta)
       // FloorPositionStruct.phi (0D_NOT_real - angular orientation consistent with W matrix

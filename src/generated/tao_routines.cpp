@@ -563,7 +563,7 @@ void Tao::tao_draw_curve_data(
     TaoPlotStruct &plot,
     TaoGraphStruct &graph,
     TaoCurveStruct &curve,
-    bool have_data
+    bool &have_data
 ) {
   fortran_tao_draw_curve_data(
       /* void* */ plot.get_fortran_ptr(),
@@ -611,7 +611,7 @@ void Tao::tao_draw_histogram_data(
     TaoPlotStruct &plot,
     TaoGraphStruct &graph,
     TaoCurveStruct &curve,
-    bool have_data
+    bool &have_data
 ) {
   fortran_tao_draw_histogram_data(
       /* void* */ plot.get_fortran_ptr(),
@@ -654,7 +654,7 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shapes,
-    std::optional<int> ix_shape_min
+    optional_ref<int> ix_shape_min
 ) {
   // ele_shapes: TaoEleShapeStruct in (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _ele_shapes_desc;
@@ -666,13 +666,8 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
   char _label_name[4096];
   double _y1{};
   double _y2{};
-  int ix_shape_min_lvalue;
-  auto *_ix_shape_min{&ix_shape_min_lvalue};
-  if (ix_shape_min.has_value()) {
-    ix_shape_min_lvalue = ix_shape_min.value();
-  } else {
-    _ix_shape_min = nullptr;
-  }
+  auto *_ix_shape_min =
+      ix_shape_min.has_value() ? &ix_shape_min->get() : nullptr; // inout, optional
   fortran_tao_ele_shape_info(
       /* int& */ ix_uni,
       /* void* */ ele.get_fortran_ptr(),
@@ -1859,8 +1854,8 @@ Tao::TaoMerit Tao::tao_merit() {
   fortran_tao_merit(/* bool& */ _calc_ok, /* double& */ _this_merit);
   return TaoMerit{_calc_ok, _this_merit};
 }
-std::string Tao::tao_next_word(std::string line) {
-  auto _line = line.c_str();
+std::string Tao::tao_next_word(std::string &line) {
+  auto _line = line.c_str(); // ptr, inout, required
   char _word[4096];
   fortran_tao_next_word(/* const char* */ _line, /* const char* */ _word);
   return _word;
@@ -2233,7 +2228,7 @@ Tao::TaoPointerToEleShape Tao::tao_pointer_to_ele_shape(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shape,
-    std::optional<int> ix_shape_min
+    optional_ref<int> ix_shape_min
 ) {
   // ele_shape: TaoEleShapeStruct in (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _ele_shape_desc;
@@ -2243,13 +2238,8 @@ Tao::TaoPointerToEleShape Tao::tao_pointer_to_ele_shape(
   _ele_shape_desc.strides[0] = 1;
   char _dat_var_name[4096];
   double _dat_var_value{};
-  int ix_shape_min_lvalue;
-  auto *_ix_shape_min{&ix_shape_min_lvalue};
-  if (ix_shape_min.has_value()) {
-    ix_shape_min_lvalue = ix_shape_min.value();
-  } else {
-    _ix_shape_min = nullptr;
-  }
+  auto *_ix_shape_min =
+      ix_shape_min.has_value() ? &ix_shape_min->get() : nullptr; // inout, optional
   void *_e_shape;
   fortran_tao_pointer_to_ele_shape(
       /* int& */ ix_uni,
@@ -2301,8 +2291,8 @@ Tao::tao_pointer_to_universe(int ix_uni, std::optional<bool> neg2_to_default) {
   return std::move((_u ? std::make_optional<TaoUniverseStruct>(_u) : std::nullopt));
 }
 std::optional<TaoUniverseStruct>
-Tao::tao_pointer_to_universe(std::string string, std::optional<bool> neg2_to_default) {
-  auto _string = string.c_str();
+Tao::tao_pointer_to_universe(std::string &string, std::optional<bool> neg2_to_default) {
+  auto _string = string.c_str(); // ptr, inout, required
   bool neg2_to_default_lvalue;
   auto *_neg2_to_default{&neg2_to_default_lvalue};
   if (neg2_to_default.has_value()) {
@@ -2468,9 +2458,12 @@ int Tao::tao_read_phase_space_index(std::string name, int ixc, std::optional<boo
   );
   return _ix_ps;
 }
-void Tao::tao_regression_test() { fortran_tao_regression_test(); }
-void Tao::tao_remove_blank_characters(std::string str) {
-  auto _str = str.c_str();
+void Tao::tao_regression_test(std::string cmd_str) {
+  auto _cmd_str = cmd_str.c_str();
+  fortran_tao_regression_test(/* const char* */ _cmd_str);
+}
+void Tao::tao_remove_blank_characters(std::string &str) {
+  auto _str = str.c_str(); // ptr, inout, required
   fortran_tao_remove_blank_characters(/* const char* */ _str);
 }
 bool Tao::tao_run_cmd(std::string which) {

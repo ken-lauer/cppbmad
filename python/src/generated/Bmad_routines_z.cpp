@@ -67,19 +67,24 @@ Remember: +z points into the element.
   m.def(
       "zero_ele_kicks",
       &Bmad::zero_ele_kicks,
+      py::arg("ele"),
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element with no kicks.
+    Element with possible nonzero kicks.
+    This parameter is an input/output and is modified in-place. As an output: Element with no kicks.
 )"""
   );
   m.def(
       "zero_ele_offsets",
       &Bmad::zero_ele_offsets,
+      py::arg("ele"),
       R"""(Parameters
 ----------
 ele : EleStruct
-    Element with no (mis)orientation.
+    Element with possible nonzero offsets, etc.
+    This parameter is an input/output and is modified in-place. As an output: Element with no
+    (mis)orientation.
 )"""
   );
   m.def(

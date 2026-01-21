@@ -183,18 +183,18 @@ void init_rad_map_ele_struct(py::module &m, py::class_<RadMapEleStruct> &cls) {
 void init_rad_map_struct(py::module &m, py::class_<RadMapStruct> &cls) {
   cls.def(py::init<>())
       // RadMapStruct.ref_orb (1D_NOT_real - Reference point around which damp_mat is calculated.
-      .def_property_readonly("ref_orb", &RadMapStruct::ref_orb)
+      .def_property("ref_orb", &RadMapStruct::ref_orb, &RadMapStruct::set_ref_orb)
       // RadMapStruct.damp_dmat (2D_NOT_real - damp_correction = xfer_mat_with_damping -
       // xfer_mat_without_damping.
-      .def_property_readonly("damp_dmat", &RadMapStruct::damp_dmat)
+      .def_property("damp_dmat", &RadMapStruct::damp_dmat, &RadMapStruct::set_damp_dmat)
       // RadMapStruct.xfer_damp_vec (1D_NOT_real - Transfer map with damping 0th order vector.
-      .def_property_readonly("xfer_damp_vec", &RadMapStruct::xfer_damp_vec)
+      .def_property("xfer_damp_vec", &RadMapStruct::xfer_damp_vec, &RadMapStruct::set_xfer_damp_vec)
       // RadMapStruct.xfer_damp_mat (2D_NOT_real - 1st order matrix: xfer_no_damp_mat +
       // xfer_damp_correction.
-      .def_property_readonly("xfer_damp_mat", &RadMapStruct::xfer_damp_mat)
+      .def_property("xfer_damp_mat", &RadMapStruct::xfer_damp_mat, &RadMapStruct::set_xfer_damp_mat)
       // RadMapStruct.stoc_mat (2D_NOT_real - Stochastic variance or 'kick' (Cholesky decomposed)
       // matrix.
-      .def_property_readonly("stoc_mat", &RadMapStruct::stoc_mat)
+      .def_property("stoc_mat", &RadMapStruct::stoc_mat, &RadMapStruct::set_stoc_mat)
 
       .def("__repr__", [](const RadMapStruct &self) { return to_string(self); })
 
@@ -411,9 +411,10 @@ void init_random_state_struct(py::module &m, py::class_<RandomStateStruct> &cls)
       )
       // RandomStateStruct.in_sobseq (0D_NOT_integer8 -
       .def_property("in_sobseq", &RandomStateStruct::in_sobseq, &RandomStateStruct::set_in_sobseq)
-      // 1D_NOT_integer8 ix_sobseq proxy support missing
+      // RandomStateStruct.ix_sobseq (1D_NOT_integer8 -
+      .def_property("ix_sobseq", &RandomStateStruct::ix_sobseq, &RandomStateStruct::set_ix_sobseq)
       // RandomStateStruct.x_sobseq (1D_NOT_real -
-      .def_property_readonly("x_sobseq", &RandomStateStruct::x_sobseq)
+      .def_property("x_sobseq", &RandomStateStruct::x_sobseq, &RandomStateStruct::set_x_sobseq)
 
       .def("__repr__", [](const RandomStateStruct &self) { return to_string(self); })
 

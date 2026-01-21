@@ -165,7 +165,7 @@ subroutine fortran_integrate_max (ix_start, ix_ele, datum_value, ix_m, branch, v
   ! inout: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(vec%data_ptr)) then
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec(0:) => f_vec_ptr
@@ -214,7 +214,7 @@ subroutine fortran_integrate_min (ix_start, ix_ele, datum_value, ix_m, branch, v
   ! inout: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(vec%data_ptr)) then
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec(0:) => f_vec_ptr
@@ -476,6 +476,8 @@ subroutine fortran_tao_beam_track_endpoint (ele_id, lat, branch_str, where, u, e
   ! in: f_u 0D_NOT_type
   if (.not. c_associated(u)) return
   call c_f_pointer(u, f_u)
+  ! out: f_ele 0D_PTR_type
+  if (c_associated(ele))   call c_f_pointer(ele, f_ele)
   f_ele => tao_beam_track_endpoint(f_ele_id, f_lat, f_branch_str, f_where, f_u)
 
   ! out: f_ele 0D_PTR_type
@@ -888,7 +890,7 @@ subroutine fortran_tao_constraint_type_name (datum, datum_name) bind(c)
   f_datum_name = tao_constraint_type_name(f_datum)
 
   ! out: f_datum_name 0D_NOT_character
-  call c_f_pointer(datum_name, f_datum_name_ptr, [len_trim(f_datum_name) + 1]) ! output-only string
+  call c_f_pointer(datum_name, f_datum_name_ptr, [len_trim(f_datum_name) + 1])
   call to_c_str(f_datum_name, f_datum_name_ptr)
 end subroutine
 subroutine fortran_tao_control_tree_list (ele, tree) bind(c)
@@ -1069,6 +1071,9 @@ subroutine fortran_tao_curve_ele_ref (curve, point_to_ele_ref, ele_track) bind(c
   call c_f_pointer(curve, f_curve)
   ! in: f_point_to_ele_ref 0D_NOT_logical
   f_point_to_ele_ref = point_to_ele_ref
+  ! out: f_ele_track 0D_PTR_type
+  if (.not. c_associated(ele_track)) return
+  call c_f_pointer(ele_track, f_ele_track)
   f_ele_track => tao_curve_ele_ref(f_curve, f_point_to_ele_ref)
 
   ! out: f_ele_track 0D_PTR_type
@@ -1128,7 +1133,7 @@ subroutine fortran_tao_curve_name (curve, use_region, curve_name) bind(c)
   f_curve_name = tao_curve_name(f_curve, f_use_region_native_ptr)
 
   ! out: f_curve_name 0D_NOT_character
-  call c_f_pointer(curve_name, f_curve_name_ptr, [len_trim(f_curve_name) + 1]) ! output-only string
+  call c_f_pointer(curve_name, f_curve_name_ptr, [len_trim(f_curve_name) + 1])
   call to_c_str(f_curve_name, f_curve_name_ptr)
 end subroutine
 subroutine fortran_tao_curve_rms_calc (curve, who, rms, mean) bind(c)
@@ -1198,7 +1203,7 @@ subroutine fortran_tao_d2_d1_name (d1, show_universe, d2_d1_name) bind(c)
   f_d2_d1_name = tao_d2_d1_name(f_d1, f_show_universe_native_ptr)
 
   ! out: f_d2_d1_name 0D_NOT_character
-  call c_f_pointer(d2_d1_name, f_d2_d1_name_ptr, [len_trim(f_d2_d1_name) + 1]) ! output-only string
+  call c_f_pointer(d2_d1_name, f_d2_d1_name_ptr, [len_trim(f_d2_d1_name) + 1])
   call to_c_str(f_d2_d1_name, f_d2_d1_name_ptr)
 end subroutine
 subroutine fortran_tao_d2_data_stuffit (u, d2_name, n_d1_data) bind(c)
@@ -1325,7 +1330,7 @@ subroutine fortran_tao_data_type_substitute (template_, str_out, curve, graph) b
   call tao_data_type_substitute(f_template, f_str_out, f_curve, f_graph)
 
   ! out: f_str_out 0D_NOT_character
-  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
+  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
 subroutine fortran_tao_data_useit_plot_calc (curve, graph, data, check_s_position, &
@@ -1366,7 +1371,7 @@ subroutine fortran_tao_data_useit_plot_calc (curve, graph, data, check_s_positio
   call tao_data_useit_plot_calc(f_curve, f_graph, f_data, f_check_s_position, f_most_invalid)
 
   ! out: f_most_invalid 0D_NOT_character
-  call c_f_pointer(most_invalid, f_most_invalid_ptr, [len_trim(f_most_invalid) + 1]) ! output-only string
+  call c_f_pointer(most_invalid, f_most_invalid_ptr, [len_trim(f_most_invalid) + 1])
   call to_c_str(f_most_invalid, f_most_invalid_ptr)
 end subroutine
 subroutine fortran_tao_datum_has_associated_ele (data_type, branch_geometry, &
@@ -1437,14 +1442,14 @@ subroutine fortran_tao_datum_integrate (datum, branch, s_pos, values, valid_valu
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) return
   call c_f_pointer(branch, f_branch)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(s_pos%data_ptr)) then
     call c_f_pointer(s_pos%data_ptr, f_s_pos_ptr, [s_pos%dims(1)])
     f_s_pos => f_s_pos_ptr
   else
     f_s_pos_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(values%data_ptr)) then
     call c_f_pointer(values%data_ptr, f_values_ptr, [values%dims(1)])
     f_values => f_values_ptr
@@ -1458,7 +1463,7 @@ subroutine fortran_tao_datum_integrate (datum, branch, s_pos, values, valid_valu
   call c_f_pointer(valid_value, f_valid_value_ptr)
   f_valid_value_ptr = f_valid_value
   ! out: f_why_invalid 0D_NOT_character
-  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1]) ! output-only string
+  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1])
   call to_c_str(f_why_invalid, f_why_invalid_ptr)
   ! out: f_result 0D_NOT_real
   call c_f_pointer(result, f_result_ptr)
@@ -1496,7 +1501,7 @@ subroutine fortran_tao_datum_name (datum, show_universe, datum_name) bind(c)
   f_datum_name = tao_datum_name(f_datum, f_show_universe_native_ptr)
 
   ! out: f_datum_name 0D_NOT_character
-  call c_f_pointer(datum_name, f_datum_name_ptr, [len_trim(f_datum_name) + 1]) ! output-only string
+  call c_f_pointer(datum_name, f_datum_name_ptr, [len_trim(f_datum_name) + 1])
   call to_c_str(f_datum_name, f_datum_name_ptr)
 end subroutine
 subroutine fortran_tao_datum_s_position (datum, ele, s_pos) bind(c)
@@ -1670,8 +1675,12 @@ subroutine fortran_tao_draw_curve_data (plot, graph, curve, have_data) bind(c)
   type(tao_graph_struct), pointer :: f_graph
   type(c_ptr), value :: curve  ! 0D_NOT_type
   type(tao_curve_struct), pointer :: f_curve
-  logical(c_bool) :: have_data  ! 0D_NOT_logical
-  logical :: f_have_data
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: have_data  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_have_data
+  logical, target :: f_have_data_native
+  logical, pointer :: f_have_data_native_ptr
+  logical(c_bool), pointer :: f_have_data_ptr
   ! ** End of parameters **
   ! in: f_plot 0D_NOT_type
   if (.not. c_associated(plot)) return
@@ -1682,10 +1691,23 @@ subroutine fortran_tao_draw_curve_data (plot, graph, curve, have_data) bind(c)
   ! in: f_curve 0D_NOT_type
   if (.not. c_associated(curve)) return
   call c_f_pointer(curve, f_curve)
-  ! in: f_have_data 0D_NOT_logical
-  f_have_data = have_data
-  call tao_draw_curve_data(f_plot, f_graph, f_curve, f_have_data)
+  ! inout: f_have_data 0D_NOT_logical
+  if (c_associated(have_data)) then
+    call c_f_pointer(have_data, f_have_data_ptr)
+    f_have_data_native = f_have_data_ptr
+    f_have_data_native_ptr => f_have_data_native
+  else
+    f_have_data_native_ptr => null()
+  endif
+  call tao_draw_curve_data(f_plot, f_graph, f_curve, f_have_data_native_ptr)
 
+  ! inout: f_have_data 0D_NOT_logical
+  if (c_associated(have_data)) then
+    call c_f_pointer(have_data, f_have_data_ptr)
+    f_have_data_ptr = f_have_data_native
+  else
+    ! f_have_data unset
+  endif
 end subroutine
 subroutine fortran_tao_draw_ele_for_floor_plan (plot, graph, tao_lat, ele, ele_shape, &
     label_name, offset1, offset2) bind(c)
@@ -1792,8 +1814,12 @@ subroutine fortran_tao_draw_histogram_data (plot, graph, curve, have_data) bind(
   type(tao_graph_struct), pointer :: f_graph
   type(c_ptr), value :: curve  ! 0D_NOT_type
   type(tao_curve_struct), pointer :: f_curve
-  logical(c_bool) :: have_data  ! 0D_NOT_logical
-  logical :: f_have_data
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: have_data  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_have_data
+  logical, target :: f_have_data_native
+  logical, pointer :: f_have_data_native_ptr
+  logical(c_bool), pointer :: f_have_data_ptr
   ! ** End of parameters **
   ! in: f_plot 0D_NOT_type
   if (.not. c_associated(plot)) return
@@ -1804,10 +1830,23 @@ subroutine fortran_tao_draw_histogram_data (plot, graph, curve, have_data) bind(
   ! in: f_curve 0D_NOT_type
   if (.not. c_associated(curve)) return
   call c_f_pointer(curve, f_curve)
-  ! in: f_have_data 0D_NOT_logical
-  f_have_data = have_data
-  call tao_draw_histogram_data(f_plot, f_graph, f_curve, f_have_data)
+  ! inout: f_have_data 0D_NOT_logical
+  if (c_associated(have_data)) then
+    call c_f_pointer(have_data, f_have_data_ptr)
+    f_have_data_native = f_have_data_ptr
+    f_have_data_native_ptr => f_have_data_native
+  else
+    f_have_data_native_ptr => null()
+  endif
+  call tao_draw_histogram_data(f_plot, f_graph, f_curve, f_have_data_native_ptr)
 
+  ! inout: f_have_data 0D_NOT_logical
+  if (c_associated(have_data)) then
+    call c_f_pointer(have_data, f_have_data_ptr)
+    f_have_data_ptr = f_have_data_native
+  else
+    ! f_have_data unset
+  endif
 end subroutine
 subroutine fortran_tao_draw_lat_layout (plot, graph) bind(c)
 
@@ -1886,7 +1925,7 @@ subroutine fortran_tao_ele_geometry_with_misalignments (datum, ele, valid_value,
   call c_f_pointer(valid_value, f_valid_value_ptr)
   f_valid_value_ptr = f_valid_value
   ! out: f_why_invalid 0D_NOT_character
-  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1]) ! output-only string
+  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1])
   call to_c_str(f_why_invalid, f_why_invalid_ptr)
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
@@ -1906,9 +1945,6 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   type(ele_struct), pointer :: f_ele
   type(array_descriptor_t), intent(in) :: ele_shapes
   type(tao_ele_shape_struct), pointer :: f_ele_shapes(:)
-  type(c_ptr), intent(in), value :: ix_shape_min  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_shape_min
-  integer(c_int), pointer :: f_ix_shape_min_ptr
   ! ** Out parameters **
   type(c_ptr) :: e_shape  ! 0D_PTR_type
   type(tao_ele_shape_struct), pointer :: f_e_shape
@@ -1921,6 +1957,10 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   type(c_ptr), intent(in), value :: y2  ! 0D_NOT_real
   real(rp) :: f_y2
   real(c_double), pointer :: f_y2_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: ix_shape_min  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_shape_min
+  integer(c_int), pointer :: f_ix_shape_min_ptr
   ! ** End of parameters **
   ! in: f_ix_uni 0D_NOT_integer
   f_ix_uni = ix_uni
@@ -1935,7 +1975,7 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   endif
   ! out: f_e_shape 0D_PTR_type
   if (c_associated(e_shape))   call c_f_pointer(e_shape, f_e_shape)
-  ! in: f_ix_shape_min 0D_NOT_integer
+  ! inout: f_ix_shape_min 0D_NOT_integer
   if (c_associated(ix_shape_min)) then
     call c_f_pointer(ix_shape_min, f_ix_shape_min_ptr)
   else
@@ -1947,7 +1987,7 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   ! out: f_e_shape 0D_PTR_type
   e_shape = c_loc(f_e_shape)
   ! out: f_label_name 0D_NOT_character
-  call c_f_pointer(label_name, f_label_name_ptr, [len_trim(f_label_name) + 1]) ! output-only string
+  call c_f_pointer(label_name, f_label_name_ptr, [len_trim(f_label_name) + 1])
   call to_c_str(f_label_name, f_label_name_ptr)
   ! out: f_y1 0D_NOT_real
   call c_f_pointer(y1, f_y1_ptr)
@@ -1955,6 +1995,8 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   ! out: f_y2 0D_NOT_real
   call c_f_pointer(y2, f_y2_ptr)
   f_y2_ptr = f_y2
+  ! inout: f_ix_shape_min 0D_NOT_integer
+  ! no output conversion for f_ix_shape_min
 end subroutine
 subroutine fortran_tao_eval_floor_orbit (datum, ele, orbit, bunch_params, valid_value, &
     why_invalid, value) bind(c)
@@ -2002,7 +2044,7 @@ subroutine fortran_tao_eval_floor_orbit (datum, ele, orbit, bunch_params, valid_
   call c_f_pointer(valid_value, f_valid_value_ptr)
   f_valid_value_ptr = f_valid_value
   ! out: f_why_invalid 0D_NOT_character
-  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1]) ! output-only string
+  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1])
   call to_c_str(f_why_invalid, f_why_invalid_ptr)
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
@@ -2056,7 +2098,6 @@ subroutine fortran_tao_evaluate_a_datum (datum, u, tao_lat, datum_value, valid_v
   ! out: f_why_invalid 0D_NOT_character
   if (c_associated(why_invalid)) then
     call c_f_pointer(why_invalid, f_why_invalid_ptr, [huge(0)])
-    call to_f_str(f_why_invalid_ptr, f_why_invalid)
     f_why_invalid_call_ptr => f_why_invalid
   else
     f_why_invalid_call_ptr => null()
@@ -2087,8 +2128,10 @@ subroutine fortran_tao_evaluate_a_datum (datum, u, tao_lat, datum_value, valid_v
   call c_f_pointer(valid_value, f_valid_value_ptr)
   f_valid_value_ptr = f_valid_value
   ! out: f_why_invalid 0D_NOT_character
-  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1]) ! output-only string
-  call to_c_str(f_why_invalid, f_why_invalid_ptr)
+  if (c_associated(why_invalid)) then
+    call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1])
+    call to_c_str(f_why_invalid, f_why_invalid_ptr)
+  endif
 end subroutine
 subroutine fortran_tao_evaluate_datum_at_s (datum, tao_lat, ele, ele_ref, valid_value, err_str, &
     bad_datum, value) bind(c)
@@ -2137,7 +2180,7 @@ subroutine fortran_tao_evaluate_datum_at_s (datum, tao_lat, ele, ele_ref, valid_
       f_err_str, f_bad_datum)
 
   ! out: f_err_str 0D_NOT_character
-  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1]) ! output-only string
+  call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1])
   call to_c_str(f_err_str, f_err_str_ptr)
   ! out: f_bad_datum 0D_NOT_logical
   call c_f_pointer(bad_datum, f_bad_datum_ptr)
@@ -2958,7 +3001,7 @@ subroutine fortran_tao_expression_hash_substitute (expression_in, expression_out
   call tao_expression_hash_substitute(f_expression_in, f_expression_out, f_eval_ele)
 
   ! out: f_expression_out 0D_NOT_character
-  call c_f_pointer(expression_out, f_expression_out_ptr, [len_trim(f_expression_out) + 1]) ! output-only string
+  call c_f_pointer(expression_out, f_expression_out_ptr, [len_trim(f_expression_out) + 1])
   call to_c_str(f_expression_out, f_expression_out_ptr)
 end subroutine
 subroutine fortran_tao_expression_tree_to_string (tree, include_root, n_node, parent, str_out) &
@@ -3008,7 +3051,7 @@ subroutine fortran_tao_expression_tree_to_string (tree, include_root, n_node, pa
       f_parent)
 
   ! out: f_str_out 0D_ALLOC_character
-  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1]) ! output-only string
+  call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
 subroutine fortran_tao_find_plot_region (err, where, region, print_flag) bind(c)
@@ -3107,7 +3150,7 @@ subroutine fortran_tao_floor_to_screen (graph, r_floor, x_screen, y_screen) bind
   ! in: f_graph 0D_NOT_type
   if (.not. c_associated(graph)) return
   call c_f_pointer(graph, f_graph)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(r_floor%data_ptr)) then
     call c_f_pointer(r_floor%data_ptr, f_r_floor_ptr, [r_floor%dims(1)])
     f_r_floor = f_r_floor_ptr(:)
@@ -3299,7 +3342,7 @@ subroutine fortran_tao_get_user_input (cmd_out, prompt_str, wait_flag, cmd_in) b
       f_cmd_in_call_ptr)
 
   ! out: f_cmd_out 0D_NOT_character
-  call c_f_pointer(cmd_out, f_cmd_out_ptr, [len_trim(f_cmd_out) + 1]) ! output-only string
+  call c_f_pointer(cmd_out, f_cmd_out_ptr, [len_trim(f_cmd_out) + 1])
   call to_c_str(f_cmd_out, f_cmd_out_ptr)
 end subroutine
 subroutine fortran_tao_graph_controller_setup (graph) bind(c)
@@ -3429,7 +3472,7 @@ subroutine fortran_tao_graph_name (graph, use_region, graph_name) bind(c)
   f_graph_name = tao_graph_name(f_graph, f_use_region_native_ptr)
 
   ! out: f_graph_name 0D_NOT_character
-  call c_f_pointer(graph_name, f_graph_name_ptr, [len_trim(f_graph_name) + 1]) ! output-only string
+  call c_f_pointer(graph_name, f_graph_name_ptr, [len_trim(f_graph_name) + 1])
   call to_c_str(f_graph_name, f_graph_name_ptr)
 end subroutine
 subroutine fortran_tao_graph_phase_space_setup (plot, graph) bind(c)
@@ -3860,7 +3903,7 @@ subroutine fortran_tao_is_valid_name (name, why_invalid, is_valid) bind(c)
   f_is_valid = tao_is_valid_name(f_name, f_why_invalid)
 
   ! out: f_why_invalid 0D_NOT_character
-  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1]) ! output-only string
+  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1])
   call to_c_str(f_why_invalid, f_why_invalid_ptr)
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
@@ -4224,7 +4267,7 @@ subroutine fortran_tao_load_this_datum (vec, ele_ref, ele_start, ele, datum_valu
   type(c_ptr), intent(in), value :: good
   type(logical_container_alloc), pointer :: f_good
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(vec%data_ptr)) then
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec(0:) => f_vec_ptr
@@ -4453,23 +4496,26 @@ subroutine fortran_tao_next_word (line, word) bind(c)
 
   use array_desc_mod
   implicit none
-  ! ** In parameters **
-  type(c_ptr), intent(in), value :: line
-  character(len=4096), target :: f_line
-  character(kind=c_char), pointer :: f_line_ptr(:)
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: word
   character(len=4096), target :: f_word
   character(kind=c_char), pointer :: f_word_ptr(:)
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
   ! ** End of parameters **
-  ! in: f_line 0D_NOT_character
+  ! inout: f_line 0D_NOT_character
   if (.not. c_associated(line)) return
   call c_f_pointer(line, f_line_ptr, [huge(0)])
   call to_f_str(f_line_ptr, f_line)
   call tao_next_word(f_line, f_word)
 
+  ! inout: f_line 0D_NOT_character
+  call c_f_pointer(line, f_line_ptr, [len_trim(f_line) + 1])
+  call to_c_str(f_line, f_line_ptr)
   ! out: f_word 0D_NOT_character
-  call c_f_pointer(word, f_word_ptr, [len_trim(f_word) + 1]) ! output-only string
+  call c_f_pointer(word, f_word_ptr, [len_trim(f_word) + 1])
   call to_c_str(f_word, f_word_ptr)
 end subroutine
 subroutine fortran_tao_one_turn_map_calc_needed (data_type, data_source, do_one_turn_map) &
@@ -4590,7 +4636,7 @@ subroutine fortran_tao_optimization_status (datum, why_str) bind(c)
   f_why_str = tao_optimization_status(f_datum)
 
   ! out: f_why_str 0D_NOT_character
-  call c_f_pointer(why_str, f_why_str_ptr, [len_trim(f_why_str) + 1]) ! output-only string
+  call c_f_pointer(why_str, f_why_str_ptr, [len_trim(f_why_str) + 1])
   call to_c_str(f_why_str, f_why_str_ptr)
 end subroutine
 subroutine fortran_tao_orbit_beta_wave_anal (plot) bind(c)
@@ -4623,6 +4669,9 @@ subroutine fortran_tao_oreint_building_wall_pt (pt_in, pt_out) bind(c)
   ! in: f_pt_in 0D_NOT_type
   if (.not. c_associated(pt_in)) return
   call c_f_pointer(pt_in, f_pt_in)
+  ! out: f_pt_out 0D_NOT_type
+  if (.not. c_associated(pt_out)) return
+  call c_f_pointer(pt_out, f_pt_out)
   f_pt_out = tao_oreint_building_wall_pt(f_pt_in)
 
   ! out: f_pt_out 0D_NOT_type
@@ -4694,7 +4743,6 @@ subroutine fortran_tao_param_value_at_s (dat_name, ele_to_s, ele_here, orbit, er
   ! out: f_why_invalid 0D_NOT_character
   if (c_associated(why_invalid)) then
     call c_f_pointer(why_invalid, f_why_invalid_ptr, [huge(0)])
-    call to_f_str(f_why_invalid_ptr, f_why_invalid)
     f_why_invalid_call_ptr => f_why_invalid
   else
     f_why_invalid_call_ptr => null()
@@ -4718,8 +4766,10 @@ subroutine fortran_tao_param_value_at_s (dat_name, ele_to_s, ele_here, orbit, er
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_why_invalid 0D_NOT_character
-  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1]) ! output-only string
-  call to_c_str(f_why_invalid, f_why_invalid_ptr)
+  if (c_associated(why_invalid)) then
+    call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1])
+    call to_c_str(f_why_invalid, f_why_invalid_ptr)
+  endif
   ! out: f_print_err 0D_NOT_logical
   ! no output conversion for f_print_err
   ! out: f_bad_datum 0D_NOT_logical
@@ -4927,19 +4977,19 @@ subroutine fortran_tao_parse_element_param_str (err, in_str, uni, element, param
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
   ! out: f_uni 0D_NOT_character
-  call c_f_pointer(uni, f_uni_ptr, [len_trim(f_uni) + 1]) ! output-only string
+  call c_f_pointer(uni, f_uni_ptr, [len_trim(f_uni) + 1])
   call to_c_str(f_uni, f_uni_ptr)
   ! out: f_element 0D_NOT_character
-  call c_f_pointer(element, f_element_ptr, [len_trim(f_element) + 1]) ! output-only string
+  call c_f_pointer(element, f_element_ptr, [len_trim(f_element) + 1])
   call to_c_str(f_element, f_element_ptr)
   ! out: f_parameter 0D_NOT_character
-  call c_f_pointer(parameter, f_parameter_ptr, [len_trim(f_parameter) + 1]) ! output-only string
+  call c_f_pointer(parameter, f_parameter_ptr, [len_trim(f_parameter) + 1])
   call to_c_str(f_parameter, f_parameter_ptr)
   ! out: f_where 0D_NOT_integer
   call c_f_pointer(where, f_where_ptr)
   f_where_ptr = f_where
   ! out: f_component 0D_NOT_character
-  call c_f_pointer(component, f_component_ptr, [len_trim(f_component) + 1]) ! output-only string
+  call c_f_pointer(component, f_component_ptr, [len_trim(f_component) + 1])
   call to_c_str(f_component, f_component_ptr)
 end subroutine
 subroutine fortran_tao_particle_data_value (data_type, p, value, err, ele, ix_bunch) bind(c)
@@ -5113,7 +5163,7 @@ subroutine fortran_tao_pick_universe (name_in, name_out, picked, err, ix_uni, ex
       f_dflt_uni_ptr, f_pure_uni_native_ptr)
 
   ! out: f_name_out 0D_NOT_character
-  call c_f_pointer(name_out, f_name_out_ptr, [len_trim(f_name_out) + 1]) ! output-only string
+  call c_f_pointer(name_out, f_name_out_ptr, [len_trim(f_name_out) + 1])
   call to_c_str(f_name_out, f_name_out_ptr)
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
@@ -5326,6 +5376,8 @@ subroutine fortran_tao_pointer_to_building_wall_shape (wall_name, e_shape) bind(
   if (.not. c_associated(wall_name)) return
   call c_f_pointer(wall_name, f_wall_name_ptr, [huge(0)])
   call to_f_str(f_wall_name_ptr, f_wall_name)
+  ! out: f_e_shape 0D_PTR_type
+  if (c_associated(e_shape))   call c_f_pointer(e_shape, f_e_shape)
   f_e_shape => tao_pointer_to_building_wall_shape(f_wall_name)
 
   ! out: f_e_shape 0D_PTR_type
@@ -5353,6 +5405,9 @@ subroutine fortran_tao_pointer_to_datum (d1, ele_name, datum_ptr) bind(c)
   if (.not. c_associated(ele_name)) return
   call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
   call to_f_str(f_ele_name_ptr, f_ele_name)
+  ! out: f_datum_ptr 0D_PTR_type
+  if (.not. c_associated(datum_ptr)) return
+  call c_f_pointer(datum_ptr, f_datum_ptr)
   f_datum_ptr => tao_pointer_to_datum(f_d1, f_ele_name)
 
   ! out: f_datum_ptr 0D_PTR_type
@@ -5406,7 +5461,6 @@ subroutine fortran_tao_pointer_to_datum_ele (lat, ele_name, ix_ele, datum, valid
   ! out: f_why_invalid 0D_NOT_character
   if (c_associated(why_invalid)) then
     call c_f_pointer(why_invalid, f_why_invalid_ptr, [huge(0)])
-    call to_f_str(f_why_invalid_ptr, f_why_invalid)
     f_why_invalid_call_ptr => f_why_invalid
   else
     f_why_invalid_call_ptr => null()
@@ -5419,6 +5473,8 @@ subroutine fortran_tao_pointer_to_datum_ele (lat, ele_name, ix_ele, datum, valid
   else
     f_print_err_native_ptr => null()
   endif
+  ! out: f_ele 0D_PTR_type
+  if (c_associated(ele))   call c_f_pointer(ele, f_ele)
   f_ele => tao_pointer_to_datum_ele(f_lat, f_ele_name, f_ix_ele, f_datum, f_valid, &
       f_why_invalid_call_ptr, f_print_err_native_ptr)
 
@@ -5426,8 +5482,10 @@ subroutine fortran_tao_pointer_to_datum_ele (lat, ele_name, ix_ele, datum, valid
   call c_f_pointer(valid, f_valid_ptr)
   f_valid_ptr = f_valid
   ! out: f_why_invalid 0D_NOT_character
-  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1]) ! output-only string
-  call to_c_str(f_why_invalid, f_why_invalid_ptr)
+  if (c_associated(why_invalid)) then
+    call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1])
+    call to_c_str(f_why_invalid, f_why_invalid_ptr)
+  endif
   ! out: f_ele 0D_PTR_type
   ele = c_loc(f_ele)
 end subroutine
@@ -5445,9 +5503,6 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
   type(ele_struct), pointer :: f_ele
   type(array_descriptor_t), intent(in) :: ele_shape
   type(tao_ele_shape_struct), pointer :: f_ele_shape(:)
-  type(c_ptr), intent(in), value :: ix_shape_min  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_shape_min
-  integer(c_int), pointer :: f_ix_shape_min_ptr
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: dat_var_name
   character(len=4096), target :: f_dat_var_name
@@ -5458,6 +5513,10 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
   real(c_double), pointer :: f_dat_var_value_ptr
   type(c_ptr) :: e_shape  ! 0D_PTR_type
   type(tao_ele_shape_struct), pointer :: f_e_shape
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: ix_shape_min  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_shape_min
+  integer(c_int), pointer :: f_ix_shape_min_ptr
   ! ** End of parameters **
   ! in: f_ix_uni 0D_NOT_integer
   f_ix_uni = ix_uni
@@ -5473,7 +5532,6 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
   ! out: f_dat_var_name 0D_NOT_character
   if (c_associated(dat_var_name)) then
     call c_f_pointer(dat_var_name, f_dat_var_name_ptr, [huge(0)])
-    call to_f_str(f_dat_var_name_ptr, f_dat_var_name)
     f_dat_var_name_call_ptr => f_dat_var_name
   else
     f_dat_var_name_call_ptr => null()
@@ -5484,20 +5542,26 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
   else
     f_dat_var_value_ptr => null()
   endif
-  ! in: f_ix_shape_min 0D_NOT_integer
+  ! inout: f_ix_shape_min 0D_NOT_integer
   if (c_associated(ix_shape_min)) then
     call c_f_pointer(ix_shape_min, f_ix_shape_min_ptr)
   else
     f_ix_shape_min_ptr => null()
   endif
+  ! out: f_e_shape 0D_PTR_type
+  if (c_associated(e_shape))   call c_f_pointer(e_shape, f_e_shape)
   f_e_shape => tao_pointer_to_ele_shape(f_ix_uni, f_ele, f_ele_shape, f_dat_var_name_call_ptr, &
       f_dat_var_value, f_ix_shape_min_ptr)
 
   ! out: f_dat_var_name 0D_NOT_character
-  call c_f_pointer(dat_var_name, f_dat_var_name_ptr, [len_trim(f_dat_var_name) + 1]) ! output-only string
-  call to_c_str(f_dat_var_name, f_dat_var_name_ptr)
+  if (c_associated(dat_var_name)) then
+    call c_f_pointer(dat_var_name, f_dat_var_name_ptr, [len_trim(f_dat_var_name) + 1])
+    call to_c_str(f_dat_var_name, f_dat_var_name_ptr)
+  endif
   ! out: f_dat_var_value 0D_NOT_real
   ! no output conversion for f_dat_var_value
+  ! inout: f_ix_shape_min 0D_NOT_integer
+  ! no output conversion for f_ix_shape_min
   ! out: f_e_shape 0D_PTR_type
   e_shape = c_loc(f_e_shape)
 end subroutine
@@ -5525,6 +5589,8 @@ subroutine fortran_tao_pointer_to_tao_lat (u, lat_type, tao_lat) bind(c)
   else
     f_lat_type_ptr => null()
   endif
+  ! out: f_tao_lat 0D_PTR_type
+  if (c_associated(tao_lat))   call c_f_pointer(tao_lat, f_tao_lat)
   f_tao_lat => tao_pointer_to_tao_lat(f_u, f_lat_type_ptr)
 
   ! out: f_tao_lat 0D_PTR_type
@@ -5557,6 +5623,8 @@ subroutine fortran_tao_pointer_to_universe_int (ix_uni, neg2_to_default, u) bind
   else
     f_neg2_to_default_native_ptr => null()
   endif
+  ! out: f_u 0D_PTR_type
+  if (c_associated(u))   call c_f_pointer(u, f_u)
   f_u => tao_pointer_to_universe(f_ix_uni, f_neg2_to_default_native_ptr)
 
   ! out: f_u 0D_PTR_type
@@ -5568,9 +5636,6 @@ subroutine fortran_tao_pointer_to_universe_str (string, neg2_to_default, u) bind
   use tao_struct, only: tao_universe_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), intent(in), value :: string
-  character(len=4096), target :: f_string
-  character(kind=c_char), pointer :: f_string_ptr(:)
   type(c_ptr), intent(in), value :: neg2_to_default  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_neg2_to_default
   logical, target :: f_neg2_to_default_native
@@ -5579,8 +5644,12 @@ subroutine fortran_tao_pointer_to_universe_str (string, neg2_to_default, u) bind
   ! ** Out parameters **
   type(c_ptr) :: u  ! 0D_PTR_type
   type(tao_universe_struct), pointer :: f_u
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: string
+  character(len=4096), target :: f_string
+  character(kind=c_char), pointer :: f_string_ptr(:)
   ! ** End of parameters **
-  ! in: f_string 0D_NOT_character
+  ! inout: f_string 0D_NOT_character
   if (.not. c_associated(string)) return
   call c_f_pointer(string, f_string_ptr, [huge(0)])
   call to_f_str(f_string_ptr, f_string)
@@ -5592,8 +5661,13 @@ subroutine fortran_tao_pointer_to_universe_str (string, neg2_to_default, u) bind
   else
     f_neg2_to_default_native_ptr => null()
   endif
+  ! out: f_u 0D_PTR_type
+  if (c_associated(u))   call c_f_pointer(u, f_u)
   f_u => tao_pointer_to_universe(f_string, f_neg2_to_default_native_ptr)
 
+  ! inout: f_string 0D_NOT_character
+  call c_f_pointer(string, f_string_ptr, [len_trim(f_string) + 1])
+  call to_c_str(f_string, f_string_ptr)
   ! out: f_u 0D_PTR_type
   u = c_loc(f_u)
 end subroutine
@@ -5634,7 +5708,6 @@ subroutine fortran_tao_pointer_to_universes (name_in, unis, err, name_out, expli
   ! out: f_name_out 0D_NOT_character
   if (c_associated(name_out)) then
     call c_f_pointer(name_out, f_name_out_ptr, [huge(0)])
-    call to_f_str(f_name_out_ptr, f_name_out)
     f_name_out_call_ptr => f_name_out
   else
     f_name_out_call_ptr => null()
@@ -5658,8 +5731,10 @@ subroutine fortran_tao_pointer_to_universes (name_in, unis, err, name_out, expli
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
   ! out: f_name_out 0D_NOT_character
-  call c_f_pointer(name_out, f_name_out_ptr, [len_trim(f_name_out) + 1]) ! output-only string
-  call to_c_str(f_name_out, f_name_out_ptr)
+  if (c_associated(name_out)) then
+    call c_f_pointer(name_out, f_name_out_ptr, [len_trim(f_name_out) + 1])
+    call to_c_str(f_name_out, f_name_out_ptr)
+  endif
   ! out: f_explicit_uni 0D_NOT_logical
   ! no output conversion for f_explicit_uni
 end subroutine
@@ -5983,29 +6058,40 @@ subroutine fortran_tao_read_phase_space_index (name, ixc, print_err, ix_ps) bind
   call c_f_pointer(ix_ps, f_ix_ps_ptr)
   f_ix_ps_ptr = f_ix_ps
 end subroutine
-subroutine fortran_tao_regression_test () bind(c)
+subroutine fortran_tao_regression_test (cmd_str) bind(c)
 
   use array_desc_mod
   implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: cmd_str
+  character(len=4096), target :: f_cmd_str
+  character(kind=c_char), pointer :: f_cmd_str_ptr(:)
   ! ** End of parameters **
-  call tao_regression_test()
+  ! in: f_cmd_str 0D_NOT_character
+  if (.not. c_associated(cmd_str)) return
+  call c_f_pointer(cmd_str, f_cmd_str_ptr, [huge(0)])
+  call to_f_str(f_cmd_str_ptr, f_cmd_str)
+  call tao_regression_test(f_cmd_str)
 
 end subroutine
 subroutine fortran_tao_remove_blank_characters (str) bind(c)
 
   use array_desc_mod
   implicit none
-  ! ** In parameters **
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: str
   character(len=4096), target :: f_str
   character(kind=c_char), pointer :: f_str_ptr(:)
   ! ** End of parameters **
-  ! in: f_str 0D_NOT_character
+  ! inout: f_str 0D_NOT_character
   if (.not. c_associated(str)) return
   call c_f_pointer(str, f_str_ptr, [huge(0)])
   call to_f_str(f_str_ptr, f_str)
   call tao_remove_blank_characters(f_str)
 
+  ! inout: f_str 0D_NOT_character
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
+  call to_c_str(f_str, f_str_ptr)
 end subroutine
 subroutine fortran_tao_run_cmd (which, abort) bind(c)
 
@@ -6173,6 +6259,20 @@ subroutine fortran_tao_scale_graph (graph, y_min, y_max, axis, include_wall, y_r
     f_include_wall_native_ptr => f_include_wall_native
   else
     f_include_wall_native_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(y_range%data_ptr)) then
+    call c_f_pointer(y_range%data_ptr, f_y_range_ptr, [y_range%dims(1)])
+    ! output-only
+  else
+    f_y_range_ptr => null()
+  endif
+  !! general array (1D_NOT_real) out
+  if (c_associated(y2_range%data_ptr)) then
+    call c_f_pointer(y2_range%data_ptr, f_y2_range_ptr, [y2_range%dims(1)])
+    ! output-only
+  else
+    f_y2_range_ptr => null()
   endif
   call tao_scale_graph(f_graph, f_y_min, f_y_max, f_axis_call_ptr, f_include_wall_native_ptr, &
       f_y_range, f_y2_range)
@@ -6907,7 +7007,6 @@ subroutine fortran_tao_set_invalid (datum, message, why_invalid, exterminate, er
   ! out: f_why_invalid 0D_NOT_character
   if (c_associated(why_invalid)) then
     call c_f_pointer(why_invalid, f_why_invalid_ptr, [huge(0)])
-    call to_f_str(f_why_invalid_ptr, f_why_invalid)
     f_why_invalid_call_ptr => f_why_invalid
   else
     f_why_invalid_call_ptr => null()
@@ -6938,8 +7037,10 @@ subroutine fortran_tao_set_invalid (datum, message, why_invalid, exterminate, er
       f_err_level_ptr, f_print_err_native_ptr)
 
   ! out: f_why_invalid 0D_NOT_character
-  call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1]) ! output-only string
-  call to_c_str(f_why_invalid, f_why_invalid_ptr)
+  if (c_associated(why_invalid)) then
+    call c_f_pointer(why_invalid, f_why_invalid_ptr, [len_trim(f_why_invalid) + 1])
+    call to_c_str(f_why_invalid, f_why_invalid_ptr)
+  endif
 end subroutine
 subroutine fortran_tao_set_key_cmd (key_str, cmd_str) bind(c)
 
@@ -7050,7 +7151,7 @@ subroutine fortran_tao_set_opt_vars (var_vec, print_limit_warning) bind(c)
   logical, pointer :: f_print_limit_warning_native_ptr
   logical(c_bool), pointer :: f_print_limit_warning_ptr
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(var_vec%data_ptr)) then
     call c_f_pointer(var_vec%data_ptr, f_var_vec_ptr, [var_vec%dims(1)])
     f_var_vec => f_var_vec_ptr
@@ -8000,7 +8101,7 @@ subroutine fortran_tao_subin_uni_number (name_in, ix_uni, name_out, ok) bind(c)
   f_ok = tao_subin_uni_number(f_name_in, f_ix_uni, f_name_out)
 
   ! out: f_name_out 0D_NOT_character
-  call c_f_pointer(name_out, f_name_out_ptr, [len_trim(f_name_out) + 1]) ! output-only string
+  call c_f_pointer(name_out, f_name_out_ptr, [len_trim(f_name_out) + 1])
   call to_c_str(f_name_out, f_name_out_ptr)
   ! out: f_ok 0D_NOT_logical
   call c_f_pointer(ok, f_ok_ptr)
@@ -8481,7 +8582,7 @@ subroutine fortran_tao_var1_name (var, var1_name) bind(c)
   f_var1_name = tao_var1_name(f_var)
 
   ! out: f_var1_name 0D_NOT_character
-  call c_f_pointer(var1_name, f_var1_name_ptr, [len_trim(f_var1_name) + 1]) ! output-only string
+  call c_f_pointer(var1_name, f_var1_name_ptr, [len_trim(f_var1_name) + 1])
   call to_c_str(f_var1_name, f_var1_name_ptr)
 end subroutine
 subroutine fortran_tao_var_attrib_name (var, var_attrib_name) bind(c)
@@ -8503,7 +8604,7 @@ subroutine fortran_tao_var_attrib_name (var, var_attrib_name) bind(c)
   f_var_attrib_name = tao_var_attrib_name(f_var)
 
   ! out: f_var_attrib_name 0D_NOT_character
-  call c_f_pointer(var_attrib_name, f_var_attrib_name_ptr, [len_trim(f_var_attrib_name) + 1]) ! output-only string
+  call c_f_pointer(var_attrib_name, f_var_attrib_name_ptr, [len_trim(f_var_attrib_name) + 1])
   call to_c_str(f_var_attrib_name, f_var_attrib_name_ptr)
 end subroutine
 subroutine fortran_tao_var_check (eles, attribute, silent) bind(c)
@@ -8701,42 +8802,42 @@ subroutine fortran_tao_wave_fit (curve, ix1, n_dat, coef, rms, f1, f2, f3, f4) b
   f_ix1 = ix1
   ! in: f_n_dat 0D_NOT_integer
   f_n_dat = n_dat
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(coef%data_ptr)) then
     call c_f_pointer(coef%data_ptr, f_coef_ptr, [coef%dims(1)])
     f_coef => f_coef_ptr
   else
     f_coef_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(rms%data_ptr)) then
     call c_f_pointer(rms%data_ptr, f_rms_ptr, [rms%dims(1)])
     f_rms => f_rms_ptr
   else
     f_rms_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(f1%data_ptr)) then
     call c_f_pointer(f1%data_ptr, f_f1_ptr, [f1%dims(1)])
     f_f1 => f_f1_ptr
   else
     f_f1_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(f2%data_ptr)) then
     call c_f_pointer(f2%data_ptr, f_f2_ptr, [f2%dims(1)])
     f_f2 => f_f2_ptr
   else
     f_f2_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(f3%data_ptr)) then
     call c_f_pointer(f3%data_ptr, f_f3_ptr, [f3%dims(1)])
     f_f3 => f_f3_ptr
   else
     f_f3_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(f4%data_ptr)) then
     call c_f_pointer(f4%data_ptr, f_f4_ptr, [f4%dims(1)])
     f_f4 => f_f4_ptr

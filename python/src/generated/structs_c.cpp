@@ -19,7 +19,7 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
           &CartesianMapStruct::set_field_scale
       )
       // CartesianMapStruct.r0 (1D_NOT_real - Field origin offset.
-      .def_property_readonly("r0", &CartesianMapStruct::r0)
+      .def_property("r0", &CartesianMapStruct::r0, &CartesianMapStruct::set_r0)
       // CartesianMapStruct.master_parameter (0D_NOT_integer - Master parameter in ele%value(:)
       // array to use for scaling the field.
       .def_property(
@@ -203,7 +203,7 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
       // ComplexTaylorTermStruct.coef (0D_NOT_complex -
       .def_property("coef", &ComplexTaylorTermStruct::coef, &ComplexTaylorTermStruct::set_coef)
       // ComplexTaylorTermStruct.expn (1D_NOT_integer -
-      .def_property_readonly("expn", &ComplexTaylorTermStruct::expn)
+      .def_property("expn", &ComplexTaylorTermStruct::expn, &ComplexTaylorTermStruct::set_expn)
       .def_static(
           "new_array1d",
           [](int sz, int lbound) { return ComplexTaylorTermStructAlloc1D(lbound, sz); },
@@ -239,7 +239,7 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
 void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cls) {
   cls.def(py::init<>())
       // ControlRamp1Struct.y_knot (1D_ALLOC_real -
-      .def_property_readonly("y_knot", &ControlRamp1Struct::y_knot)
+      .def_property("y_knot", &ControlRamp1Struct::y_knot, &ControlRamp1Struct::set_y_knot)
       // ControlRamp1Struct.stack (1D_ALLOC_type - Evaluation stack
       .def_property_readonly("stack", &ControlRamp1Struct::stack)
       // ControlRamp1Struct.attribute (0D_NOT_character - Name of attribute controlled. Set to
@@ -293,7 +293,7 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
       // ControlStruct.value (0D_NOT_real - Used by group, and overlay elements.
       .def_property("value", &ControlStruct::value, &ControlStruct::set_value)
       // ControlStruct.y_knot (1D_ALLOC_real -
-      .def_property_readonly("y_knot", &ControlStruct::y_knot)
+      .def_property("y_knot", &ControlStruct::y_knot, &ControlStruct::set_y_knot)
       // ControlStruct.stack (1D_ALLOC_type - Evaluation stack
       .def_property_readonly("stack", &ControlStruct::stack)
       // ControlStruct.slave (0D_NOT_type -
@@ -384,7 +384,7 @@ void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
       // ControllerStruct.ramper_lord (1D_ALLOC_type - Ramper lord info for this slave
       .def_property_readonly("ramper_lord", &ControllerStruct::ramper_lord)
       // ControllerStruct.x_knot (1D_ALLOC_real -
-      .def_property_readonly("x_knot", &ControllerStruct::x_knot)
+      .def_property("x_knot", &ControllerStruct::x_knot, &ControllerStruct::set_x_knot)
 
       .def("__repr__", [](const ControllerStruct &self) { return to_string(self); })
 
@@ -446,19 +446,19 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
   cls.def(py::init<>())
       // CoordStruct.vec (1D_NOT_real - (x, px, y, py, z, pz). Generally phase space for charged
       // particles. See Bmad manual.
-      .def_property_readonly("vec", &CoordStruct::vec)
+      .def_property("vec", &CoordStruct::vec, &CoordStruct::set_vec)
       // CoordStruct.s (0D_NOT_real - Longitudinal position
       .def_property("s", &CoordStruct::s, &CoordStruct::set_s)
       // CoordStruct.t (0D_NOT_real16 - Absolute time (not relative to reference). Note: Quad
       // precision!
       .def_property("t", &CoordStruct::t, &CoordStruct::set_t)
       // CoordStruct.spin (1D_NOT_real - Spin.
-      .def_property_readonly("spin", &CoordStruct::spin)
+      .def_property("spin", &CoordStruct::spin, &CoordStruct::set_spin)
       // CoordStruct.field (1D_NOT_real - Photon E-field intensity (x,y).
-      .def_property_readonly("field", &CoordStruct::field)
+      .def_property("field", &CoordStruct::field, &CoordStruct::set_field)
       // CoordStruct.phase (1D_NOT_real - Photon E-field phase (x,y). For charged particles,
       // phase(1) is RF phase.
-      .def_property_readonly("phase", &CoordStruct::phase)
+      .def_property("phase", &CoordStruct::phase, &CoordStruct::set_phase)
       // CoordStruct.charge (0D_NOT_real - Macroparticle weight (which is different from particle
       // species charge). For some space charge calcs the weight is in Coulombs.
       .def_property("charge", &CoordStruct::charge, &CoordStruct::set_charge)
@@ -573,7 +573,7 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
       // CylindricalMapStruct.dz (0D_NOT_real - Distance between sampled field points.
       .def_property("dz", &CylindricalMapStruct::dz, &CylindricalMapStruct::set_dz)
       // CylindricalMapStruct.r0 (1D_NOT_real - Field origin offset.
-      .def_property_readonly("r0", &CylindricalMapStruct::r0)
+      .def_property("r0", &CylindricalMapStruct::r0, &CylindricalMapStruct::set_r0)
       // CylindricalMapStruct.ptr (0D_PTR_type -
       .def_property("ptr", &CylindricalMapStruct::ptr, &CylindricalMapStruct::set_ptr)
       .def_static(

@@ -63,6 +63,13 @@ subroutine fortran_test_bunch_struct_array (arr_in, arr_inout, arr_out, opt_stat
   endif
   !! container type array (1D_ALLOC_type)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
   !! type array (1D_NOT_type)
   if (c_associated(arr_in_opt%data_ptr)) then
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt, [arr_in_opt%dims(1)])
@@ -116,6 +123,13 @@ subroutine fortran_test_bunch_struct_scalar (val_in, val_inout, val_out, opt_sta
   ! out: f_val_out 0D_NOT_type
   if (.not. c_associated(val_out)) return
   call c_f_pointer(val_out, f_val_out)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
   ! in: f_val_in_opt 0D_NOT_type
   if (c_associated(val_in_opt))   call c_f_pointer(val_in_opt, f_val_in_opt)
   ! inout: f_val_inout_opt 0D_NOT_type
@@ -168,6 +182,13 @@ subroutine fortran_test_character_scalar (val_in, val_inout, val_out, opt_status
   if (.not. c_associated(val_inout)) return
   call c_f_pointer(val_inout, f_val_inout_ptr, [huge(0)])
   call to_f_str(f_val_inout_ptr, f_val_inout)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
   ! in: f_val_in_opt 0D_NOT_character
   if (c_associated(val_in_opt)) then
     call c_f_pointer(val_in_opt, f_val_in_opt_ptr, [huge(0)])
@@ -188,9 +209,10 @@ subroutine fortran_test_character_scalar (val_in, val_inout, val_out, opt_status
       f_val_in_opt_call_ptr, f_val_inout_opt_call_ptr)
 
   ! inout: f_val_inout 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
+  call c_f_pointer(val_inout, f_val_inout_ptr, [len_trim(f_val_inout) + 1])
+  call to_c_str(f_val_inout, f_val_inout_ptr)
   ! out: f_val_out 0D_NOT_character
-  call c_f_pointer(val_out, f_val_out_ptr, [len_trim(f_val_out) + 1]) ! output-only string
+  call c_f_pointer(val_out, f_val_out_ptr, [len_trim(f_val_out) + 1])
   call to_c_str(f_val_out, f_val_out_ptr)
   ! out: f_opt_status 1D_NOT_integer
   if (c_associated(opt_status%data_ptr)) then
@@ -198,7 +220,10 @@ subroutine fortran_test_character_scalar (val_in, val_inout, val_out, opt_status
     f_opt_status_ptr = f_opt_status(:)
   endif
   ! inout: f_val_inout_opt 0D_NOT_character
-  ! TODO i/o string (max length issue; buffer overflow...)
+  if (c_associated(val_inout_opt)) then
+    call c_f_pointer(val_inout_opt, f_val_inout_opt_ptr, [len_trim(f_val_inout_opt) + 1])
+    call to_c_str(f_val_inout_opt, f_val_inout_opt_ptr)
+  endif
 end subroutine
 subroutine fortran_test_complex_array (arr_in, arr_inout, arr_out, opt_status, arr_in_opt, &
     arr_inout_opt) bind(c)
@@ -226,14 +251,14 @@ subroutine fortran_test_complex_array (arr_in, arr_inout, arr_out, opt_status, a
   complex(rp), pointer :: f_arr_inout_opt(:)
   complex(c_double_complex), pointer :: f_arr_inout_opt_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) in
   if (c_associated(arr_in%data_ptr)) then
     call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
     f_arr_in => f_arr_in_ptr
   else
     f_arr_in_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(arr_inout%data_ptr)) then
     call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
     f_arr_inout => f_arr_inout_ptr
@@ -242,14 +267,21 @@ subroutine fortran_test_complex_array (arr_in, arr_inout, arr_out, opt_status, a
   endif
   !! container general array (1D_ALLOC_complex)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
+  !! general array (1D_NOT_complex) in
   if (c_associated(arr_in_opt%data_ptr)) then
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
     f_arr_in_opt => f_arr_in_opt_ptr
   else
     f_arr_in_opt_ptr => null()
   endif
-  !! general array (1D_NOT_complex)
+  !! general array (1D_NOT_complex) inout
   if (c_associated(arr_inout_opt%data_ptr)) then
     call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
     f_arr_inout_opt => f_arr_inout_opt_ptr
@@ -298,6 +330,13 @@ subroutine fortran_test_complex_scalar (val_in, val_inout, val_out, opt_status, 
     call c_f_pointer(val_inout, f_val_inout_ptr)
   else
     f_val_inout_ptr => null()
+  endif
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
   endif
   ! in: f_val_in_opt 0D_NOT_complex
   if (c_associated(val_in_opt)) then
@@ -353,14 +392,14 @@ subroutine fortran_test_integer8_array (arr_in, arr_inout, arr_out, opt_status, 
   integer(8), pointer :: f_arr_inout_opt(:)
   integer(c_int64_t), pointer :: f_arr_inout_opt_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_integer8)
+  !! general array (1D_NOT_integer8) in
   if (c_associated(arr_in%data_ptr)) then
     call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
     f_arr_in => f_arr_in_ptr
   else
     f_arr_in_ptr => null()
   endif
-  !! general array (1D_NOT_integer8)
+  !! general array (1D_NOT_integer8) inout
   if (c_associated(arr_inout%data_ptr)) then
     call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
     f_arr_inout => f_arr_inout_ptr
@@ -369,14 +408,21 @@ subroutine fortran_test_integer8_array (arr_in, arr_inout, arr_out, opt_status, 
   endif
   !! container general array (1D_ALLOC_integer8)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
-  !! general array (1D_NOT_integer8)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
+  !! general array (1D_NOT_integer8) in
   if (c_associated(arr_in_opt%data_ptr)) then
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
     f_arr_in_opt => f_arr_in_opt_ptr
   else
     f_arr_in_opt_ptr => null()
   endif
-  !! general array (1D_NOT_integer8)
+  !! general array (1D_NOT_integer8) inout
   if (c_associated(arr_inout_opt%data_ptr)) then
     call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
     f_arr_inout_opt => f_arr_inout_opt_ptr
@@ -425,6 +471,13 @@ subroutine fortran_test_integer8_scalar (val_in, val_inout, val_out, opt_status,
     call c_f_pointer(val_inout, f_val_inout_ptr)
   else
     f_val_inout_ptr => null()
+  endif
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
   endif
   ! in: f_val_in_opt 0D_NOT_integer8
   if (c_associated(val_in_opt)) then
@@ -480,14 +533,14 @@ subroutine fortran_test_integer_array (arr_in, arr_inout, arr_out, opt_status, a
   integer, pointer :: f_arr_inout_opt(:)
   integer(c_int), pointer :: f_arr_inout_opt_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) in
   if (c_associated(arr_in%data_ptr)) then
     call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
     f_arr_in => f_arr_in_ptr
   else
     f_arr_in_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(arr_inout%data_ptr)) then
     call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
     f_arr_inout => f_arr_inout_ptr
@@ -496,14 +549,21 @@ subroutine fortran_test_integer_array (arr_in, arr_inout, arr_out, opt_status, a
   endif
   !! container general array (1D_ALLOC_integer)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
+  !! general array (1D_NOT_integer) in
   if (c_associated(arr_in_opt%data_ptr)) then
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
     f_arr_in_opt => f_arr_in_opt_ptr
   else
     f_arr_in_opt_ptr => null()
   endif
-  !! general array (1D_NOT_integer)
+  !! general array (1D_NOT_integer) inout
   if (c_associated(arr_inout_opt%data_ptr)) then
     call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
     f_arr_inout_opt => f_arr_inout_opt_ptr
@@ -552,6 +612,13 @@ subroutine fortran_test_integer_scalar (val_in, val_inout, val_out, opt_status, 
     call c_f_pointer(val_inout, f_val_inout_ptr)
   else
     f_val_inout_ptr => null()
+  endif
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
   endif
   ! in: f_val_in_opt 0D_NOT_integer
   if (c_associated(val_in_opt)) then
@@ -609,6 +676,13 @@ subroutine fortran_test_logical_array (arr_in, arr_inout, arr_out, opt_status, a
   if (c_associated(arr_inout))   call c_f_pointer(arr_inout, f_arr_inout)
   !! container general array (1D_ALLOC_logical)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
   !! container general array (1D_ALLOC_logical)
   if (c_associated(arr_in_opt))   call c_f_pointer(arr_in_opt, f_arr_in_opt)
   !! container general array (1D_ALLOC_logical)
@@ -663,6 +737,13 @@ subroutine fortran_test_logical_scalar (val_in, val_inout, val_out, opt_status, 
     f_val_inout_native_ptr => f_val_inout_native
   else
     f_val_inout_native_ptr => null()
+  endif
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
   endif
   ! in: f_val_in_opt 0D_NOT_logical
   if (c_associated(val_in_opt)) then
@@ -734,6 +815,13 @@ subroutine fortran_test_real16_array (arr_in, arr_inout, arr_out, opt_status, ar
   if (c_associated(arr_inout))   call c_f_pointer(arr_inout, f_arr_inout)
   !! container general array (1D_ALLOC_real16)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
   !! container general array (1D_ALLOC_real16)
   if (c_associated(arr_in_opt))   call c_f_pointer(arr_in_opt, f_arr_in_opt)
   !! container general array (1D_ALLOC_real16)
@@ -788,6 +876,13 @@ subroutine fortran_test_real16_scalar (val_in, val_inout, val_out, opt_status, v
     f_val_inout_native_ptr => f_val_inout_native
   else
     f_val_inout_native_ptr => null()
+  endif
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
   endif
   ! in: f_val_in_opt 0D_NOT_real16
   if (c_associated(val_in_opt)) then
@@ -857,14 +952,14 @@ subroutine fortran_test_real_array (arr_in, arr_inout, arr_out, opt_status, arr_
   real(rp), pointer :: f_arr_inout_opt(:)
   real(c_double), pointer :: f_arr_inout_opt_ptr(:)
   ! ** End of parameters **
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) in
   if (c_associated(arr_in%data_ptr)) then
     call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
     f_arr_in => f_arr_in_ptr
   else
     f_arr_in_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(arr_inout%data_ptr)) then
     call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
     f_arr_inout => f_arr_inout_ptr
@@ -873,14 +968,21 @@ subroutine fortran_test_real_array (arr_in, arr_inout, arr_out, opt_status, arr_
   endif
   !! container general array (1D_ALLOC_real)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
+  !! general array (1D_NOT_real) in
   if (c_associated(arr_in_opt%data_ptr)) then
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
     f_arr_in_opt => f_arr_in_opt_ptr
   else
     f_arr_in_opt_ptr => null()
   endif
-  !! general array (1D_NOT_real)
+  !! general array (1D_NOT_real) inout
   if (c_associated(arr_inout_opt%data_ptr)) then
     call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
     f_arr_inout_opt => f_arr_inout_opt_ptr
@@ -929,6 +1031,13 @@ subroutine fortran_test_real_scalar (val_in, val_inout, val_out, opt_status, val
     call c_f_pointer(val_inout, f_val_inout_ptr)
   else
     f_val_inout_ptr => null()
+  endif
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
   endif
   ! in: f_val_in_opt 0D_NOT_real
   if (c_associated(val_in_opt)) then

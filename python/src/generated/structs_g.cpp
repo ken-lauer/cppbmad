@@ -20,7 +20,7 @@ void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
       // extended to include the interpolating spline polynomial.
       .def_property("n_deriv_max", &GenGrad1Struct::n_deriv_max, &GenGrad1Struct::set_n_deriv_max)
       // GenGrad1Struct.deriv (2D_ALLOC_real - Range: (iz0:iz1, 0:2*n_deriv_max+1)
-      .def_property_readonly("deriv", &GenGrad1Struct::deriv)
+      .def_property("deriv", &GenGrad1Struct::deriv, &GenGrad1Struct::set_deriv)
       .def_static(
           "new_array1d",
           [](int sz, int lbound) { return GenGrad1StructAlloc1D(lbound, sz); },
@@ -73,7 +73,7 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
       // GenGradMapStruct.dz (0D_NOT_real - Point spacing.
       .def_property("dz", &GenGradMapStruct::dz, &GenGradMapStruct::set_dz)
       // GenGradMapStruct.r0 (1D_NOT_real - field origin relative to ele_anchor_pt.
-      .def_property_readonly("r0", &GenGradMapStruct::r0)
+      .def_property("r0", &GenGradMapStruct::r0, &GenGradMapStruct::set_r0)
       // GenGradMapStruct.field_scale (0D_NOT_real - Factor to scale the fields by
       .def_property(
           "field_scale",
@@ -170,9 +170,9 @@ void init_grid_beam_init_struct(py::module &m, py::class_<GridBeamInitStruct> &c
 void init_grid_field_pt1_struct(py::module &m, py::class_<GridFieldPt1Struct> &cls) {
   cls.def(py::init<>())
       // GridFieldPt1Struct.E (1D_NOT_complex -
-      .def_property_readonly("E", &GridFieldPt1Struct::E)
+      .def_property("E", &GridFieldPt1Struct::E, &GridFieldPt1Struct::set_E)
       // GridFieldPt1Struct.B (1D_NOT_complex -
-      .def_property_readonly("B", &GridFieldPt1Struct::B)
+      .def_property("B", &GridFieldPt1Struct::B, &GridFieldPt1Struct::set_B)
 
       .def("__repr__", [](const GridFieldPt1Struct &self) { return to_string(self); })
 
@@ -266,9 +266,9 @@ void init_grid_field_struct(py::module &m, py::class_<GridFieldStruct> &cls) {
           &GridFieldStruct::set_interpolation_order
       )
       // GridFieldStruct.dr (1D_NOT_real - Grid spacing.
-      .def_property_readonly("dr", &GridFieldStruct::dr)
+      .def_property("dr", &GridFieldStruct::dr, &GridFieldStruct::set_dr)
       // GridFieldStruct.r0 (1D_NOT_real - Field origin relative to ele_anchor_pt.
-      .def_property_readonly("r0", &GridFieldStruct::r0)
+      .def_property("r0", &GridFieldStruct::r0, &GridFieldStruct::set_r0)
       // GridFieldStruct.curved_ref_frame (0D_NOT_logical -
       .def_property(
           "curved_ref_frame",

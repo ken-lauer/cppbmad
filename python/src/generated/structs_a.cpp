@@ -128,7 +128,7 @@ void init_anormal_mode_struct(py::module &m, py::class_<AnormalModeStruct> &cls)
           &AnormalModeStruct::set_emittance_no_vert
       )
       // AnormalModeStruct.synch_int (1D_NOT_real - Synchrotron integrals
-      .def_property_readonly("synch_int", &AnormalModeStruct::synch_int)
+      .def_property("synch_int", &AnormalModeStruct::synch_int, &AnormalModeStruct::set_synch_int)
       // AnormalModeStruct.j_damp (0D_NOT_real - damping partition number
       .def_property("j_damp", &AnormalModeStruct::j_damp, &AnormalModeStruct::set_j_damp)
       // AnormalModeStruct.alpha_damp (0D_NOT_real - damping per turn
@@ -321,11 +321,23 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           &AllEncompassingStruct::set_real_rp_0d
       )
       // AllEncompassingStruct.real_rp_1d (1D_NOT_real -
-      .def_property_readonly("real_rp_1d", &AllEncompassingStruct::real_rp_1d)
+      .def_property(
+          "real_rp_1d",
+          &AllEncompassingStruct::real_rp_1d,
+          &AllEncompassingStruct::set_real_rp_1d
+      )
       // AllEncompassingStruct.real_rp_2d (2D_NOT_real -
-      .def_property_readonly("real_rp_2d", &AllEncompassingStruct::real_rp_2d)
+      .def_property(
+          "real_rp_2d",
+          &AllEncompassingStruct::real_rp_2d,
+          &AllEncompassingStruct::set_real_rp_2d
+      )
       // AllEncompassingStruct.real_rp_3d (3D_NOT_real -
-      .def_property_readonly("real_rp_3d", &AllEncompassingStruct::real_rp_3d)
+      .def_property(
+          "real_rp_3d",
+          &AllEncompassingStruct::real_rp_3d,
+          &AllEncompassingStruct::set_real_rp_3d
+      )
       // AllEncompassingStruct.real_rp_0d_ptr (0D_PTR_real -
       .def_property(
           "real_rp_0d_ptr",
@@ -333,17 +345,41 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           &AllEncompassingStruct::set_real_rp_0d_ptr
       )
       // AllEncompassingStruct.real_rp_1d_ptr (1D_PTR_real -
-      .def_property_readonly("real_rp_1d_ptr", &AllEncompassingStruct::real_rp_1d_ptr)
+      .def_property(
+          "real_rp_1d_ptr",
+          &AllEncompassingStruct::real_rp_1d_ptr,
+          &AllEncompassingStruct::set_real_rp_1d_ptr
+      )
       // AllEncompassingStruct.real_rp_2d_ptr (2D_PTR_real -
-      .def_property_readonly("real_rp_2d_ptr", &AllEncompassingStruct::real_rp_2d_ptr)
+      .def_property(
+          "real_rp_2d_ptr",
+          &AllEncompassingStruct::real_rp_2d_ptr,
+          &AllEncompassingStruct::set_real_rp_2d_ptr
+      )
       // AllEncompassingStruct.real_rp_3d_ptr (3D_PTR_real -
-      .def_property_readonly("real_rp_3d_ptr", &AllEncompassingStruct::real_rp_3d_ptr)
+      .def_property(
+          "real_rp_3d_ptr",
+          &AllEncompassingStruct::real_rp_3d_ptr,
+          &AllEncompassingStruct::set_real_rp_3d_ptr
+      )
       // AllEncompassingStruct.real_rp_1d_alloc (1D_ALLOC_real -
-      .def_property_readonly("real_rp_1d_alloc", &AllEncompassingStruct::real_rp_1d_alloc)
+      .def_property(
+          "real_rp_1d_alloc",
+          &AllEncompassingStruct::real_rp_1d_alloc,
+          &AllEncompassingStruct::set_real_rp_1d_alloc
+      )
       // AllEncompassingStruct.real_rp_2d_alloc (2D_ALLOC_real -
-      .def_property_readonly("real_rp_2d_alloc", &AllEncompassingStruct::real_rp_2d_alloc)
+      .def_property(
+          "real_rp_2d_alloc",
+          &AllEncompassingStruct::real_rp_2d_alloc,
+          &AllEncompassingStruct::set_real_rp_2d_alloc
+      )
       // AllEncompassingStruct.real_rp_3d_alloc (3D_ALLOC_real - Real(dp)
-      .def_property_readonly("real_rp_3d_alloc", &AllEncompassingStruct::real_rp_3d_alloc)
+      .def_property(
+          "real_rp_3d_alloc",
+          &AllEncompassingStruct::real_rp_3d_alloc,
+          &AllEncompassingStruct::set_real_rp_3d_alloc
+      )
       // AllEncompassingStruct.real_dp_0d (0D_NOT_real -
       .def_property(
           "real_dp_0d",
@@ -351,11 +387,23 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           &AllEncompassingStruct::set_real_dp_0d
       )
       // AllEncompassingStruct.real_dp_1d (1D_NOT_real -
-      .def_property_readonly("real_dp_1d", &AllEncompassingStruct::real_dp_1d)
+      .def_property(
+          "real_dp_1d",
+          &AllEncompassingStruct::real_dp_1d,
+          &AllEncompassingStruct::set_real_dp_1d
+      )
       // AllEncompassingStruct.real_dp_2d (2D_NOT_real -
-      .def_property_readonly("real_dp_2d", &AllEncompassingStruct::real_dp_2d)
+      .def_property(
+          "real_dp_2d",
+          &AllEncompassingStruct::real_dp_2d,
+          &AllEncompassingStruct::set_real_dp_2d
+      )
       // AllEncompassingStruct.real_dp_3d (3D_NOT_real -
-      .def_property_readonly("real_dp_3d", &AllEncompassingStruct::real_dp_3d)
+      .def_property(
+          "real_dp_3d",
+          &AllEncompassingStruct::real_dp_3d,
+          &AllEncompassingStruct::set_real_dp_3d
+      )
       // AllEncompassingStruct.real_dp_0d_ptr (0D_PTR_real -
       .def_property(
           "real_dp_0d_ptr",
@@ -363,17 +411,41 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           &AllEncompassingStruct::set_real_dp_0d_ptr
       )
       // AllEncompassingStruct.real_dp_1d_ptr (1D_PTR_real -
-      .def_property_readonly("real_dp_1d_ptr", &AllEncompassingStruct::real_dp_1d_ptr)
+      .def_property(
+          "real_dp_1d_ptr",
+          &AllEncompassingStruct::real_dp_1d_ptr,
+          &AllEncompassingStruct::set_real_dp_1d_ptr
+      )
       // AllEncompassingStruct.real_dp_2d_ptr (2D_PTR_real -
-      .def_property_readonly("real_dp_2d_ptr", &AllEncompassingStruct::real_dp_2d_ptr)
+      .def_property(
+          "real_dp_2d_ptr",
+          &AllEncompassingStruct::real_dp_2d_ptr,
+          &AllEncompassingStruct::set_real_dp_2d_ptr
+      )
       // AllEncompassingStruct.real_dp_3d_ptr (3D_PTR_real -
-      .def_property_readonly("real_dp_3d_ptr", &AllEncompassingStruct::real_dp_3d_ptr)
+      .def_property(
+          "real_dp_3d_ptr",
+          &AllEncompassingStruct::real_dp_3d_ptr,
+          &AllEncompassingStruct::set_real_dp_3d_ptr
+      )
       // AllEncompassingStruct.real_dp_1d_alloc (1D_ALLOC_real -
-      .def_property_readonly("real_dp_1d_alloc", &AllEncompassingStruct::real_dp_1d_alloc)
+      .def_property(
+          "real_dp_1d_alloc",
+          &AllEncompassingStruct::real_dp_1d_alloc,
+          &AllEncompassingStruct::set_real_dp_1d_alloc
+      )
       // AllEncompassingStruct.real_dp_2d_alloc (2D_ALLOC_real -
-      .def_property_readonly("real_dp_2d_alloc", &AllEncompassingStruct::real_dp_2d_alloc)
+      .def_property(
+          "real_dp_2d_alloc",
+          &AllEncompassingStruct::real_dp_2d_alloc,
+          &AllEncompassingStruct::set_real_dp_2d_alloc
+      )
       // AllEncompassingStruct.real_dp_3d_alloc (3D_ALLOC_real - complex(dp)
-      .def_property_readonly("real_dp_3d_alloc", &AllEncompassingStruct::real_dp_3d_alloc)
+      .def_property(
+          "real_dp_3d_alloc",
+          &AllEncompassingStruct::real_dp_3d_alloc,
+          &AllEncompassingStruct::set_real_dp_3d_alloc
+      )
       // AllEncompassingStruct.complex_dp_0d (0D_NOT_complex -
       .def_property(
           "complex_dp_0d",
@@ -381,32 +453,68 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           &AllEncompassingStruct::set_complex_dp_0d
       )
       // AllEncompassingStruct.complex_dp_1d (1D_NOT_complex -
-      .def_property_readonly("complex_dp_1d", &AllEncompassingStruct::complex_dp_1d)
+      .def_property(
+          "complex_dp_1d",
+          &AllEncompassingStruct::complex_dp_1d,
+          &AllEncompassingStruct::set_complex_dp_1d
+      )
       // AllEncompassingStruct.complex_dp_2d (2D_NOT_complex -
-      .def_property_readonly("complex_dp_2d", &AllEncompassingStruct::complex_dp_2d)
+      .def_property(
+          "complex_dp_2d",
+          &AllEncompassingStruct::complex_dp_2d,
+          &AllEncompassingStruct::set_complex_dp_2d
+      )
       // AllEncompassingStruct.complex_dp_3d (3D_NOT_complex - TODO complex(dp), pointer ::
       // complex_dp_0d_ptr
-      .def_property_readonly("complex_dp_3d", &AllEncompassingStruct::complex_dp_3d)
+      .def_property(
+          "complex_dp_3d",
+          &AllEncompassingStruct::complex_dp_3d,
+          &AllEncompassingStruct::set_complex_dp_3d
+      )
       // AllEncompassingStruct.complex_dp_1d_ptr (1D_PTR_complex -
-      .def_property_readonly("complex_dp_1d_ptr", &AllEncompassingStruct::complex_dp_1d_ptr)
+      .def_property(
+          "complex_dp_1d_ptr",
+          &AllEncompassingStruct::complex_dp_1d_ptr,
+          &AllEncompassingStruct::set_complex_dp_1d_ptr
+      )
       // AllEncompassingStruct.complex_dp_2d_ptr (2D_PTR_complex -
-      .def_property_readonly("complex_dp_2d_ptr", &AllEncompassingStruct::complex_dp_2d_ptr)
+      .def_property(
+          "complex_dp_2d_ptr",
+          &AllEncompassingStruct::complex_dp_2d_ptr,
+          &AllEncompassingStruct::set_complex_dp_2d_ptr
+      )
       // AllEncompassingStruct.complex_dp_3d_ptr (3D_PTR_complex -
-      .def_property_readonly("complex_dp_3d_ptr", &AllEncompassingStruct::complex_dp_3d_ptr)
+      .def_property(
+          "complex_dp_3d_ptr",
+          &AllEncompassingStruct::complex_dp_3d_ptr,
+          &AllEncompassingStruct::set_complex_dp_3d_ptr
+      )
       // AllEncompassingStruct.complex_dp_1d_alloc (1D_ALLOC_complex -
-      .def_property_readonly("complex_dp_1d_alloc", &AllEncompassingStruct::complex_dp_1d_alloc)
+      .def_property(
+          "complex_dp_1d_alloc",
+          &AllEncompassingStruct::complex_dp_1d_alloc,
+          &AllEncompassingStruct::set_complex_dp_1d_alloc
+      )
       // AllEncompassingStruct.complex_dp_2d_alloc (2D_ALLOC_complex -
-      .def_property_readonly("complex_dp_2d_alloc", &AllEncompassingStruct::complex_dp_2d_alloc)
+      .def_property(
+          "complex_dp_2d_alloc",
+          &AllEncompassingStruct::complex_dp_2d_alloc,
+          &AllEncompassingStruct::set_complex_dp_2d_alloc
+      )
       // AllEncompassingStruct.complex_dp_3d_alloc (3D_ALLOC_complex - Integer
-      .def_property_readonly("complex_dp_3d_alloc", &AllEncompassingStruct::complex_dp_3d_alloc)
+      .def_property(
+          "complex_dp_3d_alloc",
+          &AllEncompassingStruct::complex_dp_3d_alloc,
+          &AllEncompassingStruct::set_complex_dp_3d_alloc
+      )
       // AllEncompassingStruct.int_0d (0D_NOT_integer -
       .def_property("int_0d", &AllEncompassingStruct::int_0d, &AllEncompassingStruct::set_int_0d)
       // AllEncompassingStruct.int_1d (1D_NOT_integer -
-      .def_property_readonly("int_1d", &AllEncompassingStruct::int_1d)
+      .def_property("int_1d", &AllEncompassingStruct::int_1d, &AllEncompassingStruct::set_int_1d)
       // AllEncompassingStruct.int_2d (2D_NOT_integer -
-      .def_property_readonly("int_2d", &AllEncompassingStruct::int_2d)
+      .def_property("int_2d", &AllEncompassingStruct::int_2d, &AllEncompassingStruct::set_int_2d)
       // AllEncompassingStruct.int_3d (3D_NOT_integer -
-      .def_property_readonly("int_3d", &AllEncompassingStruct::int_3d)
+      .def_property("int_3d", &AllEncompassingStruct::int_3d, &AllEncompassingStruct::set_int_3d)
       // AllEncompassingStruct.int_0d_ptr (0D_PTR_integer -
       .def_property(
           "int_0d_ptr",
@@ -414,43 +522,115 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           &AllEncompassingStruct::set_int_0d_ptr
       )
       // AllEncompassingStruct.int_1d_ptr (1D_PTR_integer -
-      .def_property_readonly("int_1d_ptr", &AllEncompassingStruct::int_1d_ptr)
+      .def_property(
+          "int_1d_ptr",
+          &AllEncompassingStruct::int_1d_ptr,
+          &AllEncompassingStruct::set_int_1d_ptr
+      )
       // AllEncompassingStruct.int_2d_ptr (2D_PTR_integer -
-      .def_property_readonly("int_2d_ptr", &AllEncompassingStruct::int_2d_ptr)
+      .def_property(
+          "int_2d_ptr",
+          &AllEncompassingStruct::int_2d_ptr,
+          &AllEncompassingStruct::set_int_2d_ptr
+      )
       // AllEncompassingStruct.int_3d_ptr (3D_PTR_integer -
-      .def_property_readonly("int_3d_ptr", &AllEncompassingStruct::int_3d_ptr)
+      .def_property(
+          "int_3d_ptr",
+          &AllEncompassingStruct::int_3d_ptr,
+          &AllEncompassingStruct::set_int_3d_ptr
+      )
       // AllEncompassingStruct.int_1d_alloc (1D_ALLOC_integer -
-      .def_property_readonly("int_1d_alloc", &AllEncompassingStruct::int_1d_alloc)
+      .def_property(
+          "int_1d_alloc",
+          &AllEncompassingStruct::int_1d_alloc,
+          &AllEncompassingStruct::set_int_1d_alloc
+      )
       // AllEncompassingStruct.int_2d_alloc (2D_ALLOC_integer -
-      .def_property_readonly("int_2d_alloc", &AllEncompassingStruct::int_2d_alloc)
+      .def_property(
+          "int_2d_alloc",
+          &AllEncompassingStruct::int_2d_alloc,
+          &AllEncompassingStruct::set_int_2d_alloc
+      )
       // AllEncompassingStruct.int_3d_alloc (3D_ALLOC_integer - Integer8
-      .def_property_readonly("int_3d_alloc", &AllEncompassingStruct::int_3d_alloc)
+      .def_property(
+          "int_3d_alloc",
+          &AllEncompassingStruct::int_3d_alloc,
+          &AllEncompassingStruct::set_int_3d_alloc
+      )
       // AllEncompassingStruct.int8_0d (0D_NOT_integer8 -
       .def_property("int8_0d", &AllEncompassingStruct::int8_0d, &AllEncompassingStruct::set_int8_0d)
-      // 1D_NOT_integer8 int8_1d proxy support missing
-      // 2D_NOT_integer8 int8_2d proxy support missing
-      // 3D_NOT_integer8 int8_3d proxy support missing
+      // AllEncompassingStruct.int8_1d (1D_NOT_integer8 -
+      .def_property("int8_1d", &AllEncompassingStruct::int8_1d, &AllEncompassingStruct::set_int8_1d)
+      // AllEncompassingStruct.int8_2d (2D_NOT_integer8 -
+      .def_property("int8_2d", &AllEncompassingStruct::int8_2d, &AllEncompassingStruct::set_int8_2d)
+      // AllEncompassingStruct.int8_3d (3D_NOT_integer8 -
+      .def_property("int8_3d", &AllEncompassingStruct::int8_3d, &AllEncompassingStruct::set_int8_3d)
       // AllEncompassingStruct.int8_0d_ptr (0D_PTR_integer8 -
       .def_property(
           "int8_0d_ptr",
           &AllEncompassingStruct::int8_0d_ptr,
           &AllEncompassingStruct::set_int8_0d_ptr
       )
-      // 1D_PTR_integer8 int8_1d_ptr proxy support missing
-      // 2D_PTR_integer8 int8_2d_ptr proxy support missing
-      // 3D_PTR_integer8 int8_3d_ptr proxy support missing
-      // 1D_ALLOC_integer8 int8_1d_alloc proxy support missing
-      // 2D_ALLOC_integer8 int8_2d_alloc proxy support missing
-      // 3D_ALLOC_integer8 int8_3d_alloc proxy support missing
+      // AllEncompassingStruct.int8_1d_ptr (1D_PTR_integer8 -
+      .def_property(
+          "int8_1d_ptr",
+          &AllEncompassingStruct::int8_1d_ptr,
+          &AllEncompassingStruct::set_int8_1d_ptr
+      )
+      // AllEncompassingStruct.int8_2d_ptr (2D_PTR_integer8 -
+      .def_property(
+          "int8_2d_ptr",
+          &AllEncompassingStruct::int8_2d_ptr,
+          &AllEncompassingStruct::set_int8_2d_ptr
+      )
+      // AllEncompassingStruct.int8_3d_ptr (3D_PTR_integer8 -
+      .def_property(
+          "int8_3d_ptr",
+          &AllEncompassingStruct::int8_3d_ptr,
+          &AllEncompassingStruct::set_int8_3d_ptr
+      )
+      // AllEncompassingStruct.int8_1d_alloc (1D_ALLOC_integer8 -
+      .def_property(
+          "int8_1d_alloc",
+          &AllEncompassingStruct::int8_1d_alloc,
+          &AllEncompassingStruct::set_int8_1d_alloc
+      )
+      // AllEncompassingStruct.int8_2d_alloc (2D_ALLOC_integer8 -
+      .def_property(
+          "int8_2d_alloc",
+          &AllEncompassingStruct::int8_2d_alloc,
+          &AllEncompassingStruct::set_int8_2d_alloc
+      )
+      // AllEncompassingStruct.int8_3d_alloc (3D_ALLOC_integer8 - logical
+      .def_property(
+          "int8_3d_alloc",
+          &AllEncompassingStruct::int8_3d_alloc,
+          &AllEncompassingStruct::set_int8_3d_alloc
+      )
       // AllEncompassingStruct.logical_0d (0D_NOT_logical -
       .def_property(
           "logical_0d",
           &AllEncompassingStruct::logical_0d,
           &AllEncompassingStruct::set_logical_0d
       )
-      // 1D_NOT_logical logical_1d proxy support missing
-      // 2D_NOT_logical logical_2d proxy support missing
-      // 3D_NOT_logical logical_3d proxy support missing
+      // AllEncompassingStruct.logical_1d (1D_NOT_logical -
+      .def_property(
+          "logical_1d",
+          &AllEncompassingStruct::logical_1d,
+          &AllEncompassingStruct::set_logical_1d
+      )
+      // AllEncompassingStruct.logical_2d (2D_NOT_logical -
+      .def_property(
+          "logical_2d",
+          &AllEncompassingStruct::logical_2d,
+          &AllEncompassingStruct::set_logical_2d
+      )
+      // AllEncompassingStruct.logical_3d (3D_NOT_logical -
+      .def_property(
+          "logical_3d",
+          &AllEncompassingStruct::logical_3d,
+          &AllEncompassingStruct::set_logical_3d
+      )
       // AllEncompassingStruct.logical_0d_ptr (0D_PTR_logical - logical, pointer ::
       // logical_1d_ptr(:) logical, pointer :: logical_2d_ptr(:,:) logical, pointer ::
       // logical_3d_ptr(:,:,:) logical, allocatable :: logical_1d_alloc(:) logical, allocatable ::

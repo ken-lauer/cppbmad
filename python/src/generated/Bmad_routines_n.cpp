@@ -24,7 +24,6 @@ max_len : int
       "new_control",
       &Bmad::new_control,
       py::arg("lat"),
-      py::arg("ix_ele"),
       py::arg("ele_name") = py::none(),
       R"""(Parameters
 ----------

@@ -10,3 +10,7 @@
 namespace py = pybind11;
 
 void init_Bmad_routines_e(py::module &m);
+
+struct PyExpectOneOf {
+  std::string delim;
+};
