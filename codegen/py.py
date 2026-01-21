@@ -5,7 +5,7 @@ import string
 import textwrap
 
 from .arg import CodegenStructure
-from .config import SUPPORTED_ARRAY_DIMS
+from .context import SUPPORTED_ARRAY_DIMS
 from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys
 from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_SRC

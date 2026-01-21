@@ -89,7 +89,10 @@ ignore = [
 isort.required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.per-file-ignores]
+"codegen/context.py" = ["PLC0415"]
 "codegen/gen.py" = ["T201"]
+"codegen/inspect.py" = ["T201"]
+"codegen/tst_routines.py" = ["T201"]
 "codegen/structs.py" = ["E402"]
 "python/examples/*.py" = ["T201"]
 

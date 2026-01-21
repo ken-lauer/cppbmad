@@ -256,7 +256,7 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
                 {ptr_conv}
                 call vec2tensor({self.f_ptr_name}, {self.f_name})""")
         else:
-            raise NotImplementedError(len(arr))
+            raise NotImplementedError(f"{self.routine.name} {self.arg.c_name} {len(arr)}")
 
         result.extend(
             self.if_then_else_block(
@@ -433,9 +433,16 @@ class FortranWrapperStringArgument(FortranWrapperArgument):
 
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
 
-        code = textwrap.dedent(f"""\
-            call c_f_pointer({self.c_name}, {self.f_ptr_name}, [huge(0)])
-            call to_f_str({self.f_ptr_name}, {self.f_name})""")
+        ptr_conv = f"call c_f_pointer({self.c_name}, {self.f_ptr_name}, [huge(0)])"
+        if self.intent != "out":
+            code = "\n".join(
+                (
+                    ptr_conv,
+                    f"call to_f_str({self.f_ptr_name}, {self.f_name})",
+                )
+            )
+        else:
+            code = ptr_conv
 
         if self.type_info.optional:
             code = f"{code}\n{self.custom_call_arg_name} => {self.f_name}"
@@ -450,7 +457,8 @@ class FortranWrapperStringArgument(FortranWrapperArgument):
         else:
             result.extend(self.error_if(f".not. c_associated({self.c_name})"))
             result.append(f"  call c_f_pointer({self.c_name}, {self.f_ptr_name}, [huge(0)])")
-            result.append(f"  call to_f_str({self.f_ptr_name}, {self.f_name})")
+            if self.intent != "out":
+                result.append(f"  call to_f_str({self.f_ptr_name}, {self.f_name})")
 
         return result
 
@@ -459,13 +467,15 @@ class FortranWrapperStringArgument(FortranWrapperArgument):
             return []
 
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
-        if self.intent == "inout":
-            result.append("  ! TODO i/o string (max length issue; buffer overflow...)")
+
+        code = textwrap.dedent(f"""\
+            call c_f_pointer({self.c_name}, {self.f_ptr_name}, [len_trim({self.f_name}) + 1])
+            call to_c_str({self.f_name}, {self.f_ptr_name})""")
+
+        if self.type_info.optional:
+            result.extend(self.if_block(f"c_associated({self.c_name})", code))
         else:
-            result.append(
-                f"  call c_f_pointer({self.c_name}, {self.f_ptr_name}, [len_trim({self.f_name}) + 1]) ! output-only string"
-            )
-            result.append(f"  call to_c_str({self.f_name}, {self.f_ptr_name})")
+            result.append(textwrap.indent(code, "  "))
 
         return result
 

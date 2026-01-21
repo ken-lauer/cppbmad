@@ -165,7 +165,7 @@ def get_cpp_container(cpp_base: str, dim: int, ptr: str, is_dynamic_array: bool)
 
     if cpp_base == "PROXYCLS":
         return f"{cpp_base}Array{dim}D&"
-    return f"FArray1D<{cpp_base}>&"
+    return f"FArray{dim}D<{cpp_base}>&"
 
 
 def remove_optional(typ: str) -> str:

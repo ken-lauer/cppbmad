@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 import logging
-import sys
 import typing
+import sys
 from dataclasses import dataclass, field
 
 import pydantic.alias_generators
 
-from .config import CodegenConfig
-from .context import get_params
+from .context import CodegenConfig, ctx
 from .proxy import (
     struct_to_proxy_class_name,
 )
@@ -104,6 +103,8 @@ class Argument:
     ):
         if member.kind and member.type.lower() == "integer":
             type_ = INT8
+        elif member.type.lower() == "class":
+            type_ = "type"
         else:
             type_ = member.type
 
@@ -276,7 +277,7 @@ class CodegenStructure:
     @property
     def args_to_convert(self):
         return [
-            arg for arg in self.arg if f"{self.f_name}%{arg.f_name}" not in get_params().interface_ignore_list
+            arg for arg in self.arg if f"{self.f_name}%{arg.f_name}" not in ctx().params.interface_ignore_list
         ]
 
     @property

@@ -24,7 +24,7 @@ support and `struct` parsing utilities.
 This approach could potentially be generalized for other Fortran codebases.
 It would be neat one day to do that.
 
-- I'm admittedly no Fortran expert to see where the limitations are. I've built
+- I'm admittedly no Fortran expert to see where all of the limitations are. I've built
   this entirely around how Bmad uses Fortran - the parser, the routine
   handling, and everything else.
 - I don't have any other projects in mind at the moment.
@@ -33,6 +33,14 @@ It would be neat one day to do that.
 
 So in all likelihood this will stay as a Bmad-only C++/Python wrapper
 generator.
+
+### Limitations
+
+- Allocatable containers for 2D+ arrays are not implemented
+- 2D+ derived type (structure) arrays are not handled
+- 2D+ logical arrays are not supported
+- 2D+ character arrays are not supported
+- Compile-time assumed array dimensions are not supported (`arr(M)` where `M` is a parameter)
 
 ## Building
 

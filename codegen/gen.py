@@ -17,14 +17,10 @@ from __future__ import annotations
 import argparse
 import logging
 import pathlib
-import typing
 
 from .arg import Argument, CodegenStructure
-from .config import CodegenConfig
-from .context import ConfigContext, config_context
-from .coverage import generate_coverage_report
-from .cpp import generate_to_string_code, generate_to_string_header
-from .enums import ENUM_FILENAME, get_enum_code, parse_all_enums
+from .context import CodegenConfig, ConfigContext, config_context
+from .enums import get_enum_code, parse_all_enums
 from .paths import (
     CODEGEN_ROOT,
     CPPBMAD_INCLUDE,
@@ -39,9 +35,6 @@ from .py import generate_pybmad
 from .routines import generate_routines, parse_bmad_routines
 from .structs import ParsedStructure, load_bmad_parser_structures
 from .util import write_contents_if_differs, write_if_differs
-
-if typing.TYPE_CHECKING:
-    pass
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +72,7 @@ def write_parsed_structures(structs, fn):
                 f_out.write(f"    {arg.original_repr()}\n")
 
 
-def check_missing(structs: list[CodegenStructure]):
+def check_missing(params: CodegenConfig, structs: list[CodegenStructure]) -> dict[str, dict[str, str]]:
     struct_names = {struct.f_name.lower() for struct in structs}
 
     missing_by_struct = {}
@@ -264,12 +257,12 @@ def load_routines(parsed_structs: list[ParsedStructure], config: CodegenConfig):
     while check:
         typ = check.pop(0)
         if typ not in parsed_structs_by_name:
-            logger.warning("Skipping %s as it's not in the bmad parsed struture list", typ)
+            logger.warning("Skipping %s as it's not in the bmad parsed structure list", typ)
             structs_to_skip.add(typ)
             continue
 
         parsed_st = parsed_structs_by_name[typ]
-        if parsed_st.module in params.skips or typ in params.skips:
+        if parsed_st.module in config.skips or typ in config.skips:
             structs_to_skip.add(typ)
             continue
 
@@ -285,75 +278,82 @@ def load_routines(parsed_structs: list[ParsedStructure], config: CodegenConfig):
     return settings_and_routines, structs_to_use
 
 
+def load_context(
+    config_file: pathlib.Path = CODEGEN_ROOT / "default.toml",
+    pybmad: bool = True,
+) -> ConfigContext:
+    logger.debug(f"Config file: {config_file}")
+    params = CodegenConfig.from_file(config_file)
+
+    parsed_structs = load_bmad_parser_structures()
+
+    structs = get_structure_definitions(params, parsed_structs)
+    enums = parse_all_enums(params.enum_filenames)
+
+    ctx = ConfigContext(
+        params=params,
+        codegen_structs=structs,
+        parsed_structs=parsed_structs,
+        enums=enums,
+        missing_struct_attrs=check_missing(params, structs),
+        pybmad_files={},
+    )
+    config_context.set(ctx)
+    assert len(ctx.codegen_structs)
+
+    ctx.routines, ctx.routines_by_name, ctx.routine_files = generate_routines(params)
+
+    if pybmad:
+        ctx.pybmad_files = generate_pybmad(ctx.codegen_structs, ctx.routines_by_name, ctx.enums)
+
+    return ctx
+
+
 def generate(
     config_file: pathlib.Path = CODEGEN_ROOT / "default.toml",
     pybmad: bool = True,
 ):
-    # TODO refactor globals
-    global params  # noqa: PLW0603
+    ctx = load_context(config_file, pybmad)
 
-    logger.info(f"Config file: {config_file}")
-    params = CodegenConfig.from_file(config_file)
-
-    parsed_structs = load_bmad_parser_structures()
-    _settings_and_routines, _routine_structs = load_routines(parsed_structs, params)
+    # _settings_and_routines, _routine_structs = load_routines(parsed_structs, params)
     # TODO
     # params.struct_list = sorted(_routine_structs)
-
-    structs = get_structure_definitions(params, parsed_structs)
-    enums = parse_all_enums(params.enum_filenames)
-    config_context.set(
-        ConfigContext(
-            params=params,
-            codegen_structs=structs,
-            parsed_structs=parsed_structs,
-            enums=enums,
-        )
-    )
-    assert len(config_context.get().codegen_structs)
+    assert len(ctx.codegen_structs)
 
     # Print diagnostics
-    logger.info(f"Number of structs in input list: {len(structs)}")
-    logger.info(f"Number of structs found:         {len(parsed_structs)}")
+    logger.info(f"Number of structs in input list: {len(ctx.codegen_structs)}")
+    logger.info(f"Number of structs found:         {len(ctx.parsed_structs)}")
 
-    missing_struct_attrs = check_missing(structs)
-    write_proxy_classes(params, structs)
-    write_contents_if_differs(ENUM_FILENAME, get_enum_code(enums))
+    to_string_header = ctx.cpp_to_string_header
+    to_string_code = ctx.cpp_to_string_code
+    enum_code = get_enum_code(ctx.enums)
 
-    routines, routines_by_name = generate_routines(params)
+    cpp_gen_src = PYBMAD_SRC / "generated"
+    hpp_gen_src = PYBMAD_INCLUDE / "generated"
+    existing_files = set(cpp_gen_src.glob("*.cpp")) | set(hpp_gen_src.glob("*.hpp"))
+    for fn in existing_files:
+        if fn not in ctx.pybmad_files:
+            logger.warning(f"Removing stale file from previous generation: {fn}")
+            fn.unlink()
 
-    report_html = generate_coverage_report(routines, structs, missing_struct_attrs)
-    write_contents_if_differs(REPO_ROOT / "coverage.html", report_html)
-
-    to_string_header = generate_to_string_header(
-        template=(CODEGEN_ROOT / "to_string.tpl.hpp").read_text(),
-        structs=structs,
-        routines=routines_by_name,
-    )
+    write_contents_if_differs(REPO_ROOT / "coverage.html", ctx.report_html)
+    write_proxy_classes(ctx.params, ctx.codegen_structs)
+    write_contents_if_differs(CPPBMAD_INCLUDE / "bmad" / "generated" / "enums.hpp", enum_code)
     write_contents_if_differs(
         CPPBMAD_INCLUDE / "bmad" / "generated" / "to_string.hpp", contents=to_string_header
     )
-
-    to_string_code = generate_to_string_code(
-        template=(CODEGEN_ROOT / "to_string.tpl.cpp").read_text(),
-        structs=structs,
-        routines=routines_by_name,
-    )
     write_contents_if_differs(CPPBMAD_SRC / "generated" / "to_string.cpp", contents=to_string_code)
 
+    for fn, contents in ctx.routine_files.items():
+        write_contents_if_differs(
+            target_path=fn,
+            contents=contents,
+        )
     if pybmad:
-        pybmad_files = generate_pybmad(structs, routines_by_name, enums)
-        cpp_gen_src = PYBMAD_SRC / "generated"
-        hpp_gen_src = PYBMAD_INCLUDE / "generated"
-        existing_files = set(cpp_gen_src.glob("*.cpp")) | set(hpp_gen_src.glob("*.hpp"))
-        for fn in existing_files:
-            if fn not in pybmad_files:
-                logger.warning(f"Removing stale file from previous generation: {fn}")
-                fn.unlink()
-        for fn, source in pybmad_files.items():
+        for fn, source in ctx.pybmad_files.items():
             write_contents_if_differs(target_path=fn, contents=source)
 
-    return structs, parsed_structs, routines, routines_by_name
+    return ctx
 
 
 def main():
@@ -391,4 +391,4 @@ def main():
 
 
 if __name__ == "__main__":
-    structs, parsed_structs, routines, routines_by_name = main()
+    ctx = main()

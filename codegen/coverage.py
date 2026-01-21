@@ -39,6 +39,8 @@ def _classify_failure_reason(reason: str) -> str:
         return "Test Build Skip"
     if "module name unset" in lower_r:
         return "Routine not in a module"
+    if "undefined enum" in lower_r:
+        return "Array size uses undefined enum/local size"
 
     return reason
 

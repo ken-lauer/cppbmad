@@ -11,10 +11,10 @@ from dataclasses import dataclass, field
 from typing import Literal
 
 from .arg import Argument as InterfaceArgument
-from .config import CodegenConfig, RoutineSettings
-from .context import config_context, get_params
+from .context import CodegenConfig, RoutineSettings, config_context, get_params
 from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper, generate_routines_header
 from .docstring import DocstringParameter, RoutineDocstring, parse_routine_comment_block
+from .enums import EnumValue
 from .exceptions import RenameError, RoutineNotFoundError, UnsupportedTypeError
 from .fortran import generate_fortran_routine_with_c_binding
 from .paths import CODEGEN_ROOT, CPPBMAD_ROOT
@@ -32,7 +32,6 @@ from .util import (
     sorted_routines,
     struct_to_proxy_class_name,
     wrap_line,
-    write_contents_if_differs,
 )
 
 logger = logging.getLogger(__name__)
@@ -179,6 +178,40 @@ class RoutineArg(InterfaceArgument):
     @property
     def cpp(self):
         return CppWrapperArgument.from_arg(self)
+
+    def _check_enums_if_dynamic(self, enums: dict[str, EnumValue]):
+        def is_integer(s: str) -> bool:
+            try:
+                int(s)
+                return True
+            except ValueError:
+                return False
+
+        for dim in self.array:
+            if ":" in dim:
+                parts = dim.split(":")
+                for part in parts:
+                    if not part:
+                        continue
+                    if is_integer(part):
+                        continue
+                    if part.upper().rstrip("$") in enums:
+                        continue
+                    return True
+            elif dim == "*":
+                return True
+            else:
+                part = dim
+                if not is_integer(part) and part.upper().rstrip("$") not in enums:
+                    return True
+
+        return False
+
+    def maybe_make_dynamic_array(self):
+        # if self._check_enums_if_dynamic(ctx().enums_by_name):
+        #     self.orig_array = self.array
+        #     self.array = [":" for _ in self.array]
+        pass
 
     @classmethod
     def from_routine(
@@ -527,13 +560,13 @@ class FortranRoutine:
             return ["No matching docstring"]
         if TEST_BUILD and self.name not in TEST_ROUTINES:
             return [f"PYBMAD_TEST_BUILD enabled; {self.name} is skipped"]
-        conf = config_context.get()
+        ctx = config_context.get()
 
-        if conf.params.should_skip_routine(self.name.lower()):
+        if ctx.params.should_skip_routine(self.name.lower()):
             return ["Routine in configuration skip list"]
-        if self.module.lower() in conf.params.skips:
+        if self.module.lower() in ctx.params.skips:
             return [f"Routine module ({self.module}) in configuration skip list"]
-        structs_by_name = conf.codegen_structs_by_name
+        structs_by_name = ctx.codegen_structs_by_name
 
         assert self.docstring is not None
         lower_members = {name.lower(): member for name, member in self.declarations.items()}
@@ -958,10 +991,11 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
                 try:
                     best_option.args = best_option.translate_args(config)
                 except Exception as ex:
+                    if "debug" in str(ex):
+                        raise
                     logger.warning(
                         f"Reparse failed after docstring inclusion: {best_option.name} {missing_arg_names} {ex}"
                     )
-
         intf = get_interface_defn()
         if intf:
             best_option.module = intf.module
@@ -1126,20 +1160,19 @@ def generate_routines(params: CodegenConfig):
     all_routines_by_name = {}
     to_write = {}
     for settings in params.routines:
-        # Filter out private routines to start with:
         routines = [routine for routine in parse_bmad_routines(settings, params) if not routine.private]
         all_routines.extend(routines)
         logger.info(f"Pruning routines ({settings.fortran_output_filename})")
         routines_by_name = prune_routines(routines, params)
         all_routines_by_name.update(routines_by_name)
-        logger.info("Generating code: routines Fortran side")
+        logger.info(f"Generating code: routines Fortran side ({settings.fortran_module_name}")
 
         routines_header = generate_routines_header(
             template=(CODEGEN_ROOT / "routines.tpl.hpp").read_text(),
             routines=routines_by_name,
             settings=settings,
         )
-        logger.info("Generating code: routines C++ side")
+        logger.info(f"Generating code: routines C++ side ({settings.cpp_namespace})")
         cpp_routine_code = generate_cpp_routine_code(
             template=(CODEGEN_ROOT / "routines.tpl.cpp").read_text(),
             routines=routines_by_name,
@@ -1157,12 +1190,6 @@ def generate_routines(params: CodegenConfig):
         to_write[generated / settings.fortran_output_filename] = fortran_routine_code
         to_write[generated / settings.cpp_output_filename] = cpp_routine_code
 
-    for fn, contents in to_write.items():
-        write_contents_if_differs(
-            target_path=fn,
-            contents=contents,
-        )
-
     unique_routines = {rt.name: rt for rt in all_routines}
     usable = [rt for rt in unique_routines.values() if rt.usable]
 
@@ -1171,4 +1198,4 @@ def generate_routines(params: CodegenConfig):
     #     for arg in rt.args:
     #         arg.check_enums(enums_by_name)
     logger.info("Procedures: %d usable / %d total unique", len(usable), len(all_routines_by_name))
-    return all_routines, all_routines_by_name
+    return all_routines, all_routines_by_name, to_write

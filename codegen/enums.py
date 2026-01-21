@@ -146,6 +146,58 @@ def parse_all_enums(enum_filenames: list[pathlib.Path]):
     return {fn.name: parse_fortran_enums(fn) for fn in enum_filenames}
 
 
+def is_integer(s: str) -> bool:
+    if not s:
+        return False
+    if s[0] == "-":
+        return s[1:].isdigit()
+    return s.isdigit()
+
+
+def get_enums_from_bounds(bounds: list[str]) -> set[str]:
+    enums = set()
+    for bound in bounds:
+        bound = bound.strip()
+
+        if not bound or is_integer(bound):
+            continue
+
+        if bound.endswith("$"):
+            bound = bound.removesuffix("$")
+
+        enums.add(bound.lower())
+
+    return enums
+
+
+def to_cpp_enum(enum_str: str, namespace: str = "Bmad") -> str:
+    clean_str = enum_str.strip()
+    if clean_str.endswith("$"):
+        clean_str = clean_str[:-1]
+
+    return f"{namespace}::{clean_str.upper()}"
+
+
+def replace_enums_with_cpp(bounds: list[str], enums: dict[str, EnumValue]) -> list[str]:
+    result = []
+    for b in bounds:
+        b = b.strip()
+
+        if is_integer(b):
+            result.append(b)
+            continue
+        key = b[:-1] if b.endswith("$") else b
+
+        if not key:
+            result.append(key)
+        elif key in enums:
+            result.append(to_cpp_enum(key))
+        else:
+            raise KeyError(f"Enum '{key}' found in bounds '{b}' but not in provided map.")
+
+    return result
+
+
 def get_enum_code(enums_by_filename: dict[str, dict[str, EnumValue]]):
     result = [
         """
