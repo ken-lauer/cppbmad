@@ -132,12 +132,16 @@ def get_ele_keys(enums: dict[str, EnumValue]):
     return get_enums_in_range(enums, start_key="DRIFT", num_key="N_KEY")
 
 
-def get_class_code(clsname: str, enums: list[EnumValue]) -> str:
+def get_class_code(clsname: str, enums: list[EnumValue], offset: int = 0) -> str:
     code = [f"enum class {clsname} : size_t {{"]
+    if offset > 0:
+        offset_code = f" + {offset}" if offset else ""
+    else:
+        offset_code = f" - {abs(offset)}" if offset else ""
     for attr in enums:
         if attr.comment:
             code.append(f"// {attr.comment}")
-        code.append(f"  {attr.name} = {attr.value},")
+        code.append(f"  {attr.name} = {attr.value}{offset_code},")
     code.append(f"}}; // enum class {clsname}")
     return "\n".join(code)
 
@@ -186,7 +190,10 @@ def replace_enums_with_cpp(bounds: list[str], enums: dict[str, EnumValue]) -> li
         if is_integer(b):
             result.append(b)
             continue
-        key = b[:-1] if b.endswith("$") else b
+        key = b.removesuffix("$").upper()
+
+        if "(" in key:
+            raise ValueError("Calls in array bounds are not supported")
 
         if not key:
             result.append(key)
@@ -228,7 +235,19 @@ namespace Bmad {
             result.append(f"const {enum.type} {enum.name} = {enum.value};")
 
         if fn == "bmad_struct.f90":
-            result.append(get_class_code("EleAttribute", get_ele_attributes(enums)))
+            result.append(
+                get_class_code(
+                    "EleAttribute",
+                    get_ele_attributes(enums),
+                    offset=-1,
+                )
+            )
+            result.append(
+                get_class_code(
+                    "EleAttributeFortran",
+                    get_ele_attributes(enums),
+                )
+            )
             result.append(get_class_code("EleKey", get_ele_keys(enums)))
 
     result.append("""

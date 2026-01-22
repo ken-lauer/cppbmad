@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import logging
-import typing
 import sys
+import typing
 from dataclasses import dataclass, field
 
 import pydantic.alias_generators
@@ -246,9 +246,6 @@ class Argument:
         # self.is_dynamic_array
         transform = get_type_transform(self.full_type)
         return self._replace_transform_placeholders(transform)
-
-    def original_repr(self) -> str:
-        return f'["{self.type}({self.kind})", "{self.pointer_type}", "{self.f_name}", {self.array}, {self.lbound} {self.ubound} "{self.init_value}"]'
 
 
 @dataclass

@@ -60,18 +60,6 @@ def match_structure_definition(
     struct.parsed = fstruct
 
 
-def write_parsed_structures(structs, fn):
-    """
-    Write parsed structure definitions to a file.
-    """
-    with pathlib.Path(fn).open("w") as f_out:
-        for struct in structs:
-            f_out.write("******************************************\n")
-            f_out.write(f"{struct.f_name}    {len(struct.arg)}\n")
-            for arg in struct.arg:
-                f_out.write(f"    {arg.original_repr()}\n")
-
-
 def check_missing(params: CodegenConfig, structs: list[CodegenStructure]) -> dict[str, dict[str, str]]:
     struct_names = {struct.f_name.lower() for struct in structs}
 
@@ -206,9 +194,6 @@ def get_structure_definitions(
 
 
 def write_proxy_classes(params: CodegenConfig, structs: list[CodegenStructure]) -> None:
-    if DEBUG:
-        write_parsed_structures(structs, "f_structs.parsed")
-
     generated = CPPBMAD_ROOT / "src" / "generated"
 
     write_if_differs(

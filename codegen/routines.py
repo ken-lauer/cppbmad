@@ -14,7 +14,7 @@ from .arg import Argument as InterfaceArgument
 from .context import CodegenConfig, RoutineSettings, config_context, get_params
 from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper, generate_routines_header
 from .docstring import DocstringParameter, RoutineDocstring, parse_routine_comment_block
-from .enums import EnumValue
+from .enums import EnumValue, replace_enums_with_cpp
 from .exceptions import RenameError, RoutineNotFoundError, UnsupportedTypeError
 from .fortran import generate_fortran_routine_with_c_binding
 from .paths import CODEGEN_ROOT, CPPBMAD_ROOT
@@ -572,6 +572,7 @@ class FortranRoutine:
         lower_members = {name.lower(): member for name, member in self.declarations.items()}
         lower_doc = {name.lower(): doc for name, doc in self.docstring.arguments_by_name.items()}
 
+        enums_by_name = ctx.enums_by_name
         reasons = []
 
         for arg_name in self.arg_names_with_result:
@@ -609,6 +610,12 @@ class FortranRoutine:
                             reasons.append(f"Pointer to variable {arg.intent} sized array: {arg.full_type}")
                         if arg.type != "type":
                             reasons.append(f"Variable {arg.intent} sized array: {arg.full_type}")
+
+                try:
+                    replace_enums_with_cpp(arg.lbound, enums_by_name)
+                    replace_enums_with_cpp(arg.ubound, enums_by_name)
+                except Exception as ex:
+                    reasons.append(f"Array bounds handling: {ex}")
 
         if len(self.arg_names_with_result) != len(self.args):
             reasons.append("Translated arg count mismatch (unsupported?)")

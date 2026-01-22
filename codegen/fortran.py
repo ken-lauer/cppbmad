@@ -220,44 +220,38 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
             f"  {tf_type} :: {self.f_ptr_name}(:)",
         ]
 
-    def get_input_conversion(self) -> list[str]:
-        if self.intent == "out" or self.is_function_result:
-            return []
+    @property
+    def dims_calc(self) -> str:
+        if len(self.arg.array) == 1:
+            return f"{self.c_name}%dims(1)"
+        return f"product({self.c_name}%dims(1:{self.c_name}%rank))"
 
-        result = [f"  !! general array ({self.arg.full_type})"]
-        dims_calc = f"[{self.c_name}%dims(1)]"
-        if len(self.arg.array) > 1:
-            dims_calc = f"[product({self.c_name}%dims(1:{self.c_name}%rank))]"
+    def get_input_conversion(self) -> list[str]:
+        result = [f"  !! general array ({self.arg.full_type}) {self.arg.intent}"]
+        dims_calc = f"[{self.dims_calc}]"
 
         arr = self.arg.array
-        # check = f"c_associated({self.c_name}%data_ptr)"
         ptr_conv = f"call c_f_pointer({self.c_name}%data_ptr, {self.f_ptr_name}, {dims_calc})"
 
-        if len(arr) == 1:
+        if self.intent == "out" or self.is_function_result:
+            code = "! output-only"
+        elif len(arr) == 1:
             if self.arg.is_dynamic_array:
                 if self.arg.array[0].startswith("0"):
                     ptr = f"{self.f_name}(0:)"
                 else:
                     ptr = self.f_name
-                code = textwrap.dedent(f"""\
-                {ptr_conv}
-                {ptr} => {self.f_ptr_name}""")
-
+                code = f"{ptr} => {self.f_ptr_name}"
             else:
-                code = textwrap.dedent(f"""\
-                {ptr_conv}
-                {self.f_name} = {self.f_ptr_name}(:)""")
+                code = f"{self.f_name} = {self.f_ptr_name}(:)"
         elif len(arr) == 2:
-            code = textwrap.dedent(f"""\
-                {ptr_conv}
-                call vec2mat({self.f_ptr_name}, {self.f_name})""")
+            code = f"call vec2mat({self.f_ptr_name}, {self.f_name})"
         elif len(arr) == 3:
-            code = textwrap.dedent(f"""\
-                {ptr_conv}
-                call vec2tensor({self.f_ptr_name}, {self.f_name})""")
+            code = f"call vec2tensor({self.f_ptr_name}, {self.f_name})"
         else:
             raise NotImplementedError(f"{self.routine.name} {self.arg.c_name} {len(arr)}")
 
+        code = "\n".join((ptr_conv, code))
         result.extend(
             self.if_then_else_block(
                 f"c_associated({self.c_name}%data_ptr)", code, f"{self.f_ptr_name} => null()"
@@ -266,35 +260,31 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
         return result
 
     def get_output_conversion(self) -> list[str]:
-        if self.intent != "out" or not self.arg.array:
+        if self.intent != "out":
             return []
 
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
         arr = self.arg.array
 
-        dims_calc = f"[{self.c_name}%dims(1)]"
-        if len(self.arg.array) > 1:
-            dims_calc = f"[product({self.c_name}%dims(1:{self.c_name}%rank))]"
-
+        dims_calc = f"[{self.dims_calc}]"
         ptr_conv = f"call c_f_pointer({self.c_name}%data_ptr, {self.f_ptr_name}, {dims_calc})"
 
         if len(arr) == 1:
             code = textwrap.dedent(f"""\
                 {ptr_conv}
                 {self.f_ptr_name} = {self.f_name}(:)""")
-            result.extend(self.if_block(f"c_associated({self.c_name}%data_ptr)", code))
         elif len(arr) == 2:
-            result.append(f"! TODO general output array 2D {self.arg}")
-            # code = textwrap.dedent(f"""\
-            #     call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
-            #     call mat2vec({self.f_name}, {self.f_ptr_name})""")
+            # result.append(f"! TODO general output array 2D {self.arg}")
+            code = textwrap.dedent(f"""\
+                {self.f_ptr_name} = mat2vec({self.f_name}, {self.dims_calc})""")
         elif len(arr) == 3:
-            result.append(f"! TODO general output array 3D {self.arg}")
-            # code = textwrap.dedent(f"""\
-            #     call c_f_pointer({self.c_name}, {self.f_ptr_name}, [{self.dimensions}])
-            #     call tensor2vec({self.f_name}, {self.f_ptr_name})""")
+            # result.append(f"! TODO general output array 3D {self.arg}")
+            code = textwrap.dedent(f"""\
+                {self.f_ptr_name} = tensor2vec({self.f_name}, {self.dims_calc})""")
         else:
             raise NotImplementedError(len(arr))
+
+        result.extend(self.if_block(f"c_associated({self.c_name}%data_ptr)", code))
 
         return result
 
