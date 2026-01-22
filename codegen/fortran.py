@@ -494,8 +494,8 @@ class FortranWrapperTypeArgument(FortranWrapperArgument):
         ]
 
     def get_input_conversion(self) -> list[str]:
-        if self.is_function_result:
-            return []
+        # if self.is_function_result:
+        #     return []
 
         result = [f"  ! {self.intent}: {self.f_name} {self.arg.full_type}"]
         code = f"  call c_f_pointer({self.c_name}, {self.f_name})"
