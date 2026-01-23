@@ -421,7 +421,6 @@ class CppWrapperGeneralArgumentArray(CppWrapperArgument):
                 pbtype = self.arg.transform.cpp_declare_type
                 lines.append(f"{pbtype} {self.fortran_call_arg_name};")
                 lines.append(f"{desc_name}.data_ptr = {self.fortran_call_arg_name}.data();")
-                # 1D dynamic size update?
                 lines.append(f"{desc_name}.dims[0] = {self.fortran_call_arg_name}.size();")
             elif self.arg.is_optional:
                 lines.append(f"if ({self.arg.c_name}.has_value()) {{")
@@ -445,18 +444,26 @@ class CppWrapperGeneralArgumentArray(CppWrapperArgument):
             lines.append(f"{ctype} {vec_name}[{dims}];")
             lines.append(f"{desc_name}.data_ptr = {vec_name};")
 
+            dim_lines = []
+            for n, dim in enumerate(self.arg.c_dims):
+                dim_lines.append(f"{desc_name}.dims[{n}] = {dim};")  # {self.arg.c_name}.size({n});")
+
             prefix = "matrix" if len(arr) == 2 else "tensor"
 
             if self.arg.is_optional and self.arg.intent != "out":
                 lines.append(f"if ({self.arg.c_name}.has_value()) {{")
                 lines.append(f"  {prefix}_to_vec({self.arg.c_name}.value(), {vec_name});")
+                lines.extend([f"  {line}" for line in dim_lines])
                 lines.append("} else {")
                 lines.append(f"  {desc_name}.data_ptr = nullptr;")
                 lines.append("}")
             elif self.arg.intent != "out":
+                lines.extend(dim_lines)
                 if self.arg.is_optional:
                     lines.append(f"if ({self.arg.c_name})")
                 lines.append(f"{prefix}_to_vec({self.arg.c_name}, {vec_name});")
+            else:
+                lines.extend(dim_lines)
         else:
             raise NotImplementedError(len(arr))
         return lines
