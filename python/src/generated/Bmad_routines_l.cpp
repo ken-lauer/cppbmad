@@ -36,7 +36,9 @@ void init_Bmad_routines_l(py::module &m) {
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lafun
+
+  Parameters
   ----------
   x : 
   y : 
@@ -48,10 +50,13 @@ void init_Bmad_routines_l(py::module &m) {
       "lat_compute_ref_energy_and_time",
       &Bmad::lat_compute_ref_energy_and_time,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lat_compute_ref_energy_and_time
+
+  Parameters
   ----------
   lat : LatStruct
       Input lattice.
+
   err_flag : bool
       Set true if there is an error. False otherwise.
   )"""
@@ -84,29 +89,39 @@ void init_Bmad_routines_l(py::module &m) {
       py::arg("ix_dflt_branch") = py::none(),
       py::arg("order_by_index") = py::none(),
       py::arg("append_eles") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lat_ele_locator
+
+  Parameters
   ----------
   loc_str : unknown
       Element names or indexes. May be lower case.
+
   lat : LatStruct
       Lattice to search through.
+
   eles : ElePointerStruct
       If append_eles is True, save existing elements.
       This parameter is an input/output and is modified in-place. As an output: Array of matching elements.
+
   n_loc : int
       Number of existing elements. Used if append_eles is True.
       This parameter is an input/output and is modified in-place. As an output: Number of locations found.
+
   err : bool
       Set True if there is a decode error. Note: Not finding any matching element is not an error.
+
   above_ubound_is_err : unknown, optional
       Default is True. If the upper bound "e2" on an "e1:e2" range construct is an integer and above the maximum
       element index then treat this as an error?
+
   ix_dflt_branch : int, optional
       If present and not -1 then restrict search to specified branch. If not present or -1: Search all branches.
       Exception: For elements specified using
+
   order_by_index : bool, optional
       False is default. If True, order a component of loc_str like "quad::*" by element index instead of
       longitudinal s-position. Index ordering and s-position ordering
+
   append_eles : bool, optional
       Default is False. If True, found elements are appended to eles(:) array.
   )"""
@@ -116,7 +131,9 @@ void init_Bmad_routines_l(py::module &m) {
       &Bmad::lat_equal_lat,
       py::arg("lat_out"),
       py::arg("lat_in"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lat_equal_lat
+
+  Parameters
   ----------
   lat_out : 
   lat_in : 
@@ -126,7 +143,9 @@ void init_Bmad_routines_l(py::module &m) {
       "lat_geometry",
       &Bmad::lat_geometry,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lat_geometry
+
+  Parameters
   ----------
   lat : LatStruct
       The lattice.
@@ -139,17 +158,23 @@ void init_Bmad_routines_l(py::module &m) {
       py::arg("ix_ele") = py::none(),
       py::arg("ref_orb") = py::none(),
       py::arg("ix_branch") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lat_make_mat6
+
+  Parameters
   ----------
   lat : LatStruct
       Lat containing the elements.
+
   ix_ele : int, optional
       Index of the element. If not present
+
   ref_orb : CoordStruct, optional
       Coordinates of the reference orbit around which the matrix is calculated. If not present
+
   ix_branch : int, optional
       Branch index. Default is 0 (main lattice). -1 => All branches/all elements (ref_orb & ix_ele will be
       ignored).
+
   err_flag : bool
       True if there is an error. False otherwise.
   )"""
@@ -158,10 +183,13 @@ void init_Bmad_routines_l(py::module &m) {
       "lat_sanity_check",
       &Bmad::lat_sanity_check,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lat_sanity_check
+
+  Parameters
   ----------
   lat : LatStruct
       Lattice to check
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -170,7 +198,9 @@ void init_Bmad_routines_l(py::module &m) {
       "lat_to_ptc_layout",
       &Bmad::lat_to_ptc_layout,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lat_to_ptc_layout
+
+  Parameters
   ----------
   lat : LatStruct
       Input lattice
@@ -181,7 +211,9 @@ void init_Bmad_routines_l(py::module &m) {
       &Bmad::lat_vec_equal_lat_vec,
       py::arg("lat1"),
       py::arg("lat2"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lat_vec_equal_lat_vec
+
+  Parameters
   ----------
   lat1 : 
   lat2 : 
@@ -191,11 +223,14 @@ void init_Bmad_routines_l(py::module &m) {
       "lattice_bookkeeper",
       &Bmad::lattice_bookkeeper,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lattice_bookkeeper
+
+  Parameters
   ----------
   lat : LatStruct
       Lattice needing bookkeeping.
       This parameter is an input/output and is modified in-place. As an output: Lattice with bookkeeping done.
+
   err_flag : bool
       Set true if there is an error. False otherwise.
   )"""
@@ -204,7 +239,9 @@ void init_Bmad_routines_l(py::module &m) {
       "lcavity_rf_step_setup",
       &Bmad::lcavity_rf_step_setup,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lcavity_rf_step_setup
+
+  Parameters
   ----------
   ele : EleStruct
       Lcavity element.
@@ -230,17 +267,22 @@ void init_Bmad_routines_l(py::module &m) {
   ----------
   ele : EleStruct
       SBend element.
+
   param : LatParamStruct
       Rel charge.
+
   particle_at : int
       first_track_edge$, or second_track_edge$,
+
   orb : CoordStruct
       Starting coords.
       This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+
   mat6 : float, optional
       Transfer matrix up to the edge.
       This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
       edge.
+
   make_matrix : float, optional
       Propagate the transfer matrix? Default is False.
   )"""
@@ -279,6 +321,7 @@ void init_Bmad_routines_l(py::module &m) {
   -------
   err_flag : bool
       Set True if the expression is not linear
+
   coef : float
       Linear coefficient.
   )"""
@@ -287,10 +330,13 @@ void init_Bmad_routines_l(py::module &m) {
       "linear_to_spin_taylor",
       &Bmad::linear_to_spin_taylor,
       py::arg("q_map"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine linear_to_spin_taylor
+
+  Parameters
   ----------
   q_map : float
       Linear quaternion map.
+
   spin_taylor : TaylorStruct
       Taylor map
   )"""
@@ -327,6 +373,7 @@ void init_Bmad_routines_l(py::module &m) {
   ----------
   action : unknown
       'continue', 'new_command', or 'init'
+
   ix_start : int
       Index in bp_com.parse_line string where to append stuff.
 
@@ -334,8 +381,10 @@ void init_Bmad_routines_l(py::module &m) {
   -------
   end_of_file : bool
       End of file reached?
+
   err_flag : bool
       Set True if there is an error. False otherwise
+
   bp_com%parse_line : 
       string to append to.
   )"""
@@ -346,14 +395,19 @@ void init_Bmad_routines_l(py::module &m) {
       py::arg("slave"),
       py::arg("slave_edge"),
       py::arg("lord"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lord_edge_aligned
+
+  Parameters
   ----------
   slave : EleStruct
       Slave element.
+
   slave_edge : int
       End under consideration: entrance_end$, exit_end$, in_between$, etc.
+
   lord : EleStruct
       Lord element.
+
   is_aligned : int
       True if a lord edge is aligned with the slave edge. If slave_edge is not entrance_end$ nor exit_end$ then
       is_aligned is False.
@@ -367,20 +421,27 @@ void init_Bmad_routines_l(py::module &m) {
       py::arg("ds"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine low_energy_z_correction
+
+  Parameters
   ----------
   orbit : CoordStruct
       Position before correction
+
   ele : unknown
       Element being tracked through.
+
   ds : float
       Longitudinal distance traveled by reference particle.
+
   mat6 : float, optional
       Transfer matrix before the multipole.
       This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
       including multipole.
+
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
+
   dz : float
       Change in z.
   )"""

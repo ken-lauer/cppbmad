@@ -12,7 +12,9 @@ void init_Bmad_routines_x(py::module &m) {
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine xlafun
+
+Parameters
 ----------
 x : 
 y : 

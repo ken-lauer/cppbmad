@@ -30,17 +30,22 @@ Parameters
 ----------
 ele : EleStruct
     Element with fringe.
+
 param : LatParamStruct
     Tracking parameters.
+
 particle_at : int
     Either first_track_edge$ or second_track_edge$.
+
 orbit : CoordStruct
     Starting coordinates.
     This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
+
 mat6 : float, optional
     Transfer matrix up to the fringe.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
     fringe.
+
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
 )"""
@@ -51,7 +56,9 @@ make_matrix : float, optional
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("has_it"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine has_attribute
+
+Parameters
 ----------
 ele : 
 attrib : 
@@ -111,7 +118,9 @@ has_attribute function.
       py::arg("error"),
       py::arg("lat") = py::none(),
       py::arg("alive_only") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine hdf5_write_beam
+
+Parameters
 ----------
 file_name : 
 bunches : 
@@ -128,7 +137,9 @@ alive_only :
       py::arg("ele"),
       py::arg("g_field"),
       py::arg("err_flag"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine hdf5_write_grid_field
+
+Parameters
 ----------
 file_name : 
 ele : 
@@ -159,16 +170,21 @@ Parameters
 orb : CoordStruct
     Starting coords.
     This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+
 ele : EleStruct
     SBend element.
+
 param : LatParamStruct
     Rel charge.
+
 particle_at : int
     first_track_edge$, or second_track_edge$
+
 mat6 : float, optional
     Transfer matrix up to the edge.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
     edge.
+
 make_matrix : float, optional
     Propagate the transfer matrix? Default is False.
 )"""

@@ -12,7 +12,9 @@ void init_bsim_routines_b(py::module &m) {
       py::arg("bbu_beam"),
       py::arg("bbu_param"),
       py::arg("beam_init"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bbu_add_a_bunch
+
+Parameters
 ----------
 lat : 
 bbu_beam : 
@@ -27,7 +29,9 @@ beam_init :
       py::arg("bbu_beam"),
       py::arg("n_period"),
       py::arg("ix_stage_last_tracked"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bbu_hom_voltage_calc
+
+Parameters
 ----------
 lat : 
 bbu_beam : 
@@ -39,7 +43,9 @@ ix_stage_last_tracked :
       "bbu_remove_head_bunch",
       &bsim::bbu_remove_head_bunch,
       py::arg("bbu_beam"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bbu_remove_head_bunch
+
+Parameters
 ----------
 bbu_beam : 
 )"""
@@ -51,7 +57,9 @@ bbu_beam :
       py::arg("dt_bunch"),
       py::arg("bbu_param"),
       py::arg("bbu_beam"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bbu_setup
+
+Parameters
 ----------
 lat : 
 dt_bunch : 
@@ -67,7 +75,9 @@ bbu_beam :
       py::arg("bbu_param"),
       py::arg("lost"),
       py::arg("ix_stage_tracked"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bbu_track_a_stage
+
+Parameters
 ----------
 lat : 
 bbu_beam : 
@@ -87,7 +97,9 @@ ix_stage_tracked :
       py::arg("growth_rate"),
       py::arg("lost"),
       py::arg("irep"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bbu_track_all
+
+Parameters
 ----------
 lat : 
 bbu_beam : 

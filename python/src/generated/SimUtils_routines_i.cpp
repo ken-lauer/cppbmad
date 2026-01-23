@@ -11,7 +11,9 @@ void init_SimUtils_routines_i(py::module &m) {
       py::arg("m"),
       py::arg("arg"),
       py::arg("i_bes"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine i_bessel
+
+Parameters
 ----------
 m : 
 arg : 
@@ -24,7 +26,9 @@ i_bes :
       py::arg("m"),
       py::arg("arg"),
       py::arg("i_bes"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine i_bessel_extended
+
+Parameters
 ----------
 m : 
 arg : 
@@ -38,7 +42,9 @@ i_bes :
       py::arg("digits"),
       py::arg("number"),
       py::arg("cnumber"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine increment_file_number
+
+Parameters
 ----------
 file_name : 
 digits : 
@@ -52,7 +58,9 @@ cnumber :
       py::arg("string1"),
       py::arg("string2"),
       py::arg("indx"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine index_nocase
+
+Parameters
 ----------
 string1 : 
 string2 : 
@@ -77,11 +85,14 @@ Parameters
 ----------
 N : int
     Number of data points to fit over. aka window size.
+
 dt : float
     Time interval between data points. It is assumed that the data is
+
 separated by fixed time intervals. : 
 order : int
     Order of fit polynomial.  Must be greater than or equal to der.
+
 der : int
     Order of derivative to be returned. Set der=0 to obtain the fit.
 
@@ -97,7 +108,9 @@ Returns
       py::arg("int_"),
       py::arg("width") = py::none(),
       py::arg("str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine int_str
+
+Parameters
 ----------
 int : 
 width : 
@@ -118,7 +131,6 @@ Windows the complex data and used Numerical Recipes four1 to find the peak in th
 The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
 available.
 
-
 Returns
 -------
 this_fft
@@ -137,7 +149,6 @@ this_fft
 Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
 The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
 available.
-
 )"""
   );
   m.def(
@@ -154,7 +165,6 @@ function inverse_prob (val) result (prob)
   real(rp) val
 end function
 
-
 Returns
 -------
 prob
@@ -165,12 +175,16 @@ prob
       &SimUtils::is_decreasing_sequence,
       py::arg("array"),
       py::arg("strict") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine is_decreasing_sequence
+
+Parameters
 ----------
 array : float
     Sequence.
+
 strict : bool, optional
     If True (default) sequence must be strictly decreasing.
+
 is_decreasing : bool
     Set True if sequence is decreasing.
 )"""
@@ -212,12 +226,16 @@ boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
       &SimUtils::is_increasing_sequence,
       py::arg("array"),
       py::arg("strict") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine is_increasing_sequence
+
+Parameters
 ----------
 array : float
     Sequence.
+
 strict : bool, optional
     If True (default) sequence must be strictly increasing.
+
 is_increasing : bool
     Set True if sequence is increasing.
 )"""
@@ -230,7 +248,9 @@ is_increasing : bool
       py::arg("delims") = py::none(),
       py::arg("ix_word") = py::none(),
       py::arg("valid"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine is_integer
+
+Parameters
 ----------
 string : 
 int : 
@@ -245,7 +265,9 @@ valid :
       py::arg("string"),
       py::arg("ignore") = py::none(),
       py::arg("valid"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine is_logical
+
+Parameters
 ----------
 string : 
 ignore : 
@@ -259,7 +281,9 @@ valid :
       py::arg("ignore") = py::none(),
       py::arg("real_num") = py::none(),
       py::arg("valid"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine is_real
+
+Parameters
 ----------
 string : 
 ignore : 

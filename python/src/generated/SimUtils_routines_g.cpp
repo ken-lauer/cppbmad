@@ -14,7 +14,9 @@ void init_SimUtils_routines_g(py::module &m) {
       py::arg("s"),
       py::arg("err_tol") = py::none(),
       py::arg("value"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine gen_complete_elliptic
+
+Parameters
 ----------
 kc : 
 p : 
@@ -31,7 +33,9 @@ value :
       py::arg("cnum_in"),
       py::arg("num_out"),
       py::arg("err_flag"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine get_file_number
+
+Parameters
 ----------
 file_name : 
 cnum_in : 
@@ -51,7 +55,6 @@ subroutine get_next_number (filein, cnum, digits)
   character(*) cnum
   integer digits
 end subroutine
-
 )"""
   );
 }

@@ -10,13 +10,17 @@ void init_Bmad_routines_k(py::module &m) {
       &Bmad::key_name_to_key_index,
       py::arg("key_str"),
       py::arg("abbrev_allowed") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine key_name_to_key_index
+
+Parameters
 ----------
 key_str : unknown
     Name of the key. Result is case insensitive.
+
 abbrev_allowed : bool, optional
     Abbreviations (eg: "quad") allowed? Default is False. At least 3 characters are needed (except for
     rfcavity elements) if True.
+
 key_index : int
     Index of the key. Set to -1 if key_name not recognized.
 )"""
@@ -94,12 +98,16 @@ Parameters
 ----------
 ele : EleStruct
     Element being tracked thorugh.
+
 param : LatParamStruct
     Lattice parameters.
+
 s_rel : float
     Distance from the start of the element to the particle.
+
 orbit : CoordStruct
     Position of particle.
+
 local_ref_frame : 
     -- Logical, If True then take the input coordinates as being with respect to the frame of referene of the
     element.
@@ -108,8 +116,10 @@ Returns
 -------
 dr_ds : float
     Kick vector.
+
 field : EmFieldStruct
     Local field.
+
 err : bool
     Set True if there is an error.
 
@@ -138,7 +148,9 @@ complex_taylor : ComplexTaylorStruct
       "kill_ptc_layouts",
       &Bmad::kill_ptc_layouts,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine kill_ptc_layouts
+
+Parameters
 ----------
 lat : LatStruct
     Bmad lattice with associated layouts.
@@ -148,7 +160,9 @@ lat : LatStruct
       "kill_taylor",
       &Bmad::kill_taylor,
       py::arg("bmad_taylor"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine kill_taylor
+
+Parameters
 ----------
 bmad_taylor : TaylorStruct
     Taylor to be deallocated.
@@ -198,18 +212,25 @@ kind_str : unknown
       py::arg("y_knot"),
       py::arg("x_pt"),
       py::arg("interpolation"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine knot_interpolate
+
+Parameters
 ----------
 x_knot : float
     Knot x-values.
+
 y_knot : float
     Knot y-values.
+
 x_pt : float
     Point to evaluate at.
+
 interpolation : int
     Interpolation type. cubic$ or linear$.
+
 err_flag : bool
     Set True if there is an error. False otherwise.
+
 y_pt : float
     Interpolated y-value.
 )"""
@@ -220,7 +241,9 @@ y_pt : float
       py::arg("x_knot"),
       py::arg("y_knot"),
       py::arg("str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine knots_to_string
+
+Parameters
 ----------
 x_knot : 
 y_knot : 

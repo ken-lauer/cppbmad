@@ -11,7 +11,6 @@ void init_SimUtils_routines_n(py::module &m) {
       py::arg("n_data"),
       py::arg("n"),
       R"""(Function to automatically select the number of bins
-
 )"""
   );
   m.def(
@@ -20,7 +19,9 @@ void init_SimUtils_routines_n(py::module &m) {
       py::arg("n"),
       py::arg("k"),
       py::arg("nck"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine n_choose_k
+
+Parameters
 ----------
 n : 
 k : 
@@ -34,14 +35,19 @@ nck :
       py::arg("deriv1"),
       py::arg("x1"),
       py::arg("n_spline"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine n_spline_create
+
+Parameters
 ----------
 deriv0 : float
     Derivative vector from order 0 to some order n at x = 0.
+
 deriv1 : float
     Derivative vector from order 0 to some order n at x = x1.
+
 x1 : float
     Location where deriv1 derivatives have been evaluated.
+
 n_spline : 
     real(rp), Derivative vector from order 0 to order 2*n+1 of the interpolation spline.
 )"""
@@ -65,7 +71,6 @@ Frequencies returned are in units of 2pi. That is, freqs ranges from 0 to 1.
 
 freqs and amps must be allocated before hand.  This subroutine will repeat the
 decomposition loop until all elements of freqs and amps are populated.
-
 )"""
   );
   m.def(
@@ -74,7 +79,9 @@ decomposition loop until all elements of freqs and amps are populated.
       py::arg("nametable"),
       py::arg("name"),
       py::arg("ix_name"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine nametable_add
+
+Parameters
 ----------
 nametable : 
 name : 
@@ -88,7 +95,9 @@ ix_name :
       py::arg("name"),
       py::arg("n_match") = py::none(),
       py::arg("ix_max"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine nametable_bracket_indexx
+
+Parameters
 ----------
 nametable : 
 name : 
@@ -102,7 +111,9 @@ ix_max :
       py::arg("nametable"),
       py::arg("name"),
       py::arg("ix_name"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine nametable_change1
+
+Parameters
 ----------
 nametable : 
 name : 
@@ -115,7 +126,9 @@ ix_name :
       py::arg("nametable"),
       py::arg("n_min") = py::none(),
       py::arg("n_max") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine nametable_init
+
+Parameters
 ----------
 nametable : 
 n_min : 
@@ -127,7 +140,9 @@ n_max :
       &SimUtils::nametable_remove,
       py::arg("nametable"),
       py::arg("ix_name"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine nametable_remove
+
+Parameters
 ----------
 nametable : 
 ix_name : 

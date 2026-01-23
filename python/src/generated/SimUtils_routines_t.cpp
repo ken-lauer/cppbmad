@@ -16,7 +16,6 @@ subroutine test_tune_tracker_lock (tracker_locked)
   implicit none
   logical tracker_locked(2)
 end subroutine
-
 )"""
   );
   py::class_<SimUtils::TricubicCmplxEval, std::unique_ptr<SimUtils::TricubicCmplxEval>>(
@@ -62,10 +61,13 @@ Parameters
 ----------
 x_norm : float
     x_norm = (x - x0) / dx
+
 y_norm : float
     y_norm = (y - y0) / dy
+
 z_norm : float
     z_norm = (z - z0) / dz
+
 tri_coef : TricubicCmplxCoefStruct
     Coefficients.
 
@@ -73,10 +75,13 @@ Returns
 -------
 f_val : complex
     Value of f.
+
 df_dx : complex
     Normalized first derivative: True df/dx = df_dx * dx
+
 df_dy : complex
     Normalized first derivative: True df/dy = df_dy * dy
+
 df_dz : complex
     Normalized first derivative: True df/dz = df_dz * dz
 )"""
@@ -85,7 +90,9 @@ df_dz : complex
       "type_this_file",
       &SimUtils::type_this_file,
       py::arg("filename"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine type_this_file
+
+Parameters
 ----------
 filename : 
 )"""

@@ -9,7 +9,9 @@ void init_bsim_routines_r(py::module &m) {
       "rf_cav_names",
       &bsim::rf_cav_names,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rf_cav_names
+
+Parameters
 ----------
 lat : 
 )"""

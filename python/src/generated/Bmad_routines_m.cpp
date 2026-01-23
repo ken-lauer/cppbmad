@@ -18,6 +18,7 @@ Parameters
 ----------
 ele : EleStruct
     Drift element.
+
 energy : MadEnergyStruct
     particle energy structure.
 
@@ -42,6 +43,7 @@ Parameters
 ----------
 map1 : MadMapStruct
     First map in the beam line.
+
 map2 : MadMapStruct
     Second map in the beam line.
 
@@ -65,6 +67,7 @@ Parameters
 ----------
 ele : EleStruct
     Drift element.
+
 energy : MadEnergyStruct
     particle energy structure.
 
@@ -88,6 +91,7 @@ Parameters
 ----------
 ele : EleStruct
     Electric seperator element.
+
 energy : MadEnergyStruct
     particle energy structure.
 
@@ -112,6 +116,7 @@ Parameters
 ----------
 map : MadMapStruct
     Order 2 map.
+
 energy : MadEnergyStruct
     Energy numbers.
 
@@ -135,6 +140,7 @@ Parameters
 ----------
 ele : EleStruct
     Quadrupole element.
+
 energy : MadEnergyStruct
     particle energy structure.
 
@@ -158,6 +164,7 @@ Parameters
 ----------
 ele : EleStruct
     Rfcavity element.
+
 energy : MadEnergyStruct
     particle energy structure.
 
@@ -181,6 +188,7 @@ Parameters
 ----------
 ele : EleStruct
     Sbend element.
+
 energy : MadEnergyStruct
     particle energy structure.
 
@@ -204,8 +212,10 @@ Parameters
 ----------
 ele : EleStruct
     Solenoid element.
+
 energy : MadEnergyStruct
     particle energy structure.
+
 into : bool
     If True then map is for particle entering a dipole
 
@@ -230,8 +240,10 @@ Parameters
 ----------
 ele : EleStruct
     Solenoid element.
+
 energy : MadEnergyStruct
     particle energy structure.
+
 into : bool
     If True then map is for particle entering a dipole
 
@@ -239,10 +251,13 @@ Returns
 -------
 map : MadMapStruct
     Fringe dipole map.
+
 %k : 
     0th order map.
+
 %r : 
     1st order map.
+
 %t : 
     2nd order map.
 )"""
@@ -261,6 +276,7 @@ Parameters
 ----------
 ele : EleStruct
     Sextupole element.
+
 energy : MadEnergyStruct
     particle energy structure.
 
@@ -284,6 +300,7 @@ Parameters
 ----------
 ele : EleStruct
     Solenoid element.
+
 energy : MadEnergyStruct
     particle energy structure.
 
@@ -330,6 +347,7 @@ Parameters
 ----------
 el : float
     Length.
+
 sk1 : float
     Quadrupole strength.
 
@@ -337,10 +355,13 @@ Returns
 -------
 c : float
     Cosine-like function.             c(k,l)
+
 s : float
     Sine-like function.               s(k,l)
+
 d : float
     Dispersion function.              d(k,l)
+
 f : float
     Integral of dispersion function.  f(k,l)
 )"""
@@ -376,12 +397,16 @@ Parameters
 map : MadMapStruct
     Unrotated transport map.
     This parameter is an input/output and is modified in-place. As an output: Rotated transport map.
+
 %k : 
     0th order map.
+
 %r : 
     1st order map.
+
 %t : 
     2nd order map.
+
 tilt : float
     Tilt
 )"""
@@ -400,6 +425,7 @@ Parameters
 ----------
 c0 : CoordStruct
     Starting coords.
+
 map : MadMapStruct
     2nd order map.
 
@@ -415,10 +441,13 @@ c1 : CoordStruct
       py::arg("twiss"),
       py::arg("g2_mat"),
       py::arg("g2_inv_mat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_g2_mats
+
+Parameters
 ----------
 twiss : TwissStruct
     Twiss parameters.
+
 g2_mat : 
 g2_inv_mat : 
 )"""
@@ -444,12 +473,16 @@ g2_inv_mat :
       "make_g_mats",
       &Bmad::make_g_mats,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_g_mats
+
+Parameters
 ----------
 ele : EleStruct
     Element
+
 g_mat : float
     Normal mode to betaless coords
+
 g_inv_mat : float
     The inverse of G_MAT
 )"""
@@ -503,7 +536,6 @@ B blocks have the form /     sqrt(beta)         0       \
 V "Teng matrix" has 4 free parameters (xy, xpy, ypx, and pxpy coupling)
 H "Dispersion matrix" has 8 free parameters (xz, xpz, pxz, pxpz, yz, ypz, pyz, pypz coupling)
 
-
 Parameters
 ----------
 N : float
@@ -513,12 +545,16 @@ Returns
 -------
 B : float
     Block diagonal matrix of Twiss parameters
+
 V : float
     horizontal-vertical coupling information
+
 H : float
     horizontal-longitudinal and vertical-longitudinal coupling information
+
 Vbar : float
     mat_symp_conj(B).V.B
+
 Hbar : float
     mat_symp_conj(B).H.B
 )"""
@@ -529,16 +565,21 @@ Hbar : float
       py::arg("lat_in"),
       py::arg("use_taylor") = py::none(),
       py::arg("orb0_arr") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_hybrid_lat
+
+Parameters
 ----------
 lat_in : LatStruct
     Input lattice.
+
 lat_out : LatStruct
     Lattice with hybrid elements. Note: Lat_out must not be the same actual argument as lat_in.
+
 use_taylor : bool, optional
     If present and True then the hybrid elements will have a taylor series instead of a simple linear matrix.
     If an element to be concatenated has a taylor series then this taylor series will be concatenated with the
     other elements
+
 orb0_arr : CoordArrayStruct, optional
     Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
 )"""
@@ -573,6 +614,7 @@ Parameters
 ----------
 ele : EleStruct
     Element
+
 param : LatParamStruct
     particle id
 
@@ -580,6 +622,7 @@ Returns
 -------
 energy : MadEnergyStruct
     Energy of the particle
+
 map : MadMapStruct
     Structure holding the transfer map.
 )"""
@@ -607,16 +650,22 @@ map : MadMapStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_mat6
+
+Parameters
 ----------
 ele : EleStruct
     Element holding the transfer matrix.
+
 param : LatParamStruct
     Lattice global parameters.
+
 start_orb : CoordStruct, optional
     Reference coordinates at the beginning of element. If not present, default is to use the zero orbit.
+
 end_orb : CoordStruct
     Reference coordinates at the end of element.
+
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -644,17 +693,23 @@ err_flag : bool
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_mat6_bmad
+
+Parameters
 ----------
 ele : EleStruct
     Element to track through.
     This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+
 param : LatParamStruct
     Parameters are needed for some elements.
+
 start_orb : CoordStruct
     Starting coords.
+
 end_orb : CoordStruct
     Coordinates at the end of element.
+
 err : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -682,17 +737,23 @@ err : bool
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_mat6_bmad_photon
+
+Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
     This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+
 param : LatParamStruct
     Parameters are needed for some elements.
+
 start_orb : CoordStruct
     Coordinates at the beginning of element.
+
 end_orb : CoordStruct
     Coordinates at the end of element.
+
 err : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -714,6 +775,7 @@ Parameters
 ----------
 ele : EleStruct
     Element tracked through.
+
 param : LatParamStruct
 
 Returns
@@ -739,10 +801,13 @@ Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix.
+
 param : LatParamStruct
     Lattice parameters.
+
 map : MadMapStruct
     2nd order map.
+
 c0 : CoordStruct
     Coordinates at the beginning of element.
 
@@ -750,8 +815,10 @@ Returns
 -------
 %c0 : 
     0th order transfer matrix.
+
 %mat6 : 
     6x6 1st order transfer matrix.
+
 c1 : CoordStruct
     Coordinates at the end of element.
 )"""
@@ -761,13 +828,17 @@ c1 : CoordStruct
       &Bmad::make_mat6_symp_lie_ptc,
       py::arg("ele"),
       py::arg("start_orb"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_mat6_symp_lie_ptc
+
+Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
     This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+
 start_orb : CoordStruct
     Coordinates at the beginning of element.
+
 end_orb : CoordStruct
     Coordinates at end of element.
 )"""
@@ -778,15 +849,20 @@ end_orb : CoordStruct
       py::arg("ele"),
       py::arg("start_orb"),
       py::arg("err_flag") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_mat6_taylor
+
+Parameters
 ----------
 ele : EleStruct
     Element to track through.
     This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+
 start_orb : CoordStruct
     Starting coords.
+
 end_orb : CoordStruct
     Coordinates at the end of element.
+
 err_flag : 
 )"""
   );
@@ -814,19 +890,26 @@ err_flag :
       py::arg("param"),
       py::arg("start_orb"),
       py::arg("spin_only") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_mat6_tracking
+
+Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
     This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+
 param : LatParamStruct
     Parameters are needed for some elements.
+
 start_orb : CoordStruct
     Coordinates at the beginning of element.
+
 end_orb : CoordStruct
     Coordinates at the end of element.
+
 err_flag : bool
     Set True if there is an error. False otherwise.
+
 spin_only : bool, optional
     Default False. If True, only calculate ele.spin_taylor.
 )"""
@@ -874,6 +957,7 @@ Parameters
 ----------
 t6 : float
     1-turn transfer matrix
+
 abz_tunes : float, optional
     a-mode is abz_tunes(1), b-mode is abz_tunes(2), synch tune is abz_tunes(3)
 
@@ -881,10 +965,13 @@ Returns
 -------
 N : float
     X = N.J
+
 err_flag : bool
     Set to true on error.  Often means Eigen decomposition failed.
+
 tunes_out : float
     Fractional tune (in radians) of the 3 normal modes of t6.
+
 U : float
     U = Inverse(N).t6.N.  Block diagonal matrix of 2x2 rotation matrices.
 )"""
@@ -929,6 +1016,7 @@ Parameters
 ----------
 M : float
     1-turn transfer matrix
+
 abz_tunes : float
     tunes for a,b, and c modes.  Used to identify which eigenvector is associated with which mode.
 
@@ -936,10 +1024,13 @@ Returns
 -------
 P : complex
     Eqn. 97.  Phase advances.
+
 Bp : complex
     Eqns. 89 & 101.  Beta functions.
+
 R : complex
     Eqn. 99.  Transverse coupling.
+
 H : complex
     Eqn. 100.  Longitudinal coupling.
 )"""
@@ -985,18 +1076,25 @@ Parameters
 ----------
 t6 : float
     1-turn transfer matrix
+
 mode : NormalModesStruct
     normal mode emittances
+
 %a%emittance : float
     a-mode emittance
+
 %b%emittance : float
     b-mode emittance
+
 %z%emittance : float
     z-mode emittance
+
 %a%tune : float
     a-mode tune.  Used to associate emittances with the proper mode.
+
 %b%tune : float
     b-mode tune.  Used to associate emittances with the proper mode.
+
 %z%tune : float
     z-mode tune.  Used to associate emittances with the proper mode.
 
@@ -1004,8 +1102,10 @@ Returns
 -------
 sigma_mat : float
     beam envelop sigma matrix
+
 err_flag : bool
     set to true if something goes wrong.  Usually means Eigen decomposition of the 1-turn matrix failed.
+
 Nout : float
     Contains the normalized eigenvectors that were used to make the sigma matrix.
 )"""
@@ -1036,7 +1136,6 @@ map : MadMapStruct
 For a one-turn transfer matrix M, this routine find the eigen matrix V.
 V is ordered such that the per turn phase advance of its column pairs agree with abz_tunes.
 It is normalized to be symplectic.
-
 )"""
   );
   py::class_<Bmad::MakeVMats, std::unique_ptr<Bmad::MakeVMats>>(
@@ -1060,12 +1159,16 @@ It is normalized to be symplectic.
       "make_v_mats",
       &Bmad::make_v_mats,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_v_mats
+
+Parameters
 ----------
 ele : EleStruct
     Element
+
 v_mat : float
     Normal mode to X-Y coords transformation
+
 v_inv_mat : float
     X-Y coords to Normal mode transformation
 )"""
@@ -1079,7 +1182,6 @@ v_inv_mat : float
       R"""(Subroutine makeup_control_slave (lat, slave, err_flag)
 
 This routine is not meant for general use.
-
 )"""
   );
   m.def(
@@ -1092,7 +1194,6 @@ This routine is not meant for general use.
 
 Subroutine to calculate the attributes of group slave elements.
 This routine is private to bookkeeper_mod.
-
 )"""
   );
   m.def(
@@ -1105,7 +1206,6 @@ This routine is private to bookkeeper_mod.
 
 Subroutine to calcualte the attributes of multipass slave elements.
 This routine is not meant for guse.
-
 )"""
   );
   m.def(
@@ -1118,7 +1218,6 @@ This routine is not meant for guse.
 
 Subroutine to calcualte the attributes of superposition slave elements.
 This routine is not meant for general use.
-
 )"""
   );
   m.def(
@@ -1141,14 +1240,19 @@ slave : EleStruct
     Slave element.
     This parameter is an input/output and is modified in-place. As an output: Slave element with appropriate
     values set.
+
 lord : EleStruct
     Lord element.
+
 offset : float
     offset of entrance end of slave from entrance end of the lord.
+
 param : LatParamStruct
     lattice paramters.
+
 include_upstream_end : bool
     Slave contains the lord's entrance end?
+
 include_downstream_end : bool
     Slave contains the lord's exit end?
 
@@ -1162,10 +1266,13 @@ err_flag : bool
       "map1_inverse",
       &Bmad::map1_inverse,
       py::arg("map1"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine map1_inverse
+
+Parameters
 ----------
 map1 : SpinOrbitMap1Struct
     Input map.
+
 inv_map1 : SpinOrbitMap1Struct
     Inverse map.
 )"""
@@ -1173,7 +1280,9 @@ inv_map1 : SpinOrbitMap1Struct
   m.def(
       "map1_make_unit",
       &Bmad::map1_make_unit,
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine map1_make_unit
+
+Parameters
 ----------
 map1 : SpinOrbitMap1Struct
     Unit map.
@@ -1185,7 +1294,9 @@ map1 : SpinOrbitMap1Struct
       py::arg("map2"),
       py::arg("map1"),
       py::arg("map_out"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine map1_times_map1
+
+Parameters
 ----------
 map2 : 
 map1 : 
@@ -1196,10 +1307,13 @@ map_out :
       "map_to_angle_coords",
       &Bmad::map_to_angle_coords,
       py::arg("t_canon"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine map_to_angle_coords
+
+Parameters
 ----------
 t_canon : TaylorStruct
     Taylor map in canonical coords.
+
 t_angle : TaylorStruct
     Taylor map in angle coords.
 )"""
@@ -1226,12 +1340,16 @@ branch : BranchStruct
       &Bmad::master_parameter_value,
       py::arg("master_parameter"),
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine master_parameter_value
+
+Parameters
 ----------
 master_parameter : int
     Index of the master parameter.
+
 ele : EleStruct
     Element containing the fieldmap.
+
 value : float
     Value of the master parameter.
 )"""
@@ -1243,15 +1361,20 @@ value : float
       py::arg("tilt"),
       py::arg("n"),
       py::arg("orbit"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine mat4_multipole
+
+Parameters
 ----------
 knl : float
     Strength of multipole
+
 tilt : float
     Tilt of multipole
+
 n : 
 orbit : CoordStruct
     coordinates of particle
+
 kick_mat : float
     Kick matrix (Jacobian) at orbit.
 )"""
@@ -1261,10 +1384,13 @@ kick_mat : float
       &Bmad::mat6_add_offsets,
       py::arg("ele"),
       py::arg("param"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine mat6_add_offsets
+
+Parameters
 ----------
 ele : EleStruct
     Element with given orientation.
+
 param : LatParamStruct
 )"""
   );
@@ -1275,14 +1401,19 @@ param : LatParamStruct
       py::arg("y_pitch_tot"),
       py::arg("orientation"),
       py::arg("mat6"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine mat6_add_pitch
+
+Parameters
 ----------
 x_pitch_tot : float
     Horizontal pitch
+
 y_pitch_tot : float
     Vertical pitch
+
 orientation : int
     Element longitudinal orientation. +1 or -1.
+
 mat6 : float
     1st order part of the transfer map (Jacobian).
     This parameter is an input/output and is modified in-place. As an output: 1st order xfer map with pitches.
@@ -1302,6 +1433,7 @@ Parameters
 ----------
 vec0 : 
     0th order transfer vector.
+
 mat6 : 
     6x6 transfer matrix.
 
@@ -1354,28 +1486,40 @@ complex_taylor : ComplexTaylorStruct
       &Bmad::mat_symp_decouple,
       py::arg("t0"),
       py::arg("type_out"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine mat_symp_decouple
+
+Parameters
 ----------
 t0 : float
     Input matrix
+
 stat : int
     status of results: ok$, in_stop_band$, or unstable$
+
 u : unknown
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+
 v : unknown
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+
 ubar : unknown
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+
 vbar : unknown
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+
 g : unknown
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+
 twiss1 : TwissStruct
     Twiss params for the "upper left" mode.
+
 twiss2 : TwissStruct
     Twiss params for the "lower right" mode.
+
 gamma : float
     gamma_c factor.
+
 type_out : bool
     If .true. then an error message is typed out for a non ok$ STAT
 )"""
@@ -1407,20 +1551,28 @@ type_out : bool
       py::arg("start_orb"),
       py::arg("include_delta_time") = py::none(),
       py::arg("set_trombone") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine match_ele_to_mat6
+
+Parameters
 ----------
 ele : EleStruct
     Match element.
+
 start_orb : CoordStruct
     Starting orbit.
+
 mat6 : float
     Transfer matrix (1st order part of xfer map).
+
 vec0 : float
     0th order part of the transfer map.
+
 err_flag : bool
     Set true if there is an error. False otherwise.
+
 include_delta_time : bool, optional
     If False, ignore any finite ele.value(delta_time$).
+
 set_trombone : bool, optional
     Default is False. If True, set the beginning and ending Twiss values in the element to create a phase
     trombone.
@@ -1431,12 +1583,16 @@ set_trombone : bool, optional
       &Bmad::mexp,
       py::arg("x"),
       py::arg("m"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine mexp
+
+Parameters
 ----------
 x : float
     Number.
+
 m : int
     Exponent.
+
 this_exp : float
     Result.
 )"""
@@ -1449,7 +1605,9 @@ this_exp : float
       py::arg("n"),
       py::arg("ndim"),
       py::arg("isn"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine mfft1
+
+Parameters
 ----------
 a : 
 b : 
@@ -1473,8 +1631,10 @@ Parameters
 ----------
 ele : EleStruct
     Bmad element with misalignments.
+
 use_offsets : bool
     Does ptc_fibre include element offsets, pitches and tilt?
+
 This argument is ignored if the element is a patch. : 
 for_layout : bool
     If True then fibre is being created as part of a layout as opposed to a stand-alone fibre
@@ -1489,10 +1649,13 @@ ptc_fibre : unknown
       "momentum_compaction",
       &Bmad::momentum_compaction,
       py::arg("branch"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine momentum_compaction
+
+Parameters
 ----------
 branch : BranchStruct
     Lattice branch to calculate on.
+
 mom_comp : float
     Momentum compaction.
 )"""
@@ -1531,22 +1694,31 @@ mom_comp : float
       &Bmad::multi_turn_tracking_analysis,
       py::arg("track"),
       py::arg("i_dim"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multi_turn_tracking_analysis
+
+Parameters
 ----------
 track : CooordStruct
     multi-turn tracking data to analyze. track(i) is the particle position at a given point
+
 i_dim : int
     number of dimensions used in the tracking: 2, or 4.
+
 track0 : CoordStruct
     Closed orbit.
+
 ele : EleStruct
     structure holding the 1-turn matrix and Twiss parameters.
+
 stable : bool
     Is motion stable?
+
 growth_rate : float
     Unstable growth rate (= 0 if stable).
+
 chi : float
     How symplectic the computed 1-turn matrix is.
+
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -1567,8 +1739,10 @@ Parameters
 ----------
 ele : EleStruct
     Multilayer element.
+
 %component_name : unknown
     Multilayer type name. Assumed upper case.
+
 A blank name is not an error and results in nothing set. : 
 %value : 
     Photon energy in eV.
@@ -1603,16 +1777,22 @@ err_flag : bool
       py::arg("ele"),
       py::arg("chain_ele") = py::none(),
       py::arg("use_super_lord") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipass_chain
+
+Parameters
 ----------
 ele : ElePointerStruct
     Element in a multipass chain.
+
 ix_pass : int
     Multipass pass number of the input element.
+
 n_links : int
     Number of times the physical element is passed through.
+
 chain_ele : ElePointerStruct
     pointers to the elements of the chain. Note: chain_ele(ix_pass).ele => ele
+
 use_super_lord : bool, optional
     If present and True and if ele is a super_slave, construct the chain_ele(:) array using the corresponding
     super_lords.
@@ -1641,16 +1821,22 @@ use_super_lord : bool, optional
       py::arg("an"),
       py::arg("bn"),
       py::arg("n"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole1_ab_to_kt
+
+Parameters
 ----------
 an : float
     Skew multipole component.
+
 bn : float
     Normal multipole component.
+
 n : int
     Order of multipole.
+
 knl : float
     Multitude magnatude.
+
 tn : float
     Multipole angle.
 )"""
@@ -1679,18 +1865,25 @@ tn : float
       py::arg("knsl"),
       py::arg("tn"),
       py::arg("n"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole1_kt_to_ab
+
+Parameters
 ----------
 knl : float
     Normal multitude component.
+
 knsl : float
     Skew multitude component.
+
 tn : float
     Multipole angle.
+
 n : int
     Multipole order.
+
 an : float
     Skew multipole component.
+
 bn : float
     Normal multipole component.
 )"""
@@ -1702,14 +1895,19 @@ bn : float
       py::arg("bn"),
       py::arg("knl"),
       py::arg("tn"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole_ab_to_kt
+
+Parameters
 ----------
 an : float
     Skew multipole component.
+
 bn : float
     Normal multipole component.
+
 knl : float
     Multitude magnatude.
+
 tn : float
     Multipole angle.
 )"""
@@ -1745,26 +1943,36 @@ tn : float
       py::arg("pole_type") = py::none(),
       py::arg("include_kicks") = py::none(),
       py::arg("original") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole_ele_to_ab
+
+Parameters
 ----------
 ele : EleStruct
     Element.
+
 use_ele_tilt : bool
     If True then include ele.value(tilt_tot$) in calculations.
+
 ix_pole_max : int
     Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero.
+
 a : float
     Array of multipole values.
+
 b : float
     Array of multipole values.
+
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
+
 include_kicks : int, optional
     Ignored for for pole_type == electric$ for non-elseparator elements.
+
 b1 : float
     If present, b1 is set to the value of the b(1) component of the b(:) array and b(1) is set to zero. Also
     ix_pole_max is ajusted as needed. This is used by routines that want to handle b(1) in a special way in
     tracking.
+
 original : bool, optional
     Default is false. If True, no scaling is applied.
 )"""
@@ -1778,20 +1986,28 @@ original : bool, optional
       py::arg("tilt"),
       py::arg("pole_type") = py::none(),
       py::arg("include_kicks") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole_ele_to_kt
+
+Parameters
 ----------
 ele : EleStruct
     Lattice element.
+
 use_ele_tilt : bool
     If True then include ele.value(tilt_tot$) in calculations.
+
 ix_pole_max : int
     Index of largest nonzero pole.
+
 knl : float
     Vector of strengths, MAD units.
+
 tilt : float
     Vector of tilts.
+
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
+
 include_kicks : int, optional
     Possibilities are:
 )"""
@@ -1801,12 +2017,16 @@ include_kicks : int, optional
       &Bmad::multipole_init,
       py::arg("who"),
       py::arg("zero") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole_init
+
+Parameters
 ----------
 ele : EleStruct
     Element holding the multipoles.
+
 who : int
     electric$, magnetic$, or all$
+
 zero : bool, optional
     If present and True then zero the arrays even if they already exist when this routine is called. Default
     is False which means that if the arrays already exist then this routine will do nothing.
@@ -1832,18 +2052,25 @@ Parameters
 ----------
 knl : float
     Multipole integrated strength.
+
 tilt : float
     Multipole tilt.
+
 n : float
     Multipole order.
+
 ref_species : int
     Reference species.
+
 ele_orientation : int
     Element orientation +1 = normal, -1 = reversed.
+
 coord : CoordStruct
     Particle position and direction of travel.
+
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
+
 ref_orb_offset : bool, optional
     If True and n = 0 then use the MAD convention and model the multipole as a zero length bend with bending
     angle knl. Default is False.
@@ -1863,20 +2090,28 @@ Returns
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("factor"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole_kick_mat
+
+Parameters
 ----------
 knl : float
     Strength of multipoles
+
 tilt : float
     Tilt of multipoles
+
 ref_species : int
     Reference species.
+
 ele : EleStruct
     Lattice element containing multipoles.
+
 orbit : CoordStruct
     coordinates of particle around which the
+
 factor : float
     Factor to scale knl by.
+
 mat6 : float
     matrix with kick values at mat6(2:4:2, 1:3:2). The rest of the matrix is untouched.
 )"""
@@ -1899,15 +2134,20 @@ Parameters
 ----------
 knl : float
     Multipole strengths.
+
 tilt : float
     Multipole tilts.
+
 ele : EleStruct
     Lattice element containing the multipoles.
+
 orbit : CoordStruct
     Particle position.
     This parameter is an input/output and is modified in-place. As an output: Kicked particle.
+
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
+
 ref_orb_offset : bool, optional
     If present and n = 0 then the multipole simulates a zero length bend with bending angle knl.
 )"""
@@ -1920,16 +2160,22 @@ ref_orb_offset : bool, optional
       py::arg("tn"),
       py::arg("an"),
       py::arg("bn"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole_kt_to_ab
+
+Parameters
 ----------
 knl : float
     Normal multitude component.
+
 knsl : float
     Skew multitude component.
+
 tn : float
     Multipole angle.
+
 an : float
     Skew multipole component.
+
 bn : float
     Normal multipole component.
 )"""
@@ -1940,12 +2186,16 @@ bn : float
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine multipole_spin_tracking
+
+Parameters
 ----------
 ele : EleStruct
     Element
+
 param : 
     Lat_param_struct
+
 orbit : CoordStruct
     Particle coordinates.
 )"""
@@ -1956,7 +2206,9 @@ orbit : CoordStruct
       py::arg("y"),
       py::arg("x"),
       py::arg("arg"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine mytan
+
+Parameters
 ----------
 y : 
 x : 

@@ -9,7 +9,9 @@ void init_bsim_routines_i(py::module &m) {
       "insert_phase_trombone",
       &bsim::insert_phase_trombone,
       py::arg("branch"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine insert_phase_trombone
+
+Parameters
 ----------
 branch : BranchStruct
     Lattice branch.

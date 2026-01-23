@@ -20,8 +20,10 @@ Parameters
 ----------
 B : float
     Magnetic field.
+
 E : float
     Electric field
+
 orbit : CoordStruct
     particle orbit
 
@@ -56,21 +58,29 @@ g_bend : float
       py::arg("s_rel"),
       py::arg("orbit"),
       py::arg("local_ref_frame"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine g_bending_strength_from_em_field
+
+Parameters
 ----------
 ele : EleStruct
     Element being tracked thorugh.
+
 param : LatParamStruct
     Lattice parameters.
+
 s_rel : float
     Distance from the start of the element to the particle.
+
 orbit : CoordStruct
     Particle position in lab (not element) frame.
+
 local_ref_frame : 
     Logical, If True then take the input coordinates and output g as being with respect to the frame of
     referene of the element (ignore misalignments).
+
 g : float
     g = (g_x, g_y, g_s) bending strength vector (|g| = 1/bend_radius).
+
 dg : float
     dg(:)/dr gradient. Takes into account dg_x/dx in a bend due to curvilinear coords.
 )"""
@@ -79,7 +89,9 @@ dg : float
       "g_integrals_calc",
       &Bmad::g_integrals_calc,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine g_integrals_calc
+
+Parameters
 ----------
 lat : LatStruct
     Lattice to integrate through.
@@ -89,10 +101,13 @@ lat : LatStruct
       "gamma_ref",
       &Bmad::gamma_ref,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine gamma_ref
+
+Parameters
 ----------
 ele : EleStruct
     Element to evaluate at.
+
 gamma : float
     Relativistic gamma factor Energy/mass*c^2.
 )"""
@@ -103,14 +118,19 @@ gamma : float
       py::arg("ele"),
       py::arg("gen_grad"),
       py::arg("iz"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine gen_grad1_to_em_taylor
+
+Parameters
 ----------
 ele : unknown
     Element containing the map.
+
 gen_grad : GenGradMapStruct
     Gen_grad map.
+
 iz : int
     z-plane index to evaluate.
+
 em_taylor : EmTaylorStruct
     Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
 )"""
@@ -121,14 +141,19 @@ em_taylor : EmTaylorStruct
       py::arg("ele"),
       py::arg("gen_grad"),
       py::arg("s_pos"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine gen_grad_at_s_to_em_taylor
+
+Parameters
 ----------
 ele : unknown
     Element containing the map.
+
 gen_grad : GenGradMapStruct
     Gen_grad map.
+
 s_pos : float
     Position to evaluate em_taylor at.
+
 em_taylor : EmTaylorStruct
     Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
 )"""
@@ -141,7 +166,9 @@ em_taylor : EmTaylorStruct
       py::arg("rho"),
       py::arg("theta"),
       py::arg("field"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine gen_grad_field
+
+Parameters
 ----------
 deriv : 
 gg : 
@@ -164,6 +191,7 @@ Parameters
 ----------
 bound : float
     -bound and +bound are lower and upper integration bound.
+
 args : float
     Parameters and constants of dpsi/dt.  See comments of psi_prime for details.
 
@@ -179,7 +207,9 @@ sigma : float
       py::arg("delim"),
       py::arg("call_file"),
       py::arg("err"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine get_called_file
+
+Parameters
 ----------
 delim : 
 call_file : 
@@ -231,6 +261,7 @@ Parameters
 ----------
 sigma_mat : float
     beam envelop sigma matrix
+
 Nmat : float, optional
     If present, then the emittanced will be ordered such that the eigensystem most closely resembles Nmat.
 
@@ -238,6 +269,7 @@ Returns
 -------
 normal : float
     normal mode emittances
+
 err_flag : bool
     Set to true if something went wrong.  Otherwise set to false.
 )"""
@@ -282,10 +314,13 @@ Parameters
 ----------
 word : unknown
     Word returned
+
 delim_list : unknown
     List of valid delimiters
+
 upper_case_word : bool, optional
     if True then convert word to
+
 upper case. Default is True. : 
 call_check : bool, optional
     If present and True then check for 'call::<filename>' construct. Default is False.
@@ -294,10 +329,13 @@ Returns
 -------
 ix_word : int
     length of word argument
+
 delim : unknown
     Actual delimiter found
+
 delim_found : bool
     Set true if a delimiter found. A delimiter
+
 may not be found if the end of the line is reached first. : 
 err_flag : bool
     Set True if there is an error. False otherwise.
@@ -308,12 +346,16 @@ err_flag : bool
       &Bmad::get_slave_list,
       py::arg("lord"),
       py::arg("slaves"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine get_slave_list
+
+Parameters
 ----------
 lord : EleStruct
     The lord element.
+
 slaves : ElePointerStruct
     : Array of slaves.
+
 n_slave : int
     Number of slaves.
 )"""
@@ -325,7 +367,9 @@ n_slave : int
       py::arg("dimensions"),
       py::arg("field_scale"),
       py::arg("ref_time"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine gpt_field_grid_scaling
+
+Parameters
 ----------
 ele : 
 dimensions : 
@@ -339,7 +383,9 @@ ref_time :
       py::arg("pt0"),
       py::arg("ele"),
       py::arg("field_value"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine gpt_max_field_reference
+
+Parameters
 ----------
 pt0 : 
 ele : 
@@ -372,11 +418,11 @@ field_value :
 
 Routine to initialize a bunch of particles from a GPT screen file.
 
-
 Parameters
 ----------
 gpt_file : unknown
     Name of GPT data file.
+
 ele : EleStruct
     Lattice element whose downstream end coincident with the GPT screen.
 
@@ -384,6 +430,7 @@ Returns
 -------
 bunch : BunchStruct
     Particle bunch
+
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -393,12 +440,16 @@ err_flag : bool
       &Bmad::gradient_shift_sr_wake,
       py::arg("ele"),
       py::arg("param"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine gradient_shift_sr_wake
+
+Parameters
 ----------
 ele : EleStruct
     Lcavity element.
+
 param : LatParamStruct
     Lattice parameters
+
 grad_shift : float
     Shift in gradient
 )"""
@@ -424,21 +475,29 @@ Parameters
 ----------
 ele : EleStruct
     Element containing the grid.
+
 orbit : CoordStruct
     Used for constructing an error message if the particle is out of bounds.
+
 grid : GridFieldStruct
     Grid to interpolate.
+
 err_flag : bool
     Set to true if there is an error. False otherwise.
+
 x1 : float
     dimension 1 interpolation point.
+
 x2 : float, optional
     dimension 2 interpolation point.
+
 x3 : float, optional
     dimension 3 interpolation point.
+
 allow_s_out_of_bounds : bool, optional
     allow s-coordinate grossly out of bounds to return zero field without an error. This is used when the
     field of one element overlaps
+
 the field of another. Default is False. : 
 print_err : bool, optional
     print an error message if the particle is out of bounds? Default is True.

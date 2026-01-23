@@ -14,7 +14,9 @@ void init_SimUtils_routines_p(py::module &m) {
       py::arg("descrip"),
       py::arg("width"),
       py::arg("digits"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine parse_fortran_format
+
+Parameters
 ----------
 format_str : 
 n_repeat : 
@@ -37,6 +39,7 @@ Parameters
 ----------
 ran_state : RandomStateStruct, optional
     Point to this if present.
+
 Otherwise point to the global saved state. : 
 ix_thread : int, optional
     Thread index.
@@ -53,14 +56,19 @@ ran_state_ptr : RandomStateStruct
       py::arg("poly"),
       py::arg("x"),
       py::arg("diff_coef") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine poly_eval
+
+Parameters
 ----------
 poly : float
     Polynomial
+
 x : float
     Point to evaluate at.
+
 diff_coef : bool, optional
     poly(:) array are differentials? Default is False.
+
 y : float
     Value of polynomial.
 )"""
@@ -70,10 +78,13 @@ y : float
       &SimUtils::probability_funct,
       py::arg("x"),
       py::arg("prob"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine probability_funct
+
+Parameters
 ----------
 x : float
     Function argument.
+
 prob : 
 )"""
   );
@@ -83,7 +94,9 @@ prob :
       py::arg("a"),
       py::arg("b"),
       py::arg("func_retval__"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine projdd
+
+Parameters
 ----------
 a : 
 b : 

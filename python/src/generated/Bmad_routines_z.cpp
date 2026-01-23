@@ -41,10 +41,13 @@ Parameters
 ----------
 ele : EleStruct
     Element
+
 x : float
     Photon coordinates on surface.
+
 y : float
     Photon coordinates on surface.
+
 extend_grid : bool, optional
     If a grid is involved and (x, y) is outside of the grid, and extend_grid = True: Pretend (x, y) is at
     edge. Default is False.
@@ -53,8 +56,10 @@ Returns
 -------
 z : float
     z coordinate.
+
 err_flag : bool
     Set True if cannot compute z due to, say, point
+
 being outside of ellipseoid or grid bounds. : 
 dz_dxy : float
     Surface slope at (x, y).
@@ -68,7 +73,9 @@ Remember: +z points into the element.
       "zero_ele_kicks",
       &Bmad::zero_ele_kicks,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine zero_ele_kicks
+
+Parameters
 ----------
 ele : EleStruct
     Element with possible nonzero kicks.
@@ -79,7 +86,9 @@ ele : EleStruct
       "zero_ele_offsets",
       &Bmad::zero_ele_offsets,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine zero_ele_offsets
+
+Parameters
 ----------
 ele : EleStruct
     Element with possible nonzero offsets, etc.
@@ -114,7 +123,9 @@ Returns
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine zlafun
+
+Parameters
 ----------
 x : 
 y : 

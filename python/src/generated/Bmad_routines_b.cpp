@@ -24,17 +24,23 @@ void init_Bmad_routines_b(py::module &m) {
       py::arg("x"),
       py::arg("y"),
       py::arg("sigma"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bbi_kick
+
+Parameters
 ----------
 x : float
     X coordinate.
+
 y : float
     Y coordinate.
+
 sigma : float
     Beam (x,y) sigmas.
+
 nk : float
     Normalized, dimensionless kick component. In terms of the the actual kick: nk = [kick_x / (xi_x * sigma_x
     / beta_x), kick_y / (xi_y * sigma_y / beta_y)
+
 dnk : float
     derivatives of nk. EG: dnk(2,1) = dnk(2)/dy Note: xi_x = beta_x * bbi_const / sig_x     ! Horizontal tune
     shift parameter xi_y = beta_y * bbi_const / sig_y     ! Vertical   tune shift parameter where bbi_const =
@@ -61,12 +67,16 @@ dnk : float
       py::arg("ele"),
       py::arg("n_slice"),
       py::arg("z_slice"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bbi_slice_calc
+
+Parameters
 ----------
 ele : EleStruct
     beambeam element
+
 n_slice : int
     Number of slices
+
 z_slice : float
     Array of slice positions 1:n_slice. zero padded for indexes greater than n_slice
 )"""
@@ -94,14 +104,19 @@ Parameters
 ----------
 sigma_mat : float
     beam sigma_matrix at element entrance
+
 tail_cut : bool
     If true, then apply tail cut to coulomb logarithm.
+
 tau : float
     horizontal betatron damping rate.  Needed if tail_cut is true.
+
 energy : float
     beam energy in eV
+
 n_part : float
     number of particles in the bunch
+
 species : int
     Partical species.
 
@@ -116,7 +131,9 @@ ibs_mat : float
       &Bmad::beam_equal_beam,
       py::arg("beam1"),
       py::arg("beam2"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine beam_equal_beam
+
+Parameters
 ----------
 beam1 : 
 beam2 : 
@@ -131,17 +148,24 @@ beam2 :
       py::arg("modes") = py::none(),
       py::arg("err_flag") = py::none(),
       py::arg("beam_init_set"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine beam_init_setup
+
+Parameters
 ----------
 beam_init_in : BeamInitStruct
     Input parameters
+
 ele : EleStruct
+
 species : int
     Beam particle species.
+
 modes : NormalModesStruct, optional
     Normal mode parameters.
+
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
+
 beam_init_set : BeamInitStruct
     See above.
 )"""
@@ -203,12 +227,16 @@ Returns
 -------
 angle_xy : float
     transverse tilt of beam envelope
+
 angle_xz : float
     horizontal crabbing of beam envelope
+
 angle_yz : float
     vertical crabbing of beam envelope
+
 angle_xpz : float
     x-pz coupling
+
 angle_ypz : float
     y-pz coupling
 )"""
@@ -251,19 +279,25 @@ Parameters
 ----------
 ele : EleStruct
     SBend element.
+
 param : LatParamStruct
     Rel charge.
+
 particle_at : int
     first_track_edge$, or second_track_edge$.
+
 orb : CoordStruct
     Starting coords.
     This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+
 mat6 : float, optional
     Transfer matrix before fringe.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
     including fringe.
+
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
+
 track_spin : bool, optional
     If True then track the spin through the edge fields. Default: False.
 )"""
@@ -277,20 +311,28 @@ track_spin : bool, optional
       py::arg("local_ref_frame"),
       py::arg("calc_dfield") = py::none(),
       py::arg("calc_potential") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bend_exact_multipole_field
+
+Parameters
 ----------
 ele : unknown
     Bend element.
+
 param : LatParamStruct
     Lattice branch parameters.
+
 orbit : CoordStruct
     particle position.
+
 local_ref_frame : bool
     Is the particle position in the local element ref
+
 field : EmFieldStruct
     Field
+
 calc_dfield : bool, optional
     If present and True then calculate the field derivatives.
+
 calc_potential : bool, optional
     Calc electric and magnetic potentials? Default is false.
 )"""
@@ -300,10 +342,13 @@ calc_potential : bool, optional
       &Bmad::bend_length_has_been_set,
       py::arg("ele"),
       py::arg("is_set"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bend_length_has_been_set
+
+Parameters
 ----------
 ele : EleStruct
     Element to be checked.
+
 is_set : bool
     Note: will be set True for non-bend elements.
 )"""
@@ -358,8 +403,10 @@ Parameters
 ----------
 E_photon : float
     Photon energy.
+
 g_bend : float
     1/rho bending strength.
+
 gamma : float
     Relativistic gamma factor of generating charged particle.
 
@@ -432,29 +479,38 @@ Parameters
 ----------
 g_bend_x : float
     Bending 1/rho component in horizontal plane.
+
 g_bend_y : float
     Bending 1/rho component in vertical plane.
+
 gamma : float
     Relativistic gamma factor of generating charged particle.
+
 E_min : float, optional
     Minimum photon energy. Default is zero. Ignored if negative.
+
 E_max : float, optional
     Maximum photon energy.  Default is Infinity. Ignored if negative.
+
 If non-positive then E_max will be taken to be Infinity. : 
 E_integ_prob : float
     , optional :: integrated energy probability. See above.
+
 If E_integ_prob is non-negative : 
 it must be in the range [0 : 
 1]. : 
 vert_angle_min : float, optional
     Minimum vertical angle to emit a photon.
+
 -pi/2 is used if argument not present or if argument is less than -pi/2. : 
 vert_angle_max : float, optional
     Maximum vertical angle to emit a photon.
+
 pi/2 is used if argument not present or if argument is greater than pi/2. : 
 vert_angle_symmetric : bool, optional
     Default is False. If True, photons will be emitted in the range [-vert_angle_max, -vert_angle_min] as well
     as the range
+
 [vert_angle_min : 
 vert_angle_max]. In this case vert_angle_min/max must be positive. : 
 emit_probability : float, optional
@@ -484,10 +540,13 @@ Parameters
 ----------
 g_bend_x : float
     Bending 1/rho component in horizontal plane.
+
 g_bend_y : float
     Bending 1/rho component in vertical plane.
+
 E_rel : float
     Relative photon energy E/E_crit.
+
 gamma_phi : float
     gamma * phi where gamma is the beam relativistic factor and phi is the vertical photon angle (in radians).
 
@@ -495,8 +554,10 @@ Returns
 -------
 orbit : CoordStruct
     Photon coords
+
 %field : 
     (x,y) polaraization. Will have unit magnitude
+
 %phase : 
     (x,y) phases. Will be [0, pi/2].
 )"""
@@ -518,10 +579,13 @@ Parameters
 ----------
 E_rel : float
     Relative photon energy E/E_crit.
+
 gamma : float
     beam relativistic factor
+
 r_in : float, optional
     Integrated probability in the range [0,1].
+
 If not present : 
 a random number will be used. : 
 invert : float, optional
@@ -559,18 +623,25 @@ phi : float
       py::arg("g"),
       py::arg("delta_s"),
       py::arg("ref_tilt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bend_shift
+
+Parameters
 ----------
 position1 : FloorPositionStruct
     Position of particle in inital coordinate frame.
+
 g : float
     Curvature (1/rho)
+
 delta_s : float
     S-position of final frame relative to the initial frame.
+
 w_mat : float
     W matrix used in the transformation
+
 ref_tilt : float, optional
     ref_tilt. Default: 0
+
 position2 : FloorPositionStruct
     particle coordinates relative to the final frame.
 )"""
@@ -593,8 +664,10 @@ Parameters
 ----------
 vert_angle : float
     Vertical angle.
+
 E_rel : float
     Relative photon energy E/E_crit.
+
 gamma : float
     Relativistic gamma factor of generating charged particle.
 
@@ -627,22 +700,31 @@ Parameters
 ----------
 current : float
     Beam current in amps
+
 alpha : float
     Momentum compaction
+
 Energy : float
     beam energy
+
 sigma_p : float
     energy spread
+
 Vrf : float
     total RF voltage in Volts
+
 omega : float
     rf frequency in radians/s
+
 U0 : float
     energy loss per turn (eV)
+
 circ : float
     circumpherence
+
 R : float
     Resistive part of effective impedance
+
 L : float
     Inductive part of effective impedance
 
@@ -681,21 +763,29 @@ sigma_z : float
       py::arg("lat_file"),
       py::arg("make_mats6") = py::none(),
       py::arg("use_line") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bmad_parser
+
+Parameters
 ----------
 lat_file : unknown
     Name of the input file.
+
 lat : LatStruct
     Lat structure. See bmad_struct.f90 for more details.
+
 make_mats6 : bool, optional
     Compute the 6x6 transport matrices for the Elements?
+
 digested_read_ok : bool
     Set True if the digested file was
+
 use_line : unknown, optional
     If present and not blank, override the use statement in the lattice file and use use_line instead.
+
 err_flag : bool
     Set true if there is an error, false otherwise. Note: err_flag does *not* include errors in lat_make_mat6
     since if there is a match element, there is an error raised since
+
 parse_lat : LatStruct
     List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
     documentation.
@@ -710,17 +800,23 @@ parse_lat : LatStruct
       py::arg("make_mats6") = py::none(),
       py::arg("err_flag") = py::none(),
       py::arg("parse_lat") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bmad_parser2
+
+Parameters
 ----------
 lat_file : unknown
     Input file name.
+
 lat : LatStruct
     lattice with existing layout.
     This parameter is an input/output and is modified in-place. As an output: lattice with modifications.
+
 orbit : CoordStruct, optional
     closed orbit for when
+
 make_mats6 : bool, optional
     Make the 6x6 transport matrices for then
+
 err_flag : 
 parse_lat : LatStruct, optional
     Used by bmad_parser to pass to bmad_parser2 a list of elements that were defined in the lattice file but
@@ -733,19 +829,28 @@ parse_lat : LatStruct, optional
       &Bmad::bmad_patch_parameters_to_ptc,
       py::arg("ang"),
       py::arg("exi"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bmad_patch_parameters_to_ptc
+
+Parameters
 ----------
 ang : 
 exi : 
 )"""
   );
-  m.def("bp_set_ran_status", &Bmad::bp_set_ran_status, R"""()""");
+  m.def(
+      "bp_set_ran_status",
+      &Bmad::bp_set_ran_status,
+      R"""(Wrapper for Fortran routine bp_set_ran_status
+)"""
+  );
   m.def(
       "branch_equal_branch",
       &Bmad::branch_equal_branch,
       py::arg("branch1"),
       py::arg("branch2"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine branch_equal_branch
+
+Parameters
 ----------
 branch1 : 
 branch2 : 
@@ -755,10 +860,13 @@ branch2 :
       "branch_name",
       &Bmad::branch_name,
       py::arg("branch"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine branch_name
+
+Parameters
 ----------
 branch : BranchStruct
     Lattice branch
+
 name : unknown
     Encoded name
 )"""
@@ -796,7 +904,9 @@ branch : BranchStruct
       &Bmad::bunch_equal_bunch,
       py::arg("bunch1"),
       py::arg("bunch2"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine bunch_equal_bunch
+
+Parameters
 ----------
 bunch1 : 
 bunch2 : 

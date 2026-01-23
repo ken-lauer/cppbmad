@@ -11,7 +11,9 @@ void init_SimUtils_routines_j(py::module &m) {
       py::arg("m"),
       py::arg("arg"),
       py::arg("j_bes"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine j_bessel
+
+Parameters
 ----------
 m : 
 arg : 

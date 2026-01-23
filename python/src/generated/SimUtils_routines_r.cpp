@@ -42,9 +42,11 @@ Parameters
 set : unknown, optional
     Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
     'quasi'  -> Uses sobseq from Numerical Recipes.
+
 ''       -> Do nothing. : 
 get : unknown, optional
     Get the current (before any set) random number engine.
+
 ran_state : RandomStateStruct, optional
     Internal state. See the ran_seed_put documentation for more details.
 )"""
@@ -95,9 +97,11 @@ Parameters
 ----------
 set : unknown, optional
     Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited'
+
 ''       ! Do nothing : 
 set_sigma_cut : float, optional
     Sigma cutoff. Initially: sigma_cut = -1.
+
 ran_state : RandomStateStruct, optional
     Internal state. See the ran_seed_put documentation for more details.
 
@@ -105,6 +109,7 @@ Returns
 -------
 get : unknown
     Get the current (before any set) gaussian converter.
+
 get_sigma_cut : float
     Get the current (before any set) sigma cutoff.
 )"""
@@ -132,6 +137,7 @@ Parameters
 ----------
 ran_state : RandomStateStruct, optional
     Internal state.
+
 See the ran_seed_put documentation for more details. : 
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
@@ -141,6 +147,7 @@ Returns
 harvest : float
     Random number.
     This parameter is an input/output and is modified in-place. As an output: Random number array.
+
 Or : 
 
 Notes
@@ -171,6 +178,7 @@ Parameters
 ----------
 ran_state : RandomStateStruct, optional
     Internal state.
+
 See the ran_seed_put documentation for more details. : 
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
@@ -180,6 +188,7 @@ Returns
 harvest : float
     Random number.
     This parameter is an input/output and is modified in-place. As an output: Random number array.
+
 Or : 
 
 Notes
@@ -225,6 +234,7 @@ Parameters
 ----------
 seed : int
     Seed number. If seed = 0 then a
+
 seed will be choosen based upon the system clock. : 
 mpi_offset : int, optional
     Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
@@ -261,6 +271,7 @@ Returns
 harvest : float
     Random number.
     This parameter is an input/output and is modified in-place. As an output: Random number array.
+
 Or : 
 
 Notes
@@ -297,6 +308,7 @@ Returns
 harvest : float
     Random number.
     This parameter is an input/output and is modified in-place. As an output: Random number array.
+
 Or : 
 
 Notes
@@ -311,7 +323,9 @@ Overloaded versions:
       py::arg("width"),
       py::arg("n_blanks") = py::none(),
       py::arg("fmt_str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine real_num_fortran_format
+
+Parameters
 ----------
 number : 
 width : 
@@ -325,7 +339,9 @@ fmt_str :
       py::arg("path_in"),
       py::arg("path_out"),
       py::arg("is_ok"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine real_path
+
+Parameters
 ----------
 path_in : 
 path_out : 
@@ -339,7 +355,9 @@ is_ok :
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
       py::arg("str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine real_str
+
+Parameters
 ----------
 r_num : 
 n_signif : 
@@ -355,7 +373,9 @@ str :
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
       py::arg("str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine real_to_string
+
+Parameters
 ----------
 real_num : 
 width : 
@@ -377,16 +397,18 @@ Subroutine to allocate an allocatable spline_struct array.
 The data of the array is preserved but data at the end of the
 array will be lost if n is less than the original size of the array
 
-
 Parameters
 ----------
 spline : SplineStruct
     Spline to reallocate.
     This parameter is an input/output and is modified in-place. As an output: Allocated spline.
+
 n : int
     Upper bound needed for 1-dimensional arrays.
+
 n_min : int, optional
     Lower bound of spline array. Default is 1.
+
 exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
 )"""
@@ -413,14 +435,19 @@ exact : bool, optional
       &SimUtils::rms_value,
       py::arg("val_arr"),
       py::arg("good_val") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rms_value
+
+Parameters
 ----------
 val_arr : float
     Array of reals.
+
 good_val : bool, optional
     If present, only calculate RMS where good_val(i) = True.
+
 ave_val : float
     average value.
+
 rms_val : float
     RMS value. Set to real_garbage$ if there is a problem.
 )"""
@@ -430,12 +457,16 @@ rms_val : float
       &SimUtils::rot_2d,
       py::arg("vec_in"),
       py::arg("angle"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rot_2d
+
+Parameters
 ----------
 vec_in : float
     Init vec
+
 angle : float
     angle in radians.
+
 vec_out : float
     Rotated vec.
 )"""
@@ -455,8 +486,10 @@ Parameters
 vec : float
     vector
     This parameter is an input/output and is modified in-place. As an output: Rotated vector.
+
 axis : int
     x_axis$, y_axis$, or z_axis$
+
 angle : float
     angle to rotate.
 )"""
@@ -475,8 +508,10 @@ Parameters
 ----------
 vec_in : float
     Initial vector.
+
 axis : float
     Axis of rotation. Must be normalized to 1.
+
 angle : float
     Angle to rotate by
 
@@ -513,7 +548,9 @@ re_out : float
       py::arg("command"),
       py::arg("time") = py::none(),
       py::arg("time0") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine run_timer
+
+Parameters
 ----------
 command : 
 time : 

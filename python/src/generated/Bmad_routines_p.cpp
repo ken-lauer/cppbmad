@@ -28,7 +28,6 @@ This must read in:
    .
    .
    . ) },
-
 )"""
   );
   m.def(
@@ -40,7 +39,9 @@ This must read in:
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine parse_cylindrical_map
+
+Parameters
 ----------
 cl_map : 
 ele : 
@@ -62,7 +63,6 @@ err_flag :
       R"""(Subroutine parse_gen_grad_map (gg_map, ele, lat, delim, delim_found, err_flag)
 
 Subroutine to parse a "gen_grad_map = {}" construct
-
 )"""
   );
   m.def(
@@ -74,7 +74,9 @@ Subroutine to parse a "gen_grad_map = {}" construct
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine parse_grid_field
+
+Parameters
 ----------
 g_field : 
 ele : 
@@ -107,7 +109,6 @@ Example:   "(1.2, 2.3, 4.4, 8.5)"
 
 Similar to parse_integer_list2 except does not use allocatable array.
 See parse_integer_list2 for more details
-
 )"""
   );
   py::class_<Bmad::ParseIntegerList2, std::unique_ptr<Bmad::ParseIntegerList2>>(
@@ -155,22 +156,30 @@ Parameters
 ----------
 err_str : unknown
     Error string to print if there is an error.
+
 lat : LatStruct
     lattice
+
 int_array : int
     the array to be read in
     This parameter is an input/output and is modified in-place. As an output: Array of values.
+
 Optional: : 
 num_expected = 1 : int
     number of expected arguments. Used to initialize int_array.
+
 open_delim   = ' : unknown
     opening delimeter.
+
 separator    = ' : unknown
     separating character.
+
 ' : unknown
     separating character.
+
 close_delim  = ')' : unknown
     closing delimeter.
+
 default_value = 0 : float
     inital assignment of int_array elements.
 
@@ -178,10 +187,13 @@ Returns
 -------
 is_ok : bool
     Set True if everything is ok.
+
 num_found : int
     number of elements.
+
 delim : unknown
     Delimiter found where the parsing of the input line stops.
+
 delim_found : bool
     Delimiter found? False if end of input command.
 )"""
@@ -232,8 +244,10 @@ Parameters
 ----------
 lat : LatStruct
     Lattice
+
 err_str : unknown
     Error string to print if there is an error.
+
 exact_size : 
 open_delim : 
 separator : 
@@ -299,24 +313,33 @@ Parameters
 ----------
 lat : LatStruct
     lattice
+
 err_str : unknown
     Error string to print if there is an error.
+
 real_array : float
     the array to be read in
     This parameter is an input/output and is modified in-place. As an output: Array of values
+
 num_expected = 10 : int, optional
     number of expected arguments
+
 Used to initialize real_array : 
 open_brace   = ' : unknown, optional
     opening delimeter.
+
 separator    = ' : unknown, optional
     separating character
+
 ' : unknown, optional
     separating character
+
 close_brace  = ')' : unknown, optional
     closing delimeter
+
 default_value = 0.0_rp : float, optional
     inital assignment of real_array elements.
+
 single_value = False : bool, optional
     If true then an array with a single value and no braces is accepted.
 
@@ -324,10 +347,13 @@ Returns
 -------
 is_ok : bool
     Set True if everything is ok
+
 num_found : int
     number of elements
+
 delim : unknown
     Delimiter found where the parsing of the input line stops.
+
 delim_found : bool
     Stopping delimiter found? False if end of input command.
 
@@ -343,7 +369,9 @@ pase_real_list parse_real_matrix.
       py::arg("word"),
       py::arg("lat"),
       py::arg("redef_is_error"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine parser_add_constant
+
+Parameters
 ----------
 word : 
 lat : 
@@ -362,7 +390,6 @@ redef_is_error :
       R"""(Subroutine parser_call_check(word, ix_word, delim, delim_found, call_found, err_flag))
 
 Routine to check if there is a "call::XXX" construct in the input stream.
-
 )"""
   );
   py::class_<Bmad::ParserFastComplexRead, std::unique_ptr<Bmad::ParserFastComplexRead>>(
@@ -400,6 +427,7 @@ Parameters
 ----------
 ele : EleStruct
     Lattice element associated with the array. Used for error messages.
+
 err_str : unknown
     String used when printing error messages identifying where in the lattice file the error is occuring.
 
@@ -407,8 +435,10 @@ Returns
 -------
 cmplx_vec : complex
     Complex vector.
+
 delim : unknown
     Delimitor at end of array. Must be "," or "}"
+
 is_ok : bool
     True if everything OK. False otherwise.
 )"""
@@ -422,7 +452,6 @@ is_ok : bool
       py::arg("err_str"),
       py::arg("is_ok"),
       R"""(Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
-
 
 Returns
 -------
@@ -471,10 +500,13 @@ Parameters
 ----------
 ele : EleStruct
     Lattice element associated with the array. Used for error messages.
+
 end_delims : unknown
     List of possible ending delimitors.
+
 err_str : unknown
     String used when printing error messages identifying where in
+
 the lattice file the error is occuring. : 
 exact_size : bool, optional
     If True (default), number of values must match real_vec size.
@@ -483,10 +515,13 @@ Returns
 -------
 real_vec : complex
     Real vector.
+
 delim : unknown
     Delimitor at end of array.
+
 is_ok : bool
     True if everything OK. False otherwise.
+
 n_real : int
     Number of elements found.
 )"""
@@ -505,7 +540,6 @@ n_real : int
 Subroutine to keep track of the files that are opened for reading.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
-
 )"""
   );
   m.def(
@@ -519,7 +553,9 @@ This subroutine is not intended for general use.
       py::arg("err"),
       py::arg("str1") = py::none(),
       py::arg("str2") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine parser_get_integer
+
+Parameters
 ----------
 int_val : 
 word : 
@@ -540,7 +576,9 @@ str2 :
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine parser_get_logical
+
+Parameters
 ----------
 attrib_name : 
 this_logic : 
@@ -560,7 +598,6 @@ Routine to identify the elements the forks in a lattice are branching to.
 
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
-
 )"""
   );
   m.def(
@@ -568,7 +605,6 @@ This subroutine is not intended for general use.
       &Bmad::parser_init_custom_elements,
       py::arg("lat"),
       R"""(Subroutine parser_init_custom_elements (lat)
-
 )"""
   );
   m.def(
@@ -579,7 +615,6 @@ This subroutine is not intended for general use.
       R"""(Subroutine parser_print_line(end_of_file)
 
 This routine is called when a print statement is found in the lattice file.
-
 )"""
   );
   m.def(
@@ -621,6 +656,7 @@ Parameters
 ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+
 lr_file_name : unknown
     Name of long-range wake field file.
 
@@ -645,6 +681,7 @@ Parameters
 ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+
 sr_file_name : unknown
     Name of short-range wake field file.
 
@@ -652,8 +689,10 @@ Returns
 -------
 %wake%sr%table : 
     Short-range wake potential.
+
 %wake%sr%long : 
     Short-range wake potential.
+
 %wake%sr%trans : 
     Short-range wake potential.
 )"""
@@ -698,8 +737,10 @@ Parameters
 ----------
 con_in : ControlStruct
     Input control structure.
+
 lord : EleStruct
     Lord element associated with the control_struct.
+
 ix_var : int
     If an expression stack evaluates to a constant, this routine will modify the expression stack to evaluate
     to the value of: lord.control.var(ix_var) * constant
@@ -727,13 +768,17 @@ Parameters
 ----------
 orb : CoordStruct
     particle in s-coordinates
+
 branch : BranchStruct
     branch that contains branch.ele(orb.ix_ele)
+
 in_time_coordinates : bool
     Default is false. If true, orb
+
 will taken as in time coordinates. : 
 in_body_frame : bool
     Default is true. If false, ele offsets will be ignored.
+
 Result: : 
 particle : CoordStruct
     particle in global time coordinates
@@ -747,10 +792,13 @@ particle
       "particle_is_moving_backwards",
       &Bmad::particle_is_moving_backwards,
       py::arg("orbit"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine particle_is_moving_backwards
+
+Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates
+
 is_moving_backwards : bool
     True if moving backward. False otherwise.
 )"""
@@ -760,12 +808,16 @@ is_moving_backwards : bool
       &Bmad::particle_is_moving_forward,
       py::arg("orbit"),
       py::arg("dir") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine particle_is_moving_forward
+
+Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates
+
 dir : int, optional
     +1 if tracking forward(default) or -1 to return True if tracking backwards.
+
 is_moving_forward : bool
     True if moving forward. False otherwise.
 )"""
@@ -781,24 +833,33 @@ is_moving_forward : bool
       py::arg("rf_freq") = py::none(),
       py::arg("abs_time") = py::none(),
       py::arg("time"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine particle_rf_time
+
+Parameters
 ----------
 orbit : CoordStruct
     Particle coordinates
+
 ele : EleStruct
     Element being tracked through.
+
 reference_active_edge : unknown
     If True, and ele is a rfcavity or lcavity, use the active edge (edge of the
+
 s_rel : float, optional
     Longitudinal position relative to the upstream edge of the element.
+
 time_coords : bool, optional
     Default False. If True then orbit is using time based phase space coordinates.
+
 rf_freq : float, optional
     If present, the returned time shifted by an integer multiple of 1/rf_freq to be in the range
     [-1/2*rf_freq, 1/2*rf_freq]. This is useful to
+
 abs_time : float, optional
     If False (default) use setting of bmad_com.absolute_time_tracking. If True, use absolute time instead of
     relative time.
+
 time : float
     Current time.
 )"""
@@ -808,12 +869,16 @@ time : float
       &Bmad::patch_flips_propagation_direction,
       py::arg("x_pitch"),
       py::arg("y_pitch"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine patch_flips_propagation_direction
+
+Parameters
 ----------
 x_pitch : float
     Rotaion around y-axis
+
 y_pitch : float
     Rotation around x-axis.
+
 is_flip : bool
     True if patch does a flip
 )"""
@@ -823,12 +888,16 @@ is_flip : bool
       &Bmad::patch_length,
       py::arg("patch"),
       py::arg("ref_coords") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine patch_length
+
+Parameters
 ----------
 patch : EleStruct
     Patch element.
+
 ref_coords : int, optional
     Reference coords to use. entrance_end$, exit_end$ Default is nint(patch.value(ref_coords$)).
+
 length : float
     Length of patch.
 )"""
@@ -869,6 +938,7 @@ Parameters
 ----------
 material : unknown
     Material name.
+
 Energy : float
     Photon energy (eV).
 
@@ -876,8 +946,10 @@ Returns
 -------
 absorption : float
     E_field ~ Exp(-absorption * length)
+
 phase_shift : float
     E_field Phase shift (radians) per unit length relative to vacuum.
+
 err_flag : bool
     Set true if material not recognized.
 )"""
@@ -919,11 +991,14 @@ Parameters
 ----------
 orbit0 : CoordStruct
     Photon coords at beginning of lattice
+
 orbit : CoordStruct
     Photon coords at the detector.
+
 ele : EleStruct
     Element with grid.
     This parameter is an input/output and is modified in-place. As an output: Element with updatted grid.
+
 pixel_pt : PixelPtStruct, optional
     If present then use this grid point instead of the grid point determined by the (x, y) coords of the
     photon
@@ -933,6 +1008,7 @@ Returns
 ix_pt : int
     Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
     argument is present.
+
 iy_pt : int
     Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
     argument is present.
@@ -969,8 +1045,10 @@ Parameters
 ----------
 graze_angle_in : float
     Incident grazing (not polar) angle in radians.
+
 energy : float
     Photon energy in eV.
+
 surface : PhotonReflectSurfaceStruct
     surface info
 
@@ -978,6 +1056,7 @@ Returns
 -------
 graze_angle_out : float
     graze_angle in radians.
+
 phi_out : float
     Azimuthal angle in radians.
 )"""
@@ -991,7 +1070,6 @@ Routine to initialize the standard proton reflection probability tables.
 The standard tables are for 10 nm C film on Al substrate.
 The surface roughness for diffuse scattering is 200 nm and the
 the surface roughness correlation length is 5.5 um.
-
 
 Returns
 -------
@@ -1036,8 +1114,10 @@ Parameters
 ----------
 angle : float
     Incident grazing angle in radians.
+
 energy : float
     Photon energy in eV.
+
 surface : PhotonReflectSurfaceStruct
     surface info
 
@@ -1045,6 +1125,7 @@ Returns
 -------
 p_reflect : float
     Reflection probability.
+
 rel_p_specular : float
     Relative specular reflection probability.
 )"""
@@ -1065,10 +1146,13 @@ Parameters
 ----------
 aperture_ele : EleStruct
     Element containing the aperture
+
 x_lim : float
     Transverse corner points in aperture_ele coord frame.
+
 y_lim : float
     Transverse corner points in aperture_ele coord frame.
+
 source_ele : EleStruct
     Photon source element.
 
@@ -1124,16 +1208,22 @@ e_type : int
       py::arg("orbit"),
       py::arg("ele_orientation"),
       py::arg("return_stream_end") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine physical_ele_end
+
+Parameters
 ----------
 track_end : int
     first_track_edge$, second_track_edge$, surface$, or in_between$
+
 orbit : CoordStruct
     Particle position.
+
 ele_orientation : int
     Either 1 = Normal or -1 = element reversed.
+
 return_stream_end : bool, optional
     If True return the stream end instead of the physical end. Default is False.
+
 physical_end : int
     Return_stream_end ->  Possibilities False             ->  entrance_end$, exit_end$, surface$, or
     in_between$ True              ->  upstream_end$, downstream_end$
@@ -1157,16 +1247,21 @@ Parameters
 ----------
 ele : EleStruct
     Emitting element.
+
 param : LatParamStruct
     lattice parameters.
+
 orbit : CoordStruct
     phase-space coords of photon. --   Will be in curved surface coords if there is a curved surface.
     This parameter is an input/output and is modified in-place. As an output: Final phase-space coords
+
 direction : int
     +1 -> Emit in forward +z direction, -1 -> emit backwards.
+
 max_target_area : float
     Area of the solid angle photons may be emitted over. max_target_area is used for normalizing the photon
     field.
+
 generally will be equal to twopi or fourpi. : 
 w_to_surface : float, optional
     Rotation matrix for curved surface.
@@ -1198,12 +1293,16 @@ Parameters
 ----------
 ele : EleStruct
     Element contained in the branch.
+
 branch_name : unknown
     May be a branch name or a branch index.
+
 lat : LatStruct
     Lattice to search.
+
 parameter_is_branch0 : bool, optional
     If True, 'PARAMETER' is taken to be
+
 an alternative name for branch : 
 blank_branch : int, optional
     Branch index if branch_name = ''. Default is blank is an error.
@@ -1249,12 +1348,16 @@ Parameters
 ----------
 ele : EleStruct
     Element contained in the branch.
+
 branch_name : unknown
     May be a branch name or a branch index.
+
 lat : LatStruct
     Lattice to search.
+
 parameter_is_branch0 : bool, optional
     If True, 'PARAMETER' is taken to be
+
 an alternative name for branch : 
 blank_branch : int, optional
     Branch index if branch_name = ''. Default is blank is an error.
@@ -1296,16 +1399,22 @@ Parameters
 ----------
 lat : LatStruct
     Lattice.
+
 ix_ele : int
     Index of element in lat.branch(ix_branch).
+
 ix_branch : int
     Index of the lat.branch(:) containing the element.
+
 ix_nametable : int
     Nametable index. See above
+
 ele_loc : LatEleLocStruct
     Location identification.
+
 ele_name : unknown
     Name or index of element.
+
 foreign_ele : EleStruct
     Lattice element in another lattice.
 
@@ -1349,16 +1458,22 @@ Parameters
 ----------
 lat : LatStruct
     Lattice.
+
 ix_ele : int
     Index of element in lat.branch(ix_branch).
+
 ix_branch : int
     Index of the lat.branch(:) containing the element.
+
 ix_nametable : int
     Nametable index. See above
+
 ele_loc : LatEleLocStruct
     Location identification.
+
 ele_name : unknown
     Name or index of element.
+
 foreign_ele : EleStruct
     Lattice element in another lattice.
 
@@ -1402,16 +1517,22 @@ Parameters
 ----------
 lat : LatStruct
     Lattice.
+
 ix_ele : int
     Index of element in lat.branch(ix_branch).
+
 ix_branch : int
     Index of the lat.branch(:) containing the element.
+
 ix_nametable : int
     Nametable index. See above
+
 ele_loc : LatEleLocStruct
     Location identification.
+
 ele_name : unknown
     Name or index of element.
+
 foreign_ele : EleStruct
     Lattice element in another lattice.
 
@@ -1455,16 +1576,22 @@ Parameters
 ----------
 lat : LatStruct
     Lattice.
+
 ix_ele : int
     Index of element in lat.branch(ix_branch).
+
 ix_branch : int
     Index of the lat.branch(:) containing the element.
+
 ix_nametable : int
     Nametable index. See above
+
 ele_loc : LatEleLocStruct
     Location identification.
+
 ele_name : unknown
     Name or index of element.
+
 foreign_ele : EleStruct
     Lattice element in another lattice.
 
@@ -1541,10 +1668,13 @@ Parameters
 ----------
 branch : BranchStruct
     Branch to use
+
 s : float
     Longitudinal position.
+
 choose_max : bool
     See above.
+
 print_err : bool, optional
     Print error message if there is an error? Default is True.
 
@@ -1552,16 +1682,22 @@ Returns
 -------
 ele : EleStruct
     Pointer to element at s.
+
 err_flag : bool
     Set True if s is out of bounds. False otherwise.
+
 s_eff : float
     Effective s. Equal to s with a open lattice. See above.
+
 position : CoordStruct
     Positional information.
+
 %s : 
     Same as input s.
+
 %ix_ele : 
     Same as output ix_ele
+
 %location : 
     Location relative to element. Upstream_end$, downstream_end$, or inside$
 
@@ -1578,10 +1714,13 @@ negative length which of the possible elements is actually chosen is ill-defined
       "pointer_to_fibre",
       &Bmad::pointer_to_fibre,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine pointer_to_fibre
+
+Parameters
 ----------
 ele : EleStruct
     Bmad element
+
 assoc_fibre : unknown
     Pointer to the associated fibre.
 )"""
@@ -1608,14 +1747,19 @@ assoc_fibre : unknown
       &Bmad::pointer_to_field_ele,
       py::arg("ele"),
       py::arg("ix_field_ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine pointer_to_field_ele
+
+Parameters
 ----------
 ele : EleStruct
     Element with sum number of associated field elements.
+
 ix_field_ele : int
     Index of the field element to point to. This index runs from 1 to num_field_eles(ele).
+
 dz_offset : float
     Longitudinal offset of ele upstream edge from the field ele pointed to.
+
 field_ele : EleStruct
     Pointer to the field element with index ix_field_ele.
 )"""
@@ -1641,12 +1785,16 @@ field_ele : EleStruct
       "pointer_to_girder",
       &Bmad::pointer_to_girder,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine pointer_to_girder
+
+Parameters
 ----------
 ele : EleStruct
     Element to check.
+
 ix_slave_back : int
     Index back to ele. That is, pointer_to_slave(girder, ix_slave_back)
+
 girder : EleStruct
     : Pointer to the girder. Null if ele is not girder supported.
 )"""
@@ -1683,22 +1831,31 @@ girder : EleStruct
       py::arg("slave"),
       py::arg("ix_lord"),
       py::arg("lord_type") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine pointer_to_lord
+
+Parameters
 ----------
 slave : EleStruct
     Slave element.
+
 ix_lord : int
     Index of the lord.
+
 control : ControlStruct
     Pointer to control info for this lord/slave relationship.
+
 ix_slave_back : int
     Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
+
 lord_type : int, optional
     See above.
+
 ix_control : int
     Index in lat.control(:) array the control argument is at.
+
 ix_ic : int
     Index of the lat.ic(:) element associated with the control argument.
+
 lord_ptr : EleStruct
     Pointer to the lord.
 )"""
@@ -1727,14 +1884,19 @@ lord_ptr : EleStruct
       "pointer_to_multipass_lord",
       &Bmad::pointer_to_multipass_lord,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine pointer_to_multipass_lord
+
+Parameters
 ----------
 ele : EleStruct
     Lattice element.
+
 ix_pass : int
     Multipass turn number. Set to 0 if element is a multipass_lord.
+
 super_lord : EleStruct
     super_lord of the element. Set to NULL if ele is not a super_slave or super_lord.
+
 multi_lord : EleStruct
     multipass_lord if there is one. Set to NULL if there is no multipass_lord.
 )"""
@@ -1747,16 +1909,22 @@ multi_lord : EleStruct
       py::arg("skip_beginning") = py::none(),
       py::arg("follow_fork") = py::none(),
       py::arg("next_ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine pointer_to_next_ele
+
+Parameters
 ----------
 this_ele : EleStruct
     Starting element.
+
 offset : int, optional
     +1 -> return next element, +2 -> element
+
 skip_beginning : bool, optional
     If True then skip beginning element #0
+
 follow_fork : bool, optional
     If True then fork at any fork element. Default is False.
+
 next_ele : EleStruct
     Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
 )"""
@@ -1809,8 +1977,10 @@ Parameters
 ----------
 lord : EleStruct
     Lord element
+
 ix_slave : int
     Index of the slave in the list of slaves controled by the lord..
+
 lord_type : int, optional
     See above.
 
@@ -1818,15 +1988,19 @@ Returns
 -------
 slave_ptr : EleStruct
     Pointer to the slave.
+
 Nullified if there is an error. : 
 control : ControlStruct
     Pointer to control info for this lord/slave relationship.
+
 Nullified if there is an error. : 
 ix_lord_back : int
     Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back)
+
 will point back to the lord. Set to -1 if there is an error. : 
 ix_control : int
     Index in lat.control(:) array the control argument is at.
+
 ix_ic : int
     Index of the lat.ic(:) element associated with the control argument.
 
@@ -1867,20 +2041,28 @@ pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
       &Bmad::pointer_to_super_lord,
       py::arg("slave"),
       py::arg("lord_type") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine pointer_to_super_lord
+
+Parameters
 ----------
 slave : EleStruct
     Slave element.
+
 control : ControlStruct
     Pointer to control info for this lord/slave relationship.
+
 ix_slave_back : int
     Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
+
 ix_control : int
     Index in lat.control(:) array the control argument is at.
+
 ix_ic : int
     Index of the lat.ic(:) element associated with the control argument.
+
 lord_type : int, optional
     If present, only return a super_lord of this type.
+
 lord_ptr : EleStruct
     Pointer to the lord.
 )"""
@@ -1931,14 +2113,18 @@ Parameters
 ----------
 ele : EleStruct
     Element containing the grid
+
 nearest : bool
     If True, return pointer to nearest grid point.
+
 If False : 
 return pointer to the grid point lower and left of : 
 x : float
     Photon position.
+
 y : float
     Photon position.
+
 extend_grid : bool, optional
     If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
 
@@ -1946,14 +2132,18 @@ Returns
 -------
 ix : int
     Grid point index.
+
 iy : int
     Grid point index.
+
 pt : GridPointStruct
     Pointer to grid point.
+
 Will not be associated if : 
 xx : float
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
+
 yy : float
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
@@ -2003,14 +2193,18 @@ Parameters
 ----------
 ele : EleStruct
     Element containing the grid
+
 nearest : bool
     If True, return pointer to nearest grid point.
+
 If False : 
 return pointer to the grid point lower and left of : 
 x : float
     Photon position.
+
 y : float
     Photon position.
+
 extend_grid : bool, optional
     If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
 
@@ -2018,14 +2212,18 @@ Returns
 -------
 ix : int
     Grid point index.
+
 iy : int
     Grid point index.
+
 pt : GridPointStruct
     Pointer to grid point.
+
 Will not be associated if : 
 xx : float
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
+
 yy : float
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
@@ -2052,12 +2250,16 @@ yy : float
       "pointer_to_wake_ele",
       &Bmad::pointer_to_wake_ele,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine pointer_to_wake_ele
+
+Parameters
 ----------
 ele : EleStruct
     Lattice element.
+
 delta_s : float
     distance of wake locaiton from beginning of ele.
+
 wake_ele : EleStruct
     Element having the associated wake.
 )"""
@@ -2098,6 +2300,7 @@ Parameters
 ----------
 ele : EleStruct
     lattice element.
+
 ix_wall : int, optional
     index in wall3d(:) array. Default is 1.
 
@@ -2105,9 +2308,11 @@ Returns
 -------
 wall3d : Wall3DStruct
     Pointer to the associated wall structure.
+
 Will be nullified if there is no associated wall. : 
 ds_offset : float
     Element offset: s(beginning of ele) - s(beginning of wall3d)
+
 is_branch_wall : bool
     Set True if wall3d points to branch.wall3d.
 )"""
@@ -2116,10 +2321,13 @@ is_branch_wall : bool
       "polar_to_spinor",
       &Bmad::polar_to_spinor,
       py::arg("polar"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine polar_to_spinor
+
+Parameters
 ----------
 polar : SpinPolarStruct
     includes polar phase
+
 spinor : complex
     Spinor
 )"""
@@ -2128,10 +2336,13 @@ spinor : complex
       "polar_to_vec",
       &Bmad::polar_to_vec,
       py::arg("polar"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine polar_to_vec
+
+Parameters
 ----------
 polar : 
     Spin_polar_struct
+
 vec : 
     Real(3)
 )"""
@@ -2181,18 +2392,25 @@ Parameters
 ----------
 ring : LatStruct
     the storage ring
+
 ix : int
     element at which to make the projection
+
 mode : NormalModesStruct
     normal mode emittances
+
 %a%emittance : float
     a-mode emittance
+
 %b%emittance : float
     b-mode emittance
+
 %z%emittance : float
     z-mode emittance
+
 %a%tune : float
     a-mode tune.  Used to associate emittances with the proper mode.
+
 %b%tune : float
     b-mode tune.  Used to associate emittances with the proper mode.
 
@@ -2200,8 +2418,10 @@ Returns
 -------
 sigma_x : float
     projected horizontal beamsize
+
 sigma_y : float
     projected vertical beamsize
+
 sigma_z : float
     projected longitudinal beamsize
 )"""
@@ -2222,8 +2442,10 @@ Parameters
 ----------
 t : float
     time relative to RF bucket
+
 p : float
     psi(t)
+
 args : float
     parameters and constants of DEQ
 
@@ -2237,7 +2459,9 @@ dpdt : float
       "ptc_bookkeeper",
       &Bmad::ptc_bookkeeper,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine ptc_bookkeeper
+
+Parameters
 ----------
 lat : LatStruct
     Bmad lattice.
@@ -2268,24 +2492,32 @@ Parameters
 ptc_layout : unknown
     This parameter is an input/output and is modified in-place. As an output: Lattice with the optimum number
     of tracking steps and integrator order.
+
 kl_max : float
     Maximum K1*L per tracking step.
+
 ds_max : float
     Maximum ds for any step.
+
 Useful when including other physicas like space charge. : 
 even_steps : bool, optional
     Always use an even number of steps for a fibre?
+
 Useful if need to evaluate at the center of fibres. : 
 r_typical : float, optional
     Typical transverse offset. Used for computing the
+
 effective contribution of K1*L due to sextupoles. : 
 dx_tol_bend : float
     Tolerable residual orbit in a bend.
+
 use_2nd_order : bool, optional
     If present and True then force the use of 2nd order
+
 integrator. : 
 crossover : int, optional
     crossover points between orders for all elements except wigglers. Default is [4, 18].
+
 crossover_wiggler : unknown, optional
     crossover points for wigglers. Default is [30, 60].
 )"""
@@ -2324,6 +2556,7 @@ Returns
 -------
 state : int
     Same as coord_struct.state. alive$, lost$, lost_neg_x$, etc.
+
 ptc_fibre : unknown
     Pointer to fibre where particle lost. Nullified if particle alive.
 )"""
@@ -2344,6 +2577,7 @@ Parameters
 ----------
 branch : BranchStruct
     Branch of a lattice.
+
 radiation_damping_on : unknown, optional
     If True, radiation dampling is included in the calculation. Default is the setting of
     bmad_com..radiation_damping_on.
@@ -2391,10 +2625,12 @@ Returns
 -------
 norm_mode : 
     Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
+
 %a%emittance : 
 etc. : 
 sigma_map : float
     Sigma matrix (Bmad coordinates).
+
 closed_orb : CoordStruct
     Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
 )"""
@@ -2421,32 +2657,39 @@ Parameters
 ----------
 dKL_max : float
     Maximum K1 * L quadrupole strength allowed for an integration step.
+
 Reasonable value would be something like 0.04. : 
 l_max : float
     Maximum step length. Ignored if set to 0.
+
 l_max_drift_only : unknown
     If True then l_max is only used for splitting drifts.
+
 bend_dorb : float
     Residual bend orbit error. With some integration methods a zero orbit at the start of the bend will not be
     zero at the end. In this case, bend_dorb sets a maximum allowable orbit deviation. If set to zero, this
     argument will be ignored. A resonable value is 10d-7. Note that the actual orbit deviation is not simply
     related to bend_dorb and can be larger. In any case, lowering bend_dorb (without making it zero) will
     lower the
+
 orbit deviation. : 
 sex_dx : float
     To split sextupoles, sex_dx is used as the reference position about which the quadrupole strength is
     calculated. This quadrupole strength is then used with dKL_max to calculate the number of integration
     steps.
+
 Set to zero to ignore. : 
 even : bool, optional
     If True then each fibre  will have an even number of steps. If False then the number of steps will be odd.
     If not present then number
+
 of steps is not constrained to be even or odd. : 
 crossover : int, optional
     crossover(1) sets the maximum number of 2nd order integration steps to use. If the number of steps would
     exceed crossover(1) then integration is switched to 4th order. crossover(2) sets the maximum number of 4th
     order integration steps. If this number is exceeded, 6th order integration is used. Currently the default
     in PTC is [4, 18].
+
 crossover_wiggler : unknown, optional
     crossover for wiggler elements.
 )"""
@@ -2469,6 +2712,7 @@ branch : BranchStruct
     Lattice branch.
     This parameter is an input/output and is modified in-place. As an output: Lattice branch containing the
     matrices.
+
 pz : float, optional
     energy offset around which to calculate the matrices if there is no RF.
 
@@ -2483,7 +2727,9 @@ Returns
       "ptc_ran_seed_put",
       &Bmad::ptc_ran_seed_put,
       py::arg("iseed"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine ptc_ran_seed_put
+
+Parameters
 ----------
 iseed : int
     0 -> Use system clock.
@@ -2493,7 +2739,9 @@ iseed : int
       "ptc_set_rf_state_for_c_normal",
       &Bmad::ptc_set_rf_state_for_c_normal,
       py::arg("nocavity"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine ptc_set_rf_state_for_c_normal
+
+Parameters
 ----------
 nocavity : bool
     True -> RF is off and vice versa.
@@ -2506,7 +2754,6 @@ nocavity : bool
 
 Routine to see if the taylor_order for PTC needs to be set/changed.
 For example, for a change in bmad_com%taylor_order.
-
 )"""
   );
   py::class_<Bmad::PtcSpinCalc, std::unique_ptr<Bmad::PtcSpinCalc>>(
@@ -2544,10 +2791,12 @@ Returns
 -------
 norm_mode : 
     Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
+
 %a%emittance : 
 etc. : 
 sigma_map : float
     Sigma matrix (Bmad coordinates).
+
 closed_orb : CoordStruct
     Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
 )"""
@@ -2582,6 +2831,7 @@ Parameters
 ----------
 branch : LatStruct
     Lat to track through.
+
 orbit : CoordStruct
     Coordinates at beginning of branch.
     This parameter is an input/output and is modified in-place. As an output: Orbit array.
@@ -2590,6 +2840,7 @@ Returns
 -------
 track_state : int
     Set to moving_forward$ if everything is OK.
+
 Otherwise: set to index of element where particle was lost. : 
 err_flag : bool
     Set true if particle lost or error. False otherwise
@@ -2606,26 +2857,36 @@ err_flag : bool
       py::arg("ix2") = py::none(),
       py::arg("one_turn") = py::none(),
       py::arg("unit_start") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine ptc_transfer_map_with_spin
+
+Parameters
 ----------
 branch : BranchStruct
     Lattice branch used in the calculation.
+
 t_map : TaylorStruct
     Initial orbital map (used when unit_start = False)
     This parameter is an input/output and is modified in-place. As an output: Orbital transfer map.
+
 s_map : TaylorStruct
     Initial spin map (used when unit_start = False)
     This parameter is an input/output and is modified in-place. As an output: Quaternion spin transfer map.
+
 orb0 : CoordStruct
     Initial orbit around which the map is made.
+
 err_flag : bool
     Set True if problem like number overflow, etc.
+
 ix1 : int, optional
     Element start index for the calculation.
+
 ix2 : int, optional
     Element end index for the calculation.
+
 one_turn : bool, optional
     If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
+
 unit_start : bool, optional
     If present and False then t_map will be used as the starting map instead of the unit map. Default = True
 )"""
@@ -2649,14 +2910,19 @@ Parameters
 ----------
 lat : 
     TYPE(lat_struct)
+
 %param%n_part : float
     Bunch current in # per bunch
+
 %ele : float
     Beam energy
+
 t6 : float
     1-turn transfer matrix
+
 inductance : float
     Longitudinal inductance in Henrys.  Something on the order of nH.
+
 sig_z : float
     Bunch length.
 

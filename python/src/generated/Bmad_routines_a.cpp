@@ -44,19 +44,26 @@ Parameters
 ----------
 a : float
     Multipole skew component.
+
 b : float
     Multipole normal component.
+
 n : float
     Multipole order.
+
 ref_species : int
     Reference species.
+
 ele_orientation : int
     Element orientation +1 = normal, -1 = reversed,
+
 0 = Ignore orientation and tracking species : 
 coord : CoordStruct
     Particle position and direction of travel.
+
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
+
 scale : float, optional
     Factor to scale the kicks. Default is 1. For pole_type = electric$, set scale to the longitudinal length
     of the field region.
@@ -65,8 +72,10 @@ Returns
 -------
 kx : float
     X kick.
+
 ky : float
     Y kick.
+
 dk : float
     Kick derivative: dkick(x,y)/d(x,y).
 )"""
@@ -95,25 +104,33 @@ Parameters
 ----------
 an : float
     Skew multipole strengths.
+
 bn : float
     Normal multipole strengths.
+
 ix_pole_max : int
     Maximum pole index.
+
 ele : EleStruct
     Lattice element containing the multipoles.
+
 orbit : CoordStruct
     Particle position.
     This parameter is an input/output and is modified in-place. As an output: Kicked particle.
+
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
+
 scale : float, optional
     Factor to scale the kicks. Default is 1.
+
 For pole_type = electric$ : 
 set scale to the longitudinal length of the field region : 
 mat6 : float, optional
     Transfer matrix before the multipole.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
     including multipole.
+
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
 )"""
@@ -135,6 +152,7 @@ Parameters
 ----------
 e_orb : CoordStruct
     charged particle position.
+
 photon_orb : CoordStruct
     Photon position relative to e_orb.
     This parameter is an input/output and is modified in-place. As an output: Absolute photon position.
@@ -144,10 +162,13 @@ photon_orb : CoordStruct
       "absolute_time_tracking",
       &Bmad::absolute_time_tracking,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine absolute_time_tracking
+
+Parameters
 ----------
 ele : EleStruct
     Element being tracked through.
+
 is_abs_time : bool
     True if absolute time tracking is needed.
 )"""
@@ -158,15 +179,20 @@ is_abs_time : bool
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("true_time") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine ac_kicker_amp
+
+Parameters
 ----------
 ele : EleStruct
     ac_kicker element.
+
 orbit : CoordStruct
     Contains the time to evaluate the amplitude at.
+
 true_time : float, optional
     The actual time. Normally this time is calculated using orbit.t or orbit.vec(5) but sometimes it is
     convenient to be able to override this. For example, time_runge_kutta uses this.
+
 ac_amp : float
     Amplitude. Will be set to 1 if the element is not an ac_kicker.
 )"""
@@ -209,14 +235,19 @@ Parameters
 ----------
 ring : LatStruct
     lattice
+
 %a%tune : 
     a-mode tune (horizontal-like)
+
 %b%tune : 
     b-mode tune (vertical-like)
+
 %z%tune : 
     c-mode tune (synchrotron-like)
+
 ix : int
     element index at which to calculate J
+
 J : float
     Vector containing normal mode invariants and phases
 
@@ -224,6 +255,7 @@ Returns
 -------
 X : float
     canonical phase space coordinates of the particle
+
 err_flag : bool
     Set to true on error.  Often means Eigen decomposition failed.
 )"""
@@ -237,18 +269,25 @@ err_flag : bool
       py::arg("n_add_slave_field") = py::none(),
       py::arg("n_add_lord_field") = py::none(),
       py::arg("add_at_end") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine add_lattice_control_structs
+
+Parameters
 ----------
 ele : EleStruct
     Lord or slave element that needs extra control elements.
+
 n_add_slave : int, optional
     Number of field slaves to add to lord. Default is zero.
+
 n_add_lord : int, optional
     Number of field lords to add to slave. Default is zero.
+
 n_add_slave_field : int, optional
     Number of field slaves to add to lord. Default is zero.
+
 n_add_lord_field : int, optional
     Number of field lords to add to slave. Default is zero.
+
 add_at_end : bool, optional
     Used when n_add_slave or n_add_slave_field is non-zero. If True then new space is added at the end of the
     array. If False then new space is added at the front of the array. Default is True.
@@ -301,29 +340,37 @@ Parameters
 lat : LatStruct
     Lat to modify.
     This parameter is an input/output and is modified in-place. As an output: Modified lat.
+
 super_ele_in : EleStruct
     Element to superimpose.
+
 %s : 
     Position of end of element.
+
 Negative distances mean distance from the end. : 
 ix_branch : int
     Branch index to put element.
+
 save_null_drift : bool, optional
     Save a copy of a drift to be split as a null_ele? This is useful if further superpositions might use this
     drift as a reference element. After all superpositions are done, remove_eles_from_lat can be called to
     remove all null_eles.
+
 Default is False. : 
 create_jumbo_slave : bool, optional
     Default is False. If True then super_slaves that are created that have super_ele_in as their super_lord
     are
+
 em_field elements. : 
 ix_insert : int, optional
     If present and positive, and super_ele_in has zero length, use ix_insert as the index to insert
     super_ele_in at. ix_insert is useful when superposing next to another element that has zero or negative
     length (EG a patch) and you want
+
 to make sure that the superimposed element is on the correct side of the element. : 
 mangle_slave_names : bool, optional
     If True (default), adjust slave names appropriately. Name
+
 mangeling can take time so bmad_parser will do this all at once at the end. : 
 wrap : bool, optional
     If True (default), and if the superimposed element has an end that extends beyond the starting or ending
@@ -336,6 +383,7 @@ Returns
 -------
 err_flag : bool
     Set True if there is an error. False otherwise
+
 super_ele_out : EleStruct
     Pointer to the super element in the lattice.
 )"""
@@ -346,7 +394,9 @@ super_ele_out : EleStruct
       py::arg("lat"),
       py::arg("m_slaves"),
       py::arg("lord_in") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine add_this_multipass
+
+Parameters
 ----------
 lat : 
 m_slaves : 
@@ -364,7 +414,6 @@ lord_in :
 
 Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
 This subroutine is not intended for general use.
-
 )"""
   );
   m.def(
@@ -378,7 +427,6 @@ This subroutine is not intended for general use.
 
 Routine to adjust the names of the slaves.
 This routine is used by add_superimpose and is not meant for general use.
-
 )"""
   );
   m.def(
@@ -386,9 +434,12 @@ This routine is used by add_superimpose and is not meant for general use.
       &Bmad::allocate_branch_array,
       py::arg("lat"),
       py::arg("upper_bound"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine allocate_branch_array
+
+Parameters
 ----------
 lat : LatStruct
+
 upper_bound : int
     Desired upper bound.
 )"""
@@ -400,14 +451,19 @@ upper_bound : int
       py::arg("upper_bound") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("do_ramper_slave_setup") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine allocate_lat_ele_array
+
+Parameters
 ----------
 lat : LatStruct
     Lattice with element array.
+
 upper_bound : int, optional
     Optional desired upper bound.
+
 ix_branch : int, optional
     Branch index. Default is 0.
+
 do_ramper_slave_setup : bool, optional
     Default False. If true, setup ramper slaves. Generally this needs to be done if reallocating with a fully
     formed lattice.
@@ -418,12 +474,16 @@ do_ramper_slave_setup : bool, optional
       &Bmad::angle_between_polars,
       py::arg("polar1"),
       py::arg("polar2"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine angle_between_polars
+
+Parameters
 ----------
 polar1 : 
     (spin_polar_struct)
+
 polar2 : 
     (spin_polar_struct)
+
 angle : float
     Angle between the polar vectors
 )"""
@@ -433,11 +493,14 @@ angle : float
       &Bmad::angle_to_canonical_coords,
       py::arg("orbit"),
       py::arg("coord_type") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine angle_to_canonical_coords
+
+Parameters
 ----------
 orbit : CoordStruct
     Orbit in angular coordinates.
     This parameter is an input/output and is modified in-place. As an output: Orbit in canonical coordinates.
+
 coord_type : unknown, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
@@ -462,11 +525,14 @@ ele : EleStruct
       "apply_all_rampers",
       &Bmad::apply_all_rampers,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine apply_all_rampers
+
+Parameters
 ----------
 lat : LatStruct
     Lattice.
     This parameter is an input/output and is modified in-place. As an output: Lattice with rampers applied.
+
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -479,20 +545,26 @@ err_flag : bool
       py::arg("ddE_dr"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine apply_energy_kick
+
+Parameters
 ----------
 dE : float
     Energy change
+
 orbit : CoordStruct
     Beginning coordinates
     This parameter is an input/output and is modified in-place. As an output: coordinates with added dE energy
     kick.
+
 ddE_dr : 
     real(rp), Derivatives of dE [ddE_dx, ddE_dy].
+
 mat6 : float, optional
     Transfer matrix before fringe.
     This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
     including energy kick.
+
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
 )"""
@@ -521,10 +593,13 @@ ele%ptc_fibre :
       "apply_rampers_to_slave",
       &Bmad::apply_rampers_to_slave,
       py::arg("slave"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine apply_rampers_to_slave
+
+Parameters
 ----------
 slave : EleStruct
     Element to apply ramper elements to.
+
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -535,7 +610,9 @@ err_flag : bool
       py::arg("arr"),
       py::arg("parens_in") = py::none(),
       py::arg("str_out"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine array_re_str
+
+Parameters
 ----------
 arr : 
 parens_in : 
@@ -548,7 +625,9 @@ str_out :
       py::arg("pt0"),
       py::arg("ele"),
       py::arg("field_value"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine astra_max_field_reference
+
+Parameters
 ----------
 pt0 : 
 ele : 
@@ -560,13 +639,17 @@ field_value :
       &Bmad::at_this_ele_end,
       py::arg("now_at"),
       py::arg("where_at"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine at_this_ele_end
+
+Parameters
 ----------
 now_at : int
     Which end is under consideration: entrance_end$, exit_end$, surface$, or in_between$.
+
 where_at : int
     Which ends have the aperture or fringe field: entrance_end$, exit_end$, continuous$, both_ends$,
     no_aperture$, surface$, wall_transition$.
+
 is_at_this_end : bool
     True if at this end. False otherwise.
 )"""
@@ -576,12 +659,15 @@ is_at_this_end : bool
       &Bmad::attribute_bookkeeper,
       py::arg("ele"),
       py::arg("force_bookkeeping") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine attribute_bookkeeper
+
+Parameters
 ----------
 ele : EleStruct
     Element with attributes
     This parameter is an input/output and is modified in-place. As an output: Element with self-consistant
     attributes.
+
 force_bookkeeping : unknown, optional
     If present and True then force attribute bookkeeping to be done independent of the state of
     ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
@@ -643,19 +729,26 @@ Parameters
 ----------
 ix_ele : int
     Index of element in element array.
+
 ix_branch : int
     Branch index of element.
+
 ele : EleStruct
     Element containing the attribute
+
 attrib_name : unknown
     Name of the attribute. Assumed upper case.
+
 lat : LatStruct
     Lattice structure.
+
 err_print_flag : bool, optional
     If present and False then suppress
+
 printing of an error message if attribute is not free. : 
 except_overlay : bool, optional
     If present and True then an attribute that is controlled by an overlay will be treated as free.
+
 This is used by : 
 for example : 
 the create_overlay routine. : 
@@ -667,6 +760,7 @@ Returns
 -------
 free : bool
     Set True if attribtute not found or attriubte
+
 cannot be changed directly. : 
 why_not_free : int
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -729,19 +823,26 @@ Parameters
 ----------
 ix_ele : int
     Index of element in element array.
+
 ix_branch : int
     Branch index of element.
+
 ele : EleStruct
     Element containing the attribute
+
 attrib_name : unknown
     Name of the attribute. Assumed upper case.
+
 lat : LatStruct
     Lattice structure.
+
 err_print_flag : bool, optional
     If present and False then suppress
+
 printing of an error message if attribute is not free. : 
 except_overlay : bool, optional
     If present and True then an attribute that is controlled by an overlay will be treated as free.
+
 This is used by : 
 for example : 
 the create_overlay routine. : 
@@ -753,6 +854,7 @@ Returns
 -------
 free : bool
     Set True if attribtute not found or attriubte
+
 cannot be changed directly. : 
 why_not_free : int
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -819,19 +921,26 @@ Parameters
 ----------
 ix_ele : int
     Index of element in element array.
+
 ix_branch : int
     Branch index of element.
+
 ele : EleStruct
     Element containing the attribute
+
 attrib_name : unknown
     Name of the attribute. Assumed upper case.
+
 lat : LatStruct
     Lattice structure.
+
 err_print_flag : bool, optional
     If present and False then suppress
+
 printing of an error message if attribute is not free. : 
 except_overlay : bool, optional
     If present and True then an attribute that is controlled by an overlay will be treated as free.
+
 This is used by : 
 for example : 
 the create_overlay routine. : 
@@ -843,6 +952,7 @@ Returns
 -------
 free : bool
     Set True if attribtute not found or attriubte
+
 cannot be changed directly. : 
 why_not_free : int
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -901,13 +1011,17 @@ Parameters
 ----------
 ele : EleStruct
     attribute_index will restrict the name search to
+
 valid attributes of the given element. : 
 key : int
     Equivalent to ele.key.
+
 name : unknown
     Attribute name. Must be uppercase.
+
 can_abbreviate : bool, optional
     Can abbreviate names? Default is True.
+
 print_error : bool, optional
     Default True. If false, do not print error message.
 
@@ -915,6 +1029,7 @@ Returns
 -------
 full_name : unknown
     Non-abbreviated name.
+
 attrib_index : int
     Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
     = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
@@ -973,13 +1088,17 @@ Parameters
 ----------
 ele : EleStruct
     attribute_index will restrict the name search to
+
 valid attributes of the given element. : 
 key : int
     Equivalent to ele.key.
+
 name : unknown
     Attribute name. Must be uppercase.
+
 can_abbreviate : bool, optional
     Can abbreviate names? Default is True.
+
 print_error : bool, optional
     Default True. If false, do not print error message.
 
@@ -987,6 +1106,7 @@ Returns
 -------
 full_name : unknown
     Non-abbreviated name.
+
 attrib_index : int
     Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
     = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
@@ -1011,19 +1131,22 @@ This routine is an overloaded name for:
   attribute_name1 (ele, ix_att, show_private) result (attrib_name)
   attribute_name2 (key, ix_att, show_private) result (attrib_name)
 
-
 Note: attribute_name (key, ix_att) is not able to handle overlay/group control variables.
 Use attributge_name (ele, ix_att) is this is needed.
 
 Parameters
 ----------
 ele : EleStruct
+
 %key : int
     Key name of element type (e.g. SBEND$, etc.)
+
 key : int
     Key name of element type (e.g. sbend$, etc.)
+
 ix_att : int
     Index of attribute (e.g. k1$)
+
 show_private : bool, optional
     If False (default) return null_name$ for private attributes.
 
@@ -1055,19 +1178,22 @@ This routine is an overloaded name for:
   attribute_name1 (ele, ix_att, show_private) result (attrib_name)
   attribute_name2 (key, ix_att, show_private) result (attrib_name)
 
-
 Note: attribute_name (key, ix_att) is not able to handle overlay/group control variables.
 Use attributge_name (ele, ix_att) is this is needed.
 
 Parameters
 ----------
 ele : EleStruct
+
 %key : int
     Key name of element type (e.g. SBEND$, etc.)
+
 key : int
     Key name of element type (e.g. sbend$, etc.)
+
 ix_att : int
     Index of attribute (e.g. k1$)
+
 show_private : bool, optional
     If False (default) return null_name$ for private attributes.
 
@@ -1110,6 +1236,7 @@ Parameters
 ----------
 attrib_name : unknown
     Name of the attribute. Must be upper case.
+
 ele : EleStruct, optional
     Element associated with the attribute. Needed if attrib_name can correspond to an overlay or group
     variable.
@@ -1135,6 +1262,7 @@ Parameters
 ----------
 attrib_name : unknown
     Name of the attribute. Must be upper case.
+
 unrecognized_units : unknown, optional
     String to use if the attribute name is unrecognized. Note: Non-real attributes (EG: 'TRACKING_METHOD') are
     not recognized. Default is ""
@@ -1153,20 +1281,27 @@ attrib_units : unknown
       py::arg("scale_phase") = py::none(),
       py::arg("scale_amp") = py::none(),
       py::arg("call_bookkeeper") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine autoscale_phase_and_amp
+
+Parameters
 ----------
 ele : EleStruct
     RF element or e_gun.
     This parameter is an input/output and is modified in-place. As an output: element with phase and amplitude
     adjusted.
+
 param : LatParamStruct
     lattice parameters
+
 err_flag : 
     Logical, Set true if there is an error. False otherwise.
+
 scale_phase : bool, optional
     Scale the phase? See above.
+
 scale_amp : bool, optional
     Scale the amplitude? See above.
+
 call_bookkeeper : bool, optional
     Call lattice_bookkeeper at end? Default is True.
 )"""
@@ -1177,12 +1312,16 @@ call_bookkeeper : bool, optional
       py::arg("frac1"),
       py::arg("twiss1"),
       py::arg("twiss2"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine average_twiss
+
+Parameters
 ----------
 frac1 : float
     Fraction of twiss1 to use in the average.
+
 twiss1 : TwissStruct
     Twiss parameters to average.
+
 twiss2 : 
 ave_twiss : TwissStruct
     Average twiss.

@@ -11,7 +11,9 @@ void init_SimUtils_routines_d(py::module &m) {
       py::arg("string"),
       py::arg("numeric_month") = py::none(),
       py::arg("include_zone") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine date_and_time_stamp
+
+Parameters
 ----------
 string : 
 numeric_month : 
@@ -22,7 +24,9 @@ include_zone :
       "destfixedwindowls",
       &SimUtils::destfixedwindowls,
       py::arg("id"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine destfixedwindowls
+
+Parameters
 ----------
 id : 
 )"""
@@ -31,7 +35,9 @@ id :
       "detab",
       &SimUtils::detab,
       py::arg("str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine detab
+
+Parameters
 ----------
 str : 
 )"""
@@ -44,7 +50,9 @@ str :
       py::arg("y_size"),
       py::arg("x_res"),
       py::arg("y_res"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine display_size_and_resolution
+
+Parameters
 ----------
 ix_screen : 
 x_size : 
@@ -59,7 +67,9 @@ y_res :
       py::arg("m"),
       py::arg("arg"),
       py::arg("dj_bes"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine dj_bessel
+
+Parameters
 ----------
 m : 
 arg : 
@@ -72,7 +82,9 @@ dj_bes :
       py::arg("str"),
       py::arg("old_hash") = py::none(),
       py::arg("hash"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine djb_hash
+
+Parameters
 ----------
 str : 
 old_hash : 
@@ -84,7 +96,9 @@ hash :
       &SimUtils::djb_str_hash,
       py::arg("in_str"),
       py::arg("hash_str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine djb_str_hash
+
+Parameters
 ----------
 in_str : 
 hash_str : 
@@ -94,7 +108,9 @@ hash_str :
       "downcase_string",
       &SimUtils::downcase_string,
       py::arg("string"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine downcase_string
+
+Parameters
 ----------
 string : 
 )"""

@@ -10,7 +10,9 @@ void init_SimUtils_routines_f(py::module &m) {
       &SimUtils::factorial,
       py::arg("n"),
       py::arg("fact"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine factorial
+
+Parameters
 ----------
 n : 
 fact : 
@@ -22,7 +24,9 @@ fact :
       py::arg("z"),
       py::arg("w"),
       py::arg("dw"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine faddeeva_function
+
+Parameters
 ----------
 z : 
 w : 
@@ -46,6 +50,7 @@ Parameters
 arr : complex
     Input array.
     This parameter is an input/output and is modified in-place. As an output: FFT of array.
+
 isign : int
     -1 => "Forward" transform, +1 => "Backwards" transform.
 )"""
@@ -57,7 +62,9 @@ isign : int
       py::arg("out_file"),
       py::arg("directory"),
       py::arg("add_switch"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine file_directorizer
+
+Parameters
 ----------
 in_file : 
 out_file : 
@@ -71,7 +78,9 @@ add_switch :
       py::arg("string"),
       py::arg("dflt_file_name"),
       py::arg("file_name"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine file_get
+
+Parameters
 ----------
 string : 
 dflt_file_name : 
@@ -86,7 +95,9 @@ file_name :
       py::arg("file_name"),
       py::arg("file_unit"),
       py::arg("readonly"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine file_get_open
+
+Parameters
 ----------
 string : 
 dflt_file_name : 
@@ -102,7 +113,9 @@ readonly :
       py::arg("out_file_name"),
       py::arg("suffix"),
       py::arg("add_switch"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine file_suffixer
+
+Parameters
 ----------
 in_file_name : 
 out_file_name : 
@@ -116,7 +129,9 @@ add_switch :
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine find_location_int
+
+Parameters
 ----------
 arr : 
 value : 
@@ -129,7 +144,9 @@ ix_match :
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine find_location_logic
+
+Parameters
 ----------
 arr : 
 value : 
@@ -141,12 +158,16 @@ ix_match :
       py::overload_cast<FArray1D<Real> &, double>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine find_location_real
+
+Parameters
 ----------
 arr : 
     real(rp), logical, or integer
+
 value : unknown
     :).
+
 ix_match : int
     Index of match. Zero if no match found.
 )"""
@@ -238,6 +259,7 @@ Parameters
 ----------
 data : float
     data to analyze
+
 frequency : float
     frequency
 
@@ -245,10 +267,13 @@ Returns
 -------
 cos_amp : float
     cosine amplitude
+
 sin_amp : float
     sine amplitude
+
 dcos_amp : float
     cosine amplitude derivative
+
 dsin_amp : float
     sine amplitude derivative
 )"""

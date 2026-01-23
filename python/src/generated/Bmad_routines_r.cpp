@@ -59,17 +59,23 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   ele : EleStruct
       Element under consideration.
+
   include_opening_angle : bool
       If True include the effect of the vertical opening angle of emitted radiation.
+
   Generally use True unless comparing against other codes. : 
   orb_in : CoordStruct
       Entrance orbit about which to compute the matrices.
+
   orb_out : CoordStruct
       Exit orbit.
+
   g2_tol : float
       Tollerance on g^2 per unit length (damping tolerance).
+
   g3_tol : float
       Tollerance on g^3 per unit length (stocastic tolerance).
+
   ele0 : EleStruct, optional
       Element before `ele`. Needed if and only if rad_int1 is present
 
@@ -77,10 +83,13 @@ void init_Bmad_routines_r(py::module &m) {
   -------
   rad_map : RadMapStruct
       Damping and stochastic matrices.
+
   %stoc_mat : 
       Variance matrix.
+
   err_flag : bool
       Set true if there is an error. False otherwise.
+
   rad_int1 : RadInt1Struct
       Radiation integrals
   )"""
@@ -133,10 +142,13 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   ele1 : EleStruct
       Start element of integration range.
+
   ele2 : EleStruct
       End element of integration range.
+
   include_opening_angle : bool
       If True include the effect of the vertical opening angle of emitted radiation.
+
   Generally use True unless comparing against other codes. : 
   closed_orbit : CoordStruct, optional
       Closed orbit. If not present this routine will calculate it.
@@ -145,17 +157,24 @@ void init_Bmad_routines_r(py::module &m) {
   -------
   rmap : RadMapStruct
       Damping and stochastic mats
+
   %stoc_mat : 
       stochastic variance matrix.
+
   mode : NormalModesStruct
+
   %dpz_damp : 
       Change in pz without RF.
+
   %pz_average : 
       Average pz due to damping.
+
   xfer_nodamp_mat : float
       Transfer matrix without damping.
+
   rad_int_branch : RadIntBranchStruct
       Array of element-by-element radiation integrals.
+
   err_flag : bool
       Set true if there is a problem.
   )"""
@@ -197,19 +216,25 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   ele : EleStruct
       Element under consideration.
+
   where : int
       What part of ele to integrate over.
+
   upstream$ -> 1st half of element : 
   downsteam$ -> 2nd half : 
   all$ -> everything. : 
   orb_in : CoordStruct
       Entrance orbit about which to compute the matrices.
+
   orb_out : CoordStruct
       Exit orbit.
+
   g_tol : float
       Tollerance on |g| per unit length.
+
   g2_tol : float
       Tollerance on g^2 per unit length.
+
   g3_tol : float
       Tollerance on g^3 per unit length.
 
@@ -217,8 +242,10 @@ void init_Bmad_routines_r(py::module &m) {
   -------
   int_g : float
       Integrals of (gx,gy) vector.
+
   gint_g2 : float
       integrals of |g|^2 and |g|^3.
+
   int_g3 : float
       integrals of |g|^2 and |g|^3.
   )"""
@@ -250,20 +277,27 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("orbit"),
       py::arg("ix_cache") = py::none(),
       py::arg("ix_branch") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine radiation_integrals
+
+  Parameters
   ----------
   lat : LatStruct
       Lattice to use. The calculation assumes that
+
   orbit : CoordStruct
       Closed orbit for the branch.
+
   mode : NormalModesStruct
       Parameters for the ("horizontal like") a-mode,
+
   ix_cache : int, optional
       Cache pointer.
       This parameter is an input/output and is modified in-place. As an output: Cache pointer. If ix_cache = 0
       at input then
+
   ix_branch : int, optional
       Lattice branch index. Default is 0.
+
   rad_int_by_ele : RadIntAllEleStruct
       Radiation integrals element by element.
   )"""
@@ -282,6 +316,7 @@ void init_Bmad_routines_r(py::module &m) {
   ele : EleStruct
       Element whose map is to be setup.
       This parameter is an input/output and is modified in-place. As an output: Element with map calculated.
+
   ref_orb : CoordStruct, optional
       If present, ignore ele_map.stale setting and make the map around this reference orbit.
 
@@ -296,12 +331,15 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::ramper_slave_setup,
       py::arg("lat"),
       py::arg("force_setup") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine ramper_slave_setup
+
+  Parameters
   ----------
   lat : LatStruct
       Lattice to be setup.
       This parameter is an input/output and is modified in-place. As an output: Lattice with ramper slaves
       setup.
+
   force_setup : bool, optional
       Default False. If True, do the setup even if lat.ramper_slave_bookkeeping = ok$. But the setup will never
       be done if lat.ramper_slave_bookkeeping = super_ok$.
@@ -329,14 +367,19 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::ramper_value,
       py::arg("ramper"),
       py::arg("r1"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine ramper_value
+
+  Parameters
   ----------
   ramper : EleStruct
       Ramper lord.
+
   r1 : ControlRamp1Struct
       Slave function.
+
   err_flag : bool
       Set True if there is an error, False otherwise.
+
   value : float
       Value of the slave function.
   )"""
@@ -357,6 +400,7 @@ void init_Bmad_routines_r(py::module &m) {
       Element with wake. If no wake then nothing is done.
       This parameter is an input/output and is modified in-place. As an output: Element with wake frequencies
       set.
+
   %value : 
       Frequency.
 
@@ -364,6 +408,7 @@ void init_Bmad_routines_r(py::module &m) {
   -------
   %wake%lr%mode : 
       Set frequency.
+
   set_done : bool
       Set True if there where lr wakes to be set. False otherwise.
   )"""
@@ -374,7 +419,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("rel"),
       py::arg("plc"),
       py::arg("out"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rchomp
+
+  Parameters
   ----------
   rel : 
   plc : 
@@ -388,15 +435,20 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("n"),
       py::arg("save_old") = py::none(),
       py::arg("exact") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine re_allocate_eles
+
+  Parameters
   ----------
   eles : ElePointerStruct
       Array of element pointers with possible old data.
       This parameter is an input/output and is modified in-place. As an output: Array of element pointers.
+
   n : int
       Array size to set.
+
   save_old : bool, optional
       If present and True then save the old data.
+
   exact : bool, optional
       If present and True then eles will have size = n If False (default), reallcation will not be done if eles
       is already large enough
@@ -408,7 +460,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("section"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine re_allocate_wall3d_section_array
+
+  Parameters
   ----------
   section : 
   n : 
@@ -421,7 +475,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("v"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine re_allocate_wall3d_vertex_array
+
+  Parameters
   ----------
   v : 
   n : 
@@ -444,8 +500,10 @@ void init_Bmad_routines_r(py::module &m) {
   Parameters
   ----------
   tree : ExpressionTreeStruct
+
   n : int
       Size wanted.
+
   exact : bool, optional
       Default is False. If False, the size of the output array is permitted to be larger than n.
   )"""
@@ -455,7 +513,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::overload_cast<long double, std::string>(&Bmad::re_str),
       py::arg("rel"),
       py::arg("str_out"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine re_str_qp
+
+  Parameters
   ----------
   rel : 
   str_out : 
@@ -466,7 +526,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::overload_cast<double, std::string>(&Bmad::re_str),
       py::arg("rel"),
       py::arg("str_out"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine re_str_rp
+
+  Parameters
   ----------
   rel : 
   str_out : 
@@ -509,14 +571,19 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   iu : int
       File unit number
+
   file_name : unknown
       Name of beam file.
+
   beam_init : BeamInitStruct
       See above.
+
   ele : EleStruct, optional
       Element with reference energy, etc.
+
   print_mom_shift_warning : bool, optional
       Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+
   shift_momentum : bool, optional
       Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
@@ -524,6 +591,7 @@ void init_Bmad_routines_r(py::module &m) {
   -------
   beam : BeamStruct
       Structure holding the beam information.
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -569,12 +637,16 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   file_name : unknown
       Name of beam file.
+
   beam_init : BeamInitStruct
       See above.
+
   ele : EleStruct, optional
       Element with reference energy, etc.
+
   print_mom_shift_warning : bool, optional
       Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+
   shift_momentum : bool, optional
       Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
@@ -582,6 +654,7 @@ void init_Bmad_routines_r(py::module &m) {
   -------
   beam : BeamStruct
       Structure holding the beam information.
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -601,11 +674,14 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   file_name : unknown
       File to create.
+
   ele : EleStruct
       Element associated with the map.
+
   Ouput: : 
   cart_map : 
       cartesian_map_struct, cartesian map.
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -625,11 +701,14 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   file_name : unknown
       File to create.
+
   ele : EleStruct
       Element associated with the map.
+
   Ouput: : 
   cl_map : 
       cylindrical_map_struct, cylindrical map.
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -649,11 +728,14 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   file_name : unknown
       File to create.
+
   ele : EleStruct
       Element associated with the map.
+
   Ouput: : 
   g_field : 
       grid_field_struct, cylindrical map.
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -684,31 +766,45 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("n_bunch"),
       py::arg("n_particle") = py::none(),
       py::arg("extend") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine reallocate_beam
+
+  Parameters
   ----------
   beam : BeamStruct
       Beam bunches are saved if save = True.
       This parameter is an input/output and is modified in-place. As an output: Allocated beam_struct structure.
+
   n_bunch : int
       Number of bunches.
+
   n_particle : int, optional
       Number of particles. Must be non-negative. If save = True then the number of particles in existing bunches
       will not be touched.
+
   extend : 
   )"""
   );
-  m.def("reallocate_bp_com_const", &Bmad::reallocate_bp_com_const, R"""()""");
+  m.def(
+      "reallocate_bp_com_const",
+      &Bmad::reallocate_bp_com_const,
+      R"""(Wrapper for Fortran routine reallocate_bp_com_const
+  )"""
+  );
   m.def(
       "reallocate_bunch",
       &Bmad::reallocate_bunch,
       py::arg("n_particle"),
       py::arg("save") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine reallocate_bunch
+
+  Parameters
   ----------
   bunch : BunchStruct
       Allocated bunch_struct structure.
+
   n_particle : int
       Number of particles. Must be non-negative.
+
   save : bool, optional
       If present and True then save the old bunch info.
   )"""
@@ -718,10 +814,13 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::reallocate_control,
       py::arg("lat"),
       py::arg("n"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine reallocate_control
+
+  Parameters
   ----------
   lat : LatStruct
       Lattice.
+
   n : int
       Array size for lat.control(:) and lat.ic(:).
   )"""
@@ -751,10 +850,13 @@ void init_Bmad_routines_r(py::module &m) {
   coord : CoordStruct
       Allocatable array.
       This parameter is an input/output and is modified in-place. As an output: Allocated array.
+
   n_coord : int
       Minimum array upper bound wanted.
+
   lat : LatStruct
       Lattice
+
   ix_branch : int, optional
       Branch to use. Default is 0 (main branch).
 
@@ -790,10 +892,13 @@ void init_Bmad_routines_r(py::module &m) {
   coord : CoordStruct
       Allocatable array.
       This parameter is an input/output and is modified in-place. As an output: Allocated array.
+
   n_coord : int
       Minimum array upper bound wanted.
+
   lat : LatStruct
       Lattice
+
   ix_branch : int, optional
       Branch to use. Default is 0 (main branch).
 
@@ -827,10 +932,13 @@ void init_Bmad_routines_r(py::module &m) {
   coord : CoordStruct
       Allocatable array.
       This parameter is an input/output and is modified in-place. As an output: Allocated array.
+
   n_coord : int
       Minimum array upper bound wanted.
+
   lat : LatStruct
       Lattice
+
   ix_branch : int, optional
       Branch to use. Default is 0 (main branch).
 
@@ -845,13 +953,17 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("stack"),
       py::arg("n"),
       py::arg("exact") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine reallocate_expression_stack
+
+  Parameters
   ----------
   stack : unknown
       Existing stack array.
       This parameter is an input/output and is modified in-place. As an output: Resized stack.
+
   n : int
       Array size needed.
+
   exact : bool, optional
       If present and False then the size of the output array is permitted to be larger than n. Default is True.
   )"""
@@ -861,12 +973,16 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::rel_tracking_charge_to_mass,
       py::arg("orbit"),
       py::arg("ref_species"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rel_tracking_charge_to_mass
+
+  Parameters
   ----------
   orbit : CoordStruct
       Particle position structure.
+
   ref_species : int
       Reference species
+
   rel_charge : float
       Relative charge/mass
   )"""
@@ -877,12 +993,16 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("ele1"),
       py::arg("ele2"),
       py::arg("func_retval__"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine relative_mode_flip
+
+  Parameters
   ----------
   ele1 : EleStruct
       Elements to compare.
+
   ele2 : EleStruct
       Elements to compare.
+
   relative_mode_flip : 
   )"""
   );
@@ -937,6 +1057,7 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   taylor_in : TaylorStruct
       Input taylor map.
+
   remove_higher_order_terms : bool
       If True then terms that are higher order than bmad_com.taylor_order are removed.
 
@@ -944,6 +1065,7 @@ void init_Bmad_routines_r(py::module &m) {
   -------
   taylor_out : TaylorStruct
       Taylor with constant terms removed.
+
   c0 : float
       The constant part of the taylor map
   )"""
@@ -952,10 +1074,13 @@ void init_Bmad_routines_r(py::module &m) {
       "remove_dead_from_bunch",
       &Bmad::remove_dead_from_bunch,
       py::arg("bunch_in"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine remove_dead_from_bunch
+
+  Parameters
   ----------
   bunch_in : BunchStruct
       Input bunch with alive and dead particles.
+
   bunch_out : BunchStruct
       Output bunch with only alive and pre_born particles. Note: bunch_out can be the same actual argument as
       bunch_in.
@@ -966,11 +1091,14 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::remove_eles_from_lat,
       py::arg("lat"),
       py::arg("check_sanity") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine remove_eles_from_lat
+
+  Parameters
   ----------
   lat : LatStruct
       Lattice to compress.
       This parameter is an input/output and is modified in-place. As an output: Compressed lattice.
+
   check_sanity : bool, optional
       If True (default) then call lat_sanity_check
   )"""
@@ -980,12 +1108,15 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::remove_lord_slave_link,
       py::arg("lord"),
       py::arg("slave"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine remove_lord_slave_link
+
+  Parameters
   ----------
   lord : EleStruct
       Lord element
       This parameter is an input/output and is modified in-place. As an output: Lord element with link info
       removed
+
   slave : EleStruct
       Slave element
       This parameter is an input/output and is modified in-place. As an output: Slave element with link info
@@ -997,12 +1128,16 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::reverse_lat,
       py::arg("lat_in"),
       py::arg("track_antiparticle") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine reverse_lat
+
+  Parameters
   ----------
   lat_in : LatStruct
       Input lattice to reverse.
+
   lat_rev : LatStruct
       Reversed lattice.
+
   track_antiparticle : bool, optional
       Set the particle species of the reversed lat to the anti-particle of lat_in? Default is True.
   )"""
@@ -1030,19 +1165,25 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   ele : EleStruct
       Element being tracked through
+
   param : LatParamStruct
       branch parameters.
+
   particle_at : int
       first_track_edge$, or second_track_edge$.
+
   phase : float
       phase of cavity
+
   orbit : CoordStruct
       Position before kick.
       This parameter is an input/output and is modified in-place. As an output: Position after kick.
+
   mat6 : float, optional
       Transfer matrix before the element.
       This parameter is an input/output and is modified in-place. As an output: Transfer matrix through the
       element.
+
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
 
@@ -1057,14 +1198,19 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("branch"),
       py::arg("ix_ele1") = py::none(),
       py::arg("ix_ele2") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rf_is_on
+
+  Parameters
   ----------
   branch : BranchStruct
       Lattice branch to check.
+
   ix_ele1 : int, optional
       Start of range of elements to check. Default is 0.
+
   ix_ele2 : int, optional
       End of range of elements to check. Default is branch.n_ele_track.
+
   is_on : bool
       True if any rfcavity is powered. False otherwise.
   )"""
@@ -1075,12 +1221,16 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("ele"),
       py::arg("ds") = py::none(),
       py::arg("time"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rf_ref_time_offset
+
+  Parameters
   ----------
   ele : EleStruct
       RF Element being tracked through.
+
   ds : float, optional
       Distance of particle from start edge. Default is zero.
+
   time : float
       Offset time.
   )"""
@@ -1098,7 +1248,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("i"),
       py::arg("j"),
       py::arg("res"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rfun
+
+  Parameters
   ----------
   u : 
   v : 
@@ -1125,7 +1277,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("dt_next"),
       py::arg("err_flag"),
       py::arg("extra_field") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rk_adaptive_time_step
+
+  Parameters
   ----------
   ele : 
   param : 
@@ -1152,7 +1306,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("err_flag"),
       py::arg("print_err") = py::none(),
       py::arg("extra_field") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rk_time_step1
+
+  Parameters
   ----------
   ele : 
   param : 
@@ -1173,7 +1329,9 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("vec"),
       py::arg("angle"),
       py::arg("rvec"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rotate3
+
+  Parameters
   ----------
   vec : 
   angle : 
@@ -1196,12 +1354,16 @@ void init_Bmad_routines_r(py::module &m) {
   ----------
   field : EmFieldStruct
       E and B fields and derivatives.
+
   w_mat : float
       rotation matrix.
+
   w_inv : float
       rotation matrix inverse = transpose(w_mat)
+
   calc_dfield : bool, optional
       If present and True then rotate the field derivatives.
+
   calc_potential : bool, optional
       Rotate the magnetic vector potential? Default is false.
   )"""
@@ -1211,7 +1373,9 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::rotate_field_zx,
       py::arg("field"),
       py::arg("theta"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rotate_field_zx
+
+  Parameters
   ----------
   field : 
   theta : 
@@ -1224,14 +1388,19 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("orbit"),
       py::arg("set"),
       py::arg("rot_mat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rotate_for_curved_surface
+
+  Parameters
   ----------
   ele : EleStruct
       reflecting element
+
   orbit : CoordStruct
       Photon position.
+
   set : bool
       True -> Transform body coords to local curved body coords.
+
   rot_mat : float
       When set = False, rotation matrix calculated from previous call with set = True.
       This parameter is an input/output and is modified in-place. As an output: When set = True, calculated
@@ -1243,13 +1412,17 @@ void init_Bmad_routines_r(py::module &m) {
       &Bmad::rotate_spin,
       py::arg("rot_vec"),
       py::arg("spin"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rotate_spin
+
+  Parameters
   ----------
   rot_vec : float
       Rotation axis. Magnitude of rot_vec is the rotation angle.
+
   spin : float
       Initial coords.
       This parameter is an input/output and is modified in-place. As an output: Final coords.
+
   qrot : float
       : rotation quaternion.
   )"""
@@ -1261,15 +1434,20 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("field"),
       py::arg("ele"),
       py::arg("ds"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rotate_spin_a_step
+
+  Parameters
   ----------
   orbit : CoordStruct
       Initial orbit.
       This parameter is an input/output and is modified in-place. As an output: Orbit with rotated spin
+
   field : EmFieldStruct
       EM Field
+
   ele : 
       ele_struct, Element being tracked through.
+
   ds : float
       Longitudinal step in element body frame.
   )"""
@@ -1282,17 +1460,23 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("BL") = py::none(),
       py::arg("EL") = py::none(),
       py::arg("qrot") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine rotate_spin_given_field
+
+  Parameters
   ----------
   orbit : CoordStruct
       Initial orbit.
       This parameter is an input/output and is modified in-place. As an output: Orbit with rotated spin
+
   sign_z_vel : int
       +/- 1. Sign of direction of travel relative to the element.
+
   BL : float, optional
       Integrated field strength. Assumed zero if not present.
+
   EL : float, optional
       Integrated field strength. Assumed zero if not present.
+
   qrot : float, optional
       Initial rotation quaternion.
       This parameter is an input/output and is modified in-place. As an output: Rotation quaternion with

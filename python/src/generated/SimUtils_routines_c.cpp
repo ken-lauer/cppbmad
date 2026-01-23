@@ -12,7 +12,9 @@ void init_SimUtils_routines_c(py::module &m) {
       py::arg("num_in"),
       py::arg("num_out"),
       py::arg("err_flag"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine calc_file_number
+
+Parameters
 ----------
 file_name : 
 num_in : 
@@ -25,7 +27,9 @@ err_flag :
       &SimUtils::change_file_number,
       py::arg("file_name"),
       py::arg("change"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine change_file_number
+
+Parameters
 ----------
 file_name : 
 change : 
@@ -44,6 +48,7 @@ Parameters
 ----------
 species : int
     Species ID.
+
 default : int, optional
     If present then use default value if species = not_set$.
 
@@ -91,6 +96,7 @@ Returns
 -------
 frequency : float
     Frequency corresponding to the largest FFT amplitude
+
 err : bool
     Error: not enough data. Frequency is near 0 or 0.5
 )"""
@@ -102,7 +108,9 @@ err : bool
       py::arg("wi"),
       py::arg("zr"),
       py::arg("zi"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine complex_error_function
+
+Parameters
 ----------
 wr : 
 wi : 
@@ -115,7 +123,9 @@ zi :
       &SimUtils::cos_one,
       py::arg("angle"),
       py::arg("cos1"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine cos_one
+
+Parameters
 ----------
 angle : 
 cos1 : 
@@ -127,7 +137,9 @@ cos1 :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine cosc
+
+Parameters
 ----------
 x : 
 nd : 
@@ -154,10 +166,13 @@ Parameters
 ----------
 r0 : float
     Start (x, y) point.
+
 r1 : float
     End (x, y) point.
+
 slope0 : float
     Starting slope.
+
 slope1 : float
     End slope.
 
@@ -172,12 +187,16 @@ spline : SplineStruct
       &SimUtils::cross_product,
       py::arg("a"),
       py::arg("b"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine cross_product
+
+Parameters
 ----------
 a : float
     Input vectors.
+
 b : float
     Input vectors.
+
 c : float
     Cross product: a X b.
 )"""

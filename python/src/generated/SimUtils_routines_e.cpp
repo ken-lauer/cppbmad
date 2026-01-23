@@ -20,6 +20,7 @@ spline : SplineStruct
     Array of splines.
     This parameter is an input/output and is modified in-place. As an output: Array with slopes at end
     calculated.
+
 which_end : int
     0 => calculate slopes for the start end of the array. 1 => calculate slopes for the end end of the array.
 )"""
@@ -28,7 +29,9 @@ which_end : int
       "err_exit",
       &SimUtils::err_exit,
       py::arg("err_str") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine err_exit
+
+Parameters
 ----------
 err_str : 
 )"""

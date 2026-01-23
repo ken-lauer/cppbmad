@@ -11,7 +11,9 @@ void init_SimUtils_routines_s(py::module &m) {
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine set_parameter_int
+
+Parameters
 ----------
 param_val : 
 set_val : 
@@ -24,7 +26,9 @@ save_val :
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine set_parameter_logic
+
+Parameters
 ----------
 param_val : 
 set_val : 
@@ -37,7 +41,9 @@ save_val :
       py::arg("param_val"),
       py::arg("set_val"),
       py::arg("save_val"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine set_parameter_real
+
+Parameters
 ----------
 param_val : 
 set_val : 
@@ -59,6 +65,7 @@ Parameters
 ----------
 species_in : int
     Input species.
+
 charge : int
     Charge to set species_charged to.
 
@@ -74,7 +81,9 @@ species_charged : int
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine sinc
+
+Parameters
 ----------
 x : 
 nd : 
@@ -87,7 +96,9 @@ y :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine sincc
+
+Parameters
 ----------
 x : 
 nd : 
@@ -100,7 +111,9 @@ y :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine sinhx_x
+
+Parameters
 ----------
 x : 
 nd : 
@@ -112,7 +125,9 @@ y :
       &SimUtils::skip_header,
       py::arg("ix_unit"),
       py::arg("error_flag"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine skip_header
+
+Parameters
 ----------
 ix_unit : 
 error_flag : 
@@ -135,8 +150,10 @@ Parameters
 ----------
 name : unknown
     Name of the species.
+
 default : int, optional
     Default species to use if name is blank or 'ref_species'.
+
 If not present : 
 a blank name is an error. : 
 print_err : bool, optional
@@ -162,6 +179,7 @@ Parameters
 ----------
 pmd_name : unknown
     OpenPMD species name.
+
 charge : int
     Species charge. Ignored for subatomic particles.
 
@@ -204,6 +222,7 @@ Parameters
 ----------
 mass : float
     Mass of the particle
+
 charge : int
     Charge of the particle.
 
@@ -228,6 +247,7 @@ Parameters
 ----------
 species : int
     Species ID.
+
 non_subatomic_default : float, optional
     Default value to be used for non-subatomic species. Default value of this argument is zero.
 
@@ -251,8 +271,10 @@ Parameters
 ----------
 a_spline : SplineStruct
     Single spline structure.
+
 x : float
     Point for evaluation.
+
 n : int, optional
     Output derivative order. May be -1, 0, 1, 2, or 3. Default is 0. n = -1 => output is integral of y from
     a_spline.x0 to x. n = 1 => output is dy/dx, n = 2 => output is d^2y/dx^2, etc.
@@ -291,8 +313,10 @@ Modules used:
 Parameters
 ----------
 spline : SplineStruct
+
 %x0 : unknown
     points must be in assending order.
+
 %y0 : 
     Y-component of a point.
 
@@ -300,6 +324,7 @@ Returns
 -------
 %coef : 
     Spline coefficients at a point.
+
 ok : bool
     Set .false. if something is wrong (like less than 2 points used).
 )"""
@@ -347,9 +372,11 @@ Parameters
 ----------
 x_knot : float
     Array of x values for the knot points.
+
 Must have more than 2 points and be in asending order. : 
 y_knot : float
     Array of y values for the knot points. Must be same size as x_knot(:).
+
 x : float
     Point to evaluate at.
 
@@ -357,8 +384,10 @@ Returns
 -------
 ok : bool
     Set .true. if everything ok, That is, x is within the spline range.
+
 y : float
     Spline interpolation.
+
 dy : float
     Spline derivative interpolation.
 )"""
@@ -398,6 +427,7 @@ Parameters
 ----------
 spline : SplineStruct
     Spline structure.
+
 x : float
     point for evaluation.
 
@@ -405,8 +435,10 @@ Returns
 -------
 ok : bool
     Set .true. if everything ok. That is, x is within the spline range.
+
 y : float
     Spline interpolation.
+
 dy : float
     Spline derivative interpolation.
 
@@ -423,7 +455,9 @@ spline_mod
       py::arg("alpha"),
       py::arg("x"),
       py::arg("y"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine sqrt_alpha
+
+Parameters
 ----------
 alpha : 
 x : 
@@ -436,7 +470,9 @@ y :
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("ds1"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine sqrt_one
+
+Parameters
 ----------
 x : 
 nd : 
@@ -449,7 +485,9 @@ ds1 :
       py::arg("str"),
       py::arg("match"),
       py::arg("num"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_count
+
+Parameters
 ----------
 str : 
 match : 
@@ -460,7 +498,9 @@ num :
       "str_downcase",
       &SimUtils::str_downcase,
       py::arg("src"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_downcase
+
+Parameters
 ----------
 dst : 
 src : 
@@ -473,7 +513,9 @@ src :
       py::arg("set"),
       py::arg("ignore_clauses") = py::none(),
       py::arg("ix_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_first_in_set
+
+Parameters
 ----------
 line : 
 set : 
@@ -487,7 +529,9 @@ ix_match :
       py::arg("line"),
       py::arg("set"),
       py::arg("ix_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_first_not_in_set
+
+Parameters
 ----------
 line : 
 set : 
@@ -500,7 +544,9 @@ ix_match :
       py::arg("line"),
       py::arg("set"),
       py::arg("ix_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_last_in_set
+
+Parameters
 ----------
 line : 
 set : 
@@ -513,7 +559,9 @@ ix_match :
       py::arg("line"),
       py::arg("set"),
       py::arg("ix_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_last_not_in_set
+
+Parameters
 ----------
 line : 
 set : 
@@ -526,7 +574,9 @@ ix_match :
       py::arg("str"),
       py::arg("pat"),
       py::arg("a_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_match_wild
+
+Parameters
 ----------
 str : 
 pat : 
@@ -541,7 +591,9 @@ a_match :
       py::arg("str_replace") = py::none(),
       py::arg("do_trim") = py::none(),
       py::arg("ignore_escaped") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_substitute
+
+Parameters
 ----------
 string : 
 str_match : 
@@ -554,7 +606,9 @@ ignore_escaped :
       "str_upcase",
       &SimUtils::str_upcase,
       py::arg("src"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine str_upcase
+
+Parameters
 ----------
 dst : 
 src : 
@@ -568,7 +622,9 @@ src :
       py::arg("err_flag"),
       py::arg("err_print_flag") = py::none(),
       py::arg("value"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine string_to_int
+
+Parameters
 ----------
 line : 
 default : 
@@ -585,7 +641,9 @@ value :
       py::arg("err_flag"),
       py::arg("err_print_flag") = py::none(),
       py::arg("value"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine string_to_real
+
+Parameters
 ----------
 line : 
 default : 
@@ -600,7 +658,9 @@ value :
       py::arg("in_string"),
       py::arg("out_string"),
       py::arg("word_len"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine string_trim
+
+Parameters
 ----------
 in_string : 
 out_string : 
@@ -616,7 +676,9 @@ word_len :
       py::arg("ix_word"),
       py::arg("delim"),
       py::arg("ix_next"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine string_trim2
+
+Parameters
 ----------
 in_str : 
 delimitors : 
@@ -644,14 +706,19 @@ Parameters
 ----------
 y : float
     Function values at grid points.
+
 y1 : float
     dy/dx1 derivatives.
+
 y2 : float
     dy/dx2 derivatives.
+
 y12 : float
     d2y/dx1*dx2 second derivatives.
+
 d1 : float
     Grid width in 1-direction.
+
 d2 : float
     Grid width in 2-direction.
 
@@ -708,22 +775,31 @@ Parameters
 ----------
 y : float
     Function values at grid points.
+
 y1 : float
     dy/dx1 derivatives.
+
 y2 : float
     dy/dx2 derivatives.
+
 y12 : float
     d2y/dx1*dx2 second derivatives.
+
 x1l : float
     1-direction coordinate at lower points.
+
 x1u : float
     1-direction coordinate at upper points
+
 x2l : float
     2-direction coordinate at lower points.
+
 x2u : float
     2-direction coordinate at upper points
+
 x1 : float
     1-direction coordinate at point to evaluate.
+
 x2 : float
     2-direction coordinate at point to evaluate.
 
@@ -731,8 +807,10 @@ Returns
 -------
 ansy : float
     Interpolation value.
+
 ansy1 : float
     1-direction derivative at interpolation point.
+
 ansy2 : float
     2-direction derivative at interpolation point.
 )"""
@@ -767,12 +845,15 @@ This is essentially polint from Numerical Recipes.
 Parameters
 ----------
 xa : float
+
 ya : float
+
 x : float
 
 Returns
 -------
 y : float
+
 dy : float
 )"""
   );
@@ -789,6 +870,7 @@ Parameters
 ----------
 x : float
     Variable.
+
 coef : float
     Coefficients.
 
@@ -840,7 +922,9 @@ arr : int
       &SimUtils::system_command,
       py::arg("line"),
       py::arg("err_flag") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine system_command
+
+Parameters
 ----------
 line : 
 err_flag : 

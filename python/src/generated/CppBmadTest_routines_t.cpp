@@ -95,7 +95,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_bunch_struct_array
+
+  Parameters
   ----------
   arr_in : 
   arr_inout : 
@@ -131,7 +133,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_bunch_struct_scalar
+
+  Parameters
   ----------
   val_in : 
   val_inout : 
@@ -171,7 +175,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_character_scalar
+
+  Parameters
   ----------
   val_in : 
   val_inout : 
@@ -189,7 +195,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_complex_array
+
+  Parameters
   ----------
   arr_in : 
   arr_inout : 
@@ -229,7 +237,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_complex_scalar
+
+  Parameters
   ----------
   val_in : 
   val_inout : 
@@ -247,7 +257,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_integer8_array
+
+  Parameters
   ----------
   arr_in : 
   arr_inout : 
@@ -287,7 +299,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_integer8_scalar
+
+  Parameters
   ----------
   val_in : 
   val_inout : 
@@ -305,7 +319,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_integer_array
+
+  Parameters
   ----------
   arr_in : 
   arr_inout : 
@@ -345,7 +361,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_integer_scalar
+
+  Parameters
   ----------
   val_in : 
   val_inout : 
@@ -363,7 +381,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_logical_array
+
+  Parameters
   ----------
   arr_in : 
   arr_inout : 
@@ -403,7 +423,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_logical_scalar
+
+  Parameters
   ----------
   val_in : 
   val_inout : 
@@ -421,7 +443,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_real16_array
+
+  Parameters
   ----------
   arr_in : 
   arr_inout : 
@@ -461,7 +485,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_real16_scalar
+
+  Parameters
   ----------
   val_in : 
   val_inout : 
@@ -479,7 +505,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_real_array
+
+  Parameters
   ----------
   arr_in : 
   arr_inout : 
@@ -519,7 +547,9 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine test_real_scalar
+
+  Parameters
   ----------
   val_in : 
   val_inout : 

@@ -13,7 +13,6 @@ void init_Bmad_routines_n(py::module &m) {
 Routine to return the the maximum number of characters in any attribute
 name known to bmad.
 
-
 Returns
 -------
 max_len : int
@@ -25,12 +24,16 @@ max_len : int
       &Bmad::new_control,
       py::arg("lat"),
       py::arg("ele_name") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine new_control
+
+Parameters
 ----------
 lat : LatStruct
     Lat used
+
 ix_ele : int
     Index of the new control element
+
 ele_name : unknown, optional
     Name of the new element.
 )"""
@@ -66,7 +69,9 @@ int_val : int
       py::arg("A") = py::none(),
       py::arg("A_inverse") = py::none(),
       py::arg("order") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine normal_form_complex_taylors
+
+Parameters
 ----------
 one_turn_taylor : 
 rf_on : 
@@ -118,11 +123,11 @@ The mapping procedure for one turn is:
  z_Floquet_out = RotationMatrix(phi_a, phi_b, phi_c) . z_Floquet_in
  z_Lab_out = A o z_Floquet_out
 
-
 Parameters
 ----------
 one_turn_taylor : TaylorStruct
     one turn taylor map
+
 rf_on : bool
     Was the map calculated with RF on?
 
@@ -130,8 +135,10 @@ Returns
 -------
 A : TaylorStruct
     Map from Floquet coordinates to Lab coordinates
+
 A_inverse : TaylorStruct
     Map from Lab coordinates to Floquet coordinates
+
 dhdj : TaylorStruct
     Map from Floquet coordinates to phase advances
 )"""
@@ -175,8 +182,10 @@ Parameters
 ----------
 mat : float
     1-turn transfer matrix
+
 above_transition : bool, optional
     If present and false, then z-mode assumes positive slip factor.
+
 Else negative slip factor assumed. : 
 abz_tunes : float, optional
     Tunes to order eigensystem by.
@@ -185,8 +194,10 @@ Returns
 -------
 tune : float
     Tunes of the 3 normal modes (radians)
+
 B : float
     B is block diagonal and related to the normal mode Twiss parameters.
+
 HV : float
     Transforms from normal mode coordinates to canonical coordinates: x = H.V.a
 )"""
@@ -196,12 +207,15 @@ HV : float
       &Bmad::normal_mode_dispersion,
       py::arg("ele"),
       py::arg("reverse") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine normal_mode_dispersion
+
+Parameters
 ----------
 ele : EleStruct
     Element whose dispersions are to be adjusted.
     This parameter is an input/output and is modified in-place. As an output: Element with adjusted
     dispersions.
+
 reverse : bool, optional
     Default is False. If True, calculate the x,y dispersions from the normal mode ones.
 )"""
@@ -231,10 +245,13 @@ err_flag : bool
       "num_field_eles",
       &Bmad::num_field_eles,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine num_field_eles
+
+Parameters
 ----------
 ele : EleStruct
     Element with sum number of associated field elements.
+
 n_field_ele : int
     Number of associated field elements.
 )"""
@@ -244,13 +261,17 @@ n_field_ele : int
       &Bmad::num_lords,
       py::arg("slave"),
       py::arg("lord_type"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine num_lords
+
+Parameters
 ----------
 slave : EleStruct
     Slave element.
+
 lord_type : int
     Type of lord. super_lord$, multipass_lord$, girder_lord$, group_lord$, overlay_lord$, and governor$ (=
     group + overlay + control + girder)
+
 num : int
     Number of lords of the given type.
 )"""

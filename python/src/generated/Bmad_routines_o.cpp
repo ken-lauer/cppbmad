@@ -94,18 +94,24 @@ void init_Bmad_routines_o(py::module &m) {
   orbit : CoordStruct
       Starting coords: (x, px, y, py, z, delta) in element body coords.
       This parameter is an input/output and is modified in-place. As an output: Ending coords
+
   ele : EleStruct
       Element to track through.
+
   param : LatParamStruct
       Lattice parameters.
+
   s1_body : float
       Starting point relative to physical entrance.
+
   s2_body : float
       Ending point relative physical entrance.
+
   mat6 : float, optional
       Transfer matrix before the element.
       This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
       through the element.
+
   make_matrix : bool, optional
       If True then make the 6x6 transfer matrix.
 
@@ -113,6 +119,7 @@ void init_Bmad_routines_o(py::module &m) {
   -------
   err_flag : bool
       Set True if there is an error. False otherwise. Note: a particle getting
+
   lost : 
   for example hitting an aperture : 
   is *not* an error. : 
@@ -163,25 +170,34 @@ void init_Bmad_routines_o(py::module &m) {
   orb : CoordStruct
       Starting coords: (x, px, y, py, s, ps) [t-based]
       This parameter is an input/output and is modified in-place. As an output: Ending coords
+
   ele : EleStruct
       Element to track through.
+
   %tracking_method : unknown
       BMAD does no supply em_field_custom. == custom$ then use em_field_custom
+
   /= custom$ then use em_field_standard : 
   param : LatParamStruct
       Beam parameters.
+
   t_dir : float
       Direction of time travel = +/-1. Can be negative for patches. Will be -1 if element has a negative length.
+
   rf_time : float
       Time relative to RF clock.
       This parameter is an input/output and is modified in-place. As an output: Updated time.
+
   track : TrackStruct, optional
       Structure holding the track information.
+
   %save_track : bool
       Set True if track is to be saved.
+
   t_end : float, optional
       If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
       The time orb.t at which tracking stops
+
   may be less than this if the particle gets to the end of the element : 
   extra_field : EmFieldStruct, optional
       Static field to be added to the element field. Eg used with space charge.
@@ -190,6 +206,7 @@ void init_Bmad_routines_o(py::module &m) {
   -------
   err_flag : bool
       Set True if there is an error. False otherwise.
+
   dt_step : float
       Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
   )"""
@@ -228,37 +245,51 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       py::arg("time") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine offset_particle
+
+  Parameters
   ----------
   ele : EleStruct
       Element
+
   set : bool
       T (= set$)   -> Translate from lab coords to the local element coords.
+
   orbit : CoordStruct
       Coordinates of the particle.
       This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
+
   set_tilt : bool, optional
       Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends.
+
   set_hvkicks : bool, optional
       Default is True.
+
   drift_to_edge : int, optional
       no$             -> Do not propagate (drift) particle. no$ is default if s_pos is present. upstream_end$
       -> Propagate to upsteam edge. This is default if set = set$ and s_pos is not present. downstream_end$ ->
       Propagate to downsteam edge. This is default if set = unset$ and s_pos is not present.
+
   s_pos : float, optional
       Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords).
+
   s_out : float
       Longitudinal particle position. If set = set$: Relative to entrance end (in body coords).
+
   set_spin : bool, optional
       Default if False.
+
   mat6 : float, optional
       Transfer matrix before off setting.
       This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
       after offsets applied.
+
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
+
   spin_qrot : float
       Spin rotation quaternion
+
   time : float, optional
       Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
       This parameter is an input/output and is modified in-place. As an output: Updated time.
@@ -272,18 +303,24 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("set"),
       py::arg("offset_position_only") = py::none(),
       py::arg("rot_mat") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine offset_photon
+
+  Parameters
   ----------
   ele : EleStruct
       Element
+
   orbit : CoordStruct
       Coordinates of the particle.
       This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
+
   set : bool
       T (= set$)   -> Translate from lab coords to element coords. F (= unset$) -> Translate from element coords
       to lab coords.
+
   offset_position_only : unknown, optional
       If present and True, only offset the position coordinates.
+
   rot_mat : float, optional
       Rotation matrix from starting coords to ending coords.
   )"""
@@ -294,14 +331,19 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("ele"),
       py::arg("phi_a"),
       py::arg("phi_b"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine one_turn_mat_at_ele
+
+  Parameters
   ----------
   ele : EleStruct
       Reference element.
+
   phi_a : float
       "a" mode tune in radians.
+
   phi_b : float
       "b" mode tune in radians.
+
   mat4 : float
       1-Turn coupled matrix.
   )"""
@@ -340,8 +382,10 @@ void init_Bmad_routines_o(py::module &m) {
   ----------
   file_name : unknown
       File to create.
+
   action : unknown
       'READ' or 'WRITE'
+
   r_name : unknown
       Calling routine name for error messages.
 
@@ -349,8 +393,10 @@ void init_Bmad_routines_o(py::module &m) {
   -------
   iu : int
       Unit number of opened file.
+
   iver : int
       Version number if action = 'READ'
+
   is_ok : bool
       Open OK?
   )"""
@@ -383,18 +429,25 @@ void init_Bmad_routines_o(py::module &m) {
       &Bmad::orbit_amplitude_calc,
       py::arg("ele"),
       py::arg("orb"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine orbit_amplitude_calc
+
+  Parameters
   ----------
   ele : EleStruct
       Element holding the Twiss parameters,
+
   orb : CoordStruct
       Orbit coordinates at the exit end of ele.
+
   amp_a : float
       a-mode amplitude
+
   amp_b : float
       b-mode amplitude
+
   amp_na : float
       a-mode, energy normalized, amplitude.
+
   amp_nb : float
       b-mode, energy normalized, amplitude.
   )"""
@@ -406,16 +459,21 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("p0c_new"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine orbit_reference_energy_correction
+
+  Parameters
   ----------
   orbit : CoordStruct
       Coordinates to correct.
+
   p0c_new : float
       New reference momentum.
+
   mat6 : float, optional
       Transfer matrix before correction.
       This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
       including correction.
+
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
   )"""
@@ -425,12 +483,16 @@ void init_Bmad_routines_o(py::module &m) {
       &Bmad::orbit_to_floor_phase_space,
       py::arg("orbit"),
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine orbit_to_floor_phase_space
+
+  Parameters
   ----------
   orbit : CoordStruct
       Particle orbit in local (not element) coordinates.
+
   ele : EleStruct
       Lattice element particle is in.
+
   floor_phase_space : float
       Floor phase space
   )"""
@@ -442,16 +504,22 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("ele"),
       py::arg("z_direction") = py::none(),
       py::arg("relative_to") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine orbit_to_local_curvilinear
+
+  Parameters
   ----------
   orbit : CoordStruct
       Particle orbit in laboratory (not body) coordinates.
+
   ele : EleStruct
       Lattice element particle is in.
+
   z_direction : int, optional
       Set to +1 or -1.  Z-direction of particle velocity
+
   relative_to : int, optional
       not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
+
   local_position : FloorPositionStruct
       Position in local coordinates.
   )"""
@@ -478,13 +546,18 @@ void init_Bmad_routines_o(py::module &m) {
       &Bmad::orbit_too_large,
       py::arg("orbit"),
       py::arg("check_momentum") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine orbit_too_large
+
+  Parameters
   ----------
   orbit : CoordStruct
       Particle orbit.
+
   param : LatParamStruct
+
   check_momentum : bool, optional
       If True (default) check the momentum.
+
   is_too_large : bool
       True if orbit is too large. False otherwise.
   )"""
@@ -521,12 +594,15 @@ void init_Bmad_routines_o(py::module &m) {
   ----------
   eval : complex
       complex eigenvalues.
+
   evecr : complex
       complex eigenvectors arranged down columns.
+
   mat_tunes : float
       Three normal mode tunes, in radians.
       This parameter is an input/output and is modified in-place. As an output: Ordered normal mode tunes, in
       radians.
+
   Nmat : float
       Normalized, real eigen matrix from make_N.
 
@@ -534,6 +610,7 @@ void init_Bmad_routines_o(py::module &m) {
   -------
   evec : complex
       complex eigenvectors arranged down columns.
+
   err_flag : bool
       Set True if there is an error. False otherwise
   )"""
@@ -557,9 +634,11 @@ void init_Bmad_routines_o(py::module &m) {
   eval : complex
       complex eigenvalues.
       This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvalues.
+
   evec : complex
       complex eigenvectors arranged down columns.
       This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvectors.
+
   mat_tunes : float, optional
       Three normal mode tunes, in radians.
       This parameter is an input/output and is modified in-place. As an output: Reordered same as evecs.
@@ -582,11 +661,14 @@ void init_Bmad_routines_o(py::module &m) {
   eval : complex
       complex eigenvalues.
       This parameter is an input/output and is modified in-place. As an output: Ordered eigenvalues.
+
   evec : complex
       complex eigenvectors arranged down columns.
       This parameter is an input/output and is modified in-place. As an output: Ordered eigenvectors.
+
   mat_tunes : float
       Three normal mode tunes, in radians.
+
   abz_tunes : float
       Tunes to order eigensystem by.
 
@@ -610,6 +692,7 @@ void init_Bmad_routines_o(py::module &m) {
   ----------
   bunch : BunchStruct
       collection of particles.
+
   %particle : 
       Longitudinal position of j^th particle.
 
@@ -625,11 +708,14 @@ void init_Bmad_routines_o(py::module &m) {
       &Bmad::order_super_lord_slaves,
       py::arg("lat"),
       py::arg("ix_lord"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine order_super_lord_slaves
+
+  Parameters
   ----------
   lat : LatStruct
       Lat.
       This parameter is an input/output and is modified in-place. As an output: Lat with fixed controls.
+
   ix_lord : int
       Index of lord element.
   )"""
@@ -640,7 +726,9 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine osc_alloc_freespace_array
+
+  Parameters
   ----------
   nlo : 
   nhi : 
@@ -653,7 +741,9 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine osc_alloc_image_array
+
+  Parameters
   ----------
   nlo : 
   nhi : 
@@ -666,7 +756,9 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine osc_alloc_rectpipe_arrays
+
+  Parameters
   ----------
   nlo : 
   nhi : 
@@ -682,7 +774,9 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("delta"),
       py::arg("umin"),
       py::arg("npad"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine osc_getgrnpipe
+
+  Parameters
   ----------
   gam : 
   a : 
@@ -692,7 +786,12 @@ void init_Bmad_routines_o(py::module &m) {
   npad : 
   )"""
   );
-  m.def("osc_read_rectpipe_grn", &Bmad::osc_read_rectpipe_grn, R"""()""");
+  m.def(
+      "osc_read_rectpipe_grn",
+      &Bmad::osc_read_rectpipe_grn,
+      R"""(Wrapper for Fortran routine osc_read_rectpipe_grn
+  )"""
+  );
   m.def(
       "osc_write_rectpipe_grn",
       &Bmad::osc_write_rectpipe_grn,
@@ -704,7 +803,9 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("gamma"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine osc_write_rectpipe_grn
+
+  Parameters
   ----------
   apipe : 
   bpipe : 

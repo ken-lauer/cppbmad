@@ -10,12 +10,16 @@ void init_Bmad_routines_v(py::module &m) {
       &Bmad::valid_field_calc,
       py::arg("ele"),
       py::arg("field_calc"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine valid_field_calc
+
+Parameters
 ----------
 ele : EleStruct
     Lattice element.
+
 field_calc : int
     bmad_standard$, etc.
+
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -25,12 +29,16 @@ is_valid : bool
       &Bmad::valid_fringe_type,
       py::arg("ele"),
       py::arg("fringe_type"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine valid_fringe_type
+
+Parameters
 ----------
 ele : EleStruct
     Lattice element.
+
 fringe_type : int
     bmad_standard$, etc.
+
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -41,14 +49,19 @@ is_valid : bool
       py::arg("ele"),
       py::arg("species"),
       py::arg("mat6_calc_method"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine valid_mat6_calc_method
+
+Parameters
 ----------
 ele : EleStruct
     Lattice element.
+
 species : 
     Type of particle being tracked. electron$, etc. or not_set$
+
 mat6_calc_method : int
     bmad_standard$, etc.
+
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -58,12 +71,16 @@ is_valid : bool
       &Bmad::valid_spin_tracking_method,
       py::arg("ele"),
       py::arg("spin_tracking_method"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine valid_spin_tracking_method
+
+Parameters
 ----------
 ele : EleStruct
     Lattice element.
+
 spin_tracking_method : int
     bmad_standard$, etc.
+
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -74,14 +91,19 @@ is_valid : bool
       py::arg("ele"),
       py::arg("species"),
       py::arg("tracking_method"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine valid_tracking_method
+
+Parameters
 ----------
 ele : EleStruct
     Lattice element.
+
 species : 
     Type of particle being tracked. electron$, etc. or not_set$
+
 tracking_method : int
     bmad_standard$, etc.
+
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -110,18 +132,25 @@ is_valid : bool
       py::arg("attrib_name"),
       py::arg("err_print_flag") = py::none(),
       py::arg("err_value") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine value_of_attribute
+
+Parameters
 ----------
 ele : EleStruct
     After this routine finishes Ptr_attrib
+
 attrib_name : unknown
     Name of attribute. Must be uppercase.
+
 err_flag : bool
     Set True if attribtute not found. False otherwise.
+
 err_print_flag : bool, optional
     If present and True then print an error message if there is an  error.
+
 err_value : float, optional
     Value to set value argument if there is an error. Default is 0.
+
 value : float
     Value of the attribute. Set to err_value if not found.
 )"""
@@ -135,7 +164,9 @@ value : float
       py::arg("typ"),
       py::arg("ignore_if_zero") = py::none(),
       py::arg("use_comma") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine value_to_line
+
+Parameters
 ----------
 line : 
 value : 
@@ -150,12 +181,16 @@ use_comma :
       &Bmad::vec_to_polar,
       py::arg("vec"),
       py::arg("phase") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine vec_to_polar
+
+Parameters
 ----------
 vec : float
     unitary spin vector
+
 phase : float, optional
     Phase of the spinor, if not given then set to zero
+
 polar : SpinPolarStruct
 )"""
   );
@@ -164,12 +199,16 @@ polar : SpinPolarStruct
       &Bmad::vec_to_spinor,
       py::arg("vec"),
       py::arg("phase") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine vec_to_spinor
+
+Parameters
 ----------
 vec : float
     Spin vector in cartesian coordinates
+
 phase : float
     Phase of the spinor, if not given then set to zero
+
 spinor : complex
     Spinor.
 )"""
@@ -193,15 +232,17 @@ Routine to check if a name is well formed. Examples:
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
-
 Parameters
 ----------
 name : unknown
     Name(1:ix_name) is the string to check.
+
 ix_name : int
     Number of characters in the name.
+
 pure_name : bool, optional
     If True, reject names that contain "[", "]", "(", ")", "." characters.
+
 Default is False. : 
 include_wild : bool, optional
     Name can include wild card characters and additionally type prefixes like "QUAD::". Default is False.

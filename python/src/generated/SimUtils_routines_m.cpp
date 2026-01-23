@@ -10,7 +10,9 @@ void init_SimUtils_routines_m(py::module &m) {
       &SimUtils::make_legal_comment,
       py::arg("comment_in"),
       py::arg("comment_out"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine make_legal_comment
+
+Parameters
 ----------
 comment_in : 
 comment_out : 
@@ -46,7 +48,9 @@ mass : float
       py::arg("str"),
       py::arg("pat"),
       py::arg("is_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine match_reg
+
+Parameters
 ----------
 str : 
 pat : 
@@ -59,7 +63,9 @@ is_match :
       py::arg("string"),
       py::arg("template_"),
       py::arg("is_match"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine match_wild
+
+Parameters
 ----------
 string : 
 template : 
@@ -76,15 +82,15 @@ is_match :
 
 Optimizer that uses Numerical Recipes brent to find a local maximum,
 which is the frequency that maximizes the projection.
-
-
 )"""
   );
   m.def(
       "milli_sleep",
       &SimUtils::milli_sleep,
       py::arg("milli_sec"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine milli_sleep
+
+Parameters
 ----------
 milli_sec : 
 )"""

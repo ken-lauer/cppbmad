@@ -55,8 +55,10 @@ void init_SimUtils_routines_b(py::module &m) {
   ----------
   x_norm : float
       x_norm = (x - x0) / dx
+
   y_norm : float
       y_norm = (y - y0) / dy
+
   bi_coef : BicubicCmplxCoefStruct
       Coefficients.
 
@@ -64,8 +66,10 @@ void init_SimUtils_routines_b(py::module &m) {
   -------
   f_val : complex
       Value of f.
+
   df_dx : complex
       Normalized first derivative: True df/dx = df_dx * dx
+
   df_dy : complex
       Normalized first derivative: True df/dy = df_dy * dy
   )"""
@@ -84,8 +88,10 @@ void init_SimUtils_routines_b(py::module &m) {
   ----------
   x : float
       Input value to bin.
+
   bin1_x_min : float
       Minimum value of bin with index 1.
+
   bin_delta : float
       Bin width.
 
@@ -124,8 +130,10 @@ void init_SimUtils_routines_b(py::module &m) {
   ----------
   ix_bin : int
       Index of bin under question.
+
   bin1_x_min : float
       Minimum value of bin with index 1.
+
   bin_delta : float
       Bin width.
 
@@ -159,8 +167,10 @@ void init_SimUtils_routines_b(py::module &m) {
   word : int
       Input word
       This parameter is an input/output and is modified in-place. As an output: Word with bit set.
+
   pos : int
       position to set.
+
   set_to_1 : bool
       If True then bit is set to 1. If False bit is set to 0.
   )"""
@@ -202,10 +212,13 @@ void init_SimUtils_routines_b(py::module &m) {
   ----------
   x_knot : float
       Array of x values.
+
   x : float
       Evaluation point.
+
   strict : bool, optional
       Default is False. Determines acceptible range.
+
   print_err : bool, optional
       Default is True. Print error message if out of range?
 
@@ -213,6 +226,7 @@ void init_SimUtils_routines_b(py::module &m) {
   -------
   ix0 : int
       If ok = True, x is in the interval [x_knot(ix0), x_knot(ix0+1)]
+
   ok : bool
       True if x is in range. False otherwise.
   )"""

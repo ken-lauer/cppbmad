@@ -9,7 +9,9 @@ void init_SimUtils_routines_v(py::module &m) {
       "virtual_memory_usage",
       &SimUtils::virtual_memory_usage,
       py::arg("usage"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine virtual_memory_usage
+
+Parameters
 ----------
 usage : 
 )"""

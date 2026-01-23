@@ -15,7 +15,9 @@ void init_Bmad_routines_d(py::module &m) {
       py::arg("delta"),
       py::arg("species"),
       py::arg("mat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine damping_matrix_d
+
+Parameters
 ----------
 gamma : 
 g_tot : 
@@ -33,16 +35,21 @@ mat :
       py::arg("nullify_only") = py::none(),
       py::arg("nullify_branch") = py::none(),
       py::arg("dealloc_poles") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine deallocate_ele_pointers
+
+Parameters
 ----------
 ele : EleStruct
     Element with pointers.
     This parameter is an input/output and is modified in-place. As an output: Element with deallocated
     pointers.
+
 nullify_only : bool, optional
     If present and True: Nullify & do not deallocate.
+
 nullify_branch : bool, optional
     Nullify ele.branch? Default is True.
+
 dealloc_poles : bool, optional
     Dealloc ele.a/b_pole, ele.a/b_pole_elec? Default is True.
 )"""
@@ -66,7 +73,9 @@ tree : ExpressionTreeStruct
       "deallocate_lat_pointers",
       &Bmad::deallocate_lat_pointers,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine deallocate_lat_pointers
+
+Parameters
 ----------
 lat : LatStruct
     Lat with pointers.
@@ -77,10 +86,13 @@ lat : LatStruct
       "default_tracking_species",
       &Bmad::default_tracking_species,
       py::arg("param"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine default_tracking_species
+
+Parameters
 ----------
 param : LatParamStruct
     Parameters for a lattice branch.
+
 species : int
     Default species to be used for tracking.
 )"""
@@ -98,6 +110,7 @@ Parameters
 ----------
 orbit : CoordStruct
     Orbit at surface.
+
 ele : EleStruct
     Detector element.
 
@@ -112,12 +125,16 @@ ix_pix : int
       &Bmad::diffraction_plate_or_mask_hit_spot,
       py::arg("ele"),
       py::arg("orbit"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine diffraction_plate_or_mask_hit_spot
+
+Parameters
 ----------
 ele : EleStruct
     diffraction_plate or mask element.
+
 orbit : CoordStruct
     particle position.
+
 ix_section : 
     integer, Set to index of clear section hit. Set to zero if photon is outside all clear areas.
 )"""
@@ -129,7 +146,9 @@ ix_section :
       py::arg("g_tot"),
       py::arg("species"),
       py::arg("mat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine diffusion_matrix_b
+
+Parameters
 ----------
 gamma : 
 g_tot : 
@@ -160,16 +179,22 @@ mat :
       py::arg("orbit"),
       py::arg("particle_at"),
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine distance_to_aperture
+
+Parameters
 ----------
 orbit : CoordStruct
     Particle position.
+
 particle_at : int
     first_track_edge$, second_track_edge$, or in_between$
+
 ele : EleStruct
     Element containing aperture.
+
 no_aperture_here : bool
     True if aperture does not exist at the longitudinal location of the particle.
+
 dist : float
     Normalized distance of the particle from the aperture.
 )"""
@@ -178,11 +203,14 @@ dist : float
       "do_mode_flip",
       &Bmad::do_mode_flip,
       py::arg("ele"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine do_mode_flip
+
+Parameters
 ----------
 ele : EleStruct
     Starting Element
     This parameter is an input/output and is modified in-place. As an output: Flipped element
+
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -194,7 +222,9 @@ err_flag : bool
       py::arg("mass"),
       py::arg("dE"),
       py::arg("dpc"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine dpc_given_de
+
+Parameters
 ----------
 pc_old : 
 mass : 
@@ -227,7 +257,9 @@ lat : LatStruct
       "drift_multipass_name_correction",
       &Bmad::drift_multipass_name_correction,
       py::arg("lat"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine drift_multipass_name_correction
+
+Parameters
 ----------
 lat : 
 )"""
@@ -250,10 +282,13 @@ Parameters
 ----------
 orbit : CoordStruct
     particle orbit in time-based coordinates.
+
 beta0 : float
     reference velocity v/c.
+
 delta_s : float, optional
     s-coordinate distance to drift particle.
+
 delta_t : float, optional
     -coordinate distancet to drift particle.
 )"""
@@ -273,8 +308,10 @@ Parameters
 p : CoordStruct
     Init particle position.
     This parameter is an input/output and is modified in-place. As an output: Final particle position.
+
 s : float
     Target s coordinate.
+
 branch : BranchStruct
     Branch being tracked through.
 )"""
@@ -294,8 +331,10 @@ Parameters
 p : CoordStruct
     Init particle position.
     This parameter is an input/output and is modified in-place. As an output: Final particle position.
+
 t : float
     Target t coordinate.
+
 branch : BranchStruct
     Lattice branch being tracked through.
 )"""
@@ -316,10 +355,13 @@ Parameters
 ----------
 s_chord0 : float
     Start position along centroid chord.
+
 s_chord1 : float
     Stop position along central_chord.
+
 spline : SplineStruct
     Spline of x-position as a function of s.
+
 dtheta_ref : float, optional
     angle to rotate the reference line from the centroid chord. Default is 0.
 
@@ -348,16 +390,21 @@ Parameters
 ----------
 branch : BranchStruct
     Lattice branch to track through.
+
 ele0 : EleStruct
     Lattice element at start of tracking
+
 orb0 : CoordStruct
     reference orbit at the start of tracking.
+
 theta_xy : float
     Angle of radial line (in radians) in x-y space.
+
 Angle is "normalized" by %x_init : 
 %y_init. : 
 ap_param : ApertureParamStruct
     Structure holding the input data:
+
 check_xy_init : bool, optional
     If True, do not check that aperture_param.x_init and .y_init are non-zero. Default is True.
 
@@ -382,10 +429,13 @@ Parameters
 ----------
 aperture_param : ApertureParamStruct
     Scan parameters
+
 lat : LatStruct
     Lattice.
+
 pz_start : float
     Starting phase space pz values.
+
 print_timing : bool, optional
     If True print info on calculation time. Default is True.
 

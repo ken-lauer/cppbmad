@@ -42,6 +42,7 @@ Returns
 -------
 axis : float
     Rotation axis. Normalized to 1.
+
 angle : float
     Rotation angle in the range [0, pi].
 )"""
@@ -70,7 +71,9 @@ quat : float
       &SimUtils::word_len,
       py::arg("wording"),
       py::arg("wlen"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine word_len
+
+Parameters
 ----------
 wording : 
 wlen : 
@@ -87,7 +90,9 @@ wlen :
       py::arg("delim_found"),
       py::arg("out_str"),
       py::arg("ignore_interior") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine word_read
+
+Parameters
 ----------
 in_str : 
 delim_list : 

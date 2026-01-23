@@ -15,7 +15,9 @@ void init_SimUtils_routines_l(py::module &m) {
       py::arg("b"),
       py::arg("sig_a"),
       py::arg("sig_b"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine linear_fit
+
+Parameters
 ----------
 x : 
 y : 
@@ -32,14 +34,19 @@ sig_b :
       py::arg("x"),
       py::arg("y"),
       py::arg("z"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine linear_fit_2d
+
+Parameters
 ----------
 x : float
     Array of x-values.
+
 y : float
     Array of y-values.
+
 z : float
     Array of z-values
+
 coef : float
     Coefficients of the linear fit
 )"""
@@ -49,7 +56,9 @@ coef : float
       &SimUtils::logic_str,
       py::arg("logic"),
       py::arg("str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine logic_str
+
+Parameters
 ----------
 logic : 
 str : 
@@ -59,7 +68,9 @@ str :
       "lunget",
       &SimUtils::lunget,
       py::arg("func_retval__"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine lunget
+
+Parameters
 ----------
 lunget : 
 )"""

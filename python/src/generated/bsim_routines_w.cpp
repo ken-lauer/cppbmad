@@ -12,7 +12,9 @@ void init_bsim_routines_w(py::module &m) {
       py::arg("bbu_beam"),
       py::arg("bbu_param"),
       py::arg("this_stage"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine write_bunch_by_bunch_info
+
+Parameters
 ----------
 lat : 
 bbu_beam : 

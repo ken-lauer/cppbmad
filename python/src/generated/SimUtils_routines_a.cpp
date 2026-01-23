@@ -11,7 +11,6 @@ void init_SimUtils_routines_a(py::module &m) {
       R"""(Subroutine allocate_thread_states()
 
 Routine to allocate random number state structures when openMP is used.
-
 )"""
   );
   m.def(
@@ -66,7 +65,6 @@ anti_species : int
 Implements the All Phase FFT method for obtaining accurate phase from signal data.
 
 The signal data is truncated to an odd length, and the phase is relative to the central point.
-
 )"""
   );
   py::class_<SimUtils::ApfftCorr, std::unique_ptr<SimUtils::ApfftCorr>>(
@@ -108,10 +106,13 @@ Parameters
 ----------
 rdata_in : float
     signal data.
+
 bounds : float
     range within which to search for peak.
+
 window : unknown
     'rec' or 'han' for rectangular or Hann window.
+
 diag : int, optional
     causes low-level routine apfft_ext to produce a fort.X file where X=9000+fid containing diag information.
 
@@ -119,8 +120,10 @@ Returns
 -------
 phase : float
     phase of peak found in signal.
+
 freq : float
     frequency of peak
+
 amp : float
     amplitude of peak
 )"""
@@ -141,7 +144,6 @@ Implements the All Phase FFT method for obtaining accurate phase from signal dat
 
 This "extended" apfft subroutine returns the amplitudes and frequency as well, for use
 by the corrected apfft subroutine in this module.
-
 )"""
   );
   m.def(
@@ -150,7 +152,9 @@ by the corrected apfft subroutine in this module.
       py::arg("x"),
       py::arg("nd") = py::none(),
       py::arg("y"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine asinc
+
+Parameters
 ----------
 x : 
 nd : 
@@ -163,7 +167,9 @@ y :
       py::arg("int_arr"),
       py::arg("err_str"),
       py::arg("ival"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine assert_equal
+
+Parameters
 ----------
 int_arr : 
 err_str : 
@@ -206,10 +212,13 @@ Parameters
 ----------
 charge : int
     Charge of the atom.
+
 is_anti : bool
     Is an anti-atom.
+
 atomic_num : int
     Atomic number.
+
 n_nuc : int
     Number of nucleons.
 
@@ -232,6 +241,7 @@ Parameters
 ----------
 axis : float
     Axis of rotation.
+
 angle : float
     angle of rotation.
 
@@ -255,6 +265,7 @@ Parameters
 ----------
 axis : float
     Rotation axis. Does not have to be normalized.
+
 angle : float
     Rotation angle in the range [-pi, pi].
 

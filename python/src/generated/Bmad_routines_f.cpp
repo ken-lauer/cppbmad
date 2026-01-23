@@ -23,7 +23,9 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("b"),
       py::arg("n"),
       py::arg("isn"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine fft1
+
+  Parameters
   ----------
   a : 
   b : 
@@ -56,19 +58,25 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("branch"),
       py::arg("ix_ele"),
       py::arg("from_mad") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine fibre_to_ele
+
+  Parameters
   ----------
   ptc_fibre : unknown
       PTC fibre.
+
   branch : BranchStruct
       branch containing elements.
+
   ix_ele : int
       Index in ele(:) array of element last used.
       This parameter is an input/output and is modified in-place. As an output: Index to element created (upper
       index if more than one created).
+
   err_flag : bool
       Set true if there is an error. False otherwise. To do: lcavity energy change !? open or closed geometry?
       Energy patch
+
   from_mad : bool, optional
       If True, ignore PTC specific parameters like integrator_order. Default is False. True is used when the
       fibre has been created via MAD. In this case, the PTC specific parameters may not have good values.
@@ -92,6 +100,7 @@ void init_Bmad_routines_f(py::module &m) {
   ----------
   ele : EleStruct
       Element containing the attribute
+
   attrib_name : unknown
       Name of the field attribute. Assumed upper case.
 
@@ -115,6 +124,7 @@ void init_Bmad_routines_f(py::module &m) {
   table : PhotonReflectTableStruct
       Surface tables to be finalized.
       This parameter is an input/output and is modified in-place. As an output: Finalized surface tables.
+
   in_degrees : bool
       Table angles in degrees?
   )"""
@@ -141,17 +151,22 @@ void init_Bmad_routines_f(py::module &m) {
       &Bmad::find_element_ends,
       py::arg("ele"),
       py::arg("ix_multipass") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine find_element_ends
+
+  Parameters
   ----------
   ele : EleStruct
       Element to find the ends for.
+
   ele1 : EleStruct
       Pointer to element just before ele.
+
   ele2 : EleStruct
       Pointer to ele itself or the last sub-element within ele. Note: ele1 and ele2 will be nullified if ele is
       in the lord part of the lattice and does not have any slaves. Note: For an element in the tracking part of
       the lattice: ele1.ix_ele = ele.ix_ele - 1 ele2        => ele Exception: For Beginning element (index 0),
       ele1 => ele
+
   ix_multipass : int, optional
       Which multipass pass to follow. Default is 1. This is ignored if there is no multipass elements.
   )"""
@@ -176,6 +191,7 @@ void init_Bmad_routines_f(py::module &m) {
   ----------
   bound : float
       -bound and +bound is integration bound.
+
   args : float
       Parameters and constants of dpsi/dt.  See comments of psi_prime for details.
 
@@ -209,19 +225,26 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("ele"),
       py::arg("fm_type"),
       py::arg("ignore_slaves") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine find_matching_fieldmap
+
+  Parameters
   ----------
   file_name : unknown
       File name associated with field to match to.
+
   ele : EleStruct
       Element holding the field to be matched.
+
   fm_type : int
       Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_grad_map$, grid_field$
+
   match_ele : EleStruct
       Pointer to element with matched field. Nullified if no match found.
+
   ix_field : int
       index of field. For example: matching field => match_ele.cartesian_map(ix_field) Set to -1 if no match
       found.
+
   ignore_slaves : bool, optional
       If True, ignore any multipass slaves. Default is False.
   )"""
@@ -242,8 +265,10 @@ void init_Bmad_routines_f(py::module &m) {
   ----------
   bound : float
       -bound and +bound are integration boundaries
+
   p0 : float
       Boundary condition psi(0)
+
   args : float
       Parameters and constants of DEQ.  See psi_prime comments for details.
 
@@ -276,16 +301,22 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("theta"),
       py::arg("phi"),
       py::arg("psi"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine floor_angles_to_w_mat
+
+  Parameters
   ----------
   theta : float
       Azimuth angle.
+
   phi : float
       Pitch angle.
+
   psi : float
       Roll angle.
+
   w_mat : float
       Orientation matrix.
+
   w_mat_inv : float
       Inverse Orientation matrix.
   )"""
@@ -315,16 +346,22 @@ void init_Bmad_routines_f(py::module &m) {
       &Bmad::floor_w_mat_to_angles,
       py::arg("w_mat"),
       py::arg("floor0") = py::none(),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine floor_w_mat_to_angles
+
+  Parameters
   ----------
   w_mat : float
       Orientation matrix.
+
   theta : float
       Azimuth angle.
+
   phi : float
       Pitch angle.
+
   psi : float
       Roll angle.
+
   floor0 : FloorPositionStruct, optional
       There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
       choose the solution "nearest" the angles in floor0.
@@ -344,6 +381,7 @@ void init_Bmad_routines_f(py::module &m) {
   ----------
   re_taylor : TaylorStruct
       Real part
+
   im_taylor : TaylorStruct
       Imaginary part
 
@@ -383,11 +421,11 @@ void init_Bmad_routines_f(py::module &m) {
   Exception: If the use_line argument is present and not blank, the suffix will be:
       suffix = '.' + use_line + '.digested' + bmad_inc_version$
 
-
   Parameters
   ----------
   lat_file : unknown
       Input lattice file name.
+
   use_line : unknown, optional
       Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
       the lattice file.
@@ -396,6 +434,7 @@ void init_Bmad_routines_f(py::module &m) {
   -------
   digested_file : unknown
       Name of the digested file.
+
   full_lat_file : unknown
       Input lattice file name with full directory. Can be used for error messages.
   )"""
@@ -406,14 +445,19 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("particle_at"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine fringe_here
+
+  Parameters
   ----------
   ele : EleStruct
       Lattice element.
+
   orbit : CoordStruct
       Particle position.
+
   particle_at : int
       Either first_track_edge$ or second_track_edge$.
+
   is_here : bool
       True if there is a fringe. False if not.
   )"""

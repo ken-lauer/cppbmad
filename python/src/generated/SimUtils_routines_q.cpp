@@ -9,10 +9,13 @@ void init_SimUtils_routines_q(py::module &m) {
       "quadratic_roots",
       &SimUtils::quadratic_roots,
       py::arg("coefs"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine quadratic_roots
+
+Parameters
 ----------
 coefs : float
     Coefficients of the quadratic equation with 0 = coefs(1) + coefs(2) * x + coefs(3) * x^2
+
 root : complex
     Complex roots.
 )"""
@@ -113,12 +116,16 @@ Parameters
 ----------
 q1 : float
     Quaternions.
+
 q2 : float
     Quaternions.
+
 q3 : float, optional
     More quaternions.
+
 ... : float, optional
     More quaternions.
+
 q9 : float, optional
     More quaternions.
 
@@ -161,12 +168,16 @@ Parameters
 ----------
 q1 : float
     Quaternions.
+
 q2 : float
     Quaternions.
+
 q3 : float, optional
     More quaternions.
+
 ... : float, optional
     More quaternions.
+
 q9 : float, optional
     More quaternions.
 
@@ -192,6 +203,7 @@ Parameters
 ----------
 quat : float
     Quaternion to rotate with. Does not have to be normalized.
+
 vec_in : float
     Initial vector.
 
@@ -217,6 +229,7 @@ Parameters
 ----------
 quat : float
     Quaternion to rotate with. Does not have to be normalized.
+
 vec_in : float
     Initial vector.
 
@@ -261,6 +274,7 @@ Returns
 -------
 axis : float
     Axis of rotation.
+
 angle : float
     angle of rotation in range [0, pi].
 )"""
@@ -311,7 +325,9 @@ w_mat : float
       py::arg("return_str"),
       py::arg("ix"),
       py::arg("ios"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine query_string
+
+Parameters
 ----------
 query_str : 
 upcase : 
@@ -325,7 +341,9 @@ ios :
       &SimUtils::quote,
       py::arg("str"),
       py::arg("q_str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine quote
+
+Parameters
 ----------
 str : 
 q_str : 

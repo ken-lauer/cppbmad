@@ -3,9 +3,8 @@ pybmad
 """
 from __future__ import annotations
 import collections.abc
-import enum
 import typing
-__all__: list[str] = ['A0', 'A0_ELEC', 'A21', 'A21_ELEC', 'ABS', 'ABSOLUTE', 'ABSOLUTE_TIME_TRACKING', 'AB_MULTIPOLE', 'ACCORDION_EDGE', 'ACOS', 'ACOSH', 'ACOTH', 'AC_KICKER', 'ALIAS', 'ALIVE', 'ALL', 'ALL_CONTROL_VAR', 'ALL_GROUPS', 'ALPHA_A', 'ALPHA_A0', 'ALPHA_A1', 'ALPHA_ANGLE', 'ALPHA_A_OUT', 'ALPHA_A_STORED', 'ALPHA_A_STRONG', 'ALPHA_B', 'ALPHA_B0', 'ALPHA_B1', 'ALPHA_B_OUT', 'ALPHA_B_STORED', 'ALPHA_B_STRONG', 'AMPERSAND', 'AMP_VS_TIME', 'ANCHOR_BEGINNING', 'ANCHOR_CENTER', 'ANCHOR_END', 'ANGLE', 'ANGLE_OUT_MAX', 'ANOMALOUS_MAG_MOMENT_DEUTERON', 'ANOMALOUS_MAG_MOMENT_ELECTRON', 'ANOMALOUS_MAG_MOMENT_HE3', 'ANOMALOUS_MAG_MOMENT_MUON', 'ANOMALOUS_MAG_MOMENT_NEUTRON', 'ANOMALOUS_MAG_MOMENT_PROTON', 'ANOMALOUS_MOMENT_OF', 'ANTIMUON', 'ANTIPARTICLE', 'ANTIPROTON', 'ANTI_ATOM', 'ANTI_DEUTERON', 'ANTI_HELION', 'ANTI_NEUTRON', 'ANTI_REF_PARTICLE', 'APERTURE', 'APERTURE_AT', 'APERTURE_TYPE', 'AREA_DENSITY', 'AREA_DENSITY_USED', 'ARG_COUNT', 'ARROW', 'ASCII', 'ASIN', 'ASINH', 'ATAN', 'ATAN2', 'ATANH', 'ATOMIC_MASS_UNIT', 'ATTRIBUTE_GROUP', 'AUTO', 'AUTOSCALE_AMPLITUDE', 'AUTOSCALE_PHASE', 'AUTO_APERTURE', 'AVERAGE', 'AbMultipoleKick', 'AcKickerFreqStruct', 'AcKickerFreqStructAlloc1D', 'AcKickerFreqStructArray1D', 'AcKickerStruct', 'AcKickerTimeStruct', 'AcKickerTimeStructAlloc1D', 'AcKickerTimeStructArray1D', 'ActionToXyz', 'AddSuperimpose', 'AllEncompassingStruct', 'AnormalModeStruct', 'ApertureParamStruct', 'AperturePointStruct', 'AperturePointStructAlloc1D', 'AperturePointStructArray1D', 'ApertureScanStruct', 'ApertureScanStructAlloc1D', 'ApertureScanStructArray1D', 'ApfftCorr', 'AttributeFree1', 'AttributeFree2', 'AttributeFree3', 'AttributeIndex1', 'AttributeIndex2', 'B0', 'B0_ELEC', 'B1_GRADIENT', 'B21', 'B21_ELEC', 'B2_GRADIENT', 'B3_GRADIENT', 'BASIC_BEND', 'BBI_CONST', 'BEAMBEAM', 'BEGINNING_ELE', 'BENDS', 'BEND_TILT', 'BETA_A', 'BETA_A0', 'BETA_A1', 'BETA_A_OUT', 'BETA_A_STORED', 'BETA_A_STRONG', 'BETA_B', 'BETA_B0', 'BETA_B1', 'BETA_B_OUT', 'BETA_B_STORED', 'BETA_B_STRONG', 'BINARY', 'BLACK', 'BLANK', 'BLUE', 'BL_HKICK', 'BL_KICK', 'BL_VKICK', 'BMAD_INC_VERSION', 'BMAD_STANDARD', 'BOTH_ENDS', 'BRAGG_ANGLE', 'BRAGG_ANGLE_IN', 'BRAGG_ANGLE_OUT', 'BRAGG_DIFFRACTED', 'BS_FIELD', 'B_FIELD', 'B_FIELD_ERR', 'B_FIELD_TOT', 'B_MAX', 'B_PARAM', 'BbiKick', 'BbuBeamStruct', 'BbuParamStruct', 'BbuStageStruct', 'BbuStageStructAlloc1D', 'BbuStageStructArray1D', 'BeamInitStruct', 'BeamStruct', 'BeamTilts', 'BendShift', 'BicubicCmplxCoefStruct', 'BicubicCmplxCoefStructArray3D', 'BicubicCmplxEval', 'BinXCenter', 'BitSet', 'BmadCommonStruct', 'BmadNormalFormStruct', 'BmadParser', 'BookkeepingStateStruct', 'BoolAlloc1D', 'BoolArray1D', 'BoolArray2D', 'BoolArray3D', 'BpmPhaseCouplingStruct', 'BracketIndexForSpline', 'BranchStruct', 'BranchStructAlloc1D', 'BranchStructArray1D', 'BunchParamsStruct', 'BunchParamsStructAlloc1D', 'BunchParamsStructArray1D', 'BunchStruct', 'BunchStructAlloc1D', 'BunchStructArray1D', 'BunchTrackStruct', 'BunchTrackStructAlloc1D', 'BunchTrackStructArray1D', 'C11_MAT0', 'C11_MAT1', 'C12_MAT0', 'C12_MAT1', 'C21_MAT0', 'C21_MAT1', 'C22_MAT0', 'C22_MAT1', 'CANNOT_FIND', 'CAPILLARY', 'CARTESIAN_MAP', 'CATHODE_FFT_3D', 'CAVITY_TYPE', 'CEILING', 'CENTER_PT', 'CHAMBER_WALL', 'CHARGE', 'CHARGE_OF', 'CHECK_SUM', 'CIRCLE_DOT_SYM', 'CIRCLE_FILLED_SYM', 'CIRCLE_PLUS_SYM', 'CIRCLE_SYM', 'CLASSICAL_RADIUS_FACTOR', 'CLEAR', 'CLOSED', 'CMAT_11', 'CMAT_11_STORED', 'CMAT_12', 'CMAT_12_STORED', 'CMAT_21', 'CMAT_21_STORED', 'CMAT_22', 'CMAT_22_STORED', 'COHERENT', 'COLON', 'COMMA', 'COMPOUND', 'CONSTANT', 'CONSTANT_REF_ENERGY', 'CONTINUOUS', 'CONTROL_GROUP', 'CONTROL_LORD', 'CONTROL_VAR', 'CONVERTER', 'COS', 'COSH', 'COT', 'COTH', 'COUPLER_ANGLE', 'COUPLER_AT', 'COUPLER_PHASE', 'COUPLER_STRENGTH', 'CRAB_CAVITY', 'CRAB_TILT', 'CRAB_X1', 'CRAB_X2', 'CRAB_X3', 'CRAB_X4', 'CRAB_X5', 'CREATE_JUMBO_SLAVE', 'CRITICAL_ANGLE', 'CRITICAL_ANGLE_FACTOR', 'CROSSING_TIME', 'CROSS_HATCHED', 'CRUNCH', 'CRUNCH_CALIB', 'CRYSTAL', 'CRYSTAL_TYPE', 'CSC', 'CSR_DS_STEP', 'CSR_METHOD', 'CUBIC', 'CURLY_BRACKETS', 'CURRENT', 'CURVATURE', 'CURVE', 'CUSTOM', 'CUSTOM_APERTURE', 'CUSTOM_ATTRIBUTE0', 'CUSTOM_ATTRIBUTE_NUM', 'CYAN', 'CYCLES', 'CYLINDRICAL_MAP', 'C_LIGHT', 'CalcBunchParams', 'CalcEmittancesAndTwissFromSigmaMatrix', 'CalcWallRadius', 'CartesianMapStruct', 'CartesianMapStructAlloc1D', 'CartesianMapStructArray1D', 'CartesianMapTerm1Struct', 'CartesianMapTerm1StructAlloc1D', 'CartesianMapTerm1StructArray1D', 'CartesianMapTermStruct', 'CheckIfSInBounds', 'ChromCalc', 'ChromTune', 'ComplexAlloc1D', 'ComplexArray1D', 'ComplexArray2D', 'ComplexArray3D', 'ComplexTaylorStruct', 'ComplexTaylorStructAlloc1D', 'ComplexTaylorStructArray1D', 'ComplexTaylorTermStruct', 'ComplexTaylorTermStructAlloc1D', 'ComplexTaylorTermStructArray1D', 'ComplexTaylorToMat6', 'ConcatTransferMat', 'ControlRamp1Struct', 'ControlRamp1StructAlloc1D', 'ControlRamp1StructArray1D', 'ControlStruct', 'ControlStructAlloc1D', 'ControlStructArray1D', 'ControlVar1Struct', 'ControlVar1StructAlloc1D', 'ControlVar1StructArray1D', 'ControllerStruct', 'ConvertCoords', 'ConvertPcTo', 'ConvertTotalEnergyTo', 'ConverterDistributionParser', 'CoordArrayStruct', 'CoordArrayStructAlloc1D', 'CoordArrayStructArray1D', 'CoordStruct', 'CoordStructAlloc1D', 'CoordStructArray1D', 'CoordsBodyToLocal', 'CoordsBodyToRelExit', 'CoordsCurvilinearToFloor', 'CoordsFloorToCurvilinear', 'CoordsFloorToLocalCurvilinear', 'CoordsLocalCurvilinearToBody', 'CoordsLocalCurvilinearToFloor', 'CreateElementSlice', 'CreatePlanarWigglerModel', 'CylindricalMapStruct', 'CylindricalMapStructAlloc1D', 'CylindricalMapStructArray1D', 'CylindricalMapTerm1Struct', 'CylindricalMapTerm1StructAlloc1D', 'CylindricalMapTerm1StructArray1D', 'CylindricalMapTermStruct', 'D1_THICKNESS', 'D2_THICKNESS', 'DALPHA_DPZ_A', 'DALPHA_DPZ_A_STORED', 'DALPHA_DPZ_B', 'DALPHA_DPZ_B_STORED', 'DARK_GREY', 'DARWIN_WIDTH_PI', 'DARWIN_WIDTH_SIGMA', 'DASHED', 'DASH_DOT', 'DASH_DOT3', 'DBETA_DPZ_A', 'DBETA_DPZ_A_STORED', 'DBETA_DPZ_B', 'DBETA_DPZ_B_STORED', 'DBRAGG_ANGLE_DE', 'DB_FIELD', 'DCMAT_DPZ_11_STORED', 'DCMAT_DPZ_12_STORED', 'DCMAT_DPZ_21_STORED', 'DCMAT_DPZ_22_STORED', 'DEFAULT_TRACKING_SPECIES', 'DEF_BMAD_COM', 'DEF_LINE', 'DEF_MAD_BEAM', 'DEF_PARAMETER', 'DEF_PARTICLE_START', 'DEF_PTC_COM', 'DEF_SPACE_CHARGE_COM', 'DEGREES', 'DELTA_E_REF', 'DELTA_REF_TIME', 'DELTA_REF_TIME_USER_SET', 'DELTA_TIME', 'DENSITY', 'DENSITY_USED', 'DESCRIP', 'DETAP_DPZ_X', 'DETAP_DPZ_X_STORED', 'DETAP_DPZ_Y', 'DETAP_DPZ_Y_STORED', 'DETA_DPZ_X', 'DETA_DPZ_X_STORED', 'DETA_DPZ_Y', 'DETA_DPZ_Y_STORED', 'DETA_DS_MASTER', 'DETECTOR', 'DEUTERON', 'DE_ETA_MEAS', 'DFLT_DRAW', 'DFLT_SET', 'DG', 'DIAMOND_SYM', 'DIFFRACTION_PLATE', 'DIRECTION', 'DISPATCH', 'DISTRIBUTION', 'DIVIDE', 'DOTTED', 'DOT_SYM', 'DOUBLE_COLON', 'DOWNSTREAM', 'DOWNSTREAM_COORD_DIR', 'DOWNSTREAM_END', 'DPHI_A', 'DPHI_B', 'DPHI_ORIGIN', 'DPSI_ORIGIN', 'DRIFT', 'DRIFT_KICK', 'DS_PHOTON_SLICE', 'DS_SLICE', 'DS_STEP', 'DTHETA_ORIGIN', 'DTHICKNESS_DX', 'DT_MAX', 'DX_ORIGIN', 'DY_ORIGIN', 'DZ_ORIGIN', 'D_SPACING', 'DistanceToAperture', 'E1', 'E1_GRADIENT', 'E2', 'E2_CENTER', 'E2_GRADIENT', 'E2_PROBABILITY', 'E3_GRADIENT', 'ECOLLIMATOR', 'ELECTRIC', 'ELECTRIC_DIPOLE_MOMENT', 'ELECTRON', 'ELEC_MULTIPOLE', 'ELE_ORIGIN', 'ELLIPTICAL', 'ELSEPARATOR', 'EMITTANCE_A', 'EMITTANCE_B', 'EMITTANCE_Z', 'EMIT_FRACTION', 'EM_FIELD', 'END_EDGE', 'END_STACK', 'ENERGY_DISTRIBUTION', 'ENERGY_PROBABILITY_CURVE', 'ENTRANCE_END', 'EPS_STEP_SCALE', 'EQUAL', 'ETAP_A', 'ETAP_B', 'ETAP_X', 'ETAP_X0', 'ETAP_X1', 'ETAP_X_OUT', 'ETAP_X_STORED', 'ETAP_Y', 'ETAP_Y0', 'ETAP_Y1', 'ETAP_Y_OUT', 'ETAP_Y_STORED', 'ETA_A', 'ETA_B', 'ETA_X', 'ETA_X0', 'ETA_X1', 'ETA_X_OUT', 'ETA_X_STORED', 'ETA_Y', 'ETA_Y0', 'ETA_Y1', 'ETA_Y_OUT', 'ETA_Y_STORED', 'ETA_Z', 'EXACT_MISALIGN', 'EXACT_MODEL', 'EXACT_MULTIPOLES', 'EXIT_END', 'EXP', 'E_CENTER', 'E_CENTER_RELATIVE_TO_REF', 'E_CHARGE', 'E_FIELD', 'E_FIELD_X', 'E_FIELD_Y', 'E_GUN', 'E_LOSS', 'E_MASS', 'E_PHOTON', 'E_TOT', 'E_TOT_OFFSET', 'E_TOT_REF_INIT', 'E_TOT_SET', 'E_TOT_START', 'E_TOT_STRONG', 'EigenDecomp6mat', 'EleAttribute', 'EleKey', 'EleMisalignmentLSCalc', 'ElePointerStruct', 'ElePointerStructAlloc1D', 'ElePointerStructArray1D', 'EleStruct', 'EleStructAlloc1D', 'EleStructArray1D', 'EleToFibre', 'EleToTaylor', 'ElecMultipoleField', 'ElementAtSBranch', 'ElementAtSLat', 'EllipseBeamInitStruct', 'EllipseBeamInitStructAlloc1D', 'EllipseBeamInitStructArray1D', 'EmFieldCalc', 'EmFieldStruct', 'EmFieldStructAlloc1D', 'EmFieldStructArray1D', 'EmTaylorStruct', 'EmTaylorStructAlloc1D', 'EmTaylorStructArray1D', 'EmTaylorTermStruct', 'EmTaylorTermStructAlloc1D', 'EmTaylorTermStructArray1D', 'Emit6d', 'EnvelopeRadintsIbs', 'EvaluateArrayIndex', 'EvaluateLogical', 'ExpectOneOf', 'ExpectThis', 'ExpressionAtomStruct', 'ExpressionAtomStructAlloc1D', 'ExpressionAtomStructArray1D', 'ExpressionStackValue', 'ExpressionStringToStack', 'ExpressionStringToTree', 'ExpressionTreeStruct', 'ExpressionTreeStructAlloc1D', 'ExpressionTreeStructArray1D', 'ExpressionValue', 'FACTORIAL', 'FALSE_', 'FALSE_INT', 'FAMILY_QU', 'FAMILY_SQ', 'FAMILY_X', 'FAMILY_Y', 'FB1', 'FB2', 'FCharArray1D', 'FEEDBACK', 'FFT_3D', 'FIDUCIAL', 'FIDUCIAL_PT', 'FIELDMAP', 'FIELD_AUTOSCALE', 'FIELD_CALC', 'FIELD_LORD', 'FIELD_MASTER', 'FIELD_OVERLAPS', 'FIELD_SCALE_FACTOR', 'FIELD_X', 'FIELD_Y', 'FILLED_ARROW_HEAD', 'FINAL_CHARGE', 'FINE_STRUCTURE_CONSTANT', 'FINT', 'FINTX', 'FIRST_PASS', 'FIRST_TRACK_EDGE', 'FIXED_STEP_RUNGE_KUTTA', 'FIXED_STEP_TIME_RUNGE_KUTTA', 'FIXER', 'FLEXIBLE', 'FLOOR', 'FLOOR_POSITION_GROUP', 'FLOOR_SHIFT', 'FOCAL_STRENGTH', 'FOIL', 'FORK', 'FORWARD_DIFFRACTED', 'FOURPI', 'FQ1', 'FQ2', 'FREE', 'FREQUENCIES', 'FRINGE_AT', 'FRINGE_TYPE', 'FULL', 'FUNCTION', 'FUNC_PARENS', 'F_FACTOR', 'Fibre', 'FibreToEle', 'FindElementEnds', 'FindMatchingFieldmap', 'FloorAnglesToWMat', 'FloorPositionStruct', 'FloorWMatToAngles', 'FormDigestedBmadFileName', 'FourierAmplitude', 'G', 'GANG', 'GAP', 'GAUSSIAN', 'GBendingStrengthFromEmField', 'GEN_GRAD_MAP', 'GEOMETRY', 'GIRDER', 'GIRDER_LORD', 'GKICKER', 'GOVERNOR', 'GRADIENT', 'GRADIENT_ERR', 'GRADIENT_TOT', 'GRAZE_ANGLE', 'GRAZE_ANGLE_IN', 'GRAZE_ANGLE_OUT', 'GREEN', 'GRID_FIELD', 'GROUP', 'GROUP_LORD', 'G_ERR', 'G_MAX', 'G_TOT', 'GenGrad1Struct', 'GenGrad1StructAlloc1D', 'GenGrad1StructArray1D', 'GenGradMapStruct', 'GenGradMapStructAlloc1D', 'GenGradMapStructArray1D', 'GetEmitFromSigmaMat', 'GetNextWord', 'GptToParticleBunch', 'GridBeamInitStruct', 'GridBeamInitStructAlloc1D', 'GridBeamInitStructArray1D', 'GridFieldPt1Struct', 'GridFieldPt1StructArray3D', 'GridFieldPtStruct', 'GridFieldStruct', 'GridFieldStructAlloc1D', 'GridFieldStructArray1D', 'H1', 'H2', 'HARD_EDGE_ONLY', 'HARMON', 'HARMON_MASTER', 'HATCHED', 'HDF5', 'HELICAL_MODEL', 'HELION', 'HGAP', 'HGAPX', 'HIGHLAND', 'HIGH_ENERGY_SPACE_CHARGE_ON', 'HKICK', 'HKICKER', 'HORIZONTALLY_PURE', 'HYBRID', 'HYPER_X', 'HYPER_XY', 'HYPER_Y', 'H_BAR_PLANCK', 'H_DISPLACE', 'H_PLANCK', 'HighEnergySpaceChargeStruct', 'IDENTITY', 'IMPACTT', 'INCLUDE_KICKS', 'INCOHERENT', 'INHERIT_FROM_FORK', 'INIT_NEEDED', 'INPUT_ELE', 'INSIDE', 'INSTRUMENT', 'INT', 'INTEGRATOR_ORDER', 'INTERPOLATION', 'INT_GARBAGE', 'INVALID', 'INVALID_NAME', 'IN_BETWEEN', 'IN_STOP_BAND', 'IS_INTEGER', 'IS_LOGICAL', 'IS_MOSAIC', 'IS_ON', 'IS_REAL', 'IS_STRING', 'IS_STRUCT', 'IS_SWITCH', 'IX_BRANCH', 'IX_FIXER', 'IX_SLICE_SLAVE', 'IX_TO_BRANCH', 'IX_TO_ELEMENT', 'InitAttributeName1', 'InitBeamDistribution', 'InitBunchDistribution', 'InitPhotonIntegProb', 'Int8Alloc1D', 'Int8Array1D', 'IntAlloc1D', 'IntArray1D', 'IntArray2D', 'IntArray3D', 'Interval1CoefStruct', 'Interval1CoefStructAlloc1D', 'Interval1CoefStructArray1D', 'K0L', 'K0SL', 'K1', 'K1X', 'K1Y', 'K2', 'K21L', 'K21SL', 'K3', 'KICK', 'KICK0', 'KICKER', 'KS', 'KX', 'KickVectorCalc', 'KnotInterpolate', 'KvBeamInitStruct', 'L', 'LATTICE', 'LATTICE_TYPE', 'LB_SUBATOMIC', 'LCAVITY', 'LEADING', 'LENS', 'LIGHT_GREEN', 'LIGHT_GREY', 'LINEAR', 'LINEAR_EDGE', 'LIVE_BRANCH', 'LOG', 'LONGITUDINAL_MODE', 'LORD_DEFINED', 'LORD_PAD1', 'LORD_PAD2', 'LOST', 'LOST_NEG_X', 'LOST_NEG_X_APERTURE', 'LOST_NEG_Y', 'LOST_NEG_Y_APERTURE', 'LOST_POS_X', 'LOST_POS_X_APERTURE', 'LOST_POS_Y', 'LOST_POS_Y_APERTURE', 'LOST_PZ', 'LOST_PZ_APERTURE', 'LOST_Z', 'LOST_Z_APERTURE', 'LR_FREQ_SPREAD', 'LR_SELF_WAKE_ON', 'LR_WAKE', 'LR_WAKE_FILE', 'LYNCH_DAHL', 'L_ACTIVE', 'L_CHORD', 'L_FUNC_PARENS', 'L_PARENS', 'L_PERIOD', 'L_RECTANGLE', 'L_SAGITTA', 'L_SOFT_EDGE', 'LatEleLocStruct', 'LatEleLocStructAlloc1D', 'LatEleLocStructArray1D', 'LatEleLocator', 'LatEleOrder1Struct', 'LatEleOrder1StructAlloc1D', 'LatEleOrder1StructArray1D', 'LatEleOrderArrayStruct', 'LatEleOrderArrayStructAlloc1D', 'LatEleOrderArrayStructArray1D', 'LatEleOrderStruct', 'LatParamStruct', 'LatStruct', 'LatStructAlloc1D', 'LatStructArray1D', 'Layout', 'LinacNormalModeStruct', 'LinearCoef', 'LoadParseLine', 'MACHINE', 'MAD', 'MAGENTA', 'MAGNETIC', 'MAGNUS', 'MARKER', 'MASK', 'MASK_PLATE', 'MASS_OF', 'MAT6_CALC_METHOD', 'MAT6_GROUP', 'MATCH', 'MATCH_ORBIT', 'MATCH_TWISS', 'MATERIAL_TYPE', 'MATRIX', 'MATRIX_KICK', 'MAX', 'MAX_FRINGE_ORDER', 'MAYBE', 'MEAN_EXCITATION_ENERGY', 'MIN', 'MINOR_SLAVE', 'MINUS', 'MIRROR', 'MIXED', 'MODE', 'MODE_FLIP', 'MODE_FLIP0', 'MODE_FLIP1', 'MODE_FLIP_STORED', 'MODULO', 'MONITOR', 'MOSAIC_ANGLE_RMS_IN_PLANE', 'MOSAIC_ANGLE_RMS_OUT_PLANE', 'MOSAIC_DIFFRACTION_NUM', 'MOSAIC_THICKNESS', 'MOVING_FORWARD', 'MULTILAYER_MIRROR', 'MULTIPASS_LORD', 'MULTIPASS_REF_ENERGY', 'MULTIPASS_SLAVE', 'MULTIPOLE', 'MULTIPOLES_ON', 'MULTIPOLE_SOURCE', 'MULTIPOLE_SYMMETRY', 'MUON', 'MU_0_VAC', 'M_DEUTERON', 'M_ELECTRON', 'M_HELION', 'M_MUON', 'M_NEUTRON', 'M_PION_0', 'M_PION_CHARGED', 'M_PROTON', 'MadEnergyStruct', 'MadMapStruct', 'MadTmfoc', 'MakeGMats', 'MakeHvbp', 'MakeMadMap', 'MakeMat6', 'MakeMat6Bmad', 'MakeMat6BmadPhoton', 'MakeMat6Tracking', 'MakeN', 'MakePbrh', 'MakeSmatFromAbc', 'MakeVMats', 'MatSympDecouple', 'MatchEleToMat6', 'Mode3Struct', 'ModeInfoStruct', 'MultiTurnTrackingAnalysis', 'MultipassChain', 'Multipole1AbToKt', 'Multipole1KtToAb', 'MultipoleEleToAb', 'NAVY_BLUE', 'NEUTRON', 'NEW_BRANCH', 'NINT', 'NO', 'NOISE', 'NONE', 'NONE_PT', 'NON_SYMPLECTIC', 'NORMAL', 'NOT_A_LORD', 'NOT_SET', 'NOWHERE', 'NO_APERTURE', 'NO_CLOSED_ORBIT', 'NO_COMPLETE_ORBIT', 'NO_DELIM', 'NO_END', 'NO_END_MARKER', 'NO_FIELD', 'NO_FILL', 'NO_MISALIGNMENT', 'NULL_ELE', 'NUMERIC', 'NUM_ELE_ATTRIB', 'NUM_ELE_ATTRIB_EXTENDED', 'NUM_STEPS', 'N_AVOGADRO', 'N_CELL', 'N_KEY', 'N_PART', 'N_PARTICLE', 'N_PERIOD', 'N_PLANE', 'N_POLE_MAXX', 'N_RF_STEPS', 'N_SAMPLE', 'N_SLICE', 'N_SLICE_SPLINE', 'N_VAR_MAX', 'NametableStruct', 'NormalFormTaylors', 'NormalMode3Calc', 'NormalModesStruct', 'OCTUPOLE', 'OFF', 'OFFSET_MOVES_APERTURE', 'OFF_AND_SAVE', 'OK', 'OLD_ASCII', 'OLD_CONTROL_VAR', 'OLD_CONTROL_VAR_OFFSET', 'OLD_INTEGRATOR', 'ON', 'ONE_DIM', 'ONE_FILE', 'OPAL', 'OPAQUE', 'OPEN', 'ORANGE', 'ORIGIN_ELE', 'ORIGIN_ELE_REF_PT', 'OSC_AMPLITUDE', 'OUTLINE_ARROW_HEAD', 'OUTPUT_ELE', 'OUTSIDE', 'OVERLAY', 'OVERLAY_LORD', 'OdeintBmad', 'OdeintBmadTime', 'OffsetParticle', 'OpenBinaryFile', 'OrbitAmplitudeCalc', 'OrbitTooLarge', 'OrderEvecsByNSimilarity', 'P0C', 'P0C_REF_INIT', 'P0C_SET', 'P0C_START', 'P88', 'P89', 'P90', 'PARENS', 'PARTICLE', 'PATCH', 'PATCH_PROBLEM', 'PC_OUT_MAX', 'PC_OUT_MIN', 'PC_STRONG', 'PENDELLOSUNG_PERIOD_PI', 'PENDELLOSUNG_PERIOD_SIGMA', 'PHASE_TROMBONE', 'PHASE_X', 'PHASE_Y', 'PHI0', 'PHI0_AUTOSCALE', 'PHI0_ERR', 'PHI0_MAX', 'PHI0_MULTIPASS', 'PHI_A', 'PHI_A_STORED', 'PHI_B', 'PHI_B_STORED', 'PHI_POSITION', 'PHOTON', 'PHOTON_FORK', 'PHOTON_INIT', 'PHOTON_TYPE', 'PHYSICAL_SOURCE', 'PI', 'PICKUP', 'PION_0', 'PION_MINUS', 'PION_PLUS', 'PIPE', 'PIXEL', 'PLANAR_MODEL', 'PLUS', 'PLUS_SYM', 'POLARITY', 'POLARIZED', 'POSITRON', 'POWER', 'PRE_BORN', 'PRINT_PAGE_LONG_LEN', 'PRINT_PAGE_SHORT_LEN', 'PROTON', 'PROVISIONAL', 'PSI_ANGLE', 'PSI_POSITION', 'PTC_CANONICAL_COORDS', 'PTC_FIELD_GEOMETRY', 'PTC_FRINGE_GEOMETRY', 'PTC_INTEGRATION_TYPE', 'PTC_STANDARD', 'PURPLE', 'PX', 'PX0', 'PX1', 'PX_APERTURE_CENTER', 'PX_APERTURE_WIDTH2', 'PX_KICK', 'PX_REF', 'PX_STORED', 'PY', 'PY0', 'PY1', 'PY_APERTURE_CENTER', 'PY_APERTURE_WIDTH2', 'PY_KICK', 'PY_REF', 'PY_STORED', 'PZ', 'PZ0', 'PZ1', 'PZ_APERTURE_CENTER', 'PZ_APERTURE_WIDTH2', 'PZ_KICK', 'PZ_REF', 'PZ_STORED', 'P_MASS', 'ParseIntegerList2', 'ParseRealList', 'ParseRealList2', 'ParserFastComplexRead', 'ParserFastRealRead', 'PhotonAbsorptionAndPhaseShift', 'PhotonAddToDetectorStatistics', 'PhotonElementStruct', 'PhotonMaterialStruct', 'PhotonReflectSurfaceStruct', 'PhotonReflectTableStruct', 'PhotonReflectTableStructAlloc1D', 'PhotonReflectTableStructArray1D', 'PhotonReflection', 'PhotonReflectivity', 'PhotonTargetStruct', 'PixelDetecStruct', 'PixelPtStruct', 'PixelPtStructArray2D', 'PointerToElementAtS', 'PointerToFieldEle', 'PointerToGirder', 'PointerToLord', 'PointerToMultipassLord', 'PointerToSlave', 'PointerToSuperLord', 'PointerToSurfaceDisplacementPt', 'PointerToSurfaceSegmentedPt', 'PointerToWakeEle', 'PointerToWall3d', 'PreTrackerStruct', 'ProjectEmitToXyz', 'PtcCheckForLostParticle', 'PtcEmitCalc', 'PtcNormalFormStruct', 'PtcSpinCalc', 'PtcTrackAll', 'QUADRUPOLE', 'QUAD_TILT', 'QpAxisStruct', 'QpLegendStruct', 'QpLineStruct', 'QpPointStruct', 'QpRectStruct', 'QpSymbolStruct', 'QuatToAxisAngle', 'R0_ELEC', 'R0_MAG', 'RADIANS', 'RADIANS_OVER_2PI', 'RADIATION_LENGTH', 'RADIATION_LENGTH_USED', 'RADIUS', 'RAD_INT_GROUP', 'RAMPER', 'RAMPER_LORD', 'RAN', 'RAN_GAUSS', 'RAN_SEED', 'RBEND', 'RCOLLIMATOR', 'REAL_GARBAGE', 'RECALC', 'RECTANGULAR', 'RED', 'REDDISH_PURPLE', 'RED_CROSS_SYM', 'REFERENCE', 'REFER_TO_LORDS', 'REFLECTION', 'REFLECTIVITY_TABLE', 'REF_CAP_GAMMA', 'REF_COORDS', 'REF_ENERGY_GROUP', 'REF_ORBIT', 'REF_ORBIT_FOLLOWS', 'REF_ORIGIN', 'REF_PARTICLE', 'REF_SPECIES', 'REF_TILT', 'REF_TILT_TOT', 'REF_TIME', 'REF_TIME_START', 'REF_WAVELENGTH', 'RELATIVE', 'REPETITION_FREQUENCY', 'RESTORE_STATE', 'RFCAVITY', 'RF_BEND', 'RF_FREQUENCY', 'RF_WAVELENGTH', 'RHO', 'RIPKEN_KICK', 'RMS', 'ROLL', 'ROLL_TOT', 'ROOT', 'ROTATIONALLY_SYMMETRIC_RZ', 'RUNGE_KUTTA', 'R_E', 'R_P', 'R_PARENS', 'R_SOLENOID', 'Rad1DampAndStocMats', 'RadDampAndStocMats', 'RadGIntegrals', 'RadInt1Struct', 'RadInt1StructAlloc1D', 'RadInt1StructArray1D', 'RadIntAllEleStruct', 'RadIntBranchStruct', 'RadIntBranchStructAlloc1D', 'RadIntBranchStructArray1D', 'RadMapEleStruct', 'RadMapStruct', 'RadiationIntegrals', 'RamperLordStruct', 'RamperLordStructAlloc1D', 'RamperLordStructArray1D', 'RamperValue', 'RanGaussConverter', 'RandomStateStruct', 'ReadBeamAscii', 'ReadBeamFile', 'Real16Alloc1D', 'Real16Array1D', 'RealAlloc1D', 'RealArray1D', 'RealArray2D', 'RealArray3D', 'ReleaseRadIntCache', 'ResonanceHStruct', 'ResonanceHStructAlloc1D', 'ResonanceHStructArray1D', 'RfEleStruct', 'RfStairStepStruct', 'RfStairStepStructAlloc1D', 'RfStairStepStructArray1D', 'RmsValue', 'SAD_FULL', 'SAD_MULT', 'SAMPLE', 'SAVE_STATE', 'SBEND', 'SCALE_FIELD_TO_ONE', 'SCALE_MULTIPOLES', 'SCATTER_METHOD', 'SCATTER_TEST', 'SEC', 'SECOND_TRACK_EDGE', 'SECTOR', 'SEXTUPOLE', 'SHIFTED_TO_RELATIVE', 'SHORT', 'SIGN', 'SIG_E', 'SIG_E2', 'SIG_PZ', 'SIG_VX', 'SIG_VY', 'SIG_X', 'SIG_Y', 'SIG_Z', 'SIN', 'SINC', 'SINH', 'SLAVE', 'SLICE', 'SLICE_SLAVE', 'SMALL_REL_CHANGE', 'SOFT_EDGE', 'SOFT_EDGE_ONLY', 'SOLENOID', 'SOLID', 'SOLID_FILL', 'SOL_QUAD', 'SPACE_CHARGE_METHOD', 'SPATIAL_DISTRIBUTION', 'SPECIES', 'SPECIES_CONST', 'SPECIES_OUT', 'SPECIES_STRONG', 'SPHERICAL', 'SPIN_DN_DPZ_X', 'SPIN_DN_DPZ_Y', 'SPIN_DN_DPZ_Z', 'SPIN_FRINGE_ON', 'SPIN_INTEGRATION', 'SPIN_TRACKING_METHOD', 'SPIN_X', 'SPIN_X_STORED', 'SPIN_Y', 'SPIN_Y_STORED', 'SPIN_Z', 'SPIN_Z_STORED', 'SPLIT_ID', 'SPRINT', 'SQRT', 'SQRT_2', 'SQRT_3', 'SQUARE_BRACKETS', 'SQUARE_CONCAVE_SYM', 'SQUARE_FILLED_SYM', 'SQUARE_SYM', 'SR_WAKE', 'SR_WAKE_FILE', 'STALE', 'STANDARD', 'STANDING_WAVE', 'STAR5_FILLED_SYM', 'STAR5_SYM', 'START_EDGE', 'START_END', 'STAR_OF_DAVID_SYM', 'STEADY_STATE_3D', 'STRAIGHT', 'SUM', 'SUPERIMPOSE', 'SUPER_LORD', 'SUPER_OFFSET', 'SUPER_OK', 'SUPER_SLAVE', 'SURFACE', 'SYMMETRY', 'SYMPLECTIFY', 'SYMP_LIE_BMAD', 'SYMP_LIE_PTC', 'S_ABORT', 'S_AND_FLOOR_POSITION_GROUP', 'S_BLANK', 'S_DINFO', 'S_DWARN', 'S_ERROR', 'S_FATAL', 'S_IMPORTANT', 'S_INFO', 'S_LONG', 'S_NOOUTPUT', 'S_PLANE', 'S_POSITION', 'S_POSITION_GROUP', 'S_SUCCESS', 'S_TWISS_REF', 'S_WARN', 'ScAdaptiveStep', 'ScStep', 'SetEleAttribute', 'SetEleStatusStale', 'SetFringeOnOff', 'SetPtcQuiet', 'SpaceChargeCommonStruct', 'SpinAxisStruct', 'SpinDnDpzFromMat8', 'SpinDnDpzFromQmap', 'SpinMat8ResonanceStrengths', 'SpinMatToEigen', 'SpinOrbitMap1Struct', 'SpinOrbitMap1StructAlloc1D', 'SpinOrbitMap1StructArray1D', 'SpinPolarStruct', 'SpinQuatResonanceStrengths', 'SplineAkimaInterpolate', 'SplineEvaluate', 'SplineStruct', 'SplineStructAlloc1D', 'SplineStructArray1D', 'SplitLat', 'StrongBeamSigmaCalc', 'StrongBeamStruct', 'SummationRdtStruct', 'SummationRdtStructAlloc1D', 'SummationRdtStructArray1D', 'SuperBicubicInterpolation', 'SuperPolint', 'SurfaceCurvatureStruct', 'SurfaceDisplacementPtStruct', 'SurfaceDisplacementPtStructArray2D', 'SurfaceDisplacementStruct', 'SurfaceGridDisplacement', 'SurfaceHMisalignPtStruct', 'SurfaceHMisalignPtStructArray2D', 'SurfaceHMisalignStruct', 'SurfaceSegmentedPtStruct', 'SurfaceSegmentedPtStructArray2D', 'SurfaceSegmentedStruct', 'T', 'T0', 'T21', 'T6ToB123', 'TAN', 'TANH', 'TAYLOR', 'TAYLOR_MAP_INCLUDES_OFFSETS', 'TAYLOR_OFFSET', 'TAYLOR_ORDER', 'TERM', 'THETA_POSITION', 'THICKNESS', 'THICK_MULTIPOLE', 'TILT', 'TILT_CALIB', 'TILT_CORR', 'TILT_TOT', 'TIMES', 'TIMES_SYM', 'TIME_RUNGE_KUTTA', 'TO_ELEMENT', 'TO_LINE', 'TRACKING', 'TRACKING_METHOD', 'TRAILING', 'TRANSMISSION', 'TRANSPARENT', 'TRANSVERSE_KICK', 'TRANSVERSE_SIGMA_CUT', 'TRAVELING_WAVE', 'TRIANGLE_FILLED_SYM', 'TRIANGLE_SYM', 'TRUE_', 'TRUE_INT', 'TT', 'TWISS_PROPAGATE_FAILURE', 'TWOPI', 'TYPE', 'T_OFFSET', 'TaoBeamBranchStruct', 'TaoBeamUniStruct', 'TaoBuildingWallOrientationStruct', 'TaoBuildingWallPointStruct', 'TaoBuildingWallPointStructAlloc1D', 'TaoBuildingWallPointStructArray1D', 'TaoBuildingWallSectionStruct', 'TaoBuildingWallSectionStructAlloc1D', 'TaoBuildingWallSectionStructArray1D', 'TaoBuildingWallStruct', 'TaoCmdHistoryStruct', 'TaoCmdHistoryStructAlloc1D', 'TaoCmdHistoryStructArray1D', 'TaoCommonStruct', 'TaoCurveColorStruct', 'TaoCurveOrbitStruct', 'TaoCurveRmsCalc', 'TaoCurveStruct', 'TaoCurveStructAlloc1D', 'TaoCurveStructArray1D', 'TaoD1DataStruct', 'TaoD1DataStructAlloc1D', 'TaoD1DataStructArray1D', 'TaoD2DataStruct', 'TaoD2DataStructAlloc1D', 'TaoD2DataStructArray1D', 'TaoDataStruct', 'TaoDataStructAlloc1D', 'TaoDataStructArray1D', 'TaoDataVarComponentStruct', 'TaoDataVarComponentStructAlloc1D', 'TaoDataVarComponentStructArray1D', 'TaoDatumIntegrate', 'TaoDrawCurveData', 'TaoDrawHistogramData', 'TaoDrawingStruct', 'TaoDynamicApertureStruct', 'TaoEleGeometryWithMisalignments', 'TaoElePointerStruct', 'TaoElePointerStructAlloc1D', 'TaoElePointerStructArray1D', 'TaoEleShapeInfo', 'TaoEleShapeStruct', 'TaoEleShapeStructAlloc1D', 'TaoEleShapeStructArray1D', 'TaoEvalFloorOrbit', 'TaoEvalNodeStruct', 'TaoEvalNodeStructAlloc1D', 'TaoEvalNodeStructArray1D', 'TaoEvaluateADatum', 'TaoEvaluateDatumAtS', 'TaoExpressionInfoStruct', 'TaoExpressionInfoStructAlloc1D', 'TaoExpressionInfoStructArray1D', 'TaoFindPlotRegion', 'TaoFloorPlanStruct', 'TaoFloorToScreen', 'TaoGetOptVars', 'TaoGlobalStruct', 'TaoGraphSMinMaxCalc', 'TaoGraphStruct', 'TaoGraphStructAlloc1D', 'TaoGraphStructArray1D', 'TaoHistogramStruct', 'TaoInitStruct', 'TaoInjectBeam', 'TaoIsValidName', 'TaoLatSigmaStruct', 'TaoLatSigmaStructAlloc1D', 'TaoLatSigmaStructArray1D', 'TaoLatticeBranchStruct', 'TaoLatticeBranchStructAlloc1D', 'TaoLatticeBranchStructArray1D', 'TaoLatticeCalc', 'TaoLatticeStruct', 'TaoMerit', 'TaoModelBranchStruct', 'TaoModelBranchStructAlloc1D', 'TaoModelBranchStructArray1D', 'TaoModelElementStruct', 'TaoModelElementStructAlloc1D', 'TaoModelElementStructArray1D', 'TaoNextWord', 'TaoOpenScratchFile', 'TaoParamValueAtS', 'TaoParseElementParamStr', 'TaoPickUniverse', 'TaoPingScaleStruct', 'TaoPlotCacheStruct', 'TaoPlotCacheStructAlloc1D', 'TaoPlotCacheStructArray1D', 'TaoPlotPageStruct', 'TaoPlotRegionStruct', 'TaoPlotRegionStructAlloc1D', 'TaoPlotRegionStructArray1D', 'TaoPlotStruct', 'TaoPlotStructAlloc1D', 'TaoPlotStructArray1D', 'TaoPointerToDatumEle', 'TaoPointerToEleShape', 'TaoPointerToUniverseStr', 'TaoPointerToUniverses', 'TaoRemoveBlankCharacters', 'TaoScaleGraph', 'TaoSetIntegerValue', 'TaoSetLogicalValue', 'TaoSetQpAxisStruct', 'TaoSetQpPointStruct', 'TaoSetQpRectStruct', 'TaoSetRealValue', 'TaoShapePatternPointStruct', 'TaoShapePatternPointStructAlloc1D', 'TaoShapePatternPointStructArray1D', 'TaoShapePatternStruct', 'TaoShapePatternStructAlloc1D', 'TaoShapePatternStructArray1D', 'TaoSpinDnDpzStruct', 'TaoSpinEleStruct', 'TaoSpinEleStructAlloc1D', 'TaoSpinEleStructArray1D', 'TaoSpinMapStruct', 'TaoSpinPolarizationStruct', 'TaoSubinUniNumber', 'TaoSuperUniverseStruct', 'TaoTitleStruct', 'TaoToPhaseAndCouplingReading', 'TaoToReal', 'TaoTrackingEleIndex', 'TaoUniverseCalcStruct', 'TaoUniversePointerStruct', 'TaoUniversePointerStructAlloc1D', 'TaoUniversePointerStructArray1D', 'TaoUniverseStruct', 'TaoUniverseStructAlloc1D', 'TaoUniverseStructArray1D', 'TaoV1VarStruct', 'TaoV1VarStructAlloc1D', 'TaoV1VarStructArray1D', 'TaoVarSlaveStruct', 'TaoVarSlaveStructAlloc1D', 'TaoVarSlaveStructArray1D', 'TaoVarStruct', 'TaoVarStructAlloc1D', 'TaoVarStructArray1D', 'TaoWaveKickPtStruct', 'TaoWaveKickPtStructAlloc1D', 'TaoWaveKickPtStructArray1D', 'TaoWaveStruct', 'TargetMinMaxCalc', 'TargetPointStruct', 'TargetPointStructAlloc1D', 'TargetPointStructArray1D', 'TargetRotMats', 'TaylorStruct', 'TaylorStructAlloc1D', 'TaylorStructArray1D', 'TaylorTermStruct', 'TaylorTermStructAlloc1D', 'TaylorTermStructArray1D', 'TestBunchStructScalar', 'TestCharacterScalar', 'TestComplexScalar', 'TestInteger8Scalar', 'TestIntegerScalar', 'TestLogicalScalar', 'TestReal16Scalar', 'TestRealScalar', 'TestSubStruct', 'TestSubStructAlloc1D', 'TestSubStructArray1D', 'TestSubStructArray2D', 'TestSubStructArray3D', 'TestSubSubStruct', 'ToEtaReading', 'ToOrbitReading', 'ToPhaseAndCouplingReading', 'Track1', 'Track1Bmad', 'Track1RungeKutta', 'Track1TimeRungeKutta', 'TrackABeambeam', 'TrackADrift', 'TrackAPatch', 'TrackAZeroLengthElement', 'TrackAll', 'TrackFromSToS', 'TrackPointStruct', 'TrackPointStructAlloc1D', 'TrackPointStructArray1D', 'TrackStruct', 'TrackUntilDead', 'TrackingRadMapSetup', 'TransferMapFromSToS', 'TricubicCmplxCoefStruct', 'TricubicCmplxCoefStructArray3D', 'TricubicCmplxEval', 'Twiss1Propagate', 'TwissAndTrackFromSToS', 'TwissAndTrackIntraEle', 'TwissAtElement', 'TwissFromTracking', 'TwissStruct', 'UB_SUBATOMIC', 'UNARY_MINUS', 'UNARY_PLUS', 'UNDIFFRACTED', 'UNDULATOR', 'UNIFORM', 'UNKNOWN', 'UNPOLARIZED', 'UNSTABLE', 'UNSTABLE_A', 'UNSTABLE_B', 'UPSTREAM', 'UPSTREAM_COORD_DIR', 'UPSTREAM_END', 'USER_SET', 'USER_SETS_LENGTH', 'USE_REFLECTIVITY_TABLE', 'V1_UNITCELL', 'V2_UNITCELL', 'VAL1', 'VAL10', 'VAL11', 'VAL12', 'VAL2', 'VAL3', 'VAL4', 'VAL5', 'VAL6', 'VAL7', 'VAL8', 'VAL9', 'VAR', 'VARIABLE', 'VAR_OFFSET', 'VELOCITY_DISTRIBUTION', 'VERTICALLY_PURE', 'VERTICAL_BAR', 'VERTICAL_KICK', 'VKICK', 'VKICKER', 'VOLTAGE', 'VOLTAGE_ERR', 'VOLTAGE_TOT', 'V_DISPLACE', 'V_UNITCELL', 'ValueOfAttribute', 'WALL', 'WALL3D', 'WALL_END', 'WALL_START', 'WALL_TRANSITION', 'WHITE', 'WIGGLER', 'WIGGLERS', 'WMatToAxisAngle', 'WRAP_SUPERIMPOSE', 'WakeLrModeStruct', 'WakeLrModeStructAlloc1D', 'WakeLrModeStructArray1D', 'WakeLrStruct', 'WakeSrModeStruct', 'WakeSrModeStructAlloc1D', 'WakeSrModeStructArray1D', 'WakeSrStruct', 'WakeSrZLongStruct', 'WakeStruct', 'Wall3DSectionStruct', 'Wall3DSectionStructAlloc1D', 'Wall3DSectionStructArray1D', 'Wall3DStruct', 'Wall3DStructAlloc1D', 'Wall3DStructArray1D', 'Wall3DVertexStruct', 'Wall3DVertexStructAlloc1D', 'Wall3DVertexStructArray1D', 'Wall3dDRadius', 'WriteAstraFieldGridFile', 'WriteAstraFieldGridFile3d', 'WriteGptFieldGridFile1d', 'WriteGptFieldGridFile2d', 'WriteGptFieldGridFile3d', 'WriteLatLine', 'WriteLatticeInScibmad', 'WriteOpalFieldGridFile', 'X', 'X0', 'X1', 'X1_EDGE', 'X1_LIMIT', 'X2_EDGE', 'X2_LIMIT', 'XFER_MAT_CALC_FAILURE', 'XY', 'XYZ', 'XY_AXIS', 'X_AXIS', 'X_DISPERSION_CALIB', 'X_DISPERSION_ERR', 'X_GAIN_CALIB', 'X_GAIN_ERR', 'X_INVARIANT', 'X_KICK', 'X_KNOT', 'X_LEADING', 'X_LIMIT', 'X_OFFSET', 'X_OFFSET_CALIB', 'X_OFFSET_MULT', 'X_OFFSET_TOT', 'X_PITCH', 'X_PITCH_TOT', 'X_PLANE', 'X_POLARIZATION', 'X_POSITION', 'X_QUAD', 'X_REF', 'X_STORED', 'X_SYMBOL_SYM', 'X_TRAILING', 'XyDispStruct', 'Y', 'Y0', 'Y1', 'Y1_EDGE', 'Y1_LIMIT', 'Y2_EDGE', 'Y2_LIMIT', 'YELLOW', 'YELLOW_GREEN', 'YES', 'Y_AXIS', 'Y_DISPERSION_CALIB', 'Y_DISPERSION_ERR', 'Y_GAIN_CALIB', 'Y_GAIN_ERR', 'Y_KICK', 'Y_KNOT', 'Y_LEADING', 'Y_LIMIT', 'Y_OFFSET', 'Y_OFFSET_CALIB', 'Y_OFFSET_MULT', 'Y_OFFSET_TOT', 'Y_PITCH', 'Y_PITCH_TOT', 'Y_PLANE', 'Y_POLARIZATION', 'Y_POSITION', 'Y_QUAD', 'Y_REF', 'Y_STORED', 'Y_TRAILING', 'Z', 'Z0', 'Z1', 'ZAtSurface', 'ZERO', 'Z_APERTURE_CENTER', 'Z_APERTURE_WIDTH2', 'Z_AXIS', 'Z_KICK', 'Z_OFFSET', 'Z_OFFSET_TOT', 'Z_PLANE', 'Z_POSITION', 'Z_REF', 'Z_STORED', 'ab_multipole_kick', 'ab_multipole_kicks', 'absolute_photon_position', 'absolute_time_tracking', 'ac_kicker_amp', 'action_to_xyz', 'add_lattice_control_structs', 'add_superimpose', 'add_this_multipass', 'add_this_taylor_term', 'adjust_super_slave_names', 'allocate_branch_array', 'allocate_lat_ele_array', 'allocate_thread_states', 'angle_between_polars', 'angle_to_canonical_coords', 'anomalous_moment_of', 'antiparticle', 'aperture_bookkeeper', 'apfft', 'apfft_corr', 'apfft_ext', 'apply_all_rampers', 'apply_energy_kick', 'apply_patch_to_ptc_fibre', 'apply_rampers_to_slave', 'array_re_str', 'asinc', 'assert_equal', 'astra_max_field_reference', 'at_this_ele_end', 'atomic_number', 'atomic_species_id', 'attribute_bookkeeper', 'attribute_free', 'attribute_index', 'attribute_name', 'attribute_type', 'attribute_units', 'autoscale_phase_and_amp', 'average_twiss', 'axis_angle_to_quat', 'axis_angle_to_w_mat', 'bbi_kick', 'bbi_slice_calc', 'bbu_add_a_bunch', 'bbu_hom_voltage_calc', 'bbu_remove_head_bunch', 'bbu_setup', 'bbu_track_a_stage', 'bbu_track_all', 'beam_envelope_ibs', 'beam_equal_beam', 'beam_init_setup', 'beam_tilts', 'beambeam_fibre_setup', 'bend_edge_kick', 'bend_exact_multipole_field', 'bend_length_has_been_set', 'bend_photon_e_rel_init', 'bend_photon_energy_integ_prob', 'bend_photon_energy_normalized_probability', 'bend_photon_init', 'bend_photon_polarization_init', 'bend_photon_vert_angle_init', 'bend_shift', 'bend_vert_angle_integ_prob', 'bicubic_cmplx_eval', 'bin_index', 'bin_x_center', 'bit_set', 'bl_via_vlassov', 'bmad_parser', 'bmad_parser2', 'bmad_patch_parameters_to_ptc', 'bp_set_ran_status', 'bracket_index_for_spline', 'branch_equal_branch', 'branch_name', 'branch_to_ptc_m_u', 'bunch_equal_bunch', 'c_to_cbar', 'calc_bunch_params', 'calc_bunch_params_slice', 'calc_bunch_params_z_slice', 'calc_bunch_sigma_matrix_etc', 'calc_emittances_and_twiss_from_sigma_matrix', 'calc_file_number', 'calc_spin_params', 'calc_super_slave_key', 'calc_wall_radius', 'calc_z_tune', 'canonical_to_angle_coords', 'cbar_to_c', 'change_file_number', 'charge_of', 'charge_to_mass_of', 'check_aperture_limit', 'check_controller_controls', 'check_for_superimpose_problem', 'check_if_s_in_bounds', 'check_rf_freq', 'choose_quads_for_set_tune', 'chrom_calc', 'chrom_tune', 'classical_radius', 'clear_lat_1turn_mats', 'clear_taylor_maps_from_elements', 'closed_orbit_calc', 'closed_orbit_from_tracking', 'cmplx_re_str', 'coarse_frequency_estimate', 'combine_consecutive_elements', 'complex_error_function', 'complex_taylor_clean', 'complex_taylor_coef', 'complex_taylor_equal_complex_taylor', 'complex_taylor_exponent_index', 'complex_taylor_make_unit', 'complex_taylor_to_mat6', 'complex_taylors_equal_complex_taylors', 'compute_slave_coupler', 'concat_ele_taylor', 'concat_taylor', 'concat_transfer_mat', 'control_bookkeeper', 'convert_bend_exact_multipole', 'convert_coords', 'convert_field_ele_to_lab', 'convert_local_cartesian_to_local_curvilinear', 'convert_local_curvilinear_to_local_cartesian', 'convert_particle_coordinates_s_to_t', 'convert_particle_coordinates_t_to_s', 'convert_pc_to', 'convert_total_energy_to', 'converter_distribution_parser', 'coord_equal_coord', 'coord_state_name', 'coords_body_to_local', 'coords_body_to_rel_exit', 'coords_curvilinear_to_floor', 'coords_floor_to_curvilinear', 'coords_floor_to_local_curvilinear', 'coords_floor_to_relative', 'coords_local_curvilinear_to_body', 'coords_local_curvilinear_to_floor', 'coords_relative_to_floor', 'cos_one', 'cosc', 'coulombfun', 'count_lines_in_file', 'create_a_spline', 'create_concatenated_wall3d', 'create_element_slice', 'create_field_overlap', 'create_girder', 'create_group', 'create_lat_ele_nametable', 'create_overlay', 'create_planar_wiggler_model', 'create_ramper', 'create_sol_quad_model', 'create_unique_ele_names', 'create_wiggler_cartesian_map', 'cross_product', 'crystal_attribute_bookkeeper', 'crystal_h_misalign', 'crystal_type_to_crystal_params', 'custom_attribute_ubound_index', 'damping_matrix_d', 'date_and_time_stamp', 'deallocate_ele_pointers', 'deallocate_expression_tree', 'deallocate_lat_pointers', 'default_tracking_species', 'destfixedwindowls', 'detab', 'detector_pixel_pt', 'diffraction_plate_or_mask_hit_spot', 'diffusion_matrix_b', 'display_size_and_resolution', 'distance_to_aperture', 'dj_bessel', 'djb_hash', 'djb_str_hash', 'do_mode_flip', 'downcase_string', 'dpc_given_de', 'drift_and_pipe_track_methods_adjustment', 'drift_multipass_name_correction', 'drift_orbit_time', 'drift_particle_to_s', 'drift_particle_to_t', 'dspline_len', 'dynamic_aperture_point', 'dynamic_aperture_scan', 'e_accel_field', 'e_crit_photon', 'eigen_decomp_6mat', 'ele_compute_ref_energy_and_time', 'ele_equal_ele', 'ele_equals_ele', 'ele_finalizer', 'ele_full_name', 'ele_geometry', 'ele_geometry_with_misalignments', 'ele_has_constant_ds_dt_ref', 'ele_has_nonzero_kick', 'ele_has_nonzero_offset', 'ele_is_monitor', 'ele_loc', 'ele_loc_name', 'ele_misalignment_l_s_calc', 'ele_nametable_index', 'ele_order_calc', 'ele_reference_energy_correction', 'ele_rf_step_index', 'ele_to_fibre', 'ele_to_ptc_magnetic_bn_an', 'ele_to_spin_taylor', 'ele_to_taylor', 'ele_unique_name', 'ele_value_has_changed', 'ele_vec_equal_ele_vec', 'elec_multipole_field', 'element_at_s', 'element_slice_iterator', 'ellipinc_test', 'em_field_calc', 'em_field_derivatives', 'em_field_kick_vector_time', 'em_field_plus_em_field', 'em_taylor_equal_em_taylor', 'em_taylors_equal_em_taylors', 'emit_6d', 'end_akima_spline_calc', 'entering_element', 'envelope_radints', 'envelope_radints_ibs', 'eq_ac_kicker', 'eq_ac_kicker_freq', 'eq_ac_kicker_time', 'eq_anormal_mode', 'eq_aperture_param', 'eq_aperture_point', 'eq_aperture_scan', 'eq_beam', 'eq_beam_init', 'eq_bmad_common', 'eq_bookkeeping_state', 'eq_bpm_phase_coupling', 'eq_branch', 'eq_bunch', 'eq_bunch_params', 'eq_cartesian_map', 'eq_cartesian_map_term', 'eq_cartesian_map_term1', 'eq_complex_taylor', 'eq_complex_taylor_term', 'eq_control', 'eq_control_ramp1', 'eq_control_var1', 'eq_controller', 'eq_coord', 'eq_coord_array', 'eq_cylindrical_map', 'eq_cylindrical_map_term', 'eq_cylindrical_map_term1', 'eq_ele', 'eq_ellipse_beam_init', 'eq_em_field', 'eq_em_taylor', 'eq_em_taylor_term', 'eq_expression_atom', 'eq_floor_position', 'eq_gen_grad1', 'eq_gen_grad_map', 'eq_grid_beam_init', 'eq_grid_field', 'eq_grid_field_pt', 'eq_grid_field_pt1', 'eq_high_energy_space_charge', 'eq_interval1_coef', 'eq_kv_beam_init', 'eq_lat', 'eq_lat_ele_loc', 'eq_lat_param', 'eq_linac_normal_mode', 'eq_mode3', 'eq_mode_info', 'eq_normal_modes', 'eq_photon_element', 'eq_photon_material', 'eq_photon_reflect_surface', 'eq_photon_reflect_table', 'eq_photon_target', 'eq_pixel_detec', 'eq_pixel_pt', 'eq_pre_tracker', 'eq_rad_int1', 'eq_rad_int_all_ele', 'eq_rad_int_branch', 'eq_rad_map', 'eq_rad_map_ele', 'eq_ramper_lord', 'eq_space_charge_common', 'eq_spin_polar', 'eq_spline', 'eq_strong_beam', 'eq_surface_curvature', 'eq_surface_displacement', 'eq_surface_displacement_pt', 'eq_surface_h_misalign', 'eq_surface_h_misalign_pt', 'eq_surface_segmented', 'eq_surface_segmented_pt', 'eq_target_point', 'eq_taylor', 'eq_taylor_term', 'eq_track', 'eq_track_point', 'eq_twiss', 'eq_wake', 'eq_wake_lr', 'eq_wake_lr_mode', 'eq_wake_sr', 'eq_wake_sr_mode', 'eq_wake_sr_z_long', 'eq_wall3d', 'eq_wall3d_section', 'eq_wall3d_vertex', 'eq_xy_disp', 'equal_sign_here', 'equivalent_taylor_attributes', 'err_exit', 'etdiv', 'evaluate_array_index', 'evaluate_logical', 'exact_bend_edge_kick', 'exp_bessi0', 'expect_one_of', 'expect_this', 'expression_stack_to_string', 'expression_stack_value', 'expression_string_to_stack', 'expression_string_to_tree', 'expression_tree_to_string', 'expression_value', 'factorial', 'faddeeva_function', 'fft1', 'fft_1d', 'fibre_to_ele', 'field_attribute_free', 'file_directorizer', 'file_get', 'file_get_open', 'file_suffixer', 'finalize_reflectivity_table', 'find_element_ends', 'find_fwhm', 'find_location', 'find_matching_fieldmap', 'find_normalization', 'fine_frequency_estimate', 'fixedwindowls', 'floor_angles_to_w_mat', 'floor_w_mat_to_angles', 'form_complex_taylor', 'form_digested_bmad_file_name', 'fourier_amplitude', 'fringe_here', 'g_bend_from_em_field', 'g_bending_strength_from_em_field', 'g_integrals_calc', 'gamma_ref', 'gen_complete_elliptic', 'gen_grad1_to_em_taylor', 'gen_grad_at_s_to_em_taylor', 'gen_grad_field', 'get_bl_from_fwhm', 'get_bmad_com', 'get_called_file', 'get_emit_from_sigma_mat', 'get_file_number', 'get_file_time_stamp', 'get_next_word', 'get_slave_list', 'get_space_charge_com', 'get_super_universe', 'gpt_field_grid_scaling', 'gpt_max_field_reference', 'gpt_to_particle_bunch', 'gradient_shift_sr_wake', 'grid_field_interpolate', 'hanhan', 'hard_multipole_edge_kick', 'has_attribute', 'has_curvature', 'has_orientation_attributes', 'hdf5_write_beam', 'hdf5_write_grid_field', 'hom_voltage', 'hwang_bend_edge_kick', 'i_bessel', 'i_bessel_extended', 'ibs_matrix_c', 'igfcoulombfun', 'igfexfun', 'igfeyfun', 'igfezfun', 'increment_file_number', 'index_nocase', 'init_attribute_name1', 'init_attribute_name_array', 'init_beam_distribution', 'init_bmad', 'init_bmad_parser_common', 'init_bunch_distribution', 'init_complex_taylor_series', 'init_coord', 'init_custom', 'init_ele', 'init_em_taylor_series', 'init_lat', 'init_multipole_cache', 'init_photon_from_a_photon_init_ele', 'init_photon_integ_prob', 'init_spin_distribution', 'init_surface_segment', 'init_taylor_series', 'init_wake', 'initfixedwindowls', 'insert_element', 'insert_phase_trombone', 'int_str', 'integrand_base', 'integrate_max', 'integrate_min', 'integrate_psi', 'integrated_mats', 'integration_timer', 'interpolated_fft', 'interpolated_fft_gsl', 'ion_kick', 'is_alphabetic', 'is_attribute', 'is_decreasing_sequence', 'is_false', 'is_increasing_sequence', 'is_integer', 'is_logical', 'is_real', 'is_subatomic_species', 'is_true', 'j_bessel', 'key_name_to_key_index', 'kick_vector_calc', 'kill_complex_taylor', 'kill_ptc_layouts', 'kill_taylor', 'kind_name', 'knot_interpolate', 'knots_to_string', 'lafun', 'lat_compute_ref_energy_and_time', 'lat_ele_locator', 'lat_equal_lat', 'lat_geometry', 'lat_make_mat6', 'lat_sanity_check', 'lat_to_ptc_layout', 'lat_vec_equal_lat_vec', 'lattice_bookkeeper', 'lcavity_rf_step_setup', 'linear_bend_edge_kick', 'linear_coef', 'linear_fit', 'linear_fit_2d', 'linear_to_spin_taylor', 'load_parse_line', 'logic_str', 'logical_to_python', 'lord_edge_aligned', 'low_energy_z_correction', 'lunget', 'mad_add_offsets_and_multipoles', 'mad_concat_map2', 'mad_drift', 'mad_elsep', 'mad_map_to_taylor', 'mad_quadrupole', 'mad_rfcavity', 'mad_sbend', 'mad_sbend_body', 'mad_sbend_fringe', 'mad_sextupole', 'mad_solenoid', 'mad_tmfoc', 'mad_tmsymm', 'mad_tmtilt', 'mad_track1', 'make_g2_mats', 'make_g_mats', 'make_hvbp', 'make_hybrid_lat', 'make_legal_comment', 'make_mad_map', 'make_mat6', 'make_mat6_bmad', 'make_mat6_bmad_photon', 'make_mat6_high_energy_space_charge', 'make_mat6_mad', 'make_mat6_symp_lie_ptc', 'make_mat6_taylor', 'make_mat6_tracking', 'make_n', 'make_pbrh', 'make_smat_from_abc', 'make_unit_mad_map', 'make_v', 'make_v_mats', 'makeup_control_slave', 'makeup_group_lord', 'makeup_multipass_slave', 'makeup_super_slave', 'makeup_super_slave1', 'map1_inverse', 'map1_make_unit', 'map1_times_map1', 'map_to_angle_coords', 'mark_patch_regions', 'mass_of', 'master_parameter_value', 'mat4_multipole', 'mat6_add_offsets', 'mat6_add_pitch', 'mat6_to_complex_taylor', 'mat_symp_decouple', 'match_ele_to_mat6', 'match_reg', 'match_wild', 'maximize_projection', 'mexp', 'mfft1', 'milli_sleep', 'misalign_ptc_fibre', 'momentum_compaction', 'multi_turn_tracking_analysis', 'multilayer_type_to_multilayer_params', 'multipass_chain', 'multipole1_ab_to_kt', 'multipole1_kt_to_ab', 'multipole_ab_to_kt', 'multipole_ele_to_ab', 'multipole_ele_to_kt', 'multipole_init', 'multipole_kick', 'multipole_kick_mat', 'multipole_kicks', 'multipole_kt_to_ab', 'multipole_spin_tracking', 'mytan', 'n_attrib_string_max_len', 'n_bins_automatic', 'n_choose_k', 'n_spline_create', 'naff', 'nametable_add', 'nametable_bracket_indexx', 'nametable_change1', 'nametable_init', 'nametable_remove', 'new_control', 'nint_chk', 'normal_form_complex_taylors', 'normal_form_taylors', 'normal_mode3_calc', 'normal_mode_dispersion', 'normalize_evecs', 'num_field_eles', 'num_lords', 'odeint_bmad', 'odeint_bmad_time', 'offset_particle', 'offset_photon', 'omega_to_quat', 'one_turn_mat_at_ele', 'open_binary_file', 'openpmd_species_name', 'orbit_amplitude_calc', 'orbit_reference_energy_correction', 'orbit_to_floor_phase_space', 'orbit_to_local_curvilinear', 'orbit_too_large', 'order_evecs_by_n_similarity', 'order_evecs_by_plane_dominance', 'order_evecs_by_tune', 'order_particles_in_z', 'order_super_lord_slaves', 'ordinal_str', 'osc_alloc_freespace_array', 'osc_alloc_image_array', 'osc_alloc_rectpipe_arrays', 'osc_getgrnpipe', 'osc_read_rectpipe_grn', 'osc_write_rectpipe_grn', 'parse_cartesian_map', 'parse_cylindrical_map', 'parse_fortran_format', 'parse_gen_grad_map', 'parse_grid_field', 'parse_integer_list', 'parse_integer_list2', 'parse_real_list', 'parse_real_list2', 'parser_add_constant', 'parser_call_check', 'parser_fast_complex_read', 'parser_fast_integer_read', 'parser_fast_real_read', 'parser_file_stack', 'parser_get_integer', 'parser_get_logical', 'parser_identify_fork_to_element', 'parser_init_custom_elements', 'parser_print_line', 'parser_read_lr_wake', 'parser_read_old_format_lr_wake', 'parser_read_old_format_sr_wake', 'parser_read_sr_wake', 'parser_transfer_control_struct', 'particle_in_global_frame', 'particle_is_moving_backwards', 'particle_is_moving_forward', 'particle_rf_time', 'patch_flips_propagation_direction', 'patch_length', 'photon_absorption_and_phase_shift', 'photon_add_to_detector_statistics', 'photon_reflection', 'photon_reflection_std_surface_init', 'photon_reflectivity', 'photon_target_corner_calc', 'photon_target_setup', 'photon_type', 'physical_ele_end', 'point_photon_emission', 'pointer_to_branch', 'pointer_to_ele', 'pointer_to_element_at_s', 'pointer_to_fibre', 'pointer_to_field_ele', 'pointer_to_girder', 'pointer_to_lord', 'pointer_to_multipass_lord', 'pointer_to_next_ele', 'pointer_to_ran_state', 'pointer_to_slave', 'pointer_to_super_lord', 'pointer_to_surface_displacement_pt', 'pointer_to_surface_segmented_pt', 'pointer_to_wake_ele', 'pointer_to_wall3d', 'polar_to_spinor', 'polar_to_vec', 'poly_eval', 'probability_funct', 'projdd', 'project_emit_to_xyz', 'psi_prime_sca', 'ptc_bookkeeper', 'ptc_calculate_tracking_step_size', 'ptc_check_for_lost_particle', 'ptc_closed_orbit_calc', 'ptc_emit_calc', 'ptc_layouts_resplit', 'ptc_one_turn_mat_and_closed_orbit_calc', 'ptc_ran_seed_put', 'ptc_set_rf_state_for_c_normal', 'ptc_set_taylor_order_if_needed', 'ptc_spin_calc', 'ptc_track_all', 'ptc_transfer_map_with_spin', 'pwd_mat', 'quadratic_roots', 'quat_conj', 'quat_inverse', 'quat_mul', 'quat_rotate', 'quat_to_axis_angle', 'quat_to_omega', 'quat_to_w_mat', 'query_string', 'quote', 'rad1_damp_and_stoc_mats', 'rad_damp_and_stoc_mats', 'rad_g_integrals', 'radiation_integrals', 'radiation_map_setup', 'ramper_slave_setup', 'ramper_value', 'ran_default_state', 'ran_engine', 'ran_gauss_converter', 'ran_gauss_scalar', 'ran_gauss_vector', 'ran_seed_get', 'ran_seed_put', 'ran_uniform', 'randomize_lr_wake_frequencies', 'rchomp', 're_allocate', 're_allocate_eles', 're_associate_node_array', 're_str', 'read_beam_ascii', 'read_beam_file', 'read_binary_cartesian_map', 'read_binary_cylindrical_map', 'read_binary_grid_field', 'read_surface_reflection_file', 'real_num_fortran_format', 'real_path', 'real_str', 'real_to_string', 'reallocate_beam', 'reallocate_bp_com_const', 'reallocate_bunch', 'reallocate_control', 'reallocate_coord', 'reallocate_expression_stack', 'reallocate_spline', 'rel_tracking_charge_to_mass', 'relative_mode_flip', 'release_rad_int_cache', 'remove_constant_taylor', 'remove_dead_from_bunch', 'remove_eles_from_lat', 'remove_lord_slave_link', 'reverse_lat', 'rf_cav_names', 'rf_coupler_kick', 'rf_is_on', 'rf_ref_time_offset', 'rfun', 'rk_adaptive_time_step', 'rk_time_step1', 'rms_value', 'rot_2d', 'rotate3', 'rotate_em_field', 'rotate_field_zx', 'rotate_for_curved_surface', 'rotate_spin', 'rotate_spin_a_step', 'rotate_spin_given_field', 'rotate_vec', 'rotate_vec_given_axis_angle', 'rp8', 'run_timer', 's_body_calc', 's_calc', 'sad_mult_hard_bend_edge_kick', 'sad_soft_bend_edge_kick', 'save_a_beam_step', 'save_a_bunch_step', 'save_a_step', 'sbend_body_with_k1_map', 'sc_adaptive_step', 'sc_step', 'set_active_fixer', 'set_custom_attribute_name', 'set_ele_attribute', 'set_ele_defaults', 'set_ele_name', 'set_ele_real_attribute', 'set_ele_status_stale', 'set_flags_for_changed_attribute', 'set_fringe_on_off', 'set_lords_status_stale', 'set_on_off', 'set_orbit_to_zero', 'set_parameter', 'set_ptc', 'set_ptc_base_state', 'set_ptc_com_pointers', 'set_ptc_quiet', 'set_ptc_verbose', 'set_pwd_ele', 'set_species_charge', 'set_status_flags', 'set_tune', 'set_tune_3d', 'set_twiss', 'set_z_tune', 'settable_dep_var_bookkeeping', 'setup_high_energy_space_charge_calc', 'sigma_mat_ptc_to_bmad', 'significant_difference', 'sinc', 'sincc', 'sinhx_x', 'skip_ele_blender', 'skip_header', 'slice_lattice', 'soft_quadrupole_edge_kick', 'sol_quad_mat6_calc', 'solve_psi_adaptive', 'solve_psi_fixed_steps', 'sort_complex_taylor_terms', 'species_id', 'species_id_from_openpmd', 'species_name', 'species_of', 'spin_dn_dpz_from_mat8', 'spin_dn_dpz_from_qmap', 'spin_map1_normalize', 'spin_mat8_resonance_strengths', 'spin_mat_to_eigen', 'spin_of', 'spin_omega', 'spin_quat_resonance_strengths', 'spin_taylor_to_linear', 'spinor_to_polar', 'spinor_to_vec', 'spline1', 'spline_akima', 'spline_akima_interpolate', 'spline_evaluate', 'spline_fit_orbit', 'split_lat', 'sprint_spin_taylor_map', 'sqrt_alpha', 'sqrt_one', 'sr_longitudinal_wake_particle', 'sr_transverse_wake_particle', 'sr_z_long_wake', 'srdt_calc', 'srdt_lsq_solution', 'start_branch_at', 'str_count', 'str_downcase', 'str_first_in_set', 'str_first_not_in_set', 'str_last_in_set', 'str_last_not_in_set', 'str_match_wild', 'str_substitute', 'str_upcase', 'stream_ele_end', 'string_attrib', 'string_to_int', 'string_to_real', 'string_trim', 'string_trim2', 'strong_beam_sigma_calc', 'strong_beam_strength', 'super_bicubic_coef', 'super_bicubic_interpolation', 'super_polint', 'super_poly', 'super_sobseq', 'super_sort', 'surface_grid_displacement', 'symp_lie_bmad', 'system_command', 't6_to_b123', 'tao_abort_command_file', 'tao_add_to_normal_mode_h_array', 'tao_alias_cmd', 'tao_allocate_data_array', 'tao_allocate_v1_var', 'tao_allocate_var_array', 'tao_beam_emit_calc', 'tao_beam_track', 'tao_beam_track_endpoint', 'tao_branch_index', 'tao_calc_data_at_s_pts', 'tao_cbar_wave_anal', 'tao_change_ele', 'tao_change_tune', 'tao_change_var', 'tao_change_z_tune', 'tao_chrom_calc_needed', 'tao_clear_cmd', 'tao_clip_cmd', 'tao_close_command_file', 'tao_cmd_history_record', 'tao_command', 'tao_constraint_type_name', 'tao_control_tree_list', 'tao_count_strings', 'tao_create_plot_window', 'tao_curve_beam_ellipse_setup', 'tao_curve_check_universe', 'tao_curve_data_setup', 'tao_curve_datum_calc', 'tao_curve_ele_ref', 'tao_curve_ix_uni', 'tao_curve_name', 'tao_curve_rms_calc', 'tao_d2_d1_name', 'tao_d2_data_stuffit', 'tao_data_check', 'tao_data_coupling_init', 'tao_data_sanity_check', 'tao_data_type_substitute', 'tao_data_useit_plot_calc', 'tao_datum_has_associated_ele', 'tao_datum_integrate', 'tao_datum_name', 'tao_datum_s_position', 'tao_de_optimizer', 'tao_deallocate_plot_cache', 'tao_deallocate_tree', 'tao_destroy_plot_window', 'tao_dmerit_calc', 'tao_dmodel_dvar_calc', 'tao_do_wire_scan', 'tao_draw_beam_chamber_wall', 'tao_draw_curve_data', 'tao_draw_ele_for_floor_plan', 'tao_draw_floor_plan', 'tao_draw_graph_axes', 'tao_draw_histogram_data', 'tao_draw_lat_layout', 'tao_draw_plots', 'tao_ele_geometry_with_misalignments', 'tao_ele_shape_info', 'tao_eval_floor_orbit', 'tao_evaluate_a_datum', 'tao_evaluate_datum_at_s', 'tao_evaluate_element_parameters', 'tao_evaluate_expression', 'tao_evaluate_expression_new', 'tao_evaluate_expression_old', 'tao_evaluate_lat_or_beam_data', 'tao_evaluate_stack_old', 'tao_evaluate_tree', 'tao_evaluate_tune', 'tao_expression_hash_substitute', 'tao_expression_tree_to_string', 'tao_find_plot_region', 'tao_fixer', 'tao_floor_to_screen', 'tao_floor_to_screen_coords', 'tao_geodesic_lm_optimizer', 'tao_get_data', 'tao_get_opt_vars', 'tao_get_user_input', 'tao_graph_controller_setup', 'tao_graph_data_setup', 'tao_graph_data_slice_setup', 'tao_graph_dynamic_aperture_setup', 'tao_graph_histogram_setup', 'tao_graph_name', 'tao_graph_phase_space_setup', 'tao_graph_s_min_max_calc', 'tao_graph_setup', 'tao_init', 'tao_init_beam_in_universe', 'tao_init_beams', 'tao_init_data', 'tao_init_data_end_stuff', 'tao_init_data_in_universe', 'tao_init_dynamic_aperture', 'tao_init_find_elements', 'tao_init_global', 'tao_init_lattice', 'tao_init_plotting', 'tao_init_variables', 'tao_inject_beam', 'tao_inject_particle', 'tao_is_valid_name', 'tao_json_cmd', 'tao_key_info_to_str', 'tao_lat_bookkeeper', 'tao_lat_emit_calc', 'tao_lat_sigma_calc_needed', 'tao_lat_sigma_track', 'tao_lattice_branches_equal_tao_lattice_branches', 'tao_lattice_calc', 'tao_lattice_equal_tao_lattice', 'tao_limit_calc', 'tao_lm_optimizer', 'tao_lmdif_optimizer', 'tao_load_this_datum', 'tao_locate_all_elements', 'tao_locate_elements', 'tao_mark_lattice_ele', 'tao_merit', 'tao_next_word', 'tao_one_turn_map_calc_needed', 'tao_open_file', 'tao_open_scratch_file', 'tao_optimization_status', 'tao_orbit_beta_wave_anal', 'tao_oreint_building_wall_pt', 'tao_param_value_at_s', 'tao_param_value_routine', 'tao_parse_command_args', 'tao_parse_element_param_str', 'tao_particle_data_value', 'tao_pause_cmd', 'tao_phase_space_axis_index', 'tao_phase_wave_anal', 'tao_pick_universe', 'tao_pipe_cmd', 'tao_place_cmd', 'tao_plot_cmd', 'tao_plot_data', 'tao_plot_histogram', 'tao_plot_key_table', 'tao_plot_setup', 'tao_plot_struct_transfer', 'tao_plot_wave', 'tao_pointer_to_building_wall_shape', 'tao_pointer_to_datum', 'tao_pointer_to_datum_ele', 'tao_pointer_to_ele_shape', 'tao_pointer_to_tao_lat', 'tao_pointer_to_universe', 'tao_pointer_to_universes', 'tao_pointer_to_var_in_lattice', 'tao_pointer_to_var_in_lattice2', 'tao_print_command_line_info', 'tao_ptc_normal_form', 'tao_python_cmd', 'tao_quiet_set', 'tao_rad_int_calc_needed', 'tao_re_allocate_expression_info', 'tao_re_associate_node_array', 'tao_re_execute', 'tao_read_cmd', 'tao_read_phase_space_index', 'tao_regression_test', 'tao_remove_blank_characters', 'tao_run_cmd', 'tao_scale_cmd', 'tao_scale_graph', 'tao_scale_ping_data', 'tao_scale_plot', 'tao_scratch_values_calc', 'tao_set_beam_cmd', 'tao_set_beam_init_cmd', 'tao_set_bmad_com_cmd', 'tao_set_branch_cmd', 'tao_set_calculate_cmd', 'tao_set_curve_cmd', 'tao_set_curve_invalid', 'tao_set_data_cmd', 'tao_set_data_useit_opt', 'tao_set_default_cmd', 'tao_set_drawing_cmd', 'tao_set_dynamic_aperture_cmd', 'tao_set_elements_cmd', 'tao_set_floor_plan_axis_label', 'tao_set_geodesic_lm_cmd', 'tao_set_global_cmd', 'tao_set_graph_cmd', 'tao_set_integer_value', 'tao_set_invalid', 'tao_set_key_cmd', 'tao_set_lattice_cmd', 'tao_set_logical_value', 'tao_set_openmp_n_threads', 'tao_set_opt_vars', 'tao_set_opti_de_param_cmd', 'tao_set_particle_start_cmd', 'tao_set_plot_cmd', 'tao_set_plot_page_cmd', 'tao_set_ptc_com_cmd', 'tao_set_qp_axis_struct', 'tao_set_qp_point_struct', 'tao_set_qp_rect_struct', 'tao_set_ran_state_cmd', 'tao_set_real_value', 'tao_set_region_cmd', 'tao_set_space_charge_com_cmd', 'tao_set_symbolic_number_cmd', 'tao_set_tune_cmd', 'tao_set_universe_cmd', 'tao_set_var_cmd', 'tao_set_var_model_value', 'tao_set_var_useit_opt', 'tao_set_wave_cmd', 'tao_set_z_tune_cmd', 'tao_setup_key_table', 'tao_shape_init', 'tao_show_cmd', 'tao_show_constraints', 'tao_single_mode', 'tao_single_track', 'tao_spin_matrices_calc_needed', 'tao_spin_tracking_turn_on', 'tao_split_component', 'tao_srdt_calc_needed', 'tao_subin_uni_number', 'tao_svd_optimizer', 'tao_symbol_import_from_lat', 'tao_taper_cmd', 'tao_to_change_number', 'tao_to_int', 'tao_to_phase_and_coupling_reading', 'tao_to_real', 'tao_too_many_particles_lost', 'tao_top10_derivative_print', 'tao_top10_merit_categories_print', 'tao_top_level', 'tao_tracking_ele_index', 'tao_turn_on_special_calcs_if_needed_for_plotting', 'tao_type_expression_tree', 'tao_uni_atsign_index', 'tao_universe_index', 'tao_use_data', 'tao_use_var', 'tao_user_is_terminating_optimization', 'tao_var1_name', 'tao_var_attrib_name', 'tao_var_check', 'tao_var_repoint', 'tao_var_target_calc', 'tao_var_useit_plot_calc', 'tao_var_write', 'tao_veto_vars_with_zero_dmodel', 'tao_wave_analysis', 'tao_wave_cmd', 'tao_wave_fit', 'tao_write_cmd', 'tao_x_axis_cmd', 'tao_x_scale_cmd', 'tao_x_scale_graph', 'tao_x_scale_plot', 'taper_mag_strengths', 'target_min_max_calc', 'target_rot_mats', 'taylor_equal_taylor', 'taylor_inverse', 'taylor_propagate1', 'taylor_to_mad_map', 'taylors_equal_taylors', 'test_bunch_struct_array', 'test_bunch_struct_scalar', 'test_character_scalar', 'test_complex_array', 'test_complex_scalar', 'test_integer8_array', 'test_integer8_scalar', 'test_integer_array', 'test_integer_scalar', 'test_logical_array', 'test_logical_scalar', 'test_real16_array', 'test_real16_scalar', 'test_real_array', 'test_real_scalar', 'tilt_coords', 'tilt_coords_photon', 'tilt_mat6', 'to_eta_reading', 'to_fieldmap_coords', 'to_orbit_reading', 'to_phase_and_coupling_reading', 'to_photon_angle_coords', 'to_str', 'to_surface_coords', 'touschek_lifetime', 'touschek_rate1', 'touschek_rate1_zap', 'track1', 'track1_beam', 'track1_bmad', 'track1_bmad_photon', 'track1_bunch', 'track1_bunch_csr', 'track1_bunch_csr3d', 'track1_bunch_hom', 'track1_bunch_space_charge', 'track1_crystal', 'track1_diffraction_plate_or_mask', 'track1_high_energy_space_charge', 'track1_lens', 'track1_linear', 'track1_lr_wake', 'track1_mad', 'track1_mirror', 'track1_mosaic_crystal', 'track1_multilayer_mirror', 'track1_radiation', 'track1_radiation_center', 'track1_runge_kutta', 'track1_sample', 'track1_spin', 'track1_spin_integration', 'track1_spin_taylor', 'track1_sr_wake', 'track1_symp_lie_ptc', 'track1_taylor', 'track1_time_runge_kutta', 'track_a_beambeam', 'track_a_bend', 'track_a_bend_photon', 'track_a_capillary', 'track_a_converter', 'track_a_crab_cavity', 'track_a_drift', 'track_a_drift_photon', 'track_a_foil', 'track_a_gkicker', 'track_a_lcavity', 'track_a_lcavity_old', 'track_a_mask', 'track_a_match', 'track_a_patch', 'track_a_patch_photon', 'track_a_pickup', 'track_a_quadrupole', 'track_a_rfcavity', 'track_a_sad_mult', 'track_a_sol_quad', 'track_a_thick_multipole', 'track_a_wiggler', 'track_a_zero_length_element', 'track_all', 'track_beam', 'track_bunch', 'track_bunch_time', 'track_bunch_to_s', 'track_bunch_to_t', 'track_complex_taylor', 'track_from_s_to_s', 'track_many', 'track_to_surface', 'track_until_dead', 'tracking_rad_map_setup', 'transfer_ac_kick', 'transfer_branch', 'transfer_branch_parameters', 'transfer_branches', 'transfer_ele', 'transfer_ele_taylor', 'transfer_eles', 'transfer_fieldmap', 'transfer_fixer_params', 'transfer_lat', 'transfer_lat_parameters', 'transfer_map_calc', 'transfer_map_from_s_to_s', 'transfer_mat2_from_twiss', 'transfer_mat_from_twiss', 'transfer_matrix_calc', 'transfer_twiss', 'transfer_wake', 'tricubic_cmplx_eval', 'truncate_complex_taylor_to_order', 'twiss1_propagate', 'twiss3_at_start', 'twiss3_from_twiss2', 'twiss3_propagate1', 'twiss3_propagate_all', 'twiss_and_track', 'twiss_and_track_at_s', 'twiss_and_track_from_s_to_s', 'twiss_and_track_intra_ele', 'twiss_at_element', 'twiss_at_start', 'twiss_from_tracking', 'twiss_propagate1', 'twiss_propagate_all', 'twiss_to_1_turn_mat', 'type_coord', 'type_expression_tree', 'type_ptc_layout', 'type_this_file', 'upcase_string', 'update_ele_from_fibre', 'update_fibre_from_ele', 'update_floor_angles', 'valid_field_calc', 'valid_fringe_type', 'valid_mat6_calc_method', 'valid_spin_tracking_method', 'valid_tracking_method', 'value_of_attribute', 'value_to_line', 'vec_to_polar', 'vec_to_spinor', 'verify_valid_name', 'virtual_memory_usage', 'w_mat_for_bend_angle', 'w_mat_for_tilt', 'w_mat_for_x_pitch', 'w_mat_for_y_pitch', 'w_mat_to_axis_angle', 'w_mat_to_quat', 'wall3d_d_radius', 'wall3d_initializer', 'wall3d_section_initializer', 'wall3d_to_position', 'word_len', 'word_read', 'word_to_value', 'write_ascii_beam_file', 'write_astra_bend', 'write_astra_field_grid_file', 'write_astra_field_grid_file_3d', 'write_beam_file', 'write_beam_floor_positions', 'write_binary_cartesian_map', 'write_binary_cylindrical_map', 'write_binary_grid_field', 'write_blender_ele', 'write_blender_lat_layout', 'write_bmad_lattice_file', 'write_bunch_by_bunch_info', 'write_gpt_field_grid_file_1d', 'write_gpt_field_grid_file_2d', 'write_gpt_field_grid_file_3d', 'write_lat_line', 'write_lattice_in_elegant_format', 'write_lattice_in_foreign_format', 'write_lattice_in_mad_format', 'write_lattice_in_sad_format', 'write_lattice_in_scibmad', 'write_line_element', 'write_opal_field_grid_file', 'write_opal_lattice_file', 'write_time_particle_distribution', 'x0_radiation_length', 'xlafun', 'xraylib_nist_compound', 'ylafun', 'z_at_surface', 'zero_ele_kicks', 'zero_ele_offsets', 'zero_lr_wakes_in_lat', 'zlafun']
+__all__: list[str] = ['AbMultipoleKick', 'AcKickerFreqStruct', 'AcKickerFreqStructAlloc1D', 'AcKickerFreqStructArray1D', 'AcKickerStruct', 'AcKickerTimeStruct', 'AcKickerTimeStructAlloc1D', 'AcKickerTimeStructArray1D', 'ActionToXyz', 'AddSuperimpose', 'AllEncompassingStruct', 'AnormalModeStruct', 'ApertureParamStruct', 'AperturePointStruct', 'AperturePointStructAlloc1D', 'AperturePointStructArray1D', 'ApertureScanStruct', 'ApertureScanStructAlloc1D', 'ApertureScanStructArray1D', 'ApfftCorr', 'AttributeFree1', 'AttributeFree2', 'AttributeFree3', 'AttributeIndex1', 'AttributeIndex2', 'BbiKick', 'BbuBeamStruct', 'BbuParamStruct', 'BbuStageStruct', 'BbuStageStructAlloc1D', 'BbuStageStructArray1D', 'BeamInitStruct', 'BeamStruct', 'BeamTilts', 'BendShift', 'BicubicCmplxCoefStruct', 'BicubicCmplxCoefStructArray3D', 'BicubicCmplxEval', 'BinXCenter', 'BitSet', 'BmadCommonStruct', 'BmadNormalFormStruct', 'BmadParser', 'BookkeepingStateStruct', 'BoolAlloc1D', 'BoolArray1D', 'BoolArray2D', 'BoolArray3D', 'BpmPhaseCouplingStruct', 'BracketIndexForSpline', 'BranchStruct', 'BranchStructAlloc1D', 'BranchStructArray1D', 'BunchParamsStruct', 'BunchParamsStructAlloc1D', 'BunchParamsStructArray1D', 'BunchStruct', 'BunchStructAlloc1D', 'BunchStructArray1D', 'BunchTrackStruct', 'BunchTrackStructAlloc1D', 'BunchTrackStructArray1D', 'CalcBunchParams', 'CalcEmittancesAndTwissFromSigmaMatrix', 'CalcWallRadius', 'CartesianMapStruct', 'CartesianMapStructAlloc1D', 'CartesianMapStructArray1D', 'CartesianMapTerm1Struct', 'CartesianMapTerm1StructAlloc1D', 'CartesianMapTerm1StructArray1D', 'CartesianMapTermStruct', 'CheckIfSInBounds', 'ChromCalc', 'ChromTune', 'ComplexAlloc1D', 'ComplexArray1D', 'ComplexArray2D', 'ComplexArray3D', 'ComplexTaylorStruct', 'ComplexTaylorStructAlloc1D', 'ComplexTaylorStructArray1D', 'ComplexTaylorTermStruct', 'ComplexTaylorTermStructAlloc1D', 'ComplexTaylorTermStructArray1D', 'ComplexTaylorToMat6', 'ConcatTransferMat', 'ControlRamp1Struct', 'ControlRamp1StructAlloc1D', 'ControlRamp1StructArray1D', 'ControlStruct', 'ControlStructAlloc1D', 'ControlStructArray1D', 'ControlVar1Struct', 'ControlVar1StructAlloc1D', 'ControlVar1StructArray1D', 'ControllerStruct', 'ConvertCoords', 'ConvertPcTo', 'ConvertTotalEnergyTo', 'ConverterDistributionParser', 'CoordArrayStruct', 'CoordArrayStructAlloc1D', 'CoordArrayStructArray1D', 'CoordStruct', 'CoordStructAlloc1D', 'CoordStructArray1D', 'CoordsBodyToLocal', 'CoordsBodyToRelExit', 'CoordsCurvilinearToFloor', 'CoordsFloorToCurvilinear', 'CoordsFloorToLocalCurvilinear', 'CoordsLocalCurvilinearToBody', 'CoordsLocalCurvilinearToFloor', 'CreateElementSlice', 'CreatePlanarWigglerModel', 'CylindricalMapStruct', 'CylindricalMapStructAlloc1D', 'CylindricalMapStructArray1D', 'CylindricalMapTerm1Struct', 'CylindricalMapTerm1StructAlloc1D', 'CylindricalMapTerm1StructArray1D', 'CylindricalMapTermStruct', 'DistanceToAperture', 'EigenDecomp6mat', 'EleMisalignmentLSCalc', 'ElePointerStruct', 'ElePointerStructAlloc1D', 'ElePointerStructArray1D', 'EleStruct', 'EleStructAlloc1D', 'EleStructArray1D', 'EleToFibre', 'EleToTaylor', 'ElecMultipoleField', 'ElementAtSBranch', 'ElementAtSLat', 'EllipseBeamInitStruct', 'EllipseBeamInitStructAlloc1D', 'EllipseBeamInitStructArray1D', 'EmFieldCalc', 'EmFieldStruct', 'EmFieldStructAlloc1D', 'EmFieldStructArray1D', 'EmTaylorStruct', 'EmTaylorStructAlloc1D', 'EmTaylorStructArray1D', 'EmTaylorTermStruct', 'EmTaylorTermStructAlloc1D', 'EmTaylorTermStructArray1D', 'Emit6d', 'EnvelopeRadintsIbs', 'EvaluateArrayIndex', 'EvaluateLogical', 'ExpectOneOf', 'ExpectThis', 'ExpressionAtomStruct', 'ExpressionAtomStructAlloc1D', 'ExpressionAtomStructArray1D', 'ExpressionStackValue', 'ExpressionStringToStack', 'ExpressionStringToTree', 'ExpressionTreeStruct', 'ExpressionTreeStructAlloc1D', 'ExpressionTreeStructArray1D', 'ExpressionValue', 'FCharArray1D', 'Fibre', 'FibreToEle', 'FindElementEnds', 'FindMatchingFieldmap', 'FloorAnglesToWMat', 'FloorPositionStruct', 'FloorWMatToAngles', 'FormDigestedBmadFileName', 'FourierAmplitude', 'GBendingStrengthFromEmField', 'GenGrad1Struct', 'GenGrad1StructAlloc1D', 'GenGrad1StructArray1D', 'GenGradMapStruct', 'GenGradMapStructAlloc1D', 'GenGradMapStructArray1D', 'GetEmitFromSigmaMat', 'GetNextWord', 'GptToParticleBunch', 'GridBeamInitStruct', 'GridBeamInitStructAlloc1D', 'GridBeamInitStructArray1D', 'GridFieldPt1Struct', 'GridFieldPt1StructArray3D', 'GridFieldPtStruct', 'GridFieldStruct', 'GridFieldStructAlloc1D', 'GridFieldStructArray1D', 'HighEnergySpaceChargeStruct', 'InitAttributeName1', 'InitBeamDistribution', 'InitBunchDistribution', 'InitPhotonIntegProb', 'Int8Alloc1D', 'Int8Array1D', 'IntAlloc1D', 'IntArray1D', 'IntArray2D', 'IntArray3D', 'Interval1CoefStruct', 'Interval1CoefStructAlloc1D', 'Interval1CoefStructArray1D', 'KickVectorCalc', 'KnotInterpolate', 'KvBeamInitStruct', 'LatEleLocStruct', 'LatEleLocStructAlloc1D', 'LatEleLocStructArray1D', 'LatEleLocator', 'LatEleOrder1Struct', 'LatEleOrder1StructAlloc1D', 'LatEleOrder1StructArray1D', 'LatEleOrderArrayStruct', 'LatEleOrderArrayStructAlloc1D', 'LatEleOrderArrayStructArray1D', 'LatEleOrderStruct', 'LatParamStruct', 'LatStruct', 'LatStructAlloc1D', 'LatStructArray1D', 'Layout', 'LinacNormalModeStruct', 'LinearCoef', 'LoadParseLine', 'MadEnergyStruct', 'MadMapStruct', 'MadTmfoc', 'MakeGMats', 'MakeHvbp', 'MakeMadMap', 'MakeMat6', 'MakeMat6Bmad', 'MakeMat6BmadPhoton', 'MakeMat6Tracking', 'MakeN', 'MakePbrh', 'MakeSmatFromAbc', 'MakeVMats', 'MatSympDecouple', 'MatchEleToMat6', 'Mode3Struct', 'ModeInfoStruct', 'MultiTurnTrackingAnalysis', 'MultipassChain', 'Multipole1AbToKt', 'Multipole1KtToAb', 'MultipoleEleToAb', 'NametableStruct', 'NormalFormTaylors', 'NormalMode3Calc', 'NormalModesStruct', 'OdeintBmad', 'OdeintBmadTime', 'OffsetParticle', 'OpenBinaryFile', 'OrbitAmplitudeCalc', 'OrbitTooLarge', 'OrderEvecsByNSimilarity', 'ParseIntegerList2', 'ParseRealList', 'ParseRealList2', 'ParserFastComplexRead', 'ParserFastRealRead', 'PhotonAbsorptionAndPhaseShift', 'PhotonAddToDetectorStatistics', 'PhotonElementStruct', 'PhotonMaterialStruct', 'PhotonReflectSurfaceStruct', 'PhotonReflectTableStruct', 'PhotonReflectTableStructAlloc1D', 'PhotonReflectTableStructArray1D', 'PhotonReflection', 'PhotonReflectivity', 'PhotonTargetStruct', 'PixelDetecStruct', 'PixelPtStruct', 'PixelPtStructArray2D', 'PointerToElementAtS', 'PointerToFieldEle', 'PointerToGirder', 'PointerToLord', 'PointerToMultipassLord', 'PointerToSlave', 'PointerToSuperLord', 'PointerToSurfaceDisplacementPt', 'PointerToSurfaceSegmentedPt', 'PointerToWakeEle', 'PointerToWall3d', 'PreTrackerStruct', 'ProjectEmitToXyz', 'PtcCheckForLostParticle', 'PtcEmitCalc', 'PtcNormalFormStruct', 'PtcSpinCalc', 'PtcTrackAll', 'QpAxisStruct', 'QpLegendStruct', 'QpLineStruct', 'QpPointStruct', 'QpRectStruct', 'QpSymbolStruct', 'QuatToAxisAngle', 'Rad1DampAndStocMats', 'RadDampAndStocMats', 'RadGIntegrals', 'RadInt1Struct', 'RadInt1StructAlloc1D', 'RadInt1StructArray1D', 'RadIntAllEleStruct', 'RadIntBranchStruct', 'RadIntBranchStructAlloc1D', 'RadIntBranchStructArray1D', 'RadMapEleStruct', 'RadMapStruct', 'RadiationIntegrals', 'RamperLordStruct', 'RamperLordStructAlloc1D', 'RamperLordStructArray1D', 'RamperValue', 'RanGaussConverter', 'RandomStateStruct', 'ReadBeamAscii', 'ReadBeamFile', 'Real16Alloc1D', 'Real16Array1D', 'RealAlloc1D', 'RealArray1D', 'RealArray2D', 'RealArray3D', 'ReleaseRadIntCache', 'ResonanceHStruct', 'ResonanceHStructAlloc1D', 'ResonanceHStructArray1D', 'RfEleStruct', 'RfStairStepStruct', 'RfStairStepStructAlloc1D', 'RfStairStepStructArray1D', 'RmsValue', 'ScAdaptiveStep', 'ScStep', 'SetEleAttribute', 'SetEleStatusStale', 'SetFringeOnOff', 'SetPtcQuiet', 'SpaceChargeCommonStruct', 'SpinAxisStruct', 'SpinDnDpzFromMat8', 'SpinDnDpzFromQmap', 'SpinMat8ResonanceStrengths', 'SpinMatToEigen', 'SpinOrbitMap1Struct', 'SpinOrbitMap1StructAlloc1D', 'SpinOrbitMap1StructArray1D', 'SpinPolarStruct', 'SpinQuatResonanceStrengths', 'SplineAkimaInterpolate', 'SplineEvaluate', 'SplineStruct', 'SplineStructAlloc1D', 'SplineStructArray1D', 'SplitLat', 'StrongBeamSigmaCalc', 'StrongBeamStruct', 'SummationRdtStruct', 'SummationRdtStructAlloc1D', 'SummationRdtStructArray1D', 'SuperBicubicInterpolation', 'SuperPolint', 'SurfaceCurvatureStruct', 'SurfaceDisplacementPtStruct', 'SurfaceDisplacementPtStructArray2D', 'SurfaceDisplacementStruct', 'SurfaceGridDisplacement', 'SurfaceHMisalignPtStruct', 'SurfaceHMisalignPtStructArray2D', 'SurfaceHMisalignStruct', 'SurfaceSegmentedPtStruct', 'SurfaceSegmentedPtStructArray2D', 'SurfaceSegmentedStruct', 'T6ToB123', 'TaoBeamBranchStruct', 'TaoBeamUniStruct', 'TaoBuildingWallOrientationStruct', 'TaoBuildingWallPointStruct', 'TaoBuildingWallPointStructAlloc1D', 'TaoBuildingWallPointStructArray1D', 'TaoBuildingWallSectionStruct', 'TaoBuildingWallSectionStructAlloc1D', 'TaoBuildingWallSectionStructArray1D', 'TaoBuildingWallStruct', 'TaoCmdHistoryStruct', 'TaoCmdHistoryStructAlloc1D', 'TaoCmdHistoryStructArray1D', 'TaoCommonStruct', 'TaoCurveColorStruct', 'TaoCurveOrbitStruct', 'TaoCurveRmsCalc', 'TaoCurveStruct', 'TaoCurveStructAlloc1D', 'TaoCurveStructArray1D', 'TaoD1DataStruct', 'TaoD1DataStructAlloc1D', 'TaoD1DataStructArray1D', 'TaoD2DataStruct', 'TaoD2DataStructAlloc1D', 'TaoD2DataStructArray1D', 'TaoDataStruct', 'TaoDataStructAlloc1D', 'TaoDataStructArray1D', 'TaoDataVarComponentStruct', 'TaoDataVarComponentStructAlloc1D', 'TaoDataVarComponentStructArray1D', 'TaoDatumIntegrate', 'TaoDrawCurveData', 'TaoDrawHistogramData', 'TaoDrawingStruct', 'TaoDynamicApertureStruct', 'TaoEleGeometryWithMisalignments', 'TaoElePointerStruct', 'TaoElePointerStructAlloc1D', 'TaoElePointerStructArray1D', 'TaoEleShapeInfo', 'TaoEleShapeStruct', 'TaoEleShapeStructAlloc1D', 'TaoEleShapeStructArray1D', 'TaoEvalFloorOrbit', 'TaoEvalNodeStruct', 'TaoEvalNodeStructAlloc1D', 'TaoEvalNodeStructArray1D', 'TaoEvaluateADatum', 'TaoEvaluateDatumAtS', 'TaoExpressionInfoStruct', 'TaoExpressionInfoStructAlloc1D', 'TaoExpressionInfoStructArray1D', 'TaoFindPlotRegion', 'TaoFloorPlanStruct', 'TaoFloorToScreen', 'TaoGetOptVars', 'TaoGlobalStruct', 'TaoGraphSMinMaxCalc', 'TaoGraphStruct', 'TaoGraphStructAlloc1D', 'TaoGraphStructArray1D', 'TaoHistogramStruct', 'TaoInitStruct', 'TaoInjectBeam', 'TaoIsValidName', 'TaoLatSigmaStruct', 'TaoLatSigmaStructAlloc1D', 'TaoLatSigmaStructArray1D', 'TaoLatticeBranchStruct', 'TaoLatticeBranchStructAlloc1D', 'TaoLatticeBranchStructArray1D', 'TaoLatticeCalc', 'TaoLatticeStruct', 'TaoMerit', 'TaoModelBranchStruct', 'TaoModelBranchStructAlloc1D', 'TaoModelBranchStructArray1D', 'TaoModelElementStruct', 'TaoModelElementStructAlloc1D', 'TaoModelElementStructArray1D', 'TaoNextWord', 'TaoOpenScratchFile', 'TaoParamValueAtS', 'TaoParseElementParamStr', 'TaoPickUniverse', 'TaoPingScaleStruct', 'TaoPlotCacheStruct', 'TaoPlotCacheStructAlloc1D', 'TaoPlotCacheStructArray1D', 'TaoPlotPageStruct', 'TaoPlotRegionStruct', 'TaoPlotRegionStructAlloc1D', 'TaoPlotRegionStructArray1D', 'TaoPlotStruct', 'TaoPlotStructAlloc1D', 'TaoPlotStructArray1D', 'TaoPointerToDatumEle', 'TaoPointerToEleShape', 'TaoPointerToUniverseStr', 'TaoPointerToUniverses', 'TaoRemoveBlankCharacters', 'TaoScaleGraph', 'TaoSetIntegerValue', 'TaoSetLogicalValue', 'TaoSetQpAxisStruct', 'TaoSetQpPointStruct', 'TaoSetQpRectStruct', 'TaoSetRealValue', 'TaoShapePatternPointStruct', 'TaoShapePatternPointStructAlloc1D', 'TaoShapePatternPointStructArray1D', 'TaoShapePatternStruct', 'TaoShapePatternStructAlloc1D', 'TaoShapePatternStructArray1D', 'TaoSpinDnDpzStruct', 'TaoSpinEleStruct', 'TaoSpinEleStructAlloc1D', 'TaoSpinEleStructArray1D', 'TaoSpinMapStruct', 'TaoSpinPolarizationStruct', 'TaoSubinUniNumber', 'TaoSuperUniverseStruct', 'TaoTitleStruct', 'TaoToPhaseAndCouplingReading', 'TaoToReal', 'TaoTrackingEleIndex', 'TaoUniverseCalcStruct', 'TaoUniversePointerStruct', 'TaoUniversePointerStructAlloc1D', 'TaoUniversePointerStructArray1D', 'TaoUniverseStruct', 'TaoUniverseStructAlloc1D', 'TaoUniverseStructArray1D', 'TaoV1VarStruct', 'TaoV1VarStructAlloc1D', 'TaoV1VarStructArray1D', 'TaoVarSlaveStruct', 'TaoVarSlaveStructAlloc1D', 'TaoVarSlaveStructArray1D', 'TaoVarStruct', 'TaoVarStructAlloc1D', 'TaoVarStructArray1D', 'TaoWaveKickPtStruct', 'TaoWaveKickPtStructAlloc1D', 'TaoWaveKickPtStructArray1D', 'TaoWaveStruct', 'TargetMinMaxCalc', 'TargetPointStruct', 'TargetPointStructAlloc1D', 'TargetPointStructArray1D', 'TargetRotMats', 'TaylorStruct', 'TaylorStructAlloc1D', 'TaylorStructArray1D', 'TaylorTermStruct', 'TaylorTermStructAlloc1D', 'TaylorTermStructArray1D', 'TestBunchStructScalar', 'TestCharacterScalar', 'TestComplexScalar', 'TestInteger8Scalar', 'TestIntegerScalar', 'TestLogicalScalar', 'TestReal16Scalar', 'TestRealScalar', 'TestSubStruct', 'TestSubStructAlloc1D', 'TestSubStructArray1D', 'TestSubStructArray2D', 'TestSubStructArray3D', 'TestSubSubStruct', 'ToEtaReading', 'ToOrbitReading', 'ToPhaseAndCouplingReading', 'Track1', 'Track1Bmad', 'Track1RungeKutta', 'Track1TimeRungeKutta', 'TrackABeambeam', 'TrackADrift', 'TrackAPatch', 'TrackAZeroLengthElement', 'TrackAll', 'TrackFromSToS', 'TrackPointStruct', 'TrackPointStructAlloc1D', 'TrackPointStructArray1D', 'TrackStruct', 'TrackUntilDead', 'TrackingRadMapSetup', 'TransferMapFromSToS', 'TricubicCmplxCoefStruct', 'TricubicCmplxCoefStructArray3D', 'TricubicCmplxEval', 'Twiss1Propagate', 'TwissAndTrackFromSToS', 'TwissAndTrackIntraEle', 'TwissAtElement', 'TwissFromTracking', 'TwissStruct', 'ValueOfAttribute', 'WMatToAxisAngle', 'WakeLrModeStruct', 'WakeLrModeStructAlloc1D', 'WakeLrModeStructArray1D', 'WakeLrStruct', 'WakeSrModeStruct', 'WakeSrModeStructAlloc1D', 'WakeSrModeStructArray1D', 'WakeSrStruct', 'WakeSrZLongStruct', 'WakeStruct', 'Wall3DSectionStruct', 'Wall3DSectionStructAlloc1D', 'Wall3DSectionStructArray1D', 'Wall3DStruct', 'Wall3DStructAlloc1D', 'Wall3DStructArray1D', 'Wall3DVertexStruct', 'Wall3DVertexStructAlloc1D', 'Wall3DVertexStructArray1D', 'Wall3dDRadius', 'WriteAstraFieldGridFile', 'WriteAstraFieldGridFile3d', 'WriteGptFieldGridFile1d', 'WriteGptFieldGridFile2d', 'WriteGptFieldGridFile3d', 'WriteLatLine', 'WriteLatticeInScibmad', 'WriteOpalFieldGridFile', 'XyDispStruct', 'ZAtSurface', 'ab_multipole_kick', 'ab_multipole_kicks', 'absolute_photon_position', 'absolute_time_tracking', 'ac_kicker_amp', 'action_to_xyz', 'add_lattice_control_structs', 'add_superimpose', 'add_this_multipass', 'add_this_taylor_term', 'adjust_super_slave_names', 'allocate_branch_array', 'allocate_lat_ele_array', 'allocate_thread_states', 'angle_between_polars', 'angle_to_canonical_coords', 'anomalous_moment_of', 'antiparticle', 'aperture_bookkeeper', 'apfft', 'apfft_corr', 'apfft_ext', 'apply_all_rampers', 'apply_energy_kick', 'apply_patch_to_ptc_fibre', 'apply_rampers_to_slave', 'array_re_str', 'asinc', 'assert_equal', 'astra_max_field_reference', 'at_this_ele_end', 'atomic_number', 'atomic_species_id', 'attribute_bookkeeper', 'attribute_free', 'attribute_index', 'attribute_name', 'attribute_type', 'attribute_units', 'autoscale_phase_and_amp', 'average_twiss', 'axis_angle_to_quat', 'axis_angle_to_w_mat', 'bbi_kick', 'bbi_slice_calc', 'bbu_add_a_bunch', 'bbu_hom_voltage_calc', 'bbu_remove_head_bunch', 'bbu_setup', 'bbu_track_a_stage', 'bbu_track_all', 'beam_envelope_ibs', 'beam_equal_beam', 'beam_init_setup', 'beam_tilts', 'beambeam_fibre_setup', 'bend_edge_kick', 'bend_exact_multipole_field', 'bend_length_has_been_set', 'bend_photon_e_rel_init', 'bend_photon_energy_integ_prob', 'bend_photon_energy_normalized_probability', 'bend_photon_init', 'bend_photon_polarization_init', 'bend_photon_vert_angle_init', 'bend_shift', 'bend_vert_angle_integ_prob', 'bicubic_cmplx_eval', 'bin_index', 'bin_x_center', 'bit_set', 'bl_via_vlassov', 'bmad_parser', 'bmad_parser2', 'bmad_patch_parameters_to_ptc', 'bp_set_ran_status', 'bracket_index_for_spline', 'branch_equal_branch', 'branch_name', 'branch_to_ptc_m_u', 'bunch_equal_bunch', 'c_to_cbar', 'calc_bunch_params', 'calc_bunch_params_slice', 'calc_bunch_params_z_slice', 'calc_bunch_sigma_matrix_etc', 'calc_emittances_and_twiss_from_sigma_matrix', 'calc_file_number', 'calc_spin_params', 'calc_super_slave_key', 'calc_wall_radius', 'calc_z_tune', 'canonical_to_angle_coords', 'cbar_to_c', 'change_file_number', 'charge_of', 'charge_to_mass_of', 'check_aperture_limit', 'check_controller_controls', 'check_for_superimpose_problem', 'check_if_s_in_bounds', 'check_rf_freq', 'choose_quads_for_set_tune', 'chrom_calc', 'chrom_tune', 'classical_radius', 'clear_lat_1turn_mats', 'clear_taylor_maps_from_elements', 'closed_orbit_calc', 'closed_orbit_from_tracking', 'cmplx_re_str', 'coarse_frequency_estimate', 'combine_consecutive_elements', 'complex_error_function', 'complex_taylor_clean', 'complex_taylor_coef', 'complex_taylor_equal_complex_taylor', 'complex_taylor_exponent_index', 'complex_taylor_make_unit', 'complex_taylor_to_mat6', 'complex_taylors_equal_complex_taylors', 'compute_slave_coupler', 'concat_ele_taylor', 'concat_taylor', 'concat_transfer_mat', 'control_bookkeeper', 'convert_bend_exact_multipole', 'convert_coords', 'convert_field_ele_to_lab', 'convert_local_cartesian_to_local_curvilinear', 'convert_local_curvilinear_to_local_cartesian', 'convert_particle_coordinates_s_to_t', 'convert_particle_coordinates_t_to_s', 'convert_pc_to', 'convert_total_energy_to', 'converter_distribution_parser', 'coord_equal_coord', 'coord_state_name', 'coords_body_to_local', 'coords_body_to_rel_exit', 'coords_curvilinear_to_floor', 'coords_floor_to_curvilinear', 'coords_floor_to_local_curvilinear', 'coords_floor_to_relative', 'coords_local_curvilinear_to_body', 'coords_local_curvilinear_to_floor', 'coords_relative_to_floor', 'cos_one', 'cosc', 'coulombfun', 'count_lines_in_file', 'create_a_spline', 'create_concatenated_wall3d', 'create_element_slice', 'create_field_overlap', 'create_girder', 'create_group', 'create_lat_ele_nametable', 'create_overlay', 'create_planar_wiggler_model', 'create_ramper', 'create_sol_quad_model', 'create_unique_ele_names', 'create_wiggler_cartesian_map', 'cross_product', 'crystal_attribute_bookkeeper', 'crystal_h_misalign', 'crystal_type_to_crystal_params', 'custom_attribute_ubound_index', 'damping_matrix_d', 'date_and_time_stamp', 'deallocate_ele_pointers', 'deallocate_expression_tree', 'deallocate_lat_pointers', 'default_tracking_species', 'destfixedwindowls', 'detab', 'detector_pixel_pt', 'diffraction_plate_or_mask_hit_spot', 'diffusion_matrix_b', 'display_size_and_resolution', 'distance_to_aperture', 'dj_bessel', 'djb_hash', 'djb_str_hash', 'do_mode_flip', 'downcase_string', 'dpc_given_de', 'drift_and_pipe_track_methods_adjustment', 'drift_multipass_name_correction', 'drift_orbit_time', 'drift_particle_to_s', 'drift_particle_to_t', 'dspline_len', 'dynamic_aperture_point', 'dynamic_aperture_scan', 'e_accel_field', 'e_crit_photon', 'eigen_decomp_6mat', 'ele_compute_ref_energy_and_time', 'ele_equal_ele', 'ele_equals_ele', 'ele_finalizer', 'ele_full_name', 'ele_geometry', 'ele_geometry_with_misalignments', 'ele_has_constant_ds_dt_ref', 'ele_has_nonzero_kick', 'ele_has_nonzero_offset', 'ele_is_monitor', 'ele_loc', 'ele_loc_name', 'ele_misalignment_l_s_calc', 'ele_nametable_index', 'ele_order_calc', 'ele_reference_energy_correction', 'ele_rf_step_index', 'ele_to_fibre', 'ele_to_ptc_magnetic_bn_an', 'ele_to_spin_taylor', 'ele_to_taylor', 'ele_unique_name', 'ele_value_has_changed', 'ele_vec_equal_ele_vec', 'elec_multipole_field', 'element_at_s', 'element_slice_iterator', 'ellipinc_test', 'em_field_calc', 'em_field_derivatives', 'em_field_kick_vector_time', 'em_field_plus_em_field', 'em_taylor_equal_em_taylor', 'em_taylors_equal_em_taylors', 'emit_6d', 'end_akima_spline_calc', 'entering_element', 'envelope_radints', 'envelope_radints_ibs', 'eq_ac_kicker', 'eq_ac_kicker_freq', 'eq_ac_kicker_time', 'eq_anormal_mode', 'eq_aperture_param', 'eq_aperture_point', 'eq_aperture_scan', 'eq_beam', 'eq_beam_init', 'eq_bmad_common', 'eq_bookkeeping_state', 'eq_bpm_phase_coupling', 'eq_branch', 'eq_bunch', 'eq_bunch_params', 'eq_cartesian_map', 'eq_cartesian_map_term', 'eq_cartesian_map_term1', 'eq_complex_taylor', 'eq_complex_taylor_term', 'eq_control', 'eq_control_ramp1', 'eq_control_var1', 'eq_controller', 'eq_coord', 'eq_coord_array', 'eq_cylindrical_map', 'eq_cylindrical_map_term', 'eq_cylindrical_map_term1', 'eq_ele', 'eq_ellipse_beam_init', 'eq_em_field', 'eq_em_taylor', 'eq_em_taylor_term', 'eq_expression_atom', 'eq_floor_position', 'eq_gen_grad1', 'eq_gen_grad_map', 'eq_grid_beam_init', 'eq_grid_field', 'eq_grid_field_pt', 'eq_grid_field_pt1', 'eq_high_energy_space_charge', 'eq_interval1_coef', 'eq_kv_beam_init', 'eq_lat', 'eq_lat_ele_loc', 'eq_lat_param', 'eq_linac_normal_mode', 'eq_mode3', 'eq_mode_info', 'eq_normal_modes', 'eq_photon_element', 'eq_photon_material', 'eq_photon_reflect_surface', 'eq_photon_reflect_table', 'eq_photon_target', 'eq_pixel_detec', 'eq_pixel_pt', 'eq_pre_tracker', 'eq_rad_int1', 'eq_rad_int_all_ele', 'eq_rad_int_branch', 'eq_rad_map', 'eq_rad_map_ele', 'eq_ramper_lord', 'eq_space_charge_common', 'eq_spin_polar', 'eq_spline', 'eq_strong_beam', 'eq_surface_curvature', 'eq_surface_displacement', 'eq_surface_displacement_pt', 'eq_surface_h_misalign', 'eq_surface_h_misalign_pt', 'eq_surface_segmented', 'eq_surface_segmented_pt', 'eq_target_point', 'eq_taylor', 'eq_taylor_term', 'eq_track', 'eq_track_point', 'eq_twiss', 'eq_wake', 'eq_wake_lr', 'eq_wake_lr_mode', 'eq_wake_sr', 'eq_wake_sr_mode', 'eq_wake_sr_z_long', 'eq_wall3d', 'eq_wall3d_section', 'eq_wall3d_vertex', 'eq_xy_disp', 'equal_sign_here', 'equivalent_taylor_attributes', 'err_exit', 'etdiv', 'evaluate_array_index', 'evaluate_logical', 'exact_bend_edge_kick', 'exp_bessi0', 'expect_one_of', 'expect_this', 'expression_stack_to_string', 'expression_stack_value', 'expression_string_to_stack', 'expression_string_to_tree', 'expression_tree_to_string', 'expression_value', 'factorial', 'faddeeva_function', 'fft1', 'fft_1d', 'fibre_to_ele', 'field_attribute_free', 'file_directorizer', 'file_get', 'file_get_open', 'file_suffixer', 'finalize_reflectivity_table', 'find_element_ends', 'find_fwhm', 'find_location', 'find_matching_fieldmap', 'find_normalization', 'fine_frequency_estimate', 'fixedwindowls', 'floor_angles_to_w_mat', 'floor_w_mat_to_angles', 'form_complex_taylor', 'form_digested_bmad_file_name', 'fourier_amplitude', 'fringe_here', 'g_bend_from_em_field', 'g_bending_strength_from_em_field', 'g_integrals_calc', 'gamma_ref', 'gen_complete_elliptic', 'gen_grad1_to_em_taylor', 'gen_grad_at_s_to_em_taylor', 'gen_grad_field', 'get_bl_from_fwhm', 'get_bmad_com', 'get_called_file', 'get_emit_from_sigma_mat', 'get_file_number', 'get_file_time_stamp', 'get_next_word', 'get_slave_list', 'get_space_charge_com', 'get_super_universe', 'gpt_field_grid_scaling', 'gpt_max_field_reference', 'gpt_to_particle_bunch', 'gradient_shift_sr_wake', 'grid_field_interpolate', 'hanhan', 'hard_multipole_edge_kick', 'has_attribute', 'has_curvature', 'has_orientation_attributes', 'hdf5_write_beam', 'hdf5_write_grid_field', 'hom_voltage', 'hwang_bend_edge_kick', 'i_bessel', 'i_bessel_extended', 'ibs_matrix_c', 'igfcoulombfun', 'igfexfun', 'igfeyfun', 'igfezfun', 'increment_file_number', 'index_nocase', 'init_attribute_name1', 'init_attribute_name_array', 'init_beam_distribution', 'init_bmad', 'init_bmad_parser_common', 'init_bunch_distribution', 'init_complex_taylor_series', 'init_coord', 'init_custom', 'init_ele', 'init_em_taylor_series', 'init_lat', 'init_multipole_cache', 'init_photon_from_a_photon_init_ele', 'init_photon_integ_prob', 'init_spin_distribution', 'init_surface_segment', 'init_taylor_series', 'init_wake', 'initfixedwindowls', 'insert_element', 'insert_phase_trombone', 'int_str', 'integrand_base', 'integrate_max', 'integrate_min', 'integrate_psi', 'integrated_mats', 'integration_timer', 'interpolated_fft', 'interpolated_fft_gsl', 'ion_kick', 'is_alphabetic', 'is_attribute', 'is_decreasing_sequence', 'is_false', 'is_increasing_sequence', 'is_integer', 'is_logical', 'is_real', 'is_subatomic_species', 'is_true', 'j_bessel', 'key_name_to_key_index', 'kick_vector_calc', 'kill_complex_taylor', 'kill_ptc_layouts', 'kill_taylor', 'kind_name', 'knot_interpolate', 'knots_to_string', 'lafun', 'lat_compute_ref_energy_and_time', 'lat_ele_locator', 'lat_equal_lat', 'lat_geometry', 'lat_make_mat6', 'lat_sanity_check', 'lat_to_ptc_layout', 'lat_vec_equal_lat_vec', 'lattice_bookkeeper', 'lcavity_rf_step_setup', 'linear_bend_edge_kick', 'linear_coef', 'linear_fit', 'linear_fit_2d', 'linear_to_spin_taylor', 'load_parse_line', 'logic_str', 'logical_to_python', 'lord_edge_aligned', 'low_energy_z_correction', 'lunget', 'mad_add_offsets_and_multipoles', 'mad_concat_map2', 'mad_drift', 'mad_elsep', 'mad_map_to_taylor', 'mad_quadrupole', 'mad_rfcavity', 'mad_sbend', 'mad_sbend_body', 'mad_sbend_fringe', 'mad_sextupole', 'mad_solenoid', 'mad_tmfoc', 'mad_tmsymm', 'mad_tmtilt', 'mad_track1', 'make_g2_mats', 'make_g_mats', 'make_hvbp', 'make_hybrid_lat', 'make_legal_comment', 'make_mad_map', 'make_mat6', 'make_mat6_bmad', 'make_mat6_bmad_photon', 'make_mat6_high_energy_space_charge', 'make_mat6_mad', 'make_mat6_symp_lie_ptc', 'make_mat6_taylor', 'make_mat6_tracking', 'make_n', 'make_pbrh', 'make_smat_from_abc', 'make_unit_mad_map', 'make_v', 'make_v_mats', 'makeup_control_slave', 'makeup_group_lord', 'makeup_multipass_slave', 'makeup_super_slave', 'makeup_super_slave1', 'map1_inverse', 'map1_make_unit', 'map1_times_map1', 'map_to_angle_coords', 'mark_patch_regions', 'mass_of', 'master_parameter_value', 'mat4_multipole', 'mat6_add_offsets', 'mat6_add_pitch', 'mat6_to_complex_taylor', 'mat_symp_decouple', 'match_ele_to_mat6', 'match_reg', 'match_wild', 'maximize_projection', 'mexp', 'mfft1', 'milli_sleep', 'misalign_ptc_fibre', 'momentum_compaction', 'multi_turn_tracking_analysis', 'multilayer_type_to_multilayer_params', 'multipass_chain', 'multipole1_ab_to_kt', 'multipole1_kt_to_ab', 'multipole_ab_to_kt', 'multipole_ele_to_ab', 'multipole_ele_to_kt', 'multipole_init', 'multipole_kick', 'multipole_kick_mat', 'multipole_kicks', 'multipole_kt_to_ab', 'multipole_spin_tracking', 'mytan', 'n_attrib_string_max_len', 'n_bins_automatic', 'n_choose_k', 'n_spline_create', 'naff', 'nametable_add', 'nametable_bracket_indexx', 'nametable_change1', 'nametable_init', 'nametable_remove', 'new_control', 'nint_chk', 'normal_form_complex_taylors', 'normal_form_taylors', 'normal_mode3_calc', 'normal_mode_dispersion', 'normalize_evecs', 'num_field_eles', 'num_lords', 'odeint_bmad', 'odeint_bmad_time', 'offset_particle', 'offset_photon', 'omega_to_quat', 'one_turn_mat_at_ele', 'open_binary_file', 'openpmd_species_name', 'orbit_amplitude_calc', 'orbit_reference_energy_correction', 'orbit_to_floor_phase_space', 'orbit_to_local_curvilinear', 'orbit_too_large', 'order_evecs_by_n_similarity', 'order_evecs_by_plane_dominance', 'order_evecs_by_tune', 'order_particles_in_z', 'order_super_lord_slaves', 'ordinal_str', 'osc_alloc_freespace_array', 'osc_alloc_image_array', 'osc_alloc_rectpipe_arrays', 'osc_getgrnpipe', 'osc_read_rectpipe_grn', 'osc_write_rectpipe_grn', 'parse_cartesian_map', 'parse_cylindrical_map', 'parse_fortran_format', 'parse_gen_grad_map', 'parse_grid_field', 'parse_integer_list', 'parse_integer_list2', 'parse_real_list', 'parse_real_list2', 'parser_add_constant', 'parser_call_check', 'parser_fast_complex_read', 'parser_fast_integer_read', 'parser_fast_real_read', 'parser_file_stack', 'parser_get_integer', 'parser_get_logical', 'parser_identify_fork_to_element', 'parser_init_custom_elements', 'parser_print_line', 'parser_read_lr_wake', 'parser_read_old_format_lr_wake', 'parser_read_old_format_sr_wake', 'parser_read_sr_wake', 'parser_transfer_control_struct', 'particle_in_global_frame', 'particle_is_moving_backwards', 'particle_is_moving_forward', 'particle_rf_time', 'patch_flips_propagation_direction', 'patch_length', 'photon_absorption_and_phase_shift', 'photon_add_to_detector_statistics', 'photon_reflection', 'photon_reflection_std_surface_init', 'photon_reflectivity', 'photon_target_corner_calc', 'photon_target_setup', 'photon_type', 'physical_ele_end', 'point_photon_emission', 'pointer_to_branch', 'pointer_to_ele', 'pointer_to_element_at_s', 'pointer_to_fibre', 'pointer_to_field_ele', 'pointer_to_girder', 'pointer_to_lord', 'pointer_to_multipass_lord', 'pointer_to_next_ele', 'pointer_to_ran_state', 'pointer_to_slave', 'pointer_to_super_lord', 'pointer_to_surface_displacement_pt', 'pointer_to_surface_segmented_pt', 'pointer_to_wake_ele', 'pointer_to_wall3d', 'polar_to_spinor', 'polar_to_vec', 'poly_eval', 'probability_funct', 'projdd', 'project_emit_to_xyz', 'psi_prime_sca', 'ptc_bookkeeper', 'ptc_calculate_tracking_step_size', 'ptc_check_for_lost_particle', 'ptc_closed_orbit_calc', 'ptc_emit_calc', 'ptc_layouts_resplit', 'ptc_one_turn_mat_and_closed_orbit_calc', 'ptc_ran_seed_put', 'ptc_set_rf_state_for_c_normal', 'ptc_set_taylor_order_if_needed', 'ptc_spin_calc', 'ptc_track_all', 'ptc_transfer_map_with_spin', 'pwd_mat', 'quadratic_roots', 'quat_conj', 'quat_inverse', 'quat_mul', 'quat_rotate', 'quat_to_axis_angle', 'quat_to_omega', 'quat_to_w_mat', 'query_string', 'quote', 'rad1_damp_and_stoc_mats', 'rad_damp_and_stoc_mats', 'rad_g_integrals', 'radiation_integrals', 'radiation_map_setup', 'ramper_slave_setup', 'ramper_value', 'ran_default_state', 'ran_engine', 'ran_gauss_converter', 'ran_gauss_scalar', 'ran_gauss_vector', 'ran_seed_get', 'ran_seed_put', 'ran_uniform', 'randomize_lr_wake_frequencies', 'rchomp', 're_allocate', 're_allocate_eles', 're_associate_node_array', 're_str', 'read_beam_ascii', 'read_beam_file', 'read_binary_cartesian_map', 'read_binary_cylindrical_map', 'read_binary_grid_field', 'read_surface_reflection_file', 'real_num_fortran_format', 'real_path', 'real_str', 'real_to_string', 'reallocate_beam', 'reallocate_bp_com_const', 'reallocate_bunch', 'reallocate_control', 'reallocate_coord', 'reallocate_expression_stack', 'reallocate_spline', 'rel_tracking_charge_to_mass', 'relative_mode_flip', 'release_rad_int_cache', 'remove_constant_taylor', 'remove_dead_from_bunch', 'remove_eles_from_lat', 'remove_lord_slave_link', 'reverse_lat', 'rf_cav_names', 'rf_coupler_kick', 'rf_is_on', 'rf_ref_time_offset', 'rfun', 'rk_adaptive_time_step', 'rk_time_step1', 'rms_value', 'rot_2d', 'rotate3', 'rotate_em_field', 'rotate_field_zx', 'rotate_for_curved_surface', 'rotate_spin', 'rotate_spin_a_step', 'rotate_spin_given_field', 'rotate_vec', 'rotate_vec_given_axis_angle', 'rp8', 'run_timer', 's_body_calc', 's_calc', 'sad_mult_hard_bend_edge_kick', 'sad_soft_bend_edge_kick', 'save_a_beam_step', 'save_a_bunch_step', 'save_a_step', 'sbend_body_with_k1_map', 'sc_adaptive_step', 'sc_step', 'set_active_fixer', 'set_custom_attribute_name', 'set_ele_attribute', 'set_ele_defaults', 'set_ele_name', 'set_ele_real_attribute', 'set_ele_status_stale', 'set_flags_for_changed_attribute', 'set_fringe_on_off', 'set_lords_status_stale', 'set_on_off', 'set_orbit_to_zero', 'set_parameter', 'set_ptc', 'set_ptc_base_state', 'set_ptc_com_pointers', 'set_ptc_quiet', 'set_ptc_verbose', 'set_pwd_ele', 'set_species_charge', 'set_status_flags', 'set_tune', 'set_tune_3d', 'set_twiss', 'set_z_tune', 'settable_dep_var_bookkeeping', 'setup_high_energy_space_charge_calc', 'sigma_mat_ptc_to_bmad', 'significant_difference', 'sinc', 'sincc', 'sinhx_x', 'skip_ele_blender', 'skip_header', 'slice_lattice', 'soft_quadrupole_edge_kick', 'sol_quad_mat6_calc', 'solve_psi_adaptive', 'solve_psi_fixed_steps', 'sort_complex_taylor_terms', 'species_id', 'species_id_from_openpmd', 'species_name', 'species_of', 'spin_dn_dpz_from_mat8', 'spin_dn_dpz_from_qmap', 'spin_map1_normalize', 'spin_mat8_resonance_strengths', 'spin_mat_to_eigen', 'spin_of', 'spin_omega', 'spin_quat_resonance_strengths', 'spin_taylor_to_linear', 'spinor_to_polar', 'spinor_to_vec', 'spline1', 'spline_akima', 'spline_akima_interpolate', 'spline_evaluate', 'spline_fit_orbit', 'split_lat', 'sprint_spin_taylor_map', 'sqrt_alpha', 'sqrt_one', 'sr_longitudinal_wake_particle', 'sr_transverse_wake_particle', 'sr_z_long_wake', 'srdt_calc', 'srdt_lsq_solution', 'start_branch_at', 'str_count', 'str_downcase', 'str_first_in_set', 'str_first_not_in_set', 'str_last_in_set', 'str_last_not_in_set', 'str_match_wild', 'str_substitute', 'str_upcase', 'stream_ele_end', 'string_attrib', 'string_to_int', 'string_to_real', 'string_trim', 'string_trim2', 'strong_beam_sigma_calc', 'strong_beam_strength', 'super_bicubic_coef', 'super_bicubic_interpolation', 'super_polint', 'super_poly', 'super_sobseq', 'super_sort', 'surface_grid_displacement', 'symp_lie_bmad', 'system_command', 't6_to_b123', 'tao_abort_command_file', 'tao_add_to_normal_mode_h_array', 'tao_alias_cmd', 'tao_allocate_data_array', 'tao_allocate_v1_var', 'tao_allocate_var_array', 'tao_beam_emit_calc', 'tao_beam_track', 'tao_beam_track_endpoint', 'tao_branch_index', 'tao_calc_data_at_s_pts', 'tao_cbar_wave_anal', 'tao_change_ele', 'tao_change_tune', 'tao_change_var', 'tao_change_z_tune', 'tao_chrom_calc_needed', 'tao_clear_cmd', 'tao_clip_cmd', 'tao_close_command_file', 'tao_cmd_history_record', 'tao_command', 'tao_constraint_type_name', 'tao_control_tree_list', 'tao_count_strings', 'tao_create_plot_window', 'tao_curve_beam_ellipse_setup', 'tao_curve_check_universe', 'tao_curve_data_setup', 'tao_curve_datum_calc', 'tao_curve_ele_ref', 'tao_curve_ix_uni', 'tao_curve_name', 'tao_curve_rms_calc', 'tao_d2_d1_name', 'tao_d2_data_stuffit', 'tao_data_check', 'tao_data_coupling_init', 'tao_data_sanity_check', 'tao_data_type_substitute', 'tao_data_useit_plot_calc', 'tao_datum_has_associated_ele', 'tao_datum_integrate', 'tao_datum_name', 'tao_datum_s_position', 'tao_de_optimizer', 'tao_deallocate_plot_cache', 'tao_deallocate_tree', 'tao_destroy_plot_window', 'tao_dmerit_calc', 'tao_dmodel_dvar_calc', 'tao_do_wire_scan', 'tao_draw_beam_chamber_wall', 'tao_draw_curve_data', 'tao_draw_ele_for_floor_plan', 'tao_draw_floor_plan', 'tao_draw_graph_axes', 'tao_draw_histogram_data', 'tao_draw_lat_layout', 'tao_draw_plots', 'tao_ele_geometry_with_misalignments', 'tao_ele_shape_info', 'tao_eval_floor_orbit', 'tao_evaluate_a_datum', 'tao_evaluate_datum_at_s', 'tao_evaluate_element_parameters', 'tao_evaluate_expression', 'tao_evaluate_expression_new', 'tao_evaluate_expression_old', 'tao_evaluate_lat_or_beam_data', 'tao_evaluate_stack_old', 'tao_evaluate_tree', 'tao_evaluate_tune', 'tao_expression_hash_substitute', 'tao_expression_tree_to_string', 'tao_find_plot_region', 'tao_fixer', 'tao_floor_to_screen', 'tao_floor_to_screen_coords', 'tao_geodesic_lm_optimizer', 'tao_get_data', 'tao_get_opt_vars', 'tao_get_user_input', 'tao_graph_controller_setup', 'tao_graph_data_setup', 'tao_graph_data_slice_setup', 'tao_graph_dynamic_aperture_setup', 'tao_graph_histogram_setup', 'tao_graph_name', 'tao_graph_phase_space_setup', 'tao_graph_s_min_max_calc', 'tao_graph_setup', 'tao_init', 'tao_init_beam_in_universe', 'tao_init_beams', 'tao_init_data', 'tao_init_data_end_stuff', 'tao_init_data_in_universe', 'tao_init_dynamic_aperture', 'tao_init_find_elements', 'tao_init_global', 'tao_init_lattice', 'tao_init_plotting', 'tao_init_variables', 'tao_inject_beam', 'tao_inject_particle', 'tao_is_valid_name', 'tao_json_cmd', 'tao_key_info_to_str', 'tao_lat_bookkeeper', 'tao_lat_emit_calc', 'tao_lat_sigma_calc_needed', 'tao_lat_sigma_track', 'tao_lattice_branches_equal_tao_lattice_branches', 'tao_lattice_calc', 'tao_lattice_equal_tao_lattice', 'tao_limit_calc', 'tao_lm_optimizer', 'tao_lmdif_optimizer', 'tao_load_this_datum', 'tao_locate_all_elements', 'tao_locate_elements', 'tao_mark_lattice_ele', 'tao_merit', 'tao_next_word', 'tao_one_turn_map_calc_needed', 'tao_open_file', 'tao_open_scratch_file', 'tao_optimization_status', 'tao_orbit_beta_wave_anal', 'tao_oreint_building_wall_pt', 'tao_param_value_at_s', 'tao_param_value_routine', 'tao_parse_command_args', 'tao_parse_element_param_str', 'tao_particle_data_value', 'tao_pause_cmd', 'tao_phase_space_axis_index', 'tao_phase_wave_anal', 'tao_pick_universe', 'tao_pipe_cmd', 'tao_place_cmd', 'tao_plot_cmd', 'tao_plot_data', 'tao_plot_histogram', 'tao_plot_key_table', 'tao_plot_setup', 'tao_plot_struct_transfer', 'tao_plot_wave', 'tao_pointer_to_building_wall_shape', 'tao_pointer_to_datum', 'tao_pointer_to_datum_ele', 'tao_pointer_to_ele_shape', 'tao_pointer_to_tao_lat', 'tao_pointer_to_universe', 'tao_pointer_to_universes', 'tao_pointer_to_var_in_lattice', 'tao_pointer_to_var_in_lattice2', 'tao_print_command_line_info', 'tao_ptc_normal_form', 'tao_python_cmd', 'tao_quiet_set', 'tao_rad_int_calc_needed', 'tao_re_allocate_expression_info', 'tao_re_associate_node_array', 'tao_re_execute', 'tao_read_cmd', 'tao_read_phase_space_index', 'tao_regression_test', 'tao_remove_blank_characters', 'tao_run_cmd', 'tao_scale_cmd', 'tao_scale_graph', 'tao_scale_ping_data', 'tao_scale_plot', 'tao_scratch_values_calc', 'tao_set_beam_cmd', 'tao_set_beam_init_cmd', 'tao_set_bmad_com_cmd', 'tao_set_branch_cmd', 'tao_set_calculate_cmd', 'tao_set_curve_cmd', 'tao_set_curve_invalid', 'tao_set_data_cmd', 'tao_set_data_useit_opt', 'tao_set_default_cmd', 'tao_set_drawing_cmd', 'tao_set_dynamic_aperture_cmd', 'tao_set_elements_cmd', 'tao_set_floor_plan_axis_label', 'tao_set_geodesic_lm_cmd', 'tao_set_global_cmd', 'tao_set_graph_cmd', 'tao_set_integer_value', 'tao_set_invalid', 'tao_set_key_cmd', 'tao_set_lattice_cmd', 'tao_set_logical_value', 'tao_set_openmp_n_threads', 'tao_set_opt_vars', 'tao_set_opti_de_param_cmd', 'tao_set_particle_start_cmd', 'tao_set_plot_cmd', 'tao_set_plot_page_cmd', 'tao_set_ptc_com_cmd', 'tao_set_qp_axis_struct', 'tao_set_qp_point_struct', 'tao_set_qp_rect_struct', 'tao_set_ran_state_cmd', 'tao_set_real_value', 'tao_set_region_cmd', 'tao_set_space_charge_com_cmd', 'tao_set_symbolic_number_cmd', 'tao_set_tune_cmd', 'tao_set_universe_cmd', 'tao_set_var_cmd', 'tao_set_var_model_value', 'tao_set_var_useit_opt', 'tao_set_wave_cmd', 'tao_set_z_tune_cmd', 'tao_setup_key_table', 'tao_shape_init', 'tao_show_cmd', 'tao_show_constraints', 'tao_single_mode', 'tao_single_track', 'tao_spin_matrices_calc_needed', 'tao_spin_tracking_turn_on', 'tao_split_component', 'tao_srdt_calc_needed', 'tao_subin_uni_number', 'tao_svd_optimizer', 'tao_symbol_import_from_lat', 'tao_taper_cmd', 'tao_to_change_number', 'tao_to_int', 'tao_to_phase_and_coupling_reading', 'tao_to_real', 'tao_too_many_particles_lost', 'tao_top10_derivative_print', 'tao_top10_merit_categories_print', 'tao_top_level', 'tao_tracking_ele_index', 'tao_turn_on_special_calcs_if_needed_for_plotting', 'tao_type_expression_tree', 'tao_uni_atsign_index', 'tao_universe_index', 'tao_use_data', 'tao_use_var', 'tao_user_is_terminating_optimization', 'tao_var1_name', 'tao_var_attrib_name', 'tao_var_check', 'tao_var_repoint', 'tao_var_target_calc', 'tao_var_useit_plot_calc', 'tao_var_write', 'tao_veto_vars_with_zero_dmodel', 'tao_wave_analysis', 'tao_wave_cmd', 'tao_wave_fit', 'tao_write_cmd', 'tao_x_axis_cmd', 'tao_x_scale_cmd', 'tao_x_scale_graph', 'tao_x_scale_plot', 'taper_mag_strengths', 'target_min_max_calc', 'target_rot_mats', 'taylor_equal_taylor', 'taylor_inverse', 'taylor_propagate1', 'taylor_to_mad_map', 'taylors_equal_taylors', 'test_bunch_struct_array', 'test_bunch_struct_scalar', 'test_character_scalar', 'test_complex_array', 'test_complex_scalar', 'test_integer8_array', 'test_integer8_scalar', 'test_integer_array', 'test_integer_scalar', 'test_logical_array', 'test_logical_scalar', 'test_real16_array', 'test_real16_scalar', 'test_real_array', 'test_real_scalar', 'tilt_coords', 'tilt_coords_photon', 'tilt_mat6', 'to_eta_reading', 'to_fieldmap_coords', 'to_orbit_reading', 'to_phase_and_coupling_reading', 'to_photon_angle_coords', 'to_str', 'to_surface_coords', 'touschek_lifetime', 'touschek_rate1', 'touschek_rate1_zap', 'track1', 'track1_beam', 'track1_bmad', 'track1_bmad_photon', 'track1_bunch', 'track1_bunch_csr', 'track1_bunch_csr3d', 'track1_bunch_hom', 'track1_bunch_space_charge', 'track1_crystal', 'track1_diffraction_plate_or_mask', 'track1_high_energy_space_charge', 'track1_lens', 'track1_linear', 'track1_lr_wake', 'track1_mad', 'track1_mirror', 'track1_mosaic_crystal', 'track1_multilayer_mirror', 'track1_radiation', 'track1_radiation_center', 'track1_runge_kutta', 'track1_sample', 'track1_spin', 'track1_spin_integration', 'track1_spin_taylor', 'track1_sr_wake', 'track1_symp_lie_ptc', 'track1_taylor', 'track1_time_runge_kutta', 'track_a_beambeam', 'track_a_bend', 'track_a_bend_photon', 'track_a_capillary', 'track_a_converter', 'track_a_crab_cavity', 'track_a_drift', 'track_a_drift_photon', 'track_a_foil', 'track_a_gkicker', 'track_a_lcavity', 'track_a_lcavity_old', 'track_a_mask', 'track_a_match', 'track_a_patch', 'track_a_patch_photon', 'track_a_pickup', 'track_a_quadrupole', 'track_a_rfcavity', 'track_a_sad_mult', 'track_a_sol_quad', 'track_a_thick_multipole', 'track_a_wiggler', 'track_a_zero_length_element', 'track_all', 'track_beam', 'track_bunch', 'track_bunch_time', 'track_bunch_to_s', 'track_bunch_to_t', 'track_complex_taylor', 'track_from_s_to_s', 'track_many', 'track_to_surface', 'track_until_dead', 'tracking_rad_map_setup', 'transfer_ac_kick', 'transfer_branch', 'transfer_branch_parameters', 'transfer_branches', 'transfer_ele', 'transfer_ele_taylor', 'transfer_eles', 'transfer_fieldmap', 'transfer_fixer_params', 'transfer_lat', 'transfer_lat_parameters', 'transfer_map_calc', 'transfer_map_from_s_to_s', 'transfer_mat2_from_twiss', 'transfer_mat_from_twiss', 'transfer_matrix_calc', 'transfer_twiss', 'transfer_wake', 'tricubic_cmplx_eval', 'truncate_complex_taylor_to_order', 'twiss1_propagate', 'twiss3_at_start', 'twiss3_from_twiss2', 'twiss3_propagate1', 'twiss3_propagate_all', 'twiss_and_track', 'twiss_and_track_at_s', 'twiss_and_track_from_s_to_s', 'twiss_and_track_intra_ele', 'twiss_at_element', 'twiss_at_start', 'twiss_from_tracking', 'twiss_propagate1', 'twiss_propagate_all', 'twiss_to_1_turn_mat', 'type_coord', 'type_expression_tree', 'type_ptc_layout', 'type_this_file', 'upcase_string', 'update_ele_from_fibre', 'update_fibre_from_ele', 'update_floor_angles', 'valid_field_calc', 'valid_fringe_type', 'valid_mat6_calc_method', 'valid_spin_tracking_method', 'valid_tracking_method', 'value_of_attribute', 'value_to_line', 'vec_to_polar', 'vec_to_spinor', 'verify_valid_name', 'virtual_memory_usage', 'w_mat_for_bend_angle', 'w_mat_for_tilt', 'w_mat_for_x_pitch', 'w_mat_for_y_pitch', 'w_mat_to_axis_angle', 'w_mat_to_quat', 'wall3d_d_radius', 'wall3d_initializer', 'wall3d_section_initializer', 'wall3d_to_position', 'word_len', 'word_read', 'word_to_value', 'write_ascii_beam_file', 'write_astra_bend', 'write_astra_field_grid_file', 'write_astra_field_grid_file_3d', 'write_beam_file', 'write_beam_floor_positions', 'write_binary_cartesian_map', 'write_binary_cylindrical_map', 'write_binary_grid_field', 'write_blender_ele', 'write_blender_lat_layout', 'write_bmad_lattice_file', 'write_bunch_by_bunch_info', 'write_gpt_field_grid_file_1d', 'write_gpt_field_grid_file_2d', 'write_gpt_field_grid_file_3d', 'write_lat_line', 'write_lattice_in_elegant_format', 'write_lattice_in_foreign_format', 'write_lattice_in_mad_format', 'write_lattice_in_sad_format', 'write_lattice_in_scibmad', 'write_line_element', 'write_opal_field_grid_file', 'write_opal_lattice_file', 'write_time_particle_distribution', 'x0_radiation_length', 'xlafun', 'xraylib_nist_compound', 'ylafun', 'z_at_surface', 'zero_ele_kicks', 'zero_ele_offsets', 'zero_lr_wakes_in_lat', 'zlafun']
 class AbMultipoleKick:
     """
     ab_multipole_kick return type
@@ -4135,167 +4134,6 @@ class EigenDecomp6mat:
     @property
     def tunes(self) -> typing.Annotated[list[float], "FixedSize(3)"]:
         ...
-class EleAttribute(enum.IntEnum):
-    ANGLE: typing.ClassVar[EleAttribute]  # value = <EleAttribute.ANGLE: 32>
-    B3_GRADIENT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.B3_GRADIENT: 47>
-    BL_HKICK: typing.ClassVar[EleAttribute]  # value = <EleAttribute.BL_HKICK: 40>
-    BL_KICK: typing.ClassVar[EleAttribute]  # value = <EleAttribute.BL_KICK: 42>
-    BL_VKICK: typing.ClassVar[EleAttribute]  # value = <EleAttribute.BL_VKICK: 41>
-    BS_FIELD: typing.ClassVar[EleAttribute]  # value = <EleAttribute.BS_FIELD: 48>
-    CHECK_SUM: typing.ClassVar[EleAttribute]  # value = <EleAttribute.CHECK_SUM: 74>
-    CMAT_12: typing.ClassVar[EleAttribute]  # value = <EleAttribute.CMAT_12: 29>
-    CMAT_21: typing.ClassVar[EleAttribute]  # value = <EleAttribute.CMAT_21: 30>
-    CMAT_22: typing.ClassVar[EleAttribute]  # value = <EleAttribute.CMAT_22: 31>
-    CSR_DS_STEP: typing.ClassVar[EleAttribute]  # value = <EleAttribute.CSR_DS_STEP: 67>
-    D1_THICKNESS: typing.ClassVar[EleAttribute]  # value = <EleAttribute.D1_THICKNESS: 19>
-    DARWIN_WIDTH_PI: typing.ClassVar[EleAttribute]  # value = <EleAttribute.DARWIN_WIDTH_PI: 11>
-    DELTA_E_REF: typing.ClassVar[EleAttribute]  # value = <EleAttribute.DELTA_E_REF: 7>
-    DELTA_REF_TIME: typing.ClassVar[EleAttribute]  # value = <EleAttribute.DELTA_REF_TIME: 49>
-    DG: typing.ClassVar[EleAttribute]  # value = <EleAttribute.DG: 6>
-    DISPATCH: typing.ClassVar[EleAttribute]  # value = <EleAttribute.DISPATCH: 62>
-    DS_STEP: typing.ClassVar[EleAttribute]  # value = <EleAttribute.DS_STEP: 66>
-    ETAP_X_OUT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.ETAP_X_OUT: 26>
-    ETAP_Y_OUT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.ETAP_Y_OUT: 27>
-    ETA_Y_OUT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.ETA_Y_OUT: 25>
-    E_TOT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.E_TOT: 53>
-    E_TOT_START: typing.ClassVar[EleAttribute]  # value = <EleAttribute.E_TOT_START: 51>
-    FB1: typing.ClassVar[EleAttribute]  # value = <EleAttribute.FB1: 20>
-    FB2: typing.ClassVar[EleAttribute]  # value = <EleAttribute.FB2: 21>
-    FQ2: typing.ClassVar[EleAttribute]  # value = <EleAttribute.FQ2: 23>
-    FRINGE_AT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.FRINGE_AT: 10>
-    FRINGE_TYPE: typing.ClassVar[EleAttribute]  # value = <EleAttribute.FRINGE_TYPE: 9>
-    GEOMETRY: typing.ClassVar[EleAttribute]  # value = <EleAttribute.GEOMETRY: 46>
-    GRADIENT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.GRADIENT: 5>
-    GRAZE_ANGLE: typing.ClassVar[EleAttribute]  # value = <EleAttribute.GRAZE_ANGLE: 4>
-    HKICK: typing.ClassVar[EleAttribute]  # value = <EleAttribute.HKICK: 38>
-    K1: typing.ClassVar[EleAttribute]  # value = <EleAttribute.K1: 3>
-    L: typing.ClassVar[EleAttribute]  # value = <EleAttribute.L: 0>
-    LATTICE_TYPE: typing.ClassVar[EleAttribute]  # value = <EleAttribute.LATTICE_TYPE: 44>
-    LIVE_BRANCH: typing.ClassVar[EleAttribute]  # value = <EleAttribute.LIVE_BRANCH: 45>
-    LORD_PAD1: typing.ClassVar[EleAttribute]  # value = <EleAttribute.LORD_PAD1: 68>
-    LORD_PAD2: typing.ClassVar[EleAttribute]  # value = <EleAttribute.LORD_PAD2: 69>
-    MULTIPASS_REF_ENERGY: typing.ClassVar[EleAttribute]  # value = <EleAttribute.MULTIPASS_REF_ENERGY: 61>
-    NUM_STEPS: typing.ClassVar[EleAttribute]  # value = <EleAttribute.NUM_STEPS: 65>
-    P0C: typing.ClassVar[EleAttribute]  # value = <EleAttribute.P0C: 52>
-    P0C_START: typing.ClassVar[EleAttribute]  # value = <EleAttribute.P0C_START: 50>
-    PHI0_ERR: typing.ClassVar[EleAttribute]  # value = <EleAttribute.PHI0_ERR: 24>
-    PHOTON_TYPE: typing.ClassVar[EleAttribute]  # value = <EleAttribute.PHOTON_TYPE: 43>
-    REF_TILT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.REF_TILT: 2>
-    REF_TILT_TOT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.REF_TILT_TOT: 60>
-    REF_TIME_START: typing.ClassVar[EleAttribute]  # value = <EleAttribute.REF_TIME_START: 63>
-    RHO: typing.ClassVar[EleAttribute]  # value = <EleAttribute.RHO: 8>
-    SIG_E: typing.ClassVar[EleAttribute]  # value = <EleAttribute.SIG_E: 18>
-    SIG_VX: typing.ClassVar[EleAttribute]  # value = <EleAttribute.SIG_VX: 16>
-    SIG_VY: typing.ClassVar[EleAttribute]  # value = <EleAttribute.SIG_VY: 17>
-    SIG_X: typing.ClassVar[EleAttribute]  # value = <EleAttribute.SIG_X: 13>
-    SIG_Y: typing.ClassVar[EleAttribute]  # value = <EleAttribute.SIG_Y: 14>
-    SIG_Z: typing.ClassVar[EleAttribute]  # value = <EleAttribute.SIG_Z: 15>
-    SPIN_FRINGE_ON: typing.ClassVar[EleAttribute]  # value = <EleAttribute.SPIN_FRINGE_ON: 12>
-    THICKNESS: typing.ClassVar[EleAttribute]  # value = <EleAttribute.THICKNESS: 64>
-    TILT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.TILT: 1>
-    TILT_TOT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.TILT_TOT: 59>
-    UPSTREAM_COORD_DIR: typing.ClassVar[EleAttribute]  # value = <EleAttribute.UPSTREAM_COORD_DIR: 28>
-    VKICK: typing.ClassVar[EleAttribute]  # value = <EleAttribute.VKICK: 39>
-    X1_LIMIT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.X1_LIMIT: 70>
-    X2_LIMIT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.X2_LIMIT: 71>
-    X_OFFSET: typing.ClassVar[EleAttribute]  # value = <EleAttribute.X_OFFSET: 35>
-    X_OFFSET_TOT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.X_OFFSET_TOT: 56>
-    X_PITCH: typing.ClassVar[EleAttribute]  # value = <EleAttribute.X_PITCH: 33>
-    X_PITCH_TOT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.X_PITCH_TOT: 54>
-    Y1_LIMIT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Y1_LIMIT: 72>
-    Y2_LIMIT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Y2_LIMIT: 73>
-    Y_OFFSET: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Y_OFFSET: 36>
-    Y_OFFSET_CALIB: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Y_OFFSET_CALIB: 22>
-    Y_OFFSET_TOT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Y_OFFSET_TOT: 57>
-    Y_PITCH: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Y_PITCH: 34>
-    Y_PITCH_TOT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Y_PITCH_TOT: 55>
-    Z_OFFSET: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Z_OFFSET: 37>
-    Z_OFFSET_TOT: typing.ClassVar[EleAttribute]  # value = <EleAttribute.Z_OFFSET_TOT: 58>
-    @classmethod
-    def __new__(cls, value):
-        ...
-    def __format__(self, format_spec):
-        """
-        Convert to a string according to format_spec.
-        """
-class EleKey(enum.IntEnum):
-    AB_MULTIPOLE: typing.ClassVar[EleKey]  # value = <EleKey.AB_MULTIPOLE: 22>
-    AC_KICKER: typing.ClassVar[EleKey]  # value = <EleKey.AC_KICKER: 58>
-    BEAMBEAM: typing.ClassVar[EleKey]  # value = <EleKey.BEAMBEAM: 11>
-    BEGINNING_ELE: typing.ClassVar[EleKey]  # value = <EleKey.BEGINNING_ELE: 28>
-    CAPILLARY: typing.ClassVar[EleKey]  # value = <EleKey.CAPILLARY: 45>
-    CONVERTER: typing.ClassVar[EleKey]  # value = <EleKey.CONVERTER: 38>
-    CRAB_CAVITY: typing.ClassVar[EleKey]  # value = <EleKey.CRAB_CAVITY: 61>
-    CRYSTAL: typing.ClassVar[EleKey]  # value = <EleKey.CRYSTAL: 43>
-    CUSTOM: typing.ClassVar[EleKey]  # value = <EleKey.CUSTOM: 7>
-    DEF_BMAD_COM: typing.ClassVar[EleKey]  # value = <EleKey.DEF_BMAD_COM: 20>
-    DEF_LINE: typing.ClassVar[EleKey]  # value = <EleKey.DEF_LINE: 29>
-    DEF_MAD_BEAM: typing.ClassVar[EleKey]  # value = <EleKey.DEF_MAD_BEAM: 21>
-    DEF_PARAMETER: typing.ClassVar[EleKey]  # value = <EleKey.DEF_PARAMETER: 26>
-    DEF_PARTICLE_START: typing.ClassVar[EleKey]  # value = <EleKey.DEF_PARTICLE_START: 39>
-    DEF_PTC_COM: typing.ClassVar[EleKey]  # value = <EleKey.DEF_PTC_COM: 63>
-    DEF_SPACE_CHARGE_COM: typing.ClassVar[EleKey]  # value = <EleKey.DEF_SPACE_CHARGE_COM: 60>
-    DETECTOR: typing.ClassVar[EleKey]  # value = <EleKey.DETECTOR: 55>
-    DIFFRACTION_PLATE: typing.ClassVar[EleKey]  # value = <EleKey.DIFFRACTION_PLATE: 52>
-    DRIFT: typing.ClassVar[EleKey]  # value = <EleKey.DRIFT: 1>
-    ECOLLIMATOR: typing.ClassVar[EleKey]  # value = <EleKey.ECOLLIMATOR: 36>
-    ELSEPARATOR: typing.ClassVar[EleKey]  # value = <EleKey.ELSEPARATOR: 10>
-    EM_FIELD: typing.ClassVar[EleKey]  # value = <EleKey.EM_FIELD: 48>
-    E_GUN: typing.ClassVar[EleKey]  # value = <EleKey.E_GUN: 47>
-    FEEDBACK: typing.ClassVar[EleKey]  # value = <EleKey.FEEDBACK: 69>
-    FIDUCIAL: typing.ClassVar[EleKey]  # value = <EleKey.FIDUCIAL: 50>
-    FIXER: typing.ClassVar[EleKey]  # value = <EleKey.FIXER: 70>
-    FLOOR_SHIFT: typing.ClassVar[EleKey]  # value = <EleKey.FLOOR_SHIFT: 49>
-    FOIL: typing.ClassVar[EleKey]  # value = <EleKey.FOIL: 66>
-    FORK: typing.ClassVar[EleKey]  # value = <EleKey.FORK: 41>
-    GIRDER: typing.ClassVar[EleKey]  # value = <EleKey.GIRDER: 37>
-    GKICKER: typing.ClassVar[EleKey]  # value = <EleKey.GKICKER: 65>
-    GROUP: typing.ClassVar[EleKey]  # value = <EleKey.GROUP: 4>
-    HKICKER: typing.ClassVar[EleKey]  # value = <EleKey.HKICKER: 33>
-    HYBRID: typing.ClassVar[EleKey]  # value = <EleKey.HYBRID: 16>
-    INSTRUMENT: typing.ClassVar[EleKey]  # value = <EleKey.INSTRUMENT: 32>
-    KICKER: typing.ClassVar[EleKey]  # value = <EleKey.KICKER: 15>
-    LCAVITY: typing.ClassVar[EleKey]  # value = <EleKey.LCAVITY: 25>
-    LENS: typing.ClassVar[EleKey]  # value = <EleKey.LENS: 59>
-    MARKER: typing.ClassVar[EleKey]  # value = <EleKey.MARKER: 14>
-    MASK: typing.ClassVar[EleKey]  # value = <EleKey.MASK: 57>
-    MATCH: typing.ClassVar[EleKey]  # value = <EleKey.MATCH: 30>
-    MIRROR: typing.ClassVar[EleKey]  # value = <EleKey.MIRROR: 42>
-    MONITOR: typing.ClassVar[EleKey]  # value = <EleKey.MONITOR: 31>
-    MULTILAYER_MIRROR: typing.ClassVar[EleKey]  # value = <EleKey.MULTILAYER_MIRROR: 46>
-    MULTIPOLE: typing.ClassVar[EleKey]  # value = <EleKey.MULTIPOLE: 19>
-    NULL_ELE: typing.ClassVar[EleKey]  # value = <EleKey.NULL_ELE: 27>
-    OCTUPOLE: typing.ClassVar[EleKey]  # value = <EleKey.OCTUPOLE: 17>
-    OVERLAY: typing.ClassVar[EleKey]  # value = <EleKey.OVERLAY: 6>
-    PATCH: typing.ClassVar[EleKey]  # value = <EleKey.PATCH: 24>
-    PHOTON_FORK: typing.ClassVar[EleKey]  # value = <EleKey.PHOTON_FORK: 40>
-    PHOTON_INIT: typing.ClassVar[EleKey]  # value = <EleKey.PHOTON_INIT: 53>
-    PICKUP: typing.ClassVar[EleKey]  # value = <EleKey.PICKUP: 68>
-    PIPE: typing.ClassVar[EleKey]  # value = <EleKey.PIPE: 44>
-    QUADRUPOLE: typing.ClassVar[EleKey]  # value = <EleKey.QUADRUPOLE: 3>
-    RAMPER: typing.ClassVar[EleKey]  # value = <EleKey.RAMPER: 62>
-    RBEND: typing.ClassVar[EleKey]  # value = <EleKey.RBEND: 18>
-    RCOLLIMATOR: typing.ClassVar[EleKey]  # value = <EleKey.RCOLLIMATOR: 35>
-    RFCAVITY: typing.ClassVar[EleKey]  # value = <EleKey.RFCAVITY: 9>
-    RF_BEND: typing.ClassVar[EleKey]  # value = <EleKey.RF_BEND: 64>
-    SAD_MULT: typing.ClassVar[EleKey]  # value = <EleKey.SAD_MULT: 56>
-    SAMPLE: typing.ClassVar[EleKey]  # value = <EleKey.SAMPLE: 54>
-    SBEND: typing.ClassVar[EleKey]  # value = <EleKey.SBEND: 2>
-    SEXTUPOLE: typing.ClassVar[EleKey]  # value = <EleKey.SEXTUPOLE: 5>
-    SOLENOID: typing.ClassVar[EleKey]  # value = <EleKey.SOLENOID: 23>
-    SOL_QUAD: typing.ClassVar[EleKey]  # value = <EleKey.SOL_QUAD: 13>
-    TAYLOR: typing.ClassVar[EleKey]  # value = <EleKey.TAYLOR: 8>
-    THICK_MULTIPOLE: typing.ClassVar[EleKey]  # value = <EleKey.THICK_MULTIPOLE: 67>
-    UNDULATOR: typing.ClassVar[EleKey]  # value = <EleKey.UNDULATOR: 51>
-    VKICKER: typing.ClassVar[EleKey]  # value = <EleKey.VKICKER: 34>
-    WIGGLER: typing.ClassVar[EleKey]  # value = <EleKey.WIGGLER: 12>
-    @classmethod
-    def __new__(cls, value):
-        ...
-    def __format__(self, format_spec):
-        """
-        Convert to a string according to format_spec.
-        """
 class EleMisalignmentLSCalc:
     """
     ele_misalignment_l_s_calc return type
@@ -18231,19 +18069,26 @@ def ab_multipole_kick(a: typing.SupportsFloat, b: typing.SupportsFloat, n: typin
     ----------
     a : float
         Multipole skew component.
+    
     b : float
         Multipole normal component.
+    
     n : float
         Multipole order.
+    
     ref_species : int
         Reference species.
+    
     ele_orientation : int
         Element orientation +1 = normal, -1 = reversed,
+    
     0 = Ignore orientation and tracking species : 
     coord : CoordStruct
         Particle position and direction of travel.
+    
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
+    
     scale : float, optional
         Factor to scale the kicks. Default is 1. For pole_type = electric$, set scale to the longitudinal length
         of the field region.
@@ -18252,8 +18097,10 @@ def ab_multipole_kick(a: typing.SupportsFloat, b: typing.SupportsFloat, n: typin
     -------
     kx : float
         X kick.
+    
     ky : float
         Y kick.
+    
     dk : float
         Kick derivative: dkick(x,y)/d(x,y).
     """
@@ -18271,25 +18118,33 @@ def ab_multipole_kicks(an: RealArray1D, bn: RealArray1D, ix_pole_max: typing.Sup
     ----------
     an : float
         Skew multipole strengths.
+    
     bn : float
         Normal multipole strengths.
+    
     ix_pole_max : int
         Maximum pole index.
+    
     ele : EleStruct
         Lattice element containing the multipoles.
+    
     orbit : CoordStruct
         Particle position.
         This parameter is an input/output and is modified in-place. As an output: Kicked particle.
+    
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
+    
     scale : float, optional
         Factor to scale the kicks. Default is 1.
+    
     For pole_type = electric$ : 
     set scale to the longitudinal length of the field region : 
     mat6 : float, optional
         Transfer matrix before the multipole.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
         including multipole.
+    
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
     """
@@ -18307,30 +18162,39 @@ def absolute_photon_position(e_orb: CoordStruct, photon_orb: CoordStruct) -> Non
     ----------
     e_orb : CoordStruct
         charged particle position.
+    
     photon_orb : CoordStruct
         Photon position relative to e_orb.
         This parameter is an input/output and is modified in-place. As an output: Absolute photon position.
     """
 def absolute_time_tracking(ele: EleStruct) -> bool:
     """
+    Wrapper for Fortran routine absolute_time_tracking
+    
     Parameters
     ----------
     ele : EleStruct
         Element being tracked through.
+    
     is_abs_time : bool
         True if absolute time tracking is needed.
     """
 def ac_kicker_amp(ele: EleStruct, orbit: CoordStruct, true_time: typing.SupportsFloat | None = None) -> float:
     """
+    Wrapper for Fortran routine ac_kicker_amp
+    
     Parameters
     ----------
     ele : EleStruct
         ac_kicker element.
+    
     orbit : CoordStruct
         Contains the time to evaluate the amplitude at.
+    
     true_time : float, optional
         The actual time. Normally this time is calculated using orbit.t or orbit.vec(5) but sometimes it is
         convenient to be able to override this. For example, time_runge_kutta uses this.
+    
     ac_amp : float
         Amplitude. Will be set to 1 if the element is not an ac_kicker.
     """
@@ -18351,14 +18215,19 @@ def action_to_xyz(ring: LatStruct, ix: typing.SupportsInt, J: typing.Annotated[c
     ----------
     ring : LatStruct
         lattice
+    
     %a%tune : 
         a-mode tune (horizontal-like)
+    
     %b%tune : 
         b-mode tune (vertical-like)
+    
     %z%tune : 
         c-mode tune (synchrotron-like)
+    
     ix : int
         element index at which to calculate J
+    
     J : float
         Vector containing normal mode invariants and phases
     
@@ -18366,23 +18235,31 @@ def action_to_xyz(ring: LatStruct, ix: typing.SupportsInt, J: typing.Annotated[c
     -------
     X : float
         canonical phase space coordinates of the particle
+    
     err_flag : bool
         Set to true on error.  Often means Eigen decomposition failed.
     """
 def add_lattice_control_structs(ele: EleStruct, n_add_slave: typing.SupportsInt | None = None, n_add_lord: typing.SupportsInt | None = None, n_add_slave_field: typing.SupportsInt | None = None, n_add_lord_field: typing.SupportsInt | None = None, add_at_end: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine add_lattice_control_structs
+    
     Parameters
     ----------
     ele : EleStruct
         Lord or slave element that needs extra control elements.
+    
     n_add_slave : int, optional
         Number of field slaves to add to lord. Default is zero.
+    
     n_add_lord : int, optional
         Number of field lords to add to slave. Default is zero.
+    
     n_add_slave_field : int, optional
         Number of field slaves to add to lord. Default is zero.
+    
     n_add_lord_field : int, optional
         Number of field lords to add to slave. Default is zero.
+    
     add_at_end : bool, optional
         Used when n_add_slave or n_add_slave_field is non-zero. If True then new space is added at the end of the
         array. If False then new space is added at the front of the array. Default is True.
@@ -18408,29 +18285,37 @@ def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.S
     lat : LatStruct
         Lat to modify.
         This parameter is an input/output and is modified in-place. As an output: Modified lat.
+    
     super_ele_in : EleStruct
         Element to superimpose.
+    
     %s : 
         Position of end of element.
+    
     Negative distances mean distance from the end. : 
     ix_branch : int
         Branch index to put element.
+    
     save_null_drift : bool, optional
         Save a copy of a drift to be split as a null_ele? This is useful if further superpositions might use this
         drift as a reference element. After all superpositions are done, remove_eles_from_lat can be called to
         remove all null_eles.
+    
     Default is False. : 
     create_jumbo_slave : bool, optional
         Default is False. If True then super_slaves that are created that have super_ele_in as their super_lord
         are
+    
     em_field elements. : 
     ix_insert : int, optional
         If present and positive, and super_ele_in has zero length, use ix_insert as the index to insert
         super_ele_in at. ix_insert is useful when superposing next to another element that has zero or negative
         length (EG a patch) and you want
+    
     to make sure that the superimposed element is on the correct side of the element. : 
     mangle_slave_names : bool, optional
         If True (default), adjust slave names appropriately. Name
+    
     mangeling can take time so bmad_parser will do this all at once at the end. : 
     wrap : bool, optional
         If True (default), and if the superimposed element has an end that extends beyond the starting or ending
@@ -18443,11 +18328,14 @@ def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.S
     -------
     err_flag : bool
         Set True if there is an error. False otherwise
+    
     super_ele_out : EleStruct
         Pointer to the super element in the lattice.
     """
 def add_this_multipass(lat: LatStruct, m_slaves: LatEleLocStructArray1D, lord_in: EleStruct | None = None) -> None:
     """
+    Wrapper for Fortran routine add_this_multipass
+    
     Parameters
     ----------
     lat : 
@@ -18470,22 +18358,30 @@ def adjust_super_slave_names(lat: LatStruct, ix1_lord: typing.SupportsInt, ix2_l
     """
 def allocate_branch_array(lat: LatStruct, upper_bound: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine allocate_branch_array
+    
     Parameters
     ----------
     lat : LatStruct
+    
     upper_bound : int
         Desired upper bound.
     """
 def allocate_lat_ele_array(lat: LatStruct, upper_bound: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, do_ramper_slave_setup: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine allocate_lat_ele_array
+    
     Parameters
     ----------
     lat : LatStruct
         Lattice with element array.
+    
     upper_bound : int, optional
         Optional desired upper bound.
+    
     ix_branch : int, optional
         Branch index. Default is 0.
+    
     do_ramper_slave_setup : bool, optional
         Default False. If true, setup ramper slaves. Generally this needs to be done if reallocating with a fully
         formed lattice.
@@ -18498,22 +18394,29 @@ def allocate_thread_states() -> None:
     """
 def angle_between_polars(polar1: SpinPolarStruct, polar2: SpinPolarStruct) -> float:
     """
+    Wrapper for Fortran routine angle_between_polars
+    
     Parameters
     ----------
     polar1 : 
         (spin_polar_struct)
+    
     polar2 : 
         (spin_polar_struct)
+    
     angle : float
         Angle between the polar vectors
     """
 def angle_to_canonical_coords(orbit: CoordStruct, coord_type: str | None = None) -> None:
     """
+    Wrapper for Fortran routine angle_to_canonical_coords
+    
     Parameters
     ----------
     orbit : CoordStruct
         Orbit in angular coordinates.
         This parameter is an input/output and is modified in-place. As an output: Orbit in canonical coordinates.
+    
     coord_type : unknown, optional
         Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
         y, y' = dy/ds, dt = -z / (beta * c), pz)
@@ -18585,10 +18488,13 @@ def apfft_corr(rdata_in: RealArray1D, bounds: typing.Annotated[collections.abc.S
     ----------
     rdata_in : float
         signal data.
+    
     bounds : float
         range within which to search for peak.
+    
     window : unknown
         'rec' or 'han' for rectangular or Hann window.
+    
     diag : int, optional
         causes low-level routine apfft_ext to produce a fort.X file where X=9000+fid containing diag information.
     
@@ -18596,8 +18502,10 @@ def apfft_corr(rdata_in: RealArray1D, bounds: typing.Annotated[collections.abc.S
     -------
     phase : float
         phase of peak found in signal.
+    
     freq : float
         frequency of peak
+    
     amp : float
         amplitude of peak
     """
@@ -18612,30 +18520,39 @@ def apfft_ext(rdata: RealArray1D, bounds: typing.Annotated[collections.abc.Seque
     """
 def apply_all_rampers(lat: LatStruct) -> bool:
     """
+    Wrapper for Fortran routine apply_all_rampers
+    
     Parameters
     ----------
     lat : LatStruct
         Lattice.
         This parameter is an input/output and is modified in-place. As an output: Lattice with rampers applied.
+    
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
 def apply_energy_kick(dE: typing.SupportsFloat, orbit: CoordStruct, ddE_dr: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine apply_energy_kick
+    
     Parameters
     ----------
     dE : float
         Energy change
+    
     orbit : CoordStruct
         Beginning coordinates
         This parameter is an input/output and is modified in-place. As an output: coordinates with added dE energy
         kick.
+    
     ddE_dr : 
         real(rp), Derivatives of dE [ddE_dx, ddE_dy].
+    
     mat6 : float, optional
         Transfer matrix before fringe.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
         including energy kick.
+    
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
     """
@@ -18658,15 +18575,20 @@ def apply_patch_to_ptc_fibre(ele: EleStruct) -> None:
     """
 def apply_rampers_to_slave(slave: EleStruct) -> bool:
     """
+    Wrapper for Fortran routine apply_rampers_to_slave
+    
     Parameters
     ----------
     slave : EleStruct
         Element to apply ramper elements to.
+    
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
 def array_re_str(arr: RealArray1D, parens_in: str | None = None, str_out: str) -> None:
     """
+    Wrapper for Fortran routine array_re_str
+    
     Parameters
     ----------
     arr : 
@@ -18675,6 +18597,8 @@ def array_re_str(arr: RealArray1D, parens_in: str | None = None, str_out: str) -
     """
 def asinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine asinc
+    
     Parameters
     ----------
     x : 
@@ -18683,6 +18607,8 @@ def asinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typi
     """
 def assert_equal(int_arr: IntArray1D, err_str: str, ival: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine assert_equal
+    
     Parameters
     ----------
     int_arr : 
@@ -18691,6 +18617,8 @@ def assert_equal(int_arr: IntArray1D, err_str: str, ival: typing.SupportsInt) ->
     """
 def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine astra_max_field_reference
+    
     Parameters
     ----------
     pt0 : 
@@ -18699,13 +18627,17 @@ def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_val
     """
 def at_this_ele_end(now_at: typing.SupportsInt, where_at: typing.SupportsInt) -> bool:
     """
+    Wrapper for Fortran routine at_this_ele_end
+    
     Parameters
     ----------
     now_at : int
         Which end is under consideration: entrance_end$, exit_end$, surface$, or in_between$.
+    
     where_at : int
         Which ends have the aperture or fringe field: entrance_end$, exit_end$, continuous$, both_ends$,
         no_aperture$, surface$, wall_transition$.
+    
     is_at_this_end : bool
         True if at this end. False otherwise.
     """
@@ -18737,10 +18669,13 @@ def atomic_species_id(charge: typing.SupportsInt, is_anti: bool, atomic_num: typ
     ----------
     charge : int
         Charge of the atom.
+    
     is_anti : bool
         Is an anti-atom.
+    
     atomic_num : int
         Atomic number.
+    
     n_nuc : int
         Number of nucleons.
     
@@ -18751,12 +18686,15 @@ def atomic_species_id(charge: typing.SupportsInt, is_anti: bool, atomic_num: typ
     """
 def attribute_bookkeeper(ele: EleStruct, force_bookkeeping: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine attribute_bookkeeper
+    
     Parameters
     ----------
     ele : EleStruct
         Element with attributes
         This parameter is an input/output and is modified in-place. As an output: Element with self-consistant
         attributes.
+    
     force_bookkeeping : unknown, optional
         If present and True then force attribute bookkeeping to be done independent of the state of
         ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
@@ -18788,19 +18726,26 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
     ----------
     ix_ele : int
         Index of element in element array.
+    
     ix_branch : int
         Branch index of element.
+    
     ele : EleStruct
         Element containing the attribute
+    
     attrib_name : unknown
         Name of the attribute. Assumed upper case.
+    
     lat : LatStruct
         Lattice structure.
+    
     err_print_flag : bool, optional
         If present and False then suppress
+    
     printing of an error message if attribute is not free. : 
     except_overlay : bool, optional
         If present and True then an attribute that is controlled by an overlay will be treated as free.
+    
     This is used by : 
     for example : 
     the create_overlay routine. : 
@@ -18812,6 +18757,7 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
     -------
     free : bool
         Set True if attribtute not found or attriubte
+    
     cannot be changed directly. : 
     why_not_free : int
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -18846,19 +18792,26 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
     ----------
     ix_ele : int
         Index of element in element array.
+    
     ix_branch : int
         Branch index of element.
+    
     ele : EleStruct
         Element containing the attribute
+    
     attrib_name : unknown
         Name of the attribute. Assumed upper case.
+    
     lat : LatStruct
         Lattice structure.
+    
     err_print_flag : bool, optional
         If present and False then suppress
+    
     printing of an error message if attribute is not free. : 
     except_overlay : bool, optional
         If present and True then an attribute that is controlled by an overlay will be treated as free.
+    
     This is used by : 
     for example : 
     the create_overlay routine. : 
@@ -18870,6 +18823,7 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
     -------
     free : bool
         Set True if attribtute not found or attriubte
+    
     cannot be changed directly. : 
     why_not_free : int
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -18904,19 +18858,26 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
     ----------
     ix_ele : int
         Index of element in element array.
+    
     ix_branch : int
         Branch index of element.
+    
     ele : EleStruct
         Element containing the attribute
+    
     attrib_name : unknown
         Name of the attribute. Assumed upper case.
+    
     lat : LatStruct
         Lattice structure.
+    
     err_print_flag : bool, optional
         If present and False then suppress
+    
     printing of an error message if attribute is not free. : 
     except_overlay : bool, optional
         If present and True then an attribute that is controlled by an overlay will be treated as free.
+    
     This is used by : 
     for example : 
     the create_overlay routine. : 
@@ -18928,6 +18889,7 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
     -------
     free : bool
         Set True if attribtute not found or attriubte
+    
     cannot be changed directly. : 
     why_not_free : int
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -18962,13 +18924,17 @@ def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = Non
     ----------
     ele : EleStruct
         attribute_index will restrict the name search to
+    
     valid attributes of the given element. : 
     key : int
         Equivalent to ele.key.
+    
     name : unknown
         Attribute name. Must be uppercase.
+    
     can_abbreviate : bool, optional
         Can abbreviate names? Default is True.
+    
     print_error : bool, optional
         Default True. If false, do not print error message.
     
@@ -18976,6 +18942,7 @@ def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = Non
     -------
     full_name : unknown
         Non-abbreviated name.
+    
     attrib_index : int
         Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
         = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
@@ -19010,13 +18977,17 @@ def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | N
     ----------
     ele : EleStruct
         attribute_index will restrict the name search to
+    
     valid attributes of the given element. : 
     key : int
         Equivalent to ele.key.
+    
     name : unknown
         Attribute name. Must be uppercase.
+    
     can_abbreviate : bool, optional
         Can abbreviate names? Default is True.
+    
     print_error : bool, optional
         Default True. If false, do not print error message.
     
@@ -19024,6 +18995,7 @@ def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | N
     -------
     full_name : unknown
         Non-abbreviated name.
+    
     attrib_index : int
         Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
         = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
@@ -19044,19 +19016,22 @@ def attribute_name(key: typing.SupportsInt, ix_att: typing.SupportsInt, show_pri
       attribute_name1 (ele, ix_att, show_private) result (attrib_name)
       attribute_name2 (key, ix_att, show_private) result (attrib_name)
     
-    
     Note: attribute_name (key, ix_att) is not able to handle overlay/group control variables.
     Use attributge_name (ele, ix_att) is this is needed.
     
     Parameters
     ----------
     ele : EleStruct
+    
     %key : int
         Key name of element type (e.g. SBEND$, etc.)
+    
     key : int
         Key name of element type (e.g. sbend$, etc.)
+    
     ix_att : int
         Index of attribute (e.g. k1$)
+    
     show_private : bool, optional
         If False (default) return null_name$ for private attributes.
     
@@ -19084,19 +19059,22 @@ def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: boo
       attribute_name1 (ele, ix_att, show_private) result (attrib_name)
       attribute_name2 (key, ix_att, show_private) result (attrib_name)
     
-    
     Note: attribute_name (key, ix_att) is not able to handle overlay/group control variables.
     Use attributge_name (ele, ix_att) is this is needed.
     
     Parameters
     ----------
     ele : EleStruct
+    
     %key : int
         Key name of element type (e.g. SBEND$, etc.)
+    
     key : int
         Key name of element type (e.g. sbend$, etc.)
+    
     ix_att : int
         Index of attribute (e.g. k1$)
+    
     show_private : bool, optional
         If False (default) return null_name$ for private attributes.
     
@@ -19135,6 +19113,7 @@ def attribute_type(attrib_name: str, ele: EleStruct | None = None) -> int:
     ----------
     attrib_name : unknown
         Name of the attribute. Must be upper case.
+    
     ele : EleStruct, optional
         Element associated with the attribute. Needed if attrib_name can correspond to an overlay or group
         variable.
@@ -19156,6 +19135,7 @@ def attribute_units(attrib_name: str, unrecognized_units: str | None = None) -> 
     ----------
     attrib_name : unknown
         Name of the attribute. Must be upper case.
+    
     unrecognized_units : unknown, optional
         String to use if the attribute name is unrecognized. Note: Non-real attributes (EG: 'TRACKING_METHOD') are
         not recognized. Default is ""
@@ -19167,31 +19147,42 @@ def attribute_units(attrib_name: str, unrecognized_units: str | None = None) -> 
     """
 def autoscale_phase_and_amp(ele: EleStruct, param: LatParamStruct, scale_phase: bool | None = None, scale_amp: bool | None = None, call_bookkeeper: bool | None = None) -> bool:
     """
+    Wrapper for Fortran routine autoscale_phase_and_amp
+    
     Parameters
     ----------
     ele : EleStruct
         RF element or e_gun.
         This parameter is an input/output and is modified in-place. As an output: element with phase and amplitude
         adjusted.
+    
     param : LatParamStruct
         lattice parameters
+    
     err_flag : 
         Logical, Set true if there is an error. False otherwise.
+    
     scale_phase : bool, optional
         Scale the phase? See above.
+    
     scale_amp : bool, optional
         Scale the amplitude? See above.
+    
     call_bookkeeper : bool, optional
         Call lattice_bookkeeper at end? Default is True.
     """
 def average_twiss(frac1: typing.SupportsFloat, twiss1: TwissStruct, twiss2: TwissStruct) -> TwissStruct:
     """
+    Wrapper for Fortran routine average_twiss
+    
     Parameters
     ----------
     frac1 : float
         Fraction of twiss1 to use in the average.
+    
     twiss1 : TwissStruct
         Twiss parameters to average.
+    
     twiss2 : 
     ave_twiss : TwissStruct
         Average twiss.
@@ -19206,6 +19197,7 @@ def axis_angle_to_quat(axis: typing.Annotated[collections.abc.Sequence[typing.Su
     ----------
     axis : float
         Axis of rotation.
+    
     angle : float
         angle of rotation.
     
@@ -19225,6 +19217,7 @@ def axis_angle_to_w_mat(axis: typing.Annotated[collections.abc.Sequence[typing.S
     ----------
     axis : float
         Rotation axis. Does not have to be normalized.
+    
     angle : float
         Rotation angle in the range [-pi, pi].
     
@@ -19235,17 +19228,23 @@ def axis_angle_to_w_mat(axis: typing.Annotated[collections.abc.Sequence[typing.S
     """
 def bbi_kick(x: typing.SupportsFloat, y: typing.SupportsFloat, sigma: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]) -> BbiKick:
     """
+    Wrapper for Fortran routine bbi_kick
+    
     Parameters
     ----------
     x : float
         X coordinate.
+    
     y : float
         Y coordinate.
+    
     sigma : float
         Beam (x,y) sigmas.
+    
     nk : float
         Normalized, dimensionless kick component. In terms of the the actual kick: nk = [kick_x / (xi_x * sigma_x
         / beta_x), kick_y / (xi_y * sigma_y / beta_y)
+    
     dnk : float
         derivatives of nk. EG: dnk(2,1) = dnk(2)/dy Note: xi_x = beta_x * bbi_const / sig_x     ! Horizontal tune
         shift parameter xi_y = beta_y * bbi_const / sig_y     ! Vertical   tune shift parameter where bbi_const =
@@ -19267,17 +19266,23 @@ def bbi_kick(x: typing.SupportsFloat, y: typing.SupportsFloat, sigma: typing.Ann
     """
 def bbi_slice_calc(ele: EleStruct, n_slice: typing.SupportsInt, z_slice: RealArray1D) -> None:
     """
+    Wrapper for Fortran routine bbi_slice_calc
+    
     Parameters
     ----------
     ele : EleStruct
         beambeam element
+    
     n_slice : int
         Number of slices
+    
     z_slice : float
         Array of slice positions 1:n_slice. zero padded for indexes greater than n_slice
     """
 def bbu_add_a_bunch(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, beam_init: BeamInitStruct) -> None:
     """
+    Wrapper for Fortran routine bbu_add_a_bunch
+    
     Parameters
     ----------
     lat : 
@@ -19287,6 +19292,8 @@ def bbu_add_a_bunch(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParam
     """
 def bbu_hom_voltage_calc(lat: LatStruct, bbu_beam: BbuBeamStruct, n_period: typing.SupportsInt, ix_stage_last_tracked: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine bbu_hom_voltage_calc
+    
     Parameters
     ----------
     lat : 
@@ -19296,12 +19303,16 @@ def bbu_hom_voltage_calc(lat: LatStruct, bbu_beam: BbuBeamStruct, n_period: typi
     """
 def bbu_remove_head_bunch(bbu_beam: BbuBeamStruct) -> None:
     """
+    Wrapper for Fortran routine bbu_remove_head_bunch
+    
     Parameters
     ----------
     bbu_beam : 
     """
 def bbu_setup(lat: LatStruct, dt_bunch: typing.SupportsFloat, bbu_param: BbuParamStruct, bbu_beam: BbuBeamStruct) -> None:
     """
+    Wrapper for Fortran routine bbu_setup
+    
     Parameters
     ----------
     lat : 
@@ -19311,6 +19322,8 @@ def bbu_setup(lat: LatStruct, dt_bunch: typing.SupportsFloat, bbu_param: BbuPara
     """
 def bbu_track_a_stage(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, lost: bool, ix_stage_tracked: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine bbu_track_a_stage
+    
     Parameters
     ----------
     lat : 
@@ -19321,6 +19334,8 @@ def bbu_track_a_stage(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuPar
     """
 def bbu_track_all(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, beam_init: BeamInitStruct, hom_voltage_normalized: typing.SupportsFloat, growth_rate: typing.SupportsFloat, lost: bool, irep: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine bbu_track_all
+    
     Parameters
     ----------
     lat : 
@@ -19348,14 +19363,19 @@ def beam_envelope_ibs(sigma_mat: typing.Annotated[collections.abc.Sequence[typin
     ----------
     sigma_mat : float
         beam sigma_matrix at element entrance
+    
     tail_cut : bool
         If true, then apply tail cut to coulomb logarithm.
+    
     tau : float
         horizontal betatron damping rate.  Needed if tail_cut is true.
+    
     energy : float
         beam energy in eV
+    
     n_part : float
         number of particles in the bunch
+    
     species : int
         Partical species.
     
@@ -19366,6 +19386,8 @@ def beam_envelope_ibs(sigma_mat: typing.Annotated[collections.abc.Sequence[typin
     """
 def beam_equal_beam(beam1: BeamStruct, beam2: BeamStruct) -> None:
     """
+    Wrapper for Fortran routine beam_equal_beam
+    
     Parameters
     ----------
     beam1 : 
@@ -19373,17 +19395,24 @@ def beam_equal_beam(beam1: BeamStruct, beam2: BeamStruct) -> None:
     """
 def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typing.SupportsInt, modes: NormalModesStruct | None = None, err_flag: bool | None = None, beam_init_set: BeamInitStruct) -> None:
     """
+    Wrapper for Fortran routine beam_init_setup
+    
     Parameters
     ----------
     beam_init_in : BeamInitStruct
         Input parameters
+    
     ele : EleStruct
+    
     species : int
         Beam particle species.
+    
     modes : NormalModesStruct, optional
         Normal mode parameters.
+    
     err_flag : bool, optional
         Set true if there is an error. False otherwise.
+    
     beam_init_set : BeamInitStruct
         See above.
     """
@@ -19416,12 +19445,16 @@ def beam_tilts(S: typing.Annotated[collections.abc.Sequence[typing.Annotated[col
     -------
     angle_xy : float
         transverse tilt of beam envelope
+    
     angle_xz : float
         horizontal crabbing of beam envelope
+    
     angle_yz : float
         vertical crabbing of beam envelope
+    
     angle_xpz : float
         x-pz coupling
+    
     angle_ypz : float
         y-pz coupling
     """
@@ -19452,47 +19485,64 @@ def bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.Su
     ----------
     ele : EleStruct
         SBend element.
+    
     param : LatParamStruct
         Rel charge.
+    
     particle_at : int
         first_track_edge$, or second_track_edge$.
+    
     orb : CoordStruct
         Starting coords.
         This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+    
     mat6 : float, optional
         Transfer matrix before fringe.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
         including fringe.
+    
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
+    
     track_spin : bool, optional
         If True then track the spin through the edge fields. Default: False.
     """
 def bend_exact_multipole_field(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None) -> EmFieldStruct:
     """
+    Wrapper for Fortran routine bend_exact_multipole_field
+    
     Parameters
     ----------
     ele : unknown
         Bend element.
+    
     param : LatParamStruct
         Lattice branch parameters.
+    
     orbit : CoordStruct
         particle position.
+    
     local_ref_frame : bool
         Is the particle position in the local element ref
+    
     field : EmFieldStruct
         Field
+    
     calc_dfield : bool, optional
         If present and True then calculate the field derivatives.
+    
     calc_potential : bool, optional
         Calc electric and magnetic potentials? Default is false.
     """
 def bend_length_has_been_set(ele: EleStruct, is_set: bool) -> None:
     """
+    Wrapper for Fortran routine bend_length_has_been_set
+    
     Parameters
     ----------
     ele : EleStruct
         Element to be checked.
+    
     is_set : bool
         Note: will be set True for non-bend elements.
     """
@@ -19539,8 +19589,10 @@ def bend_photon_energy_integ_prob(E_photon: typing.SupportsFloat, g_bend: typing
     ----------
     E_photon : float
         Photon energy.
+    
     g_bend : float
         1/rho bending strength.
+    
     gamma : float
         Relativistic gamma factor of generating charged particle.
     
@@ -19598,29 +19650,38 @@ def bend_photon_init(g_bend_x: typing.SupportsFloat, g_bend_y: typing.SupportsFl
     ----------
     g_bend_x : float
         Bending 1/rho component in horizontal plane.
+    
     g_bend_y : float
         Bending 1/rho component in vertical plane.
+    
     gamma : float
         Relativistic gamma factor of generating charged particle.
+    
     E_min : float, optional
         Minimum photon energy. Default is zero. Ignored if negative.
+    
     E_max : float, optional
         Maximum photon energy.  Default is Infinity. Ignored if negative.
+    
     If non-positive then E_max will be taken to be Infinity. : 
     E_integ_prob : float
         , optional :: integrated energy probability. See above.
+    
     If E_integ_prob is non-negative : 
     it must be in the range [0 : 
     1]. : 
     vert_angle_min : float, optional
         Minimum vertical angle to emit a photon.
+    
     -pi/2 is used if argument not present or if argument is less than -pi/2. : 
     vert_angle_max : float, optional
         Maximum vertical angle to emit a photon.
+    
     pi/2 is used if argument not present or if argument is greater than pi/2. : 
     vert_angle_symmetric : bool, optional
         Default is False. If True, photons will be emitted in the range [-vert_angle_max, -vert_angle_min] as well
         as the range
+    
     [vert_angle_min : 
     vert_angle_max]. In this case vert_angle_min/max must be positive. : 
     emit_probability : float, optional
@@ -19644,10 +19705,13 @@ def bend_photon_polarization_init(g_bend_x: typing.SupportsFloat, g_bend_y: typi
     ----------
     g_bend_x : float
         Bending 1/rho component in horizontal plane.
+    
     g_bend_y : float
         Bending 1/rho component in vertical plane.
+    
     E_rel : float
         Relative photon energy E/E_crit.
+    
     gamma_phi : float
         gamma * phi where gamma is the beam relativistic factor and phi is the vertical photon angle (in radians).
     
@@ -19655,8 +19719,10 @@ def bend_photon_polarization_init(g_bend_x: typing.SupportsFloat, g_bend_y: typi
     -------
     orbit : CoordStruct
         Photon coords
+    
     %field : 
         (x,y) polaraization. Will have unit magnitude
+    
     %phase : 
         (x,y) phases. Will be [0, pi/2].
     """
@@ -19672,10 +19738,13 @@ def bend_photon_vert_angle_init(E_rel: typing.SupportsFloat, gamma: typing.Suppo
     ----------
     E_rel : float
         Relative photon energy E/E_crit.
+    
     gamma : float
         beam relativistic factor
+    
     r_in : float, optional
         Integrated probability in the range [0,1].
+    
     If not present : 
     a random number will be used. : 
     invert : float, optional
@@ -19690,18 +19759,25 @@ def bend_photon_vert_angle_init(E_rel: typing.SupportsFloat, gamma: typing.Suppo
     """
 def bend_shift(position1: FloorPositionStruct, g: typing.SupportsFloat, delta_s: typing.SupportsFloat, ref_tilt: typing.SupportsFloat | None = None) -> BendShift:
     """
+    Wrapper for Fortran routine bend_shift
+    
     Parameters
     ----------
     position1 : FloorPositionStruct
         Position of particle in inital coordinate frame.
+    
     g : float
         Curvature (1/rho)
+    
     delta_s : float
         S-position of final frame relative to the initial frame.
+    
     w_mat : float
         W matrix used in the transformation
+    
     ref_tilt : float, optional
         ref_tilt. Default: 0
+    
     position2 : FloorPositionStruct
         particle coordinates relative to the final frame.
     """
@@ -19719,8 +19795,10 @@ def bend_vert_angle_integ_prob(vert_angle: typing.SupportsFloat, E_rel: typing.S
     ----------
     vert_angle : float
         Vertical angle.
+    
     E_rel : float
         Relative photon energy E/E_crit.
+    
     gamma : float
         Relativistic gamma factor of generating charged particle.
     
@@ -19744,8 +19822,10 @@ def bicubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFloa
       ----------
       x_norm : float
           x_norm = (x - x0) / dx
+    
       y_norm : float
           y_norm = (y - y0) / dy
+    
       bi_coef : BicubicCmplxCoefStruct
           Coefficients.
     
@@ -19753,8 +19833,10 @@ def bicubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFloa
       -------
       f_val : complex
           Value of f.
+    
       df_dx : complex
           Normalized first derivative: True df/dx = df_dx * dx
+    
       df_dy : complex
           Normalized first derivative: True df/dy = df_dy * dy
     """
@@ -19768,8 +19850,10 @@ def bin_index(x: typing.SupportsFloat, bin1_x_min: typing.SupportsFloat, bin_del
       ----------
       x : float
           Input value to bin.
+    
       bin1_x_min : float
           Minimum value of bin with index 1.
+    
       bin_delta : float
           Bin width.
     
@@ -19788,8 +19872,10 @@ def bin_x_center(ix_bin: typing.SupportsInt, bin1_x_min: typing.SupportsFloat, b
       ----------
       ix_bin : int
           Index of bin under question.
+    
       bin1_x_min : float
           Minimum value of bin with index 1.
+    
       bin_delta : float
           Bin width.
     
@@ -19808,8 +19894,10 @@ def bit_set(word: typing.SupportsInt, pos: typing.SupportsInt, set_to_1: bool) -
       word : int
           Input word
           This parameter is an input/output and is modified in-place. As an output: Word with bit set.
+    
       pos : int
           position to set.
+    
       set_to_1 : bool
           If True then bit is set to 1. If False bit is set to 0.
     """
@@ -19825,22 +19913,31 @@ def bl_via_vlassov(current: typing.SupportsFloat, alpha: typing.SupportsFloat, E
     ----------
     current : float
         Beam current in amps
+    
     alpha : float
         Momentum compaction
+    
     Energy : float
         beam energy
+    
     sigma_p : float
         energy spread
+    
     Vrf : float
         total RF voltage in Volts
+    
     omega : float
         rf frequency in radians/s
+    
     U0 : float
         energy loss per turn (eV)
+    
     circ : float
         circumpherence
+    
     R : float
         Resistive part of effective impedance
+    
     L : float
         Inductive part of effective impedance
     
@@ -19851,38 +19948,52 @@ def bl_via_vlassov(current: typing.SupportsFloat, alpha: typing.SupportsFloat, E
     """
 def bmad_parser(lat_file: str, make_mats6: bool | None = None, use_line: str | None = None) -> BmadParser:
     """
+    Wrapper for Fortran routine bmad_parser
+    
     Parameters
     ----------
     lat_file : unknown
         Name of the input file.
+    
     lat : LatStruct
         Lat structure. See bmad_struct.f90 for more details.
+    
     make_mats6 : bool, optional
         Compute the 6x6 transport matrices for the Elements?
+    
     digested_read_ok : bool
         Set True if the digested file was
+    
     use_line : unknown, optional
         If present and not blank, override the use statement in the lattice file and use use_line instead.
+    
     err_flag : bool
         Set true if there is an error, false otherwise. Note: err_flag does *not* include errors in lat_make_mat6
         since if there is a match element, there is an error raised since
+    
     parse_lat : LatStruct
         List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
         documentation.
     """
 def bmad_parser2(lat_file: str, lat: LatStruct, orbit: CoordStructArray1D | None = None, make_mats6: bool | None = None, err_flag: bool | None = None, parse_lat: LatStruct | None = None) -> None:
     """
+    Wrapper for Fortran routine bmad_parser2
+    
     Parameters
     ----------
     lat_file : unknown
         Input file name.
+    
     lat : LatStruct
         lattice with existing layout.
         This parameter is an input/output and is modified in-place. As an output: lattice with modifications.
+    
     orbit : CoordStruct, optional
         closed orbit for when
+    
     make_mats6 : bool, optional
         Make the 6x6 transport matrices for then
+    
     err_flag : 
     parse_lat : LatStruct, optional
         Used by bmad_parser to pass to bmad_parser2 a list of elements that were defined in the lattice file but
@@ -19891,13 +20002,17 @@ def bmad_parser2(lat_file: str, lat: LatStruct, orbit: CoordStructArray1D | None
     """
 def bmad_patch_parameters_to_ptc(ang: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], exi: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
+    Wrapper for Fortran routine bmad_patch_parameters_to_ptc
+    
     Parameters
     ----------
     ang : 
     exi : 
     """
 def bp_set_ran_status() -> None:
-    ...
+    """
+    Wrapper for Fortran routine bp_set_ran_status
+    """
 def bracket_index_for_spline(x_knot: RealArray1D, x: typing.SupportsFloat, strict: bool | None = None, print_err: bool | None = None) -> BracketIndexForSpline:
     """
     Function bracket_index_for_spline (x_knot, x, ix0, strict, print_err) result (ok)
@@ -19913,10 +20028,13 @@ def bracket_index_for_spline(x_knot: RealArray1D, x: typing.SupportsFloat, stric
       ----------
       x_knot : float
           Array of x values.
+    
       x : float
           Evaluation point.
+    
       strict : bool, optional
           Default is False. Determines acceptible range.
+    
       print_err : bool, optional
           Default is True. Print error message if out of range?
     
@@ -19924,11 +20042,14 @@ def bracket_index_for_spline(x_knot: RealArray1D, x: typing.SupportsFloat, stric
       -------
       ix0 : int
           If ok = True, x is in the interval [x_knot(ix0), x_knot(ix0+1)]
+    
       ok : bool
           True if x is in range. False otherwise.
     """
 def branch_equal_branch(branch1: BranchStruct, branch2: BranchStruct) -> None:
     """
+    Wrapper for Fortran routine branch_equal_branch
+    
     Parameters
     ----------
     branch1 : 
@@ -19936,10 +20057,13 @@ def branch_equal_branch(branch1: BranchStruct, branch2: BranchStruct) -> None:
     """
 def branch_name(branch: BranchStruct) -> str:
     """
+    Wrapper for Fortran routine branch_name
+    
     Parameters
     ----------
     branch : BranchStruct
         Lattice branch
+    
     name : unknown
         Encoded name
     """
@@ -19970,6 +20094,8 @@ def branch_to_ptc_m_u(branch: BranchStruct) -> None:
     """
 def bunch_equal_bunch(bunch1: BunchStruct, bunch2: BunchStruct) -> None:
     """
+    Wrapper for Fortran routine bunch_equal_bunch
+    
     Parameters
     ----------
     bunch1 : 
@@ -19977,10 +20103,13 @@ def bunch_equal_bunch(bunch1: BunchStruct, bunch2: BunchStruct) -> None:
     """
 def c_to_cbar(ele: EleStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine c_to_cbar
+    
+      Parameters
       ----------
       ele : EleStruct
           Element with C matrix and Twiss parameters.
+    
       cbar_mat : float
           Cbar matrix.
     """
@@ -20002,19 +20131,24 @@ def calc_bunch_params(bunch: BunchStruct, print_err: bool | None = None, is_time
       ----------
       bunch : 
           Bunch_struct
+    
       print_err : bool, optional
           If present and False then suppress
+    
       "no eigen-system found" messages. : 
       is_time_coords : bool, optional
           Are particle coords using time coords. Default is False.
+    
       ele : EleStruct, optional
           Element being tracked through. Must be present if is_time_coords = True.
     
       Returns
       -------
       bunch_params : BunchParamsStruct
+    
       error : bool
           Set True if there is an error.
+    
       n_mat : float
           N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
           51.).
@@ -20029,17 +20163,23 @@ def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct,
       ----------
       bunch : 
           bunch_struct
+    
       plane : int
           plane to slice through (x$, px$, & etc...)
+    
       slice_center : float
           Center to take slice about
+    
       slice_spread : float
           +/- spread in slice about center.
+    
       print_err : bool, optional
           If present and False then suppress
+    
       "no eigen-system found" messages. : 
       is_time_coords : bool, optional
           Default is False. If True, input bunch is using time coordinates in which
+    
       case there will be a conversion to s-coords before bunch_params are computed. : 
       ele : EleStruct, optional
           Element being tracked through. Must be present if is_time_coords = True.
@@ -20047,6 +20187,7 @@ def calc_bunch_params_slice(bunch: BunchStruct, bunch_params: BunchParamsStruct,
       Returns
       -------
       params : BunchParamsStruct
+    
       err : bool
           Set True if there is an error.
     """
@@ -20063,14 +20204,18 @@ def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruc
       ----------
       bunch : 
           bunch_struct
+    
       slice_bounds : float
           Slice bounds in percentage of particles ordered by z-position.
+    
       0.0 is the back of the bunch and 1.0 is the front of the bunch. : 
       print_err : bool, optional
           If present and False then suppress
+    
       "no eigen-system found" messages. : 
       is_time_coords : bool, optional
           Default is False. If True, input bunch is using time coordinates in which
+    
       case there will be a conversion to s-coords before bunch_params are computed. : 
       ele : EleStruct, optional
           Element being tracked through. Must be present if is_time_coords = True.
@@ -20078,6 +20223,7 @@ def calc_bunch_params_z_slice(bunch: BunchStruct, bunch_params: BunchParamsStruc
       Returns
       -------
       params : BunchParamsStruct
+    
       err : bool
           Set True if there is an error.
     """
@@ -20091,6 +20237,7 @@ def calc_bunch_sigma_matrix_etc(particle: CoordStructArray1D, charge: RealArray1
       ----------
       particle : CoordStruct
           Array of particles.
+    
       charge : float
           Particle charge or photon intensity.
     
@@ -20110,6 +20257,7 @@ def calc_emittances_and_twiss_from_sigma_matrix(sigma_mat: typing.Annotated[coll
       ----------
       sigma_mat : float
           Sigma matrix.
+    
       print_err : bool, optional
           If present and False then suppress "no eigen-system found" messages.
     
@@ -20117,14 +20265,18 @@ def calc_emittances_and_twiss_from_sigma_matrix(sigma_mat: typing.Annotated[coll
       -------
       bunch_params : BunchParamsStruct
           Holds Twiss and emittance info.
+    
       error : bool
           Set True if there is an error. Can happen if the emittance of a mode is zero.
+    
       n_mat : float
           N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
           51.).
     """
 def calc_file_number(file_name: str, num_in: typing.SupportsInt, num_out: typing.SupportsInt, err_flag: bool) -> None:
     """
+    Wrapper for Fortran routine calc_file_number
+    
     Parameters
     ----------
     file_name : 
@@ -20147,19 +20299,25 @@ def calc_spin_params(bunch: BunchStruct) -> BunchParamsStruct:
       -------
       bunch_params : BunchParamStruct
           Structure holding average
+    
       centroid%spin : 
           (x,y,z) polarization.
     """
 def calc_super_slave_key(lord1: EleStruct, lord2: EleStruct, create_jumbo_slave: bool | None = None) -> EleStruct:
     """
-    Parameters
+    Wrapper for Fortran routine calc_super_slave_key
+    
+      Parameters
       ----------
       lord1 : EleStruct
           First slave. .key
+    
       lord2 : EleStruct
           Second slave. .key .sub_key
+    
       slave : EleStruct
           Super_slave element.
+    
       create_jumbo_slave : unknown, optional
           If True then slave.key will be set to em_field. Default is False.
     """
@@ -20177,8 +20335,10 @@ def calc_wall_radius(v: Wall3DVertexStructArray1D, cos_ang: typing.SupportsFloat
       ----------
       v : Wall3DVertexStruct
           Array of vertices that make up the cross-section.
+    
       cos_ang : float
           cosine of the transverse photon position.
+    
       sin_ang : float
           sine of the transverse photon position.
     
@@ -20186,15 +20346,19 @@ def calc_wall_radius(v: Wall3DVertexStructArray1D, cos_ang: typing.SupportsFloat
       -------
       r_wall : float
           Wall radius at given angle.
+    
       dr_dtheta : float
           derivative of r_wall.
+    
       ix_vertex : int
           Wall at given angle is between v(ix_vertex-1) and v(ix_vertex). If ix_vertex = 1 then Wall at given angle
           is between v(N) and v(1) where N = size(v).
     """
 def calc_z_tune(branch: BranchStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine calc_z_tune
+    
+      Parameters
       ----------
       branch : BranchStruct
           Lattice branch
@@ -20206,30 +20370,40 @@ def calc_z_tune(branch: BranchStruct) -> None:
     """
 def canonical_to_angle_coords(orbit: CoordStruct, coord_type: str | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine canonical_to_angle_coords
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Orbit in canonical coordinates.
           This parameter is an input/output and is modified in-place. As an output: Orbit in angular coordinates.
+    
       coord_type : unknown, optional
           Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
           y, y' = dy/ds, dt = -z / (beta * c), pz)
     """
 def cbar_to_c(cbar_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"], a: TwissStruct, b: TwissStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine cbar_to_c
+    
+      Parameters
       ----------
       cbar_mat : float
           Cbar matrix.
+    
       a : TwissStruct
           a-mode Twiss parameters
+    
       b : TwissStruct
           b-mode Twiss parameters
+    
       c_mat : float
           C matrix.
     """
 def change_file_number(file_name: str, change: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine change_file_number
+    
     Parameters
     ----------
     file_name : 
@@ -20245,6 +20419,7 @@ def charge_of(species: typing.SupportsInt, default_: typing.SupportsInt | None =
     ----------
     species : int
         Species ID.
+    
     default : int, optional
         If present then use default value if species = not_set$.
     
@@ -20271,31 +20446,43 @@ def charge_to_mass_of(species: typing.SupportsInt) -> float:
     """
 def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.SupportsInt, param: LatParamStruct, old_orb: CoordStruct | None = None, check_momentum: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine check_aperture_limit
+    
+      Parameters
       ----------
       orb : CoordStruct
           coordinates of a particle.
+    
       ele : EleStruct
           Element holding the aperture
+    
       particle_at : int
           first_track_edge$, second_track_edge$, surface$, in_between$
+    
       param : LatParamStruct
           Lattice global parameter structure.
+    
       old_orb : CoordStruct, optional
           Old coordinates at last check. Needed if ele.aperture_at = wall_transition$.
+    
       check_momentum : bool, optional
           If present and false then checking of p_x and p_y will be disabled.
     """
 def check_controller_controls(ele_key: typing.SupportsInt, contrl: ControlStructArray1D, name: str) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine check_controller_controls
+    
+      Parameters
       ----------
       ele_key : int
           Element type. overlay$, etc.
+    
       contrl : ControlStruct
           control info. 1 element for each slave.
+    
       name : unknown
           Lord name. Used for error reporting.
+    
       err : bool
           Set true if there is a problem. False otherwise.
     """
@@ -20316,21 +20503,29 @@ def check_for_superimpose_problem(branch: BranchStruct, super_ele: EleStruct, er
     """
 def check_if_s_in_bounds(branch: BranchStruct, s: typing.SupportsFloat, print_err: bool | None = None) -> CheckIfSInBounds:
     """
-    Parameters
+    Wrapper for Fortran routine check_if_s_in_bounds
+    
+      Parameters
       ----------
       branch : BranchStruct
           Branch
+    
       s : float
           longitudinal position in the given branch.
+    
       err_flag : bool
           Set True if s position is out-of-bounds. False otherwise.
+    
       translated_s : float
           position translated to the range [0, branch_length]
+    
       print_err : bool, optional
           Print error message if there is an error? Default is True.
     """
 def check_rf_freq(lat: LatStruct, fb: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine check_rf_freq
+    
     Parameters
     ----------
     lat : 
@@ -20338,70 +20533,96 @@ def check_rf_freq(lat: LatStruct, fb: typing.SupportsFloat) -> None:
     """
 def choose_quads_for_set_tune(branch: BranchStruct, dk1: RealAlloc1D, eles: ElePointerStructAlloc1D, mask: str | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine choose_quads_for_set_tune
+    
+      Parameters
       ----------
       branch : BranchStruct
           Lattice branch.
+    
       dk1 : float
           Weights for the quadrupoles. All values will be +1 or -1.
+    
       eles : ElePointerStruct
           eles(i).ele points to element with dk1(i) weight.
+    
       mask : unknown, optional
           If present, assign weight of zero for all quads that do not match. That is, no variation for matching
           quads.
+    
       err_flag : bool
           Set True if there is not one quad with positive dk1 and one quad with negative dk1.
     """
 def chrom_calc(lat: LatStruct, delta_e: typing.SupportsFloat, pz: typing.SupportsFloat | None = None, low_E_orb: CoordStructAlloc1D | None = None, high_E_orb: CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, orb0: CoordStruct | None = None) -> ChromCalc:
     """
-    Parameters
+    Wrapper for Fortran routine chrom_calc
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat
+    
       delta_e : float
           +/- Delta energy used for the calculation. Notice that the energy difference
           This parameter is an input/output and is modified in-place. As an output: Set to 1.0d-4 if on input
           DELTA_E =< 0.
+    
       chrom_a : float
           a-mode chromaticity.
+    
       chrom_b : float
           b-mode chromaticity.
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
+    
       pz : float, optional
           reference momentum about which to calculate. Default is 0.
+    
       low_E_lat : LatStruct
           Lattice with RF off and matrices computed at E_lat +pz - delta_e
+    
       high_E_lat : LatStruct
           Lattice with RF off and matrices computed at E_lat +pz + delta_e
+    
       low_E_orb : CoordStruct
           Orbit computed at E_lat + pz - delta_e.
+    
       high_E_orb : CoordStruct
           Orbit computed at E_lat + pz + delta_e.
+    
       ix_branch : int, optional
           Index of the lattice branch to use. Default is 0.
+    
       orb0 : CoordStruct, optional
           On-energy orbit at start (fixer point). Default is the branch.particle_start. Only needed if lattice
           branch has an open geometry.
     """
 def chrom_tune(lat: LatStruct, delta_e: typing.SupportsFloat, target_x: typing.SupportsFloat, target_y: typing.SupportsFloat, err_tol: typing.SupportsFloat) -> ChromTune:
     """
-    Parameters
+    Wrapper for Fortran routine chrom_tune
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat to use,
           This parameter is an input/output and is modified in-place. As an output: Lat with sextupole set
+    
       delta_e : float
           Delta energy used for the calculation.
           This parameter is an input/output and is modified in-place. As an output: Set to 1.0d-4 if on input
           DELTA_E =< 0.
+    
       target_x : float
           Target X Chromaticity
+    
       target_y : float
           Target Y Chromaticity
+    
       err_tol : float
           Max allowable Error: Error = | X_Target - X_Actual | + | Y_Target -Y_Actual | A good number is: err_tol =
           0.05_rp
+    
       err_flag : bool
           .false. if match successful, .true. if failed Fails if takes longer than 100 iterations. If it fails the
           sextupoles are set to the last value calculated. Note: This subroutine assumes the Twiss parameters have
@@ -20409,23 +20630,30 @@ def chrom_tune(lat: LatStruct, delta_e: typing.SupportsFloat, target_x: typing.S
     """
 def classical_radius(species: typing.SupportsInt) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine classical_radius
+    
+      Parameters
       ----------
       species : int
           Species of particle.
+    
       radius : float
           Classical radius.
     """
 def clear_lat_1turn_mats() -> LatStruct:
     """
-    Parameters
+    Wrapper for Fortran routine clear_lat_1turn_mats
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat with 1-turn matrices cleared.
     """
 def clear_taylor_maps_from_elements(lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine clear_taylor_maps_from_elements
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice
@@ -20433,51 +20661,69 @@ def clear_taylor_maps_from_elements(lat: LatStruct) -> None:
     """
 def closed_orbit_calc(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine closed_orbit_calc
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat to track through.
+    
       closed_orb : CoordStruct
           closed_orb(nt) is the initial guess where nt = 0 for direction = 1 and nt = lat.n_ele_track for direction
           = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy
           This parameter is an input/output and is modified in-place. As an output: Closed orbit. closed_orb(i)
+    
       i_dim : int, optional
           Phase space dimensions to use: = 4  Transverse closed orbit at constant energy (RF off). (dE/E =
           closed_orb(0).vec(6)) = 5 Transverse closed orbit at constant energy (RF off) with the energy adjusted so
           that vec(5) is the same at the beginning and at the end. = 6 True closed orbit.
+    
       direction : int, optional
           Direction of tracking.
+    
       ix_branch : int, optional
           Lattice branch to find the closed orbit of.
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
+    
       print_err : bool, optional
           Print error message if calc does not converge? Default is True. Note: Condition messages like no RF
           voltage with i_dim = 6 will always be printed.
     """
 def closed_orbit_from_tracking(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typing.SupportsInt, eps_rel: RealArray1D | None = None, eps_abs: RealArray1D | None = None, init_guess: CoordStruct | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine closed_orbit_from_tracking
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat to track through.
+    
       closed_orb : CoordStruct
           closed orbit.
+    
       i_dim : int
           = 2,4  Transverse closed orbit at constant energy.
+    
       eps_rel : float, optional
           Relative allowed error.
+    
       eps_abs : float, optional
           Absolute allowed error.
+    
       init_guess : CoordStruct, optional
           Starting guess for the closed orbit at the start of the lattice. Set init_guess.vec(6) to the appropriate
           value of pz when calculating off-energy orbits. If not present then the origin will be used.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
 def cmplx_re_str(cmp: complex, str_out: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine cmplx_re_str
+    
+      Parameters
       ----------
       cmp : 
       str_out : 
@@ -20498,21 +20744,27 @@ def coarse_frequency_estimate(data: RealArray1D, error: bool | None = None) -> f
     -------
     frequency : float
         Frequency corresponding to the largest FFT amplitude
+    
     err : bool
         Error: not enough data. Frequency is near 0 or 0.5
     """
 def combine_consecutive_elements(lat: LatStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine combine_consecutive_elements
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice.
           This parameter is an input/output and is modified in-place. As an output: Lattice with elements combined.
+    
       error : bool
           Set True if there is an error. False otherwise.
     """
 def complex_error_function(wr: typing.SupportsFloat, wi: typing.SupportsFloat, zr: typing.SupportsFloat, zi: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine complex_error_function
+    
     Parameters
     ----------
     wr : 
@@ -20522,7 +20774,9 @@ def complex_error_function(wr: typing.SupportsFloat, wi: typing.SupportsFloat, z
     """
 def complex_taylor_clean(complex_taylor: ComplexTaylorStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine complex_taylor_clean
+    
+      Parameters
       ----------
       complex_taylor : 
     """
@@ -20558,7 +20812,6 @@ def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, exp: IntArray1D, co
       Input (complex_taylor_coef2):
         complex_taylor -- complex_taylor_struct: complex_taylor series.
         i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
-    
     
       Returns
       -------
@@ -20598,7 +20851,6 @@ def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, i1: typing.Supports
         complex_taylor -- complex_taylor_struct: complex_taylor series.
         i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
     
-    
       Returns
       -------
       complex_taylor_coef : complex
@@ -20606,7 +20858,9 @@ def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, i1: typing.Supports
     """
 def complex_taylor_equal_complex_taylor(complex_taylor1: ComplexTaylorStruct, complex_taylor2: ComplexTaylorStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine complex_taylor_equal_complex_taylor
+    
+      Parameters
       ----------
       complex_taylor1 : 
       complex_taylor2 : 
@@ -20638,7 +20892,6 @@ def complex_taylor_make_unit(complex_taylor: ComplexTaylorStructArray1D) -> None
       Subroutine to make the unit complex_taylor map:
             r(out) = Map * r(in) = r(in)
     
-    
       Returns
       -------
       complex_taylor : ComplexTaylorStruct
@@ -20655,6 +20908,7 @@ def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: C
       ----------
       a_complex_taylor : ComplexTaylorStruct
           complex_taylor map.
+    
       r_in : complex
           Coordinates at the input.
     
@@ -20662,14 +20916,18 @@ def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: C
       -------
       vec0 : complex
           0th order tranfsfer map
+    
       mat6 : complex
           1st order transfer map (6x6 matrix).
+    
       r_out : complex
           Coordinates at output.
     """
 def complex_taylors_equal_complex_taylors(complex_taylor1: ComplexTaylorStructArray1D, complex_taylor2: ComplexTaylorStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine complex_taylors_equal_complex_taylors
+    
+      Parameters
       ----------
       complex_taylor1 : 
       complex_taylor2 : 
@@ -20699,8 +20957,10 @@ def concat_ele_taylor(orb_taylor: TaylorStructArray1D, ele: EleStruct, spin_tayl
       orb_taylor : TaylorStruct
           Orbital Taylor map.
           This parameter is an input/output and is modified in-place. As an output: Concatinated orbital map
+    
       ele : EleStruct
           Element containing a Taylor map.
+    
       spin_taylor : TaylorStruct, optional
           Spin map to propagate
           This parameter is an input/output and is modified in-place. As an output: Concatinated spin map.
@@ -20729,6 +20989,7 @@ def concat_taylor(taylor1: TaylorStructArray1D, taylor2: TaylorStructArray1D, ta
       ----------
       taylor1 : TaylorStruct
           Taylor map.
+    
       taylor2 : TaylorStruct
           Taylor map.
     
@@ -20749,10 +21010,13 @@ def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.
       ----------
       mat_1 : float
           Map from s1 to s2
+    
       vec_1 : float
           Map from s1 to s2
+    
       mat_0 : float
           Map from s0 to s1
+    
       vec_0 : float
           Map from s0 to s1
     
@@ -20760,49 +21024,66 @@ def concat_transfer_mat(mat_1: typing.Annotated[collections.abc.Sequence[typing.
       -------
       mat_out : float
           Map from s0 to s2
+    
       vec_out : float
           Map from s0 to s2
     """
 def control_bookkeeper(lat: LatStruct, ele: EleStruct | None = None, err_flag: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine control_bookkeeper
+    
+      Parameters
       ----------
       lat : LatStruct
           lattice to be used
+    
       ele : EleStruct, optional
           Element whose attribute values have been changed. If not present bookkeeping will be done
+    
       err_flag : bool, optional
           Set True if there is an error. False otherwise.
     """
 def convert_bend_exact_multipole(g: typing.SupportsFloat, out_type: typing.SupportsInt, an: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(21)"], bn: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(21)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine convert_bend_exact_multipole
+    
+      Parameters
       ----------
       g : float
           1/rho bending strength.
+    
       out_type : int
           Output type: horizontally_pure$ or vertically_pure$.
+    
       an : float
           Skew multipoles.
           This parameter is an input/output and is modified in-place. As an output: Converted skew multipoles.
+    
       bn : float
           Non-skew multipoles.
           This parameter is an input/output and is modified in-place. As an output: Converted Non-skew multipoles.
     """
 def convert_coords(in_type_str: str, coord_in: CoordStruct, ele: EleStruct) -> ConvertCoords:
     """
-    Parameters
+    Wrapper for Fortran routine convert_coords
+    
+      Parameters
       ----------
       in_type_str : unknown
           type of the input coords.
+    
       coord_in : CoordStruct
           Input coordinates.
+    
       ele : EleStruct
           Provides the Twiss parameters.
+    
       out_type_str : unknown
           type of the output coords.
+    
       coord_out : CoordStruct
           Output coordinates.
+    
       err_flag : bool
           Set True if there is an error. False otherwise. in_type_str and out_type_str can be: 'LAB'
           {x, x', y, y', z, z'} 'MODE'               {a, a', b, b', z, z'} 'NORMALIZED'         {a_bar, a'_bar,
@@ -20820,12 +21101,16 @@ def convert_field_ele_to_lab(ele: EleStruct, s_here: typing.SupportsFloat, forwa
       ----------
       ele : EleStruct
           Lattice element.
+    
       s_here : 
           real(rp) S-position.
+    
       forward_transform : 
           Transform foward (to lab) or reverse.
+    
       calc_dfield : bool, optional
           If present and True then calculate the field derivatives.
+    
       calc_potential : bool, optional
           Calc electric and magnetic potentials? Default is false. This is experimental and only implemented for
           wigglers at present.
@@ -20837,7 +21122,9 @@ def convert_field_ele_to_lab(ele: EleStruct, s_here: typing.SupportsFloat, forwa
     """
 def convert_local_cartesian_to_local_curvilinear(x: typing.SupportsFloat, z: typing.SupportsFloat, g: typing.SupportsFloat, xout: typing.SupportsFloat, sout: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine convert_local_cartesian_to_local_curvilinear
+    
+      Parameters
       ----------
       x : 
       z : 
@@ -20847,7 +21134,9 @@ def convert_local_cartesian_to_local_curvilinear(x: typing.SupportsFloat, z: typ
     """
 def convert_local_curvilinear_to_local_cartesian(x: typing.SupportsFloat, s: typing.SupportsFloat, g: typing.SupportsFloat, xout: typing.SupportsFloat, zout: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine convert_local_curvilinear_to_local_cartesian
+    
+      Parameters
       ----------
       x : 
       s : 
@@ -20857,89 +21146,124 @@ def convert_local_curvilinear_to_local_cartesian(x: typing.SupportsFloat, s: typ
     """
 def convert_particle_coordinates_s_to_t(particle: CoordStruct, s_body: typing.SupportsFloat, orientation: typing.SupportsInt) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine convert_particle_coordinates_s_to_t
+    
+      Parameters
       ----------
       particle : CoordStruct
           Particle with .vec(:) in s-coords.
+    
       s_body : float
           s-position in element body coords.
+    
       orientation : int
           ele.orientation for vec(6).
     """
 def convert_particle_coordinates_t_to_s(particle: CoordStruct, ele: EleStruct, use_downstream_p0c: bool | None = None) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine convert_particle_coordinates_t_to_s
+    
+      Parameters
       ----------
       particle : CoordStruct
           Particle with .vec(:) in t-coords.
+    
       ele : EleStruct
           Element particle is going through.
+    
       s_body : float
           s-position in element body coords.
+    
       use_downstream_p0c : bool, optional
           If True (the default), use ele.value(p0c$) as the reference momentum. If False, use ele.value(p0c_start$)
           as the reference.
     """
 def convert_pc_to(pc: typing.SupportsFloat, particle: typing.SupportsInt) -> ConvertPcTo:
     """
-    Parameters
+    Wrapper for Fortran routine convert_pc_to
+    
+      Parameters
       ----------
       pc : float
           Particle momentum
+    
       particle : int
           Type of particle. positron$, etc.
+    
       E_tot : float
           Total energy of the particle.
+    
       gamma : float
           Gamma factor.
+    
       kinetic : float
           Kinetic energy
+    
       beta : float
           velocity / c_light
+    
       brho : float
           Nominal B_field*rho_bend
+    
       beta1 : float
           1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
     """
 def convert_total_energy_to(E_tot: typing.SupportsFloat, particle: typing.SupportsInt, print_err: bool | None = None) -> ConvertTotalEnergyTo:
     """
-    Parameters
+    Wrapper for Fortran routine convert_total_energy_to
+    
+      Parameters
       ----------
       E_tot : float
           Total energy of the particle.
+    
       particle : int
           Type of particle. positron$, etc.
+    
       gamma : float
           Gamma factor. Set to -1 for photons.
+    
       kinetic : float
           Kinetic energy
+    
       beta : float
           velocity / c_light
+    
       pc : float
           Particle momentum
+    
       brho : float
           Nominal B_field*rho_bend
+    
       beta1 : float
           1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
+    
       print_err : bool, optional
           Print error message if E_tot < particle mass? Default is True.
     """
 def converter_distribution_parser(ele: EleStruct) -> ConverterDistributionParser:
     """
-    Parameters
+    Wrapper for Fortran routine converter_distribution_parser
+    
+      Parameters
       ----------
       ele : EleStruct
           Converter element.
           This parameter is an input/output and is modified in-place. As an output: Converter element with
           .converter field set.
+    
       delim : unknown
           Ending delimitor.
+    
       delim_found : bool
           Has a delimitor been found?
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
@@ -20980,162 +21304,222 @@ def coord_state_name(coord_state: typing.SupportsInt, one_word: bool | None = No
     """
 def coords_body_to_local(body_position: FloorPositionStruct, ele: EleStruct, calculate_angles: bool | None = None) -> CoordsBodyToLocal:
     """
-    Parameters
+    Wrapper for Fortran routine coords_body_to_local
+    
+      Parameters
       ----------
       body_position : FloorPositionStruct
           Element body frame coordinates.
+    
       ele : EleStruct
           element that local_position coordinates are relative to.
+    
       w_mat : float
           W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
+    
       calculate_angles : bool, optional
           calculate angles for local_position Default: True. False returns local_position angles (.theta, .phi,
           .psi) = 0.
+    
       local_position : FloorPositionStruct
           Local laboratory coordinates.
     """
 def coords_body_to_rel_exit(body_position: FloorPositionStruct, ele: EleStruct, calculate_angles: bool | None = None) -> CoordsBodyToRelExit:
     """
-    Parameters
+    Wrapper for Fortran routine coords_body_to_rel_exit
+    
+      Parameters
       ----------
       body_position : FloorPositionStruct
           Element body frame coordinates.
+    
       ele : EleStruct
           element that rel_exit coordinates are relative to.
+    
       w_mat : float
           W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
+    
       calculate_angles : bool, optional
           calculate angles for rel_exit Default: True. False returns rel_exit angles (.theta, .phi, .psi) = 0.
+    
       rel_exit : FloorPositionStruct
           Cartesian coordinates relative to exit of the element.
     """
 def coords_curvilinear_to_floor(xys: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], branch: BranchStruct) -> CoordsCurvilinearToFloor:
     """
-    Parameters
+    Wrapper for Fortran routine coords_curvilinear_to_floor
+    
+      Parameters
       ----------
       xys : float
           (x, y, s) lab frame position vector.
+    
       branch : BranchStruct
           Lattice branch that defines the local reference coordinates.
+    
       err_flag : bool
           Set True if global floor position cannot be computed.
+    
       global : FloorPositionStruct
           Global floor position corresponding to (x, y, s) --    .w    -- W matrix to transform vectors: v_global =
           w_mat * v_local
     """
 def coords_floor_to_curvilinear(floor_coords: FloorPositionStruct, ele0: EleStruct) -> CoordsFloorToCurvilinear:
     """
-    Parameters
+    Wrapper for Fortran routine coords_floor_to_curvilinear
+    
+      Parameters
       ----------
       floor_coords : FloorPositionStruct
           .r = [X, Y, Z] position in global coordinates
+    
       ele0 : EleStruct
           Element to start the search at.
+    
       ele1 : EleStruct
           Element that local_coords is with respect to.
+    
       status : bool
           ok$             -> Local_coords found. patch_problem$  -> No solution due to a patch element.
+    
       w_mat : float
           W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
+    
       local_coords : FloorPositionStruct
           .r = [x, y, s] position in curvilinear coordinates
     """
 def coords_floor_to_local_curvilinear(global_position: FloorPositionStruct, ele: EleStruct, relative_to: typing.SupportsInt | None = None) -> CoordsFloorToLocalCurvilinear:
     """
-    Parameters
+    Wrapper for Fortran routine coords_floor_to_local_curvilinear
+    
+      Parameters
       ----------
       global_position : FloorPositionStruct
           .r = [X, Y, Z] position in global coordinates
+    
       ele : EleStruct
           element to find local coordinates of.
+    
       status : bool
           longitudinal position: inside$: Inside the element. upstream_end$: At upstream end of element or beyound.
+    
       w_mat : float
           W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
+    
       relative_to : int, optional
           not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
           upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
           ele.orientation = -1.
+    
       local_position : FloorPositionStruct
           .r = [x, y, z] position in local curvilinear coordinates.
     """
 def coords_floor_to_relative(floor0: FloorPositionStruct, global_position: FloorPositionStruct, calculate_angles: bool | None = None, is_delta_position: bool | None = None) -> FloorPositionStruct:
     """
-    Parameters
+    Wrapper for Fortran routine coords_floor_to_relative
+    
+      Parameters
       ----------
       floor0 : FloorPositionStruct
           reference position
+    
       global_position : FloorPositionStruct
           global position
+    
       calculate_angles : bool, optional
           calculate angles for local_position Default: True.
+    
       is_delta_position : bool, optional
           If True then treat global_position.r as a difference position in global space and only rotate the position
           but not shift it. Default: False.
+    
       local_position : FloorPositionStruct
           position relative to floor0
     """
 def coords_local_curvilinear_to_body(local_position: FloorPositionStruct, ele: EleStruct, calculate_angles: bool | None = None) -> CoordsLocalCurvilinearToBody:
     """
-    Parameters
+    Wrapper for Fortran routine coords_local_curvilinear_to_body
+    
+      Parameters
       ----------
       local_position : FloorPositionStruct
           local coordinates.
+    
       ele : EleStruct
           element that coordinates are relative to.
+    
       w_mat : float
           W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
+    
       calculate_angles : bool, optional
           calculate angles for body_position Default: True. False returns body_position angles (.theta, .phi, .psi)
           = 0.
+    
       body_position : FloorPositionStruct
           Element coordinates relative to exit of the element.
     """
 def coords_local_curvilinear_to_floor(local_position: FloorPositionStruct, ele: EleStruct, in_body_frame: bool | None = None, calculate_angles: bool | None = None, relative_to: typing.SupportsInt | None = None) -> CoordsLocalCurvilinearToFloor:
     """
-    Parameters
+    Wrapper for Fortran routine coords_local_curvilinear_to_floor
+    
+      Parameters
       ----------
       local_position : FloorPositionStruct
           Floor position in local curvilinear coordinates, with .r = [x, y, z_local] where z_local is wrt the
           entrance end of the element except if relative_to = downstream_end$. In this case, z_local is a distance
           -ele.value(l$)
+    
       ele : EleStruct
           element that local_position coordinates are relative to.
+    
       in_body_frame : bool, optional
           True => local_position is in ele body frame and includes misalignments.
+    
       w_mat : float
           W matrix at z, to transform vectors. v_global     = w_mat . v_local/body
+    
       calculate_angles : bool, optional
           calculate angles for global_position Default: True.
+    
       relative_to : int, optional
           not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
           upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
           ele.orientation = -1.
+    
       global_position : FloorPositionStruct
           Position in global coordinates.
     """
 def coords_relative_to_floor(floor0: FloorPositionStruct, dr: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], theta: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, psi: typing.SupportsFloat | None = None) -> FloorPositionStruct:
     """
-    Parameters
+    Wrapper for Fortran routine coords_relative_to_floor
+    
+      Parameters
       ----------
       floor0 : FloorPositionStruct
           Initial reference frame.
+    
       dr : float
           (x, y, z) positional shift of the reference frame.
+    
       theta : unknown, optional
           Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
           details. All angles must either be absent or present.
+    
       phi : unknown, optional
           Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
           details. All angles must either be absent or present.
+    
       psi : unknown, optional
           Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
           details. All angles must either be absent or present.
+    
       floor1 : FloorPositionStruct
           Shifted reference frame.
     """
 def cos_one(angle: typing.SupportsFloat, cos1: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine cos_one
+    
     Parameters
     ----------
     angle : 
@@ -21143,6 +21527,8 @@ def cos_one(angle: typing.SupportsFloat, cos1: typing.SupportsFloat) -> None:
     """
 def cosc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine cosc
+    
     Parameters
     ----------
     x : 
@@ -21151,7 +21537,9 @@ def cosc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typin
     """
 def coulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine coulombfun
+    
+      Parameters
       ----------
       u : 
       v : 
@@ -21161,6 +21549,8 @@ def coulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Suppo
     """
 def count_lines_in_file(file_name: str) -> int:
     """
+    Wrapper for Fortran routine count_lines_in_file
+    
     Parameters
     ----------
     file_name : 
@@ -21181,10 +21571,13 @@ def create_a_spline(r0: RealArray1D, r1: RealArray1D, slope0: typing.SupportsFlo
     ----------
     r0 : float
         Start (x, y) point.
+    
     r1 : float
         End (x, y) point.
+    
     slope0 : float
         Starting slope.
+    
     slope1 : float
         End slope.
     
@@ -21218,28 +21611,39 @@ def create_concatenated_wall3d(lat: LatStruct, err: bool) -> None:
     """
 def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offset: typing.SupportsFloat, param: LatParamStruct, include_upstream_end: bool, include_downstream_end: bool, old_slice: EleStruct | None = None, orb_in: CoordStruct | None = None) -> CreateElementSlice:
     """
-    Parameters
+    Wrapper for Fortran routine create_element_slice
+    
+      Parameters
       ----------
       sliced_ele : EleStruct
           Sliced_ele element with appropriate values set.
+    
       ele_in : EleStruct
           Original element to slice
+    
       l_slice : float
           Length of the slice
+    
       offset : float
           Offset of entrance end of sliced_ele from entrance end of ele_in.
+    
       param : LatParamStruct
           lattice paramters.
+    
       include_upstream_end : bool
           Sliced_ele contains the ele's entrance end?
+    
       include_downstream_end : bool
           Sliced_ele contains the ele's exit end?
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       old_slice : EleStruct, optional
           Previous slice or, if offset = 0, the previous element. If present this saves computation time of the
           reference energy and time at the start of the present slice. Also makes the ref energy continuous (there
           can be some small differences when
+    
       orb_in : CoordStruct, optional
           Incoming orbit if calling routine is doing tracking through the slice. This is used when old_slice is not
           present and there may be an adjustment needed to the orbit ref energy (EG space charge tracking does not
@@ -21247,63 +21651,85 @@ def create_element_slice(ele_in: EleStruct, l_slice: typing.SupportsFloat, offse
     """
 def create_field_overlap(lat: LatStruct, lord_name: str, slave_name: str) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine create_field_overlap
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice
+    
       lord_name : unknown
           Name of the element with a field extending beyound it's bounds.
+    
       slave_name : unknown
           Name of the element the lord's field overlaps.
+    
       err_flag : bool
           Set true if there is a problem (like no elements found).
     """
 def create_girder(lat: LatStruct, ix_girder: typing.SupportsInt, contrl: ControlStructArray1D, girder_info: EleStruct, err_flag: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine create_girder
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat to modify.
           This parameter is an input/output and is modified in-place. As an output: Modified lattice.
+    
       ix_girder : int
           Index of girder element.
+    
       contrl : ControlStruct
           Array of elements that are supported by the girder.
+    
       girder_info : EleStruct
           Element containing attributes to be transfered to the Girder element: girder_info.name girder_info.alias
           girder_info.descrip girder_info.value(:)
+    
       err_flag : 
     """
 def create_group(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine create_group
+    
+      Parameters
       ----------
       lord : EleStruct
           Group element.
           This parameter is an input/output and is modified in-place. As an output: Modified group elment
+    
       contrl : ControlStruct
           control info. 1 element for each slave.
+    
       err : bool
           Set True if an attribute is not free to be controlled.
     """
 def create_lat_ele_nametable(lat: LatStruct, nametable: NametableStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine create_lat_ele_nametable
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice.
+    
       nametable : NametableStruct
           Nametable of the elment names
     """
 def create_overlay(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine create_overlay
+    
+      Parameters
       ----------
       lord : EleStruct
           Overlay element.
           This parameter is an input/output and is modified in-place. As an output: Modified overlay elment
+    
       contrl : ControlStruct
           control info. 1 element for each slave.
+    
       err : bool
           Set True if an attribute is not free to be controlled.
     """
@@ -21332,8 +21758,10 @@ def create_planar_wiggler_model(wiggler_in: EleStruct, print_err: bool | None = 
       ----------
       wiggler : EleStruct
           Planar model wiggler to match to.
+    
       wig_model_com : WigglerModelingCommonStruct
           Global variable that can be used
+    
       to set weights and step sizes for the optimization. : 
       print_err : bool, optional
           If True (default) print an error message if there is an error.
@@ -21342,22 +21770,29 @@ def create_planar_wiggler_model(wiggler_in: EleStruct, print_err: bool | None = 
       -------
       lat : LatStruct
           Lattice containing the wiggler model
+    
       %ele : 
           Array of bends and drifts.
+    
       %n_ele_track : 
           Number of elements in the model.
+    
       err_flag : bool
           Set True if there is an error.
     """
 def create_ramper(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine create_ramper
+    
+      Parameters
       ----------
       lord : EleStruct
           Ramper element.
           This parameter is an input/output and is modified in-place. As an output: Modified ramper elment
+    
       contrl : ControlStruct
           control info. 1 element for each slave.
+    
       err : bool
           Set True if an attribute is not free to be controlled.
     """
@@ -21375,39 +21810,52 @@ def create_sol_quad_model(sol_quad: EleStruct, lat: LatStruct) -> None:
     """
 def create_unique_ele_names(lat: LatStruct, key: typing.SupportsInt, suffix: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine create_unique_ele_names
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice holding the elements.
           This parameter is an input/output and is modified in-place. As an output: Lattice with names made unique.
+    
       key : int
           Class key of elements to consider.
+    
       suffix : unknown
           Suffix string. Must have a single "?" character.
     """
 def create_wiggler_cartesian_map(ele: EleStruct) -> CartesianMapStruct:
     """
-    Parameters
+    Wrapper for Fortran routine create_wiggler_cartesian_map
+    
+      Parameters
       ----------
       ele : EleStruct
           Wiggler or undulator element.
+    
       cart_map : CartesianMapStruct
           Cartesian map.
     """
 def cross_product(a: RealArray1D, b: RealArray1D) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
+    Wrapper for Fortran routine cross_product
+    
     Parameters
     ----------
     a : float
         Input vectors.
+    
     b : float
         Input vectors.
+    
     c : float
         Cross product: a X b.
     """
 def crystal_attribute_bookkeeper(ele: EleStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine crystal_attribute_bookkeeper
+    
+      Parameters
       ----------
       ele : EleStruct
           Crystal element.
@@ -21422,8 +21870,10 @@ def crystal_h_misalign(ele: EleStruct, orbit: CoordStruct, h_vec: typing.Annotat
       ----------
       ele : EleStruct
           Crystal element
+    
       orbit : CoordStruct
           Photon position at crystal surface.
+    
       h_vec : float
           H vector before misalignment.
           This parameter is an input/output and is modified in-place. As an output: H vector after misalignment.
@@ -21445,8 +21895,10 @@ def crystal_type_to_crystal_params(ele: EleStruct) -> bool:
           Crystal element.
           This parameter is an input/output and is modified in-place. As an output: Crystal element with computed
           parameter..
+    
       %component_name : unknown
           Crystal type name. Assumed upper case.
+    
       A blank name is not an error and results in nothing set. : 
       %value : 
           Photon energy in eV.
@@ -21475,6 +21927,8 @@ def custom_attribute_ubound_index(ele_class: typing.SupportsInt) -> int:
     """
 def damping_matrix_d(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat, B0: typing.SupportsFloat, B1: typing.SupportsFloat, delta: typing.SupportsFloat, species: typing.SupportsInt, mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
     """
+    Wrapper for Fortran routine damping_matrix_d
+    
     Parameters
     ----------
     gamma : 
@@ -21487,6 +21941,8 @@ def damping_matrix_d(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat, B
     """
 def date_and_time_stamp(string: str, numeric_month: bool | None = None, include_zone: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine date_and_time_stamp
+    
     Parameters
     ----------
     string : 
@@ -21495,16 +21951,21 @@ def date_and_time_stamp(string: str, numeric_month: bool | None = None, include_
     """
 def deallocate_ele_pointers(ele: EleStruct, nullify_only: bool | None = None, nullify_branch: bool | None = None, dealloc_poles: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine deallocate_ele_pointers
+    
     Parameters
     ----------
     ele : EleStruct
         Element with pointers.
         This parameter is an input/output and is modified in-place. As an output: Element with deallocated
         pointers.
+    
     nullify_only : bool, optional
         If present and True: Nullify & do not deallocate.
+    
     nullify_branch : bool, optional
         Nullify ele.branch? Default is True.
+    
     dealloc_poles : bool, optional
         Dealloc ele.a/b_pole, ele.a/b_pole_elec? Default is True.
     """
@@ -21522,6 +21983,8 @@ def deallocate_expression_tree(tree: ExpressionTreeStruct) -> None:
     """
 def deallocate_lat_pointers(lat: LatStruct) -> None:
     """
+    Wrapper for Fortran routine deallocate_lat_pointers
+    
     Parameters
     ----------
     lat : LatStruct
@@ -21530,21 +21993,28 @@ def deallocate_lat_pointers(lat: LatStruct) -> None:
     """
 def default_tracking_species(param: LatParamStruct) -> int:
     """
+    Wrapper for Fortran routine default_tracking_species
+    
     Parameters
     ----------
     param : LatParamStruct
         Parameters for a lattice branch.
+    
     species : int
         Default species to be used for tracking.
     """
 def destfixedwindowls(id: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine destfixedwindowls
+    
     Parameters
     ----------
     id : 
     """
 def detab(str: str) -> None:
     """
+    Wrapper for Fortran routine detab
+    
     Parameters
     ----------
     str : 
@@ -21559,6 +22029,7 @@ def detector_pixel_pt(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[li
     ----------
     orbit : CoordStruct
         Orbit at surface.
+    
     ele : EleStruct
         Detector element.
     
@@ -21569,17 +22040,23 @@ def detector_pixel_pt(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[li
     """
 def diffraction_plate_or_mask_hit_spot(ele: EleStruct, orbit: CoordStruct) -> int:
     """
+    Wrapper for Fortran routine diffraction_plate_or_mask_hit_spot
+    
     Parameters
     ----------
     ele : EleStruct
         diffraction_plate or mask element.
+    
     orbit : CoordStruct
         particle position.
+    
     ix_section : 
         integer, Set to index of clear section hit. Set to zero if photon is outside all clear areas.
     """
 def diffusion_matrix_b(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat, species: typing.SupportsInt, mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
     """
+    Wrapper for Fortran routine diffusion_matrix_b
+    
     Parameters
     ----------
     gamma : 
@@ -21589,6 +22066,8 @@ def diffusion_matrix_b(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat,
     """
 def display_size_and_resolution(ix_screen: typing.SupportsInt, x_size: typing.SupportsFloat, y_size: typing.SupportsFloat, x_res: typing.SupportsFloat, y_res: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine display_size_and_resolution
+    
     Parameters
     ----------
     ix_screen : 
@@ -21599,21 +22078,29 @@ def display_size_and_resolution(ix_screen: typing.SupportsInt, x_size: typing.Su
     """
 def distance_to_aperture(orbit: CoordStruct, particle_at: typing.SupportsInt, ele: EleStruct) -> DistanceToAperture:
     """
+    Wrapper for Fortran routine distance_to_aperture
+    
     Parameters
     ----------
     orbit : CoordStruct
         Particle position.
+    
     particle_at : int
         first_track_edge$, second_track_edge$, or in_between$
+    
     ele : EleStruct
         Element containing aperture.
+    
     no_aperture_here : bool
         True if aperture does not exist at the longitudinal location of the particle.
+    
     dist : float
         Normalized distance of the particle from the aperture.
     """
 def dj_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, dj_bes: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine dj_bessel
+    
     Parameters
     ----------
     m : 
@@ -21622,6 +22109,8 @@ def dj_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, dj_bes: typing.S
     """
 def djb_hash(str: str, old_hash: typing.SupportsInt | None = None, hash: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine djb_hash
+    
     Parameters
     ----------
     str : 
@@ -21630,6 +22119,8 @@ def djb_hash(str: str, old_hash: typing.SupportsInt | None = None, hash: typing.
     """
 def djb_str_hash(in_str: str, hash_str: str) -> None:
     """
+    Wrapper for Fortran routine djb_str_hash
+    
     Parameters
     ----------
     in_str : 
@@ -21637,22 +22128,29 @@ def djb_str_hash(in_str: str, hash_str: str) -> None:
     """
 def do_mode_flip(ele: EleStruct) -> bool:
     """
+    Wrapper for Fortran routine do_mode_flip
+    
     Parameters
     ----------
     ele : EleStruct
         Starting Element
         This parameter is an input/output and is modified in-place. As an output: Flipped element
+    
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
 def downcase_string(string: str) -> None:
     """
+    Wrapper for Fortran routine downcase_string
+    
     Parameters
     ----------
     string : 
     """
 def dpc_given_de(pc_old: typing.SupportsFloat, mass: typing.SupportsFloat, dE: typing.SupportsFloat, dpc: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine dpc_given_de
+    
     Parameters
     ----------
     pc_old : 
@@ -21680,6 +22178,8 @@ def drift_and_pipe_track_methods_adjustment(lat: LatStruct) -> None:
     """
 def drift_multipass_name_correction(lat: LatStruct) -> None:
     """
+    Wrapper for Fortran routine drift_multipass_name_correction
+    
     Parameters
     ----------
     lat : 
@@ -21697,10 +22197,13 @@ def drift_orbit_time(orbit: CoordStruct, beta0: typing.SupportsFloat, delta_s: t
     ----------
     orbit : CoordStruct
         particle orbit in time-based coordinates.
+    
     beta0 : float
         reference velocity v/c.
+    
     delta_s : float, optional
         s-coordinate distance to drift particle.
+    
     delta_t : float, optional
         -coordinate distancet to drift particle.
     """
@@ -21715,8 +22218,10 @@ def drift_particle_to_s(p: CoordStruct, s: typing.SupportsFloat, branch: BranchS
     p : CoordStruct
         Init particle position.
         This parameter is an input/output and is modified in-place. As an output: Final particle position.
+    
     s : float
         Target s coordinate.
+    
     branch : BranchStruct
         Branch being tracked through.
     """
@@ -21731,8 +22236,10 @@ def drift_particle_to_t(p: CoordStruct, t: typing.SupportsFloat, branch: BranchS
     p : CoordStruct
         Init particle position.
         This parameter is an input/output and is modified in-place. As an output: Final particle position.
+    
     t : float
         Target t coordinate.
+    
     branch : BranchStruct
         Lattice branch being tracked through.
     """
@@ -21747,10 +22254,13 @@ def dspline_len(s_chord0: typing.SupportsFloat, s_chord1: typing.SupportsFloat, 
     ----------
     s_chord0 : float
         Start position along centroid chord.
+    
     s_chord1 : float
         Stop position along central_chord.
+    
     spline : SplineStruct
         Spline of x-position as a function of s.
+    
     dtheta_ref : float, optional
         angle to rotate the reference line from the centroid chord. Default is 0.
     
@@ -21771,16 +22281,21 @@ def dynamic_aperture_point(branch: BranchStruct, ele0: EleStruct, orb0: CoordStr
     ----------
     branch : BranchStruct
         Lattice branch to track through.
+    
     ele0 : EleStruct
         Lattice element at start of tracking
+    
     orb0 : CoordStruct
         reference orbit at the start of tracking.
+    
     theta_xy : float
         Angle of radial line (in radians) in x-y space.
+    
     Angle is "normalized" by %x_init : 
     %y_init. : 
     ap_param : ApertureParamStruct
         Structure holding the input data:
+    
     check_xy_init : bool, optional
         If True, do not check that aperture_param.x_init and .y_init are non-zero. Default is True.
     
@@ -21798,10 +22313,13 @@ def dynamic_aperture_scan(aperture_scan: ApertureScanStructAlloc1D, aperture_par
     ----------
     aperture_param : ApertureParamStruct
         Scan parameters
+    
     lat : LatStruct
         Lattice.
+    
     pz_start : float
         Starting phase space pz values.
+    
     print_timing : bool, optional
         If True print info on calculation time. Default is True.
     
@@ -21812,14 +22330,19 @@ def dynamic_aperture_scan(aperture_scan: ApertureScanStructAlloc1D, aperture_par
     """
 def e_accel_field(ele: EleStruct, voltage_or_gradient: typing.SupportsInt, bmad_standard_tracking: bool | None = None) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine e_accel_field
+    
+      Parameters
       ----------
       ele : EleStruct
           Lcavity or rfcavity element.
+    
       voltage_or_gradient : int
           voltage$ or gradient$
+    
       bmad_standard_tracking : bool, optional
           Using bmad_standard tracking? Default is False.
+    
       field : float
           Cavity field or gradient.
     """
@@ -21833,6 +22356,7 @@ def e_crit_photon(gamma: typing.SupportsFloat, g_bend: typing.SupportsFloat) -> 
       ----------
       gamma : float
           Gamma factor of charged particle emitting photon.
+    
       g_bend : float
           1/radius bending strength.
     
@@ -21857,31 +22381,41 @@ def eigen_decomp_6mat(mat: typing.Annotated[collections.abc.Sequence[typing.Anno
       -------
       eval : complex
           complex eigenvalues.
+    
       evec : complex
           complex eigenvectors arranged down columns.
+    
       err_flag : bool
           set to true if an error has occured.
+    
       tunes : float
           Mode tunes, in radians.
     """
 def ele_compute_ref_energy_and_time(ele0: EleStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine ele_compute_ref_energy_and_time
+    
+      Parameters
       ----------
       ele0 : EleStruct
           Previous element in lattice with starting energy and time values.
+    
       ele : EleStruct
           Lattice element
           This parameter is an input/output and is modified in-place. As an output: Lattice element with reference
           energy and time.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
     """
 def ele_equal_ele(ele_out: EleStruct, ele_in: EleStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine ele_equal_ele
+    
+      Parameters
       ----------
       ele_out : 
       ele_in : 
@@ -21893,11 +22427,11 @@ def ele_equals_ele(ele_in: EleStruct, update_nametable: bool) -> EleStruct:
       Subroutine that is used to set an element equal to another.
       Note: Use ele_equal_ele instead unless you know what you are doing.
     
-    
       Parameters
       ----------
       ele_in : EleStruct
           Input element.
+    
       update_nametable : bool
           If true, update the nametable. If false, do not. Note: nametable updates can take time if this routine is
           called a many times. See remove_eles_from_lat as an example.
@@ -21923,68 +22457,91 @@ def ele_finalizer(ele: EleStruct) -> None:
     """
 def ele_full_name(ele: EleStruct, template_: str | None = None) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine ele_full_name
+    
+      Parameters
       ----------
       ele : EleStruct
           Element in a lattice
+    
       template : unknown, optional
           Encoding template. Default is "@N (&#)".
+    
       str : unknown
           : Name/location string.
     """
 def ele_geometry(floor_start: FloorPositionStruct, ele: EleStruct, len_scale: typing.SupportsFloat | None = None, ignore_patch_err: bool | None = None) -> FloorPositionStruct:
     """
-    Parameters
+    Wrapper for Fortran routine ele_geometry
+    
+      Parameters
       ----------
       floor_start : 
           Starting floor coordinates at upstream end.
+    
       ele : EleStruct
           Element to propagate the geometry through.
+    
       floor_end : FloorPositionStruct
           Output floor position. If not present then
+    
       len_scale : float, optional
           factor to scale the length of the element. 1.0_rp => Output is geometry at end of element (default).
           0.5_rp => Output is geometry at center of element.
+    
       ignore_patch_err : bool, optional
           If present and True, ignore flexible patch errors. This is used by ele_compute_ref_energy_and_time to
           suppress unnecessary messages.
     """
 def ele_geometry_with_misalignments(ele: EleStruct, len_scale: typing.SupportsFloat | None = None) -> FloorPositionStruct:
     """
-    Parameters
+    Wrapper for Fortran routine ele_geometry_with_misalignments
+    
+      Parameters
       ----------
       ele : EleStruct
           Lattice element under consideration.
+    
       len_scale : float, optional
           factor to scale the length of the element. 1.0_rp => Output is geometry at end of element (default).
           0.5_rp => Output is geometry at center of element. -1.0_rp => Used to propagate geometry in reverse.
+    
       floor : FloorPositionStruct
           Floor position with misalignments
     """
 def ele_has_constant_ds_dt_ref(ele: EleStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine ele_has_constant_ds_dt_ref
+    
+      Parameters
       ----------
       ele : EleStruct
           Element.
+    
       is_const : bool
           True if reference velocity must be a constant.
     """
 def ele_has_nonzero_kick(ele: EleStruct, has_kick: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine ele_has_nonzero_kick
+    
+      Parameters
       ----------
       ele : EleStruct
           Element with possible nonzero kicks.
           This parameter is an input/output and is modified in-place. As an output: Element with no kicks.
+    
       has_kick : 
     """
 def ele_has_nonzero_offset(ele: EleStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine ele_has_nonzero_offset
+    
+      Parameters
       ----------
       ele : EleStruct
           Element with possible nonzero offsets.
+    
       has_offset : bool
           Set true is element has a non-zero offset.
     """
@@ -21999,6 +22556,7 @@ def ele_is_monitor(ele: EleStruct, print_warning: bool | None = None) -> bool:
       ----------
       ele : EleStruct
           Lattice element.
+    
       print_warning : bool, optional
           If True print a warning message if the element not a monitor like element. Default is True.
     
@@ -22009,106 +22567,144 @@ def ele_is_monitor(ele: EleStruct, print_warning: bool | None = None) -> bool:
     """
 def ele_loc(ele: EleStruct) -> LatEleLocStruct:
     """
-    Parameters
+    Wrapper for Fortran routine ele_loc
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to be identified
+    
       loc : LatEleLocStruct
           Element identifier.
     """
 def ele_loc_name(ele: EleStruct, show_branch0: bool | None = None, parens: str | None = None) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine ele_loc_name
+    
+      Parameters
       ----------
       ele : EleStruct
           Element in a lattice
+    
       show_branch0 : bool, optional
           Explicitly show branch for main
+    
       parens : unknown, optional
           If present, enclose location string using the two characters supplied. Typically parens will be set to
           "()" or "[]".
+    
       str : unknown
           Output string. Left justified.
     """
 def ele_misalignment_l_s_calc(ele: EleStruct) -> EleMisalignmentLSCalc:
     """
-    Parameters
+    Wrapper for Fortran routine ele_misalignment_l_s_calc
+    
+      Parameters
       ----------
       ele : float
           Element
+    
       L_mis : float
           Misalignment vector relative to center of element
+    
       S_mis : float
           Misalignment matrix relative to center of element
     """
 def ele_nametable_index(ele: EleStruct) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine ele_nametable_index
+    
+      Parameters
       ----------
       ele : EleStruct
           Element in a lattice.
+    
       ix_nt : int
           Nametable index. lat.nametable.name(ix_nt) and lat.nametable.index(ix_nt) correspond with ele. Set to -1
           if ele is not a lattice element. For example, a slice_slave is not a lattice element.
     """
 def ele_order_calc(lat: LatStruct) -> LatEleOrderStruct:
     """
-    Parameters
+    Wrapper for Fortran routine ele_order_calc
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to analyze.
+    
       order : LatEleOrderStruct
           Structure holding the element order information.
     """
 def ele_reference_energy_correction(ele: EleStruct, orbit: CoordStruct, particle_at: typing.SupportsInt, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine ele_reference_energy_correction
+    
+      Parameters
       ----------
       ele : EleStruct
           Element being tracked through.
+    
       orbit : CoordStruct
           Coordinates to correct.
+    
       particle_at : int
           first_track_edge$ (that is, entering the element), or second_track_edge$ (that is, leaving the element),
           or upstream_end$ (inherit ele.value(p0c_start$) ref), or downstream_end$ (inherit ele.value(p0c$)).
+    
       mat6 : float, optional
           Transfer matrix before correction.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
           including correction.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def ele_rf_step_index(E_ref: typing.SupportsFloat, s_rel: typing.SupportsFloat, ele: EleStruct) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine ele_rf_step_index
+    
+      Parameters
       ----------
       E_ref : float
           Reference energy of step. If negative, ignore and use s_rel.
+    
       s_rel : float
           S-position relative to the beginning of the element
+    
       ele : float
           RF cavity.
+    
       ix_step : int
           Corresponding index in the ele.rf.steps(:) array.
     """
 def ele_to_fibre(ele: EleStruct, use_offsets: bool, integ_order: typing.SupportsInt | None = None, steps: typing.SupportsInt | None = None, for_layout: bool | None = None, ref_in: CoordStruct | None = None) -> EleToFibre:
     """
-    Parameters
+    Wrapper for Fortran routine ele_to_fibre
+    
+      Parameters
       ----------
       ele : EleStruct
           Bmad element.
+    
       ptc_fibre : unknown
           PTC fibre element.
+    
       use_offsets : bool
           Does ptc_fibre include element offsets, pitches and tilt?
+    
       err_flag : bool
           Set True if setup OK. False otherwise.
+    
       integ_order : int, optional
           Order for the sympletic integrator. Possibilities are: 2, 4, or 6 Overrides ele.value(integrator_order$).
+    
       steps : int, optional
           Number of integration steps.
+    
       for_layout : bool, optional
           If True then fibre will be put in the PTC layout.
+    
       ref_in : CoordStruct, optional
           Particle to be tracked. ref_particle$, electron$, etc. This argument should only be present when the fibre
           is not to be put in a layout.
@@ -22134,94 +22730,128 @@ def ele_to_ptc_magnetic_bn_an(ele: EleStruct, bn: RealArray1D, an: RealArray1D) 
       -------
       bn : float
           Normal multipole component.
+    
       an : float
           Skew multipole component.
+    
       n_max : int
           Maximum non-zero multipole component. Set to zero if there are no multipoles.
     """
 def ele_to_spin_taylor(ele: EleStruct, param: LatParamStruct, orb0: CoordStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine ele_to_spin_taylor
+    
+      Parameters
       ----------
       ele : EleStruct
           Lattice element.
           This parameter is an input/output and is modified in-place. As an output: Element with spin map.
+    
       param : unknown
           Branch parameters.
+    
       orb0 : CoordStruct
           Starting ref coords.
     """
 def ele_to_taylor(ele: EleStruct, orb0: CoordStruct | None = None, taylor_map_includes_offsets: bool | None = None, include_damping: bool | None = None) -> EleToTaylor:
     """
-    Parameters
+    Wrapper for Fortran routine ele_to_taylor
+    
+      Parameters
       ----------
       ele : ElementStruct
           Element to construct map for.
+    
       orb0 : CoordStruct, optional
           Starting coords around which the Taylor map is evaluated. Default is the zero orbit.
+    
       taylor_map_includes_offsets : unknown, optional
           If present then value overrides ele.taylor_map_includes_offsets.
+    
       include_damping : bool, optional
           Sets if radiation damping is included. Default is what is set in ptc_private.base_state.
+    
       orbital_taylor : TaylorStruct
           Orbital taylor map.
+    
       spin_taylor : TaylorStruct
           Spin taylor map. If not present then the map is put in ele.spin_taylor.
     """
 def ele_unique_name(ele: EleStruct, order: LatEleOrderStruct) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine ele_unique_name
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to construct a unique name for.
+    
       order : LatEleOrderStruct
           Information on element ordering. Before calling this routine, use the routine ele_order_calc to compute
           this argument.
+    
       unique_name : unknown
           Unique name that can can be used to identify ele. The simplist name will be constructed. For example, if
           the element name is unique, unique_name will be set to the element name.
     """
 def ele_value_has_changed(ele: EleStruct, list: IntArray1D, abs_tol: RealArray1D, set_old: bool) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine ele_value_has_changed
+    
+      Parameters
       ----------
       ele : EleStruct
           Element under consideration.
           This parameter is an input/output and is modified in-place. As an output: ele.old_value may be set
           depending upon setting of set_old
+    
       list : int
           List of indexes of ele.value(:) array to check.
+    
       abs_tol : float
           List of values such that if the change in parameter value is
+    
       set_old : bool
           If True then set ele.old_value(j) = ele.value(j) for j in list
+    
       has_changed : bool
           Set True if a value has changed significantly.
     """
 def ele_vec_equal_ele_vec(ele1: EleStructArray1D, ele2: EleStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine ele_vec_equal_ele_vec
+    
+      Parameters
       ----------
       ele1 : 
       ele2 : 
     """
 def elec_multipole_field(a: typing.SupportsFloat, b: typing.SupportsFloat, n: typing.SupportsInt, coord: CoordStruct) -> ElecMultipoleField:
     """
-    Parameters
+    Wrapper for Fortran routine elec_multipole_field
+    
+      Parameters
       ----------
       a : float
           Multipole skew component.
+    
       b : float
           Multipole normal component.
+    
       n : float
           Multipole order.
+    
       coord : CoordStruct
+    
       Ex : float
           X field component
+    
       Ey : float
           Y field component.
+    
       dE : float
           Field derivatives: dfield(x,y)/d(x,y).
+    
       compute_dE : bool
           If False, do not compute the field derivatives even if dE is present. Default is True.
     """
@@ -22265,14 +22895,19 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
       ----------
       lat : LatStruct
           Lattice of elements.
+    
       branch : BranchStruct
           Branch to use
+    
       s : float
           Longitudinal position.
+    
       choose_max : bool
           See above
+    
       ix_branch : int, optional
           Branch index. Default is 0.
+    
       print_err : bool, optional
           Print error message if there is an error? Default is True.
     
@@ -22280,16 +22915,22 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
       -------
       ix_ele : int
           Index of element at s.
+    
       err_flag : bool
           Set True if s is out of bounds. False otherwise.
+    
       s_eff : float
           Effective s. Equal to s with a open lattice. See above.
+    
       position : CoordStruct
           Positional information.
+    
       %s : 
           Same as input s.
+    
       %ix_ele : 
           Same as output ix_ele
+    
       %location : 
           Location relative to element. Upstream_end$, downstream_end$, or inside$
     
@@ -22344,14 +22985,19 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
       ----------
       lat : LatStruct
           Lattice of elements.
+    
       branch : BranchStruct
           Branch to use
+    
       s : float
           Longitudinal position.
+    
       choose_max : bool
           See above
+    
       ix_branch : int, optional
           Branch index. Default is 0.
+    
       print_err : bool, optional
           Print error message if there is an error? Default is True.
     
@@ -22359,16 +23005,22 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
       -------
       ix_ele : int
           Index of element at s.
+    
       err_flag : bool
           Set True if s is out of bounds. False otherwise.
+    
       s_eff : float
           Effective s. Equal to s with a open lattice. See above.
+    
       position : CoordStruct
           Positional information.
+    
       %s : 
           Same as input s.
+    
       %ix_ele : 
           Same as output ix_ele
+    
       %location : 
           Location relative to element. Upstream_end$, downstream_end$, or inside$
     
@@ -22385,59 +23037,84 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
     """
 def element_slice_iterator(ele: EleStruct, param: LatParamStruct, i_slice: typing.SupportsInt, n_slice_tot: typing.SupportsInt, sliced_ele: EleStruct, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine element_slice_iterator
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to slice and dice.
+    
       param : LatParamStruct
           Lattice parameters
+    
       i_slice : int
           Slice index
+    
       n_slice_tot : int
           Total number of slices.
+    
       sliced_ele : 
       s_start : float, optional
           Starting edge of slice relative to beginning of element.
+    
       s_end : float, optional
           Ending edge of slice relative to beginning of element.
     """
 def ellipinc_test() -> None:
-    ...
+    """
+    Wrapper for Fortran routine ellipinc_test
+    """
 def em_field_calc(ele: EleStruct, param: LatParamStruct, s_pos: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None, use_overlap: bool | None = None, grid_allow_s_out_of_bounds: bool | None = None, rf_time: typing.SupportsFloat | None = None, used_eles: ElePointerStructAlloc1D | None = None, print_err: bool | None = None, original_ele: EleStruct | None = None) -> EmFieldCalc:
     """
-    Parameters
+    Wrapper for Fortran routine em_field_calc
+    
+      Parameters
       ----------
       ele : EleStruct
           Lattice element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       s_pos : float
           Longitudinal position. If local_ref_frame = T: In Body coords relative to the entrance edge of the
           element.
+    
       orbit : CoordStruct
           Transverse coordinates.
+    
       local_ref_frame : 
           Logical, If True then take the input coordinates and output fields
+    
       field : EmFieldStruct
           E and B fields and derivatives.
+    
       calc_dfield : bool, optional
           If present and True then calculate the field derivatives.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       calc_potential : bool, optional
           Calc electric and magnetic potentials? Default is false. This is experimental and only implemented for
           wigglers at present.
+    
       use_overlap : bool, optional
           Add in overlap fields from other elements? Default is True.
+    
       grid_allow_s_out_of_bounds : unknown, optional
           For grids, allow s-coordinate to be grossly out of bounds
+    
       rf_time : float, optional
           Set the time relative to the RF clock. Normally this time is calculated using orbit.t or orbit.vec(5) but
           sometimes it is convenient to be able to override this.
+    
       used_eles : ElePointerStruct, optional
           For internal use only when this routine is
+    
       print_err : bool, optional
           Print an error message? Default is True.
+    
       original_ele : EleStruct, optional
           Used with recursive calls that pass the lord as the ele argument. In this case original_ele is the
           original ele argument.
@@ -22469,24 +23146,33 @@ def em_field_derivatives(ele: EleStruct, param: LatParamStruct, s_pos: typing.Su
       ----------
       ele : EleStruct
           Element
+    
       param : LatParamStruct
           Lattice parameters.
+    
       s_pos : float
           Longitudinal position relative to the upstream edge of the element.
+    
       time : float
           Particle time. For absolute time tracking this is the absolute time.
+    
       For relative time tracking this is relative to the reference particle entering the element. : 
       orbit : CoordStruct
           Transverse coordinates.
+    
       %vec : 
           Transverse coords. These are the only components used in the calculation.
+    
       %vec : 
           Transverse coords. These are the only components used in the calculation.
+    
       local_ref_frame : 
           Logical, If True then take the input coordinates and output fields as being with respect to the frame of
           referene of the element (ignore misalignments).
+    
       grid_allow_s_out_of_bounds : unknown, optional
           For grids, allow s-coordinate to be grossly out of bounds
+    
       and return zero instead of an error? Default: False. Used internally for overlapping fields. : 
       rf_time : float, optional
           RF clock time. If not present then the time will be calculated using the standard algorithm.
@@ -22506,16 +23192,22 @@ def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: ty
       ----------
       ele : CoordStruct
           input particle
+    
       param : float
           Reference momentum. The sign indicates direction of p_s.
+    
       rf_time : float
           RF time.
+    
       orbit : CoordStruct
           in t-based system
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       print_err : bool, optional
           Passed to em_field_calc
+    
       extra_field : EmFieldStruct, optional
           Static field to be added to the element field. Eg used with space charge.
     
@@ -22526,7 +23218,9 @@ def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: ty
     """
 def em_field_plus_em_field(field1: EmFieldStruct, field2: EmFieldStruct, field_tot: EmFieldStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine em_field_plus_em_field
+    
+      Parameters
       ----------
       field1 : 
       field2 : 
@@ -22534,14 +23228,18 @@ def em_field_plus_em_field(field1: EmFieldStruct, field2: EmFieldStruct, field_t
     """
 def em_taylor_equal_em_taylor(em_taylor1: EmTaylorStruct, em_taylor2: EmTaylorStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine em_taylor_equal_em_taylor
+    
+      Parameters
       ----------
       em_taylor1 : 
       em_taylor2 : 
     """
 def em_taylors_equal_em_taylors(em_taylor1: EmTaylorStructArray1D, em_taylor2: EmTaylorStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine em_taylors_equal_em_taylors
+    
+      Parameters
       ----------
       em_taylor1 : 
       em_taylor2 : 
@@ -22560,8 +23258,10 @@ def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: Coord
       ----------
       ele_ref : EleStruct
           Origin of the 1-turn maps used to evaluate the emittances.
+    
       include_opening_angle : bool
           If True include the effect of the vertical opening angle of emitted radiation.
+    
       Generally use True unless comparing against other codes. : 
       closed_orbit : CoordStruct, optional
           Closed orbit. If not present this routine will calculate it.
@@ -22570,8 +23270,10 @@ def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: Coord
       -------
       mode : NormalModesStruct
           Emittance and other info.
+    
       sigma_mat : float
           Sigma matrix.
+    
       rad_int_by_ele : RadIntAllEleStruct
           Radiation integrals element-by-element.
     """
@@ -22587,17 +23289,22 @@ def end_akima_spline_calc(spline: SplineStructArray1D, which_end: typing.Support
         Array of splines.
         This parameter is an input/output and is modified in-place. As an output: Array with slopes at end
         calculated.
+    
     which_end : int
         0 => calculate slopes for the start end of the array. 1 => calculate slopes for the end end of the array.
     """
 def entering_element(orbit: CoordStruct, particle_at: typing.SupportsInt) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine entering_element
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Particle orbit.
+    
       particle_at : int
           First_track_edge$ or second_track_edge$
+    
       is_entering : bool
           Set True if particle is going from outside to inside and vice versa.
     """
@@ -22637,30 +23344,43 @@ def envelope_radints_ibs(Lambda: typing.Annotated[collections.abc.Sequence[typin
       ----------
       Lambda : float
           Integrated damping matrix.
+    
       Theta : float
           Integrated diffusion matrix.
+    
       Iota : float
           Integrated vertical excitation matrix.
+    
       eles : EleStruct
           array of element structures representing ring.
+    
       %mat6 : float
           element transfer matrix.
+    
       %value : float
           element (slice) length.
+    
       %value : float
           Beam energy in element.
+    
       mode : 
           normal_modes_struct
+    
       %a%tune : float
           tune of a-mode.
+    
       %b%tune : float
           tune of b-mode.
+    
       %z%tune : float
           tune of z-mode.
+    
       tail_cut : bool
           apply tail cut.
+    
       npart : float
           number of particles in bunch.
+    
       species : int
           Particle species.
     
@@ -22668,12 +23388,15 @@ def envelope_radints_ibs(Lambda: typing.Annotated[collections.abc.Sequence[typin
       -------
       alpha : float
           Normal mode damping decrements.
+    
       emit : float
           Normal mode emittances.
     """
 def eq_ac_kicker(f1: AcKickerStruct, f2: AcKickerStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_ac_kicker
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22681,7 +23404,9 @@ def eq_ac_kicker(f1: AcKickerStruct, f2: AcKickerStruct, is_eq: bool) -> None:
     """
 def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_ac_kicker_freq
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22689,7 +23414,9 @@ def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct, is_eq: boo
     """
 def eq_ac_kicker_time(f1: AcKickerTimeStruct, f2: AcKickerTimeStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_ac_kicker_time
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22697,7 +23424,9 @@ def eq_ac_kicker_time(f1: AcKickerTimeStruct, f2: AcKickerTimeStruct, is_eq: boo
     """
 def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_anormal_mode
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22705,7 +23434,9 @@ def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct, is_eq: bool) -
     """
 def eq_aperture_param(f1: ApertureParamStruct, f2: ApertureParamStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_aperture_param
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22713,7 +23444,9 @@ def eq_aperture_param(f1: ApertureParamStruct, f2: ApertureParamStruct, is_eq: b
     """
 def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_aperture_point
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22721,7 +23454,9 @@ def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct, is_eq: b
     """
 def eq_aperture_scan(f1: ApertureScanStruct, f2: ApertureScanStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_aperture_scan
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22729,7 +23464,9 @@ def eq_aperture_scan(f1: ApertureScanStruct, f2: ApertureScanStruct, is_eq: bool
     """
 def eq_beam(f1: BeamStruct, f2: BeamStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_beam
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22737,7 +23474,9 @@ def eq_beam(f1: BeamStruct, f2: BeamStruct, is_eq: bool) -> None:
     """
 def eq_beam_init(f1: BeamInitStruct, f2: BeamInitStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_beam_init
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22745,7 +23484,9 @@ def eq_beam_init(f1: BeamInitStruct, f2: BeamInitStruct, is_eq: bool) -> None:
     """
 def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_bmad_common
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22753,7 +23494,9 @@ def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct, is_eq: bool) -> N
     """
 def eq_bookkeeping_state(f1: BookkeepingStateStruct, f2: BookkeepingStateStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_bookkeeping_state
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22761,7 +23504,9 @@ def eq_bookkeeping_state(f1: BookkeepingStateStruct, f2: BookkeepingStateStruct,
     """
 def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_bpm_phase_coupling
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22769,7 +23514,9 @@ def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct
     """
 def eq_branch(f1: BranchStruct, f2: BranchStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_branch
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22777,7 +23524,9 @@ def eq_branch(f1: BranchStruct, f2: BranchStruct, is_eq: bool) -> None:
     """
 def eq_bunch(f1: BunchStruct, f2: BunchStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_bunch
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22785,7 +23534,9 @@ def eq_bunch(f1: BunchStruct, f2: BunchStruct, is_eq: bool) -> None:
     """
 def eq_bunch_params(f1: BunchParamsStruct, f2: BunchParamsStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_bunch_params
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22793,7 +23544,9 @@ def eq_bunch_params(f1: BunchParamsStruct, f2: BunchParamsStruct, is_eq: bool) -
     """
 def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_cartesian_map
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22801,7 +23554,9 @@ def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct, is_eq: bool
     """
 def eq_cartesian_map_term(f1: CartesianMapTermStruct, f2: CartesianMapTermStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_cartesian_map_term
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22809,7 +23564,9 @@ def eq_cartesian_map_term(f1: CartesianMapTermStruct, f2: CartesianMapTermStruct
     """
 def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Struct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_cartesian_map_term1
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22817,7 +23574,9 @@ def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Str
     """
 def eq_complex_taylor(f1: ComplexTaylorStruct, f2: ComplexTaylorStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_complex_taylor
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22825,7 +23584,9 @@ def eq_complex_taylor(f1: ComplexTaylorStruct, f2: ComplexTaylorStruct, is_eq: b
     """
 def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_complex_taylor_term
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22833,7 +23594,9 @@ def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStr
     """
 def eq_control(f1: ControlStruct, f2: ControlStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_control
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22841,7 +23604,9 @@ def eq_control(f1: ControlStruct, f2: ControlStruct, is_eq: bool) -> None:
     """
 def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_control_ramp1
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22849,7 +23614,9 @@ def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct, is_eq: bool
     """
 def eq_control_var1(f1: ControlVar1Struct, f2: ControlVar1Struct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_control_var1
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22857,7 +23624,9 @@ def eq_control_var1(f1: ControlVar1Struct, f2: ControlVar1Struct, is_eq: bool) -
     """
 def eq_controller(f1: ControllerStruct, f2: ControllerStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_controller
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22865,7 +23634,9 @@ def eq_controller(f1: ControllerStruct, f2: ControllerStruct, is_eq: bool) -> No
     """
 def eq_coord(f1: CoordStruct, f2: CoordStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_coord
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22873,7 +23644,9 @@ def eq_coord(f1: CoordStruct, f2: CoordStruct, is_eq: bool) -> None:
     """
 def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_coord_array
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22881,7 +23654,9 @@ def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct, is_eq: bool) -> N
     """
 def eq_cylindrical_map(f1: CylindricalMapStruct, f2: CylindricalMapStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_cylindrical_map
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22889,7 +23664,9 @@ def eq_cylindrical_map(f1: CylindricalMapStruct, f2: CylindricalMapStruct, is_eq
     """
 def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTermStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_cylindrical_map_term
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22897,7 +23674,9 @@ def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTerm
     """
 def eq_cylindrical_map_term1(f1: CylindricalMapTerm1Struct, f2: CylindricalMapTerm1Struct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_cylindrical_map_term1
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22905,7 +23684,9 @@ def eq_cylindrical_map_term1(f1: CylindricalMapTerm1Struct, f2: CylindricalMapTe
     """
 def eq_ele(f1: EleStruct, f2: EleStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_ele
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22913,7 +23694,9 @@ def eq_ele(f1: EleStruct, f2: EleStruct, is_eq: bool) -> None:
     """
 def eq_ellipse_beam_init(f1: EllipseBeamInitStruct, f2: EllipseBeamInitStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_ellipse_beam_init
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22921,7 +23704,9 @@ def eq_ellipse_beam_init(f1: EllipseBeamInitStruct, f2: EllipseBeamInitStruct, i
     """
 def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_em_field
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22929,7 +23714,9 @@ def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct, is_eq: bool) -> None:
     """
 def eq_em_taylor(f1: EmTaylorStruct, f2: EmTaylorStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_em_taylor
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22937,7 +23724,9 @@ def eq_em_taylor(f1: EmTaylorStruct, f2: EmTaylorStruct, is_eq: bool) -> None:
     """
 def eq_em_taylor_term(f1: EmTaylorTermStruct, f2: EmTaylorTermStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_em_taylor_term
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22945,7 +23734,9 @@ def eq_em_taylor_term(f1: EmTaylorTermStruct, f2: EmTaylorTermStruct, is_eq: boo
     """
 def eq_expression_atom(f1: ExpressionAtomStruct, f2: ExpressionAtomStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_expression_atom
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22953,7 +23744,9 @@ def eq_expression_atom(f1: ExpressionAtomStruct, f2: ExpressionAtomStruct, is_eq
     """
 def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_floor_position
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22961,7 +23754,9 @@ def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct, is_eq: b
     """
 def eq_gen_grad1(f1: GenGrad1Struct, f2: GenGrad1Struct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_gen_grad1
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22969,7 +23764,9 @@ def eq_gen_grad1(f1: GenGrad1Struct, f2: GenGrad1Struct, is_eq: bool) -> None:
     """
 def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_gen_grad_map
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22977,7 +23774,9 @@ def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct, is_eq: bool) -> 
     """
 def eq_grid_beam_init(f1: GridBeamInitStruct, f2: GridBeamInitStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_grid_beam_init
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22985,7 +23784,9 @@ def eq_grid_beam_init(f1: GridBeamInitStruct, f2: GridBeamInitStruct, is_eq: boo
     """
 def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_grid_field
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -22993,7 +23794,9 @@ def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct, is_eq: bool) -> None
     """
 def eq_grid_field_pt(f1: GridFieldPtStruct, f2: GridFieldPtStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_grid_field_pt
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23001,7 +23804,9 @@ def eq_grid_field_pt(f1: GridFieldPtStruct, f2: GridFieldPtStruct, is_eq: bool) 
     """
 def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_grid_field_pt1
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23009,7 +23814,9 @@ def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct, is_eq: boo
     """
 def eq_high_energy_space_charge(f1: HighEnergySpaceChargeStruct, f2: HighEnergySpaceChargeStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_high_energy_space_charge
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23017,7 +23824,9 @@ def eq_high_energy_space_charge(f1: HighEnergySpaceChargeStruct, f2: HighEnergyS
     """
 def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_interval1_coef
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23025,7 +23834,9 @@ def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct, is_eq: b
     """
 def eq_kv_beam_init(f1: KvBeamInitStruct, f2: KvBeamInitStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_kv_beam_init
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23033,7 +23844,9 @@ def eq_kv_beam_init(f1: KvBeamInitStruct, f2: KvBeamInitStruct, is_eq: bool) -> 
     """
 def eq_lat(f1: LatStruct, f2: LatStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_lat
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23041,7 +23854,9 @@ def eq_lat(f1: LatStruct, f2: LatStruct, is_eq: bool) -> None:
     """
 def eq_lat_ele_loc(f1: LatEleLocStruct, f2: LatEleLocStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_lat_ele_loc
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23049,7 +23864,9 @@ def eq_lat_ele_loc(f1: LatEleLocStruct, f2: LatEleLocStruct, is_eq: bool) -> Non
     """
 def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_lat_param
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23057,7 +23874,9 @@ def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct, is_eq: bool) -> None:
     """
 def eq_linac_normal_mode(f1: LinacNormalModeStruct, f2: LinacNormalModeStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_linac_normal_mode
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23065,7 +23884,9 @@ def eq_linac_normal_mode(f1: LinacNormalModeStruct, f2: LinacNormalModeStruct, i
     """
 def eq_mode3(f1: Mode3Struct, f2: Mode3Struct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_mode3
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23073,7 +23894,9 @@ def eq_mode3(f1: Mode3Struct, f2: Mode3Struct, is_eq: bool) -> None:
     """
 def eq_mode_info(f1: ModeInfoStruct, f2: ModeInfoStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_mode_info
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23081,7 +23904,9 @@ def eq_mode_info(f1: ModeInfoStruct, f2: ModeInfoStruct, is_eq: bool) -> None:
     """
 def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_normal_modes
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23089,7 +23914,9 @@ def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct, is_eq: bool) -
     """
 def eq_photon_element(f1: PhotonElementStruct, f2: PhotonElementStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_photon_element
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23097,7 +23924,9 @@ def eq_photon_element(f1: PhotonElementStruct, f2: PhotonElementStruct, is_eq: b
     """
 def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_photon_material
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23105,7 +23934,9 @@ def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct, is_eq
     """
 def eq_photon_reflect_surface(f1: PhotonReflectSurfaceStruct, f2: PhotonReflectSurfaceStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_photon_reflect_surface
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23113,7 +23944,9 @@ def eq_photon_reflect_surface(f1: PhotonReflectSurfaceStruct, f2: PhotonReflectS
     """
 def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTableStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_photon_reflect_table
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23121,7 +23954,9 @@ def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTable
     """
 def eq_photon_target(f1: PhotonTargetStruct, f2: PhotonTargetStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_photon_target
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23129,7 +23964,9 @@ def eq_photon_target(f1: PhotonTargetStruct, f2: PhotonTargetStruct, is_eq: bool
     """
 def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_pixel_detec
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23137,7 +23974,9 @@ def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct, is_eq: bool) -> N
     """
 def eq_pixel_pt(f1: PixelPtStruct, f2: PixelPtStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_pixel_pt
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23145,7 +23984,9 @@ def eq_pixel_pt(f1: PixelPtStruct, f2: PixelPtStruct, is_eq: bool) -> None:
     """
 def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_pre_tracker
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23153,7 +23994,9 @@ def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct, is_eq: bool) -> N
     """
 def eq_rad_int1(f1: RadInt1Struct, f2: RadInt1Struct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_rad_int1
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23161,7 +24004,9 @@ def eq_rad_int1(f1: RadInt1Struct, f2: RadInt1Struct, is_eq: bool) -> None:
     """
 def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_rad_int_all_ele
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23169,7 +24014,9 @@ def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct, is_eq: bo
     """
 def eq_rad_int_branch(f1: RadIntBranchStruct, f2: RadIntBranchStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_rad_int_branch
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23177,7 +24024,9 @@ def eq_rad_int_branch(f1: RadIntBranchStruct, f2: RadIntBranchStruct, is_eq: boo
     """
 def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_rad_map
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23185,7 +24034,9 @@ def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct, is_eq: bool) -> None:
     """
 def eq_rad_map_ele(f1: RadMapEleStruct, f2: RadMapEleStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_rad_map_ele
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23193,7 +24044,9 @@ def eq_rad_map_ele(f1: RadMapEleStruct, f2: RadMapEleStruct, is_eq: bool) -> Non
     """
 def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_ramper_lord
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23201,7 +24054,9 @@ def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct, is_eq: bool) -> N
     """
 def eq_space_charge_common(f1: SpaceChargeCommonStruct, f2: SpaceChargeCommonStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_space_charge_common
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23209,7 +24064,9 @@ def eq_space_charge_common(f1: SpaceChargeCommonStruct, f2: SpaceChargeCommonStr
     """
 def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_spin_polar
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23217,7 +24074,9 @@ def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct, is_eq: bool) -> None
     """
 def eq_spline(f1: SplineStruct, f2: SplineStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_spline
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23225,7 +24084,9 @@ def eq_spline(f1: SplineStruct, f2: SplineStruct, is_eq: bool) -> None:
     """
 def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_strong_beam
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23233,7 +24094,9 @@ def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct, is_eq: bool) -> N
     """
 def eq_surface_curvature(f1: SurfaceCurvatureStruct, f2: SurfaceCurvatureStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_surface_curvature
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23241,7 +24104,9 @@ def eq_surface_curvature(f1: SurfaceCurvatureStruct, f2: SurfaceCurvatureStruct,
     """
 def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplacementStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_surface_displacement
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23249,7 +24114,9 @@ def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplaceme
     """
 def eq_surface_displacement_pt(f1: SurfaceDisplacementPtStruct, f2: SurfaceDisplacementPtStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_surface_displacement_pt
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23257,7 +24124,9 @@ def eq_surface_displacement_pt(f1: SurfaceDisplacementPtStruct, f2: SurfaceDispl
     """
 def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_surface_h_misalign
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23265,7 +24134,9 @@ def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct
     """
 def eq_surface_h_misalign_pt(f1: SurfaceHMisalignPtStruct, f2: SurfaceHMisalignPtStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_surface_h_misalign_pt
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23273,7 +24144,9 @@ def eq_surface_h_misalign_pt(f1: SurfaceHMisalignPtStruct, f2: SurfaceHMisalignP
     """
 def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_surface_segmented
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23281,7 +24154,9 @@ def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct,
     """
 def eq_surface_segmented_pt(f1: SurfaceSegmentedPtStruct, f2: SurfaceSegmentedPtStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_surface_segmented_pt
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23289,7 +24164,9 @@ def eq_surface_segmented_pt(f1: SurfaceSegmentedPtStruct, f2: SurfaceSegmentedPt
     """
 def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_target_point
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23297,7 +24174,9 @@ def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct, is_eq: bool) -
     """
 def eq_taylor(f1: TaylorStruct, f2: TaylorStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_taylor
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23305,7 +24184,9 @@ def eq_taylor(f1: TaylorStruct, f2: TaylorStruct, is_eq: bool) -> None:
     """
 def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_taylor_term
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23313,7 +24194,9 @@ def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct, is_eq: bool) -> N
     """
 def eq_track(f1: TrackStruct, f2: TrackStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_track
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23321,7 +24204,9 @@ def eq_track(f1: TrackStruct, f2: TrackStruct, is_eq: bool) -> None:
     """
 def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_track_point
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23329,7 +24214,9 @@ def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct, is_eq: bool) -> N
     """
 def eq_twiss(f1: TwissStruct, f2: TwissStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_twiss
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23337,7 +24224,9 @@ def eq_twiss(f1: TwissStruct, f2: TwissStruct, is_eq: bool) -> None:
     """
 def eq_wake(f1: WakeStruct, f2: WakeStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wake
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23345,7 +24234,9 @@ def eq_wake(f1: WakeStruct, f2: WakeStruct, is_eq: bool) -> None:
     """
 def eq_wake_lr(f1: WakeLrStruct, f2: WakeLrStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wake_lr
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23353,7 +24244,9 @@ def eq_wake_lr(f1: WakeLrStruct, f2: WakeLrStruct, is_eq: bool) -> None:
     """
 def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wake_lr_mode
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23361,7 +24254,9 @@ def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct, is_eq: bool) -> 
     """
 def eq_wake_sr(f1: WakeSrStruct, f2: WakeSrStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wake_sr
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23369,7 +24264,9 @@ def eq_wake_sr(f1: WakeSrStruct, f2: WakeSrStruct, is_eq: bool) -> None:
     """
 def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wake_sr_mode
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23377,7 +24274,9 @@ def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct, is_eq: bool) -> 
     """
 def eq_wake_sr_z_long(f1: WakeSrZLongStruct, f2: WakeSrZLongStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wake_sr_z_long
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23385,7 +24284,9 @@ def eq_wake_sr_z_long(f1: WakeSrZLongStruct, f2: WakeSrZLongStruct, is_eq: bool)
     """
 def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wall3d
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23393,7 +24294,9 @@ def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct, is_eq: bool) -> None:
     """
 def eq_wall3d_section(f1: Wall3DSectionStruct, f2: Wall3DSectionStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wall3d_section
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23401,7 +24304,9 @@ def eq_wall3d_section(f1: Wall3DSectionStruct, f2: Wall3DSectionStruct, is_eq: b
     """
 def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_wall3d_vertex
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23409,7 +24314,9 @@ def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct, is_eq: bool
     """
 def eq_xy_disp(f1: XyDispStruct, f2: XyDispStruct, is_eq: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine eq_xy_disp
+    
+      Parameters
       ----------
       f1 : 
       f2 : 
@@ -23417,7 +24324,9 @@ def eq_xy_disp(f1: XyDispStruct, f2: XyDispStruct, is_eq: bool) -> None:
     """
 def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine equal_sign_here
+    
+      Parameters
       ----------
       ele : 
       delim : 
@@ -23425,24 +24334,32 @@ def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> None:
     """
 def equivalent_taylor_attributes(ele_taylor: EleStruct, ele2: EleStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine equivalent_taylor_attributes
+    
+      Parameters
       ----------
       ele_taylor : EleStruct
           Element with a Taylor map
+    
       ele2 : EleStruct
           Element that might receive the Taylor map from ele_taylor.
+    
       equiv : bool
           True if elements are equivalent.
     """
 def err_exit(err_str: str | None = None) -> None:
     """
+    Wrapper for Fortran routine err_exit
+    
     Parameters
     ----------
     err_str : 
     """
 def etdiv(A: typing.SupportsFloat, B: typing.SupportsFloat, C: typing.SupportsFloat, D: typing.SupportsFloat, E: typing.SupportsFloat, F: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine etdiv
+    
+      Parameters
       ----------
       A : 
       B : 
@@ -23463,6 +24380,7 @@ def evaluate_array_index(delim_list1: str, delim_list2: str) -> EvaluateArrayInd
       ----------
       delim_list1 : unknown
           Delimitor after the integer. Normally ')'.
+    
       delim_list2 : unknown
           Delimitor list to mark the end of word2. Normally '='.
     
@@ -23470,10 +24388,13 @@ def evaluate_array_index(delim_list1: str, delim_list2: str) -> EvaluateArrayInd
       -------
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       word2 : unknown
           Word found after delim1. Normally this should be blank.
+    
       delim2 : unknown
           Actual delimitor found after word2.
+    
       this_index : int
           Integer value
     """
@@ -23496,6 +24417,7 @@ def evaluate_logical(word: str) -> EvaluateLogical:
       -------
       this_logic : bool
           Result.
+    
       iostat : int
           Status: Returns 0 if conversion successful.
     """
@@ -23510,15 +24432,20 @@ def exact_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
       ----------
       ele : EleStruct
           SBend element.
+    
       param : LatParamStruct
+    
       particle_at : int
           first_track_edge$, or second_track_edge$.
+    
       orb : CoordStruct
           Coords after tracking.
+    
       mat6 : float, optional
           Transfer matrix up to the edge.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix through the
           edge.
+    
       make_matrix : float, optional
           Propagate the transfer matrix? Default is False.
     """
@@ -23536,8 +24463,10 @@ def exp_bessi0(t: typing.SupportsFloat, B1: typing.SupportsFloat, B2: typing.Sup
       ----------
       t : float
           Scalar agrument to evaluate function at.
+    
       B1 : float
           Scalar value.  Eq. 33 from Piwinski's paper.
+    
       B2 : float
           Scalar value.  Eq. 34 from Piwinski's paper.
     
@@ -23561,12 +24490,15 @@ def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim
       delim_list : unknown
           List of expected (valid) delimitors. If list contains a space character then no delimitor (indicating the
           end of the command) is a valid possibility.
+    
       check_input_delim : unknown
           If True, then check if delim argument is in the delim_list.
+    
       If False : 
       check that the next character in the parse stream is an expected delimitor. : 
       ele_name : unknown
           Lattice element under construction. Used for error messages.
+    
       delim : unknown
           Current delimitor that will be checked if check_input_delim = .true.
           This parameter is an input/output and is modified in-place. As an output: Next delim if check_input_delim
@@ -23595,13 +24527,17 @@ def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: st
       ----------
       expecting : unknown
           list of characters that are expected to be next in the parse stream.
+    
       check_delim : bool
           If True then use delim argument as first token to check.
+    
       A blank character indicates end of command is expected. : 
       call_check : bool
           If True then check for 'call::<filename>' construct.
+    
       err_str : unknown
           String used for error messages.
+    
       ele : EleStruct
           Element parameters being parsed.
     
@@ -23609,6 +24545,7 @@ def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: st
       -------
       delim : unknown
           Final delim
+    
       delim_found : bool
           Is there a final delim (as opposed to end of command).
     
@@ -23627,6 +24564,7 @@ def expression_stack_to_string(stack: ExpressionAtomStructArray1D, polish: bool 
       ----------
       stack : ExpressionAtomStruct
           arithmetic expression
+    
       polish : , optional
           logical, optional, Construct expression in reverse polish? Default is False.
     
@@ -23649,8 +24587,10 @@ def expression_stack_value(stack: ExpressionAtomStructArray1D, var: ControlVar1S
       ----------
       stack : ExpressionAtomStruct
           Expression to evaluate.
+    
       var : ControlVar1Struct, optional
           Array of control variables.
+    
       Used with Bmad controller elements. : 
       use_old : bool, optional
           Use var.old_value? Must be present if var(:) is present.
@@ -23659,8 +24599,10 @@ def expression_stack_value(stack: ExpressionAtomStructArray1D, var: ControlVar1S
       -------
       value : float
           Value of the expression.
+    
       err_flag : bool
           True if there is an evaluation problem. False otherwise.
+    
       err_str : unknown
           Error string explaining error if there is one.
     
@@ -23690,10 +24632,13 @@ def expression_string_to_stack(string: str, stack: ExpressionAtomStructAlloc1D) 
       -------
       stack : ExpressionAtomStruct
           Expression evaluation stack.
+    
       n_stack : int
           number of "atoms" used by the expression
+    
       err_flag : bool
           Set True if there is an error (EG divide by 0).
+    
       err_str : unknown
           String describing the error.
     
@@ -23713,6 +24658,7 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> E
       ----------
       root_tree : ExpressionTreeStruct
           Only used when recursively called.
+    
       string : unknown
           Expression to be converted.
     
@@ -23720,8 +24666,10 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> E
       -------
       tree : ExpressionTreeStruct
           Expression evaluation tree.
+    
       err_flag : bool
           Set True if there is an error (EG divide by 0).
+    
       err_str : unknown
           String describing the error. Make length large to hold the expression.
     
@@ -23755,12 +24703,15 @@ def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | N
       ----------
       tree : ExpressionTreeStruct
           Root of tree to print.
+    
       include_root : bool, optional
           Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
           type root$, this node is
+    
       always ignored. : 
       n_node : int, optional
           Node index. parent.node(n_node) === tree.
+    
       Internal use only. Used with recursive calls. : 
       parent : ExpressionTreeStruct, optional
           Internal use only. Used with recusive calls.
@@ -23780,8 +24731,10 @@ def expression_value(expression: str, var: ControlVar1StructArray1D | None = Non
       ----------
       expression : unknown
           Expression string.
+    
       var : ControlVar1Struct, optional
           Array of control variables.
+    
       Used with Bmad controller elements. : 
       use_old : bool, optional
           Use var.old_value? Must be present if var(:) is present.
@@ -23790,8 +24743,10 @@ def expression_value(expression: str, var: ControlVar1StructArray1D | None = Non
       -------
       value : float
           Value of the expression.
+    
       err_flag : bool
           True if there is an evaluation problem. False otherwise.
+    
       err_str : unknown
           Error string explaining error if there is one.
     
@@ -23802,6 +24757,8 @@ def expression_value(expression: str, var: ControlVar1StructArray1D | None = Non
     """
 def factorial(n: typing.SupportsInt, fact: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine factorial
+    
     Parameters
     ----------
     n : 
@@ -23809,6 +24766,8 @@ def factorial(n: typing.SupportsInt, fact: typing.SupportsFloat) -> None:
     """
 def faddeeva_function(z: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], w: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], dw: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"]) -> None:
     """
+    Wrapper for Fortran routine faddeeva_function
+    
     Parameters
     ----------
     z : 
@@ -23817,7 +24776,9 @@ def faddeeva_function(z: typing.Annotated[collections.abc.Sequence[typing.Suppor
     """
 def fft1(a: RealArray1D, b: RealArray1D, n: typing.SupportsInt, isn: typing.SupportsInt) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine fft1
+    
+      Parameters
       ----------
       a : 
       b : 
@@ -23839,24 +24800,31 @@ def fft_1d(arr: ComplexArray1D, isign: typing.SupportsInt) -> None:
     arr : complex
         Input array.
         This parameter is an input/output and is modified in-place. As an output: FFT of array.
+    
     isign : int
         -1 => "Forward" transform, +1 => "Backwards" transform.
     """
 def fibre_to_ele(ptc_fibre: Fibre, branch: BranchStruct, ix_ele: typing.SupportsInt, from_mad: bool | None = None) -> FibreToEle:
     """
-    Parameters
+    Wrapper for Fortran routine fibre_to_ele
+    
+      Parameters
       ----------
       ptc_fibre : unknown
           PTC fibre.
+    
       branch : BranchStruct
           branch containing elements.
+    
       ix_ele : int
           Index in ele(:) array of element last used.
           This parameter is an input/output and is modified in-place. As an output: Index to element created (upper
           index if more than one created).
+    
       err_flag : bool
           Set true if there is an error. False otherwise. To do: lcavity energy change !? open or closed geometry?
           Energy patch
+    
       from_mad : bool, optional
           If True, ignore PTC specific parameters like integrator_order. Default is False. True is used when the
           fibre has been created via MAD. In this case, the PTC specific parameters may not have good values.
@@ -23876,6 +24844,7 @@ def field_attribute_free(ele: EleStruct, attrib_name: str) -> bool:
       ----------
       ele : EleStruct
           Element containing the attribute
+    
       attrib_name : unknown
           Name of the field attribute. Assumed upper case.
     
@@ -23886,6 +24855,8 @@ def field_attribute_free(ele: EleStruct, attrib_name: str) -> bool:
     """
 def file_directorizer(in_file: str, out_file: str, directory: str, add_switch: bool) -> None:
     """
+    Wrapper for Fortran routine file_directorizer
+    
     Parameters
     ----------
     in_file : 
@@ -23895,6 +24866,8 @@ def file_directorizer(in_file: str, out_file: str, directory: str, add_switch: b
     """
 def file_get(string: str, dflt_file_name: str, file_name: str) -> None:
     """
+    Wrapper for Fortran routine file_get
+    
     Parameters
     ----------
     string : 
@@ -23903,6 +24876,8 @@ def file_get(string: str, dflt_file_name: str, file_name: str) -> None:
     """
 def file_get_open(string: str, dflt_file_name: str, file_name: str, file_unit: typing.SupportsInt, readonly: bool) -> None:
     """
+    Wrapper for Fortran routine file_get_open
+    
     Parameters
     ----------
     string : 
@@ -23913,6 +24888,8 @@ def file_get_open(string: str, dflt_file_name: str, file_name: str, file_unit: t
     """
 def file_suffixer(in_file_name: str, out_file_name: str, suffix: str, add_switch: bool) -> None:
     """
+    Wrapper for Fortran routine file_suffixer
+    
     Parameters
     ----------
     in_file_name : 
@@ -23931,22 +24908,28 @@ def finalize_reflectivity_table(table: PhotonReflectTableStruct, in_degrees: boo
       table : PhotonReflectTableStruct
           Surface tables to be finalized.
           This parameter is an input/output and is modified in-place. As an output: Finalized surface tables.
+    
       in_degrees : bool
           Table angles in degrees?
     """
 def find_element_ends(ele: EleStruct, ix_multipass: typing.SupportsInt | None = None) -> FindElementEnds:
     """
-    Parameters
+    Wrapper for Fortran routine find_element_ends
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to find the ends for.
+    
       ele1 : EleStruct
           Pointer to element just before ele.
+    
       ele2 : EleStruct
           Pointer to ele itself or the last sub-element within ele. Note: ele1 and ele2 will be nullified if ele is
           in the lord part of the lattice and does not have any slaves. Note: For an element in the tracking part of
           the lattice: ele1.ix_ele = ele.ix_ele - 1 ele2        => ele Exception: For Beginning element (index 0),
           ele1 => ele
+    
       ix_multipass : int, optional
           Which multipass pass to follow. Default is 1. This is ignored if there is no multipass elements.
     """
@@ -23967,6 +24950,7 @@ def find_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collections.ab
       ----------
       bound : float
           -bound and +bound is integration bound.
+    
       args : float
           Parameters and constants of dpsi/dt.  See comments of psi_prime for details.
     
@@ -23978,6 +24962,8 @@ def find_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collections.ab
 @typing.overload
 def find_location(arr: IntArray1D, value: typing.SupportsInt, ix_match: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine find_location_int
+    
     Parameters
     ----------
     arr : 
@@ -23987,6 +24973,8 @@ def find_location(arr: IntArray1D, value: typing.SupportsInt, ix_match: typing.S
 @typing.overload
 def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine find_location_logic
+    
     Parameters
     ----------
     arr : 
@@ -23996,30 +24984,41 @@ def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt) -
 @typing.overload
 def find_location(arr: RealArray1D, value: typing.SupportsFloat) -> int:
     """
+    Wrapper for Fortran routine find_location_real
+    
     Parameters
     ----------
     arr : 
         real(rp), logical, or integer
+    
     value : unknown
         :).
+    
     ix_match : int
         Index of match. Zero if no match found.
     """
 def find_matching_fieldmap(file_name: str, ele: EleStruct, fm_type: typing.SupportsInt, ignore_slaves: bool | None = None) -> FindMatchingFieldmap:
     """
-    Parameters
+    Wrapper for Fortran routine find_matching_fieldmap
+    
+      Parameters
       ----------
       file_name : unknown
           File name associated with field to match to.
+    
       ele : EleStruct
           Element holding the field to be matched.
+    
       fm_type : int
           Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_grad_map$, grid_field$
+    
       match_ele : EleStruct
           Pointer to element with matched field. Nullified if no match found.
+    
       ix_field : int
           index of field. For example: matching field => match_ele.cartesian_map(ix_field) Set to -1 if no match
           found.
+    
       ignore_slaves : bool, optional
           If True, ignore any multipass slaves. Default is False.
     """
@@ -24035,8 +25034,10 @@ def find_normalization(bound: typing.SupportsFloat, p0: typing.SupportsFloat, ar
       ----------
       bound : float
           -bound and +bound are integration boundaries
+    
       p0 : float
           Boundary condition psi(0)
+    
       args : float
           Parameters and constants of DEQ.  See psi_prime comments for details.
     
@@ -24087,31 +25088,43 @@ def fixedwindowls(ynew: typing.SupportsFloat, id: typing.SupportsInt, z: typing.
     """
 def floor_angles_to_w_mat(theta: typing.SupportsFloat, phi: typing.SupportsFloat, psi: typing.SupportsFloat) -> FloorAnglesToWMat:
     """
-    Parameters
+    Wrapper for Fortran routine floor_angles_to_w_mat
+    
+      Parameters
       ----------
       theta : float
           Azimuth angle.
+    
       phi : float
           Pitch angle.
+    
       psi : float
           Roll angle.
+    
       w_mat : float
           Orientation matrix.
+    
       w_mat_inv : float
           Inverse Orientation matrix.
     """
 def floor_w_mat_to_angles(w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], floor0: FloorPositionStruct | None = None) -> FloorWMatToAngles:
     """
-    Parameters
+    Wrapper for Fortran routine floor_w_mat_to_angles
+    
+      Parameters
       ----------
       w_mat : float
           Orientation matrix.
+    
       theta : float
           Azimuth angle.
+    
       phi : float
           Pitch angle.
+    
       psi : float
           Roll angle.
+    
       floor0 : FloorPositionStruct, optional
           There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
           choose the solution "nearest" the angles in floor0.
@@ -24127,6 +25140,7 @@ def form_complex_taylor(re_taylor: TaylorStruct, im_taylor: TaylorStruct) -> Com
       ----------
       re_taylor : TaylorStruct
           Real part
+    
       im_taylor : TaylorStruct
           Imaginary part
     
@@ -24145,11 +25159,11 @@ def form_digested_bmad_file_name(lat_file: str, use_line: str | None = None) -> 
       Exception: If the use_line argument is present and not blank, the suffix will be:
           suffix = '.' + use_line + '.digested' + bmad_inc_version$
     
-    
       Parameters
       ----------
       lat_file : unknown
           Input lattice file name.
+    
       use_line : unknown, optional
           Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
           the lattice file.
@@ -24158,6 +25172,7 @@ def form_digested_bmad_file_name(lat_file: str, use_line: str | None = None) -> 
       -------
       digested_file : unknown
           Name of the digested file.
+    
       full_lat_file : unknown
           Input lattice file name with full directory. Can be used for error messages.
     """
@@ -24174,6 +25189,7 @@ def fourier_amplitude(data: RealArray1D, frequency: typing.SupportsFloat) -> Fou
     ----------
     data : float
         data to analyze
+    
     frequency : float
         frequency
     
@@ -24181,23 +25197,31 @@ def fourier_amplitude(data: RealArray1D, frequency: typing.SupportsFloat) -> Fou
     -------
     cos_amp : float
         cosine amplitude
+    
     sin_amp : float
         sine amplitude
+    
     dcos_amp : float
         cosine amplitude derivative
+    
     dsin_amp : float
         sine amplitude derivative
     """
 def fringe_here(ele: EleStruct, orbit: CoordStruct, particle_at: typing.SupportsInt) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine fringe_here
+    
+      Parameters
       ----------
       ele : EleStruct
           Lattice element.
+    
       orbit : CoordStruct
           Particle position.
+    
       particle_at : int
           Either first_track_edge$ or second_track_edge$.
+    
       is_here : bool
           True if there is a fringe. False if not.
     """
@@ -24212,8 +25236,10 @@ def g_bend_from_em_field(b: typing.Annotated[collections.abc.Sequence[typing.Sup
     ----------
     B : float
         Magnetic field.
+    
     E : float
         Electric field
+    
     orbit : CoordStruct
         particle orbit
     
@@ -24224,26 +25250,36 @@ def g_bend_from_em_field(b: typing.Annotated[collections.abc.Sequence[typing.Sup
     """
 def g_bending_strength_from_em_field(ele: EleStruct, param: LatParamStruct, s_rel: typing.SupportsFloat, orbit: CoordStruct, local_ref_frame: bool) -> GBendingStrengthFromEmField:
     """
+    Wrapper for Fortran routine g_bending_strength_from_em_field
+    
     Parameters
     ----------
     ele : EleStruct
         Element being tracked thorugh.
+    
     param : LatParamStruct
         Lattice parameters.
+    
     s_rel : float
         Distance from the start of the element to the particle.
+    
     orbit : CoordStruct
         Particle position in lab (not element) frame.
+    
     local_ref_frame : 
         Logical, If True then take the input coordinates and output g as being with respect to the frame of
         referene of the element (ignore misalignments).
+    
     g : float
         g = (g_x, g_y, g_s) bending strength vector (|g| = 1/bend_radius).
+    
     dg : float
         dg(:)/dr gradient. Takes into account dg_x/dx in a bend due to curvilinear coords.
     """
 def g_integrals_calc(lat: LatStruct) -> None:
     """
+    Wrapper for Fortran routine g_integrals_calc
+    
     Parameters
     ----------
     lat : LatStruct
@@ -24251,15 +25287,20 @@ def g_integrals_calc(lat: LatStruct) -> None:
     """
 def gamma_ref(ele: EleStruct) -> float:
     """
+    Wrapper for Fortran routine gamma_ref
+    
     Parameters
     ----------
     ele : EleStruct
         Element to evaluate at.
+    
     gamma : float
         Relativistic gamma factor Energy/mass*c^2.
     """
 def gen_complete_elliptic(kc: typing.SupportsFloat, p: typing.SupportsFloat, c: typing.SupportsFloat, s: typing.SupportsFloat, err_tol: typing.SupportsFloat | None = None, value: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine gen_complete_elliptic
+    
     Parameters
     ----------
     kc : 
@@ -24271,32 +25312,44 @@ def gen_complete_elliptic(kc: typing.SupportsFloat, p: typing.SupportsFloat, c: 
     """
 def gen_grad1_to_em_taylor(ele: EleStruct, gen_grad: GenGradMapStruct, iz: typing.SupportsInt) -> EmTaylorStructArray1D:
     """
+    Wrapper for Fortran routine gen_grad1_to_em_taylor
+    
     Parameters
     ----------
     ele : unknown
         Element containing the map.
+    
     gen_grad : GenGradMapStruct
         Gen_grad map.
+    
     iz : int
         z-plane index to evaluate.
+    
     em_taylor : EmTaylorStruct
         Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
     """
 def gen_grad_at_s_to_em_taylor(ele: EleStruct, gen_grad: GenGradMapStruct, s_pos: typing.SupportsFloat) -> EmTaylorStructArray1D:
     """
+    Wrapper for Fortran routine gen_grad_at_s_to_em_taylor
+    
     Parameters
     ----------
     ele : unknown
         Element containing the map.
+    
     gen_grad : GenGradMapStruct
         Gen_grad map.
+    
     s_pos : float
         Position to evaluate em_taylor at.
+    
     em_taylor : EmTaylorStruct
         Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
     """
 def gen_grad_field(deriv: RealArray1D, gg: GenGrad1Struct, rho: typing.SupportsFloat, theta: typing.SupportsFloat, field: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
+    Wrapper for Fortran routine gen_grad_field
+    
     Parameters
     ----------
     deriv : 
@@ -24316,6 +25369,7 @@ def get_bl_from_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collect
     ----------
     bound : float
         -bound and +bound are lower and upper integration bound.
+    
     args : float
         Parameters and constants of dpsi/dt.  See comments of psi_prime for details.
     
@@ -24330,6 +25384,8 @@ def get_bmad_com() -> BmadCommonStruct:
     """
 def get_called_file(delim: str, call_file: str, err: bool) -> None:
     """
+    Wrapper for Fortran routine get_called_file
+    
     Parameters
     ----------
     delim : 
@@ -24361,6 +25417,7 @@ def get_emit_from_sigma_mat(sigma_mat: typing.Annotated[collections.abc.Sequence
     ----------
     sigma_mat : float
         beam envelop sigma matrix
+    
     Nmat : float, optional
         If present, then the emittanced will be ordered such that the eigensystem most closely resembles Nmat.
     
@@ -24368,11 +25425,14 @@ def get_emit_from_sigma_mat(sigma_mat: typing.Annotated[collections.abc.Sequence
     -------
     normal : float
         normal mode emittances
+    
     err_flag : bool
         Set to true if something went wrong.  Otherwise set to false.
     """
 def get_file_number(file_name: str, cnum_in: str, num_out: typing.SupportsInt, err_flag: bool) -> None:
     """
+    Wrapper for Fortran routine get_file_number
+    
     Parameters
     ----------
     file_name : 
@@ -24402,10 +25462,13 @@ def get_next_word(word: str, delim_list: str, upper_case_word: bool | None = Non
     ----------
     word : unknown
         Word returned
+    
     delim_list : unknown
         List of valid delimiters
+    
     upper_case_word : bool, optional
         if True then convert word to
+    
     upper case. Default is True. : 
     call_check : bool, optional
         If present and True then check for 'call::<filename>' construct. Default is False.
@@ -24414,22 +25477,29 @@ def get_next_word(word: str, delim_list: str, upper_case_word: bool | None = Non
     -------
     ix_word : int
         length of word argument
+    
     delim : unknown
         Actual delimiter found
+    
     delim_found : bool
         Set true if a delimiter found. A delimiter
+    
     may not be found if the end of the line is reached first. : 
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
 def get_slave_list(lord: EleStruct, slaves: ElePointerStructAlloc1D) -> int:
     """
+    Wrapper for Fortran routine get_slave_list
+    
     Parameters
     ----------
     lord : EleStruct
         The lord element.
+    
     slaves : ElePointerStruct
         : Array of slaves.
+    
     n_slave : int
         Number of slaves.
     """
@@ -24443,6 +25513,8 @@ def get_super_universe() -> TaoSuperUniverseStruct:
     """
 def gpt_field_grid_scaling(ele: EleStruct, dimensions: typing.SupportsInt, field_scale: typing.SupportsFloat, ref_time: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine gpt_field_grid_scaling
+    
     Parameters
     ----------
     ele : 
@@ -24452,6 +25524,8 @@ def gpt_field_grid_scaling(ele: EleStruct, dimensions: typing.SupportsInt, field
     """
 def gpt_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine gpt_max_field_reference
+    
     Parameters
     ----------
     pt0 : 
@@ -24464,11 +25538,11 @@ def gpt_to_particle_bunch(gpt_file: str, ele: EleStruct) -> GptToParticleBunch:
     
     Routine to initialize a bunch of particles from a GPT screen file.
     
-    
     Parameters
     ----------
     gpt_file : unknown
         Name of GPT data file.
+    
     ele : EleStruct
         Lattice element whose downstream end coincident with the GPT screen.
     
@@ -24476,17 +25550,22 @@ def gpt_to_particle_bunch(gpt_file: str, ele: EleStruct) -> GptToParticleBunch:
     -------
     bunch : BunchStruct
         Particle bunch
+    
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
 def gradient_shift_sr_wake(ele: EleStruct, param: LatParamStruct) -> float:
     """
+    Wrapper for Fortran routine gradient_shift_sr_wake
+    
     Parameters
     ----------
     ele : EleStruct
         Lcavity element.
+    
     param : LatParamStruct
         Lattice parameters
+    
     grad_shift : float
         Shift in gradient
     """
@@ -24501,21 +25580,29 @@ def grid_field_interpolate(ele: EleStruct, orbit: CoordStruct, grid: GridFieldSt
     ----------
     ele : EleStruct
         Element containing the grid.
+    
     orbit : CoordStruct
         Used for constructing an error message if the particle is out of bounds.
+    
     grid : GridFieldStruct
         Grid to interpolate.
+    
     err_flag : bool
         Set to true if there is an error. False otherwise.
+    
     x1 : float
         dimension 1 interpolation point.
+    
     x2 : float, optional
         dimension 2 interpolation point.
+    
     x3 : float, optional
         dimension 3 interpolation point.
+    
     allow_s_out_of_bounds : bool, optional
         allow s-coordinate grossly out of bounds to return zero field without an error. This is used when the
         field of one element overlaps
+    
     the field of another. Default is False. : 
     print_err : bool, optional
         print an error message if the particle is out of bounds? Default is True.
@@ -24527,6 +25614,8 @@ def grid_field_interpolate(ele: EleStruct, orbit: CoordStruct, grid: GridFieldSt
     """
 def hanhan(N: typing.SupportsInt, hh: RealArray1D) -> None:
     """
+    Wrapper for Fortran routine hanhan
+    
     Parameters
     ----------
     N : 
@@ -24550,22 +25639,29 @@ def hard_multipole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at:
     ----------
     ele : EleStruct
         Element with fringe.
+    
     param : LatParamStruct
         Tracking parameters.
+    
     particle_at : int
         Either first_track_edge$ or second_track_edge$.
+    
     orbit : CoordStruct
         Starting coordinates.
         This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
+    
     mat6 : float, optional
         Transfer matrix up to the fringe.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
         fringe.
+    
     make_matrix : float, optional
         Propagate the transfer matrix? Default is False.
     """
 def has_attribute(ele: EleStruct, attrib: str, has_it: bool) -> None:
     """
+    Wrapper for Fortran routine has_attribute
+    
     Parameters
     ----------
     ele : 
@@ -24612,6 +25708,8 @@ def has_orientation_attributes(ele: EleStruct) -> bool:
     """
 def hdf5_write_beam(file_name: str, bunches: BunchStructArray1D, append: bool, error: bool, lat: LatStruct | None = None, alive_only: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine hdf5_write_beam
+    
     Parameters
     ----------
     file_name : 
@@ -24623,6 +25721,8 @@ def hdf5_write_beam(file_name: str, bunches: BunchStructArray1D, append: bool, e
     """
 def hdf5_write_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStructArray1D, err_flag: bool) -> None:
     """
+    Wrapper for Fortran routine hdf5_write_grid_field
+    
     Parameters
     ----------
     file_name : 
@@ -24632,6 +25732,8 @@ def hdf5_write_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStru
     """
 def hom_voltage(lr_wake: WakeLrModeStruct, voltage: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine hom_voltage
+    
     Parameters
     ----------
     lr_wake : 
@@ -24653,21 +25755,28 @@ def hwang_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
     orb : CoordStruct
         Starting coords.
         This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+    
     ele : EleStruct
         SBend element.
+    
     param : LatParamStruct
         Rel charge.
+    
     particle_at : int
         first_track_edge$, or second_track_edge$
+    
     mat6 : float, optional
         Transfer matrix up to the edge.
         This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
         edge.
+    
     make_matrix : float, optional
         Propagate the transfer matrix? Default is False.
     """
 def i_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, i_bes: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine i_bessel
+    
     Parameters
     ----------
     m : 
@@ -24676,6 +25785,8 @@ def i_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, i_bes: typing.Sup
     """
 def i_bessel_extended(m: typing.SupportsInt, arg: typing.SupportsFloat, i_bes: complex) -> None:
     """
+    Wrapper for Fortran routine i_bessel_extended
+    
     Parameters
     ----------
     m : 
@@ -24684,7 +25795,9 @@ def i_bessel_extended(m: typing.SupportsInt, arg: typing.SupportsFloat, i_bes: c
     """
 def ibs_matrix_c(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], tail_cut: bool, tau: typing.SupportsFloat, energy: typing.SupportsFloat, n_part: typing.SupportsFloat, species: typing.SupportsInt, ibs_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine ibs_matrix_c
+    
+      Parameters
       ----------
       sigma_mat : 
       tail_cut : 
@@ -24696,7 +25809,9 @@ def ibs_matrix_c(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Ann
     """
 def igfcoulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine igfcoulombfun
+    
+      Parameters
       ----------
       u : 
       v : 
@@ -24709,7 +25824,9 @@ def igfcoulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Su
     """
 def igfexfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine igfexfun
+    
+      Parameters
       ----------
       u : 
       v : 
@@ -24722,7 +25839,9 @@ def igfexfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     """
 def igfeyfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine igfeyfun
+    
+      Parameters
       ----------
       u : 
       v : 
@@ -24735,7 +25854,9 @@ def igfeyfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     """
 def igfezfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine igfezfun
+    
+      Parameters
       ----------
       u : 
       v : 
@@ -24748,6 +25869,8 @@ def igfezfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     """
 def increment_file_number(file_name: str, digits: typing.SupportsInt, number: typing.SupportsInt, cnumber: str) -> None:
     """
+    Wrapper for Fortran routine increment_file_number
+    
     Parameters
     ----------
     file_name : 
@@ -24757,6 +25880,8 @@ def increment_file_number(file_name: str, digits: typing.SupportsInt, number: ty
     """
 def index_nocase(string1: str, string2: str, indx: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine index_nocase
+    
     Parameters
     ----------
     string1 : 
@@ -24775,15 +25900,20 @@ def init_attribute_name1(is_ok: bool, ix_key: typing.SupportsInt, ix_attrib: typ
           Initial setting.
           This parameter is an input/output and is modified in-place. As an output: Set False if there is a problem.
           Otherwise untouched.
+    
       ix_key : int
           Key index.
+    
       ix_attrib : int
           Attribute index.
+    
       name : unknown
           Attribute name. Should be uppercase if attrib_state = is_free$.
+    
       Should contain non-uppercase characters if attrib_state = private$. : 
       attrib_state : int, optional
           Class of attribute: does_not_exist$, is_free$, etc.
+    
       Defaults to is_free$. : 
       override : bool, optional
           Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
@@ -24820,16 +25950,22 @@ def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Bea
       ----------
       ele : EleStruct
           element to initialize distribution at (downstream end).
+    
       param : LatParamStruct
           Lattice parameters
+    
       %particle : 
           Type of particle.
+    
       beam_init : BeamInitStruct
           Use "getf beam_init_struct" for more details.
+    
       modes : NormalModesStruct, optional
           Normal mode parameters. See above.
+    
       print_p0c_shift_warning : bool, optional
           Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+    
       shift_momentum : bool, optional
           Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
     
@@ -24837,17 +25973,23 @@ def init_beam_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Bea
       -------
       beam : BeamStruct
           Structure with initialized particles.
+    
       err_flag : bool
           Set true if there is an error, false otherwise.
+    
       beam_init_set : BeamInitStruct
           Set to input beam_init with components like .a_emit set what is used in constructing the beam (which is
           different from beam_init.a_emit if this is set negative).
     """
 def init_bmad() -> None:
-    ...
+    """
+    Wrapper for Fortran routine init_bmad
+    """
 def init_bmad_parser_common(lat: LatStruct | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine init_bmad_parser_common
+    
+      Parameters
       ----------
       lat : 
     """
@@ -24889,16 +26031,22 @@ def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Be
       ----------
       ele : EleStruct
           element to initialize distribution at (downstream end).
+    
       param : LatParamStruct
           Lattice parameters
+    
       beam_init : BeamInitStruct
           Use "getf beam_init_struct" for more details.
+    
       ix_bunch : int
           Bunch index. 0 = bunch generated at time = 0.
+    
       modes : NormalModesStruct, optional
           Normal mode parameters. See above.
+    
       print_p0c_shift_warning : bool, optional
           Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+    
       shift_momentum : bool, optional
           Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
     
@@ -24906,8 +26054,10 @@ def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: Be
       -------
       bunch : BunchStruct
           Structure with initialized particles.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       beam_init_used : BeamInitStruct
           Set to input beam_init with components like .a_emit set what is used in constructing the beam (which can
           be different from beam_init.a_emit if this is set negative). If reading from a file, beam_init_used will
@@ -24926,8 +26076,10 @@ def init_complex_taylor_series(complex_taylor: ComplexTaylorStruct, n_term: typi
       complex_taylor : ComplexTaylorStruct
           Old structure.
           This parameter is an input/output and is modified in-place. As an output: Initalized structure.
+    
       n_term : int
           Number of terms to allocate.
+    
       n_term < 1 => complex_taylor%term pointer will be disassociated. : 
       save : bool, optional
           If True then save any old terms when complex_taylor is resized. Default is False.
@@ -24960,35 +26112,46 @@ def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[
       ----------
       orb_in : CoordStruct
           Input orbit.
+    
       vec : float
           Coordinate vector. If not present then taken to be zero.
+    
       ele : EleStruct, optional
           Particle is initialized to start at element_end of this ele.
+    
       element_end : int, optional
           upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
           start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
           upstream_end$. Note: If ele is the beginning element (index zero), the
+    
       setting of element_end will not matter. : 
       particle : int, optional
           Particle type (electron$, etc.).
+    
       If particle = not_set$ and orb_in is present : 
       use orb_in%species instead. : 
       direction : int, optional
           +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
           orb.direction except for photons which get set
+    
       according to orb%vec : 
       E_photon : float, optional
           Photon energy if particle is a photon. Ignored otherwise.
+    
       t_offset : float, optional
           Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
           a particular particle
+    
       is pegged to the time of the center of the bunch. : 
       shift_vec6 : bool, optional
           If present and False, prevent the shift of orb.vec(6).
+    
       spin : float, optional
           Particle spin. Taken to be zero if not present.
+    
       s_pos : float, optional
           Particle s-position. Only relavent if element_end = inside$.
+    
       random_on : bool, optional
           Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
           photon coords using a random number generator. If False, the photon coords will be centered within the
@@ -25031,35 +26194,46 @@ def init_coord(orb_in: CoordStruct, ele: EleStruct | None = None, element_end: t
       ----------
       orb_in : coord_struct
           Input orbit
+    
       vec : float
           Coordinate vector. If not present then taken to be zero.
+    
       ele : EleStruct, optional
           Particle is initialized to start at element_end of this ele.
+    
       element_end : int, optional
           upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
           start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
           upstream_end$. Note: If ele is the beginning element (index zero), the
+    
       setting of element_end will not matter. : 
       particle : int, optional
           Particle type (electron$, etc.).
+    
       If particle = not_set$ and orb_in is present : 
       use orb_in%species instead. : 
       direction : int, optional
           +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
           orb.direction except for photons which get set
+    
       according to orb%vec : 
       E_photon : float, optional
           Photon energy if particle is a photon. Ignored otherwise.
+    
       t_offset : float, optional
           Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
           a particular particle
+    
       is pegged to the time of the center of the bunch. : 
       shift_vec6 : bool, optional
           If present and False, prevent the shift of orb.vec(6).
+    
       spin : float, optional
           Particle spin. Taken to be zero if not present.
+    
       s_pos : float, optional
           Particle s-position. Only relavent if element_end = inside$.
+    
       random_on : bool, optional
           Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
           photon coords using a random number generator. If False, the photon coords will be centered within the
@@ -25070,6 +26244,7 @@ def init_coord(orb_in: CoordStruct, ele: EleStruct | None = None, element_end: t
       orb : CoordStruct
           Initialized coordinate. Note: For photons, orb.vec(6) is computed as sqrt(1 - vec(2)^2 - vec(4)^2) if
           needed.
+    
       orb_out : coord_struct
           Initialized coordinate
     
@@ -25105,35 +26280,46 @@ def init_coord(orb: CoordStruct, ele: EleStruct | None = None, element_end: typi
       ----------
       orb_in : CoordStruct
           Input orbit.
+    
       vec : float
           Coordinate vector. If not present then taken to be zero.
+    
       ele : EleStruct, optional
           Particle is initialized to start at element_end of this ele.
+    
       element_end : int, optional
           upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
           start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
           upstream_end$. Note: If ele is the beginning element (index zero), the
+    
       setting of element_end will not matter. : 
       particle : int, optional
           Particle type (electron$, etc.).
+    
       If particle = not_set$ and orb_in is present : 
       use orb_in%species instead. : 
       direction : int, optional
           +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
           orb.direction except for photons which get set
+    
       according to orb%vec : 
       E_photon : float, optional
           Photon energy if particle is a photon. Ignored otherwise.
+    
       t_offset : float, optional
           Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
           a particular particle
+    
       is pegged to the time of the center of the bunch. : 
       shift_vec6 : bool, optional
           If present and False, prevent the shift of orb.vec(6).
+    
       spin : float, optional
           Particle spin. Taken to be zero if not present.
+    
       s_pos : float, optional
           Particle s-position. Only relavent if element_end = inside$.
+    
       random_on : bool, optional
           Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
           photon coords using a random number generator. If False, the photon coords will be centered within the
@@ -25150,22 +26336,30 @@ def init_coord(orb: CoordStruct, ele: EleStruct | None = None, element_end: typi
     """
 def init_custom(lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine init_custom
+    
+      Parameters
       ----------
       lat : 
     """
 def init_ele(key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, branch: BranchStruct | None = None) -> EleStruct:
     """
-    Parameters
+    Wrapper for Fortran routine init_ele
+    
+      Parameters
       ----------
       ele : EleStruct
           Initialized element.
+    
       key : int, optional
           Key to initialize to. EG: quadrupole$, etc.
+    
       sub_key : int, optional
           Sub-key to initialize to.
+    
       ix_ele : int, optional
           ix_ele index to initalize to. Default = -1.
+    
       branch : BranchStruct, optional
           Branch to point ele.branch and ele.ix_branch to. Otherwise ele.branch is nullified and ele.ix_branch = 0.
     """
@@ -25182,26 +26376,34 @@ def init_em_taylor_series(em_taylor: EmTaylorStruct, n_term: typing.SupportsInt,
       em_taylor : EmTaylorStruct
           Old structure.
           This parameter is an input/output and is modified in-place. As an output: Initalized structure.
+    
       n_term : int
           Number of terms to allocate.
+    
       n_term < 0 => em_taylor%term pointer will be disassociated. : 
       save_old : bool, optional
           If True then save any old terms when em_taylor is resized. Default is False.
     """
 def init_lat(n: typing.SupportsInt | None = None, init_beginning_ele: bool | None = None) -> LatStruct:
     """
-    Parameters
+    Wrapper for Fortran routine init_lat
+    
+      Parameters
       ----------
       lat : LatStruct
           Initialized lat.
+    
       n : int, optional
           Upper bound lat.ele(0:) array is initialized to.
+    
       init_beginning_ele : bool, optional
           Init lat.ele(0)? Default is False.
     """
 def init_multipole_cache(ele: EleStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine init_multipole_cache
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to init
@@ -25209,14 +26411,19 @@ def init_multipole_cache(ele: EleStruct) -> None:
     """
 def init_photon_from_a_photon_init_ele(ele: EleStruct, param: LatParamStruct, random_on: bool | None = None) -> CoordStruct:
     """
-    Parameters
+    Wrapper for Fortran routine init_photon_from_a_photon_init_ele
+    
+      Parameters
       ----------
       ele : EleStruct
           patch element.
+    
       param : 
           lat_param_struct.
+    
       orbit : CoordStruct
           Output photon coords.
+    
       random_on : bool, optional
           : Default is True. If False then use zero for all random numbers needed in the calc.
     """
@@ -25232,18 +26439,25 @@ def init_photon_integ_prob(gamma: typing.SupportsFloat, g: typing.SupportsFloat,
       ----------
       gamma : float
           Gamma factor of charged particle emitting photon.
+    
       g : float
           1/rho bending strength.
+    
       E_min : float
           Minimum photon energy.
+    
       E_max : float
           Maximum photon energy.
+    
       vert_angle_min : float, optional
           Lower bound of vertical angle range.
+    
       vert_angle_max : float, optional
           Upper bound of vertical angle range.
+    
       vert_angle_symmetric : float, optional
           Use two symmetric ranges [-vert_angle_max, -vert_angle_min] and
+    
       [vert_angle_min : 
       vert_angle_max] instead of just [vert_angle_min : 
       vert_angle_max]? : 
@@ -25256,6 +26470,7 @@ def init_photon_integ_prob(gamma: typing.SupportsFloat, g: typing.SupportsFloat,
       -------
       E_photon : float
           See energy_integ_prob. E_photon must be present if energy_integ_prob is.
+    
       integ_prob : float
           Integrated probablility of emitting a photon in given angle and energy range.
     """
@@ -25269,6 +26484,7 @@ def init_spin_distribution(beam_init: BeamInitStruct, ele: EleStruct) -> BunchSt
       ----------
       beam_init : BeamInitStruct
           Initialization parameters
+    
       %spin : 
           (x, y, z) spin coordinates ele
     
@@ -25287,38 +26503,51 @@ def init_surface_segment(phot: PhotonElementStruct, ix: typing.SupportsInt, iy: 
       ----------
       phot : 
           Surface structure.
+    
       ix : int
           index of grid point to init.
+    
       iy : int
           index of grid point to init.
     """
 def init_taylor_series(bmad_taylor: TaylorStruct, n_term: typing.SupportsInt, save_old: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine init_taylor_series
+    
+      Parameters
       ----------
       bmad_taylor : TaylorStruct
           Old structure.
           This parameter is an input/output and is modified in-place. As an output: Initalized structure.
+    
       n_term : int
           Number of terms to allocate.
+    
       save_old : bool, optional
           If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
           Default is False.
     """
 def init_wake(n_sr_long: typing.SupportsInt, n_sr_trans: typing.SupportsInt, n_sr_z: typing.SupportsInt, n_lr_mode: typing.SupportsInt, always_allocate: bool | None = None) -> WakeStruct | None:
     """
-    Parameters
+    Wrapper for Fortran routine init_wake
+    
+      Parameters
       ----------
       wake : WakeStruct
           Initialized structure.
+    
       n_sr_long : int
           Number of terms: wake.sr.long.
+    
       n_sr_trans : int
           Number of terms: wake.sr.trans.
+    
       n_sr_z : int
           Number of terms: wake.sr.z.
+    
       n_lr_mode : int
           Number of terms: wake.lr.mode.
+    
       always_allocate : bool, optional
           If present and True then allways allocate wake even if n_lr_mode, etc. are all 0. Default is False.
     """
@@ -25334,11 +26563,14 @@ def initfixedwindowls(N: typing.SupportsInt, dt: typing.SupportsFloat, order: ty
     ----------
     N : int
         Number of data points to fit over. aka window size.
+    
     dt : float
         Time interval between data points. It is assumed that the data is
+    
     separated by fixed time intervals. : 
     order : int
         Order of fit polynomial.  Must be greater than or equal to der.
+    
     der : int
         Order of derivative to be returned. Set der=0 to obtain the fit.
     
@@ -25349,24 +26581,32 @@ def initfixedwindowls(N: typing.SupportsInt, dt: typing.SupportsFloat, order: ty
     """
 def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None, orbit: CoordStructAlloc1D | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine insert_element
+    
+      Parameters
       ----------
       lat : LatStruct
           lattice that will be modified
           This parameter is an input/output and is modified in-place. As an output: lattice with new element
           inserted
+    
       insert_ele : EleStruct
           element to insert into the lat
+    
       ix_ele : int
           branch.ele(:) index where the new element is inserted.
+    
       ix_branch : int, optional
           : branch index for the insertion. Default = 0.
+    
       orbit : CoordStruct, optional
           orbit array to enlarge.
           This parameter is an input/output and is modified in-place. As an output: Enlarged orbit array.
     """
 def insert_phase_trombone(branch: BranchStruct) -> None:
     """
+    Wrapper for Fortran routine insert_phase_trombone
+    
     Parameters
     ----------
     branch : BranchStruct
@@ -25376,6 +26616,8 @@ def insert_phase_trombone(branch: BranchStruct) -> None:
     """
 def int_str(int_: typing.SupportsInt, width: typing.SupportsInt | None = None, str: str) -> None:
     """
+    Wrapper for Fortran routine int_str
+    
     Parameters
     ----------
     int : 
@@ -25407,6 +26649,8 @@ def integrand_base(t: typing.SupportsFloat, args: RealArray1D, func_retval__: ty
     """
 def integrate_max(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datum_value: typing.SupportsFloat, ix_m: typing.SupportsInt, branch: BranchStruct, vec: RealArray1D, datum: TaoDataStruct) -> None:
     """
+    Wrapper for Fortran routine integrate_max
+    
     Parameters
     ----------
     ix_start : 
@@ -25419,6 +26663,8 @@ def integrate_max(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datu
     """
 def integrate_min(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datum_value: typing.SupportsFloat, ix_m: typing.SupportsInt, branch: BranchStruct, vec: RealArray1D, datum: TaoDataStruct) -> None:
     """
+    Wrapper for Fortran routine integrate_min
+    
     Parameters
     ----------
     ix_start : 
@@ -25440,8 +26686,10 @@ def integrate_psi(bound: typing.SupportsFloat, p0: typing.SupportsFloat, args: t
       ----------
       bound : float
           integration bound
+    
       p0 : float
           psi(0).  Boundary condition.
+    
       args : float
           Parameters and constants of DEQ.  See psi_prime comments for details.
     
@@ -25457,7 +26705,9 @@ def integrated_mats(eles: EleStructArray1D, coos: CoordStructArray1D, Lambda: ty
 @typing.overload
 def integration_timer(ele: EleStruct, param: LatParamStruct, start: CoordStruct, orb_max: CoordStruct, tol: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine integration_timer_ele
+    
+      Parameters
       ----------
       ele : 
       param : 
@@ -25468,7 +26718,9 @@ def integration_timer(ele: EleStruct, param: LatParamStruct, start: CoordStruct,
 @typing.overload
 def integration_timer(a_fibre: Fibre, orbit: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], orbit_max: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], tol_dp: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine integration_timer_fibre
+    
+      Parameters
       ----------
       a_fibre : 
       orbit : 
@@ -25482,7 +26734,6 @@ def interpolated_fft(cdata: ComplexArray1D, calc_ok: bool, opt_dump_spectrum: ty
     Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
     The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
     available.
-    
     
     Returns
     -------
@@ -25498,20 +26749,28 @@ def interpolated_fft_gsl(cdata: ComplexArray1D, calc_ok: bool, opt_dump_spectrum
     """
 def ion_kick(orbit: CoordStruct, r_beam: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], n_beam_part: typing.SupportsFloat, a_twiss: TwissStruct, b_twiss: TwissStruct, sig_ee: typing.SupportsFloat) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
-    Parameters
+    Wrapper for Fortran routine ion_kick
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Ion position.
+    
       r_beam : float
           Beam (x, y) position.
+    
       n_beam_part : float
           Number of beam particles.
+    
       a_twiss : TwissStruct
           Horizontal like beam twiss parameters.
+    
       b_twiss : TwissStruct
           vertical like beam twiss parameters.
+    
       sig_ee : float
           Sigma_E/E beam energy spread.
+    
       kick : float
           (x, y, s) kick in m/sec.
     """
@@ -25524,7 +26783,6 @@ def is_alphabetic(string: str, valid_chars: str | None = None, is_alpha: bool) -
       real(rp) prob
       real(rp) val
     end function
-    
     
     Returns
     -------
@@ -25540,6 +26798,7 @@ def is_attribute(ix_attrib: typing.SupportsInt, which: typing.SupportsInt) -> bo
       ----------
       ix_attrib : int
           Attribute index.
+    
       which : int
           control_var$, old_control_var$, all_control_var$, multipole$, elec_multipole$
     
@@ -25550,12 +26809,16 @@ def is_attribute(ix_attrib: typing.SupportsInt, which: typing.SupportsInt) -> bo
     """
 def is_decreasing_sequence(array: RealArray1D, strict: bool | None = None) -> bool:
     """
+    Wrapper for Fortran routine is_decreasing_sequence
+    
     Parameters
     ----------
     array : float
         Sequence.
+    
     strict : bool, optional
         If True (default) sequence must be strictly decreasing.
+    
     is_decreasing : bool
         Set True if sequence is decreasing.
     """
@@ -25590,17 +26853,23 @@ def is_false(param: typing.SupportsFloat) -> bool:
     """
 def is_increasing_sequence(array: RealArray1D, strict: bool | None = None) -> bool:
     """
+    Wrapper for Fortran routine is_increasing_sequence
+    
     Parameters
     ----------
     array : float
         Sequence.
+    
     strict : bool, optional
         If True (default) sequence must be strictly increasing.
+    
     is_increasing : bool
         Set True if sequence is increasing.
     """
 def is_integer(string: str, int_: typing.SupportsInt | None = None, delims: str | None = None, ix_word: typing.SupportsInt | None = None, valid: bool) -> None:
     """
+    Wrapper for Fortran routine is_integer
+    
     Parameters
     ----------
     string : 
@@ -25611,6 +26880,8 @@ def is_integer(string: str, int_: typing.SupportsInt | None = None, delims: str 
     """
 def is_logical(string: str, ignore: bool | None = None, valid: bool) -> None:
     """
+    Wrapper for Fortran routine is_logical
+    
     Parameters
     ----------
     string : 
@@ -25619,6 +26890,8 @@ def is_logical(string: str, ignore: bool | None = None, valid: bool) -> None:
     """
 def is_real(string: str, ignore: bool | None = None, real_num: typing.SupportsFloat | None = None, valid: bool) -> None:
     """
+    Wrapper for Fortran routine is_real
+    
     Parameters
     ----------
     string : 
@@ -25673,6 +26946,8 @@ def is_true(param: typing.SupportsFloat) -> bool:
     """
 def j_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, j_bes: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine j_bessel
+    
     Parameters
     ----------
     m : 
@@ -25681,13 +26956,17 @@ def j_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat, j_bes: typing.Sup
     """
 def key_name_to_key_index(key_str: str, abbrev_allowed: bool | None = None) -> int:
     """
+    Wrapper for Fortran routine key_name_to_key_index
+    
     Parameters
     ----------
     key_str : unknown
         Name of the key. Result is case insensitive.
+    
     abbrev_allowed : bool, optional
         Abbreviations (eg: "quad") allowed? Default is False. At least 3 characters are needed (except for
         rfcavity elements) if True.
+    
     key_index : int
         Index of the key. Set to -1 if key_name not recognized.
     """
@@ -25741,12 +27020,16 @@ def kick_vector_calc(ele: EleStruct, param: LatParamStruct, s_body: typing.Suppo
     ----------
     ele : EleStruct
         Element being tracked thorugh.
+    
     param : LatParamStruct
         Lattice parameters.
+    
     s_rel : float
         Distance from the start of the element to the particle.
+    
     orbit : CoordStruct
         Position of particle.
+    
     local_ref_frame : 
         -- Logical, If True then take the input coordinates as being with respect to the frame of referene of the
         element.
@@ -25755,8 +27038,10 @@ def kick_vector_calc(ele: EleStruct, param: LatParamStruct, s_body: typing.Suppo
     -------
     dr_ds : float
         Kick vector.
+    
     field : EmFieldStruct
         Local field.
+    
     err : bool
         Set True if there is an error.
     
@@ -25779,6 +27064,8 @@ def kill_complex_taylor(complex_taylor: ComplexTaylorStructArray1D) -> None:
     """
 def kill_ptc_layouts(lat: LatStruct) -> None:
     """
+    Wrapper for Fortran routine kill_ptc_layouts
+    
     Parameters
     ----------
     lat : LatStruct
@@ -25786,6 +27073,8 @@ def kill_ptc_layouts(lat: LatStruct) -> None:
     """
 def kill_taylor(bmad_taylor: TaylorStructArray1D) -> None:
     """
+    Wrapper for Fortran routine kill_taylor
+    
     Parameters
     ----------
     bmad_taylor : TaylorStruct
@@ -25810,23 +27099,32 @@ def kind_name(this_kind: typing.SupportsInt) -> str:
     """
 def knot_interpolate(x_knot: RealArray1D, y_knot: RealArray1D, x_pt: typing.SupportsFloat, interpolation: typing.SupportsInt) -> KnotInterpolate:
     """
+    Wrapper for Fortran routine knot_interpolate
+    
     Parameters
     ----------
     x_knot : float
         Knot x-values.
+    
     y_knot : float
         Knot y-values.
+    
     x_pt : float
         Point to evaluate at.
+    
     interpolation : int
         Interpolation type. cubic$ or linear$.
+    
     err_flag : bool
         Set True if there is an error. False otherwise.
+    
     y_pt : float
         Interpolated y-value.
     """
 def knots_to_string(x_knot: RealArray1D, y_knot: RealArray1D, str: str) -> None:
     """
+    Wrapper for Fortran routine knots_to_string
+    
     Parameters
     ----------
     x_knot : 
@@ -25835,7 +27133,9 @@ def knots_to_string(x_knot: RealArray1D, y_knot: RealArray1D, str: str) -> None:
     """
 def lafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine lafun
+    
+      Parameters
       ----------
       x : 
       y : 
@@ -25844,107 +27144,142 @@ def lafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFl
     """
 def lat_compute_ref_energy_and_time(lat: LatStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine lat_compute_ref_energy_and_time
+    
+      Parameters
       ----------
       lat : LatStruct
           Input lattice.
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
     """
 def lat_ele_locator(loc_str: str, lat: LatStruct, eles: ElePointerStructAlloc1D, n_loc: typing.SupportsInt, above_ubound_is_err: bool | None = None, ix_dflt_branch: typing.SupportsInt | None = None, order_by_index: bool | None = None, append_eles: bool | None = None) -> LatEleLocator:
     """
-    Parameters
+    Wrapper for Fortran routine lat_ele_locator
+    
+      Parameters
       ----------
       loc_str : unknown
           Element names or indexes. May be lower case.
+    
       lat : LatStruct
           Lattice to search through.
+    
       eles : ElePointerStruct
           If append_eles is True, save existing elements.
           This parameter is an input/output and is modified in-place. As an output: Array of matching elements.
+    
       n_loc : int
           Number of existing elements. Used if append_eles is True.
           This parameter is an input/output and is modified in-place. As an output: Number of locations found.
+    
       err : bool
           Set True if there is a decode error. Note: Not finding any matching element is not an error.
+    
       above_ubound_is_err : unknown, optional
           Default is True. If the upper bound "e2" on an "e1:e2" range construct is an integer and above the maximum
           element index then treat this as an error?
+    
       ix_dflt_branch : int, optional
           If present and not -1 then restrict search to specified branch. If not present or -1: Search all branches.
           Exception: For elements specified using
+    
       order_by_index : bool, optional
           False is default. If True, order a component of loc_str like "quad::*" by element index instead of
           longitudinal s-position. Index ordering and s-position ordering
+    
       append_eles : bool, optional
           Default is False. If True, found elements are appended to eles(:) array.
     """
 def lat_equal_lat(lat_out: LatStruct, lat_in: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine lat_equal_lat
+    
+      Parameters
       ----------
       lat_out : 
       lat_in : 
     """
 def lat_geometry(lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine lat_geometry
+    
+      Parameters
       ----------
       lat : LatStruct
           The lattice.
     """
 def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_orb: CoordStructArray1D | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine lat_make_mat6
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat containing the elements.
+    
       ix_ele : int, optional
           Index of the element. If not present
+    
       ref_orb : CoordStruct, optional
           Coordinates of the reference orbit around which the matrix is calculated. If not present
+    
       ix_branch : int, optional
           Branch index. Default is 0 (main lattice). -1 => All branches/all elements (ref_orb & ix_ele will be
           ignored).
+    
       err_flag : bool
           True if there is an error. False otherwise.
     """
 def lat_sanity_check(lat: LatStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine lat_sanity_check
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to check
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
 def lat_to_ptc_layout(lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine lat_to_ptc_layout
+    
+      Parameters
       ----------
       lat : LatStruct
           Input lattice
     """
 def lat_vec_equal_lat_vec(lat1: LatStructArray1D, lat2: LatStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine lat_vec_equal_lat_vec
+    
+      Parameters
       ----------
       lat1 : 
       lat2 : 
     """
 def lattice_bookkeeper(lat: LatStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine lattice_bookkeeper
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice needing bookkeeping.
           This parameter is an input/output and is modified in-place. As an output: Lattice with bookkeeping done.
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
     """
 def lcavity_rf_step_setup(ele: EleStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine lcavity_rf_step_setup
+    
+      Parameters
       ----------
       ele : EleStruct
           Lcavity element.
@@ -25962,17 +27297,22 @@ def linear_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: ty
       ----------
       ele : EleStruct
           SBend element.
+    
       param : LatParamStruct
           Rel charge.
+    
       particle_at : int
           first_track_edge$, or second_track_edge$,
+    
       orb : CoordStruct
           Starting coords.
           This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+    
       mat6 : float, optional
           Transfer matrix up to the edge.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
           edge.
+    
       make_matrix : float, optional
           Propagate the transfer matrix? Default is False.
     """
@@ -25991,11 +27331,14 @@ def linear_coef(stack: ExpressionAtomStructArray1D) -> LinearCoef:
       -------
       err_flag : bool
           Set True if the expression is not linear
+    
       coef : float
           Linear coefficient.
     """
 def linear_fit(x: RealArray1D, y: RealArray1D, n_data: typing.SupportsInt, a: typing.SupportsFloat, b: typing.SupportsFloat, sig_a: typing.SupportsFloat, sig_b: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine linear_fit
+    
     Parameters
     ----------
     x : 
@@ -26008,23 +27351,31 @@ def linear_fit(x: RealArray1D, y: RealArray1D, n_data: typing.SupportsInt, a: ty
     """
 def linear_fit_2d(x: RealArray1D, y: RealArray1D, z: RealArray1D) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
+    Wrapper for Fortran routine linear_fit_2d
+    
     Parameters
     ----------
     x : float
         Array of x-values.
+    
     y : float
         Array of y-values.
+    
     z : float
         Array of z-values
+    
     coef : float
         Coefficients of the linear fit
     """
 def linear_to_spin_taylor(q_map: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> TaylorStructArray1D:
     """
-    Parameters
+    Wrapper for Fortran routine linear_to_spin_taylor
+    
+      Parameters
       ----------
       q_map : float
           Linear quaternion map.
+    
       spin_taylor : TaylorStruct
           Taylor map
     """
@@ -26040,6 +27391,7 @@ def load_parse_line(action: str, ix_start: typing.SupportsInt) -> LoadParseLine:
       ----------
       action : unknown
           'continue', 'new_command', or 'init'
+    
       ix_start : int
           Index in bp_com.parse_line string where to append stuff.
     
@@ -26047,13 +27399,17 @@ def load_parse_line(action: str, ix_start: typing.SupportsInt) -> LoadParseLine:
       -------
       end_of_file : bool
           End of file reached?
+    
       err_flag : bool
           Set True if there is an error. False otherwise
+    
       bp_com%parse_line : 
           string to append to.
     """
 def logic_str(logic: bool, str: str) -> None:
     """
+    Wrapper for Fortran routine logic_str
+    
     Parameters
     ----------
     logic : 
@@ -26061,6 +27417,8 @@ def logic_str(logic: bool, str: str) -> None:
     """
 def logical_to_python(logic: bool, string: str) -> None:
     """
+    Wrapper for Fortran routine logical_to_python
+    
     Parameters
     ----------
     logic : 
@@ -26068,39 +27426,53 @@ def logical_to_python(logic: bool, string: str) -> None:
     """
 def lord_edge_aligned(slave: EleStruct, slave_edge: typing.SupportsInt, lord: EleStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine lord_edge_aligned
+    
+      Parameters
       ----------
       slave : EleStruct
           Slave element.
+    
       slave_edge : int
           End under consideration: entrance_end$, exit_end$, in_between$, etc.
+    
       lord : EleStruct
           Lord element.
+    
       is_aligned : int
           True if a lord edge is aligned with the slave edge. If slave_edge is not entrance_end$ nor exit_end$ then
           is_aligned is False.
     """
 def low_energy_z_correction(orbit: CoordStruct, ele: EleStruct, ds: typing.SupportsFloat, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine low_energy_z_correction
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Position before correction
+    
       ele : unknown
           Element being tracked through.
+    
       ds : float
           Longitudinal distance traveled by reference particle.
+    
       mat6 : float, optional
           Transfer matrix before the multipole.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
           including multipole.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
+    
       dz : float
           Change in z.
     """
 def lunget(func_retval__: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine lunget
+    
     Parameters
     ----------
     lunget : 
@@ -26116,6 +27488,7 @@ def mad_add_offsets_and_multipoles(ele: EleStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Drift element.
+    
     energy : MadEnergyStruct
         particle energy structure.
     
@@ -26136,6 +27509,7 @@ def mad_concat_map2(map1: MadMapStruct, map2: MadMapStruct) -> MadMapStruct:
     ----------
     map1 : MadMapStruct
         First map in the beam line.
+    
     map2 : MadMapStruct
         Second map in the beam line.
     
@@ -26155,6 +27529,7 @@ def mad_drift(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Drift element.
+    
     energy : MadEnergyStruct
         particle energy structure.
     
@@ -26174,6 +27549,7 @@ def mad_elsep(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Electric seperator element.
+    
     energy : MadEnergyStruct
         particle energy structure.
     
@@ -26193,6 +27569,7 @@ def mad_map_to_taylor(map: MadMapStruct, energy: MadEnergyStruct, taylor: Taylor
     ----------
     map : MadMapStruct
         Order 2 map.
+    
     energy : MadEnergyStruct
         Energy numbers.
     
@@ -26212,6 +27589,7 @@ def mad_quadrupole(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Quadrupole element.
+    
     energy : MadEnergyStruct
         particle energy structure.
     
@@ -26231,6 +27609,7 @@ def mad_rfcavity(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Rfcavity element.
+    
     energy : MadEnergyStruct
         particle energy structure.
     
@@ -26250,6 +27629,7 @@ def mad_sbend(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Sbend element.
+    
     energy : MadEnergyStruct
         particle energy structure.
     
@@ -26269,8 +27649,10 @@ def mad_sbend_body(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Solenoid element.
+    
     energy : MadEnergyStruct
         particle energy structure.
+    
     into : bool
         If True then map is for particle entering a dipole
     
@@ -26290,8 +27672,10 @@ def mad_sbend_fringe(ele: EleStruct, energy: MadEnergyStruct, into: bool) -> Mad
     ----------
     ele : EleStruct
         Solenoid element.
+    
     energy : MadEnergyStruct
         particle energy structure.
+    
     into : bool
         If True then map is for particle entering a dipole
     
@@ -26299,10 +27683,13 @@ def mad_sbend_fringe(ele: EleStruct, energy: MadEnergyStruct, into: bool) -> Mad
     -------
     map : MadMapStruct
         Fringe dipole map.
+    
     %k : 
         0th order map.
+    
     %r : 
         1st order map.
+    
     %t : 
         2nd order map.
     """
@@ -26317,6 +27704,7 @@ def mad_sextupole(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Sextupole element.
+    
     energy : MadEnergyStruct
         particle energy structure.
     
@@ -26336,6 +27724,7 @@ def mad_solenoid(ele: EleStruct, energy: MadEnergyStruct) -> MadMapStruct:
     ----------
     ele : EleStruct
         Solenoid element.
+    
     energy : MadEnergyStruct
         particle energy structure.
     
@@ -26355,6 +27744,7 @@ def mad_tmfoc(el: typing.SupportsFloat, sk1: typing.SupportsFloat) -> MadTmfoc:
     ----------
     el : float
         Length.
+    
     sk1 : float
         Quadrupole strength.
     
@@ -26362,10 +27752,13 @@ def mad_tmfoc(el: typing.SupportsFloat, sk1: typing.SupportsFloat) -> MadTmfoc:
     -------
     c : float
         Cosine-like function.             c(k,l)
+    
     s : float
         Sine-like function.               s(k,l)
+    
     d : float
         Dispersion function.              d(k,l)
+    
     f : float
         Integral of dispersion function.  f(k,l)
     """
@@ -26394,12 +27787,16 @@ def mad_tmtilt(map: MadMapStruct, tilt: typing.SupportsFloat) -> None:
     map : MadMapStruct
         Unrotated transport map.
         This parameter is an input/output and is modified in-place. As an output: Rotated transport map.
+    
     %k : 
         0th order map.
+    
     %r : 
         1st order map.
+    
     %t : 
         2nd order map.
+    
     tilt : float
         Tilt
     """
@@ -26414,6 +27811,7 @@ def mad_track1(c0: CoordStruct, map: MadMapStruct) -> CoordStruct:
     ----------
     c0 : CoordStruct
         Starting coords.
+    
     map : MadMapStruct
         2nd order map.
     
@@ -26424,21 +27822,28 @@ def mad_track1(c0: CoordStruct, map: MadMapStruct) -> CoordStruct:
     """
 def make_g2_mats(twiss: TwissStruct, g2_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"], g2_inv_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"]) -> None:
     """
+    Wrapper for Fortran routine make_g2_mats
+    
     Parameters
     ----------
     twiss : TwissStruct
         Twiss parameters.
+    
     g2_mat : 
     g2_inv_mat : 
     """
 def make_g_mats(ele: EleStruct) -> MakeGMats:
     """
+    Wrapper for Fortran routine make_g_mats
+    
     Parameters
     ----------
     ele : EleStruct
         Element
+    
     g_mat : float
         Normal mode to betaless coords
+    
     g_inv_mat : float
         The inverse of G_MAT
     """
@@ -26463,7 +27868,6 @@ def make_hvbp(N: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     V "Teng matrix" has 4 free parameters (xy, xpy, ypx, and pxpy coupling)
     H "Dispersion matrix" has 8 free parameters (xz, xpz, pxz, pxpz, yz, ypz, pyz, pypz coupling)
     
-    
     Parameters
     ----------
     N : float
@@ -26473,32 +27877,43 @@ def make_hvbp(N: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     -------
     B : float
         Block diagonal matrix of Twiss parameters
+    
     V : float
         horizontal-vertical coupling information
+    
     H : float
         horizontal-longitudinal and vertical-longitudinal coupling information
+    
     Vbar : float
         mat_symp_conj(B).V.B
+    
     Hbar : float
         mat_symp_conj(B).H.B
     """
 def make_hybrid_lat(lat_in: LatStruct, use_taylor: bool | None = None, orb0_arr: CoordArrayStructArray1D | None = None) -> LatStruct:
     """
+    Wrapper for Fortran routine make_hybrid_lat
+    
     Parameters
     ----------
     lat_in : LatStruct
         Input lattice.
+    
     lat_out : LatStruct
         Lattice with hybrid elements. Note: Lat_out must not be the same actual argument as lat_in.
+    
     use_taylor : bool, optional
         If present and True then the hybrid elements will have a taylor series instead of a simple linear matrix.
         If an element to be concatenated has a taylor series then this taylor series will be concatenated with the
         other elements
+    
     orb0_arr : CoordArrayStruct, optional
         Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
     """
 def make_legal_comment(comment_in: str, comment_out: str) -> None:
     """
+    Wrapper for Fortran routine make_legal_comment
+    
     Parameters
     ----------
     comment_in : 
@@ -26514,6 +27929,7 @@ def make_mad_map(ele: EleStruct, param: LatParamStruct) -> MakeMadMap:
     ----------
     ele : EleStruct
         Element
+    
     param : LatParamStruct
         particle id
     
@@ -26521,53 +27937,72 @@ def make_mad_map(ele: EleStruct, param: LatParamStruct) -> MakeMadMap:
     -------
     energy : MadEnergyStruct
         Energy of the particle
+    
     map : MadMapStruct
         Structure holding the transfer map.
     """
 def make_mat6(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct | None = None) -> MakeMat6:
     """
+    Wrapper for Fortran routine make_mat6
+    
     Parameters
     ----------
     ele : EleStruct
         Element holding the transfer matrix.
+    
     param : LatParamStruct
         Lattice global parameters.
+    
     start_orb : CoordStruct, optional
         Reference coordinates at the beginning of element. If not present, default is to use the zero orbit.
+    
     end_orb : CoordStruct
         Reference coordinates at the end of element.
+    
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
 def make_mat6_bmad(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct) -> MakeMat6Bmad:
     """
+    Wrapper for Fortran routine make_mat6_bmad
+    
     Parameters
     ----------
     ele : EleStruct
         Element to track through.
         This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    
     param : LatParamStruct
         Parameters are needed for some elements.
+    
     start_orb : CoordStruct
         Starting coords.
+    
     end_orb : CoordStruct
         Coordinates at the end of element.
+    
     err : bool
         Set True if there is an error. False otherwise.
     """
 def make_mat6_bmad_photon(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct) -> MakeMat6BmadPhoton:
     """
+    Wrapper for Fortran routine make_mat6_bmad_photon
+    
     Parameters
     ----------
     ele : EleStruct
         Element with transfer matrix
         This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    
     param : LatParamStruct
         Parameters are needed for some elements.
+    
     start_orb : CoordStruct
         Coordinates at the beginning of element.
+    
     end_orb : CoordStruct
         Coordinates at the end of element.
+    
     err : bool
         Set True if there is an error. False otherwise.
     """
@@ -26585,6 +28020,7 @@ def make_mat6_high_energy_space_charge(ele: EleStruct, param: LatParamStruct) ->
     ----------
     ele : EleStruct
         Element tracked through.
+    
     param : LatParamStruct
     
     Returns
@@ -26605,10 +28041,13 @@ def make_mat6_mad(ele: EleStruct, param: LatParamStruct, c0: CoordStruct) -> Coo
     ----------
     ele : EleStruct
         Element with transfer matrix.
+    
     param : LatParamStruct
         Lattice parameters.
+    
     map : MadMapStruct
         2nd order map.
+    
     c0 : CoordStruct
         Coordinates at the beginning of element.
     
@@ -26616,51 +28055,69 @@ def make_mat6_mad(ele: EleStruct, param: LatParamStruct, c0: CoordStruct) -> Coo
     -------
     %c0 : 
         0th order transfer matrix.
+    
     %mat6 : 
         6x6 1st order transfer matrix.
+    
     c1 : CoordStruct
         Coordinates at the end of element.
     """
 def make_mat6_symp_lie_ptc(ele: EleStruct, start_orb: CoordStruct) -> CoordStruct:
     """
+    Wrapper for Fortran routine make_mat6_symp_lie_ptc
+    
     Parameters
     ----------
     ele : EleStruct
         Element with transfer matrix
         This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    
     start_orb : CoordStruct
         Coordinates at the beginning of element.
+    
     end_orb : CoordStruct
         Coordinates at end of element.
     """
 def make_mat6_taylor(ele: EleStruct, start_orb: CoordStruct, err_flag: bool | None = None) -> CoordStruct:
     """
+    Wrapper for Fortran routine make_mat6_taylor
+    
     Parameters
     ----------
     ele : EleStruct
         Element to track through.
         This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    
     start_orb : CoordStruct
         Starting coords.
+    
     end_orb : CoordStruct
         Coordinates at the end of element.
+    
     err_flag : 
     """
 def make_mat6_tracking(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct, spin_only: bool | None = None) -> MakeMat6Tracking:
     """
+    Wrapper for Fortran routine make_mat6_tracking
+    
     Parameters
     ----------
     ele : EleStruct
         Element with transfer matrix
         This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    
     param : LatParamStruct
         Parameters are needed for some elements.
+    
     start_orb : CoordStruct
         Coordinates at the beginning of element.
+    
     end_orb : CoordStruct
         Coordinates at the end of element.
+    
     err_flag : bool
         Set True if there is an error. False otherwise.
+    
     spin_only : bool, optional
         Default False. If True, only calculate ele.spin_taylor.
     """
@@ -26685,6 +28142,7 @@ def make_n(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collec
     ----------
     t6 : float
         1-turn transfer matrix
+    
     abz_tunes : float, optional
         a-mode is abz_tunes(1), b-mode is abz_tunes(2), synch tune is abz_tunes(3)
     
@@ -26692,10 +28150,13 @@ def make_n(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collec
     -------
     N : float
         X = N.J
+    
     err_flag : bool
         Set to true on error.  Often means Eigen decomposition failed.
+    
     tunes_out : float
         Fractional tune (in radians) of the 3 normal modes of t6.
+    
     U : float
         U = Inverse(N).t6.N.  Block diagonal matrix of 2x2 rotation matrices.
     """
@@ -26713,6 +28174,7 @@ def make_pbrh(M: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     ----------
     M : float
         1-turn transfer matrix
+    
     abz_tunes : float
         tunes for a,b, and c modes.  Used to identify which eigenvector is associated with which mode.
     
@@ -26720,10 +28182,13 @@ def make_pbrh(M: typing.Annotated[collections.abc.Sequence[typing.Annotated[coll
     -------
     P : complex
         Eqn. 97.  Phase advances.
+    
     Bp : complex
         Eqns. 89 & 101.  Beta functions.
+    
     R : complex
         Eqn. 99.  Transverse coupling.
+    
     H : complex
         Eqn. 100.  Longitudinal coupling.
     """
@@ -26745,18 +28210,25 @@ def make_smat_from_abc(t6: typing.Annotated[collections.abc.Sequence[typing.Anno
     ----------
     t6 : float
         1-turn transfer matrix
+    
     mode : NormalModesStruct
         normal mode emittances
+    
     %a%emittance : float
         a-mode emittance
+    
     %b%emittance : float
         b-mode emittance
+    
     %z%emittance : float
         z-mode emittance
+    
     %a%tune : float
         a-mode tune.  Used to associate emittances with the proper mode.
+    
     %b%tune : float
         b-mode tune.  Used to associate emittances with the proper mode.
+    
     %z%tune : float
         z-mode tune.  Used to associate emittances with the proper mode.
     
@@ -26764,8 +28236,10 @@ def make_smat_from_abc(t6: typing.Annotated[collections.abc.Sequence[typing.Anno
     -------
     sigma_mat : float
         beam envelop sigma matrix
+    
     err_flag : bool
         set to true if something goes wrong.  Usually means Eigen decomposition of the 1-turn matrix failed.
+    
     Nout : float
         Contains the normalized eigenvectors that were used to make the sigma matrix.
     """
@@ -26791,12 +28265,16 @@ def make_v(M: typing.Annotated[collections.abc.Sequence[typing.Annotated[collect
     """
 def make_v_mats(ele: EleStruct) -> MakeVMats:
     """
+    Wrapper for Fortran routine make_v_mats
+    
     Parameters
     ----------
     ele : EleStruct
         Element
+    
     v_mat : float
         Normal mode to X-Y coords transformation
+    
     v_inv_mat : float
         X-Y coords to Normal mode transformation
     """
@@ -26840,14 +28318,19 @@ def makeup_super_slave1(slave: EleStruct, lord: EleStruct, offset: typing.Suppor
         Slave element.
         This parameter is an input/output and is modified in-place. As an output: Slave element with appropriate
         values set.
+    
     lord : EleStruct
         Lord element.
+    
     offset : float
         offset of entrance end of slave from entrance end of the lord.
+    
     param : LatParamStruct
         lattice paramters.
+    
     include_upstream_end : bool
         Slave contains the lord's entrance end?
+    
     include_downstream_end : bool
         Slave contains the lord's exit end?
     
@@ -26858,15 +28341,20 @@ def makeup_super_slave1(slave: EleStruct, lord: EleStruct, offset: typing.Suppor
     """
 def map1_inverse(map1: SpinOrbitMap1Struct) -> SpinOrbitMap1Struct:
     """
+    Wrapper for Fortran routine map1_inverse
+    
     Parameters
     ----------
     map1 : SpinOrbitMap1Struct
         Input map.
+    
     inv_map1 : SpinOrbitMap1Struct
         Inverse map.
     """
 def map1_make_unit() -> SpinOrbitMap1Struct:
     """
+    Wrapper for Fortran routine map1_make_unit
+    
     Parameters
     ----------
     map1 : SpinOrbitMap1Struct
@@ -26874,6 +28362,8 @@ def map1_make_unit() -> SpinOrbitMap1Struct:
     """
 def map1_times_map1(map2: SpinOrbitMap1Struct, map1: SpinOrbitMap1Struct, map_out: SpinOrbitMap1Struct) -> None:
     """
+    Wrapper for Fortran routine map1_times_map1
+    
     Parameters
     ----------
     map2 : 
@@ -26882,10 +28372,13 @@ def map1_times_map1(map2: SpinOrbitMap1Struct, map1: SpinOrbitMap1Struct, map_ou
     """
 def map_to_angle_coords(t_canon: TaylorStructArray1D) -> TaylorStructArray1D:
     """
+    Wrapper for Fortran routine map_to_angle_coords
+    
     Parameters
     ----------
     t_canon : TaylorStruct
         Taylor map in canonical coords.
+    
     t_angle : TaylorStruct
         Taylor map in angle coords.
     """
@@ -26926,47 +28419,64 @@ def mass_of(species: typing.SupportsInt) -> float:
     """
 def master_parameter_value(master_parameter: typing.SupportsInt, ele: EleStruct) -> float:
     """
+    Wrapper for Fortran routine master_parameter_value
+    
     Parameters
     ----------
     master_parameter : int
         Index of the master parameter.
+    
     ele : EleStruct
         Element containing the fieldmap.
+    
     value : float
         Value of the master parameter.
     """
 def mat4_multipole(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typing.SupportsInt, orbit: CoordStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
     """
+    Wrapper for Fortran routine mat4_multipole
+    
     Parameters
     ----------
     knl : float
         Strength of multipole
+    
     tilt : float
         Tilt of multipole
+    
     n : 
     orbit : CoordStruct
         coordinates of particle
+    
     kick_mat : float
         Kick matrix (Jacobian) at orbit.
     """
 def mat6_add_offsets(ele: EleStruct, param: LatParamStruct) -> None:
     """
+    Wrapper for Fortran routine mat6_add_offsets
+    
     Parameters
     ----------
     ele : EleStruct
         Element with given orientation.
+    
     param : LatParamStruct
     """
 def mat6_add_pitch(x_pitch_tot: typing.SupportsFloat, y_pitch_tot: typing.SupportsFloat, orientation: typing.SupportsInt, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
     """
+    Wrapper for Fortran routine mat6_add_pitch
+    
     Parameters
     ----------
     x_pitch_tot : float
         Horizontal pitch
+    
     y_pitch_tot : float
         Vertical pitch
+    
     orientation : int
         Element longitudinal orientation. +1 or -1.
+    
     mat6 : float
         1st order part of the transfer map (Jacobian).
         This parameter is an input/output and is modified in-place. As an output: 1st order xfer map with pitches.
@@ -26982,6 +28492,7 @@ def mat6_to_complex_taylor(vec0: typing.Annotated[collections.abc.Sequence[compl
     ----------
     vec0 : 
         0th order transfer vector.
+    
     mat6 : 
         6x6 transfer matrix.
     
@@ -26992,53 +28503,75 @@ def mat6_to_complex_taylor(vec0: typing.Annotated[collections.abc.Sequence[compl
     """
 def mat_symp_decouple(t0: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]], "FixedSize(4)"], type_out: bool) -> MatSympDecouple:
     """
+    Wrapper for Fortran routine mat_symp_decouple
+    
     Parameters
     ----------
     t0 : float
         Input matrix
+    
     stat : int
         status of results: ok$, in_stop_band$, or unstable$
+    
     u : unknown
         See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    
     v : unknown
         See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    
     ubar : unknown
         See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    
     vbar : unknown
         See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    
     g : unknown
         See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
+    
     twiss1 : TwissStruct
         Twiss params for the "upper left" mode.
+    
     twiss2 : TwissStruct
         Twiss params for the "lower right" mode.
+    
     gamma : float
         gamma_c factor.
+    
     type_out : bool
         If .true. then an error message is typed out for a non ok$ STAT
     """
 def match_ele_to_mat6(ele: EleStruct, start_orb: CoordStruct, include_delta_time: bool | None = None, set_trombone: bool | None = None) -> MatchEleToMat6:
     """
+    Wrapper for Fortran routine match_ele_to_mat6
+    
     Parameters
     ----------
     ele : EleStruct
         Match element.
+    
     start_orb : CoordStruct
         Starting orbit.
+    
     mat6 : float
         Transfer matrix (1st order part of xfer map).
+    
     vec0 : float
         0th order part of the transfer map.
+    
     err_flag : bool
         Set true if there is an error. False otherwise.
+    
     include_delta_time : bool, optional
         If False, ignore any finite ele.value(delta_time$).
+    
     set_trombone : bool, optional
         Default is False. If True, set the beginning and ending Twiss values in the element to create a phase
         trombone.
     """
 def match_reg(str: str, pat: str, is_match: bool) -> None:
     """
+    Wrapper for Fortran routine match_reg
+    
     Parameters
     ----------
     str : 
@@ -27047,6 +28580,8 @@ def match_reg(str: str, pat: str, is_match: bool) -> None:
     """
 def match_wild(string: str, template_: str, is_match: bool) -> None:
     """
+    Wrapper for Fortran routine match_wild
+    
     Parameters
     ----------
     string : 
@@ -27062,17 +28597,23 @@ def maximize_projection(seed: typing.SupportsFloat, cdata: ComplexArray1D, func_
     """
 def mexp(x: typing.SupportsFloat, m: typing.SupportsInt) -> float:
     """
+    Wrapper for Fortran routine mexp
+    
     Parameters
     ----------
     x : float
         Number.
+    
     m : int
         Exponent.
+    
     this_exp : float
         Result.
     """
 def mfft1(a: RealArray1D, b: RealArray1D, n: IntArray1D, ndim: typing.SupportsInt, isn: typing.SupportsInt) -> int:
     """
+    Wrapper for Fortran routine mfft1
+    
     Parameters
     ----------
     a : 
@@ -27084,6 +28625,8 @@ def mfft1(a: RealArray1D, b: RealArray1D, n: IntArray1D, ndim: typing.SupportsIn
     """
 def milli_sleep(milli_sec: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine milli_sleep
+    
     Parameters
     ----------
     milli_sec : 
@@ -27098,8 +28641,10 @@ def misalign_ptc_fibre(ele: EleStruct, use_offsets: bool, for_layout: bool) -> F
     ----------
     ele : EleStruct
         Bmad element with misalignments.
+    
     use_offsets : bool
         Does ptc_fibre include element offsets, pitches and tilt?
+    
     This argument is ignored if the element is a patch. : 
     for_layout : bool
         If True then fibre is being created as part of a layout as opposed to a stand-alone fibre
@@ -27111,31 +28656,43 @@ def misalign_ptc_fibre(ele: EleStruct, use_offsets: bool, for_layout: bool) -> F
     """
 def momentum_compaction(branch: BranchStruct) -> float:
     """
+    Wrapper for Fortran routine momentum_compaction
+    
     Parameters
     ----------
     branch : BranchStruct
         Lattice branch to calculate on.
+    
     mom_comp : float
         Momentum compaction.
     """
 def multi_turn_tracking_analysis(track: CoordStructArray1D, i_dim: typing.SupportsInt) -> MultiTurnTrackingAnalysis:
     """
+    Wrapper for Fortran routine multi_turn_tracking_analysis
+    
     Parameters
     ----------
     track : CooordStruct
         multi-turn tracking data to analyze. track(i) is the particle position at a given point
+    
     i_dim : int
         number of dimensions used in the tracking: 2, or 4.
+    
     track0 : CoordStruct
         Closed orbit.
+    
     ele : EleStruct
         structure holding the 1-turn matrix and Twiss parameters.
+    
     stable : bool
         Is motion stable?
+    
     growth_rate : float
         Unstable growth rate (= 0 if stable).
+    
     chi : float
         How symplectic the computed 1-turn matrix is.
+    
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
@@ -27153,8 +28710,10 @@ def multilayer_type_to_multilayer_params(ele: EleStruct) -> bool:
     ----------
     ele : EleStruct
         Multilayer element.
+    
     %component_name : unknown
         Multilayer type name. Assumed upper case.
+    
     A blank name is not an error and results in nothing set. : 
     %value : 
         Photon energy in eV.
@@ -27167,117 +28726,163 @@ def multilayer_type_to_multilayer_params(ele: EleStruct) -> bool:
     """
 def multipass_chain(ele: EleStruct, chain_ele: ElePointerStructAlloc1D | None = None, use_super_lord: bool | None = None) -> MultipassChain:
     """
+    Wrapper for Fortran routine multipass_chain
+    
     Parameters
     ----------
     ele : ElePointerStruct
         Element in a multipass chain.
+    
     ix_pass : int
         Multipass pass number of the input element.
+    
     n_links : int
         Number of times the physical element is passed through.
+    
     chain_ele : ElePointerStruct
         pointers to the elements of the chain. Note: chain_ele(ix_pass).ele => ele
+    
     use_super_lord : bool, optional
         If present and True and if ele is a super_slave, construct the chain_ele(:) array using the corresponding
         super_lords.
     """
 def multipole1_ab_to_kt(an: typing.SupportsFloat, bn: typing.SupportsFloat, n: typing.SupportsInt) -> Multipole1AbToKt:
     """
+    Wrapper for Fortran routine multipole1_ab_to_kt
+    
     Parameters
     ----------
     an : float
         Skew multipole component.
+    
     bn : float
         Normal multipole component.
+    
     n : int
         Order of multipole.
+    
     knl : float
         Multitude magnatude.
+    
     tn : float
         Multipole angle.
     """
 def multipole1_kt_to_ab(knl: typing.SupportsFloat, knsl: typing.SupportsFloat, tn: typing.SupportsFloat, n: typing.SupportsInt) -> Multipole1KtToAb:
     """
+    Wrapper for Fortran routine multipole1_kt_to_ab
+    
     Parameters
     ----------
     knl : float
         Normal multitude component.
+    
     knsl : float
         Skew multitude component.
+    
     tn : float
         Multipole angle.
+    
     n : int
         Multipole order.
+    
     an : float
         Skew multipole component.
+    
     bn : float
         Normal multipole component.
     """
 def multipole_ab_to_kt(an: RealArray1D, bn: RealArray1D, knl: RealArray1D, tn: RealArray1D) -> None:
     """
+    Wrapper for Fortran routine multipole_ab_to_kt
+    
     Parameters
     ----------
     an : float
         Skew multipole component.
+    
     bn : float
         Normal multipole component.
+    
     knl : float
         Multitude magnatude.
+    
     tn : float
         Multipole angle.
     """
 def multipole_ele_to_ab(ele: EleStruct, use_ele_tilt: bool, pole_type: typing.SupportsInt | None = None, include_kicks: typing.SupportsInt | None = None, original: bool | None = None) -> MultipoleEleToAb:
     """
+    Wrapper for Fortran routine multipole_ele_to_ab
+    
     Parameters
     ----------
     ele : EleStruct
         Element.
+    
     use_ele_tilt : bool
         If True then include ele.value(tilt_tot$) in calculations.
+    
     ix_pole_max : int
         Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero.
+    
     a : float
         Array of multipole values.
+    
     b : float
         Array of multipole values.
+    
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
+    
     include_kicks : int, optional
         Ignored for for pole_type == electric$ for non-elseparator elements.
+    
     b1 : float
         If present, b1 is set to the value of the b(1) component of the b(:) array and b(1) is set to zero. Also
         ix_pole_max is ajusted as needed. This is used by routines that want to handle b(1) in a special way in
         tracking.
+    
     original : bool, optional
         Default is false. If True, no scaling is applied.
     """
 def multipole_ele_to_kt(ele: EleStruct, use_ele_tilt: bool, knl: RealArray1D, tilt: RealArray1D, pole_type: typing.SupportsInt | None = None, include_kicks: typing.SupportsInt | None = None) -> int:
     """
+    Wrapper for Fortran routine multipole_ele_to_kt
+    
     Parameters
     ----------
     ele : EleStruct
         Lattice element.
+    
     use_ele_tilt : bool
         If True then include ele.value(tilt_tot$) in calculations.
+    
     ix_pole_max : int
         Index of largest nonzero pole.
+    
     knl : float
         Vector of strengths, MAD units.
+    
     tilt : float
         Vector of tilts.
+    
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
+    
     include_kicks : int, optional
         Possibilities are:
     """
 def multipole_init(who: typing.SupportsInt, zero: bool | None = None) -> EleStruct:
     """
+    Wrapper for Fortran routine multipole_init
+    
     Parameters
     ----------
     ele : EleStruct
         Element holding the multipoles.
+    
     who : int
         electric$, magnetic$, or all$
+    
     zero : bool, optional
         If present and True then zero the arrays even if they already exist when this routine is called. Default
         is False which means that if the arrays already exist then this routine will do nothing.
@@ -27293,18 +28898,25 @@ def multipole_kick(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typ
     ----------
     knl : float
         Multipole integrated strength.
+    
     tilt : float
         Multipole tilt.
+    
     n : float
         Multipole order.
+    
     ref_species : int
         Reference species.
+    
     ele_orientation : int
         Element orientation +1 = normal, -1 = reversed.
+    
     coord : CoordStruct
         Particle position and direction of travel.
+    
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
+    
     ref_orb_offset : bool, optional
         If True and n = 0 then use the MAD convention and model the multipole as a zero length bend with bending
         angle knl. Default is False.
@@ -27316,20 +28928,28 @@ def multipole_kick(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typ
     """
 def multipole_kick_mat(knl: RealArray1D, tilt: RealArray1D, ref_species: typing.SupportsInt, ele: EleStruct, orbit: CoordStruct, factor: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
+    Wrapper for Fortran routine multipole_kick_mat
+    
     Parameters
     ----------
     knl : float
         Strength of multipoles
+    
     tilt : float
         Tilt of multipoles
+    
     ref_species : int
         Reference species.
+    
     ele : EleStruct
         Lattice element containing multipoles.
+    
     orbit : CoordStruct
         coordinates of particle around which the
+    
     factor : float
         Factor to scale knl by.
+    
     mat6 : float
         matrix with kick values at mat6(2:4:2, 1:3:2). The rest of the matrix is untouched.
     """
@@ -27344,46 +28964,63 @@ def multipole_kicks(knl: RealArray1D, tilt: RealArray1D, ele: EleStruct, orbit: 
     ----------
     knl : float
         Multipole strengths.
+    
     tilt : float
         Multipole tilts.
+    
     ele : EleStruct
         Lattice element containing the multipoles.
+    
     orbit : CoordStruct
         Particle position.
         This parameter is an input/output and is modified in-place. As an output: Kicked particle.
+    
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
+    
     ref_orb_offset : bool, optional
         If present and n = 0 then the multipole simulates a zero length bend with bending angle knl.
     """
 def multipole_kt_to_ab(knl: RealArray1D, knsl: RealArray1D, tn: RealArray1D, an: RealArray1D, bn: RealArray1D) -> None:
     """
+    Wrapper for Fortran routine multipole_kt_to_ab
+    
     Parameters
     ----------
     knl : float
         Normal multitude component.
+    
     knsl : float
         Skew multitude component.
+    
     tn : float
         Multipole angle.
+    
     an : float
         Skew multipole component.
+    
     bn : float
         Normal multipole component.
     """
 def multipole_spin_tracking(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
+    Wrapper for Fortran routine multipole_spin_tracking
+    
     Parameters
     ----------
     ele : EleStruct
         Element
+    
     param : 
         Lat_param_struct
+    
     orbit : CoordStruct
         Particle coordinates.
     """
 def mytan(y: typing.SupportsFloat, x: typing.SupportsFloat, arg: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine mytan
+    
     Parameters
     ----------
     y : 
@@ -27397,7 +29034,6 @@ def n_attrib_string_max_len() -> int:
     Routine to return the the maximum number of characters in any attribute
     name known to bmad.
     
-    
     Returns
     -------
     max_len : int
@@ -27409,6 +29045,8 @@ def n_bins_automatic(n_data: typing.SupportsInt, n: typing.SupportsInt) -> None:
     """
 def n_choose_k(n: typing.SupportsInt, k: typing.SupportsInt, nck: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine n_choose_k
+    
     Parameters
     ----------
     n : 
@@ -27417,14 +29055,19 @@ def n_choose_k(n: typing.SupportsInt, k: typing.SupportsInt, nck: typing.Support
     """
 def n_spline_create(deriv0: RealArray1D, deriv1: RealArray1D, x1: typing.SupportsFloat, n_spline: RealArray1D) -> None:
     """
+    Wrapper for Fortran routine n_spline_create
+    
     Parameters
     ----------
     deriv0 : float
         Derivative vector from order 0 to some order n at x = 0.
+    
     deriv1 : float
         Derivative vector from order 0 to some order n at x = x1.
+    
     x1 : float
         Location where deriv1 derivatives have been evaluated.
+    
     n_spline : 
         real(rp), Derivative vector from order 0 to order 2*n+1 of the interpolation spline.
     """
@@ -27444,6 +29087,8 @@ def naff(cdata: ComplexArray1D, freqs: RealArray1D, amps: ComplexArray1D, opt_du
     """
 def nametable_add(nametable: NametableStruct, name: str, ix_name: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine nametable_add
+    
     Parameters
     ----------
     nametable : 
@@ -27452,6 +29097,8 @@ def nametable_add(nametable: NametableStruct, name: str, ix_name: typing.Support
     """
 def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typing.SupportsInt | None = None, ix_max: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine nametable_bracket_indexx
+    
     Parameters
     ----------
     nametable : 
@@ -27461,6 +29108,8 @@ def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typ
     """
 def nametable_change1(nametable: NametableStruct, name: str, ix_name: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine nametable_change1
+    
     Parameters
     ----------
     nametable : 
@@ -27469,6 +29118,8 @@ def nametable_change1(nametable: NametableStruct, name: str, ix_name: typing.Sup
     """
 def nametable_init(nametable: NametableStruct, n_min: typing.SupportsInt | None = None, n_max: typing.SupportsInt | None = None) -> None:
     """
+    Wrapper for Fortran routine nametable_init
+    
     Parameters
     ----------
     nametable : 
@@ -27477,6 +29128,8 @@ def nametable_init(nametable: NametableStruct, n_min: typing.SupportsInt | None 
     """
 def nametable_remove(nametable: NametableStruct, ix_name: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine nametable_remove
+    
     Parameters
     ----------
     nametable : 
@@ -27484,12 +29137,16 @@ def nametable_remove(nametable: NametableStruct, ix_name: typing.SupportsInt) ->
     """
 def new_control(lat: LatStruct, ele_name: str | None = None) -> int:
     """
+    Wrapper for Fortran routine new_control
+    
     Parameters
     ----------
     lat : LatStruct
         Lat used
+    
     ix_ele : int
         Index of the new control element
+    
     ele_name : unknown, optional
         Name of the new element.
     """
@@ -27513,6 +29170,8 @@ def nint_chk(re_val: typing.SupportsFloat) -> int:
     """
 def normal_form_complex_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool, F: ComplexTaylorStructArray1D | None = None, L: ComplexTaylorStructArray1D | None = None, A: TaylorStructArray1D | None = None, A_inverse: TaylorStructArray1D | None = None, order: typing.SupportsInt | None = None) -> None:
     """
+    Wrapper for Fortran routine normal_form_complex_taylors
+    
     Parameters
     ----------
     one_turn_taylor : 
@@ -27541,11 +29200,11 @@ def normal_form_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool) -> No
      z_Floquet_out = RotationMatrix(phi_a, phi_b, phi_c) . z_Floquet_in
      z_Lab_out = A o z_Floquet_out
     
-    
     Parameters
     ----------
     one_turn_taylor : TaylorStruct
         one turn taylor map
+    
     rf_on : bool
         Was the map calculated with RF on?
     
@@ -27553,8 +29212,10 @@ def normal_form_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool) -> No
     -------
     A : TaylorStruct
         Map from Floquet coordinates to Lab coordinates
+    
     A_inverse : TaylorStruct
         Map from Lab coordinates to Floquet coordinates
+    
     dhdj : TaylorStruct
         Map from Floquet coordinates to phase advances
     """
@@ -27573,8 +29234,10 @@ def normal_mode3_calc(t6: typing.Annotated[collections.abc.Sequence[typing.Annot
     ----------
     mat : float
         1-turn transfer matrix
+    
     above_transition : bool, optional
         If present and false, then z-mode assumes positive slip factor.
+    
     Else negative slip factor assumed. : 
     abz_tunes : float, optional
         Tunes to order eigensystem by.
@@ -27583,19 +29246,24 @@ def normal_mode3_calc(t6: typing.Annotated[collections.abc.Sequence[typing.Annot
     -------
     tune : float
         Tunes of the 3 normal modes (radians)
+    
     B : float
         B is block diagonal and related to the normal mode Twiss parameters.
+    
     HV : float
         Transforms from normal mode coordinates to canonical coordinates: x = H.V.a
     """
 def normal_mode_dispersion(ele: EleStruct, reverse: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine normal_mode_dispersion
+    
     Parameters
     ----------
     ele : EleStruct
         Element whose dispersions are to be adjusted.
         This parameter is an input/output and is modified in-place. As an output: Element with adjusted
         dispersions.
+    
     reverse : bool, optional
         Default is False. If True, calculate the x,y dispersions from the normal mode ones.
     """
@@ -27619,22 +29287,29 @@ def normalize_evecs(evec: typing.Annotated[collections.abc.Sequence[typing.Annot
     """
 def num_field_eles(ele: EleStruct) -> int:
     """
+    Wrapper for Fortran routine num_field_eles
+    
     Parameters
     ----------
     ele : EleStruct
         Element with sum number of associated field elements.
+    
     n_field_ele : int
         Number of associated field elements.
     """
 def num_lords(slave: EleStruct, lord_type: typing.SupportsInt) -> int:
     """
+    Wrapper for Fortran routine num_lords
+    
     Parameters
     ----------
     slave : EleStruct
         Slave element.
+    
     lord_type : int
         Type of lord. super_lord$, multipass_lord$, girder_lord$, group_lord$, overlay_lord$, and governor$ (=
         group + overlay + control + girder)
+    
     num : int
         Number of lords of the given type.
     """
@@ -27658,18 +29333,24 @@ def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_bo
       orbit : CoordStruct
           Starting coords: (x, px, y, py, z, delta) in element body coords.
           This parameter is an input/output and is modified in-place. As an output: Ending coords
+    
       ele : EleStruct
           Element to track through.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       s1_body : float
           Starting point relative to physical entrance.
+    
       s2_body : float
           Ending point relative physical entrance.
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
           through the element.
+    
       make_matrix : bool, optional
           If True then make the 6x6 transfer matrix.
     
@@ -27677,6 +29358,7 @@ def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_bo
       -------
       err_flag : bool
           Set True if there is an error. False otherwise. Note: a particle getting
+    
       lost : 
       for example hitting an aperture : 
       is *not* an error. : 
@@ -27697,25 +29379,34 @@ def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_
       orb : CoordStruct
           Starting coords: (x, px, y, py, s, ps) [t-based]
           This parameter is an input/output and is modified in-place. As an output: Ending coords
+    
       ele : EleStruct
           Element to track through.
+    
       %tracking_method : unknown
           BMAD does no supply em_field_custom. == custom$ then use em_field_custom
+    
       /= custom$ then use em_field_standard : 
       param : LatParamStruct
           Beam parameters.
+    
       t_dir : float
           Direction of time travel = +/-1. Can be negative for patches. Will be -1 if element has a negative length.
+    
       rf_time : float
           Time relative to RF clock.
           This parameter is an input/output and is modified in-place. As an output: Updated time.
+    
       track : TrackStruct, optional
           Structure holding the track information.
+    
       %save_track : bool
           Set True if track is to be saved.
+    
       t_end : float, optional
           If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
           The time orb.t at which tracking stops
+    
       may be less than this if the particle gets to the end of the element : 
       extra_field : EmFieldStruct, optional
           Static field to be added to the element field. Eg used with space charge.
@@ -27724,60 +29415,81 @@ def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_
       -------
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       dt_step : float
           Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
     """
 def offset_particle(ele: EleStruct, set: bool, orbit: CoordStruct, set_tilt: bool | None = None, set_hvkicks: bool | None = None, drift_to_edge: typing.SupportsInt | None = None, s_pos: typing.SupportsFloat | None = None, set_spin: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, time: typing.SupportsFloat | None = None) -> OffsetParticle:
     """
-    Parameters
+    Wrapper for Fortran routine offset_particle
+    
+      Parameters
       ----------
       ele : EleStruct
           Element
+    
       set : bool
           T (= set$)   -> Translate from lab coords to the local element coords.
+    
       orbit : CoordStruct
           Coordinates of the particle.
           This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
+    
       set_tilt : bool, optional
           Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends.
+    
       set_hvkicks : bool, optional
           Default is True.
+    
       drift_to_edge : int, optional
           no$             -> Do not propagate (drift) particle. no$ is default if s_pos is present. upstream_end$
           -> Propagate to upsteam edge. This is default if set = set$ and s_pos is not present. downstream_end$ ->
           Propagate to downsteam edge. This is default if set = unset$ and s_pos is not present.
+    
       s_pos : float, optional
           Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords).
+    
       s_out : float
           Longitudinal particle position. If set = set$: Relative to entrance end (in body coords).
+    
       set_spin : bool, optional
           Default if False.
+    
       mat6 : float, optional
           Transfer matrix before off setting.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
           after offsets applied.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
+    
       spin_qrot : float
           Spin rotation quaternion
+    
       time : float, optional
           Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
           This parameter is an input/output and is modified in-place. As an output: Updated time.
     """
 def offset_photon(ele: EleStruct, orbit: CoordStruct, set: bool, offset_position_only: bool | None = None, rot_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine offset_photon
+    
+      Parameters
       ----------
       ele : EleStruct
           Element
+    
       orbit : CoordStruct
           Coordinates of the particle.
           This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
+    
       set : bool
           T (= set$)   -> Translate from lab coords to element coords. F (= unset$) -> Translate from element coords
           to lab coords.
+    
       offset_position_only : unknown, optional
           If present and True, only offset the position coordinates.
+    
       rot_mat : float, optional
           Rotation matrix from starting coords to ending coords.
     """
@@ -27799,14 +29511,19 @@ def omega_to_quat(omega: typing.Annotated[collections.abc.Sequence[typing.Suppor
     """
 def one_turn_mat_at_ele(ele: EleStruct, phi_a: typing.SupportsFloat, phi_b: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(4)"]], "FixedSize(4)"]:
     """
-    Parameters
+    Wrapper for Fortran routine one_turn_mat_at_ele
+    
+      Parameters
       ----------
       ele : EleStruct
           Reference element.
+    
       phi_a : float
           "a" mode tune in radians.
+    
       phi_b : float
           "b" mode tune in radians.
+    
       mat4 : float
           1-Turn coupled matrix.
     """
@@ -27820,8 +29537,10 @@ def open_binary_file(file_name: str, action: str, r_name: str) -> OpenBinaryFile
       ----------
       file_name : unknown
           File to create.
+    
       action : unknown
           'READ' or 'WRITE'
+    
       r_name : unknown
           Calling routine name for error messages.
     
@@ -27829,8 +29548,10 @@ def open_binary_file(file_name: str, action: str, r_name: str) -> OpenBinaryFile
       -------
       iu : int
           Unit number of opened file.
+    
       iver : int
           Version number if action = 'READ'
+    
       is_ok : bool
           Open OK?
     """
@@ -27854,71 +29575,98 @@ def openpmd_species_name(species: typing.SupportsInt) -> str:
     """
 def orbit_amplitude_calc(ele: EleStruct, orb: CoordStruct) -> OrbitAmplitudeCalc:
     """
-    Parameters
+    Wrapper for Fortran routine orbit_amplitude_calc
+    
+      Parameters
       ----------
       ele : EleStruct
           Element holding the Twiss parameters,
+    
       orb : CoordStruct
           Orbit coordinates at the exit end of ele.
+    
       amp_a : float
           a-mode amplitude
+    
       amp_b : float
           b-mode amplitude
+    
       amp_na : float
           a-mode, energy normalized, amplitude.
+    
       amp_nb : float
           b-mode, energy normalized, amplitude.
     """
 def orbit_reference_energy_correction(orbit: CoordStruct, p0c_new: typing.SupportsFloat, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine orbit_reference_energy_correction
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Coordinates to correct.
+    
       p0c_new : float
           New reference momentum.
+    
       mat6 : float, optional
           Transfer matrix before correction.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
           including correction.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def orbit_to_floor_phase_space(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[list[float], "FixedSize(6)"]:
     """
-    Parameters
+    Wrapper for Fortran routine orbit_to_floor_phase_space
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Particle orbit in local (not element) coordinates.
+    
       ele : EleStruct
           Lattice element particle is in.
+    
       floor_phase_space : float
           Floor phase space
     """
 def orbit_to_local_curvilinear(orbit: CoordStruct, ele: EleStruct, z_direction: typing.SupportsInt | None = None, relative_to: typing.SupportsInt | None = None) -> FloorPositionStruct:
     """
-    Parameters
+    Wrapper for Fortran routine orbit_to_local_curvilinear
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Particle orbit in laboratory (not body) coordinates.
+    
       ele : EleStruct
           Lattice element particle is in.
+    
       z_direction : int, optional
           Set to +1 or -1.  Z-direction of particle velocity
+    
       relative_to : int, optional
           not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
+    
       local_position : FloorPositionStruct
           Position in local coordinates.
     """
 def orbit_too_large(orbit: CoordStruct, check_momentum: bool | None = None) -> OrbitTooLarge:
     """
-    Parameters
+    Wrapper for Fortran routine orbit_too_large
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Particle orbit.
+    
       param : LatParamStruct
+    
       check_momentum : bool, optional
           If True (default) check the momentum.
+    
       is_too_large : bool
           True if orbit is too large. False otherwise.
     """
@@ -27933,12 +29681,15 @@ def order_evecs_by_n_similarity(eval: typing.Annotated[collections.abc.Sequence[
       ----------
       eval : complex
           complex eigenvalues.
+    
       evecr : complex
           complex eigenvectors arranged down columns.
+    
       mat_tunes : float
           Three normal mode tunes, in radians.
           This parameter is an input/output and is modified in-place. As an output: Ordered normal mode tunes, in
           radians.
+    
       Nmat : float
           Normalized, real eigen matrix from make_N.
     
@@ -27946,6 +29697,7 @@ def order_evecs_by_n_similarity(eval: typing.Annotated[collections.abc.Sequence[
       -------
       evec : complex
           complex eigenvectors arranged down columns.
+    
       err_flag : bool
           Set True if there is an error. False otherwise
     """
@@ -27964,9 +29716,11 @@ def order_evecs_by_plane_dominance(evec: typing.Annotated[collections.abc.Sequen
       eval : complex
           complex eigenvalues.
           This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvalues.
+    
       evec : complex
           complex eigenvectors arranged down columns.
           This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvectors.
+    
       mat_tunes : float, optional
           Three normal mode tunes, in radians.
           This parameter is an input/output and is modified in-place. As an output: Reordered same as evecs.
@@ -27983,11 +29737,14 @@ def order_evecs_by_tune(evec: typing.Annotated[collections.abc.Sequence[typing.A
       eval : complex
           complex eigenvalues.
           This parameter is an input/output and is modified in-place. As an output: Ordered eigenvalues.
+    
       evec : complex
           complex eigenvectors arranged down columns.
           This parameter is an input/output and is modified in-place. As an output: Ordered eigenvectors.
+    
       mat_tunes : float
           Three normal mode tunes, in radians.
+    
       abz_tunes : float
           Tunes to order eigensystem by.
     
@@ -28008,6 +29765,7 @@ def order_particles_in_z(bunch: BunchStruct) -> None:
       ----------
       bunch : BunchStruct
           collection of particles.
+    
       %particle : 
           Longitudinal position of j^th particle.
     
@@ -28019,16 +29777,21 @@ def order_particles_in_z(bunch: BunchStruct) -> None:
     """
 def order_super_lord_slaves(lat: LatStruct, ix_lord: typing.SupportsInt) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine order_super_lord_slaves
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat.
           This parameter is an input/output and is modified in-place. As an output: Lat with fixed controls.
+    
       ix_lord : int
           Index of lord element.
     """
 def ordinal_str(n: typing.SupportsInt, str: str) -> None:
     """
+    Wrapper for Fortran routine ordinal_str
+    
     Parameters
     ----------
     n : 
@@ -28036,7 +29799,9 @@ def ordinal_str(n: typing.SupportsInt, str: str) -> None:
     """
 def osc_alloc_freespace_array(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine osc_alloc_freespace_array
+    
+      Parameters
       ----------
       nlo : 
       nhi : 
@@ -28044,7 +29809,9 @@ def osc_alloc_freespace_array(nlo: typing.Annotated[collections.abc.Sequence[typ
     """
 def osc_alloc_image_array(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine osc_alloc_image_array
+    
+      Parameters
       ----------
       nlo : 
       nhi : 
@@ -28052,7 +29819,9 @@ def osc_alloc_image_array(nlo: typing.Annotated[collections.abc.Sequence[typing.
     """
 def osc_alloc_rectpipe_arrays(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine osc_alloc_rectpipe_arrays
+    
+      Parameters
       ----------
       nlo : 
       nhi : 
@@ -28060,7 +29829,9 @@ def osc_alloc_rectpipe_arrays(nlo: typing.Annotated[collections.abc.Sequence[typ
     """
 def osc_getgrnpipe(gam: typing.SupportsFloat, a: typing.SupportsFloat, b: typing.SupportsFloat, delta: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], umin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine osc_getgrnpipe
+    
+      Parameters
       ----------
       gam : 
       a : 
@@ -28070,10 +29841,14 @@ def osc_getgrnpipe(gam: typing.SupportsFloat, a: typing.SupportsFloat, b: typing
       npad : 
     """
 def osc_read_rectpipe_grn() -> None:
-    ...
+    """
+    Wrapper for Fortran routine osc_read_rectpipe_grn
+    """
 def osc_write_rectpipe_grn(apipe: typing.SupportsFloat, bpipe: typing.SupportsFloat, delta: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], umin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], umax: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], gamma: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine osc_write_rectpipe_grn
+    
+      Parameters
       ----------
       apipe : 
       bpipe : 
@@ -28103,6 +29878,8 @@ def parse_cartesian_map(ct_map: CartesianMapStruct, ele: EleStruct, lat: LatStru
     """
 def parse_cylindrical_map(cl_map: CylindricalMapStruct, ele: EleStruct, lat: LatStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
     """
+    Wrapper for Fortran routine parse_cylindrical_map
+    
     Parameters
     ----------
     cl_map : 
@@ -28114,6 +29891,8 @@ def parse_cylindrical_map(cl_map: CylindricalMapStruct, ele: EleStruct, lat: Lat
     """
 def parse_fortran_format(format_str: str, n_repeat: typing.SupportsInt, power: typing.SupportsInt, descrip: str, width: typing.SupportsInt, digits: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine parse_fortran_format
+    
     Parameters
     ----------
     format_str : 
@@ -28131,6 +29910,8 @@ def parse_gen_grad_map(gg_map: GenGradMapStruct, ele: EleStruct, lat: LatStruct,
     """
 def parse_grid_field(g_field: GridFieldStruct, ele: EleStruct, lat: LatStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
     """
+    Wrapper for Fortran routine parse_grid_field
+    
     Parameters
     ----------
     g_field : 
@@ -28165,22 +29946,30 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     ----------
     err_str : unknown
         Error string to print if there is an error.
+    
     lat : LatStruct
         lattice
+    
     int_array : int
         the array to be read in
         This parameter is an input/output and is modified in-place. As an output: Array of values.
+    
     Optional: : 
     num_expected = 1 : int
         number of expected arguments. Used to initialize int_array.
+    
     open_delim   = ' : unknown
         opening delimeter.
+    
     separator    = ' : unknown
         separating character.
+    
     ' : unknown
         separating character.
+    
     close_delim  = ')' : unknown
         closing delimeter.
+    
     default_value = 0 : float
         inital assignment of int_array elements.
     
@@ -28188,10 +29977,13 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     -------
     is_ok : bool
         Set True if everything is ok.
+    
     num_found : int
         number of elements.
+    
     delim : unknown
         Delimiter found where the parsing of the input line stops.
+    
     delim_found : bool
         Delimiter found? False if end of input command.
     """
@@ -28211,8 +30003,10 @@ def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact
     ----------
     lat : LatStruct
         Lattice
+    
     err_str : unknown
         Error string to print if there is an error.
+    
     exact_size : 
     open_delim : 
     separator : 
@@ -28244,24 +30038,33 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     ----------
     lat : LatStruct
         lattice
+    
     err_str : unknown
         Error string to print if there is an error.
+    
     real_array : float
         the array to be read in
         This parameter is an input/output and is modified in-place. As an output: Array of values
+    
     num_expected = 10 : int, optional
         number of expected arguments
+    
     Used to initialize real_array : 
     open_brace   = ' : unknown, optional
         opening delimeter.
+    
     separator    = ' : unknown, optional
         separating character
+    
     ' : unknown, optional
         separating character
+    
     close_brace  = ')' : unknown, optional
         closing delimeter
+    
     default_value = 0.0_rp : float, optional
         inital assignment of real_array elements.
+    
     single_value = False : bool, optional
         If true then an array with a single value and no braces is accepted.
     
@@ -28269,10 +30072,13 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     -------
     is_ok : bool
         Set True if everything is ok
+    
     num_found : int
         number of elements
+    
     delim : unknown
         Delimiter found where the parsing of the input line stops.
+    
     delim_found : bool
         Stopping delimiter found? False if end of input command.
     
@@ -28283,6 +30089,8 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     """
 def parser_add_constant(word: str, lat: LatStruct, redef_is_error: bool) -> None:
     """
+    Wrapper for Fortran routine parser_add_constant
+    
     Parameters
     ----------
     word : 
@@ -28309,6 +30117,7 @@ def parser_fast_complex_read(cmplx_vec: ComplexArray1D, ele: EleStruct, err_str:
     ----------
     ele : EleStruct
         Lattice element associated with the array. Used for error messages.
+    
     err_str : unknown
         String used when printing error messages identifying where in the lattice file the error is occuring.
     
@@ -28316,15 +30125,16 @@ def parser_fast_complex_read(cmplx_vec: ComplexArray1D, ele: EleStruct, err_str:
     -------
     cmplx_vec : complex
         Complex vector.
+    
     delim : unknown
         Delimitor at end of array. Must be "," or "}"
+    
     is_ok : bool
         True if everything OK. False otherwise.
     """
 def parser_fast_integer_read(int_vec: IntArray1D, ele: EleStruct, delim_wanted: str, err_str: str, is_ok: bool) -> None:
     """
     Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
-    
     
     Returns
     -------
@@ -28346,10 +30156,13 @@ def parser_fast_real_read(real_vec: RealArray1D, ele: EleStruct, end_delims: str
     ----------
     ele : EleStruct
         Lattice element associated with the array. Used for error messages.
+    
     end_delims : unknown
         List of possible ending delimitors.
+    
     err_str : unknown
         String used when printing error messages identifying where in
+    
     the lattice file the error is occuring. : 
     exact_size : bool, optional
         If True (default), number of values must match real_vec size.
@@ -28358,10 +30171,13 @@ def parser_fast_real_read(real_vec: RealArray1D, ele: EleStruct, end_delims: str
     -------
     real_vec : complex
         Real vector.
+    
     delim : unknown
         Delimitor at end of array.
+    
     is_ok : bool
         True if everything OK. False otherwise.
+    
     n_real : int
         Number of elements found.
     """
@@ -28375,6 +30191,8 @@ def parser_file_stack(how: str, file_name_in: str | None = None, finished: bool 
     """
 def parser_get_integer(int_val: typing.SupportsInt, word: str, ix_word: typing.SupportsInt, delim: str, delim_found: bool, err: bool, str1: str | None = None, str2: str | None = None) -> None:
     """
+    Wrapper for Fortran routine parser_get_integer
+    
     Parameters
     ----------
     int_val : 
@@ -28388,6 +30206,8 @@ def parser_get_integer(int_val: typing.SupportsInt, word: str, ix_word: typing.S
     """
 def parser_get_logical(attrib_name: str, this_logic: bool, ele_name: str, delim: str, delim_found: bool, err: bool) -> None:
     """
+    Wrapper for Fortran routine parser_get_logical
+    
     Parameters
     ----------
     attrib_name : 
@@ -28446,6 +30266,7 @@ def parser_read_old_format_lr_wake(ele: EleStruct, lr_file_name: str) -> None:
     ele : EleStruct
         Element containing wake structure.
         This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+    
     lr_file_name : unknown
         Name of long-range wake field file.
     
@@ -28466,6 +30287,7 @@ def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
     ele : EleStruct
         Element containing wake structure.
         This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+    
     sr_file_name : unknown
         Name of short-range wake field file.
     
@@ -28473,8 +30295,10 @@ def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
     -------
     %wake%sr%table : 
         Short-range wake potential.
+    
     %wake%sr%long : 
         Short-range wake potential.
+    
     %wake%sr%trans : 
         Short-range wake potential.
     """
@@ -28508,8 +30332,10 @@ def parser_transfer_control_struct(con_in: ControlStruct, lord: EleStruct, ix_va
     ----------
     con_in : ControlStruct
         Input control structure.
+    
     lord : EleStruct
         Lord element associated with the control_struct.
+    
     ix_var : int
         If an expression stack evaluates to a constant, this routine will modify the expression stack to evaluate
         to the value of: lord.control.var(ix_var) * constant
@@ -28529,13 +30355,17 @@ def particle_in_global_frame(orb: CoordStruct, branch: BranchStruct, in_time_coo
     ----------
     orb : CoordStruct
         particle in s-coordinates
+    
     branch : BranchStruct
         branch that contains branch.ele(orb.ix_ele)
+    
     in_time_coordinates : bool
         Default is false. If true, orb
+    
     will taken as in time coordinates. : 
     in_body_frame : bool
         Default is true. If false, ele offsets will be ignored.
+    
     Result: : 
     particle : CoordStruct
         particle in global time coordinates
@@ -28546,66 +30376,90 @@ def particle_in_global_frame(orb: CoordStruct, branch: BranchStruct, in_time_coo
     """
 def particle_is_moving_backwards(orbit: CoordStruct) -> bool:
     """
+    Wrapper for Fortran routine particle_is_moving_backwards
+    
     Parameters
     ----------
     orbit : CoordStruct
         Particle coordinates
+    
     is_moving_backwards : bool
         True if moving backward. False otherwise.
     """
 def particle_is_moving_forward(orbit: CoordStruct, dir: typing.SupportsInt | None = None) -> bool:
     """
+    Wrapper for Fortran routine particle_is_moving_forward
+    
     Parameters
     ----------
     orbit : CoordStruct
         Particle coordinates
+    
     dir : int, optional
         +1 if tracking forward(default) or -1 to return True if tracking backwards.
+    
     is_moving_forward : bool
         True if moving forward. False otherwise.
     """
 def particle_rf_time(orbit: CoordStruct, ele: EleStruct, reference_active_edge: bool | None = None, s_rel: typing.SupportsFloat | None = None, time_coords: bool | None = None, rf_freq: typing.SupportsFloat | None = None, abs_time: bool | None = None, time: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine particle_rf_time
+    
     Parameters
     ----------
     orbit : CoordStruct
         Particle coordinates
+    
     ele : EleStruct
         Element being tracked through.
+    
     reference_active_edge : unknown
         If True, and ele is a rfcavity or lcavity, use the active edge (edge of the
+    
     s_rel : float, optional
         Longitudinal position relative to the upstream edge of the element.
+    
     time_coords : bool, optional
         Default False. If True then orbit is using time based phase space coordinates.
+    
     rf_freq : float, optional
         If present, the returned time shifted by an integer multiple of 1/rf_freq to be in the range
         [-1/2*rf_freq, 1/2*rf_freq]. This is useful to
+    
     abs_time : float, optional
         If False (default) use setting of bmad_com.absolute_time_tracking. If True, use absolute time instead of
         relative time.
+    
     time : float
         Current time.
     """
 def patch_flips_propagation_direction(x_pitch: typing.SupportsFloat, y_pitch: typing.SupportsFloat) -> bool:
     """
+    Wrapper for Fortran routine patch_flips_propagation_direction
+    
     Parameters
     ----------
     x_pitch : float
         Rotaion around y-axis
+    
     y_pitch : float
         Rotation around x-axis.
+    
     is_flip : bool
         True if patch does a flip
     """
 def patch_length(patch: EleStruct, ref_coords: typing.SupportsInt | None = None) -> float:
     """
+    Wrapper for Fortran routine patch_length
+    
     Parameters
     ----------
     patch : EleStruct
         Patch element.
+    
     ref_coords : int, optional
         Reference coords to use. entrance_end$, exit_end$ Default is nint(patch.value(ref_coords$)).
+    
     length : float
         Length of patch.
     """
@@ -28620,6 +30474,7 @@ def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloa
     ----------
     material : unknown
         Material name.
+    
     Energy : float
         Photon energy (eV).
     
@@ -28627,8 +30482,10 @@ def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloa
     -------
     absorption : float
         E_field ~ Exp(-absorption * length)
+    
     phase_shift : float
         E_field Phase shift (radians) per unit length relative to vacuum.
+    
     err_flag : bool
         Set true if material not recognized.
     """
@@ -28645,11 +30502,14 @@ def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, e
     ----------
     orbit0 : CoordStruct
         Photon coords at beginning of lattice
+    
     orbit : CoordStruct
         Photon coords at the detector.
+    
     ele : EleStruct
         Element with grid.
         This parameter is an input/output and is modified in-place. As an output: Element with updatted grid.
+    
     pixel_pt : PixelPtStruct, optional
         If present then use this grid point instead of the grid point determined by the (x, y) coords of the
         photon
@@ -28659,6 +30519,7 @@ def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, e
     ix_pt : int
         Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
         argument is present.
+    
     iy_pt : int
         Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
         argument is present.
@@ -28673,8 +30534,10 @@ def photon_reflection(graze_angle_in: typing.SupportsFloat, energy: typing.Suppo
     ----------
     graze_angle_in : float
         Incident grazing (not polar) angle in radians.
+    
     energy : float
         Photon energy in eV.
+    
     surface : PhotonReflectSurfaceStruct
         surface info
     
@@ -28682,6 +30545,7 @@ def photon_reflection(graze_angle_in: typing.SupportsFloat, energy: typing.Suppo
     -------
     graze_angle_out : float
         graze_angle in radians.
+    
     phi_out : float
         Azimuthal angle in radians.
     """
@@ -28693,7 +30557,6 @@ def photon_reflection_std_surface_init() -> PhotonReflectSurfaceStruct:
     The standard tables are for 10 nm C film on Al substrate.
     The surface roughness for diffuse scattering is 200 nm and the
     the surface roughness correlation length is 5.5 um.
-    
     
     Returns
     -------
@@ -28716,8 +30579,10 @@ def photon_reflectivity(angle: typing.SupportsFloat, energy: typing.SupportsFloa
     ----------
     angle : float
         Incident grazing angle in radians.
+    
     energy : float
         Photon energy in eV.
+    
     surface : PhotonReflectSurfaceStruct
         surface info
     
@@ -28725,6 +30590,7 @@ def photon_reflectivity(angle: typing.SupportsFloat, energy: typing.SupportsFloa
     -------
     p_reflect : float
         Reflection probability.
+    
     rel_p_specular : float
         Relative specular reflection probability.
     """
@@ -28738,10 +30604,13 @@ def photon_target_corner_calc(aperture_ele: EleStruct, x_lim: typing.SupportsFlo
     ----------
     aperture_ele : EleStruct
         Element containing the aperture
+    
     x_lim : float
         Transverse corner points in aperture_ele coord frame.
+    
     y_lim : float
         Transverse corner points in aperture_ele coord frame.
+    
     source_ele : EleStruct
         Photon source element.
     
@@ -28785,16 +30654,22 @@ def photon_type(ele: EleStruct) -> int:
     """
 def physical_ele_end(track_end: typing.SupportsInt, orbit: CoordStruct, ele_orientation: typing.SupportsInt, return_stream_end: bool | None = None) -> int:
     """
+    Wrapper for Fortran routine physical_ele_end
+    
     Parameters
     ----------
     track_end : int
         first_track_edge$, second_track_edge$, surface$, or in_between$
+    
     orbit : CoordStruct
         Particle position.
+    
     ele_orientation : int
         Either 1 = Normal or -1 = element reversed.
+    
     return_stream_end : bool, optional
         If True return the stream end instead of the physical end. Default is False.
+    
     physical_end : int
         Return_stream_end ->  Possibilities False             ->  entrance_end$, exit_end$, surface$, or
         in_between$ True              ->  upstream_end$, downstream_end$
@@ -28810,16 +30685,21 @@ def point_photon_emission(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
     ----------
     ele : EleStruct
         Emitting element.
+    
     param : LatParamStruct
         lattice parameters.
+    
     orbit : CoordStruct
         phase-space coords of photon. --   Will be in curved surface coords if there is a curved surface.
         This parameter is an input/output and is modified in-place. As an output: Final phase-space coords
+    
     direction : int
         +1 -> Emit in forward +z direction, -1 -> emit backwards.
+    
     max_target_area : float
         Area of the solid angle photons may be emitted over. max_target_area is used for normalizing the photon
         field.
+    
     generally will be equal to twopi or fourpi. : 
     w_to_surface : float, optional
         Rotation matrix for curved surface.
@@ -28849,12 +30729,16 @@ def pointer_to_branch(ele: EleStruct) -> BranchStruct | None:
     ----------
     ele : EleStruct
         Element contained in the branch.
+    
     branch_name : unknown
         May be a branch name or a branch index.
+    
     lat : LatStruct
         Lattice to search.
+    
     parameter_is_branch0 : bool, optional
         If True, 'PARAMETER' is taken to be
+    
     an alternative name for branch : 
     blank_branch : int, optional
         Branch index if branch_name = ''. Default is blank is an error.
@@ -28893,12 +30777,16 @@ def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bo
     ----------
     ele : EleStruct
         Element contained in the branch.
+    
     branch_name : unknown
         May be a branch name or a branch index.
+    
     lat : LatStruct
         Lattice to search.
+    
     parameter_is_branch0 : bool, optional
         If True, 'PARAMETER' is taken to be
+    
     an alternative name for branch : 
     blank_branch : int, optional
         Branch index if branch_name = ''. Default is blank is an error.
@@ -28936,16 +30824,22 @@ def pointer_to_ele(lat: LatStruct, ix_ele: typing.SupportsInt, ix_branch: typing
     ----------
     lat : LatStruct
         Lattice.
+    
     ix_ele : int
         Index of element in lat.branch(ix_branch).
+    
     ix_branch : int
         Index of the lat.branch(:) containing the element.
+    
     ix_nametable : int
         Nametable index. See above
+    
     ele_loc : LatEleLocStruct
         Location identification.
+    
     ele_name : unknown
         Name or index of element.
+    
     foreign_ele : EleStruct
         Lattice element in another lattice.
     
@@ -28986,16 +30880,22 @@ def pointer_to_ele(lat: LatStruct, ele_loc: LatEleLocStruct) -> EleStruct | None
     ----------
     lat : LatStruct
         Lattice.
+    
     ix_ele : int
         Index of element in lat.branch(ix_branch).
+    
     ix_branch : int
         Index of the lat.branch(:) containing the element.
+    
     ix_nametable : int
         Nametable index. See above
+    
     ele_loc : LatEleLocStruct
         Location identification.
+    
     ele_name : unknown
         Name or index of element.
+    
     foreign_ele : EleStruct
         Lattice element in another lattice.
     
@@ -29036,16 +30936,22 @@ def pointer_to_ele(lat: LatStruct, ele_name: str) -> EleStruct | None:
     ----------
     lat : LatStruct
         Lattice.
+    
     ix_ele : int
         Index of element in lat.branch(ix_branch).
+    
     ix_branch : int
         Index of the lat.branch(:) containing the element.
+    
     ix_nametable : int
         Nametable index. See above
+    
     ele_loc : LatEleLocStruct
         Location identification.
+    
     ele_name : unknown
         Name or index of element.
+    
     foreign_ele : EleStruct
         Lattice element in another lattice.
     
@@ -29086,16 +30992,22 @@ def pointer_to_ele(lat: LatStruct, foreign_ele: EleStruct) -> EleStruct | None:
     ----------
     lat : LatStruct
         Lattice.
+    
     ix_ele : int
         Index of element in lat.branch(ix_branch).
+    
     ix_branch : int
         Index of the lat.branch(:) containing the element.
+    
     ix_nametable : int
         Nametable index. See above
+    
     ele_loc : LatEleLocStruct
         Location identification.
+    
     ele_name : unknown
         Name or index of element.
+    
     foreign_ele : EleStruct
         Lattice element in another lattice.
     
@@ -29143,10 +31055,13 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     ----------
     branch : BranchStruct
         Branch to use
+    
     s : float
         Longitudinal position.
+    
     choose_max : bool
         See above.
+    
     print_err : bool, optional
         Print error message if there is an error? Default is True.
     
@@ -29154,16 +31069,22 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     -------
     ele : EleStruct
         Pointer to element at s.
+    
     err_flag : bool
         Set True if s is out of bounds. False otherwise.
+    
     s_eff : float
         Effective s. Equal to s with a open lattice. See above.
+    
     position : CoordStruct
         Positional information.
+    
     %s : 
         Same as input s.
+    
     %ix_ele : 
         Same as output ix_ele
+    
     %location : 
         Location relative to element. Upstream_end$, downstream_end$, or inside$
     
@@ -29177,83 +31098,115 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     """
 def pointer_to_fibre(ele: EleStruct) -> Fibre | None:
     """
+    Wrapper for Fortran routine pointer_to_fibre
+    
     Parameters
     ----------
     ele : EleStruct
         Bmad element
+    
     assoc_fibre : unknown
         Pointer to the associated fibre.
     """
 def pointer_to_field_ele(ele: EleStruct, ix_field_ele: typing.SupportsInt) -> PointerToFieldEle:
     """
+    Wrapper for Fortran routine pointer_to_field_ele
+    
     Parameters
     ----------
     ele : EleStruct
         Element with sum number of associated field elements.
+    
     ix_field_ele : int
         Index of the field element to point to. This index runs from 1 to num_field_eles(ele).
+    
     dz_offset : float
         Longitudinal offset of ele upstream edge from the field ele pointed to.
+    
     field_ele : EleStruct
         Pointer to the field element with index ix_field_ele.
     """
 def pointer_to_girder(ele: EleStruct) -> PointerToGirder:
     """
+    Wrapper for Fortran routine pointer_to_girder
+    
     Parameters
     ----------
     ele : EleStruct
         Element to check.
+    
     ix_slave_back : int
         Index back to ele. That is, pointer_to_slave(girder, ix_slave_back)
+    
     girder : EleStruct
         : Pointer to the girder. Null if ele is not girder supported.
     """
 def pointer_to_lord(slave: EleStruct, ix_lord: typing.SupportsInt, lord_type: typing.SupportsInt | None = None) -> PointerToLord:
     """
+    Wrapper for Fortran routine pointer_to_lord
+    
     Parameters
     ----------
     slave : EleStruct
         Slave element.
+    
     ix_lord : int
         Index of the lord.
+    
     control : ControlStruct
         Pointer to control info for this lord/slave relationship.
+    
     ix_slave_back : int
         Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
+    
     lord_type : int, optional
         See above.
+    
     ix_control : int
         Index in lat.control(:) array the control argument is at.
+    
     ix_ic : int
         Index of the lat.ic(:) element associated with the control argument.
+    
     lord_ptr : EleStruct
         Pointer to the lord.
     """
 def pointer_to_multipass_lord(ele: EleStruct) -> PointerToMultipassLord:
     """
+    Wrapper for Fortran routine pointer_to_multipass_lord
+    
     Parameters
     ----------
     ele : EleStruct
         Lattice element.
+    
     ix_pass : int
         Multipass turn number. Set to 0 if element is a multipass_lord.
+    
     super_lord : EleStruct
         super_lord of the element. Set to NULL if ele is not a super_slave or super_lord.
+    
     multi_lord : EleStruct
         multipass_lord if there is one. Set to NULL if there is no multipass_lord.
     """
 def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None = None, skip_beginning: bool | None = None, follow_fork: bool | None = None, next_ele: EleStruct) -> None:
     """
+    Wrapper for Fortran routine pointer_to_next_ele
+    
     Parameters
     ----------
     this_ele : EleStruct
         Starting element.
+    
     offset : int, optional
         +1 -> return next element, +2 -> element
+    
     skip_beginning : bool, optional
         If True then skip beginning element #0
+    
     follow_fork : bool, optional
         If True then fork at any fork element. Default is False.
+    
     next_ele : EleStruct
         Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
     """
@@ -29267,6 +31220,7 @@ def pointer_to_ran_state(ran_state: RandomStateStruct | None = None, ix_thread: 
     ----------
     ran_state : RandomStateStruct, optional
         Point to this if present.
+    
     Otherwise point to the global saved state. : 
     ix_thread : int, optional
         Thread index.
@@ -29294,8 +31248,10 @@ def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: t
     ----------
     lord : EleStruct
         Lord element
+    
     ix_slave : int
         Index of the slave in the list of slaves controled by the lord..
+    
     lord_type : int, optional
         See above.
     
@@ -29303,15 +31259,19 @@ def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: t
     -------
     slave_ptr : EleStruct
         Pointer to the slave.
+    
     Nullified if there is an error. : 
     control : ControlStruct
         Pointer to control info for this lord/slave relationship.
+    
     Nullified if there is an error. : 
     ix_lord_back : int
         Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back)
+    
     will point back to the lord. Set to -1 if there is an error. : 
     ix_control : int
         Index in lat.control(:) array the control argument is at.
+    
     ix_ic : int
         Index of the lat.ic(:) element associated with the control argument.
     
@@ -29322,20 +31282,28 @@ def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: t
     """
 def pointer_to_super_lord(slave: EleStruct, lord_type: typing.SupportsInt | None = None) -> PointerToSuperLord:
     """
+    Wrapper for Fortran routine pointer_to_super_lord
+    
     Parameters
     ----------
     slave : EleStruct
         Slave element.
+    
     control : ControlStruct
         Pointer to control info for this lord/slave relationship.
+    
     ix_slave_back : int
         Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
+    
     ix_control : int
         Index in lat.control(:) array the control argument is at.
+    
     ix_ic : int
         Index of the lat.ic(:) element associated with the control argument.
+    
     lord_type : int, optional
         If present, only return a super_lord of this type.
+    
     lord_ptr : EleStruct
         Pointer to the lord.
     """
@@ -29351,14 +31319,18 @@ def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.
     ----------
     ele : EleStruct
         Element containing the grid
+    
     nearest : bool
         If True, return pointer to nearest grid point.
+    
     If False : 
     return pointer to the grid point lower and left of : 
     x : float
         Photon position.
+    
     y : float
         Photon position.
+    
     extend_grid : bool, optional
         If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
     
@@ -29366,14 +31338,18 @@ def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.
     -------
     ix : int
         Grid point index.
+    
     iy : int
         Grid point index.
+    
     pt : GridPointStruct
         Pointer to grid point.
+    
     Will not be associated if : 
     xx : float
         Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
         the nearest grid boundary point.
+    
     yy : float
         Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
         the nearest grid boundary point.
@@ -29390,14 +31366,18 @@ def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.Sup
     ----------
     ele : EleStruct
         Element containing the grid
+    
     nearest : bool
         If True, return pointer to nearest grid point.
+    
     If False : 
     return pointer to the grid point lower and left of : 
     x : float
         Photon position.
+    
     y : float
         Photon position.
+    
     extend_grid : bool, optional
         If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
     
@@ -29405,26 +31385,34 @@ def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.Sup
     -------
     ix : int
         Grid point index.
+    
     iy : int
         Grid point index.
+    
     pt : GridPointStruct
         Pointer to grid point.
+    
     Will not be associated if : 
     xx : float
         Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
         the nearest grid boundary point.
+    
     yy : float
         Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
         the nearest grid boundary point.
     """
 def pointer_to_wake_ele(ele: EleStruct) -> PointerToWakeEle:
     """
+    Wrapper for Fortran routine pointer_to_wake_ele
+    
     Parameters
     ----------
     ele : EleStruct
         Lattice element.
+    
     delta_s : float
         distance of wake locaiton from beginning of ele.
+    
     wake_ele : EleStruct
         Element having the associated wake.
     """
@@ -29441,6 +31429,7 @@ def pointer_to_wall3d(ele: EleStruct, ix_wall: typing.SupportsInt | None = None)
     ----------
     ele : EleStruct
         lattice element.
+    
     ix_wall : int, optional
         index in wall3d(:) array. Default is 1.
     
@@ -29448,53 +31437,71 @@ def pointer_to_wall3d(ele: EleStruct, ix_wall: typing.SupportsInt | None = None)
     -------
     wall3d : Wall3DStruct
         Pointer to the associated wall structure.
+    
     Will be nullified if there is no associated wall. : 
     ds_offset : float
         Element offset: s(beginning of ele) - s(beginning of wall3d)
+    
     is_branch_wall : bool
         Set True if wall3d points to branch.wall3d.
     """
 def polar_to_spinor(polar: SpinPolarStruct) -> typing.Annotated[list[complex], "FixedSize(2)"]:
     """
+    Wrapper for Fortran routine polar_to_spinor
+    
     Parameters
     ----------
     polar : SpinPolarStruct
         includes polar phase
+    
     spinor : complex
         Spinor
     """
 def polar_to_vec(polar: SpinPolarStruct) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
+    Wrapper for Fortran routine polar_to_vec
+    
     Parameters
     ----------
     polar : 
         Spin_polar_struct
+    
     vec : 
         Real(3)
     """
 def poly_eval(poly: RealArray1D, x: typing.SupportsFloat, diff_coef: bool | None = None) -> float:
     """
+    Wrapper for Fortran routine poly_eval
+    
     Parameters
     ----------
     poly : float
         Polynomial
+    
     x : float
         Point to evaluate at.
+    
     diff_coef : bool, optional
         poly(:) array are differentials? Default is False.
+    
     y : float
         Value of polynomial.
     """
 def probability_funct(x: typing.SupportsFloat, prob: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine probability_funct
+    
     Parameters
     ----------
     x : float
         Function argument.
+    
     prob : 
     """
 def projdd(a: ComplexArray1D, b: ComplexArray1D, func_retval__: complex) -> None:
     """
+    Wrapper for Fortran routine projdd
+    
     Parameters
     ----------
     a : 
@@ -29522,18 +31529,25 @@ def project_emit_to_xyz(ring: LatStruct, ix: typing.SupportsInt, mode: NormalMod
     ----------
     ring : LatStruct
         the storage ring
+    
     ix : int
         element at which to make the projection
+    
     mode : NormalModesStruct
         normal mode emittances
+    
     %a%emittance : float
         a-mode emittance
+    
     %b%emittance : float
         b-mode emittance
+    
     %z%emittance : float
         z-mode emittance
+    
     %a%tune : float
         a-mode tune.  Used to associate emittances with the proper mode.
+    
     %b%tune : float
         b-mode tune.  Used to associate emittances with the proper mode.
     
@@ -29541,8 +31555,10 @@ def project_emit_to_xyz(ring: LatStruct, ix: typing.SupportsInt, mode: NormalMod
     -------
     sigma_x : float
         projected horizontal beamsize
+    
     sigma_y : float
         projected vertical beamsize
+    
     sigma_z : float
         projected longitudinal beamsize
     """
@@ -29558,8 +31574,10 @@ def psi_prime_sca(t: typing.SupportsFloat, p: typing.SupportsFloat, args: typing
     ----------
     t : float
         time relative to RF bucket
+    
     p : float
         psi(t)
+    
     args : float
         parameters and constants of DEQ
     
@@ -29570,6 +31588,8 @@ def psi_prime_sca(t: typing.SupportsFloat, p: typing.SupportsFloat, args: typing
     """
 def ptc_bookkeeper(lat: LatStruct) -> None:
     """
+    Wrapper for Fortran routine ptc_bookkeeper
+    
     Parameters
     ----------
     lat : LatStruct
@@ -29590,24 +31610,32 @@ def ptc_calculate_tracking_step_size(ptc_layout: Layout, kl_max: typing.Supports
     ptc_layout : unknown
         This parameter is an input/output and is modified in-place. As an output: Lattice with the optimum number
         of tracking steps and integrator order.
+    
     kl_max : float
         Maximum K1*L per tracking step.
+    
     ds_max : float
         Maximum ds for any step.
+    
     Useful when including other physicas like space charge. : 
     even_steps : bool, optional
         Always use an even number of steps for a fibre?
+    
     Useful if need to evaluate at the center of fibres. : 
     r_typical : float, optional
         Typical transverse offset. Used for computing the
+    
     effective contribution of K1*L due to sextupoles. : 
     dx_tol_bend : float
         Tolerable residual orbit in a bend.
+    
     use_2nd_order : bool, optional
         If present and True then force the use of 2nd order
+    
     integrator. : 
     crossover : int, optional
         crossover points between orders for all elements except wigglers. Default is [4, 18].
+    
     crossover_wiggler : unknown, optional
         crossover points for wigglers. Default is [30, 60].
     """
@@ -29626,6 +31654,7 @@ def ptc_check_for_lost_particle(do_reset: bool) -> PtcCheckForLostParticle:
     -------
     state : int
         Same as coord_struct.state. alive$, lost$, lost_neg_x$, etc.
+    
     ptc_fibre : unknown
         Pointer to fibre where particle lost. Nullified if particle alive.
     """
@@ -29641,6 +31670,7 @@ def ptc_closed_orbit_calc(branch: BranchStruct, closed_orbit: CoordStructAlloc1D
     ----------
     branch : BranchStruct
         Branch of a lattice.
+    
     radiation_damping_on : unknown, optional
         If True, radiation dampling is included in the calculation. Default is the setting of
         bmad_com..radiation_damping_on.
@@ -29667,10 +31697,12 @@ def ptc_emit_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Se
     -------
     norm_mode : 
         Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
+    
     %a%emittance : 
     etc. : 
     sigma_map : float
         Sigma matrix (Bmad coordinates).
+    
     closed_orb : CoordStruct
         Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
     """
@@ -29687,32 +31719,39 @@ def ptc_layouts_resplit(dKL_max: typing.SupportsFloat, l_max: typing.SupportsFlo
     ----------
     dKL_max : float
         Maximum K1 * L quadrupole strength allowed for an integration step.
+    
     Reasonable value would be something like 0.04. : 
     l_max : float
         Maximum step length. Ignored if set to 0.
+    
     l_max_drift_only : unknown
         If True then l_max is only used for splitting drifts.
+    
     bend_dorb : float
         Residual bend orbit error. With some integration methods a zero orbit at the start of the bend will not be
         zero at the end. In this case, bend_dorb sets a maximum allowable orbit deviation. If set to zero, this
         argument will be ignored. A resonable value is 10d-7. Note that the actual orbit deviation is not simply
         related to bend_dorb and can be larger. In any case, lowering bend_dorb (without making it zero) will
         lower the
+    
     orbit deviation. : 
     sex_dx : float
         To split sextupoles, sex_dx is used as the reference position about which the quadrupole strength is
         calculated. This quadrupole strength is then used with dKL_max to calculate the number of integration
         steps.
+    
     Set to zero to ignore. : 
     even : bool, optional
         If True then each fibre  will have an even number of steps. If False then the number of steps will be odd.
         If not present then number
+    
     of steps is not constrained to be even or odd. : 
     crossover : int, optional
         crossover(1) sets the maximum number of 2nd order integration steps to use. If the number of steps would
         exceed crossover(1) then integration is switched to 4th order. crossover(2) sets the maximum number of 4th
         order integration steps. If this number is exceeded, 6th order integration is used. Currently the default
         in PTC is [4, 18].
+    
     crossover_wiggler : unknown, optional
         crossover for wiggler elements.
     """
@@ -29731,6 +31770,7 @@ def ptc_one_turn_mat_and_closed_orbit_calc(branch: BranchStruct, pz: typing.Supp
         Lattice branch.
         This parameter is an input/output and is modified in-place. As an output: Lattice branch containing the
         matrices.
+    
     pz : float, optional
         energy offset around which to calculate the matrices if there is no RF.
     
@@ -29742,6 +31782,8 @@ def ptc_one_turn_mat_and_closed_orbit_calc(branch: BranchStruct, pz: typing.Supp
     """
 def ptc_ran_seed_put(iseed: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine ptc_ran_seed_put
+    
     Parameters
     ----------
     iseed : int
@@ -29749,6 +31791,8 @@ def ptc_ran_seed_put(iseed: typing.SupportsInt) -> None:
     """
 def ptc_set_rf_state_for_c_normal(nocavity: bool) -> None:
     """
+    Wrapper for Fortran routine ptc_set_rf_state_for_c_normal
+    
     Parameters
     ----------
     nocavity : bool
@@ -29776,10 +31820,12 @@ def ptc_spin_calc(ele: EleStruct, sigma_mat: typing.Annotated[collections.abc.Se
     -------
     norm_mode : 
         Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
+    
     %a%emittance : 
     etc. : 
     sigma_map : float
         Sigma matrix (Bmad coordinates).
+    
     closed_orb : CoordStruct
         Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
     """
@@ -29793,6 +31839,7 @@ def ptc_track_all(branch: BranchStruct, orbit: CoordStructAlloc1D) -> PtcTrackAl
     ----------
     branch : LatStruct
         Lat to track through.
+    
     orbit : CoordStruct
         Coordinates at beginning of branch.
         This parameter is an input/output and is modified in-place. As an output: Orbit array.
@@ -29801,32 +31848,43 @@ def ptc_track_all(branch: BranchStruct, orbit: CoordStructAlloc1D) -> PtcTrackAl
     -------
     track_state : int
         Set to moving_forward$ if everything is OK.
+    
     Otherwise: set to index of element where particle was lost. : 
     err_flag : bool
         Set true if particle lost or error. False otherwise
     """
 def ptc_transfer_map_with_spin(branch: BranchStruct, t_map: TaylorStructArray1D, s_map: TaylorStructArray1D, orb0: CoordStruct, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None) -> bool:
     """
+    Wrapper for Fortran routine ptc_transfer_map_with_spin
+    
     Parameters
     ----------
     branch : BranchStruct
         Lattice branch used in the calculation.
+    
     t_map : TaylorStruct
         Initial orbital map (used when unit_start = False)
         This parameter is an input/output and is modified in-place. As an output: Orbital transfer map.
+    
     s_map : TaylorStruct
         Initial spin map (used when unit_start = False)
         This parameter is an input/output and is modified in-place. As an output: Quaternion spin transfer map.
+    
     orb0 : CoordStruct
         Initial orbit around which the map is made.
+    
     err_flag : bool
         Set True if problem like number overflow, etc.
+    
     ix1 : int, optional
         Element start index for the calculation.
+    
     ix2 : int, optional
         Element end index for the calculation.
+    
     one_turn : bool, optional
         If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
+    
     unit_start : bool, optional
         If present and False then t_map will be used as the starting map instead of the unit map. Default = True
     """
@@ -29844,14 +31902,19 @@ def pwd_mat(lat: LatStruct, t6: typing.Annotated[collections.abc.Sequence[typing
     ----------
     lat : 
         TYPE(lat_struct)
+    
     %param%n_part : float
         Bunch current in # per bunch
+    
     %ele : float
         Beam energy
+    
     t6 : float
         1-turn transfer matrix
+    
     inductance : float
         Longitudinal inductance in Henrys.  Something on the order of nH.
+    
     sig_z : float
         Bunch length.
     
@@ -29862,10 +31925,13 @@ def pwd_mat(lat: LatStruct, t6: typing.Annotated[collections.abc.Sequence[typing
     """
 def quadratic_roots(coefs: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> typing.Annotated[list[complex], "FixedSize(2)"]:
     """
+    Wrapper for Fortran routine quadratic_roots
+    
     Parameters
     ----------
     coefs : float
         Coefficients of the quadratic equation with 0 = coefs(1) + coefs(2) * x + coefs(3) * x^2
+    
     root : complex
         Complex roots.
     """
@@ -29940,12 +32006,16 @@ def quat_mul(q1: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(
     ----------
     q1 : float
         Quaternions.
+    
     q2 : float
         Quaternions.
+    
     q3 : float, optional
         More quaternions.
+    
     ... : float, optional
         More quaternions.
+    
     q9 : float, optional
         More quaternions.
     
@@ -29969,12 +32039,16 @@ def quat_mul(q1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat]
     ----------
     q1 : float
         Quaternions.
+    
     q2 : float
         Quaternions.
+    
     q3 : float, optional
         More quaternions.
+    
     ... : float, optional
         More quaternions.
+    
     q9 : float, optional
         More quaternions.
     
@@ -29997,6 +32071,7 @@ def quat_rotate(quat: typing.Annotated[collections.abc.Sequence[complex], "Fixed
     ----------
     quat : float
         Quaternion to rotate with. Does not have to be normalized.
+    
     vec_in : float
         Initial vector.
     
@@ -30019,6 +32094,7 @@ def quat_rotate(quat: typing.Annotated[collections.abc.Sequence[typing.SupportsF
     ----------
     quat : float
         Quaternion to rotate with. Does not have to be normalized.
+    
     vec_in : float
         Initial vector.
     
@@ -30043,6 +32119,7 @@ def quat_to_axis_angle(quat: typing.Annotated[collections.abc.Sequence[typing.Su
     -------
     axis : float
         Axis of rotation.
+    
     angle : float
         angle of rotation in range [0, pi].
     """
@@ -30080,6 +32157,8 @@ def quat_to_w_mat(quat: typing.Annotated[collections.abc.Sequence[typing.Support
     """
 def query_string(query_str: str, upcase: bool, return_str: str, ix: typing.SupportsInt, ios: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine query_string
+    
     Parameters
     ----------
     query_str : 
@@ -30090,6 +32169,8 @@ def query_string(query_str: str, upcase: bool, return_str: str, ix: typing.Suppo
     """
 def quote(str: str, q_str: str) -> None:
     """
+    Wrapper for Fortran routine quote
+    
     Parameters
     ----------
     str : 
@@ -30105,17 +32186,23 @@ def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in:
       ----------
       ele : EleStruct
           Element under consideration.
+    
       include_opening_angle : bool
           If True include the effect of the vertical opening angle of emitted radiation.
+    
       Generally use True unless comparing against other codes. : 
       orb_in : CoordStruct
           Entrance orbit about which to compute the matrices.
+    
       orb_out : CoordStruct
           Exit orbit.
+    
       g2_tol : float
           Tollerance on g^2 per unit length (damping tolerance).
+    
       g3_tol : float
           Tollerance on g^3 per unit length (stocastic tolerance).
+    
       ele0 : EleStruct, optional
           Element before `ele`. Needed if and only if rad_int1 is present
     
@@ -30123,10 +32210,13 @@ def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in:
       -------
       rad_map : RadMapStruct
           Damping and stochastic matrices.
+    
       %stoc_mat : 
           Variance matrix.
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
+    
       rad_int1 : RadInt1Struct
           Radiation integrals
     """
@@ -30147,10 +32237,13 @@ def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_ang
       ----------
       ele1 : EleStruct
           Start element of integration range.
+    
       ele2 : EleStruct
           End element of integration range.
+    
       include_opening_angle : bool
           If True include the effect of the vertical opening angle of emitted radiation.
+    
       Generally use True unless comparing against other codes. : 
       closed_orbit : CoordStruct, optional
           Closed orbit. If not present this routine will calculate it.
@@ -30159,17 +32252,24 @@ def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_ang
       -------
       rmap : RadMapStruct
           Damping and stochastic mats
+    
       %stoc_mat : 
           stochastic variance matrix.
+    
       mode : NormalModesStruct
+    
       %dpz_damp : 
           Change in pz without RF.
+    
       %pz_average : 
           Average pz due to damping.
+    
       xfer_nodamp_mat : float
           Transfer matrix without damping.
+    
       rad_int_branch : RadIntBranchStruct
           Array of element-by-element radiation integrals.
+    
       err_flag : bool
           Set true if there is a problem.
     """
@@ -30184,19 +32284,25 @@ def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStru
       ----------
       ele : EleStruct
           Element under consideration.
+    
       where : int
           What part of ele to integrate over.
+    
       upstream$ -> 1st half of element : 
       downsteam$ -> 2nd half : 
       all$ -> everything. : 
       orb_in : CoordStruct
           Entrance orbit about which to compute the matrices.
+    
       orb_out : CoordStruct
           Exit orbit.
+    
       g_tol : float
           Tollerance on |g| per unit length.
+    
       g2_tol : float
           Tollerance on g^2 per unit length.
+    
       g3_tol : float
           Tollerance on g^3 per unit length.
     
@@ -30204,27 +32310,36 @@ def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStru
       -------
       int_g : float
           Integrals of (gx,gy) vector.
+    
       gint_g2 : float
           integrals of |g|^2 and |g|^3.
+    
       int_g3 : float
           integrals of |g|^2 and |g|^3.
     """
 def radiation_integrals(lat: LatStruct, orbit: CoordStructArray1D, ix_cache: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None) -> RadiationIntegrals:
     """
-    Parameters
+    Wrapper for Fortran routine radiation_integrals
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to use. The calculation assumes that
+    
       orbit : CoordStruct
           Closed orbit for the branch.
+    
       mode : NormalModesStruct
           Parameters for the ("horizontal like") a-mode,
+    
       ix_cache : int, optional
           Cache pointer.
           This parameter is an input/output and is modified in-place. As an output: Cache pointer. If ix_cache = 0
           at input then
+    
       ix_branch : int, optional
           Lattice branch index. Default is 0.
+    
       rad_int_by_ele : RadIntAllEleStruct
           Radiation integrals element by element.
     """
@@ -30239,6 +32354,7 @@ def radiation_map_setup(ele: EleStruct, ref_orbit_in: CoordStruct | None = None)
       ele : EleStruct
           Element whose map is to be setup.
           This parameter is an input/output and is modified in-place. As an output: Element with map calculated.
+    
       ref_orb : CoordStruct, optional
           If present, ignore ele_map.stale setting and make the map around this reference orbit.
     
@@ -30249,26 +32365,34 @@ def radiation_map_setup(ele: EleStruct, ref_orbit_in: CoordStruct | None = None)
     """
 def ramper_slave_setup(lat: LatStruct, force_setup: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine ramper_slave_setup
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to be setup.
           This parameter is an input/output and is modified in-place. As an output: Lattice with ramper slaves
           setup.
+    
       force_setup : bool, optional
           Default False. If True, do the setup even if lat.ramper_slave_bookkeeping = ok$. But the setup will never
           be done if lat.ramper_slave_bookkeeping = super_ok$.
     """
 def ramper_value(ramper: EleStruct, r1: ControlRamp1Struct) -> RamperValue:
     """
-    Parameters
+    Wrapper for Fortran routine ramper_value
+    
+      Parameters
       ----------
       ramper : EleStruct
           Ramper lord.
+    
       r1 : ControlRamp1Struct
           Slave function.
+    
       err_flag : bool
           Set True if there is an error, False otherwise.
+    
       value : float
           Value of the slave function.
     """
@@ -30302,9 +32426,11 @@ def ran_engine(set: str | None = None, get: str | None = None, ran_state: Random
     set : unknown, optional
         Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
         'quasi'  -> Uses sobseq from Numerical Recipes.
+    
     ''       -> Do nothing. : 
     get : unknown, optional
         Get the current (before any set) random number engine.
+    
     ran_state : RandomStateStruct, optional
         Internal state. See the ran_seed_put documentation for more details.
     """
@@ -30333,9 +32459,11 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
     ----------
     set : unknown, optional
         Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited'
+    
     ''       ! Do nothing : 
     set_sigma_cut : float, optional
         Sigma cutoff. Initially: sigma_cut = -1.
+    
     ran_state : RandomStateStruct, optional
         Internal state. See the ran_seed_put documentation for more details.
     
@@ -30343,6 +32471,7 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
     -------
     get : unknown
         Get the current (before any set) gaussian converter.
+    
     get_sigma_cut : float
         Get the current (before any set) sigma cutoff.
     """
@@ -30365,6 +32494,7 @@ def ran_gauss_scalar(ran_state: RandomStateStruct | None = None, sigma_cut: typi
     ----------
     ran_state : RandomStateStruct, optional
         Internal state.
+    
     See the ran_seed_put documentation for more details. : 
     sigma_cut : float, optional
         If present and positive will override setting of ran_state.gauss_sigma_cut.
@@ -30374,6 +32504,7 @@ def ran_gauss_scalar(ran_state: RandomStateStruct | None = None, sigma_cut: typi
     harvest : float
         Random number.
         This parameter is an input/output and is modified in-place. As an output: Random number array.
+    
     Or : 
     
     Notes
@@ -30399,6 +32530,7 @@ def ran_gauss_vector(harvest: RealArray1D, ran_state: RandomStateStruct | None =
     ----------
     ran_state : RandomStateStruct, optional
         Internal state.
+    
     See the ran_seed_put documentation for more details. : 
     sigma_cut : float, optional
         If present and positive will override setting of ran_state.gauss_sigma_cut.
@@ -30408,6 +32540,7 @@ def ran_gauss_vector(harvest: RealArray1D, ran_state: RandomStateStruct | None =
     harvest : float
         Random number.
         This parameter is an input/output and is modified in-place. As an output: Random number array.
+    
     Or : 
     
     Notes
@@ -30447,6 +32580,7 @@ def ran_seed_put(seed: typing.SupportsInt, mpi_offset: typing.SupportsInt | None
     ----------
     seed : int
         Seed number. If seed = 0 then a
+    
     seed will be choosen based upon the system clock. : 
     mpi_offset : int, optional
         Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
@@ -30479,6 +32613,7 @@ def ran_uniform(ran_state: RandomStateStruct | None = None, index_quasi: typing.
     harvest : float
         Random number.
         This parameter is an input/output and is modified in-place. As an output: Random number array.
+    
     Or : 
     
     Notes
@@ -30512,6 +32647,7 @@ def ran_uniform(harvest: RealArray1D, ran_state: RandomStateStruct | None = None
     harvest : float
         Random number.
         This parameter is an input/output and is modified in-place. As an output: Random number array.
+    
     Or : 
     
     Notes
@@ -30532,6 +32668,7 @@ def randomize_lr_wake_frequencies(ele: EleStruct) -> bool:
           Element with wake. If no wake then nothing is done.
           This parameter is an input/output and is modified in-place. As an output: Element with wake frequencies
           set.
+    
       %value : 
           Frequency.
     
@@ -30539,12 +32676,15 @@ def randomize_lr_wake_frequencies(ele: EleStruct) -> bool:
       -------
       %wake%lr%mode : 
           Set frequency.
+    
       set_done : bool
           Set True if there where lr wakes to be set. False otherwise.
     """
 def rchomp(rel: typing.SupportsFloat, plc: typing.SupportsInt, out: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rchomp
+    
+      Parameters
       ----------
       rel : 
       plc : 
@@ -30553,7 +32693,9 @@ def rchomp(rel: typing.SupportsFloat, plc: typing.SupportsInt, out: str) -> None
 @typing.overload
 def re_allocate(section: Wall3DSectionStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine re_allocate_wall3d_section_array
+    
+      Parameters
       ----------
       section : 
       n : 
@@ -30562,7 +32704,9 @@ def re_allocate(section: Wall3DSectionStructAlloc1D, n: typing.SupportsInt, exac
 @typing.overload
 def re_allocate(v: Wall3DVertexStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine re_allocate_wall3d_vertex_array
+    
+      Parameters
       ----------
       v : 
       n : 
@@ -30570,15 +32714,20 @@ def re_allocate(v: Wall3DVertexStructAlloc1D, n: typing.SupportsInt, exact: bool
     """
 def re_allocate_eles(eles: ElePointerStructAlloc1D, n: typing.SupportsInt, save_old: bool | None = None, exact: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine re_allocate_eles
+    
+      Parameters
       ----------
       eles : ElePointerStruct
           Array of element pointers with possible old data.
           This parameter is an input/output and is modified in-place. As an output: Array of element pointers.
+    
       n : int
           Array size to set.
+    
       save_old : bool, optional
           If present and True then save the old data.
+    
       exact : bool, optional
           If present and True then eles will have size = n If False (default), reallcation will not be done if eles
           is already large enough
@@ -30595,15 +32744,19 @@ def re_associate_node_array(tree: ExpressionTreeStruct, n: typing.SupportsInt, e
       Parameters
       ----------
       tree : ExpressionTreeStruct
+    
       n : int
           Size wanted.
+    
       exact : bool, optional
           Default is False. If False, the size of the output array is permitted to be larger than n.
     """
 @typing.overload
 def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine re_str_qp
+    
+      Parameters
       ----------
       rel : 
       str_out : 
@@ -30611,7 +32764,9 @@ def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
 @typing.overload
 def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine re_str_rp
+    
+      Parameters
       ----------
       rel : 
       str_out : 
@@ -30633,14 +32788,19 @@ def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ReadBeamAscii:
       ----------
       iu : int
           File unit number
+    
       file_name : unknown
           Name of beam file.
+    
       beam_init : BeamInitStruct
           See above.
+    
       ele : EleStruct, optional
           Element with reference energy, etc.
+    
       print_mom_shift_warning : bool, optional
           Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+    
       shift_momentum : bool, optional
           Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
     
@@ -30648,6 +32808,7 @@ def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ReadBeamAscii:
       -------
       beam : BeamStruct
           Structure holding the beam information.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
@@ -30669,12 +32830,16 @@ def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: EleStruct | N
       ----------
       file_name : unknown
           Name of beam file.
+    
       beam_init : BeamInitStruct
           See above.
+    
       ele : EleStruct, optional
           Element with reference energy, etc.
+    
       print_mom_shift_warning : bool, optional
           Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+    
       shift_momentum : bool, optional
           Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
     
@@ -30682,6 +32847,7 @@ def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: EleStruct | N
       -------
       beam : BeamStruct
           Structure holding the beam information.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
@@ -30695,11 +32861,14 @@ def read_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: Cartesia
       ----------
       file_name : unknown
           File to create.
+    
       ele : EleStruct
           Element associated with the map.
+    
       Ouput: : 
       cart_map : 
           cartesian_map_struct, cartesian map.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
@@ -30713,11 +32882,14 @@ def read_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: Cylindri
       ----------
       file_name : unknown
           File to create.
+    
       ele : EleStruct
           Element associated with the map.
+    
       Ouput: : 
       cl_map : 
           cylindrical_map_struct, cylindrical map.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
@@ -30731,11 +32903,14 @@ def read_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStr
       ----------
       file_name : unknown
           File to create.
+    
       ele : EleStruct
           Element associated with the map.
+    
       Ouput: : 
       g_field : 
           grid_field_struct, cylindrical map.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
@@ -30757,6 +32932,8 @@ def read_surface_reflection_file(file_name: str) -> PhotonReflectSurfaceStruct:
     """
 def real_num_fortran_format(number: typing.SupportsFloat, width: typing.SupportsInt, n_blanks: typing.SupportsInt | None = None, fmt_str: str) -> None:
     """
+    Wrapper for Fortran routine real_num_fortran_format
+    
     Parameters
     ----------
     number : 
@@ -30766,6 +32943,8 @@ def real_num_fortran_format(number: typing.SupportsFloat, width: typing.Supports
     """
 def real_path(path_in: str, path_out: str, is_ok: bool) -> None:
     """
+    Wrapper for Fortran routine real_path
+    
     Parameters
     ----------
     path_in : 
@@ -30774,6 +32953,8 @@ def real_path(path_in: str, path_out: str, is_ok: bool) -> None:
     """
 def real_str(r_num: typing.SupportsFloat, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None, str: str) -> None:
     """
+    Wrapper for Fortran routine real_str
+    
     Parameters
     ----------
     r_num : 
@@ -30783,6 +32964,8 @@ def real_str(r_num: typing.SupportsFloat, n_signif: typing.SupportsInt | None = 
     """
 def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None, str: str) -> None:
     """
+    Wrapper for Fortran routine real_to_string
+    
     Parameters
     ----------
     real_num : 
@@ -30793,37 +32976,51 @@ def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, n_
     """
 def reallocate_beam(beam: BeamStruct, n_bunch: typing.SupportsInt, n_particle: typing.SupportsInt | None = None, extend: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine reallocate_beam
+    
+      Parameters
       ----------
       beam : BeamStruct
           Beam bunches are saved if save = True.
           This parameter is an input/output and is modified in-place. As an output: Allocated beam_struct structure.
+    
       n_bunch : int
           Number of bunches.
+    
       n_particle : int, optional
           Number of particles. Must be non-negative. If save = True then the number of particles in existing bunches
           will not be touched.
+    
       extend : 
     """
 def reallocate_bp_com_const() -> None:
-    ...
+    """
+    Wrapper for Fortran routine reallocate_bp_com_const
+    """
 def reallocate_bunch(n_particle: typing.SupportsInt, save: bool | None = None) -> BunchStruct:
     """
-    Parameters
+    Wrapper for Fortran routine reallocate_bunch
+    
+      Parameters
       ----------
       bunch : BunchStruct
           Allocated bunch_struct structure.
+    
       n_particle : int
           Number of particles. Must be non-negative.
+    
       save : bool, optional
           If present and True then save the old bunch info.
     """
 def reallocate_control(lat: LatStruct, n: typing.SupportsInt) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine reallocate_control
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice.
+    
       n : int
           Array size for lat.control(:) and lat.ic(:).
     """
@@ -30850,10 +33047,13 @@ def reallocate_coord(coord_array: CoordArrayStructAlloc1D, lat: LatStruct) -> No
       coord : CoordStruct
           Allocatable array.
           This parameter is an input/output and is modified in-place. As an output: Allocated array.
+    
       n_coord : int
           Minimum array upper bound wanted.
+    
       lat : LatStruct
           Lattice
+    
       ix_branch : int, optional
           Branch to use. Default is 0 (main branch).
     
@@ -30884,10 +33084,13 @@ def reallocate_coord(coord: CoordStructAlloc1D, lat: LatStruct, ix_branch: typin
       coord : CoordStruct
           Allocatable array.
           This parameter is an input/output and is modified in-place. As an output: Allocated array.
+    
       n_coord : int
           Minimum array upper bound wanted.
+    
       lat : LatStruct
           Lattice
+    
       ix_branch : int, optional
           Branch to use. Default is 0 (main branch).
     
@@ -30918,10 +33121,13 @@ def reallocate_coord(coord: CoordStructAlloc1D, n_coord: typing.SupportsInt) -> 
       coord : CoordStruct
           Allocatable array.
           This parameter is an input/output and is modified in-place. As an output: Allocated array.
+    
       n_coord : int
           Minimum array upper bound wanted.
+    
       lat : LatStruct
           Lattice
+    
       ix_branch : int, optional
           Branch to use. Default is 0 (main branch).
     
@@ -30931,13 +33137,17 @@ def reallocate_coord(coord: CoordStructAlloc1D, n_coord: typing.SupportsInt) -> 
     """
 def reallocate_expression_stack(stack: ExpressionAtomStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine reallocate_expression_stack
+    
+      Parameters
       ----------
       stack : unknown
           Existing stack array.
           This parameter is an input/output and is modified in-place. As an output: Resized stack.
+    
       n : int
           Array size needed.
+    
       exact : bool, optional
           If present and False then the size of the output array is permitted to be larger than n. Default is True.
     """
@@ -30949,38 +33159,48 @@ def reallocate_spline(spline: SplineStructAlloc1D, n: typing.SupportsInt, n_min:
     The data of the array is preserved but data at the end of the
     array will be lost if n is less than the original size of the array
     
-    
     Parameters
     ----------
     spline : SplineStruct
         Spline to reallocate.
         This parameter is an input/output and is modified in-place. As an output: Allocated spline.
+    
     n : int
         Upper bound needed for 1-dimensional arrays.
+    
     n_min : int, optional
         Lower bound of spline array. Default is 1.
+    
     exact : bool, optional
         If present and False then the size of the output array is permitted to be larger than n. Default is True.
     """
 def rel_tracking_charge_to_mass(orbit: CoordStruct, ref_species: typing.SupportsInt) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine rel_tracking_charge_to_mass
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Particle position structure.
+    
       ref_species : int
           Reference species
+    
       rel_charge : float
           Relative charge/mass
     """
 def relative_mode_flip(ele1: EleStruct, ele2: EleStruct, func_retval__: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine relative_mode_flip
+    
+      Parameters
       ----------
       ele1 : EleStruct
           Elements to compare.
+    
       ele2 : EleStruct
           Elements to compare.
+    
       relative_mode_flip : 
     """
 def release_rad_int_cache(ix_cache: typing.SupportsInt) -> ReleaseRadIntCache:
@@ -31012,6 +33232,7 @@ def remove_constant_taylor(taylor_in: TaylorStructArray1D, taylor_out: TaylorStr
       ----------
       taylor_in : TaylorStruct
           Input taylor map.
+    
       remove_higher_order_terms : bool
           If True then terms that are higher order than bmad_com.taylor_order are removed.
     
@@ -31019,37 +33240,47 @@ def remove_constant_taylor(taylor_in: TaylorStructArray1D, taylor_out: TaylorStr
       -------
       taylor_out : TaylorStruct
           Taylor with constant terms removed.
+    
       c0 : float
           The constant part of the taylor map
     """
 def remove_dead_from_bunch(bunch_in: BunchStruct) -> BunchStruct:
     """
-    Parameters
+    Wrapper for Fortran routine remove_dead_from_bunch
+    
+      Parameters
       ----------
       bunch_in : BunchStruct
           Input bunch with alive and dead particles.
+    
       bunch_out : BunchStruct
           Output bunch with only alive and pre_born particles. Note: bunch_out can be the same actual argument as
           bunch_in.
     """
 def remove_eles_from_lat(lat: LatStruct, check_sanity: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine remove_eles_from_lat
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to compress.
           This parameter is an input/output and is modified in-place. As an output: Compressed lattice.
+    
       check_sanity : bool, optional
           If True (default) then call lat_sanity_check
     """
 def remove_lord_slave_link(lord: EleStruct, slave: EleStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine remove_lord_slave_link
+    
+      Parameters
       ----------
       lord : EleStruct
           Lord element
           This parameter is an input/output and is modified in-place. As an output: Lord element with link info
           removed
+    
       slave : EleStruct
           Slave element
           This parameter is an input/output and is modified in-place. As an output: Slave element with link info
@@ -31057,17 +33288,23 @@ def remove_lord_slave_link(lord: EleStruct, slave: EleStruct) -> None:
     """
 def reverse_lat(lat_in: LatStruct, track_antiparticle: bool | None = None) -> LatStruct:
     """
-    Parameters
+    Wrapper for Fortran routine reverse_lat
+    
+      Parameters
       ----------
       lat_in : LatStruct
           Input lattice to reverse.
+    
       lat_rev : LatStruct
           Reversed lattice.
+    
       track_antiparticle : bool, optional
           Set the particle species of the reversed lat to the anti-particle of lat_in? Default is True.
     """
 def rf_cav_names(lat: LatStruct) -> None:
     """
+    Wrapper for Fortran routine rf_cav_names
+    
     Parameters
     ----------
     lat : 
@@ -31087,19 +33324,25 @@ def rf_coupler_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.S
       ----------
       ele : EleStruct
           Element being tracked through
+    
       param : LatParamStruct
           branch parameters.
+    
       particle_at : int
           first_track_edge$, or second_track_edge$.
+    
       phase : float
           phase of cavity
+    
       orbit : CoordStruct
           Position before kick.
           This parameter is an input/output and is modified in-place. As an output: Position after kick.
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix through the
           element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     
@@ -31109,31 +33352,42 @@ def rf_coupler_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.S
     """
 def rf_is_on(branch: BranchStruct, ix_ele1: typing.SupportsInt | None = None, ix_ele2: typing.SupportsInt | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine rf_is_on
+    
+      Parameters
       ----------
       branch : BranchStruct
           Lattice branch to check.
+    
       ix_ele1 : int, optional
           Start of range of elements to check. Default is 0.
+    
       ix_ele2 : int, optional
           End of range of elements to check. Default is branch.n_ele_track.
+    
       is_on : bool
           True if any rfcavity is powered. False otherwise.
     """
 def rf_ref_time_offset(ele: EleStruct, ds: typing.SupportsFloat | None = None, time: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rf_ref_time_offset
+    
+      Parameters
       ----------
       ele : EleStruct
           RF Element being tracked through.
+    
       ds : float, optional
           Distance of particle from start edge. Default is zero.
+    
       time : float
           Offset time.
     """
 def rfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, a: typing.SupportsFloat, b: typing.SupportsFloat, hz: typing.SupportsFloat, i: typing.SupportsInt, j: typing.SupportsInt, res: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rfun
+    
+      Parameters
       ----------
       u : 
       v : 
@@ -31148,7 +33402,9 @@ def rfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFlo
     """
 def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, dt_try: typing.SupportsFloat, dt_did: typing.SupportsFloat, dt_next: typing.SupportsFloat, err_flag: bool, extra_field: EmFieldStruct | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rk_adaptive_time_step
+    
+      Parameters
       ----------
       ele : 
       param : 
@@ -31163,7 +33419,9 @@ def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruc
     """
 def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orb: CoordStruct, dt: typing.SupportsFloat, new_orb: CoordStruct, dr_dt: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None, err_flag: bool, print_err: bool | None = None, extra_field: EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
     """
-    Parameters
+    Wrapper for Fortran routine rk_time_step1
+    
+      Parameters
       ----------
       ele : 
       param : 
@@ -31179,31 +33437,42 @@ def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.Support
     """
 def rms_value(val_arr: RealArray1D, good_val: BoolAlloc1D | None = None) -> RmsValue:
     """
+    Wrapper for Fortran routine rms_value
+    
     Parameters
     ----------
     val_arr : float
         Array of reals.
+    
     good_val : bool, optional
         If present, only calculate RMS where good_val(i) = True.
+    
     ave_val : float
         average value.
+    
     rms_val : float
         RMS value. Set to real_garbage$ if there is a problem.
     """
 def rot_2d(vec_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], angle: typing.SupportsFloat) -> typing.Annotated[list[float], "FixedSize(2)"]:
     """
+    Wrapper for Fortran routine rot_2d
+    
     Parameters
     ----------
     vec_in : float
         Init vec
+    
     angle : float
         angle in radians.
+    
     vec_out : float
         Rotated vec.
     """
 def rotate3(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], angle: typing.SupportsFloat, rvec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rotate3
+    
+      Parameters
       ----------
       vec : 
       angle : 
@@ -31219,32 +33488,43 @@ def rotate_em_field(field: EmFieldStruct, w_mat: typing.Annotated[collections.ab
       ----------
       field : EmFieldStruct
           E and B fields and derivatives.
+    
       w_mat : float
           rotation matrix.
+    
       w_inv : float
           rotation matrix inverse = transpose(w_mat)
+    
       calc_dfield : bool, optional
           If present and True then rotate the field derivatives.
+    
       calc_potential : bool, optional
           Rotate the magnetic vector potential? Default is false.
     """
 def rotate_field_zx(field: EmFieldStruct, theta: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rotate_field_zx
+    
+      Parameters
       ----------
       field : 
       theta : 
     """
 def rotate_for_curved_surface(ele: EleStruct, orbit: CoordStruct, set: bool, rot_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rotate_for_curved_surface
+    
+      Parameters
       ----------
       ele : EleStruct
           reflecting element
+    
       orbit : CoordStruct
           Photon position.
+    
       set : bool
           True -> Transform body coords to local curved body coords.
+    
       rot_mat : float
           When set = False, rotation matrix calculated from previous call with set = True.
           This parameter is an input/output and is modified in-place. As an output: When set = True, calculated
@@ -31252,43 +33532,58 @@ def rotate_for_curved_surface(ele: EleStruct, orbit: CoordStruct, set: bool, rot
     """
 def rotate_spin(rot_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
-    Parameters
+    Wrapper for Fortran routine rotate_spin
+    
+      Parameters
       ----------
       rot_vec : float
           Rotation axis. Magnitude of rot_vec is the rotation angle.
+    
       spin : float
           Initial coords.
           This parameter is an input/output and is modified in-place. As an output: Final coords.
+    
       qrot : float
           : rotation quaternion.
     """
 def rotate_spin_a_step(orbit: CoordStruct, field: EmFieldStruct, ele: EleStruct, ds: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rotate_spin_a_step
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Initial orbit.
           This parameter is an input/output and is modified in-place. As an output: Orbit with rotated spin
+    
       field : EmFieldStruct
           EM Field
+    
       ele : 
           ele_struct, Element being tracked through.
+    
       ds : float
           Longitudinal step in element body frame.
     """
 def rotate_spin_given_field(orbit: CoordStruct, sign_z_vel: typing.SupportsInt, BL: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, EL: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, qrot: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine rotate_spin_given_field
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Initial orbit.
           This parameter is an input/output and is modified in-place. As an output: Orbit with rotated spin
+    
       sign_z_vel : int
           +/- 1. Sign of direction of travel relative to the element.
+    
       BL : float, optional
           Integrated field strength. Assumed zero if not present.
+    
       EL : float, optional
           Integrated field strength. Assumed zero if not present.
+    
       qrot : float, optional
           Initial rotation quaternion.
           This parameter is an input/output and is modified in-place. As an output: Rotation quaternion with
@@ -31305,8 +33600,10 @@ def rotate_vec(vec: RealArray1D, axis: typing.SupportsInt, angle: typing.Support
     vec : float
         vector
         This parameter is an input/output and is modified in-place. As an output: Rotated vector.
+    
     axis : int
         x_axis$, y_axis$, or z_axis$
+    
     angle : float
         angle to rotate.
     """
@@ -31320,8 +33617,10 @@ def rotate_vec_given_axis_angle(vec_in: typing.Annotated[collections.abc.Sequenc
     ----------
     vec_in : float
         Initial vector.
+    
     axis : float
         Axis of rotation. Must be normalized to 1.
+    
     angle : float
         Angle to rotate by
     
@@ -31350,6 +33649,8 @@ def rp8(int_in: typing.SupportsInt) -> float:
     """
 def run_timer(command: str, time: typing.SupportsFloat | None = None, time0: typing.SupportsFloat | None = None) -> None:
     """
+    Wrapper for Fortran routine run_timer
+    
     Parameters
     ----------
     command : 
@@ -31358,18 +33659,24 @@ def run_timer(command: str, time: typing.SupportsFloat | None = None, time0: typ
     """
 def s_body_calc(orbit: CoordStruct, ele: EleStruct) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine s_body_calc
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Particle coordinates.
+    
       ele : EleStruct
           Lattice element
+    
       s_body : float
           Body postion.
     """
 def s_calc(lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine s_calc
+    
+      Parameters
       ----------
       lat : LatStruct
     """
@@ -31389,17 +33696,22 @@ def sad_mult_hard_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle
       ----------
       ele : EleStruct
           Element with fringe.
+    
       param : LatParamStruct
           Tracking parameters.
+    
       particle_at : int
           Either first_track_edge$ or second_track_edge$.
+    
       orbit : CoordStruct
           Starting coordinates.
           This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
+    
       mat6 : float, optional
           Transfer matrix up to the fringe.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
           fringe.
+    
       make_matrix : float, optional
           Propagate the transfer matrix? Default is False.
     """
@@ -31413,20 +33725,27 @@ def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: 
       ----------
       ele : EleStruct
           SBend or sad_mult element.
+    
       param : LatParamStruct
+    
       particle_at : int
           first_track_edge$, or second_track_edge$.
+    
       orb : CoordStruct
           Starting coords.
           This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+    
       mat6 : float, optional
           Starting matrix
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix after fringe
           field
+    
       make_matrix : float, optional
           Propagate the transfer matrix? Default is False.
+    
       k0l : float, optional
           Used with sad_mult.
+    
       If present : 
       use this instead of ele%a_pole/%b_pole. : 
       t0 : float, optional
@@ -31434,85 +33753,118 @@ def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: 
     """
 def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: BunchTrackStructArray1D | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine save_a_beam_step
+    
+      Parameters
       ----------
       ele : EleStruct
           Element being tracked through.
+    
       beam : BeamStruct
           Bunches in the beam whose parameters are to be saved.
+    
       bunch_tracks : BunchTrackStruct, optional
           Track with current bunch info appended on. This routine does nothing if this argument is not present.
+    
       s_body : float, optional
           Body s-position from beginning of element.
+    
       is_time_coords : bool, optional
           Default is False. If True, input beam is using time coordinates in which case there will be a conversion
           to s-coords before bunch_params are computed.
     """
 def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: BunchTrackStruct | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine save_a_bunch_step
+    
+      Parameters
       ----------
       ele : EleStruct
           Element being tracked through.
+    
       bunch : BunchStruct
           Bunch whose parameters are to be saved.
+    
       bunch_track : BunchTrackStruct, optional
           Track with current bunch info appended on. This routine does nothing if this argument is not present.
+    
       s_body : float, optional
           Body s-position from beginning of element.
+    
       is_time_coords : bool, optional
           Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
           to s-coords before bunch_params are computed.
     """
 def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local_ref_frame: bool, orb: CoordStruct, s_rel: typing.SupportsFloat, save_field: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, rf_time: typing.SupportsFloat | None = None, strong_beam: StrongBeamStruct | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine save_a_step
+    
+      Parameters
       ----------
       track : TrackStruct
           Track with current position appended on.
+    
       ele : EleStruct
           Element being tracked through.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       local_ref_frame : bool
           If True then input orb is with respect to body coordinates.
+    
       orb : CoordStruct
           trajectory at s with respect to element coordinates.
+    
       s_rel : float
           Longitudinal position wrt the element. If local_ref_frame = F: Lab coords.
+    
       save_field : bool, optional
           Save electric and magnetic field values? Default is False.
+    
       mat6 : float, optional
           Matrix to store.
+    
       make_matrix : bool, optional
           Is mat6 a valid matrix? Default is False.
+    
       rf_time : float, optional
           RF clock time used for calculating the field.. If not present then the time will be calculated using the
           standard algorithm.
+    
       strong_beam : StrongBeambeamStruct, optional
           Strong beam info if tracking through a beambeam element.
     """
 def sbend_body_with_k1_map(ele: EleStruct, dg: typing.SupportsFloat, b1: typing.SupportsFloat, param: LatParamStruct, n_step: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine sbend_body_with_k1_map
+    
+      Parameters
       ----------
       ele : EleStruct
           Sbend element.
+    
       dg : float
           Field error.
+    
       b1 : float
           b1 quadrupole strength * rel_charge_dir
+    
       param : LatParamStruct
           Branch parameters.
+    
       n_step : int
           Number of steps to divide the bend into.
+    
       orbit : CoordStruct
           Orbit at beginning of the bend.
           This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
+    
       mat6 : float, optional
           Transfer matrix before element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix with body added
           in.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
@@ -31529,17 +33881,22 @@ def sc_adaptive_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_
           Starting bunch position in t-based coordinates
           This parameter is an input/output and is modified in-place. As an output: Ending bunch position in t-based
           coordinates.
+    
       ele : EleStruct
           Nominal lattice element being tracked through.
+    
       include_image : bool
           Include image charge forces?
           This parameter is an input/output and is modified in-place. As an output: Set False if image charge calc
           no longer needed (Note
+    
       t_now : float
           Current time at the beginning of tracking
+    
       dt_step : float
           Initial SC time step to take
           This parameter is an input/output and is modified in-place. As an output: Step done.
+    
       sc_field : unknown
           : Array to hold space charge fields. Its length should be the number of particles.
     
@@ -31560,14 +33917,18 @@ def sc_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_end: typi
           Starting bunch position in t-based coordinates
           This parameter is an input/output and is modified in-place. As an output: Ending bunch position in t-based
           coordinates after space charge kick.
+    
       ele : EleStruct
           Nominal element being tracked through.
+    
       include_image : bool
           Include image charge forces?
           This parameter is an input/output and is modified in-place. As an output: Set False if image charge calc
           no longer needed (Note
+    
       t_end : float
           Time at which the tracking ends.
+    
       sc_field : unknown
           : Array to hold space charge fields. Its length should be the number of particles.
     
@@ -31592,6 +33953,7 @@ def set_active_fixer(fixer: EleStruct, turn_on: bool | None = None) -> CoordStru
       fixer : EleStruct
           Fixer element to make active.
           This parameter is an input/output and is modified in-place. As an output: Element is now active.
+    
       turn_on : bool, optional
           If True (default), make this fixer the active element. If False, make the beginning element active.
     
@@ -31611,6 +33973,7 @@ def set_custom_attribute_name(custom_name: str, custom_index: typing.SupportsInt
       custom_name : unknown
           Name of the custom attribute. If prefixed by "<class>::" then the custom name will be set only for that
           element class. Example:
+    
       "quadrupole::error" will set the alias custom namefor quadrupoles. : 
       custom_index : int, optional
           Index used in assigning where in the ele_struct the custom attribute is put. If not present or 0 then the
@@ -31623,68 +33986,91 @@ def set_custom_attribute_name(custom_name: str, custom_index: typing.SupportsInt
     """
 def set_ele_attribute(ele: EleStruct, set_string: str, err_print_flag: bool | None = None, set_lords: bool | None = None) -> SetEleAttribute:
     """
-    Parameters
+    Wrapper for Fortran routine set_ele_attribute
+    
+      Parameters
       ----------
       ele : EleStruct
           Element with attribute to set.
           This parameter is an input/output and is modified in-place. As an output: Element with attribute set.
+    
       set_string : unknown
           Attribute and value for set.
+    
       err_flag : bool
           Set True if there is an error, False otherwise.
+    
       err_print_flag : bool, optional
           If present and False then suppress printing
+    
       set_lords : bool, optional
           Default False. If True, set the super_lord(s) if the element is a super_slave.
+    
       err_id : int
           Set to an integer which identifies the error type. 0 = no error. The higher the error the further along
           the error was encountered.
     """
 def set_ele_defaults(ele: EleStruct, do_allocate: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine set_ele_defaults
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to init.
           This parameter is an input/output and is modified in-place. As an output: Initialized element.
+    
       do_allocate : bool, optional
           Do default allocation of element components? Default is True.
     """
 def set_ele_name(ele: EleStruct, name: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine set_ele_name
+    
+      Parameters
       ----------
       ele : EleStruct
           Element whose name is to be set.
           This parameter is an input/output and is modified in-place. As an output: Element with name set.
+    
       name : unknown
           Name to set.
     """
 def set_ele_real_attribute(ele: EleStruct, attrib_name: str, value: typing.SupportsFloat, err_print_flag: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine set_ele_real_attribute
+    
+      Parameters
       ----------
       ele : EleStruct
           Element with attribute to set.
           This parameter is an input/output and is modified in-place. As an output: Element with attribute set.
+    
       attrib_name : unknown
           Attribute name.
+    
       value : float
           value to set to.
+    
       err_flag : bool
           Set True if there is an error, False otherwise.
+    
       err_print_flag : bool, optional
           If present and False then suppress printing of an error message if attribute is, for example, not free.
     """
 def set_ele_status_stale() -> SetEleStatusStale:
     """
-    Parameters
+    Wrapper for Fortran routine set_ele_status_stale
+    
+      Parameters
       ----------
       ele : EleStruct
           Element.
+    
       status_group : int
           Which flag groups to set. Possibilities are: attribute_group$, control_group$, floor_position_group$,
           s_position_group$,
+    
       set_slaves : bool
           If present and False then do not set the status for any slaves. Default is True.
     """
@@ -31721,19 +34107,25 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsInt, 
           Lattice being modified.
           This parameter is an input/output and is modified in-place. As an output: Lattice with appropriate
           changes.
+    
       ele : 
           ele_struct, Element being modified.
+    
       real_attrib : float, optional
           Attribute that has been changed. For example: ele.value(hkick$).
+    
       If not present then assume everything has potentially changed. : 
       int_attrib : int
           Attribute that has been changed.
+    
       For example: ele%mat6_calc_method. : 
       logic_attrib : 
           logical; Attribute that has been changed.
+    
       For example: ele%is_on. : 
       all_attrib : AllPointerStruct
           Pointer to attribute.
+    
       set_dependent : bool, optional
           If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
           when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
@@ -31776,19 +34168,25 @@ def set_flags_for_changed_attribute(lat: LatStruct, set_dependent: bool | None =
           Lattice being modified.
           This parameter is an input/output and is modified in-place. As an output: Lattice with appropriate
           changes.
+    
       ele : 
           ele_struct, Element being modified.
+    
       real_attrib : float, optional
           Attribute that has been changed. For example: ele.value(hkick$).
+    
       If not present then assume everything has potentially changed. : 
       int_attrib : int
           Attribute that has been changed.
+    
       For example: ele%mat6_calc_method. : 
       logic_attrib : 
           logical; Attribute that has been changed.
+    
       For example: ele%is_on. : 
       all_attrib : AllPointerStruct
           Pointer to attribute.
+    
       set_dependent : bool, optional
           If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
           when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
@@ -31831,19 +34229,25 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: bool, set_dependent:
           Lattice being modified.
           This parameter is an input/output and is modified in-place. As an output: Lattice with appropriate
           changes.
+    
       ele : 
           ele_struct, Element being modified.
+    
       real_attrib : float, optional
           Attribute that has been changed. For example: ele.value(hkick$).
+    
       If not present then assume everything has potentially changed. : 
       int_attrib : int
           Attribute that has been changed.
+    
       For example: ele%mat6_calc_method. : 
       logic_attrib : 
           logical; Attribute that has been changed.
+    
       For example: ele%is_on. : 
       all_attrib : AllPointerStruct
           Pointer to attribute.
+    
       set_dependent : bool, optional
           If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
           when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
@@ -31886,19 +34290,25 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsFloat
           Lattice being modified.
           This parameter is an input/output and is modified in-place. As an output: Lattice with appropriate
           changes.
+    
       ele : 
           ele_struct, Element being modified.
+    
       real_attrib : float, optional
           Attribute that has been changed. For example: ele.value(hkick$).
+    
       If not present then assume everything has potentially changed. : 
       int_attrib : int
           Attribute that has been changed.
+    
       For example: ele%mat6_calc_method. : 
       logic_attrib : 
           logical; Attribute that has been changed.
+    
       For example: ele%is_on. : 
       all_attrib : AllPointerStruct
           Pointer to attribute.
+    
       set_dependent : bool, optional
           If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
           when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
@@ -31910,73 +34320,99 @@ def set_flags_for_changed_attribute(ele: EleStruct, attrib: typing.SupportsFloat
     """
 def set_fringe_on_off(fringe_at: typing.SupportsFloat, ele_end: typing.SupportsInt, on_or_off: typing.SupportsInt) -> SetFringeOnOff:
     """
-    Parameters
+    Wrapper for Fortran routine set_fringe_on_off
+    
+      Parameters
       ----------
       fringe_at : float
           Present fringe_at setting. entrance_end$, exit_end$, both_ends$, or no_end$
           This parameter is an input/output and is modified in-place. As an output: Modified fringe setting.
+    
       ele_end : int
           Element edge: entrance_end$ or exit_end$
+    
       on_or_off : int
           Turn on$ or off$
     """
 def set_lords_status_stale(ele: EleStruct, stat_group: typing.SupportsInt, control_bookkeeping: bool | None = None, flag: typing.SupportsInt | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine set_lords_status_stale
+    
+      Parameters
       ----------
       ele : EleStruct
           Element
+    
       stat_group : int
           which status group to set. floor_position_group$, etc. See set_ele_status_stale for more details.
+    
       control_bookkeeping : unknown, optional
           Call control_bookkeeper for each lord if needed?
+    
       flag : int, optional
           Do not use. For coordinating recursion.
     """
 def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.SupportsInt, orb: CoordStructArray1D | None = None, use_ref_orb: bool | None = None, ix_branch: typing.SupportsInt | None = None, saved_values: RealAlloc1D | None = None, attribute: str | None = None, set_val: typing.SupportsInt | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine set_on_off
+    
+      Parameters
       ----------
       key : int
           Class name of elements to be turned on or off. [quadrupole$, etc.]
+    
       lat : LatStruct
           lattice structure holding the elements.
           This parameter is an input/output and is modified in-place. As an output: Modified lattice.
+    
       switch : int
           on$            => Turn elements on. If saved_values argument is present, use this. If not present (only
           for logical attributes), set to True. off$           => Turn elements off (but will not store the present
           state). off_and_save$  => Save on/off state and then turn elements off. save_state$    => Save present
           on/off state. No turning on or off is done.
+    
       orb : CoordStruct, optional
           Needed for lat_make_mat6
+    
       use_ref_orb : bool, optional
           If present and true then use ele.map_ref_orb for the reference orbit for
+    
       ix_branch : int, optional
           If present then only set for
+    
       saved_values : float, optional
           Element-by element saved values of the component.
           This parameter is an input/output and is modified in-place. As an output: Saved values of the component.
+    
       attribute : unknown, optional
           Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc.
+    
       set_val : int, optional
           Value to set to. Overrides normal set value.
     """
 def set_orbit_to_zero(orbit: CoordStructArray1D, n1: typing.SupportsInt, n2: typing.SupportsInt, ix_noset: typing.SupportsInt | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine set_orbit_to_zero
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Array with particle positions in the range orbit(n1:n2) set to zero except for orbit(ix_noset).
+    
       n1 : int
           Lower bound of orbit(:) array subset.
+    
       n2 : int
           Upper bound of orbit(:) array subset.
+    
       ix_noset : int, optional
           If present then orbit(ix_noset) will not be zeroed.
     """
 @typing.overload
 def set_parameter(param_val: typing.SupportsInt, set_val: typing.SupportsInt, save_val: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine set_parameter_int
+    
     Parameters
     ----------
     param_val : 
@@ -31986,6 +34422,8 @@ def set_parameter(param_val: typing.SupportsInt, set_val: typing.SupportsInt, sa
 @typing.overload
 def set_parameter(param_val: bool, set_val: bool, save_val: bool) -> None:
     """
+    Wrapper for Fortran routine set_parameter_logic
+    
     Parameters
     ----------
     param_val : 
@@ -31995,6 +34433,8 @@ def set_parameter(param_val: bool, set_val: bool, save_val: bool) -> None:
 @typing.overload
 def set_parameter(param_val: typing.SupportsFloat, set_val: typing.SupportsFloat, save_val: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine set_parameter_real
+    
     Parameters
     ----------
     param_val : 
@@ -32003,31 +34443,43 @@ def set_parameter(param_val: typing.SupportsFloat, set_val: typing.SupportsFloat
     """
 def set_ptc(e_tot: typing.SupportsFloat | None = None, particle: typing.SupportsInt | None = None, taylor_order: typing.SupportsInt | None = None, integ_order: typing.SupportsInt | None = None, n_step: typing.SupportsInt | None = None, no_cavity: bool | None = None, force_init: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine set_ptc
+    
+      Parameters
       ----------
       e_tot : float, optional
           Energy in eV.
+    
       particle : int, optional
           Type of particle:
+    
       taylor_order : int, optional
           Maximum order of the taylor polynomials.
+    
       integ_order : int, optional
           Default Order for the drift-kick-drift sympletic integrator. Possibilities are: 2, 4, or 6
+    
       n_step : int, optional
           Default Number of integration steps.
+    
       no_cavity : bool, optional
           No RF Cavity exists? Default = False. Corresponds to the nocavity option of the PTC init routine.
+    
       force_init : bool, optional
           If present and True then force a PTC init.
     """
 def set_ptc_base_state(component: str, set_val: bool) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine set_ptc_base_state
+    
+      Parameters
       ----------
       component : unknown
           Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc.
+    
       set_val : bool
           Value to set to. For TOTALPATH, True => 1, False => 0.
+    
       old_val : bool
           Old value.
     """
@@ -32050,15 +34502,19 @@ def set_ptc_quiet(channel: typing.SupportsInt, set: bool, old_val: typing.Suppor
       ----------
       channel : int
           Index in the lielib_print(:) array to set. 0 => c_verbose.
+    
       set : bool
           If set$ then set lielib_print(:). If unset$ then undo a previous set$.
+    
       old_val : int
           Old value needed for set = unset$.
           This parameter is an input/output and is modified in-place. As an output: Saved value for set = set$.
     """
 def set_ptc_verbose(on: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine set_ptc_verbose
+    
+      Parameters
       ----------
       on : 
     """
@@ -32075,8 +34531,10 @@ def set_pwd_ele(lat: LatStruct, mode0: NormalModesStruct, inductance: typing.Sup
       ----------
       lat : LatStruct
           lattice
+    
       mode0 : NormalModesStruct
           .sig_z and .z.sige_e should be populated before calling this subroutine.
+    
       inductance : float
           An inductance-like parameter describing the distortion of the potential well.
     
@@ -32097,6 +34555,7 @@ def set_species_charge(species_in: typing.SupportsInt, charge: typing.SupportsIn
     ----------
     species_in : int
         Input species.
+    
     charge : int
         Charge to set species_charged to.
     
@@ -32107,87 +34566,119 @@ def set_species_charge(species_in: typing.SupportsInt, charge: typing.SupportsIn
     """
 def set_status_flags(stat: typing.SupportsInt) -> BookkeepingStateStruct:
     """
-    Parameters
+    Wrapper for Fortran routine set_status_flags
+    
+      Parameters
       ----------
       bookkeeping_state : BookkeepingStateStruct
+    
       stat : int
           bookkeeping status. ok$, stale$, etc.
     """
 def set_tune(phi_a_set: typing.SupportsFloat, phi_b_set: typing.SupportsFloat, dk1: RealArray1D, eles: ElePointerStructArray1D, branch: BranchStruct, orb: CoordStructAlloc1D, print_err: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine set_tune
+    
+      Parameters
       ----------
       phi_a_set : float
           Horizontal set tune (radians)
+    
       phi_b_set : float
           Vertical set tune (radians)
+    
       dk1 : float
           Relative amount to vary a quad in tuning. The variation will be proportional to dk1. Those quads with a
           positive dk1(i) will be varied as one group and the quads with negative dk1(i) will be varied as another
           group.
+    
       eles : ElePointerStruct
           eles(i).ele points to quadrupole corresponding to dk1(i).
+    
       branch : BranchStruct
           Lattice branch to tune.
           This parameter is an input/output and is modified in-place. As an output: Q_tuned lattice branch
+    
       orb : CoordStruct
           If RF is off: Energy dE/E at which the tune is computed.
           This parameter is an input/output and is modified in-place. As an output: New closed orbit.
+    
       print_err : bool, optional
           Print error message if there is a problem? Default is True.
+    
       ok : bool
           Set True if everything is ok. False otherwise.
     """
 def set_tune_3d(branch: BranchStruct, target_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], mask: str | None = None, use_phase_trombone: bool | None = None, z_tune_set: bool | None = None, group_knobs: typing.Annotated[collections.abc.Sequence[str], "FixedSize(2)"] | None = None, print_err: bool | None = None) -> bool:
     """
+    Wrapper for Fortran routine set_tune_3d
+    
     Parameters
     ----------
     branch : BranchStruct
         This parameter is an input/output and is modified in-place. As an output: with adjusted quads and RF to
         match desired tunes.
+    
     target_tunes : float
         tunes for a, b, z modes (rad/2pi). Must include integer part.
+    
     mask : 
     use_phase_trombone : bool, optional
         Default False. If true, use a match element in phase trombone mode to adjust the tunes.
+    
     z_tune_set : bool, optional
         Default True. If false, do not try to set the synch tune.
+    
     group_knobs : unknown, optional
         If set non-blank, use these group elements for tuning.
+    
     print_err : bool, optional
         Print error message if there is a problem? Default is True.
+    
     everything_ok : bool
         Returns true or false if set was successful.
     """
 def set_twiss(branch: BranchStruct, twiss_ele: EleStruct, ix_ele: typing.SupportsInt, match_deta_ds: bool, err_flag: bool, print_err: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine set_twiss
+    
+      Parameters
       ----------
       branch : BranchStruct
           Branch to modify.
+    
       twiss_ele : EleStruct
           Element with desired Twiss parameters.
+    
       ix_ele : int
           Match branch.ele(ix_ele) Twiss to twiss_ele.
+    
       match_deta_ds : bool
           If True, match deta_ds. If False, match etap.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       print_err : bool, optional
           Print an error message if there is an error? Default is True.
     """
 def set_z_tune(branch: BranchStruct, z_tune: typing.SupportsFloat, print_err: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine set_z_tune
+    
+      Parameters
       ----------
       branch : BranchStruct
+    
       z_tune : float
           Longitudinal tune in radians (must be negative above transition).
+    
       ok : bool
           If present, returns true or false if set was successful. If not present, set_z_tune will bomb if tune
           could not be set. Notes: 1) The calculation assumes that Q_z < 1. 2) By convention a positive tune
           signifies a clockwise rotation in phase space so that the transverse tunes are positive. This means the
           longitudinal tune is negative above transition.
+    
       print_err : bool, optional
           Default is True. If False, suppress error messages
     """
@@ -32218,14 +34709,19 @@ def setup_high_energy_space_charge_calc(calc_on: bool, branch: BranchStruct, n_p
       ----------
       calc_on : bool
           Turns on or off the space charge calculation.
+    
       branch : BranchStruct
           Lattice for tracking.
+    
       n_part : float
           Number of actual particles in a bunch. Used to compute the bunch charge.
+    
       mode : NormalModesStruct
           Structure holding the beam info. Will be combined with info in beam_init.
+    
       beam_init : BeamInitStruct, optional
           Structure holding beam info. Will be combined with info in mode.
+    
       closed_orb : CoordStruct, optional
           Closed orbit. If not present the closed orbit is taken to be zero.
     """
@@ -32245,6 +34741,7 @@ def sigma_mat_ptc_to_bmad(sigma_mat_ptc: typing.Annotated[collections.abc.Sequen
       ----------
       sigma_mat_ptc : float
           PTC sigma matrix.
+    
       beta0 : float
           Reference particle velocity
     
@@ -32255,21 +34752,29 @@ def sigma_mat_ptc_to_bmad(sigma_mat_ptc: typing.Annotated[collections.abc.Sequen
     """
 def significant_difference(value1: typing.SupportsFloat, value2: typing.SupportsFloat, abs_tol: typing.SupportsFloat | None = None, rel_tol: typing.SupportsFloat | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine significant_difference
+    
+      Parameters
       ----------
       value1 : float
           First value.
+    
       value2 : float
           Second value.
+    
       abs_tol : float, optional
           Absolute tolerance. Default is 0.
+    
       rel_tol : float, optional
           Relative tolerance. Default is 0.
+    
       is_different : bool
           Set True if the difference is significant. False otherwise.
     """
 def sinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine sinc
+    
     Parameters
     ----------
     x : 
@@ -32278,6 +34783,8 @@ def sinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typin
     """
 def sincc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine sincc
+    
     Parameters
     ----------
     x : 
@@ -32286,6 +34793,8 @@ def sincc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typi
     """
 def sinhx_x(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine sinhx_x
+    
     Parameters
     ----------
     x : 
@@ -32294,13 +34803,17 @@ def sinhx_x(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, y: ty
     """
 def skip_ele_blender(ele: EleStruct, skip: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine skip_ele_blender
+    
+      Parameters
       ----------
       ele : 
       skip : 
     """
 def skip_header(ix_unit: typing.SupportsInt, error_flag: bool) -> None:
     """
+    Wrapper for Fortran routine skip_header
+    
     Parameters
     ----------
     ix_unit : 
@@ -32308,16 +34821,21 @@ def skip_header(ix_unit: typing.SupportsInt, error_flag: bool) -> None:
     """
 def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine slice_lattice
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to slice.
           This parameter is an input/output and is modified in-place. As an output: Lattice with unwanted elements
           sliced out.
+    
       ele_list : unknown
           List of elements to retain. See the documentation for
+    
       error : bool
           Set True if there is an error Set False if not.
+    
       do_bookkeeping : bool, optional
           Default is True. If false, the calling routine is responsible for: * Modifying lat.particle_start if
           needed. * Calculating Twiss functions.
@@ -32334,38 +34852,50 @@ def soft_quadrupole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at
       ----------
       ele : EleStruct
           Element being tracked through
+    
       param : LatParamStruct
           Tracking parameters.
+    
       particle_at : int
           first_track_edge$, or second_track_edge$.
+    
       orbit : CoordStruct
           Position before kick.
           This parameter is an input/output and is modified in-place. As an output: Position after kick.
+    
       mat6 : float, optional
           Transfer matrix up to the edge.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix with edge kick
           added on.
+    
       make_matrix : float, optional
           Propagate the transfer matrix? Default is False.
     """
 def sol_quad_mat6_calc(ks_in: typing.SupportsFloat, k1_in: typing.SupportsFloat, tilt: typing.SupportsFloat, length: typing.SupportsFloat, ele: EleStruct, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine sol_quad_mat6_calc
+    
+      Parameters
       ----------
       ks_in : 
       k1_in : 
       tilt : float
           quadrupole tilt.
+    
       length : float
           Sol_quad length.
+    
       ele : EleStruct
           Sol_quad element.
+    
       orbit : CoordStruct
           Orbit at beginning of the sol_quad.
+    
       mat6 : float, optional
           Transfer matrix up to the sol_quad.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix includeing the
           sol_quad.
+    
       make_matrix : bool, optional
           Extend the matrix?
     """
@@ -32382,10 +34912,13 @@ def solve_psi_adaptive(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0: t
       ----------
       t0 : float
           initial time
+    
       t1 : float
           final time
+    
       p0 : float
           Boundary condition psi(t0)
+    
       args : float
           Parameters.  See psi_prime comments for details.
     
@@ -32409,10 +34942,13 @@ def solve_psi_fixed_steps(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0
       ----------
       t0 : float
           initial time
+    
       t1 : float
           final time
+    
       p0 : float
           Boundary condition psi(t0)
+    
       args : float
           Parameters.  See psi_prime comments for details.
     
@@ -32420,6 +34956,7 @@ def solve_psi_fixed_steps(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0
       -------
       t : float
           Array of times from t0 to t1
+    
       p : float
           Array of psi evaluated at t(:)
     """
@@ -32460,8 +34997,10 @@ def species_id(name: str, default_: typing.SupportsInt | None = None, print_err:
     ----------
     name : unknown
         Name of the species.
+    
     default : int, optional
         Default species to use if name is blank or 'ref_species'.
+    
     If not present : 
     a blank name is an error. : 
     print_err : bool, optional
@@ -32483,6 +35022,7 @@ def species_id_from_openpmd(pmd_name: str, charge: typing.SupportsInt) -> int:
     ----------
     pmd_name : unknown
         OpenPMD species name.
+    
     charge : int
         Species charge. Ignored for subatomic particles.
     
@@ -32518,6 +35058,7 @@ def species_of(mass: typing.SupportsFloat, charge: typing.SupportsInt) -> int:
     ----------
     mass : float
         Mass of the particle
+    
     charge : int
         Charge of the particle.
     
@@ -32528,40 +35069,55 @@ def species_of(mass: typing.SupportsFloat, charge: typing.SupportsInt) -> int:
     """
 def spin_dn_dpz_from_mat8(mat_1turn: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]], "FixedSize(8)"], dn_dpz_partial: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None) -> SpinDnDpzFromMat8:
     """
-    Parameters
+    Wrapper for Fortran routine spin_dn_dpz_from_mat8
+    
+      Parameters
       ----------
       mat_1turn : float
           Spin-orbital matrix.
+    
       dn_dpz_partial : float, optional
           dn_dpz_partial(i,:) is dn_dpz with only one osccilation mode "excited". So dn_dpz_partial(1,:) represents
           a-mode excitation, etc.
+    
       error : bool
           Set True if there is an error. False otherwise.
+    
       dn_dpz : float
           dn_dpz (l,n,m) coordinates.
     """
 def spin_dn_dpz_from_qmap(orb_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], q_map: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"], dn_dpz_partial: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], dn_dpz_partial2: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], n0: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> SpinDnDpzFromQmap:
     """
-    Parameters
+    Wrapper for Fortran routine spin_dn_dpz_from_qmap
+    
+      Parameters
       ----------
       orb_mat : float
           1-turn orbital matrix.
+    
       q_map : float
           1-turn spin linear quaternion map.
+    
       dn_dpz_partial : float
           ) is dn_dpz with only one osccilation
+    
       dn_dpz_partial2 : float
           ) is dn_dpz with only two osccilation modes "excited". So dn_dpz_partial(1,:) represents b-mode and c-mode
+    
       error : bool
           Set True if there is an error. False otherwise.
+    
       n0 : float
           3,0).
+    
       dn_dpz : float
           dn_dpz.
     """
 def spin_map1_normalize(spin1: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine spin_map1_normalize
+    
+      Parameters
       ----------
       spin1 : float
           Unnormalized spin map.
@@ -32569,33 +35125,46 @@ def spin_map1_normalize(spin1: typing.Annotated[collections.abc.Sequence[typing.
     """
 def spin_mat8_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], mat8: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> SpinMat8ResonanceStrengths:
     """
-    Parameters
+    Wrapper for Fortran routine spin_mat8_resonance_strengths
+    
+      Parameters
       ----------
       orb_evec : complex
           Orbital eigenvector.
+    
       mat8 : float
           Spin/orbital matrix.
+    
       xi_sum : float
           Sum resonance strength.
+    
       xi_diff : float
           Difference resonance strength.
     """
 def spin_mat_to_eigen(orb_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], spin_map: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> SpinMatToEigen:
     """
-    Parameters
+    Wrapper for Fortran routine spin_mat_to_eigen
+    
+      Parameters
       ----------
       orb_mat : float
           Orbital matrix.
+    
       spin_map : float
           Quaternion 0th & 1st order map.
+    
       orb_eval : complex
           Eigenvalues.
+    
       orb_evec : complex
           Orbital eigenvectors. orb_evec(j,:) is the j^th vector.
+    
       n0 : float
           n_0 invariant spin
+    
       spin_evec : complex
           Spin eigenvectors. spin_evec(j,:) is the j^th vector.
+    
       error : bool
           Set true if there is an error. False otherwise.
     """
@@ -32611,6 +35180,7 @@ def spin_of(species: typing.SupportsInt, non_subatomic_default: typing.SupportsF
     ----------
     species : int
         Species ID.
+    
     non_subatomic_default : float, optional
         Default value to be used for non-subatomic species. Default value of this argument is zero.
     
@@ -32621,7 +35191,9 @@ def spin_of(species: typing.SupportsInt, non_subatomic_default: typing.SupportsF
     """
 def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.SupportsInt, phase_space_coords: bool | None = None, omega: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine spin_omega
+    
+      Parameters
       ----------
       field : 
       orbit : 
@@ -32631,47 +35203,64 @@ def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.Supp
     """
 def spin_quat_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], spin_q: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> SpinQuatResonanceStrengths:
     """
-    Parameters
+    Wrapper for Fortran routine spin_quat_resonance_strengths
+    
+      Parameters
       ----------
       orb_evec : complex
           Orbital eigenvector.
+    
       spin_q : float
           First order spin map.
+    
       xi_sum : float
           Sum resonance strength.
+    
       xi_diff : float
           Difference resonance strength.
     """
 def spin_taylor_to_linear(spin_taylor: TaylorStructArray1D, normalize: bool, dref_orb: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], is_on: bool) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(7)"]], "FixedSize(4)"]:
     """
-    Parameters
+    Wrapper for Fortran routine spin_taylor_to_linear
+    
+      Parameters
       ----------
       spin_taylor : TaylorStruct
           Taylor spin map.
+    
       normalize : bool
           If True, normalize the linear map.
+    
       dref_orb : float
           Change in Reference orbit: output_map1_ref - input_taylor_ref.
+    
       is_on : bool
           Is map turned on? If not spin_map1 will be the unit map.
+    
       spin_map1 : float
           First order spin map.
     """
 def spinor_to_polar(spinor: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(2)"]) -> SpinPolarStruct:
     """
-    Parameters
+    Wrapper for Fortran routine spinor_to_polar
+    
+      Parameters
       ----------
       spinor : complex
           Spinor
+    
       polar : SpinPolarStruct
           The resultant Unitary Vector in polar coordinates
     """
 def spinor_to_vec(spinor: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(2)"]) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
-    Parameters
+    Wrapper for Fortran routine spinor_to_vec
+    
+      Parameters
       ----------
       spinor : complex
           Spinor
+    
       vec : float
           spin vector in cartesian coordinates
     """
@@ -32685,8 +35274,10 @@ def spline1(a_spline: SplineStruct, x: typing.SupportsFloat, n: typing.SupportsI
     ----------
     a_spline : SplineStruct
         Single spline structure.
+    
     x : float
         Point for evaluation.
+    
     n : int, optional
         Output derivative order. May be -1, 0, 1, 2, or 3. Default is 0. n = -1 => output is integral of y from
         a_spline.x0 to x. n = 1 => output is dy/dx, n = 2 => output is d^2y/dx^2, etc.
@@ -32722,8 +35313,10 @@ def spline_akima(spline: SplineStructArray1D) -> bool:
     Parameters
     ----------
     spline : SplineStruct
+    
     %x0 : unknown
         points must be in assending order.
+    
     %y0 : 
         Y-component of a point.
     
@@ -32731,6 +35324,7 @@ def spline_akima(spline: SplineStructArray1D) -> bool:
     -------
     %coef : 
         Spline coefficients at a point.
+    
     ok : bool
         Set .false. if something is wrong (like less than 2 points used).
     """
@@ -32753,9 +35347,11 @@ def spline_akima_interpolate(x_knot: RealArray1D, y_knot: RealArray1D, x: typing
     ----------
     x_knot : float
         Array of x values for the knot points.
+    
     Must have more than 2 points and be in asending order. : 
     y_knot : float
         Array of y values for the knot points. Must be same size as x_knot(:).
+    
     x : float
         Point to evaluate at.
     
@@ -32763,8 +35359,10 @@ def spline_akima_interpolate(x_knot: RealArray1D, y_knot: RealArray1D, x: typing
     -------
     ok : bool
         Set .true. if everything ok, That is, x is within the spline range.
+    
     y : float
         Spline interpolation.
+    
     dy : float
         Spline derivative interpolation.
     """
@@ -32780,6 +35378,7 @@ def spline_evaluate(spline: SplineStructArray1D, x: typing.SupportsFloat) -> Spl
     ----------
     spline : SplineStruct
         Spline structure.
+    
     x : float
         point for evaluation.
     
@@ -32787,8 +35386,10 @@ def spline_evaluate(spline: SplineStructArray1D, x: typing.SupportsFloat) -> Spl
     -------
     ok : bool
         Set .true. if everything ok. That is, x is within the spline range.
+    
     y : float
         Spline interpolation.
+    
     dy : float
         Spline derivative interpolation.
     
@@ -32800,41 +35401,57 @@ def spline_evaluate(spline: SplineStructArray1D, x: typing.SupportsFloat) -> Spl
     """
 def spline_fit_orbit(start_orb: CoordStruct, end_orb: CoordStruct, spline_x: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"], spline_y: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine spline_fit_orbit
+    
+      Parameters
       ----------
       start_orb : CoordStruct
           Starting coords.
+    
       end_orb : CoordStruct
           Ending coords.
+    
       spline_x : float
           Spline coefs for the horizontal trajectory.
+    
       spline_y : float
           Spline coefs for vertical trajectory.
     """
 def split_lat(lat: LatStruct, s_split: typing.SupportsFloat, ix_branch: typing.SupportsInt, add_suffix: bool | None = None, check_sanity: bool | None = None, save_null_drift: bool | None = None, choose_max: bool | None = None, ix_insert: typing.SupportsInt | None = None) -> SplitLat:
     """
-    Parameters
+    Wrapper for Fortran routine split_lat
+    
+      Parameters
       ----------
       lat : LatStruct
           Original lat structure.
           This parameter is an input/output and is modified in-place. As an output: Modified lat structure.
+    
       s_split : float
           Position at which lat.branch(ix_branch) is to be split.
+    
       ix_branch : int
           Index of lat.branch(:) to use.
+    
       ix_split : int
           Index of element just before the s = s_split point.
+    
       split_done : bool
           True if lat was split.
+    
       add_suffix : bool, optional
           If True (default) add '#1' and '#2" suffixes
+    
       check_sanity : bool, optional
           If True (default) then call lat_sanity_check
+    
       save_null_drift : bool, optional
           Save a copy of a drift to be split as a null_ele? This is useful when superpositions are done. See
           add_superimpose for more info.
+    
       err_flag : bool
           Set true if there is an error, false otherwise.
+    
       choose_max : bool, optional
           If no splitting of an element is needed, that is, s_split is at an element boundary, there can be multiple
           possible values for ix_split if there exist zero length elements at the split point. If choose_max = True,
@@ -32842,6 +35459,7 @@ def split_lat(lat: LatStruct, s_split: typing.SupportsFloat, ix_branch: typing.S
           to be the minimal possible index. If s_split is not at an element boundary, the setting of choose_max is
           immaterial. If ix_insert is present, the default value of choose_max is set to give the closest element to
           ix_insert.
+    
       ix_insert : int, optional
           Element index near the point to be split. ix_insert is useful in the case where there is a patch with a
           negative length which can create an ambiguity as to where to do the split In this case ix_insert will
@@ -32850,16 +35468,21 @@ def split_lat(lat: LatStruct, s_split: typing.SupportsFloat, ix_branch: typing.S
     """
 def sprint_spin_taylor_map(ele: EleStruct, start_orbit: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"] | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine sprint_spin_taylor_map
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to form map for.
           This parameter is an input/output and is modified in-place. As an output: Element with map.
+    
       start_orbit : float, optional
           Reference orbit for the map. Default is zero orbit.
     """
 def sqrt_alpha(alpha: typing.SupportsFloat, x: typing.SupportsFloat, y: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine sqrt_alpha
+    
     Parameters
     ----------
     alpha : 
@@ -32868,6 +35491,8 @@ def sqrt_alpha(alpha: typing.SupportsFloat, x: typing.SupportsFloat, y: typing.S
     """
 def sqrt_one(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, ds1: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine sqrt_one
+    
     Parameters
     ----------
     x : 
@@ -32885,6 +35510,7 @@ def sr_longitudinal_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
       ----------
       ele : EleStruct
           Element with wakes.
+    
       orbit : CoordStruct
           Particle coords.
           This parameter is an input/output and is modified in-place. As an output: coords after the kick.
@@ -32900,6 +35526,7 @@ def sr_transverse_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
       ----------
       ele : EleStruct
           Element with wakes.
+    
       orbit : CoordStruct
           Starting particle coords.
           This parameter is an input/output and is modified in-place. As an output: Ending particle coords.
@@ -32914,8 +35541,10 @@ def sr_z_long_wake(ele: EleStruct, bunch: BunchStruct, z_ave: typing.SupportsFlo
       ----------
       ele : EleStruct
           Element with wake.
+    
       bunch : BunchStruct
           Bunch before wake applied.
+    
       z_ave : float
           Average z-position of all live particles.
     
@@ -32941,10 +35570,13 @@ def srdt_calc(lat: LatStruct, order: typing.SupportsInt, n_slices_gen_opt: typin
       ----------
       lat : LatStruct
           lattice with Twiss parameters calculated.
+    
       order : int
           1 to calculate only first order terms.  2 to also calculate 2nd order terms.
+    
       n_slices_gen_opt : int, optional
           number of times to slice elements other than sextupoles.  Default is 10.
+    
       n_slices_sxt_opt : int, optional
           nubmer of times to slice sextupoles.  Default is 20.
     
@@ -32972,16 +35604,22 @@ def srdt_lsq_solution(lat: LatStruct, var_indexes: IntArray1D, ls_soln: RealAllo
       ----------
       lat : LatStruct
           lattice with Twiss parameters calculated.
+    
       var_indexes : int
           indexes in lat.ele that are K2 variables.  Must be sorted smallest index to largest index.
+    
       n_slices_gen_opt : int, optional
           number of times to slice elements other than sextupoles.  Default is 10.
+    
       n_slices_sxt_opt : int, optional
           nubmer of times to slice sextupoles.  Default is 20.
+    
       chrom_set_x_opt : float, optional
           what to set x chromaticity to.  Default zero.
+    
       chrom_set_y_opt : float, optional
           what to set y chromaticity to.  Default zero.
+    
       weight_in : float, optional
           moment weights. Terms are: [wgt_chrom_x, wgt_chrom_y, wgt_h20001, wgt_h00201, wgt_h10002, wgt_h21000,
           wgt_h30000, wgt_h10110, wgt_h10020, wgt_h10200, If present, any terms equal to zero are given default
@@ -32994,21 +35632,28 @@ def srdt_lsq_solution(lat: LatStruct, var_indexes: IntArray1D, ls_soln: RealAllo
     """
 def start_branch_at(lat: LatStruct, ele_start: str, move_end_marker: bool) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine start_branch_at
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to modify.
           This parameter is an input/output and is modified in-place. As an output: Modified lattice.
+    
       ele_start : unknown
           Start element. Ele_start will identify the lattice branch to modify.
+    
       move_end_marker : bool
           If True then the end marker (if it is present) will be shifted like any other element. False means that
           the end marker will stay at the end.
+    
       error : bool
           Set True if there is an error Set False if not.
     """
 def str_count(str: str, match: str, num: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine str_count
+    
     Parameters
     ----------
     str : 
@@ -33017,6 +35662,8 @@ def str_count(str: str, match: str, num: typing.SupportsInt) -> None:
     """
 def str_downcase(src: str) -> str:
     """
+    Wrapper for Fortran routine str_downcase
+    
     Parameters
     ----------
     dst : 
@@ -33024,6 +35671,8 @@ def str_downcase(src: str) -> str:
     """
 def str_first_in_set(line: str, set: str, ignore_clauses: bool | None = None, ix_match: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine str_first_in_set
+    
     Parameters
     ----------
     line : 
@@ -33033,6 +35682,8 @@ def str_first_in_set(line: str, set: str, ignore_clauses: bool | None = None, ix
     """
 def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine str_first_not_in_set
+    
     Parameters
     ----------
     line : 
@@ -33041,6 +35692,8 @@ def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> N
     """
 def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine str_last_in_set
+    
     Parameters
     ----------
     line : 
@@ -33049,6 +35702,8 @@ def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> None:
     """
 def str_last_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine str_last_not_in_set
+    
     Parameters
     ----------
     line : 
@@ -33057,6 +35712,8 @@ def str_last_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> No
     """
 def str_match_wild(str: str, pat: str, a_match: bool) -> None:
     """
+    Wrapper for Fortran routine str_match_wild
+    
     Parameters
     ----------
     str : 
@@ -33065,6 +35722,8 @@ def str_match_wild(str: str, pat: str, a_match: bool) -> None:
     """
 def str_substitute(string: str, str_match: str | None = None, str_replace: str | None = None, do_trim: bool | None = None, ignore_escaped: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine str_substitute
+    
     Parameters
     ----------
     string : 
@@ -33075,6 +35734,8 @@ def str_substitute(string: str, str_match: str | None = None, str_replace: str |
     """
 def str_upcase(src: str) -> str:
     """
+    Wrapper for Fortran routine str_upcase
+    
     Parameters
     ----------
     dst : 
@@ -33082,12 +35743,16 @@ def str_upcase(src: str) -> str:
     """
 def stream_ele_end(physical_end: typing.SupportsInt, ele_orientation: typing.SupportsInt) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine stream_ele_end
+    
+      Parameters
       ----------
       physical_end : int
           entrance_end$, exit_end$, surface$, etc.
+    
       ele_orientation : int
           Either 1 = Normal or -1 = element reversed.
+    
       stream_end : int
           upstream_end$, downstream_end$, or set equal to physical_end if physical_end is neither entrance_end$ nor
           exit_end$
@@ -33106,6 +35771,7 @@ def string_attrib(attrib_name: str, ele: EleStruct) -> str:
       ----------
       attrib_name : unknown
           Name of the type of element attribute.
+    
       ele : EleStruct
           Lattice element.
     
@@ -33116,6 +35782,8 @@ def string_attrib(attrib_name: str, ele: EleStruct) -> str:
     """
 def string_to_int(line: str, default_: typing.SupportsInt, err_flag: bool, err_print_flag: bool | None = None, value: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine string_to_int
+    
     Parameters
     ----------
     line : 
@@ -33126,6 +35794,8 @@ def string_to_int(line: str, default_: typing.SupportsInt, err_flag: bool, err_p
     """
 def string_to_real(line: str, default_: typing.SupportsFloat, err_flag: bool, err_print_flag: bool | None = None, value: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine string_to_real
+    
     Parameters
     ----------
     line : 
@@ -33136,6 +35806,8 @@ def string_to_real(line: str, default_: typing.SupportsFloat, err_flag: bool, er
     """
 def string_trim(in_string: str, out_string: str, word_len: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine string_trim
+    
     Parameters
     ----------
     in_string : 
@@ -33144,6 +35816,8 @@ def string_trim(in_string: str, out_string: str, word_len: typing.SupportsInt) -
     """
 def string_trim2(in_str: str, delimitors: str, out_str: str, ix_word: typing.SupportsInt, delim: str, ix_next: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine string_trim2
+    
     Parameters
     ----------
     in_str : 
@@ -33155,25 +35829,34 @@ def string_trim2(in_str: str, delimitors: str, out_str: str, ix_word: typing.Sup
     """
 def strong_beam_sigma_calc(ele: EleStruct, s_pos: typing.SupportsFloat) -> StrongBeamSigmaCalc:
     """
-    Parameters
+    Wrapper for Fortran routine strong_beam_sigma_calc
+    
+      Parameters
       ----------
       ele : EleStruct
           Beambeam element.
+    
       s_pos : float
           Longitudinal position in lab coords of slice (used with hourglass effect correction).
+    
       sigma : float
           Strong beam x,y sigmas.
+    
       bbi_const : float
           BBI kick scale factor.
+    
       dsigma_ds : float
           sig_x and sig_y longitudinal derivatives.
     """
 def strong_beam_strength(ele: EleStruct) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine strong_beam_strength
+    
+      Parameters
       ----------
       ele : EleStruct
           Beambeam element.
+    
       strength : float
           Strong beam strength.
     """
@@ -33188,14 +35871,19 @@ def super_bicubic_coef(y: typing.Annotated[collections.abc.Sequence[typing.Suppo
     ----------
     y : float
         Function values at grid points.
+    
     y1 : float
         dy/dx1 derivatives.
+    
     y2 : float
         dy/dx2 derivatives.
+    
     y12 : float
         d2y/dx1*dx2 second derivatives.
+    
     d1 : float
         Grid width in 1-direction.
+    
     d2 : float
         Grid width in 2-direction.
     
@@ -33218,22 +35906,31 @@ def super_bicubic_interpolation(y: typing.Annotated[collections.abc.Sequence[typ
     ----------
     y : float
         Function values at grid points.
+    
     y1 : float
         dy/dx1 derivatives.
+    
     y2 : float
         dy/dx2 derivatives.
+    
     y12 : float
         d2y/dx1*dx2 second derivatives.
+    
     x1l : float
         1-direction coordinate at lower points.
+    
     x1u : float
         1-direction coordinate at upper points
+    
     x2l : float
         2-direction coordinate at lower points.
+    
     x2u : float
         2-direction coordinate at upper points
+    
     x1 : float
         1-direction coordinate at point to evaluate.
+    
     x2 : float
         2-direction coordinate at point to evaluate.
     
@@ -33241,8 +35938,10 @@ def super_bicubic_interpolation(y: typing.Annotated[collections.abc.Sequence[typ
     -------
     ansy : float
         Interpolation value.
+    
     ansy1 : float
         1-direction derivative at interpolation point.
+    
     ansy2 : float
         2-direction derivative at interpolation point.
     """
@@ -33255,12 +35954,15 @@ def super_polint(xa: RealArray1D, ya: RealArray1D, x: typing.SupportsFloat) -> S
     Parameters
     ----------
     xa : float
+    
     ya : float
+    
     x : float
     
     Returns
     -------
     y : float
+    
     dy : float
     """
 def super_poly(x: typing.SupportsFloat, coeffs: RealArray1D) -> float:
@@ -33273,6 +35975,7 @@ def super_poly(x: typing.SupportsFloat, coeffs: RealArray1D) -> float:
     ----------
     x : float
         Variable.
+    
     coef : float
         Coefficients.
     
@@ -33321,10 +36024,13 @@ def surface_grid_displacement(ele: EleStruct, x: typing.SupportsFloat, y: typing
       ----------
       ele : EleStruct
           Element containing the grid
+    
       x : float
           Photon coords at surface.
+    
       y : float
           Photon coords at surface.
+    
       extend_grid : bool, optional
           If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
     
@@ -33332,38 +36038,50 @@ def surface_grid_displacement(ele: EleStruct, x: typing.SupportsFloat, y: typing
       -------
       err_flag : bool
           Set True if there is a problem.
+    
       z : float
           surface height at (x, y).
+    
       dz_dxy : float
           Surface slope at (x, y).
     """
 def symp_lie_bmad(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, offset_ele: bool | None = None) -> TrackStruct:
     """
-    Parameters
+    Wrapper for Fortran routine symp_lie_bmad
+    
+      Parameters
       ----------
       ele : EleStruct
           Element with transfer matrix
           This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    
       param : LatParamStruct
           Parameters are needed for some elements.
+    
       orbit : CoordStruct
           Coordinates at the beginning of element.
           This parameter is an input/output and is modified in-place. As an output: Coordinates at the end of
           element.
+    
       track : TrackStruct
           Structure holding the track information. When tracking through multiple elements, the trajectory in an
           element
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
           through the element.
+    
       make_matrix : bool
           If True then make the 6x6 transfer matrix.
+    
       offset_ele : bool, optional
           Offset the element using ele.value(x_offset$), etc. Default is True.
     """
 def system_command(line: str, err_flag: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine system_command
+    
     Parameters
     ----------
     line : 
@@ -33382,6 +36100,7 @@ def t6_to_b123(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[co
       ----------
       t6 : float
           1-turn transfer matrix.  RF assumed to be on.
+    
       abz_tunes : float
           a-mode and b-mode tunes.  Used to order eigensystem.
     
@@ -33389,16 +36108,21 @@ def t6_to_b123(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[co
       -------
       B1 : float
           Beta matrix associated with a-mode.
+    
       B2 : float
           Beta matrix associated with b-mode.
+    
       B3 : float
           Beta matrix associated with c-mode.
+    
       err_flag : bool
           Set True if there is an error. False otherwise
     """
 def tao_abort_command_file(force_abort: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_abort_command_file
+    
+      Parameters
       ----------
       force_abort : bool, optional
           : If present and True, ignore s.global.cmd_file_abort_on_error and abort any open command files.
@@ -33423,16 +36147,21 @@ def tao_add_to_normal_mode_h_array(h_str: str, h_array: ResonanceHStructAlloc1D)
     """
 def tao_alias_cmd(alias: str, string: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_alias_cmd
+    
+      Parameters
       ----------
       alias : 
           Name of the tao command file.
+    
       string : 
           Command file arguments.
     """
 def tao_allocate_data_array(u: TaoUniverseStruct, n_data: typing.SupportsInt, exact: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_allocate_data_array
+    
+      Parameters
       ----------
       u : 
       n_data : 
@@ -33440,7 +36169,9 @@ def tao_allocate_data_array(u: TaoUniverseStruct, n_data: typing.SupportsInt, ex
     """
 def tao_allocate_v1_var(n_v1: typing.SupportsInt, save_old: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_allocate_v1_var
+    
+      Parameters
       ----------
       n_v1 : 
       save_old : 
@@ -33458,16 +36189,22 @@ def tao_allocate_var_array(n_var: typing.SupportsInt, default_good_user: bool) -
     """
 def tao_beam_emit_calc(plane: typing.SupportsInt, emit_type: typing.SupportsInt, ele: EleStruct, bunch_params: BunchParamsStruct) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine tao_beam_emit_calc
+    
+      Parameters
       ----------
       plane : int
           x_plane$ or y_plane$.
+    
       emit_type : int
           Either projected_emit$ or apparent_emit$
+    
       ele : EleStruct
           Element.
+    
       bunch_params : BunchParamsStruct
           Bunch sigma matrix
+    
       emit : float
           emittance.
     """
@@ -33481,10 +36218,13 @@ def tao_beam_track(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct, ix_branch: t
       ----------
       u : TaoUniverseStruct
           Universe to track through.
+    
       tao_lat : TaoLatticeStruct
           Structure containing the lattice.
+    
       ix_branch : int
           Branch index to track through.
+    
       beam : BeamStruct
           Initial beam distribution
           This parameter is an input/output and is modified in-place. As an output: Final beam distribution.
@@ -33496,34 +36236,46 @@ def tao_beam_track(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct, ix_branch: t
     """
 def tao_beam_track_endpoint(ele_id: str, lat: LatStruct, branch_str: str, where: str, u: TaoUniverseStruct) -> EleStruct | None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_beam_track_endpoint
+    
+      Parameters
       ----------
       ele_id : unknown
           Name or index of the element.
+    
       lat : LatStruct
           Lattice.
+    
       branch_str : int
           Branch where the tracking is done. '' => Branch not specified.
+    
       where : unknown
           'TRACK_END', 'TRACK_START', etc.. Used for error messages.
+    
       u : TaoUniverseStruct
           Universe beam is being tracked in.
+    
       ele : EleStruct
           Pointer to the track endpoint element. Nullified if error. Note: blank ele_id is handled if "where"
           contains 'END' or 'START'
     """
 def tao_branch_index(ix_branch: typing.SupportsInt) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine tao_branch_index
+    
+      Parameters
       ----------
       ix_branch : int
           Nominal branch number.
+    
       ix_this : int
           Branch number.
     """
 def tao_calc_data_at_s_pts(tao_lat: TaoLatticeStruct, curve: TaoCurveStruct, comp_sign: typing.SupportsFloat, good: BoolAlloc1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_calc_data_at_s_pts
+    
+      Parameters
       ----------
       tao_lat : 
       curve : 
@@ -33544,8 +36296,10 @@ def tao_change_ele(ele_name: str, attrib_name: str, num_str: str, update: bool) 
       ----------
       ele_name : unknown
           Name of variable or element.
+    
       attrib_name : unknown
           Attribute name of element.
+    
       num_str : unknown
           Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
     
@@ -33553,6 +36307,7 @@ def tao_change_ele(ele_name: str, attrib_name: str, num_str: str, update: bool) 
       -------
       err_flag : 
           logical, Set true if there is an error, false otherwise.
+    
       s%u : 
           model lattice where the variable lives.
     """
@@ -33564,12 +36319,16 @@ def tao_change_tune(branch_str: str, mask_str: str, print_list: bool, dqa_str: s
       ----------
       branch_str : unknown
           List of branches to apply tune set to.
+    
       mask_str : unknown
           List of quadrupoles to veto.
+    
       print_list : bool
           If True, print a list of elements varied and coefficients.
+    
       dqa_str : unknown
           Expression for dQa tune.
+    
       dqb_str : unknown
           Expression for dQb tune.
     
@@ -33588,8 +36347,10 @@ def tao_change_var(name: str, num_str: str, silent: bool) -> bool:
       ----------
       name : unknown
           Name of variable or element.
+    
       num_str : unknown
           Change in value. A '@' signifies a absolute set.
+    
       A 'd' signifies a set relative design. : 
       silent : bool
           If True then do not print any info.
@@ -33598,6 +36359,7 @@ def tao_change_var(name: str, num_str: str, silent: bool) -> bool:
       -------
       err_flag : 
           logical, Set true if there is an error, false otherwise.
+    
       s%u : 
           model lattice where the variable lives.
     """
@@ -33609,6 +36371,7 @@ def tao_change_z_tune(branch_str: str, dq_str: str) -> bool:
       ----------
       branch_str : unknown
           List of branches to apply tune set to.
+    
       dq_str : unknown
           Expression for dQc tune.
     
@@ -33619,7 +36382,9 @@ def tao_change_z_tune(branch_str: str, dq_str: str) -> bool:
     """
 def tao_chrom_calc_needed(data_type: str, data_source: str, do_chrom: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_chrom_calc_needed
+    
+      Parameters
       ----------
       data_type : 
       data_source : 
@@ -33627,24 +36392,32 @@ def tao_chrom_calc_needed(data_type: str, data_source: str, do_chrom: bool) -> N
     """
 def tao_clear_cmd(cmd_line: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_clear_cmd
+    
+      Parameters
       ----------
       cmd_line : unknown
           Should be set to 'maps'.
     """
 def tao_clip_cmd(gang: bool, where: str, value1: typing.SupportsFloat, value2: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_clip_cmd
+    
+      Parameters
       ----------
       gang : bool
           Gang all data d1 arrays together.
+    
       where : unknown
           Graph() to clip. Eg: 'top:x'
+    
       value1 : 
       value2 : 
     """
 def tao_close_command_file() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_close_command_file
+    """
 def tao_cmd_history_record(cmd: str) -> None:
     """
     Subroutine tao_cmd_history_record (cmd)
@@ -33653,40 +36426,53 @@ def tao_cmd_history_record(cmd: str) -> None:
     """
 def tao_command(command_line: str, err: bool) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_command
+    
+      Parameters
       ----------
       command_line : unknown
           command line
+    
       err : 
       err_is_fatal : bool
           Set True on non-recoverable error. False otherwise
     """
 def tao_constraint_type_name(datum: TaoDataStruct) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_constraint_type_name
+    
+      Parameters
       ----------
       datum : TaoDataStruct
           Datum
+    
       datum_name : unknown
           Appropriate name.
     """
 def tao_control_tree_list(ele: EleStruct, tree: ElePointerStructAlloc1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_control_tree_list
+    
+      Parameters
       ----------
       ele : EleStruct
           Lattice element to start at.
+    
       tree : ElePointerStruct
           Array of elements.
     """
 def tao_count_strings(string: str, pattern: str) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine tao_count_strings
+    
+      Parameters
       ----------
       string : unknown
           the string to look at
+    
       pattern : unknown
           the search pattern
+    
       num : int
           number of occurances
     """
@@ -33699,7 +36485,9 @@ def tao_create_plot_window() -> None:
     """
 def tao_curve_beam_ellipse_setup(curve: TaoCurveStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_curve_beam_ellipse_setup
+    
+      Parameters
       ----------
       curve : 
     """
@@ -33715,6 +36503,7 @@ def tao_curve_check_universe(curve: TaoCurveStruct, uni: TaoUniverseStruct) -> b
           Curve to check.
           This parameter is an input/output and is modified in-place. As an output: Curve.valid set to False if
           needed.
+    
       uni : TaoUniverseStruct
           Associated universe
     
@@ -33725,7 +36514,9 @@ def tao_curve_check_universe(curve: TaoCurveStruct, uni: TaoUniverseStruct) -> b
     """
 def tao_curve_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: TaoCurveStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_curve_data_setup
+    
+      Parameters
       ----------
       plot : 
       graph : 
@@ -33742,70 +36533,94 @@ def tao_curve_datum_calc(eles: ElePointerStructAlloc1D, plot: TaoPlotStruct, cur
       ----------
       eles : ElePointerStruct
           Array of elements.
+    
       plot : TaoPlotStruct
+    
       curve : TaoCurveStruct
           This parameter is an input/output and is modified in-place. As an output: Structure holding the datum
           values
+    
       who : unknown
           Where to put the data. Either: "SYMBOL" or "LINE".
     """
 def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool, ele_track: EleStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_curve_ele_ref
+    
+      Parameters
       ----------
       curve : TaoCurveStruct
           Curve with ref ele.
+    
       point_to_ele_ref : 
       ele_track : 
     """
 def tao_curve_ix_uni(curve: TaoCurveStruct) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine tao_curve_ix_uni
+    
+      Parameters
       ----------
       curve : TaoCurveStruct
           Curve.
+    
       ix_uni : int
           Universe index.
     """
 def tao_curve_name(curve: TaoCurveStruct, use_region: bool | None = None) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_curve_name
+    
+      Parameters
       ----------
       curve : TaoCurveStruct
           Curve
+    
       use_region : bool
           If present and True then use the region name instead of the plot name. Region name is 'NULL_REGION' if
           there is no assocaited region.
+    
       curve_name : unknown
           Appropriate name.
     """
 def tao_curve_rms_calc(curve: TaoCurveStruct, who: str) -> TaoCurveRmsCalc:
     """
-    Parameters
+    Wrapper for Fortran routine tao_curve_rms_calc
+    
+      Parameters
       ----------
       curve : TaoCurveStruct
           Curve to analyze.
+    
       who : unknown
           "LINE" or "SYMBOL".
+    
       rms : float
           RMS. -1 => Curve has no data.
+    
       mean : float
           Mean.
     """
 def tao_d2_d1_name(d1: TaoD1DataStruct, show_universe: bool | None = None) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_d2_d1_name
+    
+      Parameters
       ----------
       d1 : TaoD1DataStruct
           Data array.
+    
       show_universe : bool, optional
           Show the datum's universe. Default is True.
+    
       d2_d1_name : unknown
           Appropriate name.
     """
 def tao_d2_data_stuffit(u: TaoUniverseStruct, d2_name: str, n_d1_data: typing.SupportsInt) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_d2_data_stuffit
+    
+      Parameters
       ----------
       u : 
       d2_name : 
@@ -33813,29 +36628,39 @@ def tao_d2_data_stuffit(u: TaoUniverseStruct, d2_name: str, n_d1_data: typing.Su
     """
 def tao_data_check(err: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_data_check
+    
+      Parameters
       ----------
       err : 
     """
 def tao_data_coupling_init(branch: BranchStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_data_coupling_init
+    
+      Parameters
       ----------
       branch : BranchStruct
           New lattice branch.
     """
 def tao_data_sanity_check(datum: TaoDataStruct, print_err: bool, default_data_type: str, uni: TaoUniverseStruct | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_data_sanity_check
+    
+      Parameters
       ----------
       datum : TaoDataStruct
           Datum to check.
+    
       print_err : bool
           Print error message if data is not valid?
+    
       default_data_type : unknown
           Default data type associated with the datum's d2 structure.
+    
       uni : TaoUniverseStruct, optional
           Universe to use instead of datum.d1.d2.ix_universe
+    
       is_valid : bool
           True if internally consistent.
     """
@@ -33853,8 +36678,10 @@ def tao_data_type_substitute(template_: str, curve: TaoCurveStruct, graph: TaoGr
       ----------
       template : unknown
           String template.
+    
       curve : TaoCurveStruct
           curve.ele_ref_name is substituted for all instances of "#ref".
+    
       graph : TaoGraphStruct
     
       Returns
@@ -33872,27 +36699,35 @@ def tao_data_useit_plot_calc(curve: TaoCurveStruct, graph: TaoGraphStruct, data:
       ----------
       graph : 
           tao_graph_struct
+    
       curve : 
           tao_curve_struct
+    
       check_s_position : bool
           If present and True then veto data that does not have an s-position.
     
       Returns
       -------
       data : TaoDataStruct
+    
       %useit_plot : 
           True if good for plotting.
+    
       most_invalid : unknown
           String documenting biggest invalid data problem.
     """
 def tao_datum_has_associated_ele(data_type: str, branch_geometry: typing.SupportsInt | None = None) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine tao_datum_has_associated_ele
+    
+      Parameters
       ----------
       data_type : unknown
           Type of data.
+    
       branch_geometry : int, optional
           Geometry of the associated lattice branch. open$ or closed$.
+    
       has_associated_ele : int
     """
 def tao_datum_integrate(datum: TaoDataStruct, branch: BranchStruct, s_pos: RealArray1D, values: RealArray1D) -> TaoDatumIntegrate:
@@ -33905,10 +36740,13 @@ def tao_datum_integrate(datum: TaoDataStruct, branch: BranchStruct, s_pos: RealA
       ----------
       datum : TaoDataStruct
           Datum under consideration.
+    
       branch : BranchStruct
           Associated lattice branch.
+    
       s_pos : float
           Array of s-positions of the values.
+    
       values : float
           Array of values.
     
@@ -33916,19 +36754,25 @@ def tao_datum_integrate(datum: TaoDataStruct, branch: BranchStruct, s_pos: RealA
       -------
       valid_value : bool
           Set false if, for example, all s_pos(:) are the same.
+    
       why_invalid : unknown
           Information string if there is a problem.
+    
       result : float
           Integral, rms, or average depending upon datum.merit_type.
     """
 def tao_datum_name(datum: TaoDataStruct, show_universe: bool | None = None) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_datum_name
+    
+      Parameters
       ----------
       datum : TaoDataStruct
           Datum
+    
       show_universe : bool, optional
           Show the datum's universe. Default is True.
+    
       datum_name : unknown
           Appropriate name.
     """
@@ -33942,6 +36786,7 @@ def tao_datum_s_position(datum: TaoDataStruct, ele: EleStruct) -> float:
       ----------
       datum : TaoDataStruct
           Datum under conideration.
+    
       ele : EleStruct
           Associated lattice element.
     
@@ -33952,14 +36797,18 @@ def tao_datum_s_position(datum: TaoDataStruct, ele: EleStruct) -> float:
     """
 def tao_de_optimizer() -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_de_optimizer
+    
+      Parameters
       ----------
       abort : bool
           Set True if an user stop signal detected.
     """
 def tao_deallocate_plot_cache(plot_cache: TaoPlotCacheStructAlloc1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_deallocate_plot_cache
+    
+      Parameters
       ----------
       plot_cache : 
     """
@@ -33976,7 +36825,9 @@ def tao_deallocate_tree(tree: TaoEvalNodeStruct) -> None:
           This parameter is an input/output and is modified in-place. As an output: Deallocated tree.
     """
 def tao_destroy_plot_window() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_destroy_plot_window
+    """
 def tao_dmerit_calc() -> None:
     """
     Subroutine tao_dmerit_calc ()
@@ -33991,8 +36842,10 @@ def tao_dmodel_dvar_calc(force_calc: bool) -> bool:
       ----------
       s : SuperUniverseStruct
           This parameter is an input/output and is modified in-place. As an output: Super_universe_struct.
+    
       force_calc : bool
           If true then force recalculation of the matrix. If False then only calculate matrix if it doesn't exist.
+    
       veto_vars_with_zero_dmodel : unknown
           Veto variables where all dModel_dvar for that var are zero. Sets the var.good_var logical to False.
     
@@ -34000,6 +36853,7 @@ def tao_dmodel_dvar_calc(force_calc: bool) -> bool:
       -------
       %u : 
           Derivative matrix
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
     """
@@ -34018,12 +36872,16 @@ def tao_do_wire_scan(ele: EleStruct, theta: typing.SupportsFloat, beam: BeamStru
       Parameters
       ----------
       ele : ElementStruct
+    
       %value : 
           relative wire resolution RMS
+    
       %value : 
           wire angle error in radians rms.
+    
       theta : float
           wire angle wrt x axis (in degrees)
+    
       beam : BeamStruct
           contains the beam distribution
     
@@ -34044,6 +36902,7 @@ def tao_draw_beam_chamber_wall(plot: TaoPlotStruct, graph: TaoGraphStruct) -> No
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
     """
@@ -34057,10 +36916,13 @@ def tao_draw_curve_data(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: TaoCu
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph containing the curve.
+    
       curve : TaoCurveStruct
           Curve to draw.
+    
       have_data : bool
           Intitial state.
           This parameter is an input/output and is modified in-place. As an output: Is there any data to plot? Set
@@ -34076,19 +36938,26 @@ def tao_draw_ele_for_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct, tao_
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
+    
       tao_lat : TaoLatticeStruct
           Lattice containing the element.
+    
       ele : EleStruct
           Element to draw.
+    
       ele_shape : TaoEleShapeStruct
           Shape to draw from s.plot_page.floor_plan.ele_shape(:) array.
+    
       Will be NULL if no associated shape for this element. : 
       label_name : unknown
           Shape label.
+    
       offset1 : float
           Transverse distances used to scale the drawing of the element shape.
+    
       offset2 : float
           Transverse distances used to scale the drawing of the element shape.
     """
@@ -34102,6 +36971,7 @@ def tao_draw_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
     """
@@ -34116,6 +36986,7 @@ def tao_draw_graph_axes(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
     """
@@ -34129,10 +37000,13 @@ def tao_draw_histogram_data(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: T
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph containing the histogram.
+    
       curve : TaoCurveStruct
           Histogram to draw.
+    
       have_data : bool
           Intitial state.
           This parameter is an input/output and is modified in-place. As an output: Is there any data to plot? Set
@@ -34148,6 +37022,7 @@ def tao_draw_lat_layout(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
     """
@@ -34173,6 +37048,7 @@ def tao_ele_geometry_with_misalignments(datum: TaoDataStruct, ele: EleStruct) ->
       ----------
       datum : unknown
           Datum info
+    
       ele : EleStruct
           Lattice element to evaluate at.
     
@@ -34180,29 +37056,40 @@ def tao_ele_geometry_with_misalignments(datum: TaoDataStruct, ele: EleStruct) ->
       -------
       valid_value : bool
           Was able to evalute the datum?
+    
       why_invalid : unknown
           If not valid, why not.
+    
       value : float
           Datum value.
     """
 def tao_ele_shape_info(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shapes: TaoEleShapeStructArray1D, ix_shape_min: typing.SupportsInt | None = None) -> TaoEleShapeInfo:
     """
-    Parameters
+    Wrapper for Fortran routine tao_ele_shape_info
+    
+      Parameters
       ----------
       ix_uni : int
           Universe index.
+    
       ele : EleStruct
           Lattice element.
+    
       ele_shapes : TaoEleShapeStruct
           Array of shapes to search.
+    
       e_shape : TaoEleShapeStruct
           element shape. Will be nullified if no associated shape.
+    
       label_name : unknown
           Label name.
+    
       y1 : float
           shape transverse sizes.
+    
       y2 : float
           shape transverse sizes.
+    
       ix_shape_min : int, optional
           Index of minimum ele_shape(:) index to start search from. Default is 1.
           This parameter is an input/output and is modified in-place. As an output: Ele_shape(
@@ -34218,10 +37105,13 @@ def tao_eval_floor_orbit(datum: TaoDataStruct, ele: EleStruct, orbit: CoordStruc
       ----------
       datum : unknown
           Datum info
+    
       ele : EleStruct
           Lattice element to evaluate at.
+    
       orbit : CoordStruct
           Particle orbit at element.
+    
       bunch_params : BunchParamsStruct
           Bunch parameters at element.
     
@@ -34229,29 +37119,40 @@ def tao_eval_floor_orbit(datum: TaoDataStruct, ele: EleStruct, orbit: CoordStruc
       -------
       valid_value : bool
           Was able to evalute the datum?
+    
       why_invalid : unknown
           If not valid, why not.
+    
       value : float
           Datum value.
     """
 def tao_evaluate_a_datum(datum: TaoDataStruct, u: TaoUniverseStruct, tao_lat: TaoLatticeStruct, called_from_lat_calc: bool | None = None, print_err: bool | None = None) -> TaoEvaluateADatum:
     """
-    Parameters
+    Wrapper for Fortran routine tao_evaluate_a_datum
+    
+      Parameters
       ----------
       datum : TaoDataStruct
           What type of datum
+    
       u : TaoUniverseStruct
           Which universe to use.
+    
       tao_lat : TaoLatticeStruct
           Lattice to use.
+    
       datum_value : float
           Value of the datum.
+    
       valid_value : bool
           Set false when there is a problem. Set true otherwise.
+    
       why_invalid : unknown
           Tells why datum value is invalid.
+    
       called_from_lat_calc : unknown, optional
           Default is False. If true, prevents infinite loop of this
+    
       print_err : bool, optional
           Default is True. If False, do not print an error message.
     """
@@ -34265,11 +37166,15 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
       ----------
       datum : TaoDataStruct
           Datum to evaluate.
+    
       tao_lat : TaoLatticeStruct
+    
       ele : EleStruct
           Evaluation element.
+    
       ele_ref : EleStruct
           Reference element.
+    
       valid_value : bool
           True if evaluation was sucessful. False if not.
     
@@ -34277,169 +37182,241 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
       -------
       err_str : unknown
           Error string for printing an error message.
+    
       bad_datum : bool
           True -> datum is malformed. False -> Could evaluate or evaluation problem was not due to the datum
+    
       itself : 
       value : float
           Datum value.
     """
 def tao_evaluate_element_parameters(param_name: str, values: RealAlloc1D, print_err: bool, dflt_ele: EleStruct | None = None, dflt_source: str, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, eval_point: typing.SupportsInt | None = None, info: TaoExpressionInfoStructAlloc1D | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_evaluate_element_parameters
+    
+      Parameters
       ----------
       err : bool
           True if there is an error in syntax. False otherwise
+    
       param_name : unknown
           parameter name.
+    
       values : float
           Array of datum values.
+    
       print_err : bool
           Print error message?
+    
       dflt_ele : EleStruct, optional
           Default element if not specified by param_name.
+    
       dflt_source : unknown
           Default source
+    
       dflt_component : unknown, optional
           Default component
+    
       dflt_uni : int, optional
           Default universe to use.
+    
       eval_point : 
       info : unknown
     """
 def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_evaluate_expression
+    
+      Parameters
       ----------
       expression : unknown
           Arithmetic expression.
+    
       n_size : int
           Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
           this value.
+    
       use_good_user : bool
           Use the good_user logical in evaluating good(:)
+    
       value : float
           Value of arithmetic expression.
+    
       err_flag : bool
           True on an error. EG: Invalid expression.
+    
       print_err : bool, optional
           If False then supress evaluation error messages.
+    
       info : TaoExpressionInfoStruct
           Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+    
       stack : TaoEvalNodeStruct
           Array of nodes of variable names. This is useful to check what datums or variables are used in the
           expression.
+    
       dflt_component : unknown, optional
           Component to use if not specified in the expression.
+    
       dflt_source : unknown, optional
           Default source ('lat', 'data', etc.). Default is ''.
+    
       dflt_ele_ref : EleStruct, optional
           Default reference element.
+    
       dflt_ele_start : EleStruct, optional
           Default start element for ranges.
+    
       dflt_ele : EleStruct, optional
           Default element to evaluate at.
+    
       dflt_dat_or_var_index : unknown, optional
           Default datum or variable index to use.
+    
       dflt_uni : int, optional
           Default universe to use. If 0 or not present, use viewed universe.
+    
       dflt_eval_point : int, optional
           Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+    
       dflt_s_offset : float, optional
           Default offset of eval_point. Default = 0.
+    
       dflt_orbit : CoordStruct, optional
           Default orbit to evaluate at.
+    
       datum : TaoDataStruct, optional
           If present, check to see that the expression does not depend upon a datum that will be evaluated after
           this datum. If so, this is an error.
     """
 def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_evaluate_expression_new
+    
+      Parameters
       ----------
       expression : unknown
           Arithmetic expression.
+    
       n_size : int
           Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
           this value.
+    
       use_good_user : bool
           Use the good_user logical in evaluating good(:)
+    
       value : float
           Value of arithmetic expression.
+    
       err_flag : bool
           True on an error. EG: Invalid expression.
+    
       print_err : bool, optional
           If False then supress evaluation error messages.
+    
       info : TaoExpressionInfoStruct
           Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+    
       stack : TaoEvalNodeStruct
           Array of nodes of variable names. This is useful to check what datums or variables are used in the
           expression.
+    
       dflt_component : unknown, optional
           Component to use if not specified in the expression.
+    
       dflt_source : unknown, optional
           Default source ('lat', 'data', etc.). Default is ''.
+    
       dflt_ele_ref : EleStruct, optional
           Default reference element.
+    
       dflt_ele_start : EleStruct, optional
           Default start element for ranges.
+    
       dflt_ele : EleStruct, optional
           Default element to evaluate at.
+    
       dflt_dat_or_var_index : unknown, optional
           Default datum or variable index to use.
+    
       dflt_uni : int, optional
           Default universe to use. If 0 or not present, use viewed universe.
+    
       dflt_eval_point : int, optional
           Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+    
       dflt_s_offset : float, optional
           Default offset of eval_point. Default = 0.
+    
       dflt_orbit : CoordStruct, optional
           Default orbit to evaluate at.
+    
       datum : TaoDataStruct, optional
           If present, check to see that the expression does not depend upon a datum that will be evaluated after
           this datum. If so, this is an error.
     """
 def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool | None = None, info: TaoExpressionInfoStructAlloc1D | None = None, stack: TaoEvalNodeStructAlloc1D | None = None, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_evaluate_expression_old
+    
+      Parameters
       ----------
       expression : unknown
           Arithmetic expression.
+    
       n_size : int
           Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
           this value.
+    
       use_good_user : bool
           Use the good_user logical in evaluating good(:)
+    
       value : float
           Value of arithmetic expression.
+    
       err_flag : bool
           True on an error. EG: Invalid expression.
+    
       print_err : bool, optional
           If False then supress evaluation error messages.
+    
       info : TaoExpressionInfoStruct
           Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+    
       stack : TaoEvalNodeStruct
           Array of nodes of variable names. This is useful to check what datums or variables are used in the
           expression.
+    
       dflt_component : unknown, optional
           Component to use if not specified in the expression.
+    
       dflt_source : unknown, optional
           Default source ('lat', 'data', etc.). Default is ''.
+    
       dflt_ele_ref : EleStruct, optional
           Default reference element.
+    
       dflt_ele_start : EleStruct, optional
           Default start element for ranges.
+    
       dflt_ele : EleStruct, optional
           Default element to evaluate at.
+    
       dflt_dat_or_var_index : unknown, optional
           Default datum or variable index to use.
+    
       dflt_uni : int, optional
           Default universe to use. If 0 or not present, use viewed universe.
+    
       dflt_eval_point : int, optional
           Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+    
       dflt_s_offset : float, optional
           Default offset of eval_point. Default = 0.
+    
       dflt_orbit : CoordStruct, optional
           Default orbit to evaluate at.
+    
       datum : TaoDataStruct, optional
           If present, check to see that the expression does not depend upon a datum that will be evaluated after
           this datum. If so, this is an error.
@@ -34447,10 +37424,6 @@ def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use
 def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err: bool, default_source: str, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None) -> bool:
     """
     ! private tao_scratch_values_calc, tao_eval_floor_orbit, tao_ele_geometry_with_misalignments
-    
-    
-    
-    
     
        Subroutine tao_evaluate_lat_or_beam_data (err, data_name, values, print_err, default_source, default_source,
                      dflt_ele_ref, dflt_ele_start, dflt_ele, dflt_component, dflt_uni, dflt_eval_point, dflt_s_offset)
@@ -34462,22 +37435,31 @@ def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err
       ----------
       data_name : unknown
           data name.
+    
       print_err : bool
           Print error message?
+    
       dflt_source : unknown
           If not blank: Default source: 'lat' or 'beam'.
+    
       dflt_ele_ref : EleStruct, optional
           Default reference element.
+    
       dflt_ele_start : EleStruct, optional
           Default start element.
+    
       dflt_ele : EleStruct, optional
           Default element to evaluate at.
+    
       dflt_component : unknown, optional
           Default component: 'model' (default), 'base', or 'design'.
+    
       dflt_uni : int, optional
           Default universe to use.
+    
       dflt_eval_point : int, optional
           Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+    
       dflt_s_offset : float, optional
           Default offset of eval_point. Default = 0.
     
@@ -34485,6 +37467,7 @@ def tao_evaluate_lat_or_beam_data(data_name: str, values: RealAlloc1D, print_err
       -------
       err : bool
           True if there is an error. False otherwise.
+    
       values : float
           Array of datum valuse.
     """
@@ -34498,15 +37481,19 @@ def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.Su
       ----------
       stack : TaoEvalNodeStruct
           Expression stack
+    
       n_size_in : int
           Desired array size. If the expression evaluates to a a scalar, each value in the value array will get this
           value.
+    
       If n_size = 0 : 
       the natural size is determined by the expression itself. : 
       use_good_user : bool
           Use the good_user logical in evaluating good(:)
+    
       print_err : bool
           If False then supress evaluation error messages.
+    
       This does not affect syntax error messages. Default is True. : 
       expression : unknown
           Original expression. Used for error messages.
@@ -34515,41 +37502,56 @@ def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.Su
       -------
       value : float
           Value of arithmetic expression.
+    
       info : TaoExpressionInfoStruct
           Is the value valid? Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+    
       orbit.x[23]|good_user is False. : 
       err_flag : bool
           True on error. False otherwise
     """
 def tao_evaluate_tree(tao_tree: TaoEvalNodeStruct, n_size: typing.SupportsInt, use_good_user: bool, value: RealAlloc1D, print_err: bool, expression: str, info_in: TaoExpressionInfoStructAlloc1D | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_evaluate_tree
+    
+      Parameters
       ----------
       tao_tree : TaoEvalNodeStruct
           Expression tree
+    
       n_size : 
       use_good_user : bool
           Use the good_user logical in evaluating good(:)
+    
       value : float
           Value(s) of the arithmetic expression.
+    
       err_flag : bool
           True on error. False otherwise
+    
       print_err : bool
           If False then supress evaluation error messages.
+    
       expression : unknown
           Original expression. Used for error messages.
+    
       info_in : 
     """
 def tao_evaluate_tune(q_str: str, q0: typing.SupportsFloat, delta_input: bool, q_val: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_evaluate_tune
+    
+      Parameters
       ----------
       q_str : unknown
           String expression.
+    
       q0 : float
           Default to use if q_str evaluates to zero.
+    
       delta_input : bool
           If true then qa_str and qb_str are deltas from present tune.
+    
       q_val : float
           Tune value. Set zero if there is an error.
     """
@@ -34569,6 +37571,7 @@ def tao_expression_hash_substitute(expression_in: str, eval_ele: EleStruct | Non
       ----------
       expression_in : unknown
           Expression.
+    
       eval_ele : EleStruct, optional
           Evaluation element name to substitute in. If not present, expression will not be modified.
     
@@ -34587,12 +37590,15 @@ def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | 
       ----------
       tree : TaoEvalNodeStruct
           Tree to print.
+    
       include_root : bool, optional
           Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
           type root$, this node is
+    
       always ignored. : 
       n_node : int, optional
           Internal use only. Used with recursive calls.
+    
       parent : TaoEvalNodeStruct, optional
           Internal use only. Used with recusive calls.
     
@@ -34603,48 +37609,65 @@ def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | 
     """
 def tao_find_plot_region(where: str, print_flag: bool | None = None) -> TaoFindPlotRegion:
     """
-    Parameters
+    Wrapper for Fortran routine tao_find_plot_region
+    
+      Parameters
       ----------
       err : bool
           Set True on error. False otherwise.
+    
       where : unknown
           Region name.
+    
       region : TaoPlotRegionStruct
           Region found.
+    
       print_flag : bool, optional
           If present and False then surpress error messages. Default is True.
     """
 def tao_fixer(switch_: str, word1: str, word2: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_fixer
+    
+      Parameters
       ----------
       switch : unknown
           Action to take. One on : 'activate', 'save', 'write'.
+    
       word1 : unknown
           First word of command.
+    
       word2 : unknown
           Secton word of command.
     """
 def tao_floor_to_screen(graph: TaoGraphStruct, r_floor: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> TaoFloorToScreen:
     """
-    Parameters
+    Wrapper for Fortran routine tao_floor_to_screen
+    
+      Parameters
       ----------
       graph : TaoGraphStruct
           Graph defining the projection plane.
+    
       r_floor : 
       x_screen : float
           x-coordinate of projected point.
+    
       y_screen : float
           y-coordinate of projected point.
     """
 def tao_floor_to_screen_coords(graph: TaoGraphStruct, floor: FloorPositionStruct) -> FloorPositionStruct:
     """
-    Parameters
+    Wrapper for Fortran routine tao_floor_to_screen_coords
+    
+      Parameters
       ----------
       graph : TaoGraphStruct
           Graph defining the projection plane.
+    
       floor : FloorPositionStruct
           3D coordinate.
+    
       screen : FloorPositionStruct
           Projected point
     """
@@ -34658,7 +37681,6 @@ def tao_geodesic_lm_optimizer() -> bool:
       This subroutine is a wrapper for the "geodesic"
       Levenburg - Marquardt method.
     
-    
       Returns
       -------
       abort : bool
@@ -34671,34 +37693,44 @@ def tao_get_data(data_value: RealAlloc1D | None = None, data_weight: RealAlloc1D
       Subroutine to get the values of the data used in optimization and put them
       in an array. The data is ordered starting with the first universe
     
-    
       Returns
       -------
       data_value : float
           Data model values.
+    
       data_weight : float
           Data weights in the merit function.
+    
       data_meas_value : float
           Data values when the data was taken.
+    
       data_ix_dModel : int
           Data ix_dModel indices
     """
 def tao_get_opt_vars(var_value: RealAlloc1D | None = None, var_step: RealAlloc1D | None = None, var_delta: RealAlloc1D | None = None, var_weight: RealAlloc1D | None = None, var_ix: IntAlloc1D | None = None) -> TaoGetOptVars:
     """
-    Parameters
+    Wrapper for Fortran routine tao_get_opt_vars
+    
+      Parameters
       ----------
       var_value : float
           Variable model values.
+    
       var_step : float
           Variable step sizes.
+    
       var_delta : float
           Variable Merit deltas.
+    
       var_weight : float
           Variable weights in the merit function.
+    
       var_ix : int
           Variable s.var(:) indexes
+    
       ignore_if_weight_is_zero : bool
           If present and True then ignore
+    
       ignore_if_not_limited : bool
           If present and True then ignore all variables with limit constraint that are not limited.
     """
@@ -34725,9 +37757,11 @@ def tao_get_user_input(prompt_str: str | None = None, wait_flag: bool | None = N
       ----------
       prompt_str : unknown, optional
           Primpt string to print at terminal. If not
+    
       present then s%global%prompt_string will be used. : 
       wait_flag : bool, optional
           Used for single mode: Wait state for get_a_char call.
+    
       cmd_in : unknown, optional
           Command to be used in place getting user input.
     
@@ -34738,53 +37772,69 @@ def tao_get_user_input(prompt_str: str | None = None, wait_flag: bool | None = N
     """
 def tao_graph_controller_setup(graph: TaoGraphStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_graph_controller_setup
+    
+      Parameters
       ----------
       graph : 
     """
 def tao_graph_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_graph_data_setup
+    
+      Parameters
       ----------
       plot : 
       graph : 
     """
 def tao_graph_data_slice_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_graph_data_slice_setup
+    
+      Parameters
       ----------
       plot : 
       graph : 
     """
 def tao_graph_dynamic_aperture_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_graph_dynamic_aperture_setup
+    
+      Parameters
       ----------
       plot : 
       graph : 
     """
 def tao_graph_histogram_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_graph_histogram_setup
+    
+      Parameters
       ----------
       plot : 
       graph : 
     """
 def tao_graph_name(graph: TaoGraphStruct, use_region: bool | None = None) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_graph_name
+    
+      Parameters
       ----------
       graph : TaoGraphStruct
           Graph
+    
       use_region : bool
           If present and True then use the region name instead of the plot name. Region name is 'NULL_REGION' if
           there is no assocaited region.
+    
       graph_name : unknown
           Appropriate name.
     """
 def tao_graph_phase_space_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_graph_phase_space_setup
+    
+      Parameters
       ----------
       plot : 
       graph : 
@@ -34799,6 +37849,7 @@ def tao_graph_s_min_max_calc(graph: TaoGraphStruct, branch: BranchStruct) -> Tao
       ----------
       graph : TaoGraphStruct
           Graph to calculate for.
+    
       branch : BranchStruct
           Associated lattice branch.
     
@@ -34806,26 +37857,33 @@ def tao_graph_s_min_max_calc(graph: TaoGraphStruct, branch: BranchStruct) -> Tao
       -------
       s_min : float
           Graph min. May be negative with graph.allow_wrap_around = T.
+    
       s_max : float
           Graph max.
     """
 def tao_graph_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_graph_setup
+    
+      Parameters
       ----------
       plot : 
       graph : 
     """
 def tao_init() -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_init
+    
+      Parameters
       ----------
       err_flag : bool
           Set Treu if there is an error. False otherwise.
     """
 def tao_init_beam_in_universe(u: TaoUniverseStruct, beam_init: BeamInitStruct, track_start: str, track_end: str, comb_ds_save: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_init_beam_in_universe
+    
+      Parameters
       ----------
       u : 
       beam_init : 
@@ -34856,10 +37914,14 @@ def tao_init_data(data_file: str) -> None:
           Tao data initialization file. If blank, there is no file so just use the defaults.
     """
 def tao_init_data_end_stuff() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_init_data_end_stuff
+    """
 def tao_init_data_in_universe(u: TaoUniverseStruct, n_d2_add: typing.SupportsInt, keep_existing_data: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_init_data_in_universe
+    
+      Parameters
       ----------
       u : 
       n_d2_add : 
@@ -34878,16 +37940,22 @@ def tao_init_dynamic_aperture(init_file: str) -> None:
     """
 def tao_init_find_elements(u: TaoUniverseStruct, search_string: str, eles: ElePointerStructAlloc1D, attribute: str | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_init_find_elements
+    
+      Parameters
       ----------
       u : TaoUniverseStruct
           Universe to search
+    
       search_string : unknown
           What to search for
+    
       eles : ElePointerStruct
           List of matching elements.
+    
       attribute : unknown, optional
           Check that attribute of element is free to vary.
+    
       found_one : bool
           Set True if a matching element is found. However: Not set if no matching element found.
     """
@@ -34904,14 +37972,18 @@ def tao_init_global(init_file: str) -> None:
     """
 def tao_init_lattice(lat_file: str, err_flag: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_init_lattice
+    
+      Parameters
       ----------
       lat_file : 
       err_flag : 
     """
 def tao_init_plotting(plot_file: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_init_plotting
+    
+      Parameters
       ----------
       plot_file : 
     """
@@ -34940,8 +38012,10 @@ def tao_inject_beam(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch: ty
       ----------
       u : TaoUniverseStruct
           Universe containing the lattice.
+    
       model : TaoLatticeStruct
           Universe parameters.
+    
       ix_branch : int
           Lattice branch index to inject into.
     
@@ -34949,12 +38023,15 @@ def tao_inject_beam(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch: ty
       -------
       beam : BeamStruct
           Initial beam.
+    
       init_ok : bool
           Set False if there are problems. True otherwise.
     """
 def tao_inject_particle(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch: typing.SupportsInt) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_inject_particle
+    
+      Parameters
       ----------
       u : 
       model : 
@@ -34962,25 +38039,33 @@ def tao_inject_particle(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch
     """
 def tao_is_valid_name(name: str) -> TaoIsValidName:
     """
-    Parameters
+    Wrapper for Fortran routine tao_is_valid_name
+    
+      Parameters
       ----------
       name : unknown
           Name to be checked.
+    
       why_invalid : unknown
           Why invalid description.
+    
       is_valid : bool
           True if valid. False otherwise.
     """
 def tao_json_cmd(input_str: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_json_cmd
+    
+      Parameters
       ----------
       input_str : unknown
           What to show.
     """
 def tao_key_info_to_str(ix_key: typing.SupportsInt, ix_min_key: typing.SupportsInt, ix_max_key: typing.SupportsInt, key_str: str, header_str: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_key_info_to_str
+    
+      Parameters
       ----------
       ix_key : 
       ix_min_key : 
@@ -34990,31 +38075,43 @@ def tao_key_info_to_str(ix_key: typing.SupportsInt, ix_min_key: typing.SupportsI
     """
 def tao_lat_bookkeeper(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_lat_bookkeeper
+    
+      Parameters
       ----------
       u : TaoUniverseStruct
+    
       tao_lat : TaoLatticeStruct
+    
       err_flag : bool
           Set True if there is a problem. False otherwise.
     """
 def tao_lat_emit_calc(plane: typing.SupportsInt, emit_type: typing.SupportsInt, ele: EleStruct, modes: NormalModesStruct) -> float:
     """
-    Parameters
+    Wrapper for Fortran routine tao_lat_emit_calc
+    
+      Parameters
       ----------
       plane : int
           x_plane$ or y_plane$.
+    
       emit_type : int
           Either projected_emit$ or apparent_emit$
+    
       ele : EleStruct
           Element holding the Twiss and coupling parameters.
+    
       modes : NormalModesStruct
           Structure holding the emittances
+    
       emit : float
           emittance.
     """
 def tao_lat_sigma_calc_needed(data_type: str, data_source: str, do_lat_sigma: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_lat_sigma_calc_needed
+    
+      Parameters
       ----------
       data_type : 
       data_source : 
@@ -35030,10 +38127,13 @@ def tao_lat_sigma_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt
       ----------
       tao_lat : TaoLatticeStruct
           Structure containing the lattice.
+    
       ix_branch : int
           Branch index to track through.
+    
       print_err : bool, optional
           Default is False. Print error messages if, eg, lattice is unstable?
+    
       force_calc : bool, optional
           Default is False. If True, force the calculation to be done.
     
@@ -35044,30 +38144,39 @@ def tao_lat_sigma_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt
     """
 def tao_lattice_branches_equal_tao_lattice_branches(tlb1: TaoLatticeBranchStructArray1D, tlb2: TaoLatticeBranchStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_lattice_branches_equal_tao_lattice_branches
+    
+      Parameters
       ----------
       tlb1 : 
       tlb2 : 
     """
 def tao_lattice_calc() -> TaoLatticeCalc:
     """
-    Parameters
+    Wrapper for Fortran routine tao_lattice_calc
+    
+      Parameters
       ----------
       calc_ok : bool
           Set False if there was an error in the
+    
       print_err : bool
           Default True. If False, do not print error messages if, for example, the lattice is unstable.
     """
 def tao_lattice_equal_tao_lattice(lat1: TaoLatticeStruct, lat2: TaoLatticeStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_lattice_equal_tao_lattice
+    
+      Parameters
       ----------
       lat1 : 
       lat2 : 
     """
 def tao_limit_calc() -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_limit_calc
+    
+      Parameters
       ----------
       limited : bool
           Set True if a variable is past a limit.
@@ -35083,7 +38192,6 @@ def tao_lm_optimizer() -> bool:
       See the Numerical Recipes writeup for more details.
       'lm' stands for Levenburg - Marquardt. Otherwise known as LMDIF.
     
-    
       Returns
       -------
       abort : bool
@@ -35091,14 +38199,18 @@ def tao_lm_optimizer() -> bool:
     """
 def tao_lmdif_optimizer() -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_lmdif_optimizer
+    
+      Parameters
       ----------
       abort : bool
           Set True if an user stop signal detected or there is a problem with calculating the merit function.
     """
 def tao_load_this_datum(vec: RealArray1D, ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum_value: typing.SupportsFloat, valid_value: bool, datum: TaoDataStruct, branch: BranchStruct, why_invalid: str | None = None, good: BoolAlloc1D | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_load_this_datum
+    
+      Parameters
       ----------
       vec : 
       ele_ref : 
@@ -35113,45 +38225,62 @@ def tao_load_this_datum(vec: RealArray1D, ele_ref: EleStruct, ele_start: EleStru
     """
 def tao_locate_all_elements(ele_list: str, eles: ElePointerStructAlloc1D, ignore_blank: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_locate_all_elements
+    
+      Parameters
       ----------
       ele_list : unknown
           String with element names using element list format.
+    
       eles : unknown
           : Array of elements in the model lat.
+    
       err : bool
           Set true on error.
+    
       ignore_blank : bool, optional
           If present and true then do nothing if ele_list is blank. otherwise a blank is treated as an error.
     """
 def tao_locate_elements(ele_list: str, ix_universe: typing.SupportsInt, eles: ElePointerStructAlloc1D, lat_type: typing.SupportsInt | None = None, ignore_blank: bool | None = None, err_stat_level: typing.SupportsInt | None = None, above_ubound_is_err: bool | None = None, ix_branch: typing.SupportsInt | None = None, multiple_eles_is_err: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_locate_elements
+    
+      Parameters
       ----------
       ele_list : unknown
           String with element names using element list format.
+    
       ix_universe : int
           Universe to search. -1 => search s.global.default_universe. -2 (all unis) => error.
+    
       eles : unknown
           : Array of elements in the model lat.
+    
       err : bool
           Set true on error.
+    
       lat_type : int, optional
           model$ (default), design$, or base$.
+    
       ignore_blank : bool, optional
           If present and true then do nothing if
+    
       err_stat_level : int, optional
           Status level for error messages. If not present,
+    
       above_ubound_is_err : 
       ix_branch : int, optional
           If present and non-negative then use this as the branch index for elements specified using an integer
           index (EG: "43"). If -1 use the default branch, search all branches.
+    
       multiple_eles_is_err : unknown, optional
           If present and True then matching to more than one element is an error.
     """
 def tao_mark_lattice_ele(lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_mark_lattice_ele
+    
+      Parameters
       ----------
       lat : LatStruct
           Input lattice
@@ -35159,10 +38288,13 @@ def tao_mark_lattice_ele(lat: LatStruct) -> None:
     """
 def tao_merit() -> TaoMerit:
     """
-    Parameters
+    Wrapper for Fortran routine tao_merit
+    
+      Parameters
       ----------
       calc_ok : bool
           Set False if there was an error in the
+    
       this_merit : float
           Merit value.
     """
@@ -35189,7 +38321,9 @@ def tao_next_word(line: str) -> TaoNextWord:
     """
 def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_map: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_one_turn_map_calc_needed
+    
+      Parameters
       ----------
       data_type : 
       data_source : 
@@ -35197,34 +38331,45 @@ def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_m
     """
 def tao_open_file(file: str, file_name: str, error_severity: typing.SupportsInt, binary: bool | None = None) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine tao_open_file
+    
+      Parameters
       ----------
       file : 
       iunit : int
           Logical unit number. Set to 0 if file not openable.
+    
       file_name : unknown
           File name.
+    
       error_severity : int
           Severity level used in the error message. Possibilities are s_fatal$, etc. See out_io doc for more
           details.
+    
       binary : bool, optional
           If present and True then open a binary file, Defaut is False.
     """
 def tao_open_scratch_file() -> TaoOpenScratchFile:
     """
-    Parameters
+    Wrapper for Fortran routine tao_open_scratch_file
+    
+      Parameters
       ----------
       err : bool
           Set True if there is an error. False otherwise.
+    
       iu : int
           File handle unit number.
     """
 def tao_optimization_status(datum: TaoDataStruct) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_optimization_status
+    
+      Parameters
       ----------
       datum : TaoDataStruct
           Datum to evaluate.
+    
       why_str : unknown
           Optimization status of the datum.
     """
@@ -35234,38 +38379,52 @@ def tao_orbit_beta_wave_anal(plot: TaoPlotStruct) -> None:
     """
 def tao_oreint_building_wall_pt(pt_in: TaoBuildingWallPointStruct) -> TaoBuildingWallPointStruct:
     """
-    Parameters
+    Wrapper for Fortran routine tao_oreint_building_wall_pt
+    
+      Parameters
       ----------
       pt_in : TaoBuildingWallPointStruct
           Building wall point.
+    
       pt_out : TaoBuildingWallPointStruct
           Building wall point with orientation params applied.
     """
 def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct, orbit: CoordStruct) -> TaoParamValueAtS:
     """
-    Parameters
+    Wrapper for Fortran routine tao_param_value_at_s
+    
+      Parameters
       ----------
       dat_name : 
       ele_to_s : EleStruct
           Element whose exit end is at the evaluation s-position.
+    
       ele_here : EleStruct
           Lattice element that overlaps the s-position ele.s.
+    
       orbit : CoordStruct
           Orbit at the evaluation s-position.
+    
       err_flag : bool
           Set true if parameter cannot be evaluated.
+    
       why_invalid : unknown
           Set if  err_flag = True to document why is there a problem.
+    
       print_err : bool
           Print error message on error? Default is True.
+    
       bad_datum : bool
           Data_type is malformed.
+    
       value : float
           Parameter value.
     """
 def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, stack: TaoEvalNodeStruct, err_flag: bool, print_err: bool, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_param_value_routine
+    
+      Parameters
       ----------
       str : 
       use_good_user : 
@@ -35287,28 +38446,39 @@ def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, st
     """
 def tao_parse_command_args(cmd_line: str | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_parse_command_args
+    
+      Parameters
       ----------
       error : bool
           Set True if there is an error. False otherwise.
+    
       cmd_line : 
     """
 def tao_parse_element_param_str(in_str: str) -> TaoParseElementParamStr:
     """
-    Parameters
+    Wrapper for Fortran routine tao_parse_element_param_str
+    
+      Parameters
       ----------
       err : bool
           Set True if there is a parse error. False otherwise.
+    
       in_str : unknown
           String specifying a parameter of an element or elements.
+    
       uni : unknown
           Universe substring.
+    
       element : unknown
           Element name.
+    
       parameter : unknown
           Element parameter name.
+    
       where : int
           One of not_set$, anchor_beginning$, anchor_center$, or anchor_end$.
+    
       component : unknown
           One of "model", "design", or "base".
     """
@@ -35322,10 +38492,13 @@ def tao_particle_data_value(data_type: str, p: CoordStructArray1D, value: RealAl
       ----------
       data_type : unknown
           Type of data.
+    
       p : 
           coord_struct, Array of particles containing the data.
+    
       ele : EleStruct
           Needed for "Ja" evaluation.
+    
       ix_bunch : int
           Bunch index.
     
@@ -35333,12 +38506,15 @@ def tao_particle_data_value(data_type: str, p: CoordStructArray1D, value: RealAl
       -------
       value : float
           Array of values.
+    
       err : bool
           Set True if there is an error. False otherwise.
     """
 def tao_pause_cmd(time: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_pause_cmd
+    
+      Parameters
       ----------
       time : float
           Time to pause in seconds.
@@ -35353,6 +38529,7 @@ def tao_phase_space_axis_index(data_type: str, err: bool) -> int:
       ----------
       data_type : unknown
           Type of data.
+    
       err : bool
           Set True if there is an error.
     
@@ -35367,49 +38544,67 @@ def tao_phase_wave_anal(plot: TaoPlotStruct) -> None:
     """
 def tao_pick_universe(name_in: str, picked: BoolAlloc1D, dflt_uni: typing.SupportsInt | None = None, pure_uni: bool | None = None) -> TaoPickUniverse:
     """
-    Parameters
+    Wrapper for Fortran routine tao_pick_universe
+    
+      Parameters
       ----------
       name_in : unknown
           data name with possible universe spec.
+    
       name_out : unknown
           name_in without any "n@" beginning.
+    
       picked : bool
           Array showing picked universes.
+    
       err : bool
           Set True if an error is detected.
+    
       ix_uni : int
           Set to the picked universe with the highest index.
+    
       explicit_uni : bool
           Set True if name_in has explicit universe "n@" specification.
+    
       dflt_uni : int, optional
           Default universe to use. Set to -1 if explicit universe is required.
+    
       pure_uni : bool, optional
           Default is False. See above
     """
 def tao_pipe_cmd(input_str: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_pipe_cmd
+    
+      Parameters
       ----------
       input_str : unknown
           What to show.
     """
 def tao_place_cmd(where: str, who: str, no_buffer: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_place_cmd
+    
+      Parameters
       ----------
       where : unknown
           Region where the plot goes. Eg: 'top'.
+    
       who : unknown
           Type of plot. Eg: 'orbit'.
+    
       no_buffer : bool, optional
           If present and True then prevents buffering in the case when s.global.external_plotting = T
     """
 def tao_plot_cmd(where: str, component: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_plot_cmd
+    
+      Parameters
       ----------
       where : unknown
           Region name to identify the plot to set.
+    
       component : unknown
           Who to plot. EG: 'meas - design'
     """
@@ -35423,6 +38618,7 @@ def tao_plot_data(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
     """
@@ -35436,6 +38632,7 @@ def tao_plot_histogram(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
     """
@@ -35449,17 +38646,23 @@ def tao_plot_key_table(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
     """
 def tao_plot_setup() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_plot_setup
+    """
 def tao_plot_struct_transfer(plot_in: TaoPlotStruct) -> TaoPlotStruct:
     """
-    Parameters
+    Wrapper for Fortran routine tao_plot_struct_transfer
+    
+      Parameters
       ----------
       plot_in : TaoPlotStruct
           Input structure.
+    
       plot_out : TaoPlotStruct
           Output struture.
     """
@@ -35473,26 +38676,34 @@ def tao_plot_wave(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
       ----------
       plot : TaoPlotStruct
           Plot containing the graph.
+    
       graph : TaoGraphStruct
           Graph to plot.
     """
 def tao_pointer_to_building_wall_shape(wall_name: str) -> TaoEleShapeStruct | None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_pointer_to_building_wall_shape
+    
+      Parameters
       ----------
       wall_name : unknown
           Name of the wall.
+    
       e_shape : TaoEleShapeStruct
           Associated shape. Nullified if there is no associated shape.
     """
 def tao_pointer_to_datum(d1: TaoD1DataStruct, ele_name: str, datum_ptr: TaoDataStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_pointer_to_datum
+    
+      Parameters
       ----------
       d1 : TaoD1DataStruct
           D1 data struct to search.
+    
       ele_name : unknown
           Name of lattice element to match to.
+    
       datum_ptr : DataStruct
           Pointer to the matched datum. Will be null if no match found.
     """
@@ -35510,10 +38721,13 @@ def tao_pointer_to_datum_ele(lat: LatStruct, ele_name: str, ix_ele: typing.Suppo
       ----------
       lat : LatStruct
           Lattice
+    
       ix_ele : int
           Index of element.
+    
       datum : TaoDataStruct
           Used for error messages and gives branch index.
+    
       print_err : bool, optional
           Default is True. If False, do not print an error message.
     
@@ -35521,41 +38735,55 @@ def tao_pointer_to_datum_ele(lat: LatStruct, ele_name: str, ix_ele: typing.Suppo
       -------
       ele : EleStruct
           : Pointer to the element. Set to NULL if not valid
+    
       or no associated element. : 
       valid : bool
           Set False if element does not have a definite location.
+    
       Set True otherwise : 
       why_invalid : unknown
           Tells why datum value is invalid.
     """
 def tao_pointer_to_ele_shape(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shape: TaoEleShapeStructArray1D, ix_shape_min: typing.SupportsInt | None = None) -> TaoPointerToEleShape:
     """
-    Parameters
+    Wrapper for Fortran routine tao_pointer_to_ele_shape
+    
+      Parameters
       ----------
       ix_uni : int
           Universe index.
+    
       ele : EleStruct
           Lattice element.
+    
       ele_shape : TaoEleShapeStruct
           Array of shapes to search.
+    
       dat_var_name : unknown
           Name of datum or variable associated with e_shape.
+    
       dat_var_value : float
           Value of datum or variable associated with e_shape.
+    
       ix_shape_min : int, optional
           Index of minimum ele_shape(:) index to start search from. Default is 1.
           This parameter is an input/output and is modified in-place. As an output: Ele_shape(
+    
       e_shape : TaoEleShapeStruct
           Associated shape.
     """
 def tao_pointer_to_tao_lat(u: TaoUniverseStruct, lat_type: typing.SupportsInt | None = None) -> TaoLatticeStruct | None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_pointer_to_tao_lat
+    
+      Parameters
       ----------
       u : TaoUniverseStruct
           Universe to work with
+    
       lat_type : int, optional
           model$ (default), design$, or base$.
+    
       tao_lat : TaoLatticeStruct
           Tao_lat pointer. Points to u.model, u.design, or u.base
     """
@@ -35578,11 +38806,13 @@ def tao_pointer_to_universe(ix_uni: typing.SupportsInt, neg2_to_default: bool | 
       ----------
       ix_uni : int
           Index to the s.u(:) array
+    
       If ix_uni is -1 -> u : 
       string : unknown
           String in the form "<ix_uni>@..." or, if
           This parameter is an input/output and is modified in-place. As an output: String with universe prefix
           stripped off.
+    
       no "@" is present : 
       u will point to the default universe. : 
       neg2_to_default : bool, optional
@@ -35612,11 +38842,13 @@ def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) ->
       ----------
       ix_uni : int
           Index to the s.u(:) array
+    
       If ix_uni is -1 -> u : 
       string : unknown
           String in the form "<ix_uni>@..." or, if
           This parameter is an input/output and is modified in-place. As an output: String with universe prefix
           stripped off.
+    
       no "@" is present : 
       u will point to the default universe. : 
       neg2_to_default : bool, optional
@@ -35629,18 +38861,25 @@ def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) ->
     """
 def tao_pointer_to_universes(name_in: str, unis: TaoUniversePointerStructAlloc1D, dflt_uni: typing.SupportsInt | None = None) -> TaoPointerToUniverses:
     """
-    Parameters
+    Wrapper for Fortran routine tao_pointer_to_universes
+    
+      Parameters
       ----------
       name_in : unknown
           data name with possible universe spec.
+    
       unis : TaoUniversePointerStruct
           Array of pointers to picked universes.
+    
       err : bool
           Set True if an error is detected.
+    
       name_out : unknown
           name_in without any "n@" beginning.
+    
       explicit_uni : bool
           Set True if name_in has explicit universe "n@" specification.
+    
       dflt_uni : int, optional
           Default universe to use. Set to -1 if explicit universe is required.
     """
@@ -35655,8 +38894,10 @@ def tao_pointer_to_var_in_lattice(var: TaoVarStruct, ix_uni: typing.SupportsInt,
       ----------
       var : TaoVarStruct
           Structure has the info of where to point.
+    
       ix_uni : int
           the universe to use
+    
       ix_ele : int
           Index of element.
     
@@ -35664,6 +38905,7 @@ def tao_pointer_to_var_in_lattice(var: TaoVarStruct, ix_uni: typing.SupportsInt,
       -------
       var%slave : TaoVarSlaveStruct
           New component of .slave(:) array is added. .model_ptr .base_ptr .ix_ele
+    
       %ix_uni : 
       err : bool
           Set True if there is an error. False otherwise.
@@ -35679,6 +38921,7 @@ def tao_pointer_to_var_in_lattice2(var: TaoVarStruct, ix_uni: typing.SupportsInt
       ----------
       var : TaoVarStruct
           Structure has the info of where to point.
+    
       ix_uni : int
           the universe to use
     
@@ -35686,42 +38929,56 @@ def tao_pointer_to_var_in_lattice2(var: TaoVarStruct, ix_uni: typing.SupportsInt
       -------
       var%slave : TaoVarSlaveStruct
           New component of .slave(:) array is added. .model_ptr .base_ptr .ix_ele
+    
       %ix_uni : 
       err : bool
           Set True if there is an error. False otherwise.
     """
 def tao_print_command_line_info() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_print_command_line_info
+    """
 def tao_ptc_normal_form(do_calc: bool, tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, rf_on: typing.SupportsInt | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_ptc_normal_form
+    
+      Parameters
       ----------
       do_calc : bool
           Set True to do the calculation.
+    
       tao_lat : TaoLatticeStruct
           Lattice to work on.
+    
       ix_branch : int
           Branch of lattice to work on.
+    
       rf_on : int, optional
           RF state for calculation. yes$, no$, or maybe$ (default) maybe$ means that RF state in branch is used.
     """
 def tao_python_cmd(input_str: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_python_cmd
+    
+      Parameters
       ----------
       input_str : unknown
           What to show.
     """
 def tao_quiet_set(set: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_quiet_set
+    
+      Parameters
       ----------
       set : bool
           True is silent running is wanted.
     """
 def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_rad_int_calc_needed
+    
+      Parameters
       ----------
       data_type : 
       data_source : 
@@ -35729,13 +38986,17 @@ def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) 
     """
 def tao_re_allocate_expression_info(info: TaoExpressionInfoStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_re_allocate_expression_info
+    
+      Parameters
       ----------
       info : TaoExpressionInfoStruct
           This parameter is an input/output and is modified in-place. As an output: Allocated array with size(re) >=
           n.
+    
       n : int
           Size wanted.
+    
       exact : bool, optional
           If present and False then the size of the output array is permitted to be larger than n. Default is True.
     """
@@ -35751,8 +39012,10 @@ def tao_re_associate_node_array(tree: TaoEvalNodeStruct, n: typing.SupportsInt, 
       Parameters
       ----------
       tree : TaoEvalNodeStruct
+    
       n : int
           Size wanted.
+    
       exact : bool, optional
           Default is False. If False, the size of the output array is permitted to be larger than n.
     """
@@ -35764,38 +39027,50 @@ def tao_re_execute(string: str, err: bool) -> None:
     """
 def tao_read_cmd(which: str, unis: str, file: str, silent: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_read_cmd
+    
+      Parameters
       ----------
       which : 
       unis : unknown
           Universes to apply to
+    
       file : 
       silent : bool
           Silent
     """
 def tao_read_phase_space_index(name: str, ixc: typing.SupportsInt, print_err: bool | None = None) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine tao_read_phase_space_index
+    
+      Parameters
       ----------
       name : unknown
           character array holding the index. Must be in the range 1-6.
+    
       ixc : int
           location within <name> to evaluate index.
+    
       print_err : bool, optional
           If present and False then do not print an error message
+    
       ix_ps : int
           Index at <name>(<ixc>:<ixc>). Returns 0 if bad index. Example: name = r:26 ixc  = 3 Gives: ix_ps = 2 name
           = mat_94 ixc  = 7 Gives an error.
     """
 def tao_regression_test(cmd_str: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_regression_test
+    
+      Parameters
       ----------
       cmd_str : 
     """
 def tao_remove_blank_characters(str: str) -> TaoRemoveBlankCharacters:
     """
-    Parameters
+    Wrapper for Fortran routine tao_remove_blank_characters
+    
+      Parameters
       ----------
       str : unknown
           Input string.
@@ -35804,10 +39079,13 @@ def tao_remove_blank_characters(str: str) -> TaoRemoveBlankCharacters:
     """
 def tao_run_cmd(which: str) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_run_cmd
+    
+      Parameters
       ----------
       which : unknown
           which optimizer to use.
+    
       abort : bool
           Set True if the run was aborted by the user, an at minimum condition, a singular matrix condition, etc..
           False otherwise.
@@ -35823,19 +39101,26 @@ def tao_scale_cmd(where: str, y_min_in: typing.SupportsFloat, y_max_in: typing.S
       ----------
       where : unknown
           Region to scale. Eg: "top:x"
+    
       y_min_in : float
           Plot y-axis min value.
+    
       y_max_in : float
           Plot y-axis max value.
+    
       axis : unknown, optional
           'y', 'y2', or '' (both). Default = ''.
+    
       include_wall : bool, optional
           Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+    
       If present and True include the building wall position will be included in determining the the scale. : 
       gang : unknown, optional
           'gang', 'nogang', ''. Default = ''.
+    
       exact : bool, optional
           Exact plot y_max, y_min to correspond to y_min_in, y_max_in?
+    
       Default is False. Only relavent when y_min_in /= y_max_in. : 
       turn_autoscale_off : bool, optional
           If True (default) then turn off plot.autoscale_y logical for all plots that are scaled.
@@ -35853,12 +39138,16 @@ def tao_scale_graph(graph: TaoGraphStruct, y_min: typing.SupportsFloat, y_max: t
       graph : TaoGraphStruct
           Graph with axis/axes to be scaled.
           This parameter is an input/output and is modified in-place. As an output: Graph with scaled axis/axes.
+    
       y_min : float
           Axis [min, max] must cover [y_min, y_max] if not autoscaling.
+    
       y_max : float
           Axis [min, max] must cover [y_min, y_max] if not autoscaling.
+    
       axis : unknown, optional
           Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis.
+    
       'y2' -> scale y2-axis : 
       include_wall : bool, optional
           Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
@@ -35868,12 +39157,15 @@ def tao_scale_graph(graph: TaoGraphStruct, y_min: typing.SupportsFloat, y_max: t
       -------
       y_range : float
           Only used by tao_scale_plot when ganging graphs.
+    
       y2_range : float
           Only used by tao_scale_plot when ganging graphs.
     """
 def tao_scale_ping_data(u: TaoUniverseStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_scale_ping_data
+    
+      Parameters
       ----------
       u : 
     """
@@ -35890,26 +39182,34 @@ def tao_scale_plot(plot: TaoPlotStruct, y_min_in: typing.SupportsFloat, y_max_in
       plot : TaoPlotStruct
           Plot with graphs to be scaled.
           This parameter is an input/output and is modified in-place. As an output: Plot with scaled graphs.
+    
       y_min_in : float
           Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
+    
       y_max_in : float
           Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
+    
       axis : unknown, optional
           Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis.
+    
       'y2' -> scale y2-axis : 
       include_wall : bool, optional
           Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+    
       If present and True include the building wall position will be included in determining the the scale. : 
       gang : unknown, optional
           If autoscale then make all graph y-axes the same and/or make all y2-axes the same? ''        -> (default)
           Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs.
+    
       'nogang'  -> Do not gang graphs. : 
       skip_lat_layout : bool, optional
           If True, skip scaling any lat_layout graphs. Default is false.
     """
 def tao_scratch_values_calc(ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum: TaoDataStruct, branch: BranchStruct, orbit: CoordStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_scratch_values_calc
+    
+      Parameters
       ----------
       ele_ref : 
       ele_start : 
@@ -35928,8 +39228,10 @@ def tao_set_beam_cmd(who: str, value_str: str, branch_str: str) -> None:
       ----------
       who : unknown
           which parameter to set.
+    
       value_str : unknown
           Value to set to.
+    
       branch_str : unknown
           Branch to use. '' => branch 0.
     """
@@ -35943,8 +39245,10 @@ def tao_set_beam_init_cmd(who: str, value_str: str, branch_str: str) -> None:
       ----------
       who : unknown
           which beam_init variable to set
+    
       value_str : unknown
           Value to set to.
+    
       branch_str : unknown
           Branch to use. '' => branch 0
     
@@ -35963,6 +39267,7 @@ def tao_set_bmad_com_cmd(who: str, value_str: str) -> None:
       ----------
       who : unknown
           which bmad_com variable to set
+    
       value_str : unknown
           Value to set to.
     """
@@ -35976,8 +39281,10 @@ def tao_set_branch_cmd(branch_str: str, component_str: str, value_str: str) -> N
       ----------
       branch_str : unknown
           Which branch to set.
+    
       component_str : unknown
           Which branch parameter to set.
+    
       value_str : unknown
           What value to set it to.
     """
@@ -35997,8 +39304,10 @@ def tao_set_curve_cmd(curve_name: str, component: str, value_str: str) -> None:
       ----------
       curve_name : unknown
           Which curve to set.
+    
       component : unknown
           Which component to set.
+    
       value_str : unknown
           What value to set it to.
     """
@@ -36013,8 +39322,10 @@ def tao_set_curve_invalid(curve: TaoCurveStruct, why_invalid: str, print_err: bo
       curve : TaoCurveStruct
           Curve to set.
           This parameter is an input/output and is modified in-place. As an output: Curve properly set.
+    
       why_invalid : unknown
           Invalid information.
+    
       print_err : bool, optional
           If present and True then also print an error message.
     """
@@ -36028,12 +39339,15 @@ def tao_set_data_cmd(who_str: str, value_str: str, silent: bool | None = None) -
       ----------
       who_str : unknown
           Which data component(s) to set.
+    
       value_str : unknown
           What value to set it to.
     """
 def tao_set_data_useit_opt(data: TaoDataStructArray1D | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_set_data_useit_opt
+    
+      Parameters
       ----------
       data : TaoDataStruct, optional
           Data to work on. Default is all data in all universes.
@@ -36048,6 +39362,7 @@ def tao_set_default_cmd(who_str: str, value_str: str) -> None:
       ----------
       who_str : unknown
           Which default component(s) to set.
+    
       value_str : unknown
           What value to set it to.
     """
@@ -36061,8 +39376,10 @@ def tao_set_drawing_cmd(drawing: TaoDrawingStruct, component: str, value_str: st
       ----------
       drawing : TaoDrawingStruct
           s.plot_page.floor_plan or s.plot_page.lat_layout.
+    
       component : unknown
           Which shape component to set.
+    
       value_str : unknown
           Value to set to.
     
@@ -36081,6 +39398,7 @@ def tao_set_dynamic_aperture_cmd(who: str, value_str: str) -> None:
       ----------
       who : unknown
           which parameter to set.
+    
       value_str : unknown
           Value to set to.
     """
@@ -36094,14 +39412,18 @@ def tao_set_elements_cmd(ele_list: str, attribute: str, value: str, update: bool
       ----------
       ele_list : unknown
           which elements.
+    
       attribute : unknown
           Attribute to set.
+    
       value : unknown
           Value to set.
     """
 def tao_set_floor_plan_axis_label(graph: TaoGraphStruct, axis_in: QpAxisStruct, axis_out: QpAxisStruct, which: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_set_floor_plan_axis_label
+    
+      Parameters
       ----------
       graph : 
       axis_in : 
@@ -36118,6 +39440,7 @@ def tao_set_geodesic_lm_cmd(who: str, value_str: str) -> None:
       ----------
       who : unknown
           which geodesic_lm variable to set
+    
       value_str : unknown
           Value to set to.
     """
@@ -36131,6 +39454,7 @@ def tao_set_global_cmd(who: str, value_str: str) -> None:
       ----------
       who : unknown
           which global variable to set
+    
       value_str : unknown
           Value to set to.
     
@@ -36149,8 +39473,10 @@ def tao_set_graph_cmd(graph_name: str, component: str, value_str: str) -> None:
       ----------
       graph_name : unknown
           Which graph to set.
+    
       component : unknown
           Which component to set.
+    
       value_str : unknown
           What value to set it to.
     """
@@ -36167,12 +39493,16 @@ def tao_set_integer_value(var_str: str, value_str: str, min_val: typing.Supports
       ----------
       var_str : unknown
           Used for error messages.
+    
       value_str : unknown
           String with encoded value.
+    
       min_val : int, optional
           Minimum value.
+    
       max_val : int, optional
           Maximum value.
+    
       print_err : bool, optional
           If True, print error message. Default is true
     
@@ -36180,23 +39510,31 @@ def tao_set_integer_value(var_str: str, value_str: str, min_val: typing.Supports
       -------
       var : int
           Variable to set.
+    
       error : bool
           Set True on an error. False otherwise.
     """
 def tao_set_invalid(datum: TaoDataStruct, message: str, exterminate: bool | None = None, err_level: typing.SupportsInt | None = None, print_err: bool | None = None) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_set_invalid
+    
+      Parameters
       ----------
       datum : TaoDataStruct
           Bad datum.
+    
       message : unknown
           Error message.
+    
       why_invalid : unknown
           Set to message if present.
+    
       exterminate : bool, optional
           Default is False. If True, set datum.exists
+    
       err_level : int, optional
           s_error$ (default), s_warn$, etc.
+    
       print_err : bool, optional
           Default is True. If False, do not print an error message.
     """
@@ -36210,6 +39548,7 @@ def tao_set_key_cmd(key_str: str, cmd_str: str) -> None:
       ----------
       key_str : unknown
           keyboard key.
+    
       cmd_str : unknown
           Command associated with key.
     """
@@ -36223,6 +39562,7 @@ def tao_set_lattice_cmd(dest_lat: str, source_lat: str) -> None:
       ----------
       dest_lat : unknown
           Maybe: 'model', 'design', or 'base' with
+    
       optional '@n' at beginning to indicate the universe : 
       source_lat : unknown
           Maybe: 'model', 'design', or 'base'
@@ -36245,6 +39585,7 @@ def tao_set_logical_value(var_str: str, value_str: str) -> TaoSetLogicalValue:
       ----------
       var_str : unknown
           Used for error messages.
+    
       value_str : unknown
           String with encoded value.
     
@@ -36252,6 +39593,7 @@ def tao_set_logical_value(var_str: str, value_str: str) -> TaoSetLogicalValue:
       -------
       var : bool
           Variable to set.
+    
       error : bool
           Set True on an error. False otherwise.
     """
@@ -36268,10 +39610,13 @@ def tao_set_openmp_n_threads(n_threads: typing.SupportsInt) -> None:
     """
 def tao_set_opt_vars(var_vec: RealArray1D, print_limit_warning: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_set_opt_vars
+    
+      Parameters
       ----------
       var_vec : float
           Vector of variables.
+    
       print_limit_warning : unknown, optional
           Print a warning if the value is past the variable's limits. Default is True.
     """
@@ -36285,6 +39630,7 @@ def tao_set_opti_de_param_cmd(who: str, value_str: str) -> None:
       ----------
       who : unknown
           which opti_de_param variable to set
+    
       value_str : unknown
           Value to set to.
     """
@@ -36298,6 +39644,7 @@ def tao_set_particle_start_cmd(who: str, value_str: str) -> None:
       ----------
       who : unknown
           which particle_start variable to set
+    
       value_str : unknown
           Value to set to.
     
@@ -36316,8 +39663,10 @@ def tao_set_plot_cmd(plot_name: str, component: str, value_str: str) -> None:
       ----------
       plot_name : unknown
           Which plot to set.
+    
       component : unknown
           Which component to set.
+    
       value_str : unknown
           What value to set it to.
     """
@@ -36331,8 +39680,10 @@ def tao_set_plot_page_cmd(component: str, value_str: str, value_str2: str | None
       ----------
       component : unknown
           Which component to set.
+    
       value_str : unknown
           What value to set to.
+    
       value_str2 : unknown
           2nd value if component is an array.
     
@@ -36350,6 +39701,7 @@ def tao_set_ptc_com_cmd(who: str, value_str: str) -> None:
       ----------
       who : unknown
           which ptc_com variable to set
+    
       value_str : unknown
           Value to set to.
     """
@@ -36363,12 +39715,15 @@ def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStr
       ----------
       qp_axis_name : unknown
           qp_axis name. Used for error messages.
+    
       component : unknown
           qp_axis component name.
+    
       qp_axis : QpAxisStruct
           qp_axis_struct with component to modify
           This parameter is an input/output and is modified in-place. As an output: qp_axis_struct with changed
           component value.
+    
       value : unknown
           Component value.
     
@@ -36376,6 +39731,7 @@ def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStr
       -------
       error : bool
           Set true if there is an error. False otherwise.
+    
       ix_uni : int
           Tao universe number in case the value depends upon a parameter of a particular universe.
     """
@@ -36389,12 +39745,15 @@ def tao_set_qp_point_struct(qp_point_name: str, component: str, qp_point: QpPoin
       ----------
       qp_point_name : unknown
           qp_point name. Used for error messages.
+    
       component : unknown
           qp_point component name.
+    
       qp_point : QpPointStruct
           qp_point_struct with component to modify
           This parameter is an input/output and is modified in-place. As an output: qp_point_struct with changed
           component value.
+    
       value : unknown
           Component value.
     
@@ -36402,6 +39761,7 @@ def tao_set_qp_point_struct(qp_point_name: str, component: str, qp_point: QpPoin
       -------
       error : bool
           Set true if there is an error. False otherwise.
+    
       ix_uni : int
           Tao universe number in case the value depends upon a parameter of a particular universe.
     """
@@ -36415,12 +39775,15 @@ def tao_set_qp_rect_struct(qp_rect_name: str, component: str, qp_rect: QpRectStr
       ----------
       qp_rect_name : unknown
           qp_rect name. Used for error messages.
+    
       component : unknown
           qp_rect component name.
+    
       qp_rect : QpRectStruct
           qp_rect_struct with component to modify
           This parameter is an input/output and is modified in-place. As an output: qp_rect_struct with changed
           component value.
+    
       value : unknown
           Component value.
     
@@ -36428,6 +39791,7 @@ def tao_set_qp_rect_struct(qp_rect_name: str, component: str, qp_rect: QpRectStr
       -------
       error : bool
           Set true if there is an error. False otherwise.
+    
       ix_uni : int
           Tao universe number in case the value depends upon a parameter of a particular universe.
     """
@@ -36455,12 +39819,16 @@ def tao_set_real_value(var_str: str, value_str: str, min_val: typing.SupportsFlo
       ----------
       var_str : unknown
           Used for error messages.
+    
       value_str : unknown
           String with encoded value.
+    
       min_val : float, optional
           Minimum value.
+    
       max_val : float, optional
           Maximum value.
+    
       dflt_uni : int, optional
           Default universe used to evaluate parameters.
     
@@ -36468,6 +39836,7 @@ def tao_set_real_value(var_str: str, value_str: str, min_val: typing.SupportsFlo
       -------
       var : float
           Variable to set.
+    
       error : bool
           Set True on an error. False otherwise.
     """
@@ -36481,8 +39850,10 @@ def tao_set_region_cmd(region_name: str, component: str, value_str: str) -> None
       ----------
       region_name : unknown
           Which region to set.
+    
       component : unknown
           Which component to set.
+    
       value_str : unknown
           What value to set it to.
     """
@@ -36496,6 +39867,7 @@ def tao_set_space_charge_com_cmd(who: str, value_str: str) -> None:
       ----------
       who : unknown
           which space_charge_com variable to set
+    
       value_str : unknown
           Value to set to.
     
@@ -36515,8 +39887,10 @@ def tao_set_symbolic_number_cmd(sym_str: str, num_str: str | None = None, val: t
       ----------
       sym_str : unknown
           Symbol.
+    
       num_str : unknown, optional
           Symbol value expression.
+    
       val : float, optional
           Value of symbol
     """
@@ -36530,14 +39904,19 @@ def tao_set_tune_cmd(branch_str: str, mask_str: str, print_list: bool, qa_str: s
       ----------
       branch_str : unknown
           List of branches to apply tune set to.
+    
       mask_str : unknown
           List of quadrupoles to veto.
+    
       print_list : bool
           If True, print a list of elements varied and coefficients.
+    
       qa_str : unknown
           Expression for Qa tune.
+    
       qb_str : unknown
           Expression for Qb tune.
+    
       delta_input : bool
           If true then qa_str and qb_str are deltas from present tune.
     """
@@ -36551,8 +39930,10 @@ def tao_set_universe_cmd(uni: str, who: str, what: str) -> None:
       ----------
       uni : unknown
           which universe; 0 => current viewed universe
+    
       who : unknown
           "on", "off", "recalculate", "dynamic_aperture_calc", "one_turn_map_calc", or "twiss_calc"
+    
       what : unknown
           "on" or "off" for who = "dynamic_aperture_calc", "one_turn_map_calc" or "twiss_calc".
     """
@@ -36566,22 +39947,29 @@ def tao_set_var_cmd(var_str: str, value_str: str) -> None:
       ----------
       var_str : unknown
           Which var name to set.
+    
       value_str : unknown
           What value to set it to.
     """
 def tao_set_var_model_value(var: TaoVarStruct, value: typing.SupportsFloat, print_limit_warning: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_set_var_model_value
+    
+      Parameters
       ----------
       var : TaoVarStruct
           Variable to set
+    
       value : float
           Value to set to
+    
       print_limit_warning : unknown, optional
           Print a warning if the value is past the variable's limits. Default is True.
     """
 def tao_set_var_useit_opt() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_set_var_useit_opt
+    """
 def tao_set_wave_cmd(who: str, value_str: str) -> bool:
     """
     Subroutine tao_set_wave_cmd (who, value_str, err)
@@ -36592,6 +39980,7 @@ def tao_set_wave_cmd(who: str, value_str: str) -> bool:
       ----------
       who : unknown
           which wave variable to set
+    
       value_str : unknown
           Value to set to.
     
@@ -36599,6 +39988,7 @@ def tao_set_wave_cmd(who: str, value_str: str) -> bool:
       -------
       err : bool
           Set True if there is an error. False otherwise.
+    
       s%wave : 
           Wave variables structure.
     """
@@ -36612,27 +40002,37 @@ def tao_set_z_tune_cmd(branch_str: str, q_str: str, delta_input: bool) -> None:
       ----------
       branch_str : unknown
           List of branches to apply tune set to.
+    
       q_str : unknown
           Expression for Qc tune.
+    
       delta_input : bool
           If true then qa_str and qb_str are deltas from present tune.
     """
 def tao_setup_key_table() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_setup_key_table
+    """
 def tao_shape_init(shape: TaoEleShapeStruct, print_err: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_shape_init
+    
+      Parameters
       ----------
       shape : TaoEleShapeStruct
           Shape
+    
       err : 
           Set true if there is a problem translating the element class.
+    
       print_err : bool, optional
           If True then print an error message if there is a problem. Default is True.
     """
 def tao_show_cmd(what: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_show_cmd
+    
+      Parameters
       ----------
       what : unknown
           What to show.
@@ -36647,13 +40047,16 @@ def tao_show_constraints(iunit: typing.SupportsInt, form: str) -> None:
       ----------
       iunit : int
           File unit to write to. 0 => print to the terminal.
+    
       form : unknown
           What to output: 'ALL'   -> All datums and variables. 'TOP10' -> Top datums and variables that contribute
           to the merit function.
     """
 def tao_single_mode(char_: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_single_mode
+    
+      Parameters
       ----------
       char : unknown
           Command. If more characters are needed to complete the command then this routine will get them.
@@ -36668,8 +40071,10 @@ def tao_single_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, p
       ----------
       tao_lat : TaoLatticeStruct
           Structure containing the lattice.
+    
       ix_branch : int
           Branch index to track through.
+    
       print_err : bool, optional
           Default False. Print error messages if, eg, lattice is unstable?
     
@@ -36680,28 +40085,38 @@ def tao_single_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, p
     """
 def tao_spin_matrices_calc_needed(data_type: str, data_source: str, do_calc: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_spin_matrices_calc_needed
+    
+      Parameters
       ----------
       data_type : 
       data_source : 
       do_calc : 
     """
 def tao_spin_tracking_turn_on() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_spin_tracking_turn_on
+    """
 def tao_split_component(comp_str: str, comp: TaoDataVarComponentStructAlloc1D) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_split_component
+    
+      Parameters
       ----------
       comp_str : unknown
           Components. EG: 'meas - design'
+    
       comp : TaoDataVarComponentStruct
           Array of individual components.
+    
       err : bool
           Set True if there is an error, False otherwise.
     """
 def tao_srdt_calc_needed(data_type: str, data_source: str, do_srdt: typing.SupportsInt) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_srdt_calc_needed
+    
+      Parameters
       ----------
       data_type : 
       data_source : 
@@ -36709,14 +40124,19 @@ def tao_srdt_calc_needed(data_type: str, data_source: str, do_srdt: typing.Suppo
     """
 def tao_subin_uni_number(name_in: str, ix_uni: typing.SupportsInt) -> TaoSubinUniNumber:
     """
-    Parameters
+    Wrapper for Fortran routine tao_subin_uni_number
+    
+      Parameters
       ----------
       name_in : unknown
           Input name with "#" character
+    
       ix_uni : int
           Universe index.
+    
       name_out : unknown
           Output name.
+    
       ok : bool
           False if multiple universes and no "#" in name_in. True otherwise.
     """
@@ -36726,7 +40146,6 @@ def tao_svd_optimizer() -> bool:
     
       Routine to minimize the merit function using svd.
     
-    
       Returns
       -------
       abort : bool
@@ -36734,22 +40153,29 @@ def tao_svd_optimizer() -> bool:
     """
 def tao_symbol_import_from_lat(lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_symbol_import_from_lat
+    
+      Parameters
       ----------
       lat : 
     """
 def tao_taper_cmd(except: str, uni_names: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_taper_cmd
+    
+      Parameters
       ----------
       except : unknown
           List of elements not to vary.
+    
       uni_names : unknown
           Universes to taper.
     """
 def tao_to_change_number(num_str: str, n_size: typing.SupportsInt, change_number: RealAlloc1D, abs_or_rel: str, err: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_to_change_number
+    
+      Parameters
       ----------
       num_str : 
       n_size : 
@@ -36780,23 +40206,30 @@ def tao_to_phase_and_coupling_reading(ele: EleStruct, why_invalid: str, datum: T
       -------
       bpm_data : BpmPhaseCouplingStruct
           Monitor values
+    
       valid_value : bool
           Valid data value?
     """
 def tao_to_real(expression: str) -> TaoToReal:
     """
-    Parameters
+    Wrapper for Fortran routine tao_to_real
+    
+      Parameters
       ----------
       expression : unknown
           arithmetic expression
+    
       value : float
           Value of arithmetic expression.
+    
       err_flag : bool
           TRUE on error.
     """
 def tao_too_many_particles_lost(beam: BeamStruct, no_beam: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_too_many_particles_lost
+    
+      Parameters
       ----------
       beam : 
       no_beam : 
@@ -36821,11 +40254,14 @@ def tao_top10_merit_categories_print(iunit: typing.SupportsInt) -> None:
     """
 def tao_top_level(command: str | None = None) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine tao_top_level
+    
+      Parameters
       ----------
       command : unknown, optional
           Tao command string. If present, getting user input from the terminal is bypassed. This is used when
           interfacing to Python.
+    
       errcode : int
           Return error code: 0 => OK, Not 0 => Err.
     """
@@ -36839,6 +40275,7 @@ def tao_tracking_ele_index(ele: EleStruct, datum: TaoDataStruct) -> TaoTrackingE
       ----------
       ele : EleStruct
           Lattice element.
+    
       datum : TaoDataStruct
           Datum
     
@@ -36846,11 +40283,14 @@ def tao_tracking_ele_index(ele: EleStruct, datum: TaoDataStruct) -> TaoTrackingE
       -------
       ix_branch : int
           Lattice branch associated with element
+    
       ix_ele : int
           Element index associated with ele.
     """
 def tao_turn_on_special_calcs_if_needed_for_plotting() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_turn_on_special_calcs_if_needed_for_plotting
+    """
 def tao_type_expression_tree(tree: TaoEvalNodeStruct, indent: typing.SupportsInt | None = None) -> None:
     """
     Subroutine tao_type_expression_tree (tree, indent)
@@ -36862,6 +40302,7 @@ def tao_type_expression_tree(tree: TaoEvalNodeStruct, indent: typing.SupportsInt
       ----------
       tree : TaoEvalNodeStruct
           Tree to print.
+    
       indent : int, optional
           Initial indent. Default is zero.
     """
@@ -36888,76 +40329,104 @@ def tao_uni_atsign_index(string: str) -> int:
     """
 def tao_universe_index(i_uni: typing.SupportsInt, neg2_to_default: bool | None = None) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine tao_universe_index
+    
+      Parameters
       ----------
       i_uni : int
           Nominal universe number.
+    
       neg2_to_default : bool, optional
           i_uni = -2 (all universes) maps to the default uni? Default if False.
+    
       i_this_uni : int
           Universe number.
     """
 def tao_use_data(action: str, data_name: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_use_data
+    
+      Parameters
       ----------
       action : unknown
           veto, use or restore
+    
       data_name : unknown
           the selected data
     """
 def tao_use_var(action: str, var_name: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_use_var
+    
+      Parameters
       ----------
       action : unknown
           'use', 'veto', or 'restore'
+    
       var_name : unknown
           the selected variable name or all
     """
 def tao_user_is_terminating_optimization() -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine tao_user_is_terminating_optimization
+    
+      Parameters
       ----------
       is_terminating : bool
           Set True of '.' is detected. False otherwise.
     """
 def tao_var1_name(var: TaoVarStruct) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_var1_name
+    
+      Parameters
       ----------
       var : TaoVarStruct
           Variable
+    
       var1_name : unknown
           Appropriate name.
     """
 def tao_var_attrib_name(var: TaoVarStruct) -> str:
     """
-    Parameters
+    Wrapper for Fortran routine tao_var_attrib_name
+    
+      Parameters
       ----------
       var : TaoVarStruct
           Variable
+    
       var_attrib_name : unknown
           Attribute list.
     """
 def tao_var_check(eles: ElePointerStructAlloc1D, attribute: str, silent: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_var_check
+    
+      Parameters
       ----------
       eles : ElePointerStruct
           Array of elements which have a changed attribute.
+    
       attribute : unknown
           Name of attribute changed.
+    
       silent : bool
           If True and the problem can be fixed, do not issue an error message.
     """
 def tao_var_repoint() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_var_repoint
+    """
 def tao_var_target_calc() -> None:
-    ...
+    """
+    Wrapper for Fortran routine tao_var_target_calc
+    """
 def tao_var_useit_plot_calc(graph: TaoGraphStruct, var: TaoVarStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_var_useit_plot_calc
+    
+      Parameters
       ----------
       graph : 
       var : TaoVarStruct
@@ -36982,8 +40451,10 @@ def tao_var_write(out_file: str, show_good_opt_only: bool | None = None, tao_for
       ----------
       out_file : unknown
           Name of output file. If blank. Ouput to the terminal.
+    
       show_good_opt_only : bool, optional
           Write only the variables used in the optimization?
+    
       Default is False. : 
       tao_format : bool, optional
           Output format. Default False. See above.
@@ -37017,6 +40488,7 @@ def tao_wave_cmd(curve_name: str, plot_place: str, err_flag: bool) -> None:
       ----------
       curve_name : 
           Character(*) curve for wave analysis.
+    
       plot_place : 
           Character(*) place on plot page to put the wave plot.
     """
@@ -37031,16 +40503,22 @@ def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.S
       ----------
       curve : TaoCurveStruct
           Curve containing the data.
+    
       ix1 : int
           Index of first point in the data array.
+    
       n_dat : int
           Number of data points.
+    
       f1 : float
           First fit function.
+    
       f2 : float, optional
           Second fit function.
+    
       f3 : float, optional
           third fit function.
+    
       f4 : float, optional
           fourth fit function.
     
@@ -37048,22 +40526,28 @@ def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.S
       -------
       coef : float
           Fit coefficients.
+    
       rms : float
           Variances with rms(n_func+1) = sqrt(chi^2/n_dat).
     """
 def tao_write_cmd(what: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_write_cmd
+    
+      Parameters
       ----------
       what : unknown
           What to output. See the code for more details.
     """
 def tao_x_axis_cmd(where: str, what: str) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_x_axis_cmd
+    
+      Parameters
       ----------
       where : unknown
           Region to axis. Eg: "top"
+    
       what : unknown
           "s" or "index"
     """
@@ -37078,17 +40562,23 @@ def tao_x_scale_cmd(where: str, x_min_in: typing.SupportsFloat, x_max_in: typing
       ----------
       where : unknown
           Region to scale. Eg: "top"
+    
       x_min_in : float
           Plot x-axis min value.
+    
       x_max_in : float
           Plot x-axis max value.
+    
       include_wall : bool, optional
           Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+    
       If present and True include the building wall position will be included in determining the the scale. : 
       gang : unknown, optional
           'gang', 'nogang', ''. Default = ''.
+    
       exact : bool, optional
           Exact plot y_max, y_min to correspond to y_min_in, y_max_in?
+    
       Default is False. Only relavent when y_min_in /= y_max_in. : 
       turn_autoscale_off : bool, optional
           If True (default) then turn off plot.autoscale_x logical for all plots that are scaled.
@@ -37100,7 +40590,9 @@ def tao_x_scale_cmd(where: str, x_min_in: typing.SupportsFloat, x_max_in: typing
     """
 def tao_x_scale_graph(graph: TaoGraphStruct, x_min: typing.SupportsFloat, x_max: typing.SupportsFloat, include_wall: bool | None = None, have_scaled: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tao_x_scale_graph
+    
+      Parameters
       ----------
       graph : 
       x_min : 
@@ -37119,12 +40611,16 @@ def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_
       ----------
       plot : TaoPlotStruct
           Plot to scale. Eg: "top"
+    
       x_min_in : float
           Plot x-axis min value.
+    
       x_max_in : float
           Plot x-axis max value.
+    
       include_wall : bool, optional
           Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+    
       If present and True include the building wall position will be included in determining the the scale. : 
       gang : unknown, optional
           'gang', 'nogang', ''. Default = ''.
@@ -37136,16 +40632,21 @@ def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_
     """
 def taper_mag_strengths(lat: LatStruct, ref_lat: LatStruct | None = None, except: str | None = None, err_flag: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine taper_mag_strengths
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to vary.
           This parameter is an input/output and is modified in-place. As an output: Lattice with magnet strengths
           varied.
+    
       ref_lat : LatStruct, optional
           Reference lattice. If not present, lat will be used as the ref.
+    
       except : unknown, optional
           List of elements not to vary.
+    
       err_flag : 
     """
 def target_min_max_calc(r_corner1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], r_corner2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], y_min: typing.SupportsFloat, y_max: typing.SupportsFloat, phi_min: typing.SupportsFloat, phi_max: typing.SupportsFloat, initial: bool | None = None) -> TargetMinMaxCalc:
@@ -37159,16 +40660,22 @@ def target_min_max_calc(r_corner1: typing.Annotated[collections.abc.Sequence[typ
       ----------
       r_corner1 : float
           In target coords: A corner of the target. Must be normalized to 1.
+    
       r_corner2 : float
           In target coords: Adjacent corner of the target. Must be normalized to 1.
+    
       y_min : float
           min/max values. Only needed if initial = False.
+    
       y_max : float
           min/max values. Only needed if initial = False.
+    
       phi_min : float
           min/max values. Only needed if initial = False.
+    
       phi_max : float
           min/max values. Only needed if initial = False.
+    
       initial : bool, optional
           If present and True then this is the first edge for computation.
     """
@@ -37188,12 +40695,15 @@ def target_rot_mats(r_center: typing.Annotated[collections.abc.Sequence[typing.S
       -------
       w_to_target : float
           Rotation matrix from ele to target coords.
+    
       w_to_ele : float
           Rotation matrix from target to ele coords.
     """
 def taylor_equal_taylor(taylor1: TaylorStruct, taylor2: TaylorStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine taylor_equal_taylor
+    
+      Parameters
       ----------
       taylor1 : 
       taylor2 : 
@@ -37213,6 +40723,7 @@ def taylor_inverse(taylor_in: TaylorStructArray1D, taylor_inv: TaylorStructArray
       -------
       taylor_inv : TaylorStruct
           Inverted taylor map.
+    
       err : bool
           Set True if there is no inverse. If not present then print an error message.
     """
@@ -37232,11 +40743,15 @@ def taylor_propagate1(orb_taylor: TaylorStructArray1D, ele: EleStruct, param: La
       orb_taylor : TaylorStruct
           Map to be tracked
           This parameter is an input/output and is modified in-place. As an output: Map through element.
+    
       ele : EleStruct
           Element to track through
+    
       param : LatParamStruct
+    
       ref_in : CoordStruct, optional
           Particle to be tracked. Must be present if the particle to be tracked is not the reference particle or
+    
       if the direction of propagation is backwards. : 
       spin_taylor : TaylorStruct, optional
           Spin map to be tracked
@@ -37258,6 +40773,7 @@ def taylor_to_mad_map(taylor: TaylorStructArray1D, energy: MadEnergyStruct) -> M
       ----------
       taylor : TaylorStruct
           Taylor map.
+    
       energy : MadEnergyStruct
           Energy numbers.
     
@@ -37268,14 +40784,18 @@ def taylor_to_mad_map(taylor: TaylorStructArray1D, energy: MadEnergyStruct) -> M
     """
 def taylors_equal_taylors(taylor1: TaylorStructArray1D, taylor2: TaylorStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine taylors_equal_taylors
+    
+      Parameters
       ----------
       taylor1 : 
       taylor2 : 
     """
 def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructArray1D, arr_out: BunchStructAlloc1D, arr_in_opt: BunchStructArray1D | None = None, arr_inout_opt: BunchStructArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine test_bunch_struct_array
+    
+      Parameters
       ----------
       arr_in : 
       arr_inout : 
@@ -37286,7 +40806,9 @@ def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructAr
     """
 def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in_opt: BunchStruct | None = None, val_inout_opt: BunchStruct | None = None) -> TestBunchStructScalar:
     """
-    Parameters
+    Wrapper for Fortran routine test_bunch_struct_scalar
+    
+      Parameters
       ----------
       val_in : 
       val_inout : 
@@ -37297,7 +40819,9 @@ def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in
     """
 def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = None, val_inout_opt: str | None = None) -> TestCharacterScalar:
     """
-    Parameters
+    Wrapper for Fortran routine test_character_scalar
+    
+      Parameters
       ----------
       val_in : 
       val_inout : 
@@ -37308,7 +40832,9 @@ def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = 
     """
 def test_complex_array(arr_in: ComplexArray1D, arr_inout: ComplexArray1D, arr_out: ComplexAlloc1D, arr_in_opt: ComplexArray1D | None = None, arr_inout_opt: ComplexArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine test_complex_array
+    
+      Parameters
       ----------
       arr_in : 
       arr_inout : 
@@ -37319,7 +40845,9 @@ def test_complex_array(arr_in: ComplexArray1D, arr_inout: ComplexArray1D, arr_ou
     """
 def test_complex_scalar(val_in: complex, val_inout: complex, val_in_opt: complex | None = None, val_inout_opt: complex | None = None) -> TestComplexScalar:
     """
-    Parameters
+    Wrapper for Fortran routine test_complex_scalar
+    
+      Parameters
       ----------
       val_in : 
       val_inout : 
@@ -37330,7 +40858,9 @@ def test_complex_scalar(val_in: complex, val_inout: complex, val_in_opt: complex
     """
 def test_integer8_array(arr_in: Int8Array1D, arr_inout: Int8Array1D, arr_out: Int8Alloc1D, arr_in_opt: Int8Array1D | None = None, arr_inout_opt: Int8Array1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine test_integer8_array
+    
+      Parameters
       ----------
       arr_in : 
       arr_inout : 
@@ -37341,7 +40871,9 @@ def test_integer8_array(arr_in: Int8Array1D, arr_inout: Int8Array1D, arr_out: In
     """
 def test_integer8_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsInt, val_in_opt: typing.SupportsInt | None = None, val_inout_opt: typing.SupportsInt | None = None) -> TestInteger8Scalar:
     """
-    Parameters
+    Wrapper for Fortran routine test_integer8_scalar
+    
+      Parameters
       ----------
       val_in : 
       val_inout : 
@@ -37352,7 +40884,9 @@ def test_integer8_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsI
     """
 def test_integer_array(arr_in: IntArray1D, arr_inout: IntArray1D, arr_out: IntAlloc1D, arr_in_opt: IntArray1D | None = None, arr_inout_opt: IntArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine test_integer_array
+    
+      Parameters
       ----------
       arr_in : 
       arr_inout : 
@@ -37363,7 +40897,9 @@ def test_integer_array(arr_in: IntArray1D, arr_inout: IntArray1D, arr_out: IntAl
     """
 def test_integer_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsInt, val_in_opt: typing.SupportsInt | None = None, val_inout_opt: typing.SupportsInt | None = None) -> TestIntegerScalar:
     """
-    Parameters
+    Wrapper for Fortran routine test_integer_scalar
+    
+      Parameters
       ----------
       val_in : 
       val_inout : 
@@ -37374,7 +40910,9 @@ def test_integer_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsIn
     """
 def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_out: BoolAlloc1D, arr_in_opt: BoolAlloc1D | None = None, arr_inout_opt: BoolAlloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine test_logical_array
+    
+      Parameters
       ----------
       arr_in : 
       arr_inout : 
@@ -37385,7 +40923,9 @@ def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_out: Boo
     """
 def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None = None, val_inout_opt: bool | None = None) -> TestLogicalScalar:
     """
-    Parameters
+    Wrapper for Fortran routine test_logical_scalar
+    
+      Parameters
       ----------
       val_in : 
       val_inout : 
@@ -37396,7 +40936,9 @@ def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None =
     """
 def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_out: Real16Alloc1D, arr_in_opt: Real16Alloc1D | None = None, arr_inout_opt: Real16Alloc1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine test_real16_array
+    
+      Parameters
       ----------
       arr_in : 
       arr_inout : 
@@ -37407,7 +40949,9 @@ def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_out: 
     """
 def test_real16_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFloat, val_in_opt: typing.SupportsFloat | None = None, val_inout_opt: typing.SupportsFloat | None = None) -> TestReal16Scalar:
     """
-    Parameters
+    Wrapper for Fortran routine test_real16_scalar
+    
+      Parameters
       ----------
       val_in : 
       val_inout : 
@@ -37418,7 +40962,9 @@ def test_real16_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsF
     """
 def test_real_array(arr_in: RealArray1D, arr_inout: RealArray1D, arr_out: RealAlloc1D, arr_in_opt: RealArray1D | None = None, arr_inout_opt: RealArray1D | None = None) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine test_real_array
+    
+      Parameters
       ----------
       arr_in : 
       arr_inout : 
@@ -37429,7 +40975,9 @@ def test_real_array(arr_in: RealArray1D, arr_inout: RealArray1D, arr_out: RealAl
     """
 def test_real_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFloat, val_in_opt: typing.SupportsFloat | None = None, val_inout_opt: typing.SupportsFloat | None = None) -> TestRealScalar:
     """
-    Parameters
+    Wrapper for Fortran routine test_real_scalar
+    
+      Parameters
       ----------
       val_in : 
       val_inout : 
@@ -37440,42 +40988,54 @@ def test_real_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFlo
     """
 def tilt_coords(tilt_val: typing.SupportsFloat, coord: RealArray1D, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tilt_coords
+    
+      Parameters
       ----------
       tilt_val : float
           Tilt value (could be the roll value for a bend)
+    
       coord : float
           Coordinates of particle before rotation.
           This parameter is an input/output and is modified in-place. As an output: Coordinates of particle after
           rotation.
+    
       mat6 : float, optional
           Transfer matrix before tilt.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
           after tilt applied.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def tilt_coords_photon(tilt_val: typing.SupportsFloat, coord: RealArray1D, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tilt_coords_photon
+    
+      Parameters
       ----------
       tilt_val : float
           Tilt value (could be the roll value for a bend)
+    
       coord : float
           Coordinates of particle before rotation.
           This parameter is an input/output and is modified in-place. As an output: Coordinates of particle after
           rotation.
+    
       w_mat : float, optional
           Rotation matrix before tilt.
           This parameter is an input/output and is modified in-place. As an output: Rotation matrix after tilt.
     """
 def tilt_mat6(mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], tilt: typing.SupportsFloat) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine tilt_mat6
+    
+      Parameters
       ----------
       mat6 : float
           Untilted matrix.
           This parameter is an input/output and is modified in-place. As an output: Tilted matrix.
+    
       tilt : float
           Tilt angle.
     """
@@ -37493,21 +41053,29 @@ def to_eta_reading(eta_actual: RealArray1D, ele: EleStruct, axis: typing.Support
       ----------
       eta_actual : float
           Actual (eta_x, eta_y) dispersion.
+    
       ele : EleStruct
           Element where the orbit is measured.
+    
       %value : 
           Percent energy change used in dispersion measurement.
+    
       %value : 
           relative bpm resolution RMS
+    
       %value : 
           angle error in radians rms.
+    
       %value : 
           Horizontal gain correction.
+    
       %value : 
           Horizontal gain error.
+    
       ... etc ... : 
       axis : int
           x_plane$ or y_plane$
+    
       add_noise : bool
           If True add noise to the reading
     
@@ -37515,6 +41083,7 @@ def to_eta_reading(eta_actual: RealArray1D, ele: EleStruct, axis: typing.Support
       -------
       reading : float
           BPM reading
+    
       err : bool
           Set True if there is an error. False otherwise.
     """
@@ -37529,27 +41098,38 @@ def to_fieldmap_coords(ele: EleStruct, local_orb: CoordStruct, s_body: typing.Su
       ----------
       ele : EleStruct
           Element being tracked through.
+    
       local_orb : CoordStruct
           Particle orbit. Must be in local element coordinates.
+    
       s_body : float
           Longitudinal position relative to the entrance end of the element.
+    
       ele_anchor_pt : int
           anchor point of the field map (anchor_beginning$, anchor_center$, or anchor_end$).
+    
       r0 : float
           origin point of the fieldmap.
+    
       curved_ref_frame : bool
           If the element is a bend: Does the field map follow the bend reference coords?
+    
       Outpt: : 
       x : float
           Coords relative to the field map.
+    
       y : float
           Coords relative to the field map.
+    
       z : float
           Coords relative to the field map.
+    
       cos_ang : float
           cos and sin of coordinate rotation angle.
+    
       sin_ang : float
           cos and sin of coordinate rotation angle.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
@@ -37567,19 +41147,26 @@ def to_orbit_reading(orb: CoordStruct, ele: EleStruct, axis: typing.SupportsInt,
       ----------
       orb : CoordStruct
           Orbit position at BPM.
+    
       ele : EleStruct
           Element where the orbit is measured.
+    
       %value : 
           relative bpm resolution RMS
+    
       %value : 
           angle error in radians rms.
+    
       %value : 
           Horizontal gain correction.
+    
       %value : 
           Horizontal gain error.
+    
       ... etc ... : 
       axis : int
           x_plane$ or y_plane$
+    
       add_noise : bool
           If True add noise to the reading
     
@@ -37587,6 +41174,7 @@ def to_orbit_reading(orb: CoordStruct, ele: EleStruct, axis: typing.SupportsInt,
       -------
       reading : float
           BPM reading
+    
       err : bool
           Set True if there is no valid reading. For example, if ele.is_on = False.
     """
@@ -37603,10 +41191,13 @@ def to_phase_and_coupling_reading(ele: EleStruct, add_noise: bool) -> ToPhaseAnd
       ----------
       actual_phase : float
           Actual phase reading.
+    
       ele : EleStruct
           Element where phase is measured.
+    
       %value : 
           RMS Noise in radians.
+    
       add_noise : bool
           If True add noise to the reading
     
@@ -37614,6 +41205,7 @@ def to_phase_and_coupling_reading(ele: EleStruct, add_noise: bool) -> ToPhaseAnd
       -------
       reading : BpmPhaseCouplingStruct
           K and Cbar coupling parameters
+    
       err : bool
           Set True if there is an error. False otherwise.
     """
@@ -37628,6 +41220,7 @@ def to_photon_angle_coords(orb_in: CoordStruct, ele: EleStruct) -> CoordStruct:
       ----------
       orb_in : CoordStruct
           orbit in standard photon coords.
+    
       ele : EleStruct
           Reference element (generally the detector element.)
     
@@ -37646,12 +41239,16 @@ def to_str(num: typing.SupportsFloat, max_signif: typing.SupportsInt | None = No
     """
 def to_surface_coords(lab_orbit: CoordStruct, ele: EleStruct) -> CoordStruct:
     """
-    Parameters
+    Wrapper for Fortran routine to_surface_coords
+    
+      Parameters
       ----------
       lab_orbit : CoordStruct
           Photon position in laboratory coords.
+    
       ele : EleStruct
           Detector element.
+    
       surface_orbit : CoordStruct
           Photon position in element body coordinates.
     """
@@ -37683,10 +41280,13 @@ def touschek_lifetime(mode: NormalModesStruct, lat: LatStruct) -> float:
       ----------
       mode : NormalModesStruct
           beam properties
+    
       %pz_aperture : float
           momentum aperture
+    
       lat : LatStruct
           Accelerator Lattice
+    
       %param%n_part : float
           number particles per bunch
     
@@ -37739,10 +41339,13 @@ def touschek_rate1(mode: NormalModesStruct, lat: LatStruct, ix: typing.SupportsI
       ----------
       mode : NormalModesStruct
           beam properties
+    
       lat : LatStruct
           Lattice
+    
       ix : int, optional
           element index (either s or ix must be specified)
+    
       s : float, optional
           location in meters (either s or ix must be specified)
     
@@ -37753,7 +41356,9 @@ def touschek_rate1(mode: NormalModesStruct, lat: LatStruct, ix: typing.SupportsI
     """
 def touschek_rate1_zap(mode: NormalModesStruct, rate: typing.SupportsFloat, lat: LatStruct, ix: typing.SupportsInt | None = None, s: typing.SupportsFloat | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine touschek_rate1_zap
+    
+      Parameters
       ----------
       mode : 
       rate : 
@@ -37763,28 +41368,38 @@ def touschek_rate1_zap(mode: NormalModesStruct, rate: typing.SupportsFloat, lat:
     """
 def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track: TrackStruct | None = None, ignore_radiation: bool | None = None, make_map1: bool | None = None, init_to_edge: bool | None = None) -> Track1:
     """
-    Parameters
+    Wrapper for Fortran routine track1
+    
+      Parameters
       ----------
       start_orb : CoordStruct
           Starting position.
+    
       ele : EleStruct
           Element to track through.
           This parameter is an input/output and is modified in-place. As an output: Modified if make_map1 is True.
+    
       param : LatParamStruct
           Reference particle info.
+    
       end_orb : CoordStruct
           End position.
+    
       track : TrackStruct, optional
           Structure holding existing track.
           This parameter is an input/output and is modified in-place. As an output: Structure holding the track
           information if the
+    
       err_flag : bool
           Set true if there is an error. False otherwise. Note: The particle getting lost (EG hitting an aperture)
           is *not* an error. An error is something like start_orb not being properly initialized.
+    
       ignore_radiation : unknown, optional
           If present and True then do not include radiation
+    
       make_map1 : bool, optional
           Make ele.mat6 and ele.spin_q components? Default is false.
+    
       init_to_edge : bool, optional
           Default is True. If True then force the tracked particle to begin at the element's edge. See above. Do not
           use this argument unless you know what you are doing.
@@ -37800,10 +41415,13 @@ def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: CoordStructArray1D |
       beam : BeamStruct
           Starting beam position.
           This parameter is an input/output and is modified in-place. As an output: Ending beam position.
+    
       ele : EleStruct
           element to track through.
+    
       centroid : CoordStruct, optional
           Approximate centroid orbit. Only needed if CSR is on.
+    
       Hint: Calculate this before beam tracking by tracking a single particle. : 
       direction : int, optional
           +1 (default) -> Track forward, -1 -> Track backwards.
@@ -37815,35 +41433,48 @@ def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: CoordStructArray1D |
     """
 def track1_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> Track1Bmad:
     """
-    Parameters
+    Wrapper for Fortran routine track1_bmad
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Element
+    
       param : LatParamStruct
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
+    
       track : TrackStruct
           Structure holding the track information if the
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
           through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track1_bmad_photon(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine track1_bmad_photon
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position
           This parameter is an input/output and is modified in-place. As an output: End position
+    
       ele : EleStruct
           Element
+    
       param : LatParamStruct
+    
       err_flag : bool
           Set true if there is an error. False otherwise.
     """
@@ -37858,13 +41489,17 @@ def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1
       bunch : BunchStruct
           Starting bunch position.
           This parameter is an input/output and is modified in-place. As an output: Ending bunch position.
+    
       ele : EleStruct
           element to track through.
+    
       centroid : CoordStruct, optional
           Approximate centroid orbit. Only needed if CSR is on.
+    
       Hint: Calculate this before beam tracking by tracking a single particle. : 
       direction : int, optional
           +1 (default) -> Track forward, -1 -> Track backwards.
+    
       bunch_track : BunchTrackStruct, optional
           Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
           This parameter is an input/output and is modified in-place. As an output: Track information appended to
@@ -37874,6 +41509,7 @@ def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1
       -------
       err : bool
           Set true if there is an error.
+    
       EG: Too many particles lost for a CSR calc. : 
     """
 def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1D, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
@@ -37887,15 +41523,20 @@ def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructAr
       bunch : BunchStruct
           Starting bunch position.
           This parameter is an input/output and is modified in-place. As an output: Ending bunch position.
+    
       ele : EleStruct
           The element to track through. Must be part of a lattice.
+    
       centroid : 
           coord_struct, Approximate beam centroid orbit for the lattice branch.
+    
       Calculate this before beam tracking by tracking a single particle. : 
       s_start : float, optional
           Starting position relative to ele. Default = 0
+    
       s_end : float, optional
           Ending position. Default is ele length.
+    
       bunch_track : BunchTrackStruct, optional
           Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
           This parameter is an input/output and is modified in-place. As an output: track information if the
@@ -37915,21 +41556,25 @@ def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStruct
       Routine to track a bunch of particles through an element using
       steady-state 3D CSR.
     
-    
       Parameters
       ----------
       bunch : BunchStruct
           Starting bunch position.
           This parameter is an input/output and is modified in-place. As an output: Ending bunch position.
+    
       ele : EleStruct
           The element to track through. Must be part of a lattice.
+    
       centroid : 
           coord_struct, Approximate beam centroid orbit for the lattice branch.
+    
       Calculate this before beam tracking by tracking a single particle. : 
       s_start : float, optional
           Starting position relative to ele. Default = 0
+    
       s_end : float, optional
           Ending position. Default is ele length.
+    
       bunch_track : BunchTrackStruct, optional
           Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
           This parameter is an input/output and is modified in-place. As an output: track information if the
@@ -37951,10 +41596,13 @@ def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.Suppo
       bunch : BunchStruct
           Starting bunch position.
           This parameter is an input/output and is modified in-place. As an output: Ending bunch position.
+    
       ele : EleStruct
           The element to track through.
+    
       direction : int, optional
           +1 (default) -> Track forward, -1 -> Track backwards.
+    
       bunch_track : BunchTrackStruct, optional
           Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
           This parameter is an input/output and is modified in-place. As an output: Track information appended to
@@ -37962,17 +41610,23 @@ def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.Suppo
     """
 def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_s: bool | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine track1_bunch_space_charge
+    
+      Parameters
       ----------
       bunch : BunchStruct
           Starting bunch position.
           This parameter is an input/output and is modified in-place. As an output: Ending bunch position.
+    
       ele : EleStruct
           Element to track through. Must be part of a lattice.
+    
       err : bool
           Set true if there is an error. EG: Too many particles lost for a CSR calc.
+    
       track_to_same_s : bool, optional
           Default is True. If True, drift particles to all have the
+    
       bunch_track : BunchTrackStruct, optional
           Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
           This parameter is an input/output and is modified in-place. As an output: track information if the
@@ -37988,8 +41642,10 @@ def track1_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) ->
       ----------
       ele : EleStruct
           Element tracking through.
+    
       param : LatParamStruct
           lattice parameters.
+    
       orbit : CoordStruct
           phase-space coords to be transformed
           This parameter is an input/output and is modified in-place. As an output: final phase-space coords
@@ -38004,8 +41660,10 @@ def track1_diffraction_plate_or_mask(ele: EleStruct, param: LatParamStruct, orbi
       ----------
       ele : EleStruct
           Diffraction plate or mask element.
+    
       param : LatParamStruct
           lattice parameters.
+    
       orbit : CoordStruct
           phase-space coords to be transformed
           This parameter is an input/output and is modified in-place. As an output: final phase-space coords
@@ -38024,8 +41682,10 @@ def track1_high_energy_space_charge(ele: EleStruct, param: LatParamStruct, orbit
       orbit : CoordStruct
           Starting position
           This parameter is an input/output and is modified in-place. As an output: End position
+    
       ele : EleStruct
           Element tracked through.
+    
       param : LatParamStruct
     """
 def track1_lens(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
@@ -38038,21 +41698,27 @@ def track1_lens(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> No
       ----------
       ele : EleStruct
           Element tracking through.
+    
       param : LatParamStruct
           lattice parameters.
+    
       orbit : CoordStruct
           phase-space coords to be transformed
           This parameter is an input/output and is modified in-place. As an output: final phase-space coords
     """
 def track1_linear(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track1_linear
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position
           This parameter is an input/output and is modified in-place. As an output: End position
+    
       ele : EleStruct
           Element
+    
       param : LatParamStruct
     """
 def track1_lr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
@@ -38067,6 +41733,7 @@ def track1_lr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
           Element with wakes.
           This parameter is an input/output and is modified in-place. As an output: Element with updated wake
           amplitudes.
+    
       bunch : BunchStruct
           Bunch to track.
           This parameter is an input/output and is modified in-place. As an output: Kicked bunch.
@@ -38083,8 +41750,10 @@ def track1_mad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> Non
       orbit : CoordStruct
           Starting coords.
           This parameter is an input/output and is modified in-place. As an output: Ending coords.
+    
       ele : EleStruct
           Element to track through.
+    
       param : LatParamStruct
           Lattice parameters.
     """
@@ -38098,8 +41767,10 @@ def track1_mirror(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> 
       ----------
       ele : EleStruct
           Element tracking through.
+    
       param : LatParamStruct
           lattice parameters.
+    
       orbit : CoordStruct
           phase-space coords to be transformed
           This parameter is an input/output and is modified in-place. As an output: final phase-space coords
@@ -38114,8 +41785,10 @@ def track1_mosaic_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
       ----------
       ele : EleStruct
           Element tracking through.
+    
       param : LatParamStruct
           lattice parameters.
+    
       orbit : CoordStruct
           phase-space coords to be transformed
           This parameter is an input/output and is modified in-place. As an output: final phase-space coords
@@ -38131,8 +41804,10 @@ def track1_multilayer_mirror(ele: EleStruct, param: LatParamStruct, orbit: Coord
       ----------
       ele : EleStruct
           Element tracking through.
+    
       param : LatParamStruct
           lattice parameters.
+    
       orbit : CoordStruct
           phase-space coords to be transformed
           This parameter is an input/output and is modified in-place. As an output: final phase-space coords
@@ -38156,8 +41831,10 @@ def track1_radiation(orbit: CoordStruct, ele: EleStruct, edge: typing.SupportsIn
           Particle position before radiation applied.
           This parameter is an input/output and is modified in-place. As an output: Particle position after
           radiation has been applied.
+    
       ele : EleStruct
           Element generating radiation.
+    
       edge : int
           Where the particle is: start_edge$ or end_edge$.
     """
@@ -38176,12 +41853,16 @@ def track1_radiation_center(orbit: CoordStruct, ele1: EleStruct, ele2: EleStruct
           Particle at center of element before radiation applied.
           This parameter is an input/output and is modified in-place. As an output: Particle position after
           radiation has been applied.
+    
       ele1 : EleStruct
           First half of the split element.
+    
       ele2 : EleStruct
           Second half of the split element.
+    
       rad_damp : bool, optional
           If present, override setting of bmad_com.radiation_damping_on.
+    
       rad_fluct : bool, optional
           If present, override setting of bmad_com.radiation_fluctuations_on.
     
@@ -38192,23 +41873,31 @@ def track1_radiation_center(orbit: CoordStruct, ele1: EleStruct, ele2: EleStruct
     """
 def track1_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> Track1RungeKutta:
     """
-    Parameters
+    Wrapper for Fortran routine track1_runge_kutta
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting coords.
           This parameter is an input/output and is modified in-place. As an output: Ending coords.
+    
       ele : 
           Ele_struct
+    
       param : LatParamStruct
           Lattice parameters.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       track : TrackStruct
           Structure holding the track information.
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
           through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
@@ -38222,50 +41911,68 @@ def track1_sample(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> 
       ----------
       ele : EleStruct
           Element tracking through.
+    
       param : LatParamStruct
           lattice parameters.
+    
       orbit : CoordStruct
           phase-space coords to be transformed
           This parameter is an input/output and is modified in-place. As an output: final phase-space coords
     """
 def track1_spin(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, end_orb: CoordStruct, make_quaternion: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track1_spin
+    
+      Parameters
       ----------
       start_orb : CoordStruct
           Starting coords.
+    
       ele : EleStruct
           Element to track through.
+    
       param : LatParamStruct
           Beam parameters.
+    
       end_orb : CoordStruct
           Ending coords.
+    
       make_quaternion : bool, optional
           If present and true then calculate the 1st order spin map which is represented as a quaternion.
     """
 def track1_spin_integration(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, end_orb: CoordStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track1_spin_integration
+    
+      Parameters
       ----------
       start_orb : CoordStruct
           Starting coords.
+    
       ele : EleStruct
           Element to track through.
+    
       param : LatParamStruct
           Beam parameters.
+    
       end_orb : CoordStruct
           Ending coords.
     """
 def track1_spin_taylor(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct) -> CoordStruct:
     """
-    Parameters
+    Wrapper for Fortran routine track1_spin_taylor
+    
+      Parameters
       ----------
       start_orb : CoordStruct
           Starting coords.
+    
       ele : EleStruct
           Element to track through.
+    
       param : LatParamStruct
           Beam parameters.
+    
       end_orb : CoordStruct
     """
 def track1_sr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
@@ -38280,57 +41987,77 @@ def track1_sr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
           Bunch of particles.
           This parameter is an input/output and is modified in-place. As an output: Bunch with wakefields applied to
           the particles.
+    
       ele : EleStruct
           Element with wakefields.
     """
 def track1_symp_lie_ptc(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> TrackStruct:
     """
-    Parameters
+    Wrapper for Fortran routine track1_symp_lie_ptc
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position
           This parameter is an input/output and is modified in-place. As an output: End position
+    
       ele : EleStruct
           Element
+    
       param : LatParamStruct
+    
       track : TrackStruct
           Structure holding the track information.
     """
 def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: TaylorStructArray1D | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track1_taylor
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting coords.
           This parameter is an input/output and is modified in-place. As an output: Ending coords.
+    
       ele : EleStruct
           Element to track through.
+    
       taylor : TaylorStruct, optional
           Alternative map to use instead of ele.taylor.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track1_time_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, t_end: typing.SupportsFloat | None = None, dt_step: typing.SupportsFloat | None = None) -> Track1TimeRungeKutta:
     """
-    Parameters
+    Wrapper for Fortran routine track1_time_runge_kutta
+    
+      Parameters
       ----------
       orbit : CoordStruct
           starting position, z-based coords
           This parameter is an input/output and is modified in-place. As an output: end position, z-based coords
+    
       ele : EleStruct
           element
+    
       param : LatParamStruct
           lattice parameters
+    
       err_flag : bool
           Set True if there is an error. False otherwise
+    
       track : TrackStruct
           Contains array of the step-by-step particle trajectory along with the field at these positions. When
           tracking through multiple elements, the trajectory in an element
+    
       t_end : float, optional
           If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
           The time orb.t at which tracking stops
+    
       dt_step : float, optional
           If positive, next RK time step to take. This overrides bmad_com.init_ds_adaptive_tracking. Used by
           track_bunch_time.
@@ -38339,37 +42066,50 @@ def track1_time_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamS
     """
 def track_a_beambeam(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> TrackABeambeam:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_beambeam
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Beambeam element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       track : TrackStruct
           Structure holding the track information if the
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_bend(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_bend
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Bend element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float, optional
           Transfer matrix up to the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix to the element
           end.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
@@ -38386,8 +42126,10 @@ def track_a_bend_photon(orb: CoordStruct, ele: EleStruct, length: typing.Support
       orb : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Bend element.
+    
       length : float
           length to track.
     """
@@ -38402,203 +42144,273 @@ def track_a_capillary(orb: CoordStruct, ele: EleStruct) -> None:
       orb : CoordStruct
           Input photon coordinates.
           This parameter is an input/output and is modified in-place. As an output: Output photon coordinates.
+    
       ele : EleStruct
           Capillary element
     """
 def track_a_converter(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_converter
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           converter element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is False.
     """
 def track_a_crab_cavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_crab_cavity
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           crab_cavity element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_drift(orb: CoordStruct, length: typing.SupportsFloat, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, ele_orientation: typing.SupportsInt | None = None, include_ref_motion: bool | None = None, time: typing.SupportsFloat | None = None) -> TrackADrift:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_drift
+    
+      Parameters
       ----------
       orb : CoordStruct
           Orbit at start of the drift.
           This parameter is an input/output and is modified in-place. As an output: Orbit at end of the drift.
+    
       length : float
           Length to drift through in body coordinates. --    If orb.direction = 1, positive length is in +z
           direction and vice versa.
+    
       mat6 : float, optional
           Transfer matrix up to the drift.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
           drift.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
+    
       ele_orientation : int, optional
           Element orientation. Default is orb.direction.
+    
       include_ref_motion : bool, optional
           Include effect of the motion of the reference particle? Default is True. False is basically only used by
           offset_particle.
+    
       time : float, optional
           Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
           This parameter is an input/output and is modified in-place. As an output: Updated time.
     """
 def track_a_drift_photon(orb: CoordStruct, length: typing.SupportsFloat, phase_relative_to_ref: bool) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_drift_photon
+    
+      Parameters
       ----------
       orb : CoordStruct
           Orbit at start of the drift.
           This parameter is an input/output and is modified in-place. As an output: Orbit at end of the drift
+    
       length : float
           Longitudinal length to drift through.
+    
       phase_relative_to_ref : unknown
           If true then E field phase shift is relative to ref particle.
     """
 def track_a_foil(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_foil
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           foil element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is False.
     """
 def track_a_gkicker(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_gkicker
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Gkicker
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix through the
           element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_lcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_lcavity
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Thick multipole element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix through the
           element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_lcavity_old(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_lcavity_old
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Thick multipole element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix through the
           element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_mask(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_mask
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Mask element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_match(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_match
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Match element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       err_flag : 
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_patch(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool | None = None, track_spin: bool | None = None, make_matrix: bool | None = None) -> TrackAPatch:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_patch
+    
+      Parameters
       ----------
       ele : EleStruct
           patch element.
+    
       orbit : CoordStruct
           Starting phase space coords
           This parameter is an input/output and is modified in-place. As an output: Coords after applying a patch
           transformation.
+    
       drift_to_exit : bool, optional
           If False then do not drift the particle from beginning to end face. Also do not correct for a reference
           energy shift.
+    
       s_ent : float
           Longitudinal coordinate of the initial particle position in the frame of reference of the face where the
           particle exits.
+    
       ds_ref : float
           Distance reference particle travels from entrance to exit.
+    
       track_spin : bool, optional
           If True rotate the spin vector appropriately.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
@@ -38615,12 +42427,15 @@ def track_a_patch_photon(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool
       ----------
       ele : EleStruct
           patch element.
+    
       orbit : CoordStruct
           Starting phase space coords
           This parameter is an input/output and is modified in-place. As an output: Coords after applying a patch
           transformation.
+    
       drift_to_exit : bool, optional
           If False then do not drift the particle from
+    
       start to ending faces. Default is True. : 
       use_z_pos : unknown, optional
           If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
@@ -38628,154 +42443,210 @@ def track_a_patch_photon(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool
     """
 def track_a_pickup(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_pickup
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Pickup element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       err_flag : 
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_quadrupole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_quadrupole
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Quadrupole element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_rfcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_rfcavity
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           rfcavity element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_sad_mult(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_sad_mult
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Sad_mult element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float, optional
           Transfer matrix up to the sad_mult.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_sol_quad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_sol_quad
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Sol_quad or solenoid element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_thick_multipole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_thick_multipole
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Thick multipole element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float, optional
           Transfer matrix before the element.
           This parameter is an input/output and is modified in-place. As an output: Transfer matrix through the
           element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_wiggler(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_wiggler
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: End position.
+    
       ele : EleStruct
           Wiggler element.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       mat6 : float
           Transfer matrix through the element.
+    
       make_matrix : bool, optional
           Propagate the transfer matrix? Default is false.
     """
 def track_a_zero_length_element(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> TrackAZeroLengthElement:
     """
-    Parameters
+    Wrapper for Fortran routine track_a_zero_length_element
+    
+      Parameters
       ----------
       orbit : CoordStruct
           Starting coords.
           This parameter is an input/output and is modified in-place. As an output: Ending coords.
+    
       ele : EleStruct
           Element tracked through.
+    
       param : LatParamStruct
           Lattice parameters.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       track : TrackStruct
           Structure holding the track information.
     """
 def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.SupportsInt | None = None, orbit0: CoordStructAlloc1D | None = None, init_lost: bool | None = None) -> TrackAll:
     """
-    Parameters
+    Wrapper for Fortran routine track_all
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat to track through.
+    
       orbit : CoordStruct
           orbit(0) is the starting coordinates for tracking.
           This parameter is an input/output and is modified in-place. As an output: Orbit array.
+    
       ix_branch : int, optional
           Index of branch to track. Default is 0 (main branch).
+    
       track_state : int
           Set to moving_forward$ if everything is OK.
+    
       err_flag : bool
           Set true if particle lost or error. False otherwise
+    
       orbit0 : CoordStruct
           Orbit array for branch 0. Used to fill in the orbit at lord elemenets. Only needed when orbit(:) is not
           the orbit for branch 0.
+    
       init_lost : bool
           Default if False. If True, initialize orbit(N) terms that are not tracked through due to particle loss.
     """
@@ -38792,20 +42663,26 @@ def track_beam(lat: LatStruct, beam: BeamStruct, ele1: EleStruct | None = None, 
       ----------
       lat : LatStruct
           Lattice to track through.
+    
       beam : BeamStruct
           Beam at end of element ix1.
           This parameter is an input/output and is modified in-place. As an output: Beam at end of element ix2.
+    
       ele1 : EleStruct, optional
           Starting element (this element
+    
       is NOT tracked through). Default is lat%ele : 
       ele2 : EleStruct, optional
           Ending element.
+    
       Default is lat%ele : 
       centroid : CoordStruct, optional
           Approximate centroid orbit. Only needed if CSR is on.
+    
       Hint: Calculate this before beam tracking by tracking a single particle. : 
       direction : int, optional
           +1 (default) -> Track forward, -1 -> Track backwards.
+    
       bunch_tracks : BunchTrackStruct, optional
           Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
           This parameter is an input/output and is modified in-place. As an output: track information if the
@@ -38815,6 +42692,7 @@ def track_beam(lat: LatStruct, beam: BeamStruct, ele1: EleStruct | None = None, 
       -------
       err : bool
           Set true if there is an error.
+    
       EG: Too many particles lost for a CSR calc. : 
     """
 def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = None, ele2: EleStruct | None = None, centroid: CoordStructArray1D | None = None, direction: typing.SupportsInt | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
@@ -38832,20 +42710,26 @@ def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = Non
       ----------
       lat : LatStruct
           Lattice to track through.
+    
       bunch : BunchStruct
           Bunch at end of element ix1.
           This parameter is an input/output and is modified in-place. As an output: Bunch at end of element ix2.
+    
       ele1 : EleStruct, optional
           Starting element (this element
+    
       is NOT tracked through). Default is lat%ele : 
       ele2 : EleStruct, optional
           Ending element.
+    
       Default is lat%ele : 
       centroid : CoordStruct, optional
           Approximate centroid orbit. Only needed if CSR is on.
+    
       Hint: Calculate this before bunch tracking by tracking a single particle. : 
       direction : int, optional
           +1 (default) -> Track forward, -1 -> Track backwards.
+    
       bunch_track : BunchTrackStruct, optional
           Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
           This parameter is an input/output and is modified in-place. As an output: track information if the
@@ -38855,26 +42739,34 @@ def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = Non
       -------
       err : bool
           Set true if there is an error.
+    
       EG: Too many particles lost for a CSR calc. : 
     """
 def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.SupportsFloat, s_end: typing.SupportsFloat, dt_step: RealArray1D | None = None, extra_field: EmFieldStructArray1D | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine track_bunch_time
+    
+      Parameters
       ----------
       bunch : BunchStruct
           Coordinates must be time-coords in element body frame.
           This parameter is an input/output and is modified in-place. As an output: Coordinates will be time-coords
           in element body frame.
+    
       branch : BranchStruct
           Lattice branch being tracked through.
+    
       t_end : float
           Ending time.
+    
       s_end : float
           Ending s-position.
+    
       dt_step : float, optional
           Initial step to take for each particle.
           This parameter is an input/output and is modified in-place. As an output: Next RK time step that this
           tracker would take based on the error tolerance.
+    
       extra_field : EmFieldStruct, optional
           Per particle static field to be added to the lattice element field. Eg used with space charge.
     """
@@ -38890,8 +42782,10 @@ def track_bunch_to_s(bunch: BunchStruct, s: typing.SupportsFloat, branch: Branch
           Input bunch position in s-based coordinate.
           This parameter is an input/output and is modified in-place. As an output: Output bunch position in s-based
           coordinate. Particles will be at the same s coordinate
+    
       s : float
           Target coordinate.
+    
       branch : BranchStruct
           Branch being tracked through.
     """
@@ -38907,8 +42801,10 @@ def track_bunch_to_t(bunch: BunchStruct, t_target: typing.SupportsFloat, branch:
           Input bunch position in s-based coordinate.
           This parameter is an input/output and is modified in-place. As an output: Output bunch position in s-based
           coordinate. Particles will be at the same t coordinate
+    
       t_target : float
           Target t coordinate.
+    
       branch : BranchStruct
           Lattice branch being tracked through.
     """
@@ -38922,6 +42818,7 @@ def track_complex_taylor(start_orb: ComplexArray1D, complex_taylor: ComplexTaylo
       ----------
       complex_taylor : ComplexTaylorStruct
           complex_taylor map.
+    
       start_orb : complex
           Starting coords.
     
@@ -38932,59 +42829,82 @@ def track_complex_taylor(start_orb: ComplexArray1D, complex_taylor: ComplexTaylo
     """
 def track_from_s_to_s(lat: LatStruct, s_start: typing.SupportsFloat, s_end: typing.SupportsFloat, orbit_start: CoordStruct, all_orb: CoordStructAlloc1D | None = None, ix_branch: typing.SupportsInt | None = None, ix_ele_end: typing.SupportsInt | None = None) -> TrackFromSToS:
     """
-    Parameters
+    Wrapper for Fortran routine track_from_s_to_s
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice to track through
+    
       s_start : float
           Starting s-position.
+    
       s_end : float
           Ending s-position. If <= s_start then will wrap
+    
       orbit_start : CoordStruct
           Starting coordinates.
+    
       orbit_end : CoordStruct
           Ending coordinates.
+    
       all_orb : CoordStruct
           If present then the orbit at the exit ends
+    
       ix_branch : int, optional
           Lattice branch index. Default is 0 (main branch).
+    
       track_state : int
           Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+    
       ix_ele_end : int, optional
           If present, ignore s_end and track to in between ix_ele_end and ix_ele_end+1
     """
 def track_many(lat: LatStruct, orbit: CoordStructArray1D, ix_start: typing.SupportsInt, ix_end: typing.SupportsInt, direction: typing.SupportsInt, ix_branch: typing.SupportsInt | None = None) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine track_many
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat to track through.
+    
       orbit : CoordStruct
           Coordinates at start of tracking.
           This parameter is an input/output and is modified in-place. As an output: Orbit.
+    
       ix_start : int
           Start index (See Note).
+    
       ix_end : int
           End index (See Note).
+    
       direction : int
           Direction to track. = +1 -> Track forward (+s)
+    
       ix_branch : int, optional
           Branch to track. Default is 0 (main lattice).
+    
       track_state : int
           Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
     """
 def track_to_surface(ele: EleStruct, orbit: CoordStruct, param: LatParamStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    Parameters
+    Wrapper for Fortran routine track_to_surface
+    
+      Parameters
       ----------
       ele : EleStruct
           Element
+    
       orbit : CoordStruct
           Coordinates in the element coordinate frame
           This parameter is an input/output and is modified in-place. As an output: At surface in local surface
           coordinate frame
+    
       param : LatParamStruct
           Branch parameters.
+    
       w_surface : 
           real(rp), rotation matrix to transform to surface coords.
     """
@@ -39001,6 +42921,7 @@ def track_until_dead(start_orb: CoordStruct, lat: LatStruct) -> TrackUntilDead:
       ----------
       start_orb : CoordStruct
           Starting coords.
+    
       lat : unknown
           lattice that contains and element at start_orb.s
     
@@ -39008,62 +42929,85 @@ def track_until_dead(start_orb: CoordStruct, lat: LatStruct) -> TrackUntilDead:
       -------
       end_orb : CoordStruct
           final coords
+    
       track : TrackStruct
           (optional)
     """
 def tracking_rad_map_setup(ele: EleStruct, tollerance: typing.SupportsFloat, ref_edge: typing.SupportsInt) -> TrackingRadMapSetup:
     """
-    Parameters
+    Wrapper for Fortran routine tracking_rad_map_setup
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to setup. Matrices will be with respect to the map reference orbit.
+    
       tollerance : float
           Tolerance used for the computation.
+    
       ref_edge : int
           Edge that the matrices are referenced to. upstream_end$ or downstream_end$.
+    
       rad_map : RadMapStruct
           Structure holding the matrices.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
 def transfer_ac_kick(ac_in: AcKickerStruct) -> AcKickerStruct | None:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_ac_kick
+    
+      Parameters
       ----------
       ac_in : AcKickerStruct
           Input
+    
       ac_out : AcKickerStruct
           Gets set equal to ac_in
     """
 def transfer_branch(branch1: BranchStruct) -> BranchStruct:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_branch
+    
+      Parameters
       ----------
       branch1 : BranchStruct
+    
       branch2 : BranchStruct
     """
 def transfer_branch_parameters(branch_in: BranchStruct) -> BranchStruct:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_branch_parameters
+    
+      Parameters
       ----------
       branch_in : BranchStruct
           Input branch.
+    
       branch_out : BranchStruct
           Output branch with parameters set.
     """
 def transfer_branches(branch1: BranchStructArray1D, branch2: BranchStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_branches
+    
+      Parameters
       ----------
       branch1 : BranchStruct
+    
       branch2 : BranchStruct
     """
 def transfer_ele(ele1: EleStruct, nullify_pointers: bool | None = None) -> EleStruct:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_ele
+    
+      Parameters
       ----------
       ele1 : EleStruct
+    
       ele2 : EleStruct
+    
       nullify_pointers : bool, optional
           If present and True then nullify the pointers in ele2 except for the ele2.lat and ele2.lord pointers. This
           gives a "bare bones" copy where one does not have to worry about deallocating allocated structure
@@ -39071,30 +43015,41 @@ def transfer_ele(ele1: EleStruct, nullify_pointers: bool | None = None) -> EleSt
     """
 def transfer_ele_taylor(ele_in: EleStruct, taylor_order: typing.SupportsInt | None = None) -> EleStruct:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_ele_taylor
+    
+      Parameters
       ----------
       ele_in : EleStruct
           Element with the Taylor map.
+    
       ele_out : EleStruct
           Element receiving the Taylor map truncated to order taylor_order.
+    
       taylor_order : int, optional
           Order to truncate the Taylor map at.
     """
 def transfer_eles(ele1: EleStructArray1D, ele2: EleStructArray1D) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_eles
+    
+      Parameters
       ----------
       ele1 : EleStruct
+    
       ele2 : EleStruct
     """
 def transfer_fieldmap(ele_in: EleStruct, who: typing.SupportsInt) -> EleStruct:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_fieldmap
+    
+      Parameters
       ----------
       ele_in : EleStruct
           Input element.
+    
       ele_out : EleStruct
           Output element.
+    
       who : int
           Possibilities are: all$, cartesian_map$, cylindrical_map$, or grid_field$
     """
@@ -39108,10 +43063,13 @@ def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: CoordStruct 
       ----------
       fixer : EleStruct
           Fixer element to set.
+    
       to_stored : bool
           If False, set real Twiss from stored. If True, set stored Twiss from real.
+    
       orbit : CoordStruct, optional
           Used for 'phase_space' transfers.
+    
       who : bool, optional
           Who to set. Possibilities are: Groups: 'all', ' ' (default and same as 'all') Note: This excludes all
           'start' sets., 'twiss', 'a_twiss', 'b_twiss', 'cmat', 'x_dispersion', 'y_dispersion', 'dispersion',
@@ -39125,46 +43083,64 @@ def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: CoordStruct 
     """
 def transfer_lat(lat1: LatStruct) -> LatStruct:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_lat
+    
+      Parameters
       ----------
       lat1 : LatStruct
+    
       lat2 : LatStruct
     """
 def transfer_lat_parameters(lat_in: LatStruct) -> LatStruct:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_lat_parameters
+    
+      Parameters
       ----------
       lat_in : LatStruct
           Input lat.
+    
       lat_out : LatStruct
           Output lat with parameters set.
     """
 def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, ref_orb: CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: TaylorStructArray1D | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_map_calc
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice used in the calculation.
+    
       orb_map : TaylorStruct
           Initial map (used when unit_start = False)
           This parameter is an input/output and is modified in-place. As an output: Transfer map.
+    
       err_flag : bool
           Set True if problem like number overflow, etc.
+    
       ix1 : int, optional
           Element start index for the calculation.
+    
       ix2 : int, optional
           Element end index for the calculation.
+    
       ref_orb : CoordStruct, optional
           Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
           particle is not the same as the reference
+    
       ix_branch : int, optional
           Lattice branch index. Default is 0.
+    
       one_turn : bool, optional
           If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
+    
       unit_start : bool, optional
           If present and False then orb_map will be used as the starting map instead of the unit map. Default = True
+    
       concat_if_possible : unknown, optional
           If present and True then use map concatenation rather than tracking
+    
       spin_map : TaylorStruct, optional
           Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
           This parameter is an input/output and is modified in-place. As an output: Quaternion spin map.
@@ -39189,29 +43165,38 @@ def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typ
       ----------
       lat : LatStruct
           Lattice used in the calculation.
+    
       t_map : TaylorStruct
           Initial map (used when unit_start = False)
           This parameter is an input/output and is modified in-place. As an output: Transfer map.
+    
       s1 : float, optional
           Element start position for the calculation.
+    
       Default is 0. : 
       s2 : float, optional
           Element end position for the calculation.
+    
       Default is lat%param%total_length. : 
       ref_orb_in : CoordStruct, optional
           Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
           particle is not the same as the reference
+    
       particle of the lattice. : 
       ix_branch : int, optional
           Lattice branch index. Default is 0 (main branch).
+    
       one_turn : bool, optional
           If present and True, and s1 = s2, and the lattice is circular: Construct the one-turn map from s1 back to
           s1. Otherwise t_map is unchanged or the unit map if unit_start = T.
+    
       Default = False. : 
       unit_start : bool, optional
           If present and False then t_map will be used as the starting map instead of the unit map. Default = True
+    
       concat_if_possible : unknown, optional
           If present and True then use map concatenation rather than tracking
+    
       if a map is present for a given lattice element. See above. Default is False. : 
       spin_map : TaylorStruct, optional
           Initial spin map.
@@ -39222,72 +43207,96 @@ def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typ
       -------
       ref_orb_out : CoordStruct
           Ending coordinates of the reference orbit.
+    
       This is also the actual orbit of particle : 
       err_flag : bool
           Set true if there is an error. False otherwise.
     """
 def transfer_mat2_from_twiss(twiss1: TwissStruct, twiss2: TwissStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_mat2_from_twiss
+    
+      Parameters
       ----------
       twiss1 : TwissStruct
           Twiss parameters at the initial point.
+    
       twiss2 : TwissStruct
           Twiss parameters at the end point.
+    
       mat : float
           Transfer matrix between the two points.
     """
 def transfer_mat_from_twiss(ele1: EleStruct, ele2: EleStruct, orb1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], orb2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_mat_from_twiss
+    
+      Parameters
       ----------
       ele1 : EleStruct
           Element with twiss parameters for the starting point.
+    
       ele2 : EleStruct
           Element with twiss parameters for the ending point.
+    
       orb1 : float
           Reference orbit at ele1 (affects m(i,6) dispersion terms).
+    
       orb2 : float
           Reference orbit at ele2 (affects m(i,6) dispersion terms).
+    
       m : float
           Transfer matrix between the two points.
     """
 def transfer_matrix_calc(lat: LatStruct, xfer_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], xfer_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"] | None = None, ix1: typing.SupportsInt | None = None, ix2: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_matrix_calc
+    
+      Parameters
       ----------
       lat : LatStruct
           Lattice used in the calculation.
+    
       xfer_mat : 
       xfer_vec : 
       ix1 : int, optional
           Element start index for the calculation.
+    
       ix2 : int, optional
           Element end index for the calculation. Defaults: If ix1 is not present: ix2 = lat.n_ele_track If ix1 is
           present and lattice is closed: Calculate the
+    
       ix_branch : int, optional
           Branch index. Default is 0.
+    
       one_turn : bool, optional
           If present and True, and ix1 = ix2, and the lattice is closed: Construct the one-turn matrix from ix1 back
           to ix1. If False, (the default), and ix1 = ix2, mat6 is the unit matrix.
     """
 def transfer_twiss(ele_in: EleStruct, reverse: bool | None = None) -> EleStruct:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_twiss
+    
+      Parameters
       ----------
       ele_in : EleStruct
           Element with existing Twiss parameters.
+    
       ele_out : EleStruct
           Element receiving the Twiss parameters.
+    
       reverse : bool, optional
           Reverse alpha and coupling as if particle is going in the reversed direction? Default is False.
     """
 def transfer_wake(wake_in: WakeStruct) -> WakeStruct | None:
     """
-    Parameters
+    Wrapper for Fortran routine transfer_wake
+    
+      Parameters
       ----------
       wake_in : WakeStruct
           Input wake.
+    
       wake_out : WakeStruct
           Output wake.
     """
@@ -39306,10 +43315,13 @@ def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFlo
     ----------
     x_norm : float
         x_norm = (x - x0) / dx
+    
     y_norm : float
         y_norm = (y - y0) / dy
+    
     z_norm : float
         z_norm = (z - z0) / dz
+    
     tri_coef : TricubicCmplxCoefStruct
         Coefficients.
     
@@ -39317,10 +43329,13 @@ def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFlo
     -------
     f_val : complex
         Value of f.
+    
     df_dx : complex
         Normalized first derivative: True df/dx = df_dx * dx
+    
     df_dy : complex
         Normalized first derivative: True df/dy = df_dy * dy
+    
     df_dz : complex
         Normalized first derivative: True df/dz = df_dz * dz
     """
@@ -39334,6 +43349,7 @@ def truncate_complex_taylor_to_order(complex_taylor_in: ComplexTaylorStructArray
       ----------
       complex_taylor_in : ComplexTaylorStruct
           Input complex_taylor map.
+    
       order : int
           Order above which terms are dropped.
     
@@ -39344,18 +43360,25 @@ def truncate_complex_taylor_to_order(complex_taylor_in: ComplexTaylorStructArray
     """
 def twiss1_propagate(twiss1: TwissStruct, mat2: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"], ele_key: typing.SupportsInt, length: typing.SupportsFloat) -> Twiss1Propagate:
     """
-    Parameters
+    Wrapper for Fortran routine twiss1_propagate
+    
+      Parameters
       ----------
       twiss1 : TwissStruct
           Input Twiss parameters.
+    
       mat2 : float
           The transfer matrix.
+    
       ele_key : int
           quadrupole$, etc.
+    
       length : float
           Determines whether the phase is increasing or decreasing.
+    
       twiss2 : TwissStruct
           Output Twiss parameters.
+    
       err : bool
           Set True if there is an error, false otherwise.
     """
@@ -39372,6 +43395,7 @@ def twiss3_at_start(lat: LatStruct, err_flag: bool, ix_branch: typing.SupportsIn
       ----------
       lat : LatStruct
           Lattice with
+    
       ix_branch : int, optional
           Branch index. 0 = default.
     
@@ -39379,18 +43403,25 @@ def twiss3_at_start(lat: LatStruct, err_flag: bool, ix_branch: typing.SupportsIn
       -------
       %branch : EleStruct
           Starting element
+    
       %mode3 : Mode3Struct
           Structure holding the normal modes.
+    
       %v : float
           V coupling matrix.
+    
       %a : TwissStruct
           "a" normal mode Twiss parameters.
+    
       %b : TwissStruct
           "b" normal mode Twiss parameters.
+    
       %c : TwissStruct
           "c" normal mode Twiss parameters.
+    
       error : bool
           Set True if there is no RF. False otherwise.
+    
       tune3 : float
           Normal mode tunes
     """
@@ -39431,6 +43462,7 @@ def twiss3_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = 
       ----------
       lat : LatStruct
           Lattice
+    
       ix_branch : int, optional
           : Branch index. 0 = default.
     """
@@ -39476,25 +43508,35 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
           lattice.
           This parameter is an input/output and is modified in-place. As an output: Lat with computed twiss
           parameters.
+    
       %param%geometry : 
           Used to determine if lattice is open or closed.
+    
       orb : CoordStruct
           Orbit to be computed
+    
       orb : 
           Initial conditions to be used for an open geometry lattices.
+    
       orb : unknown
           Energy at which the closed orbit is computed.
           This parameter is an input/output and is modified in-place. As an output: Computed orbit.
+    
       orb_array : CoordArrayStruct
           Array of orbit arrays.
+    
       orb_array : unknown
           Array of orbit arrays.
+    
       ix_branch : int, optional
           Branch to track.
+    
       print_err : bool, optional
           Default is True. If False, suppress error messages.
+    
       calc_chrom : bool, optional
           Default is False. If True, calculate the chromatic functions.
+    
       orb_start : CoordStruct, optional
           If present, use this as the starting orbit.
     
@@ -39502,8 +43544,10 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
       -------
       %param%stable : 
           Set true or false.
+    
       %param%unstable_factor : 
           unstable growth rate (= 0 if stable)
+    
       status : int
           Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
@@ -39549,25 +43593,35 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
           lattice.
           This parameter is an input/output and is modified in-place. As an output: Lat with computed twiss
           parameters.
+    
       %param%geometry : 
           Used to determine if lattice is open or closed.
+    
       orb : CoordStruct
           Orbit to be computed
+    
       orb : 
           Initial conditions to be used for an open geometry lattices.
+    
       orb : unknown
           Energy at which the closed orbit is computed.
           This parameter is an input/output and is modified in-place. As an output: Computed orbit.
+    
       orb_array : CoordArrayStruct
           Array of orbit arrays.
+    
       orb_array : unknown
           Array of orbit arrays.
+    
       ix_branch : int, optional
           Branch to track.
+    
       print_err : bool, optional
           Default is True. If False, suppress error messages.
+    
       calc_chrom : bool, optional
           Default is False. If True, calculate the chromatic functions.
+    
       orb_start : CoordStruct, optional
           If present, use this as the starting orbit.
     
@@ -39575,8 +43629,10 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
       -------
       %param%stable : 
           Set true or false.
+    
       %param%unstable_factor : 
           unstable growth rate (= 0 if stable)
+    
       status : int
           Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
@@ -39604,28 +43660,35 @@ def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: EleS
       ----------
       lat : LatStruct
           Lattice.
+    
       s : float
           Longitudinal position. If s is negative the
+    
       the position is taken to be lat%param%total_length - s. : 
       ele_at_s : EleStruct, optional
           If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
           previous call
           This parameter is an input/output and is modified in-place. As an output: Element structure holding the
           Twiss parameters.
+    
       to this routine. : 
       orb : CoordStruct, optional
           Orbit through the Lattice.
+    
       orb_at_s : CoordStruct, optional
           If the use_last argument is True, orb_at_s is
           This parameter is an input/output and is modified in-place. As an output: Particle position at the
           position s.
+    
       taken to contain the valid orbit stored from a previous call. : 
       ix_branch : int, optional
           Branch index, Default is 0 (main lattice).
+    
       use_last : bool, optional
           If present and True, and if ele_at_s.s < s, then use ele_at_s and orb_at_s as the starting point for the
           present calculation. This can speed things up when the present s-position is in the middle of a long
           complicated element and the tracking (EG: Runge-Kutta) is slow.
+    
       compute_floor_coords : unknown, optional
           If present and True then the global "floor" coordinates (without misalignments) will be calculated and put
           in ele_at_s.floor.
@@ -39639,155 +43702,213 @@ def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: EleS
     """
 def twiss_and_track_from_s_to_s(branch: BranchStruct, orbit_start: CoordStruct, s_end: typing.SupportsFloat, ele_start: EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None) -> TwissAndTrackFromSToS:
     """
-    Parameters
+    Wrapper for Fortran routine twiss_and_track_from_s_to_s
+    
+      Parameters
       ----------
       branch : BranchStruct
           Lattice branch to track through.
+    
       orbit_start : CoordStruct
           Starting phase space coordinates at s_start.
+    
       s_end : float
           Ending position.
+    
       orbit_end : CoordStruct
           End phase space coordinates.
+    
       ele_start : EleStruct, optional
           Holds the starting parameters at s_start.
+    
       ele_end : EleStruct
           Holds the ending Twiss parameters and the transfer matrix.
+    
       err : bool
           Set True if there is a problem like the particle gets lost in tracking
+    
       compute_floor_coords : bool, optional
           If present and True then the global "floor" coordinates will be
+    
       compute_twiss : bool, optional
           Default True. If False, to save a little time, do not compute Twiss parameters.
     """
 def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: typing.SupportsFloat, l_end: typing.SupportsFloat, track_upstream_end: bool, track_downstream_end: bool, orbit_start: CoordStruct | None = None, ele_start: EleStruct | None = None, ele_end: EleStruct | None = None, compute_floor_coords: bool | None = None, compute_twiss: bool | None = None, reuse_ele_end: bool | None = None) -> TwissAndTrackIntraEle:
     """
-    Parameters
+    Wrapper for Fortran routine twiss_and_track_intra_ele
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to track through.
+    
       param : LatParamStruct
+    
       l_start : float
           Start position measured from the beginning of the element.
+    
       l_end : float
           Stop position measured from the beginning of the element.
+    
       track_upstream_end : bool
           If True then entrance effects are included in the tracking.
+    
       track_downstream_end : bool
           If True then exit effects are included in the tracking but
+    
       orbit_start : CoordStruct, optional
           Starting phase space coordinates at l_start.
+    
       orbit_end : CoordStruct
           End phase space coordinates.
+    
       ele_start : EleStruct, optional
           Holds the starting Twiss parameters at l_start.
+    
       ele_end : EleStruct, optional
           If reuse_ele_end is set True then reuse ele_end from trancking
           This parameter is an input/output and is modified in-place. As an output: Holds the ending Twiss
           parameters at l_end (except for photons).
+    
       err : bool
           Set True if there is a problem like the particle gets lost in tracking
+    
       compute_floor_coords : bool, optional
           If present and True then the global "floor" coordinates
+    
       compute_twiss : bool, optional
           Default True. If False, to save a little time, do not compute
+    
       reuse_ele_end : bool, optional
           If present and True, and if ele_end has the correct lonigitudianal length and key type, reuse ele_end from
           trancking instead of recomputing ele_end from scratch. This can save time.
     """
 def twiss_at_element(ele: EleStruct) -> TwissAtElement:
     """
-    Parameters
+    Wrapper for Fortran routine twiss_at_element
+    
+      Parameters
       ----------
       ele : EleStruct
           Element to be averaged
+    
       start : EleStruct
           Twiss and s at start of element.
+    
       end : EleStruct
           Twiss and s at end of element.
+    
       average : EleStruct
           Average Twiss and s of element.
     """
 def twiss_at_start(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, type_out: bool | None = None) -> int:
     """
-    Parameters
+    Wrapper for Fortran routine twiss_at_start
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat
           This parameter is an input/output and is modified in-place. As an output: Lattice with twiss parameters
           computed.
+    
       status : int
           Calculation status: ok$, in_stop_band$, unstable$, or non_symplectic$
+    
       ix_branch : int, optional
           Branch to use. Default is 0 (main branch).
+    
       type_out : bool, optional
           If True (the default), print an error message If the 1-turn matrix is unstable.
     """
 def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: RealArray1D | None = None) -> TwissFromTracking:
     """
-    Parameters
+    Wrapper for Fortran routine twiss_from_tracking
+    
+      Parameters
       ----------
       lat : LatStruct
           Lat to track through.
           This parameter is an input/output and is modified in-place. As an output: Structure holding the Twiss
           parameters.
+    
       ref_orb0 : CoordStruct
           Reference orbit at lat.ele(0).
+    
       symp_err : float
           A measure of how symplectic the constructed matrices were before symplecitification.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       d_orb : float, optional
           Vector of offsets to use. If not present or zero bmad_com.d_orb(:) will be used.
     """
 def twiss_propagate1(ele1: EleStruct, ele2: EleStruct, forward: bool | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine twiss_propagate1
+    
+      Parameters
       ----------
       ele1 : EleStruct
           Element holding the starting Twiss parameters for forwards propagation.
           This parameter is an input/output and is modified in-place. As an output: Element for the ending Twiss
           parameters for backwards propagation.
+    
       ele2 : EleStruct
           Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
           This parameter is an input/output and is modified in-place. As an output: Element for the ending Twiss
           parameters for forward propagation.
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       forward : bool, optional
           Default is True. If false, propagate the Twiss backwards.
     """
 def twiss_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, ie_start: typing.SupportsInt | None = None, ie_end: typing.SupportsInt | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine twiss_propagate_all
+    
+      Parameters
       ----------
       lat : LatStruct
           lattice.
           This parameter is an input/output and is modified in-place. As an output: Lattice with parameters computed
           for the branch.
+    
       ix_branch : int, optional
           Branch index. Default is 0 (main lattice).
+    
       err_flag : bool
           Set True if there is an error. False otherwise.
+    
       ie_start : int, optional
           Starting element index. Default is 0.
+    
       ie_end : int, optional
           Ending element index, Default is branch.n_ele_track.
     """
 def twiss_to_1_turn_mat(twiss: TwissStruct, phi: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
-    Parameters
+    Wrapper for Fortran routine twiss_to_1_turn_mat
+    
+      Parameters
       ----------
       twiss : TwissStruct
           Structure holding the Twiss parameters. .beta
+    
       phi : float
           Tune in radians.
+    
       mat2 : float
           1-turn matrix.
     """
 def type_coord(coord: CoordStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine type_coord
+    
+      Parameters
       ----------
       coord : CoordStruct
           Coordinate
@@ -39803,6 +43924,7 @@ def type_expression_tree(tree: ExpressionTreeStruct, indent: typing.SupportsInt 
       ----------
       tree : ExpressionTreeStruct
           Tree to print.
+    
       indent : int, optional
           Initial indent. Default is zero.
     """
@@ -39814,12 +43936,16 @@ def type_ptc_layout(lay: Layout) -> None:
     """
 def type_this_file(filename: str) -> None:
     """
+    Wrapper for Fortran routine type_this_file
+    
     Parameters
     ----------
     filename : 
     """
 def upcase_string(string: str) -> None:
     """
+    Wrapper for Fortran routine upcase_string
+    
     Parameters
     ----------
     string : 
@@ -39843,103 +43969,140 @@ def update_ele_from_fibre(ele: EleStruct) -> None:
     """
 def update_fibre_from_ele(ele: EleStruct) -> bool:
     """
+    Wrapper for Fortran routine update_fibre_from_ele
+    
     Parameters
     ----------
     ele : EleStruct
         Element with corresponding PTC fibre.
+    
     survey_needed : bool
         Set True if a call to survey will be needed. Calling survey is avoided in this routine to save time if
         multiple elements are being updated.
     """
 def update_floor_angles(floor: FloorPositionStruct, floor0: FloorPositionStruct | None = None) -> None:
     """
+    Wrapper for Fortran routine update_floor_angles
+    
     Parameters
     ----------
     floor : FloorPositionStruct
         Position with input w matrix.
         This parameter is an input/output and is modified in-place. As an output: Position with output angles.
+    
     floor0 : FloorPositionStruct, optional
         Reference position. There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If
         floor0 is present, choose the solution "nearest" the angles in floor0.
     """
 def valid_field_calc(ele: EleStruct, field_calc: typing.SupportsInt) -> bool:
     """
+    Wrapper for Fortran routine valid_field_calc
+    
     Parameters
     ----------
     ele : EleStruct
         Lattice element.
+    
     field_calc : int
         bmad_standard$, etc.
+    
     is_valid : bool
         True if a valid method. False otherwise.
     """
 def valid_fringe_type(ele: EleStruct, fringe_type: typing.SupportsInt) -> bool:
     """
+    Wrapper for Fortran routine valid_fringe_type
+    
     Parameters
     ----------
     ele : EleStruct
         Lattice element.
+    
     fringe_type : int
         bmad_standard$, etc.
+    
     is_valid : bool
         True if a valid method. False otherwise.
     """
 def valid_mat6_calc_method(ele: EleStruct, species: typing.SupportsInt, mat6_calc_method: typing.SupportsInt) -> bool:
     """
+    Wrapper for Fortran routine valid_mat6_calc_method
+    
     Parameters
     ----------
     ele : EleStruct
         Lattice element.
+    
     species : 
         Type of particle being tracked. electron$, etc. or not_set$
+    
     mat6_calc_method : int
         bmad_standard$, etc.
+    
     is_valid : bool
         True if a valid method. False otherwise.
     """
 def valid_spin_tracking_method(ele: EleStruct, spin_tracking_method: typing.SupportsInt) -> bool:
     """
+    Wrapper for Fortran routine valid_spin_tracking_method
+    
     Parameters
     ----------
     ele : EleStruct
         Lattice element.
+    
     spin_tracking_method : int
         bmad_standard$, etc.
+    
     is_valid : bool
         True if a valid method. False otherwise.
     """
 def valid_tracking_method(ele: EleStruct, species: typing.SupportsInt, tracking_method: typing.SupportsInt) -> bool:
     """
+    Wrapper for Fortran routine valid_tracking_method
+    
     Parameters
     ----------
     ele : EleStruct
         Lattice element.
+    
     species : 
         Type of particle being tracked. electron$, etc. or not_set$
+    
     tracking_method : int
         bmad_standard$, etc.
+    
     is_valid : bool
         True if a valid method. False otherwise.
     """
 def value_of_attribute(ele: EleStruct, attrib_name: str, err_print_flag: bool | None = None, err_value: typing.SupportsFloat | None = None) -> ValueOfAttribute:
     """
+    Wrapper for Fortran routine value_of_attribute
+    
     Parameters
     ----------
     ele : EleStruct
         After this routine finishes Ptr_attrib
+    
     attrib_name : unknown
         Name of attribute. Must be uppercase.
+    
     err_flag : bool
         Set True if attribtute not found. False otherwise.
+    
     err_print_flag : bool, optional
         If present and True then print an error message if there is an  error.
+    
     err_value : float, optional
         Value to set value argument if there is an error. Default is 0.
+    
     value : float
         Value of the attribute. Set to err_value if not found.
     """
 def value_to_line(line: str, value: typing.SupportsFloat, str: str, typ: str, ignore_if_zero: bool | None = None, use_comma: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine value_to_line
+    
     Parameters
     ----------
     line : 
@@ -39951,22 +44114,30 @@ def value_to_line(line: str, value: typing.SupportsFloat, str: str, typ: str, ig
     """
 def vec_to_polar(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], phase: typing.SupportsFloat | None = None) -> SpinPolarStruct:
     """
+    Wrapper for Fortran routine vec_to_polar
+    
     Parameters
     ----------
     vec : float
         unitary spin vector
+    
     phase : float, optional
         Phase of the spinor, if not given then set to zero
+    
     polar : SpinPolarStruct
     """
 def vec_to_spinor(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], phase: typing.SupportsFloat | None = None) -> typing.Annotated[list[complex], "FixedSize(2)"]:
     """
+    Wrapper for Fortran routine vec_to_spinor
+    
     Parameters
     ----------
     vec : float
         Spin vector in cartesian coordinates
+    
     phase : float
         Phase of the spinor, if not given then set to zero
+    
     spinor : complex
         Spinor.
     """
@@ -39984,15 +44155,17 @@ def verify_valid_name(name: str, ix_name: typing.SupportsInt, pure_name: bool | 
     This subroutine is used by bmad_parser and bmad_parser2.
     This subroutine is not intended for general use.
     
-    
     Parameters
     ----------
     name : unknown
         Name(1:ix_name) is the string to check.
+    
     ix_name : int
         Number of characters in the name.
+    
     pure_name : bool, optional
         If True, reject names that contain "[", "]", "(", ")", "." characters.
+    
     Default is False. : 
     include_wild : bool, optional
         Name can include wild card characters and additionally type prefixes like "QUAD::". Default is False.
@@ -40004,55 +44177,74 @@ def verify_valid_name(name: str, ix_name: typing.SupportsInt, pure_name: bool | 
     """
 def virtual_memory_usage(usage: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine virtual_memory_usage
+    
     Parameters
     ----------
     usage : 
     """
 def w_mat_for_bend_angle(angle: typing.SupportsFloat, ref_tilt: typing.SupportsFloat, r_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    Parameters
+    Wrapper for Fortran routine w_mat_for_bend_angle
+    
+      Parameters
       ----------
       angle : float
           Bending angle.
+    
       ref_tilt : float
           Reference tilt.
+    
       r_vec : float, optional
           Starting position.
           This parameter is an input/output and is modified in-place. As an output: position with ref_tilt
           transformation
+    
       w_mat : float
           W matrix
     """
 def w_mat_for_tilt(tilt: typing.SupportsFloat, return_inverse: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    Parameters
+    Wrapper for Fortran routine w_mat_for_tilt
+    
+      Parameters
       ----------
       tilt : float
           pitch angle
+    
       return_inverse : bool, optional
           If True, return the inverse matrix. Default is False.
+    
       w_mat : float
           Transformation matrix.
     """
 def w_mat_for_x_pitch(x_pitch: typing.SupportsFloat, return_inverse: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    Parameters
+    Wrapper for Fortran routine w_mat_for_x_pitch
+    
+      Parameters
       ----------
       x_pitch : float
           pitch angle
+    
       return_inverse : bool, optional
           If True, return the inverse matrix. Default is False.
+    
       w_mat : float
           Transformation matrix.
     """
 def w_mat_for_y_pitch(y_pitch: typing.SupportsFloat, return_inverse: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
-    Parameters
+    Wrapper for Fortran routine w_mat_for_y_pitch
+    
+      Parameters
       ----------
       y_pitch : float
           pitch angle
+    
       return_inverse : bool, optional
           If True, return the inverse matrix. Default is False.
+    
       w_mat : float
           Transformation matrix.
     """
@@ -40074,6 +44266,7 @@ def w_mat_to_axis_angle(w_mat: typing.Annotated[collections.abc.Sequence[typing.
     -------
     axis : float
         Rotation axis. Normalized to 1.
+    
     angle : float
         Rotation angle in the range [0, pi].
     """
@@ -40112,9 +44305,11 @@ def wall3d_d_radius(position: RealArray1D, ele: EleStruct, ix_wall: typing.Suppo
           Particle position in element coordinates. In a patch, with respect to entrance coords. [position(1),
           position(3)] = [x, y] transverse coords. position(5)                = Longitudinal position relative to
           beginning of element.
+    
       position : 
       ele : EleStruct
           Element with wall
+    
       ix_wall : int, optional
           Index of wall in .wall3d(:) array. Default is 1.
     
@@ -40122,19 +44317,25 @@ def wall3d_d_radius(position: RealArray1D, ele: EleStruct, ix_wall: typing.Suppo
       -------
       d_radius : float
           r_particle - r_wall
+    
       perp : float
           Perpendicular normal to the wall.
+    
       ix_section : int
           Set to wall slice section particle is in.
+    
       That is between ix_section and ix_section+1. : 
       no_wall_here : bool
           True if the sub-chamber under consideration does not exist at the
+    
       longitudinal location of the particle. : 
       origin : float
           (x, y, s) origin with respect to the radius is measured.
+    
       Uses the same coords as position. : 
       radius_wall : float
           Radius of the wall.
+    
       err_flag : bool
           Set True if error. (EG noassociated .wall3d), false otherwise.
     """
@@ -40190,6 +44391,7 @@ def wall3d_to_position(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[l
       ----------
       orbit : CoordStruct
           Particle position.
+    
       ele : EleStruct
           Element particle is in.
     
@@ -40200,6 +44402,8 @@ def wall3d_to_position(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[l
     """
 def word_len(wording: str, wlen: typing.SupportsInt) -> None:
     """
+    Wrapper for Fortran routine word_len
+    
     Parameters
     ----------
     wording : 
@@ -40207,6 +44411,8 @@ def word_len(wording: str, wlen: typing.SupportsInt) -> None:
     """
 def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsInt, delim: str, delim_found: bool, out_str: str, ignore_interior: bool | None = None) -> None:
     """
+    Wrapper for Fortran routine word_read
+    
     Parameters
     ----------
     in_str : 
@@ -40220,7 +44426,9 @@ def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsI
     """
 def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_flag: bool, ele: EleStruct | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine word_to_value
+    
+      Parameters
       ----------
       word : 
       lat : 
@@ -40238,16 +44446,21 @@ def write_ascii_beam_file(file_name: str, beam: BeamStruct, new_file: bool | Non
       ----------
       file_name : unknown
           Name of file.
+    
       beam : BeamStruct
           Beam to write
+    
       new_file : bool, optional
           New file or append? Default = True.
+    
       alive_only : bool, optional
           Only write live (includes pre_born) particles to the file? Default is False.
     """
 def write_astra_bend(iu: typing.SupportsInt, strength: typing.SupportsFloat, id: typing.SupportsInt, d1: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], d2: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], d3: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], d4: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine write_astra_bend
+    
+      Parameters
       ----------
       iu : 
       strength : 
@@ -40271,11 +44484,13 @@ def write_astra_field_grid_file(astra_file_unit: typing.SupportsInt, ele: EleStr
       ----------
       astra_file_unit : int
           unit number to write to, if > 0
+    
       if < 0 : 
       nothing is written : 
       and only maxfield is returned : 
       ele : EleStruct
           element to make map
+    
       dz : float, optional
           z step size in m. Default: 0.001 m
     
@@ -40283,6 +44498,7 @@ def write_astra_field_grid_file(astra_file_unit: typing.SupportsInt, ele: EleStr
       -------
       maxfield : float
           absolute maximum found for element field scaling
+    
       err : bool
           Set True if, say a file could not be opened.
     """
@@ -40300,17 +44516,18 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typin
           do iy = 1, Ny
             write single line: field(:, iy, iz)
     
-    
         Note: similar to write_astra_field_grid_file
     
       Parameters
       ----------
       base_filename : unknown
           Base filename. Files will be written as: base_filename.ex, .ey, .ez, .bx, .by, .bz
+    
       If set to '' : 
       no files will be written : 
       ele : EleStruct
           element to make map
+    
       dz : float, optional
           z step size in m. Default: 0.001 m
     
@@ -40318,6 +44535,7 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typin
       -------
       maxfield : float
           absolute maximum on-axis field found for element field scaling
+    
       err : bool
           Set True if, say a file could not be opened.
     """
@@ -40334,27 +44552,37 @@ def write_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = No
       ----------
       file_name : unknown
           Name of file.
+    
       beam : BeamStruct
           Beam to write
+    
       new_file : bool, optional
           New file or append? Default = True.
+    
       file_format : bool, optional
           ascii$, or hdf5$ (default). old_ascii$ (deprecated) is still accepted.
+    
       lat : LatStruct, optional
           If present, lattice info will be writen to hdf5 files.
+    
       alive_only : bool, optional
           Only write live (includes pre_born) particles to the file? Default is False.
     """
 def write_beam_floor_positions(file_name: str, beam: BeamStruct, ele: EleStruct, new_file: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine write_beam_floor_positions
+    
+      Parameters
       ----------
       file_name : unknown
           Name of file.
+    
       beam : BeamStruct
           Beam to write
+    
       ele : EleStruct
           Element that the beam is at.
+    
       new_file : bool, optional
           New file or append? Default = True.
     """
@@ -40369,10 +44597,13 @@ def write_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: Cartesi
       ----------
       file_name : unknown
           File to create.
+    
       ele : EleStruct
           Element associated with the map.
+    
       cart_map : CartesianMapStruct
           Cartesian map.
+    
       Ouput: : 
       err_flag : bool
           Set True if there is an error. False otherwise.
@@ -40388,10 +44619,13 @@ def write_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: Cylindr
       ----------
       file_name : unknown
           File to create.
+    
       ele : EleStruct
           Element associated with the map.
+    
       cl_map : CylindricalMapStruct
           Cylindrical map.
+    
       Ouput: : 
       err_flag : bool
           Set True if there is an error. False otherwise.
@@ -40407,17 +44641,22 @@ def write_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldSt
       ----------
       file_name : unknown
           File to create.
+    
       ele : EleStruct
           Element associated with the map.
+    
       g_field : GridFieldStruct
           Cylindrical map.
+    
       Ouput: : 
       err_flag : bool
           Set True if there is an error. False otherwise.
     """
 def write_blender_ele(iu: typing.SupportsInt, ele: EleStruct, old_format: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine write_blender_ele
+    
+      Parameters
       ----------
       iu : 
       ele : 
@@ -40425,29 +44664,39 @@ def write_blender_ele(iu: typing.SupportsInt, ele: EleStruct, old_format: bool |
     """
 def write_blender_lat_layout(file_name: str, lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine write_blender_lat_layout
+    
+      Parameters
       ----------
       file_name : 
       lat : 
     """
 def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.SupportsInt | None = None, orbit0: CoordStruct | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine write_bmad_lattice_file
+    
+      Parameters
       ----------
       bmad_file : unknown
           Name of the output lattice file.
+    
       lat : LatStruct
           Holds the lattice information.
+    
       err : bool
           Set True if, say a file could not be opened.
+    
       output_form : int, optional
           binary$   -> Write grid_field info in binary hdf5 form in separate files. Default. All other fields are
           writen in separate files in ASCII ascii$    -> Fields will be put in separate ASCII files.
+    
       orbit0 : CoordStruct, optional
           Initial orbit. Used to write the inital orbit if the lattice geometry is closed.
     """
 def write_bunch_by_bunch_info(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, this_stage: BbuStageStruct) -> None:
     """
+    Wrapper for Fortran routine write_bunch_by_bunch_info
+    
     Parameters
     ----------
     lat : 
@@ -40469,11 +44718,13 @@ def write_gpt_field_grid_file_1d(gpt_file_unit: typing.SupportsInt, ele: EleStru
       ----------
       gpt_file_unit : int
           unit number to write to, if > 0
+    
       if < 0 : 
       nothing is written : 
       and only maxfield is returned : 
       ele : EleStruct
           element to make map
+    
       dz : float, optional
           z step size in m. Default: 0.001 m
     
@@ -40481,8 +44732,10 @@ def write_gpt_field_grid_file_1d(gpt_file_unit: typing.SupportsInt, ele: EleStru
       -------
       maxfield : float
           absolute maximum found for element field scaling
+    
       ref_time : float
           time that the field was evaluated at
+    
       err : bool
           Set True if, say a file could not be opened.
     """
@@ -40493,20 +44746,23 @@ def write_gpt_field_grid_file_2d(gpt_file_unit: typing.SupportsInt, ele: EleStru
       Subroutine to write an GPT lattice file using the information in
       a lat_struct. Optionally only part of the lattice can be generated.
     
-    
       Parameters
       ----------
       gpt_file_unit : int
           unit number to write to, if > 0
+    
       if < 0 : 
       nothing is written : 
       and only maxfield is returned : 
       ele : EleStruct
           element to make map
+    
       dr : float, optional
           r step size in m. Default: 0.001 m
+    
       dz : float, optional
           z step size in m. Default: 0.001 m
+    
       r_max : float, optional
           maximum radius in m. Default: 0.02 m
     
@@ -40514,8 +44770,10 @@ def write_gpt_field_grid_file_2d(gpt_file_unit: typing.SupportsInt, ele: EleStru
       -------
       maxfield : float
           absolute maximum found for element field scaling
+    
       ref_time : float
           time that the field was evaluated at
+    
       err : bool
           Set True if, say a file could not be opened.
     """
@@ -40538,10 +44796,12 @@ def write_gpt_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typing.
       ----------
       base_filename : unknown
           Base filename. Files will be written as: base_filename_E_ASCII.gpt, _H_ASCII.gpt
+    
       If set to '' : 
       no files will be written : 
       ele : EleStruct
           element to make map
+    
       dz : float, optional
           z step size in m. Default: 0.001 m
     
@@ -40549,8 +44809,10 @@ def write_gpt_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typing.
       -------
       maxfield : float
           absolute maximum on-axis field found for element field scaling
+    
       ref_time : float
           time that the field was evaluated at
+    
       err : bool
           Set True if, say a file could not be opened.
     """
@@ -40570,100 +44832,135 @@ def write_lat_line(line: str, iu: typing.SupportsInt, end_is_neigh: bool, do_spl
       line : unknown
           String of text.
           This parameter is an input/output and is modified in-place. As an output: part of the string not written.
+    
       iu : int
           Unit number to write to.
+    
       end_is_neigh : bool
           If true then write out everything.
+    
       Otherwise wait for a full line of max_char characters or so. : 
       do_split : bool, optional
           Split line if overlength? Default is True. False is used when line has already been split for expressions
           since
+    
       the expression splitting routine does a much better job of it. : 
       scibmad : bool, optional
           Default False. If True then do not include "&" line continuation
     """
 def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine write_lattice_in_elegant_format
+    
+      Parameters
       ----------
       out_file_name : unknown
           Name of the mad output lattice file.
+    
       lat : LatStruct
           Holds the lattice information.
+    
       ref_orbit : CoordStruct, optional
           Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
           or patch elements and is
+    
       use_matrix_model : bool, optional
           Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
           switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
+    
       include_apertures : bool, optional
           If True (the default), add to the output lattice a zero length collimator element next to any non-
           collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
           collimator elements
+    
       dr12_drift_max : float, optional
           Max deviation for drifts allowed before a correction matrix element
+    
       ix_branch : int, optional
           Index of lattice branch to use. Default = 0.
+    
       err : bool
           Set True if, say a file could not be opened.
     """
 def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine write_lattice_in_foreign_format
+    
+      Parameters
       ----------
       out_type : unknown
           Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', or 'OPAL-T', 'SCIBMAD'.
+    
       out_file_name : unknown
           Name of the mad output lattice file.
+    
       lat : LatStruct
           Holds the lattice information.
+    
       ref_orbit : CoordStruct, optional
           Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
           or patch elements and is
+    
       use_matrix_model : bool, optional
           Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
           switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
+    
       include_apertures : bool, optional
           If True (the default), add to the output lattice a zero length collimator element next to any non-
           collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
           collimator elements
+    
       dr12_drift_max : float, optional
           Max deviation for drifts allowed before a correction matrix element
+    
       ix_branch : int, optional
           Index of lattice branch to use. Default = 0.
+    
       err : bool
           Set True if, say a file could not be opened.
     """
 def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruct, ref_orbit: CoordStructAlloc1D | None = None, use_matrix_model: bool | None = None, include_apertures: bool | None = None, dr12_drift_max: typing.SupportsFloat | None = None, ix_branch: typing.SupportsInt | None = None) -> bool:
     """
-    Parameters
+    Wrapper for Fortran routine write_lattice_in_mad_format
+    
+      Parameters
       ----------
       out_type : unknown
           Either 'MAD-8', or 'MAD-X'
+    
       out_file_name : unknown
           Name of the mad output lattice file.
+    
       lat : LatStruct
           Holds the lattice information.
+    
       ref_orbit : CoordStruct, optional
           Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
           or patch elements and is
+    
       use_matrix_model : bool, optional
           Use a drift-matrix_drift model for wigglers/undulators? [A MAD "matrix" is a 2nd order Taylor map.] This
           switch is ignored for SAD conversion. Default is False -> Use a bend-drift-bend model.
+    
       include_apertures : bool, optional
           If True (the default), add to the output lattice a zero length collimator element next to any non-
           collimator element that has an aperture. Note: MADX translations for non-drift elements can handle non-
           collimator elements
+    
       dr12_drift_max : float, optional
           Max deviation for drifts allowed before a correction matrix element
+    
       ix_branch : int, optional
           Index of lattice branch to use. Default = 0.
+    
       err : bool
           Set True if, say a file could not be opened.
     """
 def write_lattice_in_sad_format(out_file_name: str, lat: LatStruct, include_apertures: bool | None = None, ix_branch: typing.SupportsInt | None = None, err: bool | None = None) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine write_lattice_in_sad_format
+    
+      Parameters
       ----------
       out_file_name : 
       lat : 
@@ -40673,18 +44970,24 @@ def write_lattice_in_sad_format(out_file_name: str, lat: LatStruct, include_aper
     """
 def write_lattice_in_scibmad(lat: LatStruct) -> WriteLatticeInScibmad:
     """
-    Parameters
+    Wrapper for Fortran routine write_lattice_in_scibmad
+    
+      Parameters
       ----------
       scibmad_file : unknown
           SciBmad lattice file name.
+    
       lat : LatStruct
           Lattice
+    
       err_flag : bool
           Error flag
     """
 def write_line_element(line: str, iu: typing.SupportsInt, ele: EleStruct, lat: LatStruct) -> None:
     """
-    Parameters
+    Wrapper for Fortran routine write_line_element
+    
+      Parameters
       ----------
       line : 
       iu : 
@@ -40698,16 +45001,17 @@ def write_opal_field_grid_file(opal_file_unit: typing.SupportsInt, ele: EleStruc
       Subroutine to write an OPAL lattice file using the information in
       a lat_struct. Optionally only part of the lattice can be generated.
     
-    
       Parameters
       ----------
       opal_file_unit : int
           unit number to write to, if > 0
+    
       if < 0 : 
       nothing is written : 
       and only maxfield is returned : 
       ele : EleStruct
           element to make map
+    
       param : LatParamStruct
           Contains lattice information
     
@@ -40715,6 +45019,7 @@ def write_opal_field_grid_file(opal_file_unit: typing.SupportsInt, ele: EleStruc
       -------
       maxfield : float
           absolute maximum found for element field scaling
+    
       err : bool
           Set True if, say a file could not be opened.
     """
@@ -40729,6 +45034,7 @@ def write_opal_lattice_file(opal_file_unit: typing.SupportsInt, lat: LatStruct) 
       ----------
       opal_file_unit : int
           unit number to write to
+    
       lat : LatStruct
           Holds the lattice information.
     
@@ -40761,19 +45067,24 @@ def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: 
       ----------
       time_file_unit : int
           unit number to write to, if > 0
+    
       bunch : BunchStruct
           bunch to be written.
+    
       Particles are drifted to bmad_bunch%t_center for output : 
       ele : EleStruct
           Element being tracked through.
+    
       style : unknown, optional
           Style of output file:
+    
       'BMAD' : 
       'OPAL' : 
       'ASTRA' : 
       'GPT' : 
       branch : BranchStruct, optional
           Required for 'ASTRA' style
+    
       format : unknown
           format for numerical output. default: 'es15.7'
     
@@ -40801,6 +45112,8 @@ def x0_radiation_length(species: typing.SupportsInt) -> float:
     """
 def xlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine xlafun
+    
     Parameters
     ----------
     x : 
@@ -40827,6 +45140,8 @@ def xraylib_nist_compound(name: str) -> int:
     """
 def ylafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine ylafun
+    
     Parameters
     ----------
     x : 
@@ -40845,10 +45160,13 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     ----------
     ele : EleStruct
         Element
+    
     x : float
         Photon coordinates on surface.
+    
     y : float
         Photon coordinates on surface.
+    
     extend_grid : bool, optional
         If a grid is involved and (x, y) is outside of the grid, and extend_grid = True: Pretend (x, y) is at
         edge. Default is False.
@@ -40857,8 +45175,10 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     -------
     z : float
         z coordinate.
+    
     err_flag : bool
         Set True if cannot compute z due to, say, point
+    
     being outside of ellipseoid or grid bounds. : 
     dz_dxy : float
         Surface slope at (x, y).
@@ -40869,6 +45189,8 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     """
 def zero_ele_kicks(ele: EleStruct) -> None:
     """
+    Wrapper for Fortran routine zero_ele_kicks
+    
     Parameters
     ----------
     ele : EleStruct
@@ -40877,6 +45199,8 @@ def zero_ele_kicks(ele: EleStruct) -> None:
     """
 def zero_ele_offsets(ele: EleStruct) -> None:
     """
+    Wrapper for Fortran routine zero_ele_offsets
+    
     Parameters
     ----------
     ele : EleStruct
@@ -40903,6 +45227,8 @@ def zero_lr_wakes_in_lat(lat: LatStruct) -> None:
     """
 def zlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
+    Wrapper for Fortran routine zlafun
+    
     Parameters
     ----------
     x : 
@@ -40910,1088 +45236,3 @@ def zlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsF
     z : 
     res : 
     """
-A0: int = 140
-A0_ELEC: int = 190
-A21: int = 161
-A21_ELEC: int = 211
-ABS: int = 17
-ABSOLUTE: int = 1
-ABSOLUTE_TIME_TRACKING: int = 96
-AB_MULTIPOLE: int = 22
-ACCORDION_EDGE: int = 128
-ACOS: int = 15
-ACOSH: int = 54
-ACOTH: int = 56
-AC_KICKER: int = 58
-ALIAS: int = 80
-ALIVE: int = 1
-ALL: int = 203
-ALL_CONTROL_VAR: int = 3
-ALL_GROUPS: int = 8
-ALPHA_A: int = 99
-ALPHA_A0: int = 3
-ALPHA_A1: int = 7
-ALPHA_ANGLE: int = 21
-ALPHA_A_OUT: int = 23
-ALPHA_A_STORED: int = 22
-ALPHA_A_STRONG: int = 23
-ALPHA_B: int = 100
-ALPHA_B0: int = 5
-ALPHA_B1: int = 9
-ALPHA_B_OUT: int = 24
-ALPHA_B_STORED: int = 24
-ALPHA_B_STRONG: int = 24
-AMPERSAND: int = 73
-AMP_VS_TIME: int = 104
-ANCHOR_BEGINNING: int = 1
-ANCHOR_CENTER: int = 2
-ANCHOR_END: int = 3
-ANGLE: int = 33
-ANGLE_OUT_MAX: int = 7
-ANOMALOUS_MAG_MOMENT_DEUTERON: float = -0.14298726925
-ANOMALOUS_MAG_MOMENT_ELECTRON: float = 0.00115965218059
-ANOMALOUS_MAG_MOMENT_HE3: float = -4.184153686
-ANOMALOUS_MAG_MOMENT_MUON: float = 0.0011659217
-ANOMALOUS_MAG_MOMENT_NEUTRON: float = -1.91304273
-ANOMALOUS_MAG_MOMENT_PROTON: float = 1.79284734463
-ANOMALOUS_MOMENT_OF: int = 33
-ANTIMUON: int = 3
-ANTIPARTICLE: int = 44
-ANTIPROTON: int = -2
-ANTI_ATOM: int = 199
-ANTI_DEUTERON: int = -5
-ANTI_HELION: int = -8
-ANTI_NEUTRON: int = -6
-ANTI_REF_PARTICLE: int = -7
-APERTURE: int = 95
-APERTURE_AT: int = 108
-APERTURE_TYPE: int = 87
-AREA_DENSITY: int = 85
-AREA_DENSITY_USED: int = 86
-ARG_COUNT: int = 43
-ARROW: int = 65
-ASCII: int = 1
-ASIN: int = 14
-ASINH: int = 53
-ATAN: int = 16
-ATAN2: int = 23
-ATANH: int = 55
-ATOMIC_MASS_UNIT: float = 931494103.72
-ATTRIBUTE_GROUP: int = 1
-AUTO: int = 12
-AUTOSCALE_AMPLITUDE: int = 19
-AUTOSCALE_PHASE: int = 20
-AUTO_APERTURE: int = 1
-AVERAGE: int = 40
-B0: int = 162
-B0_ELEC: int = 212
-B1_GRADIENT: int = 45
-B21: int = 183
-B21_ELEC: int = 233
-B2_GRADIENT: int = 46
-B3_GRADIENT: int = 48
-BASIC_BEND: int = 7
-BBI_CONST: int = 7
-BEAMBEAM: int = 11
-BEGINNING_ELE: int = 28
-BENDS: int = 201
-BEND_TILT: int = 26
-BETA_A: int = 108
-BETA_A0: int = 2
-BETA_A1: int = 6
-BETA_A_OUT: int = 21
-BETA_A_STORED: int = 21
-BETA_A_STRONG: int = 21
-BETA_B: int = 109
-BETA_B0: int = 4
-BETA_B1: int = 8
-BETA_B_OUT: int = 22
-BETA_B_STORED: int = 23
-BETA_B_STRONG: int = 22
-BINARY: int = 2
-BLACK: int = 1
-BLANK: int = 72
-BLUE: int = 4
-BL_HKICK: int = 41
-BL_KICK: int = 43
-BL_VKICK: int = 42
-BMAD_INC_VERSION: int = 352
-BMAD_STANDARD: int = 1
-BOTH_ENDS: int = 3
-BRAGG_ANGLE: int = 9
-BRAGG_ANGLE_IN: int = 7
-BRAGG_ANGLE_OUT: int = 8
-BRAGG_DIFFRACTED: int = 1
-BS_FIELD: int = 49
-B_FIELD: int = 43
-B_FIELD_ERR: int = 44
-B_FIELD_TOT: int = 28
-B_MAX: int = 5
-B_PARAM: int = 30
-C11_MAT0: int = 20
-C11_MAT1: int = 25
-C12_MAT0: int = 21
-C12_MAT1: int = 26
-C21_MAT0: int = 22
-C21_MAT1: int = 27
-C22_MAT0: int = 23
-C22_MAT1: int = 28
-CANNOT_FIND: int = 4
-CAPILLARY: int = 45
-CARTESIAN_MAP: int = 123
-CATHODE_FFT_3D: int = 4
-CAVITY_TYPE: int = 22
-CEILING: int = 28
-CENTER_PT: int = 3
-CHAMBER_WALL: int = 1
-CHARGE: int = 8
-CHARGE_OF: int = 32
-CHECK_SUM: int = 75
-CIRCLE_DOT_SYM: int = 9
-CIRCLE_FILLED_SYM: int = 17
-CIRCLE_PLUS_SYM: int = 8
-CIRCLE_SYM: int = 4
-CLASSICAL_RADIUS_FACTOR: float = 1.43996454800674e-09
-CLEAR: int = 2
-CLOSED: int = 2
-CMAT_11: int = 29
-CMAT_11_STORED: int = 38
-CMAT_12: int = 30
-CMAT_12_STORED: int = 39
-CMAT_21: int = 31
-CMAT_21_STORED: int = 40
-CMAT_22: int = 32
-CMAT_22_STORED: int = 41
-COHERENT: int = 2
-COLON: int = 67
-COMMA: int = 38
-COMPOUND: int = 69
-CONSTANT: int = 37
-CONSTANT_REF_ENERGY: int = 18
-CONTINUOUS: int = 5
-CONTROL_GROUP: int = 2
-CONTROL_LORD: int = 12
-CONTROL_VAR: int = 1
-CONVERTER: int = 38
-COS: int = 12
-COSH: int = 50
-COT: int = 45
-COTH: int = 52
-COUPLER_ANGLE: int = 45
-COUPLER_AT: int = 47
-COUPLER_PHASE: int = 44
-COUPLER_STRENGTH: int = 46
-CRAB_CAVITY: int = 61
-CRAB_TILT: int = 42
-CRAB_X1: int = 39
-CRAB_X2: int = 40
-CRAB_X3: int = 41
-CRAB_X4: int = 43
-CRAB_X5: int = 44
-CREATE_JUMBO_SLAVE: int = 127
-CRITICAL_ANGLE: int = 7
-CRITICAL_ANGLE_FACTOR: int = 4
-CROSSING_TIME: int = 33
-CROSS_HATCHED: int = 4
-CRUNCH: int = 5
-CRUNCH_CALIB: int = 21
-CRYSTAL: int = 43
-CRYSTAL_TYPE: int = 116
-CSC: int = 47
-CSR_DS_STEP: int = 68
-CSR_METHOD: int = 89
-CUBIC: int = 3
-CURLY_BRACKETS: int = 63
-CURRENT: int = 25
-CURVATURE: int = 101
-CURVE: int = 4
-CUSTOM: int = 7
-CUSTOM_APERTURE: int = 7
-CUSTOM_ATTRIBUTE0: int = 233
-CUSTOM_ATTRIBUTE_NUM: int = 40
-CYAN: int = 5
-CYCLES: int = 3
-CYLINDRICAL_MAP: int = 124
-C_LIGHT: float = 299792458.0
-D1_THICKNESS: int = 20
-D2_THICKNESS: int = 21
-DALPHA_DPZ_A: int = 113
-DALPHA_DPZ_A_STORED: int = 44
-DALPHA_DPZ_B: int = 114
-DALPHA_DPZ_B_STORED: int = 45
-DARK_GREY: int = 14
-DARWIN_WIDTH_PI: int = 12
-DARWIN_WIDTH_SIGMA: int = 11
-DASHED: int = 2
-DASH_DOT: int = 3
-DASH_DOT3: int = 5
-DBETA_DPZ_A: int = 110
-DBETA_DPZ_A_STORED: int = 42
-DBETA_DPZ_B: int = 111
-DBETA_DPZ_B_STORED: int = 43
-DBRAGG_ANGLE_DE: int = 10
-DB_FIELD: int = 44
-DCMAT_DPZ_11_STORED: int = 65
-DCMAT_DPZ_12_STORED: int = 66
-DCMAT_DPZ_21_STORED: int = 67
-DCMAT_DPZ_22_STORED: int = 68
-DEFAULT_TRACKING_SPECIES: int = 20
-DEF_BMAD_COM: int = 20
-DEF_LINE: int = 29
-DEF_MAD_BEAM: int = 21
-DEF_PARAMETER: int = 26
-DEF_PARTICLE_START: int = 39
-DEF_PTC_COM: int = 63
-DEF_SPACE_CHARGE_COM: int = 60
-DEGREES: int = 2
-DELTA_E_REF: int = 8
-DELTA_REF_TIME: int = 50
-DELTA_REF_TIME_USER_SET: int = 49
-DELTA_TIME: int = 48
-DENSITY: int = 83
-DENSITY_USED: int = 84
-DESCRIP: int = 112
-DETAP_DPZ_X: int = 90
-DETAP_DPZ_X_STORED: int = 48
-DETAP_DPZ_Y: int = 96
-DETAP_DPZ_Y_STORED: int = 49
-DETA_DPZ_X: int = 88
-DETA_DPZ_X_STORED: int = 46
-DETA_DPZ_Y: int = 95
-DETA_DPZ_Y_STORED: int = 47
-DETA_DS_MASTER: int = 3
-DETECTOR: int = 55
-DEUTERON: int = 5
-DE_ETA_MEAS: int = 25
-DFLT_DRAW: int = 1
-DFLT_SET: int = 2
-DG: int = 7
-DIAMOND_SYM: int = 11
-DIFFRACTION_PLATE: int = 52
-DIRECTION: int = 3
-DISPATCH: int = 63
-DISTRIBUTION: int = 81
-DIVIDE: int = 4
-DOTTED: int = 4
-DOT_SYM: int = 1
-DOUBLE_COLON: int = 68
-DOWNSTREAM: int = 2
-DOWNSTREAM_COORD_DIR: int = 30
-DOWNSTREAM_END: int = 2
-DPHI_A: int = 10
-DPHI_B: int = 11
-DPHI_ORIGIN: int = 31
-DPSI_ORIGIN: int = 32
-DRIFT: int = 1
-DRIFT_KICK: int = 1
-DS_PHOTON_SLICE: int = 27
-DS_SLICE: int = 32
-DS_STEP: int = 67
-DTHETA_ORIGIN: int = 30
-DTHICKNESS_DX: int = 26
-DT_MAX: int = 4
-DX_ORIGIN: int = 27
-DY_ORIGIN: int = 28
-DZ_ORIGIN: int = 29
-D_SPACING: int = 39
-E1: int = 19
-E1_GRADIENT: int = 45
-E2: int = 20
-E2_CENTER: int = 22
-E2_GRADIENT: int = 46
-E2_PROBABILITY: int = 23
-E3_GRADIENT: int = 48
-ECOLLIMATOR: int = 36
-ELECTRIC: int = 2
-ELECTRIC_DIPOLE_MOMENT: int = 83
-ELECTRON: int = -1
-ELEC_MULTIPOLE: int = 4
-ELE_ORIGIN: int = 119
-ELLIPTICAL: int = 3
-ELSEPARATOR: int = 10
-EMITTANCE_A: int = 39
-EMITTANCE_B: int = 40
-EMITTANCE_Z: int = 41
-EMIT_FRACTION: int = 22
-EM_FIELD: int = 48
-END_EDGE: int = 130
-END_STACK: int = 0
-ENERGY_DISTRIBUTION: int = 27
-ENERGY_PROBABILITY_CURVE: int = 99
-ENTRANCE_END: int = 1
-EPS_STEP_SCALE: int = 26
-EQUAL: int = 66
-ETAP_A: int = 95
-ETAP_B: int = 97
-ETAP_X: int = 84
-ETAP_X0: int = 13
-ETAP_X1: int = 17
-ETAP_X_OUT: int = 27
-ETAP_X_STORED: int = 35
-ETAP_Y: int = 85
-ETAP_Y0: int = 15
-ETAP_Y1: int = 19
-ETAP_Y_OUT: int = 28
-ETAP_Y_STORED: int = 37
-ETA_A: int = 94
-ETA_B: int = 96
-ETA_X: int = 82
-ETA_X0: int = 12
-ETA_X1: int = 16
-ETA_X_OUT: int = 25
-ETA_X_STORED: int = 34
-ETA_Y: int = 83
-ETA_Y0: int = 14
-ETA_Y1: int = 18
-ETA_Y_OUT: int = 26
-ETA_Y_STORED: int = 36
-ETA_Z: int = 87
-EXACT_MISALIGN: int = 100
-EXACT_MODEL: int = 102
-EXACT_MULTIPOLES: int = 14
-EXIT_END: int = 2
-EXP: int = 20
-E_CENTER: int = 21
-E_CENTER_RELATIVE_TO_REF: int = 24
-E_CHARGE: float = 1.602176634e-19
-E_FIELD: int = 43
-E_FIELD_X: int = 28
-E_FIELD_Y: int = 29
-E_GUN: int = 47
-E_LOSS: int = 21
-E_MASS: float = 0.0005109989506900001
-E_PHOTON: int = 9
-E_TOT: int = 54
-E_TOT_OFFSET: int = 47
-E_TOT_REF_INIT: int = 41
-E_TOT_SET: int = 48
-E_TOT_START: int = 52
-E_TOT_STRONG: int = 26
-FACTORIAL: int = 24
-FALSE_: float = 0.0
-FALSE_INT: int = 0
-FAMILY_QU: int = 3
-FAMILY_SQ: int = 4
-FAMILY_X: int = 2
-FAMILY_Y: int = 1
-FB1: int = 21
-FB2: int = 22
-FEEDBACK: int = 69
-FFT_3D: int = 3
-FIDUCIAL: int = 50
-FIDUCIAL_PT: int = 31
-FIELDMAP: int = 2
-FIELD_AUTOSCALE: int = 29
-FIELD_CALC: int = 106
-FIELD_LORD: int = 15
-FIELD_MASTER: int = 111
-FIELD_OVERLAPS: int = 110
-FIELD_SCALE_FACTOR: int = 6
-FIELD_X: int = 10
-FIELD_Y: int = 11
-FILLED_ARROW_HEAD: int = 1
-FINAL_CHARGE: int = 3
-FINE_STRUCTURE_CONSTANT: float = 0.0072973525643
-FINT: int = 21
-FINTX: int = 22
-FIRST_PASS: int = 1
-FIRST_TRACK_EDGE: int = 11
-FIXED_STEP_RUNGE_KUTTA: int = 9
-FIXED_STEP_TIME_RUNGE_KUTTA: int = 13
-FIXER: int = 70
-FLEXIBLE: int = 5
-FLOOR: int = 27
-FLOOR_POSITION_GROUP: int = 3
-FLOOR_SHIFT: int = 49
-FOCAL_STRENGTH: int = 5
-FOIL: int = 66
-FORK: int = 41
-FORWARD_DIFFRACTED: int = 2
-FOURPI: float = 12.566370614359172
-FQ1: int = 23
-FQ2: int = 24
-FREE: int = 3
-FREQUENCIES: int = 101
-FRINGE_AT: int = 11
-FRINGE_TYPE: int = 10
-FULL: int = 4
-FUNCTION: int = 70
-FUNC_PARENS: int = 64
-F_FACTOR: int = 29
-G: int = 6
-GANG: int = 11
-GAP: int = 21
-GAUSSIAN: int = 2
-GEN_GRAD_MAP: int = 126
-GEOMETRY: int = 47
-GIRDER: int = 37
-GIRDER_LORD: int = 7
-GKICKER: int = 65
-GOVERNOR: int = 14
-GRADIENT: int = 6
-GRADIENT_ERR: int = 7
-GRADIENT_TOT: int = 5
-GRAZE_ANGLE: int = 5
-GRAZE_ANGLE_IN: int = 15
-GRAZE_ANGLE_OUT: int = 16
-GREEN: int = 3
-GRID_FIELD: int = 125
-GROUP: int = 4
-GROUP_LORD: int = 4
-G_ERR: int = 7
-G_MAX: int = 6
-G_TOT: int = 8
-H1: int = 25
-H2: int = 26
-HARD_EDGE_ONLY: int = 3
-HARMON: int = 4
-HARMON_MASTER: int = 5
-HATCHED: int = 3
-HDF5: int = 3
-HELICAL_MODEL: int = 6
-HELION: int = 8
-HGAP: int = 23
-HGAPX: int = 24
-HIGHLAND: int = 2
-HIGH_ENERGY_SPACE_CHARGE_ON: int = 43
-HKICK: int = 39
-HKICKER: int = 33
-HORIZONTALLY_PURE: int = 2
-HYBRID: int = 16
-HYPER_X: int = 3
-HYPER_XY: int = 2
-HYPER_Y: int = 1
-H_BAR_PLANCK: float = 6.582119568038699e-16
-H_DISPLACE: int = 4
-H_PLANCK: float = 4.135667696e-15
-IDENTITY: int = 3
-IMPACTT: int = 2
-INCLUDE_KICKS: int = 1
-INCOHERENT: int = 1
-INHERIT_FROM_FORK: int = 2
-INIT_NEEDED: int = 32
-INPUT_ELE: int = 85
-INSIDE: int = 3
-INSTRUMENT: int = 32
-INT: int = 25
-INTEGRATOR_ORDER: int = 65
-INTERPOLATION: int = 8
-INT_GARBAGE: int = -987654
-INVALID: int = -666
-INVALID_NAME: int = 0
-IN_BETWEEN: int = 13
-IN_STOP_BAND: int = 2
-IS_INTEGER: int = 2
-IS_LOGICAL: int = 1
-IS_MOSAIC: int = 24
-IS_ON: int = 79
-IS_REAL: int = 3
-IS_STRING: int = 5
-IS_STRUCT: int = 6
-IS_SWITCH: int = 4
-IX_BRANCH: int = 6
-IX_FIXER: int = 4
-IX_SLICE_SLAVE: int = -2
-IX_TO_BRANCH: int = 7
-IX_TO_ELEMENT: int = 8
-K0L: int = 140
-K0SL: int = 190
-K1: int = 4
-K1X: int = 8
-K1Y: int = 9
-K2: int = 5
-K21L: int = 161
-K21SL: int = 211
-K3: int = 6
-KICK: int = 3
-KICK0: int = 43
-KICKER: int = 15
-KS: int = 18
-KX: int = 4
-L: int = 1
-LATTICE: int = 86
-LATTICE_TYPE: int = 45
-LB_SUBATOMIC: int = -8
-LCAVITY: int = 25
-LEADING: int = 2
-LENS: int = 59
-LIGHT_GREEN: int = 10
-LIGHT_GREY: int = 15
-LINEAR: int = 4
-LINEAR_EDGE: int = 6
-LIVE_BRANCH: int = 46
-LOG: int = 19
-LONGITUDINAL_MODE: int = 32
-LORD_DEFINED: int = 8
-LORD_PAD1: int = 69
-LORD_PAD2: int = 70
-LOST: int = 2
-LOST_NEG_X: int = 3
-LOST_NEG_X_APERTURE: int = 3
-LOST_NEG_Y: int = 5
-LOST_NEG_Y_APERTURE: int = 5
-LOST_POS_X: int = 4
-LOST_POS_X_APERTURE: int = 4
-LOST_POS_Y: int = 6
-LOST_POS_Y_APERTURE: int = 6
-LOST_PZ: int = 8
-LOST_PZ_APERTURE: int = 8
-LOST_Z: int = 7
-LOST_Z_APERTURE: int = 7
-LR_FREQ_SPREAD: int = 85
-LR_SELF_WAKE_ON: int = 83
-LR_WAKE: int = 115
-LR_WAKE_FILE: int = 84
-LYNCH_DAHL: int = 3
-L_ACTIVE: int = 31
-L_CHORD: int = 30
-L_FUNC_PARENS: int = 42
-L_PARENS: int = 5
-L_PERIOD: int = 23
-L_RECTANGLE: int = 27
-L_SAGITTA: int = 29
-L_SOFT_EDGE: int = 31
-MACHINE: int = 87
-MAD: int = 14
-MAGENTA: int = 6
-MAGNETIC: int = 1
-MAGNUS: int = 11
-MARKER: int = 14
-MASK: int = 57
-MASK_PLATE: int = 2
-MASS_OF: int = 31
-MAT6_CALC_METHOD: int = 91
-MAT6_GROUP: int = 6
-MATCH: int = 30
-MATCH_ORBIT: int = 2
-MATCH_TWISS: int = 2
-MATERIAL_TYPE: int = 116
-MATRIX: int = 42
-MATRIX_KICK: int = 2
-MAX: int = 58
-MAX_FRINGE_ORDER: int = 82
-MAYBE: int = 2
-MEAN_EXCITATION_ENERGY: int = 31
-MIN: int = 57
-MINOR_SLAVE: int = 1
-MINUS: int = 2
-MIRROR: int = 42
-MIXED: int = 3
-MODE: int = 26
-MODE_FLIP: int = 33
-MODE_FLIP0: int = 24
-MODE_FLIP1: int = 29
-MODE_FLIP_STORED: int = 27
-MODULO: int = 59
-MONITOR: int = 31
-MOSAIC_ANGLE_RMS_IN_PLANE: int = 26
-MOSAIC_ANGLE_RMS_OUT_PLANE: int = 27
-MOSAIC_DIFFRACTION_NUM: int = 29
-MOSAIC_THICKNESS: int = 25
-MOVING_FORWARD: int = -9
-MULTILAYER_MIRROR: int = 46
-MULTIPASS_LORD: int = 8
-MULTIPASS_REF_ENERGY: int = 62
-MULTIPASS_SLAVE: int = 9
-MULTIPOLE: int = 19
-MULTIPOLES_ON: int = 86
-MULTIPOLE_SOURCE: int = -1
-MULTIPOLE_SYMMETRY: int = 2
-MUON: int = -3
-MU_0_VAC: float = 1.25663706127e-06
-M_DEUTERON: float = 1875612945.0
-M_ELECTRON: float = 510998.95069
-M_HELION: float = 2808391611.12
-M_MUON: float = 105658375.5
-M_NEUTRON: float = 939565421.94
-M_PION_0: float = 134976800.0
-M_PION_CHARGED: float = 139570390.0
-M_PROTON: float = 938272089.43
-NAVY_BLUE: int = 11
-NEUTRON: int = 6
-NEW_BRANCH: int = 6
-NINT: int = 26
-NO: int = 0
-NOISE: int = 6
-NONE: int = 1
-NONE_PT: int = 4
-NON_SYMPLECTIC: int = 3
-NORMAL: int = 1
-NOT_A_LORD: int = 10
-NOT_SET: int = -999
-NOWHERE: int = 4
-NO_APERTURE: int = 4
-NO_CLOSED_ORBIT: int = 9
-NO_COMPLETE_ORBIT: int = 10
-NO_DELIM: int = 10
-NO_END: int = 4
-NO_END_MARKER: int = 55
-NO_FIELD: int = 5
-NO_FILL: int = 2
-NO_MISALIGNMENT: float = 1.0
-NULL_ELE: int = 27
-NUMERIC: int = 29
-NUM_ELE_ATTRIB: int = 75
-NUM_ELE_ATTRIB_EXTENDED: int = 273
-NUM_STEPS: int = 66
-N_AVOGADRO: float = 6.02214076e+23
-N_CELL: int = 33
-N_KEY: int = 70
-N_PART: int = 2
-N_PARTICLE: int = 9
-N_PERIOD: int = 22
-N_PLANE: int = 4
-N_POLE_MAXX: int = 21
-N_RF_STEPS: int = 43
-N_SAMPLE: int = 26
-N_SLICE: int = 20
-N_SLICE_SPLINE: int = 103
-N_VAR_MAX: int = 999
-OCTUPOLE: int = 17
-OFF: int = 1
-OFFSET_MOVES_APERTURE: int = 98
-OFF_AND_SAVE: int = 5
-OK: int = 1
-OLD_ASCII: int = 44
-OLD_CONTROL_VAR: int = 2
-OLD_CONTROL_VAR_OFFSET: int = 1000
-OLD_INTEGRATOR: int = 101
-ON: int = 2
-ONE_DIM: int = 2
-ONE_FILE: int = 4
-OPAL: int = 1
-OPAQUE: int = 3
-OPEN: int = 1
-ORANGE: int = 8
-ORIGIN_ELE: int = 109
-ORIGIN_ELE_REF_PT: int = 26
-OSC_AMPLITUDE: int = 7
-OUTLINE_ARROW_HEAD: int = 2
-OUTPUT_ELE: int = 86
-OUTSIDE: int = 5
-OVERLAY: int = 6
-OVERLAY_LORD: int = 6
-P0C: int = 53
-P0C_REF_INIT: int = 40
-P0C_SET: int = 49
-P0C_START: int = 51
-P88: int = 88
-P89: int = 89
-P90: int = 90
-PARENS: int = 61
-PARTICLE: int = 132
-PATCH: int = 24
-PATCH_PROBLEM: int = 2
-PC_OUT_MAX: int = 6
-PC_OUT_MIN: int = 5
-PC_STRONG: int = 27
-PENDELLOSUNG_PERIOD_PI: int = 14
-PENDELLOSUNG_PERIOD_SIGMA: int = 13
-PHASE_TROMBONE: int = 4
-PHASE_X: int = 12
-PHASE_Y: int = 13
-PHI0: int = 24
-PHI0_AUTOSCALE: int = 27
-PHI0_ERR: int = 25
-PHI0_MAX: int = 23
-PHI0_MULTIPASS: int = 26
-PHI_A: int = 86
-PHI_A_STORED: int = 25
-PHI_B: int = 116
-PHI_B_STORED: int = 26
-PHI_POSITION: int = 106
-PHOTON: int = 0
-PHOTON_FORK: int = 40
-PHOTON_INIT: int = 53
-PHOTON_TYPE: int = 44
-PHYSICAL_SOURCE: int = 100
-PI: float = 3.141592653589793
-PICKUP: int = 68
-PION_0: int = 9
-PION_MINUS: int = -4
-PION_PLUS: int = 4
-PIPE: int = 44
-PIXEL: int = 88
-PLANAR_MODEL: int = 3
-PLUS: int = 1
-PLUS_SYM: int = 2
-POLARITY: int = 21
-POLARIZED: int = 1
-POSITRON: int = 1
-POWER: int = 7
-PRE_BORN: int = 0
-PRINT_PAGE_LONG_LEN: float = 10.5
-PRINT_PAGE_SHORT_LEN: float = 7.8
-PROTON: int = 2
-PROVISIONAL: int = 3
-PSI_ANGLE: int = 22
-PSI_POSITION: int = 107
-PTC_CANONICAL_COORDS: int = 47
-PTC_FIELD_GEOMETRY: int = 49
-PTC_FRINGE_GEOMETRY: int = 48
-PTC_INTEGRATION_TYPE: int = 93
-PTC_STANDARD: int = 3
-PURPLE: int = 12
-PX: int = 2
-PX0: int = 31
-PX1: int = 37
-PX_APERTURE_CENTER: int = 25
-PX_APERTURE_WIDTH2: int = 24
-PX_KICK: int = 34
-PX_REF: int = 84
-PX_STORED: int = 16
-PY: int = 4
-PY0: int = 33
-PY1: int = 39
-PY_APERTURE_CENTER: int = 27
-PY_APERTURE_WIDTH2: int = 26
-PY_KICK: int = 36
-PY_REF: int = 86
-PY_STORED: int = 18
-PZ: int = 6
-PZ0: int = 35
-PZ1: int = 41
-PZ_APERTURE_CENTER: int = 31
-PZ_APERTURE_WIDTH2: int = 30
-PZ_KICK: int = 38
-PZ_REF: int = 90
-PZ_STORED: int = 20
-P_MASS: float = 0.93827208943
-QUADRUPOLE: int = 3
-QUAD_TILT: int = 25
-R0_ELEC: int = 15
-R0_MAG: int = 16
-RADIANS: int = 1
-RADIANS_OVER_2PI: int = 3
-RADIATION_LENGTH: int = 88
-RADIATION_LENGTH_USED: int = 89
-RADIUS: int = 3
-RAD_INT_GROUP: int = 7
-RAMPER: int = 62
-RAMPER_LORD: int = 13
-RAN: int = 21
-RAN_GAUSS: int = 22
-RAN_SEED: int = 109
-RBEND: int = 18
-RCOLLIMATOR: int = 35
-REAL_GARBAGE: float = -987654.3
-RECALC: int = 44
-RECTANGULAR: int = 2
-RED: int = 2
-REDDISH_PURPLE: int = 13
-RED_CROSS_SYM: int = 14
-REFERENCE: int = 122
-REFER_TO_LORDS: int = 4
-REFLECTION: int = 1
-REFLECTIVITY_TABLE: int = 99
-REF_CAP_GAMMA: int = 31
-REF_COORDS: int = 4
-REF_ENERGY_GROUP: int = 5
-REF_ORBIT: int = 115
-REF_ORBIT_FOLLOWS: int = 5
-REF_ORIGIN: int = 118
-REF_PARTICLE: int = 7
-REF_SPECIES: int = 132
-REF_TILT: int = 3
-REF_TILT_TOT: int = 61
-REF_TIME: int = 93
-REF_TIME_START: int = 64
-REF_WAVELENGTH: int = 70
-RELATIVE: int = 2
-REPETITION_FREQUENCY: int = 3
-RESTORE_STATE: int = 4
-RFCAVITY: int = 9
-RF_BEND: int = 64
-RF_FREQUENCY: int = 15
-RF_WAVELENGTH: int = 16
-RHO: int = 9
-RIPKEN_KICK: int = 3
-RMS: int = 39
-ROLL: int = 2
-ROLL_TOT: int = 60
-ROOT: int = 60
-ROTATIONALLY_SYMMETRIC_RZ: int = 1
-RUNGE_KUTTA: int = 3
-R_E: float = 2.8179403227e-15
-R_P: float = 1.5346982652777385e-18
-R_PARENS: int = 6
-R_SOLENOID: int = 3
-SAD_FULL: int = 5
-SAD_MULT: int = 56
-SAMPLE: int = 54
-SAVE_STATE: int = 3
-SBEND: int = 2
-SCALE_FIELD_TO_ONE: int = 30
-SCALE_MULTIPOLES: int = 113
-SCATTER_METHOD: int = 30
-SCATTER_TEST: int = 21
-SEC: int = 46
-SECOND_TRACK_EDGE: int = 12
-SECTOR: int = 1
-SEXTUPOLE: int = 5
-SHIFTED_TO_RELATIVE: int = 3
-SHORT: int = 8
-SIGN: int = 48
-SIG_E: int = 19
-SIG_E2: int = 20
-SIG_PZ: int = 19
-SIG_VX: int = 17
-SIG_VY: int = 18
-SIG_X: int = 14
-SIG_Y: int = 15
-SIG_Z: int = 16
-SIN: int = 11
-SINC: int = 36
-SINH: int = 49
-SLAVE: int = 84
-SLICE: int = 2
-SLICE_SLAVE: int = 11
-SMALL_REL_CHANGE: float = 1e-14
-SOFT_EDGE: int = 8
-SOFT_EDGE_ONLY: int = 2
-SOLENOID: int = 23
-SOLID: int = 1
-SOLID_FILL: int = 1
-SOL_QUAD: int = 13
-SPACE_CHARGE_METHOD: int = 90
-SPATIAL_DISTRIBUTION: int = 25
-SPECIES: int = 34
-SPECIES_CONST: int = 35
-SPECIES_OUT: int = 83
-SPECIES_STRONG: int = 25
-SPHERICAL: int = 3
-SPIN_DN_DPZ_X: int = 7
-SPIN_DN_DPZ_Y: int = 8
-SPIN_DN_DPZ_Z: int = 9
-SPIN_FRINGE_ON: int = 13
-SPIN_INTEGRATION: int = 99
-SPIN_TRACKING_METHOD: int = 94
-SPIN_X: int = 21
-SPIN_X_STORED: int = 55
-SPIN_Y: int = 22
-SPIN_Y_STORED: int = 56
-SPIN_Z: int = 23
-SPIN_Z_STORED: int = 57
-SPLIT_ID: int = 31
-SPRINT: int = 12
-SQRT: int = 18
-SQRT_2: float = 1.4142135623730951
-SQRT_3: float = 1.7320508075688772
-SQUARE_BRACKETS: int = 62
-SQUARE_CONCAVE_SYM: int = 10
-SQUARE_FILLED_SYM: int = 16
-SQUARE_SYM: int = 0
-SR_WAKE: int = 114
-SR_WAKE_FILE: int = 100
-STALE: int = 2
-STANDARD: int = 1
-STANDING_WAVE: int = 1
-STAR5_FILLED_SYM: int = 18
-STAR5_SYM: int = 12
-START_EDGE: int = 129
-START_END: int = 99
-STAR_OF_DAVID_SYM: int = 15
-STEADY_STATE_3D: int = 3
-STRAIGHT: int = 2
-SUM: int = 41
-SUPERIMPOSE: int = 120
-SUPER_LORD: int = 5
-SUPER_OFFSET: int = 121
-SUPER_OK: int = 0
-SUPER_SLAVE: int = 2
-SURFACE: int = 6
-SYMMETRY: int = 6
-SYMPLECTIFY: int = 103
-SYMP_LIE_BMAD: int = 10
-SYMP_LIE_PTC: int = 2
-S_ABORT: int = 9
-S_AND_FLOOR_POSITION_GROUP: int = 9
-S_BLANK: int = -1
-S_DINFO: int = 1
-S_DWARN: int = 5
-S_ERROR: int = 7
-S_FATAL: int = 8
-S_IMPORTANT: int = 10
-S_INFO: int = 0
-S_LONG: int = 101
-S_NOOUTPUT: int = -2
-S_PLANE: int = 5
-S_POSITION: int = 131
-S_POSITION_GROUP: int = 4
-S_SUCCESS: int = 2
-S_TWISS_REF: int = 4
-S_WARN: int = 3
-T: int = 8
-T0: int = 162
-T21: int = 183
-TAN: int = 13
-TANH: int = 51
-TAYLOR: int = 8
-TAYLOR_MAP_INCLUDES_OFFSETS: int = 88
-TAYLOR_OFFSET: int = 1000000000
-TAYLOR_ORDER: int = 3
-TERM: int = 101
-THETA_POSITION: int = 105
-THICKNESS: int = 65
-THICK_MULTIPOLE: int = 67
-TILT: int = 2
-TILT_CALIB: int = 24
-TILT_CORR: int = 4
-TILT_TOT: int = 60
-TIMES: int = 3
-TIMES_SYM: int = 3
-TIME_RUNGE_KUTTA: int = 6
-TO_ELEMENT: int = 111
-TO_LINE: int = 110
-TRACKING: int = 5
-TRACKING_METHOD: int = 92
-TRAILING: int = 3
-TRANSMISSION: int = 2
-TRANSPARENT: int = 16
-TRANSVERSE_KICK: int = 3
-TRANSVERSE_SIGMA_CUT: int = 31
-TRAVELING_WAVE: int = 2
-TRIANGLE_FILLED_SYM: int = 13
-TRIANGLE_SYM: int = 7
-TRUE_: float = 1.0
-TRUE_INT: int = 1
-TT: int = 81
-TWISS_PROPAGATE_FAILURE: int = 8
-TWOPI: float = 6.283185307179586
-TYPE: int = 117
-T_OFFSET: int = 32
-UB_SUBATOMIC: int = 9
-UNARY_MINUS: int = 8
-UNARY_PLUS: int = 9
-UNDIFFRACTED: int = 3
-UNDULATOR: int = 51
-UNIFORM: int = 1
-UNKNOWN: int = 7
-UNPOLARIZED: int = 2
-UNSTABLE: int = 4
-UNSTABLE_A: int = 5
-UNSTABLE_B: int = 6
-UPSTREAM: int = 1
-UPSTREAM_COORD_DIR: int = 29
-UPSTREAM_END: int = 1
-USER_SET: int = 0
-USER_SETS_LENGTH: int = 28
-USE_REFLECTIVITY_TABLE: int = 32
-V1_UNITCELL: int = 22
-V2_UNITCELL: int = 23
-VAL1: int = 19
-VAL10: int = 28
-VAL11: int = 29
-VAL12: int = 30
-VAL2: int = 20
-VAL3: int = 21
-VAL4: int = 22
-VAL5: int = 23
-VAL6: int = 24
-VAL7: int = 25
-VAL8: int = 26
-VAL9: int = 27
-VAR: int = 89
-VARIABLE: int = 30
-VAR_OFFSET: int = 2000
-VELOCITY_DISTRIBUTION: int = 26
-VERTICALLY_PURE: int = 3
-VERTICAL_BAR: int = 71
-VERTICAL_KICK: int = 105
-VKICK: int = 40
-VKICKER: int = 34
-VOLTAGE: int = 8
-VOLTAGE_ERR: int = 9
-VOLTAGE_TOT: int = 30
-V_DISPLACE: int = 5
-V_UNITCELL: int = 23
-WALL: int = 107
-WALL3D: int = 5
-WALL_END: int = 10
-WALL_START: int = 9
-WALL_TRANSITION: int = 7
-WHITE: int = 0
-WIGGLER: int = 12
-WIGGLERS: int = 202
-WRAP_SUPERIMPOSE: int = 133
-X: int = 1
-X0: int = 30
-X1: int = 36
-X1_EDGE: int = 22
-X1_LIMIT: int = 71
-X2_EDGE: int = 23
-X2_LIMIT: int = 72
-XFER_MAT_CALC_FAILURE: int = 7
-XY: int = 2
-XYZ: int = 2
-XY_AXIS: int = 4
-X_AXIS: int = 1
-X_DISPERSION_CALIB: int = 29
-X_DISPERSION_ERR: int = 27
-X_GAIN_CALIB: int = 8
-X_GAIN_ERR: int = 3
-X_INVARIANT: int = 1
-X_KICK: int = 33
-X_KNOT: int = 81
-X_LEADING: int = 2
-X_LIMIT: int = 96
-X_OFFSET: int = 36
-X_OFFSET_CALIB: int = 22
-X_OFFSET_MULT: int = 39
-X_OFFSET_TOT: int = 57
-X_PITCH: int = 34
-X_PITCH_TOT: int = 55
-X_PLANE: int = 1
-X_POLARIZATION: int = 2
-X_POSITION: int = 102
-X_QUAD: int = 27
-X_REF: int = 83
-X_STORED: int = 15
-X_SYMBOL_SYM: int = 5
-X_TRAILING: int = 4
-Y: int = 3
-Y0: int = 32
-Y1: int = 38
-Y1_EDGE: int = 24
-Y1_LIMIT: int = 73
-Y2_EDGE: int = 25
-Y2_LIMIT: int = 74
-YELLOW: int = 7
-YELLOW_GREEN: int = 9
-YES: int = 1
-Y_AXIS: int = 2
-Y_DISPERSION_CALIB: int = 30
-Y_DISPERSION_ERR: int = 28
-Y_GAIN_CALIB: int = 20
-Y_GAIN_ERR: int = 4
-Y_KICK: int = 35
-Y_KNOT: int = 83
-Y_LEADING: int = 3
-Y_LIMIT: int = 97
-Y_OFFSET: int = 37
-Y_OFFSET_CALIB: int = 23
-Y_OFFSET_MULT: int = 40
-Y_OFFSET_TOT: int = 58
-Y_PITCH: int = 35
-Y_PITCH_TOT: int = 56
-Y_PLANE: int = 2
-Y_POLARIZATION: int = 3
-Y_POSITION: int = 103
-Y_QUAD: int = 28
-Y_REF: int = 85
-Y_STORED: int = 17
-Y_TRAILING: int = 5
-Z: int = 5
-Z0: int = 34
-Z1: int = 40
-ZERO: int = 3
-Z_APERTURE_CENTER: int = 29
-Z_APERTURE_WIDTH2: int = 28
-Z_AXIS: int = 3
-Z_KICK: int = 37
-Z_OFFSET: int = 38
-Z_OFFSET_TOT: int = 59
-Z_PLANE: int = 3
-Z_POSITION: int = 104
-Z_REF: int = 89
-Z_STORED: int = 19

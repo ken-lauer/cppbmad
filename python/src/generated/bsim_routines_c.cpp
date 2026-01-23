@@ -10,7 +10,9 @@ void init_bsim_routines_c(py::module &m) {
       &bsim::check_rf_freq,
       py::arg("lat"),
       py::arg("fb"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine check_rf_freq
+
+Parameters
 ----------
 lat : 
 fb : 
@@ -20,7 +22,9 @@ fb :
       "count_lines_in_file",
       &bsim::count_lines_in_file,
       py::arg("file_name"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine count_lines_in_file
+
+Parameters
 ----------
 file_name : 
 lines : 

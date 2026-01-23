@@ -10,7 +10,9 @@ void init_SimUtils_routines_h(py::module &m) {
       &SimUtils::hanhan,
       py::arg("N"),
       py::arg("hh"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine hanhan
+
+Parameters
 ----------
 N : 
 hh : 

@@ -50,7 +50,9 @@ pmd_name : unknown
       &SimUtils::ordinal_str,
       py::arg("n"),
       py::arg("str"),
-      R"""(Parameters
+      R"""(Wrapper for Fortran routine ordinal_str
+
+Parameters
 ----------
 n : 
 str : 
