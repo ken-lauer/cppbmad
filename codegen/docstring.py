@@ -225,16 +225,21 @@ class RoutineDocstring:
         if self.description:
             desc = textwrap.dedent("\n".join(self.description))
             lines.extend(desc.splitlines())
-            lines.append("")
+        else:
+            lines.append(f"Wrapper for Fortran routine {self.name}")
+
+        lines.append("")
 
         if self.inputs:
             lines.extend(["Parameters", "----------"])
-            for p in self.inputs:
+            for i, p in enumerate(self.inputs):
                 type_str = f"{p.data_type}" if p.data_type else ""
                 if p.is_optional:
                     type_str += ", optional"
                 lines.append(f"{p.name} : {type_str}")
                 lines.extend(_wrap_docstring_lines(p.description.lstrip(), indent="    ").splitlines())
+                if i < len(self.inputs) - 1:
+                    lines.append("")
 
         has_returns = bool(self.result_variable or self.outputs)
         if has_returns:
@@ -243,10 +248,12 @@ class RoutineDocstring:
             if self.result_variable and not self.outputs:
                 lines.append(f"{self.result_variable}")
 
-            for p in self.outputs:
+            for i, p in enumerate(self.outputs):
                 type_str = f"{p.data_type}" if p.data_type else ""
                 lines.append(f"{p.name} : {type_str}")
                 lines.extend(_wrap_docstring_lines(p.description, indent="    ").splitlines())
+                if i < len(self.outputs):
+                    lines.append("")
 
         if self.notes or self.related_routines or self.is_overloaded:
             lines.extend(["", "Notes", "-----"])
