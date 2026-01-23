@@ -102,6 +102,7 @@ def normalize_intent(
     doc_intent: Intent | None = None,
     ndim: int = 0,
     is_dynamic_array: bool = False,
+    guessed: bool = False,
 ) -> Intent:
     if doc_intent:
         intent = doc_intent
@@ -120,7 +121,8 @@ def normalize_intent(
         # member.type_info = member.type_info.replace(allocatable=True)
 
     if (
-        intent == "inout"
+        guessed  # 'inout' is default guess
+        and intent == "inout"
         and not typ.intent
         and ndim == 0
         and arg_type
@@ -256,6 +258,7 @@ class RoutineArg(InterfaceArgument):
             ndim=len(arg.array),
             is_dynamic_array=arg.is_dynamic_array,
             arg_type=arg.type,
+            guessed=doc.guessed,
         )
 
         if arg.intent == "out" and arg.member.type_info.pointer:
@@ -1003,6 +1006,7 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
                     logger.warning(
                         f"Reparse failed after docstring inclusion: {best_option.name} {missing_arg_names} {ex}"
                     )
+
         intf = get_interface_defn()
         if intf:
             best_option.module = intf.module
