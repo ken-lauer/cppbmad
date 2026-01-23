@@ -445,11 +445,11 @@ def parse_routine_comment_block(
         if line.startswith("!"):
             line = line.removeprefix("!").strip()
 
-        if line.lower() == "input:":
+        if line.lower().rstrip(": ") == "input":
             current_section = "inputs"
             i += 1
             continue
-        if line.lower() == "output:":
+        if line.lower().rstrip(": ") == "output":
             current_section = "outputs"
             i += 1
             continue
