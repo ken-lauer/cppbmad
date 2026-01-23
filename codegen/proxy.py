@@ -48,7 +48,7 @@ def get_condition(cpptype: str, logic_type: str, attr_name: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Dynamic Fortran Code Generator for Arrays (Deduplication)
+# Dynamic Fortran Code Generator for Arrays
 # ---------------------------------------------------------------------------
 def generate_fortran_array_routine(
     cpp_type: str, dim: int, is_derived_type: bool = False, logic_type: str = "NOT"
@@ -58,7 +58,6 @@ def generate_fortran_array_routine(
     handling both standard types and derived types (which need element_size).
     """
 
-    # Argument definitions
     args = [
         "struct_obj_ptr",
         "data_ptr",
@@ -69,11 +68,7 @@ def generate_fortran_array_routine(
     ]
     args = [a for a in args if a]  # Filter None
     arg_str = ", ".join(args)
-
-    # Bound count
     n_bounds = dim * 2
-
-    # Declaration block
     decls = [
         "type(c_ptr), intent(in), value :: struct_obj_ptr",
         "type(c_ptr), intent(out) :: data_ptr",
@@ -101,7 +96,6 @@ def generate_fortran_array_routine(
     loc_args = ", ".join(f"lbound(struct_obj%FATTRNAME, {i})" for i in range(1, dim + 1))
     ref_args = ", ".join(f"bounds({(i - 1) * 2 + 1})" for i in range(1, dim + 1))  # for element size ref
 
-    # Bound Assignments
     bound_assigns = []
     for i in range(1, dim + 1):
         idx_l = (i - 1) * 2 + 1
@@ -111,7 +105,7 @@ def generate_fortran_array_routine(
 
     bound_str = "\n      ".join(bound_assigns)
 
-    # Stride Assignments (Standard Column Major Logic)
+    # Stride Assignments (standard column major logic)
     stride_assigns = []
     if dim > 1:
         stride_assigns.append("strides(1) = 1_c_int")
@@ -132,7 +126,6 @@ def generate_fortran_array_routine(
 
     stride_str = "\n      ".join(stride_assigns)
 
-    # Element Size Logic
     el_size_logic = ""
     if is_derived_type:
         # storage_size returns bits. /8 for bytes.
@@ -163,6 +156,96 @@ def generate_fortran_array_routine(
     else
       {zero_str}
     endif
+  end subroutine
+"""
+
+
+# ---------------------------------------------------------------------------
+# Dynamic Fortran Code Generator for Array setters
+# ---------------------------------------------------------------------------
+def generate_fortran_array_setter(cpp_type: str, dim: int, logic_type: str = "NOT") -> str:
+    """
+    Generates Fortran implementation for setting array attributes from a flat C buffer.
+    Supports 1D, 2D, 3D.
+    """
+    # Arguments
+    # Note: data_ptr points to the flat contiguous array from C++
+    # For 1D: size is passed. For ND: shape array is passed.
+
+    is_boolean = cpp_type == "bool"
+    fortran_val_type = "integer(c_int)" if is_boolean else "FORTRANTYPE"
+
+    decls = [
+        "type(c_ptr), intent(in), value :: struct_obj_ptr",
+        "type(c_ptr), intent(in), value :: val_ptr",
+        f"integer(c_int), dimension({dim}), intent(in) :: shape",
+        "type(STRUCTNAME), pointer :: struct_obj",
+    ]
+
+    # Pointer to value array
+    # We declare val as a pointer to array of rank 'dim'
+    colons = ",".join([":"] * dim)
+    decls.append(f"{fortran_val_type}, pointer :: val({colons})")
+
+    decls_str = "\n    ".join(decls)
+
+    # Body
+    # 1. c_f_pointer for obj
+    body = ["call c_f_pointer(struct_obj_ptr, struct_obj)"]
+
+    # 2. c_f_pointer for val (using shape)
+    # Note: c_f_pointer takes shape argument for rank > 0
+    # shape argument must be 1D array of integers. 'shape' matches this.
+    body.append("if (c_associated(val_ptr)) then")
+    body.append("  call c_f_pointer(val_ptr, val, shape)")
+
+    target = "struct_obj%FATTRNAME"
+
+    if is_boolean:
+        rhs = "(val .ne. 0)"
+    else:
+        rhs = "val"
+
+    if logic_type == "ALLOC":
+        realloc_check = " .or. ".join(f"(size({target}, {d}) /= shape({d}))" for d in range(1, dim + 1))
+        body.append(f"  if (allocated({target})) then")
+        body.append(f"     if ({realloc_check}) deallocate({target})")
+        body.append("  endif")
+        body.append(
+            f"  if (.not. allocated({target})) allocate({target}({', '.join([f'shape({d})' for d in range(1, dim + 1)])}))"
+        )
+        body.append(f"  {target} = {rhs}")
+
+    elif logic_type == "PTR":
+        # For POINTER:
+        # Assignment to pointer target requires target to be allocated and
+        # associated. We do not re-point the pointer here (ambiguous
+        # ownership). We copy into the existing target. Bounds check is
+        # necessary!
+        size_check = " .and. ".join(f"(size({target}, {d}) == shape({d}))" for d in range(1, dim + 1))
+        body.append(f"  if (associated({target})) then")
+        body.append(f"    if ({size_check}) then")
+        body.append(f"       {target} = {rhs}")
+        body.append("    endif")
+        body.append("  endif")
+
+    else:
+        # NOT (Fixed/Static)
+        # Just assign. Fortran will copy. If shapes mismatch, it might crash or
+        # truncate depending on compiler. We assume caller provides correct
+        # shape for fixed arrays.
+        body.append(f"  {target} = {rhs}")
+
+    body.append("endif")
+
+    body_str = "\n    ".join(body)
+
+    return f"""
+  subroutine STRUCTNAME_set_FATTRNAME(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='STRUCTNAME_set_FATTRNAME')
+    {decls_str}
+
+    {body_str}
   end subroutine
 """
 
@@ -463,18 +546,30 @@ def make_array_template(
     cpp_type: str,
     cpp_decl_tmpl: str,
     cpp_acc_tmpl: str,
+    cpp_set_decl_tmpl: str = "",
+    cpp_set_acc_tmpl: str = "",
     is_derived_type: bool = False,
 ) -> TemplateEntry:
     """
     Generic generator for 1D, 2D, 3D arrays of both Simple and Derived types.
     """
+    fortran_s = None
+    cpp_s_decl = None
+    cpp_s_acc = []
+
+    if cpp_set_decl_tmpl and cpp_set_acc_tmpl:
+        # Note: logic_type for setters matches ptr_type (ALLOC/PTR/NOT)
+        fortran_s = generate_fortran_array_setter(cpp_type, dim, logic_type=ptr_type)
+        cpp_s_decl = subst(cpp_set_decl_tmpl, ctype=cpp_type)
+        cpp_s_acc = [subst(cpp_set_acc_tmpl, ctype=cpp_type)]
+
     return TemplateEntry(
         fortran_getter=generate_fortran_array_routine(cpp_type, dim, is_derived_type, ptr_type),
-        fortran_setter=None,
+        fortran_setter=fortran_s,
         cpp_get_decl=subst(cpp_decl_tmpl, ctype=cpp_type),
         cpp_get_accessors=[subst(cpp_acc_tmpl, ctype=cpp_type)],
-        cpp_set_decl=None,
-        cpp_set_accessors=[],
+        cpp_set_decl=cpp_s_decl,
+        cpp_set_accessors=cpp_s_acc,
     )
 
 
@@ -625,12 +720,69 @@ CPP_ARRAY_1D_ACCESSOR = """
         return ProxyHelpers::get_array_1d<CTYPE>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
     }
 """
+
+# Setter Templates
+CPP_ARRAY_SET_DECL = "    void STRUCTNAME_set_FATTRNAME(void* s, const void* d, const int* shape);"
+
+# Generic 1D
+CPP_ARRAY_1D_SET_ACCESSOR_GENERIC = """
+    void set_CATTRNAME(const std::vector<CTYPE>& v) {
+        int shape[] = { static_cast<int>(v.size()) };
+        STRUCTNAME_set_FATTRNAME(fortran_ptr_, v.data(), shape);
+    }
+"""
+# Bool 1D
+CPP_ARRAY_1D_SET_ACCESSOR_BOOL = """
+    void set_CATTRNAME(const std::vector<bool>& v) {
+        int shape[] = { static_cast<int>(v.size()) };
+        std::vector<int> bv(v.size());
+        for(size_t i=0; i<v.size(); ++i) bv[i] = v[i] ? 1 : 0;
+        STRUCTNAME_set_FATTRNAME(fortran_ptr_, bv.data(), shape);
+    }
+"""
+
 CPP_ARRAY_2D_DECL = "    void STRUCTNAME_get_FATTRNAME_info(const void* s, CTYPE** d, int* bounds, int* strides, bool* is_alloc);"
 CPP_ARRAY_2D_ACCESSOR = """
     FArray2D<CTYPE> CATTRNAME() const {
         return ProxyHelpers::get_array_2d<CTYPE>(fortran_ptr_, STRUCTNAME_get_FATTRNAME_info);
     }
 """
+
+# Generic 2D
+CPP_ARRAY_2D_SET_ACCESSOR_GENERIC = """
+    void set_CATTRNAME(const std::vector<std::vector<CTYPE>>& v) {
+        int rows = static_cast<int>(v.size());
+        int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+        int shape[] = { cols, rows }; 
+        
+        std::vector<CTYPE> flat;
+        flat.reserve(rows * cols);
+        for (int j = 0; j < cols; ++j) {
+            for (int i = 0; i < rows; ++i) {
+                flat.push_back(v[i][j]);
+            }
+        }
+        STRUCTNAME_set_FATTRNAME(fortran_ptr_, flat.data(), shape);
+    }
+"""
+# Bool 2D
+CPP_ARRAY_2D_SET_ACCESSOR_BOOL = """
+    void set_CATTRNAME(const std::vector<std::vector<bool>>& v) {
+        int rows = static_cast<int>(v.size());
+        int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+        int shape[] = { cols, rows }; 
+        
+        std::vector<int> flat;
+        flat.reserve(rows * cols);
+        for (int j = 0; j < cols; ++j) {
+            for (int i = 0; i < rows; ++i) {
+                flat.push_back(v[i][j] ? 1 : 0);
+            }
+        }
+        STRUCTNAME_set_FATTRNAME(fortran_ptr_, flat.data(), shape);
+    }
+"""
+
 CPP_ARRAY_3D_DECL = "    void STRUCTNAME_get_FATTRNAME_info(const void* s, CTYPE** d, int* bounds, int* strides, bool* is_alloc);"
 CPP_ARRAY_3D_ACCESSOR = """
     FArray3D<CTYPE> CATTRNAME() const {
@@ -638,24 +790,80 @@ CPP_ARRAY_3D_ACCESSOR = """
     }
 """
 
-std_types = ["real", "real16", "integer", "complex"]
+# Generic 3D
+CPP_ARRAY_3D_SET_ACCESSOR_GENERIC = """
+    void set_CATTRNAME(const std::vector<std::vector<std::vector<CTYPE>>>& v) {
+        int n3 = static_cast<int>(v.size());
+        int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+        int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+        int shape[] = { n1, n2, n3 }; 
+        
+        std::vector<CTYPE> flat; 
+        flat.reserve(n1*n2*n3);
+        // Transpose logic matches explanation in comments above: iter k, j, i.
+        for(int k=0; k<n3; ++k) {
+          for(int j=0; j<n2; ++j) {
+            for(int i=0; i<n1; ++i) {
+               flat.push_back(v[k][j][i]);
+            }
+          }
+        }
+        STRUCTNAME_set_FATTRNAME(fortran_ptr_, flat.data(), shape);
+    }
+"""
+
+# Bool 3D
+CPP_ARRAY_3D_SET_ACCESSOR_BOOL = """
+    void set_CATTRNAME(const std::vector<std::vector<std::vector<bool>>>& v) {
+        int n3 = static_cast<int>(v.size());
+        int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+        int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+        int shape[] = { n1, n2, n3 }; 
+        
+        std::vector<int> flat; 
+        flat.reserve(n1*n2*n3);
+        for(int k=0; k<n3; ++k) {
+          for(int j=0; j<n2; ++j) {
+            for(int i=0; i<n1; ++i) {
+               flat.push_back(v[k][j][i] ? 1 : 0);
+            }
+          }
+        }
+        STRUCTNAME_set_FATTRNAME(fortran_ptr_, flat.data(), shape);
+    }
+"""
+
+
+std_types = ["real", "real16", "integer", "complex", "integer8", "logical"]
 
 for tname in std_types:
     info = STANDARD_TYPES[tname]
+
+    # Choose accessor templates based on type
+    if tname == "logical":
+        # Arrays of bools
+        acc_1d = CPP_ARRAY_1D_SET_ACCESSOR_BOOL
+        acc_2d = CPP_ARRAY_2D_SET_ACCESSOR_BOOL
+        acc_3d = CPP_ARRAY_3D_SET_ACCESSOR_BOOL
+    else:
+        # Standard contiguous arrays
+        acc_1d = CPP_ARRAY_1D_SET_ACCESSOR_GENERIC
+        acc_2d = CPP_ARRAY_2D_SET_ACCESSOR_GENERIC
+        acc_3d = CPP_ARRAY_3D_SET_ACCESSOR_GENERIC
 
     # Loop over dimensions and logic types
     for ptr_type in ["NOT", "ALLOC", "PTR"]:
         # 1D
         templates[FullType(tname, 1, ptr_type)] = make_array_template(
-            1, ptr_type, info.c_type, CPP_ARRAY_1D_DECL, CPP_ARRAY_1D_ACCESSOR
+            1, ptr_type, info.c_type, CPP_ARRAY_1D_DECL, CPP_ARRAY_1D_ACCESSOR, CPP_ARRAY_SET_DECL, acc_1d
         )
         # 2D
         templates[FullType(tname, 2, ptr_type)] = make_array_template(
-            2, ptr_type, info.c_type, CPP_ARRAY_2D_DECL, CPP_ARRAY_2D_ACCESSOR
+            2, ptr_type, info.c_type, CPP_ARRAY_2D_DECL, CPP_ARRAY_2D_ACCESSOR, CPP_ARRAY_SET_DECL, acc_2d
         )
         # 3D
         templates[FullType(tname, 3, ptr_type)] = make_array_template(
-            3, ptr_type, info.c_type, CPP_ARRAY_3D_DECL, CPP_ARRAY_3D_ACCESSOR
+            3, ptr_type, info.c_type, CPP_ARRAY_3D_DECL, CPP_ARRAY_3D_ACCESSOR, CPP_ARRAY_SET_DECL, acc_3d
         )
 
 # ---------------------------------------------------------------------------
@@ -812,7 +1020,12 @@ def generate_accessor_code(
         f"{struct_name}%{attr_name}", params.c_side_name_translation.get(attr_name, attr_name)
     )
 
-    to_replace = {"structname": struct_name, "fattrname": attr_name, "cattrname": cattr_name}
+    to_replace = {
+        "structname": struct_name,
+        "fattrname": attr_name,
+        "cattrname": cattr_name,
+        "fortrantype": STANDARD_TYPES[full_type.type].fortran_type,
+    }
 
     if attr_kind:
         to_replace["attrtype"] = attr_kind
@@ -948,6 +1161,7 @@ contains
       is_allocated = .true.
       sz = size(ctr%data)
       js = lbound(ctr%data, 1)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
       elem_size = storage_size(ctr%data(js)) / 8
       d_ptr = c_loc(ctr%data(js))
     else
