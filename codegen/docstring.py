@@ -238,7 +238,7 @@ class RoutineDocstring:
                     type_str += ", optional"
                 lines.append(f"{p.name} : {type_str}")
                 lines.extend(_wrap_docstring_lines(p.description.lstrip(), indent="    ").splitlines())
-                if i < len(self.inputs) - 1:
+                if i < len(self.inputs) - 1 and (type_str or p.description.lstrip()):
                     lines.append("")
 
         has_returns = bool(self.result_variable or self.outputs)
@@ -251,8 +251,8 @@ class RoutineDocstring:
             for i, p in enumerate(self.outputs):
                 type_str = f"{p.data_type}" if p.data_type else ""
                 lines.append(f"{p.name} : {type_str}")
-                lines.extend(_wrap_docstring_lines(p.description, indent="    ").splitlines())
-                if i < len(self.outputs):
+                lines.extend(_wrap_docstring_lines(p.description.lstrip(), indent="    ").splitlines())
+                if i < len(self.outputs) - 1 and (type_str or p.description.lstrip()):
                     lines.append("")
 
         if self.notes or self.related_routines or self.is_overloaded:
@@ -270,7 +270,17 @@ class RoutineDocstring:
                 )
 
         lines.append("")
-        return "\n".join(lines)
+
+        def remove_multiple_blanks(lines: list[str]):
+            last = None
+            for line in lines:
+                if last == line == "":
+                    pass
+                else:
+                    yield line
+                last = line
+
+        return "\n".join(remove_multiple_blanks(lines))
 
 
 def type_information_to_python_type(dt: TypeInformation) -> str:

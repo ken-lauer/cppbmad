@@ -8,7 +8,7 @@ from .arg import CodegenStructure
 from .context import SUPPORTED_ARRAY_DIMS
 from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys
-from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_SRC
+from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_LIB, PYBMAD_SRC
 from .proxy import templates as proxy_templates
 from .routines import FortranRoutine, RoutineArg, is_python_immutable
 from .types import remove_optional
@@ -41,31 +41,44 @@ def struct_array_usage_dimensions(
 
 
 def generate_enum_wrapper(clsname: str, enums: list[EnumValue]) -> str:
-    code = [f'    py::native_enum<{clsname}>(m, "{clsname}", "enum.IntEnum") ']
+    """
+    Generate a Python enum.IntEnum class definition string.
+    """
+    code = ["", "", f"class {clsname}(enum.IntEnum):"]
+
+    if not enums:
+        code.append("    pass")
+        return "\n".join(code)
+
     for attr in enums:
-        doc = f', "{attr.comment}"' if attr.comment else ""
-        code.append(f'        .value("{attr.name}", {clsname}::{attr.name}{doc})')
-    code.append("        .export_values()")
-    code.append("        .finalize();")
+        comment = f"  # {attr.comment}" if attr.comment else ""
+        code.append(f"    {attr.name} = {attr.value}{comment}")
+
     return "\n".join(code)
 
 
 def generate_enum_constants(all_enums: dict[str, dict[str, EnumValue]]) -> str:
+    """
+    Generate Python module-level constants.
+    """
     result = []
     for fn, enums in all_enums.items():
         result.append("")
-        result.append(f"// Enums from {fn}")
+        result.append(f"# Constants from {fn}")
         for enum in enums.values():
             if enum.comment:
-                result.append(f"// {enum.comment}")
-            pytype = "int_" if enum.type == "int" else "float_"
-            result.append(f'm.attr("{enum.name}") = py::{pytype}(Bmad::{enum.name});')
+                result.append(f"# {enum.comment}")
+
+            result.append(f"{enum.name} = {enum.value}")
+
     return "\n".join(result)
 
 
 def generate_enum_wrapper_code(enums: dict[str, dict[str, EnumValue]]) -> str:
     return "\n".join(
         (
+            "import enum",
+            "",
             generate_enum_wrapper("EleAttribute", get_ele_attributes(enums["bmad_struct.f90"])),
             generate_enum_wrapper("EleKey", get_ele_keys(enums["bmad_struct.f90"])),
             generate_enum_constants(enums),
@@ -613,10 +626,6 @@ def _generate_main_module_file(
     template_text = (CODEGEN_ROOT / "pybind_mod.tpl.cpp").read_text()
     template = string.Template(template_text.replace("// ${", "${"))
 
-    enum_code = generate_enum_wrapper_code(enums)
-    if enum_code:
-        enum_code = enum_code.replace("\n", "\n    ")
-
     newline = "\n"
     core_body = textwrap.dedent(f"""\
         m.doc() = "pybmad";
@@ -630,11 +639,8 @@ def _generate_main_module_file(
         init_common_structs(m);
 
         // Routine initializers
-    {newline.join(f"    {s}" for s in routine_inits)}
-
-        // Enums
-{enum_code or "    // (No enums)"}
-        """).strip()
+        {newline.join(f"    {s}" for s in routine_inits)}
+    """).strip()
 
     inclusions = textwrap.dedent("""
         #include "pybmad/generated/structs.hpp"
@@ -647,6 +653,7 @@ def _generate_main_module_file(
     )
 
     files[PYBMAD_SRC / "generated" / "_pybmad.cpp"] = substituted
+    files[PYBMAD_LIB / "_enums.py"] = generate_enum_wrapper_code(enums)
 
 
 def generate_pybmad(

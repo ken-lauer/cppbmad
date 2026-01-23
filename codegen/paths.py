@@ -23,5 +23,6 @@ CPPBMAD_INCLUDE = REPO_ROOT / "include"
 PYBMAD_ROOT = REPO_ROOT / "python"
 PYBMAD_INCLUDE = REPO_ROOT / "python" / "include"
 PYBMAD_SRC = REPO_ROOT / "python" / "src"
+PYBMAD_LIB = REPO_ROOT / "python" / "pybmad"
 
 DEFAULT_STRUCT_CONFIG_FILE = CODEGEN_ROOT / "struct_config.toml"
