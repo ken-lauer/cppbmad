@@ -15,7 +15,7 @@ from .context import CodegenConfig, RoutineSettings, config_context, get_params
 from .cpp import CppWrapperArgument, generate_routine_cpp_wrapper, generate_routines_header
 from .docstring import DocstringParameter, RoutineDocstring, parse_routine_comment_block
 from .enums import EnumValue, replace_enums_with_cpp
-from .exceptions import RenameError, RoutineNotFoundError, UnsupportedTypeError
+from .exceptions import RoutineNotFoundError, UnsupportedTypeError
 from .fortran import generate_fortran_routine_with_c_binding
 from .paths import CODEGEN_ROOT, CPPBMAD_ROOT
 from .structs import (
@@ -41,59 +41,49 @@ TEST_BUILD = int(os.environ.get("PYBMAD_TEST_BUILD", "0"))
 TEST_ROUTINES = {"bmad_parser"}
 docstring_hotfixes = {}
 
-docstring_hotfixes["init_coord1"] = {
-    "inputs": [
-        DocstringParameter(
-            name="orb",
-            description="Input orbit",
-            data_type="coord_struct",
-            is_input=True,
-            is_output=True,
-        )
-    ],
-}
-docstring_hotfixes["init_coord2"] = {
-    "inputs": [
-        DocstringParameter(
-            name="orb_in",
-            description="Input orbit",
-            data_type="coord_struct",
-            is_input=True,
-            is_output=True,
-        )
-    ],
-    "outputs": [
-        DocstringParameter(
-            name="orb_out",
-            description="Initialized coordinate",
-            data_type="coord_struct",
-            is_input=False,
-            is_output=True,
-        )
-    ],
-}
-docstring_hotfixes["init_coord3"] = {
-    "inputs": [
-        DocstringParameter(
-            name="orb",
-            description="Input orbit",
-            data_type="coord_struct",
-            is_input=True,
-            is_output=True,
-        )
-    ],
-}
-# docstring_hotfixes["ran_gauss_converter"] = {
-#     "outputs": [
-#         DocstringParameter(
-#             name="get",
-#             description="Get the current (before any set) gaussian converter.",
-#             data_type="character(*)",
-#             is_input=True,
-#             is_output=True,
-#         )
-#     ],
-# }
+docstring_hotfixes["init_coord1"] = [
+    DocstringParameter(
+        name="orb",
+        description="Input orbit",
+        data_type="coord_struct",
+        is_input=True,
+        is_output=True,
+    )
+]
+docstring_hotfixes["init_coord2"] = [
+    DocstringParameter(
+        name="orb_in",
+        description="Input orbit",
+        data_type="coord_struct",
+        is_input=True,
+        is_output=True,
+    ),
+    DocstringParameter(
+        name="orb_out",
+        description="Initialized coordinate",
+        data_type="coord_struct",
+        is_input=False,
+        is_output=True,
+    ),
+]
+docstring_hotfixes["init_coord3"] = [
+    DocstringParameter(
+        name="orb",
+        description="Input orbit",
+        data_type="coord_struct",
+        is_input=True,
+        is_output=True,
+    ),
+]
+# docstring_hotfixes["ran_gauss_converter"] = [
+#     DocstringParameter(
+#         name="get",
+#         description="Get the current (before any set) gaussian converter.",
+#         data_type="character(*)",
+#         is_input=True,
+#         is_output=True,
+#     )
+# ]
 
 
 def normalize_intent(
@@ -374,24 +364,20 @@ class FortranRoutine:
                 lineno=-1,
                 routine_type=RoutineType.UNKNOWN,
                 description=[],
-                inputs=[
+                params=[
                     DocstringParameter(
                         name=arg_name, is_input=True, is_output=True, is_optional=False, guessed=True
                     )
                     for arg_name in self.arg_names_with_result
                 ],
-                outputs=[],
                 result_variable=None,
                 is_overloaded=False,
                 overloaded_versions=[],
                 related_routines=[],
                 notes=[],
             )
-        if self.name.lower() in docstring_hotfixes:
-            for arg in docstring_hotfixes[self.name.lower()].get("inputs", []):
-                self.docstring.update_parameter(arg)
-            for arg in docstring_hotfixes[self.name.lower()].get("outputs", []):
-                self.docstring.update_parameter(arg)
+        for arg in docstring_hotfixes.get(self.name.lower(), []):
+            self.docstring.update_parameter(arg)
 
         if self.proc_type == "function" and self.result_name == self.name.lower():
             assert self.result_name is not None
@@ -545,6 +531,10 @@ class FortranRoutine:
     @property
     def args_by_c_name(self):
         return {arg.c_name: arg for arg in self.args}
+
+    @property
+    def args_by_c_name_lower(self):
+        return {arg.c_name.lower(): arg for arg in self.args}
 
     @property
     def usable(self) -> bool:
@@ -989,13 +979,13 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
                     if not other.docstring:
                         continue
                     try:
-                        doc = other.docstring.arguments_by_name[missing_name.lower()]
+                        other_doc = other.docstring.arguments_by_name[missing_name.lower()]
                     except KeyError:
                         continue
-                    if doc.guessed:
+                    if other_doc.guessed:
                         continue
 
-                    best_option.docstring.update_parameter(doc)
+                    best_option.docstring.update_parameter(other_doc)
 
             if missing_arg_names:
                 try:
@@ -1012,6 +1002,8 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
             best_option.module = intf.module
 
         proc_by_name[usable.name] = best_option
+        if best_option.docstring:
+            fix_routine(best_option, best_option.docstring)
 
     return proc_by_name
 
@@ -1090,39 +1082,52 @@ def find_renames(filename: pathlib.Path, routine: FortranRoutine):
 
 
 def fix_routine(routine: FortranRoutine, docstring: RoutineDocstring):
-    logger.debug("Checking routine arguments against docstring: %s", routine.name)
-
-    have_all_args = all(arg.lower() in docstring.arguments_by_name for arg in routine.declared_argument_list)
-    if not have_all_args:
-        # replace arguments with those from the actual subroutine; the interface file was wrong?
-        renames, result_name = find_renames(docstring.filename, routine)
-
-        if len(routine.declared_argument_list) != len(renames):
-            raise RenameError(f"{routine.declared_argument_list} -> {renames} length mismatch")
-
-        all_renames = list(zip(routine.declared_argument_list, renames, strict=False))
-
-        if result_name and routine.result_name and result_name != routine.result_name:
-            all_renames.append((routine.result_name, result_name))
-            logger.warning(f"Function return name changed: {routine.result_name} -> {result_name}")
-
-        for interface_arg_name, source_arg_name in all_renames:
-            if interface_arg_name != source_arg_name:
-                arg = routine.declarations.pop(interface_arg_name)
-                routine.declarations[source_arg_name] = arg
-                arg.name = source_arg_name
-                logger.warning(
-                    f"Routine: {routine.name} arg rename {interface_arg_name} -> {source_arg_name}"
-                )
-
-        routine.declared_argument_list = list(renames)
-
-    extra_args = {arg for arg in routine.declarations if arg.lower() not in routine.declared_argument_list}
-    for arg in extra_args:
-        logger.warning(
-            f"Routine: {routine.name} interface has extra arg defined {arg!r} ({routine.filename}:{routine.declarations[arg].line})"
-        )
-        routine.declarations.pop(arg)
+    # logger.debug("Checking routine arguments against docstring: %s", routine.name)
+    #
+    # have_all_args = all(arg.lower() in docstring.arguments_by_name for arg in routine.declared_argument_list)
+    # if not have_all_args:
+    #     # replace arguments with those from the actual subroutine; the interface file was wrong?
+    #     renames, result_name = find_renames(docstring.filename, routine)
+    #
+    #     if len(routine.declared_argument_list) != len(renames):
+    #         raise RenameError(f"{routine.declared_argument_list} -> {renames} length mismatch")
+    #
+    #     all_renames = list(zip(routine.declared_argument_list, renames, strict=False))
+    #
+    #     if result_name and routine.result_name and result_name != routine.result_name:
+    #         all_renames.append((routine.result_name, result_name))
+    #         logger.warning(f"Function return name changed: {routine.result_name} -> {result_name}")
+    #
+    #     for interface_arg_name, source_arg_name in all_renames:
+    #         if interface_arg_name != source_arg_name:
+    #             arg = routine.declarations.pop(interface_arg_name)
+    #             routine.declarations[source_arg_name] = arg
+    #             arg.name = source_arg_name
+    #             logger.warning(
+    #                 f"Routine: {routine.name} arg rename {interface_arg_name} -> {source_arg_name}"
+    #             )
+    #
+    #     routine.declared_argument_list = list(renames)
+    #
+    # extra_args = {arg for arg in routine.declarations if arg.lower() not in routine.declared_argument_list}
+    # for arg in extra_args:
+    #     logger.warning(
+    #         f"Routine: {routine.name} interface has extra arg defined {arg!r} ({routine.filename}:{routine.declarations[arg].line})"
+    #     )
+    #     routine.declarations.pop(arg)
+    #
+    doc_args = docstring.arguments_by_name
+    for arg in routine.args:
+        doc_arg = doc_args.get(arg.c_name.lower(), None)
+        if doc_arg is None:
+            # reparse failure?
+            continue
+        doc_arg.arg_type = arg.member.type_info
+        if arg.is_optional:
+            doc_arg.is_optional = True
+        if not doc_arg.data_type:
+            # this is not exactly accurate for array data
+            doc_arg.data_type = arg.type
 
 
 def generate_cpp_routine_code(template: str, routines: dict[str, FortranRoutine], settings: RoutineSettings):

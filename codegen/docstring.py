@@ -40,6 +40,7 @@ class DocstringParameter:
     is_input: bool = False
     is_output: bool = False
     guessed: bool = False
+    arg_type: TypeInformation | None = None
 
     @property
     def is_input_only(self):
@@ -81,13 +82,13 @@ class DocstringParameter:
             self.is_optional = "optional" in type_info
 
         self.description = self.description.replace("%", ".")
-        data_type = type_info[0]
+        self.data_type = type_info[0].strip()
 
-        try:
-            typ = TypeInformation.from_line(f"{data_type} :: {self.name}")
-            self.data_type = type_information_to_python_type(typ)
-        except Exception:
-            logger.warning(f"TODO: arg parsing {self.description}")
+        # try:
+        #     typ = TypeInformation.from_line(f"{data_type} :: {self.name}")
+        #     self.data_type = type_information_to_python_type(typ)
+        # except Exception:
+        #     logger.warning(f"TODO: arg parsing {self.description}")
 
         # if "(" in self.name or "%" in self.name:
         #     self.description = f"({self.name}) {self.description}"
@@ -138,8 +139,7 @@ class RoutineDocstring:
     lineno: int
     routine_type: RoutineType
     description: list[str] = field(default_factory=list)
-    inputs: list[DocstringParameter] = field(default_factory=list)
-    outputs: list[DocstringParameter] = field(default_factory=list)
+    params: list[DocstringParameter] = field(default_factory=list)
     result_variable: str | None = None
     is_overloaded: bool = False
     overloaded_versions: list[str] = field(default_factory=list)
@@ -148,15 +148,12 @@ class RoutineDocstring:
 
     @property
     def arguments_by_name(self) -> dict[str, DocstringParameter]:
-        return {arg.name.lower(): arg for arg in self.inputs + self.outputs}
+        return {arg.name.lower(): arg for arg in self.params}
 
     def update_parameter(self, param: DocstringParameter):
         name = param.name.lower()
         if name not in self.arguments_by_name:
-            if param.is_input:
-                self.inputs.append(param)
-            else:
-                self.outputs.append(param)
+            self.params.append(param)
             return None
 
         if param.guessed:
@@ -172,8 +169,16 @@ class RoutineDocstring:
         old.guessed = param.guessed
         return old
 
+    @property
+    def inputs(self) -> list[DocstringParameter]:
+        return [param for param in self.params if param.is_input]
+
+    @property
+    def outputs(self) -> list[DocstringParameter]:
+        return [param for param in self.params if param.is_output]
+
     def to_description(self) -> str:
-        """String representation of the routine."""
+        """Bmad-style string representation of the routine."""
         result = f"{self.routine_type.value}: {self.name}"
         if self.result_variable:
             result += f" result({self.result_variable})"
@@ -199,19 +204,22 @@ class RoutineDocstring:
             for routine in self.related_routines:
                 result += f"  {routine}\n"
 
+        def add_param(param: DocstringParameter):
+            nonlocal result
+
+            optional_str = " (Optional)" if param.is_optional else ""
+            type_str = f": {param.data_type}" if param.data_type else ""
+            result += f"  {param.name}{type_str}{optional_str} -- {param.description}\n"
+
         if self.inputs:
             result += "\nInputs:\n"
             for input_param in self.inputs:
-                optional_str = " (Optional)" if input_param.is_optional else ""
-                type_str = f": {input_param.data_type}" if input_param.data_type else ""
-                result += f"  {input_param.name}{type_str}{optional_str} -- {input_param.description}\n"
+                add_param(input_param)
 
         if self.outputs:
             result += "\nOutputs:\n"
-            for output_param in self.outputs:
-                optional_str = " (Optional)" if output_param.is_optional else ""
-                type_str = f": {output_param.data_type}" if output_param.data_type else ""
-                result += f"  {output_param.name}{type_str}{optional_str} -- {output_param.description}\n"
+            for param in self.outputs:
+                add_param(param)
 
         if self.result_variable:
             result += f"\nResult: {self.result_variable}\n"
@@ -230,16 +238,26 @@ class RoutineDocstring:
 
         lines.append("")
 
+        def add_param(param: DocstringParameter, is_last: bool):
+            if param.arg_type:
+                # we have parsed code argument info, use that
+                data_type = type_information_to_python_type(param.arg_type)
+            else:
+                # otherwise, use the data type from the docstring
+                data_type = param.data_type
+
+            type_str = str(data_type)
+            if param.is_optional:
+                type_str += ", optional"
+            lines.append(f"{param.name} : {type_str}")
+            lines.extend(_wrap_docstring_lines(param.description.lstrip(), indent="    ").splitlines())
+            if not is_last and (type_str or param.description.lstrip()):
+                lines.append("")
+
         if self.inputs:
             lines.extend(["Parameters", "----------"])
-            for i, p in enumerate(self.inputs):
-                type_str = f"{p.data_type}" if p.data_type else ""
-                if p.is_optional:
-                    type_str += ", optional"
-                lines.append(f"{p.name} : {type_str}")
-                lines.extend(_wrap_docstring_lines(p.description.lstrip(), indent="    ").splitlines())
-                if i < len(self.inputs) - 1 and (type_str or p.description.lstrip()):
-                    lines.append("")
+            for i, param in enumerate(self.inputs):
+                add_param(param, is_last=(i == len(self.inputs) - 1))
 
         has_returns = bool(self.result_variable or self.outputs)
         if has_returns:
@@ -248,12 +266,8 @@ class RoutineDocstring:
             if self.result_variable and not self.outputs:
                 lines.append(f"{self.result_variable}")
 
-            for i, p in enumerate(self.outputs):
-                type_str = f"{p.data_type}" if p.data_type else ""
-                lines.append(f"{p.name} : {type_str}")
-                lines.extend(_wrap_docstring_lines(p.description.lstrip(), indent="    ").splitlines())
-                if i < len(self.outputs) - 1 and (type_str or p.description.lstrip()):
-                    lines.append("")
+            for i, param in enumerate(self.outputs):
+                add_param(param, is_last=(i == len(self.outputs) - 1))
 
         if self.notes or self.related_routines or self.is_overloaded:
             lines.extend(["", "Notes", "-----"])
@@ -277,7 +291,7 @@ class RoutineDocstring:
                 if last == line == "":
                     pass
                 else:
-                    yield line
+                    yield line.rstrip()
                 last = line
 
         return "\n".join(remove_multiple_blanks(lines))
@@ -293,12 +307,17 @@ def type_information_to_python_type(dt: TypeInformation) -> str:
         try:
             type_name = base_fortran_to_python_type[dt.type.lower()]
         except Exception:
-            type_name = "unknown"
+            type_name = dt.type.lower()
 
     if not dt.dimension:
         return type_name
 
-    return f"array of {type_name} ({dt.dimension})"
+    dim = dt.dimension.count(",") + 1
+    parts = [part.strip() for part in dt.dimension.split(",") if part.strip() not in ("0:", ":")]
+    detailed = ""
+    if parts:
+        detailed = f" (shape: {dt.dimension})"
+    return f"{dim}D array of {type_name}{detailed}"
 
 
 separator_regex = re.compile(r"^!\-+$")
@@ -527,19 +546,24 @@ def parse_routine_comment_block(
                         is_output=current_section == "outputs",
                     )
 
-                    if current_section == "inputs":
-                        docstring.inputs.append(param)
-                    else:
-                        existing_arg = docstring.arguments_by_name.get(param.name, None)
-                        if existing_arg:
+                    existing_arg = docstring.arguments_by_name.get(param.name, None)
+                    if existing_arg:
+                        if current_section == "inputs":
+                            existing_arg.is_input = True
+                        elif current_section == "outputs":
                             existing_arg.is_output = True
-                            desc = param.description.strip()
-                            if ":" in desc:
-                                desc = desc.split(":")[1].strip()
-                            if desc not in existing_arg.description:
-                                existing_arg.description += f"\nThis parameter is an input/output and is modified in-place. As an output: {desc}"
-                        else:
-                            docstring.outputs.append(param)
+                        desc = param.description.strip()
+                        if ":" in desc:
+                            desc = desc.split(":")[1].strip()
+                        if desc not in existing_arg.description:
+                            if existing_arg.is_input and existing_arg.is_output:
+                                existing_arg.description += (
+                                    "\nThis parameter is an input/output and is modified in-place."
+                                )
+                            existing_arg.description += f"\nAs an output, {existing_arg.name}: {desc}"
+                    else:
+                        docstring.params.append(param)
+
                     current_params.append(param)
 
             elif current_params:
@@ -554,7 +578,7 @@ def parse_routine_comment_block(
         else:
             i += 1
 
-    for arg in docstring.inputs + docstring.outputs:
+    for arg in docstring.params:
         arg.fix()
 
     mistaken_optional_outputs = [arg for arg in docstring.outputs if arg.is_optional]
