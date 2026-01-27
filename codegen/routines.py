@@ -173,6 +173,13 @@ class RoutineArg(InterfaceArgument):
         return self.doc_is_optional or self.member.type_info.optional
 
     @property
+    def is_python_immutable(self):
+        if self.intent != "inout":
+            return False
+
+        return len(self.array) == 0 and self.type != "type"
+
+    @property
     def is_input(self):
         return self.intent in {"in", "inout"}
 
@@ -322,13 +329,6 @@ def _get_docstring_arg(lower_doc: dict[str, DocstringParameter], arg_name: str):
             guessed=True,
         ),
     )
-
-
-def is_python_immutable(arg: RoutineArg):
-    if arg.intent != "inout":
-        return False
-
-    return len(arg.array) == 0 and arg.type != "type"
 
 
 @dataclass
@@ -520,7 +520,7 @@ class FortranRoutine:
 
     @property
     def python_class_return_type(self) -> tuple[str, str]:
-        immut_args = [arg for arg in self.args if is_python_immutable(arg)]
+        immut_args = [arg for arg in self.args if arg.is_python_immutable]
         outputs = [*self.outputs, *immut_args]
 
         if len(outputs) <= 1 and not immut_args:
@@ -639,7 +639,7 @@ class FortranRoutine:
 
     @property
     def needs_python_wrapper(self) -> bool:
-        return any(is_python_immutable(arg) for arg in self.args)
+        return any(arg.is_python_immutable for arg in self.args)
 
     @property
     def fortran_param_spec(self) -> list[str]:

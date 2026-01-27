@@ -11,7 +11,7 @@ from .enums import EnumValue, get_ele_attributes, get_ele_keys
 from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_LIB, PYBMAD_SRC
 from .proxy import _generate_proxy_constructor_arg
 from .proxy import templates as proxy_templates
-from .routines import FortranRoutine, RoutineArg, is_python_immutable
+from .routines import FortranRoutine, RoutineArg
 from .types import remove_optional
 from .util import snake_to_camel, sorted_routines
 
@@ -88,7 +88,7 @@ def generate_enum_wrapper_code(enums: dict[str, dict[str, EnumValue]]) -> str:
 
 
 def generate_routine_return_value_wrapper(routine: FortranRoutine) -> list[str]:
-    immut_args = [arg for arg in routine.args if is_python_immutable(arg)]
+    immut_args = [arg for arg in routine.args if arg.is_python_immutable]
     outputs = [*routine.outputs, *immut_args]
 
     if len(outputs) <= 1 and not immut_args:  # TODO: immut args even for 1 -> struct
@@ -123,7 +123,7 @@ def generate_py_routine_return_value_struct(routine: FortranRoutine) -> list[str
     name, py_name = routine.python_class_return_type
     orig_struct = routine.cpp_return_type
 
-    immut_args = [arg for arg in args if is_python_immutable(arg.arg)]
+    immut_args = [arg for arg in args if arg.arg.is_python_immutable]
     arg_to_decl: list[tuple[CppWrapperArgument, tuple[str, str]]] = [
         (arg, arg.struct_decl(ignore_intent=True)) for arg in immut_args
     ]
@@ -173,7 +173,7 @@ def generate_py_routine_return_value_struct(routine: FortranRoutine) -> list[str
 
 def _get_py_routine_arg_type(arg: RoutineArg) -> str:
     cpp_type = arg.transform.cpp_type
-    if is_python_immutable(arg):
+    if arg.is_python_immutable:
         if cpp_type.startswith("optional_ref"):
             # optional_ref<T> -> std::optional<T>
             cpp_type = remove_optional(cpp_type)
@@ -236,7 +236,7 @@ def generate_py_routine_wrapper(routine: FortranRoutine) -> list[str]:
     )
     lines.append("{")
 
-    immut_args = [arg for arg in args if is_python_immutable(arg.arg)]
+    immut_args = [arg for arg in args if arg.arg.is_python_immutable]
     outputs = [arg for arg in args if arg.arg.intent == "out"]
 
     if outputs:
@@ -247,7 +247,7 @@ def generate_py_routine_wrapper(routine: FortranRoutine) -> list[str]:
     lines.append(f"  {res}{routine.cpp_namespace}::{routine.overloaded_name}(")
 
     def get_call_arg(arg: CppWrapperArgument):
-        if arg.arg.transform.is_optional_ref and is_python_immutable(arg.arg):
+        if arg.arg.transform.is_optional_ref and arg.arg.is_python_immutable:
             return f"make_opt_ref({arg.arg.c_name})"
         return arg.arg.c_name
 
@@ -304,7 +304,7 @@ def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[Fortran
             else:
                 lines.append(f'py::arg("{arg.c_name}"),')
 
-    doc = routine.docstring.to_numpy_docstring(routine.arg_names_with_result)
+    doc = routine.docstring.to_numpy_docstring(routine.args)
     lines.append(rf'R"""({doc})"""')
     lines.append(");")
 

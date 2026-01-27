@@ -4,15 +4,18 @@ import logging
 import pathlib
 import re
 import textwrap
+import typing
 from dataclasses import dataclass, field
-
-from codegen.util import struct_to_proxy_class_name
 
 from .structs import (
     TypeInformation,
     get_in_parenthesis,
 )
 from .types import Intent, RoutineType
+from .util import struct_to_proxy_class_name
+
+if typing.TYPE_CHECKING:
+    from .routines import RoutineArg
 
 logger = logging.getLogger(__name__)
 
@@ -221,7 +224,7 @@ class RoutineDocstring:
 
         return result
 
-    def to_numpy_docstring(self, overload_args: list[str] | None = None) -> str:
+    def to_numpy_docstring(self, routine_args: list[RoutineArg] | None = None) -> str:
         """Create a NumPy-style docstring from the routine information."""
         lines = []
 
@@ -232,6 +235,25 @@ class RoutineDocstring:
             lines.append(f"Wrapper for Fortran routine {self.name}")
 
         lines.append("")
+
+        if routine_args:
+            inputs = []
+            outputs = []
+            for arg in routine_args:
+                try:
+                    docarg = self.arguments_by_name[arg.c_name.lower()]
+                except KeyError:
+                    continue
+
+                if arg.is_input:
+                    inputs.append(docarg)
+                    if arg.is_python_immutable:
+                        outputs.append(docarg)
+                elif arg.is_output:
+                    outputs.append(docarg)
+        else:
+            inputs = list(self.inputs)
+            outputs = list(self.outputs)
 
         def add_param(param: DocstringParameter, is_last: bool):
             if param.name.startswith("%"):
@@ -257,14 +279,6 @@ class RoutineDocstring:
             lines.extend(_wrap_docstring_lines(param.description.lstrip(), indent="    ").splitlines())
             if not is_last and (type_str or param.description.lstrip()):
                 lines.append("")
-
-        inputs = list(self.inputs)
-        outputs = list(self.outputs)
-
-        if overload_args:
-            overload_lower = [arg.lower() for arg in overload_args]
-            inputs = [arg for arg in inputs if arg.name.lower() in overload_lower]
-            outputs = [arg for arg in outputs if arg.name.lower() in overload_lower]
 
         if self.inputs:
             lines.extend(["Parameters", "----------"])
