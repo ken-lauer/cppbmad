@@ -9,6 +9,7 @@ from .context import SUPPORTED_ARRAY_DIMS
 from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys
 from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_LIB, PYBMAD_SRC
+from .proxy import _generate_proxy_constructor_arg
 from .proxy import templates as proxy_templates
 from .routines import FortranRoutine, RoutineArg, is_python_immutable
 from .types import remove_optional
@@ -354,11 +355,24 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
     code_lines.append(f"// {struct.f_name}")
     code_lines.append(f"void init_{struct.f_name}(py::module &m, py::class_<{struct.cpp_class}> &cls) {{")
 
-    # if struct.c_constructor_arg_list:
-    #     code_lines.append("        // TODO: add proper constructor with arguments")
-    #     code_lines.append("        .def(py::init<>())")
-    # else:
-    code_lines.append("        cls.def(py::init<>())")
+    ctor_args: list[str] = []
+    ctor_types: list[str] = []
+
+    for arg in struct.arg:
+        (ctor_type, _ctor_body) = _generate_proxy_constructor_arg(struct, arg)
+        if ctor_type is not None:
+            ctor_args.append(f'py::arg("{arg.python_name}") = py::none()')
+            ctor_types.append(ctor_type)
+
+    if ctor_args:
+        types_str = ", ".join(ctor_types)
+        args_str = ", ".join(ctor_args)
+
+        # cls.def(py::init<T1, T2>(), py::arg("x")=none, py::arg("y")=none);
+        code_lines.append(f"    cls.def(py::init<{types_str}>(),")
+        code_lines.append(f"        {args_str})")
+    else:
+        code_lines.append("    cls.def(py::init<>())")
 
     for arg in struct.arg:
         if not arg.is_component:

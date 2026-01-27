@@ -194,13 +194,13 @@ def get_structure_definitions(
     return structs
 
 
-def write_proxy_classes(params: CodegenConfig, structs: list[CodegenStructure]) -> None:
+def write_proxy_classes(structs: list[CodegenStructure]) -> None:
     generated = CPPBMAD_ROOT / "src" / "generated"
 
+    # TODO: does not respect --no-write
     write_if_differs(
         create_fortran_proxy_code,
         generated / "proxy_mod.f90",
-        params,
         structs,
     )
     cpp_proxy_header_template = (CODEGEN_ROOT / "proxy.tpl.hpp").read_text()
@@ -208,7 +208,6 @@ def write_proxy_classes(params: CodegenConfig, structs: list[CodegenStructure]) 
     write_if_differs(
         create_cpp_proxy_header,
         CPPBMAD_ROOT / "include" / "bmad" / "generated" / "proxy.hpp",
-        params,
         cpp_proxy_header_template,
         cpp_proxy_cpp_template,
         structs,
@@ -216,7 +215,6 @@ def write_proxy_classes(params: CodegenConfig, structs: list[CodegenStructure]) 
     write_if_differs(
         create_cpp_proxy_impl,
         generated / "proxy.cpp",
-        params,
         cpp_proxy_header_template,
         cpp_proxy_cpp_template,
         structs,
@@ -291,7 +289,7 @@ def generate(
             fn.unlink()
 
     write_contents_if_differs(REPO_ROOT / "coverage.html", ctx.report_html)
-    write_proxy_classes(ctx.params, ctx.codegen_structs)
+    write_proxy_classes(ctx.codegen_structs)
     write_contents_if_differs(CPPBMAD_INCLUDE / "bmad" / "generated" / "enums.hpp", enum_code)
     write_contents_if_differs(
         CPPBMAD_INCLUDE / "bmad" / "generated" / "to_string.hpp", contents=to_string_header

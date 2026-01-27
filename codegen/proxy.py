@@ -9,7 +9,8 @@ from .types import STANDARD_TYPES, ArgumentType, FullType, PointerType, native_t
 from .util import struct_to_proxy_class_name
 
 if TYPE_CHECKING:
-    from .gen import CodegenConfig, CodegenStructure
+    from .arg import Argument
+    from .gen import CodegenStructure
 
 logger = logging.getLogger(__name__)
 
@@ -1001,9 +1002,8 @@ def split_signature(cpp_template: str, class_name: str) -> tuple[str, str]:
 
 
 def generate_accessor_code(
-    params: CodegenConfig,
     struct_name: str,
-    attr_name: str,
+    arg: Argument,
     full_type: FullType,
     attr_kind: str = "",
 ):
@@ -1016,14 +1016,10 @@ def generate_accessor_code(
     except KeyError as ex:
         raise ValueError(f"Unsupported type: {full_type}") from ex
 
-    cattr_name = params.c_side_name_translation.get(
-        f"{struct_name}%{attr_name}", params.c_side_name_translation.get(attr_name, attr_name)
-    )
-
     to_replace = {
         "structname": struct_name,
-        "fattrname": attr_name,
-        "cattrname": cattr_name,
+        "fattrname": arg.f_name,
+        "cattrname": arg.c_name,
         "fortrantype": STANDARD_TYPES[full_type.type].fortran_type,
     }
 
@@ -1045,7 +1041,7 @@ def generate_accessor_code(
     }
 
 
-def create_fortran_proxy_code(fout, params: CodegenConfig, structs: list[CodegenStructure]):
+def create_fortran_proxy_code(fout, structs: list[CodegenStructure]):
     container_types = []
     # TODO: only generate containers if they're used
     for struct in structs:
@@ -1314,7 +1310,7 @@ contains
             if not arg.is_component:
                 continue
             try:
-                acc = generate_accessor_code(params, struct.f_name, arg.f_name, arg.full_type, arg.kind)
+                acc = generate_accessor_code(struct.f_name, arg, arg.full_type, arg.kind)
             except ValueError as ex:
                 print(f"  ! skipped {struct.f_name}%{arg.f_name}: {ex}", file=fout)
                 continue
@@ -1326,14 +1322,129 @@ contains
     print("end module", file=fout)
 
 
+def infer_cpp_type(arg) -> str | None:
+    """
+    Infers the C++ type used for the setter interface (e.g., std::string, double, std::vector<int>).
+    Returns None if the type logic is too complex or effectively read-only in this context.
+    """
+    ft = arg.full_type
+
+    # 1D Character Arrays & Derived Type Arrays have no generated setters currently
+    # (Checking against the templates definitions in the provided source)
+    if ft.dim > 0 and (ft.type in {"character", "type"}):
+        return None
+
+    # Base Type
+    if ft.type == "type":
+        base = struct_to_proxy_class_name(arg.kind)
+    elif ft.type == "character":
+        base = "std::string"
+    elif ft.type == "complex":
+        base = "std::complex<double>"
+    elif ft.type == "logical":
+        base = "bool"
+    else:
+        # Standard simple types
+        if ft.type not in STANDARD_TYPES:
+            return None
+        base = STANDARD_TYPES[ft.type].c_type
+
+    # Dimensions (Vectors)
+    res = base
+    if ft.dim > 0:
+        for _ in range(ft.dim):
+            res = f"std::vector<{res}>"
+
+    return res
+
+
+def _generate_proxy_constructor_arg(
+    struct: CodegenStructure, arg: Argument
+) -> tuple[str, str] | tuple[None, None]:
+    """
+    Generates the C++ explicit constructor code arguments for a proxy class.
+    """
+
+    if not arg.is_component:
+        return None, None
+
+    try:
+        acc = generate_accessor_code(struct.f_name, arg, arg.full_type, arg.kind)
+    except ValueError:
+        return None, None
+
+    if not acc["cpp_set_decl"]:
+        return None, None
+
+    setter_name = f"set_{arg.c_name}"
+    cpp_type = infer_cpp_type(arg)
+
+    if not cpp_type:
+        return None, None
+
+    use_ref = (arg.full_type.dim > 0) or (arg.full_type.type in {"character", "type"})
+
+    if use_ref:
+        # optional_ref<const T>
+        ctor_arg = f"optional_ref<const {cpp_type}>"
+        ctor_body = f"    if ({arg.c_name}) {setter_name}({arg.c_name}->get());"
+    else:
+        # std::optional<T>
+        ctor_arg = f"std::optional<{cpp_type}>"
+        ctor_body = f"    if ({arg.c_name}) {setter_name}(*{arg.c_name});"
+
+    return (ctor_arg, ctor_body)
+
+
+def _generate_proxy_constructor_args(struct: CodegenStructure) -> dict[str, tuple[str, str]]:
+    """
+    Generates the C++ explicit constructor code arguments for a proxy class.
+    """
+    res: dict[str, tuple[str, str]] = {}
+
+    for arg in struct.arg:
+        ctor_arg, ctor_body = _generate_proxy_constructor_arg(struct, arg)
+        if ctor_arg is not None and ctor_body is not None:
+            res[arg.f_name] = (ctor_arg, ctor_body)
+
+    return res
+
+
+def _generate_proxy_constructor(
+    struct: CodegenStructure,
+    proxy_class_name: str,
+) -> str | None:
+    """Generates the C++ explicit constructor code for a proxy class."""
+    ctor_args = _generate_proxy_constructor_args(struct)
+
+    if not ctor_args:
+        return None
+
+    args = [f"{ctor_type} {name} = std::nullopt" for name, (ctor_type, _) in ctor_args.items()]
+    init_body = [ctor_init for _, ctor_init in ctor_args.values()]
+
+    ctor_args_str = ",\n        ".join(args)
+    ctor_inits_str = "\n".join(init_body)
+
+    return f"""
+    explicit {proxy_class_name}(
+        {ctor_args_str}
+    ) : FortranProxy() {{
+{ctor_inits_str}
+    }}
+"""
+
+
 def get_proxy_header_and_code(
-    params: CodegenConfig,
     header_template_src: str,
     cpp_template_src: str,
     structs: list[CodegenStructure],
 ) -> tuple[str, str]:
-    c_forward_declarations = []
-    subs = {}
+    """
+    Generates the C++ header and implementation code for the specific structures.
+    """
+    c_forward_declarations: list[str] = []
+    subs: dict[str, str] = {}
 
     class_template = Template(
         """
@@ -1368,14 +1479,22 @@ class ${class_name} : public FortranProxy<${class_name}> {
 
     classes = {}
     all_impl = []
+
     for struct in structs:
         proxy_class_name = struct_to_proxy_class_name(struct.f_name)
-        class_body = []
+        class_body: list[str] = []
+
+        # 1. Generate the convenience definition constructor (Property Initialization)
+        ctor_code = _generate_proxy_constructor(struct, proxy_class_name)
+        if ctor_code:
+            class_body.append(ctor_code)
+
+        # 2. Generate Accessors (Getters / Setters)
         for arg in struct.arg:
             if not arg.is_component:
                 continue
             try:
-                acc = generate_accessor_code(params, struct.f_name, arg.f_name, arg.full_type, arg.kind)
+                acc = generate_accessor_code(struct.f_name, arg, arg.full_type, arg.kind)
             except ValueError as ex:
                 logger.warning(f"Proxy class {struct.f_name}%{arg.f_name} skipped: {ex}")
                 continue
@@ -1439,6 +1558,12 @@ class ${class_name} : public FortranProxy<${class_name}> {
 
     class_forward_declarations.append("}")
 
+    # Add the shorthand required for the optional references
+    class_forward_declarations.append("""
+template <typename T>
+using optional_ref = std::optional<std::reference_wrapper<T>>;
+""")
+
     # Native types aliases
     for nt in native_type_containers:
         name = nt.name
@@ -1492,21 +1617,19 @@ using {class_name}Alloc1D = FTypeAlloc1D<
 
 def create_cpp_proxy_header(
     fout,
-    params: CodegenConfig,
     header_template_src: str,
     cpp_template_src: str,
     structs: list[CodegenStructure],
 ):
-    header, _ = get_proxy_header_and_code(params, header_template_src, cpp_template_src, structs)
+    header, _ = get_proxy_header_and_code(header_template_src, cpp_template_src, structs)
     fout.write(header)
 
 
 def create_cpp_proxy_impl(
     fout,
-    params: CodegenConfig,
     header_template_src: str,
     cpp_template_src: str,
     structs: list[CodegenStructure],
 ):
-    _, impl = get_proxy_header_and_code(params, header_template_src, cpp_template_src, structs)
+    _, impl = get_proxy_header_and_code(header_template_src, cpp_template_src, structs)
     fout.write(impl)
