@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import logging.handlers
 import pathlib
 
 from .arg import Argument, CodegenStructure
@@ -340,10 +341,12 @@ def main():
     )
     args = parser.parse_args()
 
-    logging.basicConfig(
-        level=args.log_level, handlers=[logging.StreamHandler(), logging.FileHandler("build-log.log")]
-    )
-    logging.getLogger("codegen").setLevel(args.log_level)
+    log_file_handler = logging.handlers.RotatingFileHandler("build-log.log", backupCount=5)
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(args.log_level)
+    log_file_handler.setLevel(logging.DEBUG)
+    logging.basicConfig(level=args.log_level, handlers=[stream_handler, log_file_handler])
+    logging.getLogger("codegen").setLevel(logging.DEBUG)
 
     return generate(config_file=args.config_file, pybmad=not args.no_pybmad, write=not args.no_write)
 
