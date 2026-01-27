@@ -199,34 +199,14 @@ lat : LatStruct
     lattice
 
 int_array : 1D array of int
-    the array to be read in
+    the array to be read in Optional:
     This parameter is an input/output and is modified in-place.
     As an output, int_array: Array of values.
-
-Optional: : None
-
-num_expected = 1 : integer
-    number of expected arguments. Used to initialize int_array.
-
-open_delim   = ' : character(1)
-    opening delimeter.
-
-separator    = ' : character(1)
-    separating character.
-
-' : character(1)
-    separating character.
-
-close_delim  = ')' : character(1)
-    closing delimeter.
-
-default_value = 0 : real(rp)
-    inital assignment of int_array elements.
 
 Returns
 -------
 int_array : 1D array of int
-    the array to be read in
+    the array to be read in Optional:
     This parameter is an input/output and is modified in-place.
     As an output, int_array: Array of values.
 
@@ -312,11 +292,6 @@ delim : character
 delim_found : bool
 
 num_found : int, optional
-
-Notes
------
-Related routines:
-parse_real_matrix.
 )"""
   );
   py::class_<Bmad::ParseRealList2, std::unique_ptr<Bmad::ParseRealList2>>(
@@ -361,6 +336,10 @@ Routine to parse a list of reals of the form:
    open_brace real_1 separator real_2 . . . close_brace
 Example:   "(1.2, 2.3, 4.4, 8.5)"
 
+Also see:
+  pase_real_list
+  parse_real_matrix.
+
 Parameters
 ----------
 lat : LatStruct
@@ -373,29 +352,6 @@ real_array : 1D array of float
     the array to be read in
     This parameter is an input/output and is modified in-place.
     As an output, real_array: Array of values
-
-num_expected = 10 : integer, optional
-    number of expected arguments
-
-Used to initialize real_array : None
-
-open_brace   = ' : character(1), optional
-    opening delimeter.
-
-separator    = ' : character(1), optional
-    separating character
-
-' : character(1), optional
-    separating character
-
-close_brace  = ')' : character(1), optional
-    closing delimeter
-
-default_value = 0.0_rp : real(rp), optional
-    inital assignment of real_array elements.
-
-single_value = False : logical, optional
-    If true then an array with a single value and no braces is accepted.
 
 Returns
 -------
@@ -415,11 +371,6 @@ delim : character
 
 delim_found : bool
     Stopping delimiter found? False if end of input command.
-
-Notes
------
-Related routines:
-pase_real_list parse_real_matrix.
 )"""
   );
   m.def(
@@ -521,10 +472,6 @@ is_ok : bool
       py::arg("err_str"),
       py::arg("is_ok"),
       R"""(Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
-
-Returns
--------
-is_ok
 )"""
   );
   py::class_<Bmad::ParserFastRealRead, std::unique_ptr<Bmad::ParserFastRealRead>>(
@@ -574,9 +521,7 @@ end_delims : character
     List of possible ending delimitors.
 
 err_str : character
-    String used when printing error messages identifying where in
-
-the lattice file the error is occuring. : None
+    String used when printing error messages identifying where in the lattice file the error is occuring.
 
 exact_size : bool, optional
     If True (default), number of values must match real_vec size.
@@ -756,9 +701,6 @@ ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with wake information.
-
-%wake%lr : None
-    Long-range wake.
 )"""
   );
   m.def(
@@ -787,9 +729,6 @@ ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with wake information.
-
-%wake%lr%mode : None
-    Long-range wake potential.
 )"""
   );
   m.def(
@@ -818,15 +757,6 @@ ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with wake information.
-
-%wake%sr%table : None
-    Short-range wake potential.
-
-%wake%sr%long : None
-    Short-range wake potential.
-
-%wake%sr%trans : None
-    Short-range wake potential.
 )"""
   );
   m.def(
@@ -854,9 +784,6 @@ ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with wake information.
-
-%wake%sr : None
-    Short-range wake potential.
 )"""
   );
   m.def(
@@ -911,21 +838,13 @@ branch : BranchStruct
     branch that contains branch.ele(orb.ix_ele)
 
 in_time_coordinates : bool, optional
-    Default is false. If true, orb
-
-will taken as in time coordinates. : None
+    Default is false. If true, orb will taken as in time coordinates.
 
 in_body_frame : bool, optional
-    Default is true. If false, ele offsets will be ignored.
-
-Result: : None
+    Default is true. If false, ele offsets will be ignored. Result:
 
 particle : CoordStruct
     particle in global time coordinates
-
-Returns
--------
-particle
 )"""
   );
   m.def(
@@ -976,7 +895,6 @@ is_moving_forward : bool
       py::arg("time_coords") = py::none(),
       py::arg("rf_freq") = py::none(),
       py::arg("abs_time") = py::none(),
-      py::arg("time"),
       R"""(Wrapper for Fortran routine particle_rf_time
 
 Parameters
@@ -988,22 +906,26 @@ ele : EleStruct
     Element being tracked through.
 
 reference_active_edge : bool, optional
-    If True, and ele is a rfcavity or lcavity, use the active edge (edge of the
+    If True, and ele is a rfcavity or lcavity, use the active edge (edge of the region with non-zero field) as
+    the reference point.
 
 s_rel : float, optional
-    Longitudinal position relative to the upstream edge of the element.
+    Longitudinal position relative to the upstream edge of the element. Needed for relative time tracking when
+    the particle is inside the element. Default is 0.
 
 time_coords : bool, optional
     Default False. If True then orbit is using time based phase space coordinates.
 
 rf_freq : float, optional
     If present, the returned time shifted by an integer multiple of 1/rf_freq to be in the range
-    [-1/2*rf_freq, 1/2*rf_freq]. This is useful to
+    [-1/2*rf_freq, 1/2*rf_freq]. This is useful to avoid round-off errors.
 
 abs_time : bool, optional
     If False (default) use setting of bmad_com.absolute_time_tracking. If True, use absolute time instead of
     relative time.
 
+Returns
+-------
 time : float
     Current time.
 )"""
@@ -1424,9 +1346,7 @@ direction : int
 
 max_target_area : float
     Area of the solid angle photons may be emitted over. max_target_area is used for normalizing the photon
-    field.
-
-generally will be equal to twopi or fourpi. : None
+    field. generally will be equal to twopi or fourpi.
 
 w_to_surface : 2D array of float (shape: 3,3), optional
     Rotation matrix for curved surface.
@@ -1466,28 +1386,10 @@ Parameters
 ele : EleStruct
     Element contained in the branch.
 
-branch_name : character(*)
-    May be a branch name or a branch index.
-
-lat : lat_struct
-    Lattice to search.
-
-parameter_is_branch0 : logical, optional
-    If True, 'PARAMETER' is taken to be
-
-an alternative name for branch : None
-
-blank_branch : integer, optional
-    Branch index if branch_name = ''. Default is blank is an error.
-
 Returns
 -------
 branch_ptr : BranchStruct, optional
     Pointer to the branch. Nullified if there is no associated branch.
-
-Notes
------
-Overloaded versions:
 )"""
   );
   m.def(
@@ -1519,9 +1421,6 @@ which can happen, for example, with overlay elements.
 
 Parameters
 ----------
-ele : ele_struct
-    Element contained in the branch.
-
 branch_name : character
     May be a branch name or a branch index.
 
@@ -1529,9 +1428,7 @@ lat : LatStruct
     Lattice to search.
 
 parameter_is_branch0 : bool, optional
-    If True, 'PARAMETER' is taken to be
-
-an alternative name for branch : None
+    If True, 'PARAMETER' is taken to be an alternative name for branch(0). Default is False.
 
 blank_branch : int, optional
     Branch index if branch_name = ''. Default is blank is an error.
@@ -1540,10 +1437,6 @@ Returns
 -------
 branch_ptr : BranchStruct, optional
     Pointer to the branch. Nullified if there is no associated branch.
-
-Notes
------
-Overloaded versions:
 )"""
   );
   m.def(
@@ -1569,6 +1462,10 @@ Note that using ele_name to locate an element is potentially dangerous if there
 are multiple elements that have the same name. Better in this case is to use:
   lat_ele_locator
 
+Also see:
+  pointer_to_slave
+  pointer_to_lord
+
 Parameters
 ----------
 lat : LatStruct
@@ -1580,30 +1477,10 @@ ix_ele : int
 ix_branch : int, optional
     Index of the lat.branch(:) containing the element.
 
-ix_nametable : integer
-    Nametable index. See above
-
-ele_loc : lat_ele_loc_struct
-    Location identification.
-
-ele_name : character(*)
-    Name or index of element.
-
-foreign_ele : ele_struct
-    Lattice element in another lattice.
-
 Returns
 -------
 ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
-
-Notes
------
-Related routines:
-pointer_to_slave pointer_to_lord
-Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
-pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
-Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 )"""
   );
   m.def(
@@ -1628,41 +1505,22 @@ Note that using ele_name to locate an element is potentially dangerous if there
 are multiple elements that have the same name. Better in this case is to use:
   lat_ele_locator
 
+Also see:
+  pointer_to_slave
+  pointer_to_lord
+
 Parameters
 ----------
 lat : LatStruct
     Lattice.
 
-ix_ele : integer
-    Index of element in lat.branch(ix_branch).
-
-ix_branch : integer
-    Index of the lat.branch(:) containing the element.
-
-ix_nametable : integer
-    Nametable index. See above
-
 ele_loc : LatEleLocStruct
     Location identification.
-
-ele_name : character(*)
-    Name or index of element.
-
-foreign_ele : ele_struct
-    Lattice element in another lattice.
 
 Returns
 -------
 ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
-
-Notes
------
-Related routines:
-pointer_to_slave pointer_to_lord
-Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
-pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
-Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 )"""
   );
   m.def(
@@ -1687,41 +1545,22 @@ Note that using ele_name to locate an element is potentially dangerous if there
 are multiple elements that have the same name. Better in this case is to use:
   lat_ele_locator
 
+Also see:
+  pointer_to_slave
+  pointer_to_lord
+
 Parameters
 ----------
 lat : LatStruct
     Lattice.
 
-ix_ele : integer
-    Index of element in lat.branch(ix_branch).
-
-ix_branch : integer
-    Index of the lat.branch(:) containing the element.
-
-ix_nametable : integer
-    Nametable index. See above
-
-ele_loc : lat_ele_loc_struct
-    Location identification.
-
 ele_name : character
     Name or index of element.
-
-foreign_ele : ele_struct
-    Lattice element in another lattice.
 
 Returns
 -------
 ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
-
-Notes
------
-Related routines:
-pointer_to_slave pointer_to_lord
-Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
-pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
-Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 )"""
   );
   m.def(
@@ -1746,25 +1585,14 @@ Note that using ele_name to locate an element is potentially dangerous if there
 are multiple elements that have the same name. Better in this case is to use:
   lat_ele_locator
 
+Also see:
+  pointer_to_slave
+  pointer_to_lord
+
 Parameters
 ----------
 lat : LatStruct
     Lattice.
-
-ix_ele : integer
-    Index of element in lat.branch(ix_branch).
-
-ix_branch : integer
-    Index of the lat.branch(:) containing the element.
-
-ix_nametable : integer
-    Nametable index. See above
-
-ele_loc : lat_ele_loc_struct
-    Location identification.
-
-ele_name : character(*)
-    Name or index of element.
 
 foreign_ele : EleStruct
     Lattice element in another lattice.
@@ -1773,14 +1601,6 @@ Returns
 -------
 ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
-
-Notes
------
-Related routines:
-pointer_to_slave pointer_to_lord
-Overloaded versions: Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr), Function
-pointer_to_ele2 (lat, ele_loc) result (ele_ptr), Function pointer_to_ele3 (lat, ele_name) result (ele_ptr),
-Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
 )"""
   );
   py::class_<Bmad::PointerToElementAtS, std::unique_ptr<Bmad::PointerToElementAtS>>(
@@ -1865,23 +1685,6 @@ s_eff : float, optional
 
 position : CoordStruct, optional
     Positional information.
-
-%s : None
-    Same as input s.
-
-%ix_ele : None
-    Same as output ix_ele
-
-%location : None
-    Location relative to element. Upstream_end$, downstream_end$, or inside$
-
-Notes
------
-Related routines:
-element_at_s The setting of choose_max only makes a difference when s corresponds to an element boundary. For
-a circular lattice s is evaluated at the effective s which s_eff = s - branch_length * floor(s/branch_length)
-If there are multiple elements that are at the given s position due to the presence of an element with a
-negative length which of the possible elements is actually chosen is ill-defined.
 )"""
   );
   m.def(
@@ -1939,7 +1742,7 @@ dz_offset : float, optional
     Longitudinal offset of ele upstream edge from the field ele pointed to.
 
 field_ele : EleStruct, optional
-    Pointer to the field element with index ix_field_ele.
+    Pointer to the field element with index ix_field_ele. Will point to null if ix_field_ele is out of range.
 )"""
   );
   py::class_<Bmad::PointerToGirder, std::unique_ptr<Bmad::PointerToGirder>>(
@@ -1973,7 +1776,8 @@ ele : EleStruct
 Returns
 -------
 ix_slave_back : int, optional
-    Index back to ele. That is, pointer_to_slave(girder, ix_slave_back)
+    Index back to ele. That is, pointer_to_slave(girder, ix_slave_back) will point back to ele. Set to -1 if
+    no girder present
 
 girder : EleStruct, optional
     : Pointer to the girder. Null if ele is not girder supported.
@@ -2027,19 +1831,21 @@ lord_type : int, optional
 Returns
 -------
 control : ControlStruct, optional
-    Pointer to control info for this lord/slave relationship.
+    Pointer to control info for this lord/slave relationship. Nullified if there is an error.
 
 ix_slave_back : int, optional
-    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
+    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back) will point back to slave. Set
+    to -1 if there is an error or the slave is a slice_slave.
 
 ix_control : int, optional
-    Index in lat.control(:) array the control argument is at.
+    Index in lat.control(:) array the control argument is at. For ramper lord elements, ix_control is index
+    for the lord.control.ramper(:) array.
 
 ix_ic : int, optional
     Index of the lat.ic(:) element associated with the control argument.
 
 lord_ptr : EleStruct, optional
-    Pointer to the lord.
+    Pointer to the lord. Nullified if there is an error.
 )"""
   );
   py::class_<Bmad::PointerToMultipassLord, std::unique_ptr<Bmad::PointerToMultipassLord>>(
@@ -2076,10 +1882,12 @@ ele : EleStruct
 Returns
 -------
 ix_pass : int, optional
-    Multipass turn number. Set to 0 if element is a multipass_lord.
+    Multipass turn number. Set to 0 if element is a multipass_lord. Set to -1 if element is not a
+    multipass_slave.
 
 super_lord : EleStruct, optional
-    super_lord of the element. Set to NULL if ele is not a super_slave or super_lord.
+    super_lord of the element. Set to NULL if ele is not a super_slave or super_lord. Note: if ele is a
+    multipass_lord there are multiple possible super_lord slaves.
 
 multi_lord : EleStruct, optional
     multipass_lord if there is one. Set to NULL if there is no multipass_lord.
@@ -2101,10 +1909,10 @@ this_ele : EleStruct
     Starting element.
 
 offset : int, optional
-    +1 -> return next element, +2 -> element
+    +1 -> return next element, +2 -> element after that, etc. Can be negative. Default = +1.
 
 skip_beginning : bool, optional
-    If True then skip beginning element #0
+    If True then skip beginning element #0 when wrapping around. Default is False.
 
 follow_fork : bool, optional
     If True then fork at any fork element. Default is False.
@@ -2157,6 +1965,12 @@ If lord_type = all$ (the default) the range for ix_slave is:
 If lord_type = field_lord$, only the field overlap slaves may be accessed and the range for ix_slave is:
   1 to lord%n_slave_field
 
+Also see:
+  pointer_to_lord
+  pointer_to_super_lord
+  pointer_to_ele
+  num_lords
+
 Parameters
 ----------
 lord : EleStruct
@@ -2171,30 +1985,20 @@ lord_type : int, optional
 Returns
 -------
 slave_ptr : EleStruct, optional
-    Pointer to the slave.
-
-Nullified if there is an error. : None
+    Pointer to the slave. Nullified if there is an error.
 
 control : ControlStruct, optional
-    Pointer to control info for this lord/slave relationship.
-
-Nullified if there is an error. : None
+    Pointer to control info for this lord/slave relationship. Nullified if there is an error.
 
 ix_lord_back : int, optional
-    Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back)
-
-will point back to the lord. Set to -1 if there is an error. : None
+    Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back) will point back to the lord. Set
+    to -1 if there is an error.
 
 ix_control : int, optional
     Index in lat.control(:) array the control argument is at.
 
 ix_ic : int, optional
     Index of the lat.ic(:) element associated with the control argument.
-
-Notes
------
-Related routines:
-pointer_to_lord pointer_to_super_lord pointer_to_ele num_lords
 )"""
   );
   py::class_<Bmad::PointerToSuperLord, std::unique_ptr<Bmad::PointerToSuperLord>>(
@@ -2241,13 +2045,15 @@ lord_type : int, optional
 Returns
 -------
 control : ControlStruct, optional
-    Pointer to control info for this lord/slave relationship.
+    Pointer to control info for this lord/slave relationship. Nullified if there is an error.
 
 ix_slave_back : int, optional
-    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
+    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back) will point back to slave. Set
+    to -1 if there is an error or the slave is a slice_slave.
 
 ix_control : int, optional
-    Index in lat.control(:) array the control argument is at.
+    Index in lat.control(:) array the control argument is at. For ramper lord elements, ix_control is index
+    for the lord.control.ramper(:) array.
 
 ix_ic : int, optional
     Index of the lat.ic(:) element associated with the control argument.
@@ -2304,11 +2110,8 @@ ele : EleStruct
     Element containing the grid
 
 nearest : bool
-    If True, return pointer to nearest grid point.
-
-If False : None
-
-return pointer to the grid point lower and left of : None
+    If True, return pointer to nearest grid point. If False, return pointer to the grid point lower and left
+    of (x,y).
 
 x : float
     Photon position.
@@ -2328,9 +2131,7 @@ iy : int, optional
     Grid point index.
 
 pt : SurfaceDisplacementPtStruct, optional
-    Pointer to grid point.
-
-Will not be associated if : None
+    Pointer to grid point. Will not be associated if (x,y) outside the grid.
 
 xx : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
@@ -2387,11 +2188,8 @@ ele : EleStruct
     Element containing the grid
 
 nearest : bool
-    If True, return pointer to nearest grid point.
-
-If False : None
-
-return pointer to the grid point lower and left of : None
+    If True, return pointer to nearest grid point. If False, return pointer to the grid point lower and left
+    of (x,y).
 
 x : float
     Photon position.
@@ -2411,9 +2209,7 @@ iy : int, optional
     Grid point index.
 
 pt : SurfaceSegmentedPtStruct, optional
-    Pointer to grid point.
-
-Will not be associated if : None
+    Pointer to grid point. Will not be associated if (x,y) outside the grid.
 
 xx : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
@@ -2458,7 +2254,7 @@ delta_s : float, optional
     distance of wake locaiton from beginning of ele.
 
 wake_ele : EleStruct, optional
-    Element having the associated wake.
+    Element having the associated wake. wake_ele will be nullified if there is no associated wake.
 )"""
   );
   py::class_<Bmad::PointerToWall3d, std::unique_ptr<Bmad::PointerToWall3d>>(
@@ -2503,10 +2299,8 @@ ix_wall : int, optional
 
 Returns
 -------
-wall3d : Wall3DStruct, optional
-    Pointer to the associated wall structure.
-
-Will be nullified if there is no associated wall. : None
+wall3d : Wall3dStruct, optional
+    Pointer to the associated wall structure. Will be nullified if there is no associated wall.
 
 ds_offset : float, optional
     Element offset: s(beginning of ele) - s(beginning of wall3d)
@@ -2601,21 +2395,6 @@ ix : int
 mode : NormalModesStruct
     normal mode emittances
 
-%a%emittance : real(rp)
-    a-mode emittance
-
-%b%emittance : real(rp)
-    b-mode emittance
-
-%z%emittance : real(rp)
-    z-mode emittance
-
-%a%tune : real(rp)
-    a-mode tune.  Used to associate emittances with the proper mode.
-
-%b%tune : real(rp)
-    b-mode tune.  Used to associate emittances with the proper mode.
-
 Returns
 -------
 sigma_x : float
@@ -2704,27 +2483,19 @@ kl_max : float
     Maximum K1*L per tracking step.
 
 ds_max : float, optional
-    Maximum ds for any step.
-
-Useful when including other physicas like space charge. : None
+    Maximum ds for any step. Useful when including other physicas like space charge.
 
 even_steps : 1D array of bool (shape: 2), optional
-    Always use an even number of steps for a fibre?
-
-Useful if need to evaluate at the center of fibres. : None
+    Always use an even number of steps for a fibre? Useful if need to evaluate at the center of fibres.
 
 r_typical : float, optional
-    Typical transverse offset. Used for computing the
-
-effective contribution of K1*L due to sextupoles. : None
+    Typical transverse offset. Used for computing the effective contribution of K1*L due to sextupoles.
 
 dx_tol_bend : float, optional
     Tolerable residual orbit in a bend.
 
 use_2nd_order : bool, optional
-    If present and True then force the use of 2nd order
-
-integrator. : None
+    If present and True then force the use of 2nd order integrator.
 
 crossover : 1D array of int (shape: 2), optional
     crossover points between orders for all elements except wigglers. Default is [4, 18].
@@ -2841,14 +2612,7 @@ ele : EleStruct
 Returns
 -------
 norm_mode : NormalModesStruct
-    Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
-
-%a%emittance : None
-
-etc. : None
-
-sigma_map : real(rp)
-    Sigma matrix (Bmad coordinates).
+    Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc. %a%emittance, etc.
 
 closed_orb : CoordStruct
     Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
@@ -2875,9 +2639,8 @@ For the fibres in all layouts. After doing a resplit, the tune (and any other re
 Parameters
 ----------
 dKL_max : float
-    Maximum K1 * L quadrupole strength allowed for an integration step.
-
-Reasonable value would be something like 0.04. : None
+    Maximum K1 * L quadrupole strength allowed for an integration step. Reasonable value would be something
+    like 0.04.
 
 l_max : float
     Maximum step length. Ignored if set to 0.
@@ -2892,20 +2655,14 @@ bend_dorb : float
     related to bend_dorb and can be larger. In any case, lowering bend_dorb (without making it zero) will
     lower the
 
-orbit deviation. : None
-
 sex_dx : float
     To split sextupoles, sex_dx is used as the reference position about which the quadrupole strength is
     calculated. This quadrupole strength is then used with dKL_max to calculate the number of integration
-    steps.
-
-Set to zero to ignore. : None
+    steps. Set to zero to ignore.
 
 even : bool, optional
     If True then each fibre  will have an even number of steps. If False then the number of steps will be odd.
-    If not present then number
-
-of steps is not constrained to be even or odd. : None
+    If not present then number of steps is not constrained to be even or odd.
 
 crossover : 1D array of int (shape: 2), optional
     crossover(1) sets the maximum number of 2nd order integration steps to use. If the number of steps would
@@ -2945,11 +2702,6 @@ branch : BranchStruct
     Lattice branch.
     This parameter is an input/output and is modified in-place.
     As an output, branch: Lattice branch containing the matrices.
-
-%ele : matrices.
-as an output
-    Closed orbit at entrance.
-    As an output, .ele: Closed orbit at exit.
 )"""
   );
   m.def(
@@ -3019,14 +2771,7 @@ ele : EleStruct
 Returns
 -------
 norm_mode : NormalModesStruct
-    Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
-
-%a%emittance : None
-
-etc. : None
-
-sigma_map : real(rp)
-    Sigma matrix (Bmad coordinates).
+    Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc. %a%emittance, etc.
 
 closed_orb : CoordStruct
     Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
@@ -3076,9 +2821,7 @@ orbit : 1D array of CoordStruct
     As an output, orbit: Orbit array.
 
 track_state : int, optional
-    Set to moving_forward$ if everything is OK.
-
-Otherwise: set to index of element where particle was lost. : None
+    Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
 
 err_flag : bool, optional
     Set true if particle lost or error. False otherwise
@@ -3116,13 +2859,14 @@ orb0 : CoordStruct
     Initial orbit around which the map is made.
 
 ix1 : int, optional
-    Element start index for the calculation.
+    Element start index for the calculation. Default is 0.
 
 ix2 : int, optional
-    Element end index for the calculation.
+    Element end index for the calculation. Default is branch.n_ele_track.
 
 one_turn : bool, optional
-    If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
+    If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn map from
+    ix1 back to ix1. Default = False.
 
 unit_start : bool, optional
     If present and False then t_map will be used as the starting map instead of the unit map. Default = True
@@ -3162,12 +2906,6 @@ Parameters
 ----------
 lat : LatStruct
     TYPE(lat_struct)
-
-%param%n_part : real(rp)
-    Bunch current in # per bunch
-
-%ele : real(rp)
-    Beam energy
 
 t6 : 2D array of float (shape: 6,6)
     1-turn transfer matrix

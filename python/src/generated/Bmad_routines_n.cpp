@@ -204,13 +204,8 @@ Default is True ==> z-mode has a negative slip factor so the mode rotates clock-
 
 Parameters
 ----------
-mat : real(rp)
-    1-turn transfer matrix
-
 above_transition : bool, optional
-    If present and false, then z-mode assumes positive slip factor.
-
-Else negative slip factor assumed. : None
+    If present and false, then z-mode assumes positive slip factor. Else negative slip factor assumed.
 
 abz_tunes : 1D array of float (shape: 3), optional
     Tunes to order eigensystem by.

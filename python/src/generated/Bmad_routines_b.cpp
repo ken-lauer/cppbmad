@@ -41,26 +41,10 @@ Returns
 -------
 nk : 1D array of float (shape: 2)
     Normalized, dimensionless kick component. In terms of the the actual kick: nk = [kick_x / (xi_x * sigma_x
-    / beta_x), kick_y / (xi_y * sigma_y / beta_y)
+    / beta_x), kick_y / (xi_y * sigma_y / beta_y) nk = -4 * pi * [x/sigma_x, y/sigma_y] in the linear region
 
 dnk : 2D array of float (shape: 2,2)
-    derivatives of nk. EG: dnk(2,1) = dnk(2)/dy Note: xi_x = beta_x * bbi_const / sig_x     ! Horizontal tune
-    shift parameter xi_y = beta_y * bbi_const / sig_y     ! Vertical   tune shift parameter where bbi_const =
-    N_particles_bunch * r_e / (2 * pi * gamma * (sig_x + sig_y)) And the tune shifts are: dQ_x = xi_x = beta_x
-    * bbi_const / sig_x dQ_y = xi_y = beta_y * bbi_const / sig_y In the calling routine, the formulas for
-    computing the actual kicks, kick_x and kick_y, should be: kick_x = bbi_const * nk(1) ~ -4 * pi * bbi_const
-    * x / sigma_x                        [linear region] ~ -2 * N_p * r_e * x / (gamma * sig_x * (sig_x +
-    sig_y))   [linear region] ~ -2 * N_p * r_e * x / (gamma * (x^2 + y^2))               [far from beam]
-    kick_y = bbi_const * nk(2) ~ -4 * pi * bbi_const * y / sigma_y                        [linear region] ~ -2
-    * N_p * r_e * y / (gamma * sig_y * (sig_x + sig_y))   [linear region] ~ -2 * N_p * r_e * y / (gamma * (x^2
-    + y^2))               [far from beam] For the beam-ion kick, assuming the ion velocity is neglegeble, the
-    formulas are: kick_x = ion_const * nk(1) ~ -4 * pi * ion_const * x / sigma_x
-    [linear region] ~ -2 * N_p * r_p * c_light * x / (sig_x * (sig_x + sig_y) * A)  [linear region] ~ -2 * N_p
-    * r_p * c_light * x / ((x^2 + y^2) * A)              [far from beam] kick_y = ion_const * nk(2) ~ -4 * pi
-    * ion_const * y / sigma_y                             [linear region] ~ -2 * N_p * r_p * c_light * y /
-    (sig_y * (sig_x + sig_y) * A)  [linear region] ~ -2 * N_p * r_p * c_light * y / ((x^2 + y^2) * A)
-    [far from beam] ion_const = N_particles_bunch * r_p * c_light / (2 * pi * (sig_x + sig_y) * A) A = Mass of
-    ion in AMU.
+    derivatives of nk. EG: dnk(2,1) = dnk(2)/dy
 )"""
   );
   m.def(
@@ -150,6 +134,23 @@ beam1 : BeamStruct
 beam2 : BeamStruct
 )"""
   );
+  py::class_<Bmad::BeamInitSetup, std::unique_ptr<Bmad::BeamInitSetup>>(
+      m,
+      "BeamInitSetup",
+      "beam_init_setup return type"
+  )
+      .def_readonly("err_flag", &Bmad::BeamInitSetup::err_flag)
+      .def_readonly("beam_init_set", &Bmad::BeamInitSetup::beam_init_set)
+      .def("__len__", [](const Bmad::BeamInitSetup &) { return 2; })
+      .def("__getitem__", [](const Bmad::BeamInitSetup &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.beam_init_set);
+        throw py::index_error();
+      });
   m.def(
       "beam_init_setup",
       &Bmad::beam_init_setup,
@@ -157,8 +158,6 @@ beam2 : BeamStruct
       py::arg("ele"),
       py::arg("species"),
       py::arg("modes") = py::none(),
-      py::arg("err_flag") = py::none(),
-      py::arg("beam_init_set"),
       R"""(Wrapper for Fortran routine beam_init_setup
 
 Parameters
@@ -174,6 +173,8 @@ species : int
 modes : NormalModesStruct, optional
     Normal mode parameters.
 
+Returns
+-------
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
 
@@ -349,7 +350,7 @@ orbit : CoordStruct
     particle position.
 
 local_ref_frame : bool
-    Is the particle position in the local element ref
+    Is the particle position in the local element ref frame (as opposed to the lab frame)?
 
 calc_dfield : bool, optional
     If present and True then calculate the field derivatives.
@@ -367,7 +368,6 @@ field : EmFieldStruct
       "bend_length_has_been_set",
       &Bmad::bend_length_has_been_set,
       py::arg("ele"),
-      py::arg("is_set"),
       R"""(Wrapper for Fortran routine bend_length_has_been_set
 
 Parameters
@@ -375,6 +375,8 @@ Parameters
 ele : EleStruct
     Element to be checked.
 
+Returns
+-------
 is_set : bool
     Note: will be set True for non-bend elements.
 )"""
@@ -516,36 +518,24 @@ E_min : float, optional
     Minimum photon energy. Default is zero. Ignored if negative.
 
 E_max : float, optional
-    Maximum photon energy.  Default is Infinity. Ignored if negative.
-
-If non-positive then E_max will be taken to be Infinity. : None
+    Maximum photon energy.  Default is Infinity. Ignored if negative. If non-positive then E_max will be taken
+    to be Infinity.
 
 E_integ_prob : float, optional
-    , optional :: integrated energy probability. See above.
-
-If E_integ_prob is non-negative : None
-
-it must be in the range [0 : None
-
-1]. : None
+    , optional :: integrated energy probability. See above. If E_integ_prob is non-negative, it must be in the
+    range [0, 1].
 
 vert_angle_min : float, optional
-    Minimum vertical angle to emit a photon.
-
--pi/2 is used if argument not present or if argument is less than -pi/2. : None
+    Minimum vertical angle to emit a photon. -pi/2 is used if argument not present or if argument is less than
+    -pi/2.
 
 vert_angle_max : float, optional
-    Maximum vertical angle to emit a photon.
-
-pi/2 is used if argument not present or if argument is greater than pi/2. : None
+    Maximum vertical angle to emit a photon. pi/2 is used if argument not present or if argument is greater
+    than pi/2.
 
 vert_angle_symmetric : bool, optional
     Default is False. If True, photons will be emitted in the range [-vert_angle_max, -vert_angle_min] as well
-    as the range
-
-[vert_angle_min : None
-
-vert_angle_max]. In this case vert_angle_min/max must be positive. : None
+    as the range [vert_angle_min, vert_angle_max]. In this case vert_angle_min/max must be positive.
 
 emit_probability : float, optional
     Probability of emitting a photon in the range [E_min, E_max] or in the vertical angular range given. The
@@ -588,12 +578,6 @@ Returns
 -------
 orbit : CoordStruct
     Photon coords
-
-%field : None
-    (x,y) polaraization. Will have unit magnitude
-
-%phase : None
-    (x,y) phases. Will be [0, pi/2].
 )"""
   );
   m.def(
@@ -618,11 +602,7 @@ gamma : float
     beam relativistic factor
 
 r_in : float, optional
-    Integrated probability in the range [0,1].
-
-If not present : None
-
-a random number will be used. : None
+    Integrated probability in the range [0,1]. If not present, a random number will be used.
 
 invert : bool, optional
     If True then take r_in as the inverse integrated probability with inverted probability = 1 - probability.
@@ -809,7 +789,8 @@ lat_file : character
     Name of the input file.
 
 make_mats6 : bool, optional
-    Compute the 6x6 transport matrices for the Elements?
+    Compute the 6x6 transport matrices for the Elements? Default is True. Do not set False unless you know
+    what you are doing.
 
 use_line : character, optional
     If present and not blank, override the use statement in the lattice file and use use_line instead.
@@ -820,11 +801,12 @@ lat : LatStruct
     Lat structure. See bmad_struct.f90 for more details.
 
 digested_read_ok : bool, optional
-    Set True if the digested file was
+    Set True if the digested file was successfully read. False otherwise.
 
 err_flag : bool, optional
     Set true if there is an error, false otherwise. Note: err_flag does *not* include errors in lat_make_mat6
-    since if there is a match element, there is an error raised since
+    since if there is a match element, there is an error raised since the Twiss parameters have not been set
+    but this is expected.
 
 parse_lat : LatStruct, optional
     List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
@@ -853,10 +835,10 @@ lat : LatStruct
     As an output, lat: lattice with modifications.
 
 orbit : 1D array of CoordStruct, optional
-    closed orbit for when
+    closed orbit for when bmad_parser2 calls lat_make_mat6
 
 make_mats6 : bool, optional
-    Make the 6x6 transport matrices for then
+    Make the 6x6 transport matrices for then Elements? Default is True.
 
 err_flag : bool, optional
 

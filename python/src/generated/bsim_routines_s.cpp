@@ -29,7 +29,8 @@ target_tunes : 1D array of float (shape: 3)
 mask : character, optional
 
 use_phase_trombone : bool, optional
-    Default False. If true, use a match element in phase trombone mode to adjust the tunes.
+    Default False. If true, use a match element in phase trombone mode to adjust the tunes. The match element
+    must be the first element in the lattice. Use insert_phase_trombone to insert one.
 
 z_tune_set : bool, optional
     Default True. If false, do not try to set the synch tune.

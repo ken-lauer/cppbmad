@@ -44,35 +44,35 @@ void init_SimUtils_routines_b(py::module &m) {
       py::arg("bi_coef"),
       R"""(Function bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy) result (f_val)
 
-  Routine to evaluate a bicubic interpolating complex function.
+Routine to evaluate a bicubic interpolating complex function.
 
-  Use the routine bicubic_interpolation_cmplx_coefs to generate bi_coef.
+Use the routine bicubic_interpolation_cmplx_coefs to generate bi_coef.
 
-  Note: In the equations below, the four points of the grid box being interpolated range
-  from (x0, y0) to (x0+dx, y0+dy).
+Note: In the equations below, the four points of the grid box being interpolated range
+from (x0, y0) to (x0+dx, y0+dy).
 
-  Parameters
-  ----------
-  x_norm : float
-      x_norm = (x - x0) / dx
+Parameters
+----------
+x_norm : float
+    x_norm = (x - x0) / dx
 
-  y_norm : float
-      y_norm = (y - y0) / dy
+y_norm : float
+    y_norm = (y - y0) / dy
 
-  bi_coef : BicubicCmplxCoefStruct
-      Coefficients.
+bi_coef : BicubicCmplxCoefStruct
+    Coefficients.
 
-  Returns
-  -------
-  f_val : complex
-      Value of f.
+Returns
+-------
+f_val : complex
+    Value of f.
 
-  df_dx : complex, optional
-      Normalized first derivative: True df/dx = df_dx * dx
+df_dx : complex, optional
+    Normalized first derivative: True df/dx = df_dx * dx
 
-  df_dy : complex, optional
-      Normalized first derivative: True df/dy = df_dy * dy
-  )"""
+df_dy : complex, optional
+    Normalized first derivative: True df/dy = df_dy * dy
+)"""
   );
   m.def(
       "bin_index",
@@ -82,24 +82,24 @@ void init_SimUtils_routines_b(py::module &m) {
       py::arg("bin_delta"),
       R"""(Function bin_index(x, bin1_x_min, bin_delta) result (ix_bin)
 
-  Helper function to locate the appropriate histogram bin index.
+Helper function to locate the appropriate histogram bin index.
 
-  Parameters
-  ----------
-  x : float
-      Input value to bin.
+Parameters
+----------
+x : float
+    Input value to bin.
 
-  bin1_x_min : float
-      Minimum value of bin with index 1.
+bin1_x_min : float
+    Minimum value of bin with index 1.
 
-  bin_delta : float
-      Bin width.
+bin_delta : float
+    Bin width.
 
-  Returns
-  -------
-  ix_bin : int
-      Index of bin x is in.
-  )"""
+Returns
+-------
+ix_bin : int
+    Index of bin x is in.
+)"""
   );
   py::class_<PyBinXCenter, std::unique_ptr<PyBinXCenter>>(
       m,
@@ -124,24 +124,24 @@ void init_SimUtils_routines_b(py::module &m) {
       py::arg("x_center"),
       R"""(Function bin_x_center (ix_bin, bin1_x_min, bin_delta) result(x_center)
 
-  Helper function to locate the center of a histogram bin.
+Helper function to locate the center of a histogram bin.
 
-  Parameters
-  ----------
-  ix_bin : int
-      Index of bin under question.
+Parameters
+----------
+ix_bin : int
+    Index of bin under question.
 
-  bin1_x_min : float
-      Minimum value of bin with index 1.
+bin1_x_min : float
+    Minimum value of bin with index 1.
 
-  bin_delta : float
-      Bin width.
+bin_delta : float
+    Bin width.
 
-  Returns
-  -------
-  ix_bin : int
-      Index of bin under question.
-  )"""
+Returns
+-------
+ix_bin : int
+    Index of bin under question.
+)"""
   );
   py::class_<PyBitSet, std::unique_ptr<PyBitSet>>(m, "BitSet", "bit_set return type")
       .def_readonly("word", &PyBitSet::word)
@@ -161,28 +161,28 @@ void init_SimUtils_routines_b(py::module &m) {
       py::arg("set_to_1"),
       R"""(Subroutine bit_set (word, pos, set_to_1)
 
-  Routine to set a bit in a word.
+Routine to set a bit in a word.
 
-  Parameters
-  ----------
-  word : int
-      Input word
-      This parameter is an input/output and is modified in-place.
-      As an output, word: Word with bit set.
+Parameters
+----------
+word : int
+    Input word
+    This parameter is an input/output and is modified in-place.
+    As an output, word: Word with bit set.
 
-  pos : int
-      position to set.
+pos : int
+    position to set.
 
-  set_to_1 : bool
-      If True then bit is set to 1. If False bit is set to 0.
+set_to_1 : bool
+    If True then bit is set to 1. If False bit is set to 0.
 
-  Returns
-  -------
-  word : int
-      Input word
-      This parameter is an input/output and is modified in-place.
-      As an output, word: Word with bit set.
-  )"""
+Returns
+-------
+word : int
+    Input word
+    This parameter is an input/output and is modified in-place.
+    As an output, word: Word with bit set.
+)"""
   );
   py::class_<SimUtils::BracketIndexForSpline, std::unique_ptr<SimUtils::BracketIndexForSpline>>(
       m,
@@ -210,34 +210,34 @@ void init_SimUtils_routines_b(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Function bracket_index_for_spline (x_knot, x, ix0, strict, print_err) result (ok)
 
-  Routine to find which interval to use for evaluating a spline.
-  If strict = False (default), x is in range if
-        x_knot(1) - (x_knot(2) - x_knot(1)) < x < x_knot(n) + (x_knot(n) - x_knot(n-1))
-  If stric = True, x is in range if
-        x_knot(1) <= x <= x_knot(n)
-  where n = size(x_knot)
+Routine to find which interval to use for evaluating a spline.
+If strict = False (default), x is in range if
+      x_knot(1) - (x_knot(2) - x_knot(1)) < x < x_knot(n) + (x_knot(n) - x_knot(n-1))
+If stric = True, x is in range if
+      x_knot(1) <= x <= x_knot(n)
+where n = size(x_knot)
 
-  Parameters
-  ----------
-  x_knot : 1D array of float
-      Array of x values.
+Parameters
+----------
+x_knot : 1D array of float
+    Array of x values.
 
-  x : float
-      Evaluation point.
+x : float
+    Evaluation point.
 
-  strict : bool, optional
-      Default is False. Determines acceptible range.
+strict : bool, optional
+    Default is False. Determines acceptible range.
 
-  print_err : bool, optional
-      Default is True. Print error message if out of range?
+print_err : bool, optional
+    Default is True. Print error message if out of range?
 
-  Returns
-  -------
-  ix0 : int
-      If ok = True, x is in the interval [x_knot(ix0), x_knot(ix0+1)]
+Returns
+-------
+ix0 : int
+    If ok = True, x is in the interval [x_knot(ix0), x_knot(ix0+1)]
 
-  ok : bool
-      True if x is in range. False otherwise.
-  )"""
+ok : bool
+    True if x is in range. False otherwise.
+)"""
   );
 }

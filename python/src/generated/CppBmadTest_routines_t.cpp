@@ -97,34 +97,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_bunch_struct_array
 
-  Parameters
-  ----------
-  arr_in : 1D array of BunchStruct
+Parameters
+----------
+arr_in : 1D array of BunchStruct
 
-  arr_inout : 1D array of BunchStruct
+arr_inout : 1D array of BunchStruct
 
-  arr_out : 1D array of BunchStruct
+arr_out : 1D array of BunchStruct
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of BunchStruct, optional
+arr_in_opt : 1D array of BunchStruct, optional
 
-  arr_inout_opt : 1D array of BunchStruct, optional
+arr_inout_opt : 1D array of BunchStruct, optional
 
-  Returns
-  -------
-  arr_in : 1D array of BunchStruct
+Returns
+-------
+arr_in : 1D array of BunchStruct
 
-  arr_inout : 1D array of BunchStruct
+arr_inout : 1D array of BunchStruct
 
-  arr_out : 1D array of BunchStruct
+arr_out : 1D array of BunchStruct
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of BunchStruct, optional
+arr_in_opt : 1D array of BunchStruct, optional
 
-  arr_inout_opt : 1D array of BunchStruct, optional
-  )"""
+arr_inout_opt : 1D array of BunchStruct, optional
+)"""
   );
   py::class_<
       CppBmadTest::TestBunchStructScalar,
@@ -154,34 +154,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_bunch_struct_scalar
 
-  Parameters
-  ----------
-  val_in : BunchStruct
+Parameters
+----------
+val_in : BunchStruct
 
-  val_inout : BunchStruct
+val_inout : BunchStruct
 
-  val_out : BunchStruct
+val_out : BunchStruct
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : BunchStruct, optional
+val_in_opt : BunchStruct, optional
 
-  val_inout_opt : BunchStruct, optional
+val_inout_opt : BunchStruct, optional
 
-  Returns
-  -------
-  val_in : BunchStruct
+Returns
+-------
+val_in : BunchStruct
 
-  val_inout : BunchStruct
+val_inout : BunchStruct
 
-  val_out : BunchStruct
+val_out : BunchStruct
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : BunchStruct, optional
+val_in_opt : BunchStruct, optional
 
-  val_inout_opt : BunchStruct, optional
-  )"""
+val_inout_opt : BunchStruct, optional
+)"""
   );
   py::class_<PyTestCharacterScalar, std::unique_ptr<PyTestCharacterScalar>>(
       m,
@@ -215,34 +215,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_character_scalar
 
-  Parameters
-  ----------
-  val_in : character
+Parameters
+----------
+val_in : character
 
-  val_inout : character
+val_inout : character
 
-  val_out : character
+val_out : character
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : character, optional
+val_in_opt : character, optional
 
-  val_inout_opt : character, optional
+val_inout_opt : character, optional
 
-  Returns
-  -------
-  val_in : character
+Returns
+-------
+val_in : character
 
-  val_inout : character
+val_inout : character
 
-  val_out : character
+val_out : character
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : character, optional
+val_in_opt : character, optional
 
-  val_inout_opt : character, optional
-  )"""
+val_inout_opt : character, optional
+)"""
   );
   m.def(
       "test_complex_array",
@@ -254,34 +254,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_complex_array
 
-  Parameters
-  ----------
-  arr_in : 1D array of complex
+Parameters
+----------
+arr_in : 1D array of complex
 
-  arr_inout : 1D array of complex
+arr_inout : 1D array of complex
 
-  arr_out : 1D array of complex
+arr_out : 1D array of complex
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of complex, optional
+arr_in_opt : 1D array of complex, optional
 
-  arr_inout_opt : 1D array of complex, optional
+arr_inout_opt : 1D array of complex, optional
 
-  Returns
-  -------
-  arr_in : 1D array of complex
+Returns
+-------
+arr_in : 1D array of complex
 
-  arr_inout : 1D array of complex
+arr_inout : 1D array of complex
 
-  arr_out : 1D array of complex
+arr_out : 1D array of complex
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of complex, optional
+arr_in_opt : 1D array of complex, optional
 
-  arr_inout_opt : 1D array of complex, optional
-  )"""
+arr_inout_opt : 1D array of complex, optional
+)"""
   );
   py::class_<PyTestComplexScalar, std::unique_ptr<PyTestComplexScalar>>(
       m,
@@ -315,34 +315,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_complex_scalar
 
-  Parameters
-  ----------
-  val_in : complex
+Parameters
+----------
+val_in : complex
 
-  val_inout : complex
+val_inout : complex
 
-  val_out : complex
+val_out : complex
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : complex, optional
+val_in_opt : complex, optional
 
-  val_inout_opt : complex, optional
+val_inout_opt : complex, optional
 
-  Returns
-  -------
-  val_in : complex
+Returns
+-------
+val_in : complex
 
-  val_inout : complex
+val_inout : complex
 
-  val_out : complex
+val_out : complex
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : complex, optional
+val_in_opt : complex, optional
 
-  val_inout_opt : complex, optional
-  )"""
+val_inout_opt : complex, optional
+)"""
   );
   m.def(
       "test_integer8_array",
@@ -354,34 +354,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_integer8_array
 
-  Parameters
-  ----------
-  arr_in : 1D array of int
+Parameters
+----------
+arr_in : 1D array of int
 
-  arr_inout : 1D array of int
+arr_inout : 1D array of int
 
-  arr_out : 1D array of int
+arr_out : 1D array of int
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of int, optional
+arr_in_opt : 1D array of int, optional
 
-  arr_inout_opt : 1D array of int, optional
+arr_inout_opt : 1D array of int, optional
 
-  Returns
-  -------
-  arr_in : 1D array of int
+Returns
+-------
+arr_in : 1D array of int
 
-  arr_inout : 1D array of int
+arr_inout : 1D array of int
 
-  arr_out : 1D array of int
+arr_out : 1D array of int
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of int, optional
+arr_in_opt : 1D array of int, optional
 
-  arr_inout_opt : 1D array of int, optional
-  )"""
+arr_inout_opt : 1D array of int, optional
+)"""
   );
   py::class_<PyTestInteger8Scalar, std::unique_ptr<PyTestInteger8Scalar>>(
       m,
@@ -415,34 +415,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_integer8_scalar
 
-  Parameters
-  ----------
-  val_in : int
+Parameters
+----------
+val_in : int
 
-  val_inout : int
+val_inout : int
 
-  val_out : int
+val_out : int
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : int, optional
+val_in_opt : int, optional
 
-  val_inout_opt : int, optional
+val_inout_opt : int, optional
 
-  Returns
-  -------
-  val_in : int
+Returns
+-------
+val_in : int
 
-  val_inout : int
+val_inout : int
 
-  val_out : int
+val_out : int
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : int, optional
+val_in_opt : int, optional
 
-  val_inout_opt : int, optional
-  )"""
+val_inout_opt : int, optional
+)"""
   );
   m.def(
       "test_integer_array",
@@ -454,34 +454,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_integer_array
 
-  Parameters
-  ----------
-  arr_in : 1D array of int
+Parameters
+----------
+arr_in : 1D array of int
 
-  arr_inout : 1D array of int
+arr_inout : 1D array of int
 
-  arr_out : 1D array of int
+arr_out : 1D array of int
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of int, optional
+arr_in_opt : 1D array of int, optional
 
-  arr_inout_opt : 1D array of int, optional
+arr_inout_opt : 1D array of int, optional
 
-  Returns
-  -------
-  arr_in : 1D array of int
+Returns
+-------
+arr_in : 1D array of int
 
-  arr_inout : 1D array of int
+arr_inout : 1D array of int
 
-  arr_out : 1D array of int
+arr_out : 1D array of int
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of int, optional
+arr_in_opt : 1D array of int, optional
 
-  arr_inout_opt : 1D array of int, optional
-  )"""
+arr_inout_opt : 1D array of int, optional
+)"""
   );
   py::class_<PyTestIntegerScalar, std::unique_ptr<PyTestIntegerScalar>>(
       m,
@@ -515,34 +515,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_integer_scalar
 
-  Parameters
-  ----------
-  val_in : int
+Parameters
+----------
+val_in : int
 
-  val_inout : int
+val_inout : int
 
-  val_out : int
+val_out : int
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : int, optional
+val_in_opt : int, optional
 
-  val_inout_opt : int, optional
+val_inout_opt : int, optional
 
-  Returns
-  -------
-  val_in : int
+Returns
+-------
+val_in : int
 
-  val_inout : int
+val_inout : int
 
-  val_out : int
+val_out : int
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : int, optional
+val_in_opt : int, optional
 
-  val_inout_opt : int, optional
-  )"""
+val_inout_opt : int, optional
+)"""
   );
   m.def(
       "test_logical_array",
@@ -554,34 +554,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_logical_array
 
-  Parameters
-  ----------
-  arr_in : 1D array of bool
+Parameters
+----------
+arr_in : 1D array of bool
 
-  arr_inout : 1D array of bool
+arr_inout : 1D array of bool
 
-  arr_out : 1D array of bool
+arr_out : 1D array of bool
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of bool, optional
+arr_in_opt : 1D array of bool, optional
 
-  arr_inout_opt : 1D array of bool, optional
+arr_inout_opt : 1D array of bool, optional
 
-  Returns
-  -------
-  arr_in : 1D array of bool
+Returns
+-------
+arr_in : 1D array of bool
 
-  arr_inout : 1D array of bool
+arr_inout : 1D array of bool
 
-  arr_out : 1D array of bool
+arr_out : 1D array of bool
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of bool, optional
+arr_in_opt : 1D array of bool, optional
 
-  arr_inout_opt : 1D array of bool, optional
-  )"""
+arr_inout_opt : 1D array of bool, optional
+)"""
   );
   py::class_<PyTestLogicalScalar, std::unique_ptr<PyTestLogicalScalar>>(
       m,
@@ -615,34 +615,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_logical_scalar
 
-  Parameters
-  ----------
-  val_in : bool
+Parameters
+----------
+val_in : bool
 
-  val_inout : bool
+val_inout : bool
 
-  val_out : bool
+val_out : bool
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : bool, optional
+val_in_opt : bool, optional
 
-  val_inout_opt : bool, optional
+val_inout_opt : bool, optional
 
-  Returns
-  -------
-  val_in : bool
+Returns
+-------
+val_in : bool
 
-  val_inout : bool
+val_inout : bool
 
-  val_out : bool
+val_out : bool
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : bool, optional
+val_in_opt : bool, optional
 
-  val_inout_opt : bool, optional
-  )"""
+val_inout_opt : bool, optional
+)"""
   );
   m.def(
       "test_real16_array",
@@ -654,34 +654,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_real16_array
 
-  Parameters
-  ----------
-  arr_in : 1D array of float
+Parameters
+----------
+arr_in : 1D array of float
 
-  arr_inout : 1D array of float
+arr_inout : 1D array of float
 
-  arr_out : 1D array of float
+arr_out : 1D array of float
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of float, optional
+arr_in_opt : 1D array of float, optional
 
-  arr_inout_opt : 1D array of float, optional
+arr_inout_opt : 1D array of float, optional
 
-  Returns
-  -------
-  arr_in : 1D array of float
+Returns
+-------
+arr_in : 1D array of float
 
-  arr_inout : 1D array of float
+arr_inout : 1D array of float
 
-  arr_out : 1D array of float
+arr_out : 1D array of float
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of float, optional
+arr_in_opt : 1D array of float, optional
 
-  arr_inout_opt : 1D array of float, optional
-  )"""
+arr_inout_opt : 1D array of float, optional
+)"""
   );
   py::class_<PyTestReal16Scalar, std::unique_ptr<PyTestReal16Scalar>>(
       m,
@@ -715,34 +715,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_real16_scalar
 
-  Parameters
-  ----------
-  val_in : float
+Parameters
+----------
+val_in : float
 
-  val_inout : float
+val_inout : float
 
-  val_out : float
+val_out : float
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : float, optional
+val_in_opt : float, optional
 
-  val_inout_opt : float, optional
+val_inout_opt : float, optional
 
-  Returns
-  -------
-  val_in : float
+Returns
+-------
+val_in : float
 
-  val_inout : float
+val_inout : float
 
-  val_out : float
+val_out : float
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : float, optional
+val_in_opt : float, optional
 
-  val_inout_opt : float, optional
-  )"""
+val_inout_opt : float, optional
+)"""
   );
   m.def(
       "test_real_array",
@@ -754,34 +754,34 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_real_array
 
-  Parameters
-  ----------
-  arr_in : 1D array of float
+Parameters
+----------
+arr_in : 1D array of float
 
-  arr_inout : 1D array of float
+arr_inout : 1D array of float
 
-  arr_out : 1D array of float
+arr_out : 1D array of float
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of float, optional
+arr_in_opt : 1D array of float, optional
 
-  arr_inout_opt : 1D array of float, optional
+arr_inout_opt : 1D array of float, optional
 
-  Returns
-  -------
-  arr_in : 1D array of float
+Returns
+-------
+arr_in : 1D array of float
 
-  arr_inout : 1D array of float
+arr_inout : 1D array of float
 
-  arr_out : 1D array of float
+arr_out : 1D array of float
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  arr_in_opt : 1D array of float, optional
+arr_in_opt : 1D array of float, optional
 
-  arr_inout_opt : 1D array of float, optional
-  )"""
+arr_inout_opt : 1D array of float, optional
+)"""
   );
   py::class_<PyTestRealScalar, std::unique_ptr<PyTestRealScalar>>(
       m,
@@ -815,33 +815,33 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("val_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_real_scalar
 
-  Parameters
-  ----------
-  val_in : float
+Parameters
+----------
+val_in : float
 
-  val_inout : float
+val_inout : float
 
-  val_out : float
+val_out : float
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : float, optional
+val_in_opt : float, optional
 
-  val_inout_opt : float, optional
+val_inout_opt : float, optional
 
-  Returns
-  -------
-  val_in : float
+Returns
+-------
+val_in : float
 
-  val_inout : float
+val_inout : float
 
-  val_out : float
+val_out : float
 
-  opt_status : 1D array of int (shape: 2)
+opt_status : 1D array of int (shape: 2)
 
-  val_in_opt : float, optional
+val_in_opt : float, optional
 
-  val_inout_opt : float, optional
-  )"""
+val_inout_opt : float, optional
+)"""
   );
 }

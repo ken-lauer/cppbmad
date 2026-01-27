@@ -19,9 +19,6 @@ Parameters
 ele : EleStruct
     Drift element.
 
-energy : mad_energy_struct
-    particle energy structure.
-
 Returns
 -------
 map : MadMapStruct
@@ -216,9 +213,6 @@ ele : EleStruct
 energy : MadEnergyStruct
     particle energy structure.
 
-into : logical
-    If True then map is for particle entering a dipole
-
 Returns
 -------
 map : MadMapStruct
@@ -251,15 +245,6 @@ Returns
 -------
 map : MadMapStruct
     Fringe dipole map.
-
-%k : None
-    0th order map.
-
-%r : None
-    1st order map.
-
-%t : None
-    2nd order map.
 )"""
   );
   m.def(
@@ -407,15 +392,6 @@ map : MadMapStruct
     This parameter is an input/output and is modified in-place.
     As an output, map: Rotated transport map.
 
-%k : None
-    0th order map.
-
-%r : None
-    1st order map.
-
-%t : None
-    2nd order map.
-
 tilt : float
     Tilt
 
@@ -425,15 +401,6 @@ map : MadMapStruct
     Unrotated transport map.
     This parameter is an input/output and is modified in-place.
     As an output, map: Rotated transport map.
-
-%k : None
-    0th order map.
-
-%r : None
-    1st order map.
-
-%t : None
-    2nd order map.
 )"""
   );
   m.def(
@@ -609,7 +576,7 @@ lat_in : LatStruct
 use_taylor : bool, optional
     If present and True then the hybrid elements will have a taylor series instead of a simple linear matrix.
     If an element to be concatenated has a taylor series then this taylor series will be concatenated with the
-    other elements
+    other elements in the hybrid element.
 
 orb0_arr : 1D array of CoordArrayStruct, optional
     Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
@@ -834,11 +801,6 @@ ele : EleStruct
     Element tracked through.
 
 param : LatParamStruct
-
-Returns
--------
-end : coord_struct
-    End position
 )"""
   );
   m.def(
@@ -862,9 +824,6 @@ ele : EleStruct
 param : LatParamStruct
     Lattice parameters.
 
-map : mad_map_struct
-    2nd order map.
-
 c0 : CoordStruct
     Coordinates at the beginning of element.
 
@@ -872,12 +831,6 @@ Returns
 -------
 ele : EleStruct
     Element with transfer matrix.
-
-%c0 : None
-    0th order transfer matrix.
-
-%mat6 : None
-    6x6 1st order transfer matrix.
 
 c1 : CoordStruct
     Coordinates at the end of element.
@@ -1165,24 +1118,6 @@ t6 : 2D array of float (shape: 6,6)
 
 mode : NormalModesStruct
     normal mode emittances
-
-%a%emittance : real(rp)
-    a-mode emittance
-
-%b%emittance : real(rp)
-    b-mode emittance
-
-%z%emittance : real(rp)
-    z-mode emittance
-
-%a%tune : real(rp)
-    a-mode tune.  Used to associate emittances with the proper mode.
-
-%b%tune : real(rp)
-    b-mode tune.  Used to associate emittances with the proper mode.
-
-%z%tune : real(rp)
-    z-mode tune.  Used to associate emittances with the proper mode.
 
 Returns
 -------
@@ -1706,7 +1641,7 @@ start_orb : CoordStruct
     Starting orbit.
 
 include_delta_time : bool, optional
-    If False, ignore any finite ele.value(delta_time$).
+    If False, ignore any finite ele.value(delta_time$). Default is True.
 
 set_trombone : bool, optional
     Default is False. If True, set the beginning and ending Twiss values in the element to create a phase
@@ -1800,9 +1735,8 @@ ele : EleStruct
     Bmad element with misalignments.
 
 use_offsets : bool
-    Does ptc_fibre include element offsets, pitches and tilt?
-
-This argument is ignored if the element is a patch. : None
+    Does ptc_fibre include element offsets, pitches and tilt? This argument is ignored if the element is a
+    patch.
 
 for_layout : bool
     If True then fibre is being created as part of a layout as opposed to a stand-alone fibre
@@ -1869,7 +1803,8 @@ mom_comp : float
 Parameters
 ----------
 track : 1D array of CoordStruct
-    multi-turn tracking data to analyze. track(i) is the particle position at a given point
+    multi-turn tracking data to analyze. track(i) is the particle position at a given point in the lat on the
+    i^th turn.
 
 i_dim : int
     number of dimensions used in the tracking: 2, or 4.
@@ -1889,7 +1824,7 @@ growth_rate : float
     Unstable growth rate (= 0 if stable).
 
 chi : float
-    How symplectic the computed 1-turn matrix is.
+    How symplectic the computed 1-turn matrix is. See mat_symp_check for more details.
 
 err_flag : bool
     Set true if there is an error. False otherwise.
@@ -1912,20 +1847,10 @@ Parameters
 ele : EleStruct
     Multilayer element.
 
-%component_name : character
-    Multilayer type name. Assumed upper case.
-
-A blank name is not an error and results in nothing set. : None
-
-%value : None
-    Photon energy in eV.
-
 Returns
 -------
 ele : EleStruct
     Multilayer element.
-
-%photon%material%f0_m2 : None
 
 err_flag : bool
     Set True if multilayer type is unrecognized. False otherwise.
@@ -1968,7 +1893,7 @@ use_super_lord : bool, optional
 Returns
 -------
 ix_pass : int
-    Multipass pass number of the input element.
+    Multipass pass number of the input element. Set to -1 if input element is not in a multipass section.
 
 n_links : int
     Number of times the physical element is passed through.
@@ -2136,13 +2061,14 @@ ele : EleStruct
     Element.
 
 use_ele_tilt : bool
-    If True then include ele.value(tilt_tot$) in calculations.
+    If True then include ele.value(tilt_tot$) in calculations. use_ele_tilt is ignored in the case of
+    multipole$ elements.
 
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 
 include_kicks : int, optional
-    Ignored for for pole_type == electric$ for non-elseparator elements.
+    Ignored for for pole_type == electric$ for non-elseparator elements. Possibilities are:
 
 original : bool, optional
     Default is false. If True, no scaling is applied.
@@ -2150,7 +2076,8 @@ original : bool, optional
 Returns
 -------
 ix_pole_max : int
-    Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero.
+    Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero. ix_pole_max is set
+    independent of a nonzero b1 (if present).
 
 a : 1D array of float (shape: 0:n_pole_maxx)
     Array of multipole values.
@@ -2181,7 +2108,8 @@ ele : EleStruct
     Lattice element.
 
 use_ele_tilt : bool
-    If True then include ele.value(tilt_tot$) in calculations.
+    If True then include ele.value(tilt_tot$) in calculations. use_ele_tilt is ignored in the case of
+    multipole$ elements.
 
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
@@ -2270,10 +2198,6 @@ Returns
 -------
 coord : CoordStruct
     Particle position and direction of travel.
-
-%vec : x kick.
-as an output
-    Y kick.
 )"""
   );
   m.def(
@@ -2302,7 +2226,7 @@ ele : EleStruct
     Lattice element containing multipoles.
 
 orbit : CoordStruct
-    coordinates of particle around which the
+    coordinates of particle around which the multipole kick matrix is computed.
 
 factor : float
     Factor to scale knl by.

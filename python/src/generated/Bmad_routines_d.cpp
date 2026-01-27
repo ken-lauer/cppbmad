@@ -515,11 +515,7 @@ orb0 : CoordStruct
     reference orbit at the start of tracking.
 
 theta_xy : float
-    Angle of radial line (in radians) in x-y space.
-
-Angle is "normalized" by %x_init : None
-
-%y_init. : None
+    Angle of radial line (in radians) in x-y space. Angle is "normalized" by .x_init, .y_init.
 
 ap_param : ApertureParamStruct
     Structure holding the input data:

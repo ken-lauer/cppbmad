@@ -27,10 +27,6 @@ ele : EleStruct
     Element with corresponding ele.ptc_fibre fibre.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Modified element.
-
-Notes
------
-Remember to call lattice_bookkeeper after calling this routine.
 )"""
   );
   m.def(

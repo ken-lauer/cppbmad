@@ -130,20 +130,13 @@ N : int
     Number of data points to fit over. aka window size.
 
 dt : float
-    Time interval between data points. It is assumed that the data is
-
-separated by fixed time intervals. : None
+    Time interval between data points. It is assumed that the data is separated by fixed time intervals.
 
 order : int
     Order of fit polynomial.  Must be greater than or equal to der.
 
 der : int
     Order of derivative to be returned. Set der=0 to obtain the fit.
-
-Returns
--------
-<return value> : integer
-    id of windowLS instance created.
 )"""
   );
   m.def(
@@ -156,7 +149,7 @@ Returns
 
 Parameters
 ----------
-int : None
+int : (unknown)
 
 width : int, optional
 
@@ -164,7 +157,7 @@ str : character
 
 Returns
 -------
-int : None
+int : (unknown)
 
 width : int, optional
 
@@ -184,10 +177,6 @@ str : character
 Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
 The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
 available.
-
-Returns
--------
-this_fft
 )"""
   );
   m.def(
@@ -218,10 +207,6 @@ function inverse_prob (val) result (prob)
   real(rp) prob
   real(rp) val
 end function
-
-Returns
--------
-prob
 )"""
   );
   m.def(
@@ -269,12 +254,6 @@ Returns
 -------
 this_false : bool
     Set True if param is zero. False otherwise.
-
-Notes
------
-Related routines:
-is_true int_logic ) which is a real array. Some of the elements in the %value array are used to specify
-boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
 )"""
   );
   m.def(
@@ -312,7 +291,7 @@ Parameters
 ----------
 string : character
 
-int : None
+int : (unknown)
 
 delims : character, optional
 
@@ -324,7 +303,7 @@ Returns
 -------
 string : character
 
-int : None
+int : (unknown)
 
 delims : character, optional
 
@@ -431,12 +410,6 @@ Returns
 -------
 this_true : bool
     Set False if param is zero. True otherwise.
-
-Notes
------
-Related routines:
-is_false int_logic ) which is a real array. Some of the elements in the %value array are used to specify
-boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
 )"""
   );
 }

@@ -231,7 +231,7 @@ extern "C" bool fortran_tao_constraint_type_name(
 );
 std::string tao_constraint_type_name(TaoDataStruct &datum);
 extern "C" void
-fortran_tao_control_tree_list(void *ele /* 0D_NOT_type in */, void *tree /* 1D_ALLOC_type in */);
+fortran_tao_control_tree_list(void *ele /* 0D_NOT_type in */, void *tree /* 1D_ALLOC_type inout */);
 void tao_control_tree_list(EleStruct &ele, ElePointerStructAlloc1D tree);
 extern "C" void fortran_tao_count_strings(
     const char *string /* 0D_NOT_character in */,
@@ -791,9 +791,9 @@ extern "C" bool fortran_tao_evaluate_tune(
     const char *q_str /* 0D_NOT_character in */,
     double &q0 /* 0D_NOT_real in */,
     bool &delta_input /* 0D_NOT_logical in */,
-    double &q_val /* 0D_NOT_real in */
+    double &q_val /* 0D_NOT_real out */
 );
-void tao_evaluate_tune(std::string q_str, double q0, bool delta_input, double q_val);
+double tao_evaluate_tune(std::string q_str, double q0, bool delta_input);
 extern "C" void fortran_tao_expression_hash_substitute(
     const char *expression_in /* 0D_NOT_character in */,
     const char *expression_out /* 0D_NOT_character out */,
@@ -1526,9 +1526,9 @@ std::optional<TaoEleShapeStruct> tao_pointer_to_building_wall_shape(std::string 
 extern "C" bool fortran_tao_pointer_to_datum(
     void *d1 /* 0D_NOT_type in */,
     const char *ele_name /* 0D_NOT_character in */,
-    void *datum_ptr /* 0D_PTR_type in */
+    void *datum_ptr /* 0D_PTR_type out */
 );
-void tao_pointer_to_datum(TaoD1DataStruct &d1, std::string ele_name, TaoDataStruct &datum_ptr);
+std::optional<TaoDataStruct> tao_pointer_to_datum(TaoD1DataStruct &d1, std::string ele_name);
 extern "C" bool fortran_tao_pointer_to_datum_ele(
     void *lat /* 0D_NOT_type in */,
     const char *ele_name /* 0D_NOT_character in */,

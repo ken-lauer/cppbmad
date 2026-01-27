@@ -282,7 +282,7 @@ std::string Tao::tao_constraint_type_name(TaoDataStruct &datum) {
   return _datum_name;
 }
 void Tao::tao_control_tree_list(EleStruct &ele, ElePointerStructAlloc1D tree) {
-  // intent=in allocatable type array
+  // intent=inout allocatable type array
   fortran_tao_control_tree_list(
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ tree.get_fortran_ptr()
@@ -1205,14 +1205,16 @@ bool Tao::tao_evaluate_tree(
   );
   return _err_flag;
 }
-void Tao::tao_evaluate_tune(std::string q_str, double q0, bool delta_input, double q_val) {
+double Tao::tao_evaluate_tune(std::string q_str, double q0, bool delta_input) {
   auto _q_str = q_str.c_str();
+  double _q_val{};
   fortran_tao_evaluate_tune(
       /* const char* */ _q_str,
       /* double& */ q0,
       /* bool& */ delta_input,
-      /* double& */ q_val
+      /* double& */ _q_val
   );
+  return _q_val;
 }
 std::string
 Tao::tao_expression_hash_substitute(std::string expression_in, optional_ref<EleStruct> eval_ele) {
@@ -2177,18 +2179,15 @@ std::optional<TaoEleShapeStruct> Tao::tao_pointer_to_building_wall_shape(std::st
   fortran_tao_pointer_to_building_wall_shape(/* const char* */ _wall_name, /* void* */ &_e_shape);
   return std::move((_e_shape ? std::make_optional<TaoEleShapeStruct>(_e_shape) : std::nullopt));
 }
-void Tao::tao_pointer_to_datum(
-    TaoD1DataStruct &d1,
-    std::string ele_name,
-    TaoDataStruct &datum_ptr
-) {
+std::optional<TaoDataStruct> Tao::tao_pointer_to_datum(TaoD1DataStruct &d1, std::string ele_name) {
   auto _ele_name = ele_name.c_str();
-  auto _datum_ptr = &datum_ptr; // input, required, pointer
+  void *_datum_ptr;
   fortran_tao_pointer_to_datum(
       /* void* */ d1.get_fortran_ptr(),
       /* const char* */ _ele_name,
-      /* void* */ &datum_ptr
+      /* void* */ &_datum_ptr
   );
+  return std::move((_datum_ptr ? std::make_optional<TaoDataStruct>(_datum_ptr) : std::nullopt));
 }
 Tao::TaoPointerToDatumEle Tao::tao_pointer_to_datum_ele(
     LatStruct &lat,

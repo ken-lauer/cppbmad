@@ -901,6 +901,7 @@ subroutine fortran_tao_control_tree_list (ele, tree) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
+  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: tree
   type(ele_pointer_struct_container_alloc), pointer :: f_tree
   ! ** End of parameters **
@@ -5395,7 +5396,7 @@ subroutine fortran_tao_pointer_to_datum (d1, ele_name, datum_ptr) bind(c)
   character(len=4096), target :: f_ele_name
   character(kind=c_char), pointer :: f_ele_name_ptr(:)
   ! ** Out parameters **
-  type(c_ptr), value :: datum_ptr  ! 0D_PTR_type
+  type(c_ptr) :: datum_ptr  ! 0D_PTR_type
   type(tao_data_struct), pointer :: f_datum_ptr
   ! ** End of parameters **
   ! in: f_d1 0D_NOT_type
@@ -5406,8 +5407,7 @@ subroutine fortran_tao_pointer_to_datum (d1, ele_name, datum_ptr) bind(c)
   call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
   call to_f_str(f_ele_name_ptr, f_ele_name)
   ! out: f_datum_ptr 0D_PTR_type
-  if (.not. c_associated(datum_ptr)) return
-  call c_f_pointer(datum_ptr, f_datum_ptr)
+  if (c_associated(datum_ptr))   call c_f_pointer(datum_ptr, f_datum_ptr)
   f_datum_ptr => tao_pointer_to_datum(f_d1, f_ele_name)
 
   ! out: f_datum_ptr 0D_PTR_type

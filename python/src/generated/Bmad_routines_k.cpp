@@ -104,30 +104,16 @@ ele : EleStruct
 param : LatParamStruct
     Lattice parameters.
 
-s_rel : real(rp)
-    Distance from the start of the element to the particle.
-
 orbit : CoordStruct
     Position of particle.
-
-local_ref_frame : None
-    -- Logical, If True then take the input coordinates as being with respect to the frame of referene of the
-    element.
 
 Returns
 -------
 dr_ds : 1D array of float (shape: 11)
     Kick vector.
 
-field : em_field_struct
-    Local field.
-
 err : bool
     Set True if there is an error.
-
-Notes
------
-Remember: In order to simplify the calculation, in the body of any element, P0 is taken to be
 )"""
   );
   m.def(

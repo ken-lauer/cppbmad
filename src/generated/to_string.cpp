@@ -2749,6 +2749,14 @@ std::string to_string(const Bmad::BbiKick &self) {
       {std::pair{"nk", to_string(self.nk)}, std::pair{"dnk", to_string(self.dnk)}}
   );
 }
+std::string to_string(const Bmad::BeamInitSetup &self) {
+  return repr(
+      &self,
+      "Bmad::BeamInitSetup",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"beam_init_set", to_string(self.beam_init_set)}}
+  );
+}
 std::string to_string(const Bmad::BeamTilts &self) {
   return repr(
       &self,
@@ -3790,6 +3798,29 @@ std::string to_string(const Bmad::ReadBeamFile &self) {
       {std::pair{"beam", to_string(self.beam)}, std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const Bmad::ReadBinaryCartesianMap &self) {
+  return repr(
+      &self,
+      "Bmad::ReadBinaryCartesianMap",
+      {std::pair{"cart_map", to_string(self.cart_map)},
+       std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::ReadBinaryCylindricalMap &self) {
+  return repr(
+      &self,
+      "Bmad::ReadBinaryCylindricalMap",
+      {std::pair{"cl_map", to_string(self.cl_map)}, std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::ReadBinaryGridField &self) {
+  return repr(
+      &self,
+      "Bmad::ReadBinaryGridField",
+      {std::pair{"g_field", to_string(self.g_field)},
+       std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
 std::string to_string(const SimUtils::RmsValue &self) {
   return repr(
       &self,
@@ -4268,6 +4299,18 @@ std::string to_string(const Bmad::ToEtaReading &self) {
       &self,
       "Bmad::ToEtaReading",
       {std::pair{"reading", to_string(self.reading)}, std::pair{"err", to_string(self.err)}}
+  );
+}
+std::string to_string(const Bmad::ToFieldmapCoords &self) {
+  return repr(
+      &self,
+      "Bmad::ToFieldmapCoords",
+      {std::pair{"x", to_string(self.x)},
+       std::pair{"y", to_string(self.y)},
+       std::pair{"z", to_string(self.z)},
+       std::pair{"cos_ang", to_string(self.cos_ang)},
+       std::pair{"sin_ang", to_string(self.sin_ang)},
+       std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
 std::string to_string(const Bmad::ToOrbitReading &self) {

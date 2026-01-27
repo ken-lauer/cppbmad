@@ -2103,39 +2103,48 @@ subroutine fortran_beam_init_setup (beam_init_in, ele, species, modes, err_flag,
   integer :: f_species
   type(c_ptr), value :: modes  ! 0D_NOT_type
   type(normal_modes_struct), pointer :: f_modes
-  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_err_flag
-  logical, target :: f_err_flag_native
-  logical, pointer :: f_err_flag_native_ptr
-  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   type(c_ptr), value :: beam_init_set  ! 0D_NOT_type
   type(beam_init_struct), pointer :: f_beam_init_set
   ! ** End of parameters **
   ! in: f_beam_init_in 0D_NOT_type
-  if (.not. c_associated(beam_init_in)) return
+  if (.not. c_associated(beam_init_in)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(beam_init_in, f_beam_init_in)
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
   ! in: f_species 0D_NOT_integer
   f_species = species
   ! in: f_modes 0D_NOT_type
   if (c_associated(modes))   call c_f_pointer(modes, f_modes)
-  ! in: f_err_flag 0D_NOT_logical
+  ! out: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
     call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_native = f_err_flag_ptr
-    f_err_flag_native_ptr => f_err_flag_native
   else
-    f_err_flag_native_ptr => null()
+    f_err_flag_ptr => null()
   endif
   ! out: f_beam_init_set 0D_NOT_type
-  if (.not. c_associated(beam_init_set)) return
+  if (.not. c_associated(beam_init_set)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(beam_init_set, f_beam_init_set)
-  f_beam_init_set = beam_init_setup(f_beam_init_in, f_ele, f_species, f_modes, &
-      f_err_flag_native_ptr)
+  f_beam_init_set = beam_init_setup(f_beam_init_in, f_ele, f_species, f_modes, f_err_flag)
 
+  ! out: f_err_flag 0D_NOT_logical
+  ! no output conversion for f_err_flag
   ! out: f_beam_init_set 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -6076,17 +6085,20 @@ subroutine fortran_create_lat_ele_nametable (lat, nametable) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
+  ! ** Out parameters **
   type(c_ptr), value :: nametable  ! 0D_NOT_type
   type(nametable_struct), pointer :: f_nametable
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
   call c_f_pointer(lat, f_lat)
-  ! in: f_nametable 0D_NOT_type
+  ! out: f_nametable 0D_NOT_type
   if (.not. c_associated(nametable)) return
   call c_f_pointer(nametable, f_nametable)
   call create_lat_ele_nametable(f_lat, f_nametable)
 
+  ! out: f_nametable 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_create_overlay (lord, contrl, err) bind(c)
 
@@ -24710,25 +24722,42 @@ subroutine fortran_read_binary_cartesian_map (file_name, ele, cart_map, err_flag
   character(kind=c_char), pointer :: f_file_name_ptr(:)
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
   type(c_ptr), value :: cart_map  ! 0D_NOT_type
   type(cartesian_map_struct), pointer :: f_cart_map
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_file_name 0D_NOT_character
-  if (.not. c_associated(file_name)) return
+  if (.not. c_associated(file_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(file_name, f_file_name_ptr, [huge(0)])
   call to_f_str(f_file_name_ptr, f_file_name)
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
-  ! in: f_cart_map 0D_NOT_type
-  if (.not. c_associated(cart_map)) return
+  ! out: f_cart_map 0D_NOT_type
+  if (.not. c_associated(cart_map)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(cart_map, f_cart_map)
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
   call read_binary_cartesian_map(f_file_name, f_ele, f_cart_map, f_err_flag)
 
+  ! out: f_cart_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_read_binary_cylindrical_map (file_name, ele, cl_map, err_flag) bind(c)
 
@@ -24741,25 +24770,42 @@ subroutine fortran_read_binary_cylindrical_map (file_name, ele, cl_map, err_flag
   character(kind=c_char), pointer :: f_file_name_ptr(:)
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
   type(c_ptr), value :: cl_map  ! 0D_NOT_type
   type(cylindrical_map_struct), pointer :: f_cl_map
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_file_name 0D_NOT_character
-  if (.not. c_associated(file_name)) return
+  if (.not. c_associated(file_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(file_name, f_file_name_ptr, [huge(0)])
   call to_f_str(f_file_name_ptr, f_file_name)
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
-  ! in: f_cl_map 0D_NOT_type
-  if (.not. c_associated(cl_map)) return
+  ! out: f_cl_map 0D_NOT_type
+  if (.not. c_associated(cl_map)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(cl_map, f_cl_map)
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
   call read_binary_cylindrical_map(f_file_name, f_ele, f_cl_map, f_err_flag)
 
+  ! out: f_cl_map 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_read_binary_grid_field (file_name, ele, g_field, err_flag) bind(c)
 
@@ -24772,25 +24818,42 @@ subroutine fortran_read_binary_grid_field (file_name, ele, g_field, err_flag) bi
   character(kind=c_char), pointer :: f_file_name_ptr(:)
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
   type(c_ptr), value :: g_field  ! 0D_NOT_type
   type(grid_field_struct), pointer :: f_g_field
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_file_name 0D_NOT_character
-  if (.not. c_associated(file_name)) return
+  if (.not. c_associated(file_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(file_name, f_file_name_ptr, [huge(0)])
   call to_f_str(f_file_name_ptr, f_file_name)
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
-  ! in: f_g_field 0D_NOT_type
-  if (.not. c_associated(g_field)) return
+  ! out: f_g_field 0D_NOT_type
+  if (.not. c_associated(g_field)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(g_field, f_g_field)
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
   call read_binary_grid_field(f_file_name, f_ele, f_g_field, f_err_flag)
 
+  ! out: f_g_field 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_read_surface_reflection_file (file_name, surface) bind(c)
 
@@ -26017,8 +26080,6 @@ subroutine fortran_save_a_beam_step (ele, beam, bunch_tracks, s_body, is_time_co
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: beam  ! 0D_NOT_type
   type(beam_struct), pointer :: f_beam
-  type(array_descriptor_t), intent(in) :: bunch_tracks
-  type(bunch_track_struct), pointer :: f_bunch_tracks(:)
   type(c_ptr), intent(in), value :: s_body  ! 0D_NOT_real
   real(c_double) :: f_s_body
   real(c_double), pointer :: f_s_body_ptr
@@ -26027,6 +26088,9 @@ subroutine fortran_save_a_beam_step (ele, beam, bunch_tracks, s_body, is_time_co
   logical, target :: f_is_time_coords_native
   logical, pointer :: f_is_time_coords_native_ptr
   logical(c_bool), pointer :: f_is_time_coords_ptr
+  ! ** Inout parameters **
+  type(array_descriptor_t), intent(in) :: bunch_tracks
+  type(bunch_track_struct), pointer :: f_bunch_tracks(:)
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -26068,8 +26132,6 @@ subroutine fortran_save_a_bunch_step (ele, bunch, bunch_track, s_body, is_time_c
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: bunch  ! 0D_NOT_type
   type(bunch_struct), pointer :: f_bunch
-  type(c_ptr), value :: bunch_track  ! 0D_NOT_type
-  type(bunch_track_struct), pointer :: f_bunch_track
   type(c_ptr), intent(in), value :: s_body  ! 0D_NOT_real
   real(c_double) :: f_s_body
   real(c_double), pointer :: f_s_body_ptr
@@ -26078,6 +26140,9 @@ subroutine fortran_save_a_bunch_step (ele, bunch, bunch_track, s_body, is_time_c
   logical, target :: f_is_time_coords_native
   logical, pointer :: f_is_time_coords_native_ptr
   logical(c_bool), pointer :: f_is_time_coords_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: bunch_track  ! 0D_NOT_type
+  type(bunch_track_struct), pointer :: f_bunch_track
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -26085,7 +26150,7 @@ subroutine fortran_save_a_bunch_step (ele, bunch, bunch_track, s_body, is_time_c
   ! in: f_bunch 0D_NOT_type
   if (.not. c_associated(bunch)) return
   call c_f_pointer(bunch, f_bunch)
-  ! in: f_bunch_track 0D_NOT_type
+  ! inout: f_bunch_track 0D_NOT_type
   if (c_associated(bunch_track))   call c_f_pointer(bunch_track, f_bunch_track)
   ! in: f_s_body 0D_NOT_real
   if (c_associated(s_body)) then
@@ -26112,8 +26177,6 @@ subroutine fortran_save_a_step (track, ele, param, local_ref_frame, orb, s_rel, 
   use bmad_struct, only: coord_struct, ele_struct, lat_param_struct, strong_beam_struct, track_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), value :: track  ! 0D_NOT_type
-  type(track_struct), pointer :: f_track
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: param  ! 0D_NOT_type
@@ -26142,8 +26205,11 @@ subroutine fortran_save_a_step (track, ele, param, local_ref_frame, orb, s_rel, 
   real(c_double), pointer :: f_rf_time_ptr
   type(c_ptr), value :: strong_beam  ! 0D_NOT_type
   type(strong_beam_struct), pointer :: f_strong_beam
+  ! ** Inout parameters **
+  type(c_ptr), value :: track  ! 0D_NOT_type
+  type(track_struct), pointer :: f_track
   ! ** End of parameters **
-  ! in: f_track 0D_NOT_type
+  ! inout: f_track 0D_NOT_type
   if (.not. c_associated(track)) return
   call c_f_pointer(track, f_track)
   ! in: f_ele 0D_NOT_type
@@ -29583,24 +29649,39 @@ subroutine fortran_to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0
   real(c_double), pointer :: f_r0_ptr(:)
   logical(c_bool) :: curved_ref_frame  ! 0D_NOT_logical
   logical :: f_curved_ref_frame
-  real(c_double) :: x  ! 0D_NOT_real
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: x  ! 0D_NOT_real
   real(rp) :: f_x
-  real(c_double) :: y  ! 0D_NOT_real
+  real(c_double), pointer :: f_x_ptr
+  type(c_ptr), intent(in), value :: y  ! 0D_NOT_real
   real(rp) :: f_y
-  real(c_double) :: z  ! 0D_NOT_real
+  real(c_double), pointer :: f_y_ptr
+  type(c_ptr), intent(in), value :: z  ! 0D_NOT_real
   real(rp) :: f_z
-  real(c_double) :: cos_ang  ! 0D_NOT_real
+  real(c_double), pointer :: f_z_ptr
+  type(c_ptr), intent(in), value :: cos_ang  ! 0D_NOT_real
   real(rp) :: f_cos_ang
-  real(c_double) :: sin_ang  ! 0D_NOT_real
+  real(c_double), pointer :: f_cos_ang_ptr
+  type(c_ptr), intent(in), value :: sin_ang  ! 0D_NOT_real
   real(rp) :: f_sin_ang
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  real(c_double), pointer :: f_sin_ang_ptr
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
   ! in: f_local_orb 0D_NOT_type
-  if (.not. c_associated(local_orb)) return
+  if (.not. c_associated(local_orb)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(local_orb, f_local_orb)
   ! in: f_s_body 0D_NOT_real
   f_s_body = s_body
@@ -29615,21 +29696,27 @@ subroutine fortran_to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0
   endif
   ! in: f_curved_ref_frame 0D_NOT_logical
   f_curved_ref_frame = curved_ref_frame
-  ! in: f_x 0D_NOT_real
-  f_x = x
-  ! in: f_y 0D_NOT_real
-  f_y = y
-  ! in: f_z 0D_NOT_real
-  f_z = z
-  ! in: f_cos_ang 0D_NOT_real
-  f_cos_ang = cos_ang
-  ! in: f_sin_ang 0D_NOT_real
-  f_sin_ang = sin_ang
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
   call to_fieldmap_coords(f_ele, f_local_orb, f_s_body, f_ele_anchor_pt, f_r0, &
       f_curved_ref_frame, f_x, f_y, f_z, f_cos_ang, f_sin_ang, f_err_flag)
 
+  ! out: f_x 0D_NOT_real
+  call c_f_pointer(x, f_x_ptr)
+  f_x_ptr = f_x
+  ! out: f_y 0D_NOT_real
+  call c_f_pointer(y, f_y_ptr)
+  f_y_ptr = f_y
+  ! out: f_z 0D_NOT_real
+  call c_f_pointer(z, f_z_ptr)
+  f_z_ptr = f_z
+  ! out: f_cos_ang 0D_NOT_real
+  call c_f_pointer(cos_ang, f_cos_ang_ptr)
+  f_cos_ang_ptr = f_cos_ang
+  ! out: f_sin_ang 0D_NOT_real
+  call c_f_pointer(sin_ang, f_sin_ang_ptr)
+  f_sin_ang_ptr = f_sin_ang
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_to_orbit_reading (orb, ele, axis, add_noise, reading, err) bind(c)
 
@@ -35840,23 +35927,38 @@ subroutine fortran_write_binary_cartesian_map (file_name, ele, cart_map, err_fla
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: cart_map  ! 0D_NOT_type
   type(cartesian_map_struct), pointer :: f_cart_map
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_file_name 0D_NOT_character
-  if (.not. c_associated(file_name)) return
+  if (.not. c_associated(file_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(file_name, f_file_name_ptr, [huge(0)])
   call to_f_str(f_file_name_ptr, f_file_name)
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
   ! in: f_cart_map 0D_NOT_type
-  if (.not. c_associated(cart_map)) return
+  if (.not. c_associated(cart_map)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(cart_map, f_cart_map)
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
   call write_binary_cartesian_map(f_file_name, f_ele, f_cart_map, f_err_flag)
 
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_write_binary_cylindrical_map (file_name, ele, cl_map, err_flag) bind(c)
 
@@ -35871,23 +35973,38 @@ subroutine fortran_write_binary_cylindrical_map (file_name, ele, cl_map, err_fla
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: cl_map  ! 0D_NOT_type
   type(cylindrical_map_struct), pointer :: f_cl_map
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_file_name 0D_NOT_character
-  if (.not. c_associated(file_name)) return
+  if (.not. c_associated(file_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(file_name, f_file_name_ptr, [huge(0)])
   call to_f_str(f_file_name_ptr, f_file_name)
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
   ! in: f_cl_map 0D_NOT_type
-  if (.not. c_associated(cl_map)) return
+  if (.not. c_associated(cl_map)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(cl_map, f_cl_map)
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
   call write_binary_cylindrical_map(f_file_name, f_ele, f_cl_map, f_err_flag)
 
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_write_binary_grid_field (file_name, ele, g_field, err_flag) bind(c)
 
@@ -35902,23 +36019,38 @@ subroutine fortran_write_binary_grid_field (file_name, ele, g_field, err_flag) b
   type(ele_struct), pointer :: f_ele
   type(c_ptr), value :: g_field  ! 0D_NOT_type
   type(grid_field_struct), pointer :: f_g_field
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_file_name 0D_NOT_character
-  if (.not. c_associated(file_name)) return
+  if (.not. c_associated(file_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(file_name, f_file_name_ptr, [huge(0)])
   call to_f_str(f_file_name_ptr, f_file_name)
   ! in: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) return
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(ele, f_ele)
   ! in: f_g_field 0D_NOT_type
-  if (.not. c_associated(g_field)) return
+  if (.not. c_associated(g_field)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(g_field, f_g_field)
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
   call write_binary_grid_field(f_file_name, f_ele, f_g_field, f_err_flag)
 
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_write_blender_ele (iu, ele, old_format) bind(c)
 

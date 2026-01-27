@@ -125,9 +125,6 @@ q2 : 1D array of complex (shape: 0:3)
 q3 : 1D array of complex (shape: 0:3), optional
     More quaternions.
 
-... : real(rp) or complex(rp), optional
-    More quaternions.
-
 q9 : 1D array of complex (shape: 0:3), optional
     More quaternions.
 
@@ -175,9 +172,6 @@ q2 : 1D array of float (shape: 0:3)
     Quaternions.
 
 q3 : 1D array of float (shape: 0:3), optional
-    More quaternions.
-
-... : real(rp) or complex(rp), optional
     More quaternions.
 
 q9 : 1D array of float (shape: 0:3), optional

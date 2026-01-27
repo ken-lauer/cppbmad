@@ -30,38 +30,38 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("ibs_mat"),
       R"""(Wrapper for Fortran routine ibs_matrix_c
 
-  Parameters
-  ----------
-  sigma_mat : 2D array of float (shape: 6,6)
+Parameters
+----------
+sigma_mat : 2D array of float (shape: 6,6)
 
-  tail_cut : bool
+tail_cut : bool
 
-  tau : float
+tau : float
 
-  energy : float
+energy : float
 
-  n_part : float
+n_part : float
 
-  species : int
+species : int
 
-  ibs_mat : 2D array of float (shape: 6,6)
+ibs_mat : 2D array of float (shape: 6,6)
 
-  Returns
-  -------
-  sigma_mat : 2D array of float (shape: 6,6)
+Returns
+-------
+sigma_mat : 2D array of float (shape: 6,6)
 
-  tail_cut : bool
+tail_cut : bool
 
-  tau : float
+tau : float
 
-  energy : float
+energy : float
 
-  n_part : float
+n_part : float
 
-  species : int
+species : int
 
-  ibs_mat : 2D array of float (shape: 6,6)
-  )"""
+ibs_mat : 2D array of float (shape: 6,6)
+)"""
   );
   m.def(
       "igfcoulombfun",
@@ -76,42 +76,42 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("res"),
       R"""(Wrapper for Fortran routine igfcoulombfun
 
-  Parameters
-  ----------
-  u : float
+Parameters
+----------
+u : float
 
-  v : float
+v : float
 
-  w : float
+w : float
 
-  gam : float
+gam : float
 
-  dx : float
+dx : float
 
-  dy : float
+dy : float
 
-  dz : float
+dz : float
 
-  res : float
+res : float
 
-  Returns
-  -------
-  u : float
+Returns
+-------
+u : float
 
-  v : float
+v : float
 
-  w : float
+w : float
 
-  gam : float
+gam : float
 
-  dx : float
+dx : float
 
-  dy : float
+dy : float
 
-  dz : float
+dz : float
 
-  res : float
-  )"""
+res : float
+)"""
   );
   m.def(
       "igfexfun",
@@ -126,42 +126,42 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("res"),
       R"""(Wrapper for Fortran routine igfexfun
 
-  Parameters
-  ----------
-  u : float
+Parameters
+----------
+u : float
 
-  v : float
+v : float
 
-  w : float
+w : float
 
-  gam : float
+gam : float
 
-  dx : float
+dx : float
 
-  dy : float
+dy : float
 
-  dz : float
+dz : float
 
-  res : float
+res : float
 
-  Returns
-  -------
-  u : float
+Returns
+-------
+u : float
 
-  v : float
+v : float
 
-  w : float
+w : float
 
-  gam : float
+gam : float
 
-  dx : float
+dx : float
 
-  dy : float
+dy : float
 
-  dz : float
+dz : float
 
-  res : float
-  )"""
+res : float
+)"""
   );
   m.def(
       "igfeyfun",
@@ -176,42 +176,42 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("res"),
       R"""(Wrapper for Fortran routine igfeyfun
 
-  Parameters
-  ----------
-  u : float
+Parameters
+----------
+u : float
 
-  v : float
+v : float
 
-  w : float
+w : float
 
-  gam : float
+gam : float
 
-  dx : float
+dx : float
 
-  dy : float
+dy : float
 
-  dz : float
+dz : float
 
-  res : float
+res : float
 
-  Returns
-  -------
-  u : float
+Returns
+-------
+u : float
 
-  v : float
+v : float
 
-  w : float
+w : float
 
-  gam : float
+gam : float
 
-  dx : float
+dx : float
 
-  dy : float
+dy : float
 
-  dz : float
+dz : float
 
-  res : float
-  )"""
+res : float
+)"""
   );
   m.def(
       "igfezfun",
@@ -226,42 +226,42 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("res"),
       R"""(Wrapper for Fortran routine igfezfun
 
-  Parameters
-  ----------
-  u : float
+Parameters
+----------
+u : float
 
-  v : float
+v : float
 
-  w : float
+w : float
 
-  gam : float
+gam : float
 
-  dx : float
+dx : float
 
-  dy : float
+dy : float
 
-  dz : float
+dz : float
 
-  res : float
+res : float
 
-  Returns
-  -------
-  u : float
+Returns
+-------
+u : float
 
-  v : float
+v : float
 
-  w : float
+w : float
 
-  gam : float
+gam : float
 
-  dx : float
+dx : float
 
-  dy : float
+dy : float
 
-  dz : float
+dz : float
 
-  res : float
-  )"""
+res : float
+)"""
   );
   py::class_<PyInitAttributeName1, std::unique_ptr<PyInitAttributeName1>>(
       m,
@@ -288,51 +288,48 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("override") = py::none(),
       R"""(subroutine init_attribute_name1 (is_ok, ix_key, ix_attrib, name, attrib_state, override)
 
-  Routine to initialize a single name in the element attribute name table.
+Routine to initialize a single name in the element attribute name table.
 
-  Parameters
-  ----------
-  is_ok : bool
-      Initial setting.
-      This parameter is an input/output and is modified in-place.
-      As an output, is_ok: Set False if there is a problem. Otherwise untouched.
+Parameters
+----------
+is_ok : bool
+    Initial setting.
+    This parameter is an input/output and is modified in-place.
+    As an output, is_ok: Set False if there is a problem. Otherwise untouched.
 
-  ix_key : int
-      Key index.
+ix_key : int
+    Key index.
 
-  ix_attrib : int
-      Attribute index.
+ix_attrib : int
+    Attribute index.
 
-  name : character
-      Attribute name. Should be uppercase if attrib_state = is_free$.
+name : character
+    Attribute name. Should be uppercase if attrib_state = is_free$. Should contain non-uppercase characters if
+    attrib_state = private$.
 
-  Should contain non-uppercase characters if attrib_state = private$. : None
+attrib_state : int, optional
+    Class of attribute: does_not_exist$, is_free$, etc. Defaults to is_free$.
 
-  attrib_state : int, optional
-      Class of attribute: does_not_exist$, is_free$, etc.
+override : bool, optional
+    Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
+    True then the set is done and no error is generated.
 
-  Defaults to is_free$. : None
-
-  override : bool, optional
-      Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
-      True then the set is done and no error is generated.
-
-  Returns
-  -------
-  is_ok : bool
-      Initial setting.
-      This parameter is an input/output and is modified in-place.
-      As an output, is_ok: Set False if there is a problem. Otherwise untouched.
-  )"""
+Returns
+-------
+is_ok : bool
+    Initial setting.
+    This parameter is an input/output and is modified in-place.
+    As an output, is_ok: Set False if there is a problem. Otherwise untouched.
+)"""
   );
   m.def(
       "init_attribute_name_array",
       &Bmad::init_attribute_name_array,
       R"""(Subroutine init_attribute_name_array ()
 
-  Private routine to initialize the attribute name array used by routines
-  in attribute_mod. Not meant for general use.
-  )"""
+Private routine to initialize the attribute name array used by routines
+in attribute_mod. Not meant for general use.
+)"""
   );
   py::class_<Bmad::InitBeamDistribution, std::unique_ptr<Bmad::InitBeamDistribution>>(
       m,
@@ -364,64 +361,58 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("print_p0c_shift_warning") = py::none(),
       py::arg("conserve_momentum") = py::none(),
       R"""(Subroutine init_beam_distribution (ele, param, beam_init, beam, err_flag, modes, beam_init_set,
-                                                                      print_p0c_shift_warning, conserve_momentum)
+                                                                    print_p0c_shift_warning, conserve_momentum)
 
-  Subroutine to initialize a beam of particles.
-  Initialization uses the downstream parameters of ele.
+Subroutine to initialize a beam of particles.
+Initialization uses the downstream parameters of ele.
 
-  Note: This routine sets the random number generator according to the settings
-  in beam_int and at the end resets things to their initial state.
+Note: This routine sets the random number generator according to the settings
+in beam_int and at the end resets things to their initial state.
 
-  For more information on individual bunch initialization, see the
-  init_bunch_distribution routine.
+For more information on individual bunch initialization, see the
+init_bunch_distribution routine.
 
-  Note: The optional "modes" argument generally is used to pass in normal mode parameters as
-  calculated from the lattice. If present, and if a parameter like beam_init%a_emit are
-  set negative, then the corresponding parameter in the modes structure is used.
-  If not present, a warning message is issued and the parameter is set to zero.
-  This is only used for parameters that cannot be negative.
+Note: The optional "modes" argument generally is used to pass in normal mode parameters as
+calculated from the lattice. If present, and if a parameter like beam_init%a_emit are
+set negative, then the corresponding parameter in the modes structure is used.
+If not present, a warning message is issued and the parameter is set to zero.
+This is only used for parameters that cannot be negative.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      element to initialize distribution at (downstream end).
+Parameters
+----------
+ele : EleStruct
+    element to initialize distribution at (downstream end).
 
-  param : LatParamStruct
-      Lattice parameters
+param : LatParamStruct
+    Lattice parameters
 
-  %particle : None
-      Type of particle.
+beam_init : BeamInitStruct
+    Use "getf beam_init_struct" for more details.
 
-  beam_init : BeamInitStruct
-      Use "getf beam_init_struct" for more details.
+modes : NormalModesStruct, optional
+    Normal mode parameters. See above.
 
-  modes : NormalModesStruct, optional
-      Normal mode parameters. See above.
+print_p0c_shift_warning : bool, optional
+    Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
-  print_p0c_shift_warning : bool, optional
-      Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+Returns
+-------
+beam : BeamStruct
+    Structure with initialized particles.
 
-  shift_momentum : logical, optional
-      Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+err_flag : bool, optional
+    Set true if there is an error, false otherwise.
 
-  Returns
-  -------
-  beam : BeamStruct
-      Structure with initialized particles.
-
-  err_flag : bool, optional
-      Set true if there is an error, false otherwise.
-
-  beam_init_set : BeamInitStruct, optional
-      Set to input beam_init with components like .a_emit set what is used in constructing the beam (which is
-      different from beam_init.a_emit if this is set negative).
-  )"""
+beam_init_set : BeamInitStruct, optional
+    Set to input beam_init with components like .a_emit set what is used in constructing the beam (which is
+    different from beam_init.a_emit if this is set negative).
+)"""
   );
   m.def(
       "init_bmad",
       &Bmad::init_bmad,
       R"""(Wrapper for Fortran routine init_bmad
-  )"""
+)"""
   );
   m.def(
       "init_bmad_parser_common",
@@ -429,14 +420,14 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("lat") = py::none(),
       R"""(Wrapper for Fortran routine init_bmad_parser_common
 
-  Parameters
-  ----------
-  lat : LatStruct, optional
+Parameters
+----------
+lat : LatStruct, optional
 
-  Returns
-  -------
-  lat : LatStruct, optional
-  )"""
+Returns
+-------
+lat : LatStruct, optional
+)"""
   );
   py::class_<Bmad::InitBunchDistribution, std::unique_ptr<Bmad::InitBunchDistribution>>(
       m,
@@ -469,73 +460,70 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("print_p0c_shift_warning") = py::none(),
       py::arg("conserve_momentum") = py::none(),
       R"""(Subroutine init_bunch_distribution (ele, param, beam_init, ix_bunch, bunch, err_flag, modes, beam_init_used,
-                                                                           print_p0c_shift_warning, conserve_momentum)
+                                                                         print_p0c_shift_warning, conserve_momentum)
 
-  Subroutine to initialize a distribution of particles of a bunch.
-  Initialization uses the downstream parameters of ele.
+Subroutine to initialize a distribution of particles of a bunch.
+Initialization uses the downstream parameters of ele.
 
-  There are four distributions available:
-    '', or 'ran_gauss' -- Random gaussian distribution.
-    'ellipse'  -- concentric ellipses representing a Gaussian distribution
-    'grid'     -- uniform rectangular grid
-    'KV'       -- Kapchinsky-Vladimirsky distribution
-  See the Bmad manual for more information.
+There are four distributions available:
+  '', or 'ran_gauss' -- Random gaussian distribution.
+  'ellipse'  -- concentric ellipses representing a Gaussian distribution
+  'grid'     -- uniform rectangular grid
+  'KV'       -- Kapchinsky-Vladimirsky distribution
+See the Bmad manual for more information.
 
-  The distribution is matched to the Twiss parameters, centroid position, and Energy - z
-  correlation as specified. Coupling in the element ele is incorporated into the distribution.
+The distribution is matched to the Twiss parameters, centroid position, and Energy - z
+correlation as specified. Coupling in the element ele is incorporated into the distribution.
 
-  Note: Except for the random number seed, the random number generator
-  parameters used for this routine are set from the beam_init argument.
-  That is, these parameters are independent of what is used everywhere else.
+Note: Except for the random number seed, the random number generator
+parameters used for this routine are set from the beam_init argument.
+That is, these parameters are independent of what is used everywhere else.
 
-  Note: Make sure: |beam_init%dpz_dz| < mode%sigE_E / mode%sig_z
+Note: Make sure: |beam_init%dpz_dz| < mode%sigE_E / mode%sig_z
 
-  Note: The optional "modes" argument generally is used to pass in normal mode parameters as
-  calculated from the lattice. If present, and if a parameter like beam_init%a_emit are
-  set negative, then the corresponding parameter in the modes structure is used.
-  If not present, a warning message is issued and the parameter is set to zero.
-  This is only used for parameters that cannot be negative.
+Note: The optional "modes" argument generally is used to pass in normal mode parameters as
+calculated from the lattice. If present, and if a parameter like beam_init%a_emit are
+set negative, then the corresponding parameter in the modes structure is used.
+If not present, a warning message is issued and the parameter is set to zero.
+This is only used for parameters that cannot be negative.
 
-  Note: To get good results, It is important to make sure that for
-  circular rings that beam_init%center is the correct closed orbit.
-  The closed orbit will shift if, for example, radiation damping is turned on.
+Note: To get good results, It is important to make sure that for
+circular rings that beam_init%center is the correct closed orbit.
+The closed orbit will shift if, for example, radiation damping is turned on.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      element to initialize distribution at (downstream end).
+Parameters
+----------
+ele : EleStruct
+    element to initialize distribution at (downstream end).
 
-  param : LatParamStruct
-      Lattice parameters
+param : LatParamStruct
+    Lattice parameters
 
-  beam_init : BeamInitStruct
-      Use "getf beam_init_struct" for more details.
+beam_init : BeamInitStruct
+    Use "getf beam_init_struct" for more details.
 
-  ix_bunch : int
-      Bunch index. 0 = bunch generated at time = 0.
+ix_bunch : int
+    Bunch index. 0 = bunch generated at time = 0.
 
-  modes : NormalModesStruct, optional
-      Normal mode parameters. See above.
+modes : NormalModesStruct, optional
+    Normal mode parameters. See above.
 
-  print_p0c_shift_warning : bool, optional
-      Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+print_p0c_shift_warning : bool, optional
+    Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
-  shift_momentum : logical, optional
-      Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
+Returns
+-------
+bunch : BunchStruct
+    Structure with initialized particles.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Structure with initialized particles.
+err_flag : bool, optional
+    Set True if there is an error. False otherwise.
 
-  err_flag : bool, optional
-      Set True if there is an error. False otherwise.
-
-  beam_init_used : BeamInitStruct, optional
-      Set to input beam_init with components like .a_emit set what is used in constructing the beam (which can
-      be different from beam_init.a_emit if this is set negative). If reading from a file, beam_init_used will
-      equal beam_init.
-  )"""
+beam_init_used : BeamInitStruct, optional
+    Set to input beam_init with components like .a_emit set what is used in constructing the beam (which can
+    be different from beam_init.a_emit if this is set negative). If reading from a file, beam_init_used will
+    equal beam_init.
+)"""
   );
   m.def(
       "init_complex_taylor_series",
@@ -545,32 +533,30 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("save") = py::none(),
       R"""(Subroutine init_complex_taylor_series (complex_taylor, n_term, save)
 
-  Subroutine to initialize a Bmad complex_taylor series (6 of these series make
-  a complex_taylor map). Note: This routine does not zero the structure. The calling
-  routine is responsible for setting all values.
+Subroutine to initialize a Bmad complex_taylor series (6 of these series make
+a complex_taylor map). Note: This routine does not zero the structure. The calling
+routine is responsible for setting all values.
 
-  Parameters
-  ----------
-  complex_taylor : ComplexTaylorStruct
-      Old structure.
-      This parameter is an input/output and is modified in-place.
-      As an output, complex_taylor: Initalized structure.
+Parameters
+----------
+complex_taylor : ComplexTaylorStruct
+    Old structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, complex_taylor: Initalized structure.
 
-  n_term : int
-      Number of terms to allocate.
+n_term : int
+    Number of terms to allocate. n_term < 1 => complex_taylor.term pointer will be disassociated.
 
-  n_term < 1 => complex_taylor%term pointer will be disassociated. : None
+save : bool, optional
+    If True then save any old terms when complex_taylor is resized. Default is False.
 
-  save : bool, optional
-      If True then save any old terms when complex_taylor is resized. Default is False.
-
-  Returns
-  -------
-  complex_taylor : ComplexTaylorStruct
-      Old structure.
-      This parameter is an input/output and is modified in-place.
-      As an output, complex_taylor: Initalized structure.
-  )"""
+Returns
+-------
+complex_taylor : ComplexTaylorStruct
+    Old structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, complex_taylor: Initalized structure.
+)"""
   );
   m.def(
       "init_coord",
@@ -601,91 +587,75 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("random_on") = py::none(),
       R"""(Subroutine init_coord (...)
 
-  Routine to initialize a coord_struct.
+Routine to initialize a coord_struct.
 
-  This routine is an overloaded name for:
-    Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+This routine is an overloaded name for:
+  Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
 
-  Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
-  or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
-  corresponding to the beginning_ele's value of ele%value(p0c_start$).
+Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+corresponding to the beginning_ele's value of ele%value(p0c_start$).
 
-  Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
-  of the standard which is to set orb%t from orb%vec(5).
+Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+of the standard which is to set orb%t from orb%vec(5).
 
-  For photons:
-    orb%vec(5) is set depending upon where the photon is relative to the element.
-    If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
-        except if direction is set.
+For photons:
+  orb%vec(5) is set depending upon where the photon is relative to the element.
+  If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+      except if direction is set.
 
-  Parameters
-  ----------
-  orb_in : coord_struct
-      Input orbit.
+Parameters
+----------
+vec : 1D array of float (shape: 6)
+    Coordinate vector. If not present then taken to be zero.
 
-  vec : 1D array of float (shape: 6)
-      Coordinate vector. If not present then taken to be zero.
+ele : EleStruct, optional
+    Particle is initialized to start at element_end of this ele.
 
-  ele : EleStruct, optional
-      Particle is initialized to start at element_end of this ele.
+element_end : int, optional
+    upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
+    start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
+    upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
+    matter.
 
-  element_end : int, optional
-      upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
-      start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-      upstream_end$. Note: If ele is the beginning element (index zero), the
+particle : int, optional
+    Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
 
-  setting of element_end will not matter. : None
+direction : int, optional
+    +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
+    orb.direction except for photons which get set according to orb.vec(6).
 
-  particle : int, optional
-      Particle type (electron$, etc.).
+E_photon : float, optional
+    Photon energy if particle is a photon. Ignored otherwise.
 
-  If particle = not_set$ and orb_in is present : None
+t_offset : float, optional
+    Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
+    a particular particle is pegged to the time of the center of the bunch.
 
-  use orb_in%species instead. : None
+shift_vec6 : bool, optional
+    If present and False, prevent the shift of orb.vec(6).
 
-  direction : int, optional
-      +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-      orb.direction except for photons which get set
+spin : 1D array of float (shape: 3), optional
+    Particle spin. Taken to be zero if not present.
 
-  according to orb%vec : None
+s_pos : float, optional
+    Particle s-position. Only relavent if element_end = inside$.
 
-  E_photon : float, optional
-      Photon energy if particle is a photon. Ignored otherwise.
+random_on : bool, optional
+    Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
+    photon coords using a random number generator. If False, the photon coords will be centered within the
+    distribution specified in the photon_init ele.
 
-  t_offset : float, optional
-      Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-      a particular particle
+orb : CoordStruct
+    Input orbit
 
-  is pegged to the time of the center of the bunch. : None
-
-  shift_vec6 : bool, optional
-      If present and False, prevent the shift of orb.vec(6).
-
-  spin : 1D array of float (shape: 3), optional
-      Particle spin. Taken to be zero if not present.
-
-  s_pos : float, optional
-      Particle s-position. Only relavent if element_end = inside$.
-
-  random_on : bool, optional
-      Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
-      photon coords using a random number generator. If False, the photon coords will be centered within the
-      distribution specified in the photon_init ele.
-
-  orb : CoordStruct
-      Input orbit
-
-  Returns
-  -------
-  orb : CoordStruct
-      Input orbit
-
-  Notes
-  -----
-  Overloaded versions:
-  )"""
+Returns
+-------
+orb : CoordStruct
+    Input orbit
+)"""
   );
   m.def(
       "init_coord",
@@ -714,95 +684,75 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("random_on") = py::none(),
       R"""(Subroutine init_coord (...)
 
-  Routine to initialize a coord_struct.
+Routine to initialize a coord_struct.
 
-  This routine is an overloaded name for:
-    Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+This routine is an overloaded name for:
+  Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
 
-  Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
-  or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
-  corresponding to the beginning_ele's value of ele%value(p0c_start$).
+Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+corresponding to the beginning_ele's value of ele%value(p0c_start$).
 
-  Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
-  of the standard which is to set orb%t from orb%vec(5).
+Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+of the standard which is to set orb%t from orb%vec(5).
 
-  For photons:
-    orb%vec(5) is set depending upon where the photon is relative to the element.
-    If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
-        except if direction is set.
+For photons:
+  orb%vec(5) is set depending upon where the photon is relative to the element.
+  If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+      except if direction is set.
 
-  Parameters
-  ----------
-  orb_in : CoordStruct
-      Input orbit
+Parameters
+----------
+orb_in : CoordStruct
+    Input orbit
 
-  vec : real(rp)
-      Coordinate vector. If not present then taken to be zero.
+ele : EleStruct, optional
+    Particle is initialized to start at element_end of this ele.
 
-  ele : EleStruct, optional
-      Particle is initialized to start at element_end of this ele.
+element_end : int, optional
+    upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
+    start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
+    upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
+    matter.
 
-  element_end : int, optional
-      upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
-      start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-      upstream_end$. Note: If ele is the beginning element (index zero), the
+particle : int, optional
+    Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
 
-  setting of element_end will not matter. : None
+direction : int, optional
+    +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
+    orb.direction except for photons which get set according to orb.vec(6).
 
-  particle : int, optional
-      Particle type (electron$, etc.).
+E_photon : float, optional
+    Photon energy if particle is a photon. Ignored otherwise.
 
-  If particle = not_set$ and orb_in is present : None
+t_offset : float, optional
+    Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
+    a particular particle is pegged to the time of the center of the bunch.
 
-  use orb_in%species instead. : None
+shift_vec6 : bool, optional
+    If present and False, prevent the shift of orb.vec(6).
 
-  direction : int, optional
-      +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-      orb.direction except for photons which get set
+spin : 1D array of float (shape: 3), optional
+    Particle spin. Taken to be zero if not present.
 
-  according to orb%vec : None
+s_pos : float, optional
+    Particle s-position. Only relavent if element_end = inside$.
 
-  E_photon : float, optional
-      Photon energy if particle is a photon. Ignored otherwise.
+random_on : bool, optional
+    Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
+    photon coords using a random number generator. If False, the photon coords will be centered within the
+    distribution specified in the photon_init ele.
 
-  t_offset : float, optional
-      Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-      a particular particle
+Returns
+-------
+orb_in : CoordStruct
+    Input orbit
 
-  is pegged to the time of the center of the bunch. : None
-
-  shift_vec6 : bool, optional
-      If present and False, prevent the shift of orb.vec(6).
-
-  spin : 1D array of float (shape: 3), optional
-      Particle spin. Taken to be zero if not present.
-
-  s_pos : float, optional
-      Particle s-position. Only relavent if element_end = inside$.
-
-  random_on : bool, optional
-      Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
-      photon coords using a random number generator. If False, the photon coords will be centered within the
-      distribution specified in the photon_init ele.
-
-  Returns
-  -------
-  orb_in : CoordStruct
-      Input orbit
-
-  orb : coord_struct
-      Initialized coordinate. Note: For photons, orb.vec(6) is computed as sqrt(1 - vec(2)^2 - vec(4)^2) if
-      needed.
-
-  orb_out : CoordStruct
-      Initialized coordinate
-
-  Notes
-  -----
-  Overloaded versions:
-  )"""
+orb_out : CoordStruct
+    Initialized coordinate
+)"""
   );
   m.def(
       "init_coord",
@@ -827,91 +777,64 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("spin") = py::none(),
       R"""(Subroutine init_coord (...)
 
-  Routine to initialize a coord_struct.
+Routine to initialize a coord_struct.
 
-  This routine is an overloaded name for:
-    Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
-    Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+This routine is an overloaded name for:
+  Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord2 (orb, orb_in, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
+  Subroutine init_coord3 (orb, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
 
-  Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
-  or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
-  corresponding to the beginning_ele's value of ele%value(p0c_start$).
+Note: Unless shift_vec6 is set to False, if ele is a beginning_ele (IE, the element at the beginning of the lattice),
+or e_gun, orb%vec(6) is shifted so that a particle with orb%vec(6) = 0 will end up with a value of orb%vec(6)
+corresponding to the beginning_ele's value of ele%value(p0c_start$).
 
-  Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
-  of the standard which is to set orb%t from orb%vec(5).
+Note: For non-photons, if orb_in%vec(5) is set to real_garbage$, orb_in%t will be used to set orb%vec(5) instead
+of the standard which is to set orb%t from orb%vec(5).
 
-  For photons:
-    orb%vec(5) is set depending upon where the photon is relative to the element.
-    If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
-        except if direction is set.
+For photons:
+  orb%vec(5) is set depending upon where the photon is relative to the element.
+  If orb is a photon, and orb_in is not a photon, photon is launched in same direciton as particle
+      except if direction is set.
 
-  Parameters
-  ----------
-  orb_in : coord_struct
-      Input orbit.
+Parameters
+----------
+ele : EleStruct, optional
+    Particle is initialized to start at element_end of this ele.
 
-  vec : real(rp)
-      Coordinate vector. If not present then taken to be zero.
+element_end : int, optional
+    upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
+    start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
+    upstream_end$. Note: If ele is the beginning element (index zero), the setting of element_end will not
+    matter.
 
-  ele : EleStruct, optional
-      Particle is initialized to start at element_end of this ele.
+particle : int, optional
+    Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
 
-  element_end : int, optional
-      upstream_end$, downstream_end$, inside$, or start_end$. Must be present if ele argument is present.
-      start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
-      upstream_end$. Note: If ele is the beginning element (index zero), the
+direction : int, optional
+    +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
+    orb.direction except for photons which get set according to orb.vec(6).
 
-  setting of element_end will not matter. : None
+E_photon : float, optional
+    Photon energy if particle is a photon. Ignored otherwise.
 
-  particle : int, optional
-      Particle type (electron$, etc.).
+t_offset : float, optional
+    Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
+    a particular particle is pegged to the time of the center of the bunch.
 
-  If particle = not_set$ and orb_in is present : None
+shift_vec6 : bool, optional
+    If present and False, prevent the shift of orb.vec(6).
 
-  use orb_in%species instead. : None
+spin : 1D array of float (shape: 3), optional
+    Particle spin. Taken to be zero if not present.
 
-  direction : int, optional
-      +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-      orb.direction except for photons which get set
+orb : CoordStruct
+    Input orbit
 
-  according to orb%vec : None
-
-  E_photon : float, optional
-      Photon energy if particle is a photon. Ignored otherwise.
-
-  t_offset : float, optional
-      Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
-      a particular particle
-
-  is pegged to the time of the center of the bunch. : None
-
-  shift_vec6 : bool, optional
-      If present and False, prevent the shift of orb.vec(6).
-
-  spin : 1D array of float (shape: 3), optional
-      Particle spin. Taken to be zero if not present.
-
-  s_pos : real(rp), optional
-      Particle s-position. Only relavent if element_end = inside$.
-
-  random_on : logical, optional
-      Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
-      photon coords using a random number generator. If False, the photon coords will be centered within the
-      distribution specified in the photon_init ele.
-
-  orb : CoordStruct
-      Input orbit
-
-  Returns
-  -------
-  orb : CoordStruct
-      Input orbit
-
-  Notes
-  -----
-  Overloaded versions:
-  )"""
+Returns
+-------
+orb : CoordStruct
+    Input orbit
+)"""
   );
   m.def(
       "init_custom",
@@ -919,14 +842,14 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("lat"),
       R"""(Wrapper for Fortran routine init_custom
 
-  Parameters
-  ----------
-  lat : LatStruct
+Parameters
+----------
+lat : LatStruct
 
-  Returns
-  -------
-  lat : LatStruct
-  )"""
+Returns
+-------
+lat : LatStruct
+)"""
   );
   m.def(
       "init_ele",
@@ -937,25 +860,25 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("branch") = py::none(),
       R"""(Wrapper for Fortran routine init_ele
 
-  Parameters
-  ----------
-  key : int, optional
-      Key to initialize to. EG: quadrupole$, etc.
+Parameters
+----------
+key : int, optional
+    Key to initialize to. EG: quadrupole$, etc.
 
-  sub_key : int, optional
-      Sub-key to initialize to.
+sub_key : int, optional
+    Sub-key to initialize to.
 
-  ix_ele : int, optional
-      ix_ele index to initalize to. Default = -1.
+ix_ele : int, optional
+    ix_ele index to initalize to. Default = -1.
 
-  branch : BranchStruct, optional
-      Branch to point ele.branch and ele.ix_branch to. Otherwise ele.branch is nullified and ele.ix_branch = 0.
+branch : BranchStruct, optional
+    Branch to point ele.branch and ele.ix_branch to. Otherwise ele.branch is nullified and ele.ix_branch = 0.
 
-  Returns
-  -------
-  ele : EleStruct
-      Initialized element.
-  )"""
+Returns
+-------
+ele : EleStruct
+    Initialized element.
+)"""
   );
   m.def(
       "init_em_taylor_series",
@@ -965,32 +888,30 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("save_old") = py::none(),
       R"""(Subroutine init_em_taylor_series (em_taylor, n_term, save_old)
 
-  Subroutine to initialize a Bmad Em_taylor series (6 of these series make
-  a Em_taylor map). Note: This routine does not zero the structure. The calling
-  routine is responsible for setting all values.
+Subroutine to initialize a Bmad Em_taylor series (6 of these series make
+a Em_taylor map). Note: This routine does not zero the structure. The calling
+routine is responsible for setting all values.
 
-  Parameters
-  ----------
-  em_taylor : EmTaylorStruct
-      Old structure.
-      This parameter is an input/output and is modified in-place.
-      As an output, em_taylor: Initalized structure.
+Parameters
+----------
+em_taylor : EmTaylorStruct
+    Old structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, em_taylor: Initalized structure.
 
-  n_term : int
-      Number of terms to allocate.
+n_term : int
+    Number of terms to allocate. n_term < 0 => em_taylor.term pointer will be disassociated.
 
-  n_term < 0 => em_taylor%term pointer will be disassociated. : None
+save_old : bool, optional
+    If True then save any old terms when em_taylor is resized. Default is False.
 
-  save_old : bool, optional
-      If True then save any old terms when em_taylor is resized. Default is False.
-
-  Returns
-  -------
-  em_taylor : EmTaylorStruct
-      Old structure.
-      This parameter is an input/output and is modified in-place.
-      As an output, em_taylor: Initalized structure.
-  )"""
+Returns
+-------
+em_taylor : EmTaylorStruct
+    Old structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, em_taylor: Initalized structure.
+)"""
   );
   m.def(
       "init_lat",
@@ -999,19 +920,19 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("init_beginning_ele") = py::none(),
       R"""(Wrapper for Fortran routine init_lat
 
-  Parameters
-  ----------
-  n : int, optional
-      Upper bound lat.ele(0:) array is initialized to.
+Parameters
+----------
+n : int, optional
+    Upper bound lat.ele(0:) array is initialized to. Default is 10.
 
-  init_beginning_ele : bool, optional
-      Init lat.ele(0)? Default is False.
+init_beginning_ele : bool, optional
+    Init lat.ele(0)? Default is False.
 
-  Returns
-  -------
-  lat : LatStruct
-      Initialized lat.
-  )"""
+Returns
+-------
+lat : LatStruct
+    Initialized lat.
+)"""
   );
   m.def(
       "init_multipole_cache",
@@ -1019,20 +940,20 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("ele"),
       R"""(Wrapper for Fortran routine init_multipole_cache
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element to init
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Initalized element.
+Parameters
+----------
+ele : EleStruct
+    Element to init
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Initalized element.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element to init
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Initalized element.
-  )"""
+Returns
+-------
+ele : EleStruct
+    Element to init
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Initalized element.
+)"""
   );
   m.def(
       "init_photon_from_a_photon_init_ele",
@@ -1042,22 +963,22 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("random_on") = py::none(),
       R"""(Wrapper for Fortran routine init_photon_from_a_photon_init_ele
 
-  Parameters
-  ----------
-  ele : EleStruct
-      patch element.
+Parameters
+----------
+ele : EleStruct
+    patch element.
 
-  param : LatParamStruct
-      lat_param_struct.
+param : LatParamStruct
+    lat_param_struct.
 
-  random_on : bool, optional
-      : Default is True. If False then use zero for all random numbers needed in the calc.
+random_on : bool, optional
+    : Default is True. If False then use zero for all random numbers needed in the calc.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Output photon coords.
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    Output photon coords.
+)"""
   );
   py::class_<Bmad::InitPhotonIntegProb, std::unique_ptr<Bmad::InitPhotonIntegProb>>(
       m,
@@ -1088,53 +1009,48 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("vert_angle_symmetric") = py::none(),
       py::arg("energy_integ_prob") = py::none(),
       R"""(Function init_photon_integ_prob(gamma, g, E_min, E_max, vert_angle_min,
-               vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
+             vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
 
-  Routine to calcuate the integrated probability of emitting a photon in a given vertical angle range
-  and in a given energy range
+Routine to calcuate the integrated probability of emitting a photon in a given vertical angle range
+and in a given energy range
 
-  Parameters
-  ----------
-  gamma : float
-      Gamma factor of charged particle emitting photon.
+Parameters
+----------
+gamma : float
+    Gamma factor of charged particle emitting photon.
 
-  g : float
-      1/rho bending strength.
+g : float
+    1/rho bending strength.
 
-  E_min : float
-      Minimum photon energy.
+E_min : float
+    Minimum photon energy.
 
-  E_max : float
-      Maximum photon energy.
+E_max : float
+    Maximum photon energy.
 
-  vert_angle_min : float, optional
-      Lower bound of vertical angle range.
+vert_angle_min : float, optional
+    Lower bound of vertical angle range.
 
-  vert_angle_max : float, optional
-      Upper bound of vertical angle range.
+vert_angle_max : float, optional
+    Upper bound of vertical angle range.
 
-  vert_angle_symmetric : bool, optional
-      Use two symmetric ranges [-vert_angle_max, -vert_angle_min] and
+vert_angle_symmetric : bool, optional
+    Use two symmetric ranges [-vert_angle_max, -vert_angle_min] and [vert_angle_min, vert_angle_max] instead
+    of just [vert_angle_min, vert_angle_max]?
 
-  [vert_angle_min : None
+energy_integ_prob : float, optional
+    If present, E_photon will be set to the photon energy such that the integrated probability of generating a
+    photon in the given angle and energy range in the interval [E_min, E_photon] is energy_integ_prob. That
+    is, energy_integ_prob = 0 => E_photon = E_min and energy_integ_prob = 1 => E_photon = E_max.
 
-  vert_angle_max] instead of just [vert_angle_min : None
+Returns
+-------
+E_photon : float, optional
+    See energy_integ_prob. E_photon must be present if energy_integ_prob is.
 
-  vert_angle_max]? : None
-
-  energy_integ_prob : float, optional
-      If present, E_photon will be set to the photon energy such that the integrated probability of generating a
-      photon in the given angle and energy range in the interval [E_min, E_photon] is energy_integ_prob. That
-      is, energy_integ_prob = 0 => E_photon = E_min and energy_integ_prob = 1 => E_photon = E_max.
-
-  Returns
-  -------
-  E_photon : float, optional
-      See energy_integ_prob. E_photon must be present if energy_integ_prob is.
-
-  integ_prob : float
-      Integrated probablility of emitting a photon in given angle and energy range.
-  )"""
+integ_prob : float
+    Integrated probablility of emitting a photon in given angle and energy range.
+)"""
   );
   m.def(
       "init_spin_distribution",
@@ -1143,21 +1059,18 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("ele"),
       R"""(Subroutine init_spin_distribution (beam_init, bunch, ele)
 
-  Initializes a spin distribution according to beam_init%spin.
+Initializes a spin distribution according to beam_init%spin.
 
-  Parameters
-  ----------
-  beam_init : BeamInitStruct
-      Initialization parameters
+Parameters
+----------
+beam_init : BeamInitStruct
+    Initialization parameters
 
-  %spin : None
-      (x, y, z) spin coordinates ele
-
-  Returns
-  -------
-  bunch : BunchStruct
-      Bunch of particles. .particle(:).spin
-  )"""
+Returns
+-------
+bunch : BunchStruct
+    Bunch of particles. .particle(:).spin
+)"""
   );
   m.def(
       "init_surface_segment",
@@ -1167,19 +1080,19 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("iy"),
       R"""(Subroutine init_surface_segment (phot, ix, iy)
 
-  Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
+Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
 
-  Parameters
-  ----------
-  phot : PhotonElementStruct
-      Surface structure.
+Parameters
+----------
+phot : PhotonElementStruct
+    Surface structure.
 
-  ix : int
-      index of grid point to init.
+ix : int
+    index of grid point to init.
 
-  iy : int
-      index of grid point to init.
-  )"""
+iy : int
+    index of grid point to init.
+)"""
   );
   m.def(
       "init_taylor_series",
@@ -1189,27 +1102,27 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("save_old") = py::none(),
       R"""(Wrapper for Fortran routine init_taylor_series
 
-  Parameters
-  ----------
-  bmad_taylor : TaylorStruct
-      Old structure.
-      This parameter is an input/output and is modified in-place.
-      As an output, bmad_taylor: Initalized structure.
+Parameters
+----------
+bmad_taylor : TaylorStruct
+    Old structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, bmad_taylor: Initalized structure.
 
-  n_term : int
-      Number of terms to allocate.
+n_term : int
+    Number of terms to allocate. n_term < 0 => bmad_taylor.term pointer will be disassociated.
 
-  save_old : bool, optional
-      If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
-      Default is False.
+save_old : bool, optional
+    If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
+    Default is False.
 
-  Returns
-  -------
-  bmad_taylor : TaylorStruct
-      Old structure.
-      This parameter is an input/output and is modified in-place.
-      As an output, bmad_taylor: Initalized structure.
-  )"""
+Returns
+-------
+bmad_taylor : TaylorStruct
+    Old structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, bmad_taylor: Initalized structure.
+)"""
   );
   m.def(
       "init_wake",
@@ -1221,28 +1134,28 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("always_allocate") = py::none(),
       R"""(Wrapper for Fortran routine init_wake
 
-  Parameters
-  ----------
-  n_sr_long : int
-      Number of terms: wake.sr.long.
+Parameters
+----------
+n_sr_long : int
+    Number of terms: wake.sr.long.
 
-  n_sr_trans : int
-      Number of terms: wake.sr.trans.
+n_sr_trans : int
+    Number of terms: wake.sr.trans.
 
-  n_sr_z : int
-      Number of terms: wake.sr.z.
+n_sr_z : int
+    Number of terms: wake.sr.z.
 
-  n_lr_mode : int
-      Number of terms: wake.lr.mode.
+n_lr_mode : int
+    Number of terms: wake.lr.mode.
 
-  always_allocate : bool, optional
-      If present and True then allways allocate wake even if n_lr_mode, etc. are all 0. Default is False.
+always_allocate : bool, optional
+    If present and True then allways allocate wake even if n_lr_mode, etc. are all 0. Default is False.
 
-  Returns
-  -------
-  wake : WakeStruct, optional
-      Initialized structure.
-  )"""
+Returns
+-------
+wake : WakeStruct, optional
+    Initialized structure.
+)"""
   );
   m.def(
       "insert_element",
@@ -1254,39 +1167,39 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("orbit") = py::none(),
       R"""(Wrapper for Fortran routine insert_element
 
-  Parameters
-  ----------
-  lat : LatStruct
-      lattice that will be modified
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: lattice with new element inserted
+Parameters
+----------
+lat : LatStruct
+    lattice that will be modified
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: lattice with new element inserted
 
-  insert_ele : EleStruct
-      element to insert into the lat
+insert_ele : EleStruct
+    element to insert into the lat
 
-  ix_ele : int
-      branch.ele(:) index where the new element is inserted.
+ix_ele : int
+    branch.ele(:) index where the new element is inserted.
 
-  ix_branch : int, optional
-      : branch index for the insertion. Default = 0.
+ix_branch : int, optional
+    : branch index for the insertion. Default = 0.
 
-  orbit : 1D array of CoordStruct, optional
-      orbit array to enlarge.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Enlarged orbit array.
+orbit : 1D array of CoordStruct, optional
+    orbit array to enlarge.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Enlarged orbit array.
 
-  Returns
-  -------
-  lat : LatStruct
-      lattice that will be modified
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: lattice with new element inserted
+Returns
+-------
+lat : LatStruct
+    lattice that will be modified
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: lattice with new element inserted
 
-  orbit : 1D array of CoordStruct, optional
-      orbit array to enlarge.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Enlarged orbit array.
-  )"""
+orbit : 1D array of CoordStruct, optional
+    orbit array to enlarge.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Enlarged orbit array.
+)"""
   );
   m.def(
       "integrand_base",
@@ -1296,25 +1209,20 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("func_retval__"),
       R"""(Function integrand_base(t)
 
-  This vectorized private function is the integrand in equation 31 of Piwinski's paper.
+This vectorized private function is the integrand in equation 31 of Piwinski's paper.
 
-  This intetegrand has a sharp exponential decay, and so a change of variables from t to y where t=exp(y)
-  is applied.  This COV makes the integrand more evenly distributed over the domain of integration,
-  which makes it easier for qtrap to integrate.
+This intetegrand has a sharp exponential decay, and so a change of variables from t to y where t=exp(y)
+is applied.  This COV makes the integrand more evenly distributed over the domain of integration,
+which makes it easier for qtrap to integrate.
 
-  The change of variables is done using integrand_base_cov, which is then integrated
-  using qtrap.
+The change of variables is done using integrand_base_cov, which is then integrated
+using qtrap.
 
-  Parameters
-  ----------
-  t : float
-      Array of reals over which to evaluate the integrand.
-
-  Returns
-  -------
-  <return value> : real(rp)
-      Array of reals containing values of integrand at t(:).
-  )"""
+Parameters
+----------
+t : float
+    Array of reals over which to evaluate the integrand.
+)"""
   );
   m.def(
       "integrate_psi",
@@ -1324,25 +1232,25 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("args"),
       R"""(Subroutine integrate_psi(bound,p0,args,result)
 
-  Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
-  0 to +bound.
+Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
+0 to +bound.
 
-  Parameters
-  ----------
-  bound : float
-      integration bound
+Parameters
+----------
+bound : float
+    integration bound
 
-  p0 : float
-      psi(0).  Boundary condition.
+p0 : float
+    psi(0).  Boundary condition.
 
-  args : 1D array of float (shape: 1:8)
-      Parameters and constants of DEQ.  See psi_prime comments for details.
+args : 1D array of float (shape: 1:8)
+    Parameters and constants of DEQ.  See psi_prime comments for details.
 
-  Returns
-  -------
-  result : float
-      Integral of psi from -bound to +bound.
-  )"""
+Returns
+-------
+result : float
+    Integral of psi from -bound to +bound.
+)"""
   );
   m.def(
       "integrated_mats",
@@ -1354,7 +1262,7 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("Iota"),
       py::arg("mode"),
       R"""(subroutine integrated_mats(eles,coos,Lambda,Theta,Iota,mode)
-  )"""
+)"""
   );
   m.def(
       "integration_timer",
@@ -1368,30 +1276,30 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("tol"),
       R"""(Wrapper for Fortran routine integration_timer_ele
 
-  Parameters
-  ----------
-  ele : EleStruct
+Parameters
+----------
+ele : EleStruct
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  start : CoordStruct
+start : CoordStruct
 
-  orb_max : CoordStruct
+orb_max : CoordStruct
 
-  tol : float
+tol : float
 
-  Returns
-  -------
-  ele : EleStruct
+Returns
+-------
+ele : EleStruct
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  start : CoordStruct
+start : CoordStruct
 
-  orb_max : CoordStruct
+orb_max : CoordStruct
 
-  tol : float
-  )"""
+tol : float
+)"""
   );
   m.def(
       "integration_timer",
@@ -1404,26 +1312,26 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("tol_dp"),
       R"""(Wrapper for Fortran routine integration_timer_fibre
 
-  Parameters
-  ----------
-  a_fibre : Fibre
+Parameters
+----------
+a_fibre : Fibre
 
-  orbit : 1D array of float (shape: 6)
+orbit : 1D array of float (shape: 6)
 
-  orbit_max : 1D array of float (shape: 6)
+orbit_max : 1D array of float (shape: 6)
 
-  tol_dp : float
+tol_dp : float
 
-  Returns
-  -------
-  a_fibre : Fibre
+Returns
+-------
+a_fibre : Fibre
 
-  orbit : 1D array of float (shape: 6)
+orbit : 1D array of float (shape: 6)
 
-  orbit_max : 1D array of float (shape: 6)
+orbit_max : 1D array of float (shape: 6)
 
-  tol_dp : float
-  )"""
+tol_dp : float
+)"""
   );
   m.def(
       "ion_kick",
@@ -1436,31 +1344,31 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("sig_ee"),
       R"""(Wrapper for Fortran routine ion_kick
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Ion position.
+Parameters
+----------
+orbit : CoordStruct
+    Ion position.
 
-  r_beam : 1D array of float (shape: 2)
-      Beam (x, y) position.
+r_beam : 1D array of float (shape: 2)
+    Beam (x, y) position.
 
-  n_beam_part : float
-      Number of beam particles.
+n_beam_part : float
+    Number of beam particles.
 
-  a_twiss : TwissStruct
-      Horizontal like beam twiss parameters.
+a_twiss : TwissStruct
+    Horizontal like beam twiss parameters.
 
-  b_twiss : TwissStruct
-      vertical like beam twiss parameters.
+b_twiss : TwissStruct
+    vertical like beam twiss parameters.
 
-  sig_ee : float
-      Sigma_E/E beam energy spread.
+sig_ee : float
+    Sigma_E/E beam energy spread.
 
-  Returns
-  -------
-  kick : 1D array of float (shape: 3)
-      (x, y, s) kick in m/sec.
-  )"""
+Returns
+-------
+kick : 1D array of float (shape: 3)
+    (x, y, s) kick in m/sec.
+)"""
   );
   m.def(
       "is_attribute",
@@ -1469,20 +1377,20 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("which"),
       R"""(Function is_attribute (ix_attrib, which) result (is_attrib)
 
-  Routine to determine if an attribute index corresponds to a control variable for overlys/groups.
+Routine to determine if an attribute index corresponds to a control variable for overlys/groups.
 
-  Parameters
-  ----------
-  ix_attrib : int
-      Attribute index.
+Parameters
+----------
+ix_attrib : int
+    Attribute index.
 
-  which : int
-      control_var$, old_control_var$, all_control_var$, multipole$, elec_multipole$
+which : int
+    control_var$, old_control_var$, all_control_var$, multipole$, elec_multipole$
 
-  Returns
-  -------
-  is_attrib : bool
-      True if a control variable
-  )"""
+Returns
+-------
+is_attrib : bool
+    True if a control variable
+)"""
   );
 }

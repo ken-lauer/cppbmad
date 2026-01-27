@@ -69,7 +69,7 @@ Parameters
 species : int
     Species ID.
 
-default : integer, optional
+default : int, optional
     If present then use default value if species = not_set$.
 
 Returns
@@ -116,9 +116,6 @@ Returns
 -------
 frequency : float
     Frequency corresponding to the largest FFT amplitude
-
-err : logical
-    Error: not enough data. Frequency is near 0 or 0.5
 )"""
   );
   m.def(

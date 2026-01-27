@@ -125,11 +125,6 @@ Returns
 -------
 has_attribs : bool
     True if ele has orientation attributes. False otherwise.
-
-Notes
------
-Related routines:
-has_attribute function.
 )"""
   );
   m.def(

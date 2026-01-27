@@ -218,12 +218,8 @@ Parameters
 name : character
     Name of the species.
 
-default : integer, optional
-    Default species to use if name is blank or 'ref_species'.
-
-If not present : None
-
-a blank name is an error. : None
+default : int, optional
+    Default species to use if name is blank or 'ref_species'. If not present, a blank name is an error.
 
 print_err : bool, optional
     Print error message? Default is True. If False, return species = invalid$,
@@ -335,6 +331,12 @@ spin : float
       R"""(Function spline1 (a_spline, x, n) result (y)
 
 Function for spline evaluation using a single spline (instead of a spline array).
+Also see:
+  spline_evaluate
+  spline_akima_interpolate
+
+Modules used:
+  use spline_mod
 
 Parameters
 ----------
@@ -352,11 +354,6 @@ Returns
 -------
 y : float
     Interpolated spline value or derivative.
-
-Notes
------
-Related routines:
-spline_evaluate spline_akima_interpolate use spline_mod
 )"""
   );
   m.def(
@@ -383,18 +380,9 @@ Parameters
 ----------
 spline : 1D array of SplineStruct
 
-%x0 : x-component of a point. note
-    points must be in assending order.
-
-%y0 : None
-    Y-component of a point.
-
 Returns
 -------
 spline : 1D array of SplineStruct
-
-%coef : None
-    Spline coefficients at a point.
 
 ok : bool
     Set .false. if something is wrong (like less than 2 points used).
@@ -442,9 +430,7 @@ length between an end point and the point just inside the end point.
 Parameters
 ----------
 x_knot : 1D array of float
-    Array of x values for the knot points.
-
-Must have more than 2 points and be in asending order. : None
+    Array of x values for the knot points. Must have more than 2 points and be in asending order.
 
 y_knot : 1D array of float
     Array of y values for the knot points. Must be same size as x_knot(:).
@@ -494,6 +480,14 @@ dy : float, optional
 Subroutine to evalueate a spline at a set of points.
 
 A point outside of the range of knot points is an error.
+Also see:
+  spline1
+  spline_akima_interpolate
+
+A spline may be generated using, for example, the spline_akima routine.
+
+Modules used:
+  use spline_mod
 
 Parameters
 ----------
@@ -513,12 +507,6 @@ y : float, optional
 
 dy : float, optional
     Spline derivative interpolation.
-
-Notes
------
-Related routines:
-spline1 spline_akima_interpolate A spline may be generated using for example the spline_akima routine. use
-spline_mod
 )"""
   );
   m.def(
@@ -813,7 +801,7 @@ Parameters
 ----------
 line : character
 
-default : None
+default : (unknown)
 
 err_flag : bool
 
@@ -825,7 +813,7 @@ Returns
 -------
 line : character
 
-default : None
+default : (unknown)
 
 err_flag : bool
 
@@ -848,7 +836,7 @@ Parameters
 ----------
 line : character
 
-default : None
+default : (unknown)
 
 err_flag : bool
 
@@ -860,7 +848,7 @@ Returns
 -------
 line : character
 
-default : None
+default : (unknown)
 
 err_flag : bool
 
@@ -1116,9 +1104,6 @@ Parameters
 ----------
 x : float
     Variable.
-
-coef : real(rp)
-    Coefficients.
 
 Returns
 -------

@@ -70,11 +70,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("force_abort") = py::none(),
       R"""(Wrapper for Fortran routine tao_abort_command_file
 
-  Parameters
-  ----------
-  force_abort : bool, optional
-      : If present and True, ignore s.global.cmd_file_abort_on_error and abort any open command files.
-  )"""
+Parameters
+----------
+force_abort : bool, optional
+    : If present and True, ignore s.global.cmd_file_abort_on_error and abort any open command files.
+)"""
   );
   m.def(
       "tao_add_to_normal_mode_h_array",
@@ -83,20 +83,20 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("h_array"),
       R"""(Subroutine tao_add_to_normal_mode_h_array(h_str, h_array)
 
-  Routine to add on to the "h(:)" array holding the list of normal form
-  resonance driving terms to calculate.
-  If h_str is already in the h_array(:) list, nothing is done.
+Routine to add on to the "h(:)" array holding the list of normal form
+resonance driving terms to calculate.
+If h_str is already in the h_array(:) list, nothing is done.
 
-  Parameters
-  ----------
-  h_str : character
-      Resonance driving term ID. EG: "110000"
+Parameters
+----------
+h_str : character
+    Resonance driving term ID. EG: "110000"
 
-  Returns
-  -------
-  h_array : 1D array of ResonanceHStruct
-      Array of resonance driving terms.
-  )"""
+Returns
+-------
+h_array : 1D array of ResonanceHStruct
+    Array of resonance driving terms.
+)"""
   );
   m.def(
       "tao_alias_cmd",
@@ -105,14 +105,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("string"),
       R"""(Wrapper for Fortran routine tao_alias_cmd
 
-  Parameters
-  ----------
-  alias : character
-      Name of the tao command file.
+Parameters
+----------
+alias : character
+    Name of the tao command file.
 
-  string : character
-      Command file arguments.
-  )"""
+string : character
+    Command file arguments.
+)"""
   );
   m.def(
       "tao_allocate_data_array",
@@ -122,22 +122,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("exact") = py::none(),
       R"""(Wrapper for Fortran routine tao_allocate_data_array
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
+Parameters
+----------
+u : TaoUniverseStruct
 
-  n_data : int
+n_data : int
 
-  exact : bool, optional
+exact : bool, optional
 
-  Returns
-  -------
-  u : TaoUniverseStruct
+Returns
+-------
+u : TaoUniverseStruct
 
-  n_data : int
+n_data : int
 
-  exact : bool, optional
-  )"""
+exact : bool, optional
+)"""
   );
   m.def(
       "tao_allocate_v1_var",
@@ -146,18 +146,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("save_old"),
       R"""(Wrapper for Fortran routine tao_allocate_v1_var
 
-  Parameters
-  ----------
-  n_v1 : int
+Parameters
+----------
+n_v1 : int
 
-  save_old : bool
+save_old : bool
 
-  Returns
-  -------
-  n_v1 : int
+Returns
+-------
+n_v1 : int
 
-  save_old : bool
-  )"""
+save_old : bool
+)"""
   );
   m.def(
       "tao_allocate_var_array",
@@ -166,13 +166,13 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("default_good_user"),
       R"""(Subroutine tao_allocate_var_array (n_var, default_good_user)
 
-  Routine to increase the s%var(:) array size.
+Routine to increase the s%var(:) array size.
 
-  Parameters
-  ----------
-  n_var : int
-      Size of s.var(:) wanted.
-  )"""
+Parameters
+----------
+n_var : int
+    Size of s.var(:) wanted.
+)"""
   );
   m.def(
       "tao_beam_emit_calc",
@@ -183,25 +183,25 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("bunch_params"),
       R"""(Wrapper for Fortran routine tao_beam_emit_calc
 
-  Parameters
-  ----------
-  plane : int
-      x_plane$ or y_plane$.
+Parameters
+----------
+plane : int
+    x_plane$ or y_plane$.
 
-  emit_type : int
-      Either projected_emit$ or apparent_emit$
+emit_type : int
+    Either projected_emit$ or apparent_emit$
 
-  ele : EleStruct
-      Element.
+ele : EleStruct
+    Element.
 
-  bunch_params : BunchParamsStruct
-      Bunch sigma matrix
+bunch_params : BunchParamsStruct
+    Bunch sigma matrix
 
-  Returns
-  -------
-  emit : float
-      emittance.
-  )"""
+Returns
+-------
+emit : float
+    emittance.
+)"""
   );
   m.def(
       "tao_beam_track",
@@ -212,34 +212,34 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("beam"),
       R"""(Subroutine tao_beam_track (u, tao_lat, ix_branch, beam, calc_ok)
 
-  Routine to track a a beam of particles.
+Routine to track a a beam of particles.
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
-      Universe to track through.
+Parameters
+----------
+u : TaoUniverseStruct
+    Universe to track through.
 
-  tao_lat : TaoLatticeStruct
-      Structure containing the lattice.
+tao_lat : TaoLatticeStruct
+    Structure containing the lattice.
 
-  ix_branch : int
-      Branch index to track through.
+ix_branch : int
+    Branch index to track through.
 
-  beam : BeamStruct
-      Initial beam distribution
-      This parameter is an input/output and is modified in-place.
-      As an output, beam: Final beam distribution.
+beam : BeamStruct
+    Initial beam distribution
+    This parameter is an input/output and is modified in-place.
+    As an output, beam: Final beam distribution.
 
-  Returns
-  -------
-  beam : BeamStruct
-      Initial beam distribution
-      This parameter is an input/output and is modified in-place.
-      As an output, beam: Final beam distribution.
+Returns
+-------
+beam : BeamStruct
+    Initial beam distribution
+    This parameter is an input/output and is modified in-place.
+    As an output, beam: Final beam distribution.
 
-  calc_ok : bool
-      Set True if there were no problems, False otherwise.
-  )"""
+calc_ok : bool
+    Set True if there were no problems, False otherwise.
+)"""
   );
   m.def(
       "tao_beam_track_endpoint",
@@ -251,29 +251,29 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("u"),
       R"""(Wrapper for Fortran routine tao_beam_track_endpoint
 
-  Parameters
-  ----------
-  ele_id : character
-      Name or index of the element.
+Parameters
+----------
+ele_id : character
+    Name or index of the element.
 
-  lat : LatStruct
-      Lattice.
+lat : LatStruct
+    Lattice.
 
-  branch_str : character
-      Branch where the tracking is done. '' => Branch not specified.
+branch_str : character
+    Branch where the tracking is done. '' => Branch not specified.
 
-  where : character
-      'TRACK_END', 'TRACK_START', etc.. Used for error messages.
+where : character
+    'TRACK_END', 'TRACK_START', etc.. Used for error messages.
 
-  u : TaoUniverseStruct
-      Universe beam is being tracked in.
+u : TaoUniverseStruct
+    Universe beam is being tracked in.
 
-  Returns
-  -------
-  ele : EleStruct, optional
-      Pointer to the track endpoint element. Nullified if error. Note: blank ele_id is handled if "where"
-      contains 'END' or 'START'
-  )"""
+Returns
+-------
+ele : EleStruct, optional
+    Pointer to the track endpoint element. Nullified if error. Note: blank ele_id is handled if "where"
+    contains 'END' or 'START'
+)"""
   );
   m.def(
       "tao_branch_index",
@@ -281,16 +281,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ix_branch"),
       R"""(Wrapper for Fortran routine tao_branch_index
 
-  Parameters
-  ----------
-  ix_branch : int
-      Nominal branch number.
+Parameters
+----------
+ix_branch : int
+    Nominal branch number.
 
-  Returns
-  -------
-  ix_this : int
-      Branch number.
-  )"""
+Returns
+-------
+ix_this : int
+    Branch number.
+)"""
   );
   m.def(
       "tao_calc_data_at_s_pts",
@@ -301,33 +301,33 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("good"),
       R"""(Wrapper for Fortran routine tao_calc_data_at_s_pts
 
-  Parameters
-  ----------
-  tao_lat : TaoLatticeStruct
+Parameters
+----------
+tao_lat : TaoLatticeStruct
 
-  curve : TaoCurveStruct
+curve : TaoCurveStruct
 
-  comp_sign : float
+comp_sign : float
 
-  good : 1D array of bool
+good : 1D array of bool
 
-  Returns
-  -------
-  tao_lat : TaoLatticeStruct
+Returns
+-------
+tao_lat : TaoLatticeStruct
 
-  curve : TaoCurveStruct
+curve : TaoCurveStruct
 
-  comp_sign : float
+comp_sign : float
 
-  good : 1D array of bool
-  )"""
+good : 1D array of bool
+)"""
   );
   m.def(
       "tao_cbar_wave_anal",
       &Tao::tao_cbar_wave_anal,
       py::arg("plot"),
       R"""(Subroutine tao_cbar_wave_anal (plot)
-  )"""
+)"""
   );
   m.def(
       "tao_change_ele",
@@ -338,27 +338,24 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("update"),
       R"""(Subroutine tao_change_ele (ele_name, attrib_name, num_str, update, err_flag)
 
-  Routine to change a variable in the model lattice.
+Routine to change a variable in the model lattice.
 
-  Parameters
-  ----------
-  ele_name : character
-      Name of variable or element.
+Parameters
+----------
+ele_name : character
+    Name of variable or element.
 
-  attrib_name : character
-      Attribute name of element.
+attrib_name : character
+    Attribute name of element.
 
-  num_str : character
-      Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
+num_str : character
+    Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
 
-  Returns
-  -------
-  err_flag : bool
-      logical, Set true if there is an error, false otherwise.
-
-  s%u : None
-      model lattice where the variable lives.
-  )"""
+Returns
+-------
+err_flag : bool
+    logical, Set true if there is an error, false otherwise.
+)"""
   );
   m.def(
       "tao_change_tune",
@@ -370,28 +367,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("dqb_str"),
       R"""(Subroutine tao_change_tune (branch_str, mask_str, print_list, dqa_str, dqb_str, err_flag)
 
-  Parameters
-  ----------
-  branch_str : character
-      List of branches to apply tune set to.
+Parameters
+----------
+branch_str : character
+    List of branches to apply tune set to.
 
-  mask_str : character
-      List of quadrupoles to veto.
+mask_str : character
+    List of quadrupoles to veto.
 
-  print_list : bool
-      If True, print a list of elements varied and coefficients.
+print_list : bool
+    If True, print a list of elements varied and coefficients.
 
-  dqa_str : character
-      Expression for dQa tune.
+dqa_str : character
+    Expression for dQa tune.
 
-  dqb_str : character
-      Expression for dQb tune.
+dqb_str : character
+    Expression for dQb tune.
 
-  Returns
-  -------
-  err_flag : bool
-      logical, Set true if there is an error, false otherwise.
-  )"""
+Returns
+-------
+err_flag : bool
+    logical, Set true if there is an error, false otherwise.
+)"""
   );
   m.def(
       "tao_change_var",
@@ -401,29 +398,24 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("silent"),
       R"""(Subroutine tao_change_var (name, num_str, silent, err_flag)
 
-  Routine to change a variable in the model lattice.
+Routine to change a variable in the model lattice.
 
-  Parameters
-  ----------
-  name : character
-      Name of variable or element.
+Parameters
+----------
+name : character
+    Name of variable or element.
 
-  num_str : character
-      Change in value. A '@' signifies a absolute set.
+num_str : character
+    Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
 
-  A 'd' signifies a set relative design. : None
+silent : bool
+    If True then do not print any info.
 
-  silent : bool
-      If True then do not print any info.
-
-  Returns
-  -------
-  err_flag : bool
-      logical, Set true if there is an error, false otherwise.
-
-  s%u : None
-      model lattice where the variable lives.
-  )"""
+Returns
+-------
+err_flag : bool
+    logical, Set true if there is an error, false otherwise.
+)"""
   );
   m.def(
       "tao_change_z_tune",
@@ -432,19 +424,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("dq_str"),
       R"""(Subroutine tao_change_z_tune (branch_str, dq_str, err_flag)
 
-  Parameters
-  ----------
-  branch_str : character
-      List of branches to apply tune set to.
+Parameters
+----------
+branch_str : character
+    List of branches to apply tune set to.
 
-  dq_str : character
-      Expression for dQc tune.
+dq_str : character
+    Expression for dQc tune.
 
-  Returns
-  -------
-  err_flag : bool
-      logical, Set true if there is an error, false otherwise.
-  )"""
+Returns
+-------
+err_flag : bool
+    logical, Set true if there is an error, false otherwise.
+)"""
   );
   m.def(
       "tao_chrom_calc_needed",
@@ -454,22 +446,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("do_chrom"),
       R"""(Wrapper for Fortran routine tao_chrom_calc_needed
 
-  Parameters
-  ----------
-  data_type : character
+Parameters
+----------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_chrom : bool
+do_chrom : bool
 
-  Returns
-  -------
-  data_type : character
+Returns
+-------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_chrom : bool
-  )"""
+do_chrom : bool
+)"""
   );
   m.def(
       "tao_clear_cmd",
@@ -477,11 +469,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("cmd_line"),
       R"""(Wrapper for Fortran routine tao_clear_cmd
 
-  Parameters
-  ----------
-  cmd_line : character
-      Should be set to 'maps'.
-  )"""
+Parameters
+----------
+cmd_line : character
+    Should be set to 'maps'.
+)"""
   );
   m.def(
       "tao_clip_cmd",
@@ -492,30 +484,30 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value2"),
       R"""(Wrapper for Fortran routine tao_clip_cmd
 
-  Parameters
-  ----------
-  gang : bool
-      Gang all data d1 arrays together.
+Parameters
+----------
+gang : bool
+    Gang all data d1 arrays together.
 
-  where : character
-      Graph() to clip. Eg: 'top:x'
+where : character
+    Graph() to clip. Eg: 'top:x'
 
-  value1 : float
+value1 : float
 
-  value2 : float
+value2 : float
 
-  Returns
-  -------
-  value1 : float
+Returns
+-------
+value1 : float
 
-  value2 : float
-  )"""
+value2 : float
+)"""
   );
   m.def(
       "tao_close_command_file",
       &Tao::tao_close_command_file,
       R"""(Wrapper for Fortran routine tao_close_command_file
-  )"""
+)"""
   );
   m.def(
       "tao_cmd_history_record",
@@ -523,8 +515,8 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("cmd"),
       R"""(Subroutine tao_cmd_history_record (cmd)
 
-  Subroutine to record a cmd in the command history stack
-  )"""
+Subroutine to record a cmd in the command history stack
+)"""
   );
   m.def(
       "tao_command",
@@ -533,20 +525,20 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("err"),
       R"""(Wrapper for Fortran routine tao_command
 
-  Parameters
-  ----------
-  command_line : character
-      command line
+Parameters
+----------
+command_line : character
+    command line
 
-  err : bool
+err : bool
 
-  Returns
-  -------
-  err : bool
+Returns
+-------
+err : bool
 
-  err_is_fatal : bool
-      Set True on non-recoverable error. False otherwise
-  )"""
+err_is_fatal : bool
+    Set True on non-recoverable error. False otherwise
+)"""
   );
   m.def(
       "tao_constraint_type_name",
@@ -554,16 +546,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("datum"),
       R"""(Wrapper for Fortran routine tao_constraint_type_name
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum
+Parameters
+----------
+datum : TaoDataStruct
+    Datum
 
-  Returns
-  -------
-  datum_name : character
-      Appropriate name.
-  )"""
+Returns
+-------
+datum_name : character
+    Appropriate name.
+)"""
   );
   m.def(
       "tao_control_tree_list",
@@ -572,14 +564,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("tree"),
       R"""(Wrapper for Fortran routine tao_control_tree_list
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Lattice element to start at.
+Parameters
+----------
+ele : EleStruct
+    Lattice element to start at.
 
-  tree : 1D array of ElePointerStruct
-      Array of elements.
-  )"""
+Returns
+-------
+tree : 1D array of ElePointerStruct
+    Array of elements.
+)"""
   );
   m.def(
       "tao_count_strings",
@@ -588,28 +582,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("pattern"),
       R"""(Wrapper for Fortran routine tao_count_strings
 
-  Parameters
-  ----------
-  string : character
-      the string to look at
+Parameters
+----------
+string : character
+    the string to look at
 
-  pattern : character
-      the search pattern
+pattern : character
+    the search pattern
 
-  Returns
-  -------
-  num : int
-      number of occurances
-  )"""
+Returns
+-------
+num : int
+    number of occurances
+)"""
   );
   m.def(
       "tao_create_plot_window",
       &Tao::tao_create_plot_window,
       R"""(Subroutine tao_create_plot_window ()
 
-  Subroutine to create the plot window.
-  This soubroutine knows not to create a second window if one already exists.
-  )"""
+Subroutine to create the plot window.
+This soubroutine knows not to create a second window if one already exists.
+)"""
   );
   m.def(
       "tao_curve_beam_ellipse_setup",
@@ -617,14 +611,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("curve"),
       R"""(Wrapper for Fortran routine tao_curve_beam_ellipse_setup
 
-  Parameters
-  ----------
-  curve : TaoCurveStruct
+Parameters
+----------
+curve : TaoCurveStruct
 
-  Returns
-  -------
-  curve : TaoCurveStruct
-  )"""
+Returns
+-------
+curve : TaoCurveStruct
+)"""
   );
   m.def(
       "tao_curve_check_universe",
@@ -633,28 +627,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("uni"),
       R"""(Function tao_curve_check_universe (curve, uni) result (is_ok)
 
-  Routine to check if the universe associated with a curve exists and is on.
+Routine to check if the universe associated with a curve exists and is on.
 
-  Parameters
-  ----------
-  curve : TaoCurveStruct
-      Curve to check.
-      This parameter is an input/output and is modified in-place.
-      As an output, curve: Curve.valid set to False if needed.
+Parameters
+----------
+curve : TaoCurveStruct
+    Curve to check.
+    This parameter is an input/output and is modified in-place.
+    As an output, curve: Curve.valid set to False if needed.
 
-  uni : TaoUniverseStruct
-      Associated universe
+uni : TaoUniverseStruct
+    Associated universe
 
-  Returns
-  -------
-  curve : TaoCurveStruct
-      Curve to check.
-      This parameter is an input/output and is modified in-place.
-      As an output, curve: Curve.valid set to False if needed.
+Returns
+-------
+curve : TaoCurveStruct
+    Curve to check.
+    This parameter is an input/output and is modified in-place.
+    As an output, curve: Curve.valid set to False if needed.
 
-  is_ok : bool
-      Set True if associated universe exists and is on.
-  )"""
+is_ok : bool
+    Set True if associated universe exists and is on.
+)"""
   );
   m.def(
       "tao_curve_data_setup",
@@ -664,22 +658,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("curve"),
       R"""(Wrapper for Fortran routine tao_curve_data_setup
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
+Parameters
+----------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  curve : TaoCurveStruct
+curve : TaoCurveStruct
 
-  Returns
-  -------
-  plot : TaoPlotStruct
+Returns
+-------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  curve : TaoCurveStruct
-  )"""
+curve : TaoCurveStruct
+)"""
   );
   m.def(
       "tao_curve_datum_calc",
@@ -690,29 +684,29 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("who"),
       R"""(Subroutine tao_curve_datum_calc (eles, plot, curve, who)
 
-  Routine to calculate datum values.
-  The values are calculated at the end of each eles(:)%ele element.
+Routine to calculate datum values.
+The values are calculated at the end of each eles(:)%ele element.
 
-  Parameters
-  ----------
-  eles : 1D array of ElePointerStruct
-      Array of elements.
+Parameters
+----------
+eles : 1D array of ElePointerStruct
+    Array of elements.
 
-  plot : TaoPlotStruct
+plot : TaoPlotStruct
 
-  curve : TaoCurveStruct
-      This parameter is an input/output and is modified in-place.
-      As an output, curve: Structure holding the datum values
+curve : TaoCurveStruct
+    This parameter is an input/output and is modified in-place.
+    As an output, curve: Structure holding the datum values
 
-  who : character
-      Where to put the data. Either: "SYMBOL" or "LINE".
+who : character
+    Where to put the data. Either: "SYMBOL" or "LINE".
 
-  Returns
-  -------
-  curve : TaoCurveStruct
-      This parameter is an input/output and is modified in-place.
-      As an output, curve: Structure holding the datum values
-  )"""
+Returns
+-------
+curve : TaoCurveStruct
+    This parameter is an input/output and is modified in-place.
+    As an output, curve: Structure holding the datum values
+)"""
   );
   m.def(
       "tao_curve_ele_ref",
@@ -722,21 +716,21 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ele_track"),
       R"""(Wrapper for Fortran routine tao_curve_ele_ref
 
-  Parameters
-  ----------
-  curve : TaoCurveStruct
-      Curve with ref ele.
+Parameters
+----------
+curve : TaoCurveStruct
+    Curve with ref ele.
 
-  point_to_ele_ref : bool
+point_to_ele_ref : bool
 
-  ele_track : EleStruct
+ele_track : EleStruct
 
-  Returns
-  -------
-  point_to_ele_ref : bool
+Returns
+-------
+point_to_ele_ref : bool
 
-  ele_track : EleStruct
-  )"""
+ele_track : EleStruct
+)"""
   );
   m.def(
       "tao_curve_ix_uni",
@@ -744,16 +738,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("curve"),
       R"""(Wrapper for Fortran routine tao_curve_ix_uni
 
-  Parameters
-  ----------
-  curve : TaoCurveStruct
-      Curve.
+Parameters
+----------
+curve : TaoCurveStruct
+    Curve.
 
-  Returns
-  -------
-  ix_uni : int
-      Universe index.
-  )"""
+Returns
+-------
+ix_uni : int
+    Universe index.
+)"""
   );
   m.def(
       "tao_curve_name",
@@ -762,20 +756,20 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("use_region") = py::none(),
       R"""(Wrapper for Fortran routine tao_curve_name
 
-  Parameters
-  ----------
-  curve : TaoCurveStruct
-      Curve
+Parameters
+----------
+curve : TaoCurveStruct
+    Curve
 
-  use_region : bool, optional
-      If present and True then use the region name instead of the plot name. Region name is 'NULL_REGION' if
-      there is no assocaited region.
+use_region : bool, optional
+    If present and True then use the region name instead of the plot name. Region name is 'NULL_REGION' if
+    there is no assocaited region.
 
-  Returns
-  -------
-  curve_name : character
-      Appropriate name.
-  )"""
+Returns
+-------
+curve_name : character
+    Appropriate name.
+)"""
   );
   py::class_<Tao::TaoCurveRmsCalc, std::unique_ptr<Tao::TaoCurveRmsCalc>>(
       m,
@@ -801,22 +795,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("who"),
       R"""(Wrapper for Fortran routine tao_curve_rms_calc
 
-  Parameters
-  ----------
-  curve : TaoCurveStruct
-      Curve to analyze.
+Parameters
+----------
+curve : TaoCurveStruct
+    Curve to analyze.
 
-  who : character
-      "LINE" or "SYMBOL".
+who : character
+    "LINE" or "SYMBOL".
 
-  Returns
-  -------
-  rms : float
-      RMS. -1 => Curve has no data.
+Returns
+-------
+rms : float
+    RMS. -1 => Curve has no data.
 
-  mean : float
-      Mean.
-  )"""
+mean : float
+    Mean.
+)"""
   );
   m.def(
       "tao_d2_d1_name",
@@ -825,19 +819,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("show_universe") = py::none(),
       R"""(Wrapper for Fortran routine tao_d2_d1_name
 
-  Parameters
-  ----------
-  d1 : TaoD1DataStruct
-      Data array.
+Parameters
+----------
+d1 : TaoD1DataStruct
+    Data array.
 
-  show_universe : bool, optional
-      Show the datum's universe. Default is True.
+show_universe : bool, optional
+    Show the datum's universe. Default is True.
 
-  Returns
-  -------
-  d2_d1_name : character
-      Appropriate name.
-  )"""
+Returns
+-------
+d2_d1_name : character
+    Appropriate name.
+)"""
   );
   m.def(
       "tao_d2_data_stuffit",
@@ -847,22 +841,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("n_d1_data"),
       R"""(Wrapper for Fortran routine tao_d2_data_stuffit
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
+Parameters
+----------
+u : TaoUniverseStruct
 
-  d2_name : character
+d2_name : character
 
-  n_d1_data : int
+n_d1_data : int
 
-  Returns
-  -------
-  u : TaoUniverseStruct
+Returns
+-------
+u : TaoUniverseStruct
 
-  d2_name : character
+d2_name : character
 
-  n_d1_data : int
-  )"""
+n_d1_data : int
+)"""
   );
   m.def(
       "tao_data_check",
@@ -870,14 +864,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("err"),
       R"""(Wrapper for Fortran routine tao_data_check
 
-  Parameters
-  ----------
-  err : bool
+Parameters
+----------
+err : bool
 
-  Returns
-  -------
-  err : bool
-  )"""
+Returns
+-------
+err : bool
+)"""
   );
   m.def(
       "tao_data_coupling_init",
@@ -885,11 +879,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("branch"),
       R"""(Wrapper for Fortran routine tao_data_coupling_init
 
-  Parameters
-  ----------
-  branch : BranchStruct
-      New lattice branch.
-  )"""
+Parameters
+----------
+branch : BranchStruct
+    New lattice branch.
+)"""
   );
   m.def(
       "tao_data_sanity_check",
@@ -900,25 +894,25 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("uni") = py::none(),
       R"""(Wrapper for Fortran routine tao_data_sanity_check
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum to check.
+Parameters
+----------
+datum : TaoDataStruct
+    Datum to check.
 
-  print_err : bool
-      Print error message if data is not valid?
+print_err : bool
+    Print error message if data is not valid?
 
-  default_data_type : character
-      Default data type associated with the datum's d2 structure.
+default_data_type : character
+    Default data type associated with the datum's d2 structure.
 
-  uni : TaoUniverseStruct, optional
-      Universe to use instead of datum.d1.d2.ix_universe
+uni : TaoUniverseStruct, optional
+    Universe to use instead of datum.d1.d2.ix_universe
 
-  Returns
-  -------
-  is_valid : bool
-      True if internally consistent.
-  )"""
+Returns
+-------
+is_valid : bool
+    True if internally consistent.
+)"""
   );
   m.def(
       "tao_data_type_substitute",
@@ -928,27 +922,27 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Subroutine tao_data_type_substitute (template, str_out, curve, graph)
 
-  Routine substitute the appropriate data type string for instances of "#ref" and
-  "#comp" in template.
+Routine substitute the appropriate data type string for instances of "#ref" and
+"#comp" in template.
 
-  Additionally, if template does not have a "|" character,
-  the string "|" + component will be added at the end of str_out.
+Additionally, if template does not have a "|" character,
+the string "|" + component will be added at the end of str_out.
 
-  Parameters
-  ----------
-  template : character(*)
-      String template.
+Parameters
+----------
+template : str
+    String template.
 
-  curve : TaoCurveStruct
-      curve.ele_ref_name is substituted for all instances of "#ref".
+curve : TaoCurveStruct
+    curve.ele_ref_name is substituted for all instances of "#ref".
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  str_out : character
-      String with substitutions.
-  )"""
+Returns
+-------
+str_out : character
+    String with substitutions.
+)"""
   );
   m.def(
       "tao_data_useit_plot_calc",
@@ -959,29 +953,26 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("check_s_position"),
       R"""(Subroutine tao_data_useit_plot_calc (curve, graph, data, check_s_position, most_invalid)
 
-  Routine to set the data for plotting.
+Routine to set the data for plotting.
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
-      tao_graph_struct
+Parameters
+----------
+graph : TaoGraphStruct
+    tao_graph_struct
 
-  curve : TaoCurveStruct
-      tao_curve_struct
+curve : TaoCurveStruct
+    tao_curve_struct
 
-  check_s_position : bool
-      If present and True then veto data that does not have an s-position.
+check_s_position : bool
+    If present and True then veto data that does not have an s-position.
 
-  Returns
-  -------
-  data : 1D array of TaoDataStruct
+Returns
+-------
+data : 1D array of TaoDataStruct
 
-  %useit_plot : None
-      True if good for plotting.
-
-  most_invalid : character
-      String documenting biggest invalid data problem.
-  )"""
+most_invalid : character
+    String documenting biggest invalid data problem.
+)"""
   );
   m.def(
       "tao_datum_has_associated_ele",
@@ -990,18 +981,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("branch_geometry") = py::none(),
       R"""(Wrapper for Fortran routine tao_datum_has_associated_ele
 
-  Parameters
-  ----------
-  data_type : character
-      Type of data.
+Parameters
+----------
+data_type : character
+    Type of data.
 
-  branch_geometry : int, optional
-      Geometry of the associated lattice branch. open$ or closed$.
+branch_geometry : int, optional
+    Geometry of the associated lattice branch. open$ or closed$.
 
-  Returns
-  -------
-  has_associated_ele : int
-  )"""
+Returns
+-------
+has_associated_ele : int
+)"""
   );
   py::class_<Tao::TaoDatumIntegrate, std::unique_ptr<Tao::TaoDatumIntegrate>>(
       m,
@@ -1032,33 +1023,33 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("values"),
       R"""(Function tao_datum_integrate (datum, branch, s_pos, values, valid_value, why_invalid) result (result)
 
-  Routine to calculate the integral, rms, or average of an array of values associated with a datum.
+Routine to calculate the integral, rms, or average of an array of values associated with a datum.
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum under consideration.
+Parameters
+----------
+datum : TaoDataStruct
+    Datum under consideration.
 
-  branch : BranchStruct
-      Associated lattice branch.
+branch : BranchStruct
+    Associated lattice branch.
 
-  s_pos : 1D array of float
-      Array of s-positions of the values.
+s_pos : 1D array of float
+    Array of s-positions of the values.
 
-  values : 1D array of float
-      Array of values.
+values : 1D array of float
+    Array of values.
 
-  Returns
-  -------
-  valid_value : bool
-      Set false if, for example, all s_pos(:) are the same.
+Returns
+-------
+valid_value : bool
+    Set false if, for example, all s_pos(:) are the same.
 
-  why_invalid : character
-      Information string if there is a problem.
+why_invalid : character
+    Information string if there is a problem.
 
-  result : float
-      Integral, rms, or average depending upon datum.merit_type.
-  )"""
+result : float
+    Integral, rms, or average depending upon datum.merit_type.
+)"""
   );
   m.def(
       "tao_datum_name",
@@ -1067,19 +1058,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("show_universe") = py::none(),
       R"""(Wrapper for Fortran routine tao_datum_name
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum
+Parameters
+----------
+datum : TaoDataStruct
+    Datum
 
-  show_universe : bool, optional
-      Show the datum's universe. Default is True.
+show_universe : bool, optional
+    Show the datum's universe. Default is True.
 
-  Returns
-  -------
-  datum_name : character
-      Appropriate name.
-  )"""
+Returns
+-------
+datum_name : character
+    Appropriate name.
+)"""
   );
   m.def(
       "tao_datum_s_position",
@@ -1088,32 +1079,32 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Function tao_datum_s_position (datum, ele) result (s_pos)
 
-  Routine to calculate the longitudinal position associated with a datum.
+Routine to calculate the longitudinal position associated with a datum.
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum under conideration.
+Parameters
+----------
+datum : TaoDataStruct
+    Datum under conideration.
 
-  ele : EleStruct
-      Associated lattice element.
+ele : EleStruct
+    Associated lattice element.
 
-  Returns
-  -------
-  s_pos : float
-      Associated longitudinal position.
-  )"""
+Returns
+-------
+s_pos : float
+    Associated longitudinal position.
+)"""
   );
   m.def(
       "tao_de_optimizer",
       &Tao::tao_de_optimizer,
       R"""(Wrapper for Fortran routine tao_de_optimizer
 
-  Returns
-  -------
-  abort : bool
-      Set True if an user stop signal detected.
-  )"""
+Returns
+-------
+abort : bool
+    Set True if an user stop signal detected.
+)"""
   );
   m.def(
       "tao_deallocate_plot_cache",
@@ -1121,14 +1112,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("plot_cache"),
       R"""(Wrapper for Fortran routine tao_deallocate_plot_cache
 
-  Parameters
-  ----------
-  plot_cache : 1D array of TaoPlotCacheStruct
+Parameters
+----------
+plot_cache : 1D array of TaoPlotCacheStruct
 
-  Returns
-  -------
-  plot_cache : 1D array of TaoPlotCacheStruct
-  )"""
+Returns
+-------
+plot_cache : 1D array of TaoPlotCacheStruct
+)"""
   );
   m.def(
       "tao_deallocate_tree",
@@ -1136,34 +1127,34 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("tree"),
       R"""(Subroutine tao_deallocate_tree (tree)
 
-  Routine to deallocate tree%node(:) and everything below it
+Routine to deallocate tree%node(:) and everything below it
 
-  Parameters
-  ----------
-  tree : TaoEvalNodeStruct
-      Root of tree to deallocate.
-      This parameter is an input/output and is modified in-place.
-      As an output, tree: Deallocated tree.
+Parameters
+----------
+tree : TaoEvalNodeStruct
+    Root of tree to deallocate.
+    This parameter is an input/output and is modified in-place.
+    As an output, tree: Deallocated tree.
 
-  Returns
-  -------
-  tree : TaoEvalNodeStruct
-      Root of tree to deallocate.
-      This parameter is an input/output and is modified in-place.
-      As an output, tree: Deallocated tree.
-  )"""
+Returns
+-------
+tree : TaoEvalNodeStruct
+    Root of tree to deallocate.
+    This parameter is an input/output and is modified in-place.
+    As an output, tree: Deallocated tree.
+)"""
   );
   m.def(
       "tao_destroy_plot_window",
       &Tao::tao_destroy_plot_window,
       R"""(Wrapper for Fortran routine tao_destroy_plot_window
-  )"""
+)"""
   );
   m.def(
       "tao_dmerit_calc",
       &Tao::tao_dmerit_calc,
       R"""(Subroutine tao_dmerit_calc ()
-  )"""
+)"""
   );
   m.def(
       "tao_dmodel_dvar_calc",
@@ -1171,32 +1162,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("force_calc"),
       R"""(Subroutine tao_dModel_dVar_calc (force_calc, err_flag)
 
-  Subroutine to calculate the dModel_dVar derivative matrix.
+Subroutine to calculate the dModel_dVar derivative matrix.
 
-  Parameters
-  ----------
-  s : super_universe_struct
-      This parameter is an input/output and is modified in-place.
-      As an output, s: Super_universe_struct.
+Parameters
+----------
+force_calc : bool
+    If true then force recalculation of the matrix. If False then only calculate matrix if it doesn't exist.
 
-  force_calc : bool
-      If true then force recalculation of the matrix. If False then only calculate matrix if it doesn't exist.
-
-  veto_vars_with_zero_dmodel : -- logical
-      Veto variables where all dModel_dvar for that var are zero. Sets the var.good_var logical to False.
-
-  Returns
-  -------
-  s : super_universe_struct
-      This parameter is an input/output and is modified in-place.
-      As an output, s: Super_universe_struct.
-
-  %u : None
-      Derivative matrix
-
-  err_flag : bool
-      Set true if there is an error. False otherwise.
-  )"""
+Returns
+-------
+err_flag : bool
+    Set true if there is an error. False otherwise.
+)"""
   );
   m.def(
       "tao_do_wire_scan",
@@ -1206,33 +1183,29 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("beam"),
       R"""(Subroutine tao_do_wire_scan (ele, wire_params, theta, beam) result (moment)
 
-  Returns the beam's second moment using the wire along the specified angle.
-  Keep in mind that the actual correlation axis is 90 degrees off of the
-  wire angle
+Returns the beam's second moment using the wire along the specified angle.
+Keep in mind that the actual correlation axis is 90 degrees off of the
+wire angle
 
-  This simulates a fast wire scanner that performs the scan over only one
-  bunch. Obviously, this isn't realistic. Any dynamic effects will not be
-  accounted for!
+This simulates a fast wire scanner that performs the scan over only one
+bunch. Obviously, this isn't realistic. Any dynamic effects will not be
+accounted for!
 
-  Parameters
-  ----------
-  ele : EleStruct
+Parameters
+----------
+ele : EleStruct
 
-  %value : relative wire resolution rms
-  as an output
-      wire angle error in radians rms.
+theta : float
+    wire angle wrt x axis (in degrees)
 
-  theta : float
-      wire angle wrt x axis (in degrees)
+beam : BeamStruct
+    contains the beam distribution
 
-  beam : BeamStruct
-      contains the beam distribution
-
-  Returns
-  -------
-  moment : float
-      second moment along axis specified by angle.
-  )"""
+Returns
+-------
+moment : float
+    second moment along axis specified by angle.
+)"""
   );
   m.def(
       "tao_draw_beam_chamber_wall",
@@ -1241,18 +1214,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(NOTE: THIS ROUTINE IS NOT CURRENTLY ACITVE (NOT CALLED BY ANY OTHER ROUTINE).
 
-  Subroutine tao_draw_beam_chamber_wall (plot, graph)
+Subroutine tao_draw_beam_chamber_wall (plot, graph)
 
-  Routine to draw the beam chamber wall.
+Routine to draw the beam chamber wall.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
-  )"""
+graph : TaoGraphStruct
+    Graph to plot.
+)"""
   );
   py::class_<PyTaoDrawCurveData, std::unique_ptr<PyTaoDrawCurveData>>(
       m,
@@ -1277,31 +1250,31 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("have_data"),
       R"""(Subroutine tao_draw_curve_data (plot, graph, curve, have_data)
 
-  Routine to draw a graph with data and/or variable curves.
+Routine to draw a graph with data and/or variable curves.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph containing the curve.
+graph : TaoGraphStruct
+    Graph containing the curve.
 
-  curve : TaoCurveStruct
-      Curve to draw.
+curve : TaoCurveStruct
+    Curve to draw.
 
-  have_data : bool
-      Intitial state.
-      This parameter is an input/output and is modified in-place.
-      As an output, have_data: Is there any data to plot? Set True if so.
+have_data : bool
+    Intitial state.
+    This parameter is an input/output and is modified in-place.
+    As an output, have_data: Is there any data to plot? Set True if so.
 
-  Returns
-  -------
-  have_data : bool
-      Intitial state.
-      This parameter is an input/output and is modified in-place.
-      As an output, have_data: Is there any data to plot? Set True if so.
-  )"""
+Returns
+-------
+have_data : bool
+    Intitial state.
+    This parameter is an input/output and is modified in-place.
+    As an output, have_data: Is there any data to plot? Set True if so.
+)"""
   );
   m.def(
       "tao_draw_ele_for_floor_plan",
@@ -1316,36 +1289,35 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("offset2"),
       R"""(Subroutine tao_draw_ele_for_floor_plan (plot, graph, tao_lat, ele, ele_shape, label_name, offset1, offset2)
 
-  Routine to draw one lattice element or one datum location for the floor plan graph.
+Routine to draw one lattice element or one datum location for the floor plan graph.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
+graph : TaoGraphStruct
+    Graph to plot.
 
-  tao_lat : TaoLatticeStruct
-      Lattice containing the element.
+tao_lat : TaoLatticeStruct
+    Lattice containing the element.
 
-  ele : EleStruct
-      Element to draw.
+ele : EleStruct
+    Element to draw.
 
-  ele_shape : TaoEleShapeStruct
-      Shape to draw from s.plot_page.floor_plan.ele_shape(:) array.
+ele_shape : TaoEleShapeStruct
+    Shape to draw from s.plot_page.floor_plan.ele_shape(:) array. Will be NULL if no associated shape for this
+    element.
 
-  Will be NULL if no associated shape for this element. : None
+label_name : character
+    Shape label.
 
-  label_name : character
-      Shape label.
+offset1 : float
+    Transverse distances used to scale the drawing of the element shape.
 
-  offset1 : float
-      Transverse distances used to scale the drawing of the element shape.
-
-  offset2 : float
-      Transverse distances used to scale the drawing of the element shape.
-  )"""
+offset2 : float
+    Transverse distances used to scale the drawing of the element shape.
+)"""
   );
   m.def(
       "tao_draw_floor_plan",
@@ -1354,16 +1326,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Subroutine tao_draw_floor_plan (plot, graph)
 
-  Routine to draw a floor plan graph.
+Routine to draw a floor plan graph.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
-  )"""
+graph : TaoGraphStruct
+    Graph to plot.
+)"""
   );
   m.def(
       "tao_draw_graph_axes",
@@ -1372,17 +1344,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Subroutine tao_draw_graph_axes (plot, graph)
 
-  Routine to draw a just the graph part of a data graph.
-  The calling routine takes care of drawing any curves.
+Routine to draw a just the graph part of a data graph.
+The calling routine takes care of drawing any curves.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
-  )"""
+graph : TaoGraphStruct
+    Graph to plot.
+)"""
   );
   py::class_<PyTaoDrawHistogramData, std::unique_ptr<PyTaoDrawHistogramData>>(
       m,
@@ -1407,31 +1379,31 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("have_data"),
       R"""(Subroutine tao_draw_histogram_data (plot, graph, curve, have_data)
 
-  Routine to draw a graph with data and/or variable histograms.
+Routine to draw a graph with data and/or variable histograms.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph containing the histogram.
+graph : TaoGraphStruct
+    Graph containing the histogram.
 
-  curve : TaoCurveStruct
-      Histogram to draw.
+curve : TaoCurveStruct
+    Histogram to draw.
 
-  have_data : bool
-      Intitial state.
-      This parameter is an input/output and is modified in-place.
-      As an output, have_data: Is there any data to plot? Set True if so.
+have_data : bool
+    Intitial state.
+    This parameter is an input/output and is modified in-place.
+    As an output, have_data: Is there any data to plot? Set True if so.
 
-  Returns
-  -------
-  have_data : bool
-      Intitial state.
-      This parameter is an input/output and is modified in-place.
-      As an output, have_data: Is there any data to plot? Set True if so.
-  )"""
+Returns
+-------
+have_data : bool
+    Intitial state.
+    This parameter is an input/output and is modified in-place.
+    As an output, have_data: Is there any data to plot? Set True if so.
+)"""
   );
   m.def(
       "tao_draw_lat_layout",
@@ -1440,16 +1412,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Subroutine tao_draw_lat_layout (plot, graph)
 
-  Routine to draw a lattice layout graph.
+Routine to draw a lattice layout graph.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
-  )"""
+graph : TaoGraphStruct
+    Graph to plot.
+)"""
   );
   m.def(
       "tao_draw_plots",
@@ -1457,13 +1429,13 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("do_clear") = py::none(),
       R"""(Subroutine tao_draw_plots (do_clear)
 
-  Subroutine to draw the plots on the plot window.
+Subroutine to draw the plots on the plot window.
 
-  Parameters
-  ----------
-  do_clear : bool, optional
-      If present and False then call qp_clear_page. This argument is used when drawing PS or GIF.
-  )"""
+Parameters
+----------
+do_clear : bool, optional
+    If present and False then call qp_clear_page. This argument is used when drawing PS or GIF.
+)"""
   );
   py::class_<
       Tao::TaoEleGeometryWithMisalignments,
@@ -1494,28 +1466,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Function tao_ele_geometry_with_misalignments (datum, ele, valid_value, why_invalid) result (value)
 
-  Routine to evaluate a floor position with misalignments at a given element.
-  This routine is private and not for general use.
+Routine to evaluate a floor position with misalignments at a given element.
+This routine is private and not for general use.
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum info
+Parameters
+----------
+datum : TaoDataStruct
+    Datum info
 
-  ele : EleStruct
-      Lattice element to evaluate at.
+ele : EleStruct
+    Lattice element to evaluate at.
 
-  Returns
-  -------
-  valid_value : bool
-      Was able to evalute the datum?
+Returns
+-------
+valid_value : bool
+    Was able to evalute the datum?
 
-  why_invalid : character
-      If not valid, why not.
+why_invalid : character
+    If not valid, why not.
 
-  value : float
-      Datum value.
-  )"""
+value : float
+    Datum value.
+)"""
   );
   py::class_<PyTaoEleShapeInfo, std::unique_ptr<PyTaoEleShapeInfo>>(
       m,
@@ -1552,41 +1524,41 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ix_shape_min") = py::none(),
       R"""(Wrapper for Fortran routine tao_ele_shape_info
 
-  Parameters
-  ----------
-  ix_uni : int
-      Universe index.
+Parameters
+----------
+ix_uni : int
+    Universe index.
 
-  ele : EleStruct
-      Lattice element.
+ele : EleStruct
+    Lattice element.
 
-  ele_shapes : 1D array of TaoEleShapeStruct
-      Array of shapes to search.
+ele_shapes : 1D array of TaoEleShapeStruct
+    Array of shapes to search.
 
-  ix_shape_min : int, optional
-      Index of minimum ele_shape(:) index to start search from. Default is 1.
-      This parameter is an input/output and is modified in-place.
-      As an output, ix_shape_min: Ele_shape(
+ix_shape_min : int, optional
+    Index of minimum ele_shape(:) index to start search from. Default is 1.
+    This parameter is an input/output and is modified in-place.
+    As an output, ix_shape_min: Ele_shape(
 
-  Returns
-  -------
-  e_shape : TaoEleShapeStruct, optional
-      element shape. Will be nullified if no associated shape.
+Returns
+-------
+e_shape : TaoEleShapeStruct, optional
+    element shape. Will be nullified if no associated shape.
 
-  label_name : character
-      Label name.
+label_name : character
+    Label name.
 
-  y1 : float
-      shape transverse sizes.
+y1 : float
+    shape transverse sizes.
 
-  y2 : float
-      shape transverse sizes.
+y2 : float
+    shape transverse sizes.
 
-  ix_shape_min : int, optional
-      Index of minimum ele_shape(:) index to start search from. Default is 1.
-      This parameter is an input/output and is modified in-place.
-      As an output, ix_shape_min: Ele_shape(
-  )"""
+ix_shape_min : int, optional
+    Index of minimum ele_shape(:) index to start search from. Default is 1.
+    This parameter is an input/output and is modified in-place.
+    As an output, ix_shape_min: Ele_shape(
+)"""
   );
   py::class_<Tao::TaoEvalFloorOrbit, std::unique_ptr<Tao::TaoEvalFloorOrbit>>(
       m,
@@ -1617,34 +1589,34 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("bunch_params"),
       R"""(Function tao_eval_floor_orbit (datum, ele, orbit, bunch_params, valid_value, why_invalid) result (value)
 
-  Routine to evaluate a floor_orbit datum at a given element.
-  This routine is private and not for general use.
+Routine to evaluate a floor_orbit datum at a given element.
+This routine is private and not for general use.
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum info
+Parameters
+----------
+datum : TaoDataStruct
+    Datum info
 
-  ele : EleStruct
-      Lattice element to evaluate at.
+ele : EleStruct
+    Lattice element to evaluate at.
 
-  orbit : CoordStruct
-      Particle orbit at element.
+orbit : CoordStruct
+    Particle orbit at element.
 
-  bunch_params : BunchParamsStruct
-      Bunch parameters at element.
+bunch_params : BunchParamsStruct
+    Bunch parameters at element.
 
-  Returns
-  -------
-  valid_value : bool
-      Was able to evalute the datum?
+Returns
+-------
+valid_value : bool
+    Was able to evalute the datum?
 
-  why_invalid : character
-      If not valid, why not.
+why_invalid : character
+    If not valid, why not.
 
-  value : float
-      Datum value.
-  )"""
+value : float
+    Datum value.
+)"""
   );
   py::class_<Tao::TaoEvaluateADatum, std::unique_ptr<Tao::TaoEvaluateADatum>>(
       m,
@@ -1676,37 +1648,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Wrapper for Fortran routine tao_evaluate_a_datum
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      What type of datum
+Parameters
+----------
+datum : TaoDataStruct
+    What type of datum
 
-  u : TaoUniverseStruct
-      Which universe to use.
+u : TaoUniverseStruct
+    Which universe to use.
 
-  tao_lat : TaoLatticeStruct
-      Lattice to use.
+tao_lat : TaoLatticeStruct
+    Lattice to use.
 
-  called_from_lat_calc : bool, optional
-      Default is False. If true, prevents infinite loop of this
+called_from_lat_calc : bool, optional
+    Default is False. If true, prevents infinite loop of this routine calling tao_lattice_calc
 
-  print_err : bool, optional
-      Default is True. If False, do not print an error message.
+print_err : bool, optional
+    Default is True. If False, do not print an error message.
 
-  Returns
-  -------
-  datum : TaoDataStruct
-      What type of datum
+Returns
+-------
+datum : TaoDataStruct
+    What type of datum
 
-  datum_value : float
-      Value of the datum.
+datum_value : float
+    Value of the datum.
 
-  valid_value : bool
-      Set false when there is a problem. Set true otherwise.
+valid_value : bool
+    Set false when there is a problem. Set true otherwise.
 
-  why_invalid : character, optional
-      Tells why datum value is invalid.
-  )"""
+why_invalid : character, optional
+    Tells why datum value is invalid.
+)"""
   );
   py::class_<Tao::TaoEvaluateDatumAtS, std::unique_ptr<Tao::TaoEvaluateDatumAtS>>(
       m,
@@ -1738,37 +1710,36 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("valid_value"),
       R"""(Function tao_evaluate_datum_at_s (datum, tao_lat, ele, ele_ref, valid_value, err_str, bad_datum) result(value)
 
-  Routine to evaluate a datum at a given s-position in the lattice
+Routine to evaluate a datum at a given s-position in the lattice
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum to evaluate.
+Parameters
+----------
+datum : TaoDataStruct
+    Datum to evaluate.
 
-  tao_lat : TaoLatticeStruct
+tao_lat : TaoLatticeStruct
 
-  ele : EleStruct
-      Evaluation element.
+ele : EleStruct
+    Evaluation element.
 
-  ele_ref : EleStruct
-      Reference element.
+ele_ref : EleStruct
+    Reference element.
 
-  valid_value : bool
-      True if evaluation was sucessful. False if not.
+valid_value : bool
+    True if evaluation was sucessful. False if not.
 
-  Returns
-  -------
-  err_str : character
-      Error string for printing an error message.
+Returns
+-------
+err_str : character
+    Error string for printing an error message.
 
-  bad_datum : bool
-      True -> datum is malformed. False -> Could evaluate or evaluation problem was not due to the datum
+bad_datum : bool
+    True -> datum is malformed. False -> Could evaluate or evaluation problem was not due to the datum itself
+    (EG: the lattice was unstable).
 
-  itself : None
-
-  value : float
-      Datum value.
-  )"""
+value : float
+    Datum value.
+)"""
   );
   m.def(
       "tao_evaluate_element_parameters",
@@ -1784,40 +1755,40 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("info") = py::none(),
       R"""(Wrapper for Fortran routine tao_evaluate_element_parameters
 
-  Parameters
-  ----------
-  param_name : character
-      parameter name.
+Parameters
+----------
+param_name : character
+    parameter name.
 
-  print_err : bool
-      Print error message?
+print_err : bool
+    Print error message?
 
-  dflt_ele : EleStruct, optional
-      Default element if not specified by param_name.
+dflt_ele : EleStruct, optional
+    Default element if not specified by param_name.
 
-  dflt_source : character
-      Default source
+dflt_source : character
+    Default source
 
-  dflt_component : character, optional
-      Default component
+dflt_component : character, optional
+    Default component
 
-  dflt_uni : int, optional
-      Default universe to use.
+dflt_uni : int, optional
+    Default universe to use.
 
-  eval_point : int, optional
+eval_point : int, optional
 
-  Returns
-  -------
-  err : bool
-      True if there is an error in syntax. False otherwise
+Returns
+-------
+err : bool
+    True if there is an error in syntax. False otherwise
 
-  values : 1D array of float
-      Array of datum values.
+values : 1D array of float
+    Array of datum values.
 
-  eval_point : int, optional
+eval_point : int, optional
 
-  info : 1D array of TaoExpressionInfoStruct, optional
-  )"""
+info : 1D array of TaoExpressionInfoStruct, optional
+)"""
   );
   m.def(
       "tao_evaluate_expression",
@@ -1842,70 +1813,73 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("datum") = py::none(),
       R"""(Wrapper for Fortran routine tao_evaluate_expression
 
-  Parameters
-  ----------
-  expression : character
-      Arithmetic expression.
+Parameters
+----------
+expression : character
+    Arithmetic expression.
 
-  n_size : int
-      Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-      this value.
+n_size : int
+    Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
+    this value. If n_size = 0, the natural size is determined by the expression itself.
 
-  use_good_user : bool
-      Use the good_user logical in evaluating good(:)
+use_good_user : bool
+    Use the good_user logical in evaluating good(:)
 
-  print_err : bool, optional
-      If False then supress evaluation error messages.
+print_err : bool, optional
+    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+    True.
 
-  dflt_component : character, optional
-      Component to use if not specified in the expression.
+dflt_component : character, optional
+    Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
 
-  dflt_source : character, optional
-      Default source ('lat', 'data', etc.). Default is ''.
+dflt_source : character, optional
+    Default source ('lat', 'data', etc.). Default is ''.
 
-  dflt_ele_ref : EleStruct, optional
-      Default reference element.
+dflt_ele_ref : EleStruct, optional
+    Default reference element.
 
-  dflt_ele_start : EleStruct, optional
-      Default start element for ranges.
+dflt_ele_start : EleStruct, optional
+    Default start element for ranges.
 
-  dflt_ele : EleStruct, optional
-      Default element to evaluate at.
+dflt_ele : EleStruct, optional
+    Default element to evaluate at.
 
-  dflt_dat_or_var_index : character, optional
-      Default datum or variable index to use.
+dflt_dat_or_var_index : character, optional
+    Default datum or variable index to use.
 
-  dflt_uni : int, optional
-      Default universe to use. If 0 or not present, use viewed universe.
+dflt_uni : int, optional
+    Default universe to use. If 0 or not present, use viewed universe.
 
-  dflt_eval_point : int, optional
-      Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+dflt_eval_point : int, optional
+    Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
 
-  dflt_s_offset : float, optional
-      Default offset of eval_point. Default = 0.
+dflt_s_offset : float, optional
+    Default offset of eval_point. Default = 0.
 
-  dflt_orbit : CoordStruct, optional
-      Default orbit to evaluate at.
+dflt_orbit : CoordStruct, optional
+    Default orbit to evaluate at.
 
-  datum : TaoDataStruct, optional
-      If present, check to see that the expression does not depend upon a datum that will be evaluated after
-      this datum. If so, this is an error.
+datum : TaoDataStruct, optional
+    If present, check to see that the expression does not depend upon a datum that will be evaluated after
+    this datum. If so, this is an error.
 
-  Returns
-  -------
-  value : 1D array of float
-      Value of arithmetic expression.
+Returns
+-------
+value : 1D array of float
+    Value of arithmetic expression.
 
-  err_flag : bool
-      True on an error. EG: Invalid expression.
+err_flag : bool
+    True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
+    False.
 
-  info : 1D array of TaoExpressionInfoStruct, optional
-      Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+info : 1D array of TaoExpressionInfoStruct, optional
+    Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+    orbit.x[23]|good_user is False.
 
-  stack : 1D array of TaoEvalNodeStruct, optional
-      Array of nodes of variable names. This is useful to check what datums or variables are used in the
-      expression.
-  )"""
+stack : 1D array of TaoEvalNodeStruct, optional
+    Array of nodes of variable names. This is useful to check what datums or variables are used in the
+    expression.
+)"""
   );
   m.def(
       "tao_evaluate_expression_new",
@@ -1930,70 +1904,73 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("datum") = py::none(),
       R"""(Wrapper for Fortran routine tao_evaluate_expression_new
 
-  Parameters
-  ----------
-  expression : character
-      Arithmetic expression.
+Parameters
+----------
+expression : character
+    Arithmetic expression.
 
-  n_size : int
-      Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-      this value.
+n_size : int
+    Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
+    this value. If n_size = 0, the natural size is determined by the expression itself.
 
-  use_good_user : bool
-      Use the good_user logical in evaluating good(:)
+use_good_user : bool
+    Use the good_user logical in evaluating good(:)
 
-  print_err : bool, optional
-      If False then supress evaluation error messages.
+print_err : bool, optional
+    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+    True.
 
-  dflt_component : character, optional
-      Component to use if not specified in the expression.
+dflt_component : character, optional
+    Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
 
-  dflt_source : character, optional
-      Default source ('lat', 'data', etc.). Default is ''.
+dflt_source : character, optional
+    Default source ('lat', 'data', etc.). Default is ''.
 
-  dflt_ele_ref : EleStruct, optional
-      Default reference element.
+dflt_ele_ref : EleStruct, optional
+    Default reference element.
 
-  dflt_ele_start : EleStruct, optional
-      Default start element for ranges.
+dflt_ele_start : EleStruct, optional
+    Default start element for ranges.
 
-  dflt_ele : EleStruct, optional
-      Default element to evaluate at.
+dflt_ele : EleStruct, optional
+    Default element to evaluate at.
 
-  dflt_dat_or_var_index : character, optional
-      Default datum or variable index to use.
+dflt_dat_or_var_index : character, optional
+    Default datum or variable index to use.
 
-  dflt_uni : int, optional
-      Default universe to use. If 0 or not present, use viewed universe.
+dflt_uni : int, optional
+    Default universe to use. If 0 or not present, use viewed universe.
 
-  dflt_eval_point : int, optional
-      Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+dflt_eval_point : int, optional
+    Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
 
-  dflt_s_offset : float, optional
-      Default offset of eval_point. Default = 0.
+dflt_s_offset : float, optional
+    Default offset of eval_point. Default = 0.
 
-  dflt_orbit : CoordStruct, optional
-      Default orbit to evaluate at.
+dflt_orbit : CoordStruct, optional
+    Default orbit to evaluate at.
 
-  datum : TaoDataStruct, optional
-      If present, check to see that the expression does not depend upon a datum that will be evaluated after
-      this datum. If so, this is an error.
+datum : TaoDataStruct, optional
+    If present, check to see that the expression does not depend upon a datum that will be evaluated after
+    this datum. If so, this is an error.
 
-  Returns
-  -------
-  value : 1D array of float
-      Value of arithmetic expression.
+Returns
+-------
+value : 1D array of float
+    Value of arithmetic expression.
 
-  err_flag : bool
-      True on an error. EG: Invalid expression.
+err_flag : bool
+    True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
+    False.
 
-  info : 1D array of TaoExpressionInfoStruct, optional
-      Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+info : 1D array of TaoExpressionInfoStruct, optional
+    Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+    orbit.x[23]|good_user is False.
 
-  stack : 1D array of TaoEvalNodeStruct, optional
-      Array of nodes of variable names. This is useful to check what datums or variables are used in the
-      expression.
-  )"""
+stack : 1D array of TaoEvalNodeStruct, optional
+    Array of nodes of variable names. This is useful to check what datums or variables are used in the
+    expression.
+)"""
   );
   m.def(
       "tao_evaluate_expression_old",
@@ -2018,70 +1995,73 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("datum") = py::none(),
       R"""(Wrapper for Fortran routine tao_evaluate_expression_old
 
-  Parameters
-  ----------
-  expression : character
-      Arithmetic expression.
+Parameters
+----------
+expression : character
+    Arithmetic expression.
 
-  n_size : int
-      Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
-      this value.
+n_size : int
+    Size of the value array. If the expression evaluates to a a scalar, each value in the value array will get
+    this value. If n_size = 0, the natural size is determined by the expression itself.
 
-  use_good_user : bool
-      Use the good_user logical in evaluating good(:)
+use_good_user : bool
+    Use the good_user logical in evaluating good(:)
 
-  print_err : bool, optional
-      If False then supress evaluation error messages.
+print_err : bool, optional
+    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+    True.
 
-  dflt_component : character, optional
-      Component to use if not specified in the expression.
+dflt_component : character, optional
+    Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
 
-  dflt_source : character, optional
-      Default source ('lat', 'data', etc.). Default is ''.
+dflt_source : character, optional
+    Default source ('lat', 'data', etc.). Default is ''.
 
-  dflt_ele_ref : EleStruct, optional
-      Default reference element.
+dflt_ele_ref : EleStruct, optional
+    Default reference element.
 
-  dflt_ele_start : EleStruct, optional
-      Default start element for ranges.
+dflt_ele_start : EleStruct, optional
+    Default start element for ranges.
 
-  dflt_ele : EleStruct, optional
-      Default element to evaluate at.
+dflt_ele : EleStruct, optional
+    Default element to evaluate at.
 
-  dflt_dat_or_var_index : character, optional
-      Default datum or variable index to use.
+dflt_dat_or_var_index : character, optional
+    Default datum or variable index to use.
 
-  dflt_uni : int, optional
-      Default universe to use. If 0 or not present, use viewed universe.
+dflt_uni : int, optional
+    Default universe to use. If 0 or not present, use viewed universe.
 
-  dflt_eval_point : int, optional
-      Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+dflt_eval_point : int, optional
+    Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
 
-  dflt_s_offset : float, optional
-      Default offset of eval_point. Default = 0.
+dflt_s_offset : float, optional
+    Default offset of eval_point. Default = 0.
 
-  dflt_orbit : CoordStruct, optional
-      Default orbit to evaluate at.
+dflt_orbit : CoordStruct, optional
+    Default orbit to evaluate at.
 
-  datum : TaoDataStruct, optional
-      If present, check to see that the expression does not depend upon a datum that will be evaluated after
-      this datum. If so, this is an error.
+datum : TaoDataStruct, optional
+    If present, check to see that the expression does not depend upon a datum that will be evaluated after
+    this datum. If so, this is an error.
 
-  Returns
-  -------
-  value : 1D array of float
-      Value of arithmetic expression.
+Returns
+-------
+value : 1D array of float
+    Value of arithmetic expression.
 
-  err_flag : bool
-      True on an error. EG: Invalid expression.
+err_flag : bool
+    True on an error. EG: Invalid expression. A divide by zero is not an error but good(:) will be set to
+    False.
 
-  info : 1D array of TaoExpressionInfoStruct, optional
-      Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+info : 1D array of TaoExpressionInfoStruct, optional
+    Is the value valid?, etc. Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
+    orbit.x[23]|good_user is False.
 
-  stack : 1D array of TaoEvalNodeStruct, optional
-      Array of nodes of variable names. This is useful to check what datums or variables are used in the
-      expression.
-  )"""
+stack : 1D array of TaoEvalNodeStruct, optional
+    Array of nodes of variable names. This is useful to check what datums or variables are used in the
+    expression.
+)"""
   );
   m.def(
       "tao_evaluate_lat_or_beam_data",
@@ -2099,52 +2079,49 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("dflt_s_offset") = py::none(),
       R"""(! private tao_scratch_values_calc, tao_eval_floor_orbit, tao_ele_geometry_with_misalignments
 
-   Subroutine tao_evaluate_lat_or_beam_data (err, data_name, values, print_err, default_source, default_source,
-                 dflt_ele_ref, dflt_ele_start, dflt_ele, dflt_component, dflt_uni, dflt_eval_point, dflt_s_offset)
+ Subroutine tao_evaluate_lat_or_beam_data (err, data_name, values, print_err, default_source, default_source,
+               dflt_ele_ref, dflt_ele_start, dflt_ele, dflt_component, dflt_uni, dflt_eval_point, dflt_s_offset)
 
-   Routine to evaluate data with a lat or beam source of the form:
-       <universe>@lat::<data_type>[<ix_ele_start>&<ix_ele>]|<component>
+ Routine to evaluate data with a lat or beam source of the form:
+     <universe>@lat::<data_type>[<ix_ele_start>&<ix_ele>]|<component>
 
-  Parameters
-  ----------
-  data_name : character
-      data name.
+Parameters
+----------
+data_name : character
+    data name.
 
-  print_err : bool
-      Print error message?
+print_err : bool
+    Print error message?
 
-  dflt_source : character(*)
-      If not blank: Default source: 'lat' or 'beam'.
+dflt_ele_ref : EleStruct, optional
+    Default reference element.
 
-  dflt_ele_ref : EleStruct, optional
-      Default reference element.
+dflt_ele_start : EleStruct, optional
+    Default start element.
 
-  dflt_ele_start : EleStruct, optional
-      Default start element.
+dflt_ele : EleStruct, optional
+    Default element to evaluate at.
 
-  dflt_ele : EleStruct, optional
-      Default element to evaluate at.
+dflt_component : character, optional
+    Default component: 'model' (default), 'base', or 'design'.
 
-  dflt_component : character, optional
-      Default component: 'model' (default), 'base', or 'design'.
+dflt_uni : int, optional
+    Default universe to use.
 
-  dflt_uni : int, optional
-      Default universe to use.
+dflt_eval_point : int, optional
+    Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
 
-  dflt_eval_point : int, optional
-      Default eval_point. anchor_end$ (default), anchor_center$, or anchor_beginning$.
+dflt_s_offset : float, optional
+    Default offset of eval_point. Default = 0.
 
-  dflt_s_offset : float, optional
-      Default offset of eval_point. Default = 0.
+Returns
+-------
+err : bool
+    True if there is an error. False otherwise.
 
-  Returns
-  -------
-  err : bool
-      True if there is an error. False otherwise.
-
-  values : 1D array of float
-      Array of datum valuse.
-  )"""
+values : 1D array of float
+    Array of datum valuse.
+)"""
   );
   m.def(
       "tao_evaluate_stack_old",
@@ -2158,45 +2135,35 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("info_in") = py::none(),
       R"""(Subroutine tao_evaluate_stack_old (stack, n_size_in, use_good_user, value, info, err_flag, print_err, expression)
 
-  Routine to evaluate an expression stack.
+Routine to evaluate an expression stack.
 
-  Parameters
-  ----------
-  stack : 1D array of TaoEvalNodeStruct
-      Expression stack
+Parameters
+----------
+stack : 1D array of TaoEvalNodeStruct
+    Expression stack
 
-  n_size_in : int
-      Desired array size. If the expression evaluates to a a scalar, each value in the value array will get this
-      value.
+n_size_in : int
+    Desired array size. If the expression evaluates to a a scalar, each value in the value array will get this
+    value. If n_size = 0, the natural size is determined by the expression itself.
 
-  If n_size = 0 : None
+use_good_user : bool
+    Use the good_user logical in evaluating good(:)
 
-  the natural size is determined by the expression itself. : None
+print_err : bool
+    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+    True.
 
-  use_good_user : bool
-      Use the good_user logical in evaluating good(:)
+expression : character
+    Original expression. Used for error messages.
 
-  print_err : bool
-      If False then supress evaluation error messages.
+Returns
+-------
+value : 1D array of float
+    Value of arithmetic expression.
 
-  This does not affect syntax error messages. Default is True. : None
-
-  expression : character
-      Original expression. Used for error messages.
-
-  Returns
-  -------
-  value : 1D array of float
-      Value of arithmetic expression.
-
-  info : tao_expression_info_struct
-      Is the value valid? Example: 'orbit.x[23]|meas' is not good if orbit.x[23]|good_meas or
-
-  orbit.x[23]|good_user is False. : None
-
-  err_flag : bool
-      True on error. False otherwise
-  )"""
+err_flag : bool
+    True on error. False otherwise
+)"""
   );
   m.def(
       "tao_evaluate_tree",
@@ -2210,36 +2177,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("info_in") = py::none(),
       R"""(Wrapper for Fortran routine tao_evaluate_tree
 
-  Parameters
-  ----------
-  tao_tree : TaoEvalNodeStruct
-      Expression tree
+Parameters
+----------
+tao_tree : TaoEvalNodeStruct
+    Expression tree
 
-  n_size : int
+n_size : int
 
-  use_good_user : bool
-      Use the good_user logical in evaluating good(:)
+use_good_user : bool
+    Use the good_user logical in evaluating good(:)
 
-  print_err : bool
-      If False then supress evaluation error messages.
+print_err : bool
+    If False then supress evaluation error messages. This does not affect syntax error messages. Default is
+    True.
 
-  expression : character
-      Original expression. Used for error messages.
+expression : character
+    Original expression. Used for error messages.
 
-  info_in : 1D array of TaoExpressionInfoStruct, optional
+info_in : 1D array of TaoExpressionInfoStruct, optional
 
-  Returns
-  -------
-  n_size : int
+Returns
+-------
+n_size : int
 
-  value : 1D array of float
-      Value(s) of the arithmetic expression.
+value : 1D array of float
+    Value(s) of the arithmetic expression.
 
-  err_flag : bool
-      True on error. False otherwise
+err_flag : bool
+    True on error. False otherwise
 
-  info_in : 1D array of TaoExpressionInfoStruct, optional
-  )"""
+info_in : 1D array of TaoExpressionInfoStruct, optional
+)"""
   );
   m.def(
       "tao_evaluate_tune",
@@ -2247,23 +2215,24 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("q_str"),
       py::arg("q0"),
       py::arg("delta_input"),
-      py::arg("q_val"),
       R"""(Wrapper for Fortran routine tao_evaluate_tune
 
-  Parameters
-  ----------
-  q_str : character
-      String expression.
+Parameters
+----------
+q_str : character
+    String expression.
 
-  q0 : float
-      Default to use if q_str evaluates to zero.
+q0 : float
+    Default to use if q_str evaluates to zero. Also used to set the integer part of the tune.
 
-  delta_input : bool
-      If true then qa_str and qb_str are deltas from present tune.
+delta_input : bool
+    If true then qa_str and qb_str are deltas from present tune.
 
-  q_val : float
-      Tune value. Set zero if there is an error.
-  )"""
+Returns
+-------
+q_val : float
+    Tune value. Set zero if there is an error.
+)"""
   );
   m.def(
       "tao_expression_hash_substitute",
@@ -2272,27 +2241,27 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("eval_ele") = py::none(),
       R"""(Subroutine tao_expression_hash_substitute(expression_in, expression_out, eval_ele)
 
-  Routine to, in the expression, substitute the evaluation lattice element name in place
-  of hash ("#") characters. Care is taken to only do this where it makes sense.
-  For example, "Q1##3" where here "##3" means the third instance of Q1, does not qualify.
+Routine to, in the expression, substitute the evaluation lattice element name in place
+of hash ("#") characters. Care is taken to only do this where it makes sense.
+For example, "Q1##3" where here "##3" means the third instance of Q1, does not qualify.
 
-  Specifically, a substitution will be done if the character before the hash and the
-  character after are one of:
-    [,]-*+/:|@<>, or a blank character, or the beginning or end of the expression
+Specifically, a substitution will be done if the character before the hash and the
+character after are one of:
+  [,]-*+/:|@<>, or a blank character, or the beginning or end of the expression
 
-  Parameters
-  ----------
-  expression_in : character
-      Expression.
+Parameters
+----------
+expression_in : character
+    Expression.
 
-  eval_ele : EleStruct, optional
-      Evaluation element name to substitute in. If not present, expression will not be modified.
+eval_ele : EleStruct, optional
+    Evaluation element name to substitute in. If not present, expression will not be modified.
 
-  Returns
-  -------
-  expression_out : character
-      Expression with substitutions made.
-  )"""
+Returns
+-------
+expression_out : character
+    Expression with substitutions made.
+)"""
   );
   m.def(
       "tao_expression_tree_to_string",
@@ -2303,30 +2272,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("parent") = py::none(),
       R"""(Function tao_expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
 
-  Routine to convert an expression tree to a expression string.
+Routine to convert an expression tree to a expression string.
 
-  Parameters
-  ----------
-  tree : TaoEvalNodeStruct
-      Tree to print.
+Parameters
+----------
+tree : TaoEvalNodeStruct
+    Tree to print.
 
-  include_root : bool, optional
-      Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
-      type root$, this node is
+include_root : bool, optional
+    Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
+    type root$, this node is always ignored.
 
-  always ignored. : None
+n_node : int, optional
+    Internal use only. Used with recursive calls.
 
-  n_node : int, optional
-      Internal use only. Used with recursive calls.
+parent : TaoEvalNodeStruct, optional
+    Internal use only. Used with recusive calls.
 
-  parent : TaoEvalNodeStruct, optional
-      Internal use only. Used with recusive calls.
-
-  Returns
-  -------
-  str_out : character
-      Expression string.
-  )"""
+Returns
+-------
+str_out : character
+    Expression string.
+)"""
   );
   py::class_<Tao::TaoFindPlotRegion, std::unique_ptr<Tao::TaoFindPlotRegion>>(
       m,
@@ -2352,22 +2319,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_flag") = py::none(),
       R"""(Wrapper for Fortran routine tao_find_plot_region
 
-  Parameters
-  ----------
-  where : character
-      Region name.
+Parameters
+----------
+where : character
+    Region name.
 
-  print_flag : bool, optional
-      If present and False then surpress error messages. Default is True.
+print_flag : bool, optional
+    If present and False then surpress error messages. Default is True.
 
-  Returns
-  -------
-  err : bool
-      Set True on error. False otherwise.
+Returns
+-------
+err : bool
+    Set True on error. False otherwise.
 
-  region : TaoPlotRegionStruct, optional
-      Region found.
-  )"""
+region : TaoPlotRegionStruct, optional
+    Region found.
+)"""
   );
   m.def(
       "tao_fixer",
@@ -2377,17 +2344,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("word2"),
       R"""(Wrapper for Fortran routine tao_fixer
 
-  Parameters
-  ----------
-  switch : character(*)
-      Action to take. One on : 'activate', 'save', 'write'.
+Parameters
+----------
+switch : str
+    Action to take. One on : 'activate', 'save', 'write'.
 
-  word1 : character
-      First word of command.
+word1 : character
+    First word of command.
 
-  word2 : character
-      Secton word of command.
-  )"""
+word2 : character
+    Secton word of command.
+)"""
   );
   py::class_<Tao::TaoFloorToScreen, std::unique_ptr<Tao::TaoFloorToScreen>>(
       m,
@@ -2413,23 +2380,23 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("r_floor"),
       R"""(Wrapper for Fortran routine tao_floor_to_screen
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
-      Graph defining the projection plane.
+Parameters
+----------
+graph : TaoGraphStruct
+    Graph defining the projection plane.
 
-  r_floor : 1D array of float (shape: 3)
+r_floor : 1D array of float (shape: 3)
 
-  Returns
-  -------
-  r_floor : 1D array of float (shape: 3)
+Returns
+-------
+r_floor : 1D array of float (shape: 3)
 
-  x_screen : float
-      x-coordinate of projected point.
+x_screen : float
+    x-coordinate of projected point.
 
-  y_screen : float
-      y-coordinate of projected point.
-  )"""
+y_screen : float
+    y-coordinate of projected point.
+)"""
   );
   m.def(
       "tao_floor_to_screen_coords",
@@ -2438,36 +2405,36 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("floor"),
       R"""(Wrapper for Fortran routine tao_floor_to_screen_coords
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
-      Graph defining the projection plane.
+Parameters
+----------
+graph : TaoGraphStruct
+    Graph defining the projection plane.
 
-  floor : FloorPositionStruct
-      3D coordinate.
+floor : FloorPositionStruct
+    3D coordinate.
 
-  Returns
-  -------
-  screen : FloorPositionStruct
-      Projected point
-  )"""
+Returns
+-------
+screen : FloorPositionStruct
+    Projected point
+)"""
   );
   m.def(
       "tao_geodesic_lm_optimizer",
       &Tao::tao_geodesic_lm_optimizer,
       R"""(Subroutine tao_geodesic_lm_optimizer (abort)
 
-  Routine to minimize the merit function by varying variables until
-  the "data" as calculated from the model matches the measured data.
+Routine to minimize the merit function by varying variables until
+the "data" as calculated from the model matches the measured data.
 
-  This subroutine is a wrapper for the "geodesic"
-  Levenburg - Marquardt method.
+This subroutine is a wrapper for the "geodesic"
+Levenburg - Marquardt method.
 
-  Returns
-  -------
-  abort : bool
-      Set True if an user stop signal detected.
-  )"""
+Returns
+-------
+abort : bool
+    Set True if an user stop signal detected.
+)"""
   );
   m.def(
       "tao_get_data",
@@ -2478,23 +2445,23 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("data_ix_dModel") = py::none(),
       R"""(Subroutine tao_get_data (data_value, data_weight, data_meas_value, dat_ix_dModel)
 
-  Subroutine to get the values of the data used in optimization and put them
-  in an array. The data is ordered starting with the first universe
+Subroutine to get the values of the data used in optimization and put them
+in an array. The data is ordered starting with the first universe
 
-  Returns
-  -------
-  data_value : 1D array of float, optional
-      Data model values.
+Returns
+-------
+data_value : 1D array of float, optional
+    Data model values.
 
-  data_weight : 1D array of float, optional
-      Data weights in the merit function.
+data_weight : 1D array of float, optional
+    Data weights in the merit function.
 
-  data_meas_value : 1D array of float, optional
-      Data values when the data was taken.
+data_meas_value : 1D array of float, optional
+    Data values when the data was taken.
 
-  data_ix_dModel : 1D array of int, optional
-      Data ix_dModel indices
-  )"""
+data_ix_dModel : 1D array of int, optional
+    Data ix_dModel indices
+)"""
   );
   py::class_<Tao::TaoGetOptVars, std::unique_ptr<Tao::TaoGetOptVars>>(
       m,
@@ -2523,29 +2490,29 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("var_ix") = py::none(),
       R"""(Wrapper for Fortran routine tao_get_opt_vars
 
-  Returns
-  -------
-  var_value : 1D array of float, optional
-      Variable model values.
+Returns
+-------
+var_value : 1D array of float, optional
+    Variable model values.
 
-  var_step : 1D array of float, optional
-      Variable step sizes.
+var_step : 1D array of float, optional
+    Variable step sizes.
 
-  var_delta : 1D array of float, optional
-      Variable Merit deltas.
+var_delta : 1D array of float, optional
+    Variable Merit deltas.
 
-  var_weight : 1D array of float, optional
-      Variable weights in the merit function.
+var_weight : 1D array of float, optional
+    Variable weights in the merit function.
 
-  var_ix : 1D array of int, optional
-      Variable s.var(:) indexes
+var_ix : 1D array of int, optional
+    Variable s.var(:) indexes
 
-  ignore_if_weight_is_zero : bool, optional
-      If present and True then ignore
+ignore_if_weight_is_zero : bool, optional
+    If present and True then ignore all variables whose merit weight is zero.
 
-  ignore_if_not_limited : bool, optional
-      If present and True then ignore all variables with limit constraint that are not limited.
-  )"""
+ignore_if_not_limited : bool, optional
+    If present and True then ignore all variables with limit constraint that are not limited.
+)"""
   );
   m.def(
       "tao_get_user_input",
@@ -2555,39 +2522,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("cmd_in") = py::none(),
       R"""(Subroutine tao_get_user_input (cmd_out, prompt_str, wait_flag, cmd_in)
 
-  Subroutine to get the next Tao command. In order of precedence, input may come from:
-    1) s%com%cmd string (if s%com%use_cmd_here is set to True).
-       Used for recalling commands from the history stack.
-    2) A saved command string.
-    3) A command file.
-    4) The cmd_in argument (if present). Used, for example, when interfacing with Python.
-    5) The terminal.
+Subroutine to get the next Tao command. In order of precedence, input may come from:
+  1) s%com%cmd string (if s%com%use_cmd_here is set to True).
+     Used for recalling commands from the history stack.
+  2) A saved command string.
+  3) A command file.
+  4) The cmd_in argument (if present). Used, for example, when interfacing with Python.
+  5) The terminal.
 
-  Note: A saved command string is present if a prior input string contained multiple commands.
-  For example, the following string is read from a command file or terminal or passed via cmd_in:
-          "show ele 1; set opti de; run"
-  Then cmd_out would be "show ele 1" and "set opti de; run" would be saved for the next call to this routine.
+Note: A saved command string is present if a prior input string contained multiple commands.
+For example, the following string is read from a command file or terminal or passed via cmd_in:
+        "show ele 1; set opti de; run"
+Then cmd_out would be "show ele 1" and "set opti de; run" would be saved for the next call to this routine.
 
-  Note: In single character mode, the input precedence order is ignored and input is taken from the terminal.
+Note: In single character mode, the input precedence order is ignored and input is taken from the terminal.
 
-  Parameters
-  ----------
-  prompt_str : character, optional
-      Primpt string to print at terminal. If not
+Parameters
+----------
+prompt_str : character, optional
+    Primpt string to print at terminal. If not present then s.global.prompt_string will be used.
 
-  present then s%global%prompt_string will be used. : None
+wait_flag : bool, optional
+    Used for single mode: Wait state for get_a_char call.
 
-  wait_flag : bool, optional
-      Used for single mode: Wait state for get_a_char call.
+cmd_in : character, optional
+    Command to be used in place getting user input.
 
-  cmd_in : character, optional
-      Command to be used in place getting user input.
-
-  Returns
-  -------
-  cmd_out : character
-      Command from the user.
-  )"""
+Returns
+-------
+cmd_out : character
+    Command from the user.
+)"""
   );
   m.def(
       "tao_graph_controller_setup",
@@ -2595,14 +2560,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Wrapper for Fortran routine tao_graph_controller_setup
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
+Parameters
+----------
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  graph : TaoGraphStruct
-  )"""
+Returns
+-------
+graph : TaoGraphStruct
+)"""
   );
   m.def(
       "tao_graph_data_setup",
@@ -2611,18 +2576,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Wrapper for Fortran routine tao_graph_data_setup
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
+Parameters
+----------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  plot : TaoPlotStruct
+Returns
+-------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
-  )"""
+graph : TaoGraphStruct
+)"""
   );
   m.def(
       "tao_graph_data_slice_setup",
@@ -2631,18 +2596,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Wrapper for Fortran routine tao_graph_data_slice_setup
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
+Parameters
+----------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  plot : TaoPlotStruct
+Returns
+-------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
-  )"""
+graph : TaoGraphStruct
+)"""
   );
   m.def(
       "tao_graph_dynamic_aperture_setup",
@@ -2651,18 +2616,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Wrapper for Fortran routine tao_graph_dynamic_aperture_setup
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
+Parameters
+----------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  plot : TaoPlotStruct
+Returns
+-------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
-  )"""
+graph : TaoGraphStruct
+)"""
   );
   m.def(
       "tao_graph_histogram_setup",
@@ -2671,18 +2636,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Wrapper for Fortran routine tao_graph_histogram_setup
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
+Parameters
+----------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  plot : TaoPlotStruct
+Returns
+-------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
-  )"""
+graph : TaoGraphStruct
+)"""
   );
   m.def(
       "tao_graph_name",
@@ -2691,20 +2656,20 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("use_region") = py::none(),
       R"""(Wrapper for Fortran routine tao_graph_name
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
-      Graph
+Parameters
+----------
+graph : TaoGraphStruct
+    Graph
 
-  use_region : bool, optional
-      If present and True then use the region name instead of the plot name. Region name is 'NULL_REGION' if
-      there is no assocaited region.
+use_region : bool, optional
+    If present and True then use the region name instead of the plot name. Region name is 'NULL_REGION' if
+    there is no assocaited region.
 
-  Returns
-  -------
-  graph_name : character
-      Appropriate name.
-  )"""
+Returns
+-------
+graph_name : character
+    Appropriate name.
+)"""
   );
   m.def(
       "tao_graph_phase_space_setup",
@@ -2713,18 +2678,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Wrapper for Fortran routine tao_graph_phase_space_setup
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
+Parameters
+----------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  plot : TaoPlotStruct
+Returns
+-------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
-  )"""
+graph : TaoGraphStruct
+)"""
   );
   py::class_<Tao::TaoGraphSMinMaxCalc, std::unique_ptr<Tao::TaoGraphSMinMaxCalc>>(
       m,
@@ -2750,24 +2715,24 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("branch"),
       R"""(Subroutine tao_graph_s_min_max_calc(graph, branch, s_min, s_max)
 
-  Routine to calculate min and max for a graph when plot%x_axis_type is set to "s".
+Routine to calculate min and max for a graph when plot%x_axis_type is set to "s".
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
-      Graph to calculate for.
+Parameters
+----------
+graph : TaoGraphStruct
+    Graph to calculate for.
 
-  branch : BranchStruct
-      Associated lattice branch.
+branch : BranchStruct
+    Associated lattice branch.
 
-  Returns
-  -------
-  s_min : float
-      Graph min. May be negative with graph.allow_wrap_around = T.
+Returns
+-------
+s_min : float
+    Graph min. May be negative with graph.allow_wrap_around = T.
 
-  s_max : float
-      Graph max.
-  )"""
+s_max : float
+    Graph max.
+)"""
   );
   m.def(
       "tao_graph_setup",
@@ -2776,29 +2741,29 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Wrapper for Fortran routine tao_graph_setup
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
+Parameters
+----------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  plot : TaoPlotStruct
+Returns
+-------
+plot : TaoPlotStruct
 
-  graph : TaoGraphStruct
-  )"""
+graph : TaoGraphStruct
+)"""
   );
   m.def(
       "tao_init",
       &Tao::tao_init,
       R"""(Wrapper for Fortran routine tao_init
 
-  Returns
-  -------
-  err_flag : bool
-      Set Treu if there is an error. False otherwise.
-  )"""
+Returns
+-------
+err_flag : bool
+    Set Treu if there is an error. False otherwise.
+)"""
   );
   m.def(
       "tao_init_beam_in_universe",
@@ -2810,30 +2775,30 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("comb_ds_save"),
       R"""(Wrapper for Fortran routine tao_init_beam_in_universe
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
+Parameters
+----------
+u : TaoUniverseStruct
 
-  beam_init : BeamInitStruct
+beam_init : BeamInitStruct
 
-  track_start : character
+track_start : character
 
-  track_end : character
+track_end : character
 
-  comb_ds_save : float
+comb_ds_save : float
 
-  Returns
-  -------
-  u : TaoUniverseStruct
+Returns
+-------
+u : TaoUniverseStruct
 
-  beam_init : BeamInitStruct
+beam_init : BeamInitStruct
 
-  track_start : character
+track_start : character
 
-  track_end : character
+track_end : character
 
-  comb_ds_save : float
-  )"""
+comb_ds_save : float
+)"""
   );
   m.def(
       "tao_init_beams",
@@ -2841,13 +2806,13 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("init_file"),
       R"""(Subroutine tao_init_beams (init_file)
 
-  Subroutine to initialize beam stuff.
+Subroutine to initialize beam stuff.
 
-  Parameters
-  ----------
-  init_file : character
-      Tao initialization file. If blank, there is no file so just use the defaults.
-  )"""
+Parameters
+----------
+init_file : character
+    Tao initialization file. If blank, there is no file so just use the defaults.
+)"""
   );
   m.def(
       "tao_init_data",
@@ -2855,19 +2820,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("data_file"),
       R"""(Subroutine tao_init_data (data_file)
 
-  Subroutine to initialize the tao data structures.
+Subroutine to initialize the tao data structures.
 
-  Parameters
-  ----------
-  data_file : character
-      Tao data initialization file. If blank, there is no file so just use the defaults.
-  )"""
+Parameters
+----------
+data_file : character
+    Tao data initialization file. If blank, there is no file so just use the defaults.
+)"""
   );
   m.def(
       "tao_init_data_end_stuff",
       &Tao::tao_init_data_end_stuff,
       R"""(Wrapper for Fortran routine tao_init_data_end_stuff
-  )"""
+)"""
   );
   m.def(
       "tao_init_data_in_universe",
@@ -2877,22 +2842,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("keep_existing_data") = py::none(),
       R"""(Wrapper for Fortran routine tao_init_data_in_universe
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
+Parameters
+----------
+u : TaoUniverseStruct
 
-  n_d2_add : int
+n_d2_add : int
 
-  keep_existing_data : bool, optional
+keep_existing_data : bool, optional
 
-  Returns
-  -------
-  u : TaoUniverseStruct
+Returns
+-------
+u : TaoUniverseStruct
 
-  n_d2_add : int
+n_d2_add : int
 
-  keep_existing_data : bool, optional
-  )"""
+keep_existing_data : bool, optional
+)"""
   );
   m.def(
       "tao_init_dynamic_aperture",
@@ -2900,13 +2865,13 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("init_file"),
       R"""(Subroutine tao_init_dynamic_aperture (init_file)
 
-  Routine to initalize dynamic aperture simulations.
+Routine to initalize dynamic aperture simulations.
 
-  Parameters
-  ----------
-  init_file : character
-      File setting dynamic_aperture parameters.
-  )"""
+Parameters
+----------
+init_file : character
+    File setting dynamic_aperture parameters.
+)"""
   );
   m.def(
       "tao_init_find_elements",
@@ -2917,25 +2882,25 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("attribute") = py::none(),
       R"""(Wrapper for Fortran routine tao_init_find_elements
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
-      Universe to search
+Parameters
+----------
+u : TaoUniverseStruct
+    Universe to search
 
-  search_string : character
-      What to search for
+search_string : character
+    What to search for
 
-  attribute : character, optional
-      Check that attribute of element is free to vary.
+attribute : character, optional
+    Check that attribute of element is free to vary.
 
-  Returns
-  -------
-  eles : 1D array of ElePointerStruct
-      List of matching elements.
+Returns
+-------
+eles : 1D array of ElePointerStruct
+    List of matching elements. Size is zero if no elements found.
 
-  found_one : bool, optional
-      Set True if a matching element is found. However: Not set if no matching element found.
-  )"""
+found_one : bool, optional
+    Set True if a matching element is found. However: Not set if no matching element found.
+)"""
   );
   m.def(
       "tao_init_global",
@@ -2943,13 +2908,13 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("init_file"),
       R"""(Subroutine tao_init_global (init_file)
 
-  Subroutine to initialize the tao global structures.
+Subroutine to initialize the tao global structures.
 
-  Parameters
-  ----------
-  init_file : character
-      Tao initialization file. If blank, there is no file so just use the defaults.
-  )"""
+Parameters
+----------
+init_file : character
+    Tao initialization file. If blank, there is no file so just use the defaults.
+)"""
   );
   m.def(
       "tao_init_lattice",
@@ -2958,18 +2923,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("err_flag"),
       R"""(Wrapper for Fortran routine tao_init_lattice
 
-  Parameters
-  ----------
-  lat_file : character
+Parameters
+----------
+lat_file : character
 
-  err_flag : bool
+err_flag : bool
 
-  Returns
-  -------
-  lat_file : character
+Returns
+-------
+lat_file : character
 
-  err_flag : bool
-  )"""
+err_flag : bool
+)"""
   );
   m.def(
       "tao_init_plotting",
@@ -2977,14 +2942,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("plot_file"),
       R"""(Wrapper for Fortran routine tao_init_plotting
 
-  Parameters
-  ----------
-  plot_file : character
+Parameters
+----------
+plot_file : character
 
-  Returns
-  -------
-  plot_file : character
-  )"""
+Returns
+-------
+plot_file : character
+)"""
   );
   m.def(
       "tao_init_variables",
@@ -2992,13 +2957,13 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("var_file"),
       R"""(Subroutine tao_init_variables (var_file)
 
-  Subroutine to initialize the tao variable structures.
+Subroutine to initialize the tao variable structures.
 
-  Parameters
-  ----------
-  var_file : character
-      Tao variable initialization file. If blank, there is no file so just use the defaults.
-  )"""
+Parameters
+----------
+var_file : character
+    Tao variable initialization file. If blank, there is no file so just use the defaults.
+)"""
   );
   py::class_<Tao::TaoInjectBeam, std::unique_ptr<Tao::TaoInjectBeam>>(
       m,
@@ -3025,31 +2990,31 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ix_branch"),
       R"""(Subroutine tao_inject_beam (u, model, ix_branch, beam, init_ok)
 
-  This will initialize the beam for a given lattice branch.
+This will initialize the beam for a given lattice branch.
 
-  Trying to inject a beam of one species into a branch with a different ref species
-  (example: electron bunch into photon branch) is problematical. To avoid problems, Tao
-  will set not inject (init_ok = False) if there is a mismatch.
+Trying to inject a beam of one species into a branch with a different ref species
+(example: electron bunch into photon branch) is problematical. To avoid problems, Tao
+will set not inject (init_ok = False) if there is a mismatch.
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
-      Universe containing the lattice.
+Parameters
+----------
+u : TaoUniverseStruct
+    Universe containing the lattice.
 
-  model : TaoLatticeStruct
-      Universe parameters.
+model : TaoLatticeStruct
+    Universe parameters.
 
-  ix_branch : int
-      Lattice branch index to inject into.
+ix_branch : int
+    Lattice branch index to inject into.
 
-  Returns
-  -------
-  beam : BeamStruct
-      Initial beam.
+Returns
+-------
+beam : BeamStruct
+    Initial beam.
 
-  init_ok : bool
-      Set False if there are problems. True otherwise.
-  )"""
+init_ok : bool
+    Set False if there are problems. True otherwise.
+)"""
   );
   m.def(
       "tao_inject_particle",
@@ -3059,22 +3024,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ix_branch"),
       R"""(Wrapper for Fortran routine tao_inject_particle
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
+Parameters
+----------
+u : TaoUniverseStruct
 
-  model : TaoLatticeStruct
+model : TaoLatticeStruct
 
-  ix_branch : int
+ix_branch : int
 
-  Returns
-  -------
-  u : TaoUniverseStruct
+Returns
+-------
+u : TaoUniverseStruct
 
-  model : TaoLatticeStruct
+model : TaoLatticeStruct
 
-  ix_branch : int
-  )"""
+ix_branch : int
+)"""
   );
   py::class_<Tao::TaoIsValidName, std::unique_ptr<Tao::TaoIsValidName>>(
       m,
@@ -3099,19 +3064,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("name"),
       R"""(Wrapper for Fortran routine tao_is_valid_name
 
-  Parameters
-  ----------
-  name : character
-      Name to be checked.
+Parameters
+----------
+name : character
+    Name to be checked.
 
-  Returns
-  -------
-  why_invalid : character
-      Why invalid description.
+Returns
+-------
+why_invalid : character
+    Why invalid description.
 
-  is_valid : bool
-      True if valid. False otherwise.
-  )"""
+is_valid : bool
+    True if valid. False otherwise.
+)"""
   );
   m.def(
       "tao_json_cmd",
@@ -3119,11 +3084,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("input_str"),
       R"""(Wrapper for Fortran routine tao_json_cmd
 
-  Parameters
-  ----------
-  input_str : character
-      What to show.
-  )"""
+Parameters
+----------
+input_str : character
+    What to show.
+)"""
   );
   m.def(
       "tao_key_info_to_str",
@@ -3135,30 +3100,30 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("header_str"),
       R"""(Wrapper for Fortran routine tao_key_info_to_str
 
-  Parameters
-  ----------
-  ix_key : int
+Parameters
+----------
+ix_key : int
 
-  ix_min_key : int
+ix_min_key : int
 
-  ix_max_key : int
+ix_max_key : int
 
-  key_str : character
+key_str : character
 
-  header_str : character
+header_str : character
 
-  Returns
-  -------
-  ix_key : int
+Returns
+-------
+ix_key : int
 
-  ix_min_key : int
+ix_min_key : int
 
-  ix_max_key : int
+ix_max_key : int
 
-  key_str : character
+key_str : character
 
-  header_str : character
-  )"""
+header_str : character
+)"""
   );
   m.def(
       "tao_lat_bookkeeper",
@@ -3167,17 +3132,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("tao_lat"),
       R"""(Wrapper for Fortran routine tao_lat_bookkeeper
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
+Parameters
+----------
+u : TaoUniverseStruct
 
-  tao_lat : TaoLatticeStruct
+tao_lat : TaoLatticeStruct
 
-  Returns
-  -------
-  err_flag : bool
-      Set True if there is a problem. False otherwise.
-  )"""
+Returns
+-------
+err_flag : bool
+    Set True if there is a problem. False otherwise.
+)"""
   );
   m.def(
       "tao_lat_emit_calc",
@@ -3188,25 +3153,25 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("modes"),
       R"""(Wrapper for Fortran routine tao_lat_emit_calc
 
-  Parameters
-  ----------
-  plane : int
-      x_plane$ or y_plane$.
+Parameters
+----------
+plane : int
+    x_plane$ or y_plane$.
 
-  emit_type : int
-      Either projected_emit$ or apparent_emit$
+emit_type : int
+    Either projected_emit$ or apparent_emit$
 
-  ele : EleStruct
-      Element holding the Twiss and coupling parameters.
+ele : EleStruct
+    Element holding the Twiss and coupling parameters.
 
-  modes : NormalModesStruct
-      Structure holding the emittances
+modes : NormalModesStruct
+    Structure holding the emittances
 
-  Returns
-  -------
-  emit : float
-      emittance.
-  )"""
+Returns
+-------
+emit : float
+    emittance.
+)"""
   );
   m.def(
       "tao_lat_sigma_calc_needed",
@@ -3216,22 +3181,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("do_lat_sigma"),
       R"""(Wrapper for Fortran routine tao_lat_sigma_calc_needed
 
-  Parameters
-  ----------
-  data_type : character
+Parameters
+----------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_lat_sigma : bool
+do_lat_sigma : bool
 
-  Returns
-  -------
-  data_type : character
+Returns
+-------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_lat_sigma : bool
-  )"""
+do_lat_sigma : bool
+)"""
   );
   m.def(
       "tao_lat_sigma_track",
@@ -3242,27 +3207,27 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("force_calc") = py::none(),
       R"""(Subroutine tao_lat_sigma_track (tao_lat, calc_ok, ix_branch, print_err, force_calc)
 
-  Routine to track the 6x6 sigma matrix through the lattice using the lattice linear transfer matrices.
+Routine to track the 6x6 sigma matrix through the lattice using the lattice linear transfer matrices.
 
-  Parameters
-  ----------
-  tao_lat : TaoLatticeStruct
-      Structure containing the lattice.
+Parameters
+----------
+tao_lat : TaoLatticeStruct
+    Structure containing the lattice.
 
-  ix_branch : int
-      Branch index to track through.
+ix_branch : int
+    Branch index to track through.
 
-  print_err : bool, optional
-      Default is False. Print error messages if, eg, lattice is unstable?
+print_err : bool, optional
+    Default is False. Print error messages if, eg, lattice is unstable?
 
-  force_calc : bool, optional
-      Default is False. If True, force the calculation to be done.
+force_calc : bool, optional
+    Default is False. If True, force the calculation to be done.
 
-  Returns
-  -------
-  calc_ok : bool
-      Set True if there were no problems, False otherwise.
-  )"""
+Returns
+-------
+calc_ok : bool
+    Set True if there were no problems, False otherwise.
+)"""
   );
   m.def(
       "tao_lattice_branches_equal_tao_lattice_branches",
@@ -3271,18 +3236,18 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("tlb2"),
       R"""(Wrapper for Fortran routine tao_lattice_branches_equal_tao_lattice_branches
 
-  Parameters
-  ----------
-  tlb1 : 1D array of TaoLatticeBranchStruct
+Parameters
+----------
+tlb1 : 1D array of TaoLatticeBranchStruct
 
-  tlb2 : 1D array of TaoLatticeBranchStruct
+tlb2 : 1D array of TaoLatticeBranchStruct
 
-  Returns
-  -------
-  tlb1 : 1D array of TaoLatticeBranchStruct
+Returns
+-------
+tlb1 : 1D array of TaoLatticeBranchStruct
 
-  tlb2 : 1D array of TaoLatticeBranchStruct
-  )"""
+tlb2 : 1D array of TaoLatticeBranchStruct
+)"""
   );
   py::class_<Tao::TaoLatticeCalc, std::unique_ptr<Tao::TaoLatticeCalc>>(
       m,
@@ -3306,14 +3271,14 @@ void init_Tao_routines_t(py::module &m) {
       &Tao::tao_lattice_calc,
       R"""(Wrapper for Fortran routine tao_lattice_calc
 
-  Returns
-  -------
-  calc_ok : bool
-      Set False if there was an error in the
+Returns
+-------
+calc_ok : bool
+    Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
 
-  print_err : bool, optional
-      Default True. If False, do not print error messages if, for example, the lattice is unstable.
-  )"""
+print_err : bool, optional
+    Default True. If False, do not print error messages if, for example, the lattice is unstable.
+)"""
   );
   m.def(
       "tao_lattice_equal_tao_lattice",
@@ -3322,58 +3287,58 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("lat2"),
       R"""(Wrapper for Fortran routine tao_lattice_equal_tao_lattice
 
-  Parameters
-  ----------
-  lat1 : TaoLatticeStruct
+Parameters
+----------
+lat1 : TaoLatticeStruct
 
-  lat2 : TaoLatticeStruct
+lat2 : TaoLatticeStruct
 
-  Returns
-  -------
-  lat1 : TaoLatticeStruct
+Returns
+-------
+lat1 : TaoLatticeStruct
 
-  lat2 : TaoLatticeStruct
-  )"""
+lat2 : TaoLatticeStruct
+)"""
   );
   m.def(
       "tao_limit_calc",
       &Tao::tao_limit_calc,
       R"""(Wrapper for Fortran routine tao_limit_calc
 
-  Returns
-  -------
-  limited : bool
-      Set True if a variable is past a limit.
-  )"""
+Returns
+-------
+limited : bool
+    Set True if a variable is past a limit.
+)"""
   );
   m.def(
       "tao_lm_optimizer",
       &Tao::tao_lm_optimizer,
       R"""(Subroutine tao_lm_optimizer (abort)
 
-  Routine to minimize the merit function by varying variables until
-  the "data" as calculated from the model matches the measured data.
+Routine to minimize the merit function by varying variables until
+the "data" as calculated from the model matches the measured data.
 
-  This subroutine is a wrapper for the mrqmin routine of Numerical Recipes.
-  See the Numerical Recipes writeup for more details.
-  'lm' stands for Levenburg - Marquardt. Otherwise known as LMDIF.
+This subroutine is a wrapper for the mrqmin routine of Numerical Recipes.
+See the Numerical Recipes writeup for more details.
+'lm' stands for Levenburg - Marquardt. Otherwise known as LMDIF.
 
-  Returns
-  -------
-  abort : bool
-      Set True if an user stop signal detected.
-  )"""
+Returns
+-------
+abort : bool
+    Set True if an user stop signal detected.
+)"""
   );
   m.def(
       "tao_lmdif_optimizer",
       &Tao::tao_lmdif_optimizer,
       R"""(Wrapper for Fortran routine tao_lmdif_optimizer
 
-  Returns
-  -------
-  abort : bool
-      Set True if an user stop signal detected or there is a problem with calculating the merit function.
-  )"""
+Returns
+-------
+abort : bool
+    Set True if an user stop signal detected or there is a problem with calculating the merit function.
+)"""
   );
   m.def(
       "tao_load_this_datum",
@@ -3390,50 +3355,50 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("good") = py::none(),
       R"""(Wrapper for Fortran routine tao_load_this_datum
 
-  Parameters
-  ----------
-  vec : 1D array of float
+Parameters
+----------
+vec : 1D array of float
 
-  ele_ref : EleStruct
+ele_ref : EleStruct
 
-  ele_start : EleStruct
+ele_start : EleStruct
 
-  ele : EleStruct
+ele : EleStruct
 
-  datum_value : float
+datum_value : float
 
-  valid_value : bool
+valid_value : bool
 
-  datum : TaoDataStruct
+datum : TaoDataStruct
 
-  branch : BranchStruct
+branch : BranchStruct
 
-  why_invalid : character, optional
+why_invalid : character, optional
 
-  good : 1D array of bool, optional
+good : 1D array of bool, optional
 
-  Returns
-  -------
-  vec : 1D array of float
+Returns
+-------
+vec : 1D array of float
 
-  ele_ref : EleStruct
+ele_ref : EleStruct
 
-  ele_start : EleStruct
+ele_start : EleStruct
 
-  ele : EleStruct
+ele : EleStruct
 
-  datum_value : float
+datum_value : float
 
-  valid_value : bool
+valid_value : bool
 
-  datum : TaoDataStruct
+datum : TaoDataStruct
 
-  branch : BranchStruct
+branch : BranchStruct
 
-  why_invalid : character, optional
+why_invalid : character, optional
 
-  good : 1D array of bool, optional
-  )"""
+good : 1D array of bool, optional
+)"""
   );
   m.def(
       "tao_locate_all_elements",
@@ -3443,22 +3408,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ignore_blank") = py::none(),
       R"""(Wrapper for Fortran routine tao_locate_all_elements
 
-  Parameters
-  ----------
-  ele_list : character
-      String with element names using element list format.
+Parameters
+----------
+ele_list : character
+    String with element names using element list format.
 
-  ignore_blank : bool, optional
-      If present and true then do nothing if ele_list is blank. otherwise a blank is treated as an error.
+ignore_blank : bool, optional
+    If present and true then do nothing if ele_list is blank. otherwise a blank is treated as an error.
 
-  Returns
-  -------
-  eles : 1D array of ElePointerStruct
-      : Array of elements in the model lat.
+Returns
+-------
+eles : 1D array of ElePointerStruct
+    : Array of elements in the model lat.
 
-  err : bool
-      Set true on error.
-  )"""
+err : bool
+    Set true on error.
+)"""
   );
   m.def(
       "tao_locate_elements",
@@ -3474,42 +3439,44 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("multiple_eles_is_err") = py::none(),
       R"""(Wrapper for Fortran routine tao_locate_elements
 
-  Parameters
-  ----------
-  ele_list : character
-      String with element names using element list format.
+Parameters
+----------
+ele_list : character
+    String with element names using element list format.
 
-  ix_universe : int
-      Universe to search. -1 => search s.global.default_universe. -2 (all unis) => error.
+ix_universe : int
+    Universe to search. -1 => search s.global.default_universe. -2 (all unis) => error. ix_universe is ignored
+    if ele_list starts with a universe specifier "N@".
 
-  lat_type : int, optional
-      model$ (default), design$, or base$.
+lat_type : int, optional
+    model$ (default), design$, or base$.
 
-  ignore_blank : bool, optional
-      If present and true then do nothing if
+ignore_blank : bool, optional
+    If present and true then do nothing if ele_list is blank. otherwise treated as an error.
 
-  err_stat_level : int, optional
-      Status level for error messages. If not present,
+err_stat_level : int, optional
+    Status level for error messages. If not present, print with level s_error$. Use s_nooutput$ to prevent
+    printing.
 
-  above_ubound_is_err : bool, optional
+above_ubound_is_err : bool, optional
 
-  ix_branch : int, optional
-      If present and non-negative then use this as the branch index for elements specified using an integer
-      index (EG: "43"). If -1 use the default branch, search all branches.
+ix_branch : int, optional
+    If present and non-negative then use this as the branch index for elements specified using an integer
+    index (EG: "43"). If -1 use the default branch, search all branches.
 
-  multiple_eles_is_err : bool, optional
-      If present and True then matching to more than one element is an error.
+multiple_eles_is_err : bool, optional
+    If present and True then matching to more than one element is an error.
 
-  Returns
-  -------
-  eles : 1D array of ElePointerStruct
-      : Array of elements in the model lat.
+Returns
+-------
+eles : 1D array of ElePointerStruct
+    : Array of elements in the model lat.
 
-  err : bool
-      Set true on error.
+err : bool
+    Set true on error.
 
-  above_ubound_is_err : bool, optional
-  )"""
+above_ubound_is_err : bool, optional
+)"""
   );
   m.def(
       "tao_mark_lattice_ele",
@@ -3517,20 +3484,20 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("lat"),
       R"""(Wrapper for Fortran routine tao_mark_lattice_ele
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Input lattice
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with elements marked.
+Parameters
+----------
+lat : LatStruct
+    Input lattice
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with elements marked.
 
-  Returns
-  -------
-  lat : LatStruct
-      Input lattice
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with elements marked.
-  )"""
+Returns
+-------
+lat : LatStruct
+    Input lattice
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with elements marked.
+)"""
   );
   py::class_<Tao::TaoMerit, std::unique_ptr<Tao::TaoMerit>>(m, "TaoMerit", "tao_merit return type")
       .def_readonly("calc_ok", &Tao::TaoMerit::calc_ok)
@@ -3550,14 +3517,14 @@ void init_Tao_routines_t(py::module &m) {
       &Tao::tao_merit,
       R"""(Wrapper for Fortran routine tao_merit
 
-  Returns
-  -------
-  calc_ok : bool, optional
-      Set False if there was an error in the
+Returns
+-------
+calc_ok : bool, optional
+    Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
 
-  this_merit : float
-      Merit value.
-  )"""
+this_merit : float
+    Merit value.
+)"""
   );
   py::class_<PyTaoNextWord, std::unique_ptr<PyTaoNextWord>>(
       m,
@@ -3582,29 +3549,29 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("line"),
       R"""(Subroutine tao_next_word (line, word)
 
-  Routine to return the next word in a line.
+Routine to return the next word in a line.
 
-  Words are delimited by a space character except if the space is within quotes.
-  Additionally, spaces within brackets "(...)", "{...}", and "[...]" are ignored.
-  Outer quote marks will be removed in the returned word.
+Words are delimited by a space character except if the space is within quotes.
+Additionally, spaces within brackets "(...)", "{...}", and "[...]" are ignored.
+Outer quote marks will be removed in the returned word.
 
-  Parameters
-  ----------
-  line : character
-      String to parse.
-      This parameter is an input/output and is modified in-place.
-      As an output, line: String with first word removed.
+Parameters
+----------
+line : character
+    String to parse.
+    This parameter is an input/output and is modified in-place.
+    As an output, line: String with first word removed.
 
-  Returns
-  -------
-  line : character
-      String to parse.
-      This parameter is an input/output and is modified in-place.
-      As an output, line: String with first word removed.
+Returns
+-------
+line : character
+    String to parse.
+    This parameter is an input/output and is modified in-place.
+    As an output, line: String with first word removed.
 
-  word : character
-      First word of line.
-  )"""
+word : character
+    First word of line.
+)"""
   );
   m.def(
       "tao_one_turn_map_calc_needed",
@@ -3614,22 +3581,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("do_one_turn_map"),
       R"""(Wrapper for Fortran routine tao_one_turn_map_calc_needed
 
-  Parameters
-  ----------
-  data_type : character
+Parameters
+----------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_one_turn_map : bool
+do_one_turn_map : bool
 
-  Returns
-  -------
-  data_type : character
+Returns
+-------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_one_turn_map : bool
-  )"""
+do_one_turn_map : bool
+)"""
   );
   m.def(
       "tao_open_file",
@@ -3640,27 +3607,27 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("binary") = py::none(),
       R"""(Wrapper for Fortran routine tao_open_file
 
-  Parameters
-  ----------
-  file : character
+Parameters
+----------
+file : character
 
-  file_name : character
-      File name.
+file_name : character
+    File name.
 
-  error_severity : int
-      Severity level used in the error message. Possibilities are s_fatal$, etc. See out_io doc for more
-      details.
+error_severity : int
+    Severity level used in the error message. Possibilities are s_fatal$, etc. See out_io doc for more
+    details. Use -1 to not print a message if file cannot be opened.
 
-  binary : bool, optional
-      If present and True then open a binary file, Defaut is False.
+binary : bool, optional
+    If present and True then open a binary file, Defaut is False.
 
-  Returns
-  -------
-  file : character
+Returns
+-------
+file : character
 
-  iunit : int
-      Logical unit number. Set to 0 if file not openable.
-  )"""
+iunit : int
+    Logical unit number. Set to 0 if file not openable.
+)"""
   );
   py::class_<Tao::TaoOpenScratchFile, std::unique_ptr<Tao::TaoOpenScratchFile>>(
       m,
@@ -3684,14 +3651,14 @@ void init_Tao_routines_t(py::module &m) {
       &Tao::tao_open_scratch_file,
       R"""(Wrapper for Fortran routine tao_open_scratch_file
 
-  Returns
-  -------
-  err : bool
-      Set True if there is an error. False otherwise.
+Returns
+-------
+err : bool
+    Set True if there is an error. False otherwise.
 
-  iu : int
-      File handle unit number.
-  )"""
+iu : int
+    File handle unit number.
+)"""
   );
   m.def(
       "tao_optimization_status",
@@ -3699,23 +3666,23 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("datum"),
       R"""(Wrapper for Fortran routine tao_optimization_status
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Datum to evaluate.
+Parameters
+----------
+datum : TaoDataStruct
+    Datum to evaluate.
 
-  Returns
-  -------
-  why_str : character
-      Optimization status of the datum.
-  )"""
+Returns
+-------
+why_str : character
+    Optimization status of the datum.
+)"""
   );
   m.def(
       "tao_orbit_beta_wave_anal",
       &Tao::tao_orbit_beta_wave_anal,
       py::arg("plot"),
       R"""(Subroutine tao_orbit_beta_wave_anal (plot)
-  )"""
+)"""
   );
   m.def(
       "tao_oreint_building_wall_pt",
@@ -3723,16 +3690,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("pt_in"),
       R"""(Wrapper for Fortran routine tao_oreint_building_wall_pt
 
-  Parameters
-  ----------
-  pt_in : TaoBuildingWallPointStruct
-      Building wall point.
+Parameters
+----------
+pt_in : TaoBuildingWallPointStruct
+    Building wall point.
 
-  Returns
-  -------
-  pt_out : TaoBuildingWallPointStruct
-      Building wall point with orientation params applied.
-  )"""
+Returns
+-------
+pt_out : TaoBuildingWallPointStruct
+    Building wall point with orientation params applied.
+)"""
   );
   py::class_<Tao::TaoParamValueAtS, std::unique_ptr<Tao::TaoParamValueAtS>>(
       m,
@@ -3769,38 +3736,38 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Wrapper for Fortran routine tao_param_value_at_s
 
-  Parameters
-  ----------
-  dat_name : character
+Parameters
+----------
+dat_name : character
 
-  ele_to_s : EleStruct
-      Element whose exit end is at the evaluation s-position.
+ele_to_s : EleStruct
+    Element whose exit end is at the evaluation s-position.
 
-  ele_here : EleStruct
-      Lattice element that overlaps the s-position ele.s.
+ele_here : EleStruct
+    Lattice element that overlaps the s-position ele.s.
 
-  orbit : CoordStruct
-      Orbit at the evaluation s-position.
+orbit : CoordStruct
+    Orbit at the evaluation s-position.
 
-  Returns
-  -------
-  dat_name : character
+Returns
+-------
+dat_name : character
 
-  err_flag : bool
-      Set true if parameter cannot be evaluated.
+err_flag : bool
+    Set true if parameter cannot be evaluated.
 
-  why_invalid : character, optional
-      Set if  err_flag = True to document why is there a problem.
+why_invalid : character, optional
+    Set if  err_flag = True to document why is there a problem.
 
-  print_err : bool, optional
-      Print error message on error? Default is True.
+print_err : bool, optional
+    Print error message on error? Default is True.
 
-  bad_datum : bool, optional
-      Data_type is malformed.
+bad_datum : bool, optional
+    Data_type is malformed.
 
-  value : float
-      Parameter value.
-  )"""
+value : float
+    Parameter value.
+)"""
   );
   m.def(
       "tao_param_value_routine",
@@ -3824,78 +3791,78 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("datum") = py::none(),
       R"""(Wrapper for Fortran routine tao_param_value_routine
 
-  Parameters
-  ----------
-  str : character
+Parameters
+----------
+str : character
 
-  use_good_user : bool
+use_good_user : bool
 
-  saved_prefix : character
+saved_prefix : character
 
-  stack : TaoEvalNodeStruct
+stack : TaoEvalNodeStruct
 
-  err_flag : bool
+err_flag : bool
 
-  print_err : bool
+print_err : bool
 
-  dflt_component : character, optional
+dflt_component : character, optional
 
-  dflt_source : character, optional
+dflt_source : character, optional
 
-  dflt_ele_ref : EleStruct, optional
+dflt_ele_ref : EleStruct, optional
 
-  dflt_ele_start : EleStruct, optional
+dflt_ele_start : EleStruct, optional
 
-  dflt_ele : EleStruct, optional
+dflt_ele : EleStruct, optional
 
-  dflt_dat_or_var_index : character, optional
+dflt_dat_or_var_index : character, optional
 
-  dflt_uni : int, optional
+dflt_uni : int, optional
 
-  dflt_eval_point : int, optional
+dflt_eval_point : int, optional
 
-  dflt_s_offset : float, optional
+dflt_s_offset : float, optional
 
-  dflt_orbit : CoordStruct, optional
+dflt_orbit : CoordStruct, optional
 
-  datum : TaoDataStruct, optional
+datum : TaoDataStruct, optional
 
-  Returns
-  -------
-  str : character
+Returns
+-------
+str : character
 
-  use_good_user : bool
+use_good_user : bool
 
-  saved_prefix : character
+saved_prefix : character
 
-  stack : TaoEvalNodeStruct
+stack : TaoEvalNodeStruct
 
-  err_flag : bool
+err_flag : bool
 
-  print_err : bool
+print_err : bool
 
-  dflt_component : character, optional
+dflt_component : character, optional
 
-  dflt_source : character, optional
+dflt_source : character, optional
 
-  dflt_ele_ref : EleStruct, optional
+dflt_ele_ref : EleStruct, optional
 
-  dflt_ele_start : EleStruct, optional
+dflt_ele_start : EleStruct, optional
 
-  dflt_ele : EleStruct, optional
+dflt_ele : EleStruct, optional
 
-  dflt_dat_or_var_index : character, optional
+dflt_dat_or_var_index : character, optional
 
-  dflt_uni : int, optional
+dflt_uni : int, optional
 
-  dflt_eval_point : int, optional
+dflt_eval_point : int, optional
 
-  dflt_s_offset : float, optional
+dflt_s_offset : float, optional
 
-  dflt_orbit : CoordStruct, optional
+dflt_orbit : CoordStruct, optional
 
-  datum : TaoDataStruct, optional
-  )"""
+datum : TaoDataStruct, optional
+)"""
   );
   m.def(
       "tao_parse_command_args",
@@ -3903,17 +3870,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("cmd_line") = py::none(),
       R"""(Wrapper for Fortran routine tao_parse_command_args
 
-  Parameters
-  ----------
-  cmd_line : character, optional
+Parameters
+----------
+cmd_line : character, optional
 
-  Returns
-  -------
-  error : bool
-      Set True if there is an error. False otherwise.
+Returns
+-------
+error : bool
+    Set True if there is an error. False otherwise.
 
-  cmd_line : character, optional
-  )"""
+cmd_line : character, optional
+)"""
   );
   py::class_<Tao::TaoParseElementParamStr, std::unique_ptr<Tao::TaoParseElementParamStr>>(
       m,
@@ -3950,31 +3917,31 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("in_str"),
       R"""(Wrapper for Fortran routine tao_parse_element_param_str
 
-  Parameters
-  ----------
-  in_str : character
-      String specifying a parameter of an element or elements.
+Parameters
+----------
+in_str : character
+    String specifying a parameter of an element or elements.
 
-  Returns
-  -------
-  err : bool
-      Set True if there is a parse error. False otherwise.
+Returns
+-------
+err : bool
+    Set True if there is a parse error. False otherwise.
 
-  uni : character
-      Universe substring.
+uni : character
+    Universe substring.
 
-  element : character
-      Element name.
+element : character
+    Element name.
 
-  parameter : character
-      Element parameter name.
+parameter : character
+    Element parameter name.
 
-  where : int
-      One of not_set$, anchor_beginning$, anchor_center$, or anchor_end$.
+where : int
+    One of not_set$, anchor_beginning$, anchor_center$, or anchor_end$.
 
-  component : character
-      One of "model", "design", or "base".
-  )"""
+component : character
+    One of "model", "design", or "base".
+)"""
   );
   m.def(
       "tao_particle_data_value",
@@ -3986,30 +3953,30 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ix_bunch"),
       R"""(Subroutine tao_particle_data_value (data_type, p, value, err, ele, ix_bunch)
 
-  Routine to calculate the value array of a data_type for an array of particles.
+Routine to calculate the value array of a data_type for an array of particles.
 
-  Parameters
-  ----------
-  data_type : character
-      Type of data.
+Parameters
+----------
+data_type : character
+    Type of data.
 
-  p : 1D array of CoordStruct
-      coord_struct, Array of particles containing the data.
+p : 1D array of CoordStruct
+    coord_struct, Array of particles containing the data.
 
-  ele : EleStruct
-      Needed for "Ja" evaluation.
+ele : EleStruct
+    Needed for "Ja" evaluation.
 
-  ix_bunch : int
-      Bunch index.
+ix_bunch : int
+    Bunch index.
 
-  Returns
-  -------
-  value : 1D array of float
-      Array of values.
+Returns
+-------
+value : 1D array of float
+    Array of values.
 
-  err : bool
-      Set True if there is an error. False otherwise.
-  )"""
+err : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "tao_pause_cmd",
@@ -4017,11 +3984,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("time"),
       R"""(Wrapper for Fortran routine tao_pause_cmd
 
-  Parameters
-  ----------
-  time : float
-      Time to pause in seconds.
-  )"""
+Parameters
+----------
+time : float
+    Time to pause in seconds.
+)"""
   );
   m.def(
       "tao_phase_space_axis_index",
@@ -4030,28 +3997,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("err"),
       R"""(Function tao_phase_space_axis_index (data_type, err) result (ix_axis)
 
-  Routine to calculate the phase space axis index for a given data type.
+Routine to calculate the phase space axis index for a given data type.
 
-  Parameters
-  ----------
-  data_type : character
-      Type of data.
+Parameters
+----------
+data_type : character
+    Type of data.
 
-  err : bool
-      Set True if there is an error.
+err : bool
+    Set True if there is an error.
 
-  Returns
-  -------
-  ix_axis : int
-      Axis index.
-  )"""
+Returns
+-------
+ix_axis : int
+    Axis index.
+)"""
   );
   m.def(
       "tao_phase_wave_anal",
       &Tao::tao_phase_wave_anal,
       py::arg("plot"),
       R"""(Subroutine tao_phase_wave_anal (plot)
-  )"""
+)"""
   );
   py::class_<Tao::TaoPickUniverse, std::unique_ptr<Tao::TaoPickUniverse>>(
       m,
@@ -4085,34 +4052,34 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("pure_uni") = py::none(),
       R"""(Wrapper for Fortran routine tao_pick_universe
 
-  Parameters
-  ----------
-  name_in : character
-      data name with possible universe spec.
+Parameters
+----------
+name_in : character
+    data name with possible universe spec.
 
-  dflt_uni : int, optional
-      Default universe to use. Set to -1 if explicit universe is required.
+dflt_uni : int, optional
+    Default universe to use. Set to -1 if explicit universe is required.
 
-  pure_uni : bool, optional
-      Default is False. See above
+pure_uni : bool, optional
+    Default is False. See above
 
-  Returns
-  -------
-  name_out : character
-      name_in without any "n@" beginning.
+Returns
+-------
+name_out : character
+    name_in without any "n@" beginning.
 
-  picked : 1D array of bool
-      Array showing picked universes.
+picked : 1D array of bool
+    Array showing picked universes. The array will be resized if necessary.
 
-  err : bool
-      Set True if an error is detected.
+err : bool
+    Set True if an error is detected.
 
-  ix_uni : int, optional
-      Set to the picked universe with the highest index.
+ix_uni : int, optional
+    Set to the picked universe with the highest index.
 
-  explicit_uni : bool, optional
-      Set True if name_in has explicit universe "n@" specification.
-  )"""
+explicit_uni : bool, optional
+    Set True if name_in has explicit universe "n@" specification.
+)"""
   );
   m.def(
       "tao_pipe_cmd",
@@ -4120,11 +4087,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("input_str"),
       R"""(Wrapper for Fortran routine tao_pipe_cmd
 
-  Parameters
-  ----------
-  input_str : character
-      What to show.
-  )"""
+Parameters
+----------
+input_str : character
+    What to show.
+)"""
   );
   m.def(
       "tao_place_cmd",
@@ -4134,17 +4101,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("no_buffer") = py::none(),
       R"""(Wrapper for Fortran routine tao_place_cmd
 
-  Parameters
-  ----------
-  where : character
-      Region where the plot goes. Eg: 'top'.
+Parameters
+----------
+where : character
+    Region where the plot goes. Eg: 'top'.
 
-  who : character
-      Type of plot. Eg: 'orbit'.
+who : character
+    Type of plot. Eg: 'orbit'.
 
-  no_buffer : bool, optional
-      If present and True then prevents buffering in the case when s.global.external_plotting = T
-  )"""
+no_buffer : bool, optional
+    If present and True then prevents buffering in the case when s.global.external_plotting = T
+)"""
   );
   m.def(
       "tao_plot_cmd",
@@ -4153,14 +4120,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("component"),
       R"""(Wrapper for Fortran routine tao_plot_cmd
 
-  Parameters
-  ----------
-  where : character
-      Region name to identify the plot to set.
+Parameters
+----------
+where : character
+    Region name to identify the plot to set.
 
-  component : character
-      Who to plot. EG: 'meas - design'
-  )"""
+component : character
+    Who to plot. EG: 'meas - design'
+)"""
   );
   m.def(
       "tao_plot_data",
@@ -4169,16 +4136,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Subroutine tao_plot_data (plot, graph)
 
-  Routine to draw a graph with data and/or variable curves.
+Routine to draw a graph with data and/or variable curves.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
-  )"""
+graph : TaoGraphStruct
+    Graph to plot.
+)"""
   );
   m.def(
       "tao_plot_histogram",
@@ -4187,16 +4154,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Subroutine tao_plot_histogram (plot, graph)
 
-  Routine to draw one graph for the histogram analysis plot.
+Routine to draw one graph for the histogram analysis plot.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
-  )"""
+graph : TaoGraphStruct
+    Graph to plot.
+)"""
   );
   m.def(
       "tao_plot_key_table",
@@ -4205,22 +4172,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Subroutine tao_plot_key_table (plot, graph)
 
-  Routine to draw a key table graph.
+Routine to draw a key table graph.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
-  )"""
+graph : TaoGraphStruct
+    Graph to plot.
+)"""
   );
   m.def(
       "tao_plot_setup",
       &Tao::tao_plot_setup,
       R"""(Wrapper for Fortran routine tao_plot_setup
-  )"""
+)"""
   );
   m.def(
       "tao_plot_struct_transfer",
@@ -4228,16 +4195,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("plot_in"),
       R"""(Wrapper for Fortran routine tao_plot_struct_transfer
 
-  Parameters
-  ----------
-  plot_in : TaoPlotStruct
-      Input structure.
+Parameters
+----------
+plot_in : TaoPlotStruct
+    Input structure.
 
-  Returns
-  -------
-  plot_out : TaoPlotStruct
-      Output struture.
-  )"""
+Returns
+-------
+plot_out : TaoPlotStruct
+    Output struture.
+)"""
   );
   m.def(
       "tao_plot_wave",
@@ -4246,16 +4213,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("graph"),
       R"""(Subroutine tao_plot_wave (plot, graph)
 
-  Routine to draw one graph for the wave analysis plot.
+Routine to draw one graph for the wave analysis plot.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot containing the graph.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot containing the graph.
 
-  graph : TaoGraphStruct
-      Graph to plot.
-  )"""
+graph : TaoGraphStruct
+    Graph to plot.
+)"""
   );
   m.def(
       "tao_pointer_to_building_wall_shape",
@@ -4263,36 +4230,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("wall_name"),
       R"""(Wrapper for Fortran routine tao_pointer_to_building_wall_shape
 
-  Parameters
-  ----------
-  wall_name : character
-      Name of the wall.
+Parameters
+----------
+wall_name : character
+    Name of the wall.
 
-  Returns
-  -------
-  e_shape : TaoEleShapeStruct, optional
-      Associated shape. Nullified if there is no associated shape.
-  )"""
+Returns
+-------
+e_shape : TaoEleShapeStruct, optional
+    Associated shape. Nullified if there is no associated shape.
+)"""
   );
   m.def(
       "tao_pointer_to_datum",
       &Tao::tao_pointer_to_datum,
       py::arg("d1"),
       py::arg("ele_name"),
-      py::arg("datum_ptr"),
       R"""(Wrapper for Fortran routine tao_pointer_to_datum
 
-  Parameters
-  ----------
-  d1 : TaoD1DataStruct
-      D1 data struct to search.
+Parameters
+----------
+d1 : TaoD1DataStruct
+    D1 data struct to search.
 
-  ele_name : character
-      Name of lattice element to match to.
+ele_name : character
+    Name of lattice element to match to.
 
-  datum_ptr : TaoDataStruct
-      Pointer to the matched datum. Will be null if no match found.
-  )"""
+Returns
+-------
+datum_ptr : TaoDataStruct, optional
+    Pointer to the matched datum. Will be null if no match found.
+)"""
   );
   py::class_<Tao::TaoPointerToDatumEle, std::unique_ptr<Tao::TaoPointerToDatumEle>>(
       m,
@@ -4324,41 +4292,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Function tao_pointer_to_datum_ele (lat, ele_name, ix_ele, datum, valid, why_invalid, print_err) result (ele)
 
-  Routine to see if an element index corresponds to an element with a definite
-  location such as an overlay or multipass element.
+Routine to see if an element index corresponds to an element with a definite
+location such as an overlay or multipass element.
 
-  If the element is a super_lord then the super_slave element at the exit end
-  of the lord will be returned. Otherwise ix_loc will be set to ix_ele.
+If the element is a super_lord then the super_slave element at the exit end
+of the lord will be returned. Otherwise ix_loc will be set to ix_ele.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice
+Parameters
+----------
+lat : LatStruct
+    Lattice
 
-  ix_ele : int
-      Index of element.
+ix_ele : int
+    Index of element.
 
-  datum : TaoDataStruct
-      Used for error messages and gives branch index.
+datum : TaoDataStruct
+    Used for error messages and gives branch index.
 
-  print_err : bool, optional
-      Default is True. If False, do not print an error message.
+print_err : bool, optional
+    Default is True. If False, do not print an error message.
 
-  Returns
-  -------
-  ele : EleStruct, optional
-      : Pointer to the element. Set to NULL if not valid
+Returns
+-------
+ele : EleStruct, optional
+    : Pointer to the element. Set to NULL if not valid or no associated element.
 
-  or no associated element. : None
+valid : bool
+    Set False if element does not have a definite location. Set True otherwise
 
-  valid : bool
-      Set False if element does not have a definite location.
-
-  Set True otherwise : None
-
-  why_invalid : character, optional
-      Tells why datum value is invalid.
-  )"""
+why_invalid : character, optional
+    Tells why datum value is invalid.
+)"""
   );
   py::class_<PyTaoPointerToEleShape, std::unique_ptr<PyTaoPointerToEleShape>>(
       m,
@@ -4392,38 +4356,40 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ix_shape_min") = py::none(),
       R"""(Wrapper for Fortran routine tao_pointer_to_ele_shape
 
-  Parameters
-  ----------
-  ix_uni : int
-      Universe index.
+Parameters
+----------
+ix_uni : int
+    Universe index.
 
-  ele : EleStruct
-      Lattice element.
+ele : EleStruct
+    Lattice element.
 
-  ele_shape : 1D array of TaoEleShapeStruct
-      Array of shapes to search.
+ele_shape : 1D array of TaoEleShapeStruct
+    Array of shapes to search.
 
-  ix_shape_min : int, optional
-      Index of minimum ele_shape(:) index to start search from. Default is 1.
-      This parameter is an input/output and is modified in-place.
-      As an output, ix_shape_min: Ele_shape(
+ix_shape_min : int, optional
+    Index of minimum ele_shape(:) index to start search from. Default is 1.
+    This parameter is an input/output and is modified in-place.
+    As an output, ix_shape_min: Ele_shape(
 
-  Returns
-  -------
-  dat_var_name : character, optional
-      Name of datum or variable associated with e_shape.
+Returns
+-------
+dat_var_name : character, optional
+    Name of datum or variable associated with e_shape. Will be set to "" if there is no associated datum or
+    variable.
 
-  dat_var_value : float, optional
-      Value of datum or variable associated with e_shape.
+dat_var_value : float, optional
+    Value of datum or variable associated with e_shape. Will be set to zero if there is no associated datum or
+    variable.
 
-  ix_shape_min : int, optional
-      Index of minimum ele_shape(:) index to start search from. Default is 1.
-      This parameter is an input/output and is modified in-place.
-      As an output, ix_shape_min: Ele_shape(
+ix_shape_min : int, optional
+    Index of minimum ele_shape(:) index to start search from. Default is 1.
+    This parameter is an input/output and is modified in-place.
+    As an output, ix_shape_min: Ele_shape(
 
-  e_shape : TaoEleShapeStruct, optional
-      Associated shape.
-  )"""
+e_shape : TaoEleShapeStruct, optional
+    Associated shape. Nullified if there is no associated shape.
+)"""
   );
   m.def(
       "tao_pointer_to_tao_lat",
@@ -4432,19 +4398,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("lat_type") = py::none(),
       R"""(Wrapper for Fortran routine tao_pointer_to_tao_lat
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
-      Universe to work with
+Parameters
+----------
+u : TaoUniverseStruct
+    Universe to work with
 
-  lat_type : int, optional
-      model$ (default), design$, or base$.
+lat_type : int, optional
+    model$ (default), design$, or base$.
 
-  Returns
-  -------
-  tao_lat : TaoLatticeStruct, optional
-      Tao_lat pointer. Points to u.model, u.design, or u.base
-  )"""
+Returns
+-------
+tao_lat : TaoLatticeStruct, optional
+    Tao_lat pointer. Points to u.model, u.design, or u.base
+)"""
   );
   m.def(
       "tao_pointer_to_universe",
@@ -4453,45 +4419,29 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("neg2_to_default") = py::none(),
       R"""(Function tao_pointer_to_universe (...) result (u)
 
-  Routine to set a pointer to a universe.
+Routine to set a pointer to a universe.
 
-  This is an overloaded routine for the:
-   tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
-   tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+This is an overloaded routine for the:
+ tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+ tao_pointer_to_universe_str (string, neg2_to_default) result (u)
 
-  Note: With a string argument, this routine can only handle single universe picks.
-  That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
-    tao_pointer_to_universes
+Note: With a string argument, this routine can only handle single universe picks.
+That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
+  tao_pointer_to_universes
 
-  Parameters
-  ----------
-  ix_uni : int
-      Index to the s.u(:) array
+Parameters
+----------
+ix_uni : int
+    Index to the s.u(:) array If ix_uni is -1 -> u(s.global.default_universe) will be used.
 
-  If ix_uni is -1 -> u : None
+neg2_to_default : bool, optional
+    i_uni = -2 (all universes) maps to the default uni? Default if False.
 
-  string : character(*)
-      String in the form "<ix_uni>@..." or, if
-      This parameter is an input/output and is modified in-place.
-      As an output, string: String with universe prefix stripped off.
-
-  no "@" is present : None
-
-  u will point to the default universe. : None
-
-  neg2_to_default : bool, optional
-      i_uni = -2 (all universes) maps to the default uni? Default if False.
-
-  Returns
-  -------
-  string : character(*)
-      String in the form "<ix_uni>@..." or, if
-      This parameter is an input/output and is modified in-place.
-      As an output, string: String with universe prefix stripped off.
-
-  u : TaoUniverseStruct, optional
-      Universe pointer. u will be nullified if there is an error and an error message will be printed.
-  )"""
+Returns
+-------
+u : TaoUniverseStruct, optional
+    Universe pointer. u will be nullified if there is an error and an error message will be printed.
+)"""
   );
   py::class_<PyTaoPointerToUniverseStr, std::unique_ptr<PyTaoPointerToUniverseStr>>(
       m,
@@ -4517,45 +4467,36 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("neg2_to_default") = py::none(),
       R"""(Function tao_pointer_to_universe (...) result (u)
 
-  Routine to set a pointer to a universe.
+Routine to set a pointer to a universe.
 
-  This is an overloaded routine for the:
-   tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
-   tao_pointer_to_universe_str (string, neg2_to_default) result (u)
+This is an overloaded routine for the:
+ tao_pointer_to_universe_int (ix_uni, neg2_to_default) result (u)
+ tao_pointer_to_universe_str (string, neg2_to_default) result (u)
 
-  Note: With a string argument, this routine can only handle single universe picks.
-  That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
-    tao_pointer_to_universes
+Note: With a string argument, this routine can only handle single universe picks.
+That is, it cannot handlle something like "[1,3,4]@...". To handle multiple universe picks, use:
+  tao_pointer_to_universes
 
-  Parameters
-  ----------
-  ix_uni : integer
-      Index to the s.u(:) array
+Parameters
+----------
+string : character
+    String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+    This parameter is an input/output and is modified in-place.
+    As an output, string: String with universe prefix stripped off.
 
-  If ix_uni is -1 -> u : None
+neg2_to_default : bool, optional
+    i_uni = -2 (all universes) maps to the default uni? Default if False.
 
-  string : character
-      String in the form "<ix_uni>@..." or, if
-      This parameter is an input/output and is modified in-place.
-      As an output, string: String with universe prefix stripped off.
+Returns
+-------
+string : character
+    String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
+    This parameter is an input/output and is modified in-place.
+    As an output, string: String with universe prefix stripped off.
 
-  no "@" is present : None
-
-  u will point to the default universe. : None
-
-  neg2_to_default : bool, optional
-      i_uni = -2 (all universes) maps to the default uni? Default if False.
-
-  Returns
-  -------
-  string : character
-      String in the form "<ix_uni>@..." or, if
-      This parameter is an input/output and is modified in-place.
-      As an output, string: String with universe prefix stripped off.
-
-  u : TaoUniverseStruct, optional
-      Universe pointer. u will be nullified if there is an error and an error message will be printed.
-  )"""
+u : TaoUniverseStruct, optional
+    Universe pointer. u will be nullified if there is an error and an error message will be printed.
+)"""
   );
   py::class_<Tao::TaoPointerToUniverses, std::unique_ptr<Tao::TaoPointerToUniverses>>(
       m,
@@ -4585,28 +4526,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("dflt_uni") = py::none(),
       R"""(Wrapper for Fortran routine tao_pointer_to_universes
 
-  Parameters
-  ----------
-  name_in : character
-      data name with possible universe spec.
+Parameters
+----------
+name_in : character
+    data name with possible universe spec.
 
-  dflt_uni : int, optional
-      Default universe to use. Set to -1 if explicit universe is required.
+dflt_uni : int, optional
+    Default universe to use. Set to -1 if explicit universe is required.
 
-  Returns
-  -------
-  unis : 1D array of TaoUniversePointerStruct
-      Array of pointers to picked universes.
+Returns
+-------
+unis : 1D array of TaoUniversePointerStruct
+    Array of pointers to picked universes. The array will be resized if necessary.
 
-  err : bool
-      Set True if an error is detected.
+err : bool
+    Set True if an error is detected.
 
-  name_out : character, optional
-      name_in without any "n@" beginning.
+name_out : character, optional
+    name_in without any "n@" beginning.
 
-  explicit_uni : bool, optional
-      Set True if name_in has explicit universe "n@" specification.
-  )"""
+explicit_uni : bool, optional
+    Set True if name_in has explicit universe "n@" specification.
+)"""
   );
   m.def(
       "tao_pointer_to_var_in_lattice",
@@ -4616,30 +4557,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Subroutine tao_pointer_to_var_in_lattice (var, ix_uni, ele, err)
 
-  Routine to add a pointer from a given Tao variable
-  to the appropriate variable in a lattice.
+Routine to add a pointer from a given Tao variable
+to the appropriate variable in a lattice.
 
-  Parameters
-  ----------
-  var : TaoVarStruct
-      Structure has the info of where to point.
+Parameters
+----------
+var : TaoVarStruct
+    Structure has the info of where to point.
 
-  ix_uni : int
-      the universe to use
+ix_uni : int
+    the universe to use
 
-  ix_ele : integer
-      Index of element.
-
-  Returns
-  -------
-  var%slave : tao_var_slave_struct
-      New component of .slave(:) array is added. .model_ptr .base_ptr .ix_ele
-
-  %ix_uni : None
-
-  err : bool
-      Set True if there is an error. False otherwise.
-  )"""
+Returns
+-------
+err : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "tao_pointer_to_var_in_lattice2",
@@ -4648,33 +4581,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ix_uni"),
       R"""(Subroutine tao_pointer_to_var_in_lattice2 (var, ix_uni, err)
 
-  Routine to add a pointer from a given Tao variable
-  to the appropriate variable in a lattice.
+Routine to add a pointer from a given Tao variable
+to the appropriate variable in a lattice.
 
-  Parameters
-  ----------
-  var : TaoVarStruct
-      Structure has the info of where to point.
+Parameters
+----------
+var : TaoVarStruct
+    Structure has the info of where to point.
 
-  ix_uni : int
-      the universe to use
+ix_uni : int
+    the universe to use
 
-  Returns
-  -------
-  var%slave : tao_var_slave_struct
-      New component of .slave(:) array is added. .model_ptr .base_ptr .ix_ele
-
-  %ix_uni : None
-
-  err : bool
-      Set True if there is an error. False otherwise.
-  )"""
+Returns
+-------
+err : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "tao_print_command_line_info",
       &Tao::tao_print_command_line_info,
       R"""(Wrapper for Fortran routine tao_print_command_line_info
-  )"""
+)"""
   );
   m.def(
       "tao_ptc_normal_form",
@@ -4685,20 +4613,20 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("rf_on") = py::none(),
       R"""(Wrapper for Fortran routine tao_ptc_normal_form
 
-  Parameters
-  ----------
-  do_calc : bool
-      Set True to do the calculation.
+Parameters
+----------
+do_calc : bool
+    Set True to do the calculation.
 
-  tao_lat : TaoLatticeStruct
-      Lattice to work on.
+tao_lat : TaoLatticeStruct
+    Lattice to work on.
 
-  ix_branch : int
-      Branch of lattice to work on.
+ix_branch : int
+    Branch of lattice to work on.
 
-  rf_on : int, optional
-      RF state for calculation. yes$, no$, or maybe$ (default) maybe$ means that RF state in branch is used.
-  )"""
+rf_on : int, optional
+    RF state for calculation. yes$, no$, or maybe$ (default) maybe$ means that RF state in branch is used.
+)"""
   );
   m.def(
       "tao_python_cmd",
@@ -4706,11 +4634,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("input_str"),
       R"""(Wrapper for Fortran routine tao_python_cmd
 
-  Parameters
-  ----------
-  input_str : character
-      What to show.
-  )"""
+Parameters
+----------
+input_str : character
+    What to show.
+)"""
   );
   m.def(
       "tao_quiet_set",
@@ -4718,11 +4646,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("set"),
       R"""(Wrapper for Fortran routine tao_quiet_set
 
-  Parameters
-  ----------
-  set : character
-      True is silent running is wanted.
-  )"""
+Parameters
+----------
+set : character
+    True is silent running is wanted.
+)"""
   );
   m.def(
       "tao_rad_int_calc_needed",
@@ -4732,22 +4660,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("do_rad_int"),
       R"""(Wrapper for Fortran routine tao_rad_int_calc_needed
 
-  Parameters
-  ----------
-  data_type : character
+Parameters
+----------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_rad_int : bool
+do_rad_int : bool
 
-  Returns
-  -------
-  data_type : character
+Returns
+-------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_rad_int : bool
-  )"""
+do_rad_int : bool
+)"""
   );
   m.def(
       "tao_re_allocate_expression_info",
@@ -4757,24 +4685,24 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("exact") = py::none(),
       R"""(Wrapper for Fortran routine tao_re_allocate_expression_info
 
-  Parameters
-  ----------
-  info : 1D array of TaoExpressionInfoStruct
-      This parameter is an input/output and is modified in-place.
-      As an output, info: Allocated array with size(re) >= n.
+Parameters
+----------
+info : 1D array of TaoExpressionInfoStruct
+    This parameter is an input/output and is modified in-place.
+    As an output, info: Allocated array with size(re) >= n.
 
-  n : int
-      Size wanted.
+n : int
+    Size wanted.
 
-  exact : bool, optional
-      If present and False then the size of the output array is permitted to be larger than n. Default is True.
+exact : bool, optional
+    If present and False then the size of the output array is permitted to be larger than n. Default is True.
 
-  Returns
-  -------
-  info : 1D array of TaoExpressionInfoStruct
-      This parameter is an input/output and is modified in-place.
-      As an output, info: Allocated array with size(re) >= n.
-  )"""
+Returns
+-------
+info : 1D array of TaoExpressionInfoStruct
+    This parameter is an input/output and is modified in-place.
+    As an output, info: Allocated array with size(re) >= n.
+)"""
   );
   m.def(
       "tao_re_associate_node_array",
@@ -4784,25 +4712,25 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("exact") = py::none(),
       R"""(Subroutine tao_re_associate_node_array(tree, n, exact)
 
-  Routine to resize the tree%node(:) array.
+Routine to resize the tree%node(:) array.
 
-  Note: The data of the array is preserved but data at the end of the
-  array will be lost if n is less than the original size of the array
+Note: The data of the array is preserved but data at the end of the
+array will be lost if n is less than the original size of the array
 
-  Parameters
-  ----------
-  tree : TaoEvalNodeStruct
+Parameters
+----------
+tree : TaoEvalNodeStruct
 
-  n : int
-      Size wanted.
+n : int
+    Size wanted.
 
-  exact : bool, optional
-      Default is False. If False, the size of the output array is permitted to be larger than n.
+exact : bool, optional
+    Default is False. If False, the size of the output array is permitted to be larger than n.
 
-  Returns
-  -------
-  tree : TaoEvalNodeStruct
-  )"""
+Returns
+-------
+tree : TaoEvalNodeStruct
+)"""
   );
   m.def(
       "tao_re_execute",
@@ -4811,8 +4739,8 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("err"),
       R"""(Subroutine tao_re_exectue (string, err)
 
-  Subroutine to execute a previous command.
-  )"""
+Subroutine to execute a previous command.
+)"""
   );
   m.def(
       "tao_read_cmd",
@@ -4823,24 +4751,24 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("silent"),
       R"""(Wrapper for Fortran routine tao_read_cmd
 
-  Parameters
-  ----------
-  which : character
+Parameters
+----------
+which : character
 
-  unis : character
-      Universes to apply to
+unis : character
+    Universes to apply to
 
-  file : character
+file : character
 
-  silent : bool
-      Silent
+silent : bool
+    Silent
 
-  Returns
-  -------
-  which : character
+Returns
+-------
+which : character
 
-  file : character
-  )"""
+file : character
+)"""
   );
   m.def(
       "tao_read_phase_space_index",
@@ -4850,23 +4778,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Wrapper for Fortran routine tao_read_phase_space_index
 
-  Parameters
-  ----------
-  name : character
-      character array holding the index. Must be in the range 1-6.
+Parameters
+----------
+name : character
+    character array holding the index. Must be in the range 1-6.
 
-  ixc : int
-      location within <name> to evaluate index.
+ixc : int
+    location within <name> to evaluate index.
 
-  print_err : bool, optional
-      If present and False then do not print an error message
+print_err : bool, optional
+    If present and False then do not print an error message
 
-  Returns
-  -------
-  ix_ps : int
-      Index at <name>(<ixc>:<ixc>). Returns 0 if bad index. Example: name = r:26 ixc  = 3 Gives: ix_ps = 2 name
-      = mat_94 ixc  = 7 Gives an error.
-  )"""
+Returns
+-------
+ix_ps : int
+    Index at <name>(<ixc>:<ixc>). Returns 0 if bad index.
+)"""
   );
   m.def(
       "tao_regression_test",
@@ -4874,14 +4801,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("cmd_str"),
       R"""(Wrapper for Fortran routine tao_regression_test
 
-  Parameters
-  ----------
-  cmd_str : character
+Parameters
+----------
+cmd_str : character
 
-  Returns
-  -------
-  cmd_str : character
-  )"""
+Returns
+-------
+cmd_str : character
+)"""
   );
   py::class_<PyTaoRemoveBlankCharacters, std::unique_ptr<PyTaoRemoveBlankCharacters>>(
       m,
@@ -4903,20 +4830,20 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("str"),
       R"""(Wrapper for Fortran routine tao_remove_blank_characters
 
-  Parameters
-  ----------
-  str : character
-      Input string.
-      This parameter is an input/output and is modified in-place.
-      As an output, str: String with blank characters removed.
+Parameters
+----------
+str : character
+    Input string.
+    This parameter is an input/output and is modified in-place.
+    As an output, str: String with blank characters removed.
 
-  Returns
-  -------
-  str : character
-      Input string.
-      This parameter is an input/output and is modified in-place.
-      As an output, str: String with blank characters removed.
-  )"""
+Returns
+-------
+str : character
+    Input string.
+    This parameter is an input/output and is modified in-place.
+    As an output, str: String with blank characters removed.
+)"""
   );
   m.def(
       "tao_run_cmd",
@@ -4924,17 +4851,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("which"),
       R"""(Wrapper for Fortran routine tao_run_cmd
 
-  Parameters
-  ----------
-  which : character
-      which optimizer to use.
+Parameters
+----------
+which : character
+    which optimizer to use.
 
-  Returns
-  -------
-  abort : bool
-      Set True if the run was aborted by the user, an at minimum condition, a singular matrix condition, etc..
-      False otherwise.
-  )"""
+Returns
+-------
+abort : bool
+    Set True if the run was aborted by the user, an at minimum condition, a singular matrix condition, etc..
+    False otherwise.
+)"""
   );
   m.def(
       "tao_scale_cmd",
@@ -4949,39 +4876,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("turn_autoscale_off") = py::none(),
       R"""(Subroutine tao_scale_cmd (where, y_min_in, y_max_in, axis, include_wall, gang, exact, turn_autoscale_off)
 
-  Routine to scale a plot.
-  If y_min = y_max, the scales will be chosen to show all the data.
+Routine to scale a plot.
+If y_min = y_max, the scales will be chosen to show all the data.
 
-  Parameters
-  ----------
-  where : character
-      Region to scale. Eg: "top:x"
+Parameters
+----------
+where : character
+    Region to scale. Eg: "top:x"
 
-  y_min_in : float
-      Plot y-axis min value.
+y_min_in : float
+    Plot y-axis min value.
 
-  y_max_in : float
-      Plot y-axis max value.
+y_max_in : float
+    Plot y-axis max value.
 
-  axis : character, optional
-      'y', 'y2', or '' (both). Default = ''.
+axis : character, optional
+    'y', 'y2', or '' (both). Default = ''.
 
-  include_wall : bool, optional
-      Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+include_wall : bool, optional
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
+    include the building wall position will be included in determining the the scale.
 
-  If present and True include the building wall position will be included in determining the the scale. : None
+gang : character, optional
+    'gang', 'nogang', ''. Default = ''.
 
-  gang : character, optional
-      'gang', 'nogang', ''. Default = ''.
+exact : bool, optional
+    Exact plot y_max, y_min to correspond to y_min_in, y_max_in? Default is False. Only relavent when y_min_in
+    /= y_max_in.
 
-  exact : bool, optional
-      Exact plot y_max, y_min to correspond to y_min_in, y_max_in?
-
-  Default is False. Only relavent when y_min_in /= y_max_in. : None
-
-  turn_autoscale_off : bool, optional
-      If True (default) then turn off plot.autoscale_y logical for all plots that are scaled.
-  )"""
+turn_autoscale_off : bool, optional
+    If True (default) then turn off plot.autoscale_y logical for all plots that are scaled.
+)"""
   );
   py::class_<Tao::TaoScaleGraph, std::unique_ptr<Tao::TaoScaleGraph>>(
       m,
@@ -5010,45 +4935,43 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("include_wall") = py::none(),
       R"""(Subroutine tao_scale_graph (graph, y_min, y_max, axis, include_wall, y_range, y2_range)
 
-  Routine to scale the y-axis and/or y2-axis of a graph
-  If y_min = y_max then autoscaling will be done and the particular value of y_min and y_max is ignored.
-  Note: y_min/y_max is ignored if scaling y2-axis and graph%y2_mirrors_y = T.
+Routine to scale the y-axis and/or y2-axis of a graph
+If y_min = y_max then autoscaling will be done and the particular value of y_min and y_max is ignored.
+Note: y_min/y_max is ignored if scaling y2-axis and graph%y2_mirrors_y = T.
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
-      Graph with axis/axes to be scaled.
-      This parameter is an input/output and is modified in-place.
-      As an output, graph: Graph with scaled axis/axes.
+Parameters
+----------
+graph : TaoGraphStruct
+    Graph with axis/axes to be scaled.
+    This parameter is an input/output and is modified in-place.
+    As an output, graph: Graph with scaled axis/axes.
 
-  y_min : float
-      Axis [min, max] must cover [y_min, y_max] if not autoscaling.
+y_min : float
+    Axis [min, max] must cover [y_min, y_max] if not autoscaling.
 
-  y_max : float
-      Axis [min, max] must cover [y_min, y_max] if not autoscaling.
+y_max : float
+    Axis [min, max] must cover [y_min, y_max] if not autoscaling.
 
-  axis : character, optional
-      Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis.
+axis : character, optional
+    Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
 
-  'y2' -> scale y2-axis : None
+include_wall : bool, optional
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
+    include the building wall position will be included in determining the the scale.
 
-  include_wall : bool, optional
-      Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
-      include the building wall position will be included in determining the the scale.
+Returns
+-------
+graph : TaoGraphStruct
+    Graph with axis/axes to be scaled.
+    This parameter is an input/output and is modified in-place.
+    As an output, graph: Graph with scaled axis/axes.
 
-  Returns
-  -------
-  graph : TaoGraphStruct
-      Graph with axis/axes to be scaled.
-      This parameter is an input/output and is modified in-place.
-      As an output, graph: Graph with scaled axis/axes.
+y_range : 1D array of float (shape: 2), optional
+    Only used by tao_scale_plot when ganging graphs.
 
-  y_range : 1D array of float (shape: 2), optional
-      Only used by tao_scale_plot when ganging graphs.
-
-  y2_range : 1D array of float (shape: 2), optional
-      Only used by tao_scale_plot when ganging graphs.
-  )"""
+y2_range : 1D array of float (shape: 2), optional
+    Only used by tao_scale_plot when ganging graphs.
+)"""
   );
   m.def(
       "tao_scale_ping_data",
@@ -5056,14 +4979,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("u"),
       R"""(Wrapper for Fortran routine tao_scale_ping_data
 
-  Parameters
-  ----------
-  u : TaoUniverseStruct
+Parameters
+----------
+u : TaoUniverseStruct
 
-  Returns
-  -------
-  u : TaoUniverseStruct
-  )"""
+Returns
+-------
+u : TaoUniverseStruct
+)"""
   );
   m.def(
       "tao_scale_plot",
@@ -5077,49 +5000,44 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("skip_lat_layout") = py::none(),
       R"""(Subroutine tao_scale_plot (plot, y_min_in, y_max_in, axis, include_wall, gang, skip_lat_layout)
 
-  Routine to scale the y-axis and/or y2-axis of the graphs of the plot.
-  If y_min_in = y_max_in then autoscaling will be done and the particular value
-  of y_min_in and y_max_in is ignored.
+Routine to scale the y-axis and/or y2-axis of the graphs of the plot.
+If y_min_in = y_max_in then autoscaling will be done and the particular value
+of y_min_in and y_max_in is ignored.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot with graphs to be scaled.
-      This parameter is an input/output and is modified in-place.
-      As an output, plot: Plot with scaled graphs.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot with graphs to be scaled.
+    This parameter is an input/output and is modified in-place.
+    As an output, plot: Plot with scaled graphs.
 
-  y_min_in : float
-      Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
+y_min_in : float
+    Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
 
-  y_max_in : float
-      Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
+y_max_in : float
+    Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
 
-  axis : character, optional
-      Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis.
+axis : character, optional
+    Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
 
-  'y2' -> scale y2-axis : None
+include_wall : bool, optional
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
+    include the building wall position will be included in determining the the scale.
 
-  include_wall : bool, optional
-      Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+gang : character, optional
+    If autoscale then make all graph y-axes the same and/or make all y2-axes the same? ''        -> (default)
+    Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs. 'nogang'  -> Do not gang graphs.
 
-  If present and True include the building wall position will be included in determining the the scale. : None
+skip_lat_layout : bool, optional
+    If True, skip scaling any lat_layout graphs. Default is false.
 
-  gang : character, optional
-      If autoscale then make all graph y-axes the same and/or make all y2-axes the same? ''        -> (default)
-      Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs.
-
-  'nogang'  -> Do not gang graphs. : None
-
-  skip_lat_layout : bool, optional
-      If True, skip scaling any lat_layout graphs. Default is false.
-
-  Returns
-  -------
-  plot : TaoPlotStruct
-      Plot with graphs to be scaled.
-      This parameter is an input/output and is modified in-place.
-      As an output, plot: Plot with scaled graphs.
-  )"""
+Returns
+-------
+plot : TaoPlotStruct
+    Plot with graphs to be scaled.
+    This parameter is an input/output and is modified in-place.
+    As an output, plot: Plot with scaled graphs.
+)"""
   );
   m.def(
       "tao_scratch_values_calc",
@@ -5132,34 +5050,34 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Wrapper for Fortran routine tao_scratch_values_calc
 
-  Parameters
-  ----------
-  ele_ref : EleStruct
+Parameters
+----------
+ele_ref : EleStruct
 
-  ele_start : EleStruct
+ele_start : EleStruct
 
-  ele : EleStruct
+ele : EleStruct
 
-  datum : TaoDataStruct
+datum : TaoDataStruct
 
-  branch : BranchStruct
+branch : BranchStruct
 
-  orbit : 1D array of CoordStruct
+orbit : 1D array of CoordStruct
 
-  Returns
-  -------
-  ele_ref : EleStruct
+Returns
+-------
+ele_ref : EleStruct
 
-  ele_start : EleStruct
+ele_start : EleStruct
 
-  ele : EleStruct
+ele : EleStruct
 
-  datum : TaoDataStruct
+datum : TaoDataStruct
 
-  branch : BranchStruct
+branch : BranchStruct
 
-  orbit : 1D array of CoordStruct
-  )"""
+orbit : 1D array of CoordStruct
+)"""
   );
   m.def(
       "tao_set_beam_cmd",
@@ -5169,19 +5087,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("branch_str"),
       R"""(Subroutine tao_set_beam_cmd (who, value_str, branch_str)
 
-  Routine to set various beam parameters.
+Routine to set various beam parameters.
 
-  Parameters
-  ----------
-  who : character
-      which parameter to set.
+Parameters
+----------
+who : character
+    which parameter to set.
 
-  value_str : character
-      Value to set to.
+value_str : character
+    Value to set to.
 
-  branch_str : character
-      Branch to use. '' => branch 0.
-  )"""
+branch_str : character
+    Branch to use. '' => branch 0.
+)"""
   );
   m.def(
       "tao_set_beam_init_cmd",
@@ -5191,24 +5109,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("branch_str"),
       R"""(Subroutine tao_set_beam_init_cmd (who, value_str, branch_str)
 
-  Routine to set beam_init variables
+Routine to set beam_init variables
 
-  Parameters
-  ----------
-  who : character
-      which beam_init variable to set
+Parameters
+----------
+who : character
+    which beam_init variable to set
 
-  value_str : character
-      Value to set to.
+value_str : character
+    Value to set to.
 
-  branch_str : character
-      Branch to use. '' => branch 0
-
-  Returns
-  -------
-  s%beam_init : None
-      Beam_init variables structure.
-  )"""
+branch_str : character
+    Branch to use. '' => branch 0
+)"""
   );
   m.def(
       "tao_set_bmad_com_cmd",
@@ -5217,16 +5130,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_bmad_com_cmd (who, value_str)
 
-  Routine to set bmad_com variables
+Routine to set bmad_com variables
 
-  Parameters
-  ----------
-  who : character
-      which bmad_com variable to set
+Parameters
+----------
+who : character
+    which bmad_com variable to set
 
-  value_str : character
-      Value to set to.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   m.def(
       "tao_set_branch_cmd",
@@ -5236,19 +5149,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_branch_cmd (branch_str, component_str, value_str)
 
-  Routine to set lattice branch values.
+Routine to set lattice branch values.
 
-  Parameters
-  ----------
-  branch_str : character
-      Which branch to set.
+Parameters
+----------
+branch_str : character
+    Which branch to set.
 
-  component_str : character
-      Which branch parameter to set.
+component_str : character
+    Which branch parameter to set.
 
-  value_str : character
-      What value to set it to.
-  )"""
+value_str : character
+    What value to set it to.
+)"""
   );
   m.def(
       "tao_set_calculate_cmd",
@@ -5256,8 +5169,8 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("switch_") = py::none(),
       R"""(Subroutine tao_set_calculate_cmd (switch)
 
-  Toggles off lattice calc and plotting.
-  )"""
+Toggles off lattice calc and plotting.
+)"""
   );
   m.def(
       "tao_set_curve_cmd",
@@ -5267,19 +5180,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_curve_cmd (curve_name, component, value_str)
 
-  Routine to set var values.
+Routine to set var values.
 
-  Parameters
-  ----------
-  curve_name : character
-      Which curve to set.
+Parameters
+----------
+curve_name : character
+    Which curve to set.
 
-  component : character
-      Which component to set.
+component : character
+    Which component to set.
 
-  value_str : character
-      What value to set it to.
-  )"""
+value_str : character
+    What value to set it to.
+)"""
   );
   m.def(
       "tao_set_curve_invalid",
@@ -5289,28 +5202,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Subroutine tao_set_curve_invalid (curve, why_invalid, print_err)
 
-  Routine to set curve%valid to False.
+Routine to set curve%valid to False.
 
-  Parameters
-  ----------
-  curve : TaoCurveStruct
-      Curve to set.
-      This parameter is an input/output and is modified in-place.
-      As an output, curve: Curve properly set.
+Parameters
+----------
+curve : TaoCurveStruct
+    Curve to set.
+    This parameter is an input/output and is modified in-place.
+    As an output, curve: Curve properly set.
 
-  why_invalid : character
-      Invalid information.
+why_invalid : character
+    Invalid information.
 
-  print_err : bool, optional
-      If present and True then also print an error message.
+print_err : bool, optional
+    If present and True then also print an error message.
 
-  Returns
-  -------
-  curve : TaoCurveStruct
-      Curve to set.
-      This parameter is an input/output and is modified in-place.
-      As an output, curve: Curve properly set.
-  )"""
+Returns
+-------
+curve : TaoCurveStruct
+    Curve to set.
+    This parameter is an input/output and is modified in-place.
+    As an output, curve: Curve properly set.
+)"""
   );
   m.def(
       "tao_set_data_cmd",
@@ -5320,16 +5233,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("silent") = py::none(),
       R"""(Subroutine tao_set_data_cmd (who_str, value_str, silent)
 
-  Routine to set data values.
+Routine to set data values.
 
-  Parameters
-  ----------
-  who_str : character
-      Which data component(s) to set.
+Parameters
+----------
+who_str : character
+    Which data component(s) to set.
 
-  value_str : character
-      What value to set it to.
-  )"""
+value_str : character
+    What value to set it to.
+)"""
   );
   m.def(
       "tao_set_data_useit_opt",
@@ -5337,11 +5250,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("data") = py::none(),
       R"""(Wrapper for Fortran routine tao_set_data_useit_opt
 
-  Parameters
-  ----------
-  data : 1D array of TaoDataStruct, optional
-      Data to work on. Default is all data in all universes.
-  )"""
+Parameters
+----------
+data : 1D array of TaoDataStruct, optional
+    Data to work on. Default is all data in all universes.
+)"""
   );
   m.def(
       "tao_set_default_cmd",
@@ -5350,16 +5263,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_default_cmd (who_str, value_str)
 
-  Routine to set default values.
+Routine to set default values.
 
-  Parameters
-  ----------
-  who_str : character
-      Which default component(s) to set.
+Parameters
+----------
+who_str : character
+    Which default component(s) to set.
 
-  value_str : character
-      What value to set it to.
-  )"""
+value_str : character
+    What value to set it to.
+)"""
   );
   m.def(
       "tao_set_drawing_cmd",
@@ -5369,24 +5282,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_drawing_cmd (drawing, component, value_str)
 
-  Routine to set floor_plan and lat_layout parameters.
+Routine to set floor_plan and lat_layout parameters.
 
-  Parameters
-  ----------
-  drawing : TaoDrawingStruct
-      s.plot_page.floor_plan or s.plot_page.lat_layout.
+Parameters
+----------
+drawing : TaoDrawingStruct
+    s.plot_page.floor_plan or s.plot_page.lat_layout.
 
-  component : character
-      Which shape component to set.
+component : character
+    Which shape component to set.
 
-  value_str : character
-      Value to set to.
-
-  Returns
-  -------
-  s%shape : None
-      Shape variables structure.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   m.def(
       "tao_set_dynamic_aperture_cmd",
@@ -5395,16 +5303,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_dynamic_aperture_cmd (who, value_str)
 
-  Sets dynamic aperture parameters.
+Sets dynamic aperture parameters.
 
-  Parameters
-  ----------
-  who : character
-      which parameter to set.
+Parameters
+----------
+who : character
+    which parameter to set.
 
-  value_str : character
-      Value to set to.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   m.def(
       "tao_set_elements_cmd",
@@ -5415,19 +5323,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("update"),
       R"""(Subroutine tao_set_elements_cmd (ele_list, attribute, value, update)
 
-  Sets element parameters.
+Sets element parameters.
 
-  Parameters
-  ----------
-  ele_list : character
-      which elements.
+Parameters
+----------
+ele_list : character
+    which elements.
 
-  attribute : character
-      Attribute to set.
+attribute : character
+    Attribute to set.
 
-  value : character
-      Value to set.
-  )"""
+value : character
+    Value to set.
+)"""
   );
   m.def(
       "tao_set_floor_plan_axis_label",
@@ -5438,26 +5346,26 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("which"),
       R"""(Wrapper for Fortran routine tao_set_floor_plan_axis_label
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
+Parameters
+----------
+graph : TaoGraphStruct
 
-  axis_in : QpAxisStruct
+axis_in : QpAxisStruct
 
-  axis_out : QpAxisStruct
+axis_out : QpAxisStruct
 
-  which : character
+which : character
 
-  Returns
-  -------
-  graph : TaoGraphStruct
+Returns
+-------
+graph : TaoGraphStruct
 
-  axis_in : QpAxisStruct
+axis_in : QpAxisStruct
 
-  axis_out : QpAxisStruct
+axis_out : QpAxisStruct
 
-  which : character
-  )"""
+which : character
+)"""
   );
   m.def(
       "tao_set_geodesic_lm_cmd",
@@ -5466,16 +5374,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_geodesic_lm_cmd (who, value_str)
 
-  Routine to set geodesic_lm variables
+Routine to set geodesic_lm variables
 
-  Parameters
-  ----------
-  who : character
-      which geodesic_lm variable to set
+Parameters
+----------
+who : character
+    which geodesic_lm variable to set
 
-  value_str : character
-      Value to set to.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   m.def(
       "tao_set_global_cmd",
@@ -5484,21 +5392,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_global_cmd (who, value_str)
 
-  Routine to set global variables
+Routine to set global variables
 
-  Parameters
-  ----------
-  who : character
-      which global variable to set
+Parameters
+----------
+who : character
+    which global variable to set
 
-  value_str : character
-      Value to set to.
-
-  Returns
-  -------
-  s%global : None
-      Global variables structure.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   m.def(
       "tao_set_graph_cmd",
@@ -5508,19 +5411,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_graph_cmd (graph_name, component, value_str)
 
-  Routine to set var values.
+Routine to set var values.
 
-  Parameters
-  ----------
-  graph_name : character
-      Which graph to set.
+Parameters
+----------
+graph_name : character
+    Which graph to set.
 
-  component : character
-      Which component to set.
+component : character
+    Which component to set.
 
-  value_str : character
-      What value to set it to.
-  )"""
+value_str : character
+    What value to set it to.
+)"""
   );
   py::class_<Tao::TaoSetIntegerValue, std::unique_ptr<Tao::TaoSetIntegerValue>>(
       m,
@@ -5549,36 +5452,36 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Subroutine tao_set_integer_value (var, var_str, value_str, error, min_val, max_val, print_err)
 
-  Subroutine to read and set the value of an integer varialbe.
+Subroutine to read and set the value of an integer varialbe.
 
-  If the value is out of the range [min_val, max_val] then an error message will
-  be generated and the variable will not be set.
+If the value is out of the range [min_val, max_val] then an error message will
+be generated and the variable will not be set.
 
-  Parameters
-  ----------
-  var_str : character
-      Used for error messages.
+Parameters
+----------
+var_str : character
+    Used for error messages.
 
-  value_str : character
-      String with encoded value.
+value_str : character
+    String with encoded value.
 
-  min_val : int, optional
-      Minimum value.
+min_val : int, optional
+    Minimum value.
 
-  max_val : int, optional
-      Maximum value.
+max_val : int, optional
+    Maximum value.
 
-  print_err : bool, optional
-      If True, print error message. Default is true
+print_err : bool, optional
+    If True, print error message. Default is true
 
-  Returns
-  -------
-  var : int
-      Variable to set.
+Returns
+-------
+var : int
+    Variable to set.
 
-  error : bool
-      Set True on an error. False otherwise.
-  )"""
+error : bool
+    Set True on an error. False otherwise.
+)"""
   );
   m.def(
       "tao_set_invalid",
@@ -5590,28 +5493,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Wrapper for Fortran routine tao_set_invalid
 
-  Parameters
-  ----------
-  datum : TaoDataStruct
-      Bad datum.
+Parameters
+----------
+datum : TaoDataStruct
+    Bad datum.
 
-  message : character
-      Error message.
+message : character
+    Error message.
 
-  exterminate : bool, optional
-      Default is False. If True, set datum.exists
+exterminate : bool, optional
+    Default is False. If True, set datum.exists to False so that Tao will ignore this datum from now on.
 
-  err_level : int, optional
-      s_error$ (default), s_warn$, etc.
+err_level : int, optional
+    s_error$ (default), s_warn$, etc.
 
-  print_err : bool, optional
-      Default is True. If False, do not print an error message.
+print_err : bool, optional
+    Default is True. If False, do not print an error message.
 
-  Returns
-  -------
-  why_invalid : character, optional
-      Set to message if present.
-  )"""
+Returns
+-------
+why_invalid : character, optional
+    Set to message if present.
+)"""
   );
   m.def(
       "tao_set_key_cmd",
@@ -5620,16 +5523,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("cmd_str"),
       R"""(Subroutine tao_set_key_cmd (key_str, cmd_str)
 
-  Associates a command with a key press for single mode.
+Associates a command with a key press for single mode.
 
-  Parameters
-  ----------
-  key_str : character
-      keyboard key.
+Parameters
+----------
+key_str : character
+    keyboard key.
 
-  cmd_str : character
-      Command associated with key.
-  )"""
+cmd_str : character
+    Command associated with key.
+)"""
   );
   m.def(
       "tao_set_lattice_cmd",
@@ -5638,23 +5541,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("source_lat"),
       R"""(Subroutine tao_set_lattice_cmd (dest_lat, source_lat)
 
-  Sets a lattice equal to another. This will also update the data structs
+Sets a lattice equal to another. This will also update the data structs
 
-  Parameters
-  ----------
-  dest_lat : character
-      Maybe: 'model', 'design', or 'base' with
+Parameters
+----------
+dest_lat : character
+    Maybe: 'model', 'design', or 'base' with optional '@n' at beginning to indicate the universe
 
-  optional '@n' at beginning to indicate the universe : None
-
-  source_lat : character
-      Maybe: 'model', 'design', or 'base'
-
-  Returns
-  -------
-  s%u : lat_struct
-      changes specified lattice in specified universe
-  )"""
+source_lat : character
+    Maybe: 'model', 'design', or 'base'
+)"""
   );
   py::class_<Tao::TaoSetLogicalValue, std::unique_ptr<Tao::TaoSetLogicalValue>>(
       m,
@@ -5680,27 +5576,27 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_logical_value (var, var_str, value_str, error)
 
-  Subroutine to read and set the value of an logical varialbe.
+Subroutine to read and set the value of an logical varialbe.
 
-  If the value is out of the range [min_val, max_val] then an error message will
-  be generated and the variable will not be set.
+If the value is out of the range [min_val, max_val] then an error message will
+be generated and the variable will not be set.
 
-  Parameters
-  ----------
-  var_str : character
-      Used for error messages.
+Parameters
+----------
+var_str : character
+    Used for error messages.
 
-  value_str : character
-      String with encoded value.
+value_str : character
+    String with encoded value.
 
-  Returns
-  -------
-  var : bool
-      Variable to set.
+Returns
+-------
+var : bool
+    Variable to set.
 
-  error : bool
-      Set True on an error. False otherwise.
-  )"""
+error : bool
+    Set True on an error. False otherwise.
+)"""
   );
   m.def(
       "tao_set_openmp_n_threads",
@@ -5708,13 +5604,13 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("n_threads"),
       R"""(Subroutine tao_set_openmp_n_threads (n_threads)
 
-  Routine to set OpenMP thread count.  Errors if OpenMP is not available.
+Routine to set OpenMP thread count.  Errors if OpenMP is not available.
 
-  Parameters
-  ----------
-  n_threads : int
-      Number of threads.
-  )"""
+Parameters
+----------
+n_threads : int
+    Number of threads.
+)"""
   );
   m.def(
       "tao_set_opt_vars",
@@ -5723,14 +5619,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_limit_warning") = py::none(),
       R"""(Wrapper for Fortran routine tao_set_opt_vars
 
-  Parameters
-  ----------
-  var_vec : 1D array of float
-      Vector of variables.
+Parameters
+----------
+var_vec : 1D array of float
+    Vector of variables.
 
-  print_limit_warning : bool, optional
-      Print a warning if the value is past the variable's limits. Default is True.
-  )"""
+print_limit_warning : bool, optional
+    Print a warning if the value is past the variable's limits. Default is True.
+)"""
   );
   m.def(
       "tao_set_opti_de_param_cmd",
@@ -5739,16 +5635,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_opti_de_param_cmd (who, value_str)
 
-  Routine to set opti_de_param variables
+Routine to set opti_de_param variables
 
-  Parameters
-  ----------
-  who : character
-      which opti_de_param variable to set
+Parameters
+----------
+who : character
+    which opti_de_param variable to set
 
-  value_str : character
-      Value to set to.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   m.def(
       "tao_set_particle_start_cmd",
@@ -5757,21 +5653,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_particle_start_cmd (who, value_str)
 
-  Routine to set particle_start variables.
+Routine to set particle_start variables.
 
-  Parameters
-  ----------
-  who : character
-      which particle_start variable to set
+Parameters
+----------
+who : character
+    which particle_start variable to set
 
-  value_str : character
-      Value to set to.
-
-  Returns
-  -------
-  s%particle_start : None
-      Beam_start variables structure.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   m.def(
       "tao_set_plot_cmd",
@@ -5781,19 +5672,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_plot_cmd (plot_name, component, value_str)
 
-  Routine to set plot parameters.
+Routine to set plot parameters.
 
-  Parameters
-  ----------
-  plot_name : character
-      Which plot to set.
+Parameters
+----------
+plot_name : character
+    Which plot to set.
 
-  component : character
-      Which component to set.
+component : character
+    Which component to set.
 
-  value_str : character
-      What value to set it to.
-  )"""
+value_str : character
+    What value to set it to.
+)"""
   );
   m.def(
       "tao_set_plot_page_cmd",
@@ -5803,23 +5694,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str2") = py::none(),
       R"""(Subroutine tao_set_plot_page_cmd (component, value_str, value_str2)
 
-   Set various aspects of the plotting window
+ Set various aspects of the plotting window
 
-  Parameters
-  ----------
-  component : character
-      Which component to set.
+Parameters
+----------
+component : character
+    Which component to set.
 
-  value_str : character
-      What value to set to.
+value_str : character
+    What value to set to.
 
-  value_str2 : character, optional
-      2nd value if component is an array.
-
-  Returns
-  -------
-  s%plot : tao_plotting_struct
-  )"""
+value_str2 : character, optional
+    2nd value if component is an array.
+)"""
   );
   m.def(
       "tao_set_ptc_com_cmd",
@@ -5828,16 +5715,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_ptc_com_cmd (who, value_str)
 
-  Routine to set ptc_com variables
+Routine to set ptc_com variables
 
-  Parameters
-  ----------
-  who : character
-      which ptc_com variable to set
+Parameters
+----------
+who : character
+    which ptc_com variable to set
 
-  value_str : character
-      Value to set to.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   py::class_<Tao::TaoSetQpAxisStruct, std::unique_ptr<Tao::TaoSetQpAxisStruct>>(
       m,
@@ -5865,37 +5752,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value"),
       R"""(Subroutine tao_set_qp_axis_struct (qp_axis_name, component, qp_axis, value, error, ix_uni)
 
-  Routine to set qp_axis_names of a qp_axis_struct.
+Routine to set qp_axis_names of a qp_axis_struct.
 
-  Parameters
-  ----------
-  qp_axis_name : character
-      qp_axis name. Used for error messages.
+Parameters
+----------
+qp_axis_name : character
+    qp_axis name. Used for error messages.
 
-  component : character
-      qp_axis component name.
+component : character
+    qp_axis component name.
 
-  qp_axis : QpAxisStruct
-      qp_axis_struct with component to modify
-      This parameter is an input/output and is modified in-place.
-      As an output, qp_axis: qp_axis_struct with changed component value.
+qp_axis : QpAxisStruct
+    qp_axis_struct with component to modify
+    This parameter is an input/output and is modified in-place.
+    As an output, qp_axis: qp_axis_struct with changed component value.
 
-  value : character
-      Component value.
+value : character
+    Component value.
 
-  Returns
-  -------
-  qp_axis : QpAxisStruct
-      qp_axis_struct with component to modify
-      This parameter is an input/output and is modified in-place.
-      As an output, qp_axis: qp_axis_struct with changed component value.
+Returns
+-------
+qp_axis : QpAxisStruct
+    qp_axis_struct with component to modify
+    This parameter is an input/output and is modified in-place.
+    As an output, qp_axis: qp_axis_struct with changed component value.
 
-  error : bool
-      Set true if there is an error. False otherwise.
+error : bool
+    Set true if there is an error. False otherwise.
 
-  ix_uni : int, optional
-      Tao universe number in case the value depends upon a parameter of a particular universe.
-  )"""
+ix_uni : int, optional
+    Tao universe number in case the value depends upon a parameter of a particular universe.
+)"""
   );
   py::class_<Tao::TaoSetQpPointStruct, std::unique_ptr<Tao::TaoSetQpPointStruct>>(
       m,
@@ -5923,37 +5810,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value"),
       R"""(Subroutine tao_set_qp_point_struct (qp_point_name, component, qp_point, value, error, ix_uni)
 
-  Routine to set qp_point_names of a qp_point_struct.
+Routine to set qp_point_names of a qp_point_struct.
 
-  Parameters
-  ----------
-  qp_point_name : character
-      qp_point name. Used for error messages.
+Parameters
+----------
+qp_point_name : character
+    qp_point name. Used for error messages.
 
-  component : character
-      qp_point component name.
+component : character
+    qp_point component name.
 
-  qp_point : QpPointStruct
-      qp_point_struct with component to modify
-      This parameter is an input/output and is modified in-place.
-      As an output, qp_point: qp_point_struct with changed component value.
+qp_point : QpPointStruct
+    qp_point_struct with component to modify
+    This parameter is an input/output and is modified in-place.
+    As an output, qp_point: qp_point_struct with changed component value.
 
-  value : character
-      Component value.
+value : character
+    Component value.
 
-  Returns
-  -------
-  qp_point : QpPointStruct
-      qp_point_struct with component to modify
-      This parameter is an input/output and is modified in-place.
-      As an output, qp_point: qp_point_struct with changed component value.
+Returns
+-------
+qp_point : QpPointStruct
+    qp_point_struct with component to modify
+    This parameter is an input/output and is modified in-place.
+    As an output, qp_point: qp_point_struct with changed component value.
 
-  error : bool
-      Set true if there is an error. False otherwise.
+error : bool
+    Set true if there is an error. False otherwise.
 
-  ix_uni : int, optional
-      Tao universe number in case the value depends upon a parameter of a particular universe.
-  )"""
+ix_uni : int, optional
+    Tao universe number in case the value depends upon a parameter of a particular universe.
+)"""
   );
   py::class_<Tao::TaoSetQpRectStruct, std::unique_ptr<Tao::TaoSetQpRectStruct>>(
       m,
@@ -5981,37 +5868,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value"),
       R"""(Subroutine tao_set_qp_rect_struct (qp_rect_name, component, qp_rect, value, error, ix_uni)
 
-  Routine to set qp_rect_names of a qp_rect_struct.
+Routine to set qp_rect_names of a qp_rect_struct.
 
-  Parameters
-  ----------
-  qp_rect_name : character
-      qp_rect name. Used for error messages.
+Parameters
+----------
+qp_rect_name : character
+    qp_rect name. Used for error messages.
 
-  component : character
-      qp_rect component name.
+component : character
+    qp_rect component name.
 
-  qp_rect : QpRectStruct
-      qp_rect_struct with component to modify
-      This parameter is an input/output and is modified in-place.
-      As an output, qp_rect: qp_rect_struct with changed component value.
+qp_rect : QpRectStruct
+    qp_rect_struct with component to modify
+    This parameter is an input/output and is modified in-place.
+    As an output, qp_rect: qp_rect_struct with changed component value.
 
-  value : character
-      Component value.
+value : character
+    Component value.
 
-  Returns
-  -------
-  qp_rect : QpRectStruct
-      qp_rect_struct with component to modify
-      This parameter is an input/output and is modified in-place.
-      As an output, qp_rect: qp_rect_struct with changed component value.
+Returns
+-------
+qp_rect : QpRectStruct
+    qp_rect_struct with component to modify
+    This parameter is an input/output and is modified in-place.
+    As an output, qp_rect: qp_rect_struct with changed component value.
 
-  error : bool
-      Set true if there is an error. False otherwise.
+error : bool
+    Set true if there is an error. False otherwise.
 
-  ix_uni : int, optional
-      Tao universe number in case the value depends upon a parameter of a particular universe.
-  )"""
+ix_uni : int, optional
+    Tao universe number in case the value depends upon a parameter of a particular universe.
+)"""
   );
   m.def(
       "tao_set_ran_state_cmd",
@@ -6019,13 +5906,13 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("state_string"),
       R"""(Subroutine tao_set_ran_state_cmd (state_string)
 
-  Sets the random number generator state.
+Sets the random number generator state.
 
-  Parameters
-  ----------
-  state_string : character
-      Encoded random number state.
-  )"""
+Parameters
+----------
+state_string : character
+    Encoded random number state.
+)"""
   );
   py::class_<Tao::TaoSetRealValue, std::unique_ptr<Tao::TaoSetRealValue>>(
       m,
@@ -6054,36 +5941,36 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("dflt_uni") = py::none(),
       R"""(Subroutine tao_set_real_value (var, var_str, value_str, error, min_val, max_val, dflt_uni)
 
-  Subroutine to read and set the value of a real variable.
+Subroutine to read and set the value of a real variable.
 
-  If the value is out of the range [min_val, max_val] then an error message will
-  be generated and the variable will not be set.
+If the value is out of the range [min_val, max_val] then an error message will
+be generated and the variable will not be set.
 
-  Parameters
-  ----------
-  var_str : character
-      Used for error messages.
+Parameters
+----------
+var_str : character
+    Used for error messages.
 
-  value_str : character
-      String with encoded value.
+value_str : character
+    String with encoded value.
 
-  min_val : float, optional
-      Minimum value.
+min_val : float, optional
+    Minimum value.
 
-  max_val : float, optional
-      Maximum value.
+max_val : float, optional
+    Maximum value.
 
-  dflt_uni : int, optional
-      Default universe used to evaluate parameters.
+dflt_uni : int, optional
+    Default universe used to evaluate parameters.
 
-  Returns
-  -------
-  var : float
-      Variable to set.
+Returns
+-------
+var : float
+    Variable to set.
 
-  error : bool
-      Set True on an error. False otherwise.
-  )"""
+error : bool
+    Set True on an error. False otherwise.
+)"""
   );
   m.def(
       "tao_set_region_cmd",
@@ -6093,19 +5980,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_region_cmd (region_name, component, value_str)
 
-  Routine to set region parameters.
+Routine to set region parameters.
 
-  Parameters
-  ----------
-  region_name : character
-      Which region to set.
+Parameters
+----------
+region_name : character
+    Which region to set.
 
-  component : character
-      Which component to set.
+component : character
+    Which component to set.
 
-  value_str : character
-      What value to set it to.
-  )"""
+value_str : character
+    What value to set it to.
+)"""
   );
   m.def(
       "tao_set_space_charge_com_cmd",
@@ -6114,21 +6001,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_space_charge_com_cmd (who, value_str)
 
-  Routine to set space_charge_com variables
+Routine to set space_charge_com variables
 
-  Parameters
-  ----------
-  who : character
-      which space_charge_com variable to set
+Parameters
+----------
+who : character
+    which space_charge_com variable to set
 
-  value_str : character
-      Value to set to.
-
-  Returns
-  -------
-  space_charge_com : None
-      space_charge_com variables structure.
-  )"""
+value_str : character
+    Value to set to.
+)"""
   );
   m.def(
       "tao_set_symbolic_number_cmd",
@@ -6138,20 +6020,20 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("val") = py::none(),
       R"""(Subroutine tao_set_symbolic_number_cmd (sym_str, num_str, val)
 
-  Associates a given symbol with a given number.
-  Note: Either num_str or val argument must be present.
+Associates a given symbol with a given number.
+Note: Either num_str or val argument must be present.
 
-  Parameters
-  ----------
-  sym_str : character
-      Symbol.
+Parameters
+----------
+sym_str : character
+    Symbol.
 
-  num_str : character, optional
-      Symbol value expression.
+num_str : character, optional
+    Symbol value expression.
 
-  val : float, optional
-      Value of symbol
-  )"""
+val : float, optional
+    Value of symbol
+)"""
   );
   m.def(
       "tao_set_tune_cmd",
@@ -6164,28 +6046,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("delta_input"),
       R"""(Subroutine tao_set_tune_cmd (branch_str, mask_str, print_list, qa_str, qb_str, delta_input)
 
-  Routine to set the transverse tunes.
+Routine to set the transverse tunes.
 
-  Parameters
-  ----------
-  branch_str : character
-      List of branches to apply tune set to.
+Parameters
+----------
+branch_str : character
+    List of branches to apply tune set to.
 
-  mask_str : character
-      List of quadrupoles to veto.
+mask_str : character
+    List of quadrupoles to veto.
 
-  print_list : bool
-      If True, print a list of elements varied and coefficients.
+print_list : bool
+    If True, print a list of elements varied and coefficients.
 
-  qa_str : character
-      Expression for Qa tune.
+qa_str : character
+    Expression for Qa tune.
 
-  qb_str : character
-      Expression for Qb tune.
+qb_str : character
+    Expression for Qb tune.
 
-  delta_input : bool
-      If true then qa_str and qb_str are deltas from present tune.
-  )"""
+delta_input : bool
+    If true then qa_str and qb_str are deltas from present tune.
+)"""
   );
   m.def(
       "tao_set_universe_cmd",
@@ -6195,19 +6077,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("what"),
       R"""(Subroutine tao_set_universe_cmd (uni, who, what)
 
-  Sets a universe on or off, or sets the recalculate or twiss_calc logicals, etc.
+Sets a universe on or off, or sets the recalculate or twiss_calc logicals, etc.
 
-  Parameters
-  ----------
-  uni : character
-      which universe; 0 => current viewed universe
+Parameters
+----------
+uni : character
+    which universe; 0 => current viewed universe
 
-  who : character
-      "on", "off", "recalculate", "dynamic_aperture_calc", "one_turn_map_calc", or "twiss_calc"
+who : character
+    "on", "off", "recalculate", "dynamic_aperture_calc", "one_turn_map_calc", or "twiss_calc"
 
-  what : character
-      "on" or "off" for who = "dynamic_aperture_calc", "one_turn_map_calc" or "twiss_calc".
-  )"""
+what : character
+    "on" or "off" for who = "dynamic_aperture_calc", "one_turn_map_calc" or "twiss_calc".
+)"""
   );
   m.def(
       "tao_set_var_cmd",
@@ -6216,16 +6098,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_var_cmd (var_str, value_str)
 
-  Routine to set var values.
+Routine to set var values.
 
-  Parameters
-  ----------
-  var_str : character
-      Which var name to set.
+Parameters
+----------
+var_str : character
+    Which var name to set.
 
-  value_str : character
-      What value to set it to.
-  )"""
+value_str : character
+    What value to set it to.
+)"""
   );
   m.def(
       "tao_set_var_model_value",
@@ -6235,23 +6117,23 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_limit_warning") = py::none(),
       R"""(Wrapper for Fortran routine tao_set_var_model_value
 
-  Parameters
-  ----------
-  var : TaoVarStruct
-      Variable to set
+Parameters
+----------
+var : TaoVarStruct
+    Variable to set
 
-  value : float
-      Value to set to
+value : float
+    Value to set to
 
-  print_limit_warning : bool, optional
-      Print a warning if the value is past the variable's limits. Default is True.
-  )"""
+print_limit_warning : bool, optional
+    Print a warning if the value is past the variable's limits. Default is True.
+)"""
   );
   m.def(
       "tao_set_var_useit_opt",
       &Tao::tao_set_var_useit_opt,
       R"""(Wrapper for Fortran routine tao_set_var_useit_opt
-  )"""
+)"""
   );
   m.def(
       "tao_set_wave_cmd",
@@ -6260,24 +6142,21 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("value_str"),
       R"""(Subroutine tao_set_wave_cmd (who, value_str, err)
 
-  Routine to set wave variables
+Routine to set wave variables
 
-  Parameters
-  ----------
-  who : character
-      which wave variable to set
+Parameters
+----------
+who : character
+    which wave variable to set
 
-  value_str : character
-      Value to set to.
+value_str : character
+    Value to set to.
 
-  Returns
-  -------
-  err : bool
-      Set True if there is an error. False otherwise.
-
-  s%wave : None
-      Wave variables structure.
-  )"""
+Returns
+-------
+err : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "tao_set_z_tune_cmd",
@@ -6287,25 +6166,25 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("delta_input"),
       R"""(Subroutine tao_set_z_tune_cmd (branch_str, q_str, delta_input)
 
-  Routine to set the z-tune.
+Routine to set the z-tune.
 
-  Parameters
-  ----------
-  branch_str : character
-      List of branches to apply tune set to.
+Parameters
+----------
+branch_str : character
+    List of branches to apply tune set to.
 
-  q_str : character
-      Expression for Qc tune.
+q_str : character
+    Expression for Qc tune.
 
-  delta_input : bool
-      If true then qa_str and qb_str are deltas from present tune.
-  )"""
+delta_input : bool
+    If true then qa_str and qb_str are deltas from present tune.
+)"""
   );
   m.def(
       "tao_setup_key_table",
       &Tao::tao_setup_key_table,
       R"""(Wrapper for Fortran routine tao_setup_key_table
-  )"""
+)"""
   );
   m.def(
       "tao_shape_init",
@@ -6314,22 +6193,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Wrapper for Fortran routine tao_shape_init
 
-  Parameters
-  ----------
-  shape : TaoEleShapeStruct
-      Shape
+Parameters
+----------
+shape : TaoEleShapeStruct
+    Shape
 
-  print_err : bool, optional
-      If True then print an error message if there is a problem. Default is True.
+print_err : bool, optional
+    If True then print an error message if there is a problem. Default is True.
 
-  Returns
-  -------
-  shape : TaoEleShapeStruct
-      Shape
+Returns
+-------
+shape : TaoEleShapeStruct
+    Shape
 
-  err : bool
-      Set true if there is a problem translating the element class.
-  )"""
+err : bool
+    Set true if there is a problem translating the element class.
+)"""
   );
   m.def(
       "tao_show_cmd",
@@ -6337,11 +6216,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("what"),
       R"""(Wrapper for Fortran routine tao_show_cmd
 
-  Parameters
-  ----------
-  what : character
-      What to show.
-  )"""
+Parameters
+----------
+what : character
+    What to show.
+)"""
   );
   m.def(
       "tao_show_constraints",
@@ -6350,17 +6229,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("form"),
       R"""(Subroutine tao_show_constraints (iunit, form)
 
-  Routine to show a list of datums and variables and how they contribute to the merit function.
+Routine to show a list of datums and variables and how they contribute to the merit function.
 
-  Parameters
-  ----------
-  iunit : int
-      File unit to write to. 0 => print to the terminal.
+Parameters
+----------
+iunit : int
+    File unit to write to. 0 => print to the terminal.
 
-  form : character
-      What to output: 'ALL'   -> All datums and variables. 'TOP10' -> Top datums and variables that contribute
-      to the merit function.
-  )"""
+form : character
+    What to output: 'ALL'   -> All datums and variables. 'TOP10' -> Top datums and variables that contribute
+    to the merit function.
+)"""
   );
   m.def(
       "tao_single_mode",
@@ -6368,11 +6247,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("char_"),
       R"""(Wrapper for Fortran routine tao_single_mode
 
-  Parameters
-  ----------
-  char : character(1)
-      Command. If more characters are needed to complete the command then this routine will get them.
-  )"""
+Parameters
+----------
+char : character(1)
+    Command. If more characters are needed to complete the command then this routine will get them.
+)"""
   );
   m.def(
       "tao_single_track",
@@ -6382,24 +6261,24 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Subroutine tao_single_track (tao_lat, calc_ok, ix_branch, print_err)
 
-  Routine to track a single particle and calculate lattice functions through a lattice.
+Routine to track a single particle and calculate lattice functions through a lattice.
 
-  Parameters
-  ----------
-  tao_lat : TaoLatticeStruct
-      Structure containing the lattice.
+Parameters
+----------
+tao_lat : TaoLatticeStruct
+    Structure containing the lattice.
 
-  ix_branch : int
-      Branch index to track through.
+ix_branch : int
+    Branch index to track through.
 
-  print_err : bool, optional
-      Default False. Print error messages if, eg, lattice is unstable?
+print_err : bool, optional
+    Default False. Print error messages if, eg, lattice is unstable?
 
-  Returns
-  -------
-  calc_ok : bool
-      Set True if there were no problems, False otherwise.
-  )"""
+Returns
+-------
+calc_ok : bool
+    Set True if there were no problems, False otherwise.
+)"""
   );
   m.def(
       "tao_spin_matrices_calc_needed",
@@ -6409,28 +6288,28 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("do_calc"),
       R"""(Wrapper for Fortran routine tao_spin_matrices_calc_needed
 
-  Parameters
-  ----------
-  data_type : character
+Parameters
+----------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_calc : bool
+do_calc : bool
 
-  Returns
-  -------
-  data_type : character
+Returns
+-------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_calc : bool
-  )"""
+do_calc : bool
+)"""
   );
   m.def(
       "tao_spin_tracking_turn_on",
       &Tao::tao_spin_tracking_turn_on,
       R"""(Wrapper for Fortran routine tao_spin_tracking_turn_on
-  )"""
+)"""
   );
   m.def(
       "tao_split_component",
@@ -6439,19 +6318,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("comp"),
       R"""(Wrapper for Fortran routine tao_split_component
 
-  Parameters
-  ----------
-  comp_str : character
-      Components. EG: 'meas - design'
+Parameters
+----------
+comp_str : character
+    Components. EG: 'meas - design'
 
-  Returns
-  -------
-  comp : 1D array of TaoDataVarComponentStruct
-      Array of individual components.
+Returns
+-------
+comp : 1D array of TaoDataVarComponentStruct
+    Array of individual components.
 
-  err : bool
-      Set True if there is an error, False otherwise.
-  )"""
+err : bool
+    Set True if there is an error, False otherwise.
+)"""
   );
   m.def(
       "tao_srdt_calc_needed",
@@ -6461,22 +6340,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("do_srdt"),
       R"""(Wrapper for Fortran routine tao_srdt_calc_needed
 
-  Parameters
-  ----------
-  data_type : character
+Parameters
+----------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_srdt : int
+do_srdt : int
 
-  Returns
-  -------
-  data_type : character
+Returns
+-------
+data_type : character
 
-  data_source : character
+data_source : character
 
-  do_srdt : int
-  )"""
+do_srdt : int
+)"""
   );
   py::class_<Tao::TaoSubinUniNumber, std::unique_ptr<Tao::TaoSubinUniNumber>>(
       m,
@@ -6502,35 +6381,35 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("ix_uni"),
       R"""(Wrapper for Fortran routine tao_subin_uni_number
 
-  Parameters
-  ----------
-  name_in : character
-      Input name with "#" character
+Parameters
+----------
+name_in : character
+    Input name with "#" character
 
-  ix_uni : int
-      Universe index.
+ix_uni : int
+    Universe index.
 
-  Returns
-  -------
-  name_out : character
-      Output name.
+Returns
+-------
+name_out : character
+    Output name.
 
-  ok : bool
-      False if multiple universes and no "#" in name_in. True otherwise.
-  )"""
+ok : bool
+    False if multiple universes and no "#" in name_in. True otherwise.
+)"""
   );
   m.def(
       "tao_svd_optimizer",
       &Tao::tao_svd_optimizer,
       R"""(Subroutine tao_svd_optimizer (abort)
 
-  Routine to minimize the merit function using svd.
+Routine to minimize the merit function using svd.
 
-  Returns
-  -------
-  abort : bool
-      Set True if svd step increases the merit function.
-  )"""
+Returns
+-------
+abort : bool
+    Set True if svd step increases the merit function.
+)"""
   );
   m.def(
       "tao_symbol_import_from_lat",
@@ -6538,14 +6417,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("lat"),
       R"""(Wrapper for Fortran routine tao_symbol_import_from_lat
 
-  Parameters
-  ----------
-  lat : LatStruct
+Parameters
+----------
+lat : LatStruct
 
-  Returns
-  -------
-  lat : LatStruct
-  )"""
+Returns
+-------
+lat : LatStruct
+)"""
   );
   m.def(
       "tao_taper_cmd",
@@ -6554,14 +6433,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("uni_names"),
       R"""(Wrapper for Fortran routine tao_taper_cmd
 
-  Parameters
-  ----------
-  except : character
-      List of elements not to vary.
+Parameters
+----------
+except : character
+    List of elements not to vary.
 
-  uni_names : character
-      Universes to taper.
-  )"""
+uni_names : character
+    Universes to taper.
+)"""
   );
   m.def(
       "tao_to_change_number",
@@ -6573,30 +6452,30 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("err"),
       R"""(Wrapper for Fortran routine tao_to_change_number
 
-  Parameters
-  ----------
-  num_str : character
+Parameters
+----------
+num_str : character
 
-  n_size : int
+n_size : int
 
-  change_number : 1D array of float
+change_number : 1D array of float
 
-  abs_or_rel : character
+abs_or_rel : character
 
-  err : bool
+err : bool
 
-  Returns
-  -------
-  num_str : character
+Returns
+-------
+num_str : character
 
-  n_size : int
+n_size : int
 
-  change_number : 1D array of float
+change_number : 1D array of float
 
-  abs_or_rel : character
+abs_or_rel : character
 
-  err : bool
-  )"""
+err : bool
+)"""
   );
   m.def(
       "tao_to_int",
@@ -6606,10 +6485,10 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("err"),
       R"""(Subroutine tao_to_int (str, i_int, err)
 
-  Converts a string to an integer
+Converts a string to an integer
 
-  If the string str is blank then i_int = 0
-  )"""
+If the string str is blank then i_int = 0
+)"""
   );
   py::class_<Tao::TaoToPhaseAndCouplingReading, std::unique_ptr<Tao::TaoToPhaseAndCouplingReading>>(
       m,
@@ -6636,21 +6515,21 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("datum"),
       R"""(Subroutine tao_to_phase_and_coupling_reading (ele, bpm_data, valid_value)
 
-  Buffer routine for to_phase_and_coupling_reading.
+Buffer routine for to_phase_and_coupling_reading.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      The monitor.
+Parameters
+----------
+ele : EleStruct
+    The monitor.
 
-  Returns
-  -------
-  bpm_data : BpmPhaseCouplingStruct
-      Monitor values
+Returns
+-------
+bpm_data : BpmPhaseCouplingStruct
+    Monitor values
 
-  valid_value : bool
-      Valid data value?
-  )"""
+valid_value : bool
+    Valid data value?
+)"""
   );
   py::class_<Tao::TaoToReal, std::unique_ptr<Tao::TaoToReal>>(
       m,
@@ -6675,19 +6554,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("expression"),
       R"""(Wrapper for Fortran routine tao_to_real
 
-  Parameters
-  ----------
-  expression : character
-      arithmetic expression
+Parameters
+----------
+expression : character
+    arithmetic expression
 
-  Returns
-  -------
-  value : float
-      Value of arithmetic expression.
+Returns
+-------
+value : float
+    Value of arithmetic expression.
 
-  err_flag : bool
-      TRUE on error.
-  )"""
+err_flag : bool
+    TRUE on error.
+)"""
   );
   m.def(
       "tao_too_many_particles_lost",
@@ -6696,26 +6575,26 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("no_beam"),
       R"""(Wrapper for Fortran routine tao_too_many_particles_lost
 
-  Parameters
-  ----------
-  beam : BeamStruct
+Parameters
+----------
+beam : BeamStruct
 
-  no_beam : bool
+no_beam : bool
 
-  Returns
-  -------
-  beam : BeamStruct
+Returns
+-------
+beam : BeamStruct
 
-  no_beam : bool
-  )"""
+no_beam : bool
+)"""
   );
   m.def(
       "tao_top10_derivative_print",
       &Tao::tao_top10_derivative_print,
       R"""(Subroutine tao_top10_derivative_print ()
 
-  Routine to print out the top10 contributors to the merit function.
-  )"""
+Routine to print out the top10 contributors to the merit function.
+)"""
   );
   m.def(
       "tao_top10_merit_categories_print",
@@ -6723,14 +6602,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("iunit"),
       R"""(Subroutine tao_top10_merit_categories_print (iunit)
 
-  Routine to print the top data and variable categories that contribute to
-  the merit function.
+Routine to print the top data and variable categories that contribute to
+the merit function.
 
-  Parameters
-  ----------
-  iunit : int
-      File unit to write to. 0 => print to the terminal.
-  )"""
+Parameters
+----------
+iunit : int
+    File unit to write to. 0 => print to the terminal.
+)"""
   );
   m.def(
       "tao_top_level",
@@ -6738,17 +6617,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("command") = py::none(),
       R"""(Wrapper for Fortran routine tao_top_level
 
-  Parameters
-  ----------
-  command : character, optional
-      Tao command string. If present, getting user input from the terminal is bypassed. This is used when
-      interfacing to Python.
+Parameters
+----------
+command : character, optional
+    Tao command string. If present, getting user input from the terminal is bypassed. This is used when
+    interfacing to Python.
 
-  Returns
-  -------
-  errcode : int, optional
-      Return error code: 0 => OK, Not 0 => Err.
-  )"""
+Returns
+-------
+errcode : int, optional
+    Return error code: 0 => OK, Not 0 => Err.
+)"""
   );
   py::class_<Tao::TaoTrackingEleIndex, std::unique_ptr<Tao::TaoTrackingEleIndex>>(
       m,
@@ -6774,30 +6653,30 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("datum"),
       R"""(Function tao_tracking_ele_index(ele, datum, ix_branch) result (ix_ele)
 
-  Routine to return the index in the tracking part of a lattice that corresponds to ele.
+Routine to return the index in the tracking part of a lattice that corresponds to ele.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Lattice element.
+Parameters
+----------
+ele : EleStruct
+    Lattice element.
 
-  datum : TaoDataStruct
-      Datum
+datum : TaoDataStruct
+    Datum
 
-  Returns
-  -------
-  ix_branch : int, optional
-      Lattice branch associated with element
+Returns
+-------
+ix_branch : int, optional
+    Lattice branch associated with element
 
-  ix_ele : int
-      Element index associated with ele.
-  )"""
+ix_ele : int
+    Element index associated with ele.
+)"""
   );
   m.def(
       "tao_turn_on_special_calcs_if_needed_for_plotting",
       &Tao::tao_turn_on_special_calcs_if_needed_for_plotting,
       R"""(Wrapper for Fortran routine tao_turn_on_special_calcs_if_needed_for_plotting
-  )"""
+)"""
   );
   m.def(
       "tao_type_expression_tree",
@@ -6806,17 +6685,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("indent") = py::none(),
       R"""(Subroutine tao_type_expression_tree (tree, indent)
 
-  Routine to print an expression tree in tree form.
-  Good for debugging.
+Routine to print an expression tree in tree form.
+Good for debugging.
 
-  Parameters
-  ----------
-  tree : TaoEvalNodeStruct
-      Tree to print.
+Parameters
+----------
+tree : TaoEvalNodeStruct
+    Tree to print.
 
-  indent : int, optional
-      Initial indent. Default is zero.
-  )"""
+indent : int, optional
+    Initial indent. Default is zero.
+)"""
   );
   m.def(
       "tao_uni_atsign_index",
@@ -6824,23 +6703,23 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("string"),
       R"""(Function tao_uni_atsign_index(string) result (ix_amp)
 
-  Routine to return the index of an atsign ("@") character in a string if the atsign is
-  being used as a separator between a universe spec and the rest of the string.
+Routine to return the index of an atsign ("@") character in a string if the atsign is
+being used as a separator between a universe spec and the rest of the string.
 
-  For example:
-    string = "[1:3]@orbit.x[5] => ix_amp = 6
-    string = "orbit.x[5@0.2]   => ix_amp = 0 (no universe "@" present)
+For example:
+  string = "[1:3]@orbit.x[5] => ix_amp = 6
+  string = "orbit.x[5@0.2]   => ix_amp = 0 (no universe "@" present)
 
-  Parameters
-  ----------
-  string : character
-      String to parse
+Parameters
+----------
+string : character
+    String to parse
 
-  Returns
-  -------
-  ix_amp : int
-      Index of universe "@". Set to zero if no universe "@" found.
-  )"""
+Returns
+-------
+ix_amp : int
+    Index of universe "@". Set to zero if no universe "@" found.
+)"""
   );
   m.def(
       "tao_universe_index",
@@ -6849,19 +6728,19 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("neg2_to_default") = py::none(),
       R"""(Wrapper for Fortran routine tao_universe_index
 
-  Parameters
-  ----------
-  i_uni : int
-      Nominal universe number.
+Parameters
+----------
+i_uni : int
+    Nominal universe number.
 
-  neg2_to_default : bool, optional
-      i_uni = -2 (all universes) maps to the default uni? Default if False.
+neg2_to_default : bool, optional
+    i_uni = -2 (all universes) maps to the default uni? Default if False.
 
-  Returns
-  -------
-  i_this_uni : int
-      Universe number.
-  )"""
+Returns
+-------
+i_this_uni : int
+    Universe number.
+)"""
   );
   m.def(
       "tao_use_data",
@@ -6870,14 +6749,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("data_name"),
       R"""(Wrapper for Fortran routine tao_use_data
 
-  Parameters
-  ----------
-  action : character
-      veto, use or restore
+Parameters
+----------
+action : character
+    veto, use or restore
 
-  data_name : character
-      the selected data
-  )"""
+data_name : character
+    the selected data
+)"""
   );
   m.def(
       "tao_use_var",
@@ -6886,25 +6765,25 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("var_name"),
       R"""(Wrapper for Fortran routine tao_use_var
 
-  Parameters
-  ----------
-  action : character
-      'use', 'veto', or 'restore'
+Parameters
+----------
+action : character
+    'use', 'veto', or 'restore'
 
-  var_name : character
-      the selected variable name or all
-  )"""
+var_name : character
+    the selected variable name or all
+)"""
   );
   m.def(
       "tao_user_is_terminating_optimization",
       &Tao::tao_user_is_terminating_optimization,
       R"""(Wrapper for Fortran routine tao_user_is_terminating_optimization
 
-  Returns
-  -------
-  is_terminating : bool
-      Set True of '.' is detected. False otherwise.
-  )"""
+Returns
+-------
+is_terminating : bool
+    Set True of '.' is detected. False otherwise.
+)"""
   );
   m.def(
       "tao_var1_name",
@@ -6912,16 +6791,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("var"),
       R"""(Wrapper for Fortran routine tao_var1_name
 
-  Parameters
-  ----------
-  var : TaoVarStruct
-      Variable
+Parameters
+----------
+var : TaoVarStruct
+    Variable
 
-  Returns
-  -------
-  var1_name : character
-      Appropriate name.
-  )"""
+Returns
+-------
+var1_name : character
+    Appropriate name.
+)"""
   );
   m.def(
       "tao_var_attrib_name",
@@ -6929,16 +6808,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("var"),
       R"""(Wrapper for Fortran routine tao_var_attrib_name
 
-  Parameters
-  ----------
-  var : TaoVarStruct
-      Variable
+Parameters
+----------
+var : TaoVarStruct
+    Variable
 
-  Returns
-  -------
-  var_attrib_name : character
-      Attribute list.
-  )"""
+Returns
+-------
+var_attrib_name : character
+    Attribute list.
+)"""
   );
   m.def(
       "tao_var_check",
@@ -6948,29 +6827,29 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("silent"),
       R"""(Wrapper for Fortran routine tao_var_check
 
-  Parameters
-  ----------
-  eles : 1D array of ElePointerStruct
-      Array of elements which have a changed attribute.
+Parameters
+----------
+eles : 1D array of ElePointerStruct
+    Array of elements which have a changed attribute.
 
-  attribute : character
-      Name of attribute changed.
+attribute : character
+    Name of attribute changed.
 
-  silent : bool
-      If True and the problem can be fixed, do not issue an error message.
-  )"""
+silent : bool
+    If True and the problem can be fixed, do not issue an error message.
+)"""
   );
   m.def(
       "tao_var_repoint",
       &Tao::tao_var_repoint,
       R"""(Wrapper for Fortran routine tao_var_repoint
-  )"""
+)"""
   );
   m.def(
       "tao_var_target_calc",
       &Tao::tao_var_target_calc,
       R"""(Wrapper for Fortran routine tao_var_target_calc
-  )"""
+)"""
   );
   m.def(
       "tao_var_useit_plot_calc",
@@ -6979,16 +6858,16 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("var"),
       R"""(Wrapper for Fortran routine tao_var_useit_plot_calc
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
+Parameters
+----------
+graph : TaoGraphStruct
 
-  Returns
-  -------
-  graph : TaoGraphStruct
+Returns
+-------
+graph : TaoGraphStruct
 
-  var : 1D array of TaoVarStruct
-  )"""
+var : 1D array of TaoVarStruct
+)"""
   );
   m.def(
       "tao_var_write",
@@ -6998,39 +6877,37 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("tao_format") = py::none(),
       R"""(Subroutine tao_var_write (out_file, show_good_opt_only, tao_format)
 
-  Routine to write the optimized variables. One file will be created for each universe.
-  The created file will have three sections:
-    1) The variable values
-    2) The list of constraints.
-    3) A list of the top 10 constraints.
-  If out_file = '' the information will be dumped to the terminal.
-  In this case, only the variable values will be printed.
+Routine to write the optimized variables. One file will be created for each universe.
+The created file will have three sections:
+  1) The variable values
+  2) The list of constraints.
+  3) A list of the top 10 constraints.
+If out_file = '' the information will be dumped to the terminal.
+In this case, only the variable values will be printed.
 
-  When tao_format = True, the output is in the form "set variable <name> = <value>"
-  so the file can be used as a Tao command file. If tao_format = False, the format
-  is suitable for inclusion in a Bmad lattice file.
+When tao_format = True, the output is in the form "set variable <name> = <value>"
+so the file can be used as a Tao command file. If tao_format = False, the format
+is suitable for inclusion in a Bmad lattice file.
 
-  Parameters
-  ----------
-  out_file : character
-      Name of output file. If blank. Ouput to the terminal.
+Parameters
+----------
+out_file : character
+    Name of output file. If blank. Ouput to the terminal.
 
-  show_good_opt_only : bool, optional
-      Write only the variables used in the optimization?
+show_good_opt_only : bool, optional
+    Write only the variables used in the optimization? Default is False.
 
-  Default is False. : None
-
-  tao_format : bool, optional
-      Output format. Default False. See above.
-  )"""
+tao_format : bool, optional
+    Output format. Default False. See above.
+)"""
   );
   m.def(
       "tao_veto_vars_with_zero_dmodel",
       &Tao::tao_veto_vars_with_zero_dmodel,
       R"""(Subroutine tao_veto_vars_with_zero_dmodel ()
 
-  Routine to veto all variables with zero effect on data used in the merit function.
-  )"""
+Routine to veto all variables with zero effect on data used in the merit function.
+)"""
   );
   m.def(
       "tao_wave_analysis",
@@ -7038,22 +6915,22 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("plot"),
       R"""(Subroutine tao_wave_analysis (plot)
 
-  Routine to do a wave anaysis.
+Routine to do a wave anaysis.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot region setup by tao_wave_cmd.
-      This parameter is an input/output and is modified in-place.
-      As an output, plot: Plot with wave analysis curves.
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot region setup by tao_wave_cmd.
+    This parameter is an input/output and is modified in-place.
+    As an output, plot: Plot with wave analysis curves.
 
-  Returns
-  -------
-  plot : TaoPlotStruct
-      Plot region setup by tao_wave_cmd.
-      This parameter is an input/output and is modified in-place.
-      As an output, plot: Plot with wave analysis curves.
-  )"""
+Returns
+-------
+plot : TaoPlotStruct
+    Plot region setup by tao_wave_cmd.
+    This parameter is an input/output and is modified in-place.
+    As an output, plot: Plot with wave analysis curves.
+)"""
   );
   m.def(
       "tao_wave_cmd",
@@ -7063,17 +6940,17 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("err_flag"),
       R"""(Subroutine tao_wave_cmd (curve_name, plot_place, err_flag)
 
-  Routine to do the initial setup for wave plotting.
-  The wave analysis is done by the routine tao_wave_analysis.
+Routine to do the initial setup for wave plotting.
+The wave analysis is done by the routine tao_wave_analysis.
 
-  Parameters
-  ----------
-  curve_name : character
-      Character(*) curve for wave analysis.
+Parameters
+----------
+curve_name : character
+    Character(*) curve for wave analysis.
 
-  plot_place : character
-      Character(*) place on plot page to put the wave plot.
-  )"""
+plot_place : character
+    Character(*) place on plot page to put the wave plot.
+)"""
   );
   m.def(
       "tao_wave_fit",
@@ -7089,40 +6966,40 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("f4") = py::none(),
       R"""(Subroutine tao_wave_fit (curve, ix1, n_dat, coef, rms, f1, f2, f3, f4)
 
-  Routine for fitting the curve data to up to four functions using a least squares
-  SVD fit.
+Routine for fitting the curve data to up to four functions using a least squares
+SVD fit.
 
-  Parameters
-  ----------
-  curve : TaoCurveStruct
-      Curve containing the data.
+Parameters
+----------
+curve : TaoCurveStruct
+    Curve containing the data.
 
-  ix1 : int
-      Index of first point in the data array.
+ix1 : int
+    Index of first point in the data array.
 
-  n_dat : int
-      Number of data points.
+n_dat : int
+    Number of data points.
 
-  f1 : 1D array of float
-      First fit function.
+f1 : 1D array of float
+    First fit function.
 
-  f2 : 1D array of float, optional
-      Second fit function.
+f2 : 1D array of float, optional
+    Second fit function.
 
-  f3 : 1D array of float, optional
-      third fit function.
+f3 : 1D array of float, optional
+    third fit function.
 
-  f4 : 1D array of float, optional
-      fourth fit function.
+f4 : 1D array of float, optional
+    fourth fit function.
 
-  Returns
-  -------
-  coef : 1D array of float
-      Fit coefficients.
+Returns
+-------
+coef : 1D array of float
+    Fit coefficients.
 
-  rms : 1D array of float
-      Variances with rms(n_func+1) = sqrt(chi^2/n_dat).
-  )"""
+rms : 1D array of float
+    Variances with rms(n_func+1) = sqrt(chi^2/n_dat).
+)"""
   );
   m.def(
       "tao_write_cmd",
@@ -7130,11 +7007,11 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("what"),
       R"""(Wrapper for Fortran routine tao_write_cmd
 
-  Parameters
-  ----------
-  what : character
-      What to output. See the code for more details.
-  )"""
+Parameters
+----------
+what : character
+    What to output. See the code for more details.
+)"""
   );
   m.def(
       "tao_x_axis_cmd",
@@ -7143,14 +7020,14 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("what"),
       R"""(Wrapper for Fortran routine tao_x_axis_cmd
 
-  Parameters
-  ----------
-  where : character
-      Region to axis. Eg: "top"
+Parameters
+----------
+where : character
+    Region to axis. Eg: "top"
 
-  what : character
-      "s" or "index"
-  )"""
+what : character
+    "s" or "index"
+)"""
   );
   m.def(
       "tao_x_scale_cmd",
@@ -7164,41 +7041,39 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("turn_autoscale_off") = py::none(),
       R"""(Subroutine tao_x_scale_cmd (where, x_min_in, x_max_in, err, include_wall, gang, exact, turn_autoscale_off)
 
-  Routine to scale a plot. If x_min = x_max
-  Then the scales will be chosen to show all the data.
+Routine to scale a plot. If x_min = x_max
+Then the scales will be chosen to show all the data.
 
-  Parameters
-  ----------
-  where : character
-      Region to scale. Eg: "top"
+Parameters
+----------
+where : character
+    Region to scale. Eg: "top"
 
-  x_min_in : float
-      Plot x-axis min value.
+x_min_in : float
+    Plot x-axis min value.
 
-  x_max_in : float
-      Plot x-axis max value.
+x_max_in : float
+    Plot x-axis max value.
 
-  include_wall : bool, optional
-      Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+include_wall : bool, optional
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
+    include the building wall position will be included in determining the the scale.
 
-  If present and True include the building wall position will be included in determining the the scale. : None
+gang : character, optional
+    'gang', 'nogang', ''. Default = ''.
 
-  gang : character, optional
-      'gang', 'nogang', ''. Default = ''.
+exact : bool, optional
+    Exact plot y_max, y_min to correspond to y_min_in, y_max_in? Default is False. Only relavent when y_min_in
+    /= y_max_in.
 
-  exact : bool, optional
-      Exact plot y_max, y_min to correspond to y_min_in, y_max_in?
+turn_autoscale_off : bool, optional
+    If True (default) then turn off plot.autoscale_x logical for all plots that are scaled.
 
-  Default is False. Only relavent when y_min_in /= y_max_in. : None
-
-  turn_autoscale_off : bool, optional
-      If True (default) then turn off plot.autoscale_x logical for all plots that are scaled.
-
-  Returns
-  -------
-  err : bool
-      Set to True if the plot cannot be found. False otherwise.
-  )"""
+Returns
+-------
+err : bool
+    Set to True if the plot cannot be found. False otherwise.
+)"""
   );
   m.def(
       "tao_x_scale_graph",
@@ -7210,30 +7085,30 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("have_scaled") = py::none(),
       R"""(Wrapper for Fortran routine tao_x_scale_graph
 
-  Parameters
-  ----------
-  graph : TaoGraphStruct
+Parameters
+----------
+graph : TaoGraphStruct
 
-  x_min : float
+x_min : float
 
-  x_max : float
+x_max : float
 
-  include_wall : bool, optional
+include_wall : bool, optional
 
-  have_scaled : bool, optional
+have_scaled : bool, optional
 
-  Returns
-  -------
-  graph : TaoGraphStruct
+Returns
+-------
+graph : TaoGraphStruct
 
-  x_min : float
+x_min : float
 
-  x_max : float
+x_max : float
 
-  include_wall : bool, optional
+include_wall : bool, optional
 
-  have_scaled : bool, optional
-  )"""
+have_scaled : bool, optional
+)"""
   );
   m.def(
       "tao_x_scale_plot",
@@ -7245,32 +7120,31 @@ void init_Tao_routines_t(py::module &m) {
       py::arg("gang") = py::none(),
       R"""(Subroutine tao_x_scale_plot (plot, x_min_in, x_max_in, include_wall, gang, have_scaled)
 
-  Routine to scale a plot. If x_min = x_max
-  Then the scales will be chosen to show all the data.
+Routine to scale a plot. If x_min = x_max
+Then the scales will be chosen to show all the data.
 
-  Parameters
-  ----------
-  plot : TaoPlotStruct
-      Plot to scale. Eg: "top"
+Parameters
+----------
+plot : TaoPlotStruct
+    Plot to scale. Eg: "top"
 
-  x_min_in : float
-      Plot x-axis min value.
+x_min_in : float
+    Plot x-axis min value.
 
-  x_max_in : float
-      Plot x-axis max value.
+x_max_in : float
+    Plot x-axis max value.
 
-  include_wall : bool, optional
-      Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in.
+include_wall : bool, optional
+    Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
+    include the building wall position will be included in determining the the scale.
 
-  If present and True include the building wall position will be included in determining the the scale. : None
+gang : character, optional
+    'gang', 'nogang', ''. Default = ''.
 
-  gang : character, optional
-      'gang', 'nogang', ''. Default = ''.
-
-  Returns
-  -------
-  have_scaled : bool, optional
-      Has a graph been scaled?
-  )"""
+Returns
+-------
+have_scaled : bool, optional
+    Has a graph been scaled?
+)"""
   );
 }

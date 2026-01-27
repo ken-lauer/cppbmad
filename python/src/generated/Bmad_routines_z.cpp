@@ -58,16 +58,10 @@ z : float
     z coordinate.
 
 err_flag : bool
-    Set True if cannot compute z due to, say, point
-
-being outside of ellipseoid or grid bounds. : None
+    Set True if cannot compute z due to, say, point being outside of ellipseoid or grid bounds.
 
 dz_dxy : 1D array of float (shape: 2), optional
     Surface slope at (x, y).
-
-Notes
------
-Remember: +z points into the element.
 )"""
   );
   m.def(
@@ -130,9 +124,6 @@ Returns
 -------
 lat : LatStruct
     Lattice
-
-%ele : L
-    :).b_cos -> Set to zero .wake.lr.mode(:).a_sin -> Set to zero .wake.lr.mode(:).a_cos -> Set to zero
 )"""
   );
   m.def(

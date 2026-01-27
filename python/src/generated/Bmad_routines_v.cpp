@@ -147,10 +147,10 @@ is_valid : bool
 Parameters
 ----------
 ele : EleStruct
-    After this routine finishes Ptr_attrib
+    After this routine finishes Ptr_attrib will point to a variable within this element.
 
 attrib_name : character
-    Name of attribute. Must be uppercase.
+    Name of attribute. Must be uppercase. For example: "HKICK".
 
 err_print_flag : bool, optional
     If present and True then print an error message if there is an  error.
@@ -276,9 +276,7 @@ ix_name : int
     Number of characters in the name.
 
 pure_name : bool, optional
-    If True, reject names that contain "[", "]", "(", ")", "." characters.
-
-Default is False. : None
+    If True, reject names that contain "[", "]", "(", ")", "." characters. Default is False.
 
 include_wild : bool, optional
     Name can include wild card characters and additionally type prefixes like "QUAD::". Default is False.

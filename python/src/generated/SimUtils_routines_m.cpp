@@ -86,7 +86,7 @@ Parameters
 ----------
 string : character
 
-template : None
+template : (unknown)
 
 is_match : bool
 
@@ -94,7 +94,7 @@ Returns
 -------
 string : character
 
-template : None
+template : (unknown)
 
 is_match : bool
 )"""

@@ -103,11 +103,6 @@ str : character
 
 Parameters
 ----------
-lunget : None
-
-Returns
--------
-lunget : None
 )"""
   );
 }

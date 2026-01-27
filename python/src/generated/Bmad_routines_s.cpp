@@ -46,19 +46,19 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("ele"),
       R"""(Wrapper for Fortran routine s_body_calc
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Particle coordinates.
+Parameters
+----------
+orbit : CoordStruct
+    Particle coordinates.
 
-  ele : EleStruct
-      Lattice element
+ele : EleStruct
+    Lattice element
 
-  Returns
-  -------
-  s_body : float
-      Body postion.
-  )"""
+Returns
+-------
+s_body : float
+    Body postion.
+)"""
   );
   m.def(
       "s_calc",
@@ -66,14 +66,14 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("lat"),
       R"""(Wrapper for Fortran routine s_calc
 
-  Parameters
-  ----------
-  lat : LatStruct
+Parameters
+----------
+lat : LatStruct
 
-  Returns
-  -------
-  lat : LatStruct
-  )"""
+Returns
+-------
+lat : LatStruct
+)"""
   );
   m.def(
       "sad_mult_hard_bend_edge_kick",
@@ -86,50 +86,50 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Subroutine sad_mult_hard_bend_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
-  Routine to track through the hard edge bend fringe field for a bend or sad_mult element.
-  Only the bend field is taken into account here. Higher order multipolse must be handled elsewhere.
+Routine to track through the hard edge bend fringe field for a bend or sad_mult element.
+Only the bend field is taken into account here. Higher order multipolse must be handled elsewhere.
 
-  This routine assumes that the particle coordinates are with respect to the actual magnet face.
-  Thus finite e1/e2 must be taken into account by other routines.
+This routine assumes that the particle coordinates are with respect to the actual magnet face.
+Thus finite e1/e2 must be taken into account by other routines.
 
-  SAD calls this the "linear" fringe even though it is nonlinear.
+SAD calls this the "linear" fringe even though it is nonlinear.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with fringe.
+Parameters
+----------
+ele : EleStruct
+    Element with fringe.
 
-  param : LatParamStruct
-      Tracking parameters.
+param : LatParamStruct
+    Tracking parameters.
 
-  particle_at : int
-      Either first_track_edge$ or second_track_edge$.
+particle_at : int
+    Either first_track_edge$ or second_track_edge$.
 
-  orbit : CoordStruct
-      Starting coordinates.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coordinates.
+orbit : CoordStruct
+    Starting coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coordinates.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the fringe.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix including the fringe.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the fringe.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix including the fringe.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is False.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is False.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting coordinates.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coordinates.
+Returns
+-------
+orbit : CoordStruct
+    Starting coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coordinates.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the fringe.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix including the fringe.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the fringe.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix including the fringe.
+)"""
   );
   m.def(
       "sad_soft_bend_edge_kick",
@@ -142,53 +142,43 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Subroutine sad_soft_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
 
-  Subroutine to track through the ("linear") bend soft edge field of an sbend or sad_mult.
+Subroutine to track through the ("linear") bend soft edge field of an sbend or sad_mult.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      SBend or sad_mult element.
+Parameters
+----------
+ele : EleStruct
+    SBend or sad_mult element.
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  particle_at : int
-      first_track_edge$, or second_track_edge$.
+particle_at : int
+    first_track_edge$, or second_track_edge$.
 
-  orb : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Coords after tracking.
+orb : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Coords after tracking.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Starting matrix
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix after fringe field
+mat6 : 2D array of float (shape: 6,6), optional
+    Starting matrix
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix after fringe field
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is False.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is False.
 
-  k0l : real(rp), optional
-      Used with sad_mult.
+Returns
+-------
+orb : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Coords after tracking.
 
-  If present : None
-
-  use this instead of ele%a_pole/%b_pole. : None
-
-  t0 : real(rp), optional
-      Used with sad_mult. If present, use this instead of ele.a_pole/.b_pole. Must be present if k0l is.
-
-  Returns
-  -------
-  orb : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Coords after tracking.
-
-  mat6 : 2D array of float (shape: 6,6), optional
-      Starting matrix
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix after fringe field
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Starting matrix
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix after fringe field
+)"""
   );
   m.def(
       "save_a_beam_step",
@@ -200,25 +190,33 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("is_time_coords") = py::none(),
       R"""(Wrapper for Fortran routine save_a_beam_step
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element being tracked through.
+Parameters
+----------
+ele : EleStruct
+    Element being tracked through.
 
-  beam : BeamStruct
-      Bunches in the beam whose parameters are to be saved.
+beam : BeamStruct
+    Bunches in the beam whose parameters are to be saved.
 
-  bunch_tracks : 1D array of BunchTrackStruct, optional
-      Track up to now. If bunch_tracks.n_pt < 0, the structure will be reinitialized.
-      As an output, bunch_tracks: Track with current bunch info appended on. This routine does nothing
+bunch_tracks : 1D array of BunchTrackStruct, optional
+    Track up to now. If bunch_tracks.n_pt < 0, the structure will be reinitialized.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_tracks: Track with current bunch info appended on. This routine does nothing
 
-  s_body : float, optional
-      Body s-position from beginning of element.
+s_body : float, optional
+    Body s-position from beginning of element.
 
-  is_time_coords : bool, optional
-      Default is False. If True, input beam is using time coordinates in which case there will be a conversion
-      to s-coords before bunch_params are computed.
-  )"""
+is_time_coords : bool, optional
+    Default is False. If True, input beam is using time coordinates in which case there will be a conversion
+    to s-coords before bunch_params are computed.
+
+Returns
+-------
+bunch_tracks : 1D array of BunchTrackStruct, optional
+    Track up to now. If bunch_tracks.n_pt < 0, the structure will be reinitialized.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_tracks: Track with current bunch info appended on. This routine does nothing
+)"""
   );
   m.def(
       "save_a_bunch_step",
@@ -230,25 +228,33 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("is_time_coords") = py::none(),
       R"""(Wrapper for Fortran routine save_a_bunch_step
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element being tracked through.
+Parameters
+----------
+ele : EleStruct
+    Element being tracked through.
 
-  bunch : BunchStruct
-      Bunch whose parameters are to be saved.
+bunch : BunchStruct
+    Bunch whose parameters are to be saved.
 
-  bunch_track : BunchTrackStruct, optional
-      Track up to now. If bunch_track.n_pt < 0, the structure will be reinitialized.
-      As an output, bunch_track: Track with current bunch info appended on. This routine does nothing
+bunch_track : BunchTrackStruct, optional
+    Track up to now. If bunch_track.n_pt < 0, the structure will be reinitialized.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: Track with current bunch info appended on. This routine does nothing
 
-  s_body : float, optional
-      Body s-position from beginning of element.
+s_body : float, optional
+    Body s-position from beginning of element.
 
-  is_time_coords : bool, optional
-      Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
-      to s-coords before bunch_params are computed.
-  )"""
+is_time_coords : bool, optional
+    Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
+    to s-coords before bunch_params are computed.
+
+Returns
+-------
+bunch_track : BunchTrackStruct, optional
+    Track up to now. If bunch_track.n_pt < 0, the structure will be reinitialized.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: Track with current bunch info appended on. This routine does nothing
+)"""
   );
   m.def(
       "save_a_step",
@@ -266,43 +272,52 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("strong_beam") = py::none(),
       R"""(Wrapper for Fortran routine save_a_step
 
-  Parameters
-  ----------
-  track : TrackStruct
-      Track up to now. If track.n_pt < 0, the structure will be reinitialized.
-      As an output, track: Track with current position appended on.
+Parameters
+----------
+track : TrackStruct
+    Track up to now. If track.n_pt < 0, the structure will be reinitialized.
+    This parameter is an input/output and is modified in-place.
+    As an output, track: Track with current position appended on.
 
-  ele : EleStruct
-      Element being tracked through.
+ele : EleStruct
+    Element being tracked through.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  local_ref_frame : bool
-      If True then input orb is with respect to body coordinates.
+local_ref_frame : bool
+    If True then input orb is with respect to body coordinates.
 
-  orb : CoordStruct
-      trajectory at s with respect to element coordinates.
+orb : CoordStruct
+    trajectory at s with respect to element coordinates.
 
-  s_rel : float
-      Longitudinal position wrt the element. If local_ref_frame = F: Lab coords.
+s_rel : float
+    Longitudinal position wrt the element. If local_ref_frame = F: Lab coords. If local_ref_frame = T: body
+    coords.
 
-  save_field : bool, optional
-      Save electric and magnetic field values? Default is False.
+save_field : bool, optional
+    Save electric and magnetic field values? Default is False.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Matrix to store.
+mat6 : 2D array of float (shape: 6,6), optional
+    Matrix to store.
 
-  make_matrix : bool, optional
-      Is mat6 a valid matrix? Default is False.
+make_matrix : bool, optional
+    Is mat6 a valid matrix? Default is False.
 
-  rf_time : float, optional
-      RF clock time used for calculating the field.. If not present then the time will be calculated using the
-      standard algorithm.
+rf_time : float, optional
+    RF clock time used for calculating the field.. If not present then the time will be calculated using the
+    standard algorithm. This is only needed if save_field = True.
 
-  strong_beam : StrongBeamStruct, optional
-      Strong beam info if tracking through a beambeam element.
-  )"""
+strong_beam : StrongBeamStruct, optional
+    Strong beam info if tracking through a beambeam element.
+
+Returns
+-------
+track : TrackStruct
+    Track up to now. If track.n_pt < 0, the structure will be reinitialized.
+    This parameter is an input/output and is modified in-place.
+    As an output, track: Track with current position appended on.
+)"""
   );
   m.def(
       "sbend_body_with_k1_map",
@@ -317,48 +332,48 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine sbend_body_with_k1_map
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Sbend element.
+Parameters
+----------
+ele : EleStruct
+    Sbend element.
 
-  dg : float
-      Field error.
+dg : float
+    Field error.
 
-  b1 : float
-      b1 quadrupole strength * rel_charge_dir
+b1 : float
+    b1 quadrupole strength * rel_charge_dir
 
-  param : LatParamStruct
-      Branch parameters.
+param : LatParamStruct
+    Branch parameters.
 
-  n_step : int
-      Number of steps to divide the bend into.
+n_step : int
+    Number of steps to divide the bend into. Only one step is taken by this routine.
 
-  orbit : CoordStruct
-      Orbit at beginning of the bend.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coordinates.
+orbit : CoordStruct
+    Orbit at beginning of the bend.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coordinates.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix with body added in.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix with body added in.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Orbit at beginning of the bend.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coordinates.
+Returns
+-------
+orbit : CoordStruct
+    Orbit at beginning of the bend.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coordinates.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix with body added in.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix with body added in.
+)"""
   );
   py::class_<PyScAdaptiveStep, std::unique_ptr<PyScAdaptiveStep>>(
       m,
@@ -391,55 +406,55 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("sc_field"),
       R"""(Subroutine sc_adaptive_step(bunch, ele, include_image, t_now, dt_step, dt_next)
 
-  Routine to track a bunch of particles with space charge for one step using
-  adaptive step size control and determine appropriate step size for the next step
+Routine to track a bunch of particles with space charge for one step using
+adaptive step size control and determine appropriate step size for the next step
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Starting bunch position in t-based coordinates
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position in t-based coordinates.
+Parameters
+----------
+bunch : BunchStruct
+    Starting bunch position in t-based coordinates
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position in t-based coordinates.
 
-  ele : EleStruct
-      Nominal lattice element being tracked through.
+ele : EleStruct
+    Nominal lattice element being tracked through.
 
-  include_image : bool
-      Include image charge forces?
-      This parameter is an input/output and is modified in-place.
-      As an output, include_image: Set False if image charge calc no longer needed (Note
+include_image : bool
+    Include image charge forces?
+    This parameter is an input/output and is modified in-place.
+    As an output, include_image: Set False if image charge calc no longer needed (Note
 
-  t_now : float
-      Current time at the beginning of tracking
+t_now : float
+    Current time at the beginning of tracking
 
-  dt_step : float
-      Initial SC time step to take
-      This parameter is an input/output and is modified in-place.
-      As an output, dt_step: Step done.
+dt_step : float
+    Initial SC time step to take
+    This parameter is an input/output and is modified in-place.
+    As an output, dt_step: Step done.
 
-  sc_field : 1D array of EmFieldStruct
-      : Array to hold space charge fields. Its length should be the number of particles.
+sc_field : 1D array of EmFieldStruct
+    : Array to hold space charge fields. Its length should be the number of particles.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Starting bunch position in t-based coordinates
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position in t-based coordinates.
+Returns
+-------
+bunch : BunchStruct
+    Starting bunch position in t-based coordinates
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position in t-based coordinates.
 
-  include_image : bool
-      Include image charge forces?
-      This parameter is an input/output and is modified in-place.
-      As an output, include_image: Set False if image charge calc no longer needed (Note
+include_image : bool
+    Include image charge forces?
+    This parameter is an input/output and is modified in-place.
+    As an output, include_image: Set False if image charge calc no longer needed (Note
 
-  dt_step : float
-      Initial SC time step to take
-      This parameter is an input/output and is modified in-place.
-      As an output, dt_step: Step done.
+dt_step : float
+    Initial SC time step to take
+    This parameter is an input/output and is modified in-place.
+    As an output, dt_step: Step done.
 
-  dt_next : float
-      Next SC time step the tracker would take based on the error tolerance
-  )"""
+dt_next : float
+    Next SC time step the tracker would take based on the error tolerance
+)"""
   );
   py::class_<PyScStep, std::unique_ptr<PyScStep>>(m, "ScStep", "sc_step return type")
       .def_readonly("n_emit", &PyScStep::n_emit)
@@ -464,44 +479,44 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("sc_field"),
       R"""(Subroutine sc_step(bunch, ele, include_image, t_end, n_emit)
 
-  Subroutine to track a bunch through a given time step with space charge
+Subroutine to track a bunch through a given time step with space charge
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Starting bunch position in t-based coordinates
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position in t-based coordinates after space charge kick.
+Parameters
+----------
+bunch : BunchStruct
+    Starting bunch position in t-based coordinates
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position in t-based coordinates after space charge kick.
 
-  ele : EleStruct
-      Nominal element being tracked through.
+ele : EleStruct
+    Nominal element being tracked through.
 
-  include_image : bool
-      Include image charge forces?
-      This parameter is an input/output and is modified in-place.
-      As an output, include_image: Set False if image charge calc no longer needed (Note
+include_image : bool
+    Include image charge forces?
+    This parameter is an input/output and is modified in-place.
+    As an output, include_image: Set False if image charge calc no longer needed (Note
 
-  t_end : float
-      Time at which the tracking ends.
+t_end : float
+    Time at which the tracking ends.
 
-  sc_field : 1D array of EmFieldStruct
-      : Array to hold space charge fields. Its length should be the number of particles.
+sc_field : 1D array of EmFieldStruct
+    : Array to hold space charge fields. Its length should be the number of particles.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Starting bunch position in t-based coordinates
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position in t-based coordinates after space charge kick.
+Returns
+-------
+bunch : BunchStruct
+    Starting bunch position in t-based coordinates
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position in t-based coordinates after space charge kick.
 
-  include_image : bool
-      Include image charge forces?
-      This parameter is an input/output and is modified in-place.
-      As an output, include_image: Set False if image charge calc no longer needed (Note
+include_image : bool
+    Include image charge forces?
+    This parameter is an input/output and is modified in-place.
+    As an output, include_image: Set False if image charge calc no longer needed (Note
 
-  n_emit : int, optional
-      The number of particles emitted in this step.
-  )"""
+n_emit : int, optional
+    The number of particles emitted in this step.
+)"""
   );
   m.def(
       "set_active_fixer",
@@ -510,33 +525,33 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("turn_on") = py::none(),
       R"""(Subroutine set_active_fixer(fixer, turn_on, orbit)
 
-  Set the acvitive fixer element.
-  All other fixer/beginning_ele elements in the branch will be deactivated.
+Set the acvitive fixer element.
+All other fixer/beginning_ele elements in the branch will be deactivated.
 
-  If turn_on is True (default), the fixer argument becomes the active fixer.
-  If turn_on is False, and fixer%is_on is also False, there is nothing to be done.
-  If turn_on is False, and fixer%is_on is True, turn this fixer off and turn on the beginning element.
+If turn_on is True (default), the fixer argument becomes the active fixer.
+If turn_on is False, and fixer%is_on is also False, there is nothing to be done.
+If turn_on is False, and fixer%is_on is True, turn this fixer off and turn on the beginning element.
 
-  Parameters
-  ----------
-  fixer : EleStruct
-      Fixer element to make active.
-      This parameter is an input/output and is modified in-place.
-      As an output, fixer: Element is now active.
+Parameters
+----------
+fixer : EleStruct
+    Fixer element to make active.
+    This parameter is an input/output and is modified in-place.
+    As an output, fixer: Element is now active.
 
-  turn_on : bool, optional
-      If True (default), make this fixer the active element. If False, make the beginning element active.
+turn_on : bool, optional
+    If True (default), make this fixer the active element. If False, make the beginning element active.
 
-  Returns
-  -------
-  fixer : EleStruct
-      Fixer element to make active.
-      This parameter is an input/output and is modified in-place.
-      As an output, fixer: Element is now active.
+Returns
+-------
+fixer : EleStruct
+    Fixer element to make active.
+    This parameter is an input/output and is modified in-place.
+    As an output, fixer: Element is now active.
 
-  orbit : CoordStruct, optional
-      Load with stored fixer phase space and spin values.
-  )"""
+orbit : CoordStruct, optional
+    Load with stored fixer phase space and spin values.
+)"""
   );
   m.def(
       "set_custom_attribute_name",
@@ -545,25 +560,23 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("custom_index") = py::none(),
       R"""(Subroutine set_custom_attribute_name (custom_name, err_flag, custom_index)
 
-  Routine to add custom element attributes to the element attribute name table.
+Routine to add custom element attributes to the element attribute name table.
 
-  Parameters
-  ----------
-  custom_name : character
-      Name of the custom attribute. If prefixed by "<class>::" then the custom name will be set only for that
-      element class. Example:
+Parameters
+----------
+custom_name : character
+    Name of the custom attribute. If prefixed by "<class>::" then the custom name will be set only for that
+    element class. Example: "quadrupole::error" will set the alias custom namefor quadrupoles.
 
-  "quadrupole::error" will set the alias custom namefor quadrupoles. : None
+custom_index : int, optional
+    Index used in assigning where in the ele_struct the custom attribute is put. If not present or 0 then the
+    next unused slot is used.
 
-  custom_index : int, optional
-      Index used in assigning where in the ele_struct the custom attribute is put. If not present or 0 then the
-      next unused slot is used.
-
-  Returns
-  -------
-  err_flag : bool
-      Set True if an error. False otherwise.
-  )"""
+Returns
+-------
+err_flag : bool
+    Set True if an error. False otherwise.
+)"""
   );
   py::class_<Bmad::SetEleAttribute, std::unique_ptr<Bmad::SetEleAttribute>>(
       m,
@@ -591,36 +604,36 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("set_lords") = py::none(),
       R"""(Wrapper for Fortran routine set_ele_attribute
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with attribute to set.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with attribute set.
+Parameters
+----------
+ele : EleStruct
+    Element with attribute to set.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with attribute set.
 
-  set_string : character
-      Attribute and value for set.
+set_string : character
+    Attribute and value for set.
 
-  err_print_flag : bool, optional
-      If present and False then suppress printing
+err_print_flag : bool, optional
+    If present and False then suppress printing of an error message if attribute is, for example, not free.
 
-  set_lords : bool, optional
-      Default False. If True, set the super_lord(s) if the element is a super_slave.
+set_lords : bool, optional
+    Default False. If True, set the super_lord(s) if the element is a super_slave.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element with attribute to set.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with attribute set.
+Returns
+-------
+ele : EleStruct
+    Element with attribute to set.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with attribute set.
 
-  err_flag : bool
-      Set True if there is an error, False otherwise.
+err_flag : bool
+    Set True if there is an error, False otherwise.
 
-  err_id : int, optional
-      Set to an integer which identifies the error type. 0 = no error. The higher the error the further along
-      the error was encountered.
-  )"""
+err_id : int, optional
+    Set to an integer which identifies the error type. 0 = no error. The higher the error the further along
+    the error was encountered.
+)"""
   );
   m.def(
       "set_ele_defaults",
@@ -629,23 +642,23 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("do_allocate") = py::none(),
       R"""(Wrapper for Fortran routine set_ele_defaults
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element to init.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Initialized element.
+Parameters
+----------
+ele : EleStruct
+    Element to init.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Initialized element.
 
-  do_allocate : bool, optional
-      Do default allocation of element components? Default is True.
+do_allocate : bool, optional
+    Do default allocation of element components? Default is True.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element to init.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Initialized element.
-  )"""
+Returns
+-------
+ele : EleStruct
+    Element to init.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Initialized element.
+)"""
   );
   m.def(
       "set_ele_name",
@@ -654,23 +667,23 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("name"),
       R"""(Wrapper for Fortran routine set_ele_name
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element whose name is to be set.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with name set.
+Parameters
+----------
+ele : EleStruct
+    Element whose name is to be set.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with name set.
 
-  name : character
-      Name to set.
+name : character
+    Name to set.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element whose name is to be set.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with name set.
-  )"""
+Returns
+-------
+ele : EleStruct
+    Element whose name is to be set.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with name set.
+)"""
   );
   m.def(
       "set_ele_real_attribute",
@@ -681,32 +694,32 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("err_print_flag") = py::none(),
       R"""(Wrapper for Fortran routine set_ele_real_attribute
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with attribute to set.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with attribute set.
+Parameters
+----------
+ele : EleStruct
+    Element with attribute to set.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with attribute set.
 
-  attrib_name : character
-      Attribute name.
+attrib_name : character
+    Attribute name.
 
-  value : float
-      value to set to.
+value : float
+    value to set to.
 
-  err_print_flag : bool, optional
-      If present and False then suppress printing of an error message if attribute is, for example, not free.
+err_print_flag : bool, optional
+    If present and False then suppress printing of an error message if attribute is, for example, not free.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element with attribute to set.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with attribute set.
+Returns
+-------
+ele : EleStruct
+    Element with attribute to set.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with attribute set.
 
-  err_flag : bool
-      Set True if there is an error, False otherwise.
-  )"""
+err_flag : bool
+    Set True if there is an error, False otherwise.
+)"""
   );
   py::class_<Bmad::SetEleStatusStale, std::unique_ptr<Bmad::SetEleStatusStale>>(
       m,
@@ -733,18 +746,18 @@ void init_Bmad_routines_s(py::module &m) {
       &Bmad::set_ele_status_stale,
       R"""(Wrapper for Fortran routine set_ele_status_stale
 
-  Returns
-  -------
-  ele : EleStruct
-      Element.
+Returns
+-------
+ele : EleStruct
+    Element.
 
-  status_group : int
-      Which flag groups to set. Possibilities are: attribute_group$, control_group$, floor_position_group$,
-      s_position_group$,
+status_group : int
+    Which flag groups to set. Possibilities are: attribute_group$, control_group$, floor_position_group$,
+    s_position_group$, s_and_floor_position_group$, ref_energy_group$, or mat6_group$, all_groups$
 
-  set_slaves : bool, optional
-      If present and False then do not set the status for any slaves. Default is True.
-  )"""
+set_slaves : bool, optional
+    If present and False then do not set the status for any slaves. Default is True.
+)"""
   );
   m.def(
       "set_flags_for_changed_attribute",
@@ -756,72 +769,38 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("set_dependent") = py::none(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
-  Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
-  Also will do some dependent variable bookkeeping when a particular attribute has
-  been altered.
+Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+Also will do some dependent variable bookkeeping when a particular attribute has
+been altered.
 
-  This routine should be called after the attribute has been set.
+This routine should be called after the attribute has been set.
 
-  set_flags_for_changed_attribute is an overloaded name for:
-    set_flags_for_changed_lat_attribute (lat, set_dependent)
-    set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-    set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-    set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-    set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+set_flags_for_changed_attribute is an overloaded name for:
+  set_flags_for_changed_lat_attribute (lat, set_dependent)
+  set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+  set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+  set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+  set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
 
-  The set_flags_for_changed_lat_attribute (lat) routine is used when one
-  does not know what has changed and wants a complete bookkeeping done.
+The set_flags_for_changed_lat_attribute (lat) routine is used when one
+does not know what has changed and wants a complete bookkeeping done.
 
-  NOTE: The attribute argument MUST be the component that was changed. For example:
-      ele%value(x_offset$) = off_value
-      call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
-  And NOT:
-      call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+NOTE: The attribute argument MUST be the component that was changed. For example:
+    ele%value(x_offset$) = off_value
+    call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
+And NOT:
+    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
 
-  Parameters
-  ----------
-  lat : lat_struct
-      Lattice being modified.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with appropriate changes.
+Parameters
+----------
+ele : EleStruct
+    ele_struct, Element being modified.
 
-  ele : EleStruct
-      ele_struct, Element being modified.
-
-  real_attrib : real(rp), optional
-      Attribute that has been changed. For example: ele.value(hkick$).
-
-  If not present then assume everything has potentially changed. : None
-
-  int_attrib : integer
-      Attribute that has been changed.
-
-  For example: ele%mat6_calc_method. : None
-
-  logic_attrib : None
-      logical; Attribute that has been changed.
-
-  For example: ele%is_on. : None
-
-  all_attrib : all_pointer_struct
-      Pointer to attribute.
-
-  set_dependent : bool, optional
-      If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
-      when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
-      doing.
-
-  Returns
-  -------
-  lat : lat_struct
-      Lattice being modified.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with appropriate changes.
-
-  Notes
-  -----
-  Overloaded versions:
-  )"""
+set_dependent : bool, optional
+    If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
+    when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
+    doing.
+)"""
   );
   m.def(
       "set_flags_for_changed_attribute",
@@ -830,72 +809,47 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("set_dependent") = py::none(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
-  Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
-  Also will do some dependent variable bookkeeping when a particular attribute has
-  been altered.
+Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+Also will do some dependent variable bookkeeping when a particular attribute has
+been altered.
 
-  This routine should be called after the attribute has been set.
+This routine should be called after the attribute has been set.
 
-  set_flags_for_changed_attribute is an overloaded name for:
-    set_flags_for_changed_lat_attribute (lat, set_dependent)
-    set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-    set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-    set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-    set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+set_flags_for_changed_attribute is an overloaded name for:
+  set_flags_for_changed_lat_attribute (lat, set_dependent)
+  set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+  set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+  set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+  set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
 
-  The set_flags_for_changed_lat_attribute (lat) routine is used when one
-  does not know what has changed and wants a complete bookkeeping done.
+The set_flags_for_changed_lat_attribute (lat) routine is used when one
+does not know what has changed and wants a complete bookkeeping done.
 
-  NOTE: The attribute argument MUST be the component that was changed. For example:
-      ele%value(x_offset$) = off_value
-      call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
-  And NOT:
-      call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+NOTE: The attribute argument MUST be the component that was changed. For example:
+    ele%value(x_offset$) = off_value
+    call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
+And NOT:
+    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice being modified.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with appropriate changes.
+Parameters
+----------
+lat : LatStruct
+    Lattice being modified.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with appropriate changes.
 
-  ele : None
-      ele_struct, Element being modified.
+set_dependent : bool, optional
+    If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
+    when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
+    doing.
 
-  real_attrib : real(rp), optional
-      Attribute that has been changed. For example: ele.value(hkick$).
-
-  If not present then assume everything has potentially changed. : None
-
-  int_attrib : integer
-      Attribute that has been changed.
-
-  For example: ele%mat6_calc_method. : None
-
-  logic_attrib : None
-      logical; Attribute that has been changed.
-
-  For example: ele%is_on. : None
-
-  all_attrib : all_pointer_struct
-      Pointer to attribute.
-
-  set_dependent : bool, optional
-      If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
-      when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
-      doing.
-
-  Returns
-  -------
-  lat : LatStruct
-      Lattice being modified.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with appropriate changes.
-
-  Notes
-  -----
-  Overloaded versions:
-  )"""
+Returns
+-------
+lat : LatStruct
+    Lattice being modified.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with appropriate changes.
+)"""
   );
   m.def(
       "set_flags_for_changed_attribute",
@@ -907,72 +861,38 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("set_dependent") = py::none(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
-  Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
-  Also will do some dependent variable bookkeeping when a particular attribute has
-  been altered.
+Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+Also will do some dependent variable bookkeeping when a particular attribute has
+been altered.
 
-  This routine should be called after the attribute has been set.
+This routine should be called after the attribute has been set.
 
-  set_flags_for_changed_attribute is an overloaded name for:
-    set_flags_for_changed_lat_attribute (lat, set_dependent)
-    set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-    set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-    set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-    set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+set_flags_for_changed_attribute is an overloaded name for:
+  set_flags_for_changed_lat_attribute (lat, set_dependent)
+  set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+  set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+  set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+  set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
 
-  The set_flags_for_changed_lat_attribute (lat) routine is used when one
-  does not know what has changed and wants a complete bookkeeping done.
+The set_flags_for_changed_lat_attribute (lat) routine is used when one
+does not know what has changed and wants a complete bookkeeping done.
 
-  NOTE: The attribute argument MUST be the component that was changed. For example:
-      ele%value(x_offset$) = off_value
-      call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
-  And NOT:
-      call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+NOTE: The attribute argument MUST be the component that was changed. For example:
+    ele%value(x_offset$) = off_value
+    call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
+And NOT:
+    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
 
-  Parameters
-  ----------
-  lat : lat_struct
-      Lattice being modified.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with appropriate changes.
+Parameters
+----------
+ele : EleStruct
+    ele_struct, Element being modified.
 
-  ele : EleStruct
-      ele_struct, Element being modified.
-
-  real_attrib : real(rp), optional
-      Attribute that has been changed. For example: ele.value(hkick$).
-
-  If not present then assume everything has potentially changed. : None
-
-  int_attrib : integer
-      Attribute that has been changed.
-
-  For example: ele%mat6_calc_method. : None
-
-  logic_attrib : None
-      logical; Attribute that has been changed.
-
-  For example: ele%is_on. : None
-
-  all_attrib : all_pointer_struct
-      Pointer to attribute.
-
-  set_dependent : bool, optional
-      If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
-      when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
-      doing.
-
-  Returns
-  -------
-  lat : lat_struct
-      Lattice being modified.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with appropriate changes.
-
-  Notes
-  -----
-  Overloaded versions:
-  )"""
+set_dependent : bool, optional
+    If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
+    when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
+    doing.
+)"""
   );
   m.def(
       "set_flags_for_changed_attribute",
@@ -984,72 +904,38 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("set_dependent") = py::none(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
-  Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
-  Also will do some dependent variable bookkeeping when a particular attribute has
-  been altered.
+Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+Also will do some dependent variable bookkeeping when a particular attribute has
+been altered.
 
-  This routine should be called after the attribute has been set.
+This routine should be called after the attribute has been set.
 
-  set_flags_for_changed_attribute is an overloaded name for:
-    set_flags_for_changed_lat_attribute (lat, set_dependent)
-    set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
-    set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
-    set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
-    set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
+set_flags_for_changed_attribute is an overloaded name for:
+  set_flags_for_changed_lat_attribute (lat, set_dependent)
+  set_flags_for_changed_real_attribute (ele, real_attrib, set_dependent)
+  set_flags_for_changed_inteter_attribute (ele, int_attrib, set_dependent)
+  set_flags_for_changed_logical_attribute (ele, logic_attrib, set_dependent)
+  set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent)
 
-  The set_flags_for_changed_lat_attribute (lat) routine is used when one
-  does not know what has changed and wants a complete bookkeeping done.
+The set_flags_for_changed_lat_attribute (lat) routine is used when one
+does not know what has changed and wants a complete bookkeeping done.
 
-  NOTE: The attribute argument MUST be the component that was changed. For example:
-      ele%value(x_offset$) = off_value
-      call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
-  And NOT:
-      call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
+NOTE: The attribute argument MUST be the component that was changed. For example:
+    ele%value(x_offset$) = off_value
+    call set_flags_for_changed_attribute (ele, ele%value(x_offset$))
+And NOT:
+    call set_flags_for_changed_attribute (ele, off_value)  ! WRONG
 
-  Parameters
-  ----------
-  lat : lat_struct
-      Lattice being modified.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with appropriate changes.
+Parameters
+----------
+ele : EleStruct
+    ele_struct, Element being modified.
 
-  ele : EleStruct
-      ele_struct, Element being modified.
-
-  real_attrib : real(rp), optional
-      Attribute that has been changed. For example: ele.value(hkick$).
-
-  If not present then assume everything has potentially changed. : None
-
-  int_attrib : integer
-      Attribute that has been changed.
-
-  For example: ele%mat6_calc_method. : None
-
-  logic_attrib : None
-      logical; Attribute that has been changed.
-
-  For example: ele%is_on. : None
-
-  all_attrib : all_pointer_struct
-      Pointer to attribute.
-
-  set_dependent : bool, optional
-      If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
-      when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
-      doing.
-
-  Returns
-  -------
-  lat : lat_struct
-      Lattice being modified.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with appropriate changes.
-
-  Notes
-  -----
-  Overloaded versions:
-  )"""
+set_dependent : bool, optional
+    If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
+    when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
+    doing.
+)"""
   );
   py::class_<PySetFringeOnOff, std::unique_ptr<PySetFringeOnOff>>(
       m,
@@ -1073,26 +959,26 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("on_or_off"),
       R"""(Wrapper for Fortran routine set_fringe_on_off
 
-  Parameters
-  ----------
-  fringe_at : float
-      Present fringe_at setting. entrance_end$, exit_end$, both_ends$, or no_end$
-      This parameter is an input/output and is modified in-place.
-      As an output, fringe_at: Modified fringe setting.
+Parameters
+----------
+fringe_at : float
+    Present fringe_at setting. entrance_end$, exit_end$, both_ends$, or no_end$
+    This parameter is an input/output and is modified in-place.
+    As an output, fringe_at: Modified fringe setting.
 
-  ele_end : int
-      Element edge: entrance_end$ or exit_end$
+ele_end : int
+    Element edge: entrance_end$ or exit_end$
 
-  on_or_off : int
-      Turn on$ or off$
+on_or_off : int
+    Turn on$ or off$
 
-  Returns
-  -------
-  fringe_at : float
-      Present fringe_at setting. entrance_end$, exit_end$, both_ends$, or no_end$
-      This parameter is an input/output and is modified in-place.
-      As an output, fringe_at: Modified fringe setting.
-  )"""
+Returns
+-------
+fringe_at : float
+    Present fringe_at setting. entrance_end$, exit_end$, both_ends$, or no_end$
+    This parameter is an input/output and is modified in-place.
+    As an output, fringe_at: Modified fringe setting.
+)"""
   );
   m.def(
       "set_lords_status_stale",
@@ -1103,20 +989,20 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("flag") = py::none(),
       R"""(Wrapper for Fortran routine set_lords_status_stale
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element
+Parameters
+----------
+ele : EleStruct
+    Element
 
-  stat_group : int
-      which status group to set. floor_position_group$, etc. See set_ele_status_stale for more details.
+stat_group : int
+    which status group to set. floor_position_group$, etc. See set_ele_status_stale for more details.
 
-  control_bookkeeping : bool, optional
-      Call control_bookkeeper for each lord if needed?
+control_bookkeeping : bool, optional
+    Call control_bookkeeper for each lord if needed? Default if False.
 
-  flag : int, optional
-      Do not use. For coordinating recursion.
-  )"""
+flag : int, optional
+    Do not use. For coordinating recursion.
+)"""
   );
   m.def(
       "set_on_off",
@@ -1132,54 +1018,58 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("set_val") = py::none(),
       R"""(Wrapper for Fortran routine set_on_off
 
-  Parameters
-  ----------
-  key : int
-      Class name of elements to be turned on or off. [quadrupole$, etc.]
+Parameters
+----------
+key : int
+    Class name of elements to be turned on or off. [quadrupole$, etc.]
 
-  lat : LatStruct
-      lattice structure holding the elements.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Modified lattice.
+lat : LatStruct
+    lattice structure holding the elements.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Modified lattice.
 
-  switch : integer
-      on$            => Turn elements on. If saved_values argument is present, use this. If not present (only
-      for logical attributes), set to True. off$           => Turn elements off (but will not store the present
-      state). off_and_save$  => Save on/off state and then turn elements off. save_state$    => Save present
-      on/off state. No turning on or off is done.
+switch : int
+    on$            => Turn elements on. If saved_values argument is present, use this. If not present (only
+    for logical attributes), set to True. off$           => Turn elements off (but will not store the present
+    state). off_and_save$  => Save on/off state and then turn elements off. save_state$    => Save present
+    on/off state. No turning on or off is done. restore_state$ => Restore saved on/off state from saved_values
+    argument.
 
-  orb : 1D array of CoordStruct, optional
-      Needed for lat_make_mat6
+orb : 1D array of CoordStruct, optional
+    Needed for lat_make_mat6
 
-  use_ref_orb : bool, optional
-      If present and true then use ele.map_ref_orb for the reference orbit for
+use_ref_orb : bool, optional
+    If present and true then use ele.map_ref_orb for the reference orbit for calculating .mat6. Default is
+    false.
 
-  ix_branch : int, optional
-      If present then only set for
+ix_branch : int, optional
+    If present then only set for this lattice branch.
 
-  saved_values : 1D array of float, optional
-      Element-by element saved values of the component.
-      This parameter is an input/output and is modified in-place.
-      As an output, saved_values: Saved values of the component.
+saved_values : 1D array of float, optional
+    Element-by element saved values of the component. Must be present if needed (EG if switch =
+    restore_state$, etc.).
+    This parameter is an input/output and is modified in-place.
+    As an output, saved_values: Saved values of the component.
 
-  attribute : character, optional
-      Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc.
+attribute : character, optional
+    Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc. Default is 'IS_ON'. Must be upper case.
 
-  set_val : int, optional
-      Value to set to. Overrides normal set value.
+set_val : int, optional
+    Value to set to. Overrides normal set value.
 
-  Returns
-  -------
-  lat : LatStruct
-      lattice structure holding the elements.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Modified lattice.
+Returns
+-------
+lat : LatStruct
+    lattice structure holding the elements.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Modified lattice.
 
-  saved_values : 1D array of float, optional
-      Element-by element saved values of the component.
-      This parameter is an input/output and is modified in-place.
-      As an output, saved_values: Saved values of the component.
-  )"""
+saved_values : 1D array of float, optional
+    Element-by element saved values of the component. Must be present if needed (EG if switch =
+    restore_state$, etc.).
+    This parameter is an input/output and is modified in-place.
+    As an output, saved_values: Saved values of the component.
+)"""
   );
   m.def(
       "set_orbit_to_zero",
@@ -1190,22 +1080,22 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("ix_noset") = py::none(),
       R"""(Wrapper for Fortran routine set_orbit_to_zero
 
-  Parameters
-  ----------
-  n1 : int
-      Lower bound of orbit(:) array subset.
+Parameters
+----------
+n1 : int
+    Lower bound of orbit(:) array subset.
 
-  n2 : int
-      Upper bound of orbit(:) array subset.
+n2 : int
+    Upper bound of orbit(:) array subset.
 
-  ix_noset : int, optional
-      If present then orbit(ix_noset) will not be zeroed.
+ix_noset : int, optional
+    If present then orbit(ix_noset) will not be zeroed.
 
-  Returns
-  -------
-  orbit : 1D array of CoordStruct
-      Array with particle positions in the range orbit(n1:n2) set to zero except for orbit(ix_noset).
-  )"""
+Returns
+-------
+orbit : 1D array of CoordStruct
+    Array with particle positions in the range orbit(n1:n2) set to zero except for orbit(ix_noset).
+)"""
   );
   m.def(
       "set_ptc",
@@ -1219,29 +1109,30 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("force_init") = py::none(),
       R"""(Wrapper for Fortran routine set_ptc
 
-  Parameters
-  ----------
-  e_tot : float, optional
-      Energy in eV.
+Parameters
+----------
+e_tot : float, optional
+    Energy in eV.
 
-  particle : int, optional
-      Type of particle:
+particle : int, optional
+    Type of particle: electron$, proton$, etc.
 
-  taylor_order : int, optional
-      Maximum order of the taylor polynomials.
+taylor_order : int, optional
+    Maximum order of the taylor polynomials. 0 => Use default.
 
-  integ_order : int, optional
-      Default Order for the drift-kick-drift sympletic integrator. Possibilities are: 2, 4, or 6
+integ_order : int, optional
+    Default Order for the drift-kick-drift sympletic integrator. Possibilities are: 2, 4, or 6 Default = 2
 
-  n_step : int, optional
-      Default Number of integration steps.
+n_step : int, optional
+    Default Number of integration steps. Default = 1
 
-  no_cavity : bool, optional
-      No RF Cavity exists? Default = False. Corresponds to the nocavity option of the PTC init routine.
+no_cavity : bool, optional
+    No RF Cavity exists? Default = False. Corresponds to the nocavity option of the PTC init routine.
+    no_cavity = .true. will turn any cavity into a drift.
 
-  force_init : bool, optional
-      If present and True then force a PTC init.
-  )"""
+force_init : bool, optional
+    If present and True then force a PTC init.
+)"""
   );
   m.def(
       "set_ptc_base_state",
@@ -1250,27 +1141,28 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("set_val"),
       R"""(Wrapper for Fortran routine set_ptc_base_state
 
-  Parameters
-  ----------
-  component : character
-      Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc.
+Parameters
+----------
+component : character
+    Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc. See the PTC internal_state structure for
+    component names.
 
-  set_val : bool
-      Value to set to. For TOTALPATH, True => 1, False => 0.
+set_val : bool
+    Value to set to. For TOTALPATH, True => 1, False => 0.
 
-  Returns
-  -------
-  old_val : bool, optional
-      Old value.
-  )"""
+Returns
+-------
+old_val : bool, optional
+    Old value.
+)"""
   );
   m.def(
       "set_ptc_com_pointers",
       &Bmad::set_ptc_com_pointers,
       R"""(Subroutine set_ptc_com_pointers ()
 
-  Routine to set ptc_com pointers to PTC global variables.
-  )"""
+Routine to set ptc_com pointers to PTC global variables.
+)"""
   );
   py::class_<PySetPtcQuiet, std::unique_ptr<PySetPtcQuiet>>(
       m,
@@ -1294,31 +1186,31 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("old_val"),
       R"""(Subroutine set_ptc_quiet (channel, set, old_val)
 
-  Routine to set the lielib_print(:) array or c_verbose logical to suppress informational messages
-  that can clutter the output from a program using PTC.
+Routine to set the lielib_print(:) array or c_verbose logical to suppress informational messages
+that can clutter the output from a program using PTC.
 
-  Note: Only suppress printing if ptc_com%print_info_messages = F.
+Note: Only suppress printing if ptc_com%print_info_messages = F.
 
-  Parameters
-  ----------
-  channel : int
-      Index in the lielib_print(:) array to set. 0 => c_verbose.
+Parameters
+----------
+channel : int
+    Index in the lielib_print(:) array to set. 0 => c_verbose.
 
-  set : bool
-      If set$ then set lielib_print(:). If unset$ then undo a previous set$.
+set : bool
+    If set$ then set lielib_print(:). If unset$ then undo a previous set$.
 
-  old_val : int
-      Old value needed for set = unset$.
-      This parameter is an input/output and is modified in-place.
-      As an output, old_val: Saved value for set = set$.
+old_val : int
+    Old value needed for set = unset$.
+    This parameter is an input/output and is modified in-place.
+    As an output, old_val: Saved value for set = set$.
 
-  Returns
-  -------
-  old_val : int
-      Old value needed for set = unset$.
-      This parameter is an input/output and is modified in-place.
-      As an output, old_val: Saved value for set = set$.
-  )"""
+Returns
+-------
+old_val : int
+    Old value needed for set = unset$.
+    This parameter is an input/output and is modified in-place.
+    As an output, old_val: Saved value for set = set$.
+)"""
   );
   m.def(
       "set_ptc_verbose",
@@ -1326,14 +1218,14 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("on"),
       R"""(Wrapper for Fortran routine set_ptc_verbose
 
-  Parameters
-  ----------
-  on : bool
+Parameters
+----------
+on : bool
 
-  Returns
-  -------
-  on : bool
-  )"""
+Returns
+-------
+on : bool
+)"""
   );
   m.def(
       "set_pwd_ele",
@@ -1343,27 +1235,22 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("inductance"),
       R"""(Subroutine set_pwd_ele(lat,mode0,inductance)
 
-  Simulates the effect of potential well distortion by adjusting lat%ele(ix_pwd)%taylor(6)%term(2)%coef for an
-  element in the lattice.  This element will apply a pz kick based on the z coordinate.
-  Element is assumed to be at lat%ele(1).  The ibs_ring driver program
-  inserts a taylor element into lat%ele(1) if set to perform pwd calculations.
+Simulates the effect of potential well distortion by adjusting lat%ele(ix_pwd)%taylor(6)%term(2)%coef for an
+element in the lattice.  This element will apply a pz kick based on the z coordinate.
+Element is assumed to be at lat%ele(1).  The ibs_ring driver program
+inserts a taylor element into lat%ele(1) if set to perform pwd calculations.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      lattice
+Parameters
+----------
+lat : LatStruct
+    lattice
 
-  mode0 : NormalModesStruct
-      .sig_z and .z.sige_e should be populated before calling this subroutine.
+mode0 : NormalModesStruct
+    .sig_z and .z.sige_e should be populated before calling this subroutine.
 
-  inductance : float
-      An inductance-like parameter describing the distortion of the potential well.
-
-  Returns
-  -------
-  sigma : real(rp)
-      Bunch length
-  )"""
+inductance : float
+    An inductance-like parameter describing the distortion of the potential well.
+)"""
   );
   m.def(
       "set_status_flags",
@@ -1371,15 +1258,15 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("stat"),
       R"""(Wrapper for Fortran routine set_status_flags
 
-  Parameters
-  ----------
-  stat : int
-      bookkeeping status. ok$, stale$, etc.
+Parameters
+----------
+stat : int
+    bookkeeping status. ok$, stale$, etc.
 
-  Returns
-  -------
-  bookkeeping_state : BookkeepingStateStruct
-  )"""
+Returns
+-------
+bookkeeping_state : BookkeepingStateStruct
+)"""
   );
   m.def(
       "set_tune",
@@ -1393,50 +1280,50 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Wrapper for Fortran routine set_tune
 
-  Parameters
-  ----------
-  phi_a_set : float
-      Horizontal set tune (radians)
+Parameters
+----------
+phi_a_set : float
+    Horizontal set tune (radians)
 
-  phi_b_set : float
-      Vertical set tune (radians)
+phi_b_set : float
+    Vertical set tune (radians)
 
-  dk1 : 1D array of float
-      Relative amount to vary a quad in tuning. The variation will be proportional to dk1. Those quads with a
-      positive dk1(i) will be varied as one group and the quads with negative dk1(i) will be varied as another
-      group.
+dk1 : 1D array of float
+    Relative amount to vary a quad in tuning. The variation will be proportional to dk1. Those quads with a
+    positive dk1(i) will be varied as one group and the quads with negative dk1(i) will be varied as another
+    group. The routine choose_quads_for_set_tune can be used to calculate values for dk1.
 
-  eles : 1D array of ElePointerStruct
-      eles(i).ele points to quadrupole corresponding to dk1(i).
+eles : 1D array of ElePointerStruct
+    eles(i).ele points to quadrupole corresponding to dk1(i).
 
-  branch : BranchStruct
-      Lattice branch to tune.
-      This parameter is an input/output and is modified in-place.
-      As an output, branch: Q_tuned lattice branch
+branch : BranchStruct
+    Lattice branch to tune.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Q_tuned lattice branch
 
-  orb : 1D array of CoordStruct
-      If RF is off: Energy dE/E at which the tune is computed.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: New closed orbit.
+orb : 1D array of CoordStruct
+    If RF is off: Energy dE/E at which the tune is computed.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: New closed orbit.
 
-  print_err : bool, optional
-      Print error message if there is a problem? Default is True.
+print_err : bool, optional
+    Print error message if there is a problem? Default is True.
 
-  Returns
-  -------
-  branch : BranchStruct
-      Lattice branch to tune.
-      This parameter is an input/output and is modified in-place.
-      As an output, branch: Q_tuned lattice branch
+Returns
+-------
+branch : BranchStruct
+    Lattice branch to tune.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Q_tuned lattice branch
 
-  orb : 1D array of CoordStruct
-      If RF is off: Energy dE/E at which the tune is computed.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: New closed orbit.
+orb : 1D array of CoordStruct
+    If RF is off: Energy dE/E at which the tune is computed.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: New closed orbit.
 
-  ok : bool
-      Set True if everything is ok. False otherwise.
-  )"""
+ok : bool
+    Set True if everything is ok. False otherwise.
+)"""
   );
   m.def(
       "set_twiss",
@@ -1449,26 +1336,26 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Wrapper for Fortran routine set_twiss
 
-  Parameters
-  ----------
-  branch : BranchStruct
-      Branch to modify.
+Parameters
+----------
+branch : BranchStruct
+    Branch to modify.
 
-  twiss_ele : EleStruct
-      Element with desired Twiss parameters.
+twiss_ele : EleStruct
+    Element with desired Twiss parameters.
 
-  ix_ele : int
-      Match branch.ele(ix_ele) Twiss to twiss_ele.
+ix_ele : int
+    Match branch.ele(ix_ele) Twiss to twiss_ele.
 
-  match_deta_ds : bool
-      If True, match deta_ds. If False, match etap.
+match_deta_ds : bool
+    If True, match deta_ds. If False, match etap.
 
-  err_flag : bool
-      Set True if there is an error. False otherwise.
+err_flag : bool
+    Set True if there is an error. False otherwise.
 
-  print_err : bool, optional
-      Print an error message if there is an error? Default is True.
-  )"""
+print_err : bool, optional
+    Print an error message if there is an error? Default is True.
+)"""
   );
   m.def(
       "set_z_tune",
@@ -1478,26 +1365,24 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("print_err") = py::none(),
       R"""(Wrapper for Fortran routine set_z_tune
 
-  Parameters
-  ----------
-  branch : BranchStruct
+Parameters
+----------
+branch : BranchStruct
 
-  z_tune : float
-      Longitudinal tune in radians (must be negative above transition).
+z_tune : float
+    Longitudinal tune in radians (must be negative above transition).
 
-  print_err : bool, optional
-      Default is True. If False, suppress error messages
+print_err : bool, optional
+    Default is True. If False, suppress error messages
 
-  Returns
-  -------
-  branch : BranchStruct
+Returns
+-------
+branch : BranchStruct
 
-  ok : bool, optional
-      If present, returns true or false if set was successful. If not present, set_z_tune will bomb if tune
-      could not be set. Notes: 1) The calculation assumes that Q_z < 1. 2) By convention a positive tune
-      signifies a clockwise rotation in phase space so that the transverse tunes are positive. This means the
-      longitudinal tune is negative above transition.
-  )"""
+ok : bool, optional
+    If present, returns true or false if set was successful. If not present, set_z_tune will bomb if tune
+    could not be set.
+)"""
   );
   m.def(
       "settable_dep_var_bookkeeping",
@@ -1505,11 +1390,11 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("ele"),
       R"""(Subroutine settable_dep_var_bookkeeping (ele)
 
-  Subroutine to initialize dependent variables in an element.
+Subroutine to initialize dependent variables in an element.
 
-  This subroutine is used by bmad_parser and bmad_parser2.
-  This subroutine is not intended for general use.
-  )"""
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
   );
   m.def(
       "setup_high_energy_space_charge_calc",
@@ -1522,36 +1407,36 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("closed_orb") = py::none(),
       R"""(Subroutine setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, beam_init, closed_orb)
 
-  Routine to initialize constants needed by the ultra relativistic space charge
-  tracking routine track1_high_energy_space_charge. This setup routine must be called if
-  the lattice or any of the other input parameters are changed.
+Routine to initialize constants needed by the ultra relativistic space charge
+tracking routine track1_high_energy_space_charge. This setup routine must be called if
+the lattice or any of the other input parameters are changed.
 
-  Parameters used:
-      a-mode emittance
-      b-mode emittance
-      sig_z bunch length
-      sig_pz relative energy spread
+Parameters used:
+    a-mode emittance
+    b-mode emittance
+    sig_z bunch length
+    sig_pz relative energy spread
 
-  Parameters
-  ----------
-  calc_on : bool
-      Turns on or off the space charge calculation.
+Parameters
+----------
+calc_on : bool
+    Turns on or off the space charge calculation.
 
-  branch : BranchStruct
-      Lattice for tracking.
+branch : BranchStruct
+    Lattice for tracking.
 
-  n_part : float
-      Number of actual particles in a bunch. Used to compute the bunch charge.
+n_part : float
+    Number of actual particles in a bunch. Used to compute the bunch charge.
 
-  mode : NormalModesStruct
-      Structure holding the beam info. Will be combined with info in beam_init.
+mode : NormalModesStruct
+    Structure holding the beam info. Will be combined with info in beam_init.
 
-  beam_init : BeamInitStruct, optional
-      Structure holding beam info. Will be combined with info in mode.
+beam_init : BeamInitStruct, optional
+    Structure holding beam info. Will be combined with info in mode.
 
-  closed_orb : 1D array of CoordStruct, optional
-      Closed orbit. If not present the closed orbit is taken to be zero.
-  )"""
+closed_orb : 1D array of CoordStruct, optional
+    Closed orbit. If not present the closed orbit is taken to be zero.
+)"""
   );
   m.def(
       "sigma_mat_ptc_to_bmad",
@@ -1560,27 +1445,27 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("beta0"),
       R"""(Subroutine sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad)
 
-  Routine to convert a PTC sigma matrix to a Bmad sigma matrix.
-  The conversion includes the conversion between Bmad and PTC time coordinate systems.
+Routine to convert a PTC sigma matrix to a Bmad sigma matrix.
+The conversion includes the conversion between Bmad and PTC time coordinate systems.
 
-  Since PTC uses delta_E/P0c and Bmad uses delta_P/P0c coordinates, and since
-  the relationship between delta_E and delta_P is nonlinear, this routine
-  simplifies the calculation and assumes that the particle beta is constant
-  over the range of particle energies.
+Since PTC uses delta_E/P0c and Bmad uses delta_P/P0c coordinates, and since
+the relationship between delta_E and delta_P is nonlinear, this routine
+simplifies the calculation and assumes that the particle beta is constant
+over the range of particle energies.
 
-  Parameters
-  ----------
-  sigma_mat_ptc : 2D array of float (shape: 6,6)
-      PTC sigma matrix.
+Parameters
+----------
+sigma_mat_ptc : 2D array of float (shape: 6,6)
+    PTC sigma matrix.
 
-  beta0 : float
-      Reference particle velocity
+beta0 : float
+    Reference particle velocity
 
-  Returns
-  -------
-  sigma_mat_bmad : 2D array of float (shape: 6,6)
-      Bmad sigma matrix.
-  )"""
+Returns
+-------
+sigma_mat_bmad : 2D array of float (shape: 6,6)
+    Bmad sigma matrix.
+)"""
   );
   m.def(
       "significant_difference",
@@ -1591,25 +1476,25 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("rel_tol") = py::none(),
       R"""(Wrapper for Fortran routine significant_difference
 
-  Parameters
-  ----------
-  value1 : float
-      First value.
+Parameters
+----------
+value1 : float
+    First value.
 
-  value2 : float
-      Second value.
+value2 : float
+    Second value.
 
-  abs_tol : float, optional
-      Absolute tolerance. Default is 0.
+abs_tol : float, optional
+    Absolute tolerance. Default is 0.
 
-  rel_tol : float, optional
-      Relative tolerance. Default is 0.
+rel_tol : float, optional
+    Relative tolerance. Default is 0.
 
-  Returns
-  -------
-  is_different : bool
-      Set True if the difference is significant. False otherwise.
-  )"""
+Returns
+-------
+is_different : bool
+    Set True if the difference is significant. False otherwise.
+)"""
   );
   m.def(
       "skip_ele_blender",
@@ -1618,18 +1503,18 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("skip"),
       R"""(Wrapper for Fortran routine skip_ele_blender
 
-  Parameters
-  ----------
-  ele : EleStruct
+Parameters
+----------
+ele : EleStruct
 
-  skip : bool
+skip : bool
 
-  Returns
-  -------
-  ele : EleStruct
+Returns
+-------
+ele : EleStruct
 
-  skip : bool
-  )"""
+skip : bool
+)"""
   );
   m.def(
       "slice_lattice",
@@ -1639,30 +1524,31 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("do_bookkeeping") = py::none(),
       R"""(Wrapper for Fortran routine slice_lattice
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice to slice.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with unwanted elements sliced out.
+Parameters
+----------
+lat : LatStruct
+    Lattice to slice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with unwanted elements sliced out.
 
-  ele_list : character
-      List of elements to retain. See the documentation for
+ele_list : character
+    List of elements to retain. See the documentation for the lat_ele_locator routine for the syntax of the
+    list.
 
-  do_bookkeeping : bool, optional
-      Default is True. If false, the calling routine is responsible for: * Modifying lat.particle_start if
-      needed. * Calculating Twiss functions.
+do_bookkeeping : bool, optional
+    Default is True. If false, the calling routine is responsible for: * Modifying lat.particle_start if
+    needed. * Calculating Twiss functions.
 
-  Returns
-  -------
-  lat : LatStruct
-      Lattice to slice.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with unwanted elements sliced out.
+Returns
+-------
+lat : LatStruct
+    Lattice to slice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with unwanted elements sliced out.
 
-  error : bool
-      Set True if there is an error Set False if not.
-  )"""
+error : bool
+    Set True if there is an error Set False if not.
+)"""
   );
   m.def(
       "soft_quadrupole_edge_kick",
@@ -1675,46 +1561,46 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Subroutine soft_quadrupole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
-  Routine to add the SAD "linear" soft edge (for finite f1 or f2).
-  This routine assumes that the particle orbit has been rotated to the element reference frame.
-  This routine is called with sad_mult and quadrupole elements.
+Routine to add the SAD "linear" soft edge (for finite f1 or f2).
+This routine assumes that the particle orbit has been rotated to the element reference frame.
+This routine is called with sad_mult and quadrupole elements.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element being tracked through
+Parameters
+----------
+ele : EleStruct
+    Element being tracked through
 
-  param : LatParamStruct
-      Tracking parameters.
+param : LatParamStruct
+    Tracking parameters.
 
-  particle_at : int
-      first_track_edge$, or second_track_edge$.
+particle_at : int
+    first_track_edge$, or second_track_edge$.
 
-  orbit : CoordStruct
-      Position before kick.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Position after kick.
+orbit : CoordStruct
+    Position before kick.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Position after kick.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the edge.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix with edge kick added on.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the edge.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix with edge kick added on.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is False.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is False.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Position before kick.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Position after kick.
+Returns
+-------
+orbit : CoordStruct
+    Position before kick.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Position after kick.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the edge.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix with edge kick added on.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the edge.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix with edge kick added on.
+)"""
   );
   m.def(
       "sol_quad_mat6_calc",
@@ -1729,46 +1615,46 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine sol_quad_mat6_calc
 
-  Parameters
-  ----------
-  ks_in : float
+Parameters
+----------
+ks_in : float
 
-  k1_in : float
+k1_in : float
 
-  tilt : float
-      quadrupole tilt.
+tilt : float
+    quadrupole tilt.
 
-  length : float
-      Sol_quad length.
+length : float
+    Sol_quad length.
 
-  ele : EleStruct
-      Sol_quad element.
+ele : EleStruct
+    Sol_quad element.
 
-  orbit : CoordStruct
-      Orbit at beginning of the sol_quad.
+orbit : CoordStruct
+    Orbit at beginning of the sol_quad.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the sol_quad.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix includeing the sol_quad.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the sol_quad.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix includeing the sol_quad.
 
-  make_matrix : bool, optional
-      Extend the matrix?
+make_matrix : bool, optional
+    Extend the matrix?
 
-  Returns
-  -------
-  ks_in : float
+Returns
+-------
+ks_in : float
 
-  k1_in : float
+k1_in : float
 
-  orbit : CoordStruct
-      Orbit at beginning of the sol_quad.
+orbit : CoordStruct
+    Orbit at beginning of the sol_quad.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the sol_quad.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix includeing the sol_quad.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the sol_quad.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix includeing the sol_quad.
+)"""
   );
   m.def(
       "solve_psi_adaptive",
@@ -1779,30 +1665,30 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("args"),
       R"""(Subroutine solve_psi_adaptive(t0,t1,p0,args,p1)
 
-  Solve dpsi/dt for psi(t1) using adaptive steps and method:
-    "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+Solve dpsi/dt for psi(t1) using adaptive steps and method:
+  "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
 
-  The boundary condition p0 is psi(t0)
+The boundary condition p0 is psi(t0)
 
-  Parameters
-  ----------
-  t0 : float
-      initial time
+Parameters
+----------
+t0 : float
+    initial time
 
-  t1 : float
-      final time
+t1 : float
+    final time
 
-  p0 : float
-      Boundary condition psi(t0)
+p0 : float
+    Boundary condition psi(t0)
 
-  args : 1D array of float (shape: 1:8)
-      Parameters.  See psi_prime comments for details.
+args : 1D array of float (shape: 1:8)
+    Parameters.  See psi_prime comments for details.
 
-  Returns
-  -------
-  p1 : float
-      psi(t1)
-  )"""
+Returns
+-------
+p1 : float
+    psi(t1)
+)"""
   );
   m.def(
       "solve_psi_fixed_steps",
@@ -1815,35 +1701,35 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("p"),
       R"""(Subroutine solve_psi_fixed_steps(t0,t1,p0,args,t,p)
 
-  Solve dpsi/dt for psi(t1) using fixed steps and method:
-    "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
+Solve dpsi/dt for psi(t1) using fixed steps and method:
+  "Implicit Bulirsch-Stoer method of Bader and Deuflhard."
 
-  The boundary condition p0 is psi(t0).
+The boundary condition p0 is psi(t0).
 
-  Number of steps is determined by SIZE(p).
+Number of steps is determined by SIZE(p).
 
-  Parameters
-  ----------
-  t0 : float
-      initial time
+Parameters
+----------
+t0 : float
+    initial time
 
-  t1 : float
-      final time
+t1 : float
+    final time
 
-  p0 : float
-      Boundary condition psi(t0)
+p0 : float
+    Boundary condition psi(t0)
 
-  args : 1D array of float (shape: 1:8)
-      Parameters.  See psi_prime comments for details.
+args : 1D array of float (shape: 1:8)
+    Parameters.  See psi_prime comments for details.
 
-  Returns
-  -------
-  t : 1D array of float
-      Array of times from t0 to t1
+Returns
+-------
+t : 1D array of float
+    Array of times from t0 to t1
 
-  p : 1D array of float
-      Array of psi evaluated at t(:)
-  )"""
+p : 1D array of float
+    Array of psi evaluated at t(:)
+)"""
   );
   m.def(
       "sort_complex_taylor_terms",
@@ -1851,26 +1737,26 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("complex_taylor_in"),
       R"""(subroutine sort_complex_taylor_terms (complex_taylor_in, complex_taylor_sorted)
 
-  Subroutine to sort the complex_taylor terms from "lowest" to "highest" of
-  a complex_taylor series.
-  This subroutine is needed because what comes out of PTC is not sorted.
+Subroutine to sort the complex_taylor terms from "lowest" to "highest" of
+a complex_taylor series.
+This subroutine is needed because what comes out of PTC is not sorted.
 
-  Uses function complex_taylor_exponent_index to sort.
+Uses function complex_taylor_exponent_index to sort.
 
-  Note: complex_taylor_sorted needs to have been initialized.
-  Note: complex_taylor_sorted cannot be complex_taylor_in. That is it is not legal to write:
-            call sort_complex_taylor_terms (this_complex_taylor, this_complex_taylor)
+Note: complex_taylor_sorted needs to have been initialized.
+Note: complex_taylor_sorted cannot be complex_taylor_in. That is it is not legal to write:
+          call sort_complex_taylor_terms (this_complex_taylor, this_complex_taylor)
 
-  Parameters
-  ----------
-  complex_taylor_in : ComplexTaylorStruct
-      Unsorted complex_taylor series.
+Parameters
+----------
+complex_taylor_in : ComplexTaylorStruct
+    Unsorted complex_taylor series.
 
-  Returns
-  -------
-  complex_taylor_sorted : ComplexTaylorStruct
-      Sorted complex_taylor series.
-  )"""
+Returns
+-------
+complex_taylor_sorted : ComplexTaylorStruct
+    Sorted complex_taylor series.
+)"""
   );
   py::class_<Bmad::SpinDnDpzFromMat8, std::unique_ptr<Bmad::SpinDnDpzFromMat8>>(
       m,
@@ -1896,23 +1782,23 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("dn_dpz_partial") = py::none(),
       R"""(Wrapper for Fortran routine spin_dn_dpz_from_mat8
 
-  Parameters
-  ----------
-  mat_1turn : 2D array of float (shape: 8,8)
-      Spin-orbital matrix.
+Parameters
+----------
+mat_1turn : 2D array of float (shape: 8,8)
+    Spin-orbital matrix.
 
-  dn_dpz_partial : 2D array of float (shape: 3,3), optional
-      dn_dpz_partial(i,:) is dn_dpz with only one osccilation mode "excited". So dn_dpz_partial(1,:) represents
-      a-mode excitation, etc.
+dn_dpz_partial : 2D array of float (shape: 3,3), optional
+    dn_dpz_partial(i,:) is dn_dpz with only one osccilation mode "excited". So dn_dpz_partial(1,:) represents
+    a-mode excitation, etc.
 
-  Returns
-  -------
-  error : bool
-      Set True if there is an error. False otherwise.
+Returns
+-------
+error : bool
+    Set True if there is an error. False otherwise.
 
-  dn_dpz : 1D array of float (shape: 3)
-      dn_dpz (l,n,m) coordinates.
-  )"""
+dn_dpz : 1D array of float (shape: 3)
+    dn_dpz (l,n,m) coordinates.
+)"""
   );
   py::class_<Bmad::SpinDnDpzFromQmap, std::unique_ptr<Bmad::SpinDnDpzFromQmap>>(
       m,
@@ -1941,31 +1827,33 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("n0") = py::none(),
       R"""(Wrapper for Fortran routine spin_dn_dpz_from_qmap
 
-  Parameters
-  ----------
-  orb_mat : 2D array of float (shape: 6,6)
-      1-turn orbital matrix.
+Parameters
+----------
+orb_mat : 2D array of float (shape: 6,6)
+    1-turn orbital matrix.
 
-  q_map : 2D array of float (shape: 0:3,0:6)
-      1-turn spin linear quaternion map.
+q_map : 2D array of float (shape: 0:3,0:6)
+    1-turn spin linear quaternion map.
 
-  dn_dpz_partial : 2D array of float (shape: 3,3)
-      ) is dn_dpz with only one osccilation
+dn_dpz_partial : 2D array of float (shape: 3,3)
+    ) is dn_dpz with only one osccilation mode "excited". So dn_dpz_partial(1,:) represents a-mode excitation,
+    etc.
 
-  dn_dpz_partial2 : 2D array of float (shape: 3,3)
-      ) is dn_dpz with only two osccilation modes "excited". So dn_dpz_partial(1,:) represents b-mode and c-mode
+dn_dpz_partial2 : 2D array of float (shape: 3,3)
+    ) is dn_dpz with only two osccilation modes "excited". So dn_dpz_partial(1,:) represents b-mode and c-mode
+    excitation without the a-mode, etc.
 
-  n0 : 1D array of float (shape: 3), optional
-      3,0).
+n0 : 1D array of float (shape: 3), optional
+    3,0).
 
-  Returns
-  -------
-  error : bool
-      Set True if there is an error. False otherwise.
+Returns
+-------
+error : bool
+    Set True if there is an error. False otherwise.
 
-  dn_dpz : 1D array of float (shape: 3)
-      dn_dpz.
-  )"""
+dn_dpz : 1D array of float (shape: 3)
+    dn_dpz.
+)"""
   );
   m.def(
       "spin_map1_normalize",
@@ -1973,20 +1861,20 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("spin1"),
       R"""(Wrapper for Fortran routine spin_map1_normalize
 
-  Parameters
-  ----------
-  spin1 : 2D array of float (shape: 0:3,0:6)
-      Unnormalized spin map.
-      This parameter is an input/output and is modified in-place.
-      As an output, spin1: Normalized spin map.
+Parameters
+----------
+spin1 : 2D array of float (shape: 0:3,0:6)
+    Unnormalized spin map.
+    This parameter is an input/output and is modified in-place.
+    As an output, spin1: Normalized spin map.
 
-  Returns
-  -------
-  spin1 : 2D array of float (shape: 0:3,0:6)
-      Unnormalized spin map.
-      This parameter is an input/output and is modified in-place.
-      As an output, spin1: Normalized spin map.
-  )"""
+Returns
+-------
+spin1 : 2D array of float (shape: 0:3,0:6)
+    Unnormalized spin map.
+    This parameter is an input/output and is modified in-place.
+    As an output, spin1: Normalized spin map.
+)"""
   );
   py::class_<Bmad::SpinMat8ResonanceStrengths, std::unique_ptr<Bmad::SpinMat8ResonanceStrengths>>(
       m,
@@ -2012,22 +1900,22 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("mat8"),
       R"""(Wrapper for Fortran routine spin_mat8_resonance_strengths
 
-  Parameters
-  ----------
-  orb_evec : 1D array of complex (shape: 6)
-      Orbital eigenvector.
+Parameters
+----------
+orb_evec : 1D array of complex (shape: 6)
+    Orbital eigenvector.
 
-  mat8 : 2D array of float (shape: 6,6)
-      Spin/orbital matrix.
+mat8 : 2D array of float (shape: 6,6)
+    Spin/orbital matrix.
 
-  Returns
-  -------
-  xi_sum : float
-      Sum resonance strength.
+Returns
+-------
+xi_sum : float
+    Sum resonance strength.
 
-  xi_diff : float
-      Difference resonance strength.
-  )"""
+xi_diff : float
+    Difference resonance strength.
+)"""
   );
   py::class_<Bmad::SpinMatToEigen, std::unique_ptr<Bmad::SpinMatToEigen>>(
       m,
@@ -2062,31 +1950,31 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("spin_map"),
       R"""(Wrapper for Fortran routine spin_mat_to_eigen
 
-  Parameters
-  ----------
-  orb_mat : 2D array of float (shape: 6,6)
-      Orbital matrix.
+Parameters
+----------
+orb_mat : 2D array of float (shape: 6,6)
+    Orbital matrix.
 
-  spin_map : 2D array of float (shape: 0:3,0:6)
-      Quaternion 0th & 1st order map.
+spin_map : 2D array of float (shape: 0:3,0:6)
+    Quaternion 0th & 1st order map.
 
-  Returns
-  -------
-  orb_eval : 1D array of complex (shape: 6)
-      Eigenvalues.
+Returns
+-------
+orb_eval : 1D array of complex (shape: 6)
+    Eigenvalues.
 
-  orb_evec : 2D array of complex (shape: 6,6)
-      Orbital eigenvectors. orb_evec(j,:) is the j^th vector.
+orb_evec : 2D array of complex (shape: 6,6)
+    Orbital eigenvectors. orb_evec(j,:) is the j^th vector.
 
-  n0 : 1D array of float (shape: 3)
-      n_0 invariant spin
+n0 : 1D array of float (shape: 3)
+    n_0 invariant spin
 
-  spin_evec : 2D array of complex (shape: 6,3)
-      Spin eigenvectors. spin_evec(j,:) is the j^th vector.
+spin_evec : 2D array of complex (shape: 6,3)
+    Spin eigenvectors. spin_evec(j,:) is the j^th vector.
 
-  error : bool
-      Set true if there is an error. False otherwise.
-  )"""
+error : bool
+    Set true if there is an error. False otherwise.
+)"""
   );
   m.def(
       "spin_omega",
@@ -2098,30 +1986,30 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("omega"),
       R"""(Wrapper for Fortran routine spin_omega
 
-  Parameters
-  ----------
-  field : EmFieldStruct
+Parameters
+----------
+field : EmFieldStruct
 
-  orbit : CoordStruct
+orbit : CoordStruct
 
-  sign_z_vel : int
+sign_z_vel : int
 
-  phase_space_coords : bool, optional
+phase_space_coords : bool, optional
 
-  omega : 1D array of float (shape: 3)
+omega : 1D array of float (shape: 3)
 
-  Returns
-  -------
-  field : EmFieldStruct
+Returns
+-------
+field : EmFieldStruct
 
-  orbit : CoordStruct
+orbit : CoordStruct
 
-  sign_z_vel : int
+sign_z_vel : int
 
-  phase_space_coords : bool, optional
+phase_space_coords : bool, optional
 
-  omega : 1D array of float (shape: 3)
-  )"""
+omega : 1D array of float (shape: 3)
+)"""
   );
   py::class_<Bmad::SpinQuatResonanceStrengths, std::unique_ptr<Bmad::SpinQuatResonanceStrengths>>(
       m,
@@ -2147,22 +2035,22 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("spin_q"),
       R"""(Wrapper for Fortran routine spin_quat_resonance_strengths
 
-  Parameters
-  ----------
-  orb_evec : 1D array of complex (shape: 6)
-      Orbital eigenvector.
+Parameters
+----------
+orb_evec : 1D array of complex (shape: 6)
+    Orbital eigenvector.
 
-  spin_q : 2D array of float (shape: 0:3,0:6)
-      First order spin map.
+spin_q : 2D array of float (shape: 0:3,0:6)
+    First order spin map.
 
-  Returns
-  -------
-  xi_sum : float
-      Sum resonance strength.
+Returns
+-------
+xi_sum : float
+    Sum resonance strength.
 
-  xi_diff : float
-      Difference resonance strength.
-  )"""
+xi_diff : float
+    Difference resonance strength.
+)"""
   );
   m.def(
       "spin_taylor_to_linear",
@@ -2173,25 +2061,25 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("is_on"),
       R"""(Wrapper for Fortran routine spin_taylor_to_linear
 
-  Parameters
-  ----------
-  spin_taylor : 1D array of TaylorStruct (shape: 0:3)
-      Taylor spin map.
+Parameters
+----------
+spin_taylor : 1D array of TaylorStruct (shape: 0:3)
+    Taylor spin map.
 
-  normalize : bool
-      If True, normalize the linear map.
+normalize : bool
+    If True, normalize the linear map.
 
-  dref_orb : 1D array of float (shape: 6)
-      Change in Reference orbit: output_map1_ref - input_taylor_ref.
+dref_orb : 1D array of float (shape: 6)
+    Change in Reference orbit: output_map1_ref - input_taylor_ref.
 
-  is_on : bool
-      Is map turned on? If not spin_map1 will be the unit map.
+is_on : bool
+    Is map turned on? If not spin_map1 will be the unit map.
 
-  Returns
-  -------
-  spin_map1 : 2D array of float (shape: 0:3,0:6)
-      First order spin map.
-  )"""
+Returns
+-------
+spin_map1 : 2D array of float (shape: 0:3,0:6)
+    First order spin map.
+)"""
   );
   m.def(
       "spinor_to_polar",
@@ -2199,16 +2087,16 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("spinor"),
       R"""(Wrapper for Fortran routine spinor_to_polar
 
-  Parameters
-  ----------
-  spinor : 1D array of complex (shape: 2)
-      Spinor
+Parameters
+----------
+spinor : 1D array of complex (shape: 2)
+    Spinor
 
-  Returns
-  -------
-  polar : SpinPolarStruct
-      The resultant Unitary Vector in polar coordinates
-  )"""
+Returns
+-------
+polar : SpinPolarStruct
+    The resultant Unitary Vector in polar coordinates
+)"""
   );
   m.def(
       "spinor_to_vec",
@@ -2216,16 +2104,16 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("spinor"),
       R"""(Wrapper for Fortran routine spinor_to_vec
 
-  Parameters
-  ----------
-  spinor : 1D array of complex (shape: 2)
-      Spinor
+Parameters
+----------
+spinor : 1D array of complex (shape: 2)
+    Spinor
 
-  Returns
-  -------
-  vec : 1D array of float (shape: 3)
-      spin vector in cartesian coordinates
-  )"""
+Returns
+-------
+vec : 1D array of float (shape: 3)
+    spin vector in cartesian coordinates
+)"""
   );
   m.def(
       "spline_fit_orbit",
@@ -2236,20 +2124,20 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("spline_y"),
       R"""(Wrapper for Fortran routine spline_fit_orbit
 
-  Parameters
-  ----------
-  start_orb : CoordStruct
-      Starting coords.
+Parameters
+----------
+start_orb : CoordStruct
+    Starting coords.
 
-  end_orb : CoordStruct
-      Ending coords.
+end_orb : CoordStruct
+    Ending coords.
 
-  spline_x : 1D array of float (shape: 0:3)
-      Spline coefs for the horizontal trajectory.
+spline_x : 1D array of float (shape: 0:3)
+    Spline coefs for the horizontal trajectory.
 
-  spline_y : 1D array of float (shape: 0:3)
-      Spline coefs for vertical trajectory.
-  )"""
+spline_y : 1D array of float (shape: 0:3)
+    Spline coefs for vertical trajectory.
+)"""
   );
   py::class_<Bmad::SplitLat, std::unique_ptr<Bmad::SplitLat>>(
       m,
@@ -2284,59 +2172,59 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("ix_insert") = py::none(),
       R"""(Wrapper for Fortran routine split_lat
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Original lat structure.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Modified lat structure.
+Parameters
+----------
+lat : LatStruct
+    Original lat structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Modified lat structure.
 
-  s_split : float
-      Position at which lat.branch(ix_branch) is to be split.
+s_split : float
+    Position at which lat.branch(ix_branch) is to be split.
 
-  ix_branch : int
-      Index of lat.branch(:) to use.
+ix_branch : int
+    Index of lat.branch(:) to use.
 
-  add_suffix : bool, optional
-      If True (default) add '#1' and '#2" suffixes
+add_suffix : bool, optional
+    If True (default) add '#1' and '#2" suffixes to the split elements.
 
-  check_sanity : bool, optional
-      If True (default) then call lat_sanity_check
+check_sanity : bool, optional
+    If True (default) then call lat_sanity_check after the split to make sure everything is ok.
 
-  save_null_drift : bool, optional
-      Save a copy of a drift to be split as a null_ele? This is useful when superpositions are done. See
-      add_superimpose for more info.
+save_null_drift : bool, optional
+    Save a copy of a drift to be split as a null_ele? This is useful when superpositions are done. See
+    add_superimpose for more info. Default is False.
 
-  choose_max : bool, optional
-      If no splitting of an element is needed, that is, s_split is at an element boundary, there can be multiple
-      possible values for ix_split if there exist zero length elements at the split point. If choose_max = True,
-      ix_split will be chosen to be the maximum possible index and if choose_max = False ix_split will be chosen
-      to be the minimal possible index. If s_split is not at an element boundary, the setting of choose_max is
-      immaterial. If ix_insert is present, the default value of choose_max is set to give the closest element to
-      ix_insert.
+choose_max : bool, optional
+    If no splitting of an element is needed, that is, s_split is at an element boundary, there can be multiple
+    possible values for ix_split if there exist zero length elements at the split point. If choose_max = True,
+    ix_split will be chosen to be the maximum possible index and if choose_max = False ix_split will be chosen
+    to be the minimal possible index. If s_split is not at an element boundary, the setting of choose_max is
+    immaterial. If ix_insert is present, the default value of choose_max is set to give the closest element to
+    ix_insert. If ix_insert is not present, the default value of choose_max is False.
 
-  ix_insert : int, optional
-      Element index near the point to be split. ix_insert is useful in the case where there is a patch with a
-      negative length which can create an ambiguity as to where to do the split In this case ix_insert will
-      remove the ambiguity. Also useful to ensure where to split if there are elements with zero length nearby.
-      Ignored if negative.
+ix_insert : int, optional
+    Element index near the point to be split. ix_insert is useful in the case where there is a patch with a
+    negative length which can create an ambiguity as to where to do the split In this case ix_insert will
+    remove the ambiguity. Also useful to ensure where to split if there are elements with zero length nearby.
+    Ignored if negative.
 
-  Returns
-  -------
-  lat : LatStruct
-      Original lat structure.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Modified lat structure.
+Returns
+-------
+lat : LatStruct
+    Original lat structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Modified lat structure.
 
-  ix_split : int
-      Index of element just before the s = s_split point.
+ix_split : int
+    Index of element just before the s = s_split point.
 
-  split_done : bool
-      True if lat was split.
+split_done : bool
+    True if lat was split.
 
-  err_flag : bool, optional
-      Set true if there is an error, false otherwise.
-  )"""
+err_flag : bool, optional
+    Set true if there is an error, false otherwise.
+)"""
   );
   m.def(
       "sprint_spin_taylor_map",
@@ -2345,23 +2233,23 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("start_orbit") = py::none(),
       R"""(Wrapper for Fortran routine sprint_spin_taylor_map
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element to form map for.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with map.
+Parameters
+----------
+ele : EleStruct
+    Element to form map for.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with map.
 
-  start_orbit : 1D array of float (shape: 6), optional
-      Reference orbit for the map. Default is zero orbit.
+start_orbit : 1D array of float (shape: 6), optional
+    Reference orbit for the map. Default is zero orbit.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element to form map for.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with map.
-  )"""
+Returns
+-------
+ele : EleStruct
+    Element to form map for.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with map.
+)"""
   );
   m.def(
       "sr_longitudinal_wake_particle",
@@ -2370,29 +2258,29 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine sr_longitudinal_wake_particle (ele, orbit)
 
-  Routine to apply the short-range wake longitudinal component kick to a particle and then add
-  to the existing longitudinal wake the contribution from the particle.
+Routine to apply the short-range wake longitudinal component kick to a particle and then add
+to the existing longitudinal wake the contribution from the particle.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with wakes.
+Parameters
+----------
+ele : EleStruct
+    Element with wakes.
 
-  orbit : CoordStruct
-      Particle coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: coords after the kick.
+orbit : CoordStruct
+    Particle coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: coords after the kick.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element with wakes.
+Returns
+-------
+ele : EleStruct
+    Element with wakes.
 
-  orbit : CoordStruct
-      Particle coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: coords after the kick.
-  )"""
+orbit : CoordStruct
+    Particle coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: coords after the kick.
+)"""
   );
   m.def(
       "sr_transverse_wake_particle",
@@ -2401,29 +2289,29 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine sr_transverse_wake_particle (ele, orbit)
 
-  Subroutine to apply the short-range wake transverse component of the kick to a particle and then add
-  to the existing transverse wake the contribution from the particle.
+Subroutine to apply the short-range wake transverse component of the kick to a particle and then add
+to the existing transverse wake the contribution from the particle.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with wakes.
+Parameters
+----------
+ele : EleStruct
+    Element with wakes.
 
-  orbit : CoordStruct
-      Starting particle coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending particle coords.
+orbit : CoordStruct
+    Starting particle coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending particle coords.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element with wakes.
+Returns
+-------
+ele : EleStruct
+    Element with wakes.
 
-  orbit : CoordStruct
-      Starting particle coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending particle coords.
-  )"""
+orbit : CoordStruct
+    Starting particle coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending particle coords.
+)"""
   );
   m.def(
       "sr_z_long_wake",
@@ -2433,27 +2321,24 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("z_ave"),
       R"""(Subroutine sr_z_long_wake (ele, bunch, z_ave)
 
-  Subroutine to apply the short-range z-wake kick to a particle.
+Subroutine to apply the short-range z-wake kick to a particle.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with wake.
+Parameters
+----------
+ele : EleStruct
+    Element with wake.
 
-  bunch : BunchStruct
-      Bunch before wake applied.
+bunch : BunchStruct
+    Bunch before wake applied.
 
-  z_ave : float
-      Average z-position of all live particles.
+z_ave : float
+    Average z-position of all live particles.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Bunch before wake applied.
-
-  orbit : coord_struct
-      Ending particle coords.
-  )"""
+Returns
+-------
+bunch : BunchStruct
+    Bunch before wake applied.
+)"""
   );
   m.def(
       "srdt_calc",
@@ -2465,34 +2350,34 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("per_ele_out") = py::none(),
       R"""(Subroutine srdt_calc(lat, srdt_sums, order, n_slices_gen_opt, n_slices_sxt_opt)
 
-  Calculate summation RDT terms up to order=1 or order=2 while slicing sextupoles
-  n_slices_sxt_opt times and all other elements n_slices_gen_opt times.
+Calculate summation RDT terms up to order=1 or order=2 while slicing sextupoles
+n_slices_sxt_opt times and all other elements n_slices_gen_opt times.
 
-  These formulas are documented in "The Sextupole Scheme for the Swiss Light Source (SLS): An Analytic Approach"
-  by Johan Bengtsson.  SLS Note 9/97.
+These formulas are documented in "The Sextupole Scheme for the Swiss Light Source (SLS): An Analytic Approach"
+by Johan Bengtsson.  SLS Note 9/97.
 
-  The 2nd order formulas are documented in "Second-order driving terms due to sextupoles and
-  chromatic effects of quadrupoles" by Chun-xi Wang.  AOP-TN-2009-020.
+The 2nd order formulas are documented in "Second-order driving terms due to sextupoles and
+chromatic effects of quadrupoles" by Chun-xi Wang.  AOP-TN-2009-020.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      lattice with Twiss parameters calculated.
+Parameters
+----------
+lat : LatStruct
+    lattice with Twiss parameters calculated.
 
-  order : int
-      1 to calculate only first order terms.  2 to also calculate 2nd order terms.
+order : int
+    1 to calculate only first order terms.  2 to also calculate 2nd order terms.
 
-  n_slices_gen_opt : int, optional
-      number of times to slice elements other than sextupoles.  Default is 10.
+n_slices_gen_opt : int, optional
+    number of times to slice elements other than sextupoles.  Default is 10.
 
-  n_slices_sxt_opt : int, optional
-      nubmer of times to slice sextupoles.  Default is 20.
+n_slices_sxt_opt : int, optional
+    nubmer of times to slice sextupoles.  Default is 20.
 
-  Returns
-  -------
-  srdt_sums : SummationRdtStruct
-      contains complex RDT strengths.
-  )"""
+Returns
+-------
+srdt_sums : SummationRdtStruct
+    contains complex RDT strengths.
+)"""
   );
   m.def(
       "srdt_lsq_solution",
@@ -2506,48 +2391,48 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("chrom_set_y_opt") = py::none(),
       py::arg("weight_in") = py::none(),
       R"""(Subroutine srdt_lsq_solution(lat, var_indexes, ls_soln, n_slices_gen_opt, n_slices_sxt_opt,
-                                                      chrom_set_x_opt, chrom_set_y_opt, weight_in)
+                                                    chrom_set_x_opt, chrom_set_y_opt, weight_in)
 
-  Given lat, finds K2 moments that set the chromaticity and zeros-out the real
-  and complex parts of the first order driving terms, that minimizes the sum of the squares
-  of the K2 moments.  i.e. the weakest sextupole scheme that sets chromaticity
-  and zeros out the first order terms.
+Given lat, finds K2 moments that set the chromaticity and zeros-out the real
+and complex parts of the first order driving terms, that minimizes the sum of the squares
+of the K2 moments.  i.e. the weakest sextupole scheme that sets chromaticity
+and zeros out the first order terms.
 
-  Note:  This subroutine does not, in its present form, work well with knobs, overlays, or in lattices where
-         multiple elements have the same name.
+Note:  This subroutine does not, in its present form, work well with knobs, overlays, or in lattices where
+       multiple elements have the same name.
 
-  This subroutine assumes that Nsext > 18.
+This subroutine assumes that Nsext > 18.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      lattice with Twiss parameters calculated.
+Parameters
+----------
+lat : LatStruct
+    lattice with Twiss parameters calculated.
 
-  var_indexes : 1D array of int
-      indexes in lat.ele that are K2 variables.  Must be sorted smallest index to largest index.
+var_indexes : 1D array of int
+    indexes in lat.ele that are K2 variables.  Must be sorted smallest index to largest index.
 
-  n_slices_gen_opt : int, optional
-      number of times to slice elements other than sextupoles.  Default is 10.
+n_slices_gen_opt : int, optional
+    number of times to slice elements other than sextupoles.  Default is 10.
 
-  n_slices_sxt_opt : int, optional
-      nubmer of times to slice sextupoles.  Default is 20.
+n_slices_sxt_opt : int, optional
+    nubmer of times to slice sextupoles.  Default is 20.
 
-  chrom_set_x_opt : float, optional
-      what to set x chromaticity to.  Default zero.
+chrom_set_x_opt : float, optional
+    what to set x chromaticity to.  Default zero.
 
-  chrom_set_y_opt : float, optional
-      what to set y chromaticity to.  Default zero.
+chrom_set_y_opt : float, optional
+    what to set y chromaticity to.  Default zero.
 
-  weight_in : 1D array of float (shape: 10), optional
-      moment weights. Terms are: [wgt_chrom_x, wgt_chrom_y, wgt_h20001, wgt_h00201, wgt_h10002, wgt_h21000,
-      wgt_h30000, wgt_h10110, wgt_h10020, wgt_h10200, If present, any terms equal to zero are given default
-      values which is 1.0e4 for wgt_chrom_x and wgt_chrom_y and is 1.0 for everything else.
+weight_in : 1D array of float (shape: 10), optional
+    moment weights. Terms are: [wgt_chrom_x, wgt_chrom_y, wgt_h20001, wgt_h00201, wgt_h10002, wgt_h21000,
+    wgt_h30000, wgt_h10110, wgt_h10020, wgt_h10200, If present, any terms equal to zero are given default
+    values which is 1.0e4 for wgt_chrom_x and wgt_chrom_y and is 1.0 for everything else.
 
-  Returns
-  -------
-  ls_soln : 1D array of float
-      contains K2 for the indexes in var_indexes
-  )"""
+Returns
+-------
+ls_soln : 1D array of float
+    contains K2 for the indexes in var_indexes
+)"""
   );
   m.def(
       "start_branch_at",
@@ -2557,30 +2442,30 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("move_end_marker"),
       R"""(Wrapper for Fortran routine start_branch_at
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice to modify.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Modified lattice.
+Parameters
+----------
+lat : LatStruct
+    Lattice to modify.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Modified lattice.
 
-  ele_start : character
-      Start element. Ele_start will identify the lattice branch to modify.
+ele_start : character
+    Start element. Ele_start will identify the lattice branch to modify.
 
-  move_end_marker : bool
-      If True then the end marker (if it is present) will be shifted like any other element. False means that
-      the end marker will stay at the end.
+move_end_marker : bool
+    If True then the end marker (if it is present) will be shifted like any other element. False means that
+    the end marker will stay at the end.
 
-  Returns
-  -------
-  lat : LatStruct
-      Lattice to modify.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Modified lattice.
+Returns
+-------
+lat : LatStruct
+    Lattice to modify.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Modified lattice.
 
-  error : bool
-      Set True if there is an error Set False if not.
-  )"""
+error : bool
+    Set True if there is an error Set False if not.
+)"""
   );
   m.def(
       "stream_ele_end",
@@ -2589,20 +2474,20 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("ele_orientation"),
       R"""(Wrapper for Fortran routine stream_ele_end
 
-  Parameters
-  ----------
-  physical_end : int
-      entrance_end$, exit_end$, surface$, etc.
+Parameters
+----------
+physical_end : int
+    entrance_end$, exit_end$, surface$, etc.
 
-  ele_orientation : int
-      Either 1 = Normal or -1 = element reversed.
+ele_orientation : int
+    Either 1 = Normal or -1 = element reversed.
 
-  Returns
-  -------
-  stream_end : int
-      upstream_end$, downstream_end$, or set equal to physical_end if physical_end is neither entrance_end$ nor
-      exit_end$
-  )"""
+Returns
+-------
+stream_end : int
+    upstream_end$, downstream_end$, or set equal to physical_end if physical_end is neither entrance_end$ nor
+    exit_end$
+)"""
   );
   m.def(
       "string_attrib",
@@ -2611,25 +2496,25 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("ele"),
       R"""(Subroutine string_attrib (attrib_name, ele, attrib_value)
 
-  Routine to return the value of a string attribute of a lattice element.
-  This routine is useful when attrib_name is specified by the program user.
+Routine to return the value of a string attribute of a lattice element.
+This routine is useful when attrib_name is specified by the program user.
 
-  For example:
-    call string_attrib ('NAME', ele, attrib_value)  ! Will return attrib_value = ele%name
+For example:
+  call string_attrib ('NAME', ele, attrib_value)  ! Will return attrib_value = ele%name
 
-  Parameters
-  ----------
-  attrib_name : character
-      Name of the type of element attribute.
+Parameters
+----------
+attrib_name : character
+    Name of the type of element attribute.
 
-  ele : EleStruct
-      Lattice element.
+ele : EleStruct
+    Lattice element.
 
-  Returns
-  -------
-  attrib_value : character
-      The string associated with the attribute.
-  )"""
+Returns
+-------
+attrib_value : character
+    The string associated with the attribute.
+)"""
   );
   py::class_<Bmad::StrongBeamSigmaCalc, std::unique_ptr<Bmad::StrongBeamSigmaCalc>>(
       m,
@@ -2658,25 +2543,25 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("s_pos"),
       R"""(Wrapper for Fortran routine strong_beam_sigma_calc
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Beambeam element.
+Parameters
+----------
+ele : EleStruct
+    Beambeam element.
 
-  s_pos : float
-      Longitudinal position in lab coords of slice (used with hourglass effect correction).
+s_pos : float
+    Longitudinal position in lab coords of slice (used with hourglass effect correction).
 
-  Returns
-  -------
-  sigma : 1D array of float (shape: 2)
-      Strong beam x,y sigmas.
+Returns
+-------
+sigma : 1D array of float (shape: 2)
+    Strong beam x,y sigmas.
 
-  bbi_const : float
-      BBI kick scale factor.
+bbi_const : float
+    BBI kick scale factor.
 
-  dsigma_ds : 1D array of float (shape: 2)
-      sig_x and sig_y longitudinal derivatives.
-  )"""
+dsigma_ds : 1D array of float (shape: 2)
+    sig_x and sig_y longitudinal derivatives.
+)"""
   );
   m.def(
       "strong_beam_strength",
@@ -2684,16 +2569,16 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("ele"),
       R"""(Wrapper for Fortran routine strong_beam_strength
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Beambeam element.
+Parameters
+----------
+ele : EleStruct
+    Beambeam element.
 
-  Returns
-  -------
-  strength : float
-      Strong beam strength.
-  )"""
+Returns
+-------
+strength : float
+    Strong beam strength.
+)"""
   );
   py::class_<Bmad::SurfaceGridDisplacement, std::unique_ptr<Bmad::SurfaceGridDisplacement>>(
       m,
@@ -2724,33 +2609,33 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("extend_grid") = py::none(),
       R"""(Subroutine surface_grid_displacement (ele, x, y, err_flag, z, dz_dxy, extend_grid)
 
-  Routine to add in the z displacement defined by the grid
+Routine to add in the z displacement defined by the grid
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element containing the grid
+Parameters
+----------
+ele : EleStruct
+    Element containing the grid
 
-  x : float
-      Photon coords at surface.
+x : float
+    Photon coords at surface.
 
-  y : float
-      Photon coords at surface.
+y : float
+    Photon coords at surface.
 
-  extend_grid : bool, optional
-      If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
+extend_grid : bool, optional
+    If (x,y) past grid pretend (x,y) is at grid boundary. Default is False.
 
-  Returns
-  -------
-  err_flag : bool
-      Set True if there is a problem.
+Returns
+-------
+err_flag : bool
+    Set True if there is a problem.
 
-  z : float
-      surface height at (x, y).
+z : float
+    surface height at (x, y).
 
-  dz_dxy : 1D array of float (shape: 2), optional
-      Surface slope at (x, y).
-  )"""
+dz_dxy : 1D array of float (shape: 2), optional
+    Surface slope at (x, y).
+)"""
   );
   m.def(
       "symp_lie_bmad",
@@ -2763,52 +2648,52 @@ void init_Bmad_routines_s(py::module &m) {
       py::arg("offset_ele") = py::none(),
       R"""(Wrapper for Fortran routine symp_lie_bmad
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with transfer matrix
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with transfer matrix.
+Parameters
+----------
+ele : EleStruct
+    Element with transfer matrix
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
 
-  param : LatParamStruct
-      Parameters are needed for some elements.
+param : LatParamStruct
+    Parameters are needed for some elements.
 
-  orbit : CoordStruct
-      Coordinates at the beginning of element.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Coordinates at the end of element.
+orbit : CoordStruct
+    Coordinates at the beginning of element.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Coordinates at the end of element.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix propagated through the element.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix propagated through the element.
 
-  make_matrix : bool, optional
-      If True then make the 6x6 transfer matrix.
+make_matrix : bool, optional
+    If True then make the 6x6 transfer matrix.
 
-  offset_ele : bool, optional
-      Offset the element using ele.value(x_offset$), etc. Default is True.
+offset_ele : bool, optional
+    Offset the element using ele.value(x_offset$), etc. Default is True.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element with transfer matrix
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with transfer matrix.
+Returns
+-------
+ele : EleStruct
+    Element with transfer matrix
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
 
-  orbit : CoordStruct
-      Coordinates at the beginning of element.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Coordinates at the end of element.
+orbit : CoordStruct
+    Coordinates at the beginning of element.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Coordinates at the end of element.
 
-  track : TrackStruct, optional
-      Structure holding the track information. When tracking through multiple elements, the trajectory in an
-      element
+track : TrackStruct, optional
+    Structure holding the track information. When tracking through multiple elements, the trajectory in an
+    element is appended to the existing trajectory. To reset: Set track.n_pt = -1.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix propagated through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix propagated through the element.
+)"""
   );
 }

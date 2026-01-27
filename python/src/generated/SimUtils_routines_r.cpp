@@ -41,9 +41,7 @@ Parameters
 ----------
 set : character, optional
     Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
-    'quasi'  -> Uses sobseq from Numerical Recipes.
-
-''       -> Do nothing. : None
+    'quasi'  -> Uses sobseq from Numerical Recipes. ''       -> Do nothing.
 
 get : character, optional
     Get the current (before any set) random number engine.
@@ -97,9 +95,8 @@ used independent of what was set with this routine.
 Parameters
 ----------
 set : character, optional
-    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited'
-
-''       ! Do nothing : None
+    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' ''       !
+    Do nothing
 
 set_sigma_cut : float, optional
     Sigma cutoff. Initially: sigma_cut = -1.
@@ -138,9 +135,7 @@ Note: Use ran_gauss_converter to set which conversion routine to use.
 Parameters
 ----------
 ran_state : RandomStateStruct, optional
-    Internal state.
-
-See the ran_seed_put documentation for more details. : None
+    Internal state. See the ran_seed_put documentation for more details.
 
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
@@ -148,14 +143,8 @@ sigma_cut : float, optional
 Returns
 -------
 harvest : float
-    Random number.
+    Random number. Or
     As an output, harvest: Random number array.
-
-Or : None
-
-Notes
------
-Overloaded versions:
 )"""
   );
   m.def(
@@ -180,9 +169,7 @@ Note: Use ran_gauss_converter to set which conversion routine to use.
 Parameters
 ----------
 ran_state : RandomStateStruct, optional
-    Internal state.
-
-See the ran_seed_put documentation for more details. : None
+    Internal state. See the ran_seed_put documentation for more details.
 
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
@@ -190,14 +177,8 @@ sigma_cut : float, optional
 Returns
 -------
 harvest : 1D array of float
-    Random number.
+    Random number. Or
     As an output, harvest: Random number array.
-
-Or : None
-
-Notes
------
-Overloaded versions:
 )"""
   );
   m.def(
@@ -209,8 +190,6 @@ Routine to return the seed used for the random number generator.
 
 Parameters
 ----------
-ran_state : random_state_struct, optional
-    Internal state. See the ran_seed_put documentation for more details.
 
 Returns
 -------
@@ -237,9 +216,7 @@ Note: Use pointer_to_ran_state() to access the ran state directly.
 Parameters
 ----------
 seed : int
-    Seed number. If seed = 0 then a
-
-seed will be choosen based upon the system clock. : None
+    Seed number. If seed = 0 then a seed will be choosen based upon the system clock.
 
 mpi_offset : int, optional
     Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
@@ -274,14 +251,8 @@ ran_state : RandomStateStruct, optional
 Returns
 -------
 harvest : float
-    Random number.
+    Random number. Or
     As an output, harvest: Random number array.
-
-Or : None
-
-Notes
------
-Overloaded versions:
 )"""
   );
   m.def(
@@ -311,14 +282,8 @@ ran_state : RandomStateStruct, optional
 Returns
 -------
 harvest : 1D array of float
-    Random number.
+    Random number. Or
     As an output, harvest: Random number array.
-
-Or : None
-
-Notes
------
-Overloaded versions:
 )"""
   );
   m.def(

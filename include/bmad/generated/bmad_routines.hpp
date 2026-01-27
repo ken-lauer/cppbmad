@@ -471,16 +471,18 @@ extern "C" bool fortran_beam_init_setup(
     void *ele /* 0D_NOT_type in */,
     int &species /* 0D_NOT_integer in */,
     void *modes /* 0D_NOT_type in */,
-    bool *err_flag /* 0D_NOT_logical in */,
-    void *beam_init_set /* 0D_NOT_type in */
+    bool &err_flag /* 0D_NOT_logical out */,
+    void *beam_init_set /* 0D_NOT_type out */
 );
-void beam_init_setup(
+struct BeamInitSetup {
+  bool err_flag;
+  BeamInitStruct beam_init_set;
+};
+Bmad::BeamInitSetup beam_init_setup(
     BeamInitStruct &beam_init_in,
     EleStruct &ele,
     int species,
-    optional_ref<NormalModesStruct> modes,
-    std::optional<bool> err_flag,
-    BeamInitStruct &beam_init_set
+    optional_ref<NormalModesStruct> modes = std::nullopt
 );
 extern "C" void fortran_beam_tilts(
     Bmad::array_descriptor_t &S /* 2D_NOT_real in */,
@@ -538,9 +540,9 @@ EmFieldStruct bend_exact_multipole_field(
 );
 extern "C" bool fortran_bend_length_has_been_set(
     void *ele /* 0D_NOT_type in */,
-    bool &is_set /* 0D_NOT_logical in */
+    bool &is_set /* 0D_NOT_logical out */
 );
-void bend_length_has_been_set(EleStruct &ele, bool is_set);
+bool bend_length_has_been_set(EleStruct &ele);
 extern "C" bool fortran_bend_photon_e_rel_init(
     double *r_in /* 0D_NOT_real in */,
     double &E_rel /* 0D_NOT_real out */
@@ -1586,9 +1588,9 @@ extern "C" void fortran_create_group(
 void create_group(EleStruct &lord, ControlStructArray1D contrl, bool err);
 extern "C" void fortran_create_lat_ele_nametable(
     void *lat /* 0D_NOT_type in */,
-    void *nametable /* 0D_NOT_type in */
+    void *nametable /* 0D_NOT_type out */
 );
-void create_lat_ele_nametable(LatStruct &lat, NametableStruct &nametable);
+NametableStruct create_lat_ele_nametable(LatStruct &lat);
 extern "C" void fortran_create_overlay(
     void *lord /* 0D_NOT_type inout */,
     Bmad::array_descriptor_t &contrl /* 1D_NOT_type in */,
@@ -5827,17 +5829,16 @@ extern "C" bool fortran_particle_rf_time(
     bool *time_coords /* 0D_NOT_logical in */,
     double *rf_freq /* 0D_NOT_real in */,
     bool *abs_time /* 0D_NOT_logical in */,
-    long double &time /* 0D_NOT_real16 in */
+    long double &time /* 0D_NOT_real16 out */
 );
-void particle_rf_time(
+long double particle_rf_time(
     CoordStruct &orbit,
     EleStruct &ele,
-    std::optional<bool> reference_active_edge,
-    std::optional<double> s_rel,
-    std::optional<bool> time_coords,
-    std::optional<double> rf_freq,
-    std::optional<bool> abs_time,
-    long double time
+    std::optional<bool> reference_active_edge = std::nullopt,
+    std::optional<double> s_rel = std::nullopt,
+    std::optional<bool> time_coords = std::nullopt,
+    std::optional<double> rf_freq = std::nullopt,
+    std::optional<bool> abs_time = std::nullopt
 );
 extern "C" bool fortran_patch_flips_propagation_direction(
     double &x_pitch /* 0D_NOT_real in */,
@@ -6677,39 +6678,36 @@ Bmad::ReadBeamFile read_beam_file(
 extern "C" void fortran_read_binary_cartesian_map(
     const char *file_name /* 0D_NOT_character in */,
     void *ele /* 0D_NOT_type in */,
-    void *cart_map /* 0D_NOT_type in */,
-    bool &err_flag /* 0D_NOT_logical in */
+    void *cart_map /* 0D_NOT_type out */,
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void read_binary_cartesian_map(
-    std::string file_name,
-    EleStruct &ele,
-    CartesianMapStruct &cart_map,
-    bool err_flag
-);
+struct ReadBinaryCartesianMap {
+  CartesianMapStruct cart_map;
+  bool err_flag;
+};
+Bmad::ReadBinaryCartesianMap read_binary_cartesian_map(std::string file_name, EleStruct &ele);
 extern "C" void fortran_read_binary_cylindrical_map(
     const char *file_name /* 0D_NOT_character in */,
     void *ele /* 0D_NOT_type in */,
-    void *cl_map /* 0D_NOT_type in */,
-    bool &err_flag /* 0D_NOT_logical in */
+    void *cl_map /* 0D_NOT_type out */,
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void read_binary_cylindrical_map(
-    std::string file_name,
-    EleStruct &ele,
-    CylindricalMapStruct &cl_map,
-    bool err_flag
-);
+struct ReadBinaryCylindricalMap {
+  CylindricalMapStruct cl_map;
+  bool err_flag;
+};
+Bmad::ReadBinaryCylindricalMap read_binary_cylindrical_map(std::string file_name, EleStruct &ele);
 extern "C" void fortran_read_binary_grid_field(
     const char *file_name /* 0D_NOT_character in */,
     void *ele /* 0D_NOT_type in */,
-    void *g_field /* 0D_NOT_type in */,
-    bool &err_flag /* 0D_NOT_logical in */
+    void *g_field /* 0D_NOT_type out */,
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void read_binary_grid_field(
-    std::string file_name,
-    EleStruct &ele,
-    GridFieldStruct &g_field,
-    bool err_flag
-);
+struct ReadBinaryGridField {
+  GridFieldStruct g_field;
+  bool err_flag;
+};
+Bmad::ReadBinaryGridField read_binary_grid_field(std::string file_name, EleStruct &ele);
 
 // Skipped unusable routine read_digested_bmad_file:
 // - Variable-sized inout character array: 1D_ALLOC_character
@@ -6860,9 +6858,9 @@ bool rf_is_on(
 extern "C" bool fortran_rf_ref_time_offset(
     void *ele /* 0D_NOT_type in */,
     double *ds /* 0D_NOT_real in */,
-    double &time /* 0D_NOT_real in */
+    double &time /* 0D_NOT_real out */
 );
-void rf_ref_time_offset(EleStruct &ele, std::optional<double> ds, double time);
+double rf_ref_time_offset(EleStruct &ele, std::optional<double> ds = std::nullopt);
 extern "C" bool fortran_rfun(
     double &u /* 0D_NOT_real in */,
     double &v /* 0D_NOT_real in */,
@@ -7048,7 +7046,7 @@ void sad_soft_bend_edge_kick(
 extern "C" void fortran_save_a_beam_step(
     void *ele /* 0D_NOT_type in */,
     void *beam /* 0D_NOT_type in */,
-    Bmad::array_descriptor_t &bunch_tracks /* 1D_NOT_type in */,
+    Bmad::array_descriptor_t &bunch_tracks /* 1D_NOT_type inout */,
     double *s_body /* 0D_NOT_real in */,
     bool *is_time_coords /* 0D_NOT_logical in */
 );
@@ -7062,7 +7060,7 @@ void save_a_beam_step(
 extern "C" void fortran_save_a_bunch_step(
     void *ele /* 0D_NOT_type in */,
     void *bunch /* 0D_NOT_type in */,
-    void *bunch_track /* 0D_NOT_type in */,
+    void *bunch_track /* 0D_NOT_type inout */,
     double *s_body /* 0D_NOT_real in */,
     bool *is_time_coords /* 0D_NOT_logical in */
 );
@@ -7074,7 +7072,7 @@ void save_a_bunch_step(
     std::optional<bool> is_time_coords = std::nullopt
 );
 extern "C" void fortran_save_a_step(
-    void *track /* 0D_NOT_type in */,
+    void *track /* 0D_NOT_type inout */,
     void *ele /* 0D_NOT_type in */,
     void *param /* 0D_NOT_type in */,
     bool &local_ref_frame /* 0D_NOT_logical in */,
@@ -8005,26 +8003,28 @@ extern "C" void fortran_to_fieldmap_coords(
     int &ele_anchor_pt /* 0D_NOT_integer in */,
     Bmad::array_descriptor_t &r0 /* 1D_NOT_real in */,
     bool &curved_ref_frame /* 0D_NOT_logical in */,
-    double &x /* 0D_NOT_real in */,
-    double &y /* 0D_NOT_real in */,
-    double &z /* 0D_NOT_real in */,
-    double &cos_ang /* 0D_NOT_real in */,
-    double &sin_ang /* 0D_NOT_real in */,
-    bool &err_flag /* 0D_NOT_logical in */
+    double &x /* 0D_NOT_real out */,
+    double &y /* 0D_NOT_real out */,
+    double &z /* 0D_NOT_real out */,
+    double &cos_ang /* 0D_NOT_real out */,
+    double &sin_ang /* 0D_NOT_real out */,
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void to_fieldmap_coords(
+struct ToFieldmapCoords {
+  double x;
+  double y;
+  double z;
+  double cos_ang;
+  double sin_ang;
+  bool err_flag;
+};
+Bmad::ToFieldmapCoords to_fieldmap_coords(
     EleStruct &ele,
     CoordStruct &local_orb,
     double s_body,
     int ele_anchor_pt,
     FixedArray1D<Real, 3> r0,
-    bool curved_ref_frame,
-    double x,
-    double y,
-    double z,
-    double cos_ang,
-    double sin_ang,
-    bool err_flag
+    bool curved_ref_frame
 );
 extern "C" void fortran_to_orbit_reading(
     void *orb /* 0D_NOT_type in */,
@@ -9680,38 +9680,31 @@ extern "C" void fortran_write_binary_cartesian_map(
     const char *file_name /* 0D_NOT_character in */,
     void *ele /* 0D_NOT_type in */,
     void *cart_map /* 0D_NOT_type in */,
-    bool &err_flag /* 0D_NOT_logical in */
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void write_binary_cartesian_map(
+bool write_binary_cartesian_map(
     std::string file_name,
     EleStruct &ele,
-    CartesianMapStruct &cart_map,
-    bool err_flag
+    CartesianMapStruct &cart_map
 );
 extern "C" void fortran_write_binary_cylindrical_map(
     const char *file_name /* 0D_NOT_character in */,
     void *ele /* 0D_NOT_type in */,
     void *cl_map /* 0D_NOT_type in */,
-    bool &err_flag /* 0D_NOT_logical in */
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void write_binary_cylindrical_map(
+bool write_binary_cylindrical_map(
     std::string file_name,
     EleStruct &ele,
-    CylindricalMapStruct &cl_map,
-    bool err_flag
+    CylindricalMapStruct &cl_map
 );
 extern "C" void fortran_write_binary_grid_field(
     const char *file_name /* 0D_NOT_character in */,
     void *ele /* 0D_NOT_type in */,
     void *g_field /* 0D_NOT_type in */,
-    bool &err_flag /* 0D_NOT_logical in */
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void write_binary_grid_field(
-    std::string file_name,
-    EleStruct &ele,
-    GridFieldStruct &g_field,
-    bool err_flag
-);
+bool write_binary_grid_field(std::string file_name, EleStruct &ele, GridFieldStruct &g_field);
 extern "C" void fortran_write_blender_ele(
     int &iu /* 0D_NOT_integer in */,
     void *ele /* 0D_NOT_type inout */,

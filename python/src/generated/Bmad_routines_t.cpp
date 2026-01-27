@@ -81,33 +81,33 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("abz_tunes"),
       R"""(Subroutine t6_to_B123(N, abz_tunes, B1, B2, B3, err_flag)
 
-  This decomposes the one-turn matrix according to Equation 56 from
-  "Alternative approach to general coupled linear optics" by A. Wolski. PRSTAB.
+This decomposes the one-turn matrix according to Equation 56 from
+"Alternative approach to general coupled linear optics" by A. Wolski. PRSTAB.
 
-  Note that a sigma matrix can be assembeled from:  sigma = B1*emit_a + B2*emit_b + B3*emit_c
+Note that a sigma matrix can be assembeled from:  sigma = B1*emit_a + B2*emit_b + B3*emit_c
 
-  Parameters
-  ----------
-  t6 : 2D array of float (shape: 6,6)
-      1-turn transfer matrix.  RF assumed to be on.
+Parameters
+----------
+t6 : 2D array of float (shape: 6,6)
+    1-turn transfer matrix.  RF assumed to be on.
 
-  abz_tunes : 1D array of float (shape: 3)
-      a-mode and b-mode tunes.  Used to order eigensystem.
+abz_tunes : 1D array of float (shape: 3)
+    a-mode and b-mode tunes.  Used to order eigensystem.
 
-  Returns
-  -------
-  B1 : 2D array of float (shape: 6,6)
-      Beta matrix associated with a-mode.
+Returns
+-------
+B1 : 2D array of float (shape: 6,6)
+    Beta matrix associated with a-mode.
 
-  B2 : 2D array of float (shape: 6,6)
-      Beta matrix associated with b-mode.
+B2 : 2D array of float (shape: 6,6)
+    Beta matrix associated with b-mode.
 
-  B3 : 2D array of float (shape: 6,6)
-      Beta matrix associated with c-mode.
+B3 : 2D array of float (shape: 6,6)
+    Beta matrix associated with c-mode.
 
-  err_flag : bool
-      Set True if there is an error. False otherwise
-  )"""
+err_flag : bool
+    Set True if there is an error. False otherwise
+)"""
   );
   m.def(
       "taper_mag_strengths",
@@ -118,30 +118,30 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("err_flag") = py::none(),
       R"""(Wrapper for Fortran routine taper_mag_strengths
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice to vary.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with magnet strengths varied.
+Parameters
+----------
+lat : LatStruct
+    Lattice to vary.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with magnet strengths varied.
 
-  ref_lat : LatStruct, optional
-      Reference lattice. If not present, lat will be used as the ref.
+ref_lat : LatStruct, optional
+    Reference lattice. If not present, lat will be used as the ref.
 
-  except : character, optional
-      List of elements not to vary.
+except : character, optional
+    List of elements not to vary.
 
-  err_flag : bool, optional
+err_flag : bool, optional
 
-  Returns
-  -------
-  lat : LatStruct
-      Lattice to vary.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with magnet strengths varied.
+Returns
+-------
+lat : LatStruct
+    Lattice to vary.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with magnet strengths varied.
 
-  err_flag : bool, optional
-  )"""
+err_flag : bool, optional
+)"""
   );
   py::class_<PyTargetMinMaxCalc, std::unique_ptr<PyTargetMinMaxCalc>>(
       m,
@@ -178,46 +178,46 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("initial") = py::none(),
       R"""(Subroutine target_min_max_calc (r_corner1, r_corner2, y_min, y_max, phi_min, phi_max, initial)
 
-  Routine to calculate the min/max values for (y, phi).
-  min/max values are cumulative.
+Routine to calculate the min/max values for (y, phi).
+min/max values are cumulative.
 
-  Parameters
-  ----------
-  r_corner1 : 1D array of float (shape: 3)
-      In target coords: A corner of the target. Must be normalized to 1.
+Parameters
+----------
+r_corner1 : 1D array of float (shape: 3)
+    In target coords: A corner of the target. Must be normalized to 1.
 
-  r_corner2 : 1D array of float (shape: 3)
-      In target coords: Adjacent corner of the target. Must be normalized to 1.
+r_corner2 : 1D array of float (shape: 3)
+    In target coords: Adjacent corner of the target. Must be normalized to 1.
 
-  y_min : float
-      min/max values. Only needed if initial = False.
+y_min : float
+    min/max values. Only needed if initial = False.
 
-  y_max : float
-      min/max values. Only needed if initial = False.
+y_max : float
+    min/max values. Only needed if initial = False.
 
-  phi_min : float
-      min/max values. Only needed if initial = False.
+phi_min : float
+    min/max values. Only needed if initial = False.
 
-  phi_max : float
-      min/max values. Only needed if initial = False.
+phi_max : float
+    min/max values. Only needed if initial = False.
 
-  initial : bool, optional
-      If present and True then this is the first edge for computation.
+initial : bool, optional
+    If present and True then this is the first edge for computation.
 
-  Returns
-  -------
-  y_min : float
-      min/max values. Only needed if initial = False.
+Returns
+-------
+y_min : float
+    min/max values. Only needed if initial = False.
 
-  y_max : float
-      min/max values. Only needed if initial = False.
+y_max : float
+    min/max values. Only needed if initial = False.
 
-  phi_min : float
-      min/max values. Only needed if initial = False.
+phi_min : float
+    min/max values. Only needed if initial = False.
 
-  phi_max : float
-      min/max values. Only needed if initial = False.
-  )"""
+phi_max : float
+    min/max values. Only needed if initial = False.
+)"""
   );
   py::class_<Bmad::TargetRotMats, std::unique_ptr<Bmad::TargetRotMats>>(
       m,
@@ -242,22 +242,22 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("r_center"),
       R"""(Subroutine target_rot_mats (r_center, w_to_target, w_to_ele)
 
-  Routine to calculate the rotation matrices between ele coords and "target" coords.
-  By definition, in target coords r_center = [0, 0, 1].
+Routine to calculate the rotation matrices between ele coords and "target" coords.
+By definition, in target coords r_center = [0, 0, 1].
 
-  Parameters
-  ----------
-  r_center : 1D array of float (shape: 3)
-      In lab coords: Center of target relative to phton emission point.
+Parameters
+----------
+r_center : 1D array of float (shape: 3)
+    In lab coords: Center of target relative to phton emission point.
 
-  Returns
-  -------
-  w_to_target : 2D array of float (shape: 3,3)
-      Rotation matrix from ele to target coords.
+Returns
+-------
+w_to_target : 2D array of float (shape: 3,3)
+    Rotation matrix from ele to target coords.
 
-  w_to_ele : 2D array of float (shape: 3,3)
-      Rotation matrix from target to ele coords.
-  )"""
+w_to_ele : 2D array of float (shape: 3,3)
+    Rotation matrix from target to ele coords.
+)"""
   );
   m.def(
       "taylor_equal_taylor",
@@ -266,18 +266,18 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("taylor2"),
       R"""(Wrapper for Fortran routine taylor_equal_taylor
 
-  Parameters
-  ----------
-  taylor1 : TaylorStruct
+Parameters
+----------
+taylor1 : TaylorStruct
 
-  taylor2 : TaylorStruct
+taylor2 : TaylorStruct
 
-  Returns
-  -------
-  taylor1 : TaylorStruct
+Returns
+-------
+taylor1 : TaylorStruct
 
-  taylor2 : TaylorStruct
-  )"""
+taylor2 : TaylorStruct
+)"""
   );
   m.def(
       "taylor_inverse",
@@ -286,21 +286,21 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("taylor_inv"),
       R"""(Subroutine taylor_inverse (taylor_in, taylor_inv, err)
 
-  Subroutine to invert a taylor map. Since the inverse map is truncated, it is not exact.
+Subroutine to invert a taylor map. Since the inverse map is truncated, it is not exact.
 
-  Parameters
-  ----------
-  taylor_in : 1D array of TaylorStruct
-      Input taylor map.
+Parameters
+----------
+taylor_in : 1D array of TaylorStruct
+    Input taylor map.
 
-  Returns
-  -------
-  taylor_inv : 1D array of TaylorStruct
-      Inverted taylor map.
+Returns
+-------
+taylor_inv : 1D array of TaylorStruct
+    Inverted taylor map.
 
-  err : bool, optional
-      Set True if there is no inverse. If not present then print an error message.
-  )"""
+err : bool, optional
+    Set True if there is no inverse. If not present then print an error message.
+)"""
   );
   m.def(
       "taylor_propagate1",
@@ -312,50 +312,49 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("spin_taylor") = py::none(),
       R"""(Subroutine taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, spin_taylor)
 
-  Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
-  The spin tracking is only done if spin_taylor is present and bmad_com%spin_tracking_on = T.
-  The alternative routine, if ele has a taylor map, is concat_taylor.
+Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
+The spin tracking is only done if spin_taylor is present and bmad_com%spin_tracking_on = T.
+The alternative routine, if ele has a taylor map, is concat_taylor.
 
-  This routine will fail if there is no corresponding ptc fibre for this
-  element. In general, the transfer_map_calc routine should be used instead.
+This routine will fail if there is no corresponding ptc fibre for this
+element. In general, the transfer_map_calc routine should be used instead.
 
-  Parameters
-  ----------
-  orb_taylor : 1D array of TaylorStruct
-      Map to be tracked
-      This parameter is an input/output and is modified in-place.
-      As an output, orb_taylor: Map through element.
+Parameters
+----------
+orb_taylor : 1D array of TaylorStruct
+    Map to be tracked
+    This parameter is an input/output and is modified in-place.
+    As an output, orb_taylor: Map through element.
 
-  ele : EleStruct
-      Element to track through
+ele : EleStruct
+    Element to track through
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  ref_in : CoordStruct, optional
-      Particle to be tracked. Must be present if the particle to be tracked is not the reference particle or
+ref_in : CoordStruct, optional
+    Particle to be tracked. Must be present if the particle to be tracked is not the reference particle or if
+    the direction of propagation is backwards.
 
-  if the direction of propagation is backwards. : None
+spin_taylor : 1D array of TaylorStruct, optional
+    Spin map to be tracked
+    This parameter is an input/output and is modified in-place.
+    As an output, spin_taylor: Tracked spin map.
 
-  spin_taylor : 1D array of TaylorStruct, optional
-      Spin map to be tracked
-      This parameter is an input/output and is modified in-place.
-      As an output, spin_taylor: Tracked spin map.
+Returns
+-------
+orb_taylor : 1D array of TaylorStruct
+    Map to be tracked
+    This parameter is an input/output and is modified in-place.
+    As an output, orb_taylor: Map through element.
 
-  Returns
-  -------
-  orb_taylor : 1D array of TaylorStruct
-      Map to be tracked
-      This parameter is an input/output and is modified in-place.
-      As an output, orb_taylor: Map through element.
+spin_taylor : 1D array of TaylorStruct, optional
+    Spin map to be tracked
+    This parameter is an input/output and is modified in-place.
+    As an output, spin_taylor: Tracked spin map.
 
-  spin_taylor : 1D array of TaylorStruct, optional
-      Spin map to be tracked
-      This parameter is an input/output and is modified in-place.
-      As an output, spin_taylor: Tracked spin map.
-
-  err_flag : bool
-      Set True if there is an error. False otherwise.
-  )"""
+err_flag : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "taylor_to_mad_map",
@@ -364,22 +363,22 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("energy"),
       R"""(Subroutine taylor_to_mad_map (taylor, energy, map)
 
-  Subroutine to convert a Taylor map to a mad order 2 map.
-  If any of the Taylor terms have order greater than 2 they are ignored.
+Subroutine to convert a Taylor map to a mad order 2 map.
+If any of the Taylor terms have order greater than 2 they are ignored.
 
-  Parameters
-  ----------
-  taylor : 1D array of TaylorStruct
-      Taylor map.
+Parameters
+----------
+taylor : 1D array of TaylorStruct
+    Taylor map.
 
-  energy : MadEnergyStruct
-      Energy numbers.
+energy : MadEnergyStruct
+    Energy numbers.
 
-  Returns
-  -------
-  map : MadMapStruct
-      Order 2 map.
-  )"""
+Returns
+-------
+map : MadMapStruct
+    Order 2 map.
+)"""
   );
   m.def(
       "taylors_equal_taylors",
@@ -388,18 +387,18 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("taylor2"),
       R"""(Wrapper for Fortran routine taylors_equal_taylors
 
-  Parameters
-  ----------
-  taylor1 : 1D array of TaylorStruct
+Parameters
+----------
+taylor1 : 1D array of TaylorStruct
 
-  taylor2 : 1D array of TaylorStruct
+taylor2 : 1D array of TaylorStruct
 
-  Returns
-  -------
-  taylor1 : 1D array of TaylorStruct
+Returns
+-------
+taylor1 : 1D array of TaylorStruct
 
-  taylor2 : 1D array of TaylorStruct
-  )"""
+taylor2 : 1D array of TaylorStruct
+)"""
   );
   m.def(
       "tilt_coords",
@@ -410,36 +409,36 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine tilt_coords
 
-  Parameters
-  ----------
-  tilt_val : float
-      Tilt value (could be the roll value for a bend)
+Parameters
+----------
+tilt_val : float
+    Tilt value (could be the roll value for a bend)
 
-  coord : 1D array of float
-      Coordinates of particle before rotation.
-      This parameter is an input/output and is modified in-place.
-      As an output, coord: Coordinates of particle after rotation.
+coord : 1D array of float
+    Coordinates of particle before rotation.
+    This parameter is an input/output and is modified in-place.
+    As an output, coord: Coordinates of particle after rotation.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before tilt.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix transfer matrix after tilt applied.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before tilt.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix after tilt applied.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  coord : 1D array of float
-      Coordinates of particle before rotation.
-      This parameter is an input/output and is modified in-place.
-      As an output, coord: Coordinates of particle after rotation.
+Returns
+-------
+coord : 1D array of float
+    Coordinates of particle before rotation.
+    This parameter is an input/output and is modified in-place.
+    As an output, coord: Coordinates of particle after rotation.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before tilt.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix transfer matrix after tilt applied.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before tilt.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix after tilt applied.
+)"""
   );
   m.def(
       "tilt_coords_photon",
@@ -449,33 +448,33 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("w_mat") = py::none(),
       R"""(Wrapper for Fortran routine tilt_coords_photon
 
-  Parameters
-  ----------
-  tilt_val : float
-      Tilt value (could be the roll value for a bend)
+Parameters
+----------
+tilt_val : float
+    Tilt value (could be the roll value for a bend)
 
-  coord : 1D array of float
-      Coordinates of particle before rotation.
-      This parameter is an input/output and is modified in-place.
-      As an output, coord: Coordinates of particle after rotation.
+coord : 1D array of float
+    Coordinates of particle before rotation.
+    This parameter is an input/output and is modified in-place.
+    As an output, coord: Coordinates of particle after rotation.
 
-  w_mat : 2D array of float (shape: 3,3), optional
-      Rotation matrix before tilt.
-      This parameter is an input/output and is modified in-place.
-      As an output, w_mat: Rotation matrix after tilt.
+w_mat : 2D array of float (shape: 3,3), optional
+    Rotation matrix before tilt.
+    This parameter is an input/output and is modified in-place.
+    As an output, w_mat: Rotation matrix after tilt.
 
-  Returns
-  -------
-  coord : 1D array of float
-      Coordinates of particle before rotation.
-      This parameter is an input/output and is modified in-place.
-      As an output, coord: Coordinates of particle after rotation.
+Returns
+-------
+coord : 1D array of float
+    Coordinates of particle before rotation.
+    This parameter is an input/output and is modified in-place.
+    As an output, coord: Coordinates of particle after rotation.
 
-  w_mat : 2D array of float (shape: 3,3), optional
-      Rotation matrix before tilt.
-      This parameter is an input/output and is modified in-place.
-      As an output, w_mat: Rotation matrix after tilt.
-  )"""
+w_mat : 2D array of float (shape: 3,3), optional
+    Rotation matrix before tilt.
+    This parameter is an input/output and is modified in-place.
+    As an output, w_mat: Rotation matrix after tilt.
+)"""
   );
   m.def(
       "tilt_mat6",
@@ -484,23 +483,23 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("tilt"),
       R"""(Wrapper for Fortran routine tilt_mat6
 
-  Parameters
-  ----------
-  mat6 : 2D array of float (shape: 6,6)
-      Untilted matrix.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Tilted matrix.
+Parameters
+----------
+mat6 : 2D array of float (shape: 6,6)
+    Untilted matrix.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Tilted matrix.
 
-  tilt : float
-      Tilt angle.
+tilt : float
+    Tilt angle.
 
-  Returns
-  -------
-  mat6 : 2D array of float (shape: 6,6)
-      Untilted matrix.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Tilted matrix.
-  )"""
+Returns
+-------
+mat6 : 2D array of float (shape: 6,6)
+    Untilted matrix.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Tilted matrix.
+)"""
   );
   py::class_<Bmad::ToEtaReading, std::unique_ptr<Bmad::ToEtaReading>>(
       m,
@@ -528,44 +527,64 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("add_noise"),
       R"""(Subroutine to_eta_reading (eta, ele, axis, add_noise, reading, err)
 
-  Compute the measured dispersion reading given the true dispersion and the
-  monitor offsets, noise, etc.
+Compute the measured dispersion reading given the true dispersion and the
+monitor offsets, noise, etc.
 
-  This routine will only give a nonzero reading for Bmad markers,
-  monitors, and instruments.
+This routine will only give a nonzero reading for Bmad markers,
+monitors, and instruments.
 
-  Parameters
-  ----------
-  eta_actual : 1D array of float
-      Actual (eta_x, eta_y) dispersion.
+Parameters
+----------
+eta_actual : 1D array of float
+    Actual (eta_x, eta_y) dispersion.
 
-  ele : EleStruct
-      Element where the orbit is measured.
+ele : EleStruct
+    Element where the orbit is measured.
 
-  %value : percent energy change used in dispersion measurement.
-  as an output
-      relative bpm resolution RMS
-      As an output, .value: angle error in radians rms.
-      As an output, .value: Horizontal gain correction.
-      As an output, .value: Horizontal gain error.
+axis : int
+    x_plane$ or y_plane$
 
-  ... etc ... : None
+add_noise : bool
+    If True add noise to the reading
 
-  axis : int
-      x_plane$ or y_plane$
+Returns
+-------
+reading : float
+    BPM reading
 
-  add_noise : bool
-      If True add noise to the reading
-
-  Returns
-  -------
-  reading : float
-      BPM reading
-
-  err : bool
-      Set True if there is an error. False otherwise.
-  )"""
+err : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
+  py::class_<Bmad::ToFieldmapCoords, std::unique_ptr<Bmad::ToFieldmapCoords>>(
+      m,
+      "ToFieldmapCoords",
+      "to_fieldmap_coords return type"
+  )
+      .def_readonly("x", &Bmad::ToFieldmapCoords::x)
+      .def_readonly("y", &Bmad::ToFieldmapCoords::y)
+      .def_readonly("z", &Bmad::ToFieldmapCoords::z)
+      .def_readonly("cos_ang", &Bmad::ToFieldmapCoords::cos_ang)
+      .def_readonly("sin_ang", &Bmad::ToFieldmapCoords::sin_ang)
+      .def_readonly("err_flag", &Bmad::ToFieldmapCoords::err_flag)
+      .def("__len__", [](const Bmad::ToFieldmapCoords &) { return 6; })
+      .def("__getitem__", [](const Bmad::ToFieldmapCoords &s, int i) -> py::object {
+        if (i < 0)
+          i += 6;
+        if (i == 0)
+          return py::cast(s.x);
+        if (i == 1)
+          return py::cast(s.y);
+        if (i == 2)
+          return py::cast(s.z);
+        if (i == 3)
+          return py::cast(s.cos_ang);
+        if (i == 4)
+          return py::cast(s.sin_ang);
+        if (i == 5)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "to_fieldmap_coords",
       &Bmad::to_fieldmap_coords,
@@ -575,57 +594,51 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele_anchor_pt"),
       py::arg("r0"),
       py::arg("curved_ref_frame"),
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::arg("cos_ang"),
-      py::arg("sin_ang"),
-      py::arg("err_flag"),
       R"""(Subroutine to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0, curved_ref_frame,
-                                                                x, y, z, cos_ang, sin_ang, err_flag)
+                                                              x, y, z, cos_ang, sin_ang, err_flag)
 
-  Routine to return the (x,y,s) position relative to a field map.
+Routine to return the (x,y,s) position relative to a field map.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element being tracked through.
+Parameters
+----------
+ele : EleStruct
+    Element being tracked through.
 
-  local_orb : CoordStruct
-      Particle orbit. Must be in local element coordinates.
+local_orb : CoordStruct
+    Particle orbit. Must be in local element coordinates.
 
-  s_body : float
-      Longitudinal position relative to the entrance end of the element.
+s_body : float
+    Longitudinal position relative to the entrance end of the element.
 
-  ele_anchor_pt : int
-      anchor point of the field map (anchor_beginning$, anchor_center$, or anchor_end$).
+ele_anchor_pt : int
+    anchor point of the field map (anchor_beginning$, anchor_center$, or anchor_end$).
 
-  r0 : 1D array of float (shape: 3)
-      origin point of the fieldmap.
+r0 : 1D array of float (shape: 3)
+    origin point of the fieldmap.
 
-  curved_ref_frame : bool
-      If the element is a bend: Does the field map follow the bend reference coords?
+curved_ref_frame : bool
+    If the element is a bend: Does the field map follow the bend reference coords?
 
-  Outpt: : None
+Returns
+-------
+x : float
+    Coords relative to the field map.
 
-  x : float
-      Coords relative to the field map.
+y : float
+    Coords relative to the field map.
 
-  y : float
-      Coords relative to the field map.
+z : float
+    Coords relative to the field map.
 
-  z : float
-      Coords relative to the field map.
+cos_ang : float
+    cos and sin of coordinate rotation angle.
 
-  cos_ang : float
-      cos and sin of coordinate rotation angle.
+sin_ang : float
+    cos and sin of coordinate rotation angle.
 
-  sin_ang : float
-      cos and sin of coordinate rotation angle.
-
-  err_flag : bool
-      Set True if there is an error. False otherwise.
-  )"""
+err_flag : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   py::class_<Bmad::ToOrbitReading, std::unique_ptr<Bmad::ToOrbitReading>>(
       m,
@@ -653,42 +666,34 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("add_noise"),
       R"""(Subroutine to_orbit_reading (orb, ele, axis, add_noise, reading, err)
 
-  Calculate the measured reading on a bpm given the actual orbit and the
-  BPM's offsets, noise, etc.
+Calculate the measured reading on a bpm given the actual orbit and the
+BPM's offsets, noise, etc.
 
-  This routine will only give a nonzero reading for Bmad markers,
-  monitors, and instruments.
+This routine will only give a nonzero reading for Bmad markers,
+monitors, and instruments.
 
-  Parameters
-  ----------
-  orb : CoordStruct
-      Orbit position at BPM.
+Parameters
+----------
+orb : CoordStruct
+    Orbit position at BPM.
 
-  ele : EleStruct
-      Element where the orbit is measured.
+ele : EleStruct
+    Element where the orbit is measured.
 
-  %value : relative bpm resolution rms
-  as an output
-      angle error in radians rms.
-      As an output, .value: Horizontal gain correction.
-      As an output, .value: Horizontal gain error.
+axis : int
+    x_plane$ or y_plane$
 
-  ... etc ... : None
+add_noise : bool
+    If True add noise to the reading
 
-  axis : int
-      x_plane$ or y_plane$
+Returns
+-------
+reading : float
+    BPM reading
 
-  add_noise : bool
-      If True add noise to the reading
-
-  Returns
-  -------
-  reading : float
-      BPM reading
-
-  err : bool
-      Set True if there is no valid reading. For example, if ele.is_on = False.
-  )"""
+err : bool
+    Set True if there is no valid reading. For example, if ele.is_on = False.
+)"""
   );
   py::class_<Bmad::ToPhaseAndCouplingReading, std::unique_ptr<Bmad::ToPhaseAndCouplingReading>>(
       m,
@@ -714,33 +719,27 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("add_noise"),
       R"""(Subroutine to_phase_and_coupling_reading (ele, add_noise, reading, err)
 
-  Find the measured coupling values given the actual ones
+Find the measured coupling values given the actual ones
 
-  This routine will only give a nonzero reading for Bmad markers,
-  monitors, and instruments.
+This routine will only give a nonzero reading for Bmad markers,
+monitors, and instruments.
 
-  Parameters
-  ----------
-  actual_phase : real(rp)
-      Actual phase reading.
+Parameters
+----------
+ele : EleStruct
+    Element where phase is measured.
 
-  ele : EleStruct
-      Element where phase is measured.
+add_noise : bool
+    If True add noise to the reading
 
-  %value : None
-      RMS Noise in radians.
+Returns
+-------
+reading : BpmPhaseCouplingStruct
+    K and Cbar coupling parameters
 
-  add_noise : bool
-      If True add noise to the reading
-
-  Returns
-  -------
-  reading : BpmPhaseCouplingStruct
-      K and Cbar coupling parameters
-
-  err : bool
-      Set True if there is an error. False otherwise.
-  )"""
+err : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "to_photon_angle_coords",
@@ -749,22 +748,22 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Function to_photon_angle_coords (orb_in, ele) result (orb_out)
 
-  Routine to convert from standard photon coords to "angle" coords defined as:
-        x, angle_x, y, angle_y, z, E-E_ref
+Routine to convert from standard photon coords to "angle" coords defined as:
+      x, angle_x, y, angle_y, z, E-E_ref
 
-  Parameters
-  ----------
-  orb_in : CoordStruct
-      orbit in standard photon coords.
+Parameters
+----------
+orb_in : CoordStruct
+    orbit in standard photon coords.
 
-  ele : EleStruct
-      Reference element (generally the detector element.)
+ele : EleStruct
+    Reference element (generally the detector element.)
 
-  Returns
-  -------
-  orb_out : CoordStruct
-      Transformed coordinates.
-  )"""
+Returns
+-------
+orb_out : CoordStruct
+    Transformed coordinates.
+)"""
   );
   m.def(
       "to_surface_coords",
@@ -773,19 +772,19 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Wrapper for Fortran routine to_surface_coords
 
-  Parameters
-  ----------
-  lab_orbit : CoordStruct
-      Photon position in laboratory coords.
+Parameters
+----------
+lab_orbit : CoordStruct
+    Photon position in laboratory coords.
 
-  ele : EleStruct
-      Detector element.
+ele : EleStruct
+    Detector element.
 
-  Returns
-  -------
-  surface_orbit : CoordStruct
-      Photon position in element body coordinates.
-  )"""
+Returns
+-------
+surface_orbit : CoordStruct
+    Photon position in element body coordinates.
+)"""
   );
   m.def(
       "touschek_lifetime",
@@ -794,45 +793,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("lat"),
       R"""(Subroutine touschek_lifetime(mode, Tl, lat)
 
-  Calculates the touschek lifetime for a lattice by calling touschek_rate1
-  for each element.
-  The loss rate at each element is averaged over one turn to obtain the lifetime.
+Calculates the touschek lifetime for a lattice by calling touschek_rate1
+for each element.
+The loss rate at each element is averaged over one turn to obtain the lifetime.
 
-  This function assumes that the twiss parameters and closed orbit have
-  been calculated, and that mode has been populated.
+This function assumes that the twiss parameters and closed orbit have
+been calculated, and that mode has been populated.
 
-  This subroutine assumes a fixed momentum aperture.  The loss rate at each element
-  uses the same momentum aperture, mode%pz_aperture.
+This subroutine assumes a fixed momentum aperture.  The loss rate at each element
+uses the same momentum aperture, mode%pz_aperture.
 
-  A common way to call this function is to first populate mode using
-  radiation integrals.  If an ideal lattice is used, the vertical
-  emittance must also be set to a reasonable value.  If the vertical
-  emittance is due only to quantum excitation, then it will likely be
-  several orders of magnitude smaller than any real physical situation, in which
-  case the integral in this function will have problems converging.
+A common way to call this function is to first populate mode using
+radiation integrals.  If an ideal lattice is used, the vertical
+emittance must also be set to a reasonable value.  If the vertical
+emittance is due only to quantum excitation, then it will likely be
+several orders of magnitude smaller than any real physical situation, in which
+case the integral in this function will have problems converging.
 
-  In addition to setting mode, also set lat%param%n_part to the number of particles
-  per bunch.
+In addition to setting mode, also set lat%param%n_part to the number of particles
+per bunch.
 
-  Parameters
-  ----------
-  mode : NormalModesStruct
-      beam properties
+Parameters
+----------
+mode : NormalModesStruct
+    beam properties
 
-  %pz_aperture : real(rp)
-      momentum aperture
+lat : LatStruct
+    Accelerator Lattice
 
-  lat : LatStruct
-      Accelerator Lattice
-
-  %param%n_part : real(rp)
-      number particles per bunch
-
-  Returns
-  -------
-  Tl : float
-      Touschek lifetime in seconds
-  )"""
+Returns
+-------
+Tl : float
+    Touschek lifetime in seconds
+)"""
   );
   m.def(
       "touschek_rate1",
@@ -843,61 +836,61 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("s") = py::none(),
       R"""(Subroutine touschek_rate1(mode, rate, lat, ix, s)
 
-  Calculates the touschek rate at the location specified by s or ix
-  This calculation is based on Piwinski 1998 "The Touschek Effect In
-  Strong Focusing Storage Rings".  This is the most general case, equation
-  31.
+Calculates the touschek rate at the location specified by s or ix
+This calculation is based on Piwinski 1998 "The Touschek Effect In
+Strong Focusing Storage Rings".  This is the most general case, equation
+31.
 
-  This function uses twiss_and_track_at_s to determine the Twiss parameters
-  at the location s or element index ix.
+This function uses twiss_and_track_at_s to determine the Twiss parameters
+at the location s or element index ix.
 
-  A common way to call this function is to first populate mode using
-  radiation integrals.  If an ideal lattice is used, the vertical
-  emittance must also be set to a reasonable value.  If the vertical
-  emittance is due only to quantum excitation, then it will likely be
-  several orders of magnitude smaller than any real physical situation, in which
-  case the integral in this function will have problems converging.
-  Additionally, mode%pz_aperture needs to be set to the momentum aperture.
+A common way to call this function is to first populate mode using
+radiation integrals.  If an ideal lattice is used, the vertical
+emittance must also be set to a reasonable value.  If the vertical
+emittance is due only to quantum excitation, then it will likely be
+several orders of magnitude smaller than any real physical situation, in which
+case the integral in this function will have problems converging.
+Additionally, mode%pz_aperture needs to be set to the momentum aperture.
 
-  In addition to setting mode, also set lat%param%n_part to the number of particles
-  per bunch.
+In addition to setting mode, also set lat%param%n_part to the number of particles
+per bunch.
 
-  IMPORTANT NOTE: If the lattice type is a circular lattice, then
-                  mode%a%emittance and mode%b%emittance are assumed to
-                  contain the normalized emittences.  If lattice geometry is
-                  open, the emittances are assumed to be
-                  unnormalized.
+IMPORTANT NOTE: If the lattice type is a circular lattice, then
+                mode%a%emittance and mode%b%emittance are assumed to
+                contain the normalized emittences.  If lattice geometry is
+                open, the emittances are assumed to be
+                unnormalized.
 
-  IMPORTANT NOTE: The output of this subroutine is the loss rate assuming
-                  that two particles are lost per collision, one with too
-                  much energy, and one with too little energy.  This agrees
-                  with Piwinski's original derivation, which assumes that the
-                  positive energy aperture is equal in magnitude to the
-                  negative energy aperture.  If you are studying an
-                  accelerator with a non-symmetric energy aperture, then
-                  this subroutine should be called twice, once with the positive
-                  aperture, and once with the negative aperture, and rate from
-                  each call should be halved and summed.
+IMPORTANT NOTE: The output of this subroutine is the loss rate assuming
+                that two particles are lost per collision, one with too
+                much energy, and one with too little energy.  This agrees
+                with Piwinski's original derivation, which assumes that the
+                positive energy aperture is equal in magnitude to the
+                negative energy aperture.  If you are studying an
+                accelerator with a non-symmetric energy aperture, then
+                this subroutine should be called twice, once with the positive
+                aperture, and once with the negative aperture, and rate from
+                each call should be halved and summed.
 
-  Parameters
-  ----------
-  mode : NormalModesStruct
-      beam properties
+Parameters
+----------
+mode : NormalModesStruct
+    beam properties
 
-  lat : LatStruct
-      Lattice
+lat : LatStruct
+    Lattice
 
-  ix : int, optional
-      element index (either s or ix must be specified)
+ix : int, optional
+    element index (either s or ix must be specified)
 
-  s : float, optional
-      location in meters (either s or ix must be specified)
+s : float, optional
+    location in meters (either s or ix must be specified)
 
-  Returns
-  -------
-  rate : float
-      Touschek rate, in units particle per second, assuming two particles per event.
-  )"""
+Returns
+-------
+rate : float
+    Touschek rate, in units particle per second, assuming two particles per event.
+)"""
   );
   m.def(
       "touschek_rate1_zap",
@@ -909,30 +902,30 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("s") = py::none(),
       R"""(Wrapper for Fortran routine touschek_rate1_zap
 
-  Parameters
-  ----------
-  mode : NormalModesStruct
+Parameters
+----------
+mode : NormalModesStruct
 
-  rate : float
+rate : float
 
-  lat : LatStruct
+lat : LatStruct
 
-  ix : int, optional
+ix : int, optional
 
-  s : float, optional
+s : float, optional
 
-  Returns
-  -------
-  mode : NormalModesStruct
+Returns
+-------
+mode : NormalModesStruct
 
-  rate : float
+rate : float
 
-  lat : LatStruct
+lat : LatStruct
 
-  ix : int, optional
+ix : int, optional
 
-  s : float, optional
-  )"""
+s : float, optional
+)"""
   );
   py::class_<Bmad::Track1, std::unique_ptr<Bmad::Track1>>(m, "Track1", "track1 return type")
       .def_readonly("end_orb", &Bmad::Track1::end_orb)
@@ -959,53 +952,53 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("init_to_edge") = py::none(),
       R"""(Wrapper for Fortran routine track1
 
-  Parameters
-  ----------
-  start_orb : CoordStruct
-      Starting position.
+Parameters
+----------
+start_orb : CoordStruct
+    Starting position.
 
-  ele : EleStruct
-      Element to track through.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Modified if make_map1 is True.
+ele : EleStruct
+    Element to track through.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Modified if make_map1 is True.
 
-  param : LatParamStruct
-      Reference particle info.
+param : LatParamStruct
+    Reference particle info.
 
-  track : TrackStruct, optional
-      Structure holding existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, track: Structure holding the track information if the
+track : TrackStruct, optional
+    Structure holding existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, track: Structure holding the track information if the
 
-  ignore_radiation : bool, optional
-      If present and True then do not include radiation
+ignore_radiation : bool, optional
+    If present and True then do not include radiation effects along with space charge effects.
 
-  make_map1 : bool, optional
-      Make ele.mat6 and ele.spin_q components? Default is false.
+make_map1 : bool, optional
+    Make ele.mat6 and ele.spin_q components? Default is false.
 
-  init_to_edge : bool, optional
-      Default is True. If True then force the tracked particle to begin at the element's edge. See above. Do not
-      use this argument unless you know what you are doing.
+init_to_edge : bool, optional
+    Default is True. If True then force the tracked particle to begin at the element's edge. See above. Do not
+    use this argument unless you know what you are doing.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element to track through.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Modified if make_map1 is True.
+Returns
+-------
+ele : EleStruct
+    Element to track through.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Modified if make_map1 is True.
 
-  end_orb : CoordStruct
-      End position.
+end_orb : CoordStruct
+    End position.
 
-  track : TrackStruct, optional
-      Structure holding existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, track: Structure holding the track information if the
+track : TrackStruct, optional
+    Structure holding existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, track: Structure holding the track information if the
 
-  err_flag : bool, optional
-      Set true if there is an error. False otherwise. Note: The particle getting lost (EG hitting an aperture)
-      is *not* an error. An error is something like start_orb not being properly initialized.
-  )"""
+err_flag : bool, optional
+    Set true if there is an error. False otherwise. Note: The particle getting lost (EG hitting an aperture)
+    is *not* an error. An error is something like start_orb not being properly initialized.
+)"""
   );
   m.def(
       "track1_beam",
@@ -1016,36 +1009,35 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("direction") = py::none(),
       R"""(Subroutine track1_beam (beam, ele, err, centroid, direction)
 
-  Subroutine to track a beam of particles through an element.
+Subroutine to track a beam of particles through an element.
 
-  Parameters
-  ----------
-  beam : BeamStruct
-      Starting beam position.
-      This parameter is an input/output and is modified in-place.
-      As an output, beam: Ending beam position.
+Parameters
+----------
+beam : BeamStruct
+    Starting beam position.
+    This parameter is an input/output and is modified in-place.
+    As an output, beam: Ending beam position.
 
-  ele : EleStruct
-      element to track through.
+ele : EleStruct
+    element to track through.
 
-  centroid : 1D array of CoordStruct, optional
-      Approximate centroid orbit. Only needed if CSR is on.
+centroid : 1D array of CoordStruct, optional
+    Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
+    tracking a single particle.
 
-  Hint: Calculate this before beam tracking by tracking a single particle. : None
+direction : int, optional
+    +1 (default) -> Track forward, -1 -> Track backwards.
 
-  direction : int, optional
-      +1 (default) -> Track forward, -1 -> Track backwards.
+Returns
+-------
+beam : BeamStruct
+    Starting beam position.
+    This parameter is an input/output and is modified in-place.
+    As an output, beam: Ending beam position.
 
-  Returns
-  -------
-  beam : BeamStruct
-      Starting beam position.
-      This parameter is an input/output and is modified in-place.
-      As an output, beam: Ending beam position.
-
-  err : bool
-      Set true if there is an error. EG: Too many particles lost for a CSR calc.
-  )"""
+err : bool
+    Set true if there is an error. EG: Too many particles lost for a CSR calc.
+)"""
   );
   py::class_<Bmad::Track1Bmad, std::unique_ptr<Bmad::Track1Bmad>>(
       m,
@@ -1074,44 +1066,45 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track1_bmad
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Element
+ele : EleStruct
+    Element
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix propagated through the element.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix propagated through the element.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  err_flag : bool, optional
-      Set true if there is an error. False otherwise.
+err_flag : bool, optional
+    Set true if there is an error. False otherwise.
 
-  track : TrackStruct, optional
-      Structure holding the track information if the
+track : TrackStruct, optional
+    Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
+    more details.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix propagated through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix propagated through the element.
+)"""
   );
   m.def(
       "track1_bmad_photon",
@@ -1121,28 +1114,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("param"),
       R"""(Wrapper for Fortran routine track1_bmad_photon
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position
+Parameters
+----------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position
 
-  ele : EleStruct
-      Element
+ele : EleStruct
+    Element
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position
+Returns
+-------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position
 
-  err_flag : bool, optional
-      Set true if there is an error. False otherwise.
-  )"""
+err_flag : bool, optional
+    Set true if there is an error. False otherwise.
+)"""
   );
   m.def(
       "track1_bunch",
@@ -1154,48 +1147,45 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("bunch_track") = py::none(),
       R"""(Subroutine track1_bunch (bunch, ele, err, centroid, direction, bunch_track)
 
-  Subroutine to track a bunch of particles through an element.
+Subroutine to track a bunch of particles through an element.
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+Parameters
+----------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  ele : EleStruct
-      element to track through.
+ele : EleStruct
+    element to track through.
 
-  centroid : 1D array of CoordStruct, optional
-      Approximate centroid orbit. Only needed if CSR is on.
+centroid : 1D array of CoordStruct, optional
+    Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
+    tracking a single particle.
 
-  Hint: Calculate this before beam tracking by tracking a single particle. : None
+direction : int, optional
+    +1 (default) -> Track forward, -1 -> Track backwards.
 
-  direction : int, optional
-      +1 (default) -> Track forward, -1 -> Track backwards.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: Track information appended to track.
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: Track information appended to track.
+Returns
+-------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: Track information appended to track.
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: Track information appended to track.
-
-  err : bool
-      Set true if there is an error.
-
-  EG: Too many particles lost for a CSR calc. : None
-  )"""
+err : bool
+    Set true if there is an error. EG: Too many particles lost for a CSR calc.
+)"""
   );
   m.def(
       "track1_bunch_csr",
@@ -1208,49 +1198,48 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("bunch_track") = py::none(),
       R"""(Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
 
-  Routine to track a bunch of particles through an element with csr radiation effects.
+Routine to track a bunch of particles through an element with csr radiation effects.
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+Parameters
+----------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  ele : EleStruct
-      The element to track through. Must be part of a lattice.
+ele : EleStruct
+    The element to track through. Must be part of a lattice.
 
-  centroid : 1D array of CoordStruct
-      coord_struct, Approximate beam centroid orbit for the lattice branch.
+centroid : 1D array of CoordStruct
+    coord_struct, Approximate beam centroid orbit for the lattice branch. Calculate this before beam tracking
+    by tracking a single particle.
 
-  Calculate this before beam tracking by tracking a single particle. : None
+s_start : float, optional
+    Starting position relative to ele. Default = 0
 
-  s_start : float, optional
-      Starting position relative to ele. Default = 0
+s_end : float, optional
+    Ending position. Default is ele length.
 
-  s_end : float, optional
-      Ending position. Default is ele length.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: track information if the tracking method does
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: track information if the tracking method does
+Returns
+-------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: track information if the tracking method does
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: track information if the tracking method does
-
-  err : bool
-      Set true if there is an error. EG: Too many particles lost.
-  )"""
+err : bool
+    Set true if there is an error. EG: Too many particles lost.
+)"""
   );
   m.def(
       "track1_bunch_csr3d",
@@ -1263,52 +1252,56 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("bunch_track") = py::none(),
       R"""(Subroutine track1_bunch_csr3d (bunch, ele, centroid, err, bunch_track)
 
-  EXPERIMENTAL. NOT CURRENTLY OPERATIONAL!
+EXPERIMENTAL. NOT CURRENTLY OPERATIONAL!
 
-  Routine to track a bunch of particles through an element using
-  steady-state 3D CSR.
+Routine to track a bunch of particles through an element using
+steady-state 3D CSR.
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+Parameters
+----------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  ele : EleStruct
-      The element to track through. Must be part of a lattice.
+ele : EleStruct
+    The element to track through. Must be part of a lattice.
 
-  centroid : 1D array of CoordStruct
-      coord_struct, Approximate beam centroid orbit for the lattice branch.
+centroid : 1D array of CoordStruct
+    coord_struct, Approximate beam centroid orbit for the lattice branch. Calculate this before beam tracking
+    by tracking a single particle.
 
-  Calculate this before beam tracking by tracking a single particle. : None
+s_start : float, optional
+    Starting position relative to ele. Default = 0
 
-  s_start : float, optional
-      Starting position relative to ele. Default = 0
+s_end : float, optional
+    Ending position. Default is ele length.
 
-  s_end : float, optional
-      Ending position. Default is ele length.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: track information if the tracking method does
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: track information if the tracking method does
+Returns
+-------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: track information if the tracking method does
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: track information if the tracking method does
+err : bool
+    Set true if there is an error. EG: Too many particles lost.
 
-  err : bool
-      Set true if there is an error. EG: Too many particles lost.
-  )"""
+Notes
+-----
+The core routines are from the OpenCSR package developed at:
+https://github.com/ChristopherMayes/OpenCSR
+)"""
   );
   m.def(
       "track1_bunch_hom",
@@ -1319,38 +1312,38 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("bunch_track") = py::none(),
       R"""(Subroutine track1_bunch_hom (bunch, ele, direction, bunch_track)
 
-  Subroutine to track a bunch of particles through an element including wakefields.
+Subroutine to track a bunch of particles through an element including wakefields.
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+Parameters
+----------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  ele : EleStruct
-      The element to track through.
+ele : EleStruct
+    The element to track through.
 
-  direction : int, optional
-      +1 (default) -> Track forward, -1 -> Track backwards.
+direction : int, optional
+    +1 (default) -> Track forward, -1 -> Track backwards.
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: Track information appended to track.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: Track information appended to track.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+Returns
+-------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: Track information appended to track.
-  )"""
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: Track information appended to track.
+)"""
   );
   m.def(
       "track1_bunch_space_charge",
@@ -1361,39 +1354,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("bunch_track") = py::none(),
       R"""(Wrapper for Fortran routine track1_bunch_space_charge
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+Parameters
+----------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  ele : EleStruct
-      Element to track through. Must be part of a lattice.
+ele : EleStruct
+    Element to track through. Must be part of a lattice.
 
-  track_to_same_s : bool, optional
-      Default is True. If True, drift particles to all have the
+track_to_same_s : bool, optional
+    Default is True. If True, drift particles to all have the same s-position.
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: track information if the tracking method does
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: track information if the tracking method does
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Starting bunch position.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Ending bunch position.
+Returns
+-------
+bunch : BunchStruct
+    Starting bunch position.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Ending bunch position.
 
-  err : bool
-      Set true if there is an error. EG: Too many particles lost for a CSR calc.
+err : bool
+    Set true if there is an error. EG: Too many particles lost for a CSR calc.
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: track information if the tracking method does
-  )"""
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: track information if the tracking method does
+)"""
   );
   m.def(
       "track1_crystal",
@@ -1403,28 +1396,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine track1_crystal (ele, param, orbit)
 
-  Routine to track diffraction from a crystal.
+Routine to track diffraction from a crystal.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element tracking through.
+Parameters
+----------
+ele : EleStruct
+    Element tracking through.
 
-  param : LatParamStruct
-      lattice parameters.
+param : LatParamStruct
+    lattice parameters.
 
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
 
-  Returns
-  -------
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
+)"""
   );
   m.def(
       "track1_diffraction_plate_or_mask",
@@ -1434,28 +1427,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine track1_diffraction_plate_or_mask (ele, param, orbit)
 
-  Routine to track through diffraction plate and mask elements.
+Routine to track through diffraction plate and mask elements.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Diffraction plate or mask element.
+Parameters
+----------
+ele : EleStruct
+    Diffraction plate or mask element.
 
-  param : LatParamStruct
-      lattice parameters.
+param : LatParamStruct
+    lattice parameters.
 
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
 
-  Returns
-  -------
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
+)"""
   );
   m.def(
       "track1_high_energy_space_charge",
@@ -1465,30 +1458,30 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine track1_high_energy_space_charge (ele, param, orbit)
 
-  Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
-  The routine setup_high_energy_space_charge_calc must be called initially before any tracking is done.
-  This routine assumes a Gaussian bunch and is only valid with relativistic particles where the
-  effect of the space charge is small.
+Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
+The routine setup_high_energy_space_charge_calc must be called initially before any tracking is done.
+This routine assumes a Gaussian bunch and is only valid with relativistic particles where the
+effect of the space charge is small.
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position
+Parameters
+----------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position
 
-  ele : EleStruct
-      Element tracked through.
+ele : EleStruct
+    Element tracked through.
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position
+)"""
   );
   m.def(
       "track1_lens",
@@ -1498,28 +1491,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine track1_lens (ele, param, orbit)
 
-  Routine to track through a lens.
+Routine to track through a lens.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element tracking through.
+Parameters
+----------
+ele : EleStruct
+    Element tracking through.
 
-  param : LatParamStruct
-      lattice parameters.
+param : LatParamStruct
+    lattice parameters.
 
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
 
-  Returns
-  -------
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
+)"""
   );
   m.def(
       "track1_linear",
@@ -1529,27 +1522,27 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("param"),
       R"""(Wrapper for Fortran routine track1_linear
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position
+Parameters
+----------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position
 
-  ele : EleStruct
-      Element
+ele : EleStruct
+    Element
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position
+Returns
+-------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position
 
-  param : LatParamStruct
-  )"""
+param : LatParamStruct
+)"""
   );
   m.def(
       "track1_lr_wake",
@@ -1558,32 +1551,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Subroutine track1_lr_wake (bunch, ele)
 
-  Subroutine to put in the long-range wakes for particle tracking.
+Subroutine to put in the long-range wakes for particle tracking.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element with wakes.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with updated wake amplitudes.
+Parameters
+----------
+ele : EleStruct
+    Element with wakes.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with updated wake amplitudes.
 
-  bunch : BunchStruct
-      Bunch to track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Kicked bunch.
+bunch : BunchStruct
+    Bunch to track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Kicked bunch.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element with wakes.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element with updated wake amplitudes.
+Returns
+-------
+ele : EleStruct
+    Element with wakes.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with updated wake amplitudes.
 
-  bunch : BunchStruct
-      Bunch to track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Kicked bunch.
-  )"""
+bunch : BunchStruct
+    Bunch to track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Kicked bunch.
+)"""
   );
   m.def(
       "track1_mad",
@@ -1593,29 +1586,29 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("param"),
       R"""(Subroutine track1_mad (orbit, ele, param)
 
-  Subroutine to track through an element using a 2nd order transfer map.
-  Note: If map does not exist then one will be created.
+Subroutine to track through an element using a 2nd order transfer map.
+Note: If map does not exist then one will be created.
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coords.
+Parameters
+----------
+orbit : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coords.
 
-  ele : EleStruct
-      Element to track through.
+ele : EleStruct
+    Element to track through.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coords.
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coords.
+)"""
   );
   m.def(
       "track1_mirror",
@@ -1625,28 +1618,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine track1_mirror (ele, param, orbit)
 
-  Routine to track reflection from a mirror.
+Routine to track reflection from a mirror.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element tracking through.
+Parameters
+----------
+ele : EleStruct
+    Element tracking through.
 
-  param : LatParamStruct
-      lattice parameters.
+param : LatParamStruct
+    lattice parameters.
 
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
 
-  Returns
-  -------
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
+)"""
   );
   m.def(
       "track1_mosaic_crystal",
@@ -1656,28 +1649,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine track1_mosaic_crystal (ele, param, orbit)
 
-  Routine to track diffraction from a crystal.
+Routine to track diffraction from a crystal.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element tracking through.
+Parameters
+----------
+ele : EleStruct
+    Element tracking through.
 
-  param : LatParamStruct
-      lattice parameters.
+param : LatParamStruct
+    lattice parameters.
 
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
 
-  Returns
-  -------
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
+)"""
   );
   m.def(
       "track1_multilayer_mirror",
@@ -1687,29 +1680,29 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine track1_multilayer_mirror (ele, param, orbit)
 
-  Routine to track reflection from a multilayer_mirror.
-  Basic equations are from Kohn, "On the Theory of Reflectivity of an X-Ray Multilayer Mirror".
+Routine to track reflection from a multilayer_mirror.
+Basic equations are from Kohn, "On the Theory of Reflectivity of an X-Ray Multilayer Mirror".
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element tracking through.
+Parameters
+----------
+ele : EleStruct
+    Element tracking through.
 
-  param : LatParamStruct
-      lattice parameters.
+param : LatParamStruct
+    lattice parameters.
 
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
 
-  Returns
-  -------
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
+)"""
   );
   m.def(
       "track1_radiation",
@@ -1719,35 +1712,35 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("edge"),
       R"""(Subroutine track1_radiation (orbit, ele, edge)
 
-  Subroutine to apply a kick to a particle to account for radiation dampling and/or fluctuations.
+Subroutine to apply a kick to a particle to account for radiation dampling and/or fluctuations.
 
-  For tracking through a given element, this routine should be called initially when
-  the particle is at the entrance end and at the end when the particle is at the exit end, when
-  the orbit is with respect to laboratory (not element body) coordinates.
-  That is, each time this routine is called it applies half the radiation kick for the entire element.
+For tracking through a given element, this routine should be called initially when
+the particle is at the entrance end and at the end when the particle is at the exit end, when
+the orbit is with respect to laboratory (not element body) coordinates.
+That is, each time this routine is called it applies half the radiation kick for the entire element.
 
-  Note: This routine is called by track1.
+Note: This routine is called by track1.
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Particle position before radiation applied.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Particle position after radiation has been applied.
+Parameters
+----------
+orbit : CoordStruct
+    Particle position before radiation applied.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Particle position after radiation has been applied.
 
-  ele : EleStruct
-      Element generating radiation.
+ele : EleStruct
+    Element generating radiation.
 
-  edge : int
-      Where the particle is: start_edge$ or end_edge$.
+edge : int
+    Where the particle is: start_edge$ or end_edge$.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Particle position before radiation applied.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Particle position after radiation has been applied.
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    Particle position before radiation applied.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Particle position after radiation has been applied.
+)"""
   );
   m.def(
       "track1_radiation_center",
@@ -1759,42 +1752,37 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("rad_fluct") = py::none(),
       R"""(Subroutine track1_radiation_center (orbit, ele1, ele2, rad_damp, rad_fluct)
 
-  Used for elements that have been split in half: This routine applies a kick to a particle
-  to account for radiation dampling and/or fluctuations.
+Used for elements that have been split in half: This routine applies a kick to a particle
+to account for radiation dampling and/or fluctuations.
 
-  Also see: track1_radiation.
+Also see: track1_radiation.
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Particle at center of element before radiation applied.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Particle position after radiation has been applied.
+Parameters
+----------
+orbit : CoordStruct
+    Particle at center of element before radiation applied.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Particle position after radiation has been applied.
 
-  ele1 : EleStruct
-      First half of the split element.
+ele1 : EleStruct
+    First half of the split element.
 
-  ele2 : EleStruct
-      Second half of the split element.
+ele2 : EleStruct
+    Second half of the split element.
 
-  rad_damp : bool, optional
-      If present, override setting of bmad_com.radiation_damping_on.
+rad_damp : bool, optional
+    If present, override setting of bmad_com.radiation_damping_on.
 
-  rad_fluct : bool, optional
-      If present, override setting of bmad_com.radiation_fluctuations_on.
+rad_fluct : bool, optional
+    If present, override setting of bmad_com.radiation_fluctuations_on.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Particle at center of element before radiation applied.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Particle position after radiation has been applied.
-
-  Notes
-  -----
-  Related routines:
-  track1_radiation.
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    Particle at center of element before radiation applied.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Particle position after radiation has been applied.
+)"""
   );
   py::class_<Bmad::Track1RungeKutta, std::unique_ptr<Bmad::Track1RungeKutta>>(
       m,
@@ -1823,45 +1811,45 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track1_runge_kutta
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coords.
+Parameters
+----------
+orbit : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coords.
 
-  ele : EleStruct
-      Ele_struct
+ele : EleStruct
+    Ele_struct
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix propagated through the element.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix propagated through the element.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coords.
+Returns
+-------
+orbit : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coords.
 
-  err_flag : bool
-      Set True if there is an error. False otherwise.
+err_flag : bool
+    Set True if there is an error. False otherwise.
 
-  track : TrackStruct, optional
-      Structure holding the track information.
+track : TrackStruct, optional
+    Structure holding the track information.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix propagated through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix propagated through the element.
+)"""
   );
   m.def(
       "track1_sample",
@@ -1871,28 +1859,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orbit"),
       R"""(Subroutine track1_sample (ele, param, orbit)
 
-  Routine to track reflection from a sample element.
+Routine to track reflection from a sample element.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element tracking through.
+Parameters
+----------
+ele : EleStruct
+    Element tracking through.
 
-  param : LatParamStruct
-      lattice parameters.
+param : LatParamStruct
+    lattice parameters.
 
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
 
-  Returns
-  -------
-  orbit : CoordStruct
-      phase-space coords to be transformed
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: final phase-space coords
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    phase-space coords to be transformed
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: final phase-space coords
+)"""
   );
   m.def(
       "track1_spin",
@@ -1904,31 +1892,31 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_quaternion") = py::none(),
       R"""(Wrapper for Fortran routine track1_spin
 
-  Parameters
-  ----------
-  start_orb : CoordStruct
-      Starting coords.
+Parameters
+----------
+start_orb : CoordStruct
+    Starting coords.
 
-  ele : EleStruct
-      Element to track through.
+ele : EleStruct
+    Element to track through.
 
-  param : LatParamStruct
-      Beam parameters.
+param : LatParamStruct
+    Beam parameters.
 
-  end_orb : CoordStruct
-      Ending coords.
+end_orb : CoordStruct
+    Ending coords.
 
-  make_quaternion : bool, optional
-      If present and true then calculate the 1st order spin map which is represented as a quaternion.
+make_quaternion : bool, optional
+    If present and true then calculate the 1st order spin map which is represented as a quaternion.
 
-  Returns
-  -------
-  ele : EleStruct
-      Element to track through.
+Returns
+-------
+ele : EleStruct
+    Element to track through.
 
-  end_orb : CoordStruct
-      Ending coords.
-  )"""
+end_orb : CoordStruct
+    Ending coords.
+)"""
   );
   m.def(
       "track1_spin_integration",
@@ -1939,25 +1927,25 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("end_orb"),
       R"""(Wrapper for Fortran routine track1_spin_integration
 
-  Parameters
-  ----------
-  start_orb : CoordStruct
-      Starting coords.
+Parameters
+----------
+start_orb : CoordStruct
+    Starting coords.
 
-  ele : EleStruct
-      Element to track through.
+ele : EleStruct
+    Element to track through.
 
-  param : LatParamStruct
-      Beam parameters.
+param : LatParamStruct
+    Beam parameters.
 
-  end_orb : CoordStruct
-      Ending coords.
+end_orb : CoordStruct
+    Ending coords.
 
-  Returns
-  -------
-  end_orb : CoordStruct
-      Ending coords.
-  )"""
+Returns
+-------
+end_orb : CoordStruct
+    Ending coords.
+)"""
   );
   m.def(
       "track1_spin_taylor",
@@ -1967,21 +1955,21 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("param"),
       R"""(Wrapper for Fortran routine track1_spin_taylor
 
-  Parameters
-  ----------
-  start_orb : CoordStruct
-      Starting coords.
+Parameters
+----------
+start_orb : CoordStruct
+    Starting coords.
 
-  ele : EleStruct
-      Element to track through.
+ele : EleStruct
+    Element to track through.
 
-  param : LatParamStruct
-      Beam parameters.
+param : LatParamStruct
+    Beam parameters.
 
-  Returns
-  -------
-  end_orb : CoordStruct
-  )"""
+Returns
+-------
+end_orb : CoordStruct
+)"""
   );
   m.def(
       "track1_sr_wake",
@@ -1990,25 +1978,25 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Subroutine track1_sr_wake (bunch, ele)
 
-  Subroutine to apply the short range wake fields to a bunch.
+Subroutine to apply the short range wake fields to a bunch.
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Bunch of particles.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Bunch with wakefields applied to the particles.
+Parameters
+----------
+bunch : BunchStruct
+    Bunch of particles.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Bunch with wakefields applied to the particles.
 
-  ele : EleStruct
-      Element with wakefields.
+ele : EleStruct
+    Element with wakefields.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Bunch of particles.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Bunch with wakefields applied to the particles.
-  )"""
+Returns
+-------
+bunch : BunchStruct
+    Bunch of particles.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Bunch with wakefields applied to the particles.
+)"""
   );
   m.def(
       "track1_symp_lie_ptc",
@@ -2018,28 +2006,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("param"),
       R"""(Wrapper for Fortran routine track1_symp_lie_ptc
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position
+Parameters
+----------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position
 
-  ele : EleStruct
-      Element
+ele : EleStruct
+    Element
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position
+Returns
+-------
+orbit : CoordStruct
+    Starting position
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position
 
-  track : TrackStruct, optional
-      Structure holding the track information.
-  )"""
+track : TrackStruct, optional
+    Structure holding the track information.
+)"""
   );
   m.def(
       "track1_taylor",
@@ -2050,32 +2038,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track1_taylor
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coords.
+Parameters
+----------
+orbit : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coords.
 
-  ele : EleStruct
-      Element to track through.
+ele : EleStruct
+    Element to track through.
 
-  taylor : 1D array of TaylorStruct (shape: 6), optional
-      Alternative map to use instead of ele.taylor.
+taylor : 1D array of TaylorStruct (shape: 6), optional
+    Alternative map to use instead of ele.taylor.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coords.
+Returns
+-------
+orbit : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coords.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   py::class_<PyTrack1TimeRungeKutta, std::unique_ptr<PyTrack1TimeRungeKutta>>(
       m,
@@ -2107,49 +2095,51 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("dt_step") = py::none(),
       R"""(Wrapper for Fortran routine track1_time_runge_kutta
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      starting position, z-based coords
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: end position, z-based coords
+Parameters
+----------
+orbit : CoordStruct
+    starting position, z-based coords
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: end position, z-based coords
 
-  ele : EleStruct
-      element
+ele : EleStruct
+    element
 
-  param : LatParamStruct
-      lattice parameters
+param : LatParamStruct
+    lattice parameters
 
-  t_end : float, optional
-      If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
-      The time orb.t at which tracking stops
+t_end : float, optional
+    If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
+    The time orb.t at which tracking stops may be less than this if the particle gets to the end of the
+    element
 
-  dt_step : float, optional
-      If positive, next RK time step to take. This overrides bmad_com.init_ds_adaptive_tracking. Used by
-      track_bunch_time.
-      This parameter is an input/output and is modified in-place.
-      As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
+dt_step : float, optional
+    If positive, next RK time step to take. This overrides bmad_com.init_ds_adaptive_tracking. Used by
+    track_bunch_time.
+    This parameter is an input/output and is modified in-place.
+    As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      starting position, z-based coords
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: end position, z-based coords
+Returns
+-------
+orbit : CoordStruct
+    starting position, z-based coords
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: end position, z-based coords
 
-  err_flag : bool
-      Set True if there is an error. False otherwise
+err_flag : bool
+    Set True if there is an error. False otherwise
 
-  track : TrackStruct, optional
-      Contains array of the step-by-step particle trajectory along with the field at these positions. When
-      tracking through multiple elements, the trajectory in an element
+track : TrackStruct, optional
+    Contains array of the step-by-step particle trajectory along with the field at these positions. When
+    tracking through multiple elements, the trajectory in an element is appended to the existing trajectory.
+    To reset: Set track.n_pt = -1.
 
-  dt_step : float, optional
-      If positive, next RK time step to take. This overrides bmad_com.init_ds_adaptive_tracking. Used by
-      track_bunch_time.
-      This parameter is an input/output and is modified in-place.
-      As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
-  )"""
+dt_step : float, optional
+    If positive, next RK time step to take. This overrides bmad_com.init_ds_adaptive_tracking. Used by
+    track_bunch_time.
+    This parameter is an input/output and is modified in-place.
+    As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
+)"""
   );
   py::class_<Bmad::TrackABeambeam, std::unique_ptr<Bmad::TrackABeambeam>>(
       m,
@@ -2177,35 +2167,36 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_beambeam
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Beambeam element.
+ele : EleStruct
+    Beambeam element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  track : TrackStruct, optional
-      Structure holding the track information if the
+track : TrackStruct, optional
+    Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
+    more details.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_bend",
@@ -2217,39 +2208,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_bend
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Bend element.
+ele : EleStruct
+    Bend element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix to the element end.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix to the element end.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix to the element end.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix to the element end.
+)"""
   );
   m.def(
       "track_a_bend_photon",
@@ -2259,30 +2250,30 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("length"),
       R"""(Subroutine track_a_bend_photon (orb, ele, length)
 
-  Routine to track a photon through a dipole bend.
-  The photon is traveling in a straight line but the reference frame
-  is curved in a circular shape.
+Routine to track a photon through a dipole bend.
+The photon is traveling in a straight line but the reference frame
+is curved in a circular shape.
 
-  Parameters
-  ----------
-  orb : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: End position.
+Parameters
+----------
+orb : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: End position.
 
-  ele : EleStruct
-      Bend element.
+ele : EleStruct
+    Bend element.
 
-  length : float
-      length to track.
+length : float
+    length to track.
 
-  Returns
-  -------
-  orb : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: End position.
-  )"""
+Returns
+-------
+orb : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: End position.
+)"""
   );
   m.def(
       "track_a_capillary",
@@ -2291,25 +2282,25 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Subroutine track_a_capillary (orb, ele)
 
-  Routine to track through a capillary.
+Routine to track through a capillary.
 
-  Parameters
-  ----------
-  orb : CoordStruct
-      Input photon coordinates.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Output photon coordinates.
+Parameters
+----------
+orb : CoordStruct
+    Input photon coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Output photon coordinates.
 
-  ele : EleStruct
-      Capillary element
+ele : EleStruct
+    Capillary element
 
-  Returns
-  -------
-  orb : CoordStruct
-      Input photon coordinates.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Output photon coordinates.
-  )"""
+Returns
+-------
+orb : CoordStruct
+    Input photon coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Output photon coordinates.
+)"""
   );
   m.def(
       "track_a_converter",
@@ -2320,32 +2311,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_converter
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      converter element.
+ele : EleStruct
+    converter element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is False.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is False.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_crab_cavity",
@@ -2356,32 +2347,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_crab_cavity
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      crab_cavity element.
+ele : EleStruct
+    crab_cavity element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   py::class_<PyTrackADrift, std::unique_ptr<PyTrackADrift>>(
       m,
@@ -2409,54 +2400,54 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("time") = py::none(),
       R"""(Wrapper for Fortran routine track_a_drift
 
-  Parameters
-  ----------
-  orb : CoordStruct
-      Orbit at start of the drift.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Orbit at end of the drift.
+Parameters
+----------
+orb : CoordStruct
+    Orbit at start of the drift.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Orbit at end of the drift.
 
-  length : float
-      Length to drift through in body coordinates. --    If orb.direction = 1, positive length is in +z
-      direction and vice versa.
+length : float
+    Length to drift through in body coordinates. --    If orb.direction = 1, positive length is in +z
+    direction and vice versa.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the drift.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix including the drift.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the drift.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix including the drift.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  ele_orientation : int, optional
-      Element orientation. Default is orb.direction.
+ele_orientation : int, optional
+    Element orientation. Default is orb.direction.
 
-  include_ref_motion : bool, optional
-      Include effect of the motion of the reference particle? Default is True. False is basically only used by
-      offset_particle.
+include_ref_motion : bool, optional
+    Include effect of the motion of the reference particle? Default is True. False is basically only used by
+    offset_particle. Additionally, if False, orb.s is not changed.
 
-  time : float, optional
-      Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
-      This parameter is an input/output and is modified in-place.
-      As an output, time: Updated time.
+time : float, optional
+    Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
+    This parameter is an input/output and is modified in-place.
+    As an output, time: Updated time.
 
-  Returns
-  -------
-  orb : CoordStruct
-      Orbit at start of the drift.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Orbit at end of the drift.
+Returns
+-------
+orb : CoordStruct
+    Orbit at start of the drift.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Orbit at end of the drift.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the drift.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix including the drift.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the drift.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix including the drift.
 
-  time : float, optional
-      Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
-      This parameter is an input/output and is modified in-place.
-      As an output, time: Updated time.
-  )"""
+time : float, optional
+    Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
+    This parameter is an input/output and is modified in-place.
+    As an output, time: Updated time.
+)"""
   );
   m.def(
       "track_a_drift_photon",
@@ -2466,26 +2457,26 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("phase_relative_to_ref"),
       R"""(Wrapper for Fortran routine track_a_drift_photon
 
-  Parameters
-  ----------
-  orb : CoordStruct
-      Orbit at start of the drift.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Orbit at end of the drift
+Parameters
+----------
+orb : CoordStruct
+    Orbit at start of the drift.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Orbit at end of the drift
 
-  length : float
-      Longitudinal length to drift through.
+length : float
+    Longitudinal length to drift through.
 
-  phase_relative_to_ref : bool
-      If true then E field phase shift is relative to ref particle.
+phase_relative_to_ref : bool
+    If true then E field phase shift is relative to ref particle.
 
-  Returns
-  -------
-  orb : CoordStruct
-      Orbit at start of the drift.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Orbit at end of the drift
-  )"""
+Returns
+-------
+orb : CoordStruct
+    Orbit at start of the drift.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Orbit at end of the drift
+)"""
   );
   m.def(
       "track_a_foil",
@@ -2496,32 +2487,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_foil
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      foil element.
+ele : EleStruct
+    foil element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is False.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is False.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_gkicker",
@@ -2533,39 +2524,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_gkicker
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Gkicker
+ele : EleStruct
+    Gkicker
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix through the element.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the element.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_lcavity",
@@ -2577,39 +2568,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_lcavity
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Thick multipole element.
+ele : EleStruct
+    Thick multipole element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix through the element.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the element.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_lcavity_old",
@@ -2621,39 +2612,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_lcavity_old
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Thick multipole element.
+ele : EleStruct
+    Thick multipole element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix through the element.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the element.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_mask",
@@ -2664,32 +2655,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_mask
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Mask element.
+ele : EleStruct
+    Mask element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_match",
@@ -2701,36 +2692,36 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_match
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Match element.
+ele : EleStruct
+    Match element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  err_flag : bool, optional
+err_flag : bool, optional
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  err_flag : bool, optional
+err_flag : bool, optional
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   py::class_<Bmad::TrackAPatch, std::unique_ptr<Bmad::TrackAPatch>>(
       m,
@@ -2762,43 +2753,44 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_patch
 
-  Parameters
-  ----------
-  ele : EleStruct
-      patch element.
+Parameters
+----------
+ele : EleStruct
+    patch element.
 
-  orbit : CoordStruct
-      Starting phase space coords
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Coords after applying a patch transformation.
+orbit : CoordStruct
+    Starting phase space coords
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Coords after applying a patch transformation.
 
-  drift_to_exit : bool, optional
-      If False then do not drift the particle from beginning to end face. Also do not correct for a reference
-      energy shift.
+drift_to_exit : bool, optional
+    If False then do not drift the particle from beginning to end face. Also do not correct for a reference
+    energy shift. Default is True.
 
-  track_spin : bool, optional
-      If True rotate the spin vector appropriately.
+track_spin : bool, optional
+    If True rotate the spin vector appropriately. If ele.spin_tracking_method = symp_lie_ptc -> default =
+    True. Else default = False.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting phase space coords
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Coords after applying a patch transformation.
+Returns
+-------
+orbit : CoordStruct
+    Starting phase space coords
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Coords after applying a patch transformation.
 
-  s_ent : float, optional
-      Longitudinal coordinate of the initial particle position in the frame of reference of the face where the
-      particle exits.
+s_ent : float, optional
+    Longitudinal coordinate of the initial particle position in the frame of reference of the face where the
+    particle exits. For a patch with positive z_offset and all other attributes zero, s_ent = -z_offset.
 
-  ds_ref : float, optional
-      Distance reference particle travels from entrance to exit.
+ds_ref : float, optional
+    Distance reference particle travels from entrance to exit.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_patch_photon",
@@ -2809,37 +2801,35 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("use_z_pos") = py::none(),
       R"""(Subroutine track_a_patch_photon (ele, orbit, drift_to_exit, use_z_pos)
 
-  Routine to track through a patch element with a photon.
-  The steps for tracking are:
-    1) Transform from entrance to exit coordinates.
-    2) Drift particle from the entrance to the exit coordinants.
+Routine to track through a patch element with a photon.
+The steps for tracking are:
+  1) Transform from entrance to exit coordinates.
+  2) Drift particle from the entrance to the exit coordinants.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      patch element.
+Parameters
+----------
+ele : EleStruct
+    patch element.
 
-  orbit : CoordStruct
-      Starting phase space coords
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Coords after applying a patch transformation.
+orbit : CoordStruct
+    Starting phase space coords
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Coords after applying a patch transformation.
 
-  drift_to_exit : bool, optional
-      If False then do not drift the particle from
+drift_to_exit : bool, optional
+    If False then do not drift the particle from start to ending faces. Default is True.
 
-  start to ending faces. Default is True. : None
+use_z_pos : bool, optional
+    If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
+    of assuming that the particle is at the patch edge.
 
-  use_z_pos : bool, optional
-      If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
-      of assuming that the particle is at the patch edge.
-
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting phase space coords
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Coords after applying a patch transformation.
-  )"""
+Returns
+-------
+orbit : CoordStruct
+    Starting phase space coords
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Coords after applying a patch transformation.
+)"""
   );
   m.def(
       "track_a_pickup",
@@ -2851,36 +2841,36 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_pickup
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Pickup element.
+ele : EleStruct
+    Pickup element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  err_flag : bool, optional
+err_flag : bool, optional
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  err_flag : bool, optional
+err_flag : bool, optional
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_quadrupole",
@@ -2891,32 +2881,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_quadrupole
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Quadrupole element.
+ele : EleStruct
+    Quadrupole element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_rfcavity",
@@ -2927,32 +2917,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_rfcavity
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      rfcavity element.
+ele : EleStruct
+    rfcavity element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_sad_mult",
@@ -2964,39 +2954,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_sad_mult
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Sad_mult element.
+ele : EleStruct
+    Sad_mult element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the sad_mult.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the sad_mult.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix up to the sad_mult.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the sad_mult.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix.
+)"""
   );
   m.def(
       "track_a_sol_quad",
@@ -3007,32 +2997,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_sol_quad
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Sol_quad or solenoid element.
+ele : EleStruct
+    Sol_quad or solenoid element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_thick_multipole",
@@ -3044,39 +3034,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_thick_multipole
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Thick multipole element.
+ele : EleStruct
+    Thick multipole element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix through the element.
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the element.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place.
-      As an output, mat6: Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the element.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the element.
+)"""
   );
   m.def(
       "track_a_wiggler",
@@ -3087,32 +3077,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("make_matrix") = py::none(),
       R"""(Wrapper for Fortran routine track_a_wiggler
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Parameters
+----------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  ele : EleStruct
-      Wiggler element.
+ele : EleStruct
+    Wiggler element.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  make_matrix : bool, optional
-      Propagate the transfer matrix? Default is false.
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting position.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: End position.
+Returns
+-------
+orbit : CoordStruct
+    Starting position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: End position.
 
-  mat6 : 2D array of float (shape: 6,6), optional
-      Transfer matrix through the element.
-  )"""
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix through the element.
+)"""
   );
   py::class_<Bmad::TrackAZeroLengthElement, std::unique_ptr<Bmad::TrackAZeroLengthElement>>(
       m,
@@ -3139,32 +3129,32 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("param"),
       R"""(Wrapper for Fortran routine track_a_zero_length_element
 
-  Parameters
-  ----------
-  orbit : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coords.
+Parameters
+----------
+orbit : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coords.
 
-  ele : EleStruct
-      Element tracked through.
+ele : EleStruct
+    Element tracked through.
 
-  param : LatParamStruct
-      Lattice parameters.
+param : LatParamStruct
+    Lattice parameters.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Starting coords.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Ending coords.
+Returns
+-------
+orbit : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coords.
 
-  err_flag : bool
-      Set True if there is an error. False otherwise.
+err_flag : bool
+    Set True if there is an error. False otherwise.
 
-  track : TrackStruct, optional
-      Structure holding the track information.
-  )"""
+track : TrackStruct, optional
+    Structure holding the track information.
+)"""
   );
   py::class_<Bmad::TrackAll, std::unique_ptr<Bmad::TrackAll>>(
       m,
@@ -3193,39 +3183,39 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("init_lost") = py::none(),
       R"""(Wrapper for Fortran routine track_all
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lat to track through.
+Parameters
+----------
+lat : LatStruct
+    Lat to track through.
 
-  orbit : 1D array of CoordStruct
-      orbit(0) is the starting coordinates for tracking.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Orbit array.
+orbit : 1D array of CoordStruct
+    orbit(0) is the starting coordinates for tracking. If not allocated, the zero orbit will be used.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Orbit array.
 
-  ix_branch : int, optional
-      Index of branch to track. Default is 0 (main branch).
+ix_branch : int, optional
+    Index of branch to track. Default is 0 (main branch).
 
-  init_lost : bool, optional
-      Default if False. If True, initialize orbit(N) terms that are not tracked through due to particle loss.
+init_lost : bool, optional
+    Default if False. If True, initialize orbit(N) terms that are not tracked through due to particle loss.
 
-  Returns
-  -------
-  orbit : 1D array of CoordStruct
-      orbit(0) is the starting coordinates for tracking.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Orbit array.
+Returns
+-------
+orbit : 1D array of CoordStruct
+    orbit(0) is the starting coordinates for tracking. If not allocated, the zero orbit will be used.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Orbit array.
 
-  track_state : int, optional
-      Set to moving_forward$ if everything is OK.
+track_state : int, optional
+    Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
 
-  err_flag : bool, optional
-      Set true if particle lost or error. False otherwise
+err_flag : bool, optional
+    Set true if particle lost or error. False otherwise
 
-  orbit0 : 1D array of CoordStruct, optional
-      Orbit array for branch 0. Used to fill in the orbit at lord elemenets. Only needed when orbit(:) is not
-      the orbit for branch 0.
-  )"""
+orbit0 : 1D array of CoordStruct, optional
+    Orbit array for branch 0. Used to fill in the orbit at lord elemenets. Only needed when orbit(:) is not
+    the orbit for branch 0.
+)"""
   );
   m.def(
       "track_beam",
@@ -3239,61 +3229,54 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("bunch_tracks") = py::none(),
       R"""(Subroutine track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks)
 
-  Subroutine to track a beam of particles from the end of
-  ele1 Through to the end of ele2. Both must be in the same lattice branch.
+Subroutine to track a beam of particles from the end of
+ele1 Through to the end of ele2. Both must be in the same lattice branch.
 
-  Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
+Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice to track through.
+Parameters
+----------
+lat : LatStruct
+    Lattice to track through.
 
-  beam : BeamStruct
-      Beam at end of element ix1.
-      This parameter is an input/output and is modified in-place.
-      As an output, beam: Beam at end of element ix2.
+beam : BeamStruct
+    Beam at end of element ix1.
+    This parameter is an input/output and is modified in-place.
+    As an output, beam: Beam at end of element ix2.
 
-  ele1 : EleStruct, optional
-      Starting element (this element
+ele1 : EleStruct, optional
+    Starting element (this element is NOT tracked through). Default is lat.ele(0).
 
-  is NOT tracked through). Default is lat%ele : None
+ele2 : EleStruct, optional
+    Ending element. Default is lat.ele(lat.n_ele_track).
 
-  ele2 : EleStruct, optional
-      Ending element.
+centroid : 1D array of CoordStruct, optional
+    Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before beam tracking by
+    tracking a single particle.
 
-  Default is lat%ele : None
+direction : int, optional
+    +1 (default) -> Track forward, -1 -> Track backwards.
 
-  centroid : 1D array of CoordStruct, optional
-      Approximate centroid orbit. Only needed if CSR is on.
+bunch_tracks : 1D array of BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_tracks: track information if the tracking method does
 
-  Hint: Calculate this before beam tracking by tracking a single particle. : None
+Returns
+-------
+beam : BeamStruct
+    Beam at end of element ix1.
+    This parameter is an input/output and is modified in-place.
+    As an output, beam: Beam at end of element ix2.
 
-  direction : int, optional
-      +1 (default) -> Track forward, -1 -> Track backwards.
+bunch_tracks : 1D array of BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_tracks: track information if the tracking method does
 
-  bunch_tracks : 1D array of BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_tracks: track information if the tracking method does
-
-  Returns
-  -------
-  beam : BeamStruct
-      Beam at end of element ix1.
-      This parameter is an input/output and is modified in-place.
-      As an output, beam: Beam at end of element ix2.
-
-  bunch_tracks : 1D array of BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_tracks: track information if the tracking method does
-
-  err : bool
-      Set true if there is an error.
-
-  EG: Too many particles lost for a CSR calc. : None
-  )"""
+err : bool
+    Set true if there is an error. EG: Too many particles lost for a CSR calc.
+)"""
   );
   m.def(
       "track_bunch",
@@ -3307,63 +3290,56 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("bunch_track") = py::none(),
       R"""(Subroutine track_bunch (lat, bunch, ele1, ele2, err, centroid, direction, bunch_track)
 
-  Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
-  Both must be in the same lattice branch.
-  With forward tracking, if ele2 is at or before ele1, the tracking will "wrap" around
-  the ends of the lattice.
+Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
+Both must be in the same lattice branch.
+With forward tracking, if ele2 is at or before ele1, the tracking will "wrap" around
+the ends of the lattice.
 
-  Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
+Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice to track through.
+Parameters
+----------
+lat : LatStruct
+    Lattice to track through.
 
-  bunch : BunchStruct
-      Bunch at end of element ix1.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Bunch at end of element ix2.
+bunch : BunchStruct
+    Bunch at end of element ix1.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Bunch at end of element ix2.
 
-  ele1 : EleStruct, optional
-      Starting element (this element
+ele1 : EleStruct, optional
+    Starting element (this element is NOT tracked through). Default is lat.ele(0).
 
-  is NOT tracked through). Default is lat%ele : None
+ele2 : EleStruct, optional
+    Ending element. Default is lat.ele(lat.n_ele_track).
 
-  ele2 : EleStruct, optional
-      Ending element.
+centroid : 1D array of CoordStruct, optional
+    Approximate centroid orbit. Only needed if CSR is on. Hint: Calculate this before bunch tracking by
+    tracking a single particle.
 
-  Default is lat%ele : None
+direction : int, optional
+    +1 (default) -> Track forward, -1 -> Track backwards.
 
-  centroid : 1D array of CoordStruct, optional
-      Approximate centroid orbit. Only needed if CSR is on.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: track information if the tracking method does
 
-  Hint: Calculate this before bunch tracking by tracking a single particle. : None
+Returns
+-------
+bunch : BunchStruct
+    Bunch at end of element ix1.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Bunch at end of element ix2.
 
-  direction : int, optional
-      +1 (default) -> Track forward, -1 -> Track backwards.
+bunch_track : BunchTrackStruct, optional
+    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch_track: track information if the tracking method does
 
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: track information if the tracking method does
-
-  Returns
-  -------
-  bunch : BunchStruct
-      Bunch at end of element ix1.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Bunch at end of element ix2.
-
-  bunch_track : BunchTrackStruct, optional
-      Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch_track: track information if the tracking method does
-
-  err : bool
-      Set true if there is an error.
-
-  EG: Too many particles lost for a CSR calc. : None
-  )"""
+err : bool
+    Set true if there is an error. EG: Too many particles lost for a CSR calc.
+)"""
   );
   m.def(
       "track_bunch_time",
@@ -3376,42 +3352,42 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("extra_field") = py::none(),
       R"""(Wrapper for Fortran routine track_bunch_time
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Coordinates must be time-coords in element body frame.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Coordinates will be time-coords in element body frame.
+Parameters
+----------
+bunch : BunchStruct
+    Coordinates must be time-coords in element body frame.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Coordinates will be time-coords in element body frame.
 
-  branch : BranchStruct
-      Lattice branch being tracked through.
+branch : BranchStruct
+    Lattice branch being tracked through.
 
-  t_end : float
-      Ending time.
+t_end : float
+    Ending time.
 
-  s_end : float
-      Ending s-position.
+s_end : float
+    Ending s-position.
 
-  dt_step : 1D array of float, optional
-      Initial step to take for each particle.
-      This parameter is an input/output and is modified in-place.
-      As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
+dt_step : 1D array of float, optional
+    Initial step to take for each particle. Overrides bmad_com.init_ds_adaptive_tracking.
+    This parameter is an input/output and is modified in-place.
+    As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
 
-  extra_field : 1D array of EmFieldStruct, optional
-      Per particle static field to be added to the lattice element field. Eg used with space charge.
+extra_field : 1D array of EmFieldStruct, optional
+    Per particle static field to be added to the lattice element field. Eg used with space charge.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Coordinates must be time-coords in element body frame.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Coordinates will be time-coords in element body frame.
+Returns
+-------
+bunch : BunchStruct
+    Coordinates must be time-coords in element body frame.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Coordinates will be time-coords in element body frame.
 
-  dt_step : 1D array of float, optional
-      Initial step to take for each particle.
-      This parameter is an input/output and is modified in-place.
-      As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
-  )"""
+dt_step : 1D array of float, optional
+    Initial step to take for each particle. Overrides bmad_com.init_ds_adaptive_tracking.
+    This parameter is an input/output and is modified in-place.
+    As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
+)"""
   );
   m.def(
       "track_bunch_to_s",
@@ -3421,30 +3397,30 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("branch"),
       R"""(Subroutine track_bunch_to_s (bunch, s, branch)
 
-  Drift a bunch of particles to the same s coordinate
+Drift a bunch of particles to the same s coordinate
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Input bunch position in s-based coordinate.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same s
-      coordinate
+Parameters
+----------
+bunch : BunchStruct
+    Input bunch position in s-based coordinate.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same s
+    coordinate
 
-  s : float
-      Target coordinate.
+s : float
+    Target coordinate.
 
-  branch : BranchStruct
-      Branch being tracked through.
+branch : BranchStruct
+    Branch being tracked through.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Input bunch position in s-based coordinate.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same s
-      coordinate
-  )"""
+Returns
+-------
+bunch : BunchStruct
+    Input bunch position in s-based coordinate.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same s
+    coordinate
+)"""
   );
   m.def(
       "track_bunch_to_t",
@@ -3454,30 +3430,30 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("branch"),
       R"""(Subroutine track_bunch_to_t (bunch, t_target, branch)
 
-  Drift a bunch of particles to the same t coordinate
+Drift a bunch of particles to the same t coordinate
 
-  Parameters
-  ----------
-  bunch : BunchStruct
-      Input bunch position in s-based coordinate.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same t
-      coordinate
+Parameters
+----------
+bunch : BunchStruct
+    Input bunch position in s-based coordinate.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same t
+    coordinate
 
-  t_target : float
-      Target t coordinate.
+t_target : float
+    Target t coordinate.
 
-  branch : BranchStruct
-      Lattice branch being tracked through.
+branch : BranchStruct
+    Lattice branch being tracked through.
 
-  Returns
-  -------
-  bunch : BunchStruct
-      Input bunch position in s-based coordinate.
-      This parameter is an input/output and is modified in-place.
-      As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same t
-      coordinate
-  )"""
+Returns
+-------
+bunch : BunchStruct
+    Input bunch position in s-based coordinate.
+    This parameter is an input/output and is modified in-place.
+    As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same t
+    coordinate
+)"""
   );
   m.def(
       "track_complex_taylor",
@@ -3487,21 +3463,21 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("end_orb"),
       R"""(Subroutine track_complex_taylor (start_orb, complex_taylor, end_orb)
 
-  Subroutine to track using a complex_taylor map.
+Subroutine to track using a complex_taylor map.
 
-  Parameters
-  ----------
-  complex_taylor : 1D array of ComplexTaylorStruct
-      complex_taylor map.
+Parameters
+----------
+complex_taylor : 1D array of ComplexTaylorStruct
+    complex_taylor map.
 
-  start_orb : 1D array of complex
-      Starting coords.
+start_orb : 1D array of complex
+    Starting coords.
 
-  Returns
-  -------
-  end_orb : 1D array of complex
-      Ending coords.
-  )"""
+Returns
+-------
+end_orb : 1D array of complex
+    Ending coords.
+)"""
   );
   py::class_<Bmad::TrackFromSToS, std::unique_ptr<Bmad::TrackFromSToS>>(
       m,
@@ -3532,37 +3508,38 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ix_ele_end") = py::none(),
       R"""(Wrapper for Fortran routine track_from_s_to_s
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice to track through
+Parameters
+----------
+lat : LatStruct
+    Lattice to track through
 
-  s_start : float
-      Starting s-position.
+s_start : float
+    Starting s-position.
 
-  s_end : float
-      Ending s-position. If <= s_start then will wrap
+s_end : float
+    Ending s-position. If <= s_start then will wrap
 
-  orbit_start : CoordStruct
-      Starting coordinates.
+orbit_start : CoordStruct
+    Starting coordinates.
 
-  ix_branch : int, optional
-      Lattice branch index. Default is 0 (main branch).
+ix_branch : int, optional
+    Lattice branch index. Default is 0 (main branch).
 
-  ix_ele_end : int, optional
-      If present, ignore s_end and track to in between ix_ele_end and ix_ele_end+1
+ix_ele_end : int, optional
+    If present, ignore s_end and track to in between ix_ele_end and ix_ele_end+1
 
-  Returns
-  -------
-  orbit_end : CoordStruct
-      Ending coordinates.
+Returns
+-------
+orbit_end : CoordStruct
+    Ending coordinates.
 
-  all_orb : 1D array of CoordStruct, optional
-      If present then the orbit at the exit ends
+all_orb : 1D array of CoordStruct, optional
+    If present then the orbit at the exit ends of the elements tracked through will be recorded in this
+    structure.
 
-  track_state : int, optional
-      Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
-  )"""
+track_state : int, optional
+    Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+)"""
   );
   m.def(
       "track_many",
@@ -3575,38 +3552,38 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ix_branch") = py::none(),
       R"""(Wrapper for Fortran routine track_many
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lat to track through.
+Parameters
+----------
+lat : LatStruct
+    Lat to track through.
 
-  orbit : 1D array of CoordStruct
-      Coordinates at start of tracking.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Orbit.
+orbit : 1D array of CoordStruct
+    Coordinates at start of tracking.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Orbit.
 
-  ix_start : int
-      Start index (See Note).
+ix_start : int
+    Start index (See Note).
 
-  ix_end : int
-      End index (See Note).
+ix_end : int
+    End index (See Note).
 
-  direction : int
-      Direction to track. = +1 -> Track forward (+s)
+direction : int
+    Direction to track. = +1 -> Track forward (+s) = -1 -> Track backward (-s)
 
-  ix_branch : int, optional
-      Branch to track. Default is 0 (main lattice).
+ix_branch : int, optional
+    Branch to track. Default is 0 (main lattice).
 
-  Returns
-  -------
-  orbit : 1D array of CoordStruct
-      Coordinates at start of tracking.
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: Orbit.
+Returns
+-------
+orbit : 1D array of CoordStruct
+    Coordinates at start of tracking.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Orbit.
 
-  track_state : int, optional
-      Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
-  )"""
+track_state : int, optional
+    Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+)"""
   );
   m.def(
       "track_to_surface",
@@ -3616,29 +3593,29 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("param"),
       R"""(Wrapper for Fortran routine track_to_surface
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element
+Parameters
+----------
+ele : EleStruct
+    Element
 
-  orbit : CoordStruct
-      Coordinates in the element coordinate frame
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: At surface in local surface coordinate frame
+orbit : CoordStruct
+    Coordinates in the element coordinate frame
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: At surface in local surface coordinate frame
 
-  param : LatParamStruct
-      Branch parameters.
+param : LatParamStruct
+    Branch parameters.
 
-  Returns
-  -------
-  orbit : CoordStruct
-      Coordinates in the element coordinate frame
-      This parameter is an input/output and is modified in-place.
-      As an output, orbit: At surface in local surface coordinate frame
+Returns
+-------
+orbit : CoordStruct
+    Coordinates in the element coordinate frame
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: At surface in local surface coordinate frame
 
-  w_surface : 2D array of float (shape: 3,3)
-      real(rp), rotation matrix to transform to surface coords.
-  )"""
+w_surface : 2D array of float (shape: 3,3)
+    real(rp), rotation matrix to transform to surface coords.
+)"""
   );
   py::class_<Bmad::TrackUntilDead, std::unique_ptr<Bmad::TrackUntilDead>>(
       m,
@@ -3664,27 +3641,27 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("lat"),
       R"""(subroutine track_until_dead (start_orb, lat, end_orb, track)
 
-  Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
-    until it is lost or exits the lattice.
+Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
+  until it is lost or exits the lattice.
 
-    The starting element is located using start_orb%s.
+  The starting element is located using start_orb%s.
 
-  Parameters
-  ----------
-  start_orb : CoordStruct
-      Starting coords.
+Parameters
+----------
+start_orb : CoordStruct
+    Starting coords.
 
-  lat : LatStruct
-      lattice that contains and element at start_orb.s
+lat : LatStruct
+    lattice that contains and element at start_orb.s
 
-  Returns
-  -------
-  end_orb : CoordStruct
-      final coords
+Returns
+-------
+end_orb : CoordStruct
+    final coords
 
-  track : TrackStruct, optional
-      (optional)
-  )"""
+track : TrackStruct, optional
+    (optional)
+)"""
   );
   py::class_<Bmad::TrackingRadMapSetup, std::unique_ptr<Bmad::TrackingRadMapSetup>>(
       m,
@@ -3711,25 +3688,25 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ref_edge"),
       R"""(Wrapper for Fortran routine tracking_rad_map_setup
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element to setup. Matrices will be with respect to the map reference orbit.
+Parameters
+----------
+ele : EleStruct
+    Element to setup. Matrices will be with respect to the map reference orbit.
 
-  tollerance : float
-      Tolerance used for the computation.
+tollerance : float
+    Tolerance used for the computation.
 
-  ref_edge : int
-      Edge that the matrices are referenced to. upstream_end$ or downstream_end$.
+ref_edge : int
+    Edge that the matrices are referenced to. upstream_end$ or downstream_end$.
 
-  Returns
-  -------
-  rad_map : RadMapStruct
-      Structure holding the matrices.
+Returns
+-------
+rad_map : RadMapStruct
+    Structure holding the matrices.
 
-  err_flag : bool
-      Set True if there is an error. False otherwise.
-  )"""
+err_flag : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "transfer_ac_kick",
@@ -3737,16 +3714,16 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ac_in"),
       R"""(Wrapper for Fortran routine transfer_ac_kick
 
-  Parameters
-  ----------
-  ac_in : AcKickerStruct
-      Input
+Parameters
+----------
+ac_in : AcKickerStruct
+    Input
 
-  Returns
-  -------
-  ac_out : AcKickerStruct, optional
-      Gets set equal to ac_in
-  )"""
+Returns
+-------
+ac_out : AcKickerStruct, optional
+    Gets set equal to ac_in
+)"""
   );
   m.def(
       "transfer_branch",
@@ -3754,14 +3731,14 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("branch1"),
       R"""(Wrapper for Fortran routine transfer_branch
 
-  Parameters
-  ----------
-  branch1 : BranchStruct
+Parameters
+----------
+branch1 : BranchStruct
 
-  Returns
-  -------
-  branch2 : BranchStruct
-  )"""
+Returns
+-------
+branch2 : BranchStruct
+)"""
   );
   m.def(
       "transfer_branch_parameters",
@@ -3769,16 +3746,16 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("branch_in"),
       R"""(Wrapper for Fortran routine transfer_branch_parameters
 
-  Parameters
-  ----------
-  branch_in : BranchStruct
-      Input branch.
+Parameters
+----------
+branch_in : BranchStruct
+    Input branch.
 
-  Returns
-  -------
-  branch_out : BranchStruct
-      Output branch with parameters set.
-  )"""
+Returns
+-------
+branch_out : BranchStruct
+    Output branch with parameters set.
+)"""
   );
   m.def(
       "transfer_branches",
@@ -3787,14 +3764,14 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("branch2"),
       R"""(Wrapper for Fortran routine transfer_branches
 
-  Parameters
-  ----------
-  branch1 : 1D array of BranchStruct
+Parameters
+----------
+branch1 : 1D array of BranchStruct
 
-  Returns
-  -------
-  branch2 : 1D array of BranchStruct
-  )"""
+Returns
+-------
+branch2 : 1D array of BranchStruct
+)"""
   );
   m.def(
       "transfer_ele",
@@ -3803,19 +3780,19 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("nullify_pointers") = py::none(),
       R"""(Wrapper for Fortran routine transfer_ele
 
-  Parameters
-  ----------
-  ele1 : EleStruct
+Parameters
+----------
+ele1 : EleStruct
 
-  nullify_pointers : bool, optional
-      If present and True then nullify the pointers in ele2 except for the ele2.lat and ele2.lord pointers. This
-      gives a "bare bones" copy where one does not have to worry about deallocating allocated structure
-      components later.
+nullify_pointers : bool, optional
+    If present and True then nullify the pointers in ele2 except for the ele2.lat and ele2.lord pointers. This
+    gives a "bare bones" copy where one does not have to worry about deallocating allocated structure
+    components later.
 
-  Returns
-  -------
-  ele2 : EleStruct
-  )"""
+Returns
+-------
+ele2 : EleStruct
+)"""
   );
   m.def(
       "transfer_ele_taylor",
@@ -3824,19 +3801,19 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("taylor_order") = py::none(),
       R"""(Wrapper for Fortran routine transfer_ele_taylor
 
-  Parameters
-  ----------
-  ele_in : EleStruct
-      Element with the Taylor map.
+Parameters
+----------
+ele_in : EleStruct
+    Element with the Taylor map.
 
-  taylor_order : int, optional
-      Order to truncate the Taylor map at.
+taylor_order : int, optional
+    Order to truncate the Taylor map at.
 
-  Returns
-  -------
-  ele_out : EleStruct
-      Element receiving the Taylor map truncated to order taylor_order.
-  )"""
+Returns
+-------
+ele_out : EleStruct
+    Element receiving the Taylor map truncated to order taylor_order.
+)"""
   );
   m.def(
       "transfer_eles",
@@ -3845,14 +3822,14 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele2"),
       R"""(Wrapper for Fortran routine transfer_eles
 
-  Parameters
-  ----------
-  ele1 : 1D array of EleStruct
+Parameters
+----------
+ele1 : 1D array of EleStruct
 
-  Returns
-  -------
-  ele2 : 1D array of EleStruct
-  )"""
+Returns
+-------
+ele2 : 1D array of EleStruct
+)"""
   );
   m.def(
       "transfer_fieldmap",
@@ -3861,19 +3838,19 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("who"),
       R"""(Wrapper for Fortran routine transfer_fieldmap
 
-  Parameters
-  ----------
-  ele_in : EleStruct
-      Input element.
+Parameters
+----------
+ele_in : EleStruct
+    Input element.
 
-  who : int
-      Possibilities are: all$, cartesian_map$, cylindrical_map$, or grid_field$
+who : int
+    Possibilities are: all$, cartesian_map$, cylindrical_map$, or grid_field$
 
-  Returns
-  -------
-  ele_out : EleStruct
-      Output element.
-  )"""
+Returns
+-------
+ele_out : EleStruct
+    Output element.
+)"""
   );
   m.def(
       "transfer_fixer_params",
@@ -3884,30 +3861,30 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("who") = py::none(),
       R"""(Function transfer_fixer_params(fixer, to_stored, orbit, who) result (is_ok)
 
-  Set parameters of fixer.
+Set parameters of fixer.
 
-  Parameters
-  ----------
-  fixer : EleStruct
-      Fixer element to set.
+Parameters
+----------
+fixer : EleStruct
+    Fixer element to set.
 
-  to_stored : bool
-      If False, set real Twiss from stored. If True, set stored Twiss from real.
+to_stored : bool
+    If False, set real Twiss from stored. If True, set stored Twiss from real.
 
-  orbit : CoordStruct, optional
-      Used for 'phase_space' transfers.
+orbit : CoordStruct, optional
+    Used for 'phase_space' transfers.
 
-  who : character, optional
-      Who to set. Possibilities are: Groups: 'all', ' ' (default and same as 'all') Note: This excludes all
-      'start' sets., 'twiss', 'a_twiss', 'b_twiss', 'cmat', 'x_dispersion', 'y_dispersion', 'dispersion',
-      'chromatic', 'orbit', 'phase_space', 'spin', 'x_plane', 'y_plane', 'z_plane', 'start', 'start_spin',
-      'start_phase_space', Individula Parameters: 'x', 'px', 'cmat_11', etc.
+who : character, optional
+    Who to set. Possibilities are: Groups: 'all', ' ' (default and same as 'all') Note: This excludes all
+    'start' sets., 'twiss', 'a_twiss', 'b_twiss', 'cmat', 'x_dispersion', 'y_dispersion', 'dispersion',
+    'chromatic', 'orbit', 'phase_space', 'spin', 'x_plane', 'y_plane', 'z_plane', 'start', 'start_spin',
+    'start_phase_space', Individula Parameters: 'x', 'px', 'cmat_11', etc.
 
-  Returns
-  -------
-  is_ok : bool
-      logical
-  )"""
+Returns
+-------
+is_ok : bool
+    logical
+)"""
   );
   m.def(
       "transfer_lat",
@@ -3915,14 +3892,14 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("lat1"),
       R"""(Wrapper for Fortran routine transfer_lat
 
-  Parameters
-  ----------
-  lat1 : LatStruct
+Parameters
+----------
+lat1 : LatStruct
 
-  Returns
-  -------
-  lat2 : LatStruct
-  )"""
+Returns
+-------
+lat2 : LatStruct
+)"""
   );
   m.def(
       "transfer_lat_parameters",
@@ -3930,16 +3907,16 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("lat_in"),
       R"""(Wrapper for Fortran routine transfer_lat_parameters
 
-  Parameters
-  ----------
-  lat_in : LatStruct
-      Input lat.
+Parameters
+----------
+lat_in : LatStruct
+    Input lat.
 
-  Returns
-  -------
-  lat_out : LatStruct
-      Output lat with parameters set.
-  )"""
+Returns
+-------
+lat_out : LatStruct
+    Output lat with parameters set.
+)"""
   );
   m.def(
       "transfer_map_calc",
@@ -3956,58 +3933,60 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("spin_map") = py::none(),
       R"""(Wrapper for Fortran routine transfer_map_calc
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice used in the calculation.
+Parameters
+----------
+lat : LatStruct
+    Lattice used in the calculation.
 
-  orb_map : 1D array of TaylorStruct
-      Initial map (used when unit_start = False)
-      This parameter is an input/output and is modified in-place.
-      As an output, orb_map: Transfer map.
+orb_map : 1D array of TaylorStruct
+    Initial map (used when unit_start = False)
+    This parameter is an input/output and is modified in-place.
+    As an output, orb_map: Transfer map.
 
-  ix1 : int, optional
-      Element start index for the calculation.
+ix1 : int, optional
+    Element start index for the calculation. Default is 0.
 
-  ix2 : int, optional
-      Element end index for the calculation.
+ix2 : int, optional
+    Element end index for the calculation. Default is lat.n_ele_track.
 
-  ref_orb : CoordStruct, optional
-      Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
-      particle is not the same as the reference
+ref_orb : CoordStruct, optional
+    Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
+    particle is not the same as the reference particle of the lattice.
 
-  ix_branch : int, optional
-      Lattice branch index. Default is 0.
+ix_branch : int, optional
+    Lattice branch index. Default is 0.
 
-  one_turn : bool, optional
-      If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn
+one_turn : bool, optional
+    If present and True, and if ix1 = ix2, and the lattice is circular, then construct the one-turn map from
+    ix1 back to ix1. Default = False.
 
-  unit_start : bool, optional
-      If present and False then orb_map will be used as the starting map instead of the unit map. Default = True
+unit_start : bool, optional
+    If present and False then orb_map will be used as the starting map instead of the unit map. Default = True
 
-  concat_if_possible : bool, optional
-      If present and True then use map concatenation rather than tracking
+concat_if_possible : bool, optional
+    If present and True then use map concatenation rather than tracking if a map is present for a given
+    lattice element. See above. Default is False.
 
-  spin_map : 1D array of TaylorStruct, optional
-      Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
-      This parameter is an input/output and is modified in-place.
-      As an output, spin_map: Quaternion spin map.
+spin_map : 1D array of TaylorStruct, optional
+    Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
+    This parameter is an input/output and is modified in-place.
+    As an output, spin_map: Quaternion spin map.
 
-  Returns
-  -------
-  orb_map : 1D array of TaylorStruct
-      Initial map (used when unit_start = False)
-      This parameter is an input/output and is modified in-place.
-      As an output, orb_map: Transfer map.
+Returns
+-------
+orb_map : 1D array of TaylorStruct
+    Initial map (used when unit_start = False)
+    This parameter is an input/output and is modified in-place.
+    As an output, orb_map: Transfer map.
 
-  err_flag : bool
-      Set True if problem like number overflow, etc.
+err_flag : bool
+    Set True if problem like number overflow, etc.
 
-  spin_map : 1D array of TaylorStruct, optional
-      Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
-      This parameter is an input/output and is modified in-place.
-      As an output, spin_map: Quaternion spin map.
-  )"""
+spin_map : 1D array of TaylorStruct, optional
+    Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
+    This parameter is an input/output and is modified in-place.
+    As an output, spin_map: Quaternion spin map.
+)"""
   );
   py::class_<Bmad::TransferMapFromSToS, std::unique_ptr<Bmad::TransferMapFromSToS>>(
       m,
@@ -4040,87 +4019,76 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("concat_if_possible") = py::none(),
       py::arg("spin_map") = py::none(),
       R"""(Subroutine transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref_orb_out, ix_branch,
-                                           one_turn, unit_start, err_flag, concat_if_possible, spin_map)
+                                         one_turn, unit_start, err_flag, concat_if_possible, spin_map)
 
-  Subroutine to calculate the transfer map between longitudinal positions s1 to s2.
+Subroutine to calculate the transfer map between longitudinal positions s1 to s2.
 
-  If s2 < s1 and lat%param%geometry is closed$ then the
-  calculation will 'wrap around' the lattice end.
-  For example, if s1 = 900 and s2 = 10 then the t_map is the map from
-  element 900 to the lattice end plus from 0 through 10.
+If s2 < s1 and lat%param%geometry is closed$ then the
+calculation will 'wrap around' the lattice end.
+For example, if s1 = 900 and s2 = 10 then the t_map is the map from
+element 900 to the lattice end plus from 0 through 10.
 
-  If s2 < s1 and lat%param%geometry is open$ then the inverse of the forward map of s2 -> s1 is computed.
+If s2 < s1 and lat%param%geometry is open$ then the inverse of the forward map of s2 -> s1 is computed.
 
-  If s2 = s1 then you get the unit map except if one_turn = True and the lattice is circular.
+If s2 = s1 then you get the unit map except if one_turn = True and the lattice is circular.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice used in the calculation.
+Parameters
+----------
+lat : LatStruct
+    Lattice used in the calculation.
 
-  t_map : 1D array of TaylorStruct
-      Initial map (used when unit_start = False)
-      This parameter is an input/output and is modified in-place.
-      As an output, t_map: Transfer map.
+t_map : 1D array of TaylorStruct
+    Initial map (used when unit_start = False)
+    This parameter is an input/output and is modified in-place.
+    As an output, t_map: Transfer map.
 
-  s1 : float, optional
-      Element start position for the calculation.
+s1 : float, optional
+    Element start position for the calculation. Default is 0.
 
-  Default is 0. : None
+s2 : float, optional
+    Element end position for the calculation. Default is lat.param.total_length.
 
-  s2 : float, optional
-      Element end position for the calculation.
+ref_orb_in : CoordStruct, optional
+    Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
+    particle is not the same as the reference particle of the lattice.
 
-  Default is lat%param%total_length. : None
+ix_branch : int, optional
+    Lattice branch index. Default is 0 (main branch).
 
-  ref_orb_in : CoordStruct, optional
-      Reference orbit/particle at s1 around which the map is made. This arg is needed if: unit_start = True or
-      particle is not the same as the reference
+one_turn : bool, optional
+    If present and True, and s1 = s2, and the lattice is circular: Construct the one-turn map from s1 back to
+    s1. Otherwise t_map is unchanged or the unit map if unit_start = T. Default = False.
 
-  particle of the lattice. : None
+unit_start : bool, optional
+    If present and False then t_map will be used as the starting map instead of the unit map. Default = True
 
-  ix_branch : int, optional
-      Lattice branch index. Default is 0 (main branch).
+concat_if_possible : bool, optional
+    If present and True then use map concatenation rather than tracking if a map is present for a given
+    lattice element. See above. Default is False.
 
-  one_turn : bool, optional
-      If present and True, and s1 = s2, and the lattice is circular: Construct the one-turn map from s1 back to
-      s1. Otherwise t_map is unchanged or the unit map if unit_start = T.
+spin_map : 1D array of TaylorStruct, optional
+    Initial spin map.
+    This parameter is an input/output and is modified in-place.
+    As an output, spin_map: Final spin map. Only computed if bmad_com.spin_tracking_on = T.
 
-  Default = False. : None
+Returns
+-------
+t_map : 1D array of TaylorStruct
+    Initial map (used when unit_start = False)
+    This parameter is an input/output and is modified in-place.
+    As an output, t_map: Transfer map.
 
-  unit_start : bool, optional
-      If present and False then t_map will be used as the starting map instead of the unit map. Default = True
+spin_map : 1D array of TaylorStruct, optional
+    Initial spin map.
+    This parameter is an input/output and is modified in-place.
+    As an output, spin_map: Final spin map. Only computed if bmad_com.spin_tracking_on = T.
 
-  concat_if_possible : bool, optional
-      If present and True then use map concatenation rather than tracking
+ref_orb_out : CoordStruct, optional
+    Ending coordinates of the reference orbit. This is also the actual orbit of particle
 
-  if a map is present for a given lattice element. See above. Default is False. : None
-
-  spin_map : 1D array of TaylorStruct, optional
-      Initial spin map.
-      This parameter is an input/output and is modified in-place.
-      As an output, spin_map: Final spin map. Only computed if bmad_com.spin_tracking_on = T.
-
-  Returns
-  -------
-  t_map : 1D array of TaylorStruct
-      Initial map (used when unit_start = False)
-      This parameter is an input/output and is modified in-place.
-      As an output, t_map: Transfer map.
-
-  spin_map : 1D array of TaylorStruct, optional
-      Initial spin map.
-      This parameter is an input/output and is modified in-place.
-      As an output, spin_map: Final spin map. Only computed if bmad_com.spin_tracking_on = T.
-
-  ref_orb_out : CoordStruct, optional
-      Ending coordinates of the reference orbit.
-
-  This is also the actual orbit of particle : None
-
-  err_flag : bool, optional
-      Set true if there is an error. False otherwise.
-  )"""
+err_flag : bool, optional
+    Set true if there is an error. False otherwise.
+)"""
   );
   m.def(
       "transfer_mat2_from_twiss",
@@ -4129,19 +4097,19 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("twiss2"),
       R"""(Wrapper for Fortran routine transfer_mat2_from_twiss
 
-  Parameters
-  ----------
-  twiss1 : TwissStruct
-      Twiss parameters at the initial point.
+Parameters
+----------
+twiss1 : TwissStruct
+    Twiss parameters at the initial point.
 
-  twiss2 : TwissStruct
-      Twiss parameters at the end point.
+twiss2 : TwissStruct
+    Twiss parameters at the end point.
 
-  Returns
-  -------
-  mat : 2D array of float (shape: 2,2)
-      Transfer matrix between the two points.
-  )"""
+Returns
+-------
+mat : 2D array of float (shape: 2,2)
+    Transfer matrix between the two points.
+)"""
   );
   m.def(
       "transfer_mat_from_twiss",
@@ -4152,25 +4120,25 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orb2"),
       R"""(Wrapper for Fortran routine transfer_mat_from_twiss
 
-  Parameters
-  ----------
-  ele1 : EleStruct
-      Element with twiss parameters for the starting point.
+Parameters
+----------
+ele1 : EleStruct
+    Element with twiss parameters for the starting point.
 
-  ele2 : EleStruct
-      Element with twiss parameters for the ending point.
+ele2 : EleStruct
+    Element with twiss parameters for the ending point.
 
-  orb1 : 1D array of float (shape: 6)
-      Reference orbit at ele1 (affects m(i,6) dispersion terms).
+orb1 : 1D array of float (shape: 6)
+    Reference orbit at ele1 (affects m(i,6) dispersion terms).
 
-  orb2 : 1D array of float (shape: 6)
-      Reference orbit at ele2 (affects m(i,6) dispersion terms).
+orb2 : 1D array of float (shape: 6)
+    Reference orbit at ele2 (affects m(i,6) dispersion terms).
 
-  Returns
-  -------
-  m : 2D array of float (shape: 6,6)
-      Transfer matrix between the two points.
-  )"""
+Returns
+-------
+m : 2D array of float (shape: 6,6)
+    Transfer matrix between the two points.
+)"""
   );
   m.def(
       "transfer_matrix_calc",
@@ -4184,35 +4152,35 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("one_turn") = py::none(),
       R"""(Wrapper for Fortran routine transfer_matrix_calc
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice used in the calculation.
+Parameters
+----------
+lat : LatStruct
+    Lattice used in the calculation.
 
-  xfer_mat : 2D array of float (shape: 6,6)
+xfer_mat : 2D array of float (shape: 6,6)
 
-  xfer_vec : 1D array of float (shape: 6), optional
+xfer_vec : 1D array of float (shape: 6), optional
 
-  ix1 : int, optional
-      Element start index for the calculation.
+ix1 : int, optional
+    Element start index for the calculation. Default is 0.
 
-  ix2 : int, optional
-      Element end index for the calculation. Defaults: If ix1 is not present: ix2 = lat.n_ele_track If ix1 is
-      present and lattice is closed: Calculate the
+ix2 : int, optional
+    Element end index for the calculation. Defaults: If ix1 is not present: ix2 = lat.n_ele_track If ix1 is
+    present and lattice is closed: Calculate the one-turn matrix from ix1 back to ix1.
 
-  ix_branch : int, optional
-      Branch index. Default is 0.
+ix_branch : int, optional
+    Branch index. Default is 0.
 
-  one_turn : bool, optional
-      If present and True, and ix1 = ix2, and the lattice is closed: Construct the one-turn matrix from ix1 back
-      to ix1. If False, (the default), and ix1 = ix2, mat6 is the unit matrix.
+one_turn : bool, optional
+    If present and True, and ix1 = ix2, and the lattice is closed: Construct the one-turn matrix from ix1 back
+    to ix1. If False, (the default), and ix1 = ix2, mat6 is the unit matrix.
 
-  Returns
-  -------
-  xfer_mat : 2D array of float (shape: 6,6)
+Returns
+-------
+xfer_mat : 2D array of float (shape: 6,6)
 
-  xfer_vec : 1D array of float (shape: 6), optional
-  )"""
+xfer_vec : 1D array of float (shape: 6), optional
+)"""
   );
   m.def(
       "transfer_twiss",
@@ -4221,19 +4189,19 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("reverse") = py::none(),
       R"""(Wrapper for Fortran routine transfer_twiss
 
-  Parameters
-  ----------
-  ele_in : EleStruct
-      Element with existing Twiss parameters.
+Parameters
+----------
+ele_in : EleStruct
+    Element with existing Twiss parameters.
 
-  reverse : bool, optional
-      Reverse alpha and coupling as if particle is going in the reversed direction? Default is False.
+reverse : bool, optional
+    Reverse alpha and coupling as if particle is going in the reversed direction? Default is False.
 
-  Returns
-  -------
-  ele_out : EleStruct
-      Element receiving the Twiss parameters.
-  )"""
+Returns
+-------
+ele_out : EleStruct
+    Element receiving the Twiss parameters.
+)"""
   );
   m.def(
       "transfer_wake",
@@ -4241,16 +4209,16 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("wake_in"),
       R"""(Wrapper for Fortran routine transfer_wake
 
-  Parameters
-  ----------
-  wake_in : WakeStruct
-      Input wake.
+Parameters
+----------
+wake_in : WakeStruct
+    Input wake.
 
-  Returns
-  -------
-  wake_out : WakeStruct, optional
-      Output wake.
-  )"""
+Returns
+-------
+wake_out : WakeStruct, optional
+    Output wake.
+)"""
   );
   m.def(
       "truncate_complex_taylor_to_order",
@@ -4260,21 +4228,21 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("complex_taylor_out"),
       R"""(Subroutine truncate_complex_taylor_to_order (complex_taylor_in, order, complex_taylor_out)
 
-  Subroutine to throw out all terms in a complex_taylor map that are above a certain order.
+Subroutine to throw out all terms in a complex_taylor map that are above a certain order.
 
-  Parameters
-  ----------
-  complex_taylor_in : 1D array of ComplexTaylorStruct
-      Input complex_taylor map.
+Parameters
+----------
+complex_taylor_in : 1D array of ComplexTaylorStruct
+    Input complex_taylor map.
 
-  order : int
-      Order above which terms are dropped.
+order : int
+    Order above which terms are dropped.
 
-  Returns
-  -------
-  complex_taylor_out : 1D array of ComplexTaylorStruct
-      Truncated complex_taylor map.
-  )"""
+Returns
+-------
+complex_taylor_out : 1D array of ComplexTaylorStruct
+    Truncated complex_taylor map.
+)"""
   );
   py::class_<Bmad::Twiss1Propagate, std::unique_ptr<Bmad::Twiss1Propagate>>(
       m,
@@ -4302,28 +4270,28 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("length"),
       R"""(Wrapper for Fortran routine twiss1_propagate
 
-  Parameters
-  ----------
-  twiss1 : TwissStruct
-      Input Twiss parameters.
+Parameters
+----------
+twiss1 : TwissStruct
+    Input Twiss parameters.
 
-  mat2 : 2D array of float (shape: 2,2)
-      The transfer matrix.
+mat2 : 2D array of float (shape: 2,2)
+    The transfer matrix.
 
-  ele_key : int
-      quadrupole$, etc.
+ele_key : int
+    quadrupole$, etc.
 
-  length : float
-      Determines whether the phase is increasing or decreasing.
+length : float
+    Determines whether the phase is increasing or decreasing.
 
-  Returns
-  -------
-  twiss2 : TwissStruct
-      Output Twiss parameters.
+Returns
+-------
+twiss2 : TwissStruct
+    Output Twiss parameters.
 
-  err : bool
-      Set True if there is an error, false otherwise.
-  )"""
+err : bool
+    Set True if there is an error, false otherwise.
+)"""
   );
   m.def(
       "twiss3_at_start",
@@ -4333,48 +4301,27 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ix_branch") = py::none(),
       R"""(Subroutine twiss3_at_start (lat, error, ix_branch, tune3)
 
-  Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
-  This routine is for lattices with closed geometries. For open lattices see: twiss3_from_twiss2.
+Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
+This routine is for lattices with closed geometries. For open lattices see: twiss3_from_twiss2.
 
-  Note: The rf must be on for this calculation.
+Note: The rf must be on for this calculation.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice with
+Parameters
+----------
+lat : LatStruct
+    Lattice with
 
-  ix_branch : int, optional
-      Branch index. 0 = default.
+ix_branch : int, optional
+    Branch index. 0 = default.
 
-  Returns
-  -------
-  lat : LatStruct
-      Lattice with
+Returns
+-------
+lat : LatStruct
+    Lattice with
 
-  %branch : ele_struct
-      Starting element
-
-  %mode3 : mode3_struct
-      Structure holding the normal modes.
-
-  %v : real(rp)
-      V coupling matrix.
-
-  %a : twiss_struct
-      "a" normal mode Twiss parameters.
-
-  %b : twiss_struct
-      "b" normal mode Twiss parameters.
-
-  %c : twiss_struct
-      "c" normal mode Twiss parameters.
-
-  error : logical
-      Set True if there is no RF. False otherwise.
-
-  tune3 : 1D array of float (shape: 3), optional
-      Normal mode tunes
-  )"""
+tune3 : 1D array of float (shape: 3), optional
+    Normal mode tunes
+)"""
   );
   m.def(
       "twiss3_from_twiss2",
@@ -4382,29 +4329,24 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Subroutine twiss3_from_twiss2 (ele)
 
-  Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
-  longitudinal parameters.
-  Also see: twiss3_at_start
+Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
+longitudinal parameters.
+Also see: twiss3_at_start
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Lattice element at which the calculation is made.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element
+Parameters
+----------
+ele : EleStruct
+    Lattice element at which the calculation is made.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element
 
-  Returns
-  -------
-  ele : EleStruct
-      Lattice element at which the calculation is made.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele: Element
-
-  Notes
-  -----
-  Related routines:
-  twiss3_at_start
-  )"""
+Returns
+-------
+ele : EleStruct
+    Lattice element at which the calculation is made.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element
+)"""
   );
   m.def(
       "twiss3_propagate1",
@@ -4414,9 +4356,9 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("err_flag"),
       R"""(Subroutine twiss3_propagate1 (ele1, ele2, err_flag)
 
-  Subroutine to propagate the twiss parameters using all three normal modes.
-  Subroutine from original mode3_mod.
-  )"""
+Subroutine to propagate the twiss parameters using all three normal modes.
+Subroutine from original mode3_mod.
+)"""
   );
   m.def(
       "twiss3_propagate_all",
@@ -4425,17 +4367,17 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ix_branch") = py::none(),
       R"""(Subroutine twiss3_propagate_all (lat, ix_branch)
 
-  Subroutine to propagate the twiss parameters using all three normal modes.
-  Subroutine from original mode3_mod.
+Subroutine to propagate the twiss parameters using all three normal modes.
+Subroutine from original mode3_mod.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice
+Parameters
+----------
+lat : LatStruct
+    Lattice
 
-  ix_branch : int, optional
-      : Branch index. 0 = default.
-  )"""
+ix_branch : int, optional
+    : Branch index. 0 = default.
+)"""
   );
   m.def(
       "twiss_and_track",
@@ -4450,97 +4392,68 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("calc_chrom") = py::none(),
       R"""(Subroutine twiss_and_track
 
-  This routine is an overloaded name for:
-    Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
-    Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+This routine is an overloaded name for:
+  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
+  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
 
-  Routine to calculate the twiss parameters, transport matrices and orbit.
+Routine to calculate the twiss parameters, transport matrices and orbit.
 
-  The essential difference between these two procedures is that
-  twiss_and_track_branch only does the main branch while twiss_and_track_all
-  does everything but the photon_fork elements.
+The essential difference between these two procedures is that
+twiss_and_track_branch only does the main branch while twiss_and_track_all
+does everything but the photon_fork elements.
 
-  Note: This is not necessarily the fastest way to do things since this
-  routine does the entire calculation from scratch.
+Note: This is not necessarily the fastest way to do things since this
+routine does the entire calculation from scratch.
 
-  For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit.
-  If the RF is off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed.
+For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit.
+If the RF is off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed.
 
-  For an open lattice, the orbit will be computed using orb(0) as
-  starting conditions.
+For an open lattice, the orbit will be computed using orb(0) as
+starting conditions.
 
-  If there is a problem the status argument settings are: in_stop_band$,
-  unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
-  twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
-  and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
-  For an open geometry branch, status = no_complete_orbit$ is for
-  where the particle is lost in tracking. A negative sign is used to differentiate an
-  error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
+If there is a problem the status argument settings are: in_stop_band$,
+unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
+twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
+and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
+For an open geometry branch, status = no_complete_orbit$ is for
+where the particle is lost in tracking. A negative sign is used to differentiate an
+error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
 
-  If there is a problem in an open geometry branch, status argument setting is -N where N is the element
-  where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
-  which is mapped to 1.
+If there is a problem in an open geometry branch, status argument setting is -N where N is the element
+where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
+which is mapped to 1.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      lattice.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lat with computed twiss parameters.
+Parameters
+----------
+lat : LatStruct
+    lattice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lat with computed twiss parameters.
 
-  %param%geometry : None
-      Used to determine if lattice is open or closed.
+orb_array : 1D array of CoordArrayStruct
+    Array of orbit arrays.
+    As an output, orb_array: Used as the starting point for an open lattice.
 
-  orb : coord_struct
-      Orbit to be computed
-      As an output, orb: Initial conditions to be used for an open geometry lattices.
-      As an output, orb: Energy at which the closed orbit is computed.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Computed orbit.
+print_err : bool, optional
+    Default is True. If False, suppress error messages.
 
-  orb_array : 1D array of CoordArrayStruct
-      Array of orbit arrays.
-      As an output, orb_array: Used as the starting point for an open lattice.
+calc_chrom : bool, optional
+    Default is False. If True, calculate the chromatic functions.
 
-  ix_branch : integer, optional
-      Branch to track.
+Returns
+-------
+lat : LatStruct
+    lattice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lat with computed twiss parameters.
 
-  print_err : bool, optional
-      Default is True. If False, suppress error messages.
+orb_array : 1D array of CoordArrayStruct
+    Array of orbit arrays.
+    As an output, orb_array: Used as the starting point for an open lattice.
 
-  calc_chrom : bool, optional
-      Default is False. If True, calculate the chromatic functions.
-
-  orb_start : coord_struct, optional
-      If present, use this as the starting orbit.
-
-  Returns
-  -------
-  lat : LatStruct
-      lattice.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lat with computed twiss parameters.
-
-  orb : coord_struct
-      Orbit to be computed
-      As an output, orb: Initial conditions to be used for an open geometry lattices.
-      As an output, orb: Energy at which the closed orbit is computed.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Computed orbit.
-
-  orb_array : 1D array of CoordArrayStruct
-      Array of orbit arrays.
-      As an output, orb_array: Used as the starting point for an open lattice.
-
-  %param%stable : None
-      Set true or false.
-
-  %param%unstable_factor : None
-      unstable growth rate (= 0 if stable)
-
-  status : int, optional
-      Set ok$ if everything is OK and set to something else otherwise. See above for more details.
-  )"""
+status : int, optional
+    Set ok$ if everything is OK and set to something else otherwise. See above for more details.
+)"""
   );
   m.def(
       "twiss_and_track_at_s",
@@ -4555,82 +4468,74 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("compute_floor_coords") = py::none(),
       R"""(Subroutine twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, use_last, compute_floor_coords)
 
-  Subroutine to return the twiss parameters and particle orbit at a
-  given longitudinal position.
+Subroutine to return the twiss parameters and particle orbit at a
+given longitudinal position.
 
-  When calculating the Twiss parameters, this routine assumes
-  that the lattice elements already contain the Twiss parameters calculated
-  for the ends of the elements.
+When calculating the Twiss parameters, this routine assumes
+that the lattice elements already contain the Twiss parameters calculated
+for the ends of the elements.
 
-  Additionally, the orbit at the ends of the elements (contained in orb(:)) must be
-  precomputed when orb_at_s is present.
+Additionally, the orbit at the ends of the elements (contained in orb(:)) must be
+precomputed when orb_at_s is present.
 
-  Precomputation of Twiss and orbit at the element ends may be done with the twiss_and_track routine.
+Precomputation of Twiss and orbit at the element ends may be done with the twiss_and_track routine.
 
-  See also:
-    twiss_and_track_from_s_to_s
-    twiss_and_track_intra_ele
+See also:
+  twiss_and_track_from_s_to_s
+  twiss_and_track_intra_ele
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lattice.
+Parameters
+----------
+lat : LatStruct
+    Lattice.
 
-  s : float
-      Longitudinal position. If s is negative the
+s : float
+    Longitudinal position. If s is negative the the position is taken to be lat.param.total_length - s.
 
-  the position is taken to be lat%param%total_length - s. : None
+ele_at_s : EleStruct, optional
+    If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
+    previous call to this routine.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele_at_s: Element structure holding the Twiss parameters.
 
-  ele_at_s : EleStruct, optional
-      If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
-      previous call
-      This parameter is an input/output and is modified in-place.
-      As an output, ele_at_s: Element structure holding the Twiss parameters.
+orb : 1D array of CoordStruct, optional
+    Orbit through the Lattice.
 
-  to this routine. : None
+orb_at_s : CoordStruct, optional
+    If the use_last argument is True, orb_at_s is taken to contain the valid orbit stored from a previous
+    call.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb_at_s: Particle position at the position s.
 
-  orb : 1D array of CoordStruct, optional
-      Orbit through the Lattice.
+ix_branch : int, optional
+    Branch index, Default is 0 (main lattice).
 
-  orb_at_s : CoordStruct, optional
-      If the use_last argument is True, orb_at_s is
-      This parameter is an input/output and is modified in-place.
-      As an output, orb_at_s: Particle position at the position s.
+use_last : bool, optional
+    If present and True, and if ele_at_s.s < s, then use ele_at_s and orb_at_s as the starting point for the
+    present calculation. This can speed things up when the present s-position is in the middle of a long
+    complicated element and the tracking (EG: Runge-Kutta) is slow.
 
-  taken to contain the valid orbit stored from a previous call. : None
+compute_floor_coords : bool, optional
+    If present and True then the global "floor" coordinates (without misalignments) will be calculated and put
+    in ele_at_s.floor.
 
-  ix_branch : int, optional
-      Branch index, Default is 0 (main lattice).
+Returns
+-------
+ele_at_s : EleStruct, optional
+    If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
+    previous call to this routine.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele_at_s: Element structure holding the Twiss parameters.
 
-  use_last : bool, optional
-      If present and True, and if ele_at_s.s < s, then use ele_at_s and orb_at_s as the starting point for the
-      present calculation. This can speed things up when the present s-position is in the middle of a long
-      complicated element and the tracking (EG: Runge-Kutta) is slow.
+orb_at_s : CoordStruct, optional
+    If the use_last argument is True, orb_at_s is taken to contain the valid orbit stored from a previous
+    call.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb_at_s: Particle position at the position s.
 
-  compute_floor_coords : bool, optional
-      If present and True then the global "floor" coordinates (without misalignments) will be calculated and put
-      in ele_at_s.floor.
-
-  Returns
-  -------
-  ele_at_s : EleStruct, optional
-      If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
-      previous call
-      This parameter is an input/output and is modified in-place.
-      As an output, ele_at_s: Element structure holding the Twiss parameters.
-
-  orb_at_s : CoordStruct, optional
-      If the use_last argument is True, orb_at_s is
-      This parameter is an input/output and is modified in-place.
-      As an output, orb_at_s: Particle position at the position s.
-
-  with respect to the zero orbit. : None
-
-  present. : None
-
-  err : bool, optional
-      Set True if there is a problem in the calculation, False otherwise.
-  )"""
+err : bool, optional
+    Set True if there is a problem in the calculation, False otherwise.
+)"""
   );
   m.def(
       "twiss_and_track",
@@ -4649,97 +4554,80 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("orb_start") = py::none(),
       R"""(Subroutine twiss_and_track
 
-  This routine is an overloaded name for:
-    Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
-    Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+This routine is an overloaded name for:
+  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
+  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
 
-  Routine to calculate the twiss parameters, transport matrices and orbit.
+Routine to calculate the twiss parameters, transport matrices and orbit.
 
-  The essential difference between these two procedures is that
-  twiss_and_track_branch only does the main branch while twiss_and_track_all
-  does everything but the photon_fork elements.
+The essential difference between these two procedures is that
+twiss_and_track_branch only does the main branch while twiss_and_track_all
+does everything but the photon_fork elements.
 
-  Note: This is not necessarily the fastest way to do things since this
-  routine does the entire calculation from scratch.
+Note: This is not necessarily the fastest way to do things since this
+routine does the entire calculation from scratch.
 
-  For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit.
-  If the RF is off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed.
+For a circular ring: If the RF is on, the computed orbit will be the 6D closed orbit.
+If the RF is off, the 4D transverse closed orbit using orbi(0)%vec(6) is computed.
 
-  For an open lattice, the orbit will be computed using orb(0) as
-  starting conditions.
+For an open lattice, the orbit will be computed using orb(0) as
+starting conditions.
 
-  If there is a problem the status argument settings are: in_stop_band$,
-  unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
-  twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
-  and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
-  For an open geometry branch, status = no_complete_orbit$ is for
-  where the particle is lost in tracking. A negative sign is used to differentiate an
-  error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
+If there is a problem the status argument settings are: in_stop_band$,
+unstable$, non_symplectic$, in_stop_band$, non_symplectic$, xfer_mat_clac_failure$,
+twiss_propagate_failure$, no_complete_orbit$, or no_closed_orbit$. Note: in_stop_band$, unstable$,
+and non_symplectic$ refer to the 1-turn matrix which is computed with closed lattices.
+For an open geometry branch, status = no_complete_orbit$ is for
+where the particle is lost in tracking. A negative sign is used to differentiate an
+error occuring in the first call to twiss_at_start from the second call to twiss_at_start.
 
-  If there is a problem in an open geometry branch, status argument setting is -N where N is the element
-  where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
-  which is mapped to 1.
+If there is a problem in an open geometry branch, status argument setting is -N where N is the element
+where the particle was lost in tracking (negative numbers are used here to avoid confusion with ok$
+which is mapped to 1.
 
-  Parameters
-  ----------
-  lat : LatStruct
-      lattice.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lat with computed twiss parameters.
+Parameters
+----------
+lat : LatStruct
+    lattice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lat with computed twiss parameters.
 
-  %param%geometry : None
-      Used to determine if lattice is open or closed.
+orb : 1D array of CoordStruct
+    Orbit to be computed
+    As an output, orb: Initial conditions to be used for an open geometry lattices.
+    As an output, orb: Energy at which the closed orbit is computed.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Computed orbit.
 
-  orb : 1D array of CoordStruct
-      Orbit to be computed
-      As an output, orb: Initial conditions to be used for an open geometry lattices.
-      As an output, orb: Energy at which the closed orbit is computed.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Computed orbit.
+ix_branch : int, optional
+    Branch to track.
 
-  orb_array : coord_array_struct
-      Array of orbit arrays.
-      As an output, orb_array: Used as the starting point for an open lattice.
+print_err : bool, optional
+    Default is True. If False, suppress error messages.
 
-  ix_branch : int, optional
-      Branch to track.
+calc_chrom : bool, optional
+    Default is False. If True, calculate the chromatic functions.
 
-  print_err : bool, optional
-      Default is True. If False, suppress error messages.
+orb_start : CoordStruct, optional
+    If present, use this as the starting orbit.
 
-  calc_chrom : bool, optional
-      Default is False. If True, calculate the chromatic functions.
+Returns
+-------
+lat : LatStruct
+    lattice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lat with computed twiss parameters.
 
-  orb_start : CoordStruct, optional
-      If present, use this as the starting orbit.
+orb : 1D array of CoordStruct
+    Orbit to be computed
+    As an output, orb: Initial conditions to be used for an open geometry lattices.
+    As an output, orb: Energy at which the closed orbit is computed.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Computed orbit.
 
-  Returns
-  -------
-  lat : LatStruct
-      lattice.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lat with computed twiss parameters.
-
-  orb : 1D array of CoordStruct
-      Orbit to be computed
-      As an output, orb: Initial conditions to be used for an open geometry lattices.
-      As an output, orb: Energy at which the closed orbit is computed.
-      This parameter is an input/output and is modified in-place.
-      As an output, orb: Computed orbit.
-
-  orb_array : coord_array_struct
-      Array of orbit arrays.
-      As an output, orb_array: Used as the starting point for an open lattice.
-
-  %param%stable : None
-      Set true or false.
-
-  %param%unstable_factor : None
-      unstable growth rate (= 0 if stable)
-
-  status : int, optional
-      Set ok$ if everything is OK and set to something else otherwise. See above for more details.
-  )"""
+status : int, optional
+    Set ok$ if everything is OK and set to something else otherwise. See above for more details.
+)"""
   );
   py::class_<Bmad::TwissAndTrackFromSToS, std::unique_ptr<Bmad::TwissAndTrackFromSToS>>(
       m,
@@ -4772,37 +4660,38 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("compute_twiss") = py::none(),
       R"""(Wrapper for Fortran routine twiss_and_track_from_s_to_s
 
-  Parameters
-  ----------
-  branch : BranchStruct
-      Lattice branch to track through.
+Parameters
+----------
+branch : BranchStruct
+    Lattice branch to track through.
 
-  orbit_start : CoordStruct
-      Starting phase space coordinates at s_start.
+orbit_start : CoordStruct
+    Starting phase space coordinates at s_start.
 
-  s_end : float
-      Ending position.
+s_end : float
+    Ending position.
 
-  ele_start : EleStruct, optional
-      Holds the starting parameters at s_start.
+ele_start : EleStruct, optional
+    Holds the starting parameters at s_start.
 
-  compute_floor_coords : bool, optional
-      If present and True then the global "floor" coordinates will be
+compute_floor_coords : bool, optional
+    If present and True then the global "floor" coordinates will be calculated and put in ele_end.floor.
 
-  compute_twiss : bool, optional
-      Default True. If False, to save a little time, do not compute Twiss parameters.
+compute_twiss : bool, optional
+    Default True. If False, to save a little time, do not compute Twiss parameters.
 
-  Returns
-  -------
-  orbit_end : CoordStruct
-      End phase space coordinates.
+Returns
+-------
+orbit_end : CoordStruct
+    End phase space coordinates.
 
-  ele_end : EleStruct, optional
-      Holds the ending Twiss parameters and the transfer matrix.
+ele_end : EleStruct, optional
+    Holds the ending Twiss parameters and the transfer matrix. If present then the ele_start argument must
+    also be present.
 
-  err : bool, optional
-      Set True if there is a problem like the particle gets lost in tracking
-  )"""
+err : bool, optional
+    Set True if there is a problem like the particle gets lost in tracking
+)"""
   );
   py::class_<Bmad::TwissAndTrackIntraEle, std::unique_ptr<Bmad::TwissAndTrackIntraEle>>(
       m,
@@ -4838,59 +4727,65 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("reuse_ele_end") = py::none(),
       R"""(Wrapper for Fortran routine twiss_and_track_intra_ele
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element to track through.
+Parameters
+----------
+ele : EleStruct
+    Element to track through.
 
-  param : LatParamStruct
+param : LatParamStruct
 
-  l_start : float
-      Start position measured from the beginning of the element.
+l_start : float
+    Start position measured from the beginning of the element.
 
-  l_end : float
-      Stop position measured from the beginning of the element.
+l_end : float
+    Stop position measured from the beginning of the element.
 
-  track_upstream_end : bool
-      If True then entrance effects are included in the tracking.
+track_upstream_end : bool
+    If True then entrance effects are included in the tracking. But only if l_start = 0 and
+    orbit_start.location /= inside$.
 
-  track_downstream_end : bool
-      If True then exit effects are included in the tracking but
+track_downstream_end : bool
+    If True then exit effects are included in the tracking but only if l_end = ele.value(l$) (within
+    bmad_com.significant_length tol)
 
-  orbit_start : CoordStruct, optional
-      Starting phase space coordinates at l_start.
+orbit_start : CoordStruct, optional
+    Starting phase space coordinates at l_start.
 
-  ele_start : EleStruct, optional
-      Holds the starting Twiss parameters at l_start.
+ele_start : EleStruct, optional
+    Holds the starting Twiss parameters at l_start.
 
-  ele_end : EleStruct, optional
-      If reuse_ele_end is set True then reuse ele_end from trancking
-      This parameter is an input/output and is modified in-place.
-      As an output, ele_end: Holds the ending Twiss parameters at l_end (except for photons).
+ele_end : EleStruct, optional
+    If reuse_ele_end is set True then reuse ele_end from trancking instead of recomputing ele_end from
+    scratch. This can save time.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele_end: Holds the ending Twiss parameters at l_end (except for photons).
 
-  compute_floor_coords : bool, optional
-      If present and True then the global "floor" coordinates
+compute_floor_coords : bool, optional
+    If present and True then the global "floor" coordinates (without misalignments) will be calculated and put
+    in ele_end.floor.
 
-  compute_twiss : bool, optional
-      Default True. If False, to save a little time, do not compute
+compute_twiss : bool, optional
+    Default True. If False, to save a little time, do not compute Twiss parameters. Also if ele_start is not
+    present, no Twiss parameters are computed.
 
-  reuse_ele_end : bool, optional
-      If present and True, and if ele_end has the correct lonigitudianal length and key type, reuse ele_end from
-      trancking instead of recomputing ele_end from scratch. This can save time.
+reuse_ele_end : bool, optional
+    If present and True, and if ele_end has the correct lonigitudianal length and key type, reuse ele_end from
+    trancking instead of recomputing ele_end from scratch. This can save time.
 
-  Returns
-  -------
-  orbit_end : CoordStruct, optional
-      End phase space coordinates.
+Returns
+-------
+orbit_end : CoordStruct, optional
+    End phase space coordinates. If present then the orbit_start argument must also be present.
 
-  ele_end : EleStruct, optional
-      If reuse_ele_end is set True then reuse ele_end from trancking
-      This parameter is an input/output and is modified in-place.
-      As an output, ele_end: Holds the ending Twiss parameters at l_end (except for photons).
+ele_end : EleStruct, optional
+    If reuse_ele_end is set True then reuse ele_end from trancking instead of recomputing ele_end from
+    scratch. This can save time.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele_end: Holds the ending Twiss parameters at l_end (except for photons).
 
-  err : bool, optional
-      Set True if there is a problem like the particle gets lost in tracking
-  )"""
+err : bool, optional
+    Set True if there is a problem like the particle gets lost in tracking
+)"""
   );
   py::class_<Bmad::TwissAtElement, std::unique_ptr<Bmad::TwissAtElement>>(
       m,
@@ -4918,22 +4813,22 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ele"),
       R"""(Wrapper for Fortran routine twiss_at_element
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element to be averaged
+Parameters
+----------
+ele : EleStruct
+    Element to be averaged
 
-  Returns
-  -------
-  start : EleStruct, optional
-      Twiss and s at start of element.
+Returns
+-------
+start : EleStruct, optional
+    Twiss and s at start of element.
 
-  end : EleStruct, optional
-      Twiss and s at end of element.
+end : EleStruct, optional
+    Twiss and s at end of element.
 
-  average : EleStruct, optional
-      Average Twiss and s of element.
-  )"""
+average : EleStruct, optional
+    Average Twiss and s of element.
+)"""
   );
   m.def(
       "twiss_at_start",
@@ -4943,29 +4838,29 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("type_out") = py::none(),
       R"""(Wrapper for Fortran routine twiss_at_start
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lat
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with twiss parameters computed.
+Parameters
+----------
+lat : LatStruct
+    Lat
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with twiss parameters computed.
 
-  ix_branch : int, optional
-      Branch to use. Default is 0 (main branch).
+ix_branch : int, optional
+    Branch to use. Default is 0 (main branch).
 
-  type_out : bool, optional
-      If True (the default), print an error message If the 1-turn matrix is unstable.
+type_out : bool, optional
+    If True (the default), print an error message If the 1-turn matrix is unstable.
 
-  Returns
-  -------
-  lat : LatStruct
-      Lat
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with twiss parameters computed.
+Returns
+-------
+lat : LatStruct
+    Lat
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with twiss parameters computed.
 
-  status : int, optional
-      Calculation status: ok$, in_stop_band$, unstable$, or non_symplectic$
-  )"""
+status : int, optional
+    Calculation status: ok$, in_stop_band$, unstable$, or non_symplectic$
+)"""
   );
   py::class_<Bmad::TwissFromTracking, std::unique_ptr<Bmad::TwissFromTracking>>(
       m,
@@ -4992,32 +4887,33 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("d_orb") = py::none(),
       R"""(Wrapper for Fortran routine twiss_from_tracking
 
-  Parameters
-  ----------
-  lat : LatStruct
-      Lat to track through.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Structure holding the Twiss parameters.
+Parameters
+----------
+lat : LatStruct
+    Lat to track through.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Structure holding the Twiss parameters.
 
-  ref_orb0 : CoordStruct
-      Reference orbit at lat.ele(0).
+ref_orb0 : CoordStruct
+    Reference orbit at lat.ele(0).
 
-  d_orb : 1D array of float, optional
-      Vector of offsets to use. If not present or zero bmad_com.d_orb(:) will be used.
+d_orb : 1D array of float, optional
+    Vector of offsets to use. If not present or zero bmad_com.d_orb(:) will be used.
 
-  Returns
-  -------
-  lat : LatStruct
-      Lat to track through.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Structure holding the Twiss parameters.
+Returns
+-------
+lat : LatStruct
+    Lat to track through.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Structure holding the Twiss parameters.
 
-  symp_err : float
-      A measure of how symplectic the constructed matrices were before symplecitification.
+symp_err : float
+    A measure of how symplectic the constructed matrices were before symplecitification. mat_symp_check for
+    more details.
 
-  err_flag : bool
-      Set True if there is an error. False otherwise.
-  )"""
+err_flag : bool
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "twiss_propagate1",
@@ -5027,36 +4923,36 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("forward") = py::none(),
       R"""(Wrapper for Fortran routine twiss_propagate1
 
-  Parameters
-  ----------
-  ele1 : EleStruct
-      Element holding the starting Twiss parameters for forwards propagation.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele1: Element for the ending Twiss parameters for backwards propagation.
+Parameters
+----------
+ele1 : EleStruct
+    Element holding the starting Twiss parameters for forwards propagation.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele1: Element for the ending Twiss parameters for backwards propagation.
 
-  ele2 : EleStruct
-      Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele2: Element for the ending Twiss parameters for forward propagation.
+ele2 : EleStruct
+    Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele2: Element for the ending Twiss parameters for forward propagation.
 
-  forward : bool, optional
-      Default is True. If false, propagate the Twiss backwards.
+forward : bool, optional
+    Default is True. If false, propagate the Twiss backwards.
 
-  Returns
-  -------
-  ele1 : EleStruct
-      Element holding the starting Twiss parameters for forwards propagation.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele1: Element for the ending Twiss parameters for backwards propagation.
+Returns
+-------
+ele1 : EleStruct
+    Element holding the starting Twiss parameters for forwards propagation.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele1: Element for the ending Twiss parameters for backwards propagation.
 
-  ele2 : EleStruct
-      Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
-      This parameter is an input/output and is modified in-place.
-      As an output, ele2: Element for the ending Twiss parameters for forward propagation.
+ele2 : EleStruct
+    Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele2: Element for the ending Twiss parameters for forward propagation.
 
-  err_flag : bool, optional
-      Set True if there is an error. False otherwise.
-  )"""
+err_flag : bool, optional
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "twiss_propagate_all",
@@ -5067,32 +4963,33 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("ie_end") = py::none(),
       R"""(Wrapper for Fortran routine twiss_propagate_all
 
-  Parameters
-  ----------
-  lat : LatStruct
-      lattice.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with parameters computed for the branch.
+Parameters
+----------
+lat : LatStruct
+    lattice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with parameters computed for the branch.
 
-  ix_branch : int, optional
-      Branch index. Default is 0 (main lattice).
+ix_branch : int, optional
+    Branch index. Default is 0 (main lattice).
 
-  ie_start : int, optional
-      Starting element index. Default is 0.
+ie_start : int, optional
+    Starting element index. Default is 0. Note: The first element at which the Twiss parameters are calculated
+    is ie_start+1.
 
-  ie_end : int, optional
-      Ending element index, Default is branch.n_ele_track.
+ie_end : int, optional
+    Ending element index, Default is branch.n_ele_track.
 
-  Returns
-  -------
-  lat : LatStruct
-      lattice.
-      This parameter is an input/output and is modified in-place.
-      As an output, lat: Lattice with parameters computed for the branch.
+Returns
+-------
+lat : LatStruct
+    lattice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with parameters computed for the branch.
 
-  err_flag : bool, optional
-      Set True if there is an error. False otherwise.
-  )"""
+err_flag : bool, optional
+    Set True if there is an error. False otherwise.
+)"""
   );
   m.def(
       "twiss_to_1_turn_mat",
@@ -5101,19 +4998,19 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("phi"),
       R"""(Wrapper for Fortran routine twiss_to_1_turn_mat
 
-  Parameters
-  ----------
-  twiss : TwissStruct
-      Structure holding the Twiss parameters. .beta
+Parameters
+----------
+twiss : TwissStruct
+    Structure holding the Twiss parameters. .beta .alpha
 
-  phi : float
-      Tune in radians.
+phi : float
+    Tune in radians.
 
-  Returns
-  -------
-  mat2 : 2D array of float (shape: 2,2)
-      1-turn matrix.
-  )"""
+Returns
+-------
+mat2 : 2D array of float (shape: 2,2)
+    1-turn matrix.
+)"""
   );
   m.def(
       "type_coord",
@@ -5121,11 +5018,11 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("coord"),
       R"""(Wrapper for Fortran routine type_coord
 
-  Parameters
-  ----------
-  coord : CoordStruct
-      Coordinate
-  )"""
+Parameters
+----------
+coord : CoordStruct
+    Coordinate
+)"""
   );
   m.def(
       "type_expression_tree",
@@ -5134,17 +5031,17 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("indent") = py::none(),
       R"""(Subroutine type_expression_tree (tree, indent)
 
-  Routine to print an expression tree in tree form.
-  Good for debugging.
+Routine to print an expression tree in tree form.
+Good for debugging.
 
-  Parameters
-  ----------
-  tree : ExpressionTreeStruct
-      Tree to print.
+Parameters
+----------
+tree : ExpressionTreeStruct
+    Tree to print.
 
-  indent : int, optional
-      Initial indent. Default is zero.
-  )"""
+indent : int, optional
+    Initial indent. Default is zero.
+)"""
   );
   m.def(
       "type_ptc_layout",
@@ -5152,7 +5049,7 @@ void init_Bmad_routines_t(py::module &m) {
       py::arg("lay"),
       R"""(Subroutine type_ptc_layout (lay)
 
-  Subroutine to print the global information in a layout
-  )"""
+Subroutine to print the global information in a layout
+)"""
   );
 }

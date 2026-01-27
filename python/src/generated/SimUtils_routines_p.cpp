@@ -57,9 +57,7 @@ Routine to point to the appropriate state structure for generating random number
 Parameters
 ----------
 ran_state : RandomStateStruct, optional
-    Point to this if present.
-
-Otherwise point to the global saved state. : None
+    Point to this if present. Otherwise point to the global saved state.
 
 ix_thread : int, optional
     Thread index.
@@ -128,15 +126,11 @@ a : 1D array of complex
 
 b : 1D array of complex
 
-projdd : None
-
 Returns
 -------
 a : 1D array of complex
 
 b : 1D array of complex
-
-projdd : None
 )"""
   );
 }

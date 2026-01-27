@@ -882,30 +882,24 @@ FixedArray2D<Real, 6, 6> Bmad::beam_envelope_ibs(
 void Bmad::beam_equal_beam(BeamStruct &beam1, BeamStruct &beam2) {
   fortran_beam_equal_beam(/* void* */ beam1.get_fortran_ptr(), /* void* */ beam2.get_fortran_ptr());
 }
-void Bmad::beam_init_setup(
+Bmad::BeamInitSetup Bmad::beam_init_setup(
     BeamInitStruct &beam_init_in,
     EleStruct &ele,
     int species,
-    optional_ref<NormalModesStruct> modes,
-    std::optional<bool> err_flag,
-    BeamInitStruct &beam_init_set
+    optional_ref<NormalModesStruct> modes
 ) {
   auto *_modes = modes.has_value() ? modes->get().get_fortran_ptr() : nullptr; // input, optional
-  bool err_flag_lvalue;
-  auto *_err_flag{&err_flag_lvalue};
-  if (err_flag.has_value()) {
-    err_flag_lvalue = err_flag.value();
-  } else {
-    _err_flag = nullptr;
-  }
+  bool _err_flag{};
+  BeamInitStruct _beam_init_set;
   fortran_beam_init_setup(
       /* void* */ beam_init_in.get_fortran_ptr(),
       /* void* */ ele.get_fortran_ptr(),
       /* int& */ species,
       /* void* */ _modes,
-      /* bool* */ _err_flag,
-      /* void* */ beam_init_set.get_fortran_ptr()
+      /* bool& */ _err_flag,
+      /* void* */ _beam_init_set.get_fortran_ptr()
   );
+  return BeamInitSetup{_err_flag, std::move(_beam_init_set)};
 }
 Bmad::BeamTilts Bmad::beam_tilts(FixedArray2D<Real, 6, 6> S) {
   // S: in NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
@@ -1020,8 +1014,10 @@ EmFieldStruct Bmad::bend_exact_multipole_field(
   );
   return std::move(_field);
 }
-void Bmad::bend_length_has_been_set(EleStruct &ele, bool is_set) {
-  fortran_bend_length_has_been_set(/* void* */ ele.get_fortran_ptr(), /* bool& */ is_set);
+bool Bmad::bend_length_has_been_set(EleStruct &ele) {
+  bool _is_set{};
+  fortran_bend_length_has_been_set(/* void* */ ele.get_fortran_ptr(), /* bool& */ _is_set);
+  return _is_set;
 }
 double Bmad::bend_photon_e_rel_init(std::optional<double> r_in) {
   double r_in_lvalue;
@@ -2892,11 +2888,13 @@ void Bmad::create_group(EleStruct &lord, ControlStructArray1D contrl, bool err) 
       /* bool& */ err
   );
 }
-void Bmad::create_lat_ele_nametable(LatStruct &lat, NametableStruct &nametable) {
+NametableStruct Bmad::create_lat_ele_nametable(LatStruct &lat) {
+  NametableStruct _nametable;
   fortran_create_lat_ele_nametable(
       /* void* */ lat.get_fortran_ptr(),
-      /* void* */ nametable.get_fortran_ptr()
+      /* void* */ _nametable.get_fortran_ptr()
   );
+  return std::move(_nametable);
 }
 void Bmad::create_overlay(EleStruct &lord, ControlStructArray1D contrl, bool err) {
   // contrl: ControlStruct in (CppWrapperTypeArgumentArray)
@@ -10125,15 +10123,14 @@ bool Bmad::particle_is_moving_forward(CoordStruct &orbit, std::optional<int> dir
   );
   return _is_moving_forward;
 }
-void Bmad::particle_rf_time(
+long double Bmad::particle_rf_time(
     CoordStruct &orbit,
     EleStruct &ele,
     std::optional<bool> reference_active_edge,
     std::optional<double> s_rel,
     std::optional<bool> time_coords,
     std::optional<double> rf_freq,
-    std::optional<bool> abs_time,
-    long double time
+    std::optional<bool> abs_time
 ) {
   bool reference_active_edge_lvalue;
   auto *_reference_active_edge{&reference_active_edge_lvalue};
@@ -10170,6 +10167,7 @@ void Bmad::particle_rf_time(
   } else {
     _abs_time = nullptr;
   }
+  long double _time{};
   fortran_particle_rf_time(
       /* void* */ orbit.get_fortran_ptr(),
       /* void* */ ele.get_fortran_ptr(),
@@ -10178,8 +10176,9 @@ void Bmad::particle_rf_time(
       /* bool* */ _time_coords,
       /* double* */ _rf_freq,
       /* bool* */ _abs_time,
-      /* long double& */ time
+      /* long double& */ _time
   );
+  return _time;
 }
 bool Bmad::patch_flips_propagation_direction(double x_pitch, double y_pitch) {
   bool _is_flip{};
@@ -11443,47 +11442,43 @@ Bmad::ReadBeamFile Bmad::read_beam_file(
   );
   return ReadBeamFile{std::move(_beam), _err_flag};
 }
-void Bmad::read_binary_cartesian_map(
-    std::string file_name,
-    EleStruct &ele,
-    CartesianMapStruct &cart_map,
-    bool err_flag
-) {
+Bmad::ReadBinaryCartesianMap
+Bmad::read_binary_cartesian_map(std::string file_name, EleStruct &ele) {
   auto _file_name = file_name.c_str();
+  CartesianMapStruct _cart_map;
+  bool _err_flag{};
   fortran_read_binary_cartesian_map(
       /* const char* */ _file_name,
       /* void* */ ele.get_fortran_ptr(),
-      /* void* */ cart_map.get_fortran_ptr(),
-      /* bool& */ err_flag
+      /* void* */ _cart_map.get_fortran_ptr(),
+      /* bool& */ _err_flag
   );
+  return ReadBinaryCartesianMap{std::move(_cart_map), _err_flag};
 }
-void Bmad::read_binary_cylindrical_map(
-    std::string file_name,
-    EleStruct &ele,
-    CylindricalMapStruct &cl_map,
-    bool err_flag
-) {
+Bmad::ReadBinaryCylindricalMap
+Bmad::read_binary_cylindrical_map(std::string file_name, EleStruct &ele) {
   auto _file_name = file_name.c_str();
+  CylindricalMapStruct _cl_map;
+  bool _err_flag{};
   fortran_read_binary_cylindrical_map(
       /* const char* */ _file_name,
       /* void* */ ele.get_fortran_ptr(),
-      /* void* */ cl_map.get_fortran_ptr(),
-      /* bool& */ err_flag
+      /* void* */ _cl_map.get_fortran_ptr(),
+      /* bool& */ _err_flag
   );
+  return ReadBinaryCylindricalMap{std::move(_cl_map), _err_flag};
 }
-void Bmad::read_binary_grid_field(
-    std::string file_name,
-    EleStruct &ele,
-    GridFieldStruct &g_field,
-    bool err_flag
-) {
+Bmad::ReadBinaryGridField Bmad::read_binary_grid_field(std::string file_name, EleStruct &ele) {
   auto _file_name = file_name.c_str();
+  GridFieldStruct _g_field;
+  bool _err_flag{};
   fortran_read_binary_grid_field(
       /* const char* */ _file_name,
       /* void* */ ele.get_fortran_ptr(),
-      /* void* */ g_field.get_fortran_ptr(),
-      /* bool& */ err_flag
+      /* void* */ _g_field.get_fortran_ptr(),
+      /* bool& */ _err_flag
   );
+  return ReadBinaryGridField{std::move(_g_field), _err_flag};
 }
 PhotonReflectSurfaceStruct Bmad::read_surface_reflection_file(std::string file_name) {
   auto _file_name = file_name.c_str();
@@ -11743,7 +11738,7 @@ bool Bmad::rf_is_on(BranchStruct &branch, std::optional<int> ix_ele1, std::optio
   );
   return _is_on;
 }
-void Bmad::rf_ref_time_offset(EleStruct &ele, std::optional<double> ds, double time) {
+double Bmad::rf_ref_time_offset(EleStruct &ele, std::optional<double> ds) {
   double ds_lvalue;
   auto *_ds{&ds_lvalue};
   if (ds.has_value()) {
@@ -11751,11 +11746,13 @@ void Bmad::rf_ref_time_offset(EleStruct &ele, std::optional<double> ds, double t
   } else {
     _ds = nullptr;
   }
+  double _time{};
   fortran_rf_ref_time_offset(
       /* void* */ ele.get_fortran_ptr(),
       /* double* */ _ds,
-      /* double& */ time
+      /* double& */ _time
   );
+  return _time;
 }
 void Bmad::rfun(
     double u,
@@ -12118,7 +12115,7 @@ void Bmad::save_a_beam_step(
     std::optional<double> s_body,
     std::optional<bool> is_time_coords
 ) {
-  // bunch_tracks: BunchTrackStruct in (CppWrapperTypeArgumentArray)
+  // bunch_tracks: BunchTrackStruct inout (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _bunch_tracks_desc;
   _bunch_tracks_desc.rank = 1;
   if (bunch_tracks) {
@@ -14088,25 +14085,25 @@ Bmad::to_eta_reading(FArray1D<Real> &eta_actual, EleStruct &ele, int axis, bool 
   );
   return ToEtaReading{_reading, _err};
 }
-void Bmad::to_fieldmap_coords(
+Bmad::ToFieldmapCoords Bmad::to_fieldmap_coords(
     EleStruct &ele,
     CoordStruct &local_orb,
     double s_body,
     int ele_anchor_pt,
     FixedArray1D<Real, 3> r0,
-    bool curved_ref_frame,
-    double x,
-    double y,
-    double z,
-    double cos_ang,
-    double sin_ang,
-    bool err_flag
+    bool curved_ref_frame
 ) {
   // r0: in NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _r0_desc;
   _r0_desc.rank = 1;
   _r0_desc.data_ptr = r0.data();
   _r0_desc.dims[0] = r0.size();
+  double _x{};
+  double _y{};
+  double _z{};
+  double _cos_ang{};
+  double _sin_ang{};
+  bool _err_flag{};
   fortran_to_fieldmap_coords(
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ local_orb.get_fortran_ptr(),
@@ -14114,13 +14111,14 @@ void Bmad::to_fieldmap_coords(
       /* int& */ ele_anchor_pt,
       /* Bmad::array_descriptor_t& */ _r0_desc,
       /* bool& */ curved_ref_frame,
-      /* double& */ x,
-      /* double& */ y,
-      /* double& */ z,
-      /* double& */ cos_ang,
-      /* double& */ sin_ang,
-      /* bool& */ err_flag
+      /* double& */ _x,
+      /* double& */ _y,
+      /* double& */ _z,
+      /* double& */ _cos_ang,
+      /* double& */ _sin_ang,
+      /* bool& */ _err_flag
   );
+  return ToFieldmapCoords{_x, _y, _z, _cos_ang, _sin_ang, _err_flag};
 }
 Bmad::ToOrbitReading
 Bmad::to_orbit_reading(CoordStruct &orb, EleStruct &ele, int axis, bool add_noise) {
@@ -17400,47 +17398,50 @@ void Bmad::write_beam_floor_positions(
       /* bool* */ _new_file
   );
 }
-void Bmad::write_binary_cartesian_map(
+bool Bmad::write_binary_cartesian_map(
     std::string file_name,
     EleStruct &ele,
-    CartesianMapStruct &cart_map,
-    bool err_flag
+    CartesianMapStruct &cart_map
 ) {
   auto _file_name = file_name.c_str();
+  bool _err_flag{};
   fortran_write_binary_cartesian_map(
       /* const char* */ _file_name,
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ cart_map.get_fortran_ptr(),
-      /* bool& */ err_flag
+      /* bool& */ _err_flag
   );
+  return _err_flag;
 }
-void Bmad::write_binary_cylindrical_map(
+bool Bmad::write_binary_cylindrical_map(
     std::string file_name,
     EleStruct &ele,
-    CylindricalMapStruct &cl_map,
-    bool err_flag
+    CylindricalMapStruct &cl_map
 ) {
   auto _file_name = file_name.c_str();
+  bool _err_flag{};
   fortran_write_binary_cylindrical_map(
       /* const char* */ _file_name,
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ cl_map.get_fortran_ptr(),
-      /* bool& */ err_flag
+      /* bool& */ _err_flag
   );
+  return _err_flag;
 }
-void Bmad::write_binary_grid_field(
+bool Bmad::write_binary_grid_field(
     std::string file_name,
     EleStruct &ele,
-    GridFieldStruct &g_field,
-    bool err_flag
+    GridFieldStruct &g_field
 ) {
   auto _file_name = file_name.c_str();
+  bool _err_flag{};
   fortran_write_binary_grid_field(
       /* const char* */ _file_name,
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ g_field.get_fortran_ptr(),
-      /* bool& */ err_flag
+      /* bool& */ _err_flag
   );
+  return _err_flag;
 }
 void Bmad::write_blender_ele(int iu, EleStruct &ele, std::optional<bool> old_format) {
   bool old_format_lvalue;

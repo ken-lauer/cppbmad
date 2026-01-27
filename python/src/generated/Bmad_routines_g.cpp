@@ -358,9 +358,7 @@ delim_list : character
     List of valid delimiters
 
 upper_case_word : bool, optional
-    if True then convert word to
-
-upper case. Default is True. : None
+    if True then convert word to upper case. Default is True.
 
 call_check : bool, optional
     If present and True then check for 'call::<filename>' construct. Default is False.
@@ -374,9 +372,7 @@ delim : character
     Actual delimiter found
 
 delim_found : bool
-    Set true if a delimiter found. A delimiter
-
-may not be found if the end of the line is reached first. : None
+    Set true if a delimiter found. A delimiter may not be found if the end of the line is reached first.
 
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
@@ -564,17 +560,10 @@ x3 : float, optional
 
 allow_s_out_of_bounds : bool, optional
     allow s-coordinate grossly out of bounds to return zero field without an error. This is used when the
-    field of one element overlaps
-
-the field of another. Default is False. : None
+    field of one element overlaps the field of another. Default is False.
 
 print_err : bool, optional
     print an error message if the particle is out of bounds? Default is True.
-
-Returns
--------
-field : grid_field_pt_struct
-    Interpolated field (complex)
 )"""
   );
 }

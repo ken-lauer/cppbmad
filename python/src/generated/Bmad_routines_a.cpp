@@ -55,9 +55,8 @@ ref_species : int
     Reference species.
 
 ele_orientation : int
-    Element orientation +1 = normal, -1 = reversed,
-
-0 = Ignore orientation and tracking species : None
+    Element orientation +1 = normal, -1 = reversed, 0 = Ignore orientation and tracking species (used with
+    pole_type = magnetic$).
 
 coord : CoordStruct
     Particle position and direction of travel.
@@ -124,11 +123,8 @@ pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 
 scale : float, optional
-    Factor to scale the kicks. Default is 1.
-
-For pole_type = electric$ : None
-
-set scale to the longitudinal length of the field region : None
+    Factor to scale the kicks. Default is 1. For pole_type = electric$, set scale to the longitudinal length
+    of the field region
 
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix before the multipole.
@@ -264,15 +260,6 @@ Parameters
 ring : LatStruct
     lattice
 
-%a%tune : None
-    a-mode tune (horizontal-like)
-
-%b%tune : None
-    b-mode tune (vertical-like)
-
-%z%tune : None
-    c-mode tune (synchrotron-like)
-
 ix : int
     element index at which to calculate J
 
@@ -373,38 +360,27 @@ lat : LatStruct
 super_ele_in : EleStruct
     Element to superimpose.
 
-%s : None
-    Position of end of element.
-
-Negative distances mean distance from the end. : None
-
 ix_branch : int
     Branch index to put element.
 
 save_null_drift : bool, optional
     Save a copy of a drift to be split as a null_ele? This is useful if further superpositions might use this
     drift as a reference element. After all superpositions are done, remove_eles_from_lat can be called to
-    remove all null_eles.
-
-Default is False. : None
+    remove all null_eles. Default is False.
 
 create_jumbo_slave : bool, optional
     Default is False. If True then super_slaves that are created that have super_ele_in as their super_lord
-    are
-
-em_field elements. : None
+    are em_field elements.
 
 ix_insert : int, optional
     If present and positive, and super_ele_in has zero length, use ix_insert as the index to insert
     super_ele_in at. ix_insert is useful when superposing next to another element that has zero or negative
-    length (EG a patch) and you want
-
-to make sure that the superimposed element is on the correct side of the element. : None
+    length (EG a patch) and you want to make sure that the superimposed element is on the correct side of the
+    element.
 
 mangle_slave_names : bool, optional
-    If True (default), adjust slave names appropriately. Name
-
-mangeling can take time so bmad_parser will do this all at once at the end. : None
+    If True (default), adjust slave names appropriately. Name mangeling can take time so bmad_parser will do
+    this all at once at the end.
 
 wrap : bool, optional
     If True (default), and if the superimposed element has an end that extends beyond the starting or ending
@@ -512,7 +488,7 @@ lat : LatStruct
     Lattice with element array.
 
 upper_bound : int, optional
-    Optional desired upper bound.
+    Optional desired upper bound. Default: 1.3*ubound(ele(:)) or 10 if ele is not allocated.
 
 ix_branch : int, optional
     Branch index. Default is 0.
@@ -678,11 +654,6 @@ Parameters
 ----------
 ele : EleStruct
     Patch element.
-
-Returns
--------
-ele%ptc_fibre : None
-    PTC Fibre which should be a marker.
 )"""
   );
   m.def(
@@ -857,12 +828,6 @@ Parameters
 ix_ele : int
     Index of element in element array.
 
-ix_branch : integer
-    Branch index of element.
-
-ele : ele_struct
-    Element containing the attribute
-
 attrib_name : character
     Name of the attribute. Assumed upper case.
 
@@ -870,18 +835,11 @@ lat : LatStruct
     Lattice structure.
 
 err_print_flag : bool, optional
-    If present and False then suppress
-
-printing of an error message if attribute is not free. : None
+    If present and False then suppress printing of an error message if attribute is not free.
 
 except_overlay : bool, optional
-    If present and True then an attribute that is controlled by an overlay will be treated as free.
-
-This is used by : None
-
-for example : None
-
-the create_overlay routine. : None
+    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
+    used by, for example, the create_overlay routine.
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
@@ -890,9 +848,7 @@ dependent_attribs_free : bool, optional
 Returns
 -------
 free : bool
-    Set True if attribtute not found or attriubte
-
-cannot be changed directly. : None
+    Set True if attribtute not found or attriubte cannot be changed directly.
 
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -953,34 +909,18 @@ Also dependent variables such as the angle of a bend cannot be
 
 Parameters
 ----------
-ix_ele : integer
-    Index of element in element array.
-
-ix_branch : integer
-    Branch index of element.
-
 ele : EleStruct
     Element containing the attribute
 
 attrib_name : character
     Name of the attribute. Assumed upper case.
 
-lat : lat_struct
-    Lattice structure.
-
 err_print_flag : bool, optional
-    If present and False then suppress
-
-printing of an error message if attribute is not free. : None
+    If present and False then suppress printing of an error message if attribute is not free.
 
 except_overlay : bool, optional
-    If present and True then an attribute that is controlled by an overlay will be treated as free.
-
-This is used by : None
-
-for example : None
-
-the create_overlay routine. : None
+    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
+    used by, for example, the create_overlay routine.
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
@@ -989,9 +929,7 @@ dependent_attribs_free : bool, optional
 Returns
 -------
 free : bool
-    Set True if attribtute not found or attriubte
-
-cannot be changed directly. : None
+    Set True if attribtute not found or attriubte cannot be changed directly.
 
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -1062,9 +1000,6 @@ ix_ele : int
 ix_branch : int
     Branch index of element.
 
-ele : ele_struct
-    Element containing the attribute
-
 attrib_name : character
     Name of the attribute. Assumed upper case.
 
@@ -1072,18 +1007,11 @@ lat : LatStruct
     Lattice structure.
 
 err_print_flag : bool, optional
-    If present and False then suppress
-
-printing of an error message if attribute is not free. : None
+    If present and False then suppress printing of an error message if attribute is not free.
 
 except_overlay : bool, optional
-    If present and True then an attribute that is controlled by an overlay will be treated as free.
-
-This is used by : None
-
-for example : None
-
-the create_overlay routine. : None
+    If present and True then an attribute that is controlled by an overlay will be treated as free. This is
+    used by, for example, the create_overlay routine.
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
@@ -1092,9 +1020,7 @@ dependent_attribs_free : bool, optional
 Returns
 -------
 free : bool
-    Set True if attribtute not found or attriubte
-
-cannot be changed directly. : None
+    Set True if attribtute not found or attriubte cannot be changed directly.
 
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
@@ -1141,23 +1067,10 @@ This routine is an overloaded name for:
   attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
   attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
 
-Note:
-  If ele%key or key = 0 -> Entire name table will be searched.
-
-See also:
-  has_attribute
-  attribute_info
-  attribute_name
-
 Parameters
 ----------
 ele : EleStruct
-    attribute_index will restrict the name search to
-
-valid attributes of the given element. : None
-
-key : integer
-    Equivalent to ele.key.
+    attribute_index will restrict the name search to valid attributes of the given element.
 
 name : character
     Attribute name. Must be uppercase.
@@ -1174,12 +1087,15 @@ full_name : character, optional
     Non-abbreviated name.
 
 attrib_index : int
-    Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
-    = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
+    Index of the attribute. If the attribute name is not appropriate then 0 will be returned.
 
 Notes
 -----
-Overloaded versions:
+If ele%key or key = 0 -> Entire name table will be searched.
+See also:
+has_attribute
+attribute_info
+attribute_name
 )"""
   );
   py::class_<Bmad::AttributeIndex2, std::unique_ptr<Bmad::AttributeIndex2>>(
@@ -1219,21 +1135,8 @@ This routine is an overloaded name for:
   attribute_index1 (ele, name, full_name, can_abbreviate, print_error) result (attrib_index)
   attribute_index2 (key, name, full_name, can_abbreviate, print_error) result (attrib_index)
 
-Note:
-  If ele%key or key = 0 -> Entire name table will be searched.
-
-See also:
-  has_attribute
-  attribute_info
-  attribute_name
-
 Parameters
 ----------
-ele : ele_struct
-    attribute_index will restrict the name search to
-
-valid attributes of the given element. : None
-
 key : int
     Equivalent to ele.key.
 
@@ -1252,12 +1155,15 @@ full_name : character, optional
     Non-abbreviated name.
 
 attrib_index : int
-    Index of the attribute. If the attribute name is not appropriate then 0 will be returned. Example: ele.key
-    = sbend$ ix = attribute_index (ele, 'K1') Result: ix -> k1$
+    Index of the attribute. If the attribute name is not appropriate then 0 will be returned.
 
 Notes
 -----
-Overloaded versions:
+If ele%key or key = 0 -> Entire name table will be searched.
+See also:
+has_attribute
+attribute_info
+attribute_name
 )"""
   );
   m.def(
@@ -1280,11 +1186,6 @@ Use attributge_name (ele, ix_att) is this is needed.
 
 Parameters
 ----------
-ele : ele_struct
-
-%key : integer
-    Key name of element type (e.g. SBEND$, etc.)
-
 key : int
     Key name of element type (e.g. sbend$, etc.)
 
@@ -1300,11 +1201,7 @@ attrib_name : character
     Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
     private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
     invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
-    private. Example: ele.key = sbend$ name = attribute_name (ele, k1$) Result: name -> "K1"
-
-Notes
------
-Overloaded versions:
+    private.
 )"""
   );
   m.def(
@@ -1329,12 +1226,6 @@ Parameters
 ----------
 ele : EleStruct
 
-%key : integer
-    Key name of element type (e.g. SBEND$, etc.)
-
-key : integer
-    Key name of element type (e.g. sbend$, etc.)
-
 ix_att : int
     Index of attribute (e.g. k1$)
 
@@ -1347,11 +1238,7 @@ attrib_name : character
     Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
     private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
     invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
-    private. Example: ele.key = sbend$ name = attribute_name (ele, k1$) Result: name -> "K1"
-
-Notes
------
-Overloaded versions:
+    private.
 )"""
   );
   m.def(

@@ -25,30 +25,30 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("isn"),
       R"""(Wrapper for Fortran routine fft1
 
-  Parameters
-  ----------
-  a : 1D array of float
+Parameters
+----------
+a : 1D array of float
 
-  b : 1D array of float
+b : 1D array of float
 
-  n : int
+n : int
 
-  isn : int
+isn : int
 
-  ierr : int
+ierr : int
 
-  Returns
-  -------
-  a : 1D array of float
+Returns
+-------
+a : 1D array of float
 
-  b : 1D array of float
+b : 1D array of float
 
-  n : int
+n : int
 
-  isn : int
+isn : int
 
-  ierr : int
-  )"""
+ierr : int
+)"""
   );
   py::class_<PyFibreToEle, std::unique_ptr<PyFibreToEle>>(
       m,
@@ -76,37 +76,37 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("from_mad") = py::none(),
       R"""(Wrapper for Fortran routine fibre_to_ele
 
-  Parameters
-  ----------
-  ptc_fibre : Fibre
-      PTC fibre.
+Parameters
+----------
+ptc_fibre : Fibre
+    PTC fibre.
 
-  branch : BranchStruct
-      branch containing elements.
+branch : BranchStruct
+    branch containing elements.
 
-  ix_ele : int
-      Index in ele(:) array of element last used.
-      This parameter is an input/output and is modified in-place.
-      As an output, ix_ele: Index to element created (upper index if more than one created).
+ix_ele : int
+    Index in ele(:) array of element last used.
+    This parameter is an input/output and is modified in-place.
+    As an output, ix_ele: Index to element created (upper index if more than one created).
 
-  from_mad : bool, optional
-      If True, ignore PTC specific parameters like integrator_order. Default is False. True is used when the
-      fibre has been created via MAD. In this case, the PTC specific parameters may not have good values.
+from_mad : bool, optional
+    If True, ignore PTC specific parameters like integrator_order. Default is False. True is used when the
+    fibre has been created via MAD. In this case, the PTC specific parameters may not have good values.
 
-  Returns
-  -------
-  branch : BranchStruct
-      branch containing elements.
+Returns
+-------
+branch : BranchStruct
+    branch containing elements.
 
-  ix_ele : int
-      Index in ele(:) array of element last used.
-      This parameter is an input/output and is modified in-place.
-      As an output, ix_ele: Index to element created (upper index if more than one created).
+ix_ele : int
+    Index in ele(:) array of element last used.
+    This parameter is an input/output and is modified in-place.
+    As an output, ix_ele: Index to element created (upper index if more than one created).
 
-  err_flag : bool
-      Set true if there is an error. False otherwise. To do: lcavity energy change !? open or closed geometry?
-      Energy patch
-  )"""
+err_flag : bool
+    Set true if there is an error. False otherwise. To do: lcavity energy change !? open or closed geometry?
+    Energy patch
+)"""
   );
   m.def(
       "field_attribute_free",
@@ -115,26 +115,26 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("attrib_name"),
       R"""(Function field_attribute_free (ele, attrib_name) result (free)
 
-  Routine to check if a field attribute is free to vary.
+Routine to check if a field attribute is free to vary.
 
-  Field attributes are either normalized (EG K2 of a sextupole) or unnormalized (EG B2_GRADIENT of a sextupole).
-  Whether normalized or unnormalized attributes are free to vary will depend on the setting  of ele%field_master.
+Field attributes are either normalized (EG K2 of a sextupole) or unnormalized (EG B2_GRADIENT of a sextupole).
+Whether normalized or unnormalized attributes are free to vary will depend on the setting  of ele%field_master.
 
-  Generally, this routine should not be called directly. Use the routine attribute_free instead.
+Generally, this routine should not be called directly. Use the routine attribute_free instead.
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element containing the attribute
+Parameters
+----------
+ele : EleStruct
+    Element containing the attribute
 
-  attrib_name : character
-      Name of the field attribute. Assumed upper case.
+attrib_name : character
+    Name of the field attribute. Assumed upper case.
 
-  Returns
-  -------
-  free : bool
-      Is the attribute free to vary? If the attribute is not recognized, free = True will be returned.
-  )"""
+Returns
+-------
+free : bool
+    Is the attribute free to vary? If the attribute is not recognized, free = True will be returned.
+)"""
   );
   m.def(
       "finalize_reflectivity_table",
@@ -143,25 +143,25 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("in_degrees"),
       R"""(Subroutine finalize_reflectivity_table (table, in_degrees)
 
-  Routine to finalize the construction of the reflectivity tables for a surface.
+Routine to finalize the construction of the reflectivity tables for a surface.
 
-  Parameters
-  ----------
-  table : PhotonReflectTableStruct
-      Surface tables to be finalized.
-      This parameter is an input/output and is modified in-place.
-      As an output, table: Finalized surface tables.
+Parameters
+----------
+table : PhotonReflectTableStruct
+    Surface tables to be finalized.
+    This parameter is an input/output and is modified in-place.
+    As an output, table: Finalized surface tables.
 
-  in_degrees : bool
-      Table angles in degrees?
+in_degrees : bool
+    Table angles in degrees?
 
-  Returns
-  -------
-  table : PhotonReflectTableStruct
-      Surface tables to be finalized.
-      This parameter is an input/output and is modified in-place.
-      As an output, table: Finalized surface tables.
-  )"""
+Returns
+-------
+table : PhotonReflectTableStruct
+    Surface tables to be finalized.
+    This parameter is an input/output and is modified in-place.
+    As an output, table: Finalized surface tables.
+)"""
   );
   py::class_<Bmad::FindElementEnds, std::unique_ptr<Bmad::FindElementEnds>>(
       m,
@@ -187,25 +187,25 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("ix_multipass") = py::none(),
       R"""(Wrapper for Fortran routine find_element_ends
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Element to find the ends for.
+Parameters
+----------
+ele : EleStruct
+    Element to find the ends for.
 
-  ix_multipass : int, optional
-      Which multipass pass to follow. Default is 1. This is ignored if there is no multipass elements.
+ix_multipass : int, optional
+    Which multipass pass to follow. Default is 1. This is ignored if there is no multipass elements.
 
-  Returns
-  -------
-  ele1 : EleStruct, optional
-      Pointer to element just before ele.
+Returns
+-------
+ele1 : EleStruct, optional
+    Pointer to element just before ele.
 
-  ele2 : EleStruct, optional
-      Pointer to ele itself or the last sub-element within ele. Note: ele1 and ele2 will be nullified if ele is
-      in the lord part of the lattice and does not have any slaves. Note: For an element in the tracking part of
-      the lattice: ele1.ix_ele = ele.ix_ele - 1 ele2        => ele Exception: For Beginning element (index 0),
-      ele1 => ele
-  )"""
+ele2 : EleStruct, optional
+    Pointer to ele itself or the last sub-element within ele. Note: ele1 and ele2 will be nullified if ele is
+    in the lord part of the lattice and does not have any slaves. Note: For an element in the tracking part of
+    the lattice: ele1.ix_ele = ele.ix_ele - 1 ele2        => ele Exception: For Beginning element (index 0),
+    ele1 => ele
+)"""
   );
   m.def(
       "find_fwhm",
@@ -214,28 +214,28 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("args"),
       R"""(Subroutine find_fwhm(bound,args,fwhm)
 
-  Finds the full width at half max of psi(t).  fwhm * c_light / TwoRtTwoLnTwo is taken as the bunch length.
+Finds the full width at half max of psi(t).  fwhm * c_light / TwoRtTwoLnTwo is taken as the bunch length.
 
-  Steps followed:
-    Find value for p(0) that normalizes the solution to dpsi/dt.
-    Find max value of p(t) for the value of p(0) found in the previous step.
-    Find find tlower, tlower < 0, such that p(tlower) = pmax/2.
-    Find find tupper, tupper > 0, such that p(tupper) = pmax/2.
-    fwhm is tupper-tlower
+Steps followed:
+  Find value for p(0) that normalizes the solution to dpsi/dt.
+  Find max value of p(t) for the value of p(0) found in the previous step.
+  Find find tlower, tlower < 0, such that p(tlower) = pmax/2.
+  Find find tupper, tupper > 0, such that p(tupper) = pmax/2.
+  fwhm is tupper-tlower
 
-  Parameters
-  ----------
-  bound : float
-      -bound and +bound is integration bound.
+Parameters
+----------
+bound : float
+    -bound and +bound is integration bound.
 
-  args : 1D array of float (shape: 1:8)
-      Parameters and constants of dpsi/dt.  See comments of psi_prime for details.
+args : 1D array of float (shape: 1:8)
+    Parameters and constants of dpsi/dt.  See comments of psi_prime for details.
 
-  Returns
-  -------
-  fwhm : float
-      Full width at half max of psi(t)
-  )"""
+Returns
+-------
+fwhm : float
+    Full width at half max of psi(t)
+)"""
   );
   py::class_<Bmad::FindMatchingFieldmap, std::unique_ptr<Bmad::FindMatchingFieldmap>>(
       m,
@@ -263,29 +263,29 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("ignore_slaves") = py::none(),
       R"""(Wrapper for Fortran routine find_matching_fieldmap
 
-  Parameters
-  ----------
-  file_name : character
-      File name associated with field to match to.
+Parameters
+----------
+file_name : character
+    File name associated with field to match to.
 
-  ele : EleStruct
-      Element holding the field to be matched.
+ele : EleStruct
+    Element holding the field to be matched.
 
-  fm_type : int
-      Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_grad_map$, grid_field$
+fm_type : int
+    Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_grad_map$, grid_field$
 
-  ignore_slaves : bool, optional
-      If True, ignore any multipass slaves. Default is False.
+ignore_slaves : bool, optional
+    If True, ignore any multipass slaves. Default is False.
 
-  Returns
-  -------
-  match_ele : EleStruct, optional
-      Pointer to element with matched field. Nullified if no match found.
+Returns
+-------
+match_ele : EleStruct, optional
+    Pointer to element with matched field. Nullified if no match found.
 
-  ix_field : int
-      index of field. For example: matching field => match_ele.cartesian_map(ix_field) Set to -1 if no match
-      found.
-  )"""
+ix_field : int
+    index of field. For example: matching field => match_ele.cartesian_map(ix_field) Set to -1 if no match
+    found.
+)"""
   );
   m.def(
       "find_normalization",
@@ -295,26 +295,26 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("args"),
       R"""(Subroutine find_normalization(bound,p0,args,pnrml)
 
-  Finds value for boundary condition psi(0) that results in integral
-  of psi(t) from -bound to +bound to be 1.0.  This is done with the secant method.
-  Repeadedly calls integrate_psi with different values for psi(0).
+Finds value for boundary condition psi(0) that results in integral
+of psi(t) from -bound to +bound to be 1.0.  This is done with the secant method.
+Repeadedly calls integrate_psi with different values for psi(0).
 
-  Parameters
-  ----------
-  bound : float
-      -bound and +bound are integration boundaries
+Parameters
+----------
+bound : float
+    -bound and +bound are integration boundaries
 
-  p0 : float
-      Boundary condition psi(0)
+p0 : float
+    Boundary condition psi(0)
 
-  args : 1D array of float (shape: 1:8)
-      Parameters and constants of DEQ.  See psi_prime comments for details.
+args : 1D array of float (shape: 1:8)
+    Parameters and constants of DEQ.  See psi_prime comments for details.
 
-  Returns
-  -------
-  pnrml : float
-      Value for psi(0) that results in integral of psi(t) from -bound to +bound being equal to 1.0
-  )"""
+Returns
+-------
+pnrml : float
+    Value for psi(0) that results in integral of psi(t) from -bound to +bound being equal to 1.0
+)"""
   );
   py::class_<Bmad::FloorAnglesToWMat, std::unique_ptr<Bmad::FloorAnglesToWMat>>(
       m,
@@ -341,25 +341,25 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("psi"),
       R"""(Wrapper for Fortran routine floor_angles_to_w_mat
 
-  Parameters
-  ----------
-  theta : float
-      Azimuth angle.
+Parameters
+----------
+theta : float
+    Azimuth angle.
 
-  phi : float
-      Pitch angle.
+phi : float
+    Pitch angle.
 
-  psi : float
-      Roll angle.
+psi : float
+    Roll angle.
 
-  Returns
-  -------
-  w_mat : 2D array of float (shape: 3,3), optional
-      Orientation matrix.
+Returns
+-------
+w_mat : 2D array of float (shape: 3,3), optional
+    Orientation matrix.
 
-  w_mat_inv : 2D array of float (shape: 3,3), optional
-      Inverse Orientation matrix.
-  )"""
+w_mat_inv : 2D array of float (shape: 3,3), optional
+    Inverse Orientation matrix.
+)"""
   );
   py::class_<Bmad::FloorWMatToAngles, std::unique_ptr<Bmad::FloorWMatToAngles>>(
       m,
@@ -388,26 +388,26 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("floor0") = py::none(),
       R"""(Wrapper for Fortran routine floor_w_mat_to_angles
 
-  Parameters
-  ----------
-  w_mat : 2D array of float (shape: 3,3)
-      Orientation matrix.
+Parameters
+----------
+w_mat : 2D array of float (shape: 3,3)
+    Orientation matrix.
 
-  floor0 : FloorPositionStruct, optional
-      There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
-      choose the solution "nearest" the angles in floor0.
+floor0 : FloorPositionStruct, optional
+    There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
+    choose the solution "nearest" the angles in floor0.
 
-  Returns
-  -------
-  theta : float
-      Azimuth angle.
+Returns
+-------
+theta : float
+    Azimuth angle.
 
-  phi : float
-      Pitch angle.
+phi : float
+    Pitch angle.
 
-  psi : float
-      Roll angle.
-  )"""
+psi : float
+    Roll angle.
+)"""
   );
   m.def(
       "form_complex_taylor",
@@ -416,22 +416,22 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("im_taylor"),
       R"""(Subroutine form_complex_taylor (re_taylor, im_taylor, complex_taylor)
 
-  Subroutine to form a complex taylor from two taylor series representing
-    the real and imaginary parts
+Subroutine to form a complex taylor from two taylor series representing
+  the real and imaginary parts
 
-  Parameters
-  ----------
-  re_taylor : TaylorStruct
-      Real part
+Parameters
+----------
+re_taylor : TaylorStruct
+    Real part
 
-  im_taylor : TaylorStruct
-      Imaginary part
+im_taylor : TaylorStruct
+    Imaginary part
 
-  Returns
-  -------
-  complex_taylor : ComplexTaylorStruct
-      combined complex taylor
-  )"""
+Returns
+-------
+complex_taylor : ComplexTaylorStruct
+    combined complex taylor
+)"""
   );
   py::class_<Bmad::FormDigestedBmadFileName, std::unique_ptr<Bmad::FormDigestedBmadFileName>>(
       m,
@@ -457,29 +457,29 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("use_line") = py::none(),
       R"""(Subroutine form_digested_bmad_file_name (lat_file, digested_file, full_lat_file, use_line)
 
-  Subroutine to form the standard name of the Bmad digested file.
-  The standard digested file name has the suffix added to the file name:
-      suffix = '.digested' + bmad_inc_version$
-  Exception: If the use_line argument is present and not blank, the suffix will be:
-      suffix = '.' + use_line + '.digested' + bmad_inc_version$
+Subroutine to form the standard name of the Bmad digested file.
+The standard digested file name has the suffix added to the file name:
+    suffix = '.digested' + bmad_inc_version$
+Exception: If the use_line argument is present and not blank, the suffix will be:
+    suffix = '.' + use_line + '.digested' + bmad_inc_version$
 
-  Parameters
-  ----------
-  lat_file : character
-      Input lattice file name.
+Parameters
+----------
+lat_file : character
+    Input lattice file name.
 
-  use_line : character, optional
-      Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
-      the lattice file.
+use_line : character, optional
+    Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
+    the lattice file.
 
-  Returns
-  -------
-  digested_file : character
-      Name of the digested file.
+Returns
+-------
+digested_file : character
+    Name of the digested file.
 
-  full_lat_file : character, optional
-      Input lattice file name with full directory. Can be used for error messages.
-  )"""
+full_lat_file : character, optional
+    Input lattice file name with full directory. Can be used for error messages.
+)"""
   );
   m.def(
       "fringe_here",
@@ -489,21 +489,21 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("particle_at"),
       R"""(Wrapper for Fortran routine fringe_here
 
-  Parameters
-  ----------
-  ele : EleStruct
-      Lattice element.
+Parameters
+----------
+ele : EleStruct
+    Lattice element.
 
-  orbit : CoordStruct
-      Particle position.
+orbit : CoordStruct
+    Particle position.
 
-  particle_at : int
-      Either first_track_edge$ or second_track_edge$.
+particle_at : int
+    Either first_track_edge$ or second_track_edge$.
 
-  Returns
-  -------
-  is_here : bool
-      True if there is a fringe. False if not.
-  )"""
+Returns
+-------
+is_here : bool
+    True if there is a fringe. False if not.
+)"""
   );
 }

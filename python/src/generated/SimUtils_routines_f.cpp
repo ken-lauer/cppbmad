@@ -310,13 +310,6 @@ called when the instance is no longer needed.
 
 Parameters
 ----------
-ynew: : real(rp)
-    New data point.
-
-Returns
--------
-<return value) : real(rp)
-    Derivative of fit polynomial evaluated at end of window.
 )"""
   );
   py::class_<SimUtils::FourierAmplitude, std::unique_ptr<SimUtils::FourierAmplitude>>(
