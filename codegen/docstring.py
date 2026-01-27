@@ -239,12 +239,19 @@ class RoutineDocstring:
         lines.append("")
 
         def add_param(param: DocstringParameter, is_last: bool):
+            if param.name.startswith("%"):
+                return
+
             if param.arg_type:
                 # we have parsed code argument info, use that
                 data_type = type_information_to_python_type(param.arg_type)
             else:
                 # otherwise, use the data type from the docstring
                 data_type = param.data_type
+
+            if not data_type and not param.description.strip():
+                logger.warning("Unknown parameter in docstring? %r: %s", self.name, param)
+                return
 
             type_str = str(data_type)
             if param.is_optional:
@@ -468,6 +475,8 @@ def parse_routine_comment_block(
     current_section = "description"
     current_params = []
 
+    param_name = ""
+    param_desc = ""
     i = lines.index(definition_line) + 1
 
     while i < len(lines):
@@ -517,22 +526,20 @@ def parse_routine_comment_block(
                 i += 1
 
         elif current_section in {"inputs", "outputs"}:
+            param_name = ""
+            param_desc = ""
             if "--" in line:
                 param_name, param_desc = [part.strip() for part in line.split("--", 1)]
             elif "--" in next_line:
-                param_name = line.strip()
-                param_desc = ""
-            else:
-                param_name = ""
-                param_desc = ""
+                # long lines can be in the form:
+                #     really_long_name
+                #           -- type info
+                next_line_has_name = bool(next_line.lstrip("! ").split("--", 1)[0].strip())
+                if not next_line_has_name:
+                    param_name = line.strip()
 
             if param_name:
                 data_type = None
-                if "--" in param_desc:
-                    parts = param_desc.split("--", 1)
-                    data_type = parts[0].strip()
-                    param_desc = parts[1].strip()
-
                 is_optional = "optional" in param_desc.lower()
 
                 current_params = []
