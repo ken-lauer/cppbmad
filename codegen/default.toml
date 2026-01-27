@@ -452,10 +452,14 @@ cpp_namespace = "SimUtils"
 source_paths = [
   "$ACC_ROOT_DIR/sim_utils/interfaces",
   "$ACC_ROOT_DIR/sim_utils/math",
+  "$ACC_ROOT_DIR/sim_utils/matrix",
+  "$ACC_ROOT_DIR/sim_utils/io",
+  "$ACC_ROOT_DIR/sim_utils/optimizers",
+  "$ACC_ROOT_DIR/sim_utils/special_functions",
 ]
 skip_files = []
 skip_procedures = []
-do_not_overload = ["ran_gauss"]
+do_not_overload = ["ran_gauss", "modulo2"]
 
 [[routines]]
 fortran_output_filename = "tao_routines.f90"
