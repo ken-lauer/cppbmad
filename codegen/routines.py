@@ -912,9 +912,10 @@ def parse_bmad_routines(settings: RoutineSettings, config: CodegenConfig):
         try:
             proc.parse(config=config)
         except UnsupportedTypeError as ex:
+            logger.warning("Parsing failed for routine %r: unsupported type (%s)", proc.name, ex)
+        except Exception as ex:
             logger.warning("Parsing failed for routine %r: %s", proc.name, ex)
-        except Exception:
-            logger.exception("Parsing failed for routine %r", proc.name)
+            logger.debug("Parsing failed for routine %r", proc.name, exc_info=True)
 
     return procedures
 
@@ -1014,7 +1015,7 @@ def prune_routines(procedures: list[FortranRoutine], config: CodegenConfig):
                 except Exception as ex:
                     if "debug" in str(ex):
                         raise
-                    logger.warning(
+                    logger.debug(
                         f"Reparse failed after docstring inclusion: {best_option.name} {missing_arg_names} {ex}"
                     )
 
