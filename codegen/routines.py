@@ -20,6 +20,7 @@ from .fortran import generate_fortran_routine_with_c_binding
 from .paths import CODEGEN_ROOT, CPPBMAD_ROOT
 from .structs import (
     FileLine,
+    ParsedStructure,
     StructureMember,
     TypeInformation,
     join_ampersand_lines,
@@ -1191,14 +1192,64 @@ def generate_fortran_routine_code(
     )
 
 
-def generate_routines(params: CodegenConfig):
-    logger.info("Parsing routines")
+SettingsAndRoutines = list[tuple[RoutineSettings, list[FortranRoutine]]]
 
+
+def load_routines(
+    params: CodegenConfig,
+    parsed_structs: list[ParsedStructure],
+    config: CodegenConfig,
+) -> tuple[SettingsAndRoutines, list[str]]:
+    structs_seen = set()
+    settings_and_routines = []
+    for settings in config.routines:
+        logger.info("Parsing routines for namespace: %s", settings.cpp_namespace)
+        routines = [routine for routine in parse_bmad_routines(settings, params) if not routine.private]
+        settings_and_routines.append((settings, routines))
+        for routine in routines:
+            if routine.private:
+                continue
+
+            structs_seen |= {arg.kind.lower() for arg in routine.args if arg.type == "type"}
+
+    parsed_structs_by_name = {struct.name.lower(): struct for struct in parsed_structs}
+
+    structs_to_use = set()
+    structs_to_skip = set()
+    check = list(structs_seen)
+    while check:
+        typ = check.pop(0)
+        if typ not in parsed_structs_by_name:
+            logger.warning("Skipping %s as it's not in the bmad parsed structure list", typ)
+            structs_to_skip.add(typ)
+            continue
+
+        parsed_st = parsed_structs_by_name[typ]
+        if (
+            parsed_st.module in config.skips
+            or typ.lower() in config.skips
+            or typ.lower() in config.component_no_translate_list  # legacy - remove?
+        ):
+            structs_to_skip.add(typ)
+            continue
+
+        structs_to_use.add(typ)
+        for member in parsed_st.members.values():
+            if member.type.lower() not in {"type", "class"}:
+                continue
+            assert member.kind
+            kind = member.kind.lower()
+            if kind not in structs_to_skip and kind not in structs_to_use and kind not in check:
+                check.append(kind)
+
+    return settings_and_routines, sorted(structs_to_use)
+
+
+def generate_routines(params: CodegenConfig, settings_and_routines: SettingsAndRoutines):
     all_routines = []
     all_routines_by_name = {}
     to_write = {}
-    for settings in params.routines:
-        routines = [routine for routine in parse_bmad_routines(settings, params) if not routine.private]
+    for settings, routines in settings_and_routines:
         all_routines.extend(routines)
         logger.info(f"Pruning routines ({settings.fortran_output_filename})")
         routines_by_name = prune_routines(routines, params)

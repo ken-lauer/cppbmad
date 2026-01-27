@@ -1097,8 +1097,7 @@ contains
     )
 
     for nt in native_type_containers:
-        struct_name = nt.name
-        struct_name = struct_name.lower()
+        struct_name = nt.name.lower()
         container_name = nt.fortran_container_struct
         print(
             f"""
@@ -1408,7 +1407,7 @@ class ${class_name} : public FortranProxy<${class_name}> {
                     class_body.append(sig)
 
         subs[f"{struct.f_name}_class_body"] = "\n".join(class_body)
-        classes[struct.f_name] = class_body
+        classes[struct.f_name.lower()] = class_body
 
     class_forward_declarations = []
     proxy_classes = []

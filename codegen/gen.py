@@ -32,7 +32,7 @@ from .paths import (
 )
 from .proxy import create_cpp_proxy_header, create_cpp_proxy_impl, create_fortran_proxy_code
 from .py import generate_pybmad
-from .routines import generate_routines, parse_bmad_routines
+from .routines import generate_routines, load_routines
 from .structs import ParsedStructure, load_bmad_parser_structures
 from .util import write_contents_if_differs, write_if_differs
 
@@ -222,47 +222,6 @@ def write_proxy_classes(params: CodegenConfig, structs: list[CodegenStructure]) 
     )
 
 
-def load_routines(parsed_structs: list[ParsedStructure], config: CodegenConfig):
-    structs_seen = set()
-    settings_and_routines = []
-    for settings in config.routines:
-        routines = parse_bmad_routines(settings, config)
-        settings_and_routines.append((settings, routines))
-        for routine in routines:
-            if routine.private:
-                continue
-
-            structs_seen |= {arg.kind.lower() for arg in routine.args if arg.type == "type"}
-
-    parsed_structs_by_name = {struct.name.lower(): struct for struct in parsed_structs}
-
-    structs_to_use = set()
-    structs_to_skip = set()
-    check = list(structs_seen)
-    while check:
-        typ = check.pop(0)
-        if typ not in parsed_structs_by_name:
-            logger.warning("Skipping %s as it's not in the bmad parsed structure list", typ)
-            structs_to_skip.add(typ)
-            continue
-
-        parsed_st = parsed_structs_by_name[typ]
-        if parsed_st.module in config.skips or typ in config.skips:
-            structs_to_skip.add(typ)
-            continue
-
-        structs_to_use.add(typ)
-        for member in parsed_st.members.values():
-            if member.type != "type":
-                continue
-            assert member.kind
-            kind = member.kind.lower()
-            if kind not in structs_to_skip and kind not in structs_to_use and kind not in check:
-                check.append(kind)
-
-    return settings_and_routines, structs_to_use
-
-
 def load_context(
     config_file: pathlib.Path = CODEGEN_ROOT / "default.toml",
     pybmad: bool = True,
@@ -272,6 +231,11 @@ def load_context(
 
     parsed_structs = load_bmad_parser_structures()
 
+    settings_and_routines, routine_structs = load_routines(params, parsed_structs, params)
+
+    # TODO: considering opening up the struct list completely
+    # params.struct_list = sorted(set(routine_structs) | set(params.struct_list))
+    params.struct_list = params.struct_list
     structs = get_structure_definitions(params, parsed_structs)
     enums = parse_all_enums(params.enum_filenames)
 
@@ -286,7 +250,11 @@ def load_context(
     config_context.set(ctx)
     assert len(ctx.codegen_structs)
 
-    ctx.routines, ctx.routines_by_name, ctx.routine_files = generate_routines(params)
+    missing_structs = sorted(set(routine_structs) - set(params.struct_list))
+    logger.info("Structures not flagged for conversion: %d", len(missing_structs))
+    for st in missing_structs:
+        logger.debug("Structure not flagged for conversion: %s", st)
+    ctx.routines, ctx.routines_by_name, ctx.routine_files = generate_routines(params, settings_and_routines)
 
     if pybmad:
         ctx.pybmad_files = generate_pybmad(ctx.codegen_structs, ctx.routines_by_name, ctx.enums)
@@ -301,11 +269,6 @@ def generate(
 ):
     ctx = load_context(config_file, pybmad)
 
-    # _settings_and_routines, _routine_structs = load_routines(parsed_structs, params)
-    # TODO
-    # params.struct_list = sorted(_routine_structs)
-    assert len(ctx.codegen_structs)
-
     # Print diagnostics
     logger.info(f"Number of structs in input list: {len(ctx.codegen_structs)}")
     logger.info(f"Number of structs found:         {len(ctx.parsed_structs)}")
@@ -319,7 +282,7 @@ def generate(
         return ctx
 
     cpp_gen_src = PYBMAD_SRC / "generated"
-    hpp_gen_src = PYBMAD_INCLUDE / "generated"
+    hpp_gen_src = PYBMAD_INCLUDE / "pybmad" / "generated"
     existing_files = set(cpp_gen_src.glob("*.cpp")) | set(hpp_gen_src.glob("*.hpp"))
     for fn in existing_files:
         if fn not in ctx.pybmad_files:
