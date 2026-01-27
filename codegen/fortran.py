@@ -233,6 +233,8 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
         arr = self.arg.array
         ptr_conv = f"call c_f_pointer({self.c_name}%data_ptr, {self.f_ptr_name}, {dims_calc})"
 
+        set_null = f"{self.f_ptr_name} => null()"
+
         if self.intent == "out" or self.is_function_result:
             code = "! output-only"
         elif len(arr) == 1:
@@ -242,6 +244,9 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
                 else:
                     ptr = self.f_name
                 code = f"{ptr} => {self.f_ptr_name}"
+                self.custom_call_arg_name = ptr
+                # dynamic arrays are passed as pointers; so use f_name directly
+                set_null = f"{self.f_name} => null()"
             else:
                 code = f"{self.f_name} = {self.f_ptr_name}(:)"
         elif len(arr) == 2:
@@ -252,11 +257,7 @@ class FortranWrapperGeneralArrayArgument(FortranWrapperArgument):
             raise NotImplementedError(f"{self.routine.name} {self.arg.c_name} {len(arr)}")
 
         code = "\n".join((ptr_conv, code))
-        result.extend(
-            self.if_then_else_block(
-                f"c_associated({self.c_name}%data_ptr)", code, f"{self.f_ptr_name} => null()"
-            )
-        )
+        result.extend(self.if_then_else_block(f"c_associated({self.c_name}%data_ptr)", code, set_null))
         return result
 
     def get_output_conversion(self) -> list[str]:

@@ -75,15 +75,36 @@ docstring_hotfixes["init_coord3"] = [
         is_output=True,
     ),
 ]
-# docstring_hotfixes["ran_gauss_converter"] = [
-#     DocstringParameter(
-#         name="get",
-#         description="Get the current (before any set) gaussian converter.",
-#         data_type="character(*)",
-#         is_input=True,
-#         is_output=True,
-#     )
-# ]
+docstring_hotfixes["bbu_track_all"] = [
+    DocstringParameter(
+        name="hom_voltage_normalized",
+        description="HOM voltage normalized",
+        data_type="real(rp)",
+        is_input=False,
+        is_output=True,
+    ),
+    DocstringParameter(
+        name="growth_rate",
+        description="Growth rate",
+        data_type="real(rp)",
+        is_input=False,
+        is_output=True,
+    ),
+    DocstringParameter(
+        name="lost",
+        description="Lost",
+        data_type="logical",
+        is_input=False,
+        is_output=True,
+    ),
+    DocstringParameter(
+        name="irep",
+        description="irep",
+        data_type="integer",
+        is_input=False,
+        is_output=True,
+    ),
+]
 
 
 def normalize_intent(
@@ -104,7 +125,7 @@ def normalize_intent(
     if intent not in ("in", "inout", "out"):
         raise ValueError(f"Unsupported intent: {intent}")
 
-    if is_dynamic_array and intent == "out":
+    if is_dynamic_array and intent == "out" and not typ.allocatable:
         # The user will need to preallocate this for us - allow them to do
         # it by making it 'inout'
         return "inout"
