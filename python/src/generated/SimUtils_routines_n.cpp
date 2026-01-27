@@ -54,8 +54,6 @@ deriv1 : 1D array of float
 x1 : float
     Location where deriv1 derivatives have been evaluated.
 
-Returns
--------
 n_spline : 1D array of float
     real(rp), Derivative vector from order 0 to order 2*n+1 of the interpolation spline.
 )"""
@@ -96,14 +94,6 @@ nametable : NametableStruct
 name : character
 
 ix_name : int
-
-Returns
--------
-nametable : NametableStruct
-
-name : character
-
-ix_name : int
 )"""
   );
   m.def(
@@ -117,16 +107,6 @@ ix_name : int
 
 Parameters
 ----------
-nametable : NametableStruct
-
-name : character
-
-n_match : int, optional
-
-ix_max : int
-
-Returns
--------
 nametable : NametableStruct
 
 name : character
@@ -151,14 +131,6 @@ nametable : NametableStruct
 name : character
 
 ix_name : int
-
-Returns
--------
-nametable : NametableStruct
-
-name : character
-
-ix_name : int
 )"""
   );
   m.def(
@@ -176,14 +148,6 @@ nametable : NametableStruct
 n_min : int, optional
 
 n_max : int, optional
-
-Returns
--------
-nametable : NametableStruct
-
-n_min : int, optional
-
-n_max : int, optional
 )"""
   );
   m.def(
@@ -195,12 +159,6 @@ n_max : int, optional
 
 Parameters
 ----------
-nametable : NametableStruct
-
-ix_name : int
-
-Returns
--------
 nametable : NametableStruct
 
 ix_name : int

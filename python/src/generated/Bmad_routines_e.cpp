@@ -142,13 +142,6 @@ param : LatParamStruct
 
 err_flag : bool
     Set true if there is an error. False otherwise.
-
-Returns
--------
-ele : EleStruct
-    Lattice element
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Lattice element with reference energy and time.
 )"""
   );
   m.def(
@@ -160,12 +153,6 @@ ele : EleStruct
 
 Parameters
 ----------
-ele_out : EleStruct
-
-ele_in : EleStruct
-
-Returns
--------
 ele_out : EleStruct
 
 ele_in : EleStruct
@@ -211,13 +198,6 @@ ele : EleStruct
     Element to cleanup.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with pointers deallocated as needed.
-
-Returns
--------
-ele : EleStruct
-    Element to cleanup.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with pointers deallocated as needed.
 )"""
   );
   m.def(
@@ -231,9 +211,6 @@ Parameters
 ----------
 ele : EleStruct
     Element in a lattice
-
-template : str, optional
-    Encoding template. Default is "@N (&#)".
 
 Returns
 -------
@@ -321,15 +298,6 @@ is_const : bool
 
 Parameters
 ----------
-ele : EleStruct
-    Element with possible nonzero kicks.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with no kicks.
-
-has_kick : bool
-
-Returns
--------
 ele : EleStruct
     Element with possible nonzero kicks.
     This parameter is an input/output and is modified in-place.
@@ -524,16 +492,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Coordinates to correct.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before correction.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix transfer matrix including correction.
 )"""
   );
   m.def(
@@ -641,14 +599,14 @@ Parameters
 ele : EleStruct
     Bmad Element.
 
-Returns
--------
 bn : 1D array of float
     Normal multipole component.
 
 an : 1D array of float
     Skew multipole component.
 
+Returns
+-------
 n_max : int, optional
     Maximum non-zero multipole component. Set to zero if there are no multipoles.
 )"""
@@ -673,13 +631,6 @@ param : LatParamStruct
 
 orb0 : CoordStruct
     Starting ref coords.
-
-Returns
--------
-ele : EleStruct
-    Lattice element.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with spin map.
 )"""
   );
   py::class_<Bmad::EleToTaylor, std::unique_ptr<Bmad::EleToTaylor>>(
@@ -782,11 +733,6 @@ set_old : bool
 
 Returns
 -------
-ele : EleStruct
-    Element under consideration.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: ele.old_value may be set depending upon setting of set_old
-
 has_changed : bool
     Set True if a value has changed significantly.
 )"""
@@ -800,12 +746,6 @@ has_changed : bool
 
 Parameters
 ----------
-ele1 : 1D array of EleStruct
-
-ele2 : 1D array of EleStruct
-
-Returns
--------
 ele1 : 1D array of EleStruct
 
 ele2 : 1D array of EleStruct
@@ -950,9 +890,6 @@ print_err : bool, optional
 
 Returns
 -------
-ix_ele : int
-    Index of element at s.
-
 err_flag : bool, optional
     Set True if s is out of bounds. False otherwise.
 
@@ -961,6 +898,9 @@ s_eff : float, optional
 
 position : CoordStruct, optional
     Positional information.
+
+ix_ele : int
+    Index of element at s.
 )"""
   );
   py::class_<Bmad::ElementAtSLat, std::unique_ptr<Bmad::ElementAtSLat>>(
@@ -1048,9 +988,6 @@ print_err : bool, optional
 
 Returns
 -------
-ix_ele : int
-    Index of element at s.
-
 err_flag : bool, optional
     Set True if s is out of bounds. False otherwise.
 
@@ -1059,6 +996,9 @@ s_eff : float, optional
 
 position : CoordStruct, optional
     Positional information.
+
+ix_ele : int
+    Index of element at s.
 )"""
   );
   m.def(
@@ -1094,10 +1034,6 @@ s_start : float, optional
 
 s_end : float, optional
     Ending edge of slice relative to beginning of element.
-
-Returns
--------
-sliced_ele : EleStruct
 )"""
   );
   m.def(
@@ -1303,14 +1239,6 @@ field1 : EmFieldStruct
 field2 : EmFieldStruct
 
 field_tot : EmFieldStruct
-
-Returns
--------
-field1 : EmFieldStruct
-
-field2 : EmFieldStruct
-
-field_tot : EmFieldStruct
 )"""
   );
   m.def(
@@ -1325,12 +1253,6 @@ Parameters
 em_taylor1 : EmTaylorStruct
 
 em_taylor2 : EmTaylorStruct
-
-Returns
--------
-em_taylor1 : EmTaylorStruct
-
-em_taylor2 : EmTaylorStruct
 )"""
   );
   m.def(
@@ -1342,12 +1264,6 @@ em_taylor2 : EmTaylorStruct
 
 Parameters
 ----------
-em_taylor1 : 1D array of EmTaylorStruct
-
-em_taylor2 : 1D array of EmTaylorStruct
-
-Returns
--------
 em_taylor1 : 1D array of EmTaylorStruct
 
 em_taylor2 : 1D array of EmTaylorStruct
@@ -1543,14 +1459,6 @@ f1 : AcKickerStruct
 f2 : AcKickerStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : AcKickerStruct
-
-f2 : AcKickerStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1563,14 +1471,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : AcKickerFreqStruct
-
-f2 : AcKickerFreqStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : AcKickerFreqStruct
 
 f2 : AcKickerFreqStruct
@@ -1593,14 +1493,6 @@ f1 : AcKickerTimeStruct
 f2 : AcKickerTimeStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : AcKickerTimeStruct
-
-f2 : AcKickerTimeStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1613,14 +1505,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : AnormalModeStruct
-
-f2 : AnormalModeStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : AnormalModeStruct
 
 f2 : AnormalModeStruct
@@ -1643,14 +1527,6 @@ f1 : ApertureParamStruct
 f2 : ApertureParamStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : ApertureParamStruct
-
-f2 : ApertureParamStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1663,14 +1539,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : AperturePointStruct
-
-f2 : AperturePointStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : AperturePointStruct
 
 f2 : AperturePointStruct
@@ -1693,14 +1561,6 @@ f1 : ApertureScanStruct
 f2 : ApertureScanStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : ApertureScanStruct
-
-f2 : ApertureScanStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1713,14 +1573,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : BeamStruct
-
-f2 : BeamStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : BeamStruct
 
 f2 : BeamStruct
@@ -1743,14 +1595,6 @@ f1 : BeamInitStruct
 f2 : BeamInitStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : BeamInitStruct
-
-f2 : BeamInitStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1763,14 +1607,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : BmadCommonStruct
-
-f2 : BmadCommonStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : BmadCommonStruct
 
 f2 : BmadCommonStruct
@@ -1793,14 +1629,6 @@ f1 : BookkeepingStateStruct
 f2 : BookkeepingStateStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : BookkeepingStateStruct
-
-f2 : BookkeepingStateStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1813,14 +1641,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : BpmPhaseCouplingStruct
-
-f2 : BpmPhaseCouplingStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : BpmPhaseCouplingStruct
 
 f2 : BpmPhaseCouplingStruct
@@ -1843,14 +1663,6 @@ f1 : BranchStruct
 f2 : BranchStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : BranchStruct
-
-f2 : BranchStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1863,14 +1675,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : BunchStruct
-
-f2 : BunchStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : BunchStruct
 
 f2 : BunchStruct
@@ -1893,14 +1697,6 @@ f1 : BunchParamsStruct
 f2 : BunchParamsStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : BunchParamsStruct
-
-f2 : BunchParamsStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1913,14 +1709,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : CartesianMapStruct
-
-f2 : CartesianMapStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : CartesianMapStruct
 
 f2 : CartesianMapStruct
@@ -1943,14 +1731,6 @@ f1 : CartesianMapTermStruct
 f2 : CartesianMapTermStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : CartesianMapTermStruct
-
-f2 : CartesianMapTermStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -1963,14 +1743,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : CartesianMapTerm1Struct
-
-f2 : CartesianMapTerm1Struct
-
-is_eq : bool
-
-Returns
--------
 f1 : CartesianMapTerm1Struct
 
 f2 : CartesianMapTerm1Struct
@@ -1993,14 +1765,6 @@ f1 : ComplexTaylorStruct
 f2 : ComplexTaylorStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : ComplexTaylorStruct
-
-f2 : ComplexTaylorStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2013,14 +1777,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : ComplexTaylorTermStruct
-
-f2 : ComplexTaylorTermStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : ComplexTaylorTermStruct
 
 f2 : ComplexTaylorTermStruct
@@ -2043,14 +1799,6 @@ f1 : ControlStruct
 f2 : ControlStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : ControlStruct
-
-f2 : ControlStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2063,14 +1811,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : ControlRamp1Struct
-
-f2 : ControlRamp1Struct
-
-is_eq : bool
-
-Returns
--------
 f1 : ControlRamp1Struct
 
 f2 : ControlRamp1Struct
@@ -2093,14 +1833,6 @@ f1 : ControlVar1Struct
 f2 : ControlVar1Struct
 
 is_eq : bool
-
-Returns
--------
-f1 : ControlVar1Struct
-
-f2 : ControlVar1Struct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2113,14 +1845,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : ControllerStruct
-
-f2 : ControllerStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : ControllerStruct
 
 f2 : ControllerStruct
@@ -2143,14 +1867,6 @@ f1 : CoordStruct
 f2 : CoordStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : CoordStruct
-
-f2 : CoordStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2163,14 +1879,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : CoordArrayStruct
-
-f2 : CoordArrayStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : CoordArrayStruct
 
 f2 : CoordArrayStruct
@@ -2193,14 +1901,6 @@ f1 : CylindricalMapStruct
 f2 : CylindricalMapStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : CylindricalMapStruct
-
-f2 : CylindricalMapStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2213,14 +1913,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : CylindricalMapTermStruct
-
-f2 : CylindricalMapTermStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : CylindricalMapTermStruct
 
 f2 : CylindricalMapTermStruct
@@ -2243,14 +1935,6 @@ f1 : CylindricalMapTerm1Struct
 f2 : CylindricalMapTerm1Struct
 
 is_eq : bool
-
-Returns
--------
-f1 : CylindricalMapTerm1Struct
-
-f2 : CylindricalMapTerm1Struct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2263,14 +1947,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : EleStruct
-
-f2 : EleStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : EleStruct
 
 f2 : EleStruct
@@ -2293,14 +1969,6 @@ f1 : EllipseBeamInitStruct
 f2 : EllipseBeamInitStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : EllipseBeamInitStruct
-
-f2 : EllipseBeamInitStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2313,14 +1981,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : EmFieldStruct
-
-f2 : EmFieldStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : EmFieldStruct
 
 f2 : EmFieldStruct
@@ -2343,14 +2003,6 @@ f1 : EmTaylorStruct
 f2 : EmTaylorStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : EmTaylorStruct
-
-f2 : EmTaylorStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2363,14 +2015,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : EmTaylorTermStruct
-
-f2 : EmTaylorTermStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : EmTaylorTermStruct
 
 f2 : EmTaylorTermStruct
@@ -2393,14 +2037,6 @@ f1 : ExpressionAtomStruct
 f2 : ExpressionAtomStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : ExpressionAtomStruct
-
-f2 : ExpressionAtomStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2413,14 +2049,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : FloorPositionStruct
-
-f2 : FloorPositionStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : FloorPositionStruct
 
 f2 : FloorPositionStruct
@@ -2443,14 +2071,6 @@ f1 : GenGrad1Struct
 f2 : GenGrad1Struct
 
 is_eq : bool
-
-Returns
--------
-f1 : GenGrad1Struct
-
-f2 : GenGrad1Struct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2463,14 +2083,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : GenGradMapStruct
-
-f2 : GenGradMapStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : GenGradMapStruct
 
 f2 : GenGradMapStruct
@@ -2493,14 +2105,6 @@ f1 : GridBeamInitStruct
 f2 : GridBeamInitStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : GridBeamInitStruct
-
-f2 : GridBeamInitStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2513,14 +2117,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : GridFieldStruct
-
-f2 : GridFieldStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : GridFieldStruct
 
 f2 : GridFieldStruct
@@ -2543,14 +2139,6 @@ f1 : GridFieldPtStruct
 f2 : GridFieldPtStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : GridFieldPtStruct
-
-f2 : GridFieldPtStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2563,14 +2151,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : GridFieldPt1Struct
-
-f2 : GridFieldPt1Struct
-
-is_eq : bool
-
-Returns
--------
 f1 : GridFieldPt1Struct
 
 f2 : GridFieldPt1Struct
@@ -2593,14 +2173,6 @@ f1 : HighEnergySpaceChargeStruct
 f2 : HighEnergySpaceChargeStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : HighEnergySpaceChargeStruct
-
-f2 : HighEnergySpaceChargeStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2613,14 +2185,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : Interval1CoefStruct
-
-f2 : Interval1CoefStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : Interval1CoefStruct
 
 f2 : Interval1CoefStruct
@@ -2643,14 +2207,6 @@ f1 : KvBeamInitStruct
 f2 : KvBeamInitStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : KvBeamInitStruct
-
-f2 : KvBeamInitStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2663,14 +2219,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : LatStruct
-
-f2 : LatStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : LatStruct
 
 f2 : LatStruct
@@ -2693,14 +2241,6 @@ f1 : LatEleLocStruct
 f2 : LatEleLocStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : LatEleLocStruct
-
-f2 : LatEleLocStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2713,14 +2253,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : LatParamStruct
-
-f2 : LatParamStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : LatParamStruct
 
 f2 : LatParamStruct
@@ -2743,14 +2275,6 @@ f1 : LinacNormalModeStruct
 f2 : LinacNormalModeStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : LinacNormalModeStruct
-
-f2 : LinacNormalModeStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2763,14 +2287,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : Mode3Struct
-
-f2 : Mode3Struct
-
-is_eq : bool
-
-Returns
--------
 f1 : Mode3Struct
 
 f2 : Mode3Struct
@@ -2793,14 +2309,6 @@ f1 : ModeInfoStruct
 f2 : ModeInfoStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : ModeInfoStruct
-
-f2 : ModeInfoStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2813,14 +2321,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : NormalModesStruct
-
-f2 : NormalModesStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : NormalModesStruct
 
 f2 : NormalModesStruct
@@ -2843,14 +2343,6 @@ f1 : PhotonElementStruct
 f2 : PhotonElementStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : PhotonElementStruct
-
-f2 : PhotonElementStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2863,14 +2355,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : PhotonMaterialStruct
-
-f2 : PhotonMaterialStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : PhotonMaterialStruct
 
 f2 : PhotonMaterialStruct
@@ -2893,14 +2377,6 @@ f1 : PhotonReflectSurfaceStruct
 f2 : PhotonReflectSurfaceStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : PhotonReflectSurfaceStruct
-
-f2 : PhotonReflectSurfaceStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2913,14 +2389,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : PhotonReflectTableStruct
-
-f2 : PhotonReflectTableStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : PhotonReflectTableStruct
 
 f2 : PhotonReflectTableStruct
@@ -2943,14 +2411,6 @@ f1 : PhotonTargetStruct
 f2 : PhotonTargetStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : PhotonTargetStruct
-
-f2 : PhotonTargetStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -2963,14 +2423,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : PixelDetecStruct
-
-f2 : PixelDetecStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : PixelDetecStruct
 
 f2 : PixelDetecStruct
@@ -2993,14 +2445,6 @@ f1 : PixelPtStruct
 f2 : PixelPtStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : PixelPtStruct
-
-f2 : PixelPtStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3013,14 +2457,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : PreTrackerStruct
-
-f2 : PreTrackerStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : PreTrackerStruct
 
 f2 : PreTrackerStruct
@@ -3043,14 +2479,6 @@ f1 : RadInt1Struct
 f2 : RadInt1Struct
 
 is_eq : bool
-
-Returns
--------
-f1 : RadInt1Struct
-
-f2 : RadInt1Struct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3063,14 +2491,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : RadIntAllEleStruct
-
-f2 : RadIntAllEleStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : RadIntAllEleStruct
 
 f2 : RadIntAllEleStruct
@@ -3093,14 +2513,6 @@ f1 : RadIntBranchStruct
 f2 : RadIntBranchStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : RadIntBranchStruct
-
-f2 : RadIntBranchStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3113,14 +2525,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : RadMapStruct
-
-f2 : RadMapStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : RadMapStruct
 
 f2 : RadMapStruct
@@ -3143,14 +2547,6 @@ f1 : RadMapEleStruct
 f2 : RadMapEleStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : RadMapEleStruct
-
-f2 : RadMapEleStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3163,14 +2559,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : RamperLordStruct
-
-f2 : RamperLordStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : RamperLordStruct
 
 f2 : RamperLordStruct
@@ -3193,14 +2581,6 @@ f1 : SpaceChargeCommonStruct
 f2 : SpaceChargeCommonStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : SpaceChargeCommonStruct
-
-f2 : SpaceChargeCommonStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3213,14 +2593,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : SpinPolarStruct
-
-f2 : SpinPolarStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : SpinPolarStruct
 
 f2 : SpinPolarStruct
@@ -3243,14 +2615,6 @@ f1 : SplineStruct
 f2 : SplineStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : SplineStruct
-
-f2 : SplineStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3263,14 +2627,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : StrongBeamStruct
-
-f2 : StrongBeamStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : StrongBeamStruct
 
 f2 : StrongBeamStruct
@@ -3293,14 +2649,6 @@ f1 : SurfaceCurvatureStruct
 f2 : SurfaceCurvatureStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : SurfaceCurvatureStruct
-
-f2 : SurfaceCurvatureStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3313,14 +2661,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : SurfaceDisplacementStruct
-
-f2 : SurfaceDisplacementStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : SurfaceDisplacementStruct
 
 f2 : SurfaceDisplacementStruct
@@ -3343,14 +2683,6 @@ f1 : SurfaceDisplacementPtStruct
 f2 : SurfaceDisplacementPtStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : SurfaceDisplacementPtStruct
-
-f2 : SurfaceDisplacementPtStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3363,14 +2695,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : SurfaceHMisalignStruct
-
-f2 : SurfaceHMisalignStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : SurfaceHMisalignStruct
 
 f2 : SurfaceHMisalignStruct
@@ -3393,14 +2717,6 @@ f1 : SurfaceHMisalignPtStruct
 f2 : SurfaceHMisalignPtStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : SurfaceHMisalignPtStruct
-
-f2 : SurfaceHMisalignPtStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3413,14 +2729,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : SurfaceSegmentedStruct
-
-f2 : SurfaceSegmentedStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : SurfaceSegmentedStruct
 
 f2 : SurfaceSegmentedStruct
@@ -3443,14 +2751,6 @@ f1 : SurfaceSegmentedPtStruct
 f2 : SurfaceSegmentedPtStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : SurfaceSegmentedPtStruct
-
-f2 : SurfaceSegmentedPtStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3463,14 +2763,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : TargetPointStruct
-
-f2 : TargetPointStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : TargetPointStruct
 
 f2 : TargetPointStruct
@@ -3493,14 +2785,6 @@ f1 : TaylorStruct
 f2 : TaylorStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : TaylorStruct
-
-f2 : TaylorStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3513,14 +2797,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : TaylorTermStruct
-
-f2 : TaylorTermStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : TaylorTermStruct
 
 f2 : TaylorTermStruct
@@ -3543,14 +2819,6 @@ f1 : TrackStruct
 f2 : TrackStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : TrackStruct
-
-f2 : TrackStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3563,14 +2831,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : TrackPointStruct
-
-f2 : TrackPointStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : TrackPointStruct
 
 f2 : TrackPointStruct
@@ -3593,14 +2853,6 @@ f1 : TwissStruct
 f2 : TwissStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : TwissStruct
-
-f2 : TwissStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3613,14 +2865,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : WakeStruct
-
-f2 : WakeStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : WakeStruct
 
 f2 : WakeStruct
@@ -3643,14 +2887,6 @@ f1 : WakeLrStruct
 f2 : WakeLrStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : WakeLrStruct
-
-f2 : WakeLrStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3663,14 +2899,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : WakeLrModeStruct
-
-f2 : WakeLrModeStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : WakeLrModeStruct
 
 f2 : WakeLrModeStruct
@@ -3693,14 +2921,6 @@ f1 : WakeSrStruct
 f2 : WakeSrStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : WakeSrStruct
-
-f2 : WakeSrStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3713,14 +2933,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : WakeSrModeStruct
-
-f2 : WakeSrModeStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : WakeSrModeStruct
 
 f2 : WakeSrModeStruct
@@ -3743,14 +2955,6 @@ f1 : WakeSrZLongStruct
 f2 : WakeSrZLongStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : WakeSrZLongStruct
-
-f2 : WakeSrZLongStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3763,14 +2967,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : Wall3dStruct
-
-f2 : Wall3dStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : Wall3dStruct
 
 f2 : Wall3dStruct
@@ -3793,14 +2989,6 @@ f1 : Wall3dSectionStruct
 f2 : Wall3dSectionStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : Wall3dSectionStruct
-
-f2 : Wall3dSectionStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3813,14 +3001,6 @@ is_eq : bool
 
 Parameters
 ----------
-f1 : Wall3dVertexStruct
-
-f2 : Wall3dVertexStruct
-
-is_eq : bool
-
-Returns
--------
 f1 : Wall3dVertexStruct
 
 f2 : Wall3dVertexStruct
@@ -3843,14 +3023,6 @@ f1 : XyDispStruct
 f2 : XyDispStruct
 
 is_eq : bool
-
-Returns
--------
-f1 : XyDispStruct
-
-f2 : XyDispStruct
-
-is_eq : bool
 )"""
   );
   m.def(
@@ -3863,14 +3035,6 @@ is_eq : bool
 
 Parameters
 ----------
-ele : EleStruct
-
-delim : character
-
-is_here : bool
-
-Returns
--------
 ele : EleStruct
 
 delim : character
@@ -3912,20 +3076,6 @@ equiv : bool
 
 Parameters
 ----------
-A : float
-
-B : float
-
-C : float
-
-D : float
-
-E : float
-
-F : float
-
-Returns
--------
 A : float
 
 B : float
@@ -4032,11 +3182,11 @@ word : character
 
 Returns
 -------
-this_logic : bool
-    Result.
-
 iostat : int
     Status: Returns 0 if conversion successful.
+
+this_logic : bool
+    Result.
 )"""
   );
   m.def(
@@ -4073,16 +3223,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
-
-Returns
--------
-orb : CoordStruct
-    Coords after tracking.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the edge.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix through the edge.
 )"""
   );
   m.def(
@@ -4304,14 +3444,14 @@ use_old : bool, optional
 
 Returns
 -------
-value : float
-    Value of the expression.
-
 err_flag : bool
     True if there is an evaluation problem. False otherwise.
 
 err_str : character
     Error string explaining error if there is one.
+
+value : float
+    Value of the expression.
 )"""
   );
   py::class_<Bmad::ExpressionStringToStack, std::unique_ptr<Bmad::ExpressionStringToStack>>(
@@ -4432,11 +3572,11 @@ The root node, equal nodes, and all bracket nodes, will have an array of child n
 
 Parameters
 ----------
-root_tree : ExpressionTreeStruct
-    Only used when recursively called.
-
 string : character
     Expression to be converted.
+
+root_tree : ExpressionTreeStruct
+    Only used when recursively called.
 
 Returns
 -------
@@ -4526,14 +3666,14 @@ use_old : bool, optional
 
 Returns
 -------
-value : float
-    Value of the expression.
-
 err_flag : bool
     True if there is an evaluation problem. False otherwise.
 
 err_str : character, optional
     Error string explaining error if there is one.
+
+value : float
+    Value of the expression.
 )"""
   );
 }

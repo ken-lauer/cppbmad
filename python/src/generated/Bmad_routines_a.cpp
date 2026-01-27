@@ -133,18 +133,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Particle position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Kicked particle.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the multipole.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix transfer matrix including multipole.
 )"""
   );
   m.def(
@@ -165,13 +153,6 @@ Parameters
 e_orb : CoordStruct
     charged particle position.
 
-photon_orb : CoordStruct
-    Photon position relative to e_orb.
-    This parameter is an input/output and is modified in-place.
-    As an output, photon_orb: Absolute photon position.
-
-Returns
--------
 photon_orb : CoordStruct
     Photon position relative to e_orb.
     This parameter is an input/output and is modified in-place.
@@ -391,11 +372,6 @@ wrap : bool, optional
 
 Returns
 -------
-lat : LatStruct
-    Lat to modify.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Modified lat.
-
 err_flag : bool
     Set True if there is an error. False otherwise
 
@@ -413,14 +389,6 @@ super_ele_out : EleStruct, optional
 
 Parameters
 ----------
-lat : LatStruct
-
-m_slaves : 1D array of LatEleLocStruct
-
-lord_in : EleStruct, optional
-
-Returns
--------
 lat : LatStruct
 
 m_slaves : 1D array of LatEleLocStruct
@@ -467,10 +435,6 @@ lat : LatStruct
 
 upper_bound : int
     Desired upper bound.
-
-Returns
--------
-lat : LatStruct
 )"""
   );
   m.def(
@@ -496,11 +460,6 @@ ix_branch : int, optional
 do_ramper_slave_setup : bool, optional
     Default False. If true, setup ramper slaves. Generally this needs to be done if reallocating with a fully
     formed lattice.
-
-Returns
--------
-lat : LatStruct
-    Lattice with element array.
 )"""
   );
   m.def(
@@ -541,13 +500,6 @@ orbit : CoordStruct
 coord_type : character, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
-
-Returns
--------
-orbit : CoordStruct
-    Orbit in angular coordinates.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Orbit in canonical coordinates.
 )"""
   );
   m.def(
@@ -560,13 +512,6 @@ Routine to calculate aperture limits when ele%attribute_type is set to auto_aper
 
 Parameters
 ----------
-ele : EleStruct
-    Element with aperture.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with apertures set.
-
-Returns
--------
 ele : EleStruct
     Element with aperture.
     This parameter is an input/output and is modified in-place.
@@ -588,11 +533,6 @@ lat : LatStruct
 
 Returns
 -------
-lat : LatStruct
-    Lattice.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with rampers applied.
-
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -627,18 +567,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Beginning coordinates
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: coordinates with added dE energy kick.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before fringe.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix transfer matrix including energy kick.
 )"""
   );
   m.def(
@@ -688,14 +616,6 @@ arr : 1D array of float
 parens_in : character, optional
 
 str_out : character
-
-Returns
--------
-arr : 1D array of float
-
-parens_in : character, optional
-
-str_out : character
 )"""
   );
   m.def(
@@ -708,14 +628,6 @@ str_out : character
 
 Parameters
 ----------
-pt0 : GridFieldPt1Struct
-
-ele : EleStruct
-
-field_value : float
-
-Returns
--------
 pt0 : GridFieldPt1Struct
 
 ele : EleStruct
@@ -763,13 +675,6 @@ force_bookkeeping : bool, optional
     If present and True then force attribute bookkeeping to be done independent of the state of
     ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
     bookkeeping.
-
-Returns
--------
-ele : EleStruct
-    Element with attributes
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with self-consistant attributes.
 )"""
   );
   py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
@@ -847,15 +752,15 @@ dependent_attribs_free : bool, optional
 
 Returns
 -------
-free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
-
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
+
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
 )"""
   );
   py::class_<Bmad::AttributeFree2, std::unique_ptr<Bmad::AttributeFree2>>(
@@ -928,15 +833,15 @@ dependent_attribs_free : bool, optional
 
 Returns
 -------
-free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
-
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
+
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
 )"""
   );
   py::class_<Bmad::AttributeFree3, std::unique_ptr<Bmad::AttributeFree3>>(
@@ -1019,15 +924,15 @@ dependent_attribs_free : bool, optional
 
 Returns
 -------
-free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
-
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
+
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
 )"""
   );
   py::class_<Bmad::AttributeIndex1, std::unique_ptr<Bmad::AttributeIndex1>>(
@@ -1335,11 +1240,6 @@ call_bookkeeper : bool, optional
 
 Returns
 -------
-ele : EleStruct
-    RF element or e_gun.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: element with phase and amplitude adjusted.
-
 err_flag : bool
     Logical, Set true if there is an error. False otherwise.
 )"""
@@ -1364,8 +1264,6 @@ twiss2 : TwissStruct
 
 Returns
 -------
-twiss2 : TwissStruct
-
 ave_twiss : TwissStruct
     Average twiss.
 )"""

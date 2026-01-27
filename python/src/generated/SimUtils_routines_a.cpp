@@ -121,11 +121,11 @@ Returns
 phase : float
     phase of peak found in signal.
 
-freq : float
-    frequency of peak
-
 amp : float
     amplitude of peak
+
+freq : float
+    frequency of peak
 )"""
   );
   m.def(
@@ -177,14 +177,6 @@ y : float
 
 Parameters
 ----------
-int_arr : 1D array of int
-
-err_str : character
-
-ival : int
-
-Returns
--------
 int_arr : 1D array of int
 
 err_str : character

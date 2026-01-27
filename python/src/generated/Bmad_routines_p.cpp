@@ -54,20 +54,6 @@ delim : character
 delim_found : bool
 
 err_flag : bool
-
-Returns
--------
-cl_map : CylindricalMapStruct
-
-ele : EleStruct
-
-lat : LatStruct
-
-delim : character
-
-delim_found : bool
-
-err_flag : bool
 )"""
   );
   m.def(
@@ -97,20 +83,6 @@ Subroutine to parse a "gen_grad_map = {}" construct
 
 Parameters
 ----------
-g_field : GridFieldStruct
-
-ele : EleStruct
-
-lat : LatStruct
-
-delim : character
-
-delim_found : bool
-
-err_flag : bool
-
-Returns
--------
 g_field : GridFieldStruct
 
 ele : EleStruct
@@ -205,14 +177,6 @@ int_array : 1D array of int
 
 Returns
 -------
-int_array : 1D array of int
-    the array to be read in Optional:
-    This parameter is an input/output and is modified in-place.
-    As an output, int_array: Array of values.
-
-is_ok : bool
-    Set True if everything is ok.
-
 num_found : int
     number of elements.
 
@@ -221,6 +185,9 @@ delim : character
 
 delim_found : bool
     Delimiter found? False if end of input command.
+
+is_ok : bool
+    Set True if everything is ok.
 )"""
   );
   py::class_<Bmad::ParseRealList, std::unique_ptr<Bmad::ParseRealList>>(
@@ -273,6 +240,8 @@ lat : LatStruct
 err_str : character
     Error string to print if there is an error.
 
+real_array : 1D array of float
+
 exact_size : bool
 
 open_delim : character, optional
@@ -285,8 +254,6 @@ default_value : float, optional
 
 Returns
 -------
-real_array : 1D array of float
-
 delim : character
 
 delim_found : bool
@@ -355,14 +322,6 @@ real_array : 1D array of float
 
 Returns
 -------
-real_array : 1D array of float
-    the array to be read in
-    This parameter is an input/output and is modified in-place.
-    As an output, real_array: Array of values
-
-is_ok : bool
-    Set True if everything is ok
-
 num_found : int
     number of elements
 
@@ -371,6 +330,9 @@ delim : character
 
 delim_found : bool
     Stopping delimiter found? False if end of input command.
+
+is_ok : bool
+    Set True if everything is ok
 )"""
   );
   m.def(
@@ -383,14 +345,6 @@ delim_found : bool
 
 Parameters
 ----------
-word : character
-
-lat : LatStruct
-
-redef_is_error : bool
-
-Returns
--------
 word : character
 
 lat : LatStruct
@@ -445,6 +399,9 @@ at the end of the array.
 
 Parameters
 ----------
+cmplx_vec : 1D array of complex
+    Complex vector.
+
 ele : EleStruct
     Lattice element associated with the array. Used for error messages.
 
@@ -453,9 +410,6 @@ err_str : character
 
 Returns
 -------
-cmplx_vec : 1D array of complex
-    Complex vector.
-
 delim : character
     Delimitor at end of array. Must be "," or "}"
 
@@ -514,6 +468,9 @@ Note: if end_delim is "," and next character is a delim but not ",", the next ch
 
 Parameters
 ----------
+real_vec : 1D array of float
+    Real vector.
+
 ele : EleStruct
     Lattice element associated with the array. Used for error messages.
 
@@ -528,17 +485,14 @@ exact_size : bool, optional
 
 Returns
 -------
-real_vec : 1D array of float
-    Real vector.
-
 delim : character
     Delimitor at end of array.
 
-is_ok : bool
-    True if everything OK. False otherwise.
-
 n_real : int, optional
     Number of elements found.
+
+is_ok : bool
+    True if everything OK. False otherwise.
 )"""
   );
   m.def(
@@ -587,24 +541,6 @@ err : bool
 str1 : character, optional
 
 str2 : character, optional
-
-Returns
--------
-int_val : int
-
-word : character
-
-ix_word : int
-
-delim : character
-
-delim_found : bool
-
-err : bool
-
-str1 : character, optional
-
-str2 : character, optional
 )"""
   );
   m.def(
@@ -620,20 +556,6 @@ str2 : character, optional
 
 Parameters
 ----------
-attrib_name : character
-
-this_logic : bool
-
-ele_name : character
-
-delim : character
-
-delim_found : bool
-
-err : bool
-
-Returns
--------
 attrib_name : character
 
 this_logic : bool
@@ -694,13 +616,6 @@ ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with wake information.
-
-Returns
--------
-ele : EleStruct
-    Element containing wake structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with wake information.
 )"""
   );
   m.def(
@@ -722,13 +637,6 @@ ele : EleStruct
 
 lr_file_name : character
     Name of long-range wake field file.
-
-Returns
--------
-ele : EleStruct
-    Element containing wake structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with wake information.
 )"""
   );
   m.def(
@@ -750,13 +658,6 @@ ele : EleStruct
 
 sr_file_name : character
     Name of short-range wake field file.
-
-Returns
--------
-ele : EleStruct
-    Element containing wake structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with wake information.
 )"""
   );
   m.def(
@@ -773,13 +674,6 @@ This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
 ----------
-ele : EleStruct
-    Element containing wake structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with wake information.
-
-Returns
--------
 ele : EleStruct
     Element containing wake structure.
     This parameter is an input/output and is modified in-place.
@@ -1076,11 +970,6 @@ pixel_pt : PixelPtStruct, optional
 
 Returns
 -------
-ele : EleStruct
-    Element with grid.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with updatted grid.
-
 ix_pt : int, optional
     Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
     argument is present.
@@ -1256,13 +1145,6 @@ ele : EleStruct
     Source element to setup. Element will be of type: sample, diffraction_plate or photon_init.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Source element with target parameters setup in ele.photon.target.
-
-Returns
--------
-ele : EleStruct
-    Source element to setup. Element will be of type: sample, diffraction_plate or photon_init.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Source element with target parameters setup in ele.photon.target.
 )"""
   );
   m.def(
@@ -1350,13 +1232,6 @@ max_target_area : float
 
 w_to_surface : 2D array of float (shape: 3,3), optional
     Rotation matrix for curved surface.
-
-Returns
--------
-orbit : CoordStruct
-    phase-space coords of photon. --   Will be in curved surface coords if there is a curved surface.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Final phase-space coords
 )"""
   );
   m.def(
@@ -1674,9 +1549,6 @@ print_err : bool, optional
 
 Returns
 -------
-ele : EleStruct, optional
-    Pointer to element at s.
-
 err_flag : bool, optional
     Set True if s is out of bounds. False otherwise.
 
@@ -1685,6 +1557,9 @@ s_eff : float, optional
 
 position : CoordStruct, optional
     Positional information.
+
+ele : EleStruct, optional
+    Pointer to element at s.
 )"""
   );
   m.def(
@@ -1984,9 +1859,6 @@ lord_type : int, optional
 
 Returns
 -------
-slave_ptr : EleStruct, optional
-    Pointer to the slave. Nullified if there is an error.
-
 control : ControlStruct, optional
     Pointer to control info for this lord/slave relationship. Nullified if there is an error.
 
@@ -1999,6 +1871,9 @@ ix_control : int, optional
 
 ix_ic : int, optional
     Index of the lat.ic(:) element associated with the control argument.
+
+slave_ptr : EleStruct, optional
+    Pointer to the slave. Nullified if there is an error.
 )"""
   );
   py::class_<Bmad::PointerToSuperLord, std::unique_ptr<Bmad::PointerToSuperLord>>(
@@ -2130,9 +2005,6 @@ ix : int, optional
 iy : int, optional
     Grid point index.
 
-pt : SurfaceDisplacementPtStruct, optional
-    Pointer to grid point. Will not be associated if (x,y) outside the grid.
-
 xx : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
@@ -2140,6 +2012,9 @@ xx : float, optional
 yy : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
+
+pt : SurfaceDisplacementPtStruct, optional
+    Pointer to grid point. Will not be associated if (x,y) outside the grid.
 )"""
   );
   py::class_<Bmad::PointerToSurfaceSegmentedPt, std::unique_ptr<Bmad::PointerToSurfaceSegmentedPt>>(
@@ -2208,9 +2083,6 @@ ix : int, optional
 iy : int, optional
     Grid point index.
 
-pt : SurfaceSegmentedPtStruct, optional
-    Pointer to grid point. Will not be associated if (x,y) outside the grid.
-
 xx : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
@@ -2218,6 +2090,9 @@ xx : float, optional
 yy : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
+
+pt : SurfaceSegmentedPtStruct, optional
+    Pointer to grid point. Will not be associated if (x,y) outside the grid.
 )"""
   );
   py::class_<Bmad::PointerToWakeEle, std::unique_ptr<Bmad::PointerToWakeEle>>(
@@ -2299,14 +2174,14 @@ ix_wall : int, optional
 
 Returns
 -------
-wall3d : Wall3dStruct, optional
-    Pointer to the associated wall structure. Will be nullified if there is no associated wall.
-
 ds_offset : float, optional
     Element offset: s(beginning of ele) - s(beginning of wall3d)
 
 is_branch_wall : bool, optional
     Set True if wall3d points to branch.wall3d.
+
+wall3d : Wall3dStruct, optional
+    Pointer to the associated wall structure. Will be nullified if there is no associated wall.
 )"""
   );
   m.def(
@@ -2446,11 +2321,6 @@ Parameters
 ----------
 lat : LatStruct
     Bmad lattice.
-
-Returns
--------
-lat : LatStruct
-    Bmad lattice.
 )"""
   );
   m.def(
@@ -2502,12 +2372,6 @@ crossover : 1D array of int (shape: 2), optional
 
 crossover_wiggler : 1D array of int (shape: 2), optional
     crossover points for wigglers. Default is [30, 60].
-
-Returns
--------
-ptc_layout : Layout
-    This parameter is an input/output and is modified in-place.
-    As an output, ptc_layout: Lattice with the optimum number of tracking steps and integrator order.
 )"""
   );
   py::class_<Bmad::PtcCheckForLostParticle, std::unique_ptr<Bmad::PtcCheckForLostParticle>>(
@@ -2694,13 +2558,6 @@ branch : BranchStruct
 
 pz : float, optional
     energy offset around which to calculate the matrices if there is no RF.
-
-Returns
--------
-branch : BranchStruct
-    Lattice branch.
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: Lattice branch containing the matrices.
 )"""
   );
   m.def(
@@ -2814,11 +2671,6 @@ orbit : 1D array of CoordStruct
 
 Returns
 -------
-orbit : 1D array of CoordStruct
-    Coordinates at beginning of branch.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Orbit array.
-
 track_state : int, optional
     Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
 
@@ -2872,16 +2724,6 @@ unit_start : bool, optional
 
 Returns
 -------
-t_map : 1D array of TaylorStruct (shape: 6)
-    Initial orbital map (used when unit_start = False)
-    This parameter is an input/output and is modified in-place.
-    As an output, t_map: Orbital transfer map.
-
-s_map : 1D array of TaylorStruct (shape: 4)
-    Initial spin map (used when unit_start = False)
-    This parameter is an input/output and is modified in-place.
-    As an output, s_map: Quaternion spin transfer map.
-
 err_flag : bool
     Set True if problem like number overflow, etc.
 )"""

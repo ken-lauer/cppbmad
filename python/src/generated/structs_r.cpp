@@ -11,7 +11,45 @@ namespace py = pybind11;
 // =============================================================================
 // rad_int1_struct
 void init_rad_int1_struct(py::module &m, py::class_<RadInt1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("i0") = py::none(),
+         py::arg("i1") = py::none(),
+         py::arg("i2") = py::none(),
+         py::arg("i3") = py::none(),
+         py::arg("i4a") = py::none(),
+         py::arg("i4b") = py::none(),
+         py::arg("i4z") = py::none(),
+         py::arg("i5a") = py::none(),
+         py::arg("i5b") = py::none(),
+         py::arg("i6b") = py::none(),
+         py::arg("lin_i2_E4") = py::none(),
+         py::arg("lin_i3_E7") = py::none(),
+         py::arg("lin_i5a_E6") = py::none(),
+         py::arg("lin_i5b_E6") = py::none(),
+         py::arg("lin_norm_emit_a") = py::none(),
+         py::arg("lin_norm_emit_b") = py::none(),
+         py::arg("lin_sig_E") = py::none(),
+         py::arg("n_steps") = py::none()
+  )
       // RadInt1Struct.i0 (0D_NOT_real -
       .def_property("i0", &RadInt1Struct::i0, &RadInt1Struct::set_i0)
       // RadInt1Struct.i1 (0D_NOT_real -
@@ -148,7 +186,15 @@ void init_rad_int_branch_struct(py::module &m, py::class_<RadIntBranchStruct> &c
 // =============================================================================
 // rad_map_ele_struct
 void init_rad_map_ele_struct(py::module &m, py::class_<RadMapEleStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const RadMapStruct>,
+             optional_ref<const RadMapStruct>,
+             std::optional<bool>>(),
+         py::arg("rm0") = py::none(),
+         py::arg("rm1") = py::none(),
+         py::arg("stale") = py::none()
+  )
       // RadMapEleStruct.rm0 (0D_NOT_type - Upstream half and downstream half matrices for an
       // element.
       .def_property("rm0", &RadMapEleStruct::rm0, &RadMapEleStruct::set_rm0)
@@ -181,7 +227,19 @@ void init_rad_map_ele_struct(py::module &m, py::class_<RadMapEleStruct> &cls) {
 // =============================================================================
 // rad_map_struct
 void init_rad_map_struct(py::module &m, py::class_<RadMapStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<double>>>>(),
+         py::arg("ref_orb") = py::none(),
+         py::arg("damp_dmat") = py::none(),
+         py::arg("xfer_damp_vec") = py::none(),
+         py::arg("xfer_damp_mat") = py::none(),
+         py::arg("stoc_mat") = py::none()
+  )
       // RadMapStruct.ref_orb (1D_NOT_real - Reference point around which damp_mat is calculated.
       .def_property("ref_orb", &RadMapStruct::ref_orb, &RadMapStruct::set_ref_orb)
       // RadMapStruct.damp_dmat (2D_NOT_real - damp_correction = xfer_mat_with_damping -
@@ -219,7 +277,12 @@ void init_rad_map_struct(py::module &m, py::class_<RadMapStruct> &cls) {
 // =============================================================================
 // ramper_lord_struct
 void init_ramper_lord_struct(py::module &m, py::class_<RamperLordStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<int>, std::optional<int>, std::optional<double>>(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("ix_con") = py::none(),
+         py::arg("attrib_ptr") = py::none()
+  )
       // RamperLordStruct.ix_ele (0D_NOT_integer - Lord index
       .def_property("ix_ele", &RamperLordStruct::ix_ele, &RamperLordStruct::set_ix_ele)
       // RamperLordStruct.ix_con (0D_NOT_integer - Index in lord%control%ramp(:) array
@@ -257,7 +320,11 @@ void init_ramper_lord_struct(py::module &m, py::class_<RamperLordStruct> &cls) {
 // =============================================================================
 // resonance_h_struct
 void init_resonance_h_struct(py::module &m, py::class_<ResonanceHStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<std::complex<double>>>(),
+         py::arg("id") = py::none(),
+         py::arg("c_val") = py::none()
+  )
       // ResonanceHStruct.id (0D_NOT_character - 6 digit ID. EG: '003100'
       .def_property("id", &ResonanceHStruct::id, &ResonanceHStruct::set_id)
       // ResonanceHStruct.c_val (0D_NOT_complex - Resonance value
@@ -293,7 +360,7 @@ void init_resonance_h_struct(py::module &m, py::class_<ResonanceHStruct> &cls) {
 // =============================================================================
 // rf_ele_struct
 void init_rf_ele_struct(py::module &m, py::class_<RfEleStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<std::optional<double>>(), py::arg("ds_step") = py::none())
       // RfEleStruct.steps (1D_ALLOC_type - Energy stair step array indexed from zero.
       .def_property_readonly("steps", &RfEleStruct::steps)
       // RfEleStruct.ds_step (0D_NOT_real - length of a stair step.
@@ -322,7 +389,27 @@ void init_rf_ele_struct(py::module &m, py::class_<RfEleStruct> &cls) {
 // =============================================================================
 // rf_stair_step_struct
 void init_rf_stair_step_struct(py::module &m, py::class_<RfStairStepStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>>(),
+         py::arg("E_tot0") = py::none(),
+         py::arg("E_tot1") = py::none(),
+         py::arg("p0c") = py::none(),
+         py::arg("p1c") = py::none(),
+         py::arg("scale") = py::none(),
+         py::arg("time") = py::none(),
+         py::arg("s0") = py::none(),
+         py::arg("s") = py::none(),
+         py::arg("ix_step") = py::none()
+  )
       // RfStairStepStruct.E_tot0 (0D_NOT_real - Reference energy in the drift region (before the
       // kick point).
       .def_property("E_tot0", &RfStairStepStruct::E_tot0, &RfStairStepStruct::set_E_tot0)
@@ -378,7 +465,33 @@ void init_rf_stair_step_struct(py::module &m, py::class_<RfStairStepStruct> &cls
 // =============================================================================
 // random_state_struct
 void init_random_state_struct(py::module &m, py::class_<RandomStateStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int64_t>,
+             std::optional<int64_t>,
+             std::optional<bool>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<int64_t>,
+             optional_ref<const std::vector<int64_t>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("ix") = py::none(),
+         py::arg("iy") = py::none(),
+         py::arg("number_stored") = py::none(),
+         py::arg("h_saved") = py::none(),
+         py::arg("engine") = py::none(),
+         py::arg("seed") = py::none(),
+         py::arg("am") = py::none(),
+         py::arg("gauss_converter") = py::none(),
+         py::arg("gauss_sigma_cut") = py::none(),
+         py::arg("in_sobseq") = py::none(),
+         py::arg("ix_sobseq") = py::none(),
+         py::arg("x_sobseq") = py::none()
+  )
       // RandomStateStruct.ix (0D_NOT_integer8 -
       .def_property("ix", &RandomStateStruct::ix, &RandomStateStruct::set_ix)
       // RandomStateStruct.iy (0D_NOT_integer8 -

@@ -40,11 +40,6 @@ r_vec : 1D array of float (shape: 3), optional
 
 Returns
 -------
-r_vec : 1D array of float (shape: 3), optional
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, r_vec: position with ref_tilt transformation
-
 w_mat : 2D array of float (shape: 3,3)
     W matrix
 )"""
@@ -176,9 +171,6 @@ ix_wall : int, optional
 
 Returns
 -------
-d_radius : float
-    r_particle - r_wall
-
 perp : 1D array of float (shape: 3), optional
     Perpendicular normal to the wall.
 
@@ -196,6 +188,9 @@ radius_wall : float, optional
 
 err_flag : bool, optional
     Set True if error. (EG noassociated .wall3d), false otherwise.
+
+d_radius : float
+    r_particle - r_wall
 )"""
   );
   m.def(
@@ -218,11 +213,6 @@ wall3d : Wall3dStruct
 
 Returns
 -------
-wall3d : Wall3dStruct
-    Wall.
-    This parameter is an input/output and is modified in-place.
-    As an output, wall3d: Initialized wall.
-
 err : bool
     Set true if there is a problem.
 )"""
@@ -246,11 +236,6 @@ section : Wall3dSectionStruct
 
 Returns
 -------
-section : Wall3dSectionStruct
-    Wall3d section.
-    This parameter is an input/output and is modified in-place.
-    As an output, section: Initialized section-section.
-
 err : bool
     Set true if there is a problem.
 )"""
@@ -302,18 +287,6 @@ value : float
 err_flag : bool
 
 ele : EleStruct, optional
-
-Returns
--------
-word : character
-
-lat : LatStruct
-
-value : float
-
-err_flag : bool
-
-ele : EleStruct, optional
 )"""
   );
   m.def(
@@ -356,22 +329,6 @@ alive_only : bool, optional
 
 Parameters
 ----------
-iu : int
-
-strength : float
-
-id : int
-
-d1 : 1D array of float (shape: 2)
-
-d2 : 1D array of float (shape: 2)
-
-d3 : 1D array of float (shape: 2)
-
-d4 : 1D array of float (shape: 2)
-
-Returns
--------
 iu : int
 
 strength : float
@@ -656,14 +613,6 @@ iu : int
 ele : EleStruct
 
 old_format : bool, optional
-
-Returns
--------
-iu : int
-
-ele : EleStruct
-
-old_format : bool, optional
 )"""
   );
   m.def(
@@ -675,12 +624,6 @@ old_format : bool, optional
 
 Parameters
 ----------
-file_name : character
-
-lat : LatStruct
-
-Returns
--------
 file_name : character
 
 lat : LatStruct
@@ -1128,18 +1071,6 @@ include_apertures : bool, optional
 ix_branch : int, optional
 
 err : bool, optional
-
-Returns
--------
-out_file_name : character
-
-lat : LatStruct
-
-include_apertures : bool, optional
-
-ix_branch : int, optional
-
-err : bool, optional
 )"""
   );
   py::class_<Bmad::WriteLatticeInScibmad, std::unique_ptr<Bmad::WriteLatticeInScibmad>>(
@@ -1190,16 +1121,6 @@ err_flag : bool, optional
 
 Parameters
 ----------
-line : character
-
-iu : int
-
-ele : EleStruct
-
-lat : LatStruct
-
-Returns
--------
 line : character
 
 iu : int

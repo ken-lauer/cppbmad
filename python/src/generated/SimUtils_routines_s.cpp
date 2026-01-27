@@ -31,16 +31,8 @@ y : float
 
 m : float
 
-b : float
-
-d : float
-
 Returns
 -------
-y : float
-
-m : float
-
 b : float
 
 d : float
@@ -56,14 +48,6 @@ d : float
 
 Parameters
 ----------
-param_val : int
-
-set_val : int
-
-save_val : int
-
-Returns
--------
 param_val : int
 
 set_val : int
@@ -86,14 +70,6 @@ param_val : bool
 set_val : bool
 
 save_val : bool
-
-Returns
--------
-param_val : bool
-
-set_val : bool
-
-save_val : bool
 )"""
   );
   m.def(
@@ -106,14 +82,6 @@ save_val : bool
 
 Parameters
 ----------
-param_val : float
-
-set_val : float
-
-save_val : float
-
-Returns
--------
 param_val : float
 
 set_val : float
@@ -274,12 +242,6 @@ Parameters
 ix_unit : int
 
 error_flag : bool
-
-Returns
--------
-ix_unit : int
-
-error_flag : bool
 )"""
   );
   m.def(
@@ -299,9 +261,6 @@ Parameters
 ----------
 name : character
     Name of the species.
-
-default : int, optional
-    Default species to use if name is blank or 'ref_species'. If not present, a blank name is an error.
 
 print_err : bool, optional
     Print error message? Default is True. If False, return species = invalid$,
@@ -464,8 +423,6 @@ spline : 1D array of SplineStruct
 
 Returns
 -------
-spline : 1D array of SplineStruct
-
 ok : bool
     Set .false. if something is wrong (like less than 2 points used).
 )"""
@@ -630,10 +587,6 @@ nd : int, optional
     implemented.
 
 ds1 : float
-
-Returns
--------
-ds1 : float
 )"""
   );
   m.def(
@@ -651,14 +604,6 @@ str : character
 match : character
 
 num : int
-
-Returns
--------
-str : character
-
-match : character
-
-num : int
 )"""
   );
   m.def(
@@ -669,15 +614,11 @@ num : int
 
 Parameters
 ----------
-dst : character
-
 src : character
 
 Returns
 -------
 dst : character
-
-src : character
 )"""
   );
   m.def(
@@ -691,16 +632,6 @@ src : character
 
 Parameters
 ----------
-line : character
-
-set : character
-
-ignore_clauses : bool, optional
-
-ix_match : int
-
-Returns
--------
 line : character
 
 set : character
@@ -725,14 +656,6 @@ line : character
 set : character
 
 ix_match : int
-
-Returns
--------
-line : character
-
-set : character
-
-ix_match : int
 )"""
   );
   m.def(
@@ -745,14 +668,6 @@ ix_match : int
 
 Parameters
 ----------
-line : character
-
-set : character
-
-ix_match : int
-
-Returns
--------
 line : character
 
 set : character
@@ -775,14 +690,6 @@ line : character
 set : character
 
 ix_match : int
-
-Returns
--------
-line : character
-
-set : character
-
-ix_match : int
 )"""
   );
   m.def(
@@ -795,14 +702,6 @@ ix_match : int
 
 Parameters
 ----------
-str : character
-
-pat : character
-
-a_match : bool
-
-Returns
--------
 str : character
 
 pat : character
@@ -831,18 +730,6 @@ str_replace : character, optional
 do_trim : bool, optional
 
 ignore_escaped : bool, optional
-
-Returns
--------
-string : character
-
-str_match : character, optional
-
-str_replace : character, optional
-
-do_trim : bool, optional
-
-ignore_escaped : bool, optional
 )"""
   );
   m.def(
@@ -853,15 +740,11 @@ ignore_escaped : bool, optional
 
 Parameters
 ----------
-dst : character
-
 src : character
 
 Returns
 -------
 dst : character
-
-src : character
 )"""
   );
   m.def(
@@ -877,20 +760,6 @@ src : character
 Parameters
 ----------
 line : character
-
-default : (unknown)
-
-err_flag : bool
-
-err_print_flag : bool, optional
-
-value : int
-
-Returns
--------
-line : character
-
-default : (unknown)
 
 err_flag : bool
 
@@ -912,20 +781,6 @@ value : int
 Parameters
 ----------
 line : character
-
-default : (unknown)
-
-err_flag : bool
-
-err_print_flag : bool, optional
-
-value : float
-
-Returns
--------
-line : character
-
-default : (unknown)
 
 err_flag : bool
 
@@ -949,14 +804,6 @@ in_string : character
 out_string : character
 
 word_len : int
-
-Returns
--------
-in_string : character
-
-out_string : character
-
-word_len : int
 )"""
   );
   m.def(
@@ -972,20 +819,6 @@ word_len : int
 
 Parameters
 ----------
-in_str : character
-
-delimitors : character
-
-out_str : character
-
-ix_word : int
-
-delim : character
-
-ix_next : int
-
-Returns
--------
 in_str : character
 
 delimitors : character
@@ -1038,16 +871,6 @@ reset_flag : bool, optional
 
 Returns
 -------
-xv : 1D array of float
-    Array of variables
-    This parameter is an input/output and is modified in-place.
-    As an output, xv: Suggested new values
-
-fv : 1D array of float
-    Array of function value/s that should be optimized to zero
-    This parameter is an input/output and is modified in-place.
-    As an output, fv: After the last optimization this returns the best values ever.
-
 at_end : bool
     Set to False if more optimization is recommended. If set to True then xv(:) will be the minimum found.
 )"""
@@ -1253,16 +1076,11 @@ Difference is that this version has an argument for the internal state.
 
 Parameters
 ----------
-ran_state : RandomStateStruct, optional
-    Generator state. See the ran_seed_put documentation for more details.
-
-Returns
--------
-ran_state : RandomStateStruct, optional
-    Generator state. See the ran_seed_put documentation for more details.
-
 x : 1D array of float
     Random vector.
+
+ran_state : RandomStateStruct, optional
+    Generator state. See the ran_seed_put documentation for more details.
 )"""
   );
   m.def(
@@ -1276,13 +1094,6 @@ This is the NR routine sort modified to sort integers.
 
 Parameters
 ----------
-arr : 1D array of int
-    Array of integers.
-    This parameter is an input/output and is modified in-place.
-    As an output, arr: Sorted array.
-
-Returns
--------
 arr : 1D array of int
     Array of integers.
     This parameter is an input/output and is modified in-place.

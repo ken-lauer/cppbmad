@@ -65,16 +65,6 @@ digits : int
 number : int
 
 cnumber : character
-
-Returns
--------
-file_name : character
-
-digits : int
-
-number : int
-
-cnumber : character
 )"""
   );
   m.def(
@@ -87,14 +77,6 @@ cnumber : character
 
 Parameters
 ----------
-string1 : character
-
-string2 : character
-
-indx : int
-
-Returns
--------
 string1 : character
 
 string2 : character
@@ -147,16 +129,6 @@ der : int
 
 Parameters
 ----------
-int : (unknown)
-
-width : int, optional
-
-str : character
-
-Returns
--------
-int : (unknown)
-
 width : int, optional
 
 str : character
@@ -289,20 +261,6 @@ Parameters
 ----------
 string : character
 
-int : (unknown)
-
-delims : character, optional
-
-ix_word : int, optional
-
-valid : bool
-
-Returns
--------
-string : character
-
-int : (unknown)
-
 delims : character, optional
 
 ix_word : int, optional
@@ -325,14 +283,6 @@ string : character
 ignore : bool, optional
 
 valid : bool
-
-Returns
--------
-string : character
-
-ignore : bool, optional
-
-valid : bool
 )"""
   );
   m.def(
@@ -346,16 +296,6 @@ valid : bool
 
 Parameters
 ----------
-string : character
-
-ignore : bool, optional
-
-real_num : float, optional
-
-valid : bool
-
-Returns
--------
 string : character
 
 ignore : bool, optional

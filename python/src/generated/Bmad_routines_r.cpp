@@ -160,11 +160,11 @@ mode : NormalModesStruct
 xfer_nodamp_mat : 2D array of float (shape: 6,6)
     Transfer matrix without damping.
 
-rad_int_branch : RadIntBranchStruct, optional
-    Array of element-by-element radiation integrals.
-
 err_flag : bool
     Set true if there is a problem.
+
+rad_int_branch : RadIntBranchStruct, optional
+    Array of element-by-element radiation integrals.
 )"""
   );
   py::class_<Bmad::RadGIntegrals, std::unique_ptr<Bmad::RadGIntegrals>>(
@@ -310,11 +310,6 @@ ele : EleStruct
 
 Returns
 -------
-ele : EleStruct
-    Element whose map is to be setup.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with map calculated.
-
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -336,13 +331,6 @@ lat : LatStruct
 force_setup : bool, optional
     Default False. If True, do the setup even if lat.ramper_slave_bookkeeping = ok$. But the setup will never
     be done if lat.ramper_slave_bookkeeping = super_ok$.
-
-Returns
--------
-lat : LatStruct
-    Lattice to be setup.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with ramper slaves setup.
 )"""
   );
   py::class_<Bmad::RamperValue, std::unique_ptr<Bmad::RamperValue>>(
@@ -405,11 +393,6 @@ ele : EleStruct
 
 Returns
 -------
-ele : EleStruct
-    Element with wake. If no wake then nothing is done.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with wake frequencies set.
-
 set_done : bool, optional
     Set True if there where lr wakes to be set. False otherwise.
 )"""
@@ -424,14 +407,6 @@ set_done : bool, optional
 
 Parameters
 ----------
-rel : float
-
-plc : int
-
-out : character
-
-Returns
--------
 rel : float
 
 plc : int
@@ -464,13 +439,6 @@ save_old : bool, optional
 exact : bool, optional
     If present and True then eles will have size = n If False (default), reallcation will not be done if eles
     is already large enough
-
-Returns
--------
-eles : 1D array of ElePointerStruct
-    Array of element pointers with possible old data.
-    This parameter is an input/output and is modified in-place.
-    As an output, eles: Array of element pointers.
 )"""
   );
   m.def(
@@ -488,14 +456,6 @@ section : 1D array of Wall3dSectionStruct
 n : int
 
 exact : bool, optional
-
-Returns
--------
-section : 1D array of Wall3dSectionStruct
-
-n : int
-
-exact : bool, optional
 )"""
   );
   m.def(
@@ -508,14 +468,6 @@ exact : bool, optional
 
 Parameters
 ----------
-v : 1D array of Wall3dVertexStruct
-
-n : int
-
-exact : bool, optional
-
-Returns
--------
 v : 1D array of Wall3dVertexStruct
 
 n : int
@@ -545,10 +497,6 @@ n : int
 
 exact : bool, optional
     Default is False. If False, the size of the output array is permitted to be larger than n.
-
-Returns
--------
-tree : ExpressionTreeStruct
 )"""
   );
   m.def(
@@ -563,12 +511,6 @@ Parameters
 rel : float
 
 str_out : character
-
-Returns
--------
-rel : float
-
-str_out : character
 )"""
   );
   m.def(
@@ -580,12 +522,6 @@ str_out : character
 
 Parameters
 ----------
-rel : float
-
-str_out : character
-
-Returns
--------
 rel : float
 
 str_out : character
@@ -873,15 +809,6 @@ n_particle : int, optional
     will not be touched. If not present, beam.bunch(i).particle(:) will be in an undefined state.
 
 extend : bool, optional
-
-Returns
--------
-beam : BeamStruct
-    Beam bunches are saved if save = True.
-    This parameter is an input/output and is modified in-place.
-    As an output, beam: Allocated beam_struct structure.
-
-extend : bool, optional
 )"""
   );
   m.def(
@@ -925,11 +852,6 @@ lat : LatStruct
 
 n : int
     Array size for lat.control(:) and lat.ic(:).
-
-Returns
--------
-lat : LatStruct
-    Lattice.
 )"""
   );
   m.def(
@@ -992,13 +914,6 @@ lat : LatStruct
 
 ix_branch : int, optional
     Branch to use. Default is 0 (main branch).
-
-Returns
--------
-coord : 1D array of CoordStruct
-    Allocatable array.
-    This parameter is an input/output and is modified in-place.
-    As an output, coord: Allocated array.
 )"""
   );
   m.def(
@@ -1030,13 +945,6 @@ coord : 1D array of CoordStruct
 
 n_coord : int
     Minimum array upper bound wanted.
-
-Returns
--------
-coord : 1D array of CoordStruct
-    Allocatable array.
-    This parameter is an input/output and is modified in-place.
-    As an output, coord: Allocated array.
 )"""
   );
   m.def(
@@ -1059,13 +967,6 @@ n : int
 
 exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
-
-Returns
--------
-stack : 1D array of ExpressionAtomStruct
-    Existing stack array.
-    This parameter is an input/output and is modified in-place.
-    As an output, stack: Resized stack.
 )"""
   );
   m.def(
@@ -1166,16 +1067,14 @@ Parameters
 taylor_in : 1D array of TaylorStruct
     Input taylor map.
 
-remove_higher_order_terms : bool
-    If True then terms that are higher order than bmad_com.taylor_order are removed.
-
-Returns
--------
 taylor_out : 1D array of TaylorStruct
     Taylor with constant terms removed.
 
 c0 : 1D array of float
     The constant part of the taylor map
+
+remove_higher_order_terms : bool
+    If True then terms that are higher order than bmad_com.taylor_order are removed.
 )"""
   );
   m.def(
@@ -1212,13 +1111,6 @@ lat : LatStruct
 
 check_sanity : bool, optional
     If True (default) then call lat_sanity_check
-
-Returns
--------
-lat : LatStruct
-    Lattice to compress.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Compressed lattice.
 )"""
   );
   m.def(
@@ -1230,18 +1122,6 @@ lat : LatStruct
 
 Parameters
 ----------
-lord : EleStruct
-    Lord element
-    This parameter is an input/output and is modified in-place.
-    As an output, lord: Lord element with link info removed
-
-slave : EleStruct
-    Slave element
-    This parameter is an input/output and is modified in-place.
-    As an output, slave: Slave element with link info removed
-
-Returns
--------
 lord : EleStruct
     Lord element
     This parameter is an input/output and is modified in-place.
@@ -1319,18 +1199,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Position before kick.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Position after kick.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix through the element.
 )"""
   );
   m.def(
@@ -1415,28 +1283,6 @@ i : int
 j : int
 
 res : float
-
-Returns
--------
-u : float
-
-v : float
-
-w : float
-
-gam : float
-
-a : float
-
-b : float
-
-hz : float
-
-i : int
-
-j : int
-
-res : float
 )"""
   );
   m.def(
@@ -1456,28 +1302,6 @@ res : float
 
 Parameters
 ----------
-ele : EleStruct
-
-param : LatParamStruct
-
-orb : CoordStruct
-
-t_dir : int
-
-rf_time : float
-
-dt_try : float
-
-dt_did : float
-
-dt_next : float
-
-err_flag : bool
-
-extra_field : EmFieldStruct, optional
-
-Returns
--------
 ele : EleStruct
 
 param : LatParamStruct
@@ -1528,8 +1352,6 @@ dt : float
 
 new_orb : CoordStruct
 
-r_err : 1D array of float (shape: 10)
-
 dr_dt : 1D array of float (shape: 10), optional
 
 err_flag : bool
@@ -1540,27 +1362,7 @@ extra_field : EmFieldStruct, optional
 
 Returns
 -------
-ele : EleStruct
-
-param : LatParamStruct
-
-rf_time : float
-
-orb : CoordStruct
-
-dt : float
-
-new_orb : CoordStruct
-
 r_err : 1D array of float (shape: 10)
-
-dr_dt : 1D array of float (shape: 10), optional
-
-err_flag : bool
-
-print_err : bool, optional
-
-extra_field : EmFieldStruct, optional
 )"""
   );
   m.def(
@@ -1573,14 +1375,6 @@ extra_field : EmFieldStruct, optional
 
 Parameters
 ----------
-vec : 1D array of float (shape: 3)
-
-angle : float
-
-rvec : 1D array of float (shape: 3)
-
-Returns
--------
 vec : 1D array of float (shape: 3)
 
 angle : float
@@ -1616,11 +1410,6 @@ calc_dfield : bool, optional
 
 calc_potential : bool, optional
     Rotate the magnetic vector potential? Default is false.
-
-Returns
--------
-field : EmFieldStruct
-    E and B fields and derivatives.
 )"""
   );
   m.def(
@@ -1632,12 +1421,6 @@ field : EmFieldStruct
 
 Parameters
 ----------
-field : EmFieldStruct
-
-theta : float
-
-Returns
--------
 field : EmFieldStruct
 
 theta : float
@@ -1668,16 +1451,6 @@ rot_mat : 2D array of float (shape: 3,3)
     When set = False, rotation matrix calculated from previous call with set = True.
     This parameter is an input/output and is modified in-place.
     As an output, rot_mat: When set = True, calculated rotation matrix.
-
-Returns
--------
-orbit : CoordStruct
-    Photon position.
-
-rot_mat : 2D array of float (shape: 3,3)
-    When set = False, rotation matrix calculated from previous call with set = True.
-    This parameter is an input/output and is modified in-place.
-    As an output, rot_mat: When set = True, calculated rotation matrix.
 )"""
   );
   m.def(
@@ -1699,11 +1472,6 @@ spin : 1D array of float (shape: 3)
 
 Returns
 -------
-spin : 1D array of float (shape: 3)
-    Initial coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, spin: Final coords.
-
 qrot : 1D array of float (shape: 0:3), optional
     : rotation quaternion.
 )"""
@@ -1732,13 +1500,6 @@ ele : EleStruct
 
 ds : float
     Longitudinal step in element body frame.
-
-Returns
--------
-orbit : CoordStruct
-    Initial orbit.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Orbit with rotated spin
 )"""
   );
   m.def(
@@ -1766,18 +1527,6 @@ BL : 1D array of float (shape: 3), optional
 
 EL : 1D array of float (shape: 3), optional
     Integrated field strength. Assumed zero if not present.
-
-qrot : 1D array of float (shape: 0:3), optional
-    Initial rotation quaternion.
-    This parameter is an input/output and is modified in-place.
-    As an output, qrot: Rotation quaternion with rotation due to the field added in.
-
-Returns
--------
-orbit : CoordStruct
-    Initial orbit.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Orbit with rotated spin
 
 qrot : 1D array of float (shape: 0:3), optional
     Initial rotation quaternion.

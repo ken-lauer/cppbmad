@@ -11,7 +11,19 @@ namespace py = pybind11;
 // =============================================================================
 // floor_position_struct
 void init_floor_position_struct(py::module &m, py::class_<FloorPositionStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("r") = py::none(),
+         py::arg("w") = py::none(),
+         py::arg("theta") = py::none(),
+         py::arg("phi") = py::none(),
+         py::arg("psi") = py::none()
+  )
       // FloorPositionStruct.r (1D_NOT_real - (x, y, z) offset from origin
       .def_property("r", &FloorPositionStruct::r, &FloorPositionStruct::set_r)
       // FloorPositionStruct.w (2D_NOT_real - W matrix. Columns are unit vectors of the frame axes.
@@ -46,7 +58,37 @@ void init_floor_position_struct(py::module &m, py::class_<FloorPositionStruct> &
 // =============================================================================
 // fibre
 void init_fibre(py::module &m, py::class_<Fibre> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             optional_ref<const Fibre>,
+             optional_ref<const Fibre>,
+             optional_ref<const Layout>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const Fibre>,
+             optional_ref<const Fibre>,
+             std::optional<int>>(),
+         py::arg("DIR") = py::none(),
+         py::arg("PREVIOUS") = py::none(),
+         py::arg("NEXT") = py::none(),
+         py::arg("PARENT_LAYOUT") = py::none(),
+         py::arg("pos") = py::none(),
+         py::arg("BETA0") = py::none(),
+         py::arg("GAMMA0I") = py::none(),
+         py::arg("GAMBET") = py::none(),
+         py::arg("MASS") = py::none(),
+         py::arg("CHARGE") = py::none(),
+         py::arg("AG") = py::none(),
+         py::arg("P") = py::none(),
+         py::arg("N") = py::none(),
+         py::arg("loc") = py::none()
+  )
       // Fibre.DIR (0D_PTR_integer -
       .def_property("DIR", &Fibre::DIR, &Fibre::set_DIR)
       // Fibre.PREVIOUS (0D_PTR_type -

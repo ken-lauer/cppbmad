@@ -14,10 +14,6 @@ void init_bsim_routines_r(py::module &m) {
 Parameters
 ----------
 lat : LatStruct
-
-Returns
--------
-lat : LatStruct
 )"""
   );
 }

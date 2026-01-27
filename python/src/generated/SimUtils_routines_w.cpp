@@ -78,12 +78,6 @@ Parameters
 wording : character
 
 wlen : int
-
-Returns
--------
-wording : character
-
-wlen : int
 )"""
   );
   m.def(
@@ -101,24 +95,6 @@ wlen : int
 
 Parameters
 ----------
-in_str : character
-
-delim_list : character
-
-word : character
-
-ix_word : int
-
-delim : character
-
-delim_found : bool
-
-out_str : character
-
-ignore_interior : bool, optional
-
-Returns
--------
 in_str : character
 
 delim_list : character

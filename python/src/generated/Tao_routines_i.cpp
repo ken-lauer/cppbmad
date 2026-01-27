@@ -32,22 +32,6 @@ branch : BranchStruct
 vec : 1D array of float
 
 datum : TaoDataStruct
-
-Returns
--------
-ix_start : int
-
-ix_ele : int
-
-datum_value : float
-
-ix_m : int
-
-branch : BranchStruct
-
-vec : 1D array of float
-
-datum : TaoDataStruct
 )"""
   );
   m.def(
@@ -64,22 +48,6 @@ datum : TaoDataStruct
 
 Parameters
 ----------
-ix_start : int
-
-ix_ele : int
-
-datum_value : float
-
-ix_m : int
-
-branch : BranchStruct
-
-vec : 1D array of float
-
-datum : TaoDataStruct
-
-Returns
--------
 ix_start : int
 
 ix_ele : int

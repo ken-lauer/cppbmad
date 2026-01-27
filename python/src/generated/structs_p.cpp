@@ -11,7 +11,31 @@ namespace py = pybind11;
 // =============================================================================
 // photon_element_struct
 void init_photon_element_struct(py::module &m, py::class_<PhotonElementStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const SurfaceCurvatureStruct>,
+             optional_ref<const PhotonTargetStruct>,
+             optional_ref<const PhotonMaterialStruct>,
+             optional_ref<const SurfaceSegmentedStruct>,
+             optional_ref<const SurfaceHMisalignStruct>,
+             optional_ref<const SurfaceDisplacementStruct>,
+             optional_ref<const PixelDetecStruct>,
+             std::optional<int>,
+             optional_ref<const PhotonReflectTableStruct>,
+             optional_ref<const PhotonReflectTableStruct>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("curvature") = py::none(),
+         py::arg("target") = py::none(),
+         py::arg("material") = py::none(),
+         py::arg("segmented") = py::none(),
+         py::arg("h_misalign") = py::none(),
+         py::arg("displacement") = py::none(),
+         py::arg("pixel") = py::none(),
+         py::arg("reflectivity_table_type") = py::none(),
+         py::arg("reflectivity_table_sigma") = py::none(),
+         py::arg("reflectivity_table_pi") = py::none(),
+         py::arg("integrated_init_energy_prob") = py::none()
+  )
       // PhotonElementStruct.curvature (0D_NOT_type -
       .def_property(
           "curvature",
@@ -93,7 +117,25 @@ void init_photon_element_struct(py::module &m, py::class_<PhotonElementStruct> &
 // =============================================================================
 // photon_material_struct
 void init_photon_material_struct(py::module &m, py::class_<PhotonMaterialStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("f0_m1") = py::none(),
+         py::arg("f0_m2") = py::none(),
+         py::arg("f_0") = py::none(),
+         py::arg("f_h") = py::none(),
+         py::arg("f_hbar") = py::none(),
+         py::arg("f_hkl") = py::none(),
+         py::arg("h_norm") = py::none(),
+         py::arg("l_ref") = py::none()
+  )
       // PhotonMaterialStruct.f0_m1 (0D_NOT_complex - For multilayer_mirror only.
       .def_property("f0_m1", &PhotonMaterialStruct::f0_m1, &PhotonMaterialStruct::set_f0_m1)
       // PhotonMaterialStruct.f0_m2 (0D_NOT_complex - For multilayer_mirror only.
@@ -140,7 +182,21 @@ void init_photon_reflect_surface_struct(
     py::module &m,
     py::class_<PhotonReflectSurfaceStruct> &cls
 ) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>>(),
+         py::arg("name") = py::none(),
+         py::arg("description") = py::none(),
+         py::arg("reflectivity_file") = py::none(),
+         py::arg("surface_roughness_rms") = py::none(),
+         py::arg("roughness_correlation_len") = py::none(),
+         py::arg("ix_surface") = py::none()
+  )
       // PhotonReflectSurfaceStruct.name (0D_NOT_character -
       .def_property(
           "name",
@@ -205,7 +261,21 @@ void init_photon_reflect_surface_struct(
 // =============================================================================
 // photon_reflect_table_struct
 void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTableStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("angle") = py::none(),
+         py::arg("energy") = py::none(),
+         py::arg("p_reflect") = py::none(),
+         py::arg("max_energy") = py::none(),
+         py::arg("p_reflect_scratch") = py::none(),
+         py::arg("bragg_angle") = py::none()
+  )
       // PhotonReflectTableStruct.angle (1D_ALLOC_real - Vector of angle values for %p_reflect
       .def_property("angle", &PhotonReflectTableStruct::angle, &PhotonReflectTableStruct::set_angle)
       // PhotonReflectTableStruct.energy (1D_ALLOC_real - Vector of energy values for %p_reflect
@@ -274,7 +344,17 @@ void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTab
 // =============================================================================
 // photon_target_struct
 void init_photon_target_struct(py::module &m, py::class_<PhotonTargetStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const LatEleLocStruct>,
+             optional_ref<const TargetPointStruct>>(),
+         py::arg("type") = py::none(),
+         py::arg("n_corner") = py::none(),
+         py::arg("ele_loc") = py::none(),
+         py::arg("center") = py::none()
+  )
       // PhotonTargetStruct.type (0D_NOT_integer - or rectangular$
       .def_property("type", &PhotonTargetStruct::type, &PhotonTargetStruct::set_type)
       // PhotonTargetStruct.n_corner (0D_NOT_integer -
@@ -309,7 +389,19 @@ void init_photon_target_struct(py::module &m, py::class_<PhotonTargetStruct> &cl
 // =============================================================================
 // pixel_detec_struct
 void init_pixel_detec_struct(py::module &m, py::class_<PixelDetecStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<int64_t>,
+             std::optional<int64_t>,
+             std::optional<int64_t>>(),
+         py::arg("dr") = py::none(),
+         py::arg("r0") = py::none(),
+         py::arg("n_track_tot") = py::none(),
+         py::arg("n_hit_detec") = py::none(),
+         py::arg("n_hit_pixel") = py::none()
+  )
       // PixelDetecStruct.dr (1D_NOT_real -
       .def_property("dr", &PixelDetecStruct::dr, &PixelDetecStruct::set_dr)
       // PixelDetecStruct.r0 (1D_NOT_real -
@@ -360,7 +452,29 @@ void init_pixel_detec_struct(py::module &m, py::class_<PixelDetecStruct> &cls) {
 // =============================================================================
 // pixel_pt_struct
 void init_pixel_pt_struct(py::module &m, py::class_<PixelPtStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int64_t>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("n_photon") = py::none(),
+         py::arg("E_x") = py::none(),
+         py::arg("E_y") = py::none(),
+         py::arg("intensity_x") = py::none(),
+         py::arg("intensity_y") = py::none(),
+         py::arg("intensity") = py::none(),
+         py::arg("orbit") = py::none(),
+         py::arg("orbit_rms") = py::none(),
+         py::arg("init_orbit") = py::none(),
+         py::arg("init_orbit_rms") = py::none()
+  )
       // PixelPtStruct.n_photon (0D_NOT_integer8 -
       .def_property("n_photon", &PixelPtStruct::n_photon, &PixelPtStruct::set_n_photon)
       // PixelPtStruct.E_x (0D_NOT_complex -
@@ -410,7 +524,17 @@ void init_pixel_pt_struct(py::module &m, py::class_<PixelPtStruct> &cls) {
 // =============================================================================
 // pre_tracker_struct
 void init_pre_tracker_struct(py::module &m, py::class_<PreTrackerStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::string>>(),
+         py::arg("who") = py::none(),
+         py::arg("ix_ele_start") = py::none(),
+         py::arg("ix_ele_end") = py::none(),
+         py::arg("input_file") = py::none()
+  )
       // PreTrackerStruct.who (0D_NOT_integer - Can be opal$, or impactt$
       .def_property("who", &PreTrackerStruct::who, &PreTrackerStruct::set_who)
       // PreTrackerStruct.ix_ele_start (0D_NOT_integer -
@@ -447,7 +571,15 @@ void init_pre_tracker_struct(py::module &m, py::class_<PreTrackerStruct> &cls) {
 // =============================================================================
 // ptc_normal_form_struct
 void init_ptc_normal_form_struct(py::module &m, py::class_<PtcNormalFormStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const EleStruct>,
+             optional_ref<const std::vector<double>>,
+             std::optional<bool>>(),
+         py::arg("ele_origin") = py::none(),
+         py::arg("orb0") = py::none(),
+         py::arg("valid_map") = py::none()
+  )
       // PtcNormalFormStruct.ele_origin (0D_PTR_type - Element at which the on-turn map was created.
       .def_property(
           "ele_origin",

@@ -17,12 +17,6 @@ Parameters
 lat : LatStruct
 
 fb : float
-
-Returns
--------
-lat : LatStruct
-
-fb : float
 )"""
   );
   m.def(
@@ -35,12 +29,8 @@ Parameters
 ----------
 file_name : character
 
-lines : int
-
 Returns
 -------
-file_name : character
-
 lines : int
 )"""
   );

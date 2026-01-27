@@ -11,7 +11,7 @@ namespace py = pybind11;
 // =============================================================================
 // target_point_struct
 void init_target_point_struct(py::module &m, py::class_<TargetPointStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<optional_ref<const std::vector<double>>>(), py::arg("r") = py::none())
       // TargetPointStruct.r (1D_NOT_real - (x, y, z)
       .def_property("r", &TargetPointStruct::r, &TargetPointStruct::set_r)
       .def_static(
@@ -45,7 +45,7 @@ void init_target_point_struct(py::module &m, py::class_<TargetPointStruct> &cls)
 // =============================================================================
 // taylor_struct
 void init_taylor_struct(py::module &m, py::class_<TaylorStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<std::optional<double>>(), py::arg("ref") = py::none())
       // TaylorStruct.ref (0D_NOT_real -
       .def_property("ref", &TaylorStruct::ref, &TaylorStruct::set_ref)
       // TaylorStruct.term (1D_PTR_type -
@@ -81,7 +81,11 @@ void init_taylor_struct(py::module &m, py::class_<TaylorStruct> &cls) {
 // =============================================================================
 // taylor_term_struct
 void init_taylor_term_struct(py::module &m, py::class_<TaylorTermStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, optional_ref<const std::vector<int>>>(),
+         py::arg("coef") = py::none(),
+         py::arg("expn") = py::none()
+  )
       // TaylorTermStruct.coef (0D_NOT_real -
       .def_property("coef", &TaylorTermStruct::coef, &TaylorTermStruct::set_coef)
       // TaylorTermStruct.expn (1D_NOT_integer -
@@ -117,7 +121,23 @@ void init_taylor_term_struct(py::module &m, py::class_<TaylorTermStruct> &cls) {
 // =============================================================================
 // track_point_struct
 void init_track_point_struct(py::module &m, py::class_<TrackPointStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const CoordStruct>,
+             optional_ref<const EmFieldStruct>,
+             optional_ref<const StrongBeamStruct>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>>(),
+         py::arg("s_lab") = py::none(),
+         py::arg("s_body") = py::none(),
+         py::arg("orb") = py::none(),
+         py::arg("field") = py::none(),
+         py::arg("strong_beam") = py::none(),
+         py::arg("vec0") = py::none(),
+         py::arg("mat6") = py::none()
+  )
       // TrackPointStruct.s_lab (0D_NOT_real - Longitudinal lab coord with respect to the upstream
       // end.
       .def_property("s_lab", &TrackPointStruct::s_lab, &TrackPointStruct::set_s_lab)
@@ -169,7 +189,17 @@ void init_track_point_struct(py::module &m, py::class_<TrackPointStruct> &cls) {
 // =============================================================================
 // track_struct
 void init_track_struct(py::module &m, py::class_<TrackStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("ds_save") = py::none(),
+         py::arg("n_pt") = py::none(),
+         py::arg("n_bad") = py::none(),
+         py::arg("n_ok") = py::none()
+  )
       // TrackStruct.pt (1D_ALLOC_type - Array of track points indexed from 0.
       .def_property_readonly("pt", &TrackStruct::pt)
       // TrackStruct.ds_save (0D_NOT_real - Min distance between points. Not positive => Save at all
@@ -209,7 +239,41 @@ void init_track_struct(py::module &m, py::class_<TrackStruct> &cls) {
 // =============================================================================
 // twiss_struct
 void init_twiss_struct(py::module &m, py::class_<TwissStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("beta") = py::none(),
+         py::arg("alpha") = py::none(),
+         py::arg("gamma") = py::none(),
+         py::arg("phi") = py::none(),
+         py::arg("eta") = py::none(),
+         py::arg("etap") = py::none(),
+         py::arg("deta_ds") = py::none(),
+         py::arg("sigma") = py::none(),
+         py::arg("sigma_p") = py::none(),
+         py::arg("emit") = py::none(),
+         py::arg("norm_emit") = py::none(),
+         py::arg("chrom") = py::none(),
+         py::arg("dbeta_dpz") = py::none(),
+         py::arg("dalpha_dpz") = py::none(),
+         py::arg("deta_dpz") = py::none(),
+         py::arg("detap_dpz") = py::none()
+  )
       // TwissStruct.beta (0D_NOT_real -
       .def_property("beta", &TwissStruct::beta, &TwissStruct::set_beta)
       // TwissStruct.alpha (0D_NOT_real -
@@ -266,7 +330,13 @@ void init_twiss_struct(py::module &m, py::class_<TwissStruct> &cls) {
 // =============================================================================
 // tricubic_cmplx_coef_struct
 void init_tricubic_cmplx_coef_struct(py::module &m, py::class_<TricubicCmplxCoefStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>,
+             optional_ref<const std::vector<int>>>(),
+         py::arg("coef") = py::none(),
+         py::arg("i_box") = py::none()
+  )
       // TricubicCmplxCoefStruct.coef (3D_NOT_complex - Coefs
       .def_property("coef", &TricubicCmplxCoefStruct::coef, &TricubicCmplxCoefStruct::set_coef)
       // TricubicCmplxCoefStruct.i_box (1D_NOT_integer - index at lower box corner.
@@ -297,7 +367,27 @@ void init_tricubic_cmplx_coef_struct(py::module &m, py::class_<TricubicCmplxCoef
 // =============================================================================
 // tao_beam_branch_struct
 void init_tao_beam_branch_struct(py::module &m, py::class_<TaoBeamBranchStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const BeamStruct>,
+             optional_ref<const BeamInitStruct>,
+             optional_ref<const BeamInitStruct>,
+             std::optional<bool>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("beam_at_start") = py::none(),
+         py::arg("beam_init") = py::none(),
+         py::arg("beam_init_used") = py::none(),
+         py::arg("init_starting_distribution") = py::none(),
+         py::arg("track_start") = py::none(),
+         py::arg("track_end") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("ix_track_start") = py::none(),
+         py::arg("ix_track_end") = py::none()
+  )
       // TaoBeamBranchStruct.beam_at_start (0D_NOT_type - Initial beam
       .def_property(
           "beam_at_start",
@@ -377,7 +467,19 @@ void init_tao_beam_branch_struct(py::module &m, py::class_<TaoBeamBranchStruct> 
 // =============================================================================
 // tao_beam_uni_struct
 void init_tao_beam_uni_struct(py::module &m, py::class_<TaoBeamUniStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("saved_at") = py::none(),
+         py::arg("dump_file") = py::none(),
+         py::arg("dump_at") = py::none(),
+         py::arg("track_beam_in_universe") = py::none(),
+         py::arg("always_reinit") = py::none()
+  )
       // TaoBeamUniStruct.saved_at (0D_NOT_character -
       .def_property("saved_at", &TaoBeamUniStruct::saved_at, &TaoBeamUniStruct::set_saved_at)
       // TaoBeamUniStruct.dump_file (0D_NOT_character -
@@ -424,7 +526,12 @@ void init_tao_building_wall_orientation_struct(
     py::module &m,
     py::class_<TaoBuildingWallOrientationStruct> &cls
 ) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, std::optional<double>, std::optional<double>>(),
+         py::arg("theta") = py::none(),
+         py::arg("x_offset") = py::none(),
+         py::arg("z_offset") = py::none()
+  )
       // TaoBuildingWallOrientationStruct.theta (0D_NOT_real -
       .def_property(
           "theta",
@@ -472,7 +579,19 @@ void init_tao_building_wall_point_struct(
     py::module &m,
     py::class_<TaoBuildingWallPointStruct> &cls
 ) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("z") = py::none(),
+         py::arg("x") = py::none(),
+         py::arg("radius") = py::none(),
+         py::arg("z_center") = py::none(),
+         py::arg("x_center") = py::none()
+  )
       // TaoBuildingWallPointStruct.z (0D_NOT_real - Global floor position
       .def_property("z", &TaoBuildingWallPointStruct::z, &TaoBuildingWallPointStruct::set_z)
       // TaoBuildingWallPointStruct.x (0D_NOT_real - Global floor position
@@ -532,7 +651,11 @@ void init_tao_building_wall_section_struct(
     py::module &m,
     py::class_<TaoBuildingWallSectionStruct> &cls
 ) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, optional_ref<const std::string>>(),
+         py::arg("name") = py::none(),
+         py::arg("constraint") = py::none()
+  )
       // TaoBuildingWallSectionStruct.name (0D_NOT_character -
       .def_property(
           "name",
@@ -581,7 +704,10 @@ void init_tao_building_wall_section_struct(
 // =============================================================================
 // tao_building_wall_struct
 void init_tao_building_wall_struct(py::module &m, py::class_<TaoBuildingWallStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const TaoBuildingWallOrientationStruct>>(),
+         py::arg("orientation") = py::none()
+  )
       // TaoBuildingWallStruct.orientation (0D_NOT_type -
       .def_property(
           "orientation",
@@ -616,7 +742,11 @@ void init_tao_building_wall_struct(py::module &m, py::class_<TaoBuildingWallStru
 // =============================================================================
 // tao_cmd_history_struct
 void init_tao_cmd_history_struct(py::module &m, py::class_<TaoCmdHistoryStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::arg("cmd") = py::none(),
+         py::arg("ix") = py::none()
+  )
       // TaoCmdHistoryStruct.cmd (0D_ALLOC_character - The command
       .def_property("cmd", &TaoCmdHistoryStruct::cmd, &TaoCmdHistoryStruct::set_cmd)
       // TaoCmdHistoryStruct.ix (0D_NOT_integer - Command index (1st command has ix = 1, etc.) Note:
@@ -653,7 +783,87 @@ void init_tao_cmd_history_struct(py::module &m, py::class_<TaoCmdHistoryStruct> 
 // =============================================================================
 // tao_common_struct
 void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const std::vector<bool>>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>>(),
+         py::arg("covar") = py::none(),
+         py::arg("alpha") = py::none(),
+         py::arg("dummy_target") = py::none(),
+         py::arg("n_alias") = py::none(),
+         py::arg("cmd_file_level") = py::none(),
+         py::arg("ix_key_bank") = py::none(),
+         py::arg("ix_history") = py::none(),
+         py::arg("n_history") = py::none(),
+         py::arg("lev_loop") = py::none(),
+         py::arg("n_err_messages_printed") = py::none(),
+         py::arg("n_universes") = py::none(),
+         py::arg("ix_beam_track_active_element") = py::none(),
+         py::arg("cmd_file_paused") = py::none(),
+         py::arg("use_cmd_here") = py::none(),
+         py::arg("cmd_from_cmd_file") = py::none(),
+         py::arg("use_saved_beam_in_tracking") = py::none(),
+         py::arg("single_mode") = py::none(),
+         py::arg("combine_consecutive_elements_of_like_name") = py::none(),
+         py::arg("have_tracked_beam") = py::none(),
+         py::arg("init_plot_needed") = py::none(),
+         py::arg("init_beam") = py::none(),
+         py::arg("init_var") = py::none(),
+         py::arg("init_read_lat_info") = py::none(),
+         py::arg("optimizer_running") = py::none(),
+         py::arg("have_datums_using_expressions") = py::none(),
+         py::arg("print_to_terminal") = py::none(),
+         py::arg("lattice_calc_done") = py::none(),
+         py::arg("add_measurement_noise") = py::none(),
+         py::arg("is_err_message_printed") = py::none(),
+         py::arg("command_arg_has_been_executed") = py::none(),
+         py::arg("all_merit_weights_positive") = py::none(),
+         py::arg("multi_turn_orbit_is_plotted") = py::none(),
+         py::arg("force_chrom_calc") = py::none(),
+         py::arg("force_rad_int_calc") = py::none(),
+         py::arg("rad_int_ri_calc_on") = py::none(),
+         py::arg("rad_int_6d_calc_on") = py::none(),
+         py::arg("single_mode_buffer") = py::none(),
+         py::arg("cmd") = py::none(),
+         py::arg("saved_cmd_line") = py::none()
+  )
       // TaoCommonStruct.plot_place_buffer (1D_ALLOC_type - Used when %external_plotting is on.
       .def_property_readonly("plot_place_buffer", &TaoCommonStruct::plot_place_buffer)
       // TaoCommonStruct.covar (2D_ALLOC_real -
@@ -885,7 +1095,19 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
 // =============================================================================
 // tao_curve_color_struct
 void init_tao_curve_color_struct(py::module &m, py::class_<TaoCurveColorStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<bool>>(),
+         py::arg("data_type") = py::none(),
+         py::arg("is_on") = py::none(),
+         py::arg("min") = py::none(),
+         py::arg("max") = py::none(),
+         py::arg("autoscale") = py::none()
+  )
       // TaoCurveColorStruct.data_type (0D_NOT_character - Datum type to use for z-axis.
       .def_property(
           "data_type",
@@ -929,7 +1151,12 @@ void init_tao_curve_color_struct(py::module &m, py::class_<TaoCurveColorStruct> 
 // =============================================================================
 // tao_curve_orbit_struct
 void init_tao_curve_orbit_struct(py::module &m, py::class_<TaoCurveOrbitStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, std::optional<double>, std::optional<double>>(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("t") = py::none()
+  )
       // TaoCurveOrbitStruct.x (0D_NOT_real - Transverse offset
       .def_property("x", &TaoCurveOrbitStruct::x, &TaoCurveOrbitStruct::set_x)
       // TaoCurveOrbitStruct.y (0D_NOT_real - Transverse offset
@@ -960,7 +1187,87 @@ void init_tao_curve_orbit_struct(py::module &m, py::class_<TaoCurveOrbitStruct> 
 // =============================================================================
 // tao_curve_struct
 void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const TaoGraphStruct>,
+             optional_ref<const TaoHistogramStruct>,
+             optional_ref<const TaoCurveColorStruct>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<int>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<int>>,
+             std::optional<double>,
+             optional_ref<const QpLineStruct>,
+             optional_ref<const QpSymbolStruct>,
+             optional_ref<const TaoCurveOrbitStruct>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("name") = py::none(),
+         py::arg("data_source") = py::none(),
+         py::arg("data_index") = py::none(),
+         py::arg("data_type_x") = py::none(),
+         py::arg("data_type") = py::none(),
+         py::arg("ele_ref_name") = py::none(),
+         py::arg("legend_text") = py::none(),
+         py::arg("message_text") = py::none(),
+         py::arg("component") = py::none(),
+         py::arg("why_invalid") = py::none(),
+         py::arg("g") = py::none(),
+         py::arg("hist") = py::none(),
+         py::arg("z_color") = py::none(),
+         py::arg("x_line") = py::none(),
+         py::arg("y_line") = py::none(),
+         py::arg("y2_line") = py::none(),
+         py::arg("ix_line") = py::none(),
+         py::arg("x_symb") = py::none(),
+         py::arg("y_symb") = py::none(),
+         py::arg("z_symb") = py::none(),
+         py::arg("err_symb") = py::none(),
+         py::arg("symb_size") = py::none(),
+         py::arg("ix_symb") = py::none(),
+         py::arg("y_axis_scale_factor") = py::none(),
+         py::arg("line") = py::none(),
+         py::arg("symbol") = py::none(),
+         py::arg("orbit") = py::none(),
+         py::arg("ix_universe") = py::none(),
+         py::arg("symbol_every") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("ix_bunch") = py::none(),
+         py::arg("n_turn") = py::none(),
+         py::arg("use_y2") = py::none(),
+         py::arg("draw_line") = py::none(),
+         py::arg("draw_symbols") = py::none(),
+         py::arg("draw_symbol_index") = py::none(),
+         py::arg("draw_error_bars") = py::none(),
+         py::arg("smooth_line_calc") = py::none(),
+         py::arg("valid") = py::none()
+  )
       // TaoCurveStruct.name (0D_NOT_character - Name identifying the curve.
       .def_property("name", &TaoCurveStruct::name, &TaoCurveStruct::set_name)
       // TaoCurveStruct.data_source (0D_NOT_character - 'lat', 'beam', 'data' (deprecated: 'dat'),
@@ -1109,7 +1416,11 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
 // =============================================================================
 // tao_d1_data_struct
 void init_tao_d1_data_struct(py::module &m, py::class_<TaoD1DataStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, optional_ref<const TaoD2DataStruct>>(),
+         py::arg("name") = py::none(),
+         py::arg("d2") = py::none()
+  )
       // TaoD1DataStruct.name (0D_NOT_character - Eg: 'x', etc.
       .def_property("name", &TaoD1DataStruct::name, &TaoD1DataStruct::set_name)
       // TaoD1DataStruct.d2 (0D_PTR_type - ptr to parent d2_data
@@ -1147,7 +1458,29 @@ void init_tao_d1_data_struct(py::module &m, py::class_<TaoD1DataStruct> &cls) {
 // =============================================================================
 // tao_d2_data_struct
 void init_tao_d2_data_struct(py::module &m, py::class_<TaoD2DataStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("name") = py::none(),
+         py::arg("data_file_name") = py::none(),
+         py::arg("ref_file_name") = py::none(),
+         py::arg("data_date") = py::none(),
+         py::arg("ref_date") = py::none(),
+         py::arg("ix_universe") = py::none(),
+         py::arg("ix_d2_data") = py::none(),
+         py::arg("ix_ref") = py::none(),
+         py::arg("data_read_in") = py::none(),
+         py::arg("ref_read_in") = py::none()
+  )
       // TaoD2DataStruct.name (0D_NOT_character - Name to be used with commands.
       .def_property("name", &TaoD2DataStruct::name, &TaoD2DataStruct::set_name)
       // TaoD2DataStruct.data_file_name (0D_NOT_character - Data file name .
@@ -1215,7 +1548,103 @@ void init_tao_d2_data_struct(py::module &m, py::class_<TaoD2DataStruct> &cls) {
 // =============================================================================
 // tao_data_struct
 void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const TaoSpinMapStruct>,
+             optional_ref<const TaoD1DataStruct>>(),
+         py::arg("ele_name") = py::none(),
+         py::arg("ele_start_name") = py::none(),
+         py::arg("ele_ref_name") = py::none(),
+         py::arg("data_type") = py::none(),
+         py::arg("merit_type") = py::none(),
+         py::arg("id") = py::none(),
+         py::arg("data_source") = py::none(),
+         py::arg("why_invalid") = py::none(),
+         py::arg("ix_uni") = py::none(),
+         py::arg("ix_bunch") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("ix_ele_start") = py::none(),
+         py::arg("ix_ele_ref") = py::none(),
+         py::arg("ix_ele_merit") = py::none(),
+         py::arg("ix_d1") = py::none(),
+         py::arg("ix_data") = py::none(),
+         py::arg("ix_dModel") = py::none(),
+         py::arg("eval_point") = py::none(),
+         py::arg("meas_value") = py::none(),
+         py::arg("ref_value") = py::none(),
+         py::arg("model_value") = py::none(),
+         py::arg("design_value") = py::none(),
+         py::arg("old_value") = py::none(),
+         py::arg("base_value") = py::none(),
+         py::arg("error_rms") = py::none(),
+         py::arg("delta_merit") = py::none(),
+         py::arg("weight") = py::none(),
+         py::arg("invalid_value") = py::none(),
+         py::arg("merit") = py::none(),
+         py::arg("s") = py::none(),
+         py::arg("s_offset") = py::none(),
+         py::arg("ref_s_offset") = py::none(),
+         py::arg("err_message_printed") = py::none(),
+         py::arg("exists") = py::none(),
+         py::arg("good_model") = py::none(),
+         py::arg("good_base") = py::none(),
+         py::arg("good_design") = py::none(),
+         py::arg("good_meas") = py::none(),
+         py::arg("good_ref") = py::none(),
+         py::arg("good_user") = py::none(),
+         py::arg("good_opt") = py::none(),
+         py::arg("good_plot") = py::none(),
+         py::arg("useit_plot") = py::none(),
+         py::arg("useit_opt") = py::none(),
+         py::arg("spin_map") = py::none(),
+         py::arg("d1") = py::none()
+  )
       // TaoDataStruct.ele_name (0D_NOT_character - Name of the lattice element where datum is
       // evaluated.
       .def_property("ele_name", &TaoDataStruct::ele_name, &TaoDataStruct::set_ele_name)
@@ -1364,7 +1793,11 @@ void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
 // =============================================================================
 // tao_data_var_component_struct
 void init_tao_data_var_component_struct(py::module &m, py::class_<TaoDataVarComponentStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<double>>(),
+         py::arg("name") = py::none(),
+         py::arg("sign") = py::none()
+  )
       // TaoDataVarComponentStruct.name (0D_NOT_character - Eg: 'meas', 'ref', 'model', etc.
       .def_property("name", &TaoDataVarComponentStruct::name, &TaoDataVarComponentStruct::set_name)
       // TaoDataVarComponentStruct.sign (0D_NOT_real - +1 or -1
@@ -1429,7 +1862,19 @@ void init_tao_drawing_struct(py::module &m, py::class_<TaoDrawingStruct> &cls) {
 // =============================================================================
 // tao_dynamic_aperture_struct
 void init_tao_dynamic_aperture_struct(py::module &m, py::class_<TaoDynamicApertureStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const ApertureParamStruct>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("param") = py::none(),
+         py::arg("pz") = py::none(),
+         py::arg("ellipse_scale") = py::none(),
+         py::arg("a_emit") = py::none(),
+         py::arg("b_emit") = py::none()
+  )
       // TaoDynamicApertureStruct.param (0D_NOT_type -
       .def_property("param", &TaoDynamicApertureStruct::param, &TaoDynamicApertureStruct::set_param)
       // TaoDynamicApertureStruct.scan (1D_ALLOC_type - One scan for each pz.
@@ -1480,7 +1925,7 @@ void init_tao_dynamic_aperture_struct(py::module &m, py::class_<TaoDynamicApertu
 // =============================================================================
 // tao_ele_pointer_struct
 void init_tao_ele_pointer_struct(py::module &m, py::class_<TaoElePointerStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<std::optional<int>>(), py::arg("n_loc") = py::none())
       // TaoElePointerStruct.eles (1D_ALLOC_type -
       .def_property_readonly("eles", &TaoElePointerStruct::eles)
       // TaoElePointerStruct.n_loc (0D_NOT_integer -
@@ -1516,7 +1961,31 @@ void init_tao_ele_pointer_struct(py::module &m, py::class_<TaoElePointerStruct> 
 // =============================================================================
 // tao_ele_shape_struct
 void init_tao_ele_shape_struct(py::module &m, py::class_<TaoEleShapeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<double>,
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<int>,
+             optional_ref<const std::string>>(),
+         py::arg("ele_id") = py::none(),
+         py::arg("shape") = py::none(),
+         py::arg("color") = py::none(),
+         py::arg("size") = py::none(),
+         py::arg("label") = py::none(),
+         py::arg("draw") = py::none(),
+         py::arg("multi") = py::none(),
+         py::arg("line_width") = py::none(),
+         py::arg("offset") = py::none(),
+         py::arg("ix_key") = py::none(),
+         py::arg("name_ele") = py::none()
+  )
       // TaoEleShapeStruct.ele_id (0D_NOT_character - element 'key::name' to match to.
       .def_property("ele_id", &TaoEleShapeStruct::ele_id, &TaoEleShapeStruct::set_ele_id)
       // TaoEleShapeStruct.shape (0D_NOT_character - Shape to draw
@@ -1577,7 +2046,17 @@ void init_tao_ele_shape_struct(py::module &m, py::class_<TaoEleShapeStruct> &cls
 // =============================================================================
 // tao_eval_node_struct
 void init_tao_eval_node_struct(py::module &m, py::class_<TaoEvalNodeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             optional_ref<const std::string>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("type") = py::none(),
+         py::arg("name") = py::none(),
+         py::arg("scale") = py::none(),
+         py::arg("value") = py::none()
+  )
       // TaoEvalNodeStruct.type (0D_NOT_integer -
       .def_property("type", &TaoEvalNodeStruct::type, &TaoEvalNodeStruct::set_type)
       // TaoEvalNodeStruct.name (0D_NOT_character -
@@ -1621,7 +2100,12 @@ void init_tao_eval_node_struct(py::module &m, py::class_<TaoEvalNodeStruct> &cls
 // =============================================================================
 // tao_expression_info_struct
 void init_tao_expression_info_struct(py::module &m, py::class_<TaoExpressionInfoStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<bool>, optional_ref<const EleStruct>, std::optional<double>>(),
+         py::arg("good") = py::none(),
+         py::arg("ele") = py::none(),
+         py::arg("s") = py::none()
+  )
       // TaoExpressionInfoStruct.good (0D_NOT_logical - Expression is valid.
       .def_property("good", &TaoExpressionInfoStruct::good, &TaoExpressionInfoStruct::set_good)
       // TaoExpressionInfoStruct.ele (0D_PTR_type - Associated ele if it exists
@@ -1661,7 +2145,33 @@ void init_tao_expression_info_struct(py::module &m, py::class_<TaoExpressionInfo
 // =============================================================================
 // tao_floor_plan_struct
 void init_tao_floor_plan_struct(py::module &m, py::class_<TaoFloorPlanStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<double>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<double>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<int>>(),
+         py::arg("view") = py::none(),
+         py::arg("rotation") = py::none(),
+         py::arg("correct_distortion") = py::none(),
+         py::arg("flip_label_side") = py::none(),
+         py::arg("size_is_absolute") = py::none(),
+         py::arg("draw_only_first_pass") = py::none(),
+         py::arg("draw_building_wall") = py::none(),
+         py::arg("orbit_scale") = py::none(),
+         py::arg("orbit_color") = py::none(),
+         py::arg("orbit_pattern") = py::none(),
+         py::arg("orbit_lattice") = py::none(),
+         py::arg("orbit_width") = py::none()
+  )
       // TaoFloorPlanStruct.view (0D_NOT_character - or 'xz'.
       .def_property("view", &TaoFloorPlanStruct::view, &TaoFloorPlanStruct::set_view)
       // TaoFloorPlanStruct.rotation (0D_NOT_real - Rotation of floor plan plot: 1.0 -> 360^deg
@@ -1755,7 +2265,147 @@ void init_tao_floor_plan_struct(py::module &m, py::class_<TaoFloorPlanStruct> &c
 // =============================================================================
 // tao_global_struct
 void init_tao_global_struct(py::module &m, py::class_<TaoGlobalStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("beam_dead_cutoff") = py::none(),
+         py::arg("lm_opt_deriv_reinit") = py::none(),
+         py::arg("de_lm_step_ratio") = py::none(),
+         py::arg("de_var_to_population_factor") = py::none(),
+         py::arg("lmdif_eps") = py::none(),
+         py::arg("lmdif_negligible_merit") = py::none(),
+         py::arg("svd_cutoff") = py::none(),
+         py::arg("unstable_penalty") = py::none(),
+         py::arg("merit_stop_value") = py::none(),
+         py::arg("dmerit_stop_value") = py::none(),
+         py::arg("random_sigma_cutoff") = py::none(),
+         py::arg("delta_e_chrom") = py::none(),
+         py::arg("max_plot_time") = py::none(),
+         py::arg("default_universe") = py::none(),
+         py::arg("default_branch") = py::none(),
+         py::arg("n_opti_cycles") = py::none(),
+         py::arg("n_opti_loops") = py::none(),
+         py::arg("n_threads") = py::none(),
+         py::arg("phase_units") = py::none(),
+         py::arg("bunch_to_plot") = py::none(),
+         py::arg("random_seed") = py::none(),
+         py::arg("n_top10_merit") = py::none(),
+         py::arg("srdt_gen_n_slices") = py::none(),
+         py::arg("datum_err_messages_max") = py::none(),
+         py::arg("srdt_sxt_n_slices") = py::none(),
+         py::arg("srdt_use_cache") = py::none(),
+         py::arg("quiet") = py::none(),
+         py::arg("random_engine") = py::none(),
+         py::arg("random_gauss_converter") = py::none(),
+         py::arg("track_type") = py::none(),
+         py::arg("lat_sigma_calc_uses_emit_from") = py::none(),
+         py::arg("prompt_string") = py::none(),
+         py::arg("prompt_color") = py::none(),
+         py::arg("optimizer") = py::none(),
+         py::arg("print_command") = py::none(),
+         py::arg("var_out_file") = py::none(),
+         py::arg("history_file") = py::none(),
+         py::arg("beam_timer_on") = py::none(),
+         py::arg("box_plots") = py::none(),
+         py::arg("blank_line_between_commands") = py::none(),
+         py::arg("cmd_file_abort_on_error") = py::none(),
+         py::arg("concatenate_maps") = py::none(),
+         py::arg("derivative_recalc") = py::none(),
+         py::arg("derivative_uses_design") = py::none(),
+         py::arg("disable_smooth_line_calc") = py::none(),
+         py::arg("draw_curve_off_scale_warn") = py::none(),
+         py::arg("external_plotting") = py::none(),
+         py::arg("label_lattice_elements") = py::none(),
+         py::arg("label_keys") = py::none(),
+         py::arg("lattice_calc_on") = py::none(),
+         py::arg("only_limit_opt_vars") = py::none(),
+         py::arg("opt_with_ref") = py::none(),
+         py::arg("opt_with_base") = py::none(),
+         py::arg("opt_match_auto_recalc") = py::none(),
+         py::arg("opti_write_var_file") = py::none(),
+         py::arg("optimizer_allow_user_abort") = py::none(),
+         py::arg("optimizer_var_limit_warn") = py::none(),
+         py::arg("plot_on") = py::none(),
+         py::arg("rad_int_user_calc_on") = py::none(),
+         py::arg("rf_on") = py::none(),
+         py::arg("single_step") = py::none(),
+         py::arg("stop_on_error") = py::none(),
+         py::arg("svd_retreat_on_merit_increase") = py::none(),
+         py::arg("var_limits_on") = py::none(),
+         py::arg("wait_for_CR_in_single_mode") = py::none(),
+         py::arg("symbol_import") = py::none(),
+         py::arg("debug_on") = py::none(),
+         py::arg("expression_tree_on") = py::none(),
+         py::arg("verbose_on") = py::none()
+  )
       // TaoGlobalStruct.beam_dead_cutoff (0D_NOT_real - Percentage of dead particles at which beam
       // tracking is stopped.
       .def_property(
@@ -2162,7 +2812,71 @@ void init_tao_global_struct(py::module &m, py::class_<TaoGlobalStruct> &cls) {
 // =============================================================================
 // tao_graph_struct
 void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const TaoPlotStruct>,
+             optional_ref<const TaoFloorPlanStruct>,
+             optional_ref<const QpPointStruct>,
+             optional_ref<const QpPointStruct>,
+             optional_ref<const QpLegendStruct>,
+             optional_ref<const QpAxisStruct>,
+             optional_ref<const QpAxisStruct>,
+             optional_ref<const QpAxisStruct>,
+             optional_ref<const QpAxisStruct>,
+             optional_ref<const QpRectStruct>,
+             optional_ref<const QpRectStruct>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<int>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("name") = py::none(),
+         py::arg("type") = py::none(),
+         py::arg("title") = py::none(),
+         py::arg("title_suffix") = py::none(),
+         py::arg("why_invalid") = py::none(),
+         py::arg("p") = py::none(),
+         py::arg("floor_plan") = py::none(),
+         py::arg("text_legend_origin") = py::none(),
+         py::arg("curve_legend_origin") = py::none(),
+         py::arg("curve_legend") = py::none(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("x2") = py::none(),
+         py::arg("y2") = py::none(),
+         py::arg("margin") = py::none(),
+         py::arg("scale_margin") = py::none(),
+         py::arg("x_axis_scale_factor") = py::none(),
+         py::arg("symbol_size_scale") = py::none(),
+         py::arg("box") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("ix_universe") = py::none(),
+         py::arg("clip") = py::none(),
+         py::arg("y2_mirrors_y") = py::none(),
+         py::arg("limited") = py::none(),
+         py::arg("draw_axes") = py::none(),
+         py::arg("draw_curve_legend") = py::none(),
+         py::arg("draw_grid") = py::none(),
+         py::arg("draw_title") = py::none(),
+         py::arg("draw_only_good_user_data_or_vars") = py::none(),
+         py::arg("allow_wrap_around") = py::none(),
+         py::arg("is_valid") = py::none()
+  )
       // TaoGraphStruct.name (0D_NOT_character - Name identifying the graph
       .def_property("name", &TaoGraphStruct::name, &TaoGraphStruct::set_name)
       // TaoGraphStruct.type (0D_NOT_character - 'data', 'lat_layout', 'phase_space', 'histogram',
@@ -2311,7 +3025,23 @@ void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
 // =============================================================================
 // tao_histogram_struct
 void init_tao_histogram_struct(py::module &m, py::class_<TaoHistogramStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>>(),
+         py::arg("density_normalized") = py::none(),
+         py::arg("weight_by_charge") = py::none(),
+         py::arg("minimum") = py::none(),
+         py::arg("maximum") = py::none(),
+         py::arg("width") = py::none(),
+         py::arg("center") = py::none(),
+         py::arg("number") = py::none()
+  )
       // TaoHistogramStruct.density_normalized (0D_NOT_logical -
       .def_property(
           "density_normalized",
@@ -2358,7 +3088,91 @@ void init_tao_histogram_struct(py::module &m, py::class_<TaoHistogramStruct> &cl
 // =============================================================================
 // tao_init_struct
 void init_tao_init_struct(py::module &m, py::class_<TaoInitStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>>(),
+         py::arg("parse_cmd_args") = py::none(),
+         py::arg("debug_switch") = py::none(),
+         py::arg("external_plotting_switch") = py::none(),
+         py::arg("init_name") = py::none(),
+         py::arg("hook_init_file") = py::none(),
+         py::arg("hook_lat_file") = py::none(),
+         py::arg("hook_beam_file") = py::none(),
+         py::arg("hook_data_file") = py::none(),
+         py::arg("hook_plot_file") = py::none(),
+         py::arg("hook_startup_file") = py::none(),
+         py::arg("hook_var_file") = py::none(),
+         py::arg("hook_building_wall_file") = py::none(),
+         py::arg("init_file_arg_path") = py::none(),
+         py::arg("lattice_file_arg") = py::none(),
+         py::arg("hook_init_file_arg") = py::none(),
+         py::arg("init_file_arg") = py::none(),
+         py::arg("beam_file_arg") = py::none(),
+         py::arg("beam_init_position_file_arg") = py::none(),
+         py::arg("command_arg") = py::none(),
+         py::arg("data_file_arg") = py::none(),
+         py::arg("plot_file_arg") = py::none(),
+         py::arg("startup_file_arg") = py::none(),
+         py::arg("var_file_arg") = py::none(),
+         py::arg("building_wall_file_arg") = py::none(),
+         py::arg("geometry_arg") = py::none(),
+         py::arg("slice_lattice_arg") = py::none(),
+         py::arg("start_branch_at_arg") = py::none(),
+         py::arg("log_startup_arg") = py::none(),
+         py::arg("no_stopping_arg") = py::none(),
+         py::arg("noplot_arg") = py::none(),
+         py::arg("no_rad_int_arg") = py::none(),
+         py::arg("reverse_arg") = py::none(),
+         py::arg("debug_arg") = py::none(),
+         py::arg("disable_smooth_line_calc_arg") = py::none(),
+         py::arg("rf_on_arg") = py::none(),
+         py::arg("prompt_color_arg") = py::none(),
+         py::arg("quiet_arg") = py::none(),
+         py::arg("noinit_arg") = py::none(),
+         py::arg("nostartup_arg") = py::none(),
+         py::arg("symbol_import_arg") = py::none(),
+         py::arg("unique_name_suffix") = py::none()
+  )
       // TaoInitStruct.parse_cmd_args (0D_NOT_logical - Used by custom programs to control Tao init
       .def_property(
           "parse_cmd_args",
@@ -2599,7 +3413,10 @@ void init_tao_init_struct(py::module &m, py::class_<TaoInitStruct> &cls) {
 // =============================================================================
 // tao_lat_sigma_struct
 void init_tao_lat_sigma_struct(py::module &m, py::class_<TaoLatSigmaStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::vector<std::vector<double>>>>(),
+         py::arg("mat") = py::none()
+  )
       // TaoLatSigmaStruct.mat (2D_NOT_real -
       .def_property("mat", &TaoLatSigmaStruct::mat, &TaoLatSigmaStruct::set_mat)
       .def_static(
@@ -2633,7 +3450,59 @@ void init_tao_lat_sigma_struct(py::module &m, py::class_<TaoLatSigmaStruct> &cls
 // =============================================================================
 // tao_lattice_branch_struct
 void init_tao_lattice_branch_struct(py::module &m, py::class_<TaoLatticeBranchStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const TaoLatticeStruct>,
+             optional_ref<const TaoSpinPolarizationStruct>,
+             optional_ref<const SummationRdtStruct>,
+             optional_ref<const CoordStruct>,
+             optional_ref<const NormalModesStruct>,
+             optional_ref<const NormalModesStruct>,
+             optional_ref<const PtcNormalFormStruct>,
+             optional_ref<const BmadNormalFormStruct>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("tao_lat") = py::none(),
+         py::arg("spin") = py::none(),
+         py::arg("srdt") = py::none(),
+         py::arg("orb0") = py::none(),
+         py::arg("modes_ri") = py::none(),
+         py::arg("modes_6d") = py::none(),
+         py::arg("ptc_normal_form") = py::none(),
+         py::arg("bmad_normal_form") = py::none(),
+         py::arg("cache_x_min") = py::none(),
+         py::arg("cache_x_max") = py::none(),
+         py::arg("comb_ds_save") = py::none(),
+         py::arg("ix_ref_taylor") = py::none(),
+         py::arg("ix_ele_taylor") = py::none(),
+         py::arg("track_state") = py::none(),
+         py::arg("cache_n_pts") = py::none(),
+         py::arg("ix_rad_int_cache") = py::none(),
+         py::arg("has_open_match_element") = py::none(),
+         py::arg("plot_cache_valid") = py::none(),
+         py::arg("spin_map_valid") = py::none(),
+         py::arg("twiss_valid") = py::none(),
+         py::arg("mode_flip_here") = py::none(),
+         py::arg("chrom_calc_ok") = py::none(),
+         py::arg("rad_int_calc_ok") = py::none(),
+         py::arg("emit_6d_calc_ok") = py::none(),
+         py::arg("sigma_track_ok") = py::none()
+  )
       // TaoLatticeBranchStruct.tao_lat (0D_PTR_type - Parent tao_lat
       .def_property(
           "tao_lat",
@@ -2829,7 +3698,21 @@ void init_tao_lattice_branch_struct(py::module &m, py::class_<TaoLatticeBranchSt
 // =============================================================================
 // tao_lattice_struct
 void init_tao_lattice_struct(py::module &m, py::class_<TaoLatticeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const LatStruct>,
+             optional_ref<const LatStruct>,
+             optional_ref<const LatStruct>,
+             optional_ref<const RadIntAllEleStruct>,
+             optional_ref<const RadIntAllEleStruct>>(),
+         py::arg("name") = py::none(),
+         py::arg("lat") = py::none(),
+         py::arg("high_E_lat") = py::none(),
+         py::arg("low_E_lat") = py::none(),
+         py::arg("rad_int_by_ele_ri") = py::none(),
+         py::arg("rad_int_by_ele_6d") = py::none()
+  )
       // TaoLatticeStruct.name (0D_NOT_character - 'model', 'base', or 'design'.
       .def_property("name", &TaoLatticeStruct::name, &TaoLatticeStruct::set_name)
       // TaoLatticeStruct.lat (0D_NOT_type - lattice structures
@@ -2876,7 +3759,7 @@ void init_tao_lattice_struct(py::module &m, py::class_<TaoLatticeStruct> &cls) {
 // =============================================================================
 // tao_model_branch_struct
 void init_tao_model_branch_struct(py::module &m, py::class_<TaoModelBranchStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<optional_ref<const TaoBeamBranchStruct>>(), py::arg("beam") = py::none())
       // TaoModelBranchStruct.ele (1D_ALLOC_type - Per element information
       .def_property_readonly("ele", &TaoModelBranchStruct::ele)
       // TaoModelBranchStruct.beam (0D_NOT_type -
@@ -2914,7 +3797,12 @@ void init_tao_model_branch_struct(py::module &m, py::class_<TaoModelBranchStruct
 // =============================================================================
 // tao_model_element_struct
 void init_tao_model_element_struct(py::module &m, py::class_<TaoModelElementStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const BeamStruct>, std::optional<bool>, std::optional<bool>>(),
+         py::arg("beam") = py::none(),
+         py::arg("save_beam_internally") = py::none(),
+         py::arg("save_beam_to_file") = py::none()
+  )
       // TaoModelElementStruct.beam (0D_NOT_type - Beam distribution at element.
       .def_property("beam", &TaoModelElementStruct::beam, &TaoModelElementStruct::set_beam)
       // TaoModelElementStruct.save_beam_internally (0D_NOT_logical - Save beam here? Beam also
@@ -2964,7 +3852,17 @@ void init_tao_model_element_struct(py::module &m, py::class_<TaoModelElementStru
 // =============================================================================
 // tao_ping_scale_struct
 void init_tao_ping_scale_struct(py::module &m, py::class_<TaoPingScaleStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("a_mode_meas") = py::none(),
+         py::arg("a_mode_ref") = py::none(),
+         py::arg("b_mode_meas") = py::none(),
+         py::arg("b_mode_ref") = py::none()
+  )
       // TaoPingScaleStruct.a_mode_meas (0D_NOT_real -
       .def_property(
           "a_mode_meas",
@@ -3013,7 +3911,15 @@ void init_tao_ping_scale_struct(py::module &m, py::class_<TaoPingScaleStruct> &c
 // =============================================================================
 // tao_plot_cache_struct
 void init_tao_plot_cache_struct(py::module &m, py::class_<TaoPlotCacheStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const EleStruct>,
+             optional_ref<const CoordStruct>,
+             std::optional<bool>>(),
+         py::arg("ele_to_s") = py::none(),
+         py::arg("orbit") = py::none(),
+         py::arg("err") = py::none()
+  )
       // TaoPlotCacheStruct.ele_to_s (0D_NOT_type - Integrated element from branch beginning. Will
       // be marked as a hybrid element.
       .def_property("ele_to_s", &TaoPlotCacheStruct::ele_to_s, &TaoPlotCacheStruct::set_ele_to_s)
@@ -3052,7 +3958,53 @@ void init_tao_plot_cache_struct(py::module &m, py::class_<TaoPlotCacheStruct> &c
 // =============================================================================
 // tao_plot_page_struct
 void init_tao_plot_page_struct(py::module &m, py::class_<TaoPlotPageStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const TaoTitleStruct>,
+             optional_ref<const TaoTitleStruct>,
+             optional_ref<const QpRectStruct>,
+             optional_ref<const TaoDrawingStruct>,
+             optional_ref<const TaoDrawingStruct>,
+             optional_ref<const std::string>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("title") = py::none(),
+         py::arg("subtitle") = py::none(),
+         py::arg("border") = py::none(),
+         py::arg("floor_plan") = py::none(),
+         py::arg("lat_layout") = py::none(),
+         py::arg("plot_display_type") = py::none(),
+         py::arg("size") = py::none(),
+         py::arg("text_height") = py::none(),
+         py::arg("main_title_text_scale") = py::none(),
+         py::arg("graph_title_text_scale") = py::none(),
+         py::arg("axis_number_text_scale") = py::none(),
+         py::arg("axis_label_text_scale") = py::none(),
+         py::arg("legend_text_scale") = py::none(),
+         py::arg("key_table_text_scale") = py::none(),
+         py::arg("floor_plan_shape_scale") = py::none(),
+         py::arg("floor_plan_text_scale") = py::none(),
+         py::arg("lat_layout_shape_scale") = py::none(),
+         py::arg("lat_layout_text_scale") = py::none(),
+         py::arg("n_curve_pts") = py::none(),
+         py::arg("id_window") = py::none(),
+         py::arg("delete_overlapping_plots") = py::none(),
+         py::arg("draw_graph_title_suffix") = py::none()
+  )
       // TaoPlotPageStruct.title (0D_NOT_type - Title  at top of page.
       .def_property("title", &TaoPlotPageStruct::title, &TaoPlotPageStruct::set_title)
       // TaoPlotPageStruct.subtitle (0D_NOT_type - Subtitle below title at top of page.
@@ -3200,7 +4152,21 @@ void init_tao_plot_page_struct(py::module &m, py::class_<TaoPlotPageStruct> &cls
 // =============================================================================
 // tao_plot_region_struct
 void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const TaoPlotStruct>,
+             optional_ref<const std::vector<double>>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("name") = py::none(),
+         py::arg("plot") = py::none(),
+         py::arg("location") = py::none(),
+         py::arg("visible") = py::none(),
+         py::arg("list_with_show_plot_command") = py::none(),
+         py::arg("setup_done") = py::none()
+  )
       // TaoPlotRegionStruct.name (0D_NOT_character - Region name. Eg: 'r13', etc.
       .def_property("name", &TaoPlotRegionStruct::name, &TaoPlotRegionStruct::set_name)
       // TaoPlotRegionStruct.plot (0D_NOT_type - Plot associated with this region
@@ -3253,7 +4219,37 @@ void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> 
 // =============================================================================
 // tao_plot_struct
 void init_tao_plot_struct(py::module &m, py::class_<TaoPlotStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const TaoPlotRegionStruct>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("name") = py::none(),
+         py::arg("description") = py::none(),
+         py::arg("r") = py::none(),
+         py::arg("ix_plot") = py::none(),
+         py::arg("n_curve_pts") = py::none(),
+         py::arg("type") = py::none(),
+         py::arg("x_axis_type") = py::none(),
+         py::arg("autoscale_x") = py::none(),
+         py::arg("autoscale_y") = py::none(),
+         py::arg("autoscale_gang_x") = py::none(),
+         py::arg("autoscale_gang_y") = py::none(),
+         py::arg("list_with_show_plot_command") = py::none(),
+         py::arg("phantom") = py::none(),
+         py::arg("default_plot") = py::none()
+  )
       // TaoPlotStruct.name (0D_NOT_character - Identifying name. Rule: If name is blank, plot is
       // not valid.
       .def_property("name", &TaoPlotStruct::name, &TaoPlotStruct::set_name)
@@ -3335,7 +4331,12 @@ void init_tao_shape_pattern_point_struct(
     py::module &m,
     py::class_<TaoShapePatternPointStruct> &cls
 ) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, std::optional<double>, std::optional<double>>(),
+         py::arg("s") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("radius") = py::none()
+  )
       // TaoShapePatternPointStruct.s (0D_NOT_real -
       .def_property("s", &TaoShapePatternPointStruct::s, &TaoShapePatternPointStruct::set_s)
       // TaoShapePatternPointStruct.y (0D_NOT_real -
@@ -3379,7 +4380,11 @@ void init_tao_shape_pattern_point_struct(
 // =============================================================================
 // tao_shape_pattern_struct
 void init_tao_shape_pattern_struct(py::module &m, py::class_<TaoShapePatternStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, optional_ref<const QpLineStruct>>(),
+         py::arg("name") = py::none(),
+         py::arg("line") = py::none()
+  )
       // TaoShapePatternStruct.name (0D_NOT_character -
       .def_property("name", &TaoShapePatternStruct::name, &TaoShapePatternStruct::set_name)
       // TaoShapePatternStruct.line (0D_NOT_type - Line color and pattern set by shape using this
@@ -3420,7 +4425,15 @@ void init_tao_shape_pattern_struct(py::module &m, py::class_<TaoShapePatternStru
 // =============================================================================
 // tao_spin_dn_dpz_struct
 void init_tao_spin_dn_dpz_struct(py::module &m, py::class_<TaoSpinDnDpzStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<double>>>>(),
+         py::arg("vec") = py::none(),
+         py::arg("partial") = py::none(),
+         py::arg("partial2") = py::none()
+  )
       // TaoSpinDnDpzStruct.vec (1D_NOT_real - n0 derivative wrt pz.
       .def_property("vec", &TaoSpinDnDpzStruct::vec, &TaoSpinDnDpzStruct::set_vec)
       // TaoSpinDnDpzStruct.partial (2D_NOT_real - partial(i:) is spin n0 derivative wrt pz for i^th
@@ -3453,7 +4466,19 @@ void init_tao_spin_dn_dpz_struct(py::module &m, py::class_<TaoSpinDnDpzStruct> &
 // =============================================================================
 // tao_spin_ele_struct
 void init_tao_spin_ele_struct(py::module &m, py::class_<TaoSpinEleStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const TaoSpinDnDpzStruct>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<bool>>(),
+         py::arg("dn_dpz") = py::none(),
+         py::arg("orb_eigen_val") = py::none(),
+         py::arg("orb_eigen_vec") = py::none(),
+         py::arg("spin_eigen_vec") = py::none(),
+         py::arg("valid") = py::none()
+  )
       // TaoSpinEleStruct.dn_dpz (0D_NOT_type -
       .def_property("dn_dpz", &TaoSpinEleStruct::dn_dpz, &TaoSpinEleStruct::set_dn_dpz)
       // TaoSpinEleStruct.orb_eigen_val (1D_NOT_real -
@@ -3507,7 +4532,29 @@ void init_tao_spin_ele_struct(py::module &m, py::class_<TaoSpinEleStruct> &cls) 
 // =============================================================================
 // tao_spin_map_struct
 void init_tao_spin_map_struct(py::module &m, py::class_<TaoSpinMapStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<bool>,
+             optional_ref<const SpinOrbitMap1Struct>,
+             optional_ref<const SpinAxisStruct>,
+             optional_ref<const SpinAxisStruct>,
+             optional_ref<const SpinAxisStruct>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::vector<std::vector<double>>>>(),
+         py::arg("valid") = py::none(),
+         py::arg("map1") = py::none(),
+         py::arg("axis_input") = py::none(),
+         py::arg("axis0") = py::none(),
+         py::arg("axis1") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("ix_ref") = py::none(),
+         py::arg("ix_uni") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("mat8") = py::none()
+  )
       // TaoSpinMapStruct.valid (0D_NOT_logical -
       .def_property("valid", &TaoSpinMapStruct::valid, &TaoSpinMapStruct::set_valid)
       // TaoSpinMapStruct.map1 (0D_NOT_type -
@@ -3552,7 +4599,39 @@ void init_tao_spin_map_struct(py::module &m, py::class_<TaoSpinMapStruct> &cls) 
 // =============================================================================
 // tao_spin_polarization_struct
 void init_tao_spin_polarization_struct(py::module &m, py::class_<TaoSpinPolarizationStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<bool>,
+             optional_ref<const SpinOrbitMap1Struct>>(),
+         py::arg("tune") = py::none(),
+         py::arg("pol_limit_st") = py::none(),
+         py::arg("pol_limit_dk") = py::none(),
+         py::arg("pol_limit_dk_partial") = py::none(),
+         py::arg("pol_limit_dk_partial2") = py::none(),
+         py::arg("pol_rate_bks") = py::none(),
+         py::arg("depol_rate") = py::none(),
+         py::arg("depol_rate_partial") = py::none(),
+         py::arg("depol_rate_partial2") = py::none(),
+         py::arg("integral_bn") = py::none(),
+         py::arg("integral_bdn") = py::none(),
+         py::arg("integral_1ns") = py::none(),
+         py::arg("integral_dn2") = py::none(),
+         py::arg("valid") = py::none(),
+         py::arg("q_1turn") = py::none()
+  )
       // TaoSpinPolarizationStruct.tune (0D_NOT_real -
       .def_property("tune", &TaoSpinPolarizationStruct::tune, &TaoSpinPolarizationStruct::set_tune)
       // TaoSpinPolarizationStruct.pol_limit_st (0D_NOT_real - Polarization calculated using
@@ -3676,7 +4755,29 @@ void init_tao_spin_polarization_struct(py::module &m, py::class_<TaoSpinPolariza
 // =============================================================================
 // tao_super_universe_struct
 void init_tao_super_universe_struct(py::module &m, py::class_<TaoSuperUniverseStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const TaoGlobalStruct>,
+             optional_ref<const TaoInitStruct>,
+             optional_ref<const TaoCommonStruct>,
+             optional_ref<const TaoPlotPageStruct>,
+             optional_ref<const std::vector<int>>,
+             optional_ref<const TaoBuildingWallStruct>,
+             optional_ref<const TaoWaveStruct>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>>(),
+         py::arg("global_") = py::none(),
+         py::arg("init") = py::none(),
+         py::arg("com") = py::none(),
+         py::arg("plot_page") = py::none(),
+         py::arg("key") = py::none(),
+         py::arg("building_wall") = py::none(),
+         py::arg("wave") = py::none(),
+         py::arg("n_var_used") = py::none(),
+         py::arg("n_v1_var_used") = py::none(),
+         py::arg("initialized") = py::none()
+  )
       // TaoSuperUniverseStruct.global (0D_NOT_type - User accessible global variables.
       .def_property("global_", &TaoSuperUniverseStruct::global, &TaoSuperUniverseStruct::set_global)
       // TaoSuperUniverseStruct.init (0D_NOT_type - Initialization parameters
@@ -3751,7 +4852,21 @@ void init_tao_super_universe_struct(py::module &m, py::class_<TaoSuperUniverseSt
 // =============================================================================
 // tao_title_struct
 void init_tao_title_struct(py::module &m, py::class_<TaoTitleStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<bool>>(),
+         py::arg("string") = py::none(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("units") = py::none(),
+         py::arg("justify") = py::none(),
+         py::arg("draw_it") = py::none()
+  )
       // TaoTitleStruct.string (0D_NOT_character - title character string.
       .def_property("string", &TaoTitleStruct::string, &TaoTitleStruct::set_string)
       // TaoTitleStruct.x (0D_NOT_real - x, y rwt lower left corner
@@ -3788,7 +4903,35 @@ void init_tao_title_struct(py::module &m, py::class_<TaoTitleStruct> &cls) {
 // =============================================================================
 // tao_universe_calc_struct
 void init_tao_universe_calc_struct(py::module &m, py::class_<TaoUniverseCalcStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("srdt_for_data") = py::none(),
+         py::arg("rad_int_for_data") = py::none(),
+         py::arg("rad_int_for_plotting") = py::none(),
+         py::arg("chrom_for_data") = py::none(),
+         py::arg("chrom_for_plotting") = py::none(),
+         py::arg("lat_sigma_for_data") = py::none(),
+         py::arg("lat_sigma_for_plotting") = py::none(),
+         py::arg("dynamic_aperture") = py::none(),
+         py::arg("one_turn_map") = py::none(),
+         py::arg("lattice") = py::none(),
+         py::arg("twiss") = py::none(),
+         py::arg("track") = py::none(),
+         py::arg("spin_matrices") = py::none()
+  )
       // TaoUniverseCalcStruct.srdt_for_data (0D_NOT_integer - 0 = false, 1 = 1st order, 2 = 1st &
       // 2nd order
       .def_property(
@@ -3886,7 +5029,7 @@ void init_tao_universe_calc_struct(py::module &m, py::class_<TaoUniverseCalcStru
 // =============================================================================
 // tao_universe_pointer_struct
 void init_tao_universe_pointer_struct(py::module &m, py::class_<TaoUniversePointerStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<optional_ref<const TaoUniverseStruct>>(), py::arg("u") = py::none())
       // TaoUniversePointerStruct.u (0D_PTR_type -
       .def_property("u", &TaoUniversePointerStruct::u, &TaoUniversePointerStruct::set_u)
       .def_static(
@@ -3922,7 +5065,43 @@ void init_tao_universe_pointer_struct(py::module &m, py::class_<TaoUniversePoint
 // =============================================================================
 // tao_universe_struct
 void init_tao_universe_struct(py::module &m, py::class_<TaoUniverseStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const TaoLatticeStruct>,
+             optional_ref<const TaoLatticeStruct>,
+             optional_ref<const TaoLatticeStruct>,
+             optional_ref<const TaoBeamUniStruct>,
+             optional_ref<const TaoDynamicApertureStruct>,
+             optional_ref<const TaoPingScaleStruct>,
+             optional_ref<const LatStruct>,
+             optional_ref<const TaoUniverseCalcStruct>,
+             optional_ref<const LatEleOrderStruct>,
+             optional_ref<const TaoSpinMapStruct>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("model") = py::none(),
+         py::arg("design") = py::none(),
+         py::arg("base") = py::none(),
+         py::arg("beam") = py::none(),
+         py::arg("dynamic_aperture") = py::none(),
+         py::arg("ping_scale") = py::none(),
+         py::arg("scratch_lat") = py::none(),
+         py::arg("calc") = py::none(),
+         py::arg("ele_order") = py::none(),
+         py::arg("spin_map") = py::none(),
+         py::arg("dModel_dVar") = py::none(),
+         py::arg("ix_uni") = py::none(),
+         py::arg("n_d2_data_used") = py::none(),
+         py::arg("n_data_used") = py::none(),
+         py::arg("is_on") = py::none(),
+         py::arg("design_same_as_previous") = py::none(),
+         py::arg("picked_uni") = py::none()
+  )
       // TaoUniverseStruct.model (0D_PTR_type -
       .def_property("model", &TaoUniverseStruct::model, &TaoUniverseStruct::set_model)
       // TaoUniverseStruct.design (0D_PTR_type -
@@ -4027,7 +5206,11 @@ void init_tao_universe_struct(py::module &m, py::class_<TaoUniverseStruct> &cls)
 // =============================================================================
 // tao_v1_var_struct
 void init_tao_v1_var_struct(py::module &m, py::class_<TaoV1VarStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::arg("name") = py::none(),
+         py::arg("ix_v1_var") = py::none()
+  )
       // TaoV1VarStruct.name (0D_NOT_character - V1 variable name. Eg: 'quad_k1'.
       .def_property("name", &TaoV1VarStruct::name, &TaoV1VarStruct::set_name)
       // TaoV1VarStruct.ix_v1_var (0D_NOT_integer - Index to s%v1_var(:) array
@@ -4065,7 +5248,19 @@ void init_tao_v1_var_struct(py::module &m, py::class_<TaoV1VarStruct> &cls) {
 // =============================================================================
 // tao_var_slave_struct
 void init_tao_var_slave_struct(py::module &m, py::class_<TaoVarSlaveStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("ix_uni") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("model_value") = py::none(),
+         py::arg("base_value") = py::none()
+  )
       // TaoVarSlaveStruct.ix_uni (0D_NOT_integer - universe index.
       .def_property("ix_uni", &TaoVarSlaveStruct::ix_uni, &TaoVarSlaveStruct::set_ix_uni)
       // TaoVarSlaveStruct.ix_branch (0D_NOT_integer -
@@ -4115,7 +5310,83 @@ void init_tao_var_slave_struct(py::module &m, py::class_<TaoVarSlaveStruct> &cls
 // =============================================================================
 // tao_var_struct
 void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const TaoV1VarStruct>>(),
+         py::arg("ele_name") = py::none(),
+         py::arg("attrib_name") = py::none(),
+         py::arg("id") = py::none(),
+         py::arg("ix_v1") = py::none(),
+         py::arg("ix_var") = py::none(),
+         py::arg("ix_dvar") = py::none(),
+         py::arg("ix_attrib") = py::none(),
+         py::arg("ix_key_table") = py::none(),
+         py::arg("model_value") = py::none(),
+         py::arg("base_value") = py::none(),
+         py::arg("design_value") = py::none(),
+         py::arg("scratch_value") = py::none(),
+         py::arg("old_value") = py::none(),
+         py::arg("meas_value") = py::none(),
+         py::arg("ref_value") = py::none(),
+         py::arg("correction_value") = py::none(),
+         py::arg("high_lim") = py::none(),
+         py::arg("low_lim") = py::none(),
+         py::arg("step") = py::none(),
+         py::arg("weight") = py::none(),
+         py::arg("delta_merit") = py::none(),
+         py::arg("merit") = py::none(),
+         py::arg("dMerit_dVar") = py::none(),
+         py::arg("key_val0") = py::none(),
+         py::arg("key_delta") = py::none(),
+         py::arg("s") = py::none(),
+         py::arg("extend_val") = py::none(),
+         py::arg("merit_type") = py::none(),
+         py::arg("exists") = py::none(),
+         py::arg("good_var") = py::none(),
+         py::arg("good_user") = py::none(),
+         py::arg("good_opt") = py::none(),
+         py::arg("good_plot") = py::none(),
+         py::arg("useit_opt") = py::none(),
+         py::arg("useit_plot") = py::none(),
+         py::arg("key_bound") = py::none(),
+         py::arg("v1") = py::none()
+  )
       // TaoVarStruct.ele_name (0D_NOT_character - Associated lattice element name.
       .def_property("ele_name", &TaoVarStruct::ele_name, &TaoVarStruct::set_ele_name)
       // TaoVarStruct.attrib_name (0D_NOT_character - Name of the attribute to vary.
@@ -4228,7 +5499,23 @@ void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
 // =============================================================================
 // tao_wave_kick_pt_struct
 void init_tao_wave_kick_pt_struct(py::module &m, py::class_<TaoWaveKickPtStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             optional_ref<const EleStruct>>(),
+         py::arg("phi_s") = py::none(),
+         py::arg("phi_r") = py::none(),
+         py::arg("phi") = py::none(),
+         py::arg("amp") = py::none(),
+         py::arg("s") = py::none(),
+         py::arg("ix_dat_before_kick") = py::none(),
+         py::arg("ele") = py::none()
+  )
       // TaoWaveKickPtStruct.phi_s (0D_NOT_real -
       .def_property("phi_s", &TaoWaveKickPtStruct::phi_s, &TaoWaveKickPtStruct::set_phi_s)
       // TaoWaveKickPtStruct.phi_r (0D_NOT_real -
@@ -4279,7 +5566,91 @@ void init_tao_wave_kick_pt_struct(py::module &m, py::class_<TaoWaveKickPtStruct>
 // =============================================================================
 // tao_wave_struct
 void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::vector<int>>,
+             std::optional<int>,
+             optional_ref<const TaoGraphStruct>,
+             optional_ref<const TaoPlotRegionStruct>,
+             optional_ref<const TaoD1DataStruct>>(),
+         py::arg("data_type") = py::none(),
+         py::arg("rms_rel_a") = py::none(),
+         py::arg("rms_rel_b") = py::none(),
+         py::arg("rms_rel_as") = py::none(),
+         py::arg("rms_rel_bs") = py::none(),
+         py::arg("rms_rel_ar") = py::none(),
+         py::arg("rms_rel_br") = py::none(),
+         py::arg("rms_rel_k") = py::none(),
+         py::arg("rms_rel_ks") = py::none(),
+         py::arg("rms_rel_kr") = py::none(),
+         py::arg("rms_phi") = py::none(),
+         py::arg("rms_phi_s") = py::none(),
+         py::arg("rms_phi_r") = py::none(),
+         py::arg("amp_ba_s") = py::none(),
+         py::arg("amp_ba_r") = py::none(),
+         py::arg("chi_a") = py::none(),
+         py::arg("chi_c") = py::none(),
+         py::arg("chi_ba") = py::none(),
+         py::arg("amp_a") = py::none(),
+         py::arg("amp_b") = py::none(),
+         py::arg("amp_ba") = py::none(),
+         py::arg("coef_a") = py::none(),
+         py::arg("coef_b") = py::none(),
+         py::arg("coef_ba") = py::none(),
+         py::arg("n_func") = py::none(),
+         py::arg("ix_a1") = py::none(),
+         py::arg("ix_a2") = py::none(),
+         py::arg("ix_b1") = py::none(),
+         py::arg("ix_b2") = py::none(),
+         py::arg("i_a1") = py::none(),
+         py::arg("i_a2") = py::none(),
+         py::arg("i_b1") = py::none(),
+         py::arg("i_b2") = py::none(),
+         py::arg("n_a") = py::none(),
+         py::arg("n_b") = py::none(),
+         py::arg("i_curve_wrap_pt") = py::none(),
+         py::arg("ix_data") = py::none(),
+         py::arg("n_kick") = py::none(),
+         py::arg("base_graph") = py::none(),
+         py::arg("region") = py::none(),
+         py::arg("d1_dat") = py::none()
+  )
       // TaoWaveStruct.data_type (0D_NOT_character -
       .def_property("data_type", &TaoWaveStruct::data_type, &TaoWaveStruct::set_data_type)
       // TaoWaveStruct.rms_rel_a (0D_NOT_real -
@@ -4393,7 +5764,7 @@ void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
 // =============================================================================
 // test_sub_struct
 void init_test_sub_struct(py::module &m, py::class_<TestSubStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<optional_ref<const TestSubSubStruct>>(), py::arg("sr") = py::none())
       // TestSubStruct.sr (0D_NOT_type -
       .def_property("sr", &TestSubStruct::sr, &TestSubStruct::set_sr)
       .def_static(
@@ -4427,7 +5798,19 @@ void init_test_sub_struct(py::module &m, py::class_<TestSubStruct> &cls) {
 // =============================================================================
 // test_sub_sub_struct
 void init_test_sub_sub_struct(py::module &m, py::class_<TestSubSubStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int64_t>,
+             std::optional<int>,
+             optional_ref<const std::string>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("aaa") = py::none(),
+         py::arg("bbb") = py::none(),
+         py::arg("file") = py::none(),
+         py::arg("t_ref") = py::none(),
+         py::arg("freq_spread") = py::none()
+  )
       // TestSubSubStruct.aaa (0D_NOT_integer8 -
       .def_property("aaa", &TestSubSubStruct::aaa, &TestSubSubStruct::set_aaa)
       // TestSubSubStruct.bbb (0D_NOT_integer -

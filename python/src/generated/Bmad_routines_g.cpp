@@ -97,11 +97,6 @@ Parameters
 ----------
 lat : LatStruct
     Lattice to integrate through.
-
-Returns
--------
-lat : LatStruct
-    Lattice to integrate through.
 )"""
   );
   m.def(
@@ -192,18 +187,6 @@ rho : float
 theta : float
 
 field : 1D array of float (shape: 3)
-
-Returns
--------
-deriv : 1D array of float
-
-gg : GenGrad1Struct
-
-rho : float
-
-theta : float
-
-field : 1D array of float (shape: 3)
 )"""
   );
   m.def(
@@ -240,14 +223,6 @@ sigma : float
 
 Parameters
 ----------
-delim : character
-
-call_file : character
-
-err : bool
-
-Returns
--------
 delim : character
 
 call_file : character
@@ -433,16 +408,6 @@ dimensions : int
 field_scale : float
 
 ref_time : float
-
-Returns
--------
-ele : EleStruct
-
-dimensions : int
-
-field_scale : float
-
-ref_time : float
 )"""
   );
   m.def(
@@ -455,14 +420,6 @@ ref_time : float
 
 Parameters
 ----------
-pt0 : GridFieldPt1Struct
-
-ele : EleStruct
-
-field_value : float
-
-Returns
--------
 pt0 : GridFieldPt1Struct
 
 ele : EleStruct

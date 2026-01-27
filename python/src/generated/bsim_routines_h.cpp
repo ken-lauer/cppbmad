@@ -17,12 +17,6 @@ Parameters
 lr_wake : WakeLrModeStruct
 
 voltage : float
-
-Returns
--------
-lr_wake : WakeLrModeStruct
-
-voltage : float
 )"""
   );
 }

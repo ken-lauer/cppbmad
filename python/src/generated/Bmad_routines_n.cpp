@@ -88,22 +88,6 @@ A : 1D array of TaylorStruct (shape: 6), optional
 A_inverse : 1D array of TaylorStruct (shape: 6), optional
 
 order : int, optional
-
-Returns
--------
-one_turn_taylor : 1D array of TaylorStruct (shape: 6)
-
-rf_on : bool
-
-F : 1D array of ComplexTaylorStruct (shape: 6), optional
-
-L : 1D array of ComplexTaylorStruct (shape: 6), optional
-
-A : 1D array of TaylorStruct (shape: 6), optional
-
-A_inverse : 1D array of TaylorStruct (shape: 6), optional
-
-order : int, optional
 )"""
   );
   py::class_<Bmad::NormalFormTaylors, std::unique_ptr<Bmad::NormalFormTaylors>>(
@@ -157,14 +141,14 @@ rf_on : bool
 
 Returns
 -------
+dhdj : 1D array of TaylorStruct (shape: 6), optional
+    Map from Floquet coordinates to phase advances
+
 A : 1D array of TaylorStruct (shape: 6), optional
     Map from Floquet coordinates to Lab coordinates
 
 A_inverse : 1D array of TaylorStruct (shape: 6), optional
     Map from Lab coordinates to Floquet coordinates
-
-dhdj : 1D array of TaylorStruct (shape: 6), optional
-    Map from Floquet coordinates to phase advances
 )"""
   );
   py::class_<Bmad::NormalMode3Calc, std::unique_ptr<Bmad::NormalMode3Calc>>(
@@ -238,13 +222,6 @@ ele : EleStruct
 
 reverse : bool, optional
     Default is False. If True, calculate the x,y dispersions from the normal mode ones.
-
-Returns
--------
-ele : EleStruct
-    Element whose dispersions are to be adjusted.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with adjusted dispersions.
 )"""
   );
   m.def(
@@ -264,11 +241,6 @@ evec : 2D array of complex (shape: 6,6)
 
 Returns
 -------
-evec : 2D array of complex (shape: 6,6)
-    complex eigenvectors arranged down columns.
-    This parameter is an input/output and is modified in-place.
-    As an output, evec: Eigensystem normalized to be symplectic.
-
 err_flag : bool
     Set true of normalization is not possible due to amplitude is zero.
 )"""

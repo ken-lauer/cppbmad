@@ -334,18 +334,6 @@ return_str : character
 ix : int
 
 ios : int
-
-Returns
--------
-query_str : character
-
-upcase : bool
-
-return_str : character
-
-ix : int
-
-ios : int
 )"""
   );
   m.def(
@@ -357,12 +345,6 @@ ios : int
 
 Parameters
 ----------
-str : character
-
-q_str : character
-
-Returns
--------
 str : character
 
 q_str : character

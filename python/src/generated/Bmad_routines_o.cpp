@@ -118,16 +118,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting coords: (x, px, y, py, z, delta) in element body coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending coords
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix propagated through the element.
-
 err_flag : bool
     Set True if there is an error. False otherwise. Note: a particle getting lost, for example hitting an
     aperture, is *not* an error.
@@ -208,18 +198,10 @@ extra_field : EmFieldStruct, optional
 
 Returns
 -------
-orb : CoordStruct
-    Starting coords: (x, px, y, py, s, ps) [t-based]
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Ending coords
-
 rf_time : float
     Time relative to RF clock.
     This parameter is an input/output and is modified in-place.
     As an output, rf_time: Updated time.
-
-track : TrackStruct, optional
-    Structure holding the track information.
 
 err_flag : bool
     Set True if there is an error. False otherwise.
@@ -312,19 +294,9 @@ time : float, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Coordinates of the particle.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Coordinates of particle.
-
 s_out : float, optional
     Longitudinal particle position. If set = set$: Relative to entrance end (in body coords). If set = unset$:
     Relative to upstream end (in lab coords).
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before off setting.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix transfer matrix after offsets applied.
 
 spin_qrot : 1D array of float (shape: 0:3), optional
     Spin rotation quaternion
@@ -364,13 +336,6 @@ offset_position_only : bool, optional
 
 rot_mat : 2D array of float (shape: 3,3), optional
     Rotation matrix from starting coords to ending coords.
-
-Returns
--------
-orbit : CoordStruct
-    Coordinates of the particle.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Coordinates of particle.
 )"""
   );
   m.def(
@@ -528,16 +493,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Coordinates to correct.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before correction.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix transfer matrix including correction.
 )"""
   );
   m.def(
@@ -625,9 +580,6 @@ check_momentum : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Particle orbit.
-
 param : LatParamStruct, optional
 
 is_too_large : bool
@@ -677,14 +629,6 @@ Nmat : 2D array of float (shape: 6,6)
 
 Returns
 -------
-eval : 1D array of complex (shape: 6)
-    complex eigenvalues.
-
-mat_tunes : 1D array of float (shape: 3)
-    Three normal mode tunes, in radians.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat_tunes: Ordered normal mode tunes, in radians.
-
 evec : 2D array of complex (shape: 6,6)
     complex eigenvectors arranged down columns.
 
@@ -708,32 +652,15 @@ through the machine, this subroutine will not provide consistent ordering.
 
 Parameters
 ----------
-eval : 1D array of complex (shape: 6)
-    complex eigenvalues.
-    This parameter is an input/output and is modified in-place.
-    As an output, eval: Ordered complex eigenvalues.
-
 evec : 2D array of complex (shape: 6,6)
     complex eigenvectors arranged down columns.
     This parameter is an input/output and is modified in-place.
     As an output, evec: Ordered complex eigenvectors.
 
-mat_tunes : 1D array of float (shape: 3), optional
-    Three normal mode tunes, in radians.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat_tunes: Reordered same as evecs.
-
-Returns
--------
 eval : 1D array of complex (shape: 6)
     complex eigenvalues.
     This parameter is an input/output and is modified in-place.
     As an output, eval: Ordered complex eigenvalues.
-
-evec : 2D array of complex (shape: 6,6)
-    complex eigenvectors arranged down columns.
-    This parameter is an input/output and is modified in-place.
-    As an output, evec: Ordered complex eigenvectors.
 
 mat_tunes : 1D array of float (shape: 3), optional
     Three normal mode tunes, in radians.
@@ -755,15 +682,15 @@ externally supplied tunes abz_tunes.  abz_tunes is in radians.
 
 Parameters
 ----------
-eval : 1D array of complex (shape: 6)
-    complex eigenvalues.
-    This parameter is an input/output and is modified in-place.
-    As an output, eval: Ordered eigenvalues.
-
 evec : 2D array of complex (shape: 6,6)
     complex eigenvectors arranged down columns.
     This parameter is an input/output and is modified in-place.
     As an output, evec: Ordered eigenvectors.
+
+eval : 1D array of complex (shape: 6)
+    complex eigenvalues.
+    This parameter is an input/output and is modified in-place.
+    As an output, eval: Ordered eigenvalues.
 
 mat_tunes : 1D array of float (shape: 3)
     Three normal mode tunes, in radians.
@@ -773,16 +700,6 @@ abz_tunes : 1D array of float (shape: 3)
 
 Returns
 -------
-eval : 1D array of complex (shape: 6)
-    complex eigenvalues.
-    This parameter is an input/output and is modified in-place.
-    As an output, eval: Ordered eigenvalues.
-
-evec : 2D array of complex (shape: 6,6)
-    complex eigenvectors arranged down columns.
-    This parameter is an input/output and is modified in-place.
-    As an output, evec: Ordered eigenvectors.
-
 err_flag : bool
     Set to true if an error occured.
 )"""
@@ -799,11 +716,6 @@ Only live particles are ordered.
 
 Parameters
 ----------
-bunch : BunchStruct
-    collection of particles.
-
-Returns
--------
 bunch : BunchStruct
     collection of particles.
 )"""
@@ -824,13 +736,6 @@ lat : LatStruct
 
 ix_lord : int
     Index of lord element.
-
-Returns
--------
-lat : LatStruct
-    Lat.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lat with fixed controls.
 )"""
   );
   m.def(
@@ -843,14 +748,6 @@ lat : LatStruct
 
 Parameters
 ----------
-nlo : 1D array of int (shape: 3)
-
-nhi : 1D array of int (shape: 3)
-
-npad : 1D array of int (shape: 3)
-
-Returns
--------
 nlo : 1D array of int (shape: 3)
 
 nhi : 1D array of int (shape: 3)
@@ -873,14 +770,6 @@ nlo : 1D array of int (shape: 3)
 nhi : 1D array of int (shape: 3)
 
 npad : 1D array of int (shape: 3)
-
-Returns
--------
-nlo : 1D array of int (shape: 3)
-
-nhi : 1D array of int (shape: 3)
-
-npad : 1D array of int (shape: 3)
 )"""
   );
   m.def(
@@ -893,14 +782,6 @@ npad : 1D array of int (shape: 3)
 
 Parameters
 ----------
-nlo : 1D array of int (shape: 3)
-
-nhi : 1D array of int (shape: 3)
-
-npad : 1D array of int (shape: 3)
-
-Returns
--------
 nlo : 1D array of int (shape: 3)
 
 nhi : 1D array of int (shape: 3)
@@ -921,20 +802,6 @@ npad : 1D array of int (shape: 3)
 
 Parameters
 ----------
-gam : float
-
-a : float
-
-b : float
-
-delta : 1D array of float (shape: 3)
-
-umin : 1D array of float (shape: 3)
-
-npad : 1D array of int (shape: 3)
-
-Returns
--------
 gam : float
 
 a : float
@@ -969,24 +836,6 @@ npad : 1D array of int (shape: 3)
 
 Parameters
 ----------
-apipe : float
-
-bpipe : float
-
-delta : 1D array of float (shape: 3)
-
-umin : 1D array of float (shape: 3)
-
-umax : 1D array of float (shape: 3)
-
-nlo : 1D array of int (shape: 3)
-
-nhi : 1D array of int (shape: 3)
-
-gamma : float
-
-Returns
--------
 apipe : float
 
 bpipe : float

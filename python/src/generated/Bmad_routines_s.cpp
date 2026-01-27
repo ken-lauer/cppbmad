@@ -69,10 +69,6 @@ s_body : float
 Parameters
 ----------
 lat : LatStruct
-
-Returns
--------
-lat : LatStruct
 )"""
   );
   m.def(
@@ -117,18 +113,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
-
-Returns
--------
-orbit : CoordStruct
-    Starting coordinates.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending coordinates.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the fringe.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix including the fringe.
 )"""
   );
   m.def(
@@ -166,18 +150,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
-
-Returns
--------
-orb : CoordStruct
-    Starting coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Coords after tracking.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Starting matrix
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix after fringe field
 )"""
   );
   m.def(
@@ -209,13 +181,6 @@ s_body : float, optional
 is_time_coords : bool, optional
     Default is False. If True, input beam is using time coordinates in which case there will be a conversion
     to s-coords before bunch_params are computed.
-
-Returns
--------
-bunch_tracks : 1D array of BunchTrackStruct, optional
-    Track up to now. If bunch_tracks.n_pt < 0, the structure will be reinitialized.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_tracks: Track with current bunch info appended on. This routine does nothing
 )"""
   );
   m.def(
@@ -247,13 +212,6 @@ s_body : float, optional
 is_time_coords : bool, optional
     Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
     to s-coords before bunch_params are computed.
-
-Returns
--------
-bunch_track : BunchTrackStruct, optional
-    Track up to now. If bunch_track.n_pt < 0, the structure will be reinitialized.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_track: Track with current bunch info appended on. This routine does nothing
 )"""
   );
   m.def(
@@ -310,13 +268,6 @@ rf_time : float, optional
 
 strong_beam : StrongBeamStruct, optional
     Strong beam info if tracking through a beambeam element.
-
-Returns
--------
-track : TrackStruct
-    Track up to now. If track.n_pt < 0, the structure will be reinitialized.
-    This parameter is an input/output and is modified in-place.
-    As an output, track: Track with current position appended on.
 )"""
   );
   m.def(
@@ -361,18 +312,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Orbit at beginning of the bend.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending coordinates.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix with body added in.
 )"""
   );
   py::class_<PyScAdaptiveStep, std::unique_ptr<PyScAdaptiveStep>>(
@@ -437,11 +376,6 @@ sc_field : 1D array of EmFieldStruct
 
 Returns
 -------
-bunch : BunchStruct
-    Starting bunch position in t-based coordinates
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Ending bunch position in t-based coordinates.
-
 include_image : bool
     Include image charge forces?
     This parameter is an input/output and is modified in-place.
@@ -504,11 +438,6 @@ sc_field : 1D array of EmFieldStruct
 
 Returns
 -------
-bunch : BunchStruct
-    Starting bunch position in t-based coordinates
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Ending bunch position in t-based coordinates after space charge kick.
-
 include_image : bool
     Include image charge forces?
     This parameter is an input/output and is modified in-place.
@@ -544,11 +473,6 @@ turn_on : bool, optional
 
 Returns
 -------
-fixer : EleStruct
-    Fixer element to make active.
-    This parameter is an input/output and is modified in-place.
-    As an output, fixer: Element is now active.
-
 orbit : CoordStruct, optional
     Load with stored fixer phase space and spin values.
 )"""
@@ -622,11 +546,6 @@ set_lords : bool, optional
 
 Returns
 -------
-ele : EleStruct
-    Element with attribute to set.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with attribute set.
-
 err_flag : bool
     Set True if there is an error, False otherwise.
 
@@ -651,13 +570,6 @@ ele : EleStruct
 
 do_allocate : bool, optional
     Do default allocation of element components? Default is True.
-
-Returns
--------
-ele : EleStruct
-    Element to init.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Initialized element.
 )"""
   );
   m.def(
@@ -676,13 +588,6 @@ ele : EleStruct
 
 name : character
     Name to set.
-
-Returns
--------
-ele : EleStruct
-    Element whose name is to be set.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with name set.
 )"""
   );
   m.def(
@@ -712,11 +617,6 @@ err_print_flag : bool, optional
 
 Returns
 -------
-ele : EleStruct
-    Element with attribute to set.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with attribute set.
-
 err_flag : bool
     Set True if there is an error, False otherwise.
 )"""
@@ -842,13 +742,6 @@ set_dependent : bool, optional
     If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
     when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
     doing.
-
-Returns
--------
-lat : LatStruct
-    Lattice being modified.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with appropriate changes.
 )"""
   );
   m.def(
@@ -1028,13 +921,6 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place.
     As an output, lat: Modified lattice.
 
-switch : int
-    on$            => Turn elements on. If saved_values argument is present, use this. If not present (only
-    for logical attributes), set to True. off$           => Turn elements off (but will not store the present
-    state). off_and_save$  => Save on/off state and then turn elements off. save_state$    => Save present
-    on/off state. No turning on or off is done. restore_state$ => Restore saved on/off state from saved_values
-    argument.
-
 orb : 1D array of CoordStruct, optional
     Needed for lat_make_mat6
 
@@ -1056,19 +942,6 @@ attribute : character, optional
 
 set_val : int, optional
     Value to set to. Overrides normal set value.
-
-Returns
--------
-lat : LatStruct
-    lattice structure holding the elements.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Modified lattice.
-
-saved_values : 1D array of float, optional
-    Element-by element saved values of the component. Must be present if needed (EG if switch =
-    restore_state$, etc.).
-    This parameter is an input/output and is modified in-place.
-    As an output, saved_values: Saved values of the component.
 )"""
   );
   m.def(
@@ -1082,6 +955,9 @@ saved_values : 1D array of float, optional
 
 Parameters
 ----------
+orbit : 1D array of CoordStruct
+    Array with particle positions in the range orbit(n1:n2) set to zero except for orbit(ix_noset).
+
 n1 : int
     Lower bound of orbit(:) array subset.
 
@@ -1090,11 +966,6 @@ n2 : int
 
 ix_noset : int, optional
     If present then orbit(ix_noset) will not be zeroed.
-
-Returns
--------
-orbit : 1D array of CoordStruct
-    Array with particle positions in the range orbit(n1:n2) set to zero except for orbit(ix_noset).
 )"""
   );
   m.def(
@@ -1221,10 +1092,6 @@ old_val : int
 Parameters
 ----------
 on : bool
-
-Returns
--------
-on : bool
 )"""
   );
   m.def(
@@ -1311,16 +1178,6 @@ print_err : bool, optional
 
 Returns
 -------
-branch : BranchStruct
-    Lattice branch to tune.
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: Q_tuned lattice branch
-
-orb : 1D array of CoordStruct
-    If RF is off: Energy dE/E at which the tune is computed.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: New closed orbit.
-
 ok : bool
     Set True if everything is ok. False otherwise.
 )"""
@@ -1377,8 +1234,6 @@ print_err : bool, optional
 
 Returns
 -------
-branch : BranchStruct
-
 ok : bool, optional
     If present, returns true or false if set was successful. If not present, set_z_tune will bomb if tune
     could not be set.
@@ -1508,12 +1363,6 @@ Parameters
 ele : EleStruct
 
 skip : bool
-
-Returns
--------
-ele : EleStruct
-
-skip : bool
 )"""
   );
   m.def(
@@ -1541,11 +1390,6 @@ do_bookkeeping : bool, optional
 
 Returns
 -------
-lat : LatStruct
-    Lattice to slice.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with unwanted elements sliced out.
-
 error : bool
     Set True if there is an error Set False if not.
 )"""
@@ -1588,18 +1432,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
-
-Returns
--------
-orbit : CoordStruct
-    Position before kick.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Position after kick.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the edge.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix with edge kick added on.
 )"""
   );
   m.def(
@@ -1640,20 +1472,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Extend the matrix?
-
-Returns
--------
-ks_in : float
-
-k1_in : float
-
-orbit : CoordStruct
-    Orbit at beginning of the sol_quad.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the sol_quad.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix includeing the sol_quad.
 )"""
   );
   m.def(
@@ -1722,8 +1540,6 @@ p0 : float
 args : 1D array of float (shape: 1:8)
     Parameters.  See psi_prime comments for details.
 
-Returns
--------
 t : 1D array of float
     Array of times from t0 to t1
 
@@ -1867,13 +1683,6 @@ spin1 : 2D array of float (shape: 0:3,0:6)
     Unnormalized spin map.
     This parameter is an input/output and is modified in-place.
     As an output, spin1: Normalized spin map.
-
-Returns
--------
-spin1 : 2D array of float (shape: 0:3,0:6)
-    Unnormalized spin map.
-    This parameter is an input/output and is modified in-place.
-    As an output, spin1: Normalized spin map.
 )"""
   );
   py::class_<Bmad::SpinMat8ResonanceStrengths, std::unique_ptr<Bmad::SpinMat8ResonanceStrengths>>(
@@ -1988,18 +1797,6 @@ error : bool
 
 Parameters
 ----------
-field : EmFieldStruct
-
-orbit : CoordStruct
-
-sign_z_vel : int
-
-phase_space_coords : bool, optional
-
-omega : 1D array of float (shape: 3)
-
-Returns
--------
 field : EmFieldStruct
 
 orbit : CoordStruct
@@ -2211,11 +2008,6 @@ ix_insert : int, optional
 
 Returns
 -------
-lat : LatStruct
-    Original lat structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Modified lat structure.
-
 ix_split : int
     Index of element just before the s = s_split point.
 
@@ -2242,13 +2034,6 @@ ele : EleStruct
 
 start_orbit : 1D array of float (shape: 6), optional
     Reference orbit for the map. Default is zero orbit.
-
-Returns
--------
-ele : EleStruct
-    Element to form map for.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with map.
 )"""
   );
   m.def(
@@ -2270,16 +2055,6 @@ orbit : CoordStruct
     Particle coords.
     This parameter is an input/output and is modified in-place.
     As an output, orbit: coords after the kick.
-
-Returns
--------
-ele : EleStruct
-    Element with wakes.
-
-orbit : CoordStruct
-    Particle coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: coords after the kick.
 )"""
   );
   m.def(
@@ -2294,16 +2069,6 @@ to the existing transverse wake the contribution from the particle.
 
 Parameters
 ----------
-ele : EleStruct
-    Element with wakes.
-
-orbit : CoordStruct
-    Starting particle coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending particle coords.
-
-Returns
--------
 ele : EleStruct
     Element with wakes.
 
@@ -2333,11 +2098,6 @@ bunch : BunchStruct
 
 z_ave : float
     Average z-position of all live particles.
-
-Returns
--------
-bunch : BunchStruct
-    Bunch before wake applied.
 )"""
   );
   m.def(
@@ -2457,11 +2217,6 @@ move_end_marker : bool
 
 Returns
 -------
-lat : LatStruct
-    Lattice to modify.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Modified lattice.
-
 error : bool
     Set True if there is an error Set False if not.
 )"""
@@ -2675,24 +2430,9 @@ offset_ele : bool, optional
 
 Returns
 -------
-ele : EleStruct
-    Element with transfer matrix
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with transfer matrix.
-
-orbit : CoordStruct
-    Coordinates at the beginning of element.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Coordinates at the end of element.
-
 track : TrackStruct, optional
     Structure holding the track information. When tracking through multiple elements, the trajectory in an
     element is appended to the existing trajectory. To reset: Set track.n_pt = -1.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix propagated through the element.
 )"""
   );
 }

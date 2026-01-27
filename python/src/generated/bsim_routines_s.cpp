@@ -43,12 +43,6 @@ print_err : bool, optional
 
 Returns
 -------
-branch : BranchStruct
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: with adjusted quads and RF to match desired tunes.
-
-mask : character, optional
-
 everything_ok : bool
     Returns true or false if set was successful.
 )"""

@@ -23,16 +23,6 @@ bbu_beam : BbuBeamStruct
 bbu_param : BbuParamStruct
 
 beam_init : BeamInitStruct
-
-Returns
--------
-lat : LatStruct
-
-bbu_beam : BbuBeamStruct
-
-bbu_param : BbuParamStruct
-
-beam_init : BeamInitStruct
 )"""
   );
   m.def(
@@ -53,16 +43,6 @@ bbu_beam : BbuBeamStruct
 n_period : int
 
 ix_stage_last_tracked : int
-
-Returns
--------
-lat : LatStruct
-
-bbu_beam : BbuBeamStruct
-
-n_period : int
-
-ix_stage_last_tracked : int
 )"""
   );
   m.def(
@@ -73,10 +53,6 @@ ix_stage_last_tracked : int
 
 Parameters
 ----------
-bbu_beam : BbuBeamStruct
-
-Returns
--------
 bbu_beam : BbuBeamStruct
 )"""
   );
@@ -98,16 +74,6 @@ dt_bunch : float
 bbu_param : BbuParamStruct
 
 bbu_beam : BbuBeamStruct
-
-Returns
--------
-lat : LatStruct
-
-dt_bunch : float
-
-bbu_param : BbuParamStruct
-
-bbu_beam : BbuBeamStruct
 )"""
   );
   m.def(
@@ -122,18 +88,6 @@ bbu_beam : BbuBeamStruct
 
 Parameters
 ----------
-lat : LatStruct
-
-bbu_beam : BbuBeamStruct
-
-bbu_param : BbuParamStruct
-
-lost : bool
-
-ix_stage_tracked : int
-
-Returns
--------
 lat : LatStruct
 
 bbu_beam : BbuBeamStruct
@@ -189,14 +143,6 @@ beam_init : BeamInitStruct
 
 Returns
 -------
-lat : LatStruct
-
-bbu_beam : BbuBeamStruct
-
-bbu_param : BbuParamStruct
-
-beam_init : BeamInitStruct
-
 hom_voltage_normalized : float
     HOM voltage normalized
 

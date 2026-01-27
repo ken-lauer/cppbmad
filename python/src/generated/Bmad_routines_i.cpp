@@ -45,22 +45,6 @@ n_part : float
 species : int
 
 ibs_mat : 2D array of float (shape: 6,6)
-
-Returns
--------
-sigma_mat : 2D array of float (shape: 6,6)
-
-tail_cut : bool
-
-tau : float
-
-energy : float
-
-n_part : float
-
-species : int
-
-ibs_mat : 2D array of float (shape: 6,6)
 )"""
   );
   m.def(
@@ -78,24 +62,6 @@ ibs_mat : 2D array of float (shape: 6,6)
 
 Parameters
 ----------
-u : float
-
-v : float
-
-w : float
-
-gam : float
-
-dx : float
-
-dy : float
-
-dz : float
-
-res : float
-
-Returns
--------
 u : float
 
 v : float
@@ -143,24 +109,6 @@ dy : float
 dz : float
 
 res : float
-
-Returns
--------
-u : float
-
-v : float
-
-w : float
-
-gam : float
-
-dx : float
-
-dy : float
-
-dz : float
-
-res : float
 )"""
   );
   m.def(
@@ -193,24 +141,6 @@ dy : float
 dz : float
 
 res : float
-
-Returns
--------
-u : float
-
-v : float
-
-w : float
-
-gam : float
-
-dx : float
-
-dy : float
-
-dz : float
-
-res : float
 )"""
   );
   m.def(
@@ -228,24 +158,6 @@ res : float
 
 Parameters
 ----------
-u : float
-
-v : float
-
-w : float
-
-gam : float
-
-dx : float
-
-dy : float
-
-dz : float
-
-res : float
-
-Returns
--------
 u : float
 
 v : float
@@ -423,10 +335,6 @@ beam_init_set : BeamInitStruct, optional
 Parameters
 ----------
 lat : LatStruct, optional
-
-Returns
--------
-lat : LatStruct, optional
 )"""
   );
   py::class_<Bmad::InitBunchDistribution, std::unique_ptr<Bmad::InitBunchDistribution>>(
@@ -549,13 +457,6 @@ n_term : int
 
 save : bool, optional
     If True then save any old terms when complex_taylor is resized. Default is False.
-
-Returns
--------
-complex_taylor : ComplexTaylorStruct
-    Old structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, complex_taylor: Initalized structure.
 )"""
   );
   m.def(
@@ -608,6 +509,9 @@ For photons:
 
 Parameters
 ----------
+orb : CoordStruct
+    Input orbit
+
 vec : 1D array of float (shape: 6)
     Coordinate vector. If not present then taken to be zero.
 
@@ -647,14 +551,6 @@ random_on : bool, optional
     Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
     photon coords using a random number generator. If False, the photon coords will be centered within the
     distribution specified in the photon_init ele.
-
-orb : CoordStruct
-    Input orbit
-
-Returns
--------
-orb : CoordStruct
-    Input orbit
 )"""
   );
   m.def(
@@ -747,9 +643,6 @@ random_on : bool, optional
 
 Returns
 -------
-orb_in : CoordStruct
-    Input orbit
-
 orb_out : CoordStruct
     Initialized coordinate
 )"""
@@ -798,6 +691,9 @@ For photons:
 
 Parameters
 ----------
+orb : CoordStruct
+    Input orbit
+
 ele : EleStruct, optional
     Particle is initialized to start at element_end of this ele.
 
@@ -826,14 +722,6 @@ shift_vec6 : bool, optional
 
 spin : 1D array of float (shape: 3), optional
     Particle spin. Taken to be zero if not present.
-
-orb : CoordStruct
-    Input orbit
-
-Returns
--------
-orb : CoordStruct
-    Input orbit
 )"""
   );
   m.def(
@@ -844,10 +732,6 @@ orb : CoordStruct
 
 Parameters
 ----------
-lat : LatStruct
-
-Returns
--------
 lat : LatStruct
 )"""
   );
@@ -904,13 +788,6 @@ n_term : int
 
 save_old : bool, optional
     If True then save any old terms when em_taylor is resized. Default is False.
-
-Returns
--------
-em_taylor : EmTaylorStruct
-    Old structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, em_taylor: Initalized structure.
 )"""
   );
   m.def(
@@ -942,13 +819,6 @@ lat : LatStruct
 
 Parameters
 ----------
-ele : EleStruct
-    Element to init
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Initalized element.
-
-Returns
--------
 ele : EleStruct
     Element to init
     This parameter is an input/output and is modified in-place.
@@ -1115,13 +985,6 @@ n_term : int
 save_old : bool, optional
     If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
     Default is False.
-
-Returns
--------
-bmad_taylor : TaylorStruct
-    Old structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, bmad_taylor: Initalized structure.
 )"""
   );
   m.def(
@@ -1182,18 +1045,6 @@ ix_ele : int
 
 ix_branch : int, optional
     : branch index for the insertion. Default = 0.
-
-orbit : 1D array of CoordStruct, optional
-    orbit array to enlarge.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Enlarged orbit array.
-
-Returns
--------
-lat : LatStruct
-    lattice that will be modified
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: lattice with new element inserted
 
 orbit : 1D array of CoordStruct, optional
     orbit array to enlarge.
@@ -1287,18 +1138,6 @@ start : CoordStruct
 orb_max : CoordStruct
 
 tol : float
-
-Returns
--------
-ele : EleStruct
-
-param : LatParamStruct
-
-start : CoordStruct
-
-orb_max : CoordStruct
-
-tol : float
 )"""
   );
   m.def(
@@ -1314,16 +1153,6 @@ tol : float
 
 Parameters
 ----------
-a_fibre : Fibre
-
-orbit : 1D array of float (shape: 6)
-
-orbit_max : 1D array of float (shape: 6)
-
-tol_dp : float
-
-Returns
--------
 a_fibre : Fibre
 
 orbit : 1D array of float (shape: 6)

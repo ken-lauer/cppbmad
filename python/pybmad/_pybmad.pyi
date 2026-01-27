@@ -33,7 +33,7 @@ class AcKickerFreqStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AcKickerFreqStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, f: typing.SupportsFloat | None = None, amp: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -129,7 +129,7 @@ class AcKickerTimeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AcKickerTimeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, amp: typing.SupportsFloat | None = None, time: typing.SupportsFloat | None = None, spline: SplineStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -229,7 +229,7 @@ class AllEncompassingStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AllEncompassingStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, real_rp_0d: typing.SupportsFloat | None = None, real_rp_1d: collections.abc.Sequence[typing.SupportsFloat] | None = None, real_rp_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, real_rp_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]] | None = None, real_rp_0d_ptr: typing.SupportsFloat | None = None, real_rp_1d_ptr: collections.abc.Sequence[typing.SupportsFloat] | None = None, real_rp_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, real_rp_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]] | None = None, real_rp_1d_alloc: collections.abc.Sequence[typing.SupportsFloat] | None = None, real_rp_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, real_rp_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]] | None = None, real_dp_0d: typing.SupportsFloat | None = None, real_dp_1d: collections.abc.Sequence[typing.SupportsFloat] | None = None, real_dp_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, real_dp_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]] | None = None, real_dp_0d_ptr: typing.SupportsFloat | None = None, real_dp_1d_ptr: collections.abc.Sequence[typing.SupportsFloat] | None = None, real_dp_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, real_dp_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]] | None = None, real_dp_1d_alloc: collections.abc.Sequence[typing.SupportsFloat] | None = None, real_dp_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, real_dp_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]] | None = None, complex_dp_0d: complex | None = None, complex_dp_1d: collections.abc.Sequence[complex] | None = None, complex_dp_2d: collections.abc.Sequence[collections.abc.Sequence[complex]] | None = None, complex_dp_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[complex]]] | None = None, complex_dp_1d_ptr: collections.abc.Sequence[complex] | None = None, complex_dp_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[complex]] | None = None, complex_dp_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[complex]]] | None = None, complex_dp_1d_alloc: collections.abc.Sequence[complex] | None = None, complex_dp_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[complex]] | None = None, complex_dp_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[complex]]] | None = None, int_0d: typing.SupportsInt | None = None, int_1d: collections.abc.Sequence[typing.SupportsInt] | None = None, int_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]] | None = None, int_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]]] | None = None, int_0d_ptr: typing.SupportsInt | None = None, int_1d_ptr: collections.abc.Sequence[typing.SupportsInt] | None = None, int_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]] | None = None, int_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]]] | None = None, int_1d_alloc: collections.abc.Sequence[typing.SupportsInt] | None = None, int_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]] | None = None, int_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]]] | None = None, int8_0d: typing.SupportsInt | None = None, int8_1d: collections.abc.Sequence[typing.SupportsInt] | None = None, int8_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]] | None = None, int8_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]]] | None = None, int8_0d_ptr: typing.SupportsInt | None = None, int8_1d_ptr: collections.abc.Sequence[typing.SupportsInt] | None = None, int8_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]] | None = None, int8_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]]] | None = None, int8_1d_alloc: collections.abc.Sequence[typing.SupportsInt] | None = None, int8_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]] | None = None, int8_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]]] | None = None, logical_0d: bool | None = None, logical_1d: collections.abc.Sequence[bool] | None = None, logical_2d: collections.abc.Sequence[collections.abc.Sequence[bool]] | None = None, logical_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[bool]]] | None = None, logical_0d_ptr: bool | None = None, type_0d: TestSubStruct | None = None, type_0d_ptr: TestSubStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -610,7 +610,7 @@ class AnormalModeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AnormalModeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, emittance: typing.SupportsFloat | None = None, emittance_no_vert: typing.SupportsFloat | None = None, synch_int: collections.abc.Sequence[typing.SupportsFloat] | None = None, j_damp: typing.SupportsFloat | None = None, alpha_damp: typing.SupportsFloat | None = None, chrom: typing.SupportsFloat | None = None, tune: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -665,7 +665,7 @@ class ApertureParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ApertureParamStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, min_angle: typing.SupportsFloat | None = None, max_angle: typing.SupportsFloat | None = None, n_angle: typing.SupportsInt | None = None, n_turn: typing.SupportsInt | None = None, x_init: typing.SupportsFloat | None = None, y_init: typing.SupportsFloat | None = None, rel_accuracy: typing.SupportsFloat | None = None, abs_accuracy: typing.SupportsFloat | None = None, start_ele: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -728,7 +728,7 @@ class AperturePointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AperturePointStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x: typing.SupportsFloat | None = None, y: typing.SupportsFloat | None = None, plane: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, i_turn: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -818,7 +818,7 @@ class ApertureScanStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ApertureScanStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ref_orb: CoordStruct | None = None, pz_start: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -984,7 +984,7 @@ class BbuBeamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BbuBeamStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix_ele_bunch: collections.abc.Sequence[typing.SupportsInt] | None = None, ix_bunch_head: typing.SupportsInt | None = None, ix_bunch_end: typing.SupportsInt | None = None, n_bunch_in_lat: typing.SupportsInt | None = None, ix_stage_voltage_max: typing.SupportsInt | None = None, hom_voltage_max: typing.SupportsFloat | None = None, time_now: typing.SupportsFloat | None = None, one_turn_time: typing.SupportsFloat | None = None, rf_wavelength_max: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -1074,7 +1074,7 @@ class BbuParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BbuParamStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, lat_filename: str | None = None, lat2_filename: str | None = None, bunch_by_bunch_info_file: str | None = None, hybridize: bool | None = None, write_digested_hybrid_lat: bool | None = None, write_voltage_vs_time_dat: bool | None = None, keep_overlays_and_groups: bool | None = None, keep_all_lcavities: bool | None = None, use_taylor_for_hybrids: bool | None = None, stable_orbit_anal: bool | None = None, limit_factor: typing.SupportsFloat | None = None, simulation_turns_max: typing.SupportsFloat | None = None, bunch_freq: typing.SupportsFloat | None = None, init_particle_offset: typing.SupportsFloat | None = None, current: typing.SupportsFloat | None = None, rel_tol: typing.SupportsFloat | None = None, drscan: bool | None = None, use_interpolated_threshold: bool | None = None, write_hom_info: bool | None = None, elindex: typing.SupportsInt | None = None, elname: str | None = None, nstep: typing.SupportsInt | None = None, begdr: typing.SupportsFloat | None = None, enddr: typing.SupportsFloat | None = None, nrep: typing.SupportsInt | None = None, ran_seed: typing.SupportsInt | None = None, hom_order_cutoff: typing.SupportsInt | None = None, ran_gauss_sigma_cut: typing.SupportsFloat | None = None, ele_track_end: str | None = None, ix_ele_track_end: typing.SupportsInt | None = None, regression: bool | None = None, normalize_z_to_rf: bool | None = None, ramp_on: bool | None = None, ramp_pattern: collections.abc.Sequence[typing.SupportsFloat] | None = None, ramp_n_start: typing.SupportsInt | None = None, n_ramp_pattern: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -1197,7 +1197,7 @@ class BbuStageStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BbuStageStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix_ele_lr_wake: typing.SupportsInt | None = None, ix_ele_stage_end: typing.SupportsInt | None = None, ix_pass: typing.SupportsInt | None = None, ix_stage_pass1: typing.SupportsInt | None = None, ix_head_bunch: typing.SupportsInt | None = None, ix_hom_max: typing.SupportsInt | None = None, hom_voltage_max: typing.SupportsFloat | None = None, time_at_wake_ele: typing.SupportsFloat | None = None, ave_orb: collections.abc.Sequence[typing.SupportsFloat] | None = None, rms_orb: collections.abc.Sequence[typing.SupportsFloat] | None = None, min_orb: collections.abc.Sequence[typing.SupportsFloat] | None = None, max_orb: collections.abc.Sequence[typing.SupportsFloat] | None = None, n_orb: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -1377,7 +1377,7 @@ class BeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BeamInitStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, position_file: str | None = None, spin: collections.abc.Sequence[typing.SupportsFloat] | None = None, KV: KvBeamInitStruct | None = None, center_jitter: collections.abc.Sequence[typing.SupportsFloat] | None = None, emit_jitter: collections.abc.Sequence[typing.SupportsFloat] | None = None, sig_z_jitter: typing.SupportsFloat | None = None, sig_pz_jitter: typing.SupportsFloat | None = None, n_particle: typing.SupportsInt | None = None, renorm_center: bool | None = None, renorm_sigma: bool | None = None, random_engine: str | None = None, random_gauss_converter: str | None = None, random_sigma_cutoff: typing.SupportsFloat | None = None, a_norm_emit: typing.SupportsFloat | None = None, b_norm_emit: typing.SupportsFloat | None = None, a_emit: typing.SupportsFloat | None = None, b_emit: typing.SupportsFloat | None = None, dPz_dz: typing.SupportsFloat | None = None, center: collections.abc.Sequence[typing.SupportsFloat] | None = None, t_offset: typing.SupportsFloat | None = None, dt_bunch: typing.SupportsFloat | None = None, sig_z: typing.SupportsFloat | None = None, sig_pz: typing.SupportsFloat | None = None, bunch_charge: typing.SupportsFloat | None = None, n_bunch: typing.SupportsInt | None = None, ix_turn: typing.SupportsInt | None = None, species: str | None = None, full_6D_coupling_calc: bool | None = None, use_particle_start: bool | None = None, use_t_coords: bool | None = None, use_z_as_t: bool | None = None, file_name: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -1570,7 +1570,7 @@ class BicubicCmplxCoefStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BicubicCmplxCoefStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, coef: collections.abc.Sequence[collections.abc.Sequence[complex]] | None = None, i_box: collections.abc.Sequence[typing.SupportsInt] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -1671,7 +1671,7 @@ class BmadCommonStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BmadCommonStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, max_aperture_limit: typing.SupportsFloat | None = None, d_orb: collections.abc.Sequence[typing.SupportsFloat] | None = None, default_ds_step: typing.SupportsFloat | None = None, significant_length: typing.SupportsFloat | None = None, rel_tol_tracking: typing.SupportsFloat | None = None, abs_tol_tracking: typing.SupportsFloat | None = None, rel_tol_adaptive_tracking: typing.SupportsFloat | None = None, abs_tol_adaptive_tracking: typing.SupportsFloat | None = None, init_ds_adaptive_tracking: typing.SupportsFloat | None = None, min_ds_adaptive_tracking: typing.SupportsFloat | None = None, fatal_ds_adaptive_tracking: typing.SupportsFloat | None = None, autoscale_amp_abs_tol: typing.SupportsFloat | None = None, autoscale_amp_rel_tol: typing.SupportsFloat | None = None, autoscale_phase_tol: typing.SupportsFloat | None = None, electric_dipole_moment: typing.SupportsFloat | None = None, synch_rad_scale: typing.SupportsFloat | None = None, sad_eps_scale: typing.SupportsFloat | None = None, sad_amp_max: typing.SupportsFloat | None = None, sad_n_div_max: typing.SupportsInt | None = None, taylor_order: typing.SupportsInt | None = None, runge_kutta_order: typing.SupportsInt | None = None, default_integ_order: typing.SupportsInt | None = None, max_num_runge_kutta_step: typing.SupportsInt | None = None, rf_phase_below_transition_ref: bool | None = None, sr_wakes_on: bool | None = None, lr_wakes_on: bool | None = None, auto_bookkeeper: bool | None = None, high_energy_space_charge_on: bool | None = None, csr_and_space_charge_on: bool | None = None, spin_tracking_on: bool | None = None, spin_sokolov_ternov_flipping_on: bool | None = None, radiation_damping_on: bool | None = None, radiation_zero_average: bool | None = None, radiation_fluctuations_on: bool | None = None, conserve_taylor_maps: bool | None = None, absolute_time_tracking: bool | None = None, absolute_time_ref_shift: bool | None = None, convert_to_kinetic_momentum: bool | None = None, normalize_twiss: bool | None = None, aperture_limit_on: bool | None = None, spin_n0_direction_user_set: bool | None = None, debug: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -1821,7 +1821,7 @@ class BmadNormalFormStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BmadNormalFormStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ele_origin: EleStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -1881,7 +1881,7 @@ class BookkeepingStateStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BookkeepingStateStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, attributes: typing.SupportsInt | None = None, control: typing.SupportsInt | None = None, floor_position: typing.SupportsInt | None = None, s_position: typing.SupportsInt | None = None, ref_energy: typing.SupportsInt | None = None, mat6: typing.SupportsInt | None = None, rad_int: typing.SupportsInt | None = None, ptc: typing.SupportsInt | None = None, has_misalign: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -2041,7 +2041,7 @@ class BpmPhaseCouplingStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BpmPhaseCouplingStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, K_22a: typing.SupportsFloat | None = None, K_12a: typing.SupportsFloat | None = None, K_11b: typing.SupportsFloat | None = None, K_12b: typing.SupportsFloat | None = None, Cbar22_a: typing.SupportsFloat | None = None, Cbar12_a: typing.SupportsFloat | None = None, Cbar11_b: typing.SupportsFloat | None = None, Cbar12_b: typing.SupportsFloat | None = None, phi_a: typing.SupportsFloat | None = None, phi_b: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -2136,7 +2136,7 @@ class BranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BranchStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, ix_branch: typing.SupportsInt | None = None, ix_from_branch: typing.SupportsInt | None = None, ix_from_ele: typing.SupportsInt | None = None, ix_to_ele: typing.SupportsInt | None = None, ix_fixer: typing.SupportsInt | None = None, n_ele_track: typing.SupportsInt | None = None, n_ele_max: typing.SupportsInt | None = None, lat: LatStruct | None = None, a: ModeInfoStruct | None = None, b: ModeInfoStruct | None = None, z: ModeInfoStruct | None = None, param: LatParamStruct | None = None, particle_start: CoordStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -2257,7 +2257,7 @@ class BunchParamsStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BunchParamsStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, centroid: CoordStruct | None = None, x: TwissStruct | None = None, y: TwissStruct | None = None, z: TwissStruct | None = None, a: TwissStruct | None = None, b: TwissStruct | None = None, c: TwissStruct | None = None, sigma: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, rel_max: collections.abc.Sequence[typing.SupportsFloat] | None = None, rel_min: collections.abc.Sequence[typing.SupportsFloat] | None = None, s: typing.SupportsFloat | None = None, t: typing.SupportsFloat | None = None, sigma_t: typing.SupportsFloat | None = None, charge_live: typing.SupportsFloat | None = None, charge_tot: typing.SupportsFloat | None = None, n_particle_tot: typing.SupportsInt | None = None, n_particle_live: typing.SupportsInt | None = None, n_particle_lost_in_ele: typing.SupportsInt | None = None, n_good_steps: typing.SupportsInt | None = None, n_bad_steps: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, location: typing.SupportsInt | None = None, twiss_valid: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -2407,7 +2407,7 @@ class BunchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BunchStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix_z: collections.abc.Sequence[typing.SupportsInt] | None = None, charge_tot: typing.SupportsFloat | None = None, charge_live: typing.SupportsFloat | None = None, z_center: typing.SupportsFloat | None = None, t_center: typing.SupportsFloat | None = None, t0: typing.SupportsFloat | None = None, drift_between_t_and_s: bool | None = None, ix_ele: typing.SupportsInt | None = None, ix_bunch: typing.SupportsInt | None = None, ix_turn: typing.SupportsInt | None = None, n_live: typing.SupportsInt | None = None, n_good: typing.SupportsInt | None = None, n_bad: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -2541,7 +2541,7 @@ class BunchTrackStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BunchTrackStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ds_save: typing.SupportsFloat | None = None, n_pt: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -2666,7 +2666,7 @@ class CartesianMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CartesianMapStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, field_scale: typing.SupportsFloat | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None, master_parameter: typing.SupportsInt | None = None, ele_anchor_pt: typing.SupportsInt | None = None, field_type: typing.SupportsInt | None = None, ptr: CartesianMapTermStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -2761,7 +2761,7 @@ class CartesianMapTerm1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> CartesianMapTerm1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, coef: typing.SupportsFloat | None = None, kx: typing.SupportsFloat | None = None, ky: typing.SupportsFloat | None = None, kz: typing.SupportsFloat | None = None, x0: typing.SupportsFloat | None = None, y0: typing.SupportsFloat | None = None, phi_z: typing.SupportsFloat | None = None, family: typing.SupportsInt | None = None, form: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -2872,7 +2872,7 @@ class CartesianMapTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CartesianMapTermStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, file: str | None = None, n_link: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -3110,7 +3110,7 @@ class ComplexTaylorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ComplexTaylorStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ref: complex | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -3173,7 +3173,7 @@ class ComplexTaylorTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ComplexTaylorTermStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, coef: complex | None = None, expn: collections.abc.Sequence[typing.SupportsInt] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -3269,7 +3269,7 @@ class ControlRamp1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> ControlRamp1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, y_knot: collections.abc.Sequence[typing.SupportsFloat] | None = None, attribute: str | None = None, slave_name: str | None = None, is_controller: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -3341,7 +3341,7 @@ class ControlStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ControlStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, value: typing.SupportsFloat | None = None, y_knot: collections.abc.Sequence[typing.SupportsFloat] | None = None, slave: LatEleLocStruct | None = None, lord: LatEleLocStruct | None = None, slave_name: str | None = None, attribute: str | None = None, ix_attrib: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -3422,7 +3422,7 @@ class ControlVar1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> ControlVar1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, value: typing.SupportsFloat | None = None, old_value: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -3490,7 +3490,7 @@ class ControllerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ControllerStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x_knot: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -3674,7 +3674,7 @@ class CoordStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CoordStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, vec: collections.abc.Sequence[typing.SupportsFloat] | None = None, s: typing.SupportsFloat | None = None, t: typing.SupportsFloat | None = None, spin: collections.abc.Sequence[typing.SupportsFloat] | None = None, field: collections.abc.Sequence[typing.SupportsFloat] | None = None, phase: collections.abc.Sequence[typing.SupportsFloat] | None = None, charge: typing.SupportsFloat | None = None, dt_ref: typing.SupportsFloat | None = None, r: typing.SupportsFloat | None = None, p0c: typing.SupportsFloat | None = None, E_potential: typing.SupportsFloat | None = None, beta: typing.SupportsFloat | None = None, ix_ele: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, ix_turn: typing.SupportsInt | None = None, ix_user: typing.SupportsInt | None = None, state: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, time_dir: typing.SupportsInt | None = None, species: typing.SupportsInt | None = None, location: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -3994,7 +3994,7 @@ class CylindricalMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CylindricalMapStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, m: typing.SupportsInt | None = None, harmonic: typing.SupportsInt | None = None, phi0_fieldmap: typing.SupportsFloat | None = None, theta0_azimuth: typing.SupportsFloat | None = None, field_scale: typing.SupportsFloat | None = None, master_parameter: typing.SupportsInt | None = None, ele_anchor_pt: typing.SupportsInt | None = None, dz: typing.SupportsFloat | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None, ptr: CylindricalMapTermStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -4115,7 +4115,7 @@ class CylindricalMapTerm1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> CylindricalMapTerm1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, e_coef: complex | None = None, b_coef: complex | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -4172,7 +4172,7 @@ class CylindricalMapTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CylindricalMapTermStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, file: str | None = None, n_link: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -4273,7 +4273,7 @@ class ElePointerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ElePointerStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ele: EleStruct | None = None, loc: LatEleLocStruct | None = None, id: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -4371,7 +4371,7 @@ class EleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> EleStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, type: str | None = None, alias: str | None = None, component_name: str | None = None, descrip: str | None = None, a: TwissStruct | None = None, b: TwissStruct | None = None, z: TwissStruct | None = None, x: XyDispStruct | None = None, y: XyDispStruct | None = None, ac_kick: AcKickerStruct | None = None, bookkeeping_state: BookkeepingStateStruct | None = None, branch: BranchStruct | None = None, control: ControllerStruct | None = None, rf: RfEleStruct | None = None, lord: EleStruct | None = None, ptc_fibre: Fibre | None = None, floor: FloorPositionStruct | None = None, high_energy_space_charge: HighEnergySpaceChargeStruct | None = None, mode3: Mode3Struct | None = None, photon: PhotonElementStruct | None = None, rad_map: RadMapEleStruct | None = None, spin_taylor_ref_orb_in: collections.abc.Sequence[typing.SupportsFloat] | None = None, wake: WakeStruct | None = None, map_ref_orb_in: CoordStruct | None = None, map_ref_orb_out: CoordStruct | None = None, time_ref_orb_in: CoordStruct | None = None, time_ref_orb_out: CoordStruct | None = None, value: collections.abc.Sequence[typing.SupportsFloat] | None = None, old_value: collections.abc.Sequence[typing.SupportsFloat] | None = None, spin_q: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, vec0: collections.abc.Sequence[typing.SupportsFloat] | None = None, mat6: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, c_mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, dc_mat_dpz: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, gamma_c: typing.SupportsFloat | None = None, s_start: typing.SupportsFloat | None = None, s: typing.SupportsFloat | None = None, ref_time: typing.SupportsFloat | None = None, a_pole: collections.abc.Sequence[typing.SupportsFloat] | None = None, b_pole: collections.abc.Sequence[typing.SupportsFloat] | None = None, a_pole_elec: collections.abc.Sequence[typing.SupportsFloat] | None = None, b_pole_elec: collections.abc.Sequence[typing.SupportsFloat] | None = None, custom: collections.abc.Sequence[typing.SupportsFloat] | None = None, r: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]] | None = None, key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, lord_status: typing.SupportsInt | None = None, n_slave: typing.SupportsInt | None = None, n_slave_field: typing.SupportsInt | None = None, ix1_slave: typing.SupportsInt | None = None, slave_status: typing.SupportsInt | None = None, n_lord: typing.SupportsInt | None = None, n_lord_field: typing.SupportsInt | None = None, n_lord_ramper: typing.SupportsInt | None = None, ic1_lord: typing.SupportsInt | None = None, ix_pointer: typing.SupportsInt | None = None, ixx: typing.SupportsInt | None = None, iyy: typing.SupportsInt | None = None, izz: typing.SupportsInt | None = None, mat6_calc_method: typing.SupportsInt | None = None, tracking_method: typing.SupportsInt | None = None, spin_tracking_method: typing.SupportsInt | None = None, csr_method: typing.SupportsInt | None = None, space_charge_method: typing.SupportsInt | None = None, ptc_integration_type: typing.SupportsInt | None = None, field_calc: typing.SupportsInt | None = None, aperture_at: typing.SupportsInt | None = None, aperture_type: typing.SupportsInt | None = None, ref_species: typing.SupportsInt | None = None, orientation: typing.SupportsInt | None = None, symplectify: bool | None = None, mode_flip: bool | None = None, multipoles_on: bool | None = None, scale_multipoles: bool | None = None, taylor_map_includes_offsets: bool | None = None, field_master: bool | None = None, is_on: bool | None = None, logic: bool | None = None, bmad_logic: bool | None = None, select: bool | None = None, offset_moves_aperture: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -4895,7 +4895,7 @@ class EllipseBeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> EllipseBeamInitStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, part_per_ellipse: typing.SupportsInt | None = None, n_ellipse: typing.SupportsInt | None = None, sigma_cutoff: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5000,7 +5000,7 @@ class EmFieldStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> EmFieldStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, E: collections.abc.Sequence[typing.SupportsFloat] | None = None, B: collections.abc.Sequence[typing.SupportsFloat] | None = None, dE: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, dB: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, phi: typing.SupportsFloat | None = None, phi_B: typing.SupportsFloat | None = None, A: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5101,7 +5101,7 @@ class EmTaylorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> EmTaylorStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ref: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5169,7 +5169,7 @@ class EmTaylorTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> EmTaylorTermStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, coef: typing.SupportsFloat | None = None, expn: collections.abc.Sequence[typing.SupportsInt] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5331,7 +5331,7 @@ class ExpressionAtomStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ExpressionAtomStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, type: typing.SupportsInt | None = None, value: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5454,7 +5454,7 @@ class ExpressionTreeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ExpressionTreeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, type: typing.SupportsInt | None = None, value: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5559,7 +5559,7 @@ class Fibre:
         ...
     def __deepcopy__(self, arg0: dict) -> Fibre:
         ...
-    def __init__(self) -> None:
+    def __init__(self, DIR: typing.SupportsInt | None = None, PREVIOUS: Fibre | None = None, NEXT: Fibre | None = None, PARENT_LAYOUT: Layout | None = None, pos: typing.SupportsInt | None = None, BETA0: typing.SupportsFloat | None = None, GAMMA0I: typing.SupportsFloat | None = None, GAMBET: typing.SupportsFloat | None = None, MASS: typing.SupportsFloat | None = None, CHARGE: typing.SupportsFloat | None = None, AG: typing.SupportsFloat | None = None, P: Fibre | None = None, N: Fibre | None = None, loc: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5711,7 +5711,7 @@ class FloorPositionStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> FloorPositionStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, r: collections.abc.Sequence[typing.SupportsFloat] | None = None, w: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, theta: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, psi: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5835,7 +5835,7 @@ class GenGrad1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> GenGrad1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, m: typing.SupportsInt | None = None, sincos: typing.SupportsInt | None = None, n_deriv_max: typing.SupportsInt | None = None, deriv: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -5920,7 +5920,7 @@ class GenGradMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GenGradMapStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, file: str | None = None, ele_anchor_pt: typing.SupportsInt | None = None, field_type: typing.SupportsInt | None = None, iz0: typing.SupportsInt | None = None, iz1: typing.SupportsInt | None = None, dz: typing.SupportsFloat | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None, field_scale: typing.SupportsFloat | None = None, master_parameter: typing.SupportsInt | None = None, curved_ref_frame: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6092,7 +6092,7 @@ class GridBeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridBeamInitStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, n_x: typing.SupportsInt | None = None, n_px: typing.SupportsInt | None = None, x_min: typing.SupportsFloat | None = None, x_max: typing.SupportsFloat | None = None, px_min: typing.SupportsFloat | None = None, px_max: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6184,7 +6184,7 @@ class GridFieldPt1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridFieldPt1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, E: collections.abc.Sequence[complex] | None = None, B: collections.abc.Sequence[complex] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6228,7 +6228,7 @@ class GridFieldPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridFieldPtStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, file: str | None = None, n_link: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6253,7 +6253,7 @@ class GridFieldStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridFieldStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, geometry: typing.SupportsInt | None = None, harmonic: typing.SupportsInt | None = None, phi0_fieldmap: typing.SupportsFloat | None = None, field_scale: typing.SupportsFloat | None = None, field_type: typing.SupportsInt | None = None, master_parameter: typing.SupportsInt | None = None, ele_anchor_pt: typing.SupportsInt | None = None, interpolation_order: typing.SupportsInt | None = None, dr: collections.abc.Sequence[typing.SupportsFloat] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None, curved_ref_frame: bool | None = None, ptr: GridFieldPtStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6382,7 +6382,7 @@ class HighEnergySpaceChargeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> HighEnergySpaceChargeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, closed_orb: CoordStruct | None = None, kick_const: typing.SupportsFloat | None = None, sig_x: typing.SupportsFloat | None = None, sig_y: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, sin_phi: typing.SupportsFloat | None = None, cos_phi: typing.SupportsFloat | None = None, sig_z: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6658,7 +6658,7 @@ class Interval1CoefStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> Interval1CoefStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, c0: typing.SupportsFloat | None = None, c1: typing.SupportsFloat | None = None, n_exp: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6760,7 +6760,7 @@ class KvBeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> KvBeamInitStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, part_per_phi: collections.abc.Sequence[typing.SupportsInt] | None = None, n_I2: typing.SupportsInt | None = None, A: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6793,7 +6793,7 @@ class LatEleLocStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatEleLocStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix_ele: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -6878,7 +6878,7 @@ class LatEleOrder1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatEleOrder1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix_branch: typing.SupportsInt | None = None, ix_order: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7027,7 +7027,7 @@ class LatParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatParamStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, n_part: typing.SupportsFloat | None = None, total_length: typing.SupportsFloat | None = None, unstable_factor: typing.SupportsFloat | None = None, t1_with_RF: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, t1_no_RF: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, spin_tune: typing.SupportsFloat | None = None, particle: typing.SupportsInt | None = None, default_tracking_species: typing.SupportsInt | None = None, geometry: typing.SupportsInt | None = None, ixx: typing.SupportsInt | None = None, stable: bool | None = None, live_branch: bool | None = None, g1_integral: typing.SupportsFloat | None = None, g2_integral: typing.SupportsFloat | None = None, g3_integral: typing.SupportsFloat | None = None, bookkeeping_state: BookkeepingStateStruct | None = None, beam_init: BeamInitStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7129,7 +7129,7 @@ class LatStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, use_name: str | None = None, lattice: str | None = None, machine: str | None = None, input_file_name: str | None = None, title: str | None = None, a: ModeInfoStruct | None = None, b: ModeInfoStruct | None = None, z: ModeInfoStruct | None = None, param: LatParamStruct | None = None, lord_state: BookkeepingStateStruct | None = None, ele_init: EleStruct | None = None, particle_start: CoordStruct | None = None, beam_init: BeamInitStruct | None = None, pre_tracker: PreTrackerStruct | None = None, custom: collections.abc.Sequence[typing.SupportsFloat] | None = None, version: typing.SupportsInt | None = None, n_ele_track: typing.SupportsInt | None = None, n_ele_max: typing.SupportsInt | None = None, n_control_max: typing.SupportsInt | None = None, n_ic_max: typing.SupportsInt | None = None, input_taylor_order: typing.SupportsInt | None = None, ic: collections.abc.Sequence[typing.SupportsInt] | None = None, photon_type: typing.SupportsInt | None = None, creation_hash: typing.SupportsInt | None = None, ramper_slave_bookkeeping: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7298,7 +7298,7 @@ class Layout:
         ...
     def __deepcopy__(self, arg0: dict) -> Layout:
         ...
-    def __init__(self) -> None:
+    def __init__(self, NAME: str | None = None, INDEX: typing.SupportsInt | None = None, HARMONIC_NUMBER: typing.SupportsFloat | None = None, CLOSED: bool | None = None, N: typing.SupportsInt | None = None, NTHIN: typing.SupportsInt | None = None, THIN: typing.SupportsFloat | None = None, LASTPOS: typing.SupportsInt | None = None, LAST: Fibre | None = None, END: Fibre | None = None, START: Fibre | None = None, START_GROUND: Fibre | None = None, END_GROUND: Fibre | None = None, NEXT: Layout | None = None, PREVIOUS: Layout | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7388,7 +7388,7 @@ class LinacNormalModeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LinacNormalModeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, i2_E4: typing.SupportsFloat | None = None, i3_E7: typing.SupportsFloat | None = None, i5a_E6: typing.SupportsFloat | None = None, i5b_E6: typing.SupportsFloat | None = None, sig_E1: typing.SupportsFloat | None = None, a_emittance_end: typing.SupportsFloat | None = None, b_emittance_end: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7470,7 +7470,7 @@ class MadEnergyStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> MadEnergyStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, total: typing.SupportsFloat | None = None, beta: typing.SupportsFloat | None = None, gamma: typing.SupportsFloat | None = None, kinetic: typing.SupportsFloat | None = None, p0c: typing.SupportsFloat | None = None, particle: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7518,7 +7518,7 @@ class MadMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> MadMapStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, k: collections.abc.Sequence[typing.SupportsFloat] | None = None, r: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, t: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7803,7 +7803,7 @@ class Mode3Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> Mode3Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, v: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, a: TwissStruct | None = None, b: TwissStruct | None = None, c: TwissStruct | None = None, x: TwissStruct | None = None, y: TwissStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7822,7 +7822,7 @@ class ModeInfoStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ModeInfoStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, stable: bool | None = None, tune: typing.SupportsFloat | None = None, emit: typing.SupportsFloat | None = None, chrom: typing.SupportsFloat | None = None, sigma: typing.SupportsFloat | None = None, sigmap: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -7955,7 +7955,7 @@ class NametableStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> NametableStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, index: collections.abc.Sequence[typing.SupportsInt] | None = None, n_min: typing.SupportsInt | None = None, n_max: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8026,7 +8026,7 @@ class NormalModesStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> NormalModesStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, synch_int: collections.abc.Sequence[typing.SupportsFloat] | None = None, sigE_E: typing.SupportsFloat | None = None, sig_z: typing.SupportsFloat | None = None, e_loss: typing.SupportsFloat | None = None, rf_voltage: typing.SupportsFloat | None = None, pz_aperture: typing.SupportsFloat | None = None, pz_average: typing.SupportsFloat | None = None, momentum_compaction: typing.SupportsFloat | None = None, dpz_damp: typing.SupportsFloat | None = None, a: AnormalModeStruct | None = None, b: AnormalModeStruct | None = None, z: AnormalModeStruct | None = None, lin: LinacNormalModeStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8333,7 +8333,7 @@ class PhotonElementStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonElementStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, curvature: SurfaceCurvatureStruct | None = None, target: PhotonTargetStruct | None = None, material: PhotonMaterialStruct | None = None, segmented: SurfaceSegmentedStruct | None = None, h_misalign: SurfaceHMisalignStruct | None = None, displacement: SurfaceDisplacementStruct | None = None, pixel: PixelDetecStruct | None = None, reflectivity_table_type: typing.SupportsInt | None = None, reflectivity_table_sigma: PhotonReflectTableStruct | None = None, reflectivity_table_pi: PhotonReflectTableStruct | None = None, integrated_init_energy_prob: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8366,7 +8366,7 @@ class PhotonMaterialStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonMaterialStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, f0_m1: complex | None = None, f0_m2: complex | None = None, f_0: complex | None = None, f_h: complex | None = None, f_hbar: complex | None = None, f_hkl: complex | None = None, h_norm: collections.abc.Sequence[typing.SupportsFloat] | None = None, l_ref: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8393,7 +8393,7 @@ class PhotonReflectSurfaceStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonReflectSurfaceStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, description: str | None = None, reflectivity_file: str | None = None, surface_roughness_rms: typing.SupportsFloat | None = None, roughness_correlation_len: typing.SupportsFloat | None = None, ix_surface: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8429,7 +8429,7 @@ class PhotonReflectTableStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonReflectTableStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, angle: collections.abc.Sequence[typing.SupportsFloat] | None = None, energy: collections.abc.Sequence[typing.SupportsFloat] | None = None, p_reflect: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, max_energy: typing.SupportsFloat | None = None, p_reflect_scratch: collections.abc.Sequence[typing.SupportsFloat] | None = None, bragg_angle: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8554,7 +8554,7 @@ class PhotonTargetStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonTargetStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, type: typing.SupportsInt | None = None, n_corner: typing.SupportsInt | None = None, ele_loc: LatEleLocStruct | None = None, center: TargetPointStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8581,7 +8581,7 @@ class PixelDetecStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PixelDetecStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, dr: collections.abc.Sequence[typing.SupportsFloat] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None, n_track_tot: typing.SupportsInt | None = None, n_hit_detec: typing.SupportsInt | None = None, n_hit_pixel: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8628,7 +8628,7 @@ class PixelPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PixelPtStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, n_photon: typing.SupportsInt | None = None, E_x: complex | None = None, E_y: complex | None = None, intensity_x: typing.SupportsFloat | None = None, intensity_y: typing.SupportsFloat | None = None, intensity: typing.SupportsFloat | None = None, orbit: collections.abc.Sequence[typing.SupportsFloat] | None = None, orbit_rms: collections.abc.Sequence[typing.SupportsFloat] | None = None, init_orbit: collections.abc.Sequence[typing.SupportsFloat] | None = None, init_orbit_rms: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8919,7 +8919,7 @@ class PreTrackerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PreTrackerStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, who: typing.SupportsInt | None = None, ix_ele_start: typing.SupportsInt | None = None, ix_ele_end: typing.SupportsInt | None = None, input_file: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -8995,7 +8995,7 @@ class PtcNormalFormStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PtcNormalFormStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ele_origin: EleStruct | None = None, orb0: collections.abc.Sequence[typing.SupportsFloat] | None = None, valid_map: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9053,7 +9053,7 @@ class QpAxisStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpAxisStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, label: str | None = None, min: typing.SupportsFloat | None = None, max: typing.SupportsFloat | None = None, tick_min: typing.SupportsFloat | None = None, tick_max: typing.SupportsFloat | None = None, eval_min: typing.SupportsFloat | None = None, eval_max: typing.SupportsFloat | None = None, dtick: typing.SupportsFloat | None = None, number_offset: typing.SupportsFloat | None = None, label_offset: typing.SupportsFloat | None = None, major_tick_len: typing.SupportsFloat | None = None, minor_tick_len: typing.SupportsFloat | None = None, label_color: str | None = None, major_div: typing.SupportsInt | None = None, major_div_nominal: typing.SupportsInt | None = None, minor_div: typing.SupportsInt | None = None, minor_div_max: typing.SupportsInt | None = None, places: typing.SupportsInt | None = None, type: str | None = None, bounds: str | None = None, tick_side: typing.SupportsInt | None = None, number_side: typing.SupportsInt | None = None, draw_label: bool | None = None, draw_numbers: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9176,7 +9176,7 @@ class QpLegendStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpLegendStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, row_spacing: typing.SupportsFloat | None = None, line_length: typing.SupportsFloat | None = None, text_offset: typing.SupportsFloat | None = None, draw_line: bool | None = None, draw_symbol: bool | None = None, draw_text: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9208,7 +9208,7 @@ class QpLineStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpLineStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, width: typing.SupportsInt | None = None, color: str | None = None, pattern: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9227,7 +9227,7 @@ class QpPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpPointStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x: typing.SupportsFloat | None = None, y: typing.SupportsFloat | None = None, units: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9252,7 +9252,7 @@ class QpRectStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpRectStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x1: typing.SupportsFloat | None = None, x2: typing.SupportsFloat | None = None, y1: typing.SupportsFloat | None = None, y2: typing.SupportsFloat | None = None, units: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9291,7 +9291,7 @@ class QpSymbolStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpSymbolStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, type: str | None = None, height: typing.SupportsFloat | None = None, color: str | None = None, fill_pattern: str | None = None, line_width: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9386,7 +9386,7 @@ class RadInt1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> RadInt1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, i0: typing.SupportsFloat | None = None, i1: typing.SupportsFloat | None = None, i2: typing.SupportsFloat | None = None, i3: typing.SupportsFloat | None = None, i4a: typing.SupportsFloat | None = None, i4b: typing.SupportsFloat | None = None, i4z: typing.SupportsFloat | None = None, i5a: typing.SupportsFloat | None = None, i5b: typing.SupportsFloat | None = None, i6b: typing.SupportsFloat | None = None, lin_i2_E4: typing.SupportsFloat | None = None, lin_i3_E7: typing.SupportsFloat | None = None, lin_i5a_E6: typing.SupportsFloat | None = None, lin_i5b_E6: typing.SupportsFloat | None = None, lin_norm_emit_a: typing.SupportsFloat | None = None, lin_norm_emit_b: typing.SupportsFloat | None = None, lin_sig_E: typing.SupportsFloat | None = None, n_steps: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9630,7 +9630,7 @@ class RadMapEleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RadMapEleStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, rm0: RadMapStruct | None = None, rm1: RadMapStruct | None = None, stale: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9642,7 +9642,7 @@ class RadMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RadMapStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ref_orb: collections.abc.Sequence[typing.SupportsFloat] | None = None, damp_dmat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, xfer_damp_vec: collections.abc.Sequence[typing.SupportsFloat] | None = None, xfer_damp_mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, stoc_mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9704,7 +9704,7 @@ class RamperLordStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RamperLordStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix_ele: typing.SupportsInt | None = None, ix_con: typing.SupportsInt | None = None, attrib_ptr: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -9807,7 +9807,7 @@ class RandomStateStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RandomStateStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix: typing.SupportsInt | None = None, iy: typing.SupportsInt | None = None, number_stored: bool | None = None, h_saved: typing.SupportsFloat | None = None, engine: typing.SupportsInt | None = None, seed: typing.SupportsInt | None = None, am: typing.SupportsFloat | None = None, gauss_converter: typing.SupportsInt | None = None, gauss_sigma_cut: typing.SupportsFloat | None = None, in_sobseq: typing.SupportsInt | None = None, ix_sobseq: collections.abc.Sequence[typing.SupportsInt] | None = None, x_sobseq: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10131,7 +10131,7 @@ class ResonanceHStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ResonanceHStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, id: str | None = None, c_val: complex | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10187,7 +10187,7 @@ class RfEleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RfEleStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ds_step: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10211,7 +10211,7 @@ class RfStairStepStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RfStairStepStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, E_tot0: typing.SupportsFloat | None = None, E_tot1: typing.SupportsFloat | None = None, p0c: typing.SupportsFloat | None = None, p1c: typing.SupportsFloat | None = None, scale: typing.SupportsFloat | None = None, time: typing.SupportsFloat | None = None, s0: typing.SupportsFloat | None = None, s: typing.SupportsFloat | None = None, ix_step: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10436,7 +10436,7 @@ class SpaceChargeCommonStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SpaceChargeCommonStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ds_track_step: typing.SupportsFloat | None = None, dt_track_step: typing.SupportsFloat | None = None, cathode_strength_cutoff: typing.SupportsFloat | None = None, rel_tol_tracking: typing.SupportsFloat | None = None, abs_tol_tracking: typing.SupportsFloat | None = None, beam_chamber_height: typing.SupportsFloat | None = None, lsc_sigma_cutoff: typing.SupportsFloat | None = None, particle_sigma_cutoff: typing.SupportsFloat | None = None, space_charge_mesh_size: collections.abc.Sequence[typing.SupportsInt] | None = None, csr3d_mesh_size: collections.abc.Sequence[typing.SupportsInt] | None = None, n_bin: typing.SupportsInt | None = None, particle_bin_span: typing.SupportsInt | None = None, n_shield_images: typing.SupportsInt | None = None, sc_min_in_bin: typing.SupportsInt | None = None, lsc_kick_transverse_dependence: bool | None = None, debug: bool | None = None, diagnostic_output_file: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10532,7 +10532,7 @@ class SpinAxisStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SpinAxisStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, l: collections.abc.Sequence[typing.SupportsFloat] | None = None, n0: collections.abc.Sequence[typing.SupportsFloat] | None = None, m: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10630,7 +10630,7 @@ class SpinOrbitMap1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> SpinOrbitMap1Struct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, orb_mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, vec0: collections.abc.Sequence[typing.SupportsFloat] | None = None, spin_q: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10704,7 +10704,7 @@ class SpinPolarStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SpinPolarStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, polarization: typing.SupportsFloat | None = None, theta: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, xi: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10791,7 +10791,7 @@ class SplineStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SplineStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x0: typing.SupportsFloat | None = None, y0: typing.SupportsFloat | None = None, x1: typing.SupportsFloat | None = None, coef: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10905,7 +10905,7 @@ class StrongBeamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> StrongBeamStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix_slice: typing.SupportsInt | None = None, x_center: typing.SupportsFloat | None = None, y_center: typing.SupportsFloat | None = None, x_sigma: typing.SupportsFloat | None = None, y_sigma: typing.SupportsFloat | None = None, dx: typing.SupportsFloat | None = None, dy: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -10983,7 +10983,7 @@ class SummationRdtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SummationRdtStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, h11001: complex | None = None, h00111: complex | None = None, h20001: complex | None = None, h00201: complex | None = None, h10002: complex | None = None, h21000: complex | None = None, h30000: complex | None = None, h10110: complex | None = None, h10020: complex | None = None, h10200: complex | None = None, h31000: complex | None = None, h40000: complex | None = None, h20110: complex | None = None, h11200: complex | None = None, h20020: complex | None = None, h20200: complex | None = None, h00310: complex | None = None, h00400: complex | None = None, h22000: complex | None = None, h00220: complex | None = None, h11110: complex | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11071,7 +11071,7 @@ class SurfaceCurvatureStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceCurvatureStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, xy: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, spherical: typing.SupportsFloat | None = None, elliptical: collections.abc.Sequence[typing.SupportsFloat] | None = None, has_curvature: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11101,7 +11101,7 @@ class SurfaceDisplacementPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceDisplacementPtStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x0: typing.SupportsFloat | None = None, y0: typing.SupportsFloat | None = None, z0: typing.SupportsFloat | None = None, dz_dx: typing.SupportsFloat | None = None, dz_dy: typing.SupportsFloat | None = None, d2z_dxdy: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11169,7 +11169,7 @@ class SurfaceDisplacementStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceDisplacementStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, active: bool | None = None, dr: collections.abc.Sequence[typing.SupportsFloat] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11213,7 +11213,7 @@ class SurfaceHMisalignPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceHMisalignPtStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x0: typing.SupportsFloat | None = None, y0: typing.SupportsFloat | None = None, rot_y: typing.SupportsFloat | None = None, rot_t: typing.SupportsFloat | None = None, rot_y_rms: typing.SupportsFloat | None = None, rot_t_rms: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11281,7 +11281,7 @@ class SurfaceHMisalignStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceHMisalignStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, active: bool | None = None, dr: collections.abc.Sequence[typing.SupportsFloat] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11308,7 +11308,7 @@ class SurfaceSegmentedPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceSegmentedPtStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x0: typing.SupportsFloat | None = None, y0: typing.SupportsFloat | None = None, z0: typing.SupportsFloat | None = None, dz_dx: typing.SupportsFloat | None = None, dz_dy: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11370,7 +11370,7 @@ class SurfaceSegmentedStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceSegmentedStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, active: bool | None = None, dr: collections.abc.Sequence[typing.SupportsFloat] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11423,7 +11423,7 @@ class TaoBeamBranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBeamBranchStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, beam_at_start: BeamStruct | None = None, beam_init: BeamInitStruct | None = None, beam_init_used: BeamInitStruct | None = None, init_starting_distribution: bool | None = None, track_start: str | None = None, track_end: str | None = None, ix_branch: typing.SupportsInt | None = None, ix_track_start: typing.SupportsInt | None = None, ix_track_end: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11458,7 +11458,7 @@ class TaoBeamUniStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBeamUniStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, saved_at: str | None = None, dump_file: str | None = None, dump_at: str | None = None, track_beam_in_universe: bool | None = None, always_reinit: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11470,7 +11470,7 @@ class TaoBuildingWallOrientationStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBuildingWallOrientationStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, theta: typing.SupportsFloat | None = None, x_offset: typing.SupportsFloat | None = None, z_offset: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11503,7 +11503,7 @@ class TaoBuildingWallPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBuildingWallPointStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, z: typing.SupportsFloat | None = None, x: typing.SupportsFloat | None = None, radius: typing.SupportsFloat | None = None, z_center: typing.SupportsFloat | None = None, x_center: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11594,7 +11594,7 @@ class TaoBuildingWallSectionStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBuildingWallSectionStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, constraint: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11654,7 +11654,7 @@ class TaoBuildingWallStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBuildingWallStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, orientation: TaoBuildingWallOrientationStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11673,7 +11673,7 @@ class TaoCmdHistoryStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCmdHistoryStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, cmd: str | None = None, ix: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11761,7 +11761,7 @@ class TaoCommonStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCommonStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, covar: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, alpha: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, dummy_target: typing.SupportsFloat | None = None, n_alias: typing.SupportsInt | None = None, cmd_file_level: typing.SupportsInt | None = None, ix_key_bank: typing.SupportsInt | None = None, ix_history: typing.SupportsInt | None = None, n_history: typing.SupportsInt | None = None, lev_loop: typing.SupportsInt | None = None, n_err_messages_printed: typing.SupportsInt | None = None, n_universes: typing.SupportsInt | None = None, ix_beam_track_active_element: typing.SupportsInt | None = None, cmd_file_paused: bool | None = None, use_cmd_here: bool | None = None, cmd_from_cmd_file: bool | None = None, use_saved_beam_in_tracking: bool | None = None, single_mode: bool | None = None, combine_consecutive_elements_of_like_name: bool | None = None, have_tracked_beam: bool | None = None, init_plot_needed: bool | None = None, init_beam: bool | None = None, init_var: bool | None = None, init_read_lat_info: bool | None = None, optimizer_running: bool | None = None, have_datums_using_expressions: bool | None = None, print_to_terminal: bool | None = None, lattice_calc_done: bool | None = None, add_measurement_noise: bool | None = None, is_err_message_printed: collections.abc.Sequence[bool] | None = None, command_arg_has_been_executed: bool | None = None, all_merit_weights_positive: bool | None = None, multi_turn_orbit_is_plotted: bool | None = None, force_chrom_calc: bool | None = None, force_rad_int_calc: bool | None = None, rad_int_ri_calc_on: bool | None = None, rad_int_6d_calc_on: bool | None = None, single_mode_buffer: str | None = None, cmd: str | None = None, saved_cmd_line: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11860,7 +11860,7 @@ class TaoCurveColorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCurveColorStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, data_type: str | None = None, is_on: bool | None = None, min: typing.SupportsFloat | None = None, max: typing.SupportsFloat | None = None, autoscale: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11884,7 +11884,7 @@ class TaoCurveOrbitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCurveOrbitStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x: typing.SupportsFloat | None = None, y: typing.SupportsFloat | None = None, t: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -11953,7 +11953,7 @@ class TaoCurveStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCurveStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, data_source: str | None = None, data_index: str | None = None, data_type_x: str | None = None, data_type: str | None = None, ele_ref_name: str | None = None, legend_text: str | None = None, message_text: str | None = None, component: str | None = None, why_invalid: str | None = None, g: TaoGraphStruct | None = None, hist: TaoHistogramStruct | None = None, z_color: TaoCurveColorStruct | None = None, x_line: collections.abc.Sequence[typing.SupportsFloat] | None = None, y_line: collections.abc.Sequence[typing.SupportsFloat] | None = None, y2_line: collections.abc.Sequence[typing.SupportsFloat] | None = None, ix_line: collections.abc.Sequence[typing.SupportsInt] | None = None, x_symb: collections.abc.Sequence[typing.SupportsFloat] | None = None, y_symb: collections.abc.Sequence[typing.SupportsFloat] | None = None, z_symb: collections.abc.Sequence[typing.SupportsFloat] | None = None, err_symb: collections.abc.Sequence[typing.SupportsFloat] | None = None, symb_size: collections.abc.Sequence[typing.SupportsFloat] | None = None, ix_symb: collections.abc.Sequence[typing.SupportsInt] | None = None, y_axis_scale_factor: typing.SupportsFloat | None = None, line: QpLineStruct | None = None, symbol: QpSymbolStruct | None = None, orbit: TaoCurveOrbitStruct | None = None, ix_universe: typing.SupportsInt | None = None, symbol_every: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, ix_bunch: typing.SupportsInt | None = None, n_turn: typing.SupportsInt | None = None, use_y2: bool | None = None, draw_line: bool | None = None, draw_symbols: bool | None = None, draw_symbol_index: bool | None = None, draw_error_bars: bool | None = None, smooth_line_calc: bool | None = None, valid: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -12115,7 +12115,7 @@ class TaoD1DataStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoD1DataStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, d2: TaoD2DataStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -12190,7 +12190,7 @@ class TaoD2DataStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoD2DataStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, data_file_name: str | None = None, ref_file_name: str | None = None, data_date: str | None = None, ref_date: str | None = None, ix_universe: typing.SupportsInt | None = None, ix_d2_data: typing.SupportsInt | None = None, ix_ref: typing.SupportsInt | None = None, data_read_in: bool | None = None, ref_read_in: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -12294,7 +12294,7 @@ class TaoDataStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoDataStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ele_name: str | None = None, ele_start_name: str | None = None, ele_ref_name: str | None = None, data_type: str | None = None, merit_type: str | None = None, id: str | None = None, data_source: str | None = None, why_invalid: str | None = None, ix_uni: typing.SupportsInt | None = None, ix_bunch: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, ix_ele_start: typing.SupportsInt | None = None, ix_ele_ref: typing.SupportsInt | None = None, ix_ele_merit: typing.SupportsInt | None = None, ix_d1: typing.SupportsInt | None = None, ix_data: typing.SupportsInt | None = None, ix_dModel: typing.SupportsInt | None = None, eval_point: typing.SupportsInt | None = None, meas_value: typing.SupportsFloat | None = None, ref_value: typing.SupportsFloat | None = None, model_value: typing.SupportsFloat | None = None, design_value: typing.SupportsFloat | None = None, old_value: typing.SupportsFloat | None = None, base_value: typing.SupportsFloat | None = None, error_rms: typing.SupportsFloat | None = None, delta_merit: typing.SupportsFloat | None = None, weight: typing.SupportsFloat | None = None, invalid_value: typing.SupportsFloat | None = None, merit: typing.SupportsFloat | None = None, s: typing.SupportsFloat | None = None, s_offset: typing.SupportsFloat | None = None, ref_s_offset: typing.SupportsFloat | None = None, err_message_printed: bool | None = None, exists: bool | None = None, good_model: bool | None = None, good_base: bool | None = None, good_design: bool | None = None, good_meas: bool | None = None, good_ref: bool | None = None, good_user: bool | None = None, good_opt: bool | None = None, good_plot: bool | None = None, useit_plot: bool | None = None, useit_opt: bool | None = None, spin_map: TaoSpinMapStruct | None = None, d1: TaoD1DataStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -12510,7 +12510,7 @@ class TaoDataVarComponentStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoDataVarComponentStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, sign: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -12627,7 +12627,7 @@ class TaoDynamicApertureStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoDynamicApertureStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, param: ApertureParamStruct | None = None, pz: collections.abc.Sequence[typing.SupportsFloat] | None = None, ellipse_scale: typing.SupportsFloat | None = None, a_emit: typing.SupportsFloat | None = None, b_emit: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -12686,7 +12686,7 @@ class TaoElePointerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoElePointerStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, n_loc: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -12784,7 +12784,7 @@ class TaoEleShapeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoEleShapeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ele_id: str | None = None, shape: str | None = None, color: str | None = None, size: typing.SupportsFloat | None = None, label: str | None = None, draw: bool | None = None, multi: bool | None = None, line_width: typing.SupportsInt | None = None, offset: typing.SupportsFloat | None = None, ix_key: typing.SupportsInt | None = None, name_ele: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -12888,7 +12888,7 @@ class TaoEvalNodeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoEvalNodeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, type: typing.SupportsInt | None = None, name: str | None = None, scale: typing.SupportsFloat | None = None, value: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -13125,7 +13125,7 @@ class TaoExpressionInfoStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoExpressionInfoStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, good: bool | None = None, ele: EleStruct | None = None, s: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -13216,7 +13216,7 @@ class TaoFloorPlanStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoFloorPlanStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, view: str | None = None, rotation: typing.SupportsFloat | None = None, correct_distortion: bool | None = None, flip_label_side: bool | None = None, size_is_absolute: bool | None = None, draw_only_first_pass: bool | None = None, draw_building_wall: bool | None = None, orbit_scale: typing.SupportsFloat | None = None, orbit_color: str | None = None, orbit_pattern: str | None = None, orbit_lattice: str | None = None, orbit_width: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -13353,7 +13353,7 @@ class TaoGlobalStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoGlobalStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, beam_dead_cutoff: typing.SupportsFloat | None = None, lm_opt_deriv_reinit: typing.SupportsFloat | None = None, de_lm_step_ratio: typing.SupportsFloat | None = None, de_var_to_population_factor: typing.SupportsFloat | None = None, lmdif_eps: typing.SupportsFloat | None = None, lmdif_negligible_merit: typing.SupportsFloat | None = None, svd_cutoff: typing.SupportsFloat | None = None, unstable_penalty: typing.SupportsFloat | None = None, merit_stop_value: typing.SupportsFloat | None = None, dmerit_stop_value: typing.SupportsFloat | None = None, random_sigma_cutoff: typing.SupportsFloat | None = None, delta_e_chrom: typing.SupportsFloat | None = None, max_plot_time: typing.SupportsFloat | None = None, default_universe: typing.SupportsInt | None = None, default_branch: typing.SupportsInt | None = None, n_opti_cycles: typing.SupportsInt | None = None, n_opti_loops: typing.SupportsInt | None = None, n_threads: typing.SupportsInt | None = None, phase_units: typing.SupportsInt | None = None, bunch_to_plot: typing.SupportsInt | None = None, random_seed: typing.SupportsInt | None = None, n_top10_merit: typing.SupportsInt | None = None, srdt_gen_n_slices: typing.SupportsInt | None = None, datum_err_messages_max: typing.SupportsInt | None = None, srdt_sxt_n_slices: typing.SupportsInt | None = None, srdt_use_cache: bool | None = None, quiet: str | None = None, random_engine: str | None = None, random_gauss_converter: str | None = None, track_type: str | None = None, lat_sigma_calc_uses_emit_from: str | None = None, prompt_string: str | None = None, prompt_color: str | None = None, optimizer: str | None = None, print_command: str | None = None, var_out_file: str | None = None, history_file: str | None = None, beam_timer_on: bool | None = None, box_plots: bool | None = None, blank_line_between_commands: bool | None = None, cmd_file_abort_on_error: bool | None = None, concatenate_maps: bool | None = None, derivative_recalc: bool | None = None, derivative_uses_design: bool | None = None, disable_smooth_line_calc: bool | None = None, draw_curve_off_scale_warn: bool | None = None, external_plotting: bool | None = None, label_lattice_elements: bool | None = None, label_keys: bool | None = None, lattice_calc_on: bool | None = None, only_limit_opt_vars: bool | None = None, opt_with_ref: bool | None = None, opt_with_base: bool | None = None, opt_match_auto_recalc: bool | None = None, opti_write_var_file: bool | None = None, optimizer_allow_user_abort: bool | None = None, optimizer_var_limit_warn: bool | None = None, plot_on: bool | None = None, rad_int_user_calc_on: bool | None = None, rf_on: bool | None = None, single_step: bool | None = None, stop_on_error: bool | None = None, svd_retreat_on_merit_increase: bool | None = None, var_limits_on: bool | None = None, wait_for_CR_in_single_mode: bool | None = None, symbol_import: bool | None = None, debug_on: bool | None = None, expression_tree_on: bool | None = None, verbose_on: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -13557,7 +13557,7 @@ class TaoGraphStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoGraphStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, type: str | None = None, title: str | None = None, title_suffix: str | None = None, why_invalid: str | None = None, p: TaoPlotStruct | None = None, floor_plan: TaoFloorPlanStruct | None = None, text_legend_origin: QpPointStruct | None = None, curve_legend_origin: QpPointStruct | None = None, curve_legend: QpLegendStruct | None = None, x: QpAxisStruct | None = None, y: QpAxisStruct | None = None, x2: QpAxisStruct | None = None, y2: QpAxisStruct | None = None, margin: QpRectStruct | None = None, scale_margin: QpRectStruct | None = None, x_axis_scale_factor: typing.SupportsFloat | None = None, symbol_size_scale: typing.SupportsFloat | None = None, box: collections.abc.Sequence[typing.SupportsInt] | None = None, ix_branch: typing.SupportsInt | None = None, ix_universe: typing.SupportsInt | None = None, clip: bool | None = None, y2_mirrors_y: bool | None = None, limited: bool | None = None, draw_axes: bool | None = None, draw_curve_legend: bool | None = None, draw_grid: bool | None = None, draw_title: bool | None = None, draw_only_good_user_data_or_vars: bool | None = None, allow_wrap_around: bool | None = None, is_valid: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -13660,7 +13660,7 @@ class TaoHistogramStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoHistogramStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, density_normalized: bool | None = None, weight_by_charge: bool | None = None, minimum: typing.SupportsFloat | None = None, maximum: typing.SupportsFloat | None = None, width: typing.SupportsFloat | None = None, center: typing.SupportsFloat | None = None, number: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -13757,7 +13757,7 @@ class TaoInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoInitStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, parse_cmd_args: bool | None = None, debug_switch: bool | None = None, external_plotting_switch: bool | None = None, init_name: str | None = None, hook_init_file: str | None = None, hook_lat_file: str | None = None, hook_beam_file: str | None = None, hook_data_file: str | None = None, hook_plot_file: str | None = None, hook_startup_file: str | None = None, hook_var_file: str | None = None, hook_building_wall_file: str | None = None, init_file_arg_path: str | None = None, lattice_file_arg: str | None = None, hook_init_file_arg: str | None = None, init_file_arg: str | None = None, beam_file_arg: str | None = None, beam_init_position_file_arg: str | None = None, command_arg: str | None = None, data_file_arg: str | None = None, plot_file_arg: str | None = None, startup_file_arg: str | None = None, var_file_arg: str | None = None, building_wall_file_arg: str | None = None, geometry_arg: str | None = None, slice_lattice_arg: str | None = None, start_branch_at_arg: str | None = None, log_startup_arg: str | None = None, no_stopping_arg: str | None = None, noplot_arg: str | None = None, no_rad_int_arg: str | None = None, reverse_arg: str | None = None, debug_arg: str | None = None, disable_smooth_line_calc_arg: str | None = None, rf_on_arg: str | None = None, prompt_color_arg: str | None = None, quiet_arg: str | None = None, noinit_arg: str | None = None, nostartup_arg: str | None = None, symbol_import_arg: str | None = None, unique_name_suffix: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -13800,7 +13800,7 @@ class TaoLatSigmaStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoLatSigmaStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -13881,7 +13881,7 @@ class TaoLatticeBranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoLatticeBranchStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, tao_lat: TaoLatticeStruct | None = None, spin: TaoSpinPolarizationStruct | None = None, srdt: SummationRdtStruct | None = None, orb0: CoordStruct | None = None, modes_ri: NormalModesStruct | None = None, modes_6d: NormalModesStruct | None = None, ptc_normal_form: PtcNormalFormStruct | None = None, bmad_normal_form: BmadNormalFormStruct | None = None, cache_x_min: typing.SupportsFloat | None = None, cache_x_max: typing.SupportsFloat | None = None, comb_ds_save: typing.SupportsFloat | None = None, ix_ref_taylor: typing.SupportsInt | None = None, ix_ele_taylor: typing.SupportsInt | None = None, track_state: typing.SupportsInt | None = None, cache_n_pts: typing.SupportsInt | None = None, ix_rad_int_cache: typing.SupportsInt | None = None, has_open_match_element: bool | None = None, plot_cache_valid: bool | None = None, spin_map_valid: bool | None = None, twiss_valid: bool | None = None, mode_flip_here: bool | None = None, chrom_calc_ok: bool | None = None, rad_int_calc_ok: bool | None = None, emit_6d_calc_ok: bool | None = None, sigma_track_ok: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14038,7 +14038,7 @@ class TaoLatticeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoLatticeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, lat: LatStruct | None = None, high_E_lat: LatStruct | None = None, low_E_lat: LatStruct | None = None, rad_int_by_ele_ri: RadIntAllEleStruct | None = None, rad_int_by_ele_6d: RadIntAllEleStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14099,7 +14099,7 @@ class TaoModelBranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoModelBranchStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, beam: TaoBeamBranchStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14164,7 +14164,7 @@ class TaoModelElementStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoModelElementStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, beam: BeamStruct | None = None, save_beam_internally: bool | None = None, save_beam_to_file: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14334,7 +14334,7 @@ class TaoPingScaleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPingScaleStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, a_mode_meas: typing.SupportsFloat | None = None, a_mode_ref: typing.SupportsFloat | None = None, b_mode_meas: typing.SupportsFloat | None = None, b_mode_ref: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14376,7 +14376,7 @@ class TaoPlotCacheStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotCacheStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ele_to_s: EleStruct | None = None, orbit: CoordStruct | None = None, err: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14440,7 +14440,7 @@ class TaoPlotPageStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotPageStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, title: TaoTitleStruct | None = None, subtitle: TaoTitleStruct | None = None, border: QpRectStruct | None = None, floor_plan: TaoDrawingStruct | None = None, lat_layout: TaoDrawingStruct | None = None, plot_display_type: str | None = None, size: collections.abc.Sequence[typing.SupportsFloat] | None = None, text_height: typing.SupportsFloat | None = None, main_title_text_scale: typing.SupportsFloat | None = None, graph_title_text_scale: typing.SupportsFloat | None = None, axis_number_text_scale: typing.SupportsFloat | None = None, axis_label_text_scale: typing.SupportsFloat | None = None, legend_text_scale: typing.SupportsFloat | None = None, key_table_text_scale: typing.SupportsFloat | None = None, floor_plan_shape_scale: typing.SupportsFloat | None = None, floor_plan_text_scale: typing.SupportsFloat | None = None, lat_layout_shape_scale: typing.SupportsFloat | None = None, lat_layout_text_scale: typing.SupportsFloat | None = None, n_curve_pts: typing.SupportsInt | None = None, id_window: typing.SupportsInt | None = None, delete_overlapping_plots: bool | None = None, draw_graph_title_suffix: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14553,7 +14553,7 @@ class TaoPlotRegionStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotRegionStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, plot: TaoPlotStruct | None = None, location: collections.abc.Sequence[typing.SupportsFloat] | None = None, visible: bool | None = None, list_with_show_plot_command: bool | None = None, setup_done: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14629,7 +14629,7 @@ class TaoPlotStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, description: str | None = None, r: TaoPlotRegionStruct | None = None, ix_plot: typing.SupportsInt | None = None, n_curve_pts: typing.SupportsInt | None = None, type: str | None = None, x_axis_type: str | None = None, autoscale_x: bool | None = None, autoscale_y: bool | None = None, autoscale_gang_x: bool | None = None, autoscale_gang_y: bool | None = None, list_with_show_plot_command: bool | None = None, phantom: bool | None = None, default_plot: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14889,7 +14889,7 @@ class TaoShapePatternPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoShapePatternPointStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, s: typing.SupportsFloat | None = None, y: typing.SupportsFloat | None = None, radius: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -14968,7 +14968,7 @@ class TaoShapePatternStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoShapePatternStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, line: QpLineStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15027,7 +15027,7 @@ class TaoSpinDnDpzStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSpinDnDpzStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, vec: collections.abc.Sequence[typing.SupportsFloat] | None = None, partial: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, partial2: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15062,7 +15062,7 @@ class TaoSpinEleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSpinEleStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, dn_dpz: TaoSpinDnDpzStruct | None = None, orb_eigen_val: collections.abc.Sequence[typing.SupportsFloat] | None = None, orb_eigen_vec: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, spin_eigen_vec: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, valid: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15141,7 +15141,7 @@ class TaoSpinMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSpinMapStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, valid: bool | None = None, map1: SpinOrbitMap1Struct | None = None, axis_input: SpinAxisStruct | None = None, axis0: SpinAxisStruct | None = None, axis1: SpinAxisStruct | None = None, ix_ele: typing.SupportsInt | None = None, ix_ref: typing.SupportsInt | None = None, ix_uni: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, mat8: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15185,7 +15185,7 @@ class TaoSpinPolarizationStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSpinPolarizationStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, tune: typing.SupportsFloat | None = None, pol_limit_st: typing.SupportsFloat | None = None, pol_limit_dk: typing.SupportsFloat | None = None, pol_limit_dk_partial: collections.abc.Sequence[typing.SupportsFloat] | None = None, pol_limit_dk_partial2: collections.abc.Sequence[typing.SupportsFloat] | None = None, pol_rate_bks: typing.SupportsFloat | None = None, depol_rate: typing.SupportsFloat | None = None, depol_rate_partial: collections.abc.Sequence[typing.SupportsFloat] | None = None, depol_rate_partial2: collections.abc.Sequence[typing.SupportsFloat] | None = None, integral_bn: typing.SupportsFloat | None = None, integral_bdn: typing.SupportsFloat | None = None, integral_1ns: typing.SupportsFloat | None = None, integral_dn2: typing.SupportsFloat | None = None, valid: bool | None = None, q_1turn: SpinOrbitMap1Struct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15313,7 +15313,7 @@ class TaoSuperUniverseStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSuperUniverseStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, global_: TaoGlobalStruct | None = None, init: TaoInitStruct | None = None, com: TaoCommonStruct | None = None, plot_page: TaoPlotPageStruct | None = None, key: collections.abc.Sequence[typing.SupportsInt] | None = None, building_wall: TaoBuildingWallStruct | None = None, wave: TaoWaveStruct | None = None, n_var_used: typing.SupportsInt | None = None, n_v1_var_used: typing.SupportsInt | None = None, initialized: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15359,7 +15359,7 @@ class TaoTitleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoTitleStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, string: str | None = None, x: typing.SupportsFloat | None = None, y: typing.SupportsFloat | None = None, units: str | None = None, justify: str | None = None, draw_it: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15437,7 +15437,7 @@ class TaoUniverseCalcStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoUniverseCalcStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, srdt_for_data: typing.SupportsInt | None = None, rad_int_for_data: bool | None = None, rad_int_for_plotting: bool | None = None, chrom_for_data: bool | None = None, chrom_for_plotting: bool | None = None, lat_sigma_for_data: bool | None = None, lat_sigma_for_plotting: bool | None = None, dynamic_aperture: bool | None = None, one_turn_map: bool | None = None, lattice: bool | None = None, twiss: bool | None = None, track: bool | None = None, spin_matrices: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15458,7 +15458,7 @@ class TaoUniversePointerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoUniversePointerStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, u: TaoUniverseStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15533,7 +15533,7 @@ class TaoUniverseStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoUniverseStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, model: TaoLatticeStruct | None = None, design: TaoLatticeStruct | None = None, base: TaoLatticeStruct | None = None, beam: TaoBeamUniStruct | None = None, dynamic_aperture: TaoDynamicApertureStruct | None = None, ping_scale: TaoPingScaleStruct | None = None, scratch_lat: LatStruct | None = None, calc: TaoUniverseCalcStruct | None = None, ele_order: LatEleOrderStruct | None = None, spin_map: TaoSpinMapStruct | None = None, dModel_dVar: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None, ix_uni: typing.SupportsInt | None = None, n_d2_data_used: typing.SupportsInt | None = None, n_data_used: typing.SupportsInt | None = None, is_on: bool | None = None, design_same_as_previous: bool | None = None, picked_uni: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15644,7 +15644,7 @@ class TaoV1VarStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoV1VarStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, ix_v1_var: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15712,7 +15712,7 @@ class TaoVarSlaveStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoVarSlaveStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ix_uni: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, model_value: typing.SupportsFloat | None = None, base_value: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -15813,7 +15813,7 @@ class TaoVarStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoVarStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ele_name: str | None = None, attrib_name: str | None = None, id: str | None = None, ix_v1: typing.SupportsInt | None = None, ix_var: typing.SupportsInt | None = None, ix_dvar: typing.SupportsInt | None = None, ix_attrib: typing.SupportsInt | None = None, ix_key_table: typing.SupportsInt | None = None, model_value: typing.SupportsFloat | None = None, base_value: typing.SupportsFloat | None = None, design_value: typing.SupportsFloat | None = None, scratch_value: typing.SupportsFloat | None = None, old_value: typing.SupportsFloat | None = None, meas_value: typing.SupportsFloat | None = None, ref_value: typing.SupportsFloat | None = None, correction_value: typing.SupportsFloat | None = None, high_lim: typing.SupportsFloat | None = None, low_lim: typing.SupportsFloat | None = None, step: typing.SupportsFloat | None = None, weight: typing.SupportsFloat | None = None, delta_merit: typing.SupportsFloat | None = None, merit: typing.SupportsFloat | None = None, dMerit_dVar: typing.SupportsFloat | None = None, key_val0: typing.SupportsFloat | None = None, key_delta: typing.SupportsFloat | None = None, s: typing.SupportsFloat | None = None, extend_val: typing.SupportsFloat | None = None, merit_type: str | None = None, exists: bool | None = None, good_var: bool | None = None, good_user: bool | None = None, good_opt: bool | None = None, good_plot: bool | None = None, useit_opt: bool | None = None, useit_plot: bool | None = None, key_bound: bool | None = None, v1: TaoV1VarStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -16025,7 +16025,7 @@ class TaoWaveKickPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoWaveKickPtStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, phi_s: typing.SupportsFloat | None = None, phi_r: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, amp: typing.SupportsFloat | None = None, s: typing.SupportsFloat | None = None, ix_dat_before_kick: typing.SupportsInt | None = None, ele: EleStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -16125,7 +16125,7 @@ class TaoWaveStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoWaveStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, data_type: str | None = None, rms_rel_a: typing.SupportsFloat | None = None, rms_rel_b: typing.SupportsFloat | None = None, rms_rel_as: typing.SupportsFloat | None = None, rms_rel_bs: typing.SupportsFloat | None = None, rms_rel_ar: typing.SupportsFloat | None = None, rms_rel_br: typing.SupportsFloat | None = None, rms_rel_k: typing.SupportsFloat | None = None, rms_rel_ks: typing.SupportsFloat | None = None, rms_rel_kr: typing.SupportsFloat | None = None, rms_phi: typing.SupportsFloat | None = None, rms_phi_s: typing.SupportsFloat | None = None, rms_phi_r: typing.SupportsFloat | None = None, amp_ba_s: typing.SupportsFloat | None = None, amp_ba_r: typing.SupportsFloat | None = None, chi_a: typing.SupportsFloat | None = None, chi_c: typing.SupportsFloat | None = None, chi_ba: typing.SupportsFloat | None = None, amp_a: collections.abc.Sequence[typing.SupportsFloat] | None = None, amp_b: collections.abc.Sequence[typing.SupportsFloat] | None = None, amp_ba: collections.abc.Sequence[typing.SupportsFloat] | None = None, coef_a: collections.abc.Sequence[typing.SupportsFloat] | None = None, coef_b: collections.abc.Sequence[typing.SupportsFloat] | None = None, coef_ba: collections.abc.Sequence[typing.SupportsFloat] | None = None, n_func: typing.SupportsInt | None = None, ix_a1: typing.SupportsInt | None = None, ix_a2: typing.SupportsInt | None = None, ix_b1: typing.SupportsInt | None = None, ix_b2: typing.SupportsInt | None = None, i_a1: typing.SupportsInt | None = None, i_a2: typing.SupportsInt | None = None, i_b1: typing.SupportsInt | None = None, i_b2: typing.SupportsInt | None = None, n_a: typing.SupportsInt | None = None, n_b: typing.SupportsInt | None = None, i_curve_wrap_pt: typing.SupportsInt | None = None, ix_data: collections.abc.Sequence[typing.SupportsInt] | None = None, n_kick: typing.SupportsInt | None = None, base_graph: TaoGraphStruct | None = None, region: TaoPlotRegionStruct | None = None, d1_dat: TaoD1DataStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -16397,7 +16397,7 @@ class TargetPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TargetPointStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, r: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -16476,7 +16476,7 @@ class TaylorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaylorStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ref: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -16544,7 +16544,7 @@ class TaylorTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaylorTermStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, coef: typing.SupportsFloat | None = None, expn: collections.abc.Sequence[typing.SupportsInt] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -16868,7 +16868,7 @@ class TestSubStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TestSubStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, sr: TestSubSubStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -16963,7 +16963,7 @@ class TestSubSubStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TestSubSubStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, aaa: typing.SupportsInt | None = None, bbb: typing.SupportsInt | None = None, file: str | None = None, t_ref: typing.SupportsFloat | None = None, freq_spread: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -17222,7 +17222,7 @@ class TrackPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TrackPointStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, s_lab: typing.SupportsFloat | None = None, s_body: typing.SupportsFloat | None = None, orb: CoordStruct | None = None, field: EmFieldStruct | None = None, strong_beam: StrongBeamStruct | None = None, vec0: collections.abc.Sequence[typing.SupportsFloat] | None = None, mat6: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -17302,7 +17302,7 @@ class TrackStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TrackStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, ds_save: typing.SupportsFloat | None = None, n_pt: typing.SupportsInt | None = None, n_bad: typing.SupportsInt | None = None, n_ok: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -17383,7 +17383,7 @@ class TricubicCmplxCoefStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TricubicCmplxCoefStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, coef: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[complex]]] | None = None, i_box: collections.abc.Sequence[typing.SupportsInt] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -17522,7 +17522,7 @@ class TwissStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TwissStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, beta: typing.SupportsFloat | None = None, alpha: typing.SupportsFloat | None = None, gamma: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, eta: typing.SupportsFloat | None = None, etap: typing.SupportsFloat | None = None, deta_ds: typing.SupportsFloat | None = None, sigma: typing.SupportsFloat | None = None, sigma_p: typing.SupportsFloat | None = None, emit: typing.SupportsFloat | None = None, norm_emit: typing.SupportsFloat | None = None, chrom: typing.SupportsFloat | None = None, dbeta_dpz: typing.SupportsFloat | None = None, dalpha_dpz: typing.SupportsFloat | None = None, deta_dpz: typing.SupportsFloat | None = None, detap_dpz: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -17662,7 +17662,7 @@ class WakeLrModeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeLrModeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, freq: typing.SupportsFloat | None = None, freq_in: typing.SupportsFloat | None = None, R_over_Q: typing.SupportsFloat | None = None, Q: typing.SupportsFloat | None = None, damp: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, angle: typing.SupportsFloat | None = None, b_sin: typing.SupportsFloat | None = None, b_cos: typing.SupportsFloat | None = None, a_sin: typing.SupportsFloat | None = None, a_cos: typing.SupportsFloat | None = None, m: typing.SupportsInt | None = None, polarized: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -17792,7 +17792,7 @@ class WakeLrStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeLrStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, file: str | None = None, t_ref: typing.SupportsFloat | None = None, freq_spread: typing.SupportsFloat | None = None, amp_scale: typing.SupportsFloat | None = None, time_scale: typing.SupportsFloat | None = None, self_wake_on: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -17834,7 +17834,7 @@ class WakeSrModeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeSrModeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, amp: typing.SupportsFloat | None = None, damp: typing.SupportsFloat | None = None, k: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, b_sin: typing.SupportsFloat | None = None, b_cos: typing.SupportsFloat | None = None, a_sin: typing.SupportsFloat | None = None, a_cos: typing.SupportsFloat | None = None, polarization: typing.SupportsInt | None = None, position_dependence: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -17953,7 +17953,7 @@ class WakeSrStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeSrStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, file: str | None = None, z_long: WakeSrZLongStruct | None = None, z_ref_long: typing.SupportsFloat | None = None, z_ref_trans: typing.SupportsFloat | None = None, z_max: typing.SupportsFloat | None = None, amp_scale: typing.SupportsFloat | None = None, z_scale: typing.SupportsFloat | None = None, scale_with_length: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -18002,7 +18002,7 @@ class WakeSrZLongStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeSrZLongStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, w: collections.abc.Sequence[typing.SupportsFloat] | None = None, fw: collections.abc.Sequence[complex] | None = None, fbunch: collections.abc.Sequence[complex] | None = None, w_out: collections.abc.Sequence[complex] | None = None, dz: typing.SupportsFloat | None = None, z0: typing.SupportsFloat | None = None, smoothing_sigma: typing.SupportsFloat | None = None, position_dependence: typing.SupportsInt | None = None, time_based: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -18064,7 +18064,7 @@ class WakeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, sr: WakeSrStruct | None = None, lr: WakeLrStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -18082,7 +18082,7 @@ class Wall3DSectionStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> Wall3DSectionStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, material: str | None = None, surface: PhotonReflectSurfaceStruct | None = None, type: typing.SupportsInt | None = None, n_vertex_input: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, vertices_state: typing.SupportsInt | None = None, patch_in_region: bool | None = None, thickness: typing.SupportsFloat | None = None, s: typing.SupportsFloat | None = None, r0: collections.abc.Sequence[typing.SupportsFloat] | None = None, dx0_ds: typing.SupportsFloat | None = None, dy0_ds: typing.SupportsFloat | None = None, x0_coef: collections.abc.Sequence[typing.SupportsFloat] | None = None, y0_coef: collections.abc.Sequence[typing.SupportsFloat] | None = None, dr_ds: typing.SupportsFloat | None = None, p1_coef: collections.abc.Sequence[typing.SupportsFloat] | None = None, p2_coef: collections.abc.Sequence[typing.SupportsFloat] | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -18244,7 +18244,7 @@ class Wall3DStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> Wall3DStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, name: str | None = None, type: typing.SupportsInt | None = None, ix_wall3d: typing.SupportsInt | None = None, n_link: typing.SupportsInt | None = None, thickness: typing.SupportsFloat | None = None, clear_material: str | None = None, opaque_material: str | None = None, superimpose: bool | None = None, ele_anchor_pt: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -18336,7 +18336,7 @@ class Wall3DVertexStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> Wall3DVertexStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, x: typing.SupportsFloat | None = None, y: typing.SupportsFloat | None = None, radius_x: typing.SupportsFloat | None = None, radius_y: typing.SupportsFloat | None = None, tilt: typing.SupportsFloat | None = None, angle: typing.SupportsFloat | None = None, x0: typing.SupportsFloat | None = None, y0: typing.SupportsFloat | None = None, type: typing.SupportsInt | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -18593,7 +18593,7 @@ class XyDispStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> XyDispStruct:
         ...
-    def __init__(self) -> None:
+    def __init__(self, eta: typing.SupportsFloat | None = None, etap: typing.SupportsFloat | None = None, deta_ds: typing.SupportsFloat | None = None, sigma: typing.SupportsFloat | None = None, deta_dpz: typing.SupportsFloat | None = None, detap_dpz: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -18738,18 +18738,6 @@ def ab_multipole_kicks(an: RealArray1D, bn: RealArray1D, ix_pole_max: typing.Sup
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Particle position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Kicked particle.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the multipole.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix transfer matrix including multipole.
     """
 def absolute_photon_position(e_orb: CoordStruct, photon_orb: CoordStruct) -> None:
     """
@@ -18766,13 +18754,6 @@ def absolute_photon_position(e_orb: CoordStruct, photon_orb: CoordStruct) -> Non
     e_orb : CoordStruct
         charged particle position.
     
-    photon_orb : CoordStruct
-        Photon position relative to e_orb.
-        This parameter is an input/output and is modified in-place.
-        As an output, photon_orb: Absolute photon position.
-    
-    Returns
-    -------
     photon_orb : CoordStruct
         Photon position relative to e_orb.
         This parameter is an input/output and is modified in-place.
@@ -18927,11 +18908,6 @@ def add_superimpose(lat: LatStruct, super_ele_in: EleStruct, ix_branch: typing.S
     
     Returns
     -------
-    lat : LatStruct
-        Lat to modify.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Modified lat.
-    
     err_flag : bool
         Set True if there is an error. False otherwise
     
@@ -18944,14 +18920,6 @@ def add_this_multipass(lat: LatStruct, m_slaves: LatEleLocStructArray1D, lord_in
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    m_slaves : 1D array of LatEleLocStruct
-    
-    lord_in : EleStruct, optional
-    
-    Returns
-    -------
     lat : LatStruct
     
     m_slaves : 1D array of LatEleLocStruct
@@ -18982,10 +18950,6 @@ def allocate_branch_array(lat: LatStruct, upper_bound: typing.SupportsInt) -> No
     
     upper_bound : int
         Desired upper bound.
-    
-    Returns
-    -------
-    lat : LatStruct
     """
 def allocate_lat_ele_array(lat: LatStruct, upper_bound: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, do_ramper_slave_setup: bool | None = None) -> None:
     """
@@ -19005,11 +18969,6 @@ def allocate_lat_ele_array(lat: LatStruct, upper_bound: typing.SupportsInt | Non
     do_ramper_slave_setup : bool, optional
         Default False. If true, setup ramper slaves. Generally this needs to be done if reallocating with a fully
         formed lattice.
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice with element array.
     """
 def allocate_thread_states() -> None:
     """
@@ -19048,13 +19007,6 @@ def angle_to_canonical_coords(orbit: CoordStruct, coord_type: str | None = None)
     coord_type : character, optional
         Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
         y, y' = dy/ds, dt = -z / (beta * c), pz)
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Orbit in angular coordinates.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Orbit in canonical coordinates.
     """
 def anomalous_moment_of(species: typing.SupportsInt) -> float:
     """
@@ -19101,13 +19053,6 @@ def aperture_bookkeeper(ele: EleStruct) -> None:
         Element with aperture.
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with apertures set.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element with aperture.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with apertures set.
     """
 def apfft(rdata_in: RealArray1D, bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], window: str, phase: typing.SupportsFloat, diag: typing.SupportsInt | None = None) -> None:
     """
@@ -19146,11 +19091,11 @@ def apfft_corr(rdata_in: RealArray1D, bounds: typing.Annotated[collections.abc.S
     phase : float
         phase of peak found in signal.
     
-    freq : float
-        frequency of peak
-    
     amp : float
         amplitude of peak
+    
+    freq : float
+        frequency of peak
     """
 def apfft_ext(rdata: RealArray1D, bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], window: str, phase: typing.SupportsFloat, amp: typing.SupportsFloat, freq: typing.SupportsFloat, diag: typing.SupportsInt | None = None) -> None:
     """
@@ -19174,11 +19119,6 @@ def apply_all_rampers(lat: LatStruct) -> bool:
     
     Returns
     -------
-    lat : LatStruct
-        Lattice.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with rampers applied.
-    
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
@@ -19206,18 +19146,6 @@ def apply_energy_kick(dE: typing.SupportsFloat, orbit: CoordStruct, ddE_dr: typi
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Beginning coordinates
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: coordinates with added dE energy kick.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before fringe.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix transfer matrix including energy kick.
     """
 def apply_patch_to_ptc_fibre(ele: EleStruct) -> None:
     """
@@ -19256,14 +19184,6 @@ def array_re_str(arr: RealArray1D, parens_in: str | None = None, str_out: str) -
     parens_in : character, optional
     
     str_out : character
-    
-    Returns
-    -------
-    arr : 1D array of float
-    
-    parens_in : character, optional
-    
-    str_out : character
     """
 def asinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None) -> float:
     """
@@ -19293,14 +19213,6 @@ def assert_equal(int_arr: IntArray1D, err_str: str, ival: typing.SupportsInt) ->
     err_str : character
     
     ival : int
-    
-    Returns
-    -------
-    int_arr : 1D array of int
-    
-    err_str : character
-    
-    ival : int
     """
 def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value: typing.SupportsFloat) -> None:
     """
@@ -19308,14 +19220,6 @@ def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_val
     
     Parameters
     ----------
-    pt0 : GridFieldPt1Struct
-    
-    ele : EleStruct
-    
-    field_value : float
-    
-    Returns
-    -------
     pt0 : GridFieldPt1Struct
     
     ele : EleStruct
@@ -19398,13 +19302,6 @@ def attribute_bookkeeper(ele: EleStruct, force_bookkeeping: bool | None = None) 
         If present and True then force attribute bookkeeping to be done independent of the state of
         ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
         bookkeeping.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element with attributes
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with self-consistant attributes.
     """
 @typing.overload
 def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> AttributeFree1:
@@ -19452,15 +19349,15 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
     
     Returns
     -------
-    free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
-    
     why_not_free : int, optional
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
         -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
         Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
         element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
+    
+    free : bool
+        Set True if attribtute not found or attriubte cannot be changed directly.
     """
 @typing.overload
 def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> AttributeFree2:
@@ -19505,15 +19402,15 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
     
     Returns
     -------
-    free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
-    
     why_not_free : int, optional
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
         -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
         Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
         element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
+    
+    free : bool
+        Set True if attribtute not found or attriubte cannot be changed directly.
     """
 @typing.overload
 def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, attrib_name: str, lat: LatStruct, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> AttributeFree3:
@@ -19564,15 +19461,15 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
     
     Returns
     -------
-    free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
-    
     why_not_free : int, optional
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
         -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
         Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
         element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
+    
+    free : bool
+        Set True if attribtute not found or attriubte cannot be changed directly.
     """
 @typing.overload
 def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = None, print_error: bool | None = None) -> AttributeIndex1:
@@ -19809,11 +19706,6 @@ def autoscale_phase_and_amp(ele: EleStruct, param: LatParamStruct, scale_phase: 
     
     Returns
     -------
-    ele : EleStruct
-        RF element or e_gun.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: element with phase and amplitude adjusted.
-    
     err_flag : bool
         Logical, Set true if there is an error. False otherwise.
     """
@@ -19833,8 +19725,6 @@ def average_twiss(frac1: typing.SupportsFloat, twiss1: TwissStruct, twiss2: Twis
     
     Returns
     -------
-    twiss2 : TwissStruct
-    
     ave_twiss : TwissStruct
         Average twiss.
     """
@@ -19913,8 +19803,6 @@ def bbi_slice_calc(ele: EleStruct, n_slice: typing.SupportsInt, z_slice: RealArr
     n_slice : int
         Number of slices
     
-    Returns
-    -------
     z_slice : 1D array of float
         Array of slice positions 1:n_slice. zero padded for indexes greater than n_slice
     """
@@ -19924,16 +19812,6 @@ def bbu_add_a_bunch(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParam
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    bbu_beam : BbuBeamStruct
-    
-    bbu_param : BbuParamStruct
-    
-    beam_init : BeamInitStruct
-    
-    Returns
-    -------
     lat : LatStruct
     
     bbu_beam : BbuBeamStruct
@@ -19955,16 +19833,6 @@ def bbu_hom_voltage_calc(lat: LatStruct, bbu_beam: BbuBeamStruct, n_period: typi
     n_period : int
     
     ix_stage_last_tracked : int
-    
-    Returns
-    -------
-    lat : LatStruct
-    
-    bbu_beam : BbuBeamStruct
-    
-    n_period : int
-    
-    ix_stage_last_tracked : int
     """
 def bbu_remove_head_bunch(bbu_beam: BbuBeamStruct) -> None:
     """
@@ -19972,10 +19840,6 @@ def bbu_remove_head_bunch(bbu_beam: BbuBeamStruct) -> None:
     
     Parameters
     ----------
-    bbu_beam : BbuBeamStruct
-    
-    Returns
-    -------
     bbu_beam : BbuBeamStruct
     """
 def bbu_setup(lat: LatStruct, dt_bunch: typing.SupportsFloat, bbu_param: BbuParamStruct, bbu_beam: BbuBeamStruct) -> None:
@@ -19991,16 +19855,6 @@ def bbu_setup(lat: LatStruct, dt_bunch: typing.SupportsFloat, bbu_param: BbuPara
     bbu_param : BbuParamStruct
     
     bbu_beam : BbuBeamStruct
-    
-    Returns
-    -------
-    lat : LatStruct
-    
-    dt_bunch : float
-    
-    bbu_param : BbuParamStruct
-    
-    bbu_beam : BbuBeamStruct
     """
 def bbu_track_a_stage(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamStruct, lost: bool, ix_stage_tracked: typing.SupportsInt) -> None:
     """
@@ -20008,18 +19862,6 @@ def bbu_track_a_stage(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuPar
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    bbu_beam : BbuBeamStruct
-    
-    bbu_param : BbuParamStruct
-    
-    lost : bool
-    
-    ix_stage_tracked : int
-    
-    Returns
-    -------
     lat : LatStruct
     
     bbu_beam : BbuBeamStruct
@@ -20046,14 +19888,6 @@ def bbu_track_all(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param: BbuParamSt
     
     Returns
     -------
-    lat : LatStruct
-    
-    bbu_beam : BbuBeamStruct
-    
-    bbu_param : BbuParamStruct
-    
-    beam_init : BeamInitStruct
-    
     hom_voltage_normalized : float
         HOM voltage normalized
     
@@ -20109,12 +19943,6 @@ def beam_equal_beam(beam1: BeamStruct, beam2: BeamStruct) -> None:
     
     Parameters
     ----------
-    beam1 : BeamStruct
-    
-    beam2 : BeamStruct
-    
-    Returns
-    -------
     beam1 : BeamStruct
     
     beam2 : BeamStruct
@@ -20235,18 +20063,6 @@ def bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.Su
     
     track_spin : bool, optional
         If True then track the spin through the edge fields. Default: False.
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Starting coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Coords after tracking.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before fringe.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix transfer matrix including fringe.
     """
 def bend_exact_multipole_field(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, local_ref_frame: bool, calc_dfield: bool | None = None, calc_potential: bool | None = None) -> EmFieldStruct:
     """
@@ -20566,14 +20382,14 @@ def bicubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFloa
     
     Returns
     -------
-    f_val : complex
-        Value of f.
-    
     df_dx : complex, optional
         Normalized first derivative: True df/dx = df_dx * dx
     
     df_dy : complex, optional
         Normalized first derivative: True df/dy = df_dy * dy
+    
+    f_val : complex
+        Value of f.
     """
 def bin_index(x: typing.SupportsFloat, bin1_x_min: typing.SupportsFloat, bin_delta: typing.SupportsFloat) -> int:
     """
@@ -20749,15 +20565,6 @@ def bmad_parser2(lat_file: str, lat: LatStruct, orbit: CoordStructArray1D | None
         Used by bmad_parser to pass to bmad_parser2 a list of elements that were defined in the lattice file but
         not used. This is useful in preventing errors being generated if group/overlay elements definded by
         lat_file refer to unused slaves in parse_lat.
-    
-    Returns
-    -------
-    lat : LatStruct
-        lattice with existing layout.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: lattice with modifications.
-    
-    err_flag : bool, optional
     """
 def bmad_patch_parameters_to_ptc(ang: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], exi: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"]) -> None:
     """
@@ -20765,12 +20572,6 @@ def bmad_patch_parameters_to_ptc(ang: typing.Annotated[collections.abc.Sequence[
     
     Parameters
     ----------
-    ang : 1D array of float (shape: 3)
-    
-    exi : 2D array of float (shape: 3,3)
-    
-    Returns
-    -------
     ang : 1D array of float (shape: 3)
     
     exi : 2D array of float (shape: 3,3)
@@ -20821,12 +20622,6 @@ def branch_equal_branch(branch1: BranchStruct, branch2: BranchStruct) -> None:
     branch1 : BranchStruct
     
     branch2 : BranchStruct
-    
-    Returns
-    -------
-    branch1 : BranchStruct
-    
-    branch2 : BranchStruct
     """
 def branch_name(branch: BranchStruct) -> str:
     """
@@ -20868,15 +20663,6 @@ def branch_to_ptc_m_u(branch: BranchStruct) -> None:
         As an output, branch: Pointers to generated layouts.
         This parameter is an input/output and is modified in-place.
         As an output, branch: Pointer to PTC fibres
-    
-    Returns
-    -------
-    branch : BranchStruct
-        Input branch.
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: Pointers to generated layouts.
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: Pointer to PTC fibres
     """
 def bunch_equal_bunch(bunch1: BunchStruct, bunch2: BunchStruct) -> None:
     """
@@ -20884,12 +20670,6 @@ def bunch_equal_bunch(bunch1: BunchStruct, bunch2: BunchStruct) -> None:
     
     Parameters
     ----------
-    bunch1 : BunchStruct
-    
-    bunch2 : BunchStruct
-    
-    Returns
-    -------
     bunch1 : BunchStruct
     
     bunch2 : BunchStruct
@@ -21074,16 +20854,6 @@ def calc_file_number(file_name: str, num_in: typing.SupportsInt, num_out: typing
     num_out : int
     
     err_flag : bool
-    
-    Returns
-    -------
-    file_name : character
-    
-    num_in : int
-    
-    num_out : int
-    
-    err_flag : bool
     """
 def calc_spin_params(bunch: BunchStruct) -> BunchParamsStruct:
     """
@@ -21168,17 +20938,6 @@ def calc_z_tune(branch: BranchStruct) -> None:
         As an output, branch: Is the mode stable? If no rf then tune is zero but is stable.
         This parameter is an input/output and is modified in-place.
         As an output, branch: 6x6 1-turn matrix.
-    
-    Returns
-    -------
-    branch : BranchStruct
-        Lattice branch
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: Synchrotron tune (radians). If unstable tune = 0.
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: Is the mode stable? If no rf then tune is zero but is stable.
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: 6x6 1-turn matrix.
     """
 def canonical_to_angle_coords(orbit: CoordStruct, coord_type: str | None = None) -> None:
     """
@@ -21194,13 +20953,6 @@ def canonical_to_angle_coords(orbit: CoordStruct, coord_type: str | None = None)
     coord_type : character, optional
         Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
         y, y' = dy/ds, dt = -z / (beta * c), pz)
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Orbit in canonical coordinates.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Orbit in angular coordinates.
     """
 def cbar_to_c(cbar_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"]], "FixedSize(2)"], a: TwissStruct, b: TwissStruct) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(2)"]], "FixedSize(2)"]:
     """
@@ -21230,14 +20982,8 @@ def celbd(mc: typing.SupportsFloat) -> Celbd:
     ----------
     mc : float
     
-    elb : float
-    
-    eld : float
-    
     Returns
     -------
-    mc : float
-    
     elb : float
     
     eld : float
@@ -21284,12 +21030,6 @@ def change_file_number(file_name: str, change: typing.SupportsInt) -> None:
     file_name : character
     
     change : int
-    
-    Returns
-    -------
-    file_name : character
-    
-    change : int
     """
 def charge_of(species: typing.SupportsInt, default_: typing.SupportsInt | None = None) -> int:
     """
@@ -21301,9 +21041,6 @@ def charge_of(species: typing.SupportsInt, default_: typing.SupportsInt | None =
     ----------
     species : int
         Species ID.
-    
-    default : int, optional
-        If present then use default value if species = not_set$.
     
     Returns
     -------
@@ -21350,14 +21087,6 @@ def check_aperture_limit(orb: CoordStruct, ele: EleStruct, particle_at: typing.S
     
     check_momentum : bool, optional
         If present and false then checking of p_x and p_y will be disabled.
-    
-    Returns
-    -------
-    orb : CoordStruct
-        coordinates of a particle.
-    
-    param : LatParamStruct
-        Lattice global parameter structure.
     """
 def check_controller_controls(ele_key: typing.SupportsInt, contrl: ControlStructArray1D, name: str) -> bool:
     """
@@ -21423,12 +21152,6 @@ def check_rf_freq(lat: LatStruct, fb: typing.SupportsFloat) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    fb : float
-    
-    Returns
-    -------
     lat : LatStruct
     
     fb : float
@@ -21539,11 +21262,6 @@ def chrom_tune(lat: LatStruct, delta_e: typing.SupportsFloat, target_x: typing.S
     
     Returns
     -------
-    lat : LatStruct
-        Lat to use,
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lat with sextupole set
-    
     delta_e : float
         Delta energy used for the calculation. If 0 then default of 1.0d-4 is used.
         This parameter is an input/output and is modified in-place.
@@ -21587,13 +21305,6 @@ def clear_taylor_maps_from_elements(lat: LatStruct) -> None:
         Lattice
         This parameter is an input/output and is modified in-place.
         As an output, lat: Lattice with all maps cleared
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with all maps cleared
     """
 def closed_orbit_calc(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None) -> bool:
     """
@@ -21629,16 +21340,6 @@ def closed_orbit_calc(lat: LatStruct, closed_orb: CoordStructAlloc1D, i_dim: typ
     
     Returns
     -------
-    lat : LatStruct
-        Lat to track through.
-    
-    closed_orb : 1D array of CoordStruct
-        closed_orb(nt) is the initial guess where nt = 0 for direction = 1 and nt = lat.n_ele_track for direction
-        = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy around which the closed
-        orbit is calculated.
-        This parameter is an input/output and is modified in-place.
-        As an output, closed_orb: Closed orbit. closed_orb(i)
-    
     err_flag : bool, optional
         Set true if there is an error. False otherwise.
     """
@@ -21682,12 +21383,6 @@ def cmplx_re_str(cmp: complex, str_out: str) -> None:
     cmp : complex
     
     str_out : character
-    
-    Returns
-    -------
-    cmp : complex
-    
-    str_out : character
     """
 def coarse_frequency_estimate(data: RealArray1D, error: bool | None = None) -> float:
     """
@@ -21719,11 +21414,6 @@ def combine_consecutive_elements(lat: LatStruct) -> bool:
     
     Returns
     -------
-    lat : LatStruct
-        Lattice.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with elements combined.
-    
     error : bool
         Set True if there is an error. False otherwise.
     """
@@ -21740,16 +21430,6 @@ def complex_error_function(wr: typing.SupportsFloat, wi: typing.SupportsFloat, z
     zr : float
     
     zi : float
-    
-    Returns
-    -------
-    wr : float
-    
-    wi : float
-    
-    zr : float
-    
-    zi : float
     """
 def complex_taylor_clean(complex_taylor: ComplexTaylorStruct) -> None:
     """
@@ -21757,10 +21437,6 @@ def complex_taylor_clean(complex_taylor: ComplexTaylorStruct) -> None:
     
     Parameters
     ----------
-    complex_taylor : ComplexTaylorStruct
-    
-    Returns
-    -------
     complex_taylor : ComplexTaylorStruct
     """
 @typing.overload
@@ -21838,12 +21514,6 @@ def complex_taylor_equal_complex_taylor(complex_taylor1: ComplexTaylorStruct, co
     complex_taylor1 : ComplexTaylorStruct
     
     complex_taylor2 : ComplexTaylorStruct
-    
-    Returns
-    -------
-    complex_taylor1 : ComplexTaylorStruct
-    
-    complex_taylor2 : ComplexTaylorStruct
     """
 def complex_taylor_exponent_index(expn: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(6)"]) -> int:
     """
@@ -21871,11 +21541,6 @@ def complex_taylor_make_unit(complex_taylor: ComplexTaylorStructArray1D) -> None
     
     Subroutine to make the unit complex_taylor map:
           r(out) = Map * r(in) = r(in)
-    
-    Returns
-    -------
-    complex_taylor : 1D array of ComplexTaylorStruct
-        Unit complex_taylor map .
     """
 def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: ComplexArray1D, r_out: ComplexArray1D | None = None) -> ComplexTaylorToMat6:
     """
@@ -21892,6 +21557,9 @@ def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: C
     r_in : 1D array of complex
         Coordinates at the input.
     
+    r_out : 1D array of complex, optional
+        Coordinates at output.
+    
     Returns
     -------
     vec0 : 1D array of complex (shape: 6)
@@ -21899,9 +21567,6 @@ def complex_taylor_to_mat6(a_complex_taylor: ComplexTaylorStructArray1D, r_in: C
     
     mat6 : 2D array of complex (shape: 6,6)
         1st order transfer map (6x6 matrix).
-    
-    r_out : 1D array of complex, optional
-        Coordinates at output.
     """
 def complex_taylors_equal_complex_taylors(complex_taylor1: ComplexTaylorStructArray1D, complex_taylor2: ComplexTaylorStructArray1D) -> None:
     """
@@ -21909,12 +21574,6 @@ def complex_taylors_equal_complex_taylors(complex_taylor1: ComplexTaylorStructAr
     
     Parameters
     ----------
-    complex_taylor1 : 1D array of ComplexTaylorStruct
-    
-    complex_taylor2 : 1D array of ComplexTaylorStruct
-    
-    Returns
-    -------
     complex_taylor1 : 1D array of ComplexTaylorStruct
     
     complex_taylor2 : 1D array of ComplexTaylorStruct
@@ -21956,16 +21615,6 @@ def concat_ele_taylor(orb_taylor: TaylorStructArray1D, ele: EleStruct, spin_tayl
     
     Returns
     -------
-    orb_taylor : 1D array of TaylorStruct
-        Orbital Taylor map.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb_taylor: Concatinated orbital map
-    
-    spin_taylor : 1D array of TaylorStruct, optional
-        Spin map to propagate
-        This parameter is an input/output and is modified in-place.
-        As an output, spin_taylor: Concatinated spin map.
-    
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
@@ -21987,8 +21636,6 @@ def concat_taylor(taylor1: TaylorStructArray1D, taylor2: TaylorStructArray1D, ta
     taylor2 : 1D array of TaylorStruct
         Taylor map.
     
-    Returns
-    -------
     taylor3 : 1D array of TaylorStruct
         Concatinated map
     """
@@ -22050,18 +21697,6 @@ def convert_bend_exact_multipole(g: typing.SupportsFloat, out_type: typing.Suppo
     out_type : int
         Output type: horizontally_pure$ or vertically_pure$.
     
-    an : 1D array of float (shape: 0:n_pole_maxx)
-        Skew multipoles.
-        This parameter is an input/output and is modified in-place.
-        As an output, an: Converted skew multipoles.
-    
-    bn : 1D array of float (shape: 0:n_pole_maxx)
-        Non-skew multipoles.
-        This parameter is an input/output and is modified in-place.
-        As an output, bn: Converted Non-skew multipoles.
-    
-    Returns
-    -------
     an : 1D array of float (shape: 0:n_pole_maxx)
         Skew multipoles.
         This parameter is an input/output and is modified in-place.
@@ -22145,18 +21780,6 @@ def convert_local_cartesian_to_local_curvilinear(x: typing.SupportsFloat, z: typ
     xout : float
     
     sout : float
-    
-    Returns
-    -------
-    x : float
-    
-    z : float
-    
-    g : float
-    
-    xout : float
-    
-    sout : float
     """
 def convert_local_curvilinear_to_local_cartesian(x: typing.SupportsFloat, s: typing.SupportsFloat, g: typing.SupportsFloat, xout: typing.SupportsFloat, zout: typing.SupportsFloat) -> None:
     """
@@ -22164,18 +21787,6 @@ def convert_local_curvilinear_to_local_cartesian(x: typing.SupportsFloat, s: typ
     
     Parameters
     ----------
-    x : float
-    
-    s : float
-    
-    g : float
-    
-    xout : float
-    
-    zout : float
-    
-    Returns
-    -------
     x : float
     
     s : float
@@ -22200,11 +21811,6 @@ def convert_particle_coordinates_s_to_t(particle: CoordStruct, s_body: typing.Su
     
     orientation : int
         ele.orientation for vec(6).
-    
-    Returns
-    -------
-    particle : CoordStruct
-        Particle with .vec(:) in s-coords.
     """
 def convert_particle_coordinates_t_to_s(particle: CoordStruct, ele: EleStruct, use_downstream_p0c: bool | None = None) -> float:
     """
@@ -22224,9 +21830,6 @@ def convert_particle_coordinates_t_to_s(particle: CoordStruct, ele: EleStruct, u
     
     Returns
     -------
-    particle : CoordStruct
-        Particle with .vec(:) in t-coords.
-    
     s_body : float, optional
         s-position in element body coords.
     """
@@ -22316,11 +21919,6 @@ def converter_distribution_parser(ele: EleStruct) -> ConverterDistributionParser
     
     Returns
     -------
-    ele : EleStruct
-        Converter element.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Converter element with .converter field set.
-    
     delim : character
         Ending delimitor.
     
@@ -22654,18 +22252,6 @@ def coulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Suppo
     gam : float
     
     res : float
-    
-    Returns
-    -------
-    u : float
-    
-    v : float
-    
-    w : float
-    
-    gam : float
-    
-    res : float
     """
 def count_lines_in_file(file_name: str) -> int:
     """
@@ -22675,12 +22261,8 @@ def count_lines_in_file(file_name: str) -> int:
     ----------
     file_name : character
     
-    lines : int
-    
     Returns
     -------
-    file_name : character
-    
     lines : int
     """
 def create_a_spline(r0: RealArray1D, r1: RealArray1D, slope0: typing.SupportsFloat, slope1: typing.SupportsFloat) -> SplineStruct:
@@ -22727,13 +22309,6 @@ def create_concatenated_wall3d(lat: LatStruct, err: bool) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-        lattice
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice
-    
-    Returns
-    -------
     lat : LatStruct
         lattice
         This parameter is an input/output and is modified in-place.
@@ -22798,9 +22373,6 @@ def create_field_overlap(lat: LatStruct, lord_name: str, slave_name: str) -> boo
     
     Returns
     -------
-    lat : LatStruct
-        Lattice
-    
     err_flag : bool
         Set true if there is a problem (like no elements found).
     """
@@ -22826,15 +22398,6 @@ def create_girder(lat: LatStruct, ix_girder: typing.SupportsInt, contrl: Control
         girder_info.descrip girder_info.value(:)
     
     err_flag : bool
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lat to modify.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Modified lattice.
-    
-    err_flag : bool
     """
 def create_group(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> None:
     """
@@ -22852,13 +22415,6 @@ def create_group(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> No
     
     err : bool
         Set True if an attribute is not free to be controlled.
-    
-    Returns
-    -------
-    lord : EleStruct
-        Group element. .control.type
-        This parameter is an input/output and is modified in-place.
-        As an output, lord: Modified group elment
     """
 def create_lat_ele_nametable(lat: LatStruct) -> NametableStruct:
     """
@@ -22890,13 +22446,6 @@ def create_overlay(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> 
     
     err : bool
         Set True if an attribute is not free to be controlled.
-    
-    Returns
-    -------
-    lord : EleStruct
-        Overlay element. .control.type
-        This parameter is an input/output and is modified in-place.
-        As an output, lord: Modified overlay elment
     """
 def create_planar_wiggler_model(wiggler_in: EleStruct, print_err: bool | None = None) -> CreatePlanarWigglerModel:
     """
@@ -22948,13 +22497,6 @@ def create_ramper(lord: EleStruct, contrl: ControlStructArray1D, err: bool) -> N
     
     err : bool
         Set True if an attribute is not free to be controlled.
-    
-    Returns
-    -------
-    lord : EleStruct
-        Ramper element. .control.type
-        This parameter is an input/output and is modified in-place.
-        As an output, lord: Modified ramper elment
     """
 def create_sol_quad_model(sol_quad: EleStruct, lat: LatStruct) -> None:
     """
@@ -22984,13 +22526,6 @@ def create_unique_ele_names(lat: LatStruct, key: typing.SupportsInt, suffix: str
     
     suffix : character
         Suffix string. Must have a single "?" character.
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice holding the elements.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with names made unique.
     """
 def create_wiggler_cartesian_map(ele: EleStruct) -> CartesianMapStruct:
     """
@@ -23031,11 +22566,6 @@ def crystal_attribute_bookkeeper(ele: EleStruct) -> None:
     ----------
     ele : EleStruct
         Crystal element.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Crystal element.
     """
 def crystal_h_misalign(ele: EleStruct, orbit: CoordStruct, h_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
@@ -23051,13 +22581,6 @@ def crystal_h_misalign(ele: EleStruct, orbit: CoordStruct, h_vec: typing.Annotat
     orbit : CoordStruct
         Photon position at crystal surface.
     
-    h_vec : 1D array of float (shape: 3)
-        H vector before misalignment.
-        This parameter is an input/output and is modified in-place.
-        As an output, h_vec: H vector after misalignment.
-    
-    Returns
-    -------
     h_vec : 1D array of float (shape: 3)
         H vector before misalignment.
         This parameter is an input/output and is modified in-place.
@@ -23083,11 +22606,6 @@ def crystal_type_to_crystal_params(ele: EleStruct) -> bool:
     
     Returns
     -------
-    ele : EleStruct
-        Crystal element.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Crystal element with computed parameter..
-    
     err_flag : bool
         Set True if crystal type is unrecognized. False otherwise.
     """
@@ -23127,22 +22645,6 @@ def damping_matrix_d(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat, B
     species : int
     
     mat : 2D array of float (shape: 6,6)
-    
-    Returns
-    -------
-    gamma : float
-    
-    g_tot : float
-    
-    B0 : float
-    
-    B1 : float
-    
-    delta : float
-    
-    species : int
-    
-    mat : 2D array of float (shape: 6,6)
     """
 def date_and_time_stamp(string: str, numeric_month: bool | None = None, include_zone: bool | None = None) -> None:
     """
@@ -23150,14 +22652,6 @@ def date_and_time_stamp(string: str, numeric_month: bool | None = None, include_
     
     Parameters
     ----------
-    string : character
-    
-    numeric_month : bool, optional
-    
-    include_zone : bool, optional
-    
-    Returns
-    -------
     string : character
     
     numeric_month : bool, optional
@@ -23183,13 +22677,6 @@ def deallocate_ele_pointers(ele: EleStruct, nullify_only: bool | None = None, nu
     
     dealloc_poles : bool, optional
         Dealloc ele.a/b_pole, ele.a/b_pole_elec? Default is True.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element with pointers.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with deallocated pointers.
     """
 def deallocate_expression_tree(tree: ExpressionTreeStruct) -> None:
     """
@@ -23203,13 +22690,6 @@ def deallocate_expression_tree(tree: ExpressionTreeStruct) -> None:
         Tree to deallocate.
         This parameter is an input/output and is modified in-place.
         As an output, tree: Deallocated tree.
-    
-    Returns
-    -------
-    tree : ExpressionTreeStruct
-        Tree to deallocate.
-        This parameter is an input/output and is modified in-place.
-        As an output, tree: Deallocated tree.
     """
 def deallocate_lat_pointers(lat: LatStruct) -> None:
     """
@@ -23217,13 +22697,6 @@ def deallocate_lat_pointers(lat: LatStruct) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-        Lat with pointers.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lat with deallocated pointers.
-    
-    Returns
-    -------
     lat : LatStruct
         Lat with pointers.
         This parameter is an input/output and is modified in-place.
@@ -23250,10 +22723,6 @@ def destfixedwindowls(id: typing.SupportsInt) -> None:
     Parameters
     ----------
     id : int
-    
-    Returns
-    -------
-    id : int
     """
 def detab(str: str) -> None:
     """
@@ -23261,10 +22730,6 @@ def detab(str: str) -> None:
     
     Parameters
     ----------
-    str : character
-    
-    Returns
-    -------
     str : character
     """
 def detector_pixel_pt(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[list[int], "FixedSize(2)"]:
@@ -23316,16 +22781,6 @@ def diffusion_matrix_b(gamma: typing.SupportsFloat, g_tot: typing.SupportsFloat,
     species : int
     
     mat : 2D array of float (shape: 6,6)
-    
-    Returns
-    -------
-    gamma : float
-    
-    g_tot : float
-    
-    species : int
-    
-    mat : 2D array of float (shape: 6,6)
     """
 def display_size_and_resolution(ix_screen: typing.SupportsInt, x_size: typing.SupportsFloat, y_size: typing.SupportsFloat, x_res: typing.SupportsFloat, y_res: typing.SupportsFloat) -> None:
     """
@@ -23333,18 +22788,6 @@ def display_size_and_resolution(ix_screen: typing.SupportsInt, x_size: typing.Su
     
     Parameters
     ----------
-    ix_screen : int
-    
-    x_size : float
-    
-    y_size : float
-    
-    x_res : float
-    
-    y_res : float
-    
-    Returns
-    -------
     ix_screen : int
     
     x_size : float
@@ -23391,8 +22834,6 @@ def dj_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat) -> float:
     
     Returns
     -------
-    m : int
-    
     dj_bes : float
         Bessel value.
     """
@@ -23407,14 +22848,6 @@ def djb_hash(str: str, old_hash: typing.SupportsInt | None = None, hash: typing.
     old_hash : int, optional
     
     hash : int
-    
-    Returns
-    -------
-    str : character
-    
-    old_hash : int, optional
-    
-    hash : int
     """
 def djb_str_hash(in_str: str, hash_str: str) -> None:
     """
@@ -23422,12 +22855,6 @@ def djb_str_hash(in_str: str, hash_str: str) -> None:
     
     Parameters
     ----------
-    in_str : character
-    
-    hash_str : character
-    
-    Returns
-    -------
     in_str : character
     
     hash_str : character
@@ -23445,11 +22872,6 @@ def do_mode_flip(ele: EleStruct) -> bool:
     
     Returns
     -------
-    ele : EleStruct
-        Starting Element
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Flipped element
-    
     err_flag : bool, optional
         Set True if there is an error. False otherwise.
     """
@@ -23460,10 +22882,6 @@ def downcase_string(string: str) -> None:
     Parameters
     ----------
     string : character
-    
-    Returns
-    -------
-    string : character
     """
 def dpc_given_de(pc_old: typing.SupportsFloat, mass: typing.SupportsFloat, dE: typing.SupportsFloat, dpc: typing.SupportsFloat) -> None:
     """
@@ -23471,16 +22889,6 @@ def dpc_given_de(pc_old: typing.SupportsFloat, mass: typing.SupportsFloat, dE: t
     
     Parameters
     ----------
-    pc_old : float
-    
-    mass : float
-    
-    dE : float
-    
-    dpc : float
-    
-    Returns
-    -------
     pc_old : float
     
     mass : float
@@ -23506,13 +22914,6 @@ def drift_and_pipe_track_methods_adjustment(lat: LatStruct) -> None:
         Lattice
         This parameter is an input/output and is modified in-place.
         As an output, lat: Lattice with tracking methods adjusted if needed.
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with tracking methods adjusted if needed.
     """
 def drift_multipass_name_correction(lat: LatStruct) -> None:
     """
@@ -23520,10 +22921,6 @@ def drift_multipass_name_correction(lat: LatStruct) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    Returns
-    -------
     lat : LatStruct
     """
 def drift_orbit_time(orbit: CoordStruct, beta0: typing.SupportsFloat, delta_s: typing.SupportsFloat | None = None, delta_t: typing.SupportsFloat | None = None) -> None:
@@ -23548,11 +22945,6 @@ def drift_orbit_time(orbit: CoordStruct, beta0: typing.SupportsFloat, delta_s: t
     
     delta_t : float, optional
         -coordinate distancet to drift particle.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        particle orbit in time-based coordinates.
     """
 def drift_particle_to_s(p: CoordStruct, s: typing.SupportsFloat, branch: BranchStruct) -> None:
     """
@@ -23572,13 +22964,6 @@ def drift_particle_to_s(p: CoordStruct, s: typing.SupportsFloat, branch: BranchS
     
     branch : BranchStruct
         Branch being tracked through.
-    
-    Returns
-    -------
-    p : CoordStruct
-        Init particle position.
-        This parameter is an input/output and is modified in-place.
-        As an output, p: Final particle position.
     """
 def drift_particle_to_t(p: CoordStruct, t: typing.SupportsFloat, branch: BranchStruct) -> None:
     """
@@ -23598,13 +22983,6 @@ def drift_particle_to_t(p: CoordStruct, t: typing.SupportsFloat, branch: BranchS
     
     branch : BranchStruct
         Lattice branch being tracked through.
-    
-    Returns
-    -------
-    p : CoordStruct
-        Init particle position.
-        This parameter is an input/output and is modified in-place.
-        As an output, p: Final particle position.
     """
 def dspline_len(s_chord0: typing.SupportsFloat, s_chord1: typing.SupportsFloat, spline: SplineStruct, dtheta_ref: typing.SupportsFloat | None = None) -> float:
     """
@@ -23675,11 +23053,11 @@ def dynamic_aperture_scan(aperture_param: ApertureParamStruct, pz_start: RealArr
     aperture_param : ApertureParamStruct
         Scan parameters
     
-    lat : LatStruct
-        Lattice.
-    
     pz_start : 1D array of float
         Starting phase space pz values.
+    
+    lat : LatStruct
+        Lattice.
     
     print_timing : bool, optional
         If True print info on calculation time. Default is True.
@@ -23766,18 +23144,8 @@ def elbd(phi: typing.SupportsFloat, phic: typing.SupportsFloat, mc: typing.Suppo
     
     mc : float
     
-    b : float
-    
-    d : float
-    
     Returns
     -------
-    phi : float
-    
-    phic : float
-    
-    mc : float
-    
     b : float
     
     d : float
@@ -23792,16 +23160,8 @@ def elcbd(c0: typing.SupportsFloat, mc: typing.SupportsFloat) -> Elcbd:
     
     mc : float
     
-    b : float
-    
-    dx : float
-    
     Returns
     -------
-    c0 : float
-    
-    mc : float
-    
     b : float
     
     dx : float
@@ -23825,13 +23185,6 @@ def ele_compute_ref_energy_and_time(ele0: EleStruct, ele: EleStruct, param: LatP
     
     err_flag : bool
         Set true if there is an error. False otherwise.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Lattice element
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Lattice element with reference energy and time.
     """
 def ele_equal_ele(ele_out: EleStruct, ele_in: EleStruct) -> None:
     """
@@ -23839,12 +23192,6 @@ def ele_equal_ele(ele_out: EleStruct, ele_in: EleStruct) -> None:
     
     Parameters
     ----------
-    ele_out : EleStruct
-    
-    ele_in : EleStruct
-    
-    Returns
-    -------
     ele_out : EleStruct
     
     ele_in : EleStruct
@@ -23883,13 +23230,6 @@ def ele_finalizer(ele: EleStruct) -> None:
         Element to cleanup.
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with pointers deallocated as needed.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element to cleanup.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with pointers deallocated as needed.
     """
 def ele_full_name(ele: EleStruct, template_: str | None = None) -> str:
     """
@@ -23899,9 +23239,6 @@ def ele_full_name(ele: EleStruct, template_: str | None = None) -> str:
     ----------
     ele : EleStruct
         Element in a lattice
-    
-    template : str, optional
-        Encoding template. Default is "@N (&#)".
     
     Returns
     -------
@@ -23972,15 +23309,6 @@ def ele_has_nonzero_kick(ele: EleStruct, has_kick: bool) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-        Element with possible nonzero kicks.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with no kicks.
-    
-    has_kick : bool
-    
-    Returns
-    -------
     ele : EleStruct
         Element with possible nonzero kicks.
         This parameter is an input/output and is modified in-place.
@@ -24127,16 +23455,6 @@ def ele_reference_energy_correction(ele: EleStruct, orbit: CoordStruct, particle
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Coordinates to correct.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before correction.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix transfer matrix including correction.
     """
 def ele_rf_step_index(E_ref: typing.SupportsFloat, s_rel: typing.SupportsFloat, ele: EleStruct) -> int:
     """
@@ -24209,14 +23527,14 @@ def ele_to_ptc_magnetic_bn_an(ele: EleStruct, bn: RealArray1D, an: RealArray1D) 
     ele : EleStruct
         Bmad Element.
     
-    Returns
-    -------
     bn : 1D array of float
         Normal multipole component.
     
     an : 1D array of float
         Skew multipole component.
     
+    Returns
+    -------
     n_max : int, optional
         Maximum non-zero multipole component. Set to zero if there are no multipoles.
     """
@@ -24236,13 +23554,6 @@ def ele_to_spin_taylor(ele: EleStruct, param: LatParamStruct, orb0: CoordStruct)
     
     orb0 : CoordStruct
         Starting ref coords.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Lattice element.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with spin map.
     """
 def ele_to_taylor(ele: EleStruct, orb0: CoordStruct | None = None, taylor_map_includes_offsets: bool | None = None, include_damping: bool | None = None) -> EleToTaylor:
     """
@@ -24312,11 +23623,6 @@ def ele_value_has_changed(ele: EleStruct, list: IntArray1D, abs_tol: RealArray1D
     
     Returns
     -------
-    ele : EleStruct
-        Element under consideration.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: ele.old_value may be set depending upon setting of set_old
-    
     has_changed : bool
         Set True if a value has changed significantly.
     """
@@ -24326,12 +23632,6 @@ def ele_vec_equal_ele_vec(ele1: EleStructArray1D, ele2: EleStructArray1D) -> Non
     
     Parameters
     ----------
-    ele1 : 1D array of EleStruct
-    
-    ele2 : 1D array of EleStruct
-    
-    Returns
-    -------
     ele1 : 1D array of EleStruct
     
     ele2 : 1D array of EleStruct
@@ -24419,9 +23719,6 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
     
     Returns
     -------
-    ix_ele : int
-        Index of element at s.
-    
     err_flag : bool, optional
         Set True if s is out of bounds. False otherwise.
     
@@ -24430,6 +23727,9 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
     
     position : CoordStruct, optional
         Positional information.
+    
+    ix_ele : int
+        Index of element at s.
     """
 @typing.overload
 def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None) -> ElementAtSLat:
@@ -24486,9 +23786,6 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
     
     Returns
     -------
-    ix_ele : int
-        Index of element at s.
-    
     err_flag : bool, optional
         Set True if s is out of bounds. False otherwise.
     
@@ -24497,6 +23794,9 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
     
     position : CoordStruct, optional
         Positional information.
+    
+    ix_ele : int
+        Index of element at s.
     """
 def element_slice_iterator(ele: EleStruct, param: LatParamStruct, i_slice: typing.SupportsInt, n_slice_tot: typing.SupportsInt, sliced_ele: EleStruct, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None) -> None:
     """
@@ -24523,10 +23823,6 @@ def element_slice_iterator(ele: EleStruct, param: LatParamStruct, i_slice: typin
     
     s_end : float, optional
         Ending edge of slice relative to beginning of element.
-    
-    Returns
-    -------
-    sliced_ele : EleStruct
     """
 def ellipinc(phi: typing.SupportsFloat, m: typing.SupportsFloat) -> Ellipinc:
     """
@@ -24552,16 +23848,8 @@ def elsbd(s0: typing.SupportsFloat, mc: typing.SupportsFloat) -> Elsbd:
     
     mc : float
     
-    b : float
-    
-    d : float
-    
     Returns
     -------
-    s0 : float
-    
-    mc : float
-    
     b : float
     
     d : float
@@ -24709,14 +23997,6 @@ def em_field_plus_em_field(field1: EmFieldStruct, field2: EmFieldStruct, field_t
     field2 : EmFieldStruct
     
     field_tot : EmFieldStruct
-    
-    Returns
-    -------
-    field1 : EmFieldStruct
-    
-    field2 : EmFieldStruct
-    
-    field_tot : EmFieldStruct
     """
 def em_taylor_equal_em_taylor(em_taylor1: EmTaylorStruct, em_taylor2: EmTaylorStruct) -> None:
     """
@@ -24727,12 +24007,6 @@ def em_taylor_equal_em_taylor(em_taylor1: EmTaylorStruct, em_taylor2: EmTaylorSt
     em_taylor1 : EmTaylorStruct
     
     em_taylor2 : EmTaylorStruct
-    
-    Returns
-    -------
-    em_taylor1 : EmTaylorStruct
-    
-    em_taylor2 : EmTaylorStruct
     """
 def em_taylors_equal_em_taylors(em_taylor1: EmTaylorStructArray1D, em_taylor2: EmTaylorStructArray1D) -> None:
     """
@@ -24740,12 +24014,6 @@ def em_taylors_equal_em_taylors(em_taylor1: EmTaylorStructArray1D, em_taylor2: E
     
     Parameters
     ----------
-    em_taylor1 : 1D array of EmTaylorStruct
-    
-    em_taylor2 : 1D array of EmTaylorStruct
-    
-    Returns
-    -------
     em_taylor1 : 1D array of EmTaylorStruct
     
     em_taylor2 : 1D array of EmTaylorStruct
@@ -24798,13 +24066,6 @@ def end_akima_spline_calc(spline: SplineStructArray1D, which_end: typing.Support
     
     which_end : int
         0 => calculate slopes for the start end of the array. 1 => calculate slopes for the end end of the array.
-    
-    Returns
-    -------
-    spline : 1D array of SplineStruct
-        Array of splines.
-        This parameter is an input/output and is modified in-place.
-        As an output, spline: Array with slopes at end calculated.
     """
 def entering_element(orbit: CoordStruct, particle_at: typing.SupportsInt) -> bool:
     """
@@ -24900,14 +24161,6 @@ def eq_ac_kicker(f1: AcKickerStruct, f2: AcKickerStruct, is_eq: bool) -> None:
     f2 : AcKickerStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : AcKickerStruct
-    
-    f2 : AcKickerStruct
-    
-    is_eq : bool
     """
 def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct, is_eq: bool) -> None:
     """
@@ -24915,14 +24168,6 @@ def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct, is_eq: boo
     
     Parameters
     ----------
-    f1 : AcKickerFreqStruct
-    
-    f2 : AcKickerFreqStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : AcKickerFreqStruct
     
     f2 : AcKickerFreqStruct
@@ -24940,14 +24185,6 @@ def eq_ac_kicker_time(f1: AcKickerTimeStruct, f2: AcKickerTimeStruct, is_eq: boo
     f2 : AcKickerTimeStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : AcKickerTimeStruct
-    
-    f2 : AcKickerTimeStruct
-    
-    is_eq : bool
     """
 def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct, is_eq: bool) -> None:
     """
@@ -24955,14 +24192,6 @@ def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct, is_eq: bool) -
     
     Parameters
     ----------
-    f1 : AnormalModeStruct
-    
-    f2 : AnormalModeStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : AnormalModeStruct
     
     f2 : AnormalModeStruct
@@ -24980,14 +24209,6 @@ def eq_aperture_param(f1: ApertureParamStruct, f2: ApertureParamStruct, is_eq: b
     f2 : ApertureParamStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : ApertureParamStruct
-    
-    f2 : ApertureParamStruct
-    
-    is_eq : bool
     """
 def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct, is_eq: bool) -> None:
     """
@@ -24995,14 +24216,6 @@ def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct, is_eq: b
     
     Parameters
     ----------
-    f1 : AperturePointStruct
-    
-    f2 : AperturePointStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : AperturePointStruct
     
     f2 : AperturePointStruct
@@ -25020,14 +24233,6 @@ def eq_aperture_scan(f1: ApertureScanStruct, f2: ApertureScanStruct, is_eq: bool
     f2 : ApertureScanStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : ApertureScanStruct
-    
-    f2 : ApertureScanStruct
-    
-    is_eq : bool
     """
 def eq_beam(f1: BeamStruct, f2: BeamStruct, is_eq: bool) -> None:
     """
@@ -25035,14 +24240,6 @@ def eq_beam(f1: BeamStruct, f2: BeamStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : BeamStruct
-    
-    f2 : BeamStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : BeamStruct
     
     f2 : BeamStruct
@@ -25060,14 +24257,6 @@ def eq_beam_init(f1: BeamInitStruct, f2: BeamInitStruct, is_eq: bool) -> None:
     f2 : BeamInitStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : BeamInitStruct
-    
-    f2 : BeamInitStruct
-    
-    is_eq : bool
     """
 def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct, is_eq: bool) -> None:
     """
@@ -25075,14 +24264,6 @@ def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct, is_eq: bool) -> N
     
     Parameters
     ----------
-    f1 : BmadCommonStruct
-    
-    f2 : BmadCommonStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : BmadCommonStruct
     
     f2 : BmadCommonStruct
@@ -25100,14 +24281,6 @@ def eq_bookkeeping_state(f1: BookkeepingStateStruct, f2: BookkeepingStateStruct,
     f2 : BookkeepingStateStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : BookkeepingStateStruct
-    
-    f2 : BookkeepingStateStruct
-    
-    is_eq : bool
     """
 def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct, is_eq: bool) -> None:
     """
@@ -25115,14 +24288,6 @@ def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct
     
     Parameters
     ----------
-    f1 : BpmPhaseCouplingStruct
-    
-    f2 : BpmPhaseCouplingStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : BpmPhaseCouplingStruct
     
     f2 : BpmPhaseCouplingStruct
@@ -25140,14 +24305,6 @@ def eq_branch(f1: BranchStruct, f2: BranchStruct, is_eq: bool) -> None:
     f2 : BranchStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : BranchStruct
-    
-    f2 : BranchStruct
-    
-    is_eq : bool
     """
 def eq_bunch(f1: BunchStruct, f2: BunchStruct, is_eq: bool) -> None:
     """
@@ -25155,14 +24312,6 @@ def eq_bunch(f1: BunchStruct, f2: BunchStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : BunchStruct
-    
-    f2 : BunchStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : BunchStruct
     
     f2 : BunchStruct
@@ -25180,14 +24329,6 @@ def eq_bunch_params(f1: BunchParamsStruct, f2: BunchParamsStruct, is_eq: bool) -
     f2 : BunchParamsStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : BunchParamsStruct
-    
-    f2 : BunchParamsStruct
-    
-    is_eq : bool
     """
 def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct, is_eq: bool) -> None:
     """
@@ -25195,14 +24336,6 @@ def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct, is_eq: bool
     
     Parameters
     ----------
-    f1 : CartesianMapStruct
-    
-    f2 : CartesianMapStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : CartesianMapStruct
     
     f2 : CartesianMapStruct
@@ -25220,14 +24353,6 @@ def eq_cartesian_map_term(f1: CartesianMapTermStruct, f2: CartesianMapTermStruct
     f2 : CartesianMapTermStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : CartesianMapTermStruct
-    
-    f2 : CartesianMapTermStruct
-    
-    is_eq : bool
     """
 def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Struct, is_eq: bool) -> None:
     """
@@ -25235,14 +24360,6 @@ def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Str
     
     Parameters
     ----------
-    f1 : CartesianMapTerm1Struct
-    
-    f2 : CartesianMapTerm1Struct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : CartesianMapTerm1Struct
     
     f2 : CartesianMapTerm1Struct
@@ -25260,14 +24377,6 @@ def eq_complex_taylor(f1: ComplexTaylorStruct, f2: ComplexTaylorStruct, is_eq: b
     f2 : ComplexTaylorStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : ComplexTaylorStruct
-    
-    f2 : ComplexTaylorStruct
-    
-    is_eq : bool
     """
 def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStruct, is_eq: bool) -> None:
     """
@@ -25275,14 +24384,6 @@ def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStr
     
     Parameters
     ----------
-    f1 : ComplexTaylorTermStruct
-    
-    f2 : ComplexTaylorTermStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : ComplexTaylorTermStruct
     
     f2 : ComplexTaylorTermStruct
@@ -25300,14 +24401,6 @@ def eq_control(f1: ControlStruct, f2: ControlStruct, is_eq: bool) -> None:
     f2 : ControlStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : ControlStruct
-    
-    f2 : ControlStruct
-    
-    is_eq : bool
     """
 def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct, is_eq: bool) -> None:
     """
@@ -25315,14 +24408,6 @@ def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct, is_eq: bool
     
     Parameters
     ----------
-    f1 : ControlRamp1Struct
-    
-    f2 : ControlRamp1Struct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : ControlRamp1Struct
     
     f2 : ControlRamp1Struct
@@ -25340,14 +24425,6 @@ def eq_control_var1(f1: ControlVar1Struct, f2: ControlVar1Struct, is_eq: bool) -
     f2 : ControlVar1Struct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : ControlVar1Struct
-    
-    f2 : ControlVar1Struct
-    
-    is_eq : bool
     """
 def eq_controller(f1: ControllerStruct, f2: ControllerStruct, is_eq: bool) -> None:
     """
@@ -25355,14 +24432,6 @@ def eq_controller(f1: ControllerStruct, f2: ControllerStruct, is_eq: bool) -> No
     
     Parameters
     ----------
-    f1 : ControllerStruct
-    
-    f2 : ControllerStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : ControllerStruct
     
     f2 : ControllerStruct
@@ -25380,14 +24449,6 @@ def eq_coord(f1: CoordStruct, f2: CoordStruct, is_eq: bool) -> None:
     f2 : CoordStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : CoordStruct
-    
-    f2 : CoordStruct
-    
-    is_eq : bool
     """
 def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct, is_eq: bool) -> None:
     """
@@ -25395,14 +24456,6 @@ def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct, is_eq: bool) -> N
     
     Parameters
     ----------
-    f1 : CoordArrayStruct
-    
-    f2 : CoordArrayStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : CoordArrayStruct
     
     f2 : CoordArrayStruct
@@ -25420,14 +24473,6 @@ def eq_cylindrical_map(f1: CylindricalMapStruct, f2: CylindricalMapStruct, is_eq
     f2 : CylindricalMapStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : CylindricalMapStruct
-    
-    f2 : CylindricalMapStruct
-    
-    is_eq : bool
     """
 def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTermStruct, is_eq: bool) -> None:
     """
@@ -25435,14 +24480,6 @@ def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTerm
     
     Parameters
     ----------
-    f1 : CylindricalMapTermStruct
-    
-    f2 : CylindricalMapTermStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : CylindricalMapTermStruct
     
     f2 : CylindricalMapTermStruct
@@ -25460,14 +24497,6 @@ def eq_cylindrical_map_term1(f1: CylindricalMapTerm1Struct, f2: CylindricalMapTe
     f2 : CylindricalMapTerm1Struct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : CylindricalMapTerm1Struct
-    
-    f2 : CylindricalMapTerm1Struct
-    
-    is_eq : bool
     """
 def eq_ele(f1: EleStruct, f2: EleStruct, is_eq: bool) -> None:
     """
@@ -25475,14 +24504,6 @@ def eq_ele(f1: EleStruct, f2: EleStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : EleStruct
-    
-    f2 : EleStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : EleStruct
     
     f2 : EleStruct
@@ -25500,14 +24521,6 @@ def eq_ellipse_beam_init(f1: EllipseBeamInitStruct, f2: EllipseBeamInitStruct, i
     f2 : EllipseBeamInitStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : EllipseBeamInitStruct
-    
-    f2 : EllipseBeamInitStruct
-    
-    is_eq : bool
     """
 def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct, is_eq: bool) -> None:
     """
@@ -25515,14 +24528,6 @@ def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : EmFieldStruct
-    
-    f2 : EmFieldStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : EmFieldStruct
     
     f2 : EmFieldStruct
@@ -25540,14 +24545,6 @@ def eq_em_taylor(f1: EmTaylorStruct, f2: EmTaylorStruct, is_eq: bool) -> None:
     f2 : EmTaylorStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : EmTaylorStruct
-    
-    f2 : EmTaylorStruct
-    
-    is_eq : bool
     """
 def eq_em_taylor_term(f1: EmTaylorTermStruct, f2: EmTaylorTermStruct, is_eq: bool) -> None:
     """
@@ -25555,14 +24552,6 @@ def eq_em_taylor_term(f1: EmTaylorTermStruct, f2: EmTaylorTermStruct, is_eq: boo
     
     Parameters
     ----------
-    f1 : EmTaylorTermStruct
-    
-    f2 : EmTaylorTermStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : EmTaylorTermStruct
     
     f2 : EmTaylorTermStruct
@@ -25580,14 +24569,6 @@ def eq_expression_atom(f1: ExpressionAtomStruct, f2: ExpressionAtomStruct, is_eq
     f2 : ExpressionAtomStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : ExpressionAtomStruct
-    
-    f2 : ExpressionAtomStruct
-    
-    is_eq : bool
     """
 def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct, is_eq: bool) -> None:
     """
@@ -25595,14 +24576,6 @@ def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct, is_eq: b
     
     Parameters
     ----------
-    f1 : FloorPositionStruct
-    
-    f2 : FloorPositionStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : FloorPositionStruct
     
     f2 : FloorPositionStruct
@@ -25620,14 +24593,6 @@ def eq_gen_grad1(f1: GenGrad1Struct, f2: GenGrad1Struct, is_eq: bool) -> None:
     f2 : GenGrad1Struct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : GenGrad1Struct
-    
-    f2 : GenGrad1Struct
-    
-    is_eq : bool
     """
 def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct, is_eq: bool) -> None:
     """
@@ -25635,14 +24600,6 @@ def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct, is_eq: bool) -> 
     
     Parameters
     ----------
-    f1 : GenGradMapStruct
-    
-    f2 : GenGradMapStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : GenGradMapStruct
     
     f2 : GenGradMapStruct
@@ -25660,14 +24617,6 @@ def eq_grid_beam_init(f1: GridBeamInitStruct, f2: GridBeamInitStruct, is_eq: boo
     f2 : GridBeamInitStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : GridBeamInitStruct
-    
-    f2 : GridBeamInitStruct
-    
-    is_eq : bool
     """
 def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct, is_eq: bool) -> None:
     """
@@ -25675,14 +24624,6 @@ def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct, is_eq: bool) -> None
     
     Parameters
     ----------
-    f1 : GridFieldStruct
-    
-    f2 : GridFieldStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : GridFieldStruct
     
     f2 : GridFieldStruct
@@ -25700,14 +24641,6 @@ def eq_grid_field_pt(f1: GridFieldPtStruct, f2: GridFieldPtStruct, is_eq: bool) 
     f2 : GridFieldPtStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : GridFieldPtStruct
-    
-    f2 : GridFieldPtStruct
-    
-    is_eq : bool
     """
 def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct, is_eq: bool) -> None:
     """
@@ -25715,14 +24648,6 @@ def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct, is_eq: boo
     
     Parameters
     ----------
-    f1 : GridFieldPt1Struct
-    
-    f2 : GridFieldPt1Struct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : GridFieldPt1Struct
     
     f2 : GridFieldPt1Struct
@@ -25740,14 +24665,6 @@ def eq_high_energy_space_charge(f1: HighEnergySpaceChargeStruct, f2: HighEnergyS
     f2 : HighEnergySpaceChargeStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : HighEnergySpaceChargeStruct
-    
-    f2 : HighEnergySpaceChargeStruct
-    
-    is_eq : bool
     """
 def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct, is_eq: bool) -> None:
     """
@@ -25755,14 +24672,6 @@ def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct, is_eq: b
     
     Parameters
     ----------
-    f1 : Interval1CoefStruct
-    
-    f2 : Interval1CoefStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : Interval1CoefStruct
     
     f2 : Interval1CoefStruct
@@ -25780,14 +24689,6 @@ def eq_kv_beam_init(f1: KvBeamInitStruct, f2: KvBeamInitStruct, is_eq: bool) -> 
     f2 : KvBeamInitStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : KvBeamInitStruct
-    
-    f2 : KvBeamInitStruct
-    
-    is_eq : bool
     """
 def eq_lat(f1: LatStruct, f2: LatStruct, is_eq: bool) -> None:
     """
@@ -25795,14 +24696,6 @@ def eq_lat(f1: LatStruct, f2: LatStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : LatStruct
-    
-    f2 : LatStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : LatStruct
     
     f2 : LatStruct
@@ -25820,14 +24713,6 @@ def eq_lat_ele_loc(f1: LatEleLocStruct, f2: LatEleLocStruct, is_eq: bool) -> Non
     f2 : LatEleLocStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : LatEleLocStruct
-    
-    f2 : LatEleLocStruct
-    
-    is_eq : bool
     """
 def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct, is_eq: bool) -> None:
     """
@@ -25835,14 +24720,6 @@ def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : LatParamStruct
-    
-    f2 : LatParamStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : LatParamStruct
     
     f2 : LatParamStruct
@@ -25860,14 +24737,6 @@ def eq_linac_normal_mode(f1: LinacNormalModeStruct, f2: LinacNormalModeStruct, i
     f2 : LinacNormalModeStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : LinacNormalModeStruct
-    
-    f2 : LinacNormalModeStruct
-    
-    is_eq : bool
     """
 def eq_mode3(f1: Mode3Struct, f2: Mode3Struct, is_eq: bool) -> None:
     """
@@ -25875,14 +24744,6 @@ def eq_mode3(f1: Mode3Struct, f2: Mode3Struct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : Mode3Struct
-    
-    f2 : Mode3Struct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : Mode3Struct
     
     f2 : Mode3Struct
@@ -25900,14 +24761,6 @@ def eq_mode_info(f1: ModeInfoStruct, f2: ModeInfoStruct, is_eq: bool) -> None:
     f2 : ModeInfoStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : ModeInfoStruct
-    
-    f2 : ModeInfoStruct
-    
-    is_eq : bool
     """
 def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct, is_eq: bool) -> None:
     """
@@ -25915,14 +24768,6 @@ def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct, is_eq: bool) -
     
     Parameters
     ----------
-    f1 : NormalModesStruct
-    
-    f2 : NormalModesStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : NormalModesStruct
     
     f2 : NormalModesStruct
@@ -25940,14 +24785,6 @@ def eq_photon_element(f1: PhotonElementStruct, f2: PhotonElementStruct, is_eq: b
     f2 : PhotonElementStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : PhotonElementStruct
-    
-    f2 : PhotonElementStruct
-    
-    is_eq : bool
     """
 def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct, is_eq: bool) -> None:
     """
@@ -25955,14 +24792,6 @@ def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct, is_eq
     
     Parameters
     ----------
-    f1 : PhotonMaterialStruct
-    
-    f2 : PhotonMaterialStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : PhotonMaterialStruct
     
     f2 : PhotonMaterialStruct
@@ -25980,14 +24809,6 @@ def eq_photon_reflect_surface(f1: PhotonReflectSurfaceStruct, f2: PhotonReflectS
     f2 : PhotonReflectSurfaceStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : PhotonReflectSurfaceStruct
-    
-    f2 : PhotonReflectSurfaceStruct
-    
-    is_eq : bool
     """
 def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTableStruct, is_eq: bool) -> None:
     """
@@ -25995,14 +24816,6 @@ def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTable
     
     Parameters
     ----------
-    f1 : PhotonReflectTableStruct
-    
-    f2 : PhotonReflectTableStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : PhotonReflectTableStruct
     
     f2 : PhotonReflectTableStruct
@@ -26020,14 +24833,6 @@ def eq_photon_target(f1: PhotonTargetStruct, f2: PhotonTargetStruct, is_eq: bool
     f2 : PhotonTargetStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : PhotonTargetStruct
-    
-    f2 : PhotonTargetStruct
-    
-    is_eq : bool
     """
 def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct, is_eq: bool) -> None:
     """
@@ -26035,14 +24840,6 @@ def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct, is_eq: bool) -> N
     
     Parameters
     ----------
-    f1 : PixelDetecStruct
-    
-    f2 : PixelDetecStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : PixelDetecStruct
     
     f2 : PixelDetecStruct
@@ -26060,14 +24857,6 @@ def eq_pixel_pt(f1: PixelPtStruct, f2: PixelPtStruct, is_eq: bool) -> None:
     f2 : PixelPtStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : PixelPtStruct
-    
-    f2 : PixelPtStruct
-    
-    is_eq : bool
     """
 def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct, is_eq: bool) -> None:
     """
@@ -26075,14 +24864,6 @@ def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct, is_eq: bool) -> N
     
     Parameters
     ----------
-    f1 : PreTrackerStruct
-    
-    f2 : PreTrackerStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : PreTrackerStruct
     
     f2 : PreTrackerStruct
@@ -26100,14 +24881,6 @@ def eq_rad_int1(f1: RadInt1Struct, f2: RadInt1Struct, is_eq: bool) -> None:
     f2 : RadInt1Struct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : RadInt1Struct
-    
-    f2 : RadInt1Struct
-    
-    is_eq : bool
     """
 def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct, is_eq: bool) -> None:
     """
@@ -26115,14 +24888,6 @@ def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct, is_eq: bo
     
     Parameters
     ----------
-    f1 : RadIntAllEleStruct
-    
-    f2 : RadIntAllEleStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : RadIntAllEleStruct
     
     f2 : RadIntAllEleStruct
@@ -26140,14 +24905,6 @@ def eq_rad_int_branch(f1: RadIntBranchStruct, f2: RadIntBranchStruct, is_eq: boo
     f2 : RadIntBranchStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : RadIntBranchStruct
-    
-    f2 : RadIntBranchStruct
-    
-    is_eq : bool
     """
 def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct, is_eq: bool) -> None:
     """
@@ -26155,14 +24912,6 @@ def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : RadMapStruct
-    
-    f2 : RadMapStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : RadMapStruct
     
     f2 : RadMapStruct
@@ -26180,14 +24929,6 @@ def eq_rad_map_ele(f1: RadMapEleStruct, f2: RadMapEleStruct, is_eq: bool) -> Non
     f2 : RadMapEleStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : RadMapEleStruct
-    
-    f2 : RadMapEleStruct
-    
-    is_eq : bool
     """
 def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct, is_eq: bool) -> None:
     """
@@ -26195,14 +24936,6 @@ def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct, is_eq: bool) -> N
     
     Parameters
     ----------
-    f1 : RamperLordStruct
-    
-    f2 : RamperLordStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : RamperLordStruct
     
     f2 : RamperLordStruct
@@ -26220,14 +24953,6 @@ def eq_space_charge_common(f1: SpaceChargeCommonStruct, f2: SpaceChargeCommonStr
     f2 : SpaceChargeCommonStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : SpaceChargeCommonStruct
-    
-    f2 : SpaceChargeCommonStruct
-    
-    is_eq : bool
     """
 def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct, is_eq: bool) -> None:
     """
@@ -26235,14 +24960,6 @@ def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct, is_eq: bool) -> None
     
     Parameters
     ----------
-    f1 : SpinPolarStruct
-    
-    f2 : SpinPolarStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : SpinPolarStruct
     
     f2 : SpinPolarStruct
@@ -26260,14 +24977,6 @@ def eq_spline(f1: SplineStruct, f2: SplineStruct, is_eq: bool) -> None:
     f2 : SplineStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : SplineStruct
-    
-    f2 : SplineStruct
-    
-    is_eq : bool
     """
 def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct, is_eq: bool) -> None:
     """
@@ -26275,14 +24984,6 @@ def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct, is_eq: bool) -> N
     
     Parameters
     ----------
-    f1 : StrongBeamStruct
-    
-    f2 : StrongBeamStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : StrongBeamStruct
     
     f2 : StrongBeamStruct
@@ -26300,14 +25001,6 @@ def eq_surface_curvature(f1: SurfaceCurvatureStruct, f2: SurfaceCurvatureStruct,
     f2 : SurfaceCurvatureStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : SurfaceCurvatureStruct
-    
-    f2 : SurfaceCurvatureStruct
-    
-    is_eq : bool
     """
 def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplacementStruct, is_eq: bool) -> None:
     """
@@ -26315,14 +25008,6 @@ def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplaceme
     
     Parameters
     ----------
-    f1 : SurfaceDisplacementStruct
-    
-    f2 : SurfaceDisplacementStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : SurfaceDisplacementStruct
     
     f2 : SurfaceDisplacementStruct
@@ -26340,14 +25025,6 @@ def eq_surface_displacement_pt(f1: SurfaceDisplacementPtStruct, f2: SurfaceDispl
     f2 : SurfaceDisplacementPtStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : SurfaceDisplacementPtStruct
-    
-    f2 : SurfaceDisplacementPtStruct
-    
-    is_eq : bool
     """
 def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct, is_eq: bool) -> None:
     """
@@ -26355,14 +25032,6 @@ def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct
     
     Parameters
     ----------
-    f1 : SurfaceHMisalignStruct
-    
-    f2 : SurfaceHMisalignStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : SurfaceHMisalignStruct
     
     f2 : SurfaceHMisalignStruct
@@ -26380,14 +25049,6 @@ def eq_surface_h_misalign_pt(f1: SurfaceHMisalignPtStruct, f2: SurfaceHMisalignP
     f2 : SurfaceHMisalignPtStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : SurfaceHMisalignPtStruct
-    
-    f2 : SurfaceHMisalignPtStruct
-    
-    is_eq : bool
     """
 def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct, is_eq: bool) -> None:
     """
@@ -26395,14 +25056,6 @@ def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct,
     
     Parameters
     ----------
-    f1 : SurfaceSegmentedStruct
-    
-    f2 : SurfaceSegmentedStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : SurfaceSegmentedStruct
     
     f2 : SurfaceSegmentedStruct
@@ -26420,14 +25073,6 @@ def eq_surface_segmented_pt(f1: SurfaceSegmentedPtStruct, f2: SurfaceSegmentedPt
     f2 : SurfaceSegmentedPtStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : SurfaceSegmentedPtStruct
-    
-    f2 : SurfaceSegmentedPtStruct
-    
-    is_eq : bool
     """
 def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct, is_eq: bool) -> None:
     """
@@ -26435,14 +25080,6 @@ def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct, is_eq: bool) -
     
     Parameters
     ----------
-    f1 : TargetPointStruct
-    
-    f2 : TargetPointStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : TargetPointStruct
     
     f2 : TargetPointStruct
@@ -26460,14 +25097,6 @@ def eq_taylor(f1: TaylorStruct, f2: TaylorStruct, is_eq: bool) -> None:
     f2 : TaylorStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : TaylorStruct
-    
-    f2 : TaylorStruct
-    
-    is_eq : bool
     """
 def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct, is_eq: bool) -> None:
     """
@@ -26475,14 +25104,6 @@ def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct, is_eq: bool) -> N
     
     Parameters
     ----------
-    f1 : TaylorTermStruct
-    
-    f2 : TaylorTermStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : TaylorTermStruct
     
     f2 : TaylorTermStruct
@@ -26500,14 +25121,6 @@ def eq_track(f1: TrackStruct, f2: TrackStruct, is_eq: bool) -> None:
     f2 : TrackStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : TrackStruct
-    
-    f2 : TrackStruct
-    
-    is_eq : bool
     """
 def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct, is_eq: bool) -> None:
     """
@@ -26515,14 +25128,6 @@ def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct, is_eq: bool) -> N
     
     Parameters
     ----------
-    f1 : TrackPointStruct
-    
-    f2 : TrackPointStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : TrackPointStruct
     
     f2 : TrackPointStruct
@@ -26540,14 +25145,6 @@ def eq_twiss(f1: TwissStruct, f2: TwissStruct, is_eq: bool) -> None:
     f2 : TwissStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : TwissStruct
-    
-    f2 : TwissStruct
-    
-    is_eq : bool
     """
 def eq_wake(f1: WakeStruct, f2: WakeStruct, is_eq: bool) -> None:
     """
@@ -26555,14 +25152,6 @@ def eq_wake(f1: WakeStruct, f2: WakeStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : WakeStruct
-    
-    f2 : WakeStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : WakeStruct
     
     f2 : WakeStruct
@@ -26580,14 +25169,6 @@ def eq_wake_lr(f1: WakeLrStruct, f2: WakeLrStruct, is_eq: bool) -> None:
     f2 : WakeLrStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : WakeLrStruct
-    
-    f2 : WakeLrStruct
-    
-    is_eq : bool
     """
 def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct, is_eq: bool) -> None:
     """
@@ -26595,14 +25176,6 @@ def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct, is_eq: bool) -> 
     
     Parameters
     ----------
-    f1 : WakeLrModeStruct
-    
-    f2 : WakeLrModeStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : WakeLrModeStruct
     
     f2 : WakeLrModeStruct
@@ -26620,14 +25193,6 @@ def eq_wake_sr(f1: WakeSrStruct, f2: WakeSrStruct, is_eq: bool) -> None:
     f2 : WakeSrStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : WakeSrStruct
-    
-    f2 : WakeSrStruct
-    
-    is_eq : bool
     """
 def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct, is_eq: bool) -> None:
     """
@@ -26635,14 +25200,6 @@ def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct, is_eq: bool) -> 
     
     Parameters
     ----------
-    f1 : WakeSrModeStruct
-    
-    f2 : WakeSrModeStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : WakeSrModeStruct
     
     f2 : WakeSrModeStruct
@@ -26660,14 +25217,6 @@ def eq_wake_sr_z_long(f1: WakeSrZLongStruct, f2: WakeSrZLongStruct, is_eq: bool)
     f2 : WakeSrZLongStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : WakeSrZLongStruct
-    
-    f2 : WakeSrZLongStruct
-    
-    is_eq : bool
     """
 def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct, is_eq: bool) -> None:
     """
@@ -26675,14 +25224,6 @@ def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct, is_eq: bool) -> None:
     
     Parameters
     ----------
-    f1 : Wall3dStruct
-    
-    f2 : Wall3dStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : Wall3dStruct
     
     f2 : Wall3dStruct
@@ -26700,14 +25241,6 @@ def eq_wall3d_section(f1: Wall3DSectionStruct, f2: Wall3DSectionStruct, is_eq: b
     f2 : Wall3dSectionStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : Wall3dSectionStruct
-    
-    f2 : Wall3dSectionStruct
-    
-    is_eq : bool
     """
 def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct, is_eq: bool) -> None:
     """
@@ -26715,14 +25248,6 @@ def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct, is_eq: bool
     
     Parameters
     ----------
-    f1 : Wall3dVertexStruct
-    
-    f2 : Wall3dVertexStruct
-    
-    is_eq : bool
-    
-    Returns
-    -------
     f1 : Wall3dVertexStruct
     
     f2 : Wall3dVertexStruct
@@ -26740,14 +25265,6 @@ def eq_xy_disp(f1: XyDispStruct, f2: XyDispStruct, is_eq: bool) -> None:
     f2 : XyDispStruct
     
     is_eq : bool
-    
-    Returns
-    -------
-    f1 : XyDispStruct
-    
-    f2 : XyDispStruct
-    
-    is_eq : bool
     """
 def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> None:
     """
@@ -26755,14 +25272,6 @@ def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-    
-    delim : character
-    
-    is_here : bool
-    
-    Returns
-    -------
     ele : EleStruct
     
     delim : character
@@ -26793,10 +25302,6 @@ def err_exit(err_str: str | None = None) -> None:
     Parameters
     ----------
     err_str : character, optional
-    
-    Returns
-    -------
-    err_str : character, optional
     """
 def etdiv(A: typing.SupportsFloat, B: typing.SupportsFloat, C: typing.SupportsFloat, D: typing.SupportsFloat, E: typing.SupportsFloat, F: typing.SupportsFloat) -> None:
     """
@@ -26804,20 +25309,6 @@ def etdiv(A: typing.SupportsFloat, B: typing.SupportsFloat, C: typing.SupportsFl
     
     Parameters
     ----------
-    A : float
-    
-    B : float
-    
-    C : float
-    
-    D : float
-    
-    E : float
-    
-    F : float
-    
-    Returns
-    -------
     A : float
     
     B : float
@@ -26877,11 +25368,11 @@ def evaluate_logical(word: str) -> EvaluateLogical:
     
     Returns
     -------
-    this_logic : bool
-        Result.
-    
     iostat : int
         Status: Returns 0 if conversion successful.
+    
+    this_logic : bool
+        Result.
     """
 def exact_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -26910,16 +25401,6 @@ def exact_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Coords after tracking.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the edge.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix through the edge.
     """
 def exp_bessi0(t: typing.SupportsFloat, B1: typing.SupportsFloat, B2: typing.SupportsFloat, func_retval__: typing.SupportsFloat) -> None:
     """
@@ -27059,14 +25540,14 @@ def expression_stack_value(stack: ExpressionAtomStructArray1D, var: ControlVar1S
     
     Returns
     -------
-    value : float
-        Value of the expression.
-    
     err_flag : bool
         True if there is an evaluation problem. False otherwise.
     
     err_str : character
         Error string explaining error if there is one.
+    
+    value : float
+        Value of the expression.
     """
 def expression_string_to_stack(string: str) -> ExpressionStringToStack:
     """
@@ -27140,11 +25621,11 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> E
     
     Parameters
     ----------
-    root_tree : ExpressionTreeStruct
-        Only used when recursively called.
-    
     string : character
         Expression to be converted.
+    
+    root_tree : ExpressionTreeStruct
+        Only used when recursively called.
     
     Returns
     -------
@@ -27203,14 +25684,14 @@ def expression_value(expression: str, var: ControlVar1StructArray1D | None = Non
     
     Returns
     -------
-    value : float
-        Value of the expression.
-    
     err_flag : bool
         True if there is an evaluation problem. False otherwise.
     
     err_str : character, optional
         Error string explaining error if there is one.
+    
+    value : float
+        Value of the expression.
     """
 def factorial(n: typing.SupportsInt) -> float:
     """
@@ -27237,14 +25718,6 @@ def faddeeva_function(z: typing.Annotated[collections.abc.Sequence[typing.Suppor
     w : 1D array of float (shape: 2)
     
     dw : 2D array of float (shape: 2,2)
-    
-    Returns
-    -------
-    z : 1D array of float (shape: 2)
-    
-    w : 1D array of float (shape: 2)
-    
-    dw : 2D array of float (shape: 2,2)
     """
 def fft1(a: RealArray1D, b: RealArray1D, n: typing.SupportsInt, isn: typing.SupportsInt) -> int:
     """
@@ -27260,18 +25733,8 @@ def fft1(a: RealArray1D, b: RealArray1D, n: typing.SupportsInt, isn: typing.Supp
     
     isn : int
     
-    ierr : int
-    
     Returns
     -------
-    a : 1D array of float
-    
-    b : 1D array of float
-    
-    n : int
-    
-    isn : int
-    
     ierr : int
     """
 def fft_1d(arr: ComplexArray1D, isign: typing.SupportsInt) -> None:
@@ -27292,13 +25755,6 @@ def fft_1d(arr: ComplexArray1D, isign: typing.SupportsInt) -> None:
     
     isign : int
         -1 => "Forward" transform, +1 => "Backwards" transform.
-    
-    Returns
-    -------
-    arr : 1D array of complex
-        Input array.
-        This parameter is an input/output and is modified in-place.
-        As an output, arr: FFT of array.
     """
 def fibre_to_ele(ptc_fibre: Fibre, branch: BranchStruct, ix_ele: typing.SupportsInt, from_mad: bool | None = None) -> FibreToEle:
     """
@@ -27323,9 +25779,6 @@ def fibre_to_ele(ptc_fibre: Fibre, branch: BranchStruct, ix_ele: typing.Supports
     
     Returns
     -------
-    branch : BranchStruct
-        branch containing elements.
-    
     ix_ele : int
         Index in ele(:) array of element last used.
         This parameter is an input/output and is modified in-place.
@@ -27372,16 +25825,6 @@ def file_directorizer(in_file: str, out_file: str, directory: str, add_switch: b
     directory : character
     
     add_switch : bool
-    
-    Returns
-    -------
-    in_file : character
-    
-    out_file : character
-    
-    directory : character
-    
-    add_switch : bool
     """
 def file_get(string: str, dflt_file_name: str, file_name: str) -> None:
     """
@@ -27394,14 +25837,6 @@ def file_get(string: str, dflt_file_name: str, file_name: str) -> None:
     dflt_file_name : character
     
     file_name : character
-    
-    Returns
-    -------
-    string : character
-    
-    dflt_file_name : character
-    
-    file_name : character
     """
 def file_get_open(string: str, dflt_file_name: str, file_name: str, file_unit: typing.SupportsInt, readonly: bool) -> None:
     """
@@ -27409,18 +25844,6 @@ def file_get_open(string: str, dflt_file_name: str, file_name: str, file_unit: t
     
     Parameters
     ----------
-    string : character
-    
-    dflt_file_name : character
-    
-    file_name : character
-    
-    file_unit : int
-    
-    readonly : bool
-    
-    Returns
-    -------
     string : character
     
     dflt_file_name : character
@@ -27444,16 +25867,6 @@ def file_suffixer(in_file_name: str, out_file_name: str, suffix: str, add_switch
     suffix : character
     
     add_switch : bool
-    
-    Returns
-    -------
-    in_file_name : character
-    
-    out_file_name : character
-    
-    suffix : character
-    
-    add_switch : bool
     """
 def finalize_reflectivity_table(table: PhotonReflectTableStruct, in_degrees: bool) -> None:
     """
@@ -27470,13 +25883,6 @@ def finalize_reflectivity_table(table: PhotonReflectTableStruct, in_degrees: boo
     
     in_degrees : bool
         Table angles in degrees?
-    
-    Returns
-    -------
-    table : PhotonReflectTableStruct
-        Surface tables to be finalized.
-        This parameter is an input/output and is modified in-place.
-        As an output, table: Finalized surface tables.
     """
 def find_element_ends(ele: EleStruct, ix_multipass: typing.SupportsInt | None = None) -> FindElementEnds:
     """
@@ -27539,14 +25945,6 @@ def find_location(arr: IntArray1D, value: typing.SupportsInt, ix_match: typing.S
     value : int
     
     ix_match : int
-    
-    Returns
-    -------
-    arr : 1D array of int
-    
-    value : int
-    
-    ix_match : int
     """
 @typing.overload
 def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt) -> None:
@@ -27555,14 +25953,6 @@ def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt) -
     
     Parameters
     ----------
-    arr : 1D array of bool
-    
-    value : bool
-    
-    ix_match : int
-    
-    Returns
-    -------
     arr : 1D array of bool
     
     value : bool
@@ -27877,11 +26267,6 @@ def g_integrals_calc(lat: LatStruct) -> None:
     ----------
     lat : LatStruct
         Lattice to integrate through.
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice to integrate through.
     """
 def gamma_ref(ele: EleStruct) -> float:
     """
@@ -27907,16 +26292,8 @@ def gelbd(phi: typing.SupportsFloat, mc: typing.SupportsFloat) -> Gelbd:
     
     mc : float
     
-    elb : float
-    
-    eld : float
-    
     Returns
     -------
-    phi : float
-    
-    mc : float
-    
     elb : float
     
     eld : float
@@ -28002,18 +26379,6 @@ def gen_grad_field(deriv: RealArray1D, gg: GenGrad1Struct, rho: typing.SupportsF
     theta : float
     
     field : 1D array of float (shape: 3)
-    
-    Returns
-    -------
-    deriv : 1D array of float
-    
-    gg : GenGrad1Struct
-    
-    rho : float
-    
-    theta : float
-    
-    field : 1D array of float (shape: 3)
     """
 def get_bl_from_fwhm(bound: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
@@ -28045,14 +26410,6 @@ def get_called_file(delim: str, call_file: str, err: bool) -> None:
     
     Parameters
     ----------
-    delim : character
-    
-    call_file : character
-    
-    err : bool
-    
-    Returns
-    -------
     delim : character
     
     call_file : character
@@ -28102,16 +26459,6 @@ def get_file_number(file_name: str, cnum_in: str, num_out: typing.SupportsInt, e
     
     Parameters
     ----------
-    file_name : character
-    
-    cnum_in : character
-    
-    num_out : int
-    
-    err_flag : bool
-    
-    Returns
-    -------
     file_name : character
     
     cnum_in : character
@@ -28228,16 +26575,6 @@ def gpt_field_grid_scaling(ele: EleStruct, dimensions: typing.SupportsInt, field
     field_scale : float
     
     ref_time : float
-    
-    Returns
-    -------
-    ele : EleStruct
-    
-    dimensions : int
-    
-    field_scale : float
-    
-    ref_time : float
     """
 def gpt_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value: typing.SupportsFloat) -> None:
     """
@@ -28245,14 +26582,6 @@ def gpt_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value
     
     Parameters
     ----------
-    pt0 : GridFieldPt1Struct
-    
-    ele : EleStruct
-    
-    field_value : float
-    
-    Returns
-    -------
     pt0 : GridFieldPt1Struct
     
     ele : EleStruct
@@ -28344,12 +26673,6 @@ def hanhan(N: typing.SupportsInt, hh: RealArray1D) -> None:
     N : int
     
     hh : 1D array of float
-    
-    Returns
-    -------
-    N : int
-    
-    hh : 1D array of float
     """
 def hard_multipole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -28388,18 +26711,6 @@ def hard_multipole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at:
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting coordinates.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending coordinates.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the fringe.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix including the fringe.
     """
 def has_attribute(ele: EleStruct, attrib: str, has_it: bool) -> None:
     """
@@ -28407,14 +26718,6 @@ def has_attribute(ele: EleStruct, attrib: str, has_it: bool) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-    
-    attrib : character
-    
-    has_it : bool
-    
-    Returns
-    -------
     ele : EleStruct
     
     attrib : character
@@ -28471,20 +26774,6 @@ def hdf5_write_beam(file_name: str, bunches: BunchStructArray1D, append: bool, e
     lat : LatStruct, optional
     
     alive_only : bool, optional
-    
-    Returns
-    -------
-    file_name : character
-    
-    bunches : 1D array of BunchStruct
-    
-    append : bool
-    
-    error : bool
-    
-    lat : LatStruct, optional
-    
-    alive_only : bool, optional
     """
 def hdf5_write_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStructArray1D, err_flag: bool) -> None:
     """
@@ -28492,16 +26781,6 @@ def hdf5_write_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStru
     
     Parameters
     ----------
-    file_name : character
-    
-    ele : EleStruct
-    
-    g_field : 1D array of GridFieldStruct
-    
-    err_flag : bool
-    
-    Returns
-    -------
     file_name : character
     
     ele : EleStruct
@@ -28519,12 +26798,6 @@ def hom_voltage(lr_wake: WakeLrModeStruct, voltage: typing.SupportsFloat) -> Non
     lr_wake : WakeLrModeStruct
     
     voltage : float
-    
-    Returns
-    -------
-    lr_wake : WakeLrModeStruct
-    
-    voltage : float
     """
 def hwang_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -28539,11 +26812,6 @@ def hwang_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
     
     Parameters
     ----------
-    orb : CoordStruct
-        Starting coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Coords after tracking.
-    
     ele : EleStruct
         SBend element.
     
@@ -28553,16 +26821,6 @@ def hwang_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
     particle_at : int
         first_track_edge$, or second_track_edge$
     
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the edge.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix including the edge.
-    
-    make_matrix : bool, optional
-        Propagate the transfer matrix? Default is False.
-    
-    Returns
-    -------
     orb : CoordStruct
         Starting coords.
         This parameter is an input/output and is modified in-place.
@@ -28572,6 +26830,9 @@ def hwang_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
         Transfer matrix up to the edge.
         This parameter is an input/output and is modified in-place.
         As an output, mat6: Transfer matrix including the edge.
+    
+    make_matrix : bool, optional
+        Propagate the transfer matrix? Default is False.
     """
 def i_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat) -> float:
     """
@@ -28626,22 +26887,6 @@ def ibs_matrix_c(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Ann
     species : int
     
     ibs_mat : 2D array of float (shape: 6,6)
-    
-    Returns
-    -------
-    sigma_mat : 2D array of float (shape: 6,6)
-    
-    tail_cut : bool
-    
-    tau : float
-    
-    energy : float
-    
-    n_part : float
-    
-    species : int
-    
-    ibs_mat : 2D array of float (shape: 6,6)
     """
 def igfcoulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
@@ -28649,24 +26894,6 @@ def igfcoulombfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Su
     
     Parameters
     ----------
-    u : float
-    
-    v : float
-    
-    w : float
-    
-    gam : float
-    
-    dx : float
-    
-    dy : float
-    
-    dz : float
-    
-    res : float
-    
-    Returns
-    -------
     u : float
     
     v : float
@@ -28704,24 +26931,6 @@ def igfexfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     dz : float
     
     res : float
-    
-    Returns
-    -------
-    u : float
-    
-    v : float
-    
-    w : float
-    
-    gam : float
-    
-    dx : float
-    
-    dy : float
-    
-    dz : float
-    
-    res : float
     """
 def igfeyfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFloat, gam: typing.SupportsFloat, dx: typing.SupportsFloat, dy: typing.SupportsFloat, dz: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
@@ -28729,24 +26938,6 @@ def igfeyfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     
     Parameters
     ----------
-    u : float
-    
-    v : float
-    
-    w : float
-    
-    gam : float
-    
-    dx : float
-    
-    dy : float
-    
-    dz : float
-    
-    res : float
-    
-    Returns
-    -------
     u : float
     
     v : float
@@ -28784,24 +26975,6 @@ def igfezfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.Support
     dz : float
     
     res : float
-    
-    Returns
-    -------
-    u : float
-    
-    v : float
-    
-    w : float
-    
-    gam : float
-    
-    dx : float
-    
-    dy : float
-    
-    dz : float
-    
-    res : float
     """
 def increment_file_number(file_name: str, digits: typing.SupportsInt, number: typing.SupportsInt, cnumber: str) -> None:
     """
@@ -28816,16 +26989,6 @@ def increment_file_number(file_name: str, digits: typing.SupportsInt, number: ty
     number : int
     
     cnumber : character
-    
-    Returns
-    -------
-    file_name : character
-    
-    digits : int
-    
-    number : int
-    
-    cnumber : character
     """
 def index_nocase(string1: str, string2: str, indx: typing.SupportsInt) -> None:
     """
@@ -28833,14 +26996,6 @@ def index_nocase(string1: str, string2: str, indx: typing.SupportsInt) -> None:
     
     Parameters
     ----------
-    string1 : character
-    
-    string2 : character
-    
-    indx : int
-    
-    Returns
-    -------
     string1 : character
     
     string2 : character
@@ -28951,10 +27106,6 @@ def init_bmad_parser_common(lat: LatStruct | None = None) -> None:
     Parameters
     ----------
     lat : LatStruct, optional
-    
-    Returns
-    -------
-    lat : LatStruct, optional
     """
 def init_bunch_distribution(ele: EleStruct, param: LatParamStruct, beam_init: BeamInitStruct, ix_bunch: typing.SupportsInt, modes: NormalModesStruct | None = None, print_p0c_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> InitBunchDistribution:
     """
@@ -29043,13 +27194,6 @@ def init_complex_taylor_series(complex_taylor: ComplexTaylorStruct, n_term: typi
     
     save : bool, optional
         If True then save any old terms when complex_taylor is resized. Default is False.
-    
-    Returns
-    -------
-    complex_taylor : ComplexTaylorStruct
-        Old structure.
-        This parameter is an input/output and is modified in-place.
-        As an output, complex_taylor: Initalized structure.
     """
 @typing.overload
 def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], ele: EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> None:
@@ -29077,6 +27221,9 @@ def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[
     
     Parameters
     ----------
+    orb : CoordStruct
+        Input orbit
+    
     vec : 1D array of float (shape: 6)
         Coordinate vector. If not present then taken to be zero.
     
@@ -29116,14 +27263,6 @@ def init_coord(orb: CoordStruct, vec: typing.Annotated[collections.abc.Sequence[
         Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
         photon coords using a random number generator. If False, the photon coords will be centered within the
         distribution specified in the photon_init ele.
-    
-    orb : CoordStruct
-        Input orbit
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Input orbit
     """
 @typing.overload
 def init_coord(orb_in: CoordStruct, ele: EleStruct | None = None, element_end: typing.SupportsInt | None = None, particle: typing.SupportsInt | None = None, direction: typing.SupportsInt | None = None, E_photon: typing.SupportsFloat | None = None, t_offset: typing.SupportsFloat | None = None, shift_vec6: bool | None = None, spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, s_pos: typing.SupportsFloat | None = None, random_on: bool | None = None) -> CoordStruct:
@@ -29193,9 +27332,6 @@ def init_coord(orb_in: CoordStruct, ele: EleStruct | None = None, element_end: t
     
     Returns
     -------
-    orb_in : CoordStruct
-        Input orbit
-    
     orb_out : CoordStruct
         Initialized coordinate
     """
@@ -29225,6 +27361,9 @@ def init_coord(orb: CoordStruct, ele: EleStruct | None = None, element_end: typi
     
     Parameters
     ----------
+    orb : CoordStruct
+        Input orbit
+    
     ele : EleStruct, optional
         Particle is initialized to start at element_end of this ele.
     
@@ -29253,14 +27392,6 @@ def init_coord(orb: CoordStruct, ele: EleStruct | None = None, element_end: typi
     
     spin : 1D array of float (shape: 3), optional
         Particle spin. Taken to be zero if not present.
-    
-    orb : CoordStruct
-        Input orbit
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Input orbit
     """
 def init_custom(lat: LatStruct) -> None:
     """
@@ -29268,10 +27399,6 @@ def init_custom(lat: LatStruct) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    Returns
-    -------
     lat : LatStruct
     """
 def init_ele(key: typing.SupportsInt | None = None, sub_key: typing.SupportsInt | None = None, ix_ele: typing.SupportsInt | None = None, branch: BranchStruct | None = None) -> EleStruct:
@@ -29317,13 +27444,6 @@ def init_em_taylor_series(em_taylor: EmTaylorStruct, n_term: typing.SupportsInt,
     
     save_old : bool, optional
         If True then save any old terms when em_taylor is resized. Default is False.
-    
-    Returns
-    -------
-    em_taylor : EmTaylorStruct
-        Old structure.
-        This parameter is an input/output and is modified in-place.
-        As an output, em_taylor: Initalized structure.
     """
 def init_lat(n: typing.SupportsInt | None = None, init_beginning_ele: bool | None = None) -> LatStruct:
     """
@@ -29348,13 +27468,6 @@ def init_multipole_cache(ele: EleStruct) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-        Element to init
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Initalized element.
-    
-    Returns
-    -------
     ele : EleStruct
         Element to init
         This parameter is an input/output and is modified in-place.
@@ -29475,13 +27588,6 @@ def init_taylor_series(bmad_taylor: TaylorStruct, n_term: typing.SupportsInt, sa
     save_old : bool, optional
         If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
         Default is False.
-    
-    Returns
-    -------
-    bmad_taylor : TaylorStruct
-        Old structure.
-        This parameter is an input/output and is modified in-place.
-        As an output, bmad_taylor: Initalized structure.
     """
 def init_wake(n_sr_long: typing.SupportsInt, n_sr_trans: typing.SupportsInt, n_sr_z: typing.SupportsInt, n_lr_mode: typing.SupportsInt, always_allocate: bool | None = None) -> WakeStruct | None:
     """
@@ -29559,18 +27665,6 @@ def insert_element(lat: LatStruct, insert_ele: EleStruct, ix_ele: typing.Support
         orbit array to enlarge.
         This parameter is an input/output and is modified in-place.
         As an output, orbit: Enlarged orbit array.
-    
-    Returns
-    -------
-    lat : LatStruct
-        lattice that will be modified
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: lattice with new element inserted
-    
-    orbit : 1D array of CoordStruct, optional
-        orbit array to enlarge.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Enlarged orbit array.
     """
 def insert_phase_trombone(branch: BranchStruct) -> None:
     """
@@ -29582,13 +27676,6 @@ def insert_phase_trombone(branch: BranchStruct) -> None:
         Lattice branch.
         This parameter is an input/output and is modified in-place.
         As an output, branch: Lattice branch with trumbone at branch.ele(1).
-    
-    Returns
-    -------
-    branch : BranchStruct
-        Lattice branch.
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: Lattice branch with trumbone at branch.ele(1).
     """
 def int_str(int_: typing.SupportsInt, width: typing.SupportsInt | None = None, str: str) -> None:
     """
@@ -29596,16 +27683,6 @@ def int_str(int_: typing.SupportsInt, width: typing.SupportsInt | None = None, s
     
     Parameters
     ----------
-    int : (unknown)
-    
-    width : int, optional
-    
-    str : character
-    
-    Returns
-    -------
-    int : (unknown)
-    
     width : int, optional
     
     str : character
@@ -29647,22 +27724,6 @@ def integrate_max(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datu
     vec : 1D array of float
     
     datum : TaoDataStruct
-    
-    Returns
-    -------
-    ix_start : int
-    
-    ix_ele : int
-    
-    datum_value : float
-    
-    ix_m : int
-    
-    branch : BranchStruct
-    
-    vec : 1D array of float
-    
-    datum : TaoDataStruct
     """
 def integrate_min(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datum_value: typing.SupportsFloat, ix_m: typing.SupportsInt, branch: BranchStruct, vec: RealArray1D, datum: TaoDataStruct) -> None:
     """
@@ -29670,22 +27731,6 @@ def integrate_min(ix_start: typing.SupportsInt, ix_ele: typing.SupportsInt, datu
     
     Parameters
     ----------
-    ix_start : int
-    
-    ix_ele : int
-    
-    datum_value : float
-    
-    ix_m : int
-    
-    branch : BranchStruct
-    
-    vec : 1D array of float
-    
-    datum : TaoDataStruct
-    
-    Returns
-    -------
     ix_start : int
     
     ix_ele : int
@@ -29743,18 +27788,6 @@ def integration_timer(ele: EleStruct, param: LatParamStruct, start: CoordStruct,
     orb_max : CoordStruct
     
     tol : float
-    
-    Returns
-    -------
-    ele : EleStruct
-    
-    param : LatParamStruct
-    
-    start : CoordStruct
-    
-    orb_max : CoordStruct
-    
-    tol : float
     """
 @typing.overload
 def integration_timer(a_fibre: Fibre, orbit: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], orbit_max: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"], tol_dp: typing.SupportsFloat) -> None:
@@ -29763,16 +27796,6 @@ def integration_timer(a_fibre: Fibre, orbit: typing.Annotated[collections.abc.Se
     
     Parameters
     ----------
-    a_fibre : Fibre
-    
-    orbit : 1D array of float (shape: 6)
-    
-    orbit_max : 1D array of float (shape: 6)
-    
-    tol_dp : float
-    
-    Returns
-    -------
     a_fibre : Fibre
     
     orbit : 1D array of float (shape: 6)
@@ -29920,20 +27943,6 @@ def is_integer(string: str, int_: typing.SupportsInt | None = None, delims: str 
     ----------
     string : character
     
-    int : (unknown)
-    
-    delims : character, optional
-    
-    ix_word : int, optional
-    
-    valid : bool
-    
-    Returns
-    -------
-    string : character
-    
-    int : (unknown)
-    
     delims : character, optional
     
     ix_word : int, optional
@@ -29951,14 +27960,6 @@ def is_logical(string: str, ignore: bool | None = None, valid: bool) -> None:
     ignore : bool, optional
     
     valid : bool
-    
-    Returns
-    -------
-    string : character
-    
-    ignore : bool, optional
-    
-    valid : bool
     """
 def is_real(string: str, ignore: bool | None = None, real_num: typing.SupportsFloat | None = None, valid: bool) -> None:
     """
@@ -29966,16 +27967,6 @@ def is_real(string: str, ignore: bool | None = None, real_num: typing.SupportsFl
     
     Parameters
     ----------
-    string : character
-    
-    ignore : bool, optional
-    
-    real_num : float, optional
-    
-    valid : bool
-    
-    Returns
-    -------
     string : character
     
     ignore : bool, optional
@@ -30036,8 +28027,6 @@ def j_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat) -> float:
     
     Returns
     -------
-    m : int
-    
     j_bes : float
         Bessel value.
     """
@@ -30136,13 +28125,6 @@ def kill_complex_taylor(complex_taylor: ComplexTaylorStructArray1D) -> None:
         complex_taylor to be deallocated. It is OK if complex_taylor has already been deallocated.
         This parameter is an input/output and is modified in-place.
         As an output, complex_taylor: deallocated complex_taylor structure.
-    
-    Returns
-    -------
-    complex_taylor : 1D array of ComplexTaylorStruct
-        complex_taylor to be deallocated. It is OK if complex_taylor has already been deallocated.
-        This parameter is an input/output and is modified in-place.
-        As an output, complex_taylor: deallocated complex_taylor structure.
     """
 def kill_ptc_layouts(lat: LatStruct) -> None:
     """
@@ -30159,13 +28141,6 @@ def kill_taylor(bmad_taylor: TaylorStructArray1D) -> None:
     
     Parameters
     ----------
-    bmad_taylor : 1D array of TaylorStruct
-        Taylor to be deallocated.
-        This parameter is an input/output and is modified in-place.
-        As an output, bmad_taylor: deallocated Taylor structure.
-    
-    Returns
-    -------
     bmad_taylor : 1D array of TaylorStruct
         Taylor to be deallocated.
         This parameter is an input/output and is modified in-place.
@@ -30224,14 +28199,6 @@ def knots_to_string(x_knot: RealArray1D, y_knot: RealArray1D, str: str) -> None:
     y_knot : 1D array of float
     
     str : character
-    
-    Returns
-    -------
-    x_knot : 1D array of float
-    
-    y_knot : 1D array of float
-    
-    str : character
     """
 def lafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
@@ -30239,16 +28206,6 @@ def lafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFl
     
     Parameters
     ----------
-    x : float
-    
-    y : float
-    
-    z : float
-    
-    res : float
-    
-    Returns
-    -------
     x : float
     
     y : float
@@ -30268,9 +28225,6 @@ def lat_compute_ref_energy_and_time(lat: LatStruct) -> bool:
     
     Returns
     -------
-    lat : LatStruct
-        Input lattice.
-    
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
@@ -30315,11 +28269,6 @@ def lat_ele_locator(loc_str: str, lat: LatStruct, eles: ElePointerStructAlloc1D,
     
     Returns
     -------
-    eles : 1D array of ElePointerStruct
-        If append_eles is True, save existing elements.
-        This parameter is an input/output and is modified in-place.
-        As an output, eles: Array of matching elements.
-    
     n_loc : int
         Number of existing elements. Used if append_eles is True.
         This parameter is an input/output and is modified in-place.
@@ -30337,12 +28286,6 @@ def lat_equal_lat(lat_out: LatStruct, lat_in: LatStruct) -> None:
     lat_out : LatStruct
     
     lat_in : LatStruct
-    
-    Returns
-    -------
-    lat_out : LatStruct
-    
-    lat_in : LatStruct
     """
 def lat_geometry(lat: LatStruct) -> None:
     """
@@ -30350,11 +28293,6 @@ def lat_geometry(lat: LatStruct) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-        The lattice.
-    
-    Returns
-    -------
     lat : LatStruct
         The lattice.
     """
@@ -30380,9 +28318,6 @@ def lat_make_mat6(lat: LatStruct, ix_ele: typing.SupportsInt | None = None, ref_
     
     Returns
     -------
-    lat : LatStruct
-        Lat containing the elements.
-    
     err_flag : bool, optional
         True if there is an error. False otherwise.
     """
@@ -30418,12 +28353,6 @@ def lat_vec_equal_lat_vec(lat1: LatStructArray1D, lat2: LatStructArray1D) -> Non
     lat1 : 1D array of LatStruct
     
     lat2 : 1D array of LatStruct
-    
-    Returns
-    -------
-    lat1 : 1D array of LatStruct
-    
-    lat2 : 1D array of LatStruct
     """
 def lattice_bookkeeper(lat: LatStruct) -> bool:
     """
@@ -30438,11 +28367,6 @@ def lattice_bookkeeper(lat: LatStruct) -> bool:
     
     Returns
     -------
-    lat : LatStruct
-        Lattice needing bookkeeping.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with bookkeeping done.
-    
     err_flag : bool, optional
         Set true if there is an error. False otherwise.
     """
@@ -30452,13 +28376,6 @@ def lcavity_rf_step_setup(ele: EleStruct) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-        Lcavity element.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with ele.rf properly setup.
-    
-    Returns
-    -------
     ele : EleStruct
         Lcavity element.
         This parameter is an input/output and is modified in-place.
@@ -30494,18 +28411,6 @@ def linear_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: ty
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Starting coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Coords after tracking.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the edge.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix including the edge.
     """
 def linear_coef(stack: ExpressionAtomStructArray1D) -> LinearCoef:
     """
@@ -30532,22 +28437,6 @@ def linear_fit(x: RealArray1D, y: RealArray1D, n_data: typing.SupportsInt, a: ty
     
     Parameters
     ----------
-    x : 1D array of float
-    
-    y : 1D array of float
-    
-    n_data : int
-    
-    a : float
-    
-    b : float
-    
-    sig_a : float
-    
-    sig_b : float
-    
-    Returns
-    -------
     x : 1D array of float
     
     y : 1D array of float
@@ -30629,12 +28518,6 @@ def logic_str(logic: bool, str: str) -> None:
     logic : bool
     
     str : character
-    
-    Returns
-    -------
-    logic : bool
-    
-    str : character
     """
 def logical_to_python(logic: bool, string: str) -> None:
     """
@@ -30642,12 +28525,6 @@ def logical_to_python(logic: bool, string: str) -> None:
     
     Parameters
     ----------
-    logic : bool
-    
-    string : character
-    
-    Returns
-    -------
     logic : bool
     
     string : character
@@ -30698,11 +28575,6 @@ def low_energy_z_correction(orbit: CoordStruct, ele: EleStruct, ds: typing.Suppo
     
     Returns
     -------
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the multipole.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix transfer matrix including multipole.
-    
     dz : float
         Change in z.
     """
@@ -30806,8 +28678,6 @@ def mad_map_to_taylor(map: MadMapStruct, energy: MadEnergyStruct, taylor: Taylor
     energy : MadEnergyStruct
         Energy numbers.
     
-    Returns
-    -------
     taylor : 1D array of TaylorStruct
         Taylor map.
     """
@@ -30996,13 +28866,6 @@ def mad_tmsymm(te: typing.Annotated[collections.abc.Sequence[typing.Annotated[co
         array to be symmertrized.
         This parameter is an input/output and is modified in-place.
         As an output, te: symmetrized array.
-    
-    Returns
-    -------
-    te : 3D array of float (shape: 6,6,6)
-        array to be symmertrized.
-        This parameter is an input/output and is modified in-place.
-        As an output, te: symmetrized array.
     """
 def mad_tmtilt(map: MadMapStruct, tilt: typing.SupportsFloat) -> None:
     """
@@ -31020,13 +28883,6 @@ def mad_tmtilt(map: MadMapStruct, tilt: typing.SupportsFloat) -> None:
     
     tilt : float
         Tilt
-    
-    Returns
-    -------
-    map : MadMapStruct
-        Unrotated transport map.
-        This parameter is an input/output and is modified in-place.
-        As an output, map: Rotated transport map.
     """
 def mad_track1(c0: CoordStruct, map: MadMapStruct) -> CoordStruct:
     """
@@ -31057,12 +28913,6 @@ def make_g2_mats(twiss: TwissStruct, g2_mat: typing.Annotated[collections.abc.Se
     twiss : TwissStruct
         Twiss parameters.
     
-    g2_mat : 2D array of float (shape: 2,2)
-    
-    g2_inv_mat : 2D array of float (shape: 2,2)
-    
-    Returns
-    -------
     g2_mat : 2D array of float (shape: 2,2)
     
     g2_inv_mat : 2D array of float (shape: 2,2)
@@ -31158,12 +29008,6 @@ def make_legal_comment(comment_in: str, comment_out: str) -> None:
     comment_in : character
     
     comment_out : character
-    
-    Returns
-    -------
-    comment_in : character
-    
-    comment_out : character
     """
 def make_mad_map(ele: EleStruct, param: LatParamStruct) -> MakeMadMap:
     """
@@ -31204,9 +29048,6 @@ def make_mat6(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct | No
     
     Returns
     -------
-    ele : EleStruct
-        Element holding the transfer matrix.
-    
     end_orb : CoordStruct, optional
         Reference coordinates at the end of element.
     
@@ -31232,11 +29073,6 @@ def make_mat6_bmad(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct
     
     Returns
     -------
-    ele : EleStruct
-        Element to track through.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with transfer matrix.
-    
     end_orb : CoordStruct
         Coordinates at the end of element.
     
@@ -31262,11 +29098,6 @@ def make_mat6_bmad_photon(ele: EleStruct, param: LatParamStruct, start_orb: Coor
     
     Returns
     -------
-    ele : EleStruct
-        Element with transfer matrix
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with transfer matrix.
-    
     end_orb : CoordStruct
         Coordinates at the end of element.
     
@@ -31312,9 +29143,6 @@ def make_mat6_mad(ele: EleStruct, param: LatParamStruct, c0: CoordStruct) -> Coo
     
     Returns
     -------
-    ele : EleStruct
-        Element with transfer matrix.
-    
     c1 : CoordStruct
         Coordinates at the end of element.
     """
@@ -31334,11 +29162,6 @@ def make_mat6_symp_lie_ptc(ele: EleStruct, start_orb: CoordStruct) -> CoordStruc
     
     Returns
     -------
-    ele : EleStruct
-        Element with transfer matrix
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with transfer matrix.
-    
     end_orb : CoordStruct
         Coordinates at end of element.
     """
@@ -31360,15 +29183,8 @@ def make_mat6_taylor(ele: EleStruct, start_orb: CoordStruct, err_flag: bool | No
     
     Returns
     -------
-    ele : EleStruct
-        Element to track through.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with transfer matrix.
-    
     end_orb : CoordStruct
         Coordinates at the end of element.
-    
-    err_flag : bool, optional
     """
 def make_mat6_tracking(ele: EleStruct, param: LatParamStruct, start_orb: CoordStruct, spin_only: bool | None = None) -> MakeMat6Tracking:
     """
@@ -31392,11 +29208,6 @@ def make_mat6_tracking(ele: EleStruct, param: LatParamStruct, start_orb: CoordSt
     
     Returns
     -------
-    ele : EleStruct
-        Element with transfer matrix
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with transfer matrix.
-    
     end_orb : CoordStruct
         Coordinates at the end of element.
     
@@ -31519,13 +29330,6 @@ def make_unit_mad_map(map: MadMapStruct) -> None:
         2nd order transport map.
         This parameter is an input/output and is modified in-place.
         As an output, map: Unity 2nd order map.
-    
-    Returns
-    -------
-    map : MadMapStruct
-        2nd order transport map.
-        This parameter is an input/output and is modified in-place.
-        As an output, map: Unity 2nd order map.
     """
 def make_v(M: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], V: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"], abz_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
     """
@@ -31610,11 +29414,6 @@ def makeup_super_slave1(slave: EleStruct, lord: EleStruct, offset: typing.Suppor
     
     Returns
     -------
-    slave : EleStruct
-        Slave element.
-        This parameter is an input/output and is modified in-place.
-        As an output, slave: Slave element with appropriate values set.
-    
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
@@ -31652,14 +29451,6 @@ def map1_times_map1(map2: SpinOrbitMap1Struct, map1: SpinOrbitMap1Struct, map_ou
     map1 : SpinOrbitMap1Struct
     
     map_out : SpinOrbitMap1Struct
-    
-    Returns
-    -------
-    map2 : SpinOrbitMap1Struct
-    
-    map1 : SpinOrbitMap1Struct
-    
-    map_out : SpinOrbitMap1Struct
     """
 def map_to_angle_coords(t_canon: TaylorStructArray1D) -> TaylorStructArray1D:
     """
@@ -31684,13 +29475,6 @@ def mark_patch_regions(branch: BranchStruct) -> None:
     
     Parameters
     ----------
-    branch : BranchStruct
-        Lattice branch with .wall3d beam chamber wall.
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: Lattice branch with .wall3d.section(i).patch_in_region marked.
-    
-    Returns
-    -------
     branch : BranchStruct
         Lattice branch with .wall3d beam chamber wall.
         This parameter is an input/output and is modified in-place.
@@ -31753,8 +29537,6 @@ def mat4_multipole(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typ
     
     Returns
     -------
-    n : int
-    
     kick_mat : 2D array of float (shape: 4,4)
         Kick matrix (Jacobian) at orbit.
     """
@@ -31768,11 +29550,6 @@ def mat6_add_offsets(ele: EleStruct, param: LatParamStruct) -> None:
         Element with given orientation.
     
     param : LatParamStruct
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element with given orientation.
     """
 def mat6_add_pitch(x_pitch_tot: typing.SupportsFloat, y_pitch_tot: typing.SupportsFloat, orientation: typing.SupportsInt, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
     """
@@ -31789,13 +29566,6 @@ def mat6_add_pitch(x_pitch_tot: typing.SupportsFloat, y_pitch_tot: typing.Suppor
     orientation : int
         Element longitudinal orientation. +1 or -1.
     
-    mat6 : 2D array of float (shape: 6,6)
-        1st order part of the transfer map (Jacobian).
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: 1st order xfer map with pitches.
-    
-    Returns
-    -------
     mat6 : 2D array of float (shape: 6,6)
         1st order part of the transfer map (Jacobian).
         This parameter is an input/output and is modified in-place.
@@ -31903,14 +29673,6 @@ def match_reg(str: str, pat: str, is_match: bool) -> None:
     pat : character
     
     is_match : bool
-    
-    Returns
-    -------
-    str : character
-    
-    pat : character
-    
-    is_match : bool
     """
 def match_wild(string: str, template_: str, is_match: bool) -> None:
     """
@@ -31919,16 +29681,6 @@ def match_wild(string: str, template_: str, is_match: bool) -> None:
     Parameters
     ----------
     string : character
-    
-    template : (unknown)
-    
-    is_match : bool
-    
-    Returns
-    -------
-    string : character
-    
-    template : (unknown)
     
     is_match : bool
     """
@@ -31972,20 +29724,8 @@ def mfft1(a: RealArray1D, b: RealArray1D, n: IntArray1D, ndim: typing.SupportsIn
     
     isn : int
     
-    ierr : int
-    
     Returns
     -------
-    a : 1D array of float
-    
-    b : 1D array of float
-    
-    n : 1D array of int
-    
-    ndim : int
-    
-    isn : int
-    
     ierr : int
     """
 def milli_sleep(milli_sec: typing.SupportsInt) -> None:
@@ -31994,10 +29734,6 @@ def milli_sleep(milli_sec: typing.SupportsInt) -> None:
     
     Parameters
     ----------
-    milli_sec : int
-    
-    Returns
-    -------
     milli_sec : int
     """
 def misalign_ptc_fibre(ele: EleStruct, use_offsets: bool, for_layout: bool) -> Fibre | None:
@@ -32175,9 +29911,6 @@ def multilayer_type_to_multilayer_params(ele: EleStruct) -> bool:
     
     Returns
     -------
-    ele : EleStruct
-        Multilayer element.
-    
     err_flag : bool
         Set True if multilayer type is unrecognized. False otherwise.
     """
@@ -32266,8 +29999,6 @@ def multipole_ab_to_kt(an: RealArray1D, bn: RealArray1D, knl: RealArray1D, tn: R
     bn : 1D array of float
         Normal multipole component.
     
-    Returns
-    -------
     knl : 1D array of float
         Multitude magnatude.
     
@@ -32326,6 +30057,12 @@ def multipole_ele_to_kt(ele: EleStruct, use_ele_tilt: bool, knl: RealArray1D, ti
         If True then include ele.value(tilt_tot$) in calculations. use_ele_tilt is ignored in the case of
         multipole$ elements.
     
+    knl : 1D array of float
+        Vector of strengths, MAD units.
+    
+    tilt : 1D array of float
+        Vector of tilts.
+    
     pole_type : int, optional
         Type of multipole. magnetic$ (default) or electric$.
     
@@ -32336,12 +30073,6 @@ def multipole_ele_to_kt(ele: EleStruct, use_ele_tilt: bool, knl: RealArray1D, ti
     -------
     ix_pole_max : int
         Index of largest nonzero pole.
-    
-    knl : 1D array of float
-        Vector of strengths, MAD units.
-    
-    tilt : 1D array of float
-        Vector of tilts.
     """
 def multipole_init(who: typing.SupportsInt, zero: bool | None = None) -> EleStruct:
     """
@@ -32394,11 +30125,6 @@ def multipole_kick(knl: typing.SupportsFloat, tilt: typing.SupportsFloat, n: typ
     ref_orb_offset : bool, optional
         If True and n = 0 then use the MAD convention and model the multipole as a zero length bend with bending
         angle knl. Default is False.
-    
-    Returns
-    -------
-    coord : CoordStruct
-        Particle position and direction of travel.
     """
 def multipole_kick_mat(knl: RealArray1D, tilt: RealArray1D, ref_species: typing.SupportsInt, ele: EleStruct, orbit: CoordStruct, factor: typing.SupportsFloat) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
@@ -32457,13 +30183,6 @@ def multipole_kicks(knl: RealArray1D, tilt: RealArray1D, ele: EleStruct, orbit: 
     
     ref_orb_offset : bool, optional
         If present and n = 0 then the multipole simulates a zero length bend with bending angle knl.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Particle position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Kicked particle.
     """
 def multipole_kt_to_ab(knl: RealArray1D, knsl: RealArray1D, tn: RealArray1D, an: RealArray1D, bn: RealArray1D) -> None:
     """
@@ -32480,8 +30199,6 @@ def multipole_kt_to_ab(knl: RealArray1D, knsl: RealArray1D, tn: RealArray1D, an:
     tn : 1D array of float
         Multipole angle.
     
-    Returns
-    -------
     an : 1D array of float
         Skew multipole component.
     
@@ -32502,11 +30219,6 @@ def multipole_spin_tracking(ele: EleStruct, param: LatParamStruct, orbit: CoordS
     
     orbit : CoordStruct
         Particle coordinates.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Particle coordinates.
     """
 def mytan(y: typing.SupportsFloat, x: typing.SupportsFloat, arg: typing.SupportsFloat) -> None:
     """
@@ -32514,14 +30226,6 @@ def mytan(y: typing.SupportsFloat, x: typing.SupportsFloat, arg: typing.Supports
     
     Parameters
     ----------
-    y : float
-    
-    x : float
-    
-    arg : float
-    
-    Returns
-    -------
     y : float
     
     x : float
@@ -32576,8 +30280,6 @@ def n_spline_create(deriv0: RealArray1D, deriv1: RealArray1D, x1: typing.Support
     x1 : float
         Location where deriv1 derivatives have been evaluated.
     
-    Returns
-    -------
     n_spline : 1D array of float
         real(rp), Derivative vector from order 0 to order 2*n+1 of the interpolation spline.
     """
@@ -32606,14 +30308,6 @@ def nametable_add(nametable: NametableStruct, name: str, ix_name: typing.Support
     name : character
     
     ix_name : int
-    
-    Returns
-    -------
-    nametable : NametableStruct
-    
-    name : character
-    
-    ix_name : int
     """
 def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typing.SupportsInt | None = None, ix_max: typing.SupportsInt) -> None:
     """
@@ -32621,16 +30315,6 @@ def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typ
     
     Parameters
     ----------
-    nametable : NametableStruct
-    
-    name : character
-    
-    n_match : int, optional
-    
-    ix_max : int
-    
-    Returns
-    -------
     nametable : NametableStruct
     
     name : character
@@ -32650,14 +30334,6 @@ def nametable_change1(nametable: NametableStruct, name: str, ix_name: typing.Sup
     name : character
     
     ix_name : int
-    
-    Returns
-    -------
-    nametable : NametableStruct
-    
-    name : character
-    
-    ix_name : int
     """
 def nametable_init(nametable: NametableStruct, n_min: typing.SupportsInt | None = None, n_max: typing.SupportsInt | None = None) -> None:
     """
@@ -32670,14 +30346,6 @@ def nametable_init(nametable: NametableStruct, n_min: typing.SupportsInt | None 
     n_min : int, optional
     
     n_max : int, optional
-    
-    Returns
-    -------
-    nametable : NametableStruct
-    
-    n_min : int, optional
-    
-    n_max : int, optional
     """
 def nametable_remove(nametable: NametableStruct, ix_name: typing.SupportsInt) -> None:
     """
@@ -32685,12 +30353,6 @@ def nametable_remove(nametable: NametableStruct, ix_name: typing.SupportsInt) ->
     
     Parameters
     ----------
-    nametable : NametableStruct
-    
-    ix_name : int
-    
-    Returns
-    -------
     nametable : NametableStruct
     
     ix_name : int
@@ -32749,22 +30411,6 @@ def normal_form_complex_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: boo
     A_inverse : 1D array of TaylorStruct (shape: 6), optional
     
     order : int, optional
-    
-    Returns
-    -------
-    one_turn_taylor : 1D array of TaylorStruct (shape: 6)
-    
-    rf_on : bool
-    
-    F : 1D array of ComplexTaylorStruct (shape: 6), optional
-    
-    L : 1D array of ComplexTaylorStruct (shape: 6), optional
-    
-    A : 1D array of TaylorStruct (shape: 6), optional
-    
-    A_inverse : 1D array of TaylorStruct (shape: 6), optional
-    
-    order : int, optional
     """
 def normal_form_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool) -> NormalFormTaylors:
     """
@@ -32794,14 +30440,14 @@ def normal_form_taylors(one_turn_taylor: TaylorStructArray1D, rf_on: bool) -> No
     
     Returns
     -------
+    dhdj : 1D array of TaylorStruct (shape: 6), optional
+        Map from Floquet coordinates to phase advances
+    
     A : 1D array of TaylorStruct (shape: 6), optional
         Map from Floquet coordinates to Lab coordinates
     
     A_inverse : 1D array of TaylorStruct (shape: 6), optional
         Map from Lab coordinates to Floquet coordinates
-    
-    dhdj : 1D array of TaylorStruct (shape: 6), optional
-        Map from Floquet coordinates to phase advances
     """
 def normal_mode3_calc(t6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"], above_transition: bool | None = None, abz_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> NormalMode3Calc:
     """
@@ -32846,13 +30492,6 @@ def normal_mode_dispersion(ele: EleStruct, reverse: bool | None = None) -> None:
     
     reverse : bool, optional
         Default is False. If True, calculate the x,y dispersions from the normal mode ones.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element whose dispersions are to be adjusted.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with adjusted dispersions.
     """
 def normalize_evecs(evec: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"]], "FixedSize(6)"]) -> bool:
     """
@@ -32869,11 +30508,6 @@ def normalize_evecs(evec: typing.Annotated[collections.abc.Sequence[typing.Annot
     
     Returns
     -------
-    evec : 2D array of complex (shape: 6,6)
-        complex eigenvectors arranged down columns.
-        This parameter is an input/output and is modified in-place.
-        As an output, evec: Eigensystem normalized to be symplectic.
-    
     err_flag : bool
         Set true of normalization is not possible due to amplitude is zero.
     """
@@ -32953,16 +30587,6 @@ def odeint_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, s1_bo
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting coords: (x, px, y, py, z, delta) in element body coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending coords
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix propagated through the element.
-    
     err_flag : bool
         Set True if there is an error. False otherwise. Note: a particle getting lost, for example hitting an
         aperture, is *not* an error.
@@ -33013,18 +30637,10 @@ def odeint_bmad_time(orb: CoordStruct, ele: EleStruct, param: LatParamStruct, t_
     
     Returns
     -------
-    orb : CoordStruct
-        Starting coords: (x, px, y, py, s, ps) [t-based]
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Ending coords
-    
     rf_time : float
         Time relative to RF clock.
         This parameter is an input/output and is modified in-place.
         As an output, rf_time: Updated time.
-    
-    track : TrackStruct, optional
-        Structure holding the track information.
     
     err_flag : bool
         Set True if there is an error. False otherwise.
@@ -33084,19 +30700,9 @@ def offset_particle(ele: EleStruct, set: bool, orbit: CoordStruct, set_tilt: boo
     
     Returns
     -------
-    orbit : CoordStruct
-        Coordinates of the particle.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Coordinates of particle.
-    
     s_out : float, optional
         Longitudinal particle position. If set = set$: Relative to entrance end (in body coords). If set = unset$:
         Relative to upstream end (in lab coords).
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before off setting.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix transfer matrix after offsets applied.
     
     spin_qrot : 1D array of float (shape: 0:3), optional
         Spin rotation quaternion
@@ -33129,13 +30735,6 @@ def offset_photon(ele: EleStruct, orbit: CoordStruct, set: bool, offset_position
     
     rot_mat : 2D array of float (shape: 3,3), optional
         Rotation matrix from starting coords to ending coords.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Coordinates of the particle.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Coordinates of particle.
     """
 def omega_to_quat(omega: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
@@ -33264,16 +30863,6 @@ def orbit_reference_energy_correction(orbit: CoordStruct, p0c_new: typing.Suppor
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Coordinates to correct.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before correction.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix transfer matrix including correction.
     """
 def orbit_to_floor_phase_space(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[list[float], "FixedSize(6)"]:
     """
@@ -33330,9 +30919,6 @@ def orbit_too_large(orbit: CoordStruct, check_momentum: bool | None = None) -> O
     
     Returns
     -------
-    orbit : CoordStruct
-        Particle orbit.
-    
     param : LatParamStruct, optional
     
     is_too_large : bool
@@ -33360,14 +30946,6 @@ def order_evecs_by_n_similarity(eval: typing.Annotated[collections.abc.Sequence[
     
     Returns
     -------
-    eval : 1D array of complex (shape: 6)
-        complex eigenvalues.
-    
-    mat_tunes : 1D array of float (shape: 3)
-        Three normal mode tunes, in radians.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat_tunes: Ordered normal mode tunes, in radians.
-    
     evec : 2D array of complex (shape: 6,6)
         complex eigenvectors arranged down columns.
     
@@ -33386,32 +30964,15 @@ def order_evecs_by_plane_dominance(evec: typing.Annotated[collections.abc.Sequen
     
     Parameters
     ----------
-    eval : 1D array of complex (shape: 6)
-        complex eigenvalues.
-        This parameter is an input/output and is modified in-place.
-        As an output, eval: Ordered complex eigenvalues.
-    
     evec : 2D array of complex (shape: 6,6)
         complex eigenvectors arranged down columns.
         This parameter is an input/output and is modified in-place.
         As an output, evec: Ordered complex eigenvectors.
     
-    mat_tunes : 1D array of float (shape: 3), optional
-        Three normal mode tunes, in radians.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat_tunes: Reordered same as evecs.
-    
-    Returns
-    -------
     eval : 1D array of complex (shape: 6)
         complex eigenvalues.
         This parameter is an input/output and is modified in-place.
         As an output, eval: Ordered complex eigenvalues.
-    
-    evec : 2D array of complex (shape: 6,6)
-        complex eigenvectors arranged down columns.
-        This parameter is an input/output and is modified in-place.
-        As an output, evec: Ordered complex eigenvectors.
     
     mat_tunes : 1D array of float (shape: 3), optional
         Three normal mode tunes, in radians.
@@ -33427,15 +30988,15 @@ def order_evecs_by_tune(evec: typing.Annotated[collections.abc.Sequence[typing.A
     
     Parameters
     ----------
-    eval : 1D array of complex (shape: 6)
-        complex eigenvalues.
-        This parameter is an input/output and is modified in-place.
-        As an output, eval: Ordered eigenvalues.
-    
     evec : 2D array of complex (shape: 6,6)
         complex eigenvectors arranged down columns.
         This parameter is an input/output and is modified in-place.
         As an output, evec: Ordered eigenvectors.
+    
+    eval : 1D array of complex (shape: 6)
+        complex eigenvalues.
+        This parameter is an input/output and is modified in-place.
+        As an output, eval: Ordered eigenvalues.
     
     mat_tunes : 1D array of float (shape: 3)
         Three normal mode tunes, in radians.
@@ -33445,16 +31006,6 @@ def order_evecs_by_tune(evec: typing.Annotated[collections.abc.Sequence[typing.A
     
     Returns
     -------
-    eval : 1D array of complex (shape: 6)
-        complex eigenvalues.
-        This parameter is an input/output and is modified in-place.
-        As an output, eval: Ordered eigenvalues.
-    
-    evec : 2D array of complex (shape: 6,6)
-        complex eigenvectors arranged down columns.
-        This parameter is an input/output and is modified in-place.
-        As an output, evec: Ordered eigenvectors.
-    
     err_flag : bool
         Set to true if an error occured.
     """
@@ -33468,11 +31019,6 @@ def order_particles_in_z(bunch: BunchStruct) -> None:
     
     Parameters
     ----------
-    bunch : BunchStruct
-        collection of particles.
-    
-    Returns
-    -------
     bunch : BunchStruct
         collection of particles.
     """
@@ -33489,13 +31035,6 @@ def order_super_lord_slaves(lat: LatStruct, ix_lord: typing.SupportsInt) -> None
     
     ix_lord : int
         Index of lord element.
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lat.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lat with fixed controls.
     """
 def ordinal_str(n: typing.SupportsInt, str: str) -> None:
     """
@@ -33506,12 +31045,6 @@ def ordinal_str(n: typing.SupportsInt, str: str) -> None:
     n : int
     
     str : character
-    
-    Returns
-    -------
-    n : int
-    
-    str : character
     """
 def osc_alloc_freespace_array(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
@@ -33519,14 +31052,6 @@ def osc_alloc_freespace_array(nlo: typing.Annotated[collections.abc.Sequence[typ
     
     Parameters
     ----------
-    nlo : 1D array of int (shape: 3)
-    
-    nhi : 1D array of int (shape: 3)
-    
-    npad : 1D array of int (shape: 3)
-    
-    Returns
-    -------
     nlo : 1D array of int (shape: 3)
     
     nhi : 1D array of int (shape: 3)
@@ -33544,14 +31069,6 @@ def osc_alloc_image_array(nlo: typing.Annotated[collections.abc.Sequence[typing.
     nhi : 1D array of int (shape: 3)
     
     npad : 1D array of int (shape: 3)
-    
-    Returns
-    -------
-    nlo : 1D array of int (shape: 3)
-    
-    nhi : 1D array of int (shape: 3)
-    
-    npad : 1D array of int (shape: 3)
     """
 def osc_alloc_rectpipe_arrays(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
@@ -33564,14 +31081,6 @@ def osc_alloc_rectpipe_arrays(nlo: typing.Annotated[collections.abc.Sequence[typ
     nhi : 1D array of int (shape: 3)
     
     npad : 1D array of int (shape: 3)
-    
-    Returns
-    -------
-    nlo : 1D array of int (shape: 3)
-    
-    nhi : 1D array of int (shape: 3)
-    
-    npad : 1D array of int (shape: 3)
     """
 def osc_getgrnpipe(gam: typing.SupportsFloat, a: typing.SupportsFloat, b: typing.SupportsFloat, delta: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], umin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
@@ -33579,20 +31088,6 @@ def osc_getgrnpipe(gam: typing.SupportsFloat, a: typing.SupportsFloat, b: typing
     
     Parameters
     ----------
-    gam : float
-    
-    a : float
-    
-    b : float
-    
-    delta : 1D array of float (shape: 3)
-    
-    umin : 1D array of float (shape: 3)
-    
-    npad : 1D array of int (shape: 3)
-    
-    Returns
-    -------
     gam : float
     
     a : float
@@ -33630,24 +31125,6 @@ def osc_write_rectpipe_grn(apipe: typing.SupportsFloat, bpipe: typing.SupportsFl
     nhi : 1D array of int (shape: 3)
     
     gamma : float
-    
-    Returns
-    -------
-    apipe : float
-    
-    bpipe : float
-    
-    delta : 1D array of float (shape: 3)
-    
-    umin : 1D array of float (shape: 3)
-    
-    umax : 1D array of float (shape: 3)
-    
-    nlo : 1D array of int (shape: 3)
-    
-    nhi : 1D array of int (shape: 3)
-    
-    gamma : float
     """
 @typing.overload
 def out_io(level: typing.SupportsInt, routine_name: str, line: str, i_num: typing.SupportsInt, insert_tag_line: bool | None = None) -> None:
@@ -33656,18 +31133,6 @@ def out_io(level: typing.SupportsInt, routine_name: str, line: str, i_num: typin
     
     Parameters
     ----------
-    level : int
-    
-    routine_name : character
-    
-    line : character
-    
-    i_num : int
-    
-    insert_tag_line : bool, optional
-    
-    Returns
-    -------
     level : int
     
     routine_name : character
@@ -33720,44 +31185,6 @@ def out_io(level: typing.SupportsInt, routine_name: str, line1: str, line2: str 
     l_array : 1D array of bool, optional
     
     insert_tag_line : bool, optional
-    
-    Returns
-    -------
-    level : int
-    
-    routine_name : character
-    
-    line1 : character
-    
-    line2 : character, optional
-    
-    line3 : character, optional
-    
-    line4 : character, optional
-    
-    line5 : character, optional
-    
-    line6 : character, optional
-    
-    line7 : character, optional
-    
-    line8 : character, optional
-    
-    line9 : character, optional
-    
-    line10 : character, optional
-    
-    line11 : character, optional
-    
-    line12 : character, optional
-    
-    r_array : 1D array of float, optional
-    
-    i_array : 1D array of int, optional
-    
-    l_array : 1D array of bool, optional
-    
-    insert_tag_line : bool, optional
     """
 @typing.overload
 def out_io(level: typing.SupportsInt, routine_name: str, line: str, l_num: bool, insert_tag_line: bool | None = None) -> None:
@@ -33775,18 +31202,6 @@ def out_io(level: typing.SupportsInt, routine_name: str, line: str, l_num: bool,
     l_num : bool
     
     insert_tag_line : bool, optional
-    
-    Returns
-    -------
-    level : int
-    
-    routine_name : character
-    
-    line : character
-    
-    l_num : bool
-    
-    insert_tag_line : bool, optional
     """
 @typing.overload
 def out_io(level: typing.SupportsInt, routine_name: str, line: str, r_num: typing.SupportsFloat, insert_tag_line: bool | None = None) -> None:
@@ -33795,18 +31210,6 @@ def out_io(level: typing.SupportsInt, routine_name: str, line: str, r_num: typin
     
     Parameters
     ----------
-    level : int
-    
-    routine_name : character
-    
-    line : character
-    
-    r_num : float
-    
-    insert_tag_line : bool, optional
-    
-    Returns
-    -------
     level : int
     
     routine_name : character
@@ -33919,20 +31322,6 @@ def parse_cylindrical_map(cl_map: CylindricalMapStruct, ele: EleStruct, lat: Lat
     delim_found : bool
     
     err_flag : bool
-    
-    Returns
-    -------
-    cl_map : CylindricalMapStruct
-    
-    ele : EleStruct
-    
-    lat : LatStruct
-    
-    delim : character
-    
-    delim_found : bool
-    
-    err_flag : bool
     """
 def parse_fortran_format(format_str: str, n_repeat: typing.SupportsInt, power: typing.SupportsInt, descrip: str, width: typing.SupportsInt, digits: typing.SupportsInt) -> None:
     """
@@ -33940,20 +31329,6 @@ def parse_fortran_format(format_str: str, n_repeat: typing.SupportsInt, power: t
     
     Parameters
     ----------
-    format_str : character
-    
-    n_repeat : int
-    
-    power : int
-    
-    descrip : character
-    
-    width : int
-    
-    digits : int
-    
-    Returns
-    -------
     format_str : character
     
     n_repeat : int
@@ -33978,20 +31353,6 @@ def parse_grid_field(g_field: GridFieldStruct, ele: EleStruct, lat: LatStruct, d
     
     Parameters
     ----------
-    g_field : GridFieldStruct
-    
-    ele : EleStruct
-    
-    lat : LatStruct
-    
-    delim : character
-    
-    delim_found : bool
-    
-    err_flag : bool
-    
-    Returns
-    -------
     g_field : GridFieldStruct
     
     ele : EleStruct
@@ -34040,14 +31401,6 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     
     Returns
     -------
-    int_array : 1D array of int
-        the array to be read in Optional:
-        This parameter is an input/output and is modified in-place.
-        As an output, int_array: Array of values.
-    
-    is_ok : bool
-        Set True if everything is ok.
-    
     num_found : int
         number of elements.
     
@@ -34056,6 +31409,9 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     
     delim_found : bool
         Delimiter found? False if end of input command.
+    
+    is_ok : bool
+        Set True if everything is ok.
     """
 def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact_size: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsFloat | None = None, is_ok: bool) -> ParseRealList:
     """
@@ -34077,6 +31433,8 @@ def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact
     err_str : character
         Error string to print if there is an error.
     
+    real_array : 1D array of float
+    
     exact_size : bool
     
     open_delim : character, optional
@@ -34089,8 +31447,6 @@ def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact
     
     Returns
     -------
-    real_array : 1D array of float
-    
     delim : character
     
     delim_found : bool
@@ -34125,14 +31481,6 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     
     Returns
     -------
-    real_array : 1D array of float
-        the array to be read in
-        This parameter is an input/output and is modified in-place.
-        As an output, real_array: Array of values
-    
-    is_ok : bool
-        Set True if everything is ok
-    
     num_found : int
         number of elements
     
@@ -34141,6 +31489,9 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     
     delim_found : bool
         Stopping delimiter found? False if end of input command.
+    
+    is_ok : bool
+        Set True if everything is ok
     """
 def parser_add_constant(word: str, lat: LatStruct, redef_is_error: bool) -> None:
     """
@@ -34148,14 +31499,6 @@ def parser_add_constant(word: str, lat: LatStruct, redef_is_error: bool) -> None
     
     Parameters
     ----------
-    word : character
-    
-    lat : LatStruct
-    
-    redef_is_error : bool
-    
-    Returns
-    -------
     word : character
     
     lat : LatStruct
@@ -34180,6 +31523,9 @@ def parser_fast_complex_read(cmplx_vec: ComplexArray1D, ele: EleStruct, err_str:
     
     Parameters
     ----------
+    cmplx_vec : 1D array of complex
+        Complex vector.
+    
     ele : EleStruct
         Lattice element associated with the array. Used for error messages.
     
@@ -34188,9 +31534,6 @@ def parser_fast_complex_read(cmplx_vec: ComplexArray1D, ele: EleStruct, err_str:
     
     Returns
     -------
-    cmplx_vec : 1D array of complex
-        Complex vector.
-    
     delim : character
         Delimitor at end of array. Must be "," or "}"
     
@@ -34215,6 +31558,9 @@ def parser_fast_real_read(real_vec: RealArray1D, ele: EleStruct, end_delims: str
     
     Parameters
     ----------
+    real_vec : 1D array of float
+        Real vector.
+    
     ele : EleStruct
         Lattice element associated with the array. Used for error messages.
     
@@ -34229,17 +31575,14 @@ def parser_fast_real_read(real_vec: RealArray1D, ele: EleStruct, end_delims: str
     
     Returns
     -------
-    real_vec : 1D array of float
-        Real vector.
-    
     delim : character
         Delimitor at end of array.
     
-    is_ok : bool
-        True if everything OK. False otherwise.
-    
     n_real : int, optional
         Number of elements found.
+    
+    is_ok : bool
+        True if everything OK. False otherwise.
     """
 def parser_file_stack(how: str, file_name_in: str | None = None, finished: bool | None = None, err: bool | None = None, open_file: bool | None = None, abort_on_open_error: bool | None = None) -> None:
     """
@@ -34270,24 +31613,6 @@ def parser_get_integer(int_val: typing.SupportsInt, word: str, ix_word: typing.S
     str1 : character, optional
     
     str2 : character, optional
-    
-    Returns
-    -------
-    int_val : int
-    
-    word : character
-    
-    ix_word : int
-    
-    delim : character
-    
-    delim_found : bool
-    
-    err : bool
-    
-    str1 : character, optional
-    
-    str2 : character, optional
     """
 def parser_get_logical(attrib_name: str, this_logic: bool, ele_name: str, delim: str, delim_found: bool, err: bool) -> None:
     """
@@ -34295,20 +31620,6 @@ def parser_get_logical(attrib_name: str, this_logic: bool, ele_name: str, delim:
     
     Parameters
     ----------
-    attrib_name : character
-    
-    this_logic : bool
-    
-    ele_name : character
-    
-    delim : character
-    
-    delim_found : bool
-    
-    err : bool
-    
-    Returns
-    -------
     attrib_name : character
     
     this_logic : bool
@@ -34353,13 +31664,6 @@ def parser_read_lr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag:
         Element containing wake structure.
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with wake information.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element containing wake structure.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with wake information.
     """
 def parser_read_old_format_lr_wake(ele: EleStruct, lr_file_name: str) -> None:
     """
@@ -34377,13 +31681,6 @@ def parser_read_old_format_lr_wake(ele: EleStruct, lr_file_name: str) -> None:
     
     lr_file_name : character
         Name of long-range wake field file.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element containing wake structure.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with wake information.
     """
 def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
     """
@@ -34401,13 +31698,6 @@ def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
     
     sr_file_name : character
         Name of short-range wake field file.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element containing wake structure.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with wake information.
     """
 def parser_read_sr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
     """
@@ -34418,13 +31708,6 @@ def parser_read_sr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag:
     
     Parameters
     ----------
-    ele : EleStruct
-        Element containing wake structure.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with wake information.
-    
-    Returns
-    -------
     ele : EleStruct
         Element containing wake structure.
         This parameter is an input/output and is modified in-place.
@@ -34633,11 +31916,6 @@ def photon_add_to_detector_statistics(orbit0: CoordStruct, orbit: CoordStruct, e
     
     Returns
     -------
-    ele : EleStruct
-        Element with grid.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with updatted grid.
-    
     ix_pt : int, optional
         Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
         argument is present.
@@ -34757,13 +32035,6 @@ def photon_target_setup(ele: EleStruct) -> None:
         Source element to setup. Element will be of type: sample, diffraction_plate or photon_init.
         This parameter is an input/output and is modified in-place.
         As an output, ele: Source element with target parameters setup in ele.photon.target.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Source element to setup. Element will be of type: sample, diffraction_plate or photon_init.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Source element with target parameters setup in ele.photon.target.
     """
 def photon_type(ele: EleStruct) -> int:
     """
@@ -34834,13 +32105,6 @@ def point_photon_emission(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
     
     w_to_surface : 2D array of float (shape: 3,3), optional
         Rotation matrix for curved surface.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        phase-space coords of photon. --   Will be in curved surface coords if there is a curved surface.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Final phase-space coords
     """
 @typing.overload
 def pointer_to_branch(ele: EleStruct) -> BranchStruct | None:
@@ -35107,9 +32371,6 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     
     Returns
     -------
-    ele : EleStruct, optional
-        Pointer to element at s.
-    
     err_flag : bool, optional
         Set True if s is out of bounds. False otherwise.
     
@@ -35118,6 +32379,9 @@ def pointer_to_element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choos
     
     position : CoordStruct, optional
         Positional information.
+    
+    ele : EleStruct, optional
+        Pointer to element at s.
     """
 def pointer_to_fibre(ele: EleStruct) -> Fibre | None:
     """
@@ -35300,9 +32564,6 @@ def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: t
     
     Returns
     -------
-    slave_ptr : EleStruct, optional
-        Pointer to the slave. Nullified if there is an error.
-    
     control : ControlStruct, optional
         Pointer to control info for this lord/slave relationship. Nullified if there is an error.
     
@@ -35315,6 +32576,9 @@ def pointer_to_slave(lord: EleStruct, ix_slave: typing.SupportsInt, lord_type: t
     
     ix_ic : int, optional
         Index of the lat.ic(:) element associated with the control argument.
+    
+    slave_ptr : EleStruct, optional
+        Pointer to the slave. Nullified if there is an error.
     """
 def pointer_to_super_lord(slave: EleStruct, lord_type: typing.SupportsInt | None = None) -> PointerToSuperLord:
     """
@@ -35381,9 +32645,6 @@ def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.
     iy : int, optional
         Grid point index.
     
-    pt : SurfaceDisplacementPtStruct, optional
-        Pointer to grid point. Will not be associated if (x,y) outside the grid.
-    
     xx : float, optional
         Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
         the nearest grid boundary point.
@@ -35391,6 +32652,9 @@ def pointer_to_surface_displacement_pt(ele: EleStruct, nearest: bool, x: typing.
     yy : float, optional
         Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
         the nearest grid boundary point.
+    
+    pt : SurfaceDisplacementPtStruct, optional
+        Pointer to grid point. Will not be associated if (x,y) outside the grid.
     """
 def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.SupportsFloat, y: typing.SupportsFloat, extend_grid: bool | None = None) -> PointerToSurfaceSegmentedPt:
     """
@@ -35426,9 +32690,6 @@ def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.Sup
     iy : int, optional
         Grid point index.
     
-    pt : SurfaceSegmentedPtStruct, optional
-        Pointer to grid point. Will not be associated if (x,y) outside the grid.
-    
     xx : float, optional
         Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
         the nearest grid boundary point.
@@ -35436,6 +32697,9 @@ def pointer_to_surface_segmented_pt(ele: EleStruct, nearest: bool, x: typing.Sup
     yy : float, optional
         Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
         the nearest grid boundary point.
+    
+    pt : SurfaceSegmentedPtStruct, optional
+        Pointer to grid point. Will not be associated if (x,y) outside the grid.
     """
 def pointer_to_wake_ele(ele: EleStruct) -> PointerToWakeEle:
     """
@@ -35473,14 +32737,14 @@ def pointer_to_wall3d(ele: EleStruct, ix_wall: typing.SupportsInt | None = None)
     
     Returns
     -------
-    wall3d : Wall3dStruct, optional
-        Pointer to the associated wall structure. Will be nullified if there is no associated wall.
-    
     ds_offset : float, optional
         Element offset: s(beginning of ele) - s(beginning of wall3d)
     
     is_branch_wall : bool, optional
         Set True if wall3d points to branch.wall3d.
+    
+    wall3d : Wall3dStruct, optional
+        Pointer to the associated wall structure. Will be nullified if there is no associated wall.
     """
 def polar_to_spinor(polar: SpinPolarStruct) -> typing.Annotated[list[complex], "FixedSize(2)"]:
     """
@@ -35540,10 +32804,6 @@ def probability_funct(x: typing.SupportsFloat, prob: typing.SupportsFloat) -> No
         Function argument.
     
     prob : float
-    
-    Returns
-    -------
-    prob : float
     """
 def projdd(a: ComplexArray1D, b: ComplexArray1D, func_retval__: complex) -> None:
     """
@@ -35551,12 +32811,6 @@ def projdd(a: ComplexArray1D, b: ComplexArray1D, func_retval__: complex) -> None
     
     Parameters
     ----------
-    a : 1D array of complex
-    
-    b : 1D array of complex
-    
-    Returns
-    -------
     a : 1D array of complex
     
     b : 1D array of complex
@@ -35632,11 +32886,6 @@ def ptc_bookkeeper(lat: LatStruct) -> None:
     ----------
     lat : LatStruct
         Bmad lattice.
-    
-    Returns
-    -------
-    lat : LatStruct
-        Bmad lattice.
     """
 def ptc_calculate_tracking_step_size(ptc_layout: Layout, kl_max: typing.SupportsFloat, ds_max: typing.SupportsFloat | None = None, even_steps: BoolAlloc1D | None = None, r_typical: typing.SupportsFloat | None = None, dx_tol_bend: typing.SupportsFloat | None = None, use_2nd_order: bool | None = None, crossover: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None, crossover_wiggler: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(2)"] | None = None) -> None:
     """
@@ -35677,12 +32926,6 @@ def ptc_calculate_tracking_step_size(ptc_layout: Layout, kl_max: typing.Supports
     
     crossover_wiggler : 1D array of int (shape: 2), optional
         crossover points for wigglers. Default is [30, 60].
-    
-    Returns
-    -------
-    ptc_layout : Layout
-        This parameter is an input/output and is modified in-place.
-        As an output, ptc_layout: Lattice with the optimum number of tracking steps and integrator order.
     """
 def ptc_check_for_lost_particle(do_reset: bool) -> PtcCheckForLostParticle:
     """
@@ -35810,13 +33053,6 @@ def ptc_one_turn_mat_and_closed_orbit_calc(branch: BranchStruct, pz: typing.Supp
     
     pz : float, optional
         energy offset around which to calculate the matrices if there is no RF.
-    
-    Returns
-    -------
-    branch : BranchStruct
-        Lattice branch.
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: Lattice branch containing the matrices.
     """
 def ptc_ran_seed_put(iseed: typing.SupportsInt) -> None:
     """
@@ -35880,11 +33116,6 @@ def ptc_track_all(branch: BranchStruct, orbit: CoordStructAlloc1D) -> PtcTrackAl
     
     Returns
     -------
-    orbit : 1D array of CoordStruct
-        Coordinates at beginning of branch.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Orbit array.
-    
     track_state : int, optional
         Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
     
@@ -35928,16 +33159,6 @@ def ptc_transfer_map_with_spin(branch: BranchStruct, t_map: TaylorStructArray1D,
     
     Returns
     -------
-    t_map : 1D array of TaylorStruct (shape: 6)
-        Initial orbital map (used when unit_start = False)
-        This parameter is an input/output and is modified in-place.
-        As an output, t_map: Orbital transfer map.
-    
-    s_map : 1D array of TaylorStruct (shape: 4)
-        Initial spin map (used when unit_start = False)
-        This parameter is an input/output and is modified in-place.
-        As an output, s_map: Quaternion spin transfer map.
-    
     err_flag : bool
         Set True if problem like number overflow, etc.
     """
@@ -36213,18 +33434,6 @@ def query_string(query_str: str, upcase: bool, return_str: str, ix: typing.Suppo
     ix : int
     
     ios : int
-    
-    Returns
-    -------
-    query_str : character
-    
-    upcase : bool
-    
-    return_str : character
-    
-    ix : int
-    
-    ios : int
     """
 def quote(str: str, q_str: str) -> None:
     """
@@ -36232,12 +33441,6 @@ def quote(str: str, q_str: str) -> None:
     
     Parameters
     ----------
-    str : character
-    
-    q_str : character
-    
-    Returns
-    -------
     str : character
     
     q_str : character
@@ -36321,11 +33524,11 @@ def rad_damp_and_stoc_mats(ele1: EleStruct, ele2: EleStruct, include_opening_ang
     xfer_nodamp_mat : 2D array of float (shape: 6,6)
         Transfer matrix without damping.
     
-    rad_int_branch : RadIntBranchStruct, optional
-        Array of element-by-element radiation integrals.
-    
     err_flag : bool
         Set true if there is a problem.
+    
+    rad_int_branch : RadIntBranchStruct, optional
+        Array of element-by-element radiation integrals.
     """
 def rad_g_integrals(ele: EleStruct, where: typing.SupportsInt, orb_in: CoordStruct, orb_out: CoordStruct, int_g2: typing.SupportsFloat, g_tol: typing.SupportsFloat, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat) -> RadGIntegrals:
     """
@@ -36414,11 +33617,6 @@ def radiation_map_setup(ele: EleStruct, ref_orbit_in: CoordStruct | None = None)
     
     Returns
     -------
-    ele : EleStruct
-        Element whose map is to be setup.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with map calculated.
-    
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
@@ -36436,13 +33634,6 @@ def ramper_slave_setup(lat: LatStruct, force_setup: bool | None = None) -> None:
     force_setup : bool, optional
         Default False. If True, do the setup even if lat.ramper_slave_bookkeeping = ok$. But the setup will never
         be done if lat.ramper_slave_bookkeeping = super_ok$.
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice to be setup.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with ramper slaves setup.
     """
 def ramper_value(ramper: EleStruct, r1: ControlRamp1Struct) -> RamperValue:
     """
@@ -36588,17 +33779,15 @@ def ran_gauss_vector(harvest: RealArray1D, ran_state: RandomStateStruct | None =
     
     Parameters
     ----------
+    harvest : 1D array of float
+        Random number. Or
+        As an output, harvest: Random number array.
+    
     ran_state : RandomStateStruct, optional
         Internal state. See the ran_seed_put documentation for more details.
     
     sigma_cut : float, optional
         If present and positive will override setting of ran_state.gauss_sigma_cut.
-    
-    Returns
-    -------
-    harvest : 1D array of float
-        Random number. Or
-        As an output, harvest: Random number array.
     """
 def ran_seed_get() -> int:
     """
@@ -36683,14 +33872,12 @@ def ran_uniform(harvest: RealArray1D, ran_state: RandomStateStruct | None = None
     
     Parameters
     ----------
-    ran_state : RandomStateStruct, optional
-        Internal state. See the ran_seed_put documentation for more details.
-    
-    Returns
-    -------
     harvest : 1D array of float
         Random number. Or
         As an output, harvest: Random number array.
+    
+    ran_state : RandomStateStruct, optional
+        Internal state. See the ran_seed_put documentation for more details.
     """
 def randomize_lr_wake_frequencies(ele: EleStruct) -> bool:
     """
@@ -36709,11 +33896,6 @@ def randomize_lr_wake_frequencies(ele: EleStruct) -> bool:
     
     Returns
     -------
-    ele : EleStruct
-        Element with wake. If no wake then nothing is done.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with wake frequencies set.
-    
     set_done : bool, optional
         Set True if there where lr wakes to be set. False otherwise.
     """
@@ -36728,14 +33910,6 @@ def rcelbd(mc: typing.SupportsFloat, elb: typing.SupportsFloat, eld: typing.Supp
     elb : float
     
     eld : float
-    
-    Returns
-    -------
-    mc : float
-    
-    elb : float
-    
-    eld : float
     """
 def rchomp(rel: typing.SupportsFloat, plc: typing.SupportsInt, out: str) -> None:
     """
@@ -36743,14 +33917,6 @@ def rchomp(rel: typing.SupportsFloat, plc: typing.SupportsInt, out: str) -> None
     
     Parameters
     ----------
-    rel : float
-    
-    plc : int
-    
-    out : character
-    
-    Returns
-    -------
     rel : float
     
     plc : int
@@ -36769,14 +33935,6 @@ def re_allocate(section: Wall3DSectionStructAlloc1D, n: typing.SupportsInt, exac
     n : int
     
     exact : bool, optional
-    
-    Returns
-    -------
-    section : 1D array of Wall3dSectionStruct
-    
-    n : int
-    
-    exact : bool, optional
     """
 @typing.overload
 def re_allocate(v: Wall3DVertexStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
@@ -36785,14 +33943,6 @@ def re_allocate(v: Wall3DVertexStructAlloc1D, n: typing.SupportsInt, exact: bool
     
     Parameters
     ----------
-    v : 1D array of Wall3dVertexStruct
-    
-    n : int
-    
-    exact : bool, optional
-    
-    Returns
-    -------
     v : 1D array of Wall3dVertexStruct
     
     n : int
@@ -36819,13 +33969,6 @@ def re_allocate_eles(eles: ElePointerStructAlloc1D, n: typing.SupportsInt, save_
     exact : bool, optional
         If present and True then eles will have size = n If False (default), reallcation will not be done if eles
         is already large enough
-    
-    Returns
-    -------
-    eles : 1D array of ElePointerStruct
-        Array of element pointers with possible old data.
-        This parameter is an input/output and is modified in-place.
-        As an output, eles: Array of element pointers.
     """
 def re_associate_node_array(tree: ExpressionTreeStruct, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
@@ -36845,10 +33988,6 @@ def re_associate_node_array(tree: ExpressionTreeStruct, n: typing.SupportsInt, e
     
     exact : bool, optional
         Default is False. If False, the size of the output array is permitted to be larger than n.
-    
-    Returns
-    -------
-    tree : ExpressionTreeStruct
     """
 @typing.overload
 def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
@@ -36860,12 +33999,6 @@ def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
     rel : float
     
     str_out : character
-    
-    Returns
-    -------
-    rel : float
-    
-    str_out : character
     """
 @typing.overload
 def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
@@ -36874,12 +34007,6 @@ def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
     
     Parameters
     ----------
-    rel : float
-    
-    str_out : character
-    
-    Returns
-    -------
     rel : float
     
     str_out : character
@@ -37118,16 +34245,6 @@ def real_num_fortran_format(number: typing.SupportsFloat, width: typing.Supports
     n_blanks : int, optional
     
     fmt_str : character
-    
-    Returns
-    -------
-    number : float
-    
-    width : int
-    
-    n_blanks : int, optional
-    
-    fmt_str : character
     """
 def real_path(path_in: str, path_out: str, is_ok: bool) -> None:
     """
@@ -37135,14 +34252,6 @@ def real_path(path_in: str, path_out: str, is_ok: bool) -> None:
     
     Parameters
     ----------
-    path_in : character
-    
-    path_out : character
-    
-    is_ok : bool
-    
-    Returns
-    -------
     path_in : character
     
     path_out : character
@@ -37162,16 +34271,6 @@ def real_str(r_num: typing.SupportsFloat, n_signif: typing.SupportsInt | None = 
     n_decimal : int, optional
     
     str : character
-    
-    Returns
-    -------
-    r_num : float
-    
-    n_signif : int, optional
-    
-    n_decimal : int, optional
-    
-    str : character
     """
 def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None, str: str) -> None:
     """
@@ -37179,18 +34278,6 @@ def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, n_
     
     Parameters
     ----------
-    real_num : float
-    
-    width : int
-    
-    n_signif : int, optional
-    
-    n_decimal : int, optional
-    
-    str : character
-    
-    Returns
-    -------
     real_num : float
     
     width : int
@@ -37218,15 +34305,6 @@ def reallocate_beam(beam: BeamStruct, n_bunch: typing.SupportsInt, n_particle: t
     n_particle : int, optional
         Number of particles. Must be non-negative. If save = True then the number of particles in existing bunches
         will not be touched. If not present, beam.bunch(i).particle(:) will be in an undefined state.
-    
-    extend : bool, optional
-    
-    Returns
-    -------
-    beam : BeamStruct
-        Beam bunches are saved if save = True.
-        This parameter is an input/output and is modified in-place.
-        As an output, beam: Allocated beam_struct structure.
     
     extend : bool, optional
     """
@@ -37262,11 +34340,6 @@ def reallocate_control(lat: LatStruct, n: typing.SupportsInt) -> None:
     
     n : int
         Array size for lat.control(:) and lat.ic(:).
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice.
     """
 @typing.overload
 def reallocate_coord(coord_array: CoordArrayStructAlloc1D, lat: LatStruct) -> None:
@@ -37321,13 +34394,6 @@ def reallocate_coord(coord: CoordStructAlloc1D, lat: LatStruct, ix_branch: typin
     
     ix_branch : int, optional
         Branch to use. Default is 0 (main branch).
-    
-    Returns
-    -------
-    coord : 1D array of CoordStruct
-        Allocatable array.
-        This parameter is an input/output and is modified in-place.
-        As an output, coord: Allocated array.
     """
 @typing.overload
 def reallocate_coord(coord: CoordStructAlloc1D, n_coord: typing.SupportsInt) -> None:
@@ -37356,13 +34422,6 @@ def reallocate_coord(coord: CoordStructAlloc1D, n_coord: typing.SupportsInt) -> 
     
     n_coord : int
         Minimum array upper bound wanted.
-    
-    Returns
-    -------
-    coord : 1D array of CoordStruct
-        Allocatable array.
-        This parameter is an input/output and is modified in-place.
-        As an output, coord: Allocated array.
     """
 def reallocate_expression_stack(stack: ExpressionAtomStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
@@ -37380,13 +34439,6 @@ def reallocate_expression_stack(stack: ExpressionAtomStructAlloc1D, n: typing.Su
     
     exact : bool, optional
         If present and False then the size of the output array is permitted to be larger than n. Default is True.
-    
-    Returns
-    -------
-    stack : 1D array of ExpressionAtomStruct
-        Existing stack array.
-        This parameter is an input/output and is modified in-place.
-        As an output, stack: Resized stack.
     """
 def reallocate_spline(spline: SplineStructAlloc1D, n: typing.SupportsInt, n_min: typing.SupportsInt | None = None, exact: bool | None = None) -> None:
     """
@@ -37411,13 +34463,6 @@ def reallocate_spline(spline: SplineStructAlloc1D, n: typing.SupportsInt, n_min:
     
     exact : bool, optional
         If present and False then the size of the output array is permitted to be larger than n. Default is True.
-    
-    Returns
-    -------
-    spline : 1D array of SplineStruct
-        Spline to reallocate.
-        This parameter is an input/output and is modified in-place.
-        As an output, spline: Allocated spline.
     """
 def rel_tracking_charge_to_mass(orbit: CoordStruct, ref_species: typing.SupportsInt) -> float:
     """
@@ -37463,18 +34508,6 @@ def relbd(phi: typing.SupportsFloat, phic: typing.SupportsFloat, mc: typing.Supp
     b : float
     
     d : float
-    
-    Returns
-    -------
-    phi : float
-    
-    phic : float
-    
-    mc : float
-    
-    b : float
-    
-    d : float
     """
 def relcbd(c0: typing.SupportsFloat, mc: typing.SupportsFloat, b: typing.SupportsFloat, dx: typing.SupportsFloat) -> None:
     """
@@ -37482,16 +34515,6 @@ def relcbd(c0: typing.SupportsFloat, mc: typing.SupportsFloat, b: typing.Support
     
     Parameters
     ----------
-    c0 : float
-    
-    mc : float
-    
-    b : float
-    
-    dx : float
-    
-    Returns
-    -------
     c0 : float
     
     mc : float
@@ -37534,16 +34557,6 @@ def relsbd(s0: typing.SupportsFloat, mc: typing.SupportsFloat, b: typing.Support
     b : float
     
     d : float
-    
-    Returns
-    -------
-    s0 : float
-    
-    mc : float
-    
-    b : float
-    
-    d : float
     """
 def remove_constant_taylor(taylor_in: TaylorStructArray1D, taylor_out: TaylorStructArray1D, c0: RealArray1D, remove_higher_order_terms: bool) -> None:
     """
@@ -37562,16 +34575,14 @@ def remove_constant_taylor(taylor_in: TaylorStructArray1D, taylor_out: TaylorStr
     taylor_in : 1D array of TaylorStruct
         Input taylor map.
     
-    remove_higher_order_terms : bool
-        If True then terms that are higher order than bmad_com.taylor_order are removed.
-    
-    Returns
-    -------
     taylor_out : 1D array of TaylorStruct
         Taylor with constant terms removed.
     
     c0 : 1D array of float
         The constant part of the taylor map
+    
+    remove_higher_order_terms : bool
+        If True then terms that are higher order than bmad_com.taylor_order are removed.
     """
 def remove_dead_from_bunch(bunch_in: BunchStruct) -> BunchStruct:
     """
@@ -37601,13 +34612,6 @@ def remove_eles_from_lat(lat: LatStruct, check_sanity: bool | None = None) -> No
     
     check_sanity : bool, optional
         If True (default) then call lat_sanity_check
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice to compress.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Compressed lattice.
     """
 def remove_lord_slave_link(lord: EleStruct, slave: EleStruct) -> None:
     """
@@ -37615,18 +34619,6 @@ def remove_lord_slave_link(lord: EleStruct, slave: EleStruct) -> None:
     
     Parameters
     ----------
-    lord : EleStruct
-        Lord element
-        This parameter is an input/output and is modified in-place.
-        As an output, lord: Lord element with link info removed
-    
-    slave : EleStruct
-        Slave element
-        This parameter is an input/output and is modified in-place.
-        As an output, slave: Slave element with link info removed
-    
-    Returns
-    -------
     lord : EleStruct
         Lord element
         This parameter is an input/output and is modified in-place.
@@ -37660,10 +34652,6 @@ def rf_cav_names(lat: LatStruct) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    Returns
-    -------
     lat : LatStruct
     """
 def rf_coupler_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, phase: typing.SupportsFloat, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
@@ -37703,18 +34691,6 @@ def rf_coupler_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.S
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Position before kick.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Position after kick.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix through the element.
     """
 def rf_is_on(branch: BranchStruct, ix_ele1: typing.SupportsInt | None = None, ix_ele2: typing.SupportsInt | None = None) -> bool:
     """
@@ -37778,28 +34754,6 @@ def rfun(u: typing.SupportsFloat, v: typing.SupportsFloat, w: typing.SupportsFlo
     j : int
     
     res : float
-    
-    Returns
-    -------
-    u : float
-    
-    v : float
-    
-    w : float
-    
-    gam : float
-    
-    a : float
-    
-    b : float
-    
-    hz : float
-    
-    i : int
-    
-    j : int
-    
-    res : float
     """
 def rgelbd(phi: typing.SupportsFloat, mc: typing.SupportsFloat, elb: typing.SupportsFloat, eld: typing.SupportsFloat) -> None:
     """
@@ -37814,16 +34768,6 @@ def rgelbd(phi: typing.SupportsFloat, mc: typing.SupportsFloat, elb: typing.Supp
     elb : float
     
     eld : float
-    
-    Returns
-    -------
-    phi : float
-    
-    mc : float
-    
-    elb : float
-    
-    eld : float
     """
 def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruct, t_dir: typing.SupportsInt, rf_time: typing.SupportsFloat, dt_try: typing.SupportsFloat, dt_did: typing.SupportsFloat, dt_next: typing.SupportsFloat, err_flag: bool, extra_field: EmFieldStruct | None = None) -> None:
     """
@@ -37831,28 +34775,6 @@ def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruc
     
     Parameters
     ----------
-    ele : EleStruct
-    
-    param : LatParamStruct
-    
-    orb : CoordStruct
-    
-    t_dir : int
-    
-    rf_time : float
-    
-    dt_try : float
-    
-    dt_did : float
-    
-    dt_next : float
-    
-    err_flag : bool
-    
-    extra_field : EmFieldStruct, optional
-    
-    Returns
-    -------
     ele : EleStruct
     
     param : LatParamStruct
@@ -37891,8 +34813,6 @@ def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.Support
     
     new_orb : CoordStruct
     
-    r_err : 1D array of float (shape: 10)
-    
     dr_dt : 1D array of float (shape: 10), optional
     
     err_flag : bool
@@ -37903,27 +34823,7 @@ def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.Support
     
     Returns
     -------
-    ele : EleStruct
-    
-    param : LatParamStruct
-    
-    rf_time : float
-    
-    orb : CoordStruct
-    
-    dt : float
-    
-    new_orb : CoordStruct
-    
     r_err : 1D array of float (shape: 10)
-    
-    dr_dt : 1D array of float (shape: 10), optional
-    
-    err_flag : bool
-    
-    print_err : bool, optional
-    
-    extra_field : EmFieldStruct, optional
     """
 def rms_value(val_arr: RealArray1D, good_val: BoolAlloc1D | None = None) -> RmsValue:
     """
@@ -37973,14 +34873,6 @@ def rotate3(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat]
     angle : float
     
     rvec : 1D array of float (shape: 3)
-    
-    Returns
-    -------
-    vec : 1D array of float (shape: 3)
-    
-    angle : float
-    
-    rvec : 1D array of float (shape: 3)
     """
 def rotate_em_field(field: EmFieldStruct, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], w_inv: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"], calc_dfield: bool | None = None, calc_potential: bool | None = None) -> None:
     """
@@ -38004,11 +34896,6 @@ def rotate_em_field(field: EmFieldStruct, w_mat: typing.Annotated[collections.ab
     
     calc_potential : bool, optional
         Rotate the magnetic vector potential? Default is false.
-    
-    Returns
-    -------
-    field : EmFieldStruct
-        E and B fields and derivatives.
     """
 def rotate_field_zx(field: EmFieldStruct, theta: typing.SupportsFloat) -> None:
     """
@@ -38016,12 +34903,6 @@ def rotate_field_zx(field: EmFieldStruct, theta: typing.SupportsFloat) -> None:
     
     Parameters
     ----------
-    field : EmFieldStruct
-    
-    theta : float
-    
-    Returns
-    -------
     field : EmFieldStruct
     
     theta : float
@@ -38046,16 +34927,6 @@ def rotate_for_curved_surface(ele: EleStruct, orbit: CoordStruct, set: bool, rot
         When set = False, rotation matrix calculated from previous call with set = True.
         This parameter is an input/output and is modified in-place.
         As an output, rot_mat: When set = True, calculated rotation matrix.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Photon position.
-    
-    rot_mat : 2D array of float (shape: 3,3)
-        When set = False, rotation matrix calculated from previous call with set = True.
-        This parameter is an input/output and is modified in-place.
-        As an output, rot_mat: When set = True, calculated rotation matrix.
     """
 def rotate_spin(rot_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], spin: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> typing.Annotated[list[float], "FixedSize(4)"]:
     """
@@ -38073,11 +34944,6 @@ def rotate_spin(rot_vec: typing.Annotated[collections.abc.Sequence[typing.Suppor
     
     Returns
     -------
-    spin : 1D array of float (shape: 3)
-        Initial coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, spin: Final coords.
-    
     qrot : 1D array of float (shape: 0:3), optional
         : rotation quaternion.
     """
@@ -38100,13 +34966,6 @@ def rotate_spin_a_step(orbit: CoordStruct, field: EmFieldStruct, ele: EleStruct,
     
     ds : float
         Longitudinal step in element body frame.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Initial orbit.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Orbit with rotated spin
     """
 def rotate_spin_given_field(orbit: CoordStruct, sign_z_vel: typing.SupportsInt, BL: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, EL: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None, qrot: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(4)"] | None = None) -> None:
     """
@@ -38132,18 +34991,6 @@ def rotate_spin_given_field(orbit: CoordStruct, sign_z_vel: typing.SupportsInt, 
         Initial rotation quaternion.
         This parameter is an input/output and is modified in-place.
         As an output, qrot: Rotation quaternion with rotation due to the field added in.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Initial orbit.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Orbit with rotated spin
-    
-    qrot : 1D array of float (shape: 0:3), optional
-        Initial rotation quaternion.
-        This parameter is an input/output and is modified in-place.
-        As an output, qrot: Rotation quaternion with rotation due to the field added in.
     """
 def rotate_vec(vec: RealArray1D, axis: typing.SupportsInt, angle: typing.SupportsFloat) -> None:
     """
@@ -38163,13 +35010,6 @@ def rotate_vec(vec: RealArray1D, axis: typing.SupportsInt, angle: typing.Support
     
     angle : float
         angle to rotate.
-    
-    Returns
-    -------
-    vec : 1D array of float
-        vector
-        This parameter is an input/output and is modified in-place.
-        As an output, vec: Rotated vector.
     """
 def rotate_vec_given_axis_angle(vec_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], axis: RealArray1D, angle: typing.SupportsFloat) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
@@ -38224,16 +35064,6 @@ def rserbd(y: typing.SupportsFloat, m: typing.SupportsFloat, b: typing.SupportsF
     b : float
     
     d : float
-    
-    Returns
-    -------
-    y : float
-    
-    m : float
-    
-    b : float
-    
-    d : float
     """
 def run_timer(command: str, time: typing.SupportsFloat | None = None, time0: typing.SupportsFloat | None = None) -> None:
     """
@@ -38241,14 +35071,6 @@ def run_timer(command: str, time: typing.SupportsFloat | None = None, time0: typ
     
     Parameters
     ----------
-    command : character
-    
-    time : float, optional
-    
-    time0 : float, optional
-    
-    Returns
-    -------
     command : character
     
     time : float, optional
@@ -38278,10 +35100,6 @@ def s_calc(lat: LatStruct) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    Returns
-    -------
     lat : LatStruct
     """
 def sad_mult_hard_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
@@ -38319,18 +35137,6 @@ def sad_mult_hard_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting coordinates.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending coordinates.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the fringe.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix including the fringe.
     """
 def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -38360,18 +35166,6 @@ def sad_soft_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: 
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Starting coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Coords after tracking.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Starting matrix
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix after fringe field
     """
 def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: BunchTrackStructArray1D | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
@@ -38396,13 +35190,6 @@ def save_a_beam_step(ele: EleStruct, beam: BeamStruct, bunch_tracks: BunchTrackS
     is_time_coords : bool, optional
         Default is False. If True, input beam is using time coordinates in which case there will be a conversion
         to s-coords before bunch_params are computed.
-    
-    Returns
-    -------
-    bunch_tracks : 1D array of BunchTrackStruct, optional
-        Track up to now. If bunch_tracks.n_pt < 0, the structure will be reinitialized.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_tracks: Track with current bunch info appended on. This routine does nothing
     """
 def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: BunchTrackStruct | None = None, s_body: typing.SupportsFloat | None = None, is_time_coords: bool | None = None) -> None:
     """
@@ -38427,13 +35214,6 @@ def save_a_bunch_step(ele: EleStruct, bunch: BunchStruct, bunch_track: BunchTrac
     is_time_coords : bool, optional
         Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
         to s-coords before bunch_params are computed.
-    
-    Returns
-    -------
-    bunch_track : BunchTrackStruct, optional
-        Track up to now. If bunch_track.n_pt < 0, the structure will be reinitialized.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_track: Track with current bunch info appended on. This routine does nothing
     """
 def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local_ref_frame: bool, orb: CoordStruct, s_rel: typing.SupportsFloat, save_field: bool | None = None, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None, rf_time: typing.SupportsFloat | None = None, strong_beam: StrongBeamStruct | None = None) -> None:
     """
@@ -38477,13 +35257,6 @@ def save_a_step(track: TrackStruct, ele: EleStruct, param: LatParamStruct, local
     
     strong_beam : StrongBeamStruct, optional
         Strong beam info if tracking through a beambeam element.
-    
-    Returns
-    -------
-    track : TrackStruct
-        Track up to now. If track.n_pt < 0, the structure will be reinitialized.
-        This parameter is an input/output and is modified in-place.
-        As an output, track: Track with current position appended on.
     """
 def sbend_body_with_k1_map(ele: EleStruct, dg: typing.SupportsFloat, b1: typing.SupportsFloat, param: LatParamStruct, n_step: typing.SupportsInt, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -38518,18 +35291,6 @@ def sbend_body_with_k1_map(ele: EleStruct, dg: typing.SupportsFloat, b1: typing.
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Orbit at beginning of the bend.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending coordinates.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix with body added in.
     """
 def sc_adaptive_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_now: typing.SupportsFloat, dt_step: typing.SupportsFloat, sc_field: EmFieldStructArray1D) -> ScAdaptiveStep:
     """
@@ -38566,11 +35327,6 @@ def sc_adaptive_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_
     
     Returns
     -------
-    bunch : BunchStruct
-        Starting bunch position in t-based coordinates
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Ending bunch position in t-based coordinates.
-    
     include_image : bool
         Include image charge forces?
         This parameter is an input/output and is modified in-place.
@@ -38613,11 +35369,6 @@ def sc_step(bunch: BunchStruct, ele: EleStruct, include_image: bool, t_end: typi
     
     Returns
     -------
-    bunch : BunchStruct
-        Starting bunch position in t-based coordinates
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Ending bunch position in t-based coordinates after space charge kick.
-    
     include_image : bool
         Include image charge forces?
         This parameter is an input/output and is modified in-place.
@@ -38636,16 +35387,8 @@ def serbd(y: typing.SupportsFloat, m: typing.SupportsFloat) -> Serbd:
     
     m : float
     
-    b : float
-    
-    d : float
-    
     Returns
     -------
-    y : float
-    
-    m : float
-    
     b : float
     
     d : float
@@ -38673,11 +35416,6 @@ def set_active_fixer(fixer: EleStruct, turn_on: bool | None = None) -> CoordStru
     
     Returns
     -------
-    fixer : EleStruct
-        Fixer element to make active.
-        This parameter is an input/output and is modified in-place.
-        As an output, fixer: Element is now active.
-    
     orbit : CoordStruct, optional
         Load with stored fixer phase space and spin values.
     """
@@ -38724,11 +35462,6 @@ def set_ele_attribute(ele: EleStruct, set_string: str, err_print_flag: bool | No
     
     Returns
     -------
-    ele : EleStruct
-        Element with attribute to set.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with attribute set.
-    
     err_flag : bool
         Set True if there is an error, False otherwise.
     
@@ -38749,13 +35482,6 @@ def set_ele_defaults(ele: EleStruct, do_allocate: bool | None = None) -> None:
     
     do_allocate : bool, optional
         Do default allocation of element components? Default is True.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element to init.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Initialized element.
     """
 def set_ele_name(ele: EleStruct, name: str) -> None:
     """
@@ -38770,13 +35496,6 @@ def set_ele_name(ele: EleStruct, name: str) -> None:
     
     name : character
         Name to set.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element whose name is to be set.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with name set.
     """
 def set_ele_real_attribute(ele: EleStruct, attrib_name: str, value: typing.SupportsFloat, err_print_flag: bool | None = None) -> bool:
     """
@@ -38800,11 +35519,6 @@ def set_ele_real_attribute(ele: EleStruct, attrib_name: str, value: typing.Suppo
     
     Returns
     -------
-    ele : EleStruct
-        Element with attribute to set.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with attribute set.
-    
     err_flag : bool
         Set True if there is an error, False otherwise.
     """
@@ -38899,13 +35613,6 @@ def set_flags_for_changed_attribute(lat: LatStruct, set_dependent: bool | None =
         If False then dependent parameter bookkeeping will not be done. False is used, for example, during parsing
         when dependent bookkeepin is not wanted. Default is True. Do not set False unless you know what you are
         doing.
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice being modified.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with appropriate changes.
     """
 @typing.overload
 def set_flags_for_changed_attribute(ele: EleStruct, attrib: bool, set_dependent: bool | None = None) -> None:
@@ -39037,13 +35744,6 @@ def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.Supports
         This parameter is an input/output and is modified in-place.
         As an output, lat: Modified lattice.
     
-    switch : int
-        on$            => Turn elements on. If saved_values argument is present, use this. If not present (only
-        for logical attributes), set to True. off$           => Turn elements off (but will not store the present
-        state). off_and_save$  => Save on/off state and then turn elements off. save_state$    => Save present
-        on/off state. No turning on or off is done. restore_state$ => Restore saved on/off state from saved_values
-        argument.
-    
     orb : 1D array of CoordStruct, optional
         Needed for lat_make_mat6
     
@@ -39065,19 +35765,6 @@ def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.Supports
     
     set_val : int, optional
         Value to set to. Overrides normal set value.
-    
-    Returns
-    -------
-    lat : LatStruct
-        lattice structure holding the elements.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Modified lattice.
-    
-    saved_values : 1D array of float, optional
-        Element-by element saved values of the component. Must be present if needed (EG if switch =
-        restore_state$, etc.).
-        This parameter is an input/output and is modified in-place.
-        As an output, saved_values: Saved values of the component.
     """
 def set_orbit_to_zero(orbit: CoordStructArray1D, n1: typing.SupportsInt, n2: typing.SupportsInt, ix_noset: typing.SupportsInt | None = None) -> None:
     """
@@ -39085,6 +35772,9 @@ def set_orbit_to_zero(orbit: CoordStructArray1D, n1: typing.SupportsInt, n2: typ
     
     Parameters
     ----------
+    orbit : 1D array of CoordStruct
+        Array with particle positions in the range orbit(n1:n2) set to zero except for orbit(ix_noset).
+    
     n1 : int
         Lower bound of orbit(:) array subset.
     
@@ -39093,11 +35783,6 @@ def set_orbit_to_zero(orbit: CoordStructArray1D, n1: typing.SupportsInt, n2: typ
     
     ix_noset : int, optional
         If present then orbit(ix_noset) will not be zeroed.
-    
-    Returns
-    -------
-    orbit : 1D array of CoordStruct
-        Array with particle positions in the range orbit(n1:n2) set to zero except for orbit(ix_noset).
     """
 @typing.overload
 def set_parameter(param_val: typing.SupportsInt, set_val: typing.SupportsInt, save_val: typing.SupportsInt) -> None:
@@ -39106,14 +35791,6 @@ def set_parameter(param_val: typing.SupportsInt, set_val: typing.SupportsInt, sa
     
     Parameters
     ----------
-    param_val : int
-    
-    set_val : int
-    
-    save_val : int
-    
-    Returns
-    -------
     param_val : int
     
     set_val : int
@@ -39132,14 +35809,6 @@ def set_parameter(param_val: bool, set_val: bool, save_val: bool) -> None:
     set_val : bool
     
     save_val : bool
-    
-    Returns
-    -------
-    param_val : bool
-    
-    set_val : bool
-    
-    save_val : bool
     """
 @typing.overload
 def set_parameter(param_val: typing.SupportsFloat, set_val: typing.SupportsFloat, save_val: typing.SupportsFloat) -> None:
@@ -39148,14 +35817,6 @@ def set_parameter(param_val: typing.SupportsFloat, set_val: typing.SupportsFloat
     
     Parameters
     ----------
-    param_val : float
-    
-    set_val : float
-    
-    save_val : float
-    
-    Returns
-    -------
     param_val : float
     
     set_val : float
@@ -39250,10 +35911,6 @@ def set_ptc_verbose(on: bool) -> None:
     Parameters
     ----------
     on : bool
-    
-    Returns
-    -------
-    on : bool
     """
 def set_pwd_ele(lat: LatStruct, mode0: NormalModesStruct, inductance: typing.SupportsFloat) -> None:
     """
@@ -39344,16 +36001,6 @@ def set_tune(phi_a_set: typing.SupportsFloat, phi_b_set: typing.SupportsFloat, d
     
     Returns
     -------
-    branch : BranchStruct
-        Lattice branch to tune.
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: Q_tuned lattice branch
-    
-    orb : 1D array of CoordStruct
-        If RF is off: Energy dE/E at which the tune is computed.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: New closed orbit.
-    
     ok : bool
         Set True if everything is ok. False otherwise.
     """
@@ -39387,12 +36034,6 @@ def set_tune_3d(branch: BranchStruct, target_tunes: typing.Annotated[collections
     
     Returns
     -------
-    branch : BranchStruct
-        This parameter is an input/output and is modified in-place.
-        As an output, branch: with adjusted quads and RF to match desired tunes.
-    
-    mask : character, optional
-    
     everything_ok : bool
         Returns true or false if set was successful.
     """
@@ -39436,8 +36077,6 @@ def set_z_tune(branch: BranchStruct, z_tune: typing.SupportsFloat, print_err: bo
     
     Returns
     -------
-    branch : BranchStruct
-    
     ok : bool, optional
         If present, returns true or false if set was successful. If not present, set_z_tune will bomb if tune
         could not be set.
@@ -39640,12 +36279,6 @@ def skip_ele_blender(ele: EleStruct, skip: bool) -> None:
     ele : EleStruct
     
     skip : bool
-    
-    Returns
-    -------
-    ele : EleStruct
-    
-    skip : bool
     """
 def skip_header(ix_unit: typing.SupportsInt, error_flag: bool) -> None:
     """
@@ -39653,12 +36286,6 @@ def skip_header(ix_unit: typing.SupportsInt, error_flag: bool) -> None:
     
     Parameters
     ----------
-    ix_unit : int
-    
-    error_flag : bool
-    
-    Returns
-    -------
     ix_unit : int
     
     error_flag : bool
@@ -39684,11 +36311,6 @@ def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = N
     
     Returns
     -------
-    lat : LatStruct
-        Lattice to slice.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with unwanted elements sliced out.
-    
     error : bool
         Set True if there is an error Set False if not.
     """
@@ -39723,18 +36345,6 @@ def soft_quadrupole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Position before kick.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Position after kick.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the edge.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix with edge kick added on.
     """
 def sol_quad_mat6_calc(ks_in: typing.SupportsFloat, k1_in: typing.SupportsFloat, tilt: typing.SupportsFloat, length: typing.SupportsFloat, ele: EleStruct, orbit: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -39765,20 +36375,6 @@ def sol_quad_mat6_calc(ks_in: typing.SupportsFloat, k1_in: typing.SupportsFloat,
     
     make_matrix : bool, optional
         Extend the matrix?
-    
-    Returns
-    -------
-    ks_in : float
-    
-    k1_in : float
-    
-    orbit : CoordStruct
-        Orbit at beginning of the sol_quad.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the sol_quad.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix includeing the sol_quad.
     """
 def solve_psi_adaptive(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
@@ -39833,8 +36429,6 @@ def solve_psi_fixed_steps(t0: typing.SupportsFloat, t1: typing.SupportsFloat, p0
     args : 1D array of float (shape: 1:8)
         Parameters.  See psi_prime comments for details.
     
-    Returns
-    -------
     t : 1D array of float
         Array of times from t0 to t1
     
@@ -39878,9 +36472,6 @@ def species_id(name: str, default_: typing.SupportsInt | None = None, print_err:
     ----------
     name : character
         Name of the species.
-    
-    default : int, optional
-        Default species to use if name is blank or 'ref_species'. If not present, a blank name is an error.
     
     print_err : bool, optional
         Print error message? Default is True. If False, return species = invalid$,
@@ -40008,13 +36599,6 @@ def spin_map1_normalize(spin1: typing.Annotated[collections.abc.Sequence[typing.
         Unnormalized spin map.
         This parameter is an input/output and is modified in-place.
         As an output, spin1: Normalized spin map.
-    
-    Returns
-    -------
-    spin1 : 2D array of float (shape: 0:3,0:6)
-        Unnormalized spin map.
-        This parameter is an input/output and is modified in-place.
-        As an output, spin1: Normalized spin map.
     """
 def spin_mat8_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], mat8: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> SpinMat8ResonanceStrengths:
     """
@@ -40092,18 +36676,6 @@ def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.Supp
     
     Parameters
     ----------
-    field : EmFieldStruct
-    
-    orbit : CoordStruct
-    
-    sign_z_vel : int
-    
-    phase_space_coords : bool, optional
-    
-    omega : 1D array of float (shape: 3)
-    
-    Returns
-    -------
     field : EmFieldStruct
     
     orbit : CoordStruct
@@ -40238,8 +36810,6 @@ def spline_akima(spline: SplineStructArray1D) -> bool:
     
     Returns
     -------
-    spline : 1D array of SplineStruct
-    
     ok : bool
         Set .false. if something is wrong (like less than 2 points used).
     """
@@ -40376,11 +36946,6 @@ def split_lat(lat: LatStruct, s_split: typing.SupportsFloat, ix_branch: typing.S
     
     Returns
     -------
-    lat : LatStruct
-        Original lat structure.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Modified lat structure.
-    
     ix_split : int
         Index of element just before the s = s_split point.
     
@@ -40403,13 +36968,6 @@ def sprint_spin_taylor_map(ele: EleStruct, start_orbit: typing.Annotated[collect
     
     start_orbit : 1D array of float (shape: 6), optional
         Reference orbit for the map. Default is zero orbit.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element to form map for.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with map.
     """
 def sqrt_alpha(alpha: typing.SupportsFloat, x: typing.SupportsFloat) -> float:
     """
@@ -40442,10 +37000,6 @@ def sqrt_one(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, ds1:
         implemented.
     
     ds1 : float
-    
-    Returns
-    -------
-    ds1 : float
     """
 def sr_longitudinal_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
     """
@@ -40456,16 +37010,6 @@ def sr_longitudinal_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-        Element with wakes.
-    
-    orbit : CoordStruct
-        Particle coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: coords after the kick.
-    
-    Returns
-    -------
     ele : EleStruct
         Element with wakes.
     
@@ -40490,16 +37034,6 @@ def sr_transverse_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
         Starting particle coords.
         This parameter is an input/output and is modified in-place.
         As an output, orbit: Ending particle coords.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element with wakes.
-    
-    orbit : CoordStruct
-        Starting particle coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending particle coords.
     """
 def sr_z_long_wake(ele: EleStruct, bunch: BunchStruct, z_ave: typing.SupportsFloat) -> None:
     """
@@ -40517,11 +37051,6 @@ def sr_z_long_wake(ele: EleStruct, bunch: BunchStruct, z_ave: typing.SupportsFlo
     
     z_ave : float
         Average z-position of all live particles.
-    
-    Returns
-    -------
-    bunch : BunchStruct
-        Bunch before wake applied.
     """
 def srdt_calc(lat: LatStruct, order: typing.SupportsInt, n_slices_gen_opt: typing.SupportsInt | None = None, n_slices_sxt_opt: typing.SupportsInt | None = None, per_ele_out: SummationRdtStructAlloc1D | None = None) -> SummationRdtStruct:
     """
@@ -40620,11 +37149,6 @@ def start_branch_at(lat: LatStruct, ele_start: str, move_end_marker: bool) -> bo
     
     Returns
     -------
-    lat : LatStruct
-        Lattice to modify.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Modified lattice.
-    
     error : bool
         Set True if there is an error Set False if not.
     """
@@ -40639,14 +37163,6 @@ def str_count(str: str, match: str, num: typing.SupportsInt) -> None:
     match : character
     
     num : int
-    
-    Returns
-    -------
-    str : character
-    
-    match : character
-    
-    num : int
     """
 def str_downcase(src: str) -> str:
     """
@@ -40654,15 +37170,11 @@ def str_downcase(src: str) -> str:
     
     Parameters
     ----------
-    dst : character
-    
     src : character
     
     Returns
     -------
     dst : character
-    
-    src : character
     """
 def str_first_in_set(line: str, set: str, ignore_clauses: bool | None = None, ix_match: typing.SupportsInt) -> None:
     """
@@ -40670,16 +37182,6 @@ def str_first_in_set(line: str, set: str, ignore_clauses: bool | None = None, ix
     
     Parameters
     ----------
-    line : character
-    
-    set : character
-    
-    ignore_clauses : bool, optional
-    
-    ix_match : int
-    
-    Returns
-    -------
     line : character
     
     set : character
@@ -40699,14 +37201,6 @@ def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> N
     set : character
     
     ix_match : int
-    
-    Returns
-    -------
-    line : character
-    
-    set : character
-    
-    ix_match : int
     """
 def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> None:
     """
@@ -40714,14 +37208,6 @@ def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> None:
     
     Parameters
     ----------
-    line : character
-    
-    set : character
-    
-    ix_match : int
-    
-    Returns
-    -------
     line : character
     
     set : character
@@ -40739,14 +37225,6 @@ def str_last_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> No
     set : character
     
     ix_match : int
-    
-    Returns
-    -------
-    line : character
-    
-    set : character
-    
-    ix_match : int
     """
 def str_match_wild(str: str, pat: str, a_match: bool) -> None:
     """
@@ -40754,14 +37232,6 @@ def str_match_wild(str: str, pat: str, a_match: bool) -> None:
     
     Parameters
     ----------
-    str : character
-    
-    pat : character
-    
-    a_match : bool
-    
-    Returns
-    -------
     str : character
     
     pat : character
@@ -40783,18 +37253,6 @@ def str_substitute(string: str, str_match: str | None = None, str_replace: str |
     do_trim : bool, optional
     
     ignore_escaped : bool, optional
-    
-    Returns
-    -------
-    string : character
-    
-    str_match : character, optional
-    
-    str_replace : character, optional
-    
-    do_trim : bool, optional
-    
-    ignore_escaped : bool, optional
     """
 def str_upcase(src: str) -> str:
     """
@@ -40802,15 +37260,11 @@ def str_upcase(src: str) -> str:
     
     Parameters
     ----------
-    dst : character
-    
     src : character
     
     Returns
     -------
     dst : character
-    
-    src : character
     """
 def stream_ele_end(physical_end: typing.SupportsInt, ele_orientation: typing.SupportsInt) -> int:
     """
@@ -40861,20 +37315,6 @@ def string_to_int(line: str, default_: typing.SupportsInt, err_flag: bool, err_p
     ----------
     line : character
     
-    default : (unknown)
-    
-    err_flag : bool
-    
-    err_print_flag : bool, optional
-    
-    value : int
-    
-    Returns
-    -------
-    line : character
-    
-    default : (unknown)
-    
     err_flag : bool
     
     err_print_flag : bool, optional
@@ -40888,20 +37328,6 @@ def string_to_real(line: str, default_: typing.SupportsFloat, err_flag: bool, er
     Parameters
     ----------
     line : character
-    
-    default : (unknown)
-    
-    err_flag : bool
-    
-    err_print_flag : bool, optional
-    
-    value : float
-    
-    Returns
-    -------
-    line : character
-    
-    default : (unknown)
     
     err_flag : bool
     
@@ -40920,14 +37346,6 @@ def string_trim(in_string: str, out_string: str, word_len: typing.SupportsInt) -
     out_string : character
     
     word_len : int
-    
-    Returns
-    -------
-    in_string : character
-    
-    out_string : character
-    
-    word_len : int
     """
 def string_trim2(in_str: str, delimitors: str, out_str: str, ix_word: typing.SupportsInt, delim: str, ix_next: typing.SupportsInt) -> None:
     """
@@ -40935,20 +37353,6 @@ def string_trim2(in_str: str, delimitors: str, out_str: str, ix_word: typing.Sup
     
     Parameters
     ----------
-    in_str : character
-    
-    delimitors : character
-    
-    out_str : character
-    
-    ix_word : int
-    
-    delim : character
-    
-    ix_next : int
-    
-    Returns
-    -------
     in_str : character
     
     delimitors : character
@@ -41031,16 +37435,6 @@ def suggest_lmdif(XV: RealArray1D, FV: RealArray1D, eps: typing.SupportsFloat, i
     
     Returns
     -------
-    xv : 1D array of float
-        Array of variables
-        This parameter is an input/output and is modified in-place.
-        As an output, xv: Suggested new values
-    
-    fv : 1D array of float
-        Array of function value/s that should be optimized to zero
-        This parameter is an input/output and is modified in-place.
-        As an output, fv: After the last optimization this returns the best values ever.
-    
     at_end : bool
         Set to False if more optimization is recommended. If set to True then xv(:) will be the minimum found.
     """
@@ -41174,16 +37568,11 @@ def super_sobseq(x: RealArray1D, ran_state: RandomStateStruct | None = None) -> 
     
     Parameters
     ----------
-    ran_state : RandomStateStruct, optional
-        Generator state. See the ran_seed_put documentation for more details.
-    
-    Returns
-    -------
-    ran_state : RandomStateStruct, optional
-        Generator state. See the ran_seed_put documentation for more details.
-    
     x : 1D array of float
         Random vector.
+    
+    ran_state : RandomStateStruct, optional
+        Generator state. See the ran_seed_put documentation for more details.
     """
 def super_sort(arr: IntArray1D) -> None:
     """
@@ -41194,13 +37583,6 @@ def super_sort(arr: IntArray1D) -> None:
     
     Parameters
     ----------
-    arr : 1D array of int
-        Array of integers.
-        This parameter is an input/output and is modified in-place.
-        As an output, arr: Sorted array.
-    
-    Returns
-    -------
     arr : 1D array of int
         Array of integers.
         This parameter is an input/output and is modified in-place.
@@ -41269,24 +37651,9 @@ def symp_lie_bmad(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct, mat
     
     Returns
     -------
-    ele : EleStruct
-        Element with transfer matrix
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with transfer matrix.
-    
-    orbit : CoordStruct
-        Coordinates at the beginning of element.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Coordinates at the end of element.
-    
     track : TrackStruct, optional
         Structure holding the track information. When tracking through multiple elements, the trajectory in an
         element is appended to the existing trajectory. To reset: Set track.n_pt = -1.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix propagated through the element.
     """
 def system_command(line: str) -> bool:
     """
@@ -41383,14 +37750,6 @@ def tao_allocate_data_array(u: TaoUniverseStruct, n_data: typing.SupportsInt, ex
     n_data : int
     
     exact : bool, optional
-    
-    Returns
-    -------
-    u : TaoUniverseStruct
-    
-    n_data : int
-    
-    exact : bool, optional
     """
 def tao_allocate_v1_var(n_v1: typing.SupportsInt, save_old: bool) -> None:
     """
@@ -41398,12 +37757,6 @@ def tao_allocate_v1_var(n_v1: typing.SupportsInt, save_old: bool) -> None:
     
     Parameters
     ----------
-    n_v1 : int
-    
-    save_old : bool
-    
-    Returns
-    -------
     n_v1 : int
     
     save_old : bool
@@ -41466,11 +37819,6 @@ def tao_beam_track(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct, ix_branch: t
     
     Returns
     -------
-    beam : BeamStruct
-        Initial beam distribution
-        This parameter is an input/output and is modified in-place.
-        As an output, beam: Final beam distribution.
-    
     calc_ok : bool
         Set True if there were no problems, False otherwise.
     """
@@ -41521,16 +37869,6 @@ def tao_calc_data_at_s_pts(tao_lat: TaoLatticeStruct, curve: TaoCurveStruct, com
     
     Parameters
     ----------
-    tao_lat : TaoLatticeStruct
-    
-    curve : TaoCurveStruct
-    
-    comp_sign : float
-    
-    good : 1D array of bool
-    
-    Returns
-    -------
     tao_lat : TaoLatticeStruct
     
     curve : TaoCurveStruct
@@ -41641,14 +37979,6 @@ def tao_chrom_calc_needed(data_type: str, data_source: str, do_chrom: bool) -> N
     data_source : character
     
     do_chrom : bool
-    
-    Returns
-    -------
-    data_type : character
-    
-    data_source : character
-    
-    do_chrom : bool
     """
 def tao_clear_cmd(cmd_line: str) -> None:
     """
@@ -41671,12 +38001,6 @@ def tao_clip_cmd(gang: bool, where: str, value1: typing.SupportsFloat, value2: t
     where : character
         Graph() to clip. Eg: 'top:x'
     
-    value1 : float
-    
-    value2 : float
-    
-    Returns
-    -------
     value1 : float
     
     value2 : float
@@ -41704,8 +38028,6 @@ def tao_command(command_line: str, err: bool) -> bool:
     
     Returns
     -------
-    err : bool
-    
     err_is_fatal : bool
         Set True on non-recoverable error. False otherwise
     """
@@ -41768,10 +38090,6 @@ def tao_curve_beam_ellipse_setup(curve: TaoCurveStruct) -> None:
     Parameters
     ----------
     curve : TaoCurveStruct
-    
-    Returns
-    -------
-    curve : TaoCurveStruct
     """
 def tao_curve_check_universe(curve: TaoCurveStruct, uni: TaoUniverseStruct) -> bool:
     """
@@ -41791,11 +38109,6 @@ def tao_curve_check_universe(curve: TaoCurveStruct, uni: TaoUniverseStruct) -> b
     
     Returns
     -------
-    curve : TaoCurveStruct
-        Curve to check.
-        This parameter is an input/output and is modified in-place.
-        As an output, curve: Curve.valid set to False if needed.
-    
     is_ok : bool
         Set True if associated universe exists and is on.
     """
@@ -41805,14 +38118,6 @@ def tao_curve_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct, curve: TaoC
     
     Parameters
     ----------
-    plot : TaoPlotStruct
-    
-    graph : TaoGraphStruct
-    
-    curve : TaoCurveStruct
-    
-    Returns
-    -------
     plot : TaoPlotStruct
     
     graph : TaoGraphStruct
@@ -41839,12 +38144,6 @@ def tao_curve_datum_calc(eles: ElePointerStructAlloc1D, plot: TaoPlotStruct, cur
     
     who : character
         Where to put the data. Either: "SYMBOL" or "LINE".
-    
-    Returns
-    -------
-    curve : TaoCurveStruct
-        This parameter is an input/output and is modified in-place.
-        As an output, curve: Structure holding the datum values
     """
 def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool, ele_track: EleStruct) -> None:
     """
@@ -41855,12 +38154,6 @@ def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool, ele_track: 
     curve : TaoCurveStruct
         Curve with ref ele.
     
-    point_to_ele_ref : bool
-    
-    ele_track : EleStruct
-    
-    Returns
-    -------
     point_to_ele_ref : bool
     
     ele_track : EleStruct
@@ -41945,14 +38238,6 @@ def tao_d2_data_stuffit(u: TaoUniverseStruct, d2_name: str, n_d1_data: typing.Su
     d2_name : character
     
     n_d1_data : int
-    
-    Returns
-    -------
-    u : TaoUniverseStruct
-    
-    d2_name : character
-    
-    n_d1_data : int
     """
 def tao_data_check(err: bool) -> None:
     """
@@ -41960,10 +38245,6 @@ def tao_data_check(err: bool) -> None:
     
     Parameters
     ----------
-    err : bool
-    
-    Returns
-    -------
     err : bool
     """
 def tao_data_coupling_init(branch: BranchStruct) -> None:
@@ -42010,9 +38291,6 @@ def tao_data_type_substitute(template_: str, curve: TaoCurveStruct, graph: TaoGr
     
     Parameters
     ----------
-    template : str
-        String template.
-    
     curve : TaoCurveStruct
         curve.ele_ref_name is substituted for all instances of "#ref".
     
@@ -42031,19 +38309,19 @@ def tao_data_useit_plot_calc(curve: TaoCurveStruct, graph: TaoGraphStruct, data:
     
     Parameters
     ----------
+    curve : TaoCurveStruct
+        tao_curve_struct
+    
     graph : TaoGraphStruct
         tao_graph_struct
     
-    curve : TaoCurveStruct
-        tao_curve_struct
+    data : 1D array of TaoDataStruct
     
     check_s_position : bool
         If present and True then veto data that does not have an s-position.
     
     Returns
     -------
-    data : 1D array of TaoDataStruct
-    
     most_invalid : character
         String documenting biggest invalid data problem.
     """
@@ -42146,10 +38424,6 @@ def tao_deallocate_plot_cache(plot_cache: TaoPlotCacheStructAlloc1D) -> None:
     Parameters
     ----------
     plot_cache : 1D array of TaoPlotCacheStruct
-    
-    Returns
-    -------
-    plot_cache : 1D array of TaoPlotCacheStruct
     """
 def tao_deallocate_tree(tree: TaoEvalNodeStruct) -> None:
     """
@@ -42159,13 +38433,6 @@ def tao_deallocate_tree(tree: TaoEvalNodeStruct) -> None:
     
     Parameters
     ----------
-    tree : TaoEvalNodeStruct
-        Root of tree to deallocate.
-        This parameter is an input/output and is modified in-place.
-        As an output, tree: Deallocated tree.
-    
-    Returns
-    -------
     tree : TaoEvalNodeStruct
         Root of tree to deallocate.
         This parameter is an input/output and is modified in-place.
@@ -42503,9 +38770,6 @@ def tao_evaluate_a_datum(datum: TaoDataStruct, u: TaoUniverseStruct, tao_lat: Ta
     
     Returns
     -------
-    datum : TaoDataStruct
-        What type of datum
-    
     datum_value : float
         Value of the datum.
     
@@ -42582,8 +38846,6 @@ def tao_evaluate_element_parameters(param_name: str, print_err: bool, dflt_ele: 
     
     values : 1D array of float
         Array of datum values.
-    
-    eval_point : int, optional
     
     info : 1D array of TaoExpressionInfoStruct, optional
     """
@@ -42905,15 +39167,11 @@ def tao_evaluate_tree(tao_tree: TaoEvalNodeStruct, n_size: typing.SupportsInt, u
     
     Returns
     -------
-    n_size : int
-    
     value : 1D array of float
         Value(s) of the arithmetic expression.
     
     err_flag : bool
         True on error. False otherwise
-    
-    info_in : 1D array of TaoExpressionInfoStruct, optional
     """
 def tao_evaluate_tune(q_str: str, q0: typing.SupportsFloat, delta_input: bool) -> float:
     """
@@ -43012,9 +39270,6 @@ def tao_fixer(switch_: str, word1: str, word2: str) -> None:
     
     Parameters
     ----------
-    switch : str
-        Action to take. One on : 'activate', 'save', 'write'.
-    
     word1 : character
         First word of command.
     
@@ -43034,8 +39289,6 @@ def tao_floor_to_screen(graph: TaoGraphStruct, r_floor: typing.Annotated[collect
     
     Returns
     -------
-    r_floor : 1D array of float (shape: 3)
-    
     x_screen : float
         x-coordinate of projected point.
     
@@ -43164,10 +39417,6 @@ def tao_graph_controller_setup(graph: TaoGraphStruct) -> None:
     Parameters
     ----------
     graph : TaoGraphStruct
-    
-    Returns
-    -------
-    graph : TaoGraphStruct
     """
 def tao_graph_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
@@ -43175,12 +39424,6 @@ def tao_graph_data_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     
     Parameters
     ----------
-    plot : TaoPlotStruct
-    
-    graph : TaoGraphStruct
-    
-    Returns
-    -------
     plot : TaoPlotStruct
     
     graph : TaoGraphStruct
@@ -43194,12 +39437,6 @@ def tao_graph_data_slice_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> No
     plot : TaoPlotStruct
     
     graph : TaoGraphStruct
-    
-    Returns
-    -------
-    plot : TaoPlotStruct
-    
-    graph : TaoGraphStruct
     """
 def tao_graph_dynamic_aperture_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
@@ -43210,12 +39447,6 @@ def tao_graph_dynamic_aperture_setup(plot: TaoPlotStruct, graph: TaoGraphStruct)
     plot : TaoPlotStruct
     
     graph : TaoGraphStruct
-    
-    Returns
-    -------
-    plot : TaoPlotStruct
-    
-    graph : TaoGraphStruct
     """
 def tao_graph_histogram_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     """
@@ -43223,12 +39454,6 @@ def tao_graph_histogram_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> Non
     
     Parameters
     ----------
-    plot : TaoPlotStruct
-    
-    graph : TaoGraphStruct
-    
-    Returns
-    -------
     plot : TaoPlotStruct
     
     graph : TaoGraphStruct
@@ -43257,12 +39482,6 @@ def tao_graph_phase_space_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> N
     
     Parameters
     ----------
-    plot : TaoPlotStruct
-    
-    graph : TaoGraphStruct
-    
-    Returns
-    -------
     plot : TaoPlotStruct
     
     graph : TaoGraphStruct
@@ -43298,12 +39517,6 @@ def tao_graph_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
     plot : TaoPlotStruct
     
     graph : TaoGraphStruct
-    
-    Returns
-    -------
-    plot : TaoPlotStruct
-    
-    graph : TaoGraphStruct
     """
 def tao_init() -> bool:
     """
@@ -43320,18 +39533,6 @@ def tao_init_beam_in_universe(u: TaoUniverseStruct, beam_init: BeamInitStruct, t
     
     Parameters
     ----------
-    u : TaoUniverseStruct
-    
-    beam_init : BeamInitStruct
-    
-    track_start : character
-    
-    track_end : character
-    
-    comb_ds_save : float
-    
-    Returns
-    -------
     u : TaoUniverseStruct
     
     beam_init : BeamInitStruct
@@ -43374,14 +39575,6 @@ def tao_init_data_in_universe(u: TaoUniverseStruct, n_d2_add: typing.SupportsInt
     
     Parameters
     ----------
-    u : TaoUniverseStruct
-    
-    n_d2_add : int
-    
-    keep_existing_data : bool, optional
-    
-    Returns
-    -------
     u : TaoUniverseStruct
     
     n_d2_add : int
@@ -43442,12 +39635,6 @@ def tao_init_lattice(lat_file: str, err_flag: bool) -> None:
     lat_file : character
     
     err_flag : bool
-    
-    Returns
-    -------
-    lat_file : character
-    
-    err_flag : bool
     """
 def tao_init_plotting(plot_file: str) -> None:
     """
@@ -43455,10 +39642,6 @@ def tao_init_plotting(plot_file: str) -> None:
     
     Parameters
     ----------
-    plot_file : character
-    
-    Returns
-    -------
     plot_file : character
     """
 def tao_init_variables(var_file: str) -> None:
@@ -43512,14 +39695,6 @@ def tao_inject_particle(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch
     model : TaoLatticeStruct
     
     ix_branch : int
-    
-    Returns
-    -------
-    u : TaoUniverseStruct
-    
-    model : TaoLatticeStruct
-    
-    ix_branch : int
     """
 def tao_is_valid_name(name: str) -> TaoIsValidName:
     """
@@ -43553,18 +39728,6 @@ def tao_key_info_to_str(ix_key: typing.SupportsInt, ix_min_key: typing.SupportsI
     
     Parameters
     ----------
-    ix_key : int
-    
-    ix_min_key : int
-    
-    ix_max_key : int
-    
-    key_str : character
-    
-    header_str : character
-    
-    Returns
-    -------
     ix_key : int
     
     ix_min_key : int
@@ -43624,14 +39787,6 @@ def tao_lat_sigma_calc_needed(data_type: str, data_source: str, do_lat_sigma: bo
     data_source : character
     
     do_lat_sigma : bool
-    
-    Returns
-    -------
-    data_type : character
-    
-    data_source : character
-    
-    do_lat_sigma : bool
     """
 def tao_lat_sigma_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, print_err: bool | None = None, force_calc: bool | None = None) -> bool:
     """
@@ -43667,12 +39822,6 @@ def tao_lattice_branches_equal_tao_lattice_branches(tlb1: TaoLatticeBranchStruct
     tlb1 : 1D array of TaoLatticeBranchStruct
     
     tlb2 : 1D array of TaoLatticeBranchStruct
-    
-    Returns
-    -------
-    tlb1 : 1D array of TaoLatticeBranchStruct
-    
-    tlb2 : 1D array of TaoLatticeBranchStruct
     """
 def tao_lattice_calc() -> TaoLatticeCalc:
     """
@@ -43692,12 +39841,6 @@ def tao_lattice_equal_tao_lattice(lat1: TaoLatticeStruct, lat2: TaoLatticeStruct
     
     Parameters
     ----------
-    lat1 : TaoLatticeStruct
-    
-    lat2 : TaoLatticeStruct
-    
-    Returns
-    -------
     lat1 : TaoLatticeStruct
     
     lat2 : TaoLatticeStruct
@@ -43742,28 +39885,6 @@ def tao_load_this_datum(vec: RealArray1D, ele_ref: EleStruct, ele_start: EleStru
     
     Parameters
     ----------
-    vec : 1D array of float
-    
-    ele_ref : EleStruct
-    
-    ele_start : EleStruct
-    
-    ele : EleStruct
-    
-    datum_value : float
-    
-    valid_value : bool
-    
-    datum : TaoDataStruct
-    
-    branch : BranchStruct
-    
-    why_invalid : character, optional
-    
-    good : 1D array of bool, optional
-    
-    Returns
-    -------
     vec : 1D array of float
     
     ele_ref : EleStruct
@@ -43843,8 +39964,6 @@ def tao_locate_elements(ele_list: str, ix_universe: typing.SupportsInt, lat_type
     
     err : bool
         Set true on error.
-    
-    above_ubound_is_err : bool, optional
     """
 def tao_mark_lattice_ele(lat: LatStruct) -> None:
     """
@@ -43852,13 +39971,6 @@ def tao_mark_lattice_ele(lat: LatStruct) -> None:
     
     Parameters
     ----------
-    lat : LatStruct
-        Input lattice
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with elements marked.
-    
-    Returns
-    -------
     lat : LatStruct
         Input lattice
         This parameter is an input/output and is modified in-place.
@@ -43914,14 +40026,6 @@ def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_m
     data_source : character
     
     do_one_turn_map : bool
-    
-    Returns
-    -------
-    data_type : character
-    
-    data_source : character
-    
-    do_one_turn_map : bool
     """
 def tao_open_file(file: str, file_name: str, error_severity: typing.SupportsInt, binary: bool | None = None) -> int:
     """
@@ -43943,8 +40047,6 @@ def tao_open_file(file: str, file_name: str, error_severity: typing.SupportsInt,
     
     Returns
     -------
-    file : character
-    
     iunit : int
         Logical unit number. Set to 0 if file not openable.
     """
@@ -44011,8 +40113,6 @@ def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct
     
     Returns
     -------
-    dat_name : character
-    
     err_flag : bool
         Set true if parameter cannot be evaluated.
     
@@ -44067,42 +40167,6 @@ def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, st
     dflt_orbit : CoordStruct, optional
     
     datum : TaoDataStruct, optional
-    
-    Returns
-    -------
-    str : character
-    
-    use_good_user : bool
-    
-    saved_prefix : character
-    
-    stack : TaoEvalNodeStruct
-    
-    err_flag : bool
-    
-    print_err : bool
-    
-    dflt_component : character, optional
-    
-    dflt_source : character, optional
-    
-    dflt_ele_ref : EleStruct, optional
-    
-    dflt_ele_start : EleStruct, optional
-    
-    dflt_ele : EleStruct, optional
-    
-    dflt_dat_or_var_index : character, optional
-    
-    dflt_uni : int, optional
-    
-    dflt_eval_point : int, optional
-    
-    dflt_s_offset : float, optional
-    
-    dflt_orbit : CoordStruct, optional
-    
-    datum : TaoDataStruct, optional
     """
 def tao_parse_command_args(cmd_line: str | None = None) -> bool:
     """
@@ -44116,8 +40180,6 @@ def tao_parse_command_args(cmd_line: str | None = None) -> bool:
     -------
     error : bool
         Set True if there is an error. False otherwise.
-    
-    cmd_line : character, optional
     """
 def tao_parse_element_param_str(in_str: str) -> TaoParseElementParamStr:
     """
@@ -44407,14 +40469,14 @@ def tao_pointer_to_datum_ele(lat: LatStruct, ele_name: str, ix_ele: typing.Suppo
     
     Returns
     -------
-    ele : EleStruct, optional
-        : Pointer to the element. Set to NULL if not valid or no associated element.
-    
     valid : bool
         Set False if element does not have a definite location. Set True otherwise
     
     why_invalid : character, optional
         Tells why datum value is invalid.
+    
+    ele : EleStruct, optional
+        : Pointer to the element. Set to NULL if not valid or no associated element.
     """
 def tao_pointer_to_ele_shape(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shape: TaoEleShapeStructArray1D, ix_shape_min: typing.SupportsInt | None = None) -> TaoPointerToEleShape:
     """
@@ -44651,14 +40713,6 @@ def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) 
     data_source : character
     
     do_rad_int : bool
-    
-    Returns
-    -------
-    data_type : character
-    
-    data_source : character
-    
-    do_rad_int : bool
     """
 def tao_re_allocate_expression_info(info: TaoExpressionInfoStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
@@ -44675,12 +40729,6 @@ def tao_re_allocate_expression_info(info: TaoExpressionInfoStructAlloc1D, n: typ
     
     exact : bool, optional
         If present and False then the size of the output array is permitted to be larger than n. Default is True.
-    
-    Returns
-    -------
-    info : 1D array of TaoExpressionInfoStruct
-        This parameter is an input/output and is modified in-place.
-        As an output, info: Allocated array with size(re) >= n.
     """
 def tao_re_associate_node_array(tree: TaoEvalNodeStruct, n: typing.SupportsInt, exact: bool | None = None) -> None:
     """
@@ -44700,10 +40748,6 @@ def tao_re_associate_node_array(tree: TaoEvalNodeStruct, n: typing.SupportsInt, 
     
     exact : bool, optional
         Default is False. If False, the size of the output array is permitted to be larger than n.
-    
-    Returns
-    -------
-    tree : TaoEvalNodeStruct
     """
 def tao_re_execute(string: str, err: bool) -> None:
     """
@@ -44726,12 +40770,6 @@ def tao_read_cmd(which: str, unis: str, file: str, silent: bool) -> None:
     
     silent : bool
         Silent
-    
-    Returns
-    -------
-    which : character
-    
-    file : character
     """
 def tao_read_phase_space_index(name: str, ixc: typing.SupportsInt, print_err: bool | None = None) -> int:
     """
@@ -44759,10 +40797,6 @@ def tao_regression_test(cmd_str: str) -> None:
     
     Parameters
     ----------
-    cmd_str : character
-    
-    Returns
-    -------
     cmd_str : character
     """
 def tao_remove_blank_characters(str: str) -> TaoRemoveBlankCharacters:
@@ -44863,11 +40897,6 @@ def tao_scale_graph(graph: TaoGraphStruct, y_min: typing.SupportsFloat, y_max: t
     
     Returns
     -------
-    graph : TaoGraphStruct
-        Graph with axis/axes to be scaled.
-        This parameter is an input/output and is modified in-place.
-        As an output, graph: Graph with scaled axis/axes.
-    
     y_range : 1D array of float (shape: 2), optional
         Only used by tao_scale_plot when ganging graphs.
     
@@ -44880,10 +40909,6 @@ def tao_scale_ping_data(u: TaoUniverseStruct) -> None:
     
     Parameters
     ----------
-    u : TaoUniverseStruct
-    
-    Returns
-    -------
     u : TaoUniverseStruct
     """
 def tao_scale_plot(plot: TaoPlotStruct, y_min_in: typing.SupportsFloat, y_max_in: typing.SupportsFloat, axis: str | None = None, include_wall: bool | None = None, gang: str | None = None, skip_lat_layout: bool | None = None) -> None:
@@ -44920,13 +40945,6 @@ def tao_scale_plot(plot: TaoPlotStruct, y_min_in: typing.SupportsFloat, y_max_in
     
     skip_lat_layout : bool, optional
         If True, skip scaling any lat_layout graphs. Default is false.
-    
-    Returns
-    -------
-    plot : TaoPlotStruct
-        Plot with graphs to be scaled.
-        This parameter is an input/output and is modified in-place.
-        As an output, plot: Plot with scaled graphs.
     """
 def tao_scratch_values_calc(ele_ref: EleStruct, ele_start: EleStruct, ele: EleStruct, datum: TaoDataStruct, branch: BranchStruct, orbit: CoordStructArray1D) -> None:
     """
@@ -44934,20 +40952,6 @@ def tao_scratch_values_calc(ele_ref: EleStruct, ele_start: EleStruct, ele: EleSt
     
     Parameters
     ----------
-    ele_ref : EleStruct
-    
-    ele_start : EleStruct
-    
-    ele : EleStruct
-    
-    datum : TaoDataStruct
-    
-    branch : BranchStruct
-    
-    orbit : 1D array of CoordStruct
-    
-    Returns
-    -------
     ele_ref : EleStruct
     
     ele_start : EleStruct
@@ -45066,13 +41070,6 @@ def tao_set_curve_invalid(curve: TaoCurveStruct, why_invalid: str, print_err: bo
     
     print_err : bool, optional
         If present and True then also print an error message.
-    
-    Returns
-    -------
-    curve : TaoCurveStruct
-        Curve to set.
-        This parameter is an input/output and is modified in-place.
-        As an output, curve: Curve properly set.
     """
 def tao_set_data_cmd(who_str: str, value_str: str, silent: bool | None = None) -> None:
     """
@@ -45165,16 +41162,6 @@ def tao_set_floor_plan_axis_label(graph: TaoGraphStruct, axis_in: QpAxisStruct, 
     
     Parameters
     ----------
-    graph : TaoGraphStruct
-    
-    axis_in : QpAxisStruct
-    
-    axis_out : QpAxisStruct
-    
-    which : character
-    
-    Returns
-    -------
     graph : TaoGraphStruct
     
     axis_in : QpAxisStruct
@@ -45464,11 +41451,6 @@ def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStr
     
     Returns
     -------
-    qp_axis : QpAxisStruct
-        qp_axis_struct with component to modify
-        This parameter is an input/output and is modified in-place.
-        As an output, qp_axis: qp_axis_struct with changed component value.
-    
     error : bool
         Set true if there is an error. False otherwise.
     
@@ -45499,11 +41481,6 @@ def tao_set_qp_point_struct(qp_point_name: str, component: str, qp_point: QpPoin
     
     Returns
     -------
-    qp_point : QpPointStruct
-        qp_point_struct with component to modify
-        This parameter is an input/output and is modified in-place.
-        As an output, qp_point: qp_point_struct with changed component value.
-    
     error : bool
         Set true if there is an error. False otherwise.
     
@@ -45534,11 +41511,6 @@ def tao_set_qp_rect_struct(qp_rect_name: str, component: str, qp_rect: QpRectStr
     
     Returns
     -------
-    qp_rect : QpRectStruct
-        qp_rect_struct with component to modify
-        This parameter is an input/output and is modified in-place.
-        As an output, qp_rect: qp_rect_struct with changed component value.
-    
     error : bool
         Set true if there is an error. False otherwise.
     
@@ -45769,9 +41741,6 @@ def tao_shape_init(shape: TaoEleShapeStruct, print_err: bool | None = None) -> b
     
     Returns
     -------
-    shape : TaoEleShapeStruct
-        Shape
-    
     err : bool
         Set true if there is a problem translating the element class.
     """
@@ -45805,8 +41774,6 @@ def tao_single_mode(char_: str) -> None:
     
     Parameters
     ----------
-    char : character(1)
-        Command. If more characters are needed to complete the command then this routine will get them.
     """
 def tao_single_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt, print_err: bool | None = None) -> bool:
     """
@@ -45841,14 +41808,6 @@ def tao_spin_matrices_calc_needed(data_type: str, data_source: str, do_calc: boo
     data_source : character
     
     do_calc : bool
-    
-    Returns
-    -------
-    data_type : character
-    
-    data_source : character
-    
-    do_calc : bool
     """
 def tao_spin_tracking_turn_on() -> None:
     """
@@ -45877,14 +41836,6 @@ def tao_srdt_calc_needed(data_type: str, data_source: str, do_srdt: typing.Suppo
     
     Parameters
     ----------
-    data_type : character
-    
-    data_source : character
-    
-    do_srdt : int
-    
-    Returns
-    -------
     data_type : character
     
     data_source : character
@@ -45929,10 +41880,6 @@ def tao_symbol_import_from_lat(lat: LatStruct) -> None:
     Parameters
     ----------
     lat : LatStruct
-    
-    Returns
-    -------
-    lat : LatStruct
     """
 def tao_taper_cmd(except: str, uni_names: str) -> None:
     """
@@ -45952,18 +41899,6 @@ def tao_to_change_number(num_str: str, n_size: typing.SupportsInt, change_number
     
     Parameters
     ----------
-    num_str : character
-    
-    n_size : int
-    
-    change_number : 1D array of float
-    
-    abs_or_rel : character
-    
-    err : bool
-    
-    Returns
-    -------
     num_str : character
     
     n_size : int
@@ -46024,12 +41959,6 @@ def tao_too_many_particles_lost(beam: BeamStruct, no_beam: bool) -> None:
     
     Parameters
     ----------
-    beam : BeamStruct
-    
-    no_beam : bool
-    
-    Returns
-    -------
     beam : BeamStruct
     
     no_beam : bool
@@ -46238,10 +42167,6 @@ def tao_var_useit_plot_calc(graph: TaoGraphStruct, var: TaoVarStructArray1D) -> 
     ----------
     graph : TaoGraphStruct
     
-    Returns
-    -------
-    graph : TaoGraphStruct
-    
     var : 1D array of TaoVarStruct
     """
 def tao_var_write(out_file: str, show_good_opt_only: bool | None = None, tao_format: bool | None = None) -> None:
@@ -46289,13 +42214,6 @@ def tao_wave_analysis(plot: TaoPlotStruct) -> None:
         Plot region setup by tao_wave_cmd.
         This parameter is an input/output and is modified in-place.
         As an output, plot: Plot with wave analysis curves.
-    
-    Returns
-    -------
-    plot : TaoPlotStruct
-        Plot region setup by tao_wave_cmd.
-        This parameter is an input/output and is modified in-place.
-        As an output, plot: Plot with wave analysis curves.
     """
 def tao_wave_cmd(curve_name: str, plot_place: str, err_flag: bool) -> None:
     """
@@ -46330,6 +42248,12 @@ def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.S
     n_dat : int
         Number of data points.
     
+    coef : 1D array of float
+        Fit coefficients.
+    
+    rms : 1D array of float
+        Variances with rms(n_func+1) = sqrt(chi^2/n_dat).
+    
     f1 : 1D array of float
         First fit function.
     
@@ -46341,14 +42265,6 @@ def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.S
     
     f4 : 1D array of float, optional
         fourth fit function.
-    
-    Returns
-    -------
-    coef : 1D array of float
-        Fit coefficients.
-    
-    rms : 1D array of float
-        Variances with rms(n_func+1) = sqrt(chi^2/n_dat).
     """
 def tao_write_cmd(what: str) -> None:
     """
@@ -46423,18 +42339,6 @@ def tao_x_scale_graph(graph: TaoGraphStruct, x_min: typing.SupportsFloat, x_max:
     include_wall : bool, optional
     
     have_scaled : bool, optional
-    
-    Returns
-    -------
-    graph : TaoGraphStruct
-    
-    x_min : float
-    
-    x_max : float
-    
-    include_wall : bool, optional
-    
-    have_scaled : bool, optional
     """
 def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_in: typing.SupportsFloat, include_wall: bool | None = None, gang: str | None = None) -> bool:
     """
@@ -46482,15 +42386,6 @@ def taper_mag_strengths(lat: LatStruct, ref_lat: LatStruct | None = None, except
     
     except : character, optional
         List of elements not to vary.
-    
-    err_flag : bool, optional
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice to vary.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with magnet strengths varied.
     
     err_flag : bool, optional
     """
@@ -46567,12 +42462,6 @@ def taylor_equal_taylor(taylor1: TaylorStruct, taylor2: TaylorStruct) -> None:
     taylor1 : TaylorStruct
     
     taylor2 : TaylorStruct
-    
-    Returns
-    -------
-    taylor1 : TaylorStruct
-    
-    taylor2 : TaylorStruct
     """
 def taylor_inverse(taylor_in: TaylorStructArray1D, taylor_inv: TaylorStructArray1D) -> bool:
     """
@@ -46585,11 +42474,11 @@ def taylor_inverse(taylor_in: TaylorStructArray1D, taylor_inv: TaylorStructArray
     taylor_in : 1D array of TaylorStruct
         Input taylor map.
     
-    Returns
-    -------
     taylor_inv : 1D array of TaylorStruct
         Inverted taylor map.
     
+    Returns
+    -------
     err : bool, optional
         Set True if there is no inverse. If not present then print an error message.
     """
@@ -46627,16 +42516,6 @@ def taylor_propagate1(orb_taylor: TaylorStructArray1D, ele: EleStruct, param: La
     
     Returns
     -------
-    orb_taylor : 1D array of TaylorStruct
-        Map to be tracked
-        This parameter is an input/output and is modified in-place.
-        As an output, orb_taylor: Map through element.
-    
-    spin_taylor : 1D array of TaylorStruct, optional
-        Spin map to be tracked
-        This parameter is an input/output and is modified in-place.
-        As an output, spin_taylor: Tracked spin map.
-    
     err_flag : bool
         Set True if there is an error. False otherwise.
     """
@@ -46669,12 +42548,6 @@ def taylors_equal_taylors(taylor1: TaylorStructArray1D, taylor2: TaylorStructArr
     taylor1 : 1D array of TaylorStruct
     
     taylor2 : 1D array of TaylorStruct
-    
-    Returns
-    -------
-    taylor1 : 1D array of TaylorStruct
-    
-    taylor2 : 1D array of TaylorStruct
     """
 def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructArray1D, arr_in_opt: BunchStructArray1D | None = None, arr_inout_opt: BunchStructArray1D | None = None) -> TestBunchStructArray:
     """
@@ -46686,27 +42559,15 @@ def test_bunch_struct_array(arr_in: BunchStructArray1D, arr_inout: BunchStructAr
     
     arr_inout : 1D array of BunchStruct
     
-    arr_out : 1D array of BunchStruct
-    
-    opt_status : 1D array of int (shape: 2)
-    
     arr_in_opt : 1D array of BunchStruct, optional
     
     arr_inout_opt : 1D array of BunchStruct, optional
     
     Returns
     -------
-    arr_in : 1D array of BunchStruct
-    
-    arr_inout : 1D array of BunchStruct
-    
     arr_out : 1D array of BunchStruct
     
     opt_status : 1D array of int (shape: 2)
-    
-    arr_in_opt : 1D array of BunchStruct, optional
-    
-    arr_inout_opt : 1D array of BunchStruct, optional
     """
 def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in_opt: BunchStruct | None = None, val_inout_opt: BunchStruct | None = None) -> TestBunchStructScalar:
     """
@@ -46718,27 +42579,15 @@ def test_bunch_struct_scalar(val_in: BunchStruct, val_inout: BunchStruct, val_in
     
     val_inout : BunchStruct
     
-    val_out : BunchStruct
-    
-    opt_status : 1D array of int (shape: 2)
-    
     val_in_opt : BunchStruct, optional
     
     val_inout_opt : BunchStruct, optional
     
     Returns
     -------
-    val_in : BunchStruct
-    
-    val_inout : BunchStruct
-    
     val_out : BunchStruct
     
     opt_status : 1D array of int (shape: 2)
-    
-    val_in_opt : BunchStruct, optional
-    
-    val_inout_opt : BunchStruct, optional
     """
 def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = None, val_inout_opt: str | None = None) -> TestCharacterScalar:
     """
@@ -46750,25 +42599,17 @@ def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = 
     
     val_inout : character
     
-    val_out : character
-    
-    opt_status : 1D array of int (shape: 2)
-    
     val_in_opt : character, optional
     
     val_inout_opt : character, optional
     
     Returns
     -------
-    val_in : character
-    
     val_inout : character
     
     val_out : character
     
     opt_status : 1D array of int (shape: 2)
-    
-    val_in_opt : character, optional
     
     val_inout_opt : character, optional
     """
@@ -46782,27 +42623,15 @@ def test_complex_array(arr_in: ComplexArray1D, arr_inout: ComplexArray1D, arr_in
     
     arr_inout : 1D array of complex
     
-    arr_out : 1D array of complex
-    
-    opt_status : 1D array of int (shape: 2)
-    
     arr_in_opt : 1D array of complex, optional
     
     arr_inout_opt : 1D array of complex, optional
     
     Returns
     -------
-    arr_in : 1D array of complex
-    
-    arr_inout : 1D array of complex
-    
     arr_out : 1D array of complex
     
     opt_status : 1D array of int (shape: 2)
-    
-    arr_in_opt : 1D array of complex, optional
-    
-    arr_inout_opt : 1D array of complex, optional
     """
 def test_complex_scalar(val_in: complex, val_inout: complex, val_in_opt: complex | None = None, val_inout_opt: complex | None = None) -> TestComplexScalar:
     """
@@ -46814,25 +42643,17 @@ def test_complex_scalar(val_in: complex, val_inout: complex, val_in_opt: complex
     
     val_inout : complex
     
-    val_out : complex
-    
-    opt_status : 1D array of int (shape: 2)
-    
     val_in_opt : complex, optional
     
     val_inout_opt : complex, optional
     
     Returns
     -------
-    val_in : complex
-    
     val_inout : complex
     
     val_out : complex
     
     opt_status : 1D array of int (shape: 2)
-    
-    val_in_opt : complex, optional
     
     val_inout_opt : complex, optional
     """
@@ -46846,27 +42667,15 @@ def test_integer8_array(arr_in: Int8Array1D, arr_inout: Int8Array1D, arr_in_opt:
     
     arr_inout : 1D array of int
     
-    arr_out : 1D array of int
-    
-    opt_status : 1D array of int (shape: 2)
-    
     arr_in_opt : 1D array of int, optional
     
     arr_inout_opt : 1D array of int, optional
     
     Returns
     -------
-    arr_in : 1D array of int
-    
-    arr_inout : 1D array of int
-    
     arr_out : 1D array of int
     
     opt_status : 1D array of int (shape: 2)
-    
-    arr_in_opt : 1D array of int, optional
-    
-    arr_inout_opt : 1D array of int, optional
     """
 def test_integer8_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsInt, val_in_opt: typing.SupportsInt | None = None, val_inout_opt: typing.SupportsInt | None = None) -> TestInteger8Scalar:
     """
@@ -46878,25 +42687,17 @@ def test_integer8_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsI
     
     val_inout : int
     
-    val_out : int
-    
-    opt_status : 1D array of int (shape: 2)
-    
     val_in_opt : int, optional
     
     val_inout_opt : int, optional
     
     Returns
     -------
-    val_in : int
-    
     val_inout : int
     
     val_out : int
     
     opt_status : 1D array of int (shape: 2)
-    
-    val_in_opt : int, optional
     
     val_inout_opt : int, optional
     """
@@ -46910,27 +42711,15 @@ def test_integer_array(arr_in: IntArray1D, arr_inout: IntArray1D, arr_in_opt: In
     
     arr_inout : 1D array of int
     
-    arr_out : 1D array of int
-    
-    opt_status : 1D array of int (shape: 2)
-    
     arr_in_opt : 1D array of int, optional
     
     arr_inout_opt : 1D array of int, optional
     
     Returns
     -------
-    arr_in : 1D array of int
-    
-    arr_inout : 1D array of int
-    
     arr_out : 1D array of int
     
     opt_status : 1D array of int (shape: 2)
-    
-    arr_in_opt : 1D array of int, optional
-    
-    arr_inout_opt : 1D array of int, optional
     """
 def test_integer_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsInt, val_in_opt: typing.SupportsInt | None = None, val_inout_opt: typing.SupportsInt | None = None) -> TestIntegerScalar:
     """
@@ -46942,25 +42731,17 @@ def test_integer_scalar(val_in: typing.SupportsInt, val_inout: typing.SupportsIn
     
     val_inout : int
     
-    val_out : int
-    
-    opt_status : 1D array of int (shape: 2)
-    
     val_in_opt : int, optional
     
     val_inout_opt : int, optional
     
     Returns
     -------
-    val_in : int
-    
     val_inout : int
     
     val_out : int
     
     opt_status : 1D array of int (shape: 2)
-    
-    val_in_opt : int, optional
     
     val_inout_opt : int, optional
     """
@@ -46974,27 +42755,15 @@ def test_logical_array(arr_in: BoolAlloc1D, arr_inout: BoolAlloc1D, arr_in_opt: 
     
     arr_inout : 1D array of bool
     
-    arr_out : 1D array of bool
-    
-    opt_status : 1D array of int (shape: 2)
-    
     arr_in_opt : 1D array of bool, optional
     
     arr_inout_opt : 1D array of bool, optional
     
     Returns
     -------
-    arr_in : 1D array of bool
-    
-    arr_inout : 1D array of bool
-    
     arr_out : 1D array of bool
     
     opt_status : 1D array of int (shape: 2)
-    
-    arr_in_opt : 1D array of bool, optional
-    
-    arr_inout_opt : 1D array of bool, optional
     """
 def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None = None, val_inout_opt: bool | None = None) -> TestLogicalScalar:
     """
@@ -47006,25 +42775,17 @@ def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None =
     
     val_inout : bool
     
-    val_out : bool
-    
-    opt_status : 1D array of int (shape: 2)
-    
     val_in_opt : bool, optional
     
     val_inout_opt : bool, optional
     
     Returns
     -------
-    val_in : bool
-    
     val_inout : bool
     
     val_out : bool
     
     opt_status : 1D array of int (shape: 2)
-    
-    val_in_opt : bool, optional
     
     val_inout_opt : bool, optional
     """
@@ -47038,27 +42799,15 @@ def test_real16_array(arr_in: Real16Alloc1D, arr_inout: Real16Alloc1D, arr_in_op
     
     arr_inout : 1D array of float
     
-    arr_out : 1D array of float
-    
-    opt_status : 1D array of int (shape: 2)
-    
     arr_in_opt : 1D array of float, optional
     
     arr_inout_opt : 1D array of float, optional
     
     Returns
     -------
-    arr_in : 1D array of float
-    
-    arr_inout : 1D array of float
-    
     arr_out : 1D array of float
     
     opt_status : 1D array of int (shape: 2)
-    
-    arr_in_opt : 1D array of float, optional
-    
-    arr_inout_opt : 1D array of float, optional
     """
 def test_real16_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFloat, val_in_opt: typing.SupportsFloat | None = None, val_inout_opt: typing.SupportsFloat | None = None) -> TestReal16Scalar:
     """
@@ -47070,25 +42819,17 @@ def test_real16_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsF
     
     val_inout : float
     
-    val_out : float
-    
-    opt_status : 1D array of int (shape: 2)
-    
     val_in_opt : float, optional
     
     val_inout_opt : float, optional
     
     Returns
     -------
-    val_in : float
-    
     val_inout : float
     
     val_out : float
     
     opt_status : 1D array of int (shape: 2)
-    
-    val_in_opt : float, optional
     
     val_inout_opt : float, optional
     """
@@ -47102,27 +42843,15 @@ def test_real_array(arr_in: RealArray1D, arr_inout: RealArray1D, arr_in_opt: Rea
     
     arr_inout : 1D array of float
     
-    arr_out : 1D array of float
-    
-    opt_status : 1D array of int (shape: 2)
-    
     arr_in_opt : 1D array of float, optional
     
     arr_inout_opt : 1D array of float, optional
     
     Returns
     -------
-    arr_in : 1D array of float
-    
-    arr_inout : 1D array of float
-    
     arr_out : 1D array of float
     
     opt_status : 1D array of int (shape: 2)
-    
-    arr_in_opt : 1D array of float, optional
-    
-    arr_inout_opt : 1D array of float, optional
     """
 def test_real_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFloat, val_in_opt: typing.SupportsFloat | None = None, val_inout_opt: typing.SupportsFloat | None = None) -> TestRealScalar:
     """
@@ -47134,25 +42863,17 @@ def test_real_scalar(val_in: typing.SupportsFloat, val_inout: typing.SupportsFlo
     
     val_inout : float
     
-    val_out : float
-    
-    opt_status : 1D array of int (shape: 2)
-    
     val_in_opt : float, optional
     
     val_inout_opt : float, optional
     
     Returns
     -------
-    val_in : float
-    
     val_inout : float
     
     val_out : float
     
     opt_status : 1D array of int (shape: 2)
-    
-    val_in_opt : float, optional
     
     val_inout_opt : float, optional
     """
@@ -47181,18 +42902,6 @@ def tilt_coords(tilt_val: typing.SupportsFloat, coord: RealArray1D, mat6: typing
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    coord : 1D array of float
-        Coordinates of particle before rotation.
-        This parameter is an input/output and is modified in-place.
-        As an output, coord: Coordinates of particle after rotation.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before tilt.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix transfer matrix after tilt applied.
     """
 def tilt_coords_photon(tilt_val: typing.SupportsFloat, coord: RealArray1D, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None) -> None:
     """
@@ -47203,18 +42912,6 @@ def tilt_coords_photon(tilt_val: typing.SupportsFloat, coord: RealArray1D, w_mat
     tilt_val : float
         Tilt value (could be the roll value for a bend)
     
-    coord : 1D array of float
-        Coordinates of particle before rotation.
-        This parameter is an input/output and is modified in-place.
-        As an output, coord: Coordinates of particle after rotation.
-    
-    w_mat : 2D array of float (shape: 3,3), optional
-        Rotation matrix before tilt.
-        This parameter is an input/output and is modified in-place.
-        As an output, w_mat: Rotation matrix after tilt.
-    
-    Returns
-    -------
     coord : 1D array of float
         Coordinates of particle before rotation.
         This parameter is an input/output and is modified in-place.
@@ -47238,13 +42935,6 @@ def tilt_mat6(mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[c
     
     tilt : float
         Tilt angle.
-    
-    Returns
-    -------
-    mat6 : 2D array of float (shape: 6,6)
-        Untilted matrix.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Tilted matrix.
     """
 def to_eta_reading(eta_actual: RealArray1D, ele: EleStruct, axis: typing.SupportsInt, add_noise: bool) -> ToEtaReading:
     """
@@ -47538,18 +43228,6 @@ def touschek_rate1_zap(mode: NormalModesStruct, rate: typing.SupportsFloat, lat:
     ix : int, optional
     
     s : float, optional
-    
-    Returns
-    -------
-    mode : NormalModesStruct
-    
-    rate : float
-    
-    lat : LatStruct
-    
-    ix : int, optional
-    
-    s : float, optional
     """
 def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track: TrackStruct | None = None, ignore_radiation: bool | None = None, make_map1: bool | None = None, init_to_edge: bool | None = None) -> Track1:
     """
@@ -47585,18 +43263,8 @@ def track1(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, track:
     
     Returns
     -------
-    ele : EleStruct
-        Element to track through.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Modified if make_map1 is True.
-    
     end_orb : CoordStruct
         End position.
-    
-    track : TrackStruct, optional
-        Structure holding existing track.
-        This parameter is an input/output and is modified in-place.
-        As an output, track: Structure holding the track information if the
     
     err_flag : bool, optional
         Set true if there is an error. False otherwise. Note: The particle getting lost (EG hitting an aperture)
@@ -47627,11 +43295,6 @@ def track1_beam(beam: BeamStruct, ele: EleStruct, centroid: CoordStructArray1D |
     
     Returns
     -------
-    beam : BeamStruct
-        Starting beam position.
-        This parameter is an input/output and is modified in-place.
-        As an output, beam: Ending beam position.
-    
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
@@ -47661,22 +43324,12 @@ def track1_bmad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6:
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     err_flag : bool, optional
         Set true if there is an error. False otherwise.
     
     track : TrackStruct, optional
         Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
         more details.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix propagated through the element.
     """
 def track1_bmad_photon(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> bool:
     """
@@ -47696,11 +43349,6 @@ def track1_bmad_photon(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position
-    
     err_flag : bool, optional
         Set true if there is an error. False otherwise.
     """
@@ -47734,16 +43382,6 @@ def track1_bunch(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructArray1
     
     Returns
     -------
-    bunch : BunchStruct
-        Starting bunch position.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Ending bunch position.
-    
-    bunch_track : BunchTrackStruct, optional
-        Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_track: Track information appended to track.
-    
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
@@ -47780,16 +43418,6 @@ def track1_bunch_csr(bunch: BunchStruct, ele: EleStruct, centroid: CoordStructAr
     
     Returns
     -------
-    bunch : BunchStruct
-        Starting bunch position.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Ending bunch position.
-    
-    bunch_track : BunchTrackStruct, optional
-        Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_track: track information if the tracking method does
-    
     err : bool
         Set true if there is an error. EG: Too many particles lost.
     """
@@ -47829,16 +43457,6 @@ def track1_bunch_csr3d(bunch: BunchStruct, ele: EleStruct, centroid: CoordStruct
     
     Returns
     -------
-    bunch : BunchStruct
-        Starting bunch position.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Ending bunch position.
-    
-    bunch_track : BunchTrackStruct, optional
-        Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_track: track information if the tracking method does
-    
     err : bool
         Set true if there is an error. EG: Too many particles lost.
     
@@ -47870,18 +43488,6 @@ def track1_bunch_hom(bunch: BunchStruct, ele: EleStruct, direction: typing.Suppo
         Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
         This parameter is an input/output and is modified in-place.
         As an output, bunch_track: Track information appended to track.
-    
-    Returns
-    -------
-    bunch : BunchStruct
-        Starting bunch position.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Ending bunch position.
-    
-    bunch_track : BunchTrackStruct, optional
-        Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_track: Track information appended to track.
     """
 def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_s: bool | None = None, bunch_track: BunchTrackStruct | None = None) -> bool:
     """
@@ -47907,18 +43513,8 @@ def track1_bunch_space_charge(bunch: BunchStruct, ele: EleStruct, track_to_same_
     
     Returns
     -------
-    bunch : BunchStruct
-        Starting bunch position.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Ending bunch position.
-    
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
-    
-    bunch_track : BunchTrackStruct, optional
-        Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_track: track information if the tracking method does
     """
 def track1_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
@@ -47934,13 +43530,6 @@ def track1_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) ->
     param : LatParamStruct
         lattice parameters.
     
-    orbit : CoordStruct
-        phase-space coords to be transformed
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: final phase-space coords
-    
-    Returns
-    -------
     orbit : CoordStruct
         phase-space coords to be transformed
         This parameter is an input/output and is modified in-place.
@@ -47964,13 +43553,6 @@ def track1_diffraction_plate_or_mask(ele: EleStruct, param: LatParamStruct, orbi
         phase-space coords to be transformed
         This parameter is an input/output and is modified in-place.
         As an output, orbit: final phase-space coords
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        phase-space coords to be transformed
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: final phase-space coords
     """
 def track1_high_energy_space_charge(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
@@ -47983,18 +43565,11 @@ def track1_high_energy_space_charge(ele: EleStruct, param: LatParamStruct, orbit
     
     Parameters
     ----------
-    orbit : CoordStruct
-        Starting position
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position
-    
     ele : EleStruct
         Element tracked through.
     
     param : LatParamStruct
     
-    Returns
-    -------
     orbit : CoordStruct
         Starting position
         This parameter is an input/output and is modified in-place.
@@ -48018,13 +43593,6 @@ def track1_lens(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> No
         phase-space coords to be transformed
         This parameter is an input/output and is modified in-place.
         As an output, orbit: final phase-space coords
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        phase-space coords to be transformed
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: final phase-space coords
     """
 def track1_linear(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> None:
     """
@@ -48041,15 +43609,6 @@ def track1_linear(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> 
         Element
     
     param : LatParamStruct
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting position
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position
-    
-    param : LatParamStruct
     """
 def track1_lr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
     """
@@ -48059,27 +43618,15 @@ def track1_lr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-        Element with wakes.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with updated wake amplitudes.
-    
     bunch : BunchStruct
         Bunch to track.
         This parameter is an input/output and is modified in-place.
         As an output, bunch: Kicked bunch.
     
-    Returns
-    -------
     ele : EleStruct
         Element with wakes.
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with updated wake amplitudes.
-    
-    bunch : BunchStruct
-        Bunch to track.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Kicked bunch.
     """
 def track1_mad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> None:
     """
@@ -48100,13 +43647,6 @@ def track1_mad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> Non
     
     param : LatParamStruct
         Lattice parameters.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending coords.
     """
 def track1_mirror(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
@@ -48122,13 +43662,6 @@ def track1_mirror(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> 
     param : LatParamStruct
         lattice parameters.
     
-    orbit : CoordStruct
-        phase-space coords to be transformed
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: final phase-space coords
-    
-    Returns
-    -------
     orbit : CoordStruct
         phase-space coords to be transformed
         This parameter is an input/output and is modified in-place.
@@ -48152,13 +43685,6 @@ def track1_mosaic_crystal(ele: EleStruct, param: LatParamStruct, orbit: CoordStr
         phase-space coords to be transformed
         This parameter is an input/output and is modified in-place.
         As an output, orbit: final phase-space coords
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        phase-space coords to be transformed
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: final phase-space coords
     """
 def track1_multilayer_mirror(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
@@ -48175,13 +43701,6 @@ def track1_multilayer_mirror(ele: EleStruct, param: LatParamStruct, orbit: Coord
     param : LatParamStruct
         lattice parameters.
     
-    orbit : CoordStruct
-        phase-space coords to be transformed
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: final phase-space coords
-    
-    Returns
-    -------
     orbit : CoordStruct
         phase-space coords to be transformed
         This parameter is an input/output and is modified in-place.
@@ -48212,13 +43731,6 @@ def track1_radiation(orbit: CoordStruct, ele: EleStruct, edge: typing.SupportsIn
     
     edge : int
         Where the particle is: start_edge$ or end_edge$.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Particle position before radiation applied.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Particle position after radiation has been applied.
     """
 def track1_radiation_center(orbit: CoordStruct, ele1: EleStruct, ele2: EleStruct, rad_damp: bool | None = None, rad_fluct: bool | None = None) -> None:
     """
@@ -48247,13 +43759,6 @@ def track1_radiation_center(orbit: CoordStruct, ele1: EleStruct, ele2: EleStruct
     
     rad_fluct : bool, optional
         If present, override setting of bmad_com.radiation_fluctuations_on.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Particle at center of element before radiation applied.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Particle position after radiation has been applied.
     """
 def track1_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> Track1RungeKutta:
     """
@@ -48282,21 +43787,11 @@ def track1_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending coords.
-    
     err_flag : bool
         Set True if there is an error. False otherwise.
     
     track : TrackStruct, optional
         Structure holding the track information.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix propagated through the element.
     """
 def track1_sample(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> None:
     """
@@ -48312,13 +43807,6 @@ def track1_sample(ele: EleStruct, param: LatParamStruct, orbit: CoordStruct) -> 
     param : LatParamStruct
         lattice parameters.
     
-    orbit : CoordStruct
-        phase-space coords to be transformed
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: final phase-space coords
-    
-    Returns
-    -------
     orbit : CoordStruct
         phase-space coords to be transformed
         This parameter is an input/output and is modified in-place.
@@ -48344,14 +43832,6 @@ def track1_spin(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, e
     
     make_quaternion : bool, optional
         If present and true then calculate the 1st order spin map which is represented as a quaternion.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element to track through.
-    
-    end_orb : CoordStruct
-        Ending coords.
     """
 def track1_spin_integration(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct, end_orb: CoordStruct) -> None:
     """
@@ -48368,11 +43848,6 @@ def track1_spin_integration(start_orb: CoordStruct, ele: EleStruct, param: LatPa
     param : LatParamStruct
         Beam parameters.
     
-    end_orb : CoordStruct
-        Ending coords.
-    
-    Returns
-    -------
     end_orb : CoordStruct
         Ending coords.
     """
@@ -48410,13 +43885,6 @@ def track1_sr_wake(bunch: BunchStruct, ele: EleStruct) -> None:
     
     ele : EleStruct
         Element with wakefields.
-    
-    Returns
-    -------
-    bunch : BunchStruct
-        Bunch of particles.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Bunch with wakefields applied to the particles.
     """
 def track1_symp_lie_ptc(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct) -> TrackStruct:
     """
@@ -48436,11 +43904,6 @@ def track1_symp_lie_ptc(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position
-    
     track : TrackStruct, optional
         Structure holding the track information.
     """
@@ -48466,11 +43929,6 @@ def track1_taylor(orbit: CoordStruct, ele: EleStruct, taylor: TaylorStructArray1
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending coords.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -48504,11 +43962,6 @@ def track1_time_runge_kutta(orbit: CoordStruct, ele: EleStruct, param: LatParamS
     
     Returns
     -------
-    orbit : CoordStruct
-        starting position, z-based coords
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: end position, z-based coords
-    
     err_flag : bool
         Set True if there is an error. False otherwise
     
@@ -48545,11 +43998,6 @@ def track_a_beambeam(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     track : TrackStruct, optional
         Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
         more details.
@@ -48581,18 +44029,6 @@ def track_a_bend(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix to the element end.
     """
 def track_a_bend_photon(orb: CoordStruct, ele: EleStruct, length: typing.SupportsFloat) -> None:
     """
@@ -48614,13 +44050,6 @@ def track_a_bend_photon(orb: CoordStruct, ele: EleStruct, length: typing.Support
     
     length : float
         length to track.
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: End position.
     """
 def track_a_capillary(orb: CoordStruct, ele: EleStruct) -> None:
     """
@@ -48637,13 +44066,6 @@ def track_a_capillary(orb: CoordStruct, ele: EleStruct) -> None:
     
     ele : EleStruct
         Capillary element
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Input photon coordinates.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Output photon coordinates.
     """
 def track_a_converter(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
@@ -48667,11 +44089,6 @@ def track_a_converter(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct,
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -48697,11 +44114,6 @@ def track_a_crab_cavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -48742,16 +44154,6 @@ def track_a_drift(orb: CoordStruct, length: typing.SupportsFloat, mat6: typing.A
     
     Returns
     -------
-    orb : CoordStruct
-        Orbit at start of the drift.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Orbit at end of the drift.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the drift.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix including the drift.
-    
     time : float, optional
         Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
         This parameter is an input/output and is modified in-place.
@@ -48773,13 +44175,6 @@ def track_a_drift_photon(orb: CoordStruct, length: typing.SupportsFloat, phase_r
     
     phase_relative_to_ref : bool
         If true then E field phase shift is relative to ref particle.
-    
-    Returns
-    -------
-    orb : CoordStruct
-        Orbit at start of the drift.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Orbit at end of the drift
     """
 def track_a_foil(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
@@ -48803,11 +44198,6 @@ def track_a_foil(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -48835,18 +44225,6 @@ def track_a_gkicker(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, m
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix through the element.
     """
 def track_a_lcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -48872,18 +44250,6 @@ def track_a_lcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, m
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix through the element.
     """
 def track_a_lcavity_old(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
     """
@@ -48909,18 +44275,6 @@ def track_a_lcavity_old(orbit: CoordStruct, ele: EleStruct, param: LatParamStruc
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix through the element.
     """
 def track_a_mask(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
@@ -48944,11 +44298,6 @@ def track_a_mask(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -48976,13 +44325,6 @@ def track_a_match(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
-    err_flag : bool, optional
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -49013,11 +44355,6 @@ def track_a_patch(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool | None
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting phase space coords
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Coords after applying a patch transformation.
-    
     s_ent : float, optional
         Longitudinal coordinate of the initial particle position in the frame of reference of the face where the
         particle exits. For a patch with positive z_offset and all other attributes zero, s_ent = -z_offset.
@@ -49053,13 +44390,6 @@ def track_a_patch_photon(ele: EleStruct, orbit: CoordStruct, drift_to_exit: bool
     use_z_pos : bool, optional
         If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
         of assuming that the particle is at the patch edge.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting phase space coords
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Coords after applying a patch transformation.
     """
 def track_a_pickup(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, err_flag: bool | None = None, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
@@ -49085,13 +44415,6 @@ def track_a_pickup(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, er
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
-    err_flag : bool, optional
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -49117,11 +44440,6 @@ def track_a_quadrupole(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -49147,11 +44465,6 @@ def track_a_rfcavity(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -49179,18 +44492,6 @@ def track_a_sad_mult(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix up to the sad_mult.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix.
     """
 def track_a_sol_quad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
@@ -49214,11 +44515,6 @@ def track_a_sol_quad(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, 
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -49246,18 +44542,6 @@ def track_a_thick_multipole(orbit: CoordStruct, ele: EleStruct, param: LatParamS
     
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
-    
-    Returns
-    -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
-    mat6 : 2D array of float (shape: 6,6), optional
-        Transfer matrix before the element.
-        This parameter is an input/output and is modified in-place.
-        As an output, mat6: Transfer matrix through the element.
     """
 def track_a_wiggler(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, make_matrix: bool | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"] | None:
     """
@@ -49281,11 +44565,6 @@ def track_a_wiggler(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct, m
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: End position.
-    
     mat6 : 2D array of float (shape: 6,6), optional
         Transfer matrix through the element.
     """
@@ -49308,11 +44587,6 @@ def track_a_zero_length_element(orbit: CoordStruct, ele: EleStruct, param: LatPa
     
     Returns
     -------
-    orbit : CoordStruct
-        Starting coords.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Ending coords.
-    
     err_flag : bool
         Set True if there is an error. False otherwise.
     
@@ -49341,11 +44615,6 @@ def track_all(lat: LatStruct, orbit: CoordStructAlloc1D, ix_branch: typing.Suppo
     
     Returns
     -------
-    orbit : 1D array of CoordStruct
-        orbit(0) is the starting coordinates for tracking. If not allocated, the zero orbit will be used.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Orbit array.
-    
     track_state : int, optional
         Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
     
@@ -49395,16 +44664,6 @@ def track_beam(lat: LatStruct, beam: BeamStruct, ele1: EleStruct | None = None, 
     
     Returns
     -------
-    beam : BeamStruct
-        Beam at end of element ix1.
-        This parameter is an input/output and is modified in-place.
-        As an output, beam: Beam at end of element ix2.
-    
-    bunch_tracks : 1D array of BunchTrackStruct, optional
-        Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_tracks: track information if the tracking method does
-    
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
@@ -49449,16 +44708,6 @@ def track_bunch(lat: LatStruct, bunch: BunchStruct, ele1: EleStruct | None = Non
     
     Returns
     -------
-    bunch : BunchStruct
-        Bunch at end of element ix1.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Bunch at end of element ix2.
-    
-    bunch_track : BunchTrackStruct, optional
-        Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch_track: track information if the tracking method does
-    
     err : bool
         Set true if there is an error. EG: Too many particles lost for a CSR calc.
     """
@@ -49489,18 +44738,6 @@ def track_bunch_time(bunch: BunchStruct, branch: BranchStruct, t_end: typing.Sup
     
     extra_field : 1D array of EmFieldStruct, optional
         Per particle static field to be added to the lattice element field. Eg used with space charge.
-    
-    Returns
-    -------
-    bunch : BunchStruct
-        Coordinates must be time-coords in element body frame.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Coordinates will be time-coords in element body frame.
-    
-    dt_step : 1D array of float, optional
-        Initial step to take for each particle. Overrides bmad_com.init_ds_adaptive_tracking.
-        This parameter is an input/output and is modified in-place.
-        As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
     """
 def track_bunch_to_s(bunch: BunchStruct, s: typing.SupportsFloat, branch: BranchStruct) -> None:
     """
@@ -49521,14 +44758,6 @@ def track_bunch_to_s(bunch: BunchStruct, s: typing.SupportsFloat, branch: Branch
     
     branch : BranchStruct
         Branch being tracked through.
-    
-    Returns
-    -------
-    bunch : BunchStruct
-        Input bunch position in s-based coordinate.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same s
-        coordinate
     """
 def track_bunch_to_t(bunch: BunchStruct, t_target: typing.SupportsFloat, branch: BranchStruct) -> None:
     """
@@ -49549,14 +44778,6 @@ def track_bunch_to_t(bunch: BunchStruct, t_target: typing.SupportsFloat, branch:
     
     branch : BranchStruct
         Lattice branch being tracked through.
-    
-    Returns
-    -------
-    bunch : BunchStruct
-        Input bunch position in s-based coordinate.
-        This parameter is an input/output and is modified in-place.
-        As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same t
-        coordinate
     """
 def track_complex_taylor(start_orb: ComplexArray1D, complex_taylor: ComplexTaylorStructArray1D, end_orb: ComplexArray1D) -> None:
     """
@@ -49566,14 +44787,12 @@ def track_complex_taylor(start_orb: ComplexArray1D, complex_taylor: ComplexTaylo
     
     Parameters
     ----------
-    complex_taylor : 1D array of ComplexTaylorStruct
-        complex_taylor map.
-    
     start_orb : 1D array of complex
         Starting coords.
     
-    Returns
-    -------
+    complex_taylor : 1D array of ComplexTaylorStruct
+        complex_taylor map.
+    
     end_orb : 1D array of complex
         Ending coords.
     """
@@ -49641,11 +44860,6 @@ def track_many(lat: LatStruct, orbit: CoordStructArray1D, ix_start: typing.Suppo
     
     Returns
     -------
-    orbit : 1D array of CoordStruct
-        Coordinates at start of tracking.
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: Orbit.
-    
     track_state : int, optional
         Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
     """
@@ -49668,11 +44882,6 @@ def track_to_surface(ele: EleStruct, orbit: CoordStruct, param: LatParamStruct) 
     
     Returns
     -------
-    orbit : CoordStruct
-        Coordinates in the element coordinate frame
-        This parameter is an input/output and is modified in-place.
-        As an output, orbit: At surface in local surface coordinate frame
-    
     w_surface : 2D array of float (shape: 3,3)
         real(rp), rotation matrix to transform to surface coords.
     """
@@ -49772,8 +44981,6 @@ def transfer_branches(branch1: BranchStructArray1D, branch2: BranchStructArray1D
     ----------
     branch1 : 1D array of BranchStruct
     
-    Returns
-    -------
     branch2 : 1D array of BranchStruct
     """
 def transfer_ele(ele1: EleStruct, nullify_pointers: bool | None = None) -> EleStruct:
@@ -49818,8 +45025,6 @@ def transfer_eles(ele1: EleStructArray1D, ele2: EleStructArray1D) -> None:
     ----------
     ele1 : 1D array of EleStruct
     
-    Returns
-    -------
     ele2 : 1D array of EleStruct
     """
 def transfer_fieldmap(ele_in: EleStruct, who: typing.SupportsInt) -> EleStruct:
@@ -49938,18 +45143,8 @@ def transfer_map_calc(lat: LatStruct, orb_map: TaylorStructArray1D, ix1: typing.
     
     Returns
     -------
-    orb_map : 1D array of TaylorStruct
-        Initial map (used when unit_start = False)
-        This parameter is an input/output and is modified in-place.
-        As an output, orb_map: Transfer map.
-    
     err_flag : bool
         Set True if problem like number overflow, etc.
-    
-    spin_map : 1D array of TaylorStruct, optional
-        Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
-        This parameter is an input/output and is modified in-place.
-        As an output, spin_map: Quaternion spin map.
     """
 def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typing.SupportsFloat | None = None, s2: typing.SupportsFloat | None = None, ref_orb_in: CoordStruct | None = None, ix_branch: typing.SupportsInt | None = None, one_turn: bool | None = None, unit_start: bool | None = None, concat_if_possible: bool | None = None, spin_map: TaylorStructArray1D | None = None) -> TransferMapFromSToS:
     """
@@ -50008,16 +45203,6 @@ def transfer_map_from_s_to_s(lat: LatStruct, t_map: TaylorStructArray1D, s1: typ
     
     Returns
     -------
-    t_map : 1D array of TaylorStruct
-        Initial map (used when unit_start = False)
-        This parameter is an input/output and is modified in-place.
-        As an output, t_map: Transfer map.
-    
-    spin_map : 1D array of TaylorStruct, optional
-        Initial spin map.
-        This parameter is an input/output and is modified in-place.
-        As an output, spin_map: Final spin map. Only computed if bmad_com.spin_tracking_on = T.
-    
     ref_orb_out : CoordStruct, optional
         Ending coordinates of the reference orbit. This is also the actual orbit of particle
     
@@ -50090,12 +45275,6 @@ def transfer_matrix_calc(lat: LatStruct, xfer_mat: typing.Annotated[collections.
     one_turn : bool, optional
         If present and True, and ix1 = ix2, and the lattice is closed: Construct the one-turn matrix from ix1 back
         to ix1. If False, (the default), and ix1 = ix2, mat6 is the unit matrix.
-    
-    Returns
-    -------
-    xfer_mat : 2D array of float (shape: 6,6)
-    
-    xfer_vec : 1D array of float (shape: 6), optional
     """
 def transfer_twiss(ele_in: EleStruct, reverse: bool | None = None) -> EleStruct:
     """
@@ -50155,9 +45334,6 @@ def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFlo
     
     Returns
     -------
-    f_val : complex
-        Value of f.
-    
     df_dx : complex, optional
         Normalized first derivative: True df/dx = df_dx * dx
     
@@ -50166,6 +45342,9 @@ def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFlo
     
     df_dz : complex, optional
         Normalized first derivative: True df/dz = df_dz * dz
+    
+    f_val : complex
+        Value of f.
     """
 def truncate_complex_taylor_to_order(complex_taylor_in: ComplexTaylorStructArray1D, order: typing.SupportsInt, complex_taylor_out: ComplexTaylorStructArray1D) -> None:
     """
@@ -50181,8 +45360,6 @@ def truncate_complex_taylor_to_order(complex_taylor_in: ComplexTaylorStructArray
     order : int
         Order above which terms are dropped.
     
-    Returns
-    -------
     complex_taylor_out : 1D array of ComplexTaylorStruct
         Truncated complex_taylor map.
     """
@@ -50231,9 +45408,6 @@ def twiss3_at_start(lat: LatStruct, err_flag: bool, ix_branch: typing.SupportsIn
     
     Returns
     -------
-    lat : LatStruct
-        Lattice with
-    
     tune3 : 1D array of float (shape: 3), optional
         Normal mode tunes
     """
@@ -50247,13 +45421,6 @@ def twiss3_from_twiss2(ele: EleStruct) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-        Lattice element at which the calculation is made.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element
-    
-    Returns
-    -------
     ele : EleStruct
         Lattice element at which the calculation is made.
         This parameter is an input/output and is modified in-place.
@@ -50336,15 +45503,6 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
     
     Returns
     -------
-    lat : LatStruct
-        lattice.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lat with computed twiss parameters.
-    
-    orb_array : 1D array of CoordArrayStruct
-        Array of orbit arrays.
-        As an output, orb_array: Used as the starting point for an open lattice.
-    
     status : int, optional
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
@@ -50412,18 +45570,6 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
     
     Returns
     -------
-    lat : LatStruct
-        lattice.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lat with computed twiss parameters.
-    
-    orb : 1D array of CoordStruct
-        Orbit to be computed
-        As an output, orb: Initial conditions to be used for an open geometry lattices.
-        As an output, orb: Energy at which the closed orbit is computed.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb: Computed orbit.
-    
     status : int, optional
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
@@ -50484,18 +45630,6 @@ def twiss_and_track_at_s(lat: LatStruct, s: typing.SupportsFloat, ele_at_s: EleS
     
     Returns
     -------
-    ele_at_s : EleStruct, optional
-        If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
-        previous call to this routine.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele_at_s: Element structure holding the Twiss parameters.
-    
-    orb_at_s : CoordStruct, optional
-        If the use_last argument is True, orb_at_s is taken to contain the valid orbit stored from a previous
-        call.
-        This parameter is an input/output and is modified in-place.
-        As an output, orb_at_s: Particle position at the position s.
-    
     err : bool, optional
         Set True if there is a problem in the calculation, False otherwise.
     """
@@ -50589,12 +45723,6 @@ def twiss_and_track_intra_ele(ele: EleStruct, param: LatParamStruct, l_start: ty
     orbit_end : CoordStruct, optional
         End phase space coordinates. If present then the orbit_start argument must also be present.
     
-    ele_end : EleStruct, optional
-        If reuse_ele_end is set True then reuse ele_end from trancking instead of recomputing ele_end from
-        scratch. This can save time.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele_end: Holds the ending Twiss parameters at l_end (except for photons).
-    
     err : bool, optional
         Set True if there is a problem like the particle gets lost in tracking
     """
@@ -50637,11 +45765,6 @@ def twiss_at_start(lat: LatStruct, ix_branch: typing.SupportsInt | None = None, 
     
     Returns
     -------
-    lat : LatStruct
-        Lat
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with twiss parameters computed.
-    
     status : int, optional
         Calculation status: ok$, in_stop_band$, unstable$, or non_symplectic$
     """
@@ -50664,11 +45787,6 @@ def twiss_from_tracking(lat: LatStruct, ref_orb0: CoordStruct, d_orb: RealArray1
     
     Returns
     -------
-    lat : LatStruct
-        Lat to track through.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Structure holding the Twiss parameters.
-    
     symp_err : float
         A measure of how symplectic the constructed matrices were before symplecitification. mat_symp_check for
         more details.
@@ -50697,16 +45815,6 @@ def twiss_propagate1(ele1: EleStruct, ele2: EleStruct, forward: bool | None = No
     
     Returns
     -------
-    ele1 : EleStruct
-        Element holding the starting Twiss parameters for forwards propagation.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele1: Element for the ending Twiss parameters for backwards propagation.
-    
-    ele2 : EleStruct
-        Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele2: Element for the ending Twiss parameters for forward propagation.
-    
     err_flag : bool, optional
         Set True if there is an error. False otherwise.
     """
@@ -50733,11 +45841,6 @@ def twiss_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | None = N
     
     Returns
     -------
-    lat : LatStruct
-        lattice.
-        This parameter is an input/output and is modified in-place.
-        As an output, lat: Lattice with parameters computed for the branch.
-    
     err_flag : bool, optional
         Set True if there is an error. False otherwise.
     """
@@ -50795,10 +45898,6 @@ def type_this_file(filename: str) -> None:
     Parameters
     ----------
     filename : character
-    
-    Returns
-    -------
-    filename : character
     """
 def upcase_string(string: str) -> None:
     """
@@ -50806,10 +45905,6 @@ def upcase_string(string: str) -> None:
     
     Parameters
     ----------
-    string : character
-    
-    Returns
-    -------
     string : character
     """
 def update_ele_from_fibre(ele: EleStruct) -> None:
@@ -50821,13 +45916,6 @@ def update_ele_from_fibre(ele: EleStruct) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-        Element with corresponding ele.ptc_fibre fibre.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Modified element.
-    
-    Returns
-    -------
     ele : EleStruct
         Element with corresponding ele.ptc_fibre fibre.
         This parameter is an input/output and is modified in-place.
@@ -50862,13 +45950,6 @@ def update_floor_angles(floor: FloorPositionStruct, floor0: FloorPositionStruct 
     floor0 : FloorPositionStruct, optional
         Reference position. There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If
         floor0 is present, choose the solution "nearest" the angles in floor0.
-    
-    Returns
-    -------
-    floor : FloorPositionStruct
-        Position with input w matrix.
-        This parameter is an input/output and is modified in-place.
-        As an output, floor: Position with output angles.
     """
 def valid_field_calc(ele: EleStruct, field_calc: typing.SupportsInt) -> bool:
     """
@@ -51004,20 +46085,6 @@ def value_to_line(line: str, value: typing.SupportsFloat, str: str, typ: str, ig
     ignore_if_zero : bool, optional
     
     use_comma : bool, optional
-    
-    Returns
-    -------
-    line : character
-    
-    value : float
-    
-    str : character
-    
-    typ : character
-    
-    ignore_if_zero : bool, optional
-    
-    use_comma : bool, optional
     """
 def vec_to_polar(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], phase: typing.SupportsFloat | None = None) -> SpinPolarStruct:
     """
@@ -51092,10 +46159,6 @@ def virtual_memory_usage(usage: typing.SupportsInt) -> None:
     Parameters
     ----------
     usage : int
-    
-    Returns
-    -------
-    usage : int
     """
 def w_mat_for_bend_angle(angle: typing.SupportsFloat, ref_tilt: typing.SupportsFloat, r_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"] | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
     """
@@ -51116,11 +46179,6 @@ def w_mat_for_bend_angle(angle: typing.SupportsFloat, ref_tilt: typing.SupportsF
     
     Returns
     -------
-    r_vec : 1D array of float (shape: 3), optional
-        Starting position.
-        This parameter is an input/output and is modified in-place.
-        As an output, r_vec: position with ref_tilt transformation
-    
     w_mat : 2D array of float (shape: 3,3)
         W matrix
     """
@@ -51241,9 +46299,6 @@ def wall3d_d_radius(position: RealArray1D, ele: EleStruct, ix_wall: typing.Suppo
     
     Returns
     -------
-    d_radius : float
-        r_particle - r_wall
-    
     perp : 1D array of float (shape: 3), optional
         Perpendicular normal to the wall.
     
@@ -51261,6 +46316,9 @@ def wall3d_d_radius(position: RealArray1D, ele: EleStruct, ix_wall: typing.Suppo
     
     err_flag : bool, optional
         Set True if error. (EG noassociated .wall3d), false otherwise.
+    
+    d_radius : float
+        r_particle - r_wall
     """
 def wall3d_initializer(wall3d: Wall3DStruct) -> bool:
     """
@@ -51280,11 +46338,6 @@ def wall3d_initializer(wall3d: Wall3DStruct) -> bool:
     
     Returns
     -------
-    wall3d : Wall3dStruct
-        Wall.
-        This parameter is an input/output and is modified in-place.
-        As an output, wall3d: Initialized wall.
-    
     err : bool
         Set true if there is a problem.
     """
@@ -51305,11 +46358,6 @@ def wall3d_section_initializer(section: Wall3DSectionStruct) -> bool:
     
     Returns
     -------
-    section : Wall3dSectionStruct
-        Wall3d section.
-        This parameter is an input/output and is modified in-place.
-        As an output, section: Initialized section-section.
-    
     err : bool
         Set true if there is a problem.
     """
@@ -51344,12 +46392,6 @@ def word_len(wording: str, wlen: typing.SupportsInt) -> None:
     wording : character
     
     wlen : int
-    
-    Returns
-    -------
-    wording : character
-    
-    wlen : int
     """
 def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsInt, delim: str, delim_found: bool, out_str: str, ignore_interior: bool | None = None) -> None:
     """
@@ -51372,24 +46414,6 @@ def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsI
     out_str : character
     
     ignore_interior : bool, optional
-    
-    Returns
-    -------
-    in_str : character
-    
-    delim_list : character
-    
-    word : character
-    
-    ix_word : int
-    
-    delim : character
-    
-    delim_found : bool
-    
-    out_str : character
-    
-    ignore_interior : bool, optional
     """
 def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_flag: bool, ele: EleStruct | None = None) -> None:
     """
@@ -51397,18 +46421,6 @@ def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_fl
     
     Parameters
     ----------
-    word : character
-    
-    lat : LatStruct
-    
-    value : float
-    
-    err_flag : bool
-    
-    ele : EleStruct, optional
-    
-    Returns
-    -------
     word : character
     
     lat : LatStruct
@@ -51445,22 +46457,6 @@ def write_astra_bend(iu: typing.SupportsInt, strength: typing.SupportsFloat, id:
     
     Parameters
     ----------
-    iu : int
-    
-    strength : float
-    
-    id : int
-    
-    d1 : 1D array of float (shape: 2)
-    
-    d2 : 1D array of float (shape: 2)
-    
-    d3 : 1D array of float (shape: 2)
-    
-    d4 : 1D array of float (shape: 2)
-    
-    Returns
-    -------
     iu : int
     
     strength : float
@@ -51667,14 +46663,6 @@ def write_blender_ele(iu: typing.SupportsInt, ele: EleStruct, old_format: bool |
     ele : EleStruct
     
     old_format : bool, optional
-    
-    Returns
-    -------
-    iu : int
-    
-    ele : EleStruct
-    
-    old_format : bool, optional
     """
 def write_blender_lat_layout(file_name: str, lat: LatStruct) -> None:
     """
@@ -51682,12 +46670,6 @@ def write_blender_lat_layout(file_name: str, lat: LatStruct) -> None:
     
     Parameters
     ----------
-    file_name : character
-    
-    lat : LatStruct
-    
-    Returns
-    -------
     file_name : character
     
     lat : LatStruct
@@ -51723,16 +46705,6 @@ def write_bunch_by_bunch_info(lat: LatStruct, bbu_beam: BbuBeamStruct, bbu_param
     
     Parameters
     ----------
-    lat : LatStruct
-    
-    bbu_beam : BbuBeamStruct
-    
-    bbu_param : BbuParamStruct
-    
-    this_stage : BbuStageStruct
-    
-    Returns
-    -------
     lat : LatStruct
     
     bbu_beam : BbuBeamStruct
@@ -52019,18 +46991,6 @@ def write_lattice_in_sad_format(out_file_name: str, lat: LatStruct, include_aper
     ix_branch : int, optional
     
     err : bool, optional
-    
-    Returns
-    -------
-    out_file_name : character
-    
-    lat : LatStruct
-    
-    include_apertures : bool, optional
-    
-    ix_branch : int, optional
-    
-    err : bool, optional
     """
 def write_lattice_in_scibmad(lat: LatStruct) -> WriteLatticeInScibmad:
     """
@@ -52055,16 +47015,6 @@ def write_line_element(line: str, iu: typing.SupportsInt, ele: EleStruct, lat: L
     
     Parameters
     ----------
-    line : character
-    
-    iu : int
-    
-    ele : EleStruct
-    
-    lat : LatStruct
-    
-    Returns
-    -------
     line : character
     
     iu : int
@@ -52194,16 +47144,6 @@ def xlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsF
     z : float
     
     res : float
-    
-    Returns
-    -------
-    x : float
-    
-    y : float
-    
-    z : float
-    
-    res : float
     """
 def xraylib_nist_compound(name: str) -> int:
     """
@@ -52228,16 +47168,6 @@ def ylafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsF
     
     Parameters
     ----------
-    x : float
-    
-    y : float
-    
-    z : float
-    
-    res : float
-    
-    Returns
-    -------
     x : float
     
     y : float
@@ -52270,14 +47200,14 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     
     Returns
     -------
-    z : float
-        z coordinate.
-    
     err_flag : bool
         Set True if cannot compute z due to, say, point being outside of ellipseoid or grid bounds.
     
     dz_dxy : 1D array of float (shape: 2), optional
         Surface slope at (x, y).
+    
+    z : float
+        z coordinate.
     """
 def zero_ele_kicks(ele: EleStruct) -> None:
     """
@@ -52289,13 +47219,6 @@ def zero_ele_kicks(ele: EleStruct) -> None:
         Element with possible nonzero kicks.
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with no kicks.
-    
-    Returns
-    -------
-    ele : EleStruct
-        Element with possible nonzero kicks.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with no kicks.
     """
 def zero_ele_offsets(ele: EleStruct) -> None:
     """
@@ -52303,13 +47226,6 @@ def zero_ele_offsets(ele: EleStruct) -> None:
     
     Parameters
     ----------
-    ele : EleStruct
-        Element with possible nonzero offsets, etc.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Element with no (mis)orientation.
-    
-    Returns
-    -------
     ele : EleStruct
         Element with possible nonzero offsets, etc.
         This parameter is an input/output and is modified in-place.
@@ -52326,11 +47242,6 @@ def zero_lr_wakes_in_lat(lat: LatStruct) -> None:
     ----------
     lat : LatStruct
         Lattice
-    
-    Returns
-    -------
-    lat : LatStruct
-        Lattice
     """
 def zlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
@@ -52338,16 +47249,6 @@ def zlafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsF
     
     Parameters
     ----------
-    x : float
-    
-    y : float
-    
-    z : float
-    
-    res : float
-    
-    Returns
-    -------
     x : float
     
     y : float

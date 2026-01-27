@@ -11,7 +11,21 @@ namespace py = pybind11;
 // =============================================================================
 // mode3_struct
 void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>>(),
+         py::arg("v") = py::none(),
+         py::arg("a") = py::none(),
+         py::arg("b") = py::none(),
+         py::arg("c") = py::none(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none()
+  )
       // Mode3Struct.v (2D_NOT_real -
       .def_property("v", &Mode3Struct::v, &Mode3Struct::set_v)
       // Mode3Struct.a (0D_NOT_type -
@@ -48,7 +62,21 @@ void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
 // =============================================================================
 // mode_info_struct
 void init_mode_info_struct(py::module &m, py::class_<ModeInfoStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<bool>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("stable") = py::none(),
+         py::arg("tune") = py::none(),
+         py::arg("emit") = py::none(),
+         py::arg("chrom") = py::none(),
+         py::arg("sigma") = py::none(),
+         py::arg("sigmap") = py::none()
+  )
       // ModeInfoStruct.stable (0D_NOT_logical - Is the mode stable?
       .def_property("stable", &ModeInfoStruct::stable, &ModeInfoStruct::set_stable)
       // ModeInfoStruct.tune (0D_NOT_real - 'fractional' tune in radians
@@ -85,7 +113,21 @@ void init_mode_info_struct(py::module &m, py::class_<ModeInfoStruct> &cls) {
 // =============================================================================
 // mad_energy_struct
 void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>>(),
+         py::arg("total") = py::none(),
+         py::arg("beta") = py::none(),
+         py::arg("gamma") = py::none(),
+         py::arg("kinetic") = py::none(),
+         py::arg("p0c") = py::none(),
+         py::arg("particle") = py::none()
+  )
       // MadEnergyStruct.total (0D_NOT_real -
       .def_property("total", &MadEnergyStruct::total, &MadEnergyStruct::set_total)
       // MadEnergyStruct.beta (0D_NOT_real - normalized velocity: v/c
@@ -122,7 +164,15 @@ void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
 // =============================================================================
 // mad_map_struct
 void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<std::vector<double>>>>>(),
+         py::arg("k") = py::none(),
+         py::arg("r") = py::none(),
+         py::arg("t") = py::none()
+  )
       // MadMapStruct.k (1D_NOT_real - 0th order map.
       .def_property("k", &MadMapStruct::k, &MadMapStruct::set_k)
       // MadMapStruct.r (2D_NOT_real - 1st order map.

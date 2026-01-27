@@ -11,7 +11,27 @@ namespace py = pybind11;
 // =============================================================================
 // bbu_beam_struct
 void init_bbu_beam_struct(py::module &m, py::class_<BbuBeamStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<int>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("ix_ele_bunch") = py::none(),
+         py::arg("ix_bunch_head") = py::none(),
+         py::arg("ix_bunch_end") = py::none(),
+         py::arg("n_bunch_in_lat") = py::none(),
+         py::arg("ix_stage_voltage_max") = py::none(),
+         py::arg("hom_voltage_max") = py::none(),
+         py::arg("time_now") = py::none(),
+         py::arg("one_turn_time") = py::none(),
+         py::arg("rf_wavelength_max") = py::none()
+  )
       // BbuBeamStruct.bunch (1D_ALLOC_type - Bunches in the lattice
       .def_property_readonly("bunch", &BbuBeamStruct::bunch)
       // BbuBeamStruct.stage (1D_ALLOC_type -
@@ -82,7 +102,81 @@ void init_bbu_beam_struct(py::module &m, py::class_<BbuBeamStruct> &cls) {
 // =============================================================================
 // bbu_param_struct
 void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<int>,
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const std::vector<double>>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("lat_filename") = py::none(),
+         py::arg("lat2_filename") = py::none(),
+         py::arg("bunch_by_bunch_info_file") = py::none(),
+         py::arg("hybridize") = py::none(),
+         py::arg("write_digested_hybrid_lat") = py::none(),
+         py::arg("write_voltage_vs_time_dat") = py::none(),
+         py::arg("keep_overlays_and_groups") = py::none(),
+         py::arg("keep_all_lcavities") = py::none(),
+         py::arg("use_taylor_for_hybrids") = py::none(),
+         py::arg("stable_orbit_anal") = py::none(),
+         py::arg("limit_factor") = py::none(),
+         py::arg("simulation_turns_max") = py::none(),
+         py::arg("bunch_freq") = py::none(),
+         py::arg("init_particle_offset") = py::none(),
+         py::arg("current") = py::none(),
+         py::arg("rel_tol") = py::none(),
+         py::arg("drscan") = py::none(),
+         py::arg("use_interpolated_threshold") = py::none(),
+         py::arg("write_hom_info") = py::none(),
+         py::arg("elindex") = py::none(),
+         py::arg("elname") = py::none(),
+         py::arg("nstep") = py::none(),
+         py::arg("begdr") = py::none(),
+         py::arg("enddr") = py::none(),
+         py::arg("nrep") = py::none(),
+         py::arg("ran_seed") = py::none(),
+         py::arg("hom_order_cutoff") = py::none(),
+         py::arg("ran_gauss_sigma_cut") = py::none(),
+         py::arg("ele_track_end") = py::none(),
+         py::arg("ix_ele_track_end") = py::none(),
+         py::arg("regression") = py::none(),
+         py::arg("normalize_z_to_rf") = py::none(),
+         py::arg("ramp_on") = py::none(),
+         py::arg("ramp_pattern") = py::none(),
+         py::arg("ramp_n_start") = py::none(),
+         py::arg("n_ramp_pattern") = py::none()
+  )
       // BbuParamStruct.lat_filename (0D_NOT_character - Bmad lattice file name
       .def_property(
           "lat_filename",
@@ -277,7 +371,35 @@ void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
 // =============================================================================
 // bbu_stage_struct
 void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<int>>(),
+         py::arg("ix_ele_lr_wake") = py::none(),
+         py::arg("ix_ele_stage_end") = py::none(),
+         py::arg("ix_pass") = py::none(),
+         py::arg("ix_stage_pass1") = py::none(),
+         py::arg("ix_head_bunch") = py::none(),
+         py::arg("ix_hom_max") = py::none(),
+         py::arg("hom_voltage_max") = py::none(),
+         py::arg("time_at_wake_ele") = py::none(),
+         py::arg("ave_orb") = py::none(),
+         py::arg("rms_orb") = py::none(),
+         py::arg("min_orb") = py::none(),
+         py::arg("max_orb") = py::none(),
+         py::arg("n_orb") = py::none()
+  )
       // BbuStageStruct.ix_ele_lr_wake (0D_NOT_integer - Element index of element with the wake
       .def_property(
           "ix_ele_lr_wake",
@@ -359,7 +481,73 @@ void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
 // =============================================================================
 // beam_init_struct
 void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const KvBeamInitStruct>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const std::string>>(),
+         py::arg("position_file") = py::none(),
+         py::arg("spin") = py::none(),
+         py::arg("KV") = py::none(),
+         py::arg("center_jitter") = py::none(),
+         py::arg("emit_jitter") = py::none(),
+         py::arg("sig_z_jitter") = py::none(),
+         py::arg("sig_pz_jitter") = py::none(),
+         py::arg("n_particle") = py::none(),
+         py::arg("renorm_center") = py::none(),
+         py::arg("renorm_sigma") = py::none(),
+         py::arg("random_engine") = py::none(),
+         py::arg("random_gauss_converter") = py::none(),
+         py::arg("random_sigma_cutoff") = py::none(),
+         py::arg("a_norm_emit") = py::none(),
+         py::arg("b_norm_emit") = py::none(),
+         py::arg("a_emit") = py::none(),
+         py::arg("b_emit") = py::none(),
+         py::arg("dPz_dz") = py::none(),
+         py::arg("center") = py::none(),
+         py::arg("t_offset") = py::none(),
+         py::arg("dt_bunch") = py::none(),
+         py::arg("sig_z") = py::none(),
+         py::arg("sig_pz") = py::none(),
+         py::arg("bunch_charge") = py::none(),
+         py::arg("n_bunch") = py::none(),
+         py::arg("ix_turn") = py::none(),
+         py::arg("species") = py::none(),
+         py::arg("full_6D_coupling_calc") = py::none(),
+         py::arg("use_particle_start") = py::none(),
+         py::arg("use_t_coords") = py::none(),
+         py::arg("use_z_as_t") = py::none(),
+         py::arg("file_name") = py::none()
+  )
       // BeamInitStruct.position_file (0D_NOT_character - File with particle positions.
       .def_property(
           "position_file",
@@ -538,7 +726,93 @@ void init_beam_struct(py::module &m, py::class_<BeamStruct> &cls) {
 // =============================================================================
 // bmad_common_struct
 void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("max_aperture_limit") = py::none(),
+         py::arg("d_orb") = py::none(),
+         py::arg("default_ds_step") = py::none(),
+         py::arg("significant_length") = py::none(),
+         py::arg("rel_tol_tracking") = py::none(),
+         py::arg("abs_tol_tracking") = py::none(),
+         py::arg("rel_tol_adaptive_tracking") = py::none(),
+         py::arg("abs_tol_adaptive_tracking") = py::none(),
+         py::arg("init_ds_adaptive_tracking") = py::none(),
+         py::arg("min_ds_adaptive_tracking") = py::none(),
+         py::arg("fatal_ds_adaptive_tracking") = py::none(),
+         py::arg("autoscale_amp_abs_tol") = py::none(),
+         py::arg("autoscale_amp_rel_tol") = py::none(),
+         py::arg("autoscale_phase_tol") = py::none(),
+         py::arg("electric_dipole_moment") = py::none(),
+         py::arg("synch_rad_scale") = py::none(),
+         py::arg("sad_eps_scale") = py::none(),
+         py::arg("sad_amp_max") = py::none(),
+         py::arg("sad_n_div_max") = py::none(),
+         py::arg("taylor_order") = py::none(),
+         py::arg("runge_kutta_order") = py::none(),
+         py::arg("default_integ_order") = py::none(),
+         py::arg("max_num_runge_kutta_step") = py::none(),
+         py::arg("rf_phase_below_transition_ref") = py::none(),
+         py::arg("sr_wakes_on") = py::none(),
+         py::arg("lr_wakes_on") = py::none(),
+         py::arg("auto_bookkeeper") = py::none(),
+         py::arg("high_energy_space_charge_on") = py::none(),
+         py::arg("csr_and_space_charge_on") = py::none(),
+         py::arg("spin_tracking_on") = py::none(),
+         py::arg("spin_sokolov_ternov_flipping_on") = py::none(),
+         py::arg("radiation_damping_on") = py::none(),
+         py::arg("radiation_zero_average") = py::none(),
+         py::arg("radiation_fluctuations_on") = py::none(),
+         py::arg("conserve_taylor_maps") = py::none(),
+         py::arg("absolute_time_tracking") = py::none(),
+         py::arg("absolute_time_ref_shift") = py::none(),
+         py::arg("convert_to_kinetic_momentum") = py::none(),
+         py::arg("normalize_twiss") = py::none(),
+         py::arg("aperture_limit_on") = py::none(),
+         py::arg("spin_n0_direction_user_set") = py::none(),
+         py::arg("debug") = py::none()
+  )
       // BmadCommonStruct.max_aperture_limit (0D_NOT_real - Max Aperture.
       .def_property(
           "max_aperture_limit",
@@ -828,7 +1102,7 @@ void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
 // =============================================================================
 // bmad_normal_form_struct
 void init_bmad_normal_form_struct(py::module &m, py::class_<BmadNormalFormStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<optional_ref<const EleStruct>>(), py::arg("ele_origin") = py::none())
       // BmadNormalFormStruct.ele_origin (0D_PTR_type - Element at which the on-turn map was
       // created.
       .def_property(
@@ -877,7 +1151,27 @@ void init_bmad_normal_form_struct(py::module &m, py::class_<BmadNormalFormStruct
 // =============================================================================
 // bookkeeping_state_struct
 void init_bookkeeping_state_struct(py::module &m, py::class_<BookkeepingStateStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>>(),
+         py::arg("attributes") = py::none(),
+         py::arg("control") = py::none(),
+         py::arg("floor_position") = py::none(),
+         py::arg("s_position") = py::none(),
+         py::arg("ref_energy") = py::none(),
+         py::arg("mat6") = py::none(),
+         py::arg("rad_int") = py::none(),
+         py::arg("ptc") = py::none(),
+         py::arg("has_misalign") = py::none()
+  )
       // BookkeepingStateStruct.attributes (0D_NOT_integer - Element dependent attributes:
       // super_ok$, ok$ or stale$
       .def_property(
@@ -957,7 +1251,29 @@ void init_bookkeeping_state_struct(py::module &m, py::class_<BookkeepingStateStr
 // =============================================================================
 // bpm_phase_coupling_struct
 void init_bpm_phase_coupling_struct(py::module &m, py::class_<BpmPhaseCouplingStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("K_22a") = py::none(),
+         py::arg("K_12a") = py::none(),
+         py::arg("K_11b") = py::none(),
+         py::arg("K_12b") = py::none(),
+         py::arg("Cbar22_a") = py::none(),
+         py::arg("Cbar12_a") = py::none(),
+         py::arg("Cbar11_b") = py::none(),
+         py::arg("Cbar12_b") = py::none(),
+         py::arg("phi_a") = py::none(),
+         py::arg("phi_b") = py::none()
+  )
       // BpmPhaseCouplingStruct.K_22a (0D_NOT_real - In-phase y/x for a-mode oscillations.
       .def_property("K_22a", &BpmPhaseCouplingStruct::K_22a, &BpmPhaseCouplingStruct::set_K_22a)
       // BpmPhaseCouplingStruct.K_12a (0D_NOT_real - Out-of-phase y/x for a-mode oscillations.
@@ -1020,7 +1336,37 @@ void init_bpm_phase_coupling_struct(py::module &m, py::class_<BpmPhaseCouplingSt
 // =============================================================================
 // branch_struct
 void init_branch_struct(py::module &m, py::class_<BranchStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const LatStruct>,
+             optional_ref<const ModeInfoStruct>,
+             optional_ref<const ModeInfoStruct>,
+             optional_ref<const ModeInfoStruct>,
+             optional_ref<const LatParamStruct>,
+             optional_ref<const CoordStruct>>(),
+         py::arg("name") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("ix_from_branch") = py::none(),
+         py::arg("ix_from_ele") = py::none(),
+         py::arg("ix_to_ele") = py::none(),
+         py::arg("ix_fixer") = py::none(),
+         py::arg("n_ele_track") = py::none(),
+         py::arg("n_ele_max") = py::none(),
+         py::arg("lat") = py::none(),
+         py::arg("a") = py::none(),
+         py::arg("b") = py::none(),
+         py::arg("z") = py::none(),
+         py::arg("param") = py::none(),
+         py::arg("particle_start") = py::none()
+  )
       // BranchStruct.name (0D_NOT_character - Name of line that defines the branch.
       .def_property("name", &BranchStruct::name, &BranchStruct::set_name)
       // BranchStruct.ix_branch (0D_NOT_integer - Index of this branch. 0 => Main branch
@@ -1095,7 +1441,55 @@ void init_branch_struct(py::module &m, py::class_<BranchStruct> &cls) {
 // =============================================================================
 // bunch_params_struct
 void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const CoordStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>>(),
+         py::arg("centroid") = py::none(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("z") = py::none(),
+         py::arg("a") = py::none(),
+         py::arg("b") = py::none(),
+         py::arg("c") = py::none(),
+         py::arg("sigma") = py::none(),
+         py::arg("rel_max") = py::none(),
+         py::arg("rel_min") = py::none(),
+         py::arg("s") = py::none(),
+         py::arg("t") = py::none(),
+         py::arg("sigma_t") = py::none(),
+         py::arg("charge_live") = py::none(),
+         py::arg("charge_tot") = py::none(),
+         py::arg("n_particle_tot") = py::none(),
+         py::arg("n_particle_live") = py::none(),
+         py::arg("n_particle_lost_in_ele") = py::none(),
+         py::arg("n_good_steps") = py::none(),
+         py::arg("n_bad_steps") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("location") = py::none(),
+         py::arg("twiss_valid") = py::none()
+  )
       // BunchParamsStruct.centroid (0D_NOT_type - Lab frame
       .def_property("centroid", &BunchParamsStruct::centroid, &BunchParamsStruct::set_centroid)
       // BunchParamsStruct.x (0D_NOT_type - Projected Twiss parameters
@@ -1211,7 +1605,35 @@ void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls)
 // =============================================================================
 // bunch_struct
 void init_bunch_struct(py::module &m, py::class_<BunchStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<int>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<bool>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("ix_z") = py::none(),
+         py::arg("charge_tot") = py::none(),
+         py::arg("charge_live") = py::none(),
+         py::arg("z_center") = py::none(),
+         py::arg("t_center") = py::none(),
+         py::arg("t0") = py::none(),
+         py::arg("drift_between_t_and_s") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("ix_bunch") = py::none(),
+         py::arg("ix_turn") = py::none(),
+         py::arg("n_live") = py::none(),
+         py::arg("n_good") = py::none(),
+         py::arg("n_bad") = py::none()
+  )
       // BunchStruct.particle (1D_ALLOC_type -
       .def_property_readonly("particle", &BunchStruct::particle)
       // BunchStruct.ix_z (1D_ALLOC_integer - bunch%ix_z(1) is index of head particle, etc.
@@ -1283,7 +1705,11 @@ void init_bunch_struct(py::module &m, py::class_<BunchStruct> &cls) {
 // =============================================================================
 // bunch_track_struct
 void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, std::optional<int>>(),
+         py::arg("ds_save") = py::none(),
+         py::arg("n_pt") = py::none()
+  )
       // BunchTrackStruct.pt (1D_ALLOC_type - Array indexed from 0
       .def_property_readonly("pt", &BunchTrackStruct::pt)
       // BunchTrackStruct.ds_save (0D_NOT_real - Min distance between points.
@@ -1321,7 +1747,13 @@ void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &cls) {
 // =============================================================================
 // bicubic_cmplx_coef_struct
 void init_bicubic_cmplx_coef_struct(py::module &m, py::class_<BicubicCmplxCoefStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<std::vector<std::complex<double>>>>,
+             optional_ref<const std::vector<int>>>(),
+         py::arg("coef") = py::none(),
+         py::arg("i_box") = py::none()
+  )
       // BicubicCmplxCoefStruct.coef (2D_NOT_complex - Coefs
       .def_property("coef", &BicubicCmplxCoefStruct::coef, &BicubicCmplxCoefStruct::set_coef)
       // BicubicCmplxCoefStruct.i_box (1D_NOT_integer - index at lower box corner.

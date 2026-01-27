@@ -79,9 +79,6 @@ tri_coef : TricubicCmplxCoefStruct
 
 Returns
 -------
-f_val : complex
-    Value of f.
-
 df_dx : complex, optional
     Normalized first derivative: True df/dx = df_dx * dx
 
@@ -90,6 +87,9 @@ df_dy : complex, optional
 
 df_dz : complex, optional
     Normalized first derivative: True df/dz = df_dz * dz
+
+f_val : complex
+    Value of f.
 )"""
   );
   m.def(
@@ -100,10 +100,6 @@ df_dz : complex, optional
 
 Parameters
 ----------
-filename : character
-
-Returns
--------
 filename : character
 )"""
   );

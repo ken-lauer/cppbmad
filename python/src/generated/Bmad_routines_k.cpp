@@ -130,13 +130,6 @@ complex_taylor : 1D array of ComplexTaylorStruct
     complex_taylor to be deallocated. It is OK if complex_taylor has already been deallocated.
     This parameter is an input/output and is modified in-place.
     As an output, complex_taylor: deallocated complex_taylor structure.
-
-Returns
--------
-complex_taylor : 1D array of ComplexTaylorStruct
-    complex_taylor to be deallocated. It is OK if complex_taylor has already been deallocated.
-    This parameter is an input/output and is modified in-place.
-    As an output, complex_taylor: deallocated complex_taylor structure.
 )"""
   );
   m.def(
@@ -159,13 +152,6 @@ lat : LatStruct
 
 Parameters
 ----------
-bmad_taylor : 1D array of TaylorStruct
-    Taylor to be deallocated.
-    This parameter is an input/output and is modified in-place.
-    As an output, bmad_taylor: deallocated Taylor structure.
-
-Returns
--------
 bmad_taylor : 1D array of TaylorStruct
     Taylor to be deallocated.
     This parameter is an input/output and is modified in-place.
@@ -250,14 +236,6 @@ y_pt : float
 
 Parameters
 ----------
-x_knot : 1D array of float
-
-y_knot : 1D array of float
-
-str : character
-
-Returns
--------
 x_knot : 1D array of float
 
 y_knot : 1D array of float

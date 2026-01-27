@@ -57,12 +57,6 @@ Parameters
 n : int
 
 str : character
-
-Returns
--------
-n : int
-
-str : character
 )"""
   );
   m.def(
@@ -106,18 +100,6 @@ Routine to initialize the buffer used for capturing output.
 
 Parameters
 ----------
-level : int
-
-routine_name : character
-
-line : character
-
-i_num : int
-
-insert_tag_line : bool, optional
-
-Returns
--------
 level : int
 
 routine_name : character
@@ -207,44 +189,6 @@ i_array : 1D array of int, optional
 l_array : 1D array of bool, optional
 
 insert_tag_line : bool, optional
-
-Returns
--------
-level : int
-
-routine_name : character
-
-line1 : character
-
-line2 : character, optional
-
-line3 : character, optional
-
-line4 : character, optional
-
-line5 : character, optional
-
-line6 : character, optional
-
-line7 : character, optional
-
-line8 : character, optional
-
-line9 : character, optional
-
-line10 : character, optional
-
-line11 : character, optional
-
-line12 : character, optional
-
-r_array : 1D array of float, optional
-
-i_array : 1D array of int, optional
-
-l_array : 1D array of bool, optional
-
-insert_tag_line : bool, optional
 )"""
   );
   m.def(
@@ -260,18 +204,6 @@ insert_tag_line : bool, optional
 
 Parameters
 ----------
-level : int
-
-routine_name : character
-
-line : character
-
-l_num : bool
-
-insert_tag_line : bool, optional
-
-Returns
--------
 level : int
 
 routine_name : character
@@ -350,18 +282,6 @@ capture_add_null : bool, optional
 
 Parameters
 ----------
-level : int
-
-routine_name : character
-
-line : character
-
-r_num : float
-
-insert_tag_line : bool, optional
-
-Returns
--------
 level : int
 
 routine_name : character

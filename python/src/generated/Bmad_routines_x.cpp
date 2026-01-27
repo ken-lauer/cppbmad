@@ -23,16 +23,6 @@ y : float
 z : float
 
 res : float
-
-Returns
--------
-x : float
-
-y : float
-
-z : float
-
-res : float
 )"""
   );
   m.def(

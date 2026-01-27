@@ -11,7 +11,12 @@ namespace py = pybind11;
 // =============================================================================
 // ac_kicker_freq_struct
 void init_ac_kicker_freq_struct(py::module &m, py::class_<AcKickerFreqStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, std::optional<double>, std::optional<double>>(),
+         py::arg("f") = py::none(),
+         py::arg("amp") = py::none(),
+         py::arg("phi") = py::none()
+  )
       // AcKickerFreqStruct.f (0D_NOT_real -
       .def_property("f", &AcKickerFreqStruct::f, &AcKickerFreqStruct::set_f)
       // AcKickerFreqStruct.amp (0D_NOT_real -
@@ -78,7 +83,12 @@ void init_ac_kicker_struct(py::module &m, py::class_<AcKickerStruct> &cls) {
 // =============================================================================
 // ac_kicker_time_struct
 void init_ac_kicker_time_struct(py::module &m, py::class_<AcKickerTimeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, std::optional<double>, optional_ref<const SplineStruct>>(),
+         py::arg("amp") = py::none(),
+         py::arg("time") = py::none(),
+         py::arg("spline") = py::none()
+  )
       // AcKickerTimeStruct.amp (0D_NOT_real -
       .def_property("amp", &AcKickerTimeStruct::amp, &AcKickerTimeStruct::set_amp)
       // AcKickerTimeStruct.time (0D_NOT_real -
@@ -116,7 +126,23 @@ void init_ac_kicker_time_struct(py::module &m, py::class_<AcKickerTimeStruct> &c
 // =============================================================================
 // anormal_mode_struct
 void init_anormal_mode_struct(py::module &m, py::class_<AnormalModeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("emittance") = py::none(),
+         py::arg("emittance_no_vert") = py::none(),
+         py::arg("synch_int") = py::none(),
+         py::arg("j_damp") = py::none(),
+         py::arg("alpha_damp") = py::none(),
+         py::arg("chrom") = py::none(),
+         py::arg("tune") = py::none()
+  )
       // AnormalModeStruct.emittance (0D_NOT_real - Beam emittance (unnormalized). Includes vertical
       // photon opening angle.
       .def_property("emittance", &AnormalModeStruct::emittance, &AnormalModeStruct::set_emittance)
@@ -165,7 +191,27 @@ void init_anormal_mode_struct(py::module &m, py::class_<AnormalModeStruct> &cls)
 // =============================================================================
 // aperture_param_struct
 void init_aperture_param_struct(py::module &m, py::class_<ApertureParamStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::string>>(),
+         py::arg("min_angle") = py::none(),
+         py::arg("max_angle") = py::none(),
+         py::arg("n_angle") = py::none(),
+         py::arg("n_turn") = py::none(),
+         py::arg("x_init") = py::none(),
+         py::arg("y_init") = py::none(),
+         py::arg("rel_accuracy") = py::none(),
+         py::arg("abs_accuracy") = py::none(),
+         py::arg("start_ele") = py::none()
+  )
       // ApertureParamStruct.min_angle (0D_NOT_real -
       .def_property(
           "min_angle",
@@ -231,7 +277,19 @@ void init_aperture_param_struct(py::module &m, py::class_<ApertureParamStruct> &
 // =============================================================================
 // aperture_point_struct
 void init_aperture_point_struct(py::module &m, py::class_<AperturePointStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("plane") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("i_turn") = py::none()
+  )
       // AperturePointStruct.x (0D_NOT_real - (x,y) aperture point with respect to the reference
       // orbit.
       .def_property("x", &AperturePointStruct::x, &AperturePointStruct::set_x)
@@ -275,7 +333,11 @@ void init_aperture_point_struct(py::module &m, py::class_<AperturePointStruct> &
 // =============================================================================
 // aperture_scan_struct
 void init_aperture_scan_struct(py::module &m, py::class_<ApertureScanStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const CoordStruct>, std::optional<double>>(),
+         py::arg("ref_orb") = py::none(),
+         py::arg("pz_start") = py::none()
+  )
       // ApertureScanStruct.point (1D_ALLOC_type - Set of aperture points at different angles.
       .def_property_readonly("point", &ApertureScanStruct::point)
       // ApertureScanStruct.ref_orb (0D_NOT_type - Ref orbit around which the scan is made.
@@ -313,7 +375,131 @@ void init_aperture_scan_struct(py::module &m, py::class_<ApertureScanStruct> &cl
 // =============================================================================
 // all_encompassing_struct
 void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<std::vector<double>>>>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<std::vector<double>>>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<std::vector<double>>>>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<std::vector<double>>>>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<std::vector<double>>>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<std::vector<double>>>>,
+             std::optional<std::complex<double>>,
+             optional_ref<const std::vector<std::complex<double>>>,
+             optional_ref<const std::vector<std::vector<std::complex<double>>>>,
+             optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>,
+             optional_ref<const std::vector<std::complex<double>>>,
+             optional_ref<const std::vector<std::vector<std::complex<double>>>>,
+             optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>,
+             optional_ref<const std::vector<std::complex<double>>>,
+             optional_ref<const std::vector<std::vector<std::complex<double>>>>,
+             optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>,
+             std::optional<int>,
+             optional_ref<const std::vector<int>>,
+             optional_ref<const std::vector<std::vector<int>>>,
+             optional_ref<const std::vector<std::vector<std::vector<int>>>>,
+             std::optional<int>,
+             optional_ref<const std::vector<int>>,
+             optional_ref<const std::vector<std::vector<int>>>,
+             optional_ref<const std::vector<std::vector<std::vector<int>>>>,
+             optional_ref<const std::vector<int>>,
+             optional_ref<const std::vector<std::vector<int>>>,
+             optional_ref<const std::vector<std::vector<std::vector<int>>>>,
+             std::optional<int64_t>,
+             optional_ref<const std::vector<int64_t>>,
+             optional_ref<const std::vector<std::vector<int64_t>>>,
+             optional_ref<const std::vector<std::vector<std::vector<int64_t>>>>,
+             std::optional<int64_t>,
+             optional_ref<const std::vector<int64_t>>,
+             optional_ref<const std::vector<std::vector<int64_t>>>,
+             optional_ref<const std::vector<std::vector<std::vector<int64_t>>>>,
+             optional_ref<const std::vector<int64_t>>,
+             optional_ref<const std::vector<std::vector<int64_t>>>,
+             optional_ref<const std::vector<std::vector<std::vector<int64_t>>>>,
+             std::optional<bool>,
+             optional_ref<const std::vector<bool>>,
+             optional_ref<const std::vector<std::vector<bool>>>,
+             optional_ref<const std::vector<std::vector<std::vector<bool>>>>,
+             std::optional<bool>,
+             optional_ref<const TestSubStruct>,
+             optional_ref<const TestSubStruct>>(),
+         py::arg("real_rp_0d") = py::none(),
+         py::arg("real_rp_1d") = py::none(),
+         py::arg("real_rp_2d") = py::none(),
+         py::arg("real_rp_3d") = py::none(),
+         py::arg("real_rp_0d_ptr") = py::none(),
+         py::arg("real_rp_1d_ptr") = py::none(),
+         py::arg("real_rp_2d_ptr") = py::none(),
+         py::arg("real_rp_3d_ptr") = py::none(),
+         py::arg("real_rp_1d_alloc") = py::none(),
+         py::arg("real_rp_2d_alloc") = py::none(),
+         py::arg("real_rp_3d_alloc") = py::none(),
+         py::arg("real_dp_0d") = py::none(),
+         py::arg("real_dp_1d") = py::none(),
+         py::arg("real_dp_2d") = py::none(),
+         py::arg("real_dp_3d") = py::none(),
+         py::arg("real_dp_0d_ptr") = py::none(),
+         py::arg("real_dp_1d_ptr") = py::none(),
+         py::arg("real_dp_2d_ptr") = py::none(),
+         py::arg("real_dp_3d_ptr") = py::none(),
+         py::arg("real_dp_1d_alloc") = py::none(),
+         py::arg("real_dp_2d_alloc") = py::none(),
+         py::arg("real_dp_3d_alloc") = py::none(),
+         py::arg("complex_dp_0d") = py::none(),
+         py::arg("complex_dp_1d") = py::none(),
+         py::arg("complex_dp_2d") = py::none(),
+         py::arg("complex_dp_3d") = py::none(),
+         py::arg("complex_dp_1d_ptr") = py::none(),
+         py::arg("complex_dp_2d_ptr") = py::none(),
+         py::arg("complex_dp_3d_ptr") = py::none(),
+         py::arg("complex_dp_1d_alloc") = py::none(),
+         py::arg("complex_dp_2d_alloc") = py::none(),
+         py::arg("complex_dp_3d_alloc") = py::none(),
+         py::arg("int_0d") = py::none(),
+         py::arg("int_1d") = py::none(),
+         py::arg("int_2d") = py::none(),
+         py::arg("int_3d") = py::none(),
+         py::arg("int_0d_ptr") = py::none(),
+         py::arg("int_1d_ptr") = py::none(),
+         py::arg("int_2d_ptr") = py::none(),
+         py::arg("int_3d_ptr") = py::none(),
+         py::arg("int_1d_alloc") = py::none(),
+         py::arg("int_2d_alloc") = py::none(),
+         py::arg("int_3d_alloc") = py::none(),
+         py::arg("int8_0d") = py::none(),
+         py::arg("int8_1d") = py::none(),
+         py::arg("int8_2d") = py::none(),
+         py::arg("int8_3d") = py::none(),
+         py::arg("int8_0d_ptr") = py::none(),
+         py::arg("int8_1d_ptr") = py::none(),
+         py::arg("int8_2d_ptr") = py::none(),
+         py::arg("int8_3d_ptr") = py::none(),
+         py::arg("int8_1d_alloc") = py::none(),
+         py::arg("int8_2d_alloc") = py::none(),
+         py::arg("int8_3d_alloc") = py::none(),
+         py::arg("logical_0d") = py::none(),
+         py::arg("logical_1d") = py::none(),
+         py::arg("logical_2d") = py::none(),
+         py::arg("logical_3d") = py::none(),
+         py::arg("logical_0d_ptr") = py::none(),
+         py::arg("type_0d") = py::none(),
+         py::arg("type_0d_ptr") = py::none()
+  )
       // AllEncompassingStruct.real_rp_0d (0D_NOT_real -
       .def_property(
           "real_rp_0d",

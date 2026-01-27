@@ -31,16 +31,8 @@ phi : float
 
 mc : float
 
-elb : float
-
-eld : float
-
 Returns
 -------
-phi : float
-
-mc : float
-
 elb : float
 
 eld : float
@@ -90,16 +82,6 @@ value : float
 
 Parameters
 ----------
-file_name : character
-
-cnum_in : character
-
-num_out : int
-
-err_flag : bool
-
-Returns
--------
 file_name : character
 
 cnum_in : character

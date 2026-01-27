@@ -11,7 +11,43 @@ namespace py = pybind11;
 // =============================================================================
 // space_charge_common_struct
 void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommonStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<int>>,
+             optional_ref<const std::vector<int>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             optional_ref<const std::string>>(),
+         py::arg("ds_track_step") = py::none(),
+         py::arg("dt_track_step") = py::none(),
+         py::arg("cathode_strength_cutoff") = py::none(),
+         py::arg("rel_tol_tracking") = py::none(),
+         py::arg("abs_tol_tracking") = py::none(),
+         py::arg("beam_chamber_height") = py::none(),
+         py::arg("lsc_sigma_cutoff") = py::none(),
+         py::arg("particle_sigma_cutoff") = py::none(),
+         py::arg("space_charge_mesh_size") = py::none(),
+         py::arg("csr3d_mesh_size") = py::none(),
+         py::arg("n_bin") = py::none(),
+         py::arg("particle_bin_span") = py::none(),
+         py::arg("n_shield_images") = py::none(),
+         py::arg("sc_min_in_bin") = py::none(),
+         py::arg("lsc_kick_transverse_dependence") = py::none(),
+         py::arg("debug") = py::none(),
+         py::arg("diagnostic_output_file") = py::none()
+  )
       // SpaceChargeCommonStruct.ds_track_step (0D_NOT_real - CSR tracking step size
       .def_property(
           "ds_track_step",
@@ -140,7 +176,15 @@ void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommon
 // =============================================================================
 // spin_axis_struct
 void init_spin_axis_struct(py::module &m, py::class_<SpinAxisStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("l") = py::none(),
+         py::arg("n0") = py::none(),
+         py::arg("m") = py::none()
+  )
       // SpinAxisStruct.l (1D_NOT_real - Transverse axis.
       .def_property("l", &SpinAxisStruct::l, &SpinAxisStruct::set_l)
       // SpinAxisStruct.n0 (1D_NOT_real - Invariant spin axis on closed orbit.
@@ -171,7 +215,15 @@ void init_spin_axis_struct(py::module &m, py::class_<SpinAxisStruct> &cls) {
 // =============================================================================
 // spin_orbit_map1_struct
 void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>>(),
+         py::arg("orb_mat") = py::none(),
+         py::arg("vec0") = py::none(),
+         py::arg("spin_q") = py::none()
+  )
       // SpinOrbitMap1Struct.orb_mat (2D_NOT_real - Orbital matrix
       .def_property("orb_mat", &SpinOrbitMap1Struct::orb_mat, &SpinOrbitMap1Struct::set_orb_mat)
       // SpinOrbitMap1Struct.vec0 (1D_NOT_real - Orbital 0th order map: r_out = mat6 * r_in + vec0
@@ -209,7 +261,17 @@ void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> 
 // =============================================================================
 // spin_polar_struct
 void init_spin_polar_struct(py::module &m, py::class_<SpinPolarStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("polarization") = py::none(),
+         py::arg("theta") = py::none(),
+         py::arg("phi") = py::none(),
+         py::arg("xi") = py::none()
+  )
       // SpinPolarStruct.polarization (0D_NOT_real -
       .def_property(
           "polarization",
@@ -246,7 +308,23 @@ void init_spin_polar_struct(py::module &m, py::class_<SpinPolarStruct> &cls) {
 // =============================================================================
 // strong_beam_struct
 void init_strong_beam_struct(py::module &m, py::class_<StrongBeamStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("ix_slice") = py::none(),
+         py::arg("x_center") = py::none(),
+         py::arg("y_center") = py::none(),
+         py::arg("x_sigma") = py::none(),
+         py::arg("y_sigma") = py::none(),
+         py::arg("dx") = py::none(),
+         py::arg("dy") = py::none()
+  )
       // StrongBeamStruct.ix_slice (0D_NOT_integer - 0 -> at element center and not at slice.
       .def_property("ix_slice", &StrongBeamStruct::ix_slice, &StrongBeamStruct::set_ix_slice)
       // StrongBeamStruct.x_center (0D_NOT_real - Strong beam slice center.
@@ -285,7 +363,17 @@ void init_strong_beam_struct(py::module &m, py::class_<StrongBeamStruct> &cls) {
 // =============================================================================
 // surface_curvature_struct
 void init_surface_curvature_struct(py::module &m, py::class_<SurfaceCurvatureStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             std::optional<bool>>(),
+         py::arg("xy") = py::none(),
+         py::arg("spherical") = py::none(),
+         py::arg("elliptical") = py::none(),
+         py::arg("has_curvature") = py::none()
+  )
       // SurfaceCurvatureStruct.xy (2D_NOT_real -
       .def_property("xy", &SurfaceCurvatureStruct::xy, &SurfaceCurvatureStruct::set_xy)
       // SurfaceCurvatureStruct.spherical (0D_NOT_real -
@@ -335,7 +423,21 @@ void init_surface_displacement_pt_struct(
     py::module &m,
     py::class_<SurfaceDisplacementPtStruct> &cls
 ) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("x0") = py::none(),
+         py::arg("y0") = py::none(),
+         py::arg("z0") = py::none(),
+         py::arg("dz_dx") = py::none(),
+         py::arg("dz_dy") = py::none(),
+         py::arg("d2z_dxdy") = py::none()
+  )
       // SurfaceDisplacementPtStruct.x0 (0D_NOT_real - Position at center
       .def_property("x0", &SurfaceDisplacementPtStruct::x0, &SurfaceDisplacementPtStruct::set_x0)
       // SurfaceDisplacementPtStruct.y0 (0D_NOT_real - Position at center
@@ -386,7 +488,15 @@ void init_surface_displacement_pt_struct(
 // =============================================================================
 // surface_displacement_struct
 void init_surface_displacement_struct(py::module &m, py::class_<SurfaceDisplacementStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<bool>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("active") = py::none(),
+         py::arg("dr") = py::none(),
+         py::arg("r0") = py::none()
+  )
       // SurfaceDisplacementStruct.active (0D_NOT_logical -
       .def_property(
           "active",
@@ -425,7 +535,21 @@ void init_surface_displacement_struct(py::module &m, py::class_<SurfaceDisplacem
 // =============================================================================
 // surface_h_misalign_pt_struct
 void init_surface_h_misalign_pt_struct(py::module &m, py::class_<SurfaceHMisalignPtStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("x0") = py::none(),
+         py::arg("y0") = py::none(),
+         py::arg("rot_y") = py::none(),
+         py::arg("rot_t") = py::none(),
+         py::arg("rot_y_rms") = py::none(),
+         py::arg("rot_t_rms") = py::none()
+  )
       // SurfaceHMisalignPtStruct.x0 (0D_NOT_real - Position at center
       .def_property("x0", &SurfaceHMisalignPtStruct::x0, &SurfaceHMisalignPtStruct::set_x0)
       // SurfaceHMisalignPtStruct.y0 (0D_NOT_real - Position at center
@@ -476,7 +600,15 @@ void init_surface_h_misalign_pt_struct(py::module &m, py::class_<SurfaceHMisalig
 // =============================================================================
 // surface_h_misalign_struct
 void init_surface_h_misalign_struct(py::module &m, py::class_<SurfaceHMisalignStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<bool>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("active") = py::none(),
+         py::arg("dr") = py::none(),
+         py::arg("r0") = py::none()
+  )
       // SurfaceHMisalignStruct.active (0D_NOT_logical -
       .def_property("active", &SurfaceHMisalignStruct::active, &SurfaceHMisalignStruct::set_active)
       // SurfaceHMisalignStruct.dr (1D_NOT_real -
@@ -511,7 +643,19 @@ void init_surface_h_misalign_struct(py::module &m, py::class_<SurfaceHMisalignSt
 // =============================================================================
 // surface_segmented_pt_struct
 void init_surface_segmented_pt_struct(py::module &m, py::class_<SurfaceSegmentedPtStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("x0") = py::none(),
+         py::arg("y0") = py::none(),
+         py::arg("z0") = py::none(),
+         py::arg("dz_dx") = py::none(),
+         py::arg("dz_dy") = py::none()
+  )
       // SurfaceSegmentedPtStruct.x0 (0D_NOT_real - Position at center
       .def_property("x0", &SurfaceSegmentedPtStruct::x0, &SurfaceSegmentedPtStruct::set_x0)
       // SurfaceSegmentedPtStruct.y0 (0D_NOT_real - Position at center
@@ -548,7 +692,15 @@ void init_surface_segmented_pt_struct(py::module &m, py::class_<SurfaceSegmented
 // =============================================================================
 // surface_segmented_struct
 void init_surface_segmented_struct(py::module &m, py::class_<SurfaceSegmentedStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<bool>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("active") = py::none(),
+         py::arg("dr") = py::none(),
+         py::arg("r0") = py::none()
+  )
       // SurfaceSegmentedStruct.active (0D_NOT_logical -
       .def_property("active", &SurfaceSegmentedStruct::active, &SurfaceSegmentedStruct::set_active)
       // SurfaceSegmentedStruct.dr (1D_NOT_real -
@@ -583,7 +735,17 @@ void init_surface_segmented_struct(py::module &m, py::class_<SurfaceSegmentedStr
 // =============================================================================
 // spline_struct
 void init_spline_struct(py::module &m, py::class_<SplineStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("x0") = py::none(),
+         py::arg("y0") = py::none(),
+         py::arg("x1") = py::none(),
+         py::arg("coef") = py::none()
+  )
       // SplineStruct.x0 (0D_NOT_real - Point at start of spline
       .def_property("x0", &SplineStruct::x0, &SplineStruct::set_x0)
       // SplineStruct.y0 (0D_NOT_real - Point at start of spline
@@ -623,7 +785,51 @@ void init_spline_struct(py::module &m, py::class_<SplineStruct> &cls) {
 // =============================================================================
 // summation_rdt_struct
 void init_summation_rdt_struct(py::module &m, py::class_<SummationRdtStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>,
+             std::optional<std::complex<double>>>(),
+         py::arg("h11001") = py::none(),
+         py::arg("h00111") = py::none(),
+         py::arg("h20001") = py::none(),
+         py::arg("h00201") = py::none(),
+         py::arg("h10002") = py::none(),
+         py::arg("h21000") = py::none(),
+         py::arg("h30000") = py::none(),
+         py::arg("h10110") = py::none(),
+         py::arg("h10020") = py::none(),
+         py::arg("h10200") = py::none(),
+         py::arg("h31000") = py::none(),
+         py::arg("h40000") = py::none(),
+         py::arg("h20110") = py::none(),
+         py::arg("h11200") = py::none(),
+         py::arg("h20020") = py::none(),
+         py::arg("h20200") = py::none(),
+         py::arg("h00310") = py::none(),
+         py::arg("h00400") = py::none(),
+         py::arg("h22000") = py::none(),
+         py::arg("h00220") = py::none(),
+         py::arg("h11110") = py::none()
+  )
       // SummationRdtStruct.h11001 (0D_NOT_complex -
       .def_property("h11001", &SummationRdtStruct::h11001, &SummationRdtStruct::set_h11001)
       // SummationRdtStruct.h00111 (0D_NOT_complex -

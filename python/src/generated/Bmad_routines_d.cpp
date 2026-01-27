@@ -32,22 +32,6 @@ delta : float
 species : int
 
 mat : 2D array of float (shape: 6,6)
-
-Returns
--------
-gamma : float
-
-g_tot : float
-
-B0 : float
-
-B1 : float
-
-delta : float
-
-species : int
-
-mat : 2D array of float (shape: 6,6)
 )"""
   );
   m.def(
@@ -74,13 +58,6 @@ nullify_branch : bool, optional
 
 dealloc_poles : bool, optional
     Dealloc ele.a/b_pole, ele.a/b_pole_elec? Default is True.
-
-Returns
--------
-ele : EleStruct
-    Element with pointers.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with deallocated pointers.
 )"""
   );
   m.def(
@@ -97,13 +74,6 @@ tree : ExpressionTreeStruct
     Tree to deallocate.
     This parameter is an input/output and is modified in-place.
     As an output, tree: Deallocated tree.
-
-Returns
--------
-tree : ExpressionTreeStruct
-    Tree to deallocate.
-    This parameter is an input/output and is modified in-place.
-    As an output, tree: Deallocated tree.
 )"""
   );
   m.def(
@@ -114,13 +84,6 @@ tree : ExpressionTreeStruct
 
 Parameters
 ----------
-lat : LatStruct
-    Lat with pointers.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lat with deallocated pointers.
-
-Returns
--------
 lat : LatStruct
     Lat with pointers.
     This parameter is an input/output and is modified in-place.
@@ -206,16 +169,6 @@ g_tot : float
 species : int
 
 mat : 2D array of float (shape: 6,6)
-
-Returns
--------
-gamma : float
-
-g_tot : float
-
-species : int
-
-mat : 2D array of float (shape: 6,6)
 )"""
   );
   py::class_<Bmad::DistanceToAperture, std::unique_ptr<Bmad::DistanceToAperture>>(
@@ -278,11 +231,6 @@ ele : EleStruct
 
 Returns
 -------
-ele : EleStruct
-    Starting Element
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Flipped element
-
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
 )"""
@@ -298,16 +246,6 @@ err_flag : bool, optional
 
 Parameters
 ----------
-pc_old : float
-
-mass : float
-
-dE : float
-
-dpc : float
-
-Returns
--------
 pc_old : float
 
 mass : float
@@ -336,13 +274,6 @@ lat : LatStruct
     Lattice
     This parameter is an input/output and is modified in-place.
     As an output, lat: Lattice with tracking methods adjusted if needed.
-
-Returns
--------
-lat : LatStruct
-    Lattice
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with tracking methods adjusted if needed.
 )"""
   );
   m.def(
@@ -353,10 +284,6 @@ lat : LatStruct
 
 Parameters
 ----------
-lat : LatStruct
-
-Returns
--------
 lat : LatStruct
 )"""
   );
@@ -387,11 +314,6 @@ delta_s : float, optional
 
 delta_t : float, optional
     -coordinate distancet to drift particle.
-
-Returns
--------
-orbit : CoordStruct
-    particle orbit in time-based coordinates.
 )"""
   );
   m.def(
@@ -416,13 +338,6 @@ s : float
 
 branch : BranchStruct
     Branch being tracked through.
-
-Returns
--------
-p : CoordStruct
-    Init particle position.
-    This parameter is an input/output and is modified in-place.
-    As an output, p: Final particle position.
 )"""
   );
   m.def(
@@ -447,13 +362,6 @@ t : float
 
 branch : BranchStruct
     Lattice branch being tracked through.
-
-Returns
--------
-p : CoordStruct
-    Init particle position.
-    This parameter is an input/output and is modified in-place.
-    As an output, p: Final particle position.
 )"""
   );
   m.def(
@@ -544,11 +452,11 @@ Parameters
 aperture_param : ApertureParamStruct
     Scan parameters
 
-lat : LatStruct
-    Lattice.
-
 pz_start : 1D array of float
     Starting phase space pz values.
+
+lat : LatStruct
+    Lattice.
 
 print_timing : bool, optional
     If True print info on calculation time. Default is True.

@@ -14,10 +14,6 @@ void init_SimUtils_routines_v(py::module &m) {
 Parameters
 ----------
 usage : int
-
-Returns
--------
-usage : int
 )"""
   );
 }

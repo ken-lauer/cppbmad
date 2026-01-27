@@ -11,7 +11,21 @@ namespace py = pybind11;
 // =============================================================================
 // cartesian_map_struct
 void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const CartesianMapTermStruct>>(),
+         py::arg("field_scale") = py::none(),
+         py::arg("r0") = py::none(),
+         py::arg("master_parameter") = py::none(),
+         py::arg("ele_anchor_pt") = py::none(),
+         py::arg("field_type") = py::none(),
+         py::arg("ptr") = py::none()
+  )
       // CartesianMapStruct.field_scale (0D_NOT_real - Factor to scale the fields by
       .def_property(
           "field_scale",
@@ -73,7 +87,27 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
 // =============================================================================
 // cartesian_map_term1_struct
 void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("coef") = py::none(),
+         py::arg("kx") = py::none(),
+         py::arg("ky") = py::none(),
+         py::arg("kz") = py::none(),
+         py::arg("x0") = py::none(),
+         py::arg("y0") = py::none(),
+         py::arg("phi_z") = py::none(),
+         py::arg("family") = py::none(),
+         py::arg("form") = py::none()
+  )
       // CartesianMapTerm1Struct.coef (0D_NOT_real -
       .def_property("coef", &CartesianMapTerm1Struct::coef, &CartesianMapTerm1Struct::set_coef)
       // CartesianMapTerm1Struct.kx (0D_NOT_real -
@@ -129,7 +163,11 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
 // =============================================================================
 // cartesian_map_term_struct
 void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::arg("file") = py::none(),
+         py::arg("n_link") = py::none()
+  )
       // CartesianMapTermStruct.file (0D_NOT_character - Input file name. Used also as ID for
       // instances.
       .def_property("file", &CartesianMapTermStruct::file, &CartesianMapTermStruct::set_file)
@@ -163,7 +201,7 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
 // =============================================================================
 // complex_taylor_struct
 void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<std::optional<std::complex<double>>>(), py::arg("ref") = py::none())
       // ComplexTaylorStruct.ref (0D_NOT_complex -
       .def_property("ref", &ComplexTaylorStruct::ref, &ComplexTaylorStruct::set_ref)
       // ComplexTaylorStruct.term (1D_PTR_type -
@@ -199,7 +237,11 @@ void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &
 // =============================================================================
 // complex_taylor_term_struct
 void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTermStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<std::complex<double>>, optional_ref<const std::vector<int>>>(),
+         py::arg("coef") = py::none(),
+         py::arg("expn") = py::none()
+  )
       // ComplexTaylorTermStruct.coef (0D_NOT_complex -
       .def_property("coef", &ComplexTaylorTermStruct::coef, &ComplexTaylorTermStruct::set_coef)
       // ComplexTaylorTermStruct.expn (1D_NOT_integer -
@@ -237,7 +279,17 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
 // =============================================================================
 // control_ramp1_struct
 void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<bool>>(),
+         py::arg("y_knot") = py::none(),
+         py::arg("attribute") = py::none(),
+         py::arg("slave_name") = py::none(),
+         py::arg("is_controller") = py::none()
+  )
       // ControlRamp1Struct.y_knot (1D_ALLOC_real -
       .def_property("y_knot", &ControlRamp1Struct::y_knot, &ControlRamp1Struct::set_y_knot)
       // ControlRamp1Struct.stack (1D_ALLOC_type - Evaluation stack
@@ -289,7 +341,23 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
 // =============================================================================
 // control_struct
 void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const LatEleLocStruct>,
+             optional_ref<const LatEleLocStruct>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<int>>(),
+         py::arg("value") = py::none(),
+         py::arg("y_knot") = py::none(),
+         py::arg("slave") = py::none(),
+         py::arg("lord") = py::none(),
+         py::arg("slave_name") = py::none(),
+         py::arg("attribute") = py::none(),
+         py::arg("ix_attrib") = py::none()
+  )
       // ControlStruct.value (0D_NOT_real - Used by group, and overlay elements.
       .def_property("value", &ControlStruct::value, &ControlStruct::set_value)
       // ControlStruct.y_knot (1D_ALLOC_real -
@@ -338,7 +406,12 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
 // =============================================================================
 // control_var1_struct
 void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<double>, std::optional<double>>(),
+         py::arg("name") = py::none(),
+         py::arg("value") = py::none(),
+         py::arg("old_value") = py::none()
+  )
       // ControlVar1Struct.name (0D_NOT_character -
       .def_property("name", &ControlVar1Struct::name, &ControlVar1Struct::set_name)
       // ControlVar1Struct.value (0D_NOT_real -
@@ -376,7 +449,7 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
 // =============================================================================
 // controller_struct
 void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<optional_ref<const std::vector<double>>>(), py::arg("x_knot") = py::none())
       // ControllerStruct.var (1D_ALLOC_type -
       .def_property_readonly("var", &ControllerStruct::var)
       // ControllerStruct.ramp (1D_ALLOC_type - For ramper lord elements
@@ -443,7 +516,51 @@ void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
 // =============================================================================
 // coord_struct
 void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<long double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("vec") = py::none(),
+         py::arg("s") = py::none(),
+         py::arg("t") = py::none(),
+         py::arg("spin") = py::none(),
+         py::arg("field") = py::none(),
+         py::arg("phase") = py::none(),
+         py::arg("charge") = py::none(),
+         py::arg("dt_ref") = py::none(),
+         py::arg("r") = py::none(),
+         py::arg("p0c") = py::none(),
+         py::arg("E_potential") = py::none(),
+         py::arg("beta") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("ix_turn") = py::none(),
+         py::arg("ix_user") = py::none(),
+         py::arg("state") = py::none(),
+         py::arg("direction") = py::none(),
+         py::arg("time_dir") = py::none(),
+         py::arg("species") = py::none(),
+         py::arg("location") = py::none()
+  )
       // CoordStruct.vec (1D_NOT_real - (x, px, y, py, z, pz). Generally phase space for charged
       // particles. See Bmad manual.
       .def_property("vec", &CoordStruct::vec, &CoordStruct::set_vec)
@@ -526,7 +643,29 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
 // =============================================================================
 // cylindrical_map_struct
 void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const CylindricalMapTermStruct>>(),
+         py::arg("m") = py::none(),
+         py::arg("harmonic") = py::none(),
+         py::arg("phi0_fieldmap") = py::none(),
+         py::arg("theta0_azimuth") = py::none(),
+         py::arg("field_scale") = py::none(),
+         py::arg("master_parameter") = py::none(),
+         py::arg("ele_anchor_pt") = py::none(),
+         py::arg("dz") = py::none(),
+         py::arg("r0") = py::none(),
+         py::arg("ptr") = py::none()
+  )
       // CylindricalMapStruct.m (0D_NOT_integer - Azimuthal Mode: varies as cos(m*phi -
       // theta0_azimuth)
       .def_property("m", &CylindricalMapStruct::m, &CylindricalMapStruct::set_m)
@@ -609,7 +748,11 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
 // =============================================================================
 // cylindrical_map_term1_struct
 void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapTerm1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<std::complex<double>>, std::optional<std::complex<double>>>(),
+         py::arg("e_coef") = py::none(),
+         py::arg("b_coef") = py::none()
+  )
       // CylindricalMapTerm1Struct.e_coef (0D_NOT_complex -
       .def_property(
           "e_coef",
@@ -655,7 +798,11 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
 // =============================================================================
 // cylindrical_map_term_struct
 void init_cylindrical_map_term_struct(py::module &m, py::class_<CylindricalMapTermStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::arg("file") = py::none(),
+         py::arg("n_link") = py::none()
+  )
       // CylindricalMapTermStruct.file (0D_NOT_character - Input file name. Used also as ID for
       // instances.
       .def_property("file", &CylindricalMapTermStruct::file, &CylindricalMapTermStruct::set_file)

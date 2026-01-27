@@ -11,7 +11,17 @@ namespace py = pybind11;
 // =============================================================================
 // gen_grad1_struct
 void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::vector<std::vector<double>>>>(),
+         py::arg("m") = py::none(),
+         py::arg("sincos") = py::none(),
+         py::arg("n_deriv_max") = py::none(),
+         py::arg("deriv") = py::none()
+  )
       // GenGrad1Struct.m (0D_NOT_integer - Azimuthal index
       .def_property("m", &GenGrad1Struct::m, &GenGrad1Struct::set_m)
       // GenGrad1Struct.sincos (0D_NOT_integer - sin$ or cos$
@@ -52,7 +62,29 @@ void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
 // =============================================================================
 // gen_grad_map_struct
 void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<bool>>(),
+         py::arg("file") = py::none(),
+         py::arg("ele_anchor_pt") = py::none(),
+         py::arg("field_type") = py::none(),
+         py::arg("iz0") = py::none(),
+         py::arg("iz1") = py::none(),
+         py::arg("dz") = py::none(),
+         py::arg("r0") = py::none(),
+         py::arg("field_scale") = py::none(),
+         py::arg("master_parameter") = py::none(),
+         py::arg("curved_ref_frame") = py::none()
+  )
       // GenGradMapStruct.file (0D_NOT_character - Input file name. Used also as ID for instances.
       .def_property("file", &GenGradMapStruct::file, &GenGradMapStruct::set_file)
       // GenGradMapStruct.gg (1D_ALLOC_type -
@@ -124,7 +156,21 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
 // =============================================================================
 // grid_beam_init_struct
 void init_grid_beam_init_struct(py::module &m, py::class_<GridBeamInitStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("n_x") = py::none(),
+         py::arg("n_px") = py::none(),
+         py::arg("x_min") = py::none(),
+         py::arg("x_max") = py::none(),
+         py::arg("px_min") = py::none(),
+         py::arg("px_max") = py::none()
+  )
       // GridBeamInitStruct.n_x (0D_NOT_integer - Number of columns.
       .def_property("n_x", &GridBeamInitStruct::n_x, &GridBeamInitStruct::set_n_x)
       // GridBeamInitStruct.n_px (0D_NOT_integer - Number of rows.
@@ -168,7 +214,13 @@ void init_grid_beam_init_struct(py::module &m, py::class_<GridBeamInitStruct> &c
 // =============================================================================
 // grid_field_pt1_struct
 void init_grid_field_pt1_struct(py::module &m, py::class_<GridFieldPt1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<std::complex<double>>>,
+             optional_ref<const std::vector<std::complex<double>>>>(),
+         py::arg("E") = py::none(),
+         py::arg("B") = py::none()
+  )
       // GridFieldPt1Struct.E (1D_NOT_complex -
       .def_property("E", &GridFieldPt1Struct::E, &GridFieldPt1Struct::set_E)
       // GridFieldPt1Struct.B (1D_NOT_complex -
@@ -197,7 +249,11 @@ void init_grid_field_pt1_struct(py::module &m, py::class_<GridFieldPt1Struct> &c
 // =============================================================================
 // grid_field_pt_struct
 void init_grid_field_pt_struct(py::module &m, py::class_<GridFieldPtStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::arg("file") = py::none(),
+         py::arg("n_link") = py::none()
+  )
       // GridFieldPtStruct.file (0D_NOT_character - Input file name. Used also as ID for instances.
       .def_property("file", &GridFieldPtStruct::file, &GridFieldPtStruct::set_file)
       // GridFieldPtStruct.n_link (0D_NOT_integer - For memory management of this structure
@@ -228,7 +284,33 @@ void init_grid_field_pt_struct(py::module &m, py::class_<GridFieldPtStruct> &cls
 // =============================================================================
 // grid_field_struct
 void init_grid_field_struct(py::module &m, py::class_<GridFieldStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<bool>,
+             optional_ref<const GridFieldPtStruct>>(),
+         py::arg("geometry") = py::none(),
+         py::arg("harmonic") = py::none(),
+         py::arg("phi0_fieldmap") = py::none(),
+         py::arg("field_scale") = py::none(),
+         py::arg("field_type") = py::none(),
+         py::arg("master_parameter") = py::none(),
+         py::arg("ele_anchor_pt") = py::none(),
+         py::arg("interpolation_order") = py::none(),
+         py::arg("dr") = py::none(),
+         py::arg("r0") = py::none(),
+         py::arg("curved_ref_frame") = py::none(),
+         py::arg("ptr") = py::none()
+  )
       // GridFieldStruct.geometry (0D_NOT_integer - Type of grid: xyz$, or
       // rotationally_symmetric_rz$
       .def_property("geometry", &GridFieldStruct::geometry, &GridFieldStruct::set_geometry)

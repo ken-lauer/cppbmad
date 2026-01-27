@@ -35,18 +35,8 @@ n : int
 
 isn : int
 
-ierr : int
-
 Returns
 -------
-a : 1D array of float
-
-b : 1D array of float
-
-n : int
-
-isn : int
-
 ierr : int
 )"""
   );
@@ -95,9 +85,6 @@ from_mad : bool, optional
 
 Returns
 -------
-branch : BranchStruct
-    branch containing elements.
-
 ix_ele : int
     Index in ele(:) array of element last used.
     This parameter is an input/output and is modified in-place.
@@ -154,13 +141,6 @@ table : PhotonReflectTableStruct
 
 in_degrees : bool
     Table angles in degrees?
-
-Returns
--------
-table : PhotonReflectTableStruct
-    Surface tables to be finalized.
-    This parameter is an input/output and is modified in-place.
-    As an output, table: Finalized surface tables.
 )"""
   );
   py::class_<Bmad::FindElementEnds, std::unique_ptr<Bmad::FindElementEnds>>(

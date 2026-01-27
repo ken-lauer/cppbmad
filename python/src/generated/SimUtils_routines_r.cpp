@@ -168,17 +168,15 @@ Note: Use ran_gauss_converter to set which conversion routine to use.
 
 Parameters
 ----------
+harvest : 1D array of float
+    Random number. Or
+    As an output, harvest: Random number array.
+
 ran_state : RandomStateStruct, optional
     Internal state. See the ran_seed_put documentation for more details.
 
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
-
-Returns
--------
-harvest : 1D array of float
-    Random number. Or
-    As an output, harvest: Random number array.
 )"""
   );
   m.def(
@@ -276,14 +274,12 @@ Note: Use ran_engine to set which random number generator to use.
 
 Parameters
 ----------
-ran_state : RandomStateStruct, optional
-    Internal state. See the ran_seed_put documentation for more details.
-
-Returns
--------
 harvest : 1D array of float
     Random number. Or
     As an output, harvest: Random number array.
+
+ran_state : RandomStateStruct, optional
+    Internal state. See the ran_seed_put documentation for more details.
 )"""
   );
   m.def(
@@ -296,14 +292,6 @@ harvest : 1D array of float
 
 Parameters
 ----------
-mc : float
-
-elb : float
-
-eld : float
-
-Returns
--------
 mc : float
 
 elb : float
@@ -416,16 +404,6 @@ width : int
 n_blanks : int, optional
 
 fmt_str : character
-
-Returns
--------
-number : float
-
-width : int
-
-n_blanks : int, optional
-
-fmt_str : character
 )"""
   );
   m.def(
@@ -438,14 +416,6 @@ fmt_str : character
 
 Parameters
 ----------
-path_in : character
-
-path_out : character
-
-is_ok : bool
-
-Returns
--------
 path_in : character
 
 path_out : character
@@ -471,16 +441,6 @@ n_signif : int, optional
 n_decimal : int, optional
 
 str : character
-
-Returns
--------
-r_num : float
-
-n_signif : int, optional
-
-n_decimal : int, optional
-
-str : character
 )"""
   );
   m.def(
@@ -495,18 +455,6 @@ str : character
 
 Parameters
 ----------
-real_num : float
-
-width : int
-
-n_signif : int, optional
-
-n_decimal : int, optional
-
-str : character
-
-Returns
--------
 real_num : float
 
 width : int
@@ -546,13 +494,6 @@ n_min : int, optional
 
 exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
-
-Returns
--------
-spline : 1D array of SplineStruct
-    Spline to reallocate.
-    This parameter is an input/output and is modified in-place.
-    As an output, spline: Allocated spline.
 )"""
   );
   m.def(
@@ -567,18 +508,6 @@ spline : 1D array of SplineStruct
 
 Parameters
 ----------
-phi : float
-
-phic : float
-
-mc : float
-
-b : float
-
-d : float
-
-Returns
--------
 phi : float
 
 phic : float
@@ -608,16 +537,6 @@ mc : float
 b : float
 
 dx : float
-
-Returns
--------
-c0 : float
-
-mc : float
-
-b : float
-
-dx : float
 )"""
   );
   m.def(
@@ -638,16 +557,6 @@ mc : float
 b : float
 
 d : float
-
-Returns
--------
-s0 : float
-
-mc : float
-
-b : float
-
-d : float
 )"""
   );
   m.def(
@@ -661,16 +570,6 @@ d : float
 
 Parameters
 ----------
-phi : float
-
-mc : float
-
-elb : float
-
-eld : float
-
-Returns
--------
 phi : float
 
 mc : float
@@ -764,13 +663,6 @@ axis : int
 
 angle : float
     angle to rotate.
-
-Returns
--------
-vec : 1D array of float
-    vector
-    This parameter is an input/output and is modified in-place.
-    As an output, vec: Rotated vector.
 )"""
   );
   m.def(
@@ -839,16 +731,6 @@ m : float
 b : float
 
 d : float
-
-Returns
--------
-y : float
-
-m : float
-
-b : float
-
-d : float
 )"""
   );
   m.def(
@@ -861,14 +743,6 @@ d : float
 
 Parameters
 ----------
-command : character
-
-time : float, optional
-
-time0 : float, optional
-
-Returns
--------
 command : character
 
 time : float, optional

@@ -132,15 +132,6 @@ except : character, optional
     List of elements not to vary.
 
 err_flag : bool, optional
-
-Returns
--------
-lat : LatStruct
-    Lattice to vary.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with magnet strengths varied.
-
-err_flag : bool, optional
 )"""
   );
   py::class_<PyTargetMinMaxCalc, std::unique_ptr<PyTargetMinMaxCalc>>(
@@ -271,12 +262,6 @@ Parameters
 taylor1 : TaylorStruct
 
 taylor2 : TaylorStruct
-
-Returns
--------
-taylor1 : TaylorStruct
-
-taylor2 : TaylorStruct
 )"""
   );
   m.def(
@@ -293,11 +278,11 @@ Parameters
 taylor_in : 1D array of TaylorStruct
     Input taylor map.
 
-Returns
--------
 taylor_inv : 1D array of TaylorStruct
     Inverted taylor map.
 
+Returns
+-------
 err : bool, optional
     Set True if there is no inverse. If not present then print an error message.
 )"""
@@ -342,16 +327,6 @@ spin_taylor : 1D array of TaylorStruct, optional
 
 Returns
 -------
-orb_taylor : 1D array of TaylorStruct
-    Map to be tracked
-    This parameter is an input/output and is modified in-place.
-    As an output, orb_taylor: Map through element.
-
-spin_taylor : 1D array of TaylorStruct, optional
-    Spin map to be tracked
-    This parameter is an input/output and is modified in-place.
-    As an output, spin_taylor: Tracked spin map.
-
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -392,12 +367,6 @@ Parameters
 taylor1 : 1D array of TaylorStruct
 
 taylor2 : 1D array of TaylorStruct
-
-Returns
--------
-taylor1 : 1D array of TaylorStruct
-
-taylor2 : 1D array of TaylorStruct
 )"""
   );
   m.def(
@@ -426,18 +395,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-coord : 1D array of float
-    Coordinates of particle before rotation.
-    This parameter is an input/output and is modified in-place.
-    As an output, coord: Coordinates of particle after rotation.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before tilt.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix transfer matrix after tilt applied.
 )"""
   );
   m.def(
@@ -453,18 +410,6 @@ Parameters
 tilt_val : float
     Tilt value (could be the roll value for a bend)
 
-coord : 1D array of float
-    Coordinates of particle before rotation.
-    This parameter is an input/output and is modified in-place.
-    As an output, coord: Coordinates of particle after rotation.
-
-w_mat : 2D array of float (shape: 3,3), optional
-    Rotation matrix before tilt.
-    This parameter is an input/output and is modified in-place.
-    As an output, w_mat: Rotation matrix after tilt.
-
-Returns
--------
 coord : 1D array of float
     Coordinates of particle before rotation.
     This parameter is an input/output and is modified in-place.
@@ -492,13 +437,6 @@ mat6 : 2D array of float (shape: 6,6)
 
 tilt : float
     Tilt angle.
-
-Returns
--------
-mat6 : 2D array of float (shape: 6,6)
-    Untilted matrix.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Tilted matrix.
 )"""
   );
   py::class_<Bmad::ToEtaReading, std::unique_ptr<Bmad::ToEtaReading>>(
@@ -913,18 +851,6 @@ lat : LatStruct
 ix : int, optional
 
 s : float, optional
-
-Returns
--------
-mode : NormalModesStruct
-
-rate : float
-
-lat : LatStruct
-
-ix : int, optional
-
-s : float, optional
 )"""
   );
   py::class_<Bmad::Track1, std::unique_ptr<Bmad::Track1>>(m, "Track1", "track1 return type")
@@ -982,18 +908,8 @@ init_to_edge : bool, optional
 
 Returns
 -------
-ele : EleStruct
-    Element to track through.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Modified if make_map1 is True.
-
 end_orb : CoordStruct
     End position.
-
-track : TrackStruct, optional
-    Structure holding existing track.
-    This parameter is an input/output and is modified in-place.
-    As an output, track: Structure holding the track information if the
 
 err_flag : bool, optional
     Set true if there is an error. False otherwise. Note: The particle getting lost (EG hitting an aperture)
@@ -1030,11 +946,6 @@ direction : int, optional
 
 Returns
 -------
-beam : BeamStruct
-    Starting beam position.
-    This parameter is an input/output and is modified in-place.
-    As an output, beam: Ending beam position.
-
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
 )"""
@@ -1088,22 +999,12 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
 
 track : TrackStruct, optional
     Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
     more details.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix propagated through the element.
 )"""
   );
   m.def(
@@ -1128,11 +1029,6 @@ param : LatParamStruct
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position
-
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
@@ -1173,16 +1069,6 @@ bunch_track : BunchTrackStruct, optional
 
 Returns
 -------
-bunch : BunchStruct
-    Starting bunch position.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Ending bunch position.
-
-bunch_track : BunchTrackStruct, optional
-    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_track: Track information appended to track.
-
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
 )"""
@@ -1227,16 +1113,6 @@ bunch_track : BunchTrackStruct, optional
 
 Returns
 -------
-bunch : BunchStruct
-    Starting bunch position.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Ending bunch position.
-
-bunch_track : BunchTrackStruct, optional
-    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_track: track information if the tracking method does
-
 err : bool
     Set true if there is an error. EG: Too many particles lost.
 )"""
@@ -1284,16 +1160,6 @@ bunch_track : BunchTrackStruct, optional
 
 Returns
 -------
-bunch : BunchStruct
-    Starting bunch position.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Ending bunch position.
-
-bunch_track : BunchTrackStruct, optional
-    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_track: track information if the tracking method does
-
 err : bool
     Set true if there is an error. EG: Too many particles lost.
 
@@ -1331,18 +1197,6 @@ bunch_track : BunchTrackStruct, optional
     Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
     This parameter is an input/output and is modified in-place.
     As an output, bunch_track: Track information appended to track.
-
-Returns
--------
-bunch : BunchStruct
-    Starting bunch position.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Ending bunch position.
-
-bunch_track : BunchTrackStruct, optional
-    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_track: Track information appended to track.
 )"""
   );
   m.def(
@@ -1374,18 +1228,8 @@ bunch_track : BunchTrackStruct, optional
 
 Returns
 -------
-bunch : BunchStruct
-    Starting bunch position.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Ending bunch position.
-
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
-
-bunch_track : BunchTrackStruct, optional
-    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_track: track information if the tracking method does
 )"""
   );
   m.def(
@@ -1406,13 +1250,6 @@ ele : EleStruct
 param : LatParamStruct
     lattice parameters.
 
-orbit : CoordStruct
-    phase-space coords to be transformed
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: final phase-space coords
-
-Returns
--------
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place.
@@ -1441,13 +1278,6 @@ orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place.
     As an output, orbit: final phase-space coords
-
-Returns
--------
-orbit : CoordStruct
-    phase-space coords to be transformed
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: final phase-space coords
 )"""
   );
   m.def(
@@ -1465,18 +1295,11 @@ effect of the space charge is small.
 
 Parameters
 ----------
-orbit : CoordStruct
-    Starting position
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position
-
 ele : EleStruct
     Element tracked through.
 
 param : LatParamStruct
 
-Returns
--------
 orbit : CoordStruct
     Starting position
     This parameter is an input/output and is modified in-place.
@@ -1505,13 +1328,6 @@ orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place.
     As an output, orbit: final phase-space coords
-
-Returns
--------
-orbit : CoordStruct
-    phase-space coords to be transformed
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: final phase-space coords
 )"""
   );
   m.def(
@@ -1533,15 +1349,6 @@ ele : EleStruct
     Element
 
 param : LatParamStruct
-
-Returns
--------
-orbit : CoordStruct
-    Starting position
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position
-
-param : LatParamStruct
 )"""
   );
   m.def(
@@ -1555,27 +1362,15 @@ Subroutine to put in the long-range wakes for particle tracking.
 
 Parameters
 ----------
-ele : EleStruct
-    Element with wakes.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with updated wake amplitudes.
-
 bunch : BunchStruct
     Bunch to track.
     This parameter is an input/output and is modified in-place.
     As an output, bunch: Kicked bunch.
 
-Returns
--------
 ele : EleStruct
     Element with wakes.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with updated wake amplitudes.
-
-bunch : BunchStruct
-    Bunch to track.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Kicked bunch.
 )"""
   );
   m.def(
@@ -1601,13 +1396,6 @@ ele : EleStruct
 
 param : LatParamStruct
     Lattice parameters.
-
-Returns
--------
-orbit : CoordStruct
-    Starting coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending coords.
 )"""
   );
   m.def(
@@ -1628,13 +1416,6 @@ ele : EleStruct
 param : LatParamStruct
     lattice parameters.
 
-orbit : CoordStruct
-    phase-space coords to be transformed
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: final phase-space coords
-
-Returns
--------
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place.
@@ -1663,13 +1444,6 @@ orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place.
     As an output, orbit: final phase-space coords
-
-Returns
--------
-orbit : CoordStruct
-    phase-space coords to be transformed
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: final phase-space coords
 )"""
   );
   m.def(
@@ -1691,13 +1465,6 @@ ele : EleStruct
 param : LatParamStruct
     lattice parameters.
 
-orbit : CoordStruct
-    phase-space coords to be transformed
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: final phase-space coords
-
-Returns
--------
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place.
@@ -1733,13 +1500,6 @@ ele : EleStruct
 
 edge : int
     Where the particle is: start_edge$ or end_edge$.
-
-Returns
--------
-orbit : CoordStruct
-    Particle position before radiation applied.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Particle position after radiation has been applied.
 )"""
   );
   m.def(
@@ -1775,13 +1535,6 @@ rad_damp : bool, optional
 
 rad_fluct : bool, optional
     If present, override setting of bmad_com.radiation_fluctuations_on.
-
-Returns
--------
-orbit : CoordStruct
-    Particle at center of element before radiation applied.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Particle position after radiation has been applied.
 )"""
   );
   py::class_<Bmad::Track1RungeKutta, std::unique_ptr<Bmad::Track1RungeKutta>>(
@@ -1834,21 +1587,11 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending coords.
-
 err_flag : bool
     Set True if there is an error. False otherwise.
 
 track : TrackStruct, optional
     Structure holding the track information.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix propagated through the element.
 )"""
   );
   m.def(
@@ -1869,13 +1612,6 @@ ele : EleStruct
 param : LatParamStruct
     lattice parameters.
 
-orbit : CoordStruct
-    phase-space coords to be transformed
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: final phase-space coords
-
-Returns
--------
 orbit : CoordStruct
     phase-space coords to be transformed
     This parameter is an input/output and is modified in-place.
@@ -1908,14 +1644,6 @@ end_orb : CoordStruct
 
 make_quaternion : bool, optional
     If present and true then calculate the 1st order spin map which is represented as a quaternion.
-
-Returns
--------
-ele : EleStruct
-    Element to track through.
-
-end_orb : CoordStruct
-    Ending coords.
 )"""
   );
   m.def(
@@ -1938,11 +1666,6 @@ ele : EleStruct
 param : LatParamStruct
     Beam parameters.
 
-end_orb : CoordStruct
-    Ending coords.
-
-Returns
--------
 end_orb : CoordStruct
     Ending coords.
 )"""
@@ -1989,13 +1712,6 @@ bunch : BunchStruct
 
 ele : EleStruct
     Element with wakefields.
-
-Returns
--------
-bunch : BunchStruct
-    Bunch of particles.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Bunch with wakefields applied to the particles.
 )"""
   );
   m.def(
@@ -2020,11 +1736,6 @@ param : LatParamStruct
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position
-
 track : TrackStruct, optional
     Structure holding the track information.
 )"""
@@ -2056,11 +1767,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending coords.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2121,11 +1827,6 @@ dt_step : float, optional
 
 Returns
 -------
-orbit : CoordStruct
-    starting position, z-based coords
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: end position, z-based coords
-
 err_flag : bool
     Set True if there is an error. False otherwise
 
@@ -2185,11 +1886,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 track : TrackStruct, optional
     Structure holding the track information if the lattice element does tracking step-by-step. See track1 for
     more details.
@@ -2228,18 +1924,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix to the element end.
 )"""
   );
   m.def(
@@ -2266,13 +1950,6 @@ ele : EleStruct
 
 length : float
     length to track.
-
-Returns
--------
-orb : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: End position.
 )"""
   );
   m.def(
@@ -2293,13 +1970,6 @@ orb : CoordStruct
 
 ele : EleStruct
     Capillary element
-
-Returns
--------
-orb : CoordStruct
-    Input photon coordinates.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Output photon coordinates.
 )"""
   );
   m.def(
@@ -2329,11 +1999,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2365,11 +2030,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2433,16 +2093,6 @@ time : float, optional
 
 Returns
 -------
-orb : CoordStruct
-    Orbit at start of the drift.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Orbit at end of the drift.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the drift.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix including the drift.
-
 time : float, optional
     Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
     This parameter is an input/output and is modified in-place.
@@ -2469,13 +2119,6 @@ length : float
 
 phase_relative_to_ref : bool
     If true then E field phase shift is relative to ref particle.
-
-Returns
--------
-orb : CoordStruct
-    Orbit at start of the drift.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Orbit at end of the drift
 )"""
   );
   m.def(
@@ -2505,11 +2148,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2544,18 +2182,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix through the element.
 )"""
   );
   m.def(
@@ -2588,18 +2214,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix through the element.
 )"""
   );
   m.def(
@@ -2632,18 +2246,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix through the element.
 )"""
   );
   m.def(
@@ -2673,11 +2275,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2712,13 +2309,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
-err_flag : bool, optional
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2776,11 +2366,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting phase space coords
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Coords after applying a patch transformation.
-
 s_ent : float, optional
     Longitudinal coordinate of the initial particle position in the frame of reference of the face where the
     particle exits. For a patch with positive z_offset and all other attributes zero, s_ent = -z_offset.
@@ -2822,13 +2407,6 @@ drift_to_exit : bool, optional
 use_z_pos : bool, optional
     If present and True, use orbit.vec(5) as the true z-position relative to the start of the element instead
     of assuming that the particle is at the patch edge.
-
-Returns
--------
-orbit : CoordStruct
-    Starting phase space coords
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Coords after applying a patch transformation.
 )"""
   );
   m.def(
@@ -2861,13 +2439,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
-err_flag : bool, optional
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2899,11 +2470,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2935,11 +2501,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -2974,18 +2535,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the sad_mult.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix.
 )"""
   );
   m.def(
@@ -3015,11 +2564,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -3054,18 +2598,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
-
-Returns
--------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the element.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix through the element.
 )"""
   );
   m.def(
@@ -3095,11 +2627,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-orbit : CoordStruct
-    Starting position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: End position.
-
 mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
@@ -3144,11 +2671,6 @@ param : LatParamStruct
 
 Returns
 -------
-orbit : CoordStruct
-    Starting coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending coords.
-
 err_flag : bool
     Set True if there is an error. False otherwise.
 
@@ -3203,11 +2725,6 @@ init_lost : bool, optional
 
 Returns
 -------
-orbit : 1D array of CoordStruct
-    orbit(0) is the starting coordinates for tracking. If not allocated, the zero orbit will be used.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Orbit array.
-
 track_state : int, optional
     Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
 
@@ -3266,16 +2783,6 @@ bunch_tracks : 1D array of BunchTrackStruct, optional
 
 Returns
 -------
-beam : BeamStruct
-    Beam at end of element ix1.
-    This parameter is an input/output and is modified in-place.
-    As an output, beam: Beam at end of element ix2.
-
-bunch_tracks : 1D array of BunchTrackStruct, optional
-    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_tracks: track information if the tracking method does
-
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
 )"""
@@ -3329,16 +2836,6 @@ bunch_track : BunchTrackStruct, optional
 
 Returns
 -------
-bunch : BunchStruct
-    Bunch at end of element ix1.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Bunch at end of element ix2.
-
-bunch_track : BunchTrackStruct, optional
-    Existing tracks. If bunch_track.n_pt = -1 then Overwrite any existing track.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch_track: track information if the tracking method does
-
 err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
 )"""
@@ -3377,18 +2874,6 @@ dt_step : 1D array of float, optional
 
 extra_field : 1D array of EmFieldStruct, optional
     Per particle static field to be added to the lattice element field. Eg used with space charge.
-
-Returns
--------
-bunch : BunchStruct
-    Coordinates must be time-coords in element body frame.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Coordinates will be time-coords in element body frame.
-
-dt_step : 1D array of float, optional
-    Initial step to take for each particle. Overrides bmad_com.init_ds_adaptive_tracking.
-    This parameter is an input/output and is modified in-place.
-    As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
 )"""
   );
   m.def(
@@ -3414,14 +2899,6 @@ s : float
 
 branch : BranchStruct
     Branch being tracked through.
-
-Returns
--------
-bunch : BunchStruct
-    Input bunch position in s-based coordinate.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same s
-    coordinate
 )"""
   );
   m.def(
@@ -3447,14 +2924,6 @@ t_target : float
 
 branch : BranchStruct
     Lattice branch being tracked through.
-
-Returns
--------
-bunch : BunchStruct
-    Input bunch position in s-based coordinate.
-    This parameter is an input/output and is modified in-place.
-    As an output, bunch: Output bunch position in s-based coordinate. Particles will be at the same t
-    coordinate
 )"""
   );
   m.def(
@@ -3469,14 +2938,12 @@ Subroutine to track using a complex_taylor map.
 
 Parameters
 ----------
-complex_taylor : 1D array of ComplexTaylorStruct
-    complex_taylor map.
-
 start_orb : 1D array of complex
     Starting coords.
 
-Returns
--------
+complex_taylor : 1D array of ComplexTaylorStruct
+    complex_taylor map.
+
 end_orb : 1D array of complex
     Ending coords.
 )"""
@@ -3580,11 +3047,6 @@ ix_branch : int, optional
 
 Returns
 -------
-orbit : 1D array of CoordStruct
-    Coordinates at start of tracking.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Orbit.
-
 track_state : int, optional
     Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
 )"""
@@ -3612,11 +3074,6 @@ param : LatParamStruct
 
 Returns
 -------
-orbit : CoordStruct
-    Coordinates in the element coordinate frame
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: At surface in local surface coordinate frame
-
 w_surface : 2D array of float (shape: 3,3)
     real(rp), rotation matrix to transform to surface coords.
 )"""
@@ -3772,8 +3229,6 @@ Parameters
 ----------
 branch1 : 1D array of BranchStruct
 
-Returns
--------
 branch2 : 1D array of BranchStruct
 )"""
   );
@@ -3830,8 +3285,6 @@ Parameters
 ----------
 ele1 : 1D array of EleStruct
 
-Returns
--------
 ele2 : 1D array of EleStruct
 )"""
   );
@@ -3978,18 +3431,8 @@ spin_map : 1D array of TaylorStruct, optional
 
 Returns
 -------
-orb_map : 1D array of TaylorStruct
-    Initial map (used when unit_start = False)
-    This parameter is an input/output and is modified in-place.
-    As an output, orb_map: Transfer map.
-
 err_flag : bool
     Set True if problem like number overflow, etc.
-
-spin_map : 1D array of TaylorStruct, optional
-    Input quaternion spin map. Output only computed if bmad_com.spin_tracking_on = T
-    This parameter is an input/output and is modified in-place.
-    As an output, spin_map: Quaternion spin map.
 )"""
   );
   py::class_<Bmad::TransferMapFromSToS, std::unique_ptr<Bmad::TransferMapFromSToS>>(
@@ -4077,16 +3520,6 @@ spin_map : 1D array of TaylorStruct, optional
 
 Returns
 -------
-t_map : 1D array of TaylorStruct
-    Initial map (used when unit_start = False)
-    This parameter is an input/output and is modified in-place.
-    As an output, t_map: Transfer map.
-
-spin_map : 1D array of TaylorStruct, optional
-    Initial spin map.
-    This parameter is an input/output and is modified in-place.
-    As an output, spin_map: Final spin map. Only computed if bmad_com.spin_tracking_on = T.
-
 ref_orb_out : CoordStruct, optional
     Ending coordinates of the reference orbit. This is also the actual orbit of particle
 
@@ -4178,12 +3611,6 @@ ix_branch : int, optional
 one_turn : bool, optional
     If present and True, and ix1 = ix2, and the lattice is closed: Construct the one-turn matrix from ix1 back
     to ix1. If False, (the default), and ix1 = ix2, mat6 is the unit matrix.
-
-Returns
--------
-xfer_mat : 2D array of float (shape: 6,6)
-
-xfer_vec : 1D array of float (shape: 6), optional
 )"""
   );
   m.def(
@@ -4242,8 +3669,6 @@ complex_taylor_in : 1D array of ComplexTaylorStruct
 order : int
     Order above which terms are dropped.
 
-Returns
--------
 complex_taylor_out : 1D array of ComplexTaylorStruct
     Truncated complex_taylor map.
 )"""
@@ -4320,9 +3745,6 @@ ix_branch : int, optional
 
 Returns
 -------
-lat : LatStruct
-    Lattice with
-
 tune3 : 1D array of float (shape: 3), optional
     Normal mode tunes
 )"""
@@ -4339,13 +3761,6 @@ Also see: twiss3_at_start
 
 Parameters
 ----------
-ele : EleStruct
-    Lattice element at which the calculation is made.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element
-
-Returns
--------
 ele : EleStruct
     Lattice element at which the calculation is made.
     This parameter is an input/output and is modified in-place.
@@ -4446,15 +3861,6 @@ calc_chrom : bool, optional
 
 Returns
 -------
-lat : LatStruct
-    lattice.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lat with computed twiss parameters.
-
-orb_array : 1D array of CoordArrayStruct
-    Array of orbit arrays.
-    As an output, orb_array: Used as the starting point for an open lattice.
-
 status : int, optional
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
 )"""
@@ -4525,18 +3931,6 @@ compute_floor_coords : bool, optional
 
 Returns
 -------
-ele_at_s : EleStruct, optional
-    If the use_last argument is True, ele_at_s is taken to contain valid Twiss parameters stored from a
-    previous call to this routine.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele_at_s: Element structure holding the Twiss parameters.
-
-orb_at_s : CoordStruct, optional
-    If the use_last argument is True, orb_at_s is taken to contain the valid orbit stored from a previous
-    call.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb_at_s: Particle position at the position s.
-
 err : bool, optional
     Set True if there is a problem in the calculation, False otherwise.
 )"""
@@ -4617,18 +4011,6 @@ orb_start : CoordStruct, optional
 
 Returns
 -------
-lat : LatStruct
-    lattice.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lat with computed twiss parameters.
-
-orb : 1D array of CoordStruct
-    Orbit to be computed
-    As an output, orb: Initial conditions to be used for an open geometry lattices.
-    As an output, orb: Energy at which the closed orbit is computed.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Computed orbit.
-
 status : int, optional
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
 )"""
@@ -4781,12 +4163,6 @@ Returns
 orbit_end : CoordStruct, optional
     End phase space coordinates. If present then the orbit_start argument must also be present.
 
-ele_end : EleStruct, optional
-    If reuse_ele_end is set True then reuse ele_end from trancking instead of recomputing ele_end from
-    scratch. This can save time.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele_end: Holds the ending Twiss parameters at l_end (except for photons).
-
 err : bool, optional
     Set True if there is a problem like the particle gets lost in tracking
 )"""
@@ -4857,11 +4233,6 @@ type_out : bool, optional
 
 Returns
 -------
-lat : LatStruct
-    Lat
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with twiss parameters computed.
-
 status : int, optional
     Calculation status: ok$, in_stop_band$, unstable$, or non_symplectic$
 )"""
@@ -4906,11 +4277,6 @@ d_orb : 1D array of float, optional
 
 Returns
 -------
-lat : LatStruct
-    Lat to track through.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Structure holding the Twiss parameters.
-
 symp_err : float
     A measure of how symplectic the constructed matrices were before symplecitification. mat_symp_check for
     more details.
@@ -4944,16 +4310,6 @@ forward : bool, optional
 
 Returns
 -------
-ele1 : EleStruct
-    Element holding the starting Twiss parameters for forwards propagation.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele1: Element for the ending Twiss parameters for backwards propagation.
-
-ele2 : EleStruct
-    Element holding the transfer matrix and, if backwards propagation, the starting Twiss.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele2: Element for the ending Twiss parameters for forward propagation.
-
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
 )"""
@@ -4986,11 +4342,6 @@ ie_end : int, optional
 
 Returns
 -------
-lat : LatStruct
-    lattice.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with parameters computed for the branch.
-
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
 )"""

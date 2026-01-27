@@ -23,16 +23,6 @@ num_in : int
 num_out : int
 
 err_flag : bool
-
-Returns
--------
-file_name : character
-
-num_in : int
-
-num_out : int
-
-err_flag : bool
 )"""
   );
   py::class_<SimUtils::Celbd, std::unique_ptr<SimUtils::Celbd>>(m, "Celbd", "celbd return type")
@@ -58,14 +48,8 @@ Parameters
 ----------
 mc : float
 
-elb : float
-
-eld : float
-
 Returns
 -------
-mc : float
-
 elb : float
 
 eld : float
@@ -122,12 +106,6 @@ Parameters
 file_name : character
 
 change : int
-
-Returns
--------
-file_name : character
-
-change : int
 )"""
   );
   m.def(
@@ -143,9 +121,6 @@ Parameters
 ----------
 species : int
     Species ID.
-
-default : int, optional
-    If present then use default value if species = not_set$.
 
 Returns
 -------
@@ -204,16 +179,6 @@ frequency : float
 
 Parameters
 ----------
-wr : float
-
-wi : float
-
-zr : float
-
-zi : float
-
-Returns
--------
 wr : float
 
 wi : float

@@ -395,17 +395,6 @@ branch : BranchStruct
     As an output, branch: Is the mode stable? If no rf then tune is zero but is stable.
     This parameter is an input/output and is modified in-place.
     As an output, branch: 6x6 1-turn matrix.
-
-Returns
--------
-branch : BranchStruct
-    Lattice branch
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: Synchrotron tune (radians). If unstable tune = 0.
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: Is the mode stable? If no rf then tune is zero but is stable.
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: 6x6 1-turn matrix.
 )"""
   );
   m.def(
@@ -425,13 +414,6 @@ orbit : CoordStruct
 coord_type : character, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
-
-Returns
--------
-orbit : CoordStruct
-    Orbit in canonical coordinates.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Orbit in angular coordinates.
 )"""
   );
   m.def(
@@ -490,14 +472,6 @@ old_orb : CoordStruct, optional
 
 check_momentum : bool, optional
     If present and false then checking of p_x and p_y will be disabled.
-
-Returns
--------
-orb : CoordStruct
-    coordinates of a particle.
-
-param : LatParamStruct
-    Lattice global parameter structure.
 )"""
   );
   m.def(
@@ -779,11 +753,6 @@ err_tol : float
 
 Returns
 -------
-lat : LatStruct
-    Lat to use,
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lat with sextupole set
-
 delta_e : float
     Delta energy used for the calculation. If 0 then default of 1.0d-4 is used.
     This parameter is an input/output and is modified in-place.
@@ -835,13 +804,6 @@ lat : LatStruct
     Lattice
     This parameter is an input/output and is modified in-place.
     As an output, lat: Lattice with all maps cleared
-
-Returns
--------
-lat : LatStruct
-    Lattice
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with all maps cleared
 )"""
   );
   m.def(
@@ -885,16 +847,6 @@ print_err : bool, optional
 
 Returns
 -------
-lat : LatStruct
-    Lat to track through.
-
-closed_orb : 1D array of CoordStruct
-    closed_orb(nt) is the initial guess where nt = 0 for direction = 1 and nt = lat.n_ele_track for direction
-    = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy around which the closed
-    orbit is calculated.
-    This parameter is an input/output and is modified in-place.
-    As an output, closed_orb: Closed orbit. closed_orb(i)
-
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
@@ -966,12 +918,6 @@ Parameters
 cmp : complex
 
 str_out : character
-
-Returns
--------
-cmp : complex
-
-str_out : character
 )"""
   );
   m.def(
@@ -989,11 +935,6 @@ lat : LatStruct
 
 Returns
 -------
-lat : LatStruct
-    Lattice.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with elements combined.
-
 error : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -1006,10 +947,6 @@ error : bool
 
 Parameters
 ----------
-complex_taylor : ComplexTaylorStruct
-
-Returns
--------
 complex_taylor : ComplexTaylorStruct
 )"""
   );
@@ -1120,12 +1057,6 @@ Parameters
 complex_taylor1 : ComplexTaylorStruct
 
 complex_taylor2 : ComplexTaylorStruct
-
-Returns
--------
-complex_taylor1 : ComplexTaylorStruct
-
-complex_taylor2 : ComplexTaylorStruct
 )"""
   );
   m.def(
@@ -1159,11 +1090,6 @@ index : int
 
 Subroutine to make the unit complex_taylor map:
       r(out) = Map * r(in) = r(in)
-
-Returns
--------
-complex_taylor : 1D array of ComplexTaylorStruct
-    Unit complex_taylor map .
 )"""
   );
   py::class_<Bmad::ComplexTaylorToMat6, std::unique_ptr<Bmad::ComplexTaylorToMat6>>(
@@ -1202,6 +1128,9 @@ a_complex_taylor : 1D array of ComplexTaylorStruct (shape: 6)
 r_in : 1D array of complex
     Coordinates at the input.
 
+r_out : 1D array of complex, optional
+    Coordinates at output.
+
 Returns
 -------
 vec0 : 1D array of complex (shape: 6)
@@ -1209,9 +1138,6 @@ vec0 : 1D array of complex (shape: 6)
 
 mat6 : 2D array of complex (shape: 6,6)
     1st order transfer map (6x6 matrix).
-
-r_out : 1D array of complex, optional
-    Coordinates at output.
 )"""
   );
   m.def(
@@ -1223,12 +1149,6 @@ r_out : 1D array of complex, optional
 
 Parameters
 ----------
-complex_taylor1 : 1D array of ComplexTaylorStruct
-
-complex_taylor2 : 1D array of ComplexTaylorStruct
-
-Returns
--------
 complex_taylor1 : 1D array of ComplexTaylorStruct
 
 complex_taylor2 : 1D array of ComplexTaylorStruct
@@ -1278,16 +1198,6 @@ spin_taylor : 1D array of TaylorStruct, optional
 
 Returns
 -------
-orb_taylor : 1D array of TaylorStruct
-    Orbital Taylor map.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb_taylor: Concatinated orbital map
-
-spin_taylor : 1D array of TaylorStruct, optional
-    Spin map to propagate
-    This parameter is an input/output and is modified in-place.
-    As an output, spin_taylor: Concatinated spin map.
-
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -1314,8 +1224,6 @@ taylor1 : 1D array of TaylorStruct
 taylor2 : 1D array of TaylorStruct
     Taylor map.
 
-Returns
--------
 taylor3 : 1D array of TaylorStruct
     Concatinated map
 )"""
@@ -1411,18 +1319,6 @@ g : float
 out_type : int
     Output type: horizontally_pure$ or vertically_pure$.
 
-an : 1D array of float (shape: 0:n_pole_maxx)
-    Skew multipoles.
-    This parameter is an input/output and is modified in-place.
-    As an output, an: Converted skew multipoles.
-
-bn : 1D array of float (shape: 0:n_pole_maxx)
-    Non-skew multipoles.
-    This parameter is an input/output and is modified in-place.
-    As an output, bn: Converted Non-skew multipoles.
-
-Returns
--------
 an : 1D array of float (shape: 0:n_pole_maxx)
     Skew multipoles.
     This parameter is an input/output and is modified in-place.
@@ -1545,18 +1441,6 @@ g : float
 xout : float
 
 sout : float
-
-Returns
--------
-x : float
-
-z : float
-
-g : float
-
-xout : float
-
-sout : float
 )"""
   );
   m.def(
@@ -1571,18 +1455,6 @@ sout : float
 
 Parameters
 ----------
-x : float
-
-s : float
-
-g : float
-
-xout : float
-
-zout : float
-
-Returns
--------
 x : float
 
 s : float
@@ -1612,11 +1484,6 @@ s_body : float
 
 orientation : int
     ele.orientation for vec(6).
-
-Returns
--------
-particle : CoordStruct
-    Particle with .vec(:) in s-coords.
 )"""
   );
   m.def(
@@ -1641,9 +1508,6 @@ use_downstream_p0c : bool, optional
 
 Returns
 -------
-particle : CoordStruct
-    Particle with .vec(:) in t-coords.
-
 s_body : float, optional
     s-position in element body coords.
 )"""
@@ -1829,11 +1693,6 @@ ele : EleStruct
 
 Returns
 -------
-ele : EleStruct
-    Converter element.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Converter element with .converter field set.
-
 delim : character
     Ending delimitor.
 
@@ -2332,18 +2191,6 @@ w : float
 gam : float
 
 res : float
-
-Returns
--------
-u : float
-
-v : float
-
-w : float
-
-gam : float
-
-res : float
 )"""
   );
   m.def(
@@ -2363,13 +2210,6 @@ Module needed:
 
 Parameters
 ----------
-lat : LatStruct
-    lattice
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice
-
-Returns
--------
 lat : LatStruct
     lattice
     This parameter is an input/output and is modified in-place.
@@ -2466,9 +2306,6 @@ slave_name : character
 
 Returns
 -------
-lat : LatStruct
-    Lattice
-
 err_flag : bool
     Set true if there is a problem (like no elements found).
 )"""
@@ -2501,15 +2338,6 @@ girder_info : EleStruct
     girder_info.descrip girder_info.value(:)
 
 err_flag : bool
-
-Returns
--------
-lat : LatStruct
-    Lat to modify.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Modified lattice.
-
-err_flag : bool
 )"""
   );
   m.def(
@@ -2532,13 +2360,6 @@ contrl : 1D array of ControlStruct
 
 err : bool
     Set True if an attribute is not free to be controlled.
-
-Returns
--------
-lord : EleStruct
-    Group element. .control.type
-    This parameter is an input/output and is modified in-place.
-    As an output, lord: Modified group elment
 )"""
   );
   m.def(
@@ -2578,13 +2399,6 @@ contrl : 1D array of ControlStruct
 
 err : bool
     Set True if an attribute is not free to be controlled.
-
-Returns
--------
-lord : EleStruct
-    Overlay element. .control.type
-    This parameter is an input/output and is modified in-place.
-    As an output, lord: Modified overlay elment
 )"""
   );
   py::class_<Bmad::CreatePlanarWigglerModel, std::unique_ptr<Bmad::CreatePlanarWigglerModel>>(
@@ -2662,13 +2476,6 @@ contrl : 1D array of ControlStruct
 
 err : bool
     Set True if an attribute is not free to be controlled.
-
-Returns
--------
-lord : EleStruct
-    Ramper element. .control.type
-    This parameter is an input/output and is modified in-place.
-    As an output, lord: Modified ramper elment
 )"""
   );
   m.def(
@@ -2707,13 +2514,6 @@ key : int
 
 suffix : character
     Suffix string. Must have a single "?" character.
-
-Returns
--------
-lat : LatStruct
-    Lattice holding the elements.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with names made unique.
 )"""
   );
   m.def(
@@ -2743,11 +2543,6 @@ Parameters
 ----------
 ele : EleStruct
     Crystal element.
-
-Returns
--------
-ele : EleStruct
-    Crystal element.
 )"""
   );
   m.def(
@@ -2768,13 +2563,6 @@ ele : EleStruct
 orbit : CoordStruct
     Photon position at crystal surface.
 
-h_vec : 1D array of float (shape: 3)
-    H vector before misalignment.
-    This parameter is an input/output and is modified in-place.
-    As an output, h_vec: H vector after misalignment.
-
-Returns
--------
 h_vec : 1D array of float (shape: 3)
     H vector before misalignment.
     This parameter is an input/output and is modified in-place.
@@ -2803,11 +2591,6 @@ ele : EleStruct
 
 Returns
 -------
-ele : EleStruct
-    Crystal element.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Crystal element with computed parameter..
-
 err_flag : bool
     Set True if crystal type is unrecognized. False otherwise.
 )"""

@@ -128,14 +128,6 @@ u : TaoUniverseStruct
 n_data : int
 
 exact : bool, optional
-
-Returns
--------
-u : TaoUniverseStruct
-
-n_data : int
-
-exact : bool, optional
 )"""
   );
   m.def(
@@ -147,12 +139,6 @@ exact : bool, optional
 
 Parameters
 ----------
-n_v1 : int
-
-save_old : bool
-
-Returns
--------
 n_v1 : int
 
 save_old : bool
@@ -231,11 +217,6 @@ beam : BeamStruct
 
 Returns
 -------
-beam : BeamStruct
-    Initial beam distribution
-    This parameter is an input/output and is modified in-place.
-    As an output, beam: Final beam distribution.
-
 calc_ok : bool
     Set True if there were no problems, False otherwise.
 )"""
@@ -302,16 +283,6 @@ ix_this : int
 
 Parameters
 ----------
-tao_lat : TaoLatticeStruct
-
-curve : TaoCurveStruct
-
-comp_sign : float
-
-good : 1D array of bool
-
-Returns
--------
 tao_lat : TaoLatticeStruct
 
 curve : TaoCurveStruct
@@ -452,14 +423,6 @@ data_type : character
 data_source : character
 
 do_chrom : bool
-
-Returns
--------
-data_type : character
-
-data_source : character
-
-do_chrom : bool
 )"""
   );
   m.def(
@@ -491,12 +454,6 @@ gang : bool
 where : character
     Graph() to clip. Eg: 'top:x'
 
-value1 : float
-
-value2 : float
-
-Returns
--------
 value1 : float
 
 value2 : float
@@ -533,8 +490,6 @@ err : bool
 
 Returns
 -------
-err : bool
-
 err_is_fatal : bool
     Set True on non-recoverable error. False otherwise
 )"""
@@ -612,10 +567,6 @@ This soubroutine knows not to create a second window if one already exists.
 Parameters
 ----------
 curve : TaoCurveStruct
-
-Returns
--------
-curve : TaoCurveStruct
 )"""
   );
   m.def(
@@ -639,11 +590,6 @@ uni : TaoUniverseStruct
 
 Returns
 -------
-curve : TaoCurveStruct
-    Curve to check.
-    This parameter is an input/output and is modified in-place.
-    As an output, curve: Curve.valid set to False if needed.
-
 is_ok : bool
     Set True if associated universe exists and is on.
 )"""
@@ -658,14 +604,6 @@ is_ok : bool
 
 Parameters
 ----------
-plot : TaoPlotStruct
-
-graph : TaoGraphStruct
-
-curve : TaoCurveStruct
-
-Returns
--------
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
@@ -698,12 +636,6 @@ curve : TaoCurveStruct
 
 who : character
     Where to put the data. Either: "SYMBOL" or "LINE".
-
-Returns
--------
-curve : TaoCurveStruct
-    This parameter is an input/output and is modified in-place.
-    As an output, curve: Structure holding the datum values
 )"""
   );
   m.def(
@@ -719,12 +651,6 @@ Parameters
 curve : TaoCurveStruct
     Curve with ref ele.
 
-point_to_ele_ref : bool
-
-ele_track : EleStruct
-
-Returns
--------
 point_to_ele_ref : bool
 
 ele_track : EleStruct
@@ -846,14 +772,6 @@ u : TaoUniverseStruct
 d2_name : character
 
 n_d1_data : int
-
-Returns
--------
-u : TaoUniverseStruct
-
-d2_name : character
-
-n_d1_data : int
 )"""
   );
   m.def(
@@ -864,10 +782,6 @@ n_d1_data : int
 
 Parameters
 ----------
-err : bool
-
-Returns
--------
 err : bool
 )"""
   );
@@ -928,9 +842,6 @@ the string "|" + component will be added at the end of str_out.
 
 Parameters
 ----------
-template : str
-    String template.
-
 curve : TaoCurveStruct
     curve.ele_ref_name is substituted for all instances of "#ref".
 
@@ -955,19 +866,19 @@ Routine to set the data for plotting.
 
 Parameters
 ----------
+curve : TaoCurveStruct
+    tao_curve_struct
+
 graph : TaoGraphStruct
     tao_graph_struct
 
-curve : TaoCurveStruct
-    tao_curve_struct
+data : 1D array of TaoDataStruct
 
 check_s_position : bool
     If present and True then veto data that does not have an s-position.
 
 Returns
 -------
-data : 1D array of TaoDataStruct
-
 most_invalid : character
     String documenting biggest invalid data problem.
 )"""
@@ -1113,10 +1024,6 @@ abort : bool
 Parameters
 ----------
 plot_cache : 1D array of TaoPlotCacheStruct
-
-Returns
--------
-plot_cache : 1D array of TaoPlotCacheStruct
 )"""
   );
   m.def(
@@ -1129,13 +1036,6 @@ Routine to deallocate tree%node(:) and everything below it
 
 Parameters
 ----------
-tree : TaoEvalNodeStruct
-    Root of tree to deallocate.
-    This parameter is an input/output and is modified in-place.
-    As an output, tree: Deallocated tree.
-
-Returns
--------
 tree : TaoEvalNodeStruct
     Root of tree to deallocate.
     This parameter is an input/output and is modified in-place.
@@ -1665,9 +1565,6 @@ print_err : bool, optional
 
 Returns
 -------
-datum : TaoDataStruct
-    What type of datum
-
 datum_value : float
     Value of the datum.
 
@@ -1800,8 +1697,6 @@ err : bool
 
 values : 1D array of float
     Array of datum values.
-
-eval_point : int, optional
 
 info : 1D array of TaoExpressionInfoStruct, optional
 )"""
@@ -2322,15 +2217,11 @@ info_in : 1D array of TaoExpressionInfoStruct, optional
 
 Returns
 -------
-n_size : int
-
 value : 1D array of float
     Value(s) of the arithmetic expression.
 
 err_flag : bool
     True on error. False otherwise
-
-info_in : 1D array of TaoExpressionInfoStruct, optional
 )"""
   );
   m.def(
@@ -2470,9 +2361,6 @@ region : TaoPlotRegionStruct, optional
 
 Parameters
 ----------
-switch : str
-    Action to take. One on : 'activate', 'save', 'write'.
-
 word1 : character
     First word of command.
 
@@ -2513,8 +2401,6 @@ r_floor : 1D array of float (shape: 3)
 
 Returns
 -------
-r_floor : 1D array of float (shape: 3)
-
 x_screen : float
     x-coordinate of projected point.
 
@@ -2716,10 +2602,6 @@ cmd_out : character
 Parameters
 ----------
 graph : TaoGraphStruct
-
-Returns
--------
-graph : TaoGraphStruct
 )"""
   );
   m.def(
@@ -2731,12 +2613,6 @@ graph : TaoGraphStruct
 
 Parameters
 ----------
-plot : TaoPlotStruct
-
-graph : TaoGraphStruct
-
-Returns
--------
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
@@ -2754,12 +2630,6 @@ Parameters
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
-
-Returns
--------
-plot : TaoPlotStruct
-
-graph : TaoGraphStruct
 )"""
   );
   m.def(
@@ -2774,12 +2644,6 @@ Parameters
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
-
-Returns
--------
-plot : TaoPlotStruct
-
-graph : TaoGraphStruct
 )"""
   );
   m.def(
@@ -2791,12 +2655,6 @@ graph : TaoGraphStruct
 
 Parameters
 ----------
-plot : TaoPlotStruct
-
-graph : TaoGraphStruct
-
-Returns
--------
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
@@ -2833,12 +2691,6 @@ graph_name : character
 
 Parameters
 ----------
-plot : TaoPlotStruct
-
-graph : TaoGraphStruct
-
-Returns
--------
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
@@ -2899,12 +2751,6 @@ Parameters
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
-
-Returns
--------
-plot : TaoPlotStruct
-
-graph : TaoGraphStruct
 )"""
   );
   m.def(
@@ -2930,18 +2776,6 @@ err_flag : bool
 
 Parameters
 ----------
-u : TaoUniverseStruct
-
-beam_init : BeamInitStruct
-
-track_start : character
-
-track_end : character
-
-comb_ds_save : float
-
-Returns
--------
 u : TaoUniverseStruct
 
 beam_init : BeamInitStruct
@@ -2997,14 +2831,6 @@ data_file : character
 
 Parameters
 ----------
-u : TaoUniverseStruct
-
-n_d2_add : int
-
-keep_existing_data : bool, optional
-
-Returns
--------
 u : TaoUniverseStruct
 
 n_d2_add : int
@@ -3097,12 +2923,6 @@ Parameters
 lat_file : character
 
 err_flag : bool
-
-Returns
--------
-lat_file : character
-
-err_flag : bool
 )"""
   );
   m.def(
@@ -3113,10 +2933,6 @@ err_flag : bool
 
 Parameters
 ----------
-plot_file : character
-
-Returns
--------
 plot_file : character
 )"""
   );
@@ -3200,14 +3016,6 @@ u : TaoUniverseStruct
 model : TaoLatticeStruct
 
 ix_branch : int
-
-Returns
--------
-u : TaoUniverseStruct
-
-model : TaoLatticeStruct
-
-ix_branch : int
 )"""
   );
   py::class_<Tao::TaoIsValidName, std::unique_ptr<Tao::TaoIsValidName>>(
@@ -3271,18 +3079,6 @@ input_str : character
 
 Parameters
 ----------
-ix_key : int
-
-ix_min_key : int
-
-ix_max_key : int
-
-key_str : character
-
-header_str : character
-
-Returns
--------
 ix_key : int
 
 ix_min_key : int
@@ -3357,14 +3153,6 @@ data_type : character
 data_source : character
 
 do_lat_sigma : bool
-
-Returns
--------
-data_type : character
-
-data_source : character
-
-do_lat_sigma : bool
 )"""
   );
   m.def(
@@ -3410,12 +3198,6 @@ Parameters
 tlb1 : 1D array of TaoLatticeBranchStruct
 
 tlb2 : 1D array of TaoLatticeBranchStruct
-
-Returns
--------
-tlb1 : 1D array of TaoLatticeBranchStruct
-
-tlb2 : 1D array of TaoLatticeBranchStruct
 )"""
   );
   py::class_<Tao::TaoLatticeCalc, std::unique_ptr<Tao::TaoLatticeCalc>>(
@@ -3458,12 +3240,6 @@ print_err : bool, optional
 
 Parameters
 ----------
-lat1 : TaoLatticeStruct
-
-lat2 : TaoLatticeStruct
-
-Returns
--------
 lat1 : TaoLatticeStruct
 
 lat2 : TaoLatticeStruct
@@ -3526,28 +3302,6 @@ abort : bool
 
 Parameters
 ----------
-vec : 1D array of float
-
-ele_ref : EleStruct
-
-ele_start : EleStruct
-
-ele : EleStruct
-
-datum_value : float
-
-valid_value : bool
-
-datum : TaoDataStruct
-
-branch : BranchStruct
-
-why_invalid : character, optional
-
-good : 1D array of bool, optional
-
-Returns
--------
 vec : 1D array of float
 
 ele_ref : EleStruct
@@ -3675,8 +3429,6 @@ eles : 1D array of ElePointerStruct
 
 err : bool
     Set true on error.
-
-above_ubound_is_err : bool, optional
 )"""
   );
   m.def(
@@ -3687,13 +3439,6 @@ above_ubound_is_err : bool, optional
 
 Parameters
 ----------
-lat : LatStruct
-    Input lattice
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with elements marked.
-
-Returns
--------
 lat : LatStruct
     Input lattice
     This parameter is an input/output and is modified in-place.
@@ -3789,14 +3534,6 @@ data_type : character
 data_source : character
 
 do_one_turn_map : bool
-
-Returns
--------
-data_type : character
-
-data_source : character
-
-do_one_turn_map : bool
 )"""
   );
   m.def(
@@ -3824,8 +3561,6 @@ binary : bool, optional
 
 Returns
 -------
-file : character
-
 iunit : int
     Logical unit number. Set to 0 if file not openable.
 )"""
@@ -3952,8 +3687,6 @@ orbit : CoordStruct
 
 Returns
 -------
-dat_name : character
-
 err_flag : bool
     Set true if parameter cannot be evaluated.
 
@@ -4027,42 +3760,6 @@ dflt_s_offset : float, optional
 dflt_orbit : CoordStruct, optional
 
 datum : TaoDataStruct, optional
-
-Returns
--------
-str : character
-
-use_good_user : bool
-
-saved_prefix : character
-
-stack : TaoEvalNodeStruct
-
-err_flag : bool
-
-print_err : bool
-
-dflt_component : character, optional
-
-dflt_source : character, optional
-
-dflt_ele_ref : EleStruct, optional
-
-dflt_ele_start : EleStruct, optional
-
-dflt_ele : EleStruct, optional
-
-dflt_dat_or_var_index : character, optional
-
-dflt_uni : int, optional
-
-dflt_eval_point : int, optional
-
-dflt_s_offset : float, optional
-
-dflt_orbit : CoordStruct, optional
-
-datum : TaoDataStruct, optional
 )"""
   );
   m.def(
@@ -4079,8 +3776,6 @@ Returns
 -------
 error : bool
     Set True if there is an error. False otherwise.
-
-cmd_line : character, optional
 )"""
   );
   py::class_<Tao::TaoParseElementParamStr, std::unique_ptr<Tao::TaoParseElementParamStr>>(
@@ -4533,14 +4228,14 @@ print_err : bool, optional
 
 Returns
 -------
-ele : EleStruct, optional
-    : Pointer to the element. Set to NULL if not valid or no associated element.
-
 valid : bool
     Set False if element does not have a definite location. Set True otherwise
 
 why_invalid : character, optional
     Tells why datum value is invalid.
+
+ele : EleStruct, optional
+    : Pointer to the element. Set to NULL if not valid or no associated element.
 )"""
   );
   py::class_<PyTaoPointerToEleShape, std::unique_ptr<PyTaoPointerToEleShape>>(
@@ -4888,14 +4583,6 @@ data_type : character
 data_source : character
 
 do_rad_int : bool
-
-Returns
--------
-data_type : character
-
-data_source : character
-
-do_rad_int : bool
 )"""
   );
   m.def(
@@ -4917,12 +4604,6 @@ n : int
 
 exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
-
-Returns
--------
-info : 1D array of TaoExpressionInfoStruct
-    This parameter is an input/output and is modified in-place.
-    As an output, info: Allocated array with size(re) >= n.
 )"""
   );
   m.def(
@@ -4947,10 +4628,6 @@ n : int
 
 exact : bool, optional
     Default is False. If False, the size of the output array is permitted to be larger than n.
-
-Returns
--------
-tree : TaoEvalNodeStruct
 )"""
   );
   m.def(
@@ -4983,12 +4660,6 @@ file : character
 
 silent : bool
     Silent
-
-Returns
--------
-which : character
-
-file : character
 )"""
   );
   m.def(
@@ -5024,10 +4695,6 @@ ix_ps : int
 
 Parameters
 ----------
-cmd_str : character
-
-Returns
--------
 cmd_str : character
 )"""
   );
@@ -5182,11 +4849,6 @@ include_wall : bool, optional
 
 Returns
 -------
-graph : TaoGraphStruct
-    Graph with axis/axes to be scaled.
-    This parameter is an input/output and is modified in-place.
-    As an output, graph: Graph with scaled axis/axes.
-
 y_range : 1D array of float (shape: 2), optional
     Only used by tao_scale_plot when ganging graphs.
 
@@ -5202,10 +4864,6 @@ y2_range : 1D array of float (shape: 2), optional
 
 Parameters
 ----------
-u : TaoUniverseStruct
-
-Returns
--------
 u : TaoUniverseStruct
 )"""
   );
@@ -5251,13 +4909,6 @@ gang : character, optional
 
 skip_lat_layout : bool, optional
     If True, skip scaling any lat_layout graphs. Default is false.
-
-Returns
--------
-plot : TaoPlotStruct
-    Plot with graphs to be scaled.
-    This parameter is an input/output and is modified in-place.
-    As an output, plot: Plot with scaled graphs.
 )"""
   );
   m.def(
@@ -5273,20 +4924,6 @@ plot : TaoPlotStruct
 
 Parameters
 ----------
-ele_ref : EleStruct
-
-ele_start : EleStruct
-
-ele : EleStruct
-
-datum : TaoDataStruct
-
-branch : BranchStruct
-
-orbit : 1D array of CoordStruct
-
-Returns
--------
 ele_ref : EleStruct
 
 ele_start : EleStruct
@@ -5437,13 +5074,6 @@ why_invalid : character
 
 print_err : bool, optional
     If present and True then also print an error message.
-
-Returns
--------
-curve : TaoCurveStruct
-    Curve to set.
-    This parameter is an input/output and is modified in-place.
-    As an output, curve: Curve properly set.
 )"""
   );
   m.def(
@@ -5569,16 +5199,6 @@ value : character
 
 Parameters
 ----------
-graph : TaoGraphStruct
-
-axis_in : QpAxisStruct
-
-axis_out : QpAxisStruct
-
-which : character
-
-Returns
--------
 graph : TaoGraphStruct
 
 axis_in : QpAxisStruct
@@ -5993,11 +5613,6 @@ value : character
 
 Returns
 -------
-qp_axis : QpAxisStruct
-    qp_axis_struct with component to modify
-    This parameter is an input/output and is modified in-place.
-    As an output, qp_axis: qp_axis_struct with changed component value.
-
 error : bool
     Set true if there is an error. False otherwise.
 
@@ -6051,11 +5666,6 @@ value : character
 
 Returns
 -------
-qp_point : QpPointStruct
-    qp_point_struct with component to modify
-    This parameter is an input/output and is modified in-place.
-    As an output, qp_point: qp_point_struct with changed component value.
-
 error : bool
     Set true if there is an error. False otherwise.
 
@@ -6109,11 +5719,6 @@ value : character
 
 Returns
 -------
-qp_rect : QpRectStruct
-    qp_rect_struct with component to modify
-    This parameter is an input/output and is modified in-place.
-    As an output, qp_rect: qp_rect_struct with changed component value.
-
 error : bool
     Set true if there is an error. False otherwise.
 
@@ -6424,9 +6029,6 @@ print_err : bool, optional
 
 Returns
 -------
-shape : TaoEleShapeStruct
-    Shape
-
 err : bool
     Set true if there is a problem translating the element class.
 )"""
@@ -6470,8 +6072,6 @@ form : character
 
 Parameters
 ----------
-char : character(1)
-    Command. If more characters are needed to complete the command then this routine will get them.
 )"""
   );
   m.def(
@@ -6511,14 +6111,6 @@ calc_ok : bool
 
 Parameters
 ----------
-data_type : character
-
-data_source : character
-
-do_calc : bool
-
-Returns
--------
 data_type : character
 
 data_source : character
@@ -6579,14 +6171,6 @@ err : bool
 
 Parameters
 ----------
-data_type : character
-
-data_source : character
-
-do_srdt : int
-
-Returns
--------
 data_type : character
 
 data_source : character
@@ -6657,10 +6241,6 @@ abort : bool
 Parameters
 ----------
 lat : LatStruct
-
-Returns
--------
-lat : LatStruct
 )"""
   );
   m.def(
@@ -6691,18 +6271,6 @@ uni_names : character
 
 Parameters
 ----------
-num_str : character
-
-n_size : int
-
-change_number : 1D array of float
-
-abs_or_rel : character
-
-err : bool
-
-Returns
--------
 num_str : character
 
 n_size : int
@@ -6814,12 +6382,6 @@ err_flag : bool
 
 Parameters
 ----------
-beam : BeamStruct
-
-no_beam : bool
-
-Returns
--------
 beam : BeamStruct
 
 no_beam : bool
@@ -7099,10 +6661,6 @@ Parameters
 ----------
 graph : TaoGraphStruct
 
-Returns
--------
-graph : TaoGraphStruct
-
 var : 1D array of TaoVarStruct
 )"""
   );
@@ -7160,13 +6718,6 @@ plot : TaoPlotStruct
     Plot region setup by tao_wave_cmd.
     This parameter is an input/output and is modified in-place.
     As an output, plot: Plot with wave analysis curves.
-
-Returns
--------
-plot : TaoPlotStruct
-    Plot region setup by tao_wave_cmd.
-    This parameter is an input/output and is modified in-place.
-    As an output, plot: Plot with wave analysis curves.
 )"""
   );
   m.def(
@@ -7217,6 +6768,12 @@ ix1 : int
 n_dat : int
     Number of data points.
 
+coef : 1D array of float
+    Fit coefficients.
+
+rms : 1D array of float
+    Variances with rms(n_func+1) = sqrt(chi^2/n_dat).
+
 f1 : 1D array of float
     First fit function.
 
@@ -7228,14 +6785,6 @@ f3 : 1D array of float, optional
 
 f4 : 1D array of float, optional
     fourth fit function.
-
-Returns
--------
-coef : 1D array of float
-    Fit coefficients.
-
-rms : 1D array of float
-    Variances with rms(n_func+1) = sqrt(chi^2/n_dat).
 )"""
   );
   m.def(
@@ -7324,18 +6873,6 @@ err : bool
 
 Parameters
 ----------
-graph : TaoGraphStruct
-
-x_min : float
-
-x_max : float
-
-include_wall : bool, optional
-
-have_scaled : bool, optional
-
-Returns
--------
 graph : TaoGraphStruct
 
 x_min : float

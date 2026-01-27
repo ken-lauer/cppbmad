@@ -117,8 +117,6 @@ map : MadMapStruct
 energy : MadEnergyStruct
     Energy numbers.
 
-Returns
--------
 taylor : 1D array of TaylorStruct
     Taylor map.
 )"""
@@ -366,13 +364,6 @@ te : 3D array of float (shape: 6,6,6)
     array to be symmertrized.
     This parameter is an input/output and is modified in-place.
     As an output, te: symmetrized array.
-
-Returns
--------
-te : 3D array of float (shape: 6,6,6)
-    array to be symmertrized.
-    This parameter is an input/output and is modified in-place.
-    As an output, te: symmetrized array.
 )"""
   );
   m.def(
@@ -394,13 +385,6 @@ map : MadMapStruct
 
 tilt : float
     Tilt
-
-Returns
--------
-map : MadMapStruct
-    Unrotated transport map.
-    This parameter is an input/output and is modified in-place.
-    As an output, map: Rotated transport map.
 )"""
   );
   m.def(
@@ -440,12 +424,6 @@ Parameters
 twiss : TwissStruct
     Twiss parameters.
 
-g2_mat : 2D array of float (shape: 2,2)
-
-g2_inv_mat : 2D array of float (shape: 2,2)
-
-Returns
--------
 g2_mat : 2D array of float (shape: 2,2)
 
 g2_inv_mat : 2D array of float (shape: 2,2)
@@ -668,9 +646,6 @@ start_orb : CoordStruct, optional
 
 Returns
 -------
-ele : EleStruct
-    Element holding the transfer matrix.
-
 end_orb : CoordStruct, optional
     Reference coordinates at the end of element.
 
@@ -718,11 +693,6 @@ start_orb : CoordStruct
 
 Returns
 -------
-ele : EleStruct
-    Element to track through.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with transfer matrix.
-
 end_orb : CoordStruct
     Coordinates at the end of element.
 
@@ -770,11 +740,6 @@ start_orb : CoordStruct
 
 Returns
 -------
-ele : EleStruct
-    Element with transfer matrix
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with transfer matrix.
-
 end_orb : CoordStruct
     Coordinates at the end of element.
 
@@ -829,9 +794,6 @@ c0 : CoordStruct
 
 Returns
 -------
-ele : EleStruct
-    Element with transfer matrix.
-
 c1 : CoordStruct
     Coordinates at the end of element.
 )"""
@@ -855,11 +817,6 @@ start_orb : CoordStruct
 
 Returns
 -------
-ele : EleStruct
-    Element with transfer matrix
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with transfer matrix.
-
 end_orb : CoordStruct
     Coordinates at end of element.
 )"""
@@ -886,15 +843,8 @@ err_flag : bool, optional
 
 Returns
 -------
-ele : EleStruct
-    Element to track through.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with transfer matrix.
-
 end_orb : CoordStruct
     Coordinates at the end of element.
-
-err_flag : bool, optional
 )"""
   );
   py::class_<Bmad::MakeMat6Tracking, std::unique_ptr<Bmad::MakeMat6Tracking>>(
@@ -941,11 +891,6 @@ spin_only : bool, optional
 
 Returns
 -------
-ele : EleStruct
-    Element with transfer matrix
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with transfer matrix.
-
 end_orb : CoordStruct
     Coordinates at the end of element.
 
@@ -1145,13 +1090,6 @@ map : MadMapStruct
     2nd order transport map.
     This parameter is an input/output and is modified in-place.
     As an output, map: Unity 2nd order map.
-
-Returns
--------
-map : MadMapStruct
-    2nd order transport map.
-    This parameter is an input/output and is modified in-place.
-    As an output, map: Unity 2nd order map.
 )"""
   );
   m.def(
@@ -1289,11 +1227,6 @@ include_downstream_end : bool
 
 Returns
 -------
-slave : EleStruct
-    Slave element.
-    This parameter is an input/output and is modified in-place.
-    As an output, slave: Slave element with appropriate values set.
-
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -1341,14 +1274,6 @@ map2 : SpinOrbitMap1Struct
 map1 : SpinOrbitMap1Struct
 
 map_out : SpinOrbitMap1Struct
-
-Returns
--------
-map2 : SpinOrbitMap1Struct
-
-map1 : SpinOrbitMap1Struct
-
-map_out : SpinOrbitMap1Struct
 )"""
   );
   m.def(
@@ -1379,13 +1304,6 @@ This routine should be called by any routine that creates a beam chamber wall.
 
 Parameters
 ----------
-branch : BranchStruct
-    Lattice branch with .wall3d beam chamber wall.
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: Lattice branch with .wall3d.section(i).patch_in_region marked.
-
-Returns
--------
 branch : BranchStruct
     Lattice branch with .wall3d beam chamber wall.
     This parameter is an input/output and is modified in-place.
@@ -1437,8 +1355,6 @@ orbit : CoordStruct
 
 Returns
 -------
-n : int
-
 kick_mat : 2D array of float (shape: 4,4)
     Kick matrix (Jacobian) at orbit.
 )"""
@@ -1456,11 +1372,6 @@ ele : EleStruct
     Element with given orientation.
 
 param : LatParamStruct
-
-Returns
--------
-ele : EleStruct
-    Element with given orientation.
 )"""
   );
   m.def(
@@ -1483,13 +1394,6 @@ y_pitch_tot : float
 orientation : int
     Element longitudinal orientation. +1 or -1.
 
-mat6 : 2D array of float (shape: 6,6)
-    1st order part of the transfer map (Jacobian).
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: 1st order xfer map with pitches.
-
-Returns
--------
 mat6 : 2D array of float (shape: 6,6)
     1st order part of the transfer map (Jacobian).
     This parameter is an input/output and is modified in-place.
@@ -1702,20 +1606,8 @@ ndim : int
 
 isn : int
 
-ierr : int
-
 Returns
 -------
-a : 1D array of float
-
-b : 1D array of float
-
-n : 1D array of int
-
-ndim : int
-
-isn : int
-
 ierr : int
 )"""
   );
@@ -1849,9 +1741,6 @@ ele : EleStruct
 
 Returns
 -------
-ele : EleStruct
-    Multilayer element.
-
 err_flag : bool
     Set True if multilayer type is unrecognized. False otherwise.
 )"""
@@ -2015,8 +1904,6 @@ an : 1D array of float
 bn : 1D array of float
     Normal multipole component.
 
-Returns
--------
 knl : 1D array of float
     Multitude magnatude.
 
@@ -2113,6 +2000,12 @@ use_ele_tilt : bool
     If True then include ele.value(tilt_tot$) in calculations. use_ele_tilt is ignored in the case of
     multipole$ elements.
 
+knl : 1D array of float
+    Vector of strengths, MAD units.
+
+tilt : 1D array of float
+    Vector of tilts.
+
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 
@@ -2123,12 +2016,6 @@ Returns
 -------
 ix_pole_max : int
     Index of largest nonzero pole.
-
-knl : 1D array of float
-    Vector of strengths, MAD units.
-
-tilt : 1D array of float
-    Vector of tilts.
 )"""
   );
   m.def(
@@ -2195,11 +2082,6 @@ pole_type : int, optional
 ref_orb_offset : bool, optional
     If True and n = 0 then use the MAD convention and model the multipole as a zero length bend with bending
     angle knl. Default is False.
-
-Returns
--------
-coord : CoordStruct
-    Particle position and direction of travel.
 )"""
   );
   m.def(
@@ -2274,13 +2156,6 @@ pole_type : int, optional
 
 ref_orb_offset : bool, optional
     If present and n = 0 then the multipole simulates a zero length bend with bending angle knl.
-
-Returns
--------
-orbit : CoordStruct
-    Particle position.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Kicked particle.
 )"""
   );
   m.def(
@@ -2304,8 +2179,6 @@ knsl : 1D array of float
 tn : 1D array of float
     Multipole angle.
 
-Returns
--------
 an : 1D array of float
     Skew multipole component.
 
@@ -2331,11 +2204,6 @@ param : LatParamStruct
 
 orbit : CoordStruct
     Particle coordinates.
-
-Returns
--------
-orbit : CoordStruct
-    Particle coordinates.
 )"""
   );
   m.def(
@@ -2348,14 +2216,6 @@ orbit : CoordStruct
 
 Parameters
 ----------
-y : float
-
-x : float
-
-arg : float
-
-Returns
--------
 y : float
 
 x : float

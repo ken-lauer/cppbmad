@@ -20,13 +20,6 @@ ele : EleStruct
     Element with corresponding ele.ptc_fibre fibre.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Modified element.
-
-Returns
--------
-ele : EleStruct
-    Element with corresponding ele.ptc_fibre fibre.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Modified element.
 )"""
   );
   m.def(
@@ -64,13 +57,6 @@ floor : FloorPositionStruct
 floor0 : FloorPositionStruct, optional
     Reference position. There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If
     floor0 is present, choose the solution "nearest" the angles in floor0.
-
-Returns
--------
-floor : FloorPositionStruct
-    Position with input w matrix.
-    This parameter is an input/output and is modified in-place.
-    As an output, floor: Position with output angles.
 )"""
   );
 }

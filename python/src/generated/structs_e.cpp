@@ -11,7 +11,15 @@ namespace py = pybind11;
 // =============================================================================
 // ele_pointer_struct
 void init_ele_pointer_struct(py::module &m, py::class_<ElePointerStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const EleStruct>,
+             optional_ref<const LatEleLocStruct>,
+             std::optional<int>>(),
+         py::arg("ele") = py::none(),
+         py::arg("loc") = py::none(),
+         py::arg("id") = py::none()
+  )
       // ElePointerStruct.ele (0D_PTR_type -
       .def_property("ele", &ElePointerStruct::ele, &ElePointerStruct::set_ele)
       // ElePointerStruct.loc (0D_NOT_type -
@@ -50,7 +58,177 @@ void init_ele_pointer_struct(py::module &m, py::class_<ElePointerStruct> &cls) {
 // =============================================================================
 // ele_struct
 void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const TwissStruct>,
+             optional_ref<const XyDispStruct>,
+             optional_ref<const XyDispStruct>,
+             optional_ref<const AcKickerStruct>,
+             optional_ref<const BookkeepingStateStruct>,
+             optional_ref<const BranchStruct>,
+             optional_ref<const ControllerStruct>,
+             optional_ref<const RfEleStruct>,
+             optional_ref<const EleStruct>,
+             optional_ref<const Fibre>,
+             optional_ref<const FloorPositionStruct>,
+             optional_ref<const HighEnergySpaceChargeStruct>,
+             optional_ref<const Mode3Struct>,
+             optional_ref<const PhotonElementStruct>,
+             optional_ref<const RadMapEleStruct>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const WakeStruct>,
+             optional_ref<const CoordStruct>,
+             optional_ref<const CoordStruct>,
+             optional_ref<const CoordStruct>,
+             optional_ref<const CoordStruct>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<std::vector<double>>>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("name") = py::none(),
+         py::arg("type") = py::none(),
+         py::arg("alias") = py::none(),
+         py::arg("component_name") = py::none(),
+         py::arg("descrip") = py::none(),
+         py::arg("a") = py::none(),
+         py::arg("b") = py::none(),
+         py::arg("z") = py::none(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("ac_kick") = py::none(),
+         py::arg("bookkeeping_state") = py::none(),
+         py::arg("branch") = py::none(),
+         py::arg("control") = py::none(),
+         py::arg("rf") = py::none(),
+         py::arg("lord") = py::none(),
+         py::arg("ptc_fibre") = py::none(),
+         py::arg("floor") = py::none(),
+         py::arg("high_energy_space_charge") = py::none(),
+         py::arg("mode3") = py::none(),
+         py::arg("photon") = py::none(),
+         py::arg("rad_map") = py::none(),
+         py::arg("spin_taylor_ref_orb_in") = py::none(),
+         py::arg("wake") = py::none(),
+         py::arg("map_ref_orb_in") = py::none(),
+         py::arg("map_ref_orb_out") = py::none(),
+         py::arg("time_ref_orb_in") = py::none(),
+         py::arg("time_ref_orb_out") = py::none(),
+         py::arg("value") = py::none(),
+         py::arg("old_value") = py::none(),
+         py::arg("spin_q") = py::none(),
+         py::arg("vec0") = py::none(),
+         py::arg("mat6") = py::none(),
+         py::arg("c_mat") = py::none(),
+         py::arg("dc_mat_dpz") = py::none(),
+         py::arg("gamma_c") = py::none(),
+         py::arg("s_start") = py::none(),
+         py::arg("s") = py::none(),
+         py::arg("ref_time") = py::none(),
+         py::arg("a_pole") = py::none(),
+         py::arg("b_pole") = py::none(),
+         py::arg("a_pole_elec") = py::none(),
+         py::arg("b_pole_elec") = py::none(),
+         py::arg("custom") = py::none(),
+         py::arg("r") = py::none(),
+         py::arg("key") = py::none(),
+         py::arg("sub_key") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("lord_status") = py::none(),
+         py::arg("n_slave") = py::none(),
+         py::arg("n_slave_field") = py::none(),
+         py::arg("ix1_slave") = py::none(),
+         py::arg("slave_status") = py::none(),
+         py::arg("n_lord") = py::none(),
+         py::arg("n_lord_field") = py::none(),
+         py::arg("n_lord_ramper") = py::none(),
+         py::arg("ic1_lord") = py::none(),
+         py::arg("ix_pointer") = py::none(),
+         py::arg("ixx") = py::none(),
+         py::arg("iyy") = py::none(),
+         py::arg("izz") = py::none(),
+         py::arg("mat6_calc_method") = py::none(),
+         py::arg("tracking_method") = py::none(),
+         py::arg("spin_tracking_method") = py::none(),
+         py::arg("csr_method") = py::none(),
+         py::arg("space_charge_method") = py::none(),
+         py::arg("ptc_integration_type") = py::none(),
+         py::arg("field_calc") = py::none(),
+         py::arg("aperture_at") = py::none(),
+         py::arg("aperture_type") = py::none(),
+         py::arg("ref_species") = py::none(),
+         py::arg("orientation") = py::none(),
+         py::arg("symplectify") = py::none(),
+         py::arg("mode_flip") = py::none(),
+         py::arg("multipoles_on") = py::none(),
+         py::arg("scale_multipoles") = py::none(),
+         py::arg("taylor_map_includes_offsets") = py::none(),
+         py::arg("field_master") = py::none(),
+         py::arg("is_on") = py::none(),
+         py::arg("logic") = py::none(),
+         py::arg("bmad_logic") = py::none(),
+         py::arg("select") = py::none(),
+         py::arg("offset_moves_aperture") = py::none()
+  )
       // EleStruct.name (0D_NOT_character - name of element.
       .def_property("name", &EleStruct::name, &EleStruct::set_name)
       // EleStruct.type (0D_NOT_character - type name.
@@ -322,7 +500,12 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
 // =============================================================================
 // ellipse_beam_init_struct
 void init_ellipse_beam_init_struct(py::module &m, py::class_<EllipseBeamInitStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<int>, std::optional<int>, std::optional<double>>(),
+         py::arg("part_per_ellipse") = py::none(),
+         py::arg("n_ellipse") = py::none(),
+         py::arg("sigma_cutoff") = py::none()
+  )
       // EllipseBeamInitStruct.part_per_ellipse (0D_NOT_integer - number of particles per ellipse
       .def_property(
           "part_per_ellipse",
@@ -374,7 +557,23 @@ void init_ellipse_beam_init_struct(py::module &m, py::class_<EllipseBeamInitStru
 // =============================================================================
 // em_field_struct
 void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("E") = py::none(),
+         py::arg("B") = py::none(),
+         py::arg("dE") = py::none(),
+         py::arg("dB") = py::none(),
+         py::arg("phi") = py::none(),
+         py::arg("phi_B") = py::none(),
+         py::arg("A") = py::none()
+  )
       // EmFieldStruct.E (1D_NOT_real - electric field.
       .def_property("E", &EmFieldStruct::E, &EmFieldStruct::set_E)
       // EmFieldStruct.B (1D_NOT_real - magnetic field.
@@ -420,7 +619,7 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
 // =============================================================================
 // em_taylor_struct
 void init_em_taylor_struct(py::module &m, py::class_<EmTaylorStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(py::init<std::optional<double>>(), py::arg("ref") = py::none())
       // EmTaylorStruct.ref (0D_NOT_real -
       .def_property("ref", &EmTaylorStruct::ref, &EmTaylorStruct::set_ref)
       // EmTaylorStruct.term (1D_ALLOC_type -
@@ -456,7 +655,11 @@ void init_em_taylor_struct(py::module &m, py::class_<EmTaylorStruct> &cls) {
 // =============================================================================
 // em_taylor_term_struct
 void init_em_taylor_term_struct(py::module &m, py::class_<EmTaylorTermStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, optional_ref<const std::vector<int>>>(),
+         py::arg("coef") = py::none(),
+         py::arg("expn") = py::none()
+  )
       // EmTaylorTermStruct.coef (0D_NOT_real -
       .def_property("coef", &EmTaylorTermStruct::coef, &EmTaylorTermStruct::set_coef)
       // EmTaylorTermStruct.expn (1D_NOT_integer -
@@ -492,7 +695,12 @@ void init_em_taylor_term_struct(py::module &m, py::class_<EmTaylorTermStruct> &c
 // =============================================================================
 // expression_atom_struct
 void init_expression_atom_struct(py::module &m, py::class_<ExpressionAtomStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<int>, std::optional<double>>(),
+         py::arg("name") = py::none(),
+         py::arg("type") = py::none(),
+         py::arg("value") = py::none()
+  )
       // ExpressionAtomStruct.name (0D_NOT_character -
       .def_property("name", &ExpressionAtomStruct::name, &ExpressionAtomStruct::set_name)
       // ExpressionAtomStruct.type (0D_NOT_integer - plus$, minum$, sin$, cos$, etc. To convert to
@@ -533,7 +741,12 @@ void init_expression_atom_struct(py::module &m, py::class_<ExpressionAtomStruct>
 // =============================================================================
 // expression_tree_struct
 void init_expression_tree_struct(py::module &m, py::class_<ExpressionTreeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::string>, std::optional<int>, std::optional<double>>(),
+         py::arg("name") = py::none(),
+         py::arg("type") = py::none(),
+         py::arg("value") = py::none()
+  )
       // ExpressionTreeStruct.name (0D_NOT_character -
       .def_property("name", &ExpressionTreeStruct::name, &ExpressionTreeStruct::set_name)
       // ExpressionTreeStruct.type (0D_NOT_integer - plus$, minum$, sin$, cos$, etc.

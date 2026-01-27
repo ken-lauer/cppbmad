@@ -11,7 +11,35 @@ namespace py = pybind11;
 // =============================================================================
 // wake_lr_mode_struct
 void init_wake_lr_mode_struct(py::module &m, py::class_<WakeLrModeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<bool>>(),
+         py::arg("freq") = py::none(),
+         py::arg("freq_in") = py::none(),
+         py::arg("R_over_Q") = py::none(),
+         py::arg("Q") = py::none(),
+         py::arg("damp") = py::none(),
+         py::arg("phi") = py::none(),
+         py::arg("angle") = py::none(),
+         py::arg("b_sin") = py::none(),
+         py::arg("b_cos") = py::none(),
+         py::arg("a_sin") = py::none(),
+         py::arg("a_cos") = py::none(),
+         py::arg("m") = py::none(),
+         py::arg("polarized") = py::none()
+  )
       // WakeLrModeStruct.freq (0D_NOT_real - Actual Frequency in Hz.
       .def_property("freq", &WakeLrModeStruct::freq, &WakeLrModeStruct::set_freq)
       // WakeLrModeStruct.freq_in (0D_NOT_real - Input frequency in Hz.
@@ -69,7 +97,21 @@ void init_wake_lr_mode_struct(py::module &m, py::class_<WakeLrModeStruct> &cls) 
 // =============================================================================
 // wake_lr_struct
 void init_wake_lr_struct(py::module &m, py::class_<WakeLrStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<bool>>(),
+         py::arg("file") = py::none(),
+         py::arg("t_ref") = py::none(),
+         py::arg("freq_spread") = py::none(),
+         py::arg("amp_scale") = py::none(),
+         py::arg("time_scale") = py::none(),
+         py::arg("self_wake_on") = py::none()
+  )
       // WakeLrStruct.file (0D_NOT_character -
       .def_property("file", &WakeLrStruct::file, &WakeLrStruct::set_file)
       // WakeLrStruct.mode (1D_ALLOC_type -
@@ -109,7 +151,29 @@ void init_wake_lr_struct(py::module &m, py::class_<WakeLrStruct> &cls) {
 // =============================================================================
 // wake_sr_mode_struct
 void init_wake_sr_mode_struct(py::module &m, py::class_<WakeSrModeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("amp") = py::none(),
+         py::arg("damp") = py::none(),
+         py::arg("k") = py::none(),
+         py::arg("phi") = py::none(),
+         py::arg("b_sin") = py::none(),
+         py::arg("b_cos") = py::none(),
+         py::arg("a_sin") = py::none(),
+         py::arg("a_cos") = py::none(),
+         py::arg("polarization") = py::none(),
+         py::arg("position_dependence") = py::none()
+  )
       // WakeSrModeStruct.amp (0D_NOT_real - Amplitude
       .def_property("amp", &WakeSrModeStruct::amp, &WakeSrModeStruct::set_amp)
       // WakeSrModeStruct.damp (0D_NOT_real - Dampling factor.
@@ -171,7 +235,25 @@ void init_wake_sr_mode_struct(py::module &m, py::class_<WakeSrModeStruct> &cls) 
 // =============================================================================
 // wake_sr_struct
 void init_wake_sr_struct(py::module &m, py::class_<WakeSrStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const WakeSrZLongStruct>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<bool>>(),
+         py::arg("file") = py::none(),
+         py::arg("z_long") = py::none(),
+         py::arg("z_ref_long") = py::none(),
+         py::arg("z_ref_trans") = py::none(),
+         py::arg("z_max") = py::none(),
+         py::arg("amp_scale") = py::none(),
+         py::arg("z_scale") = py::none(),
+         py::arg("scale_with_length") = py::none()
+  )
       // WakeSrStruct.file (0D_NOT_character -
       .def_property("file", &WakeSrStruct::file, &WakeSrStruct::set_file)
       // WakeSrStruct.z_long (0D_NOT_type -
@@ -221,7 +303,27 @@ void init_wake_sr_struct(py::module &m, py::class_<WakeSrStruct> &cls) {
 // =============================================================================
 // wake_sr_z_long_struct
 void init_wake_sr_z_long_struct(py::module &m, py::class_<WakeSrZLongStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<std::complex<double>>>,
+             optional_ref<const std::vector<std::complex<double>>>,
+             optional_ref<const std::vector<std::complex<double>>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<bool>>(),
+         py::arg("w") = py::none(),
+         py::arg("fw") = py::none(),
+         py::arg("fbunch") = py::none(),
+         py::arg("w_out") = py::none(),
+         py::arg("dz") = py::none(),
+         py::arg("z0") = py::none(),
+         py::arg("smoothing_sigma") = py::none(),
+         py::arg("position_dependence") = py::none(),
+         py::arg("time_based") = py::none()
+  )
       // WakeSrZLongStruct.w (1D_ALLOC_real - Input single particle Wake. Indexed from 1.
       .def_property("w", &WakeSrZLongStruct::w, &WakeSrZLongStruct::set_w)
       // WakeSrZLongStruct.fw (1D_ALLOC_complex - Fourier transform of w.
@@ -277,7 +379,11 @@ void init_wake_sr_z_long_struct(py::module &m, py::class_<WakeSrZLongStruct> &cl
 // =============================================================================
 // wake_struct
 void init_wake_struct(py::module &m, py::class_<WakeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const WakeSrStruct>, optional_ref<const WakeLrStruct>>(),
+         py::arg("sr") = py::none(),
+         py::arg("lr") = py::none()
+  )
       // WakeStruct.sr (0D_NOT_type - Short-range wake
       .def_property("sr", &WakeStruct::sr, &WakeStruct::set_sr)
       // WakeStruct.lr (0D_NOT_type - Long-range wake
@@ -303,7 +409,47 @@ void init_wake_struct(py::module &m, py::class_<WakeStruct> &cls) {
 // =============================================================================
 // wall3d_section_struct
 void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const PhotonReflectSurfaceStruct>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>,
+             std::optional<double>,
+             optional_ref<const std::vector<double>>,
+             optional_ref<const std::vector<double>>>(),
+         py::arg("name") = py::none(),
+         py::arg("material") = py::none(),
+         py::arg("surface") = py::none(),
+         py::arg("type") = py::none(),
+         py::arg("n_vertex_input") = py::none(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("vertices_state") = py::none(),
+         py::arg("patch_in_region") = py::none(),
+         py::arg("thickness") = py::none(),
+         py::arg("s") = py::none(),
+         py::arg("r0") = py::none(),
+         py::arg("dx0_ds") = py::none(),
+         py::arg("dy0_ds") = py::none(),
+         py::arg("x0_coef") = py::none(),
+         py::arg("y0_coef") = py::none(),
+         py::arg("dr_ds") = py::none(),
+         py::arg("p1_coef") = py::none(),
+         py::arg("p2_coef") = py::none()
+  )
       // Wall3dSectionStruct.name (0D_NOT_character - Identifying name
       .def_property("name", &Wall3dSectionStruct::name, &Wall3dSectionStruct::set_name)
       // Wall3dSectionStruct.material (0D_NOT_character - Material.
@@ -400,7 +546,27 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
 // =============================================================================
 // wall3d_struct
 void init_wall3d_struct(py::module &m, py::class_<Wall3dStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<bool>,
+             std::optional<int>>(),
+         py::arg("name") = py::none(),
+         py::arg("type") = py::none(),
+         py::arg("ix_wall3d") = py::none(),
+         py::arg("n_link") = py::none(),
+         py::arg("thickness") = py::none(),
+         py::arg("clear_material") = py::none(),
+         py::arg("opaque_material") = py::none(),
+         py::arg("superimpose") = py::none(),
+         py::arg("ele_anchor_pt") = py::none()
+  )
       // Wall3dStruct.name (0D_NOT_character -
       .def_property("name", &Wall3dStruct::name, &Wall3dStruct::set_name)
       // Wall3dStruct.type (0D_NOT_integer - or mask_plate$
@@ -461,7 +627,27 @@ void init_wall3d_struct(py::module &m, py::class_<Wall3dStruct> &cls) {
 // =============================================================================
 // wall3d_vertex_struct
 void init_wall3d_vertex_struct(py::module &m, py::class_<Wall3dVertexStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>>(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("radius_x") = py::none(),
+         py::arg("radius_y") = py::none(),
+         py::arg("tilt") = py::none(),
+         py::arg("angle") = py::none(),
+         py::arg("x0") = py::none(),
+         py::arg("y0") = py::none(),
+         py::arg("type") = py::none()
+  )
       // Wall3dVertexStruct.x (0D_NOT_real - Coordinates of the vertex.
       .def_property("x", &Wall3dVertexStruct::x, &Wall3dVertexStruct::set_x)
       // Wall3dVertexStruct.y (0D_NOT_real - Coordinates of the vertex.

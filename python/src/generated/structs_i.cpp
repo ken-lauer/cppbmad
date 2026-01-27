@@ -11,7 +11,12 @@ namespace py = pybind11;
 // =============================================================================
 // interval1_coef_struct
 void init_interval1_coef_struct(py::module &m, py::class_<Interval1CoefStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, std::optional<double>, std::optional<double>>(),
+         py::arg("c0") = py::none(),
+         py::arg("c1") = py::none(),
+         py::arg("n_exp") = py::none()
+  )
       // Interval1CoefStruct.c0 (0D_NOT_real -
       .def_property("c0", &Interval1CoefStruct::c0, &Interval1CoefStruct::set_c0)
       // Interval1CoefStruct.c1 (0D_NOT_real -

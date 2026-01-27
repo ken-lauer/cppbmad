@@ -17,12 +17,6 @@ Parameters
 comment_in : character
 
 comment_out : character
-
-Returns
--------
-comment_in : character
-
-comment_out : character
 )"""
   );
   m.def(
@@ -64,14 +58,6 @@ str : character
 pat : character
 
 is_match : bool
-
-Returns
--------
-str : character
-
-pat : character
-
-is_match : bool
 )"""
   );
   m.def(
@@ -85,16 +71,6 @@ is_match : bool
 Parameters
 ----------
 string : character
-
-template : (unknown)
-
-is_match : bool
-
-Returns
--------
-string : character
-
-template : (unknown)
 
 is_match : bool
 )"""
@@ -119,10 +95,6 @@ which is the frequency that maximizes the projection.
 
 Parameters
 ----------
-milli_sec : int
-
-Returns
--------
 milli_sec : int
 )"""
   );

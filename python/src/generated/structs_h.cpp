@@ -14,7 +14,25 @@ void init_high_energy_space_charge_struct(
     py::module &m,
     py::class_<HighEnergySpaceChargeStruct> &cls
 ) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const CoordStruct>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("closed_orb") = py::none(),
+         py::arg("kick_const") = py::none(),
+         py::arg("sig_x") = py::none(),
+         py::arg("sig_y") = py::none(),
+         py::arg("phi") = py::none(),
+         py::arg("sin_phi") = py::none(),
+         py::arg("cos_phi") = py::none(),
+         py::arg("sig_z") = py::none()
+  )
       // HighEnergySpaceChargeStruct.closed_orb (0D_NOT_type - beam orbit
       .def_property(
           "closed_orb",

@@ -54,14 +54,14 @@ extend_grid : bool, optional
 
 Returns
 -------
-z : float
-    z coordinate.
-
 err_flag : bool
     Set True if cannot compute z due to, say, point being outside of ellipseoid or grid bounds.
 
 dz_dxy : 1D array of float (shape: 2), optional
     Surface slope at (x, y).
+
+z : float
+    z coordinate.
 )"""
   );
   m.def(
@@ -76,13 +76,6 @@ ele : EleStruct
     Element with possible nonzero kicks.
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with no kicks.
-
-Returns
--------
-ele : EleStruct
-    Element with possible nonzero kicks.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with no kicks.
 )"""
   );
   m.def(
@@ -93,13 +86,6 @@ ele : EleStruct
 
 Parameters
 ----------
-ele : EleStruct
-    Element with possible nonzero offsets, etc.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with no (mis)orientation.
-
-Returns
--------
 ele : EleStruct
     Element with possible nonzero offsets, etc.
     This parameter is an input/output and is modified in-place.
@@ -119,11 +105,6 @@ Parameters
 ----------
 lat : LatStruct
     Lattice
-
-Returns
--------
-lat : LatStruct
-    Lattice
 )"""
   );
   m.def(
@@ -137,16 +118,6 @@ lat : LatStruct
 
 Parameters
 ----------
-x : float
-
-y : float
-
-z : float
-
-res : float
-
-Returns
--------
 x : float
 
 y : float

@@ -11,7 +11,21 @@ namespace py = pybind11;
 // =============================================================================
 // xy_disp_struct
 void init_xy_disp_struct(py::module &m, py::class_<XyDispStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("eta") = py::none(),
+         py::arg("etap") = py::none(),
+         py::arg("deta_ds") = py::none(),
+         py::arg("sigma") = py::none(),
+         py::arg("deta_dpz") = py::none(),
+         py::arg("detap_dpz") = py::none()
+  )
       // XyDispStruct.eta (0D_NOT_real -
       .def_property("eta", &XyDispStruct::eta, &XyDispStruct::set_eta)
       // XyDispStruct.etap (0D_NOT_real -

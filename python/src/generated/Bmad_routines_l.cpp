@@ -47,16 +47,6 @@ y : float
 z : float
 
 res : float
-
-Returns
--------
-x : float
-
-y : float
-
-z : float
-
-res : float
 )"""
   );
   m.def(
@@ -72,9 +62,6 @@ lat : LatStruct
 
 Returns
 -------
-lat : LatStruct
-    Input lattice.
-
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -146,11 +133,6 @@ append_eles : bool, optional
 
 Returns
 -------
-eles : 1D array of ElePointerStruct
-    If append_eles is True, save existing elements.
-    This parameter is an input/output and is modified in-place.
-    As an output, eles: Array of matching elements.
-
 n_loc : int
     Number of existing elements. Used if append_eles is True.
     This parameter is an input/output and is modified in-place.
@@ -172,12 +154,6 @@ Parameters
 lat_out : LatStruct
 
 lat_in : LatStruct
-
-Returns
--------
-lat_out : LatStruct
-
-lat_in : LatStruct
 )"""
   );
   m.def(
@@ -188,11 +164,6 @@ lat_in : LatStruct
 
 Parameters
 ----------
-lat : LatStruct
-    The lattice.
-
-Returns
--------
 lat : LatStruct
     The lattice.
 )"""
@@ -224,9 +195,6 @@ ix_branch : int, optional
 
 Returns
 -------
-lat : LatStruct
-    Lat containing the elements.
-
 err_flag : bool, optional
     True if there is an error. False otherwise.
 )"""
@@ -272,12 +240,6 @@ Parameters
 lat1 : 1D array of LatStruct
 
 lat2 : 1D array of LatStruct
-
-Returns
--------
-lat1 : 1D array of LatStruct
-
-lat2 : 1D array of LatStruct
 )"""
   );
   m.def(
@@ -295,11 +257,6 @@ lat : LatStruct
 
 Returns
 -------
-lat : LatStruct
-    Lattice needing bookkeeping.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: Lattice with bookkeeping done.
-
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
@@ -312,13 +269,6 @@ err_flag : bool, optional
 
 Parameters
 ----------
-ele : EleStruct
-    Lcavity element.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element with ele.rf properly setup.
-
-Returns
--------
 ele : EleStruct
     Lcavity element.
     This parameter is an input/output and is modified in-place.
@@ -362,18 +312,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
-
-Returns
--------
-orb : CoordStruct
-    Starting coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Coords after tracking.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the edge.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix including the edge.
 )"""
   );
   py::class_<Bmad::LinearCoef, std::unique_ptr<Bmad::LinearCoef>>(
@@ -534,11 +472,6 @@ make_matrix : bool, optional
 
 Returns
 -------
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before the multipole.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix transfer matrix including multipole.
-
 dz : float
     Change in z.
 )"""

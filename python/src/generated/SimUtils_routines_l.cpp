@@ -32,22 +32,6 @@ b : float
 sig_a : float
 
 sig_b : float
-
-Returns
--------
-x : 1D array of float
-
-y : 1D array of float
-
-n_data : int
-
-a : float
-
-b : float
-
-sig_a : float
-
-sig_b : float
 )"""
   );
   m.def(
@@ -84,12 +68,6 @@ coef : 1D array of float (shape: 3)
 
 Parameters
 ----------
-logic : bool
-
-str : character
-
-Returns
--------
 logic : bool
 
 str : character

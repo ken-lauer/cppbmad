@@ -63,8 +63,6 @@ ele : EleStruct
 n_slice : int
     Number of slices
 
-Returns
--------
 z_slice : 1D array of float
     Array of slice positions 1:n_slice. zero padded for indexes greater than n_slice
 )"""
@@ -123,12 +121,6 @@ ibs_mat : 2D array of float (shape: 6,6)
 
 Parameters
 ----------
-beam1 : BeamStruct
-
-beam2 : BeamStruct
-
-Returns
--------
 beam1 : BeamStruct
 
 beam2 : BeamStruct
@@ -313,18 +305,6 @@ make_matrix : bool, optional
 
 track_spin : bool, optional
     If True then track the spin through the edge fields. Default: False.
-
-Returns
--------
-orb : CoordStruct
-    Starting coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Coords after tracking.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix before fringe.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix transfer matrix including fringe.
 )"""
   );
   m.def(
@@ -846,15 +826,6 @@ parse_lat : LatStruct, optional
     Used by bmad_parser to pass to bmad_parser2 a list of elements that were defined in the lattice file but
     not used. This is useful in preventing errors being generated if group/overlay elements definded by
     lat_file refer to unused slaves in parse_lat.
-
-Returns
--------
-lat : LatStruct
-    lattice with existing layout.
-    This parameter is an input/output and is modified in-place.
-    As an output, lat: lattice with modifications.
-
-err_flag : bool, optional
 )"""
   );
   m.def(
@@ -866,12 +837,6 @@ err_flag : bool, optional
 
 Parameters
 ----------
-ang : 1D array of float (shape: 3)
-
-exi : 2D array of float (shape: 3,3)
-
-Returns
--------
 ang : 1D array of float (shape: 3)
 
 exi : 2D array of float (shape: 3,3)
@@ -892,12 +857,6 @@ exi : 2D array of float (shape: 3,3)
 
 Parameters
 ----------
-branch1 : BranchStruct
-
-branch2 : BranchStruct
-
-Returns
--------
 branch1 : BranchStruct
 
 branch2 : BranchStruct
@@ -948,15 +907,6 @@ branch : BranchStruct
     As an output, branch: Pointers to generated layouts.
     This parameter is an input/output and is modified in-place.
     As an output, branch: Pointer to PTC fibres
-
-Returns
--------
-branch : BranchStruct
-    Input branch.
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: Pointers to generated layouts.
-    This parameter is an input/output and is modified in-place.
-    As an output, branch: Pointer to PTC fibres
 )"""
   );
   m.def(
@@ -968,12 +918,6 @@ branch : BranchStruct
 
 Parameters
 ----------
-bunch1 : BunchStruct
-
-bunch2 : BunchStruct
-
-Returns
--------
 bunch1 : BunchStruct
 
 bunch2 : BunchStruct

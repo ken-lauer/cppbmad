@@ -11,7 +11,57 @@ namespace py = pybind11;
 // =============================================================================
 // qp_axis_struct
 void init_qp_axis_struct(py::module &m, py::class_<QpAxisStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("label") = py::none(),
+         py::arg("min") = py::none(),
+         py::arg("max") = py::none(),
+         py::arg("tick_min") = py::none(),
+         py::arg("tick_max") = py::none(),
+         py::arg("eval_min") = py::none(),
+         py::arg("eval_max") = py::none(),
+         py::arg("dtick") = py::none(),
+         py::arg("number_offset") = py::none(),
+         py::arg("label_offset") = py::none(),
+         py::arg("major_tick_len") = py::none(),
+         py::arg("minor_tick_len") = py::none(),
+         py::arg("label_color") = py::none(),
+         py::arg("major_div") = py::none(),
+         py::arg("major_div_nominal") = py::none(),
+         py::arg("minor_div") = py::none(),
+         py::arg("minor_div_max") = py::none(),
+         py::arg("places") = py::none(),
+         py::arg("type") = py::none(),
+         py::arg("bounds") = py::none(),
+         py::arg("tick_side") = py::none(),
+         py::arg("number_side") = py::none(),
+         py::arg("draw_label") = py::none(),
+         py::arg("draw_numbers") = py::none()
+  )
       // QpAxisStruct.label (0D_NOT_character -
       .def_property("label", &QpAxisStruct::label, &QpAxisStruct::set_label)
       // QpAxisStruct.min (0D_NOT_real - Axis min/max in data units.
@@ -99,7 +149,21 @@ void init_qp_axis_struct(py::module &m, py::class_<QpAxisStruct> &cls) {
 // =============================================================================
 // qp_legend_struct
 void init_qp_legend_struct(py::module &m, py::class_<QpLegendStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         py::arg("row_spacing") = py::none(),
+         py::arg("line_length") = py::none(),
+         py::arg("text_offset") = py::none(),
+         py::arg("draw_line") = py::none(),
+         py::arg("draw_symbol") = py::none(),
+         py::arg("draw_text") = py::none()
+  )
       // QpLegendStruct.row_spacing (0D_NOT_real - Spacing between rows.
       .def_property("row_spacing", &QpLegendStruct::row_spacing, &QpLegendStruct::set_row_spacing)
       // QpLegendStruct.line_length (0D_NOT_real - Length of the line in points.
@@ -137,7 +201,15 @@ void init_qp_legend_struct(py::module &m, py::class_<QpLegendStruct> &cls) {
 // =============================================================================
 // qp_line_struct
 void init_qp_line_struct(py::module &m, py::class_<QpLineStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<int>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>>(),
+         py::arg("width") = py::none(),
+         py::arg("color") = py::none(),
+         py::arg("pattern") = py::none()
+  )
       // QpLineStruct.width (0D_NOT_integer -
       .def_property("width", &QpLineStruct::width, &QpLineStruct::set_width)
       // QpLineStruct.color (0D_NOT_character -
@@ -168,7 +240,12 @@ void init_qp_line_struct(py::module &m, py::class_<QpLineStruct> &cls) {
 // =============================================================================
 // qp_point_struct
 void init_qp_point_struct(py::module &m, py::class_<QpPointStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<double>, std::optional<double>, optional_ref<const std::string>>(),
+         py::arg("x") = py::none(),
+         py::arg("y") = py::none(),
+         py::arg("units") = py::none()
+  )
       // QpPointStruct.x (0D_NOT_real -
       .def_property("x", &QpPointStruct::x, &QpPointStruct::set_x)
       // QpPointStruct.y (0D_NOT_real -
@@ -199,7 +276,19 @@ void init_qp_point_struct(py::module &m, py::class_<QpPointStruct> &cls) {
 // =============================================================================
 // qp_rect_struct
 void init_qp_rect_struct(py::module &m, py::class_<QpRectStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::string>>(),
+         py::arg("x1") = py::none(),
+         py::arg("x2") = py::none(),
+         py::arg("y1") = py::none(),
+         py::arg("y2") = py::none(),
+         py::arg("units") = py::none()
+  )
       // QpRectStruct.x1 (0D_NOT_real -
       .def_property("x1", &QpRectStruct::x1, &QpRectStruct::set_x1)
       // QpRectStruct.x2 (0D_NOT_real -
@@ -234,7 +323,19 @@ void init_qp_rect_struct(py::module &m, py::class_<QpRectStruct> &cls) {
 // =============================================================================
 // qp_symbol_struct
 void init_qp_symbol_struct(py::module &m, py::class_<QpSymbolStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<double>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             std::optional<int>>(),
+         py::arg("type") = py::none(),
+         py::arg("height") = py::none(),
+         py::arg("color") = py::none(),
+         py::arg("fill_pattern") = py::none(),
+         py::arg("line_width") = py::none()
+  )
       // QpSymbolStruct.type (0D_NOT_character -
       .def_property("type", &QpSymbolStruct::type, &QpSymbolStruct::set_type)
       // QpSymbolStruct.height (0D_NOT_real - in points (same as text height)

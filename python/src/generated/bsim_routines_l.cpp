@@ -17,12 +17,6 @@ Parameters
 logic : bool
 
 string : character
-
-Returns
--------
-logic : bool
-
-string : character
 )"""
   );
 }

@@ -17,12 +17,6 @@ Parameters
 N : int
 
 hh : 1D array of float
-
-Returns
--------
-N : int
-
-hh : 1D array of float
 )"""
   );
 }

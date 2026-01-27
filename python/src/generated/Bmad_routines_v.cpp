@@ -191,20 +191,6 @@ typ : character
 ignore_if_zero : bool, optional
 
 use_comma : bool, optional
-
-Returns
--------
-line : character
-
-value : float
-
-str : character
-
-typ : character
-
-ignore_if_zero : bool, optional
-
-use_comma : bool, optional
 )"""
   );
   m.def(

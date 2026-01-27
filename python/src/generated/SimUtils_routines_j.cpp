@@ -21,8 +21,6 @@ arg : float
 
 Returns
 -------
-m : int
-
 j_bes : float
     Bessel value.
 )"""

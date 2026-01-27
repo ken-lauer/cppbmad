@@ -8024,6 +8024,9 @@ void access_test_sub_sub_struct_container(
 );
 }
 
+template <typename T>
+using optional_ref = std::optional<std::reference_wrapper<T>>;
+
 using RealAlloc1D = FAlloc1D<
     double,
     allocate_real_container,
@@ -10892,6 +10895,23 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit SplineStruct(
+      std::optional<double> x0 = std::nullopt,
+      std::optional<double> y0 = std::nullopt,
+      std::optional<double> x1 = std::nullopt,
+      optional_ref<const std::vector<double>> coef = std::nullopt
+  )
+      : FortranProxy() {
+    if (x0)
+      set_x0(*x0);
+    if (y0)
+      set_y0(*y0);
+    if (x1)
+      set_x1(*x1);
+    if (coef)
+      set_coef(coef->get());
+  }
+
   double x0() const; // 0D_NOT_real
   void set_x0(double value);
   double y0() const; // 0D_NOT_real
@@ -10917,6 +10937,23 @@ class SpinPolarStruct : public FortranProxy<SpinPolarStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit SpinPolarStruct(
+      std::optional<double> polarization = std::nullopt,
+      std::optional<double> theta = std::nullopt,
+      std::optional<double> phi = std::nullopt,
+      std::optional<double> xi = std::nullopt
+  )
+      : FortranProxy() {
+    if (polarization)
+      set_polarization(*polarization);
+    if (theta)
+      set_theta(*theta);
+    if (phi)
+      set_phi(*phi);
+    if (xi)
+      set_xi(*xi);
+  }
 
   double polarization() const; // 0D_NOT_real
   void set_polarization(double value);
@@ -10944,6 +10981,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit AcKickerTimeStruct(
+      std::optional<double> amp = std::nullopt,
+      std::optional<double> time = std::nullopt,
+      optional_ref<const SplineStruct> spline = std::nullopt
+  )
+      : FortranProxy() {
+    if (amp)
+      set_amp(*amp);
+    if (time)
+      set_time(*time);
+    if (spline)
+      set_spline(spline->get());
+  }
+
   double amp() const; // 0D_NOT_real
   void set_amp(double value);
   double time() const; // 0D_NOT_real
@@ -10967,6 +11018,20 @@ class AcKickerFreqStruct : public FortranProxy<AcKickerFreqStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit AcKickerFreqStruct(
+      std::optional<double> f = std::nullopt,
+      std::optional<double> amp = std::nullopt,
+      std::optional<double> phi = std::nullopt
+  )
+      : FortranProxy() {
+    if (f)
+      set_f(*f);
+    if (amp)
+      set_amp(*amp);
+    if (phi)
+      set_phi(*phi);
+  }
 
   double f() const; // 0D_NOT_real
   void set_f(double value);
@@ -11012,6 +11077,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit Interval1CoefStruct(
+      std::optional<double> c0 = std::nullopt,
+      std::optional<double> c1 = std::nullopt,
+      std::optional<double> n_exp = std::nullopt
+  )
+      : FortranProxy() {
+    if (c0)
+      set_c0(*c0);
+    if (c1)
+      set_c1(*c1);
+    if (n_exp)
+      set_n_exp(*n_exp);
+  }
+
   double c0() const; // 0D_NOT_real
   void set_c0(double value);
   double c1() const; // 0D_NOT_real
@@ -11039,6 +11118,29 @@ class PhotonReflectTableStruct : public FortranProxy<PhotonReflectTableStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit PhotonReflectTableStruct(
+      optional_ref<const std::vector<double>> angle = std::nullopt,
+      optional_ref<const std::vector<double>> energy = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> p_reflect = std::nullopt,
+      std::optional<double> max_energy = std::nullopt,
+      optional_ref<const std::vector<double>> p_reflect_scratch = std::nullopt,
+      optional_ref<const std::vector<double>> bragg_angle = std::nullopt
+  )
+      : FortranProxy() {
+    if (angle)
+      set_angle(angle->get());
+    if (energy)
+      set_energy(energy->get());
+    if (p_reflect)
+      set_p_reflect(p_reflect->get());
+    if (max_energy)
+      set_max_energy(*max_energy);
+    if (p_reflect_scratch)
+      set_p_reflect_scratch(p_reflect_scratch->get());
+    if (bragg_angle)
+      set_bragg_angle(bragg_angle->get());
+  }
 
   FArray1D<double> angle() const; // 1D_ALLOC_real
   void set_angle(const std::vector<double> &v);
@@ -11075,6 +11177,29 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit PhotonReflectSurfaceStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const std::string> description = std::nullopt,
+      optional_ref<const std::string> reflectivity_file = std::nullopt,
+      std::optional<double> surface_roughness_rms = std::nullopt,
+      std::optional<double> roughness_correlation_len = std::nullopt,
+      std::optional<int> ix_surface = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (description)
+      set_description(description->get());
+    if (reflectivity_file)
+      set_reflectivity_file(reflectivity_file->get());
+    if (surface_roughness_rms)
+      set_surface_roughness_rms(*surface_roughness_rms);
+    if (roughness_correlation_len)
+      set_roughness_correlation_len(*roughness_correlation_len);
+    if (ix_surface)
+      set_ix_surface(*ix_surface);
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   std::string description() const; // 0D_NOT_character
@@ -11105,6 +11230,74 @@ class CoordStruct : public FortranProxy<CoordStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit CoordStruct(
+      optional_ref<const std::vector<double>> vec = std::nullopt,
+      std::optional<double> s = std::nullopt,
+      std::optional<long double> t = std::nullopt,
+      optional_ref<const std::vector<double>> spin = std::nullopt,
+      optional_ref<const std::vector<double>> field = std::nullopt,
+      optional_ref<const std::vector<double>> phase = std::nullopt,
+      std::optional<double> charge = std::nullopt,
+      std::optional<double> dt_ref = std::nullopt,
+      std::optional<double> r = std::nullopt,
+      std::optional<double> p0c = std::nullopt,
+      std::optional<double> E_potential = std::nullopt,
+      std::optional<double> beta = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> ix_turn = std::nullopt,
+      std::optional<int> ix_user = std::nullopt,
+      std::optional<int> state = std::nullopt,
+      std::optional<int> direction = std::nullopt,
+      std::optional<int> time_dir = std::nullopt,
+      std::optional<int> species = std::nullopt,
+      std::optional<int> location = std::nullopt
+  )
+      : FortranProxy() {
+    if (vec)
+      set_vec(vec->get());
+    if (s)
+      set_s(*s);
+    if (t)
+      set_t(*t);
+    if (spin)
+      set_spin(spin->get());
+    if (field)
+      set_field(field->get());
+    if (phase)
+      set_phase(phase->get());
+    if (charge)
+      set_charge(*charge);
+    if (dt_ref)
+      set_dt_ref(*dt_ref);
+    if (r)
+      set_r(*r);
+    if (p0c)
+      set_p0c(*p0c);
+    if (E_potential)
+      set_E_potential(*E_potential);
+    if (beta)
+      set_beta(*beta);
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (ix_turn)
+      set_ix_turn(*ix_turn);
+    if (ix_user)
+      set_ix_user(*ix_user);
+    if (state)
+      set_state(*state);
+    if (direction)
+      set_direction(*direction);
+    if (time_dir)
+      set_time_dir(*time_dir);
+    if (species)
+      set_species(*species);
+    if (location)
+      set_location(*location);
+  }
 
   FArray1D<double> vec() const; // 1D_NOT_real
   void set_vec(const std::vector<double> &v);
@@ -11187,6 +11380,41 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit BpmPhaseCouplingStruct(
+      std::optional<double> K_22a = std::nullopt,
+      std::optional<double> K_12a = std::nullopt,
+      std::optional<double> K_11b = std::nullopt,
+      std::optional<double> K_12b = std::nullopt,
+      std::optional<double> Cbar22_a = std::nullopt,
+      std::optional<double> Cbar12_a = std::nullopt,
+      std::optional<double> Cbar11_b = std::nullopt,
+      std::optional<double> Cbar12_b = std::nullopt,
+      std::optional<double> phi_a = std::nullopt,
+      std::optional<double> phi_b = std::nullopt
+  )
+      : FortranProxy() {
+    if (K_22a)
+      set_K_22a(*K_22a);
+    if (K_12a)
+      set_K_12a(*K_12a);
+    if (K_11b)
+      set_K_11b(*K_11b);
+    if (K_12b)
+      set_K_12b(*K_12b);
+    if (Cbar22_a)
+      set_Cbar22_a(*Cbar22_a);
+    if (Cbar12_a)
+      set_Cbar12_a(*Cbar12_a);
+    if (Cbar11_b)
+      set_Cbar11_b(*Cbar11_b);
+    if (Cbar12_b)
+      set_Cbar12_b(*Cbar12_b);
+    if (phi_a)
+      set_phi_a(*phi_a);
+    if (phi_b)
+      set_phi_b(*phi_b);
+  }
+
   double K_22a() const; // 0D_NOT_real
   void set_K_22a(double value);
   double K_12a() const; // 0D_NOT_real
@@ -11225,6 +11453,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit ExpressionAtomStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      std::optional<int> type = std::nullopt,
+      std::optional<double> value = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (type)
+      set_type(*type);
+    if (value)
+      set_value(*value);
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   int type() const; // 0D_NOT_integer
@@ -11248,6 +11490,38 @@ class WakeSrZLongStruct : public FortranProxy<WakeSrZLongStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit WakeSrZLongStruct(
+      optional_ref<const std::vector<double>> w = std::nullopt,
+      optional_ref<const std::vector<std::complex<double>>> fw = std::nullopt,
+      optional_ref<const std::vector<std::complex<double>>> fbunch = std::nullopt,
+      optional_ref<const std::vector<std::complex<double>>> w_out = std::nullopt,
+      std::optional<double> dz = std::nullopt,
+      std::optional<double> z0 = std::nullopt,
+      std::optional<double> smoothing_sigma = std::nullopt,
+      std::optional<int> position_dependence = std::nullopt,
+      std::optional<bool> time_based = std::nullopt
+  )
+      : FortranProxy() {
+    if (w)
+      set_w(w->get());
+    if (fw)
+      set_fw(fw->get());
+    if (fbunch)
+      set_fbunch(fbunch->get());
+    if (w_out)
+      set_w_out(w_out->get());
+    if (dz)
+      set_dz(*dz);
+    if (z0)
+      set_z0(*z0);
+    if (smoothing_sigma)
+      set_smoothing_sigma(*smoothing_sigma);
+    if (position_dependence)
+      set_position_dependence(*position_dependence);
+    if (time_based)
+      set_time_based(*time_based);
+  }
 
   FArray1D<double> w() const; // 1D_ALLOC_real
   void set_w(const std::vector<double> &v);
@@ -11284,6 +11558,41 @@ class WakeSrModeStruct : public FortranProxy<WakeSrModeStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit WakeSrModeStruct(
+      std::optional<double> amp = std::nullopt,
+      std::optional<double> damp = std::nullopt,
+      std::optional<double> k = std::nullopt,
+      std::optional<double> phi = std::nullopt,
+      std::optional<double> b_sin = std::nullopt,
+      std::optional<double> b_cos = std::nullopt,
+      std::optional<double> a_sin = std::nullopt,
+      std::optional<double> a_cos = std::nullopt,
+      std::optional<int> polarization = std::nullopt,
+      std::optional<int> position_dependence = std::nullopt
+  )
+      : FortranProxy() {
+    if (amp)
+      set_amp(*amp);
+    if (damp)
+      set_damp(*damp);
+    if (k)
+      set_k(*k);
+    if (phi)
+      set_phi(*phi);
+    if (b_sin)
+      set_b_sin(*b_sin);
+    if (b_cos)
+      set_b_cos(*b_cos);
+    if (a_sin)
+      set_a_sin(*a_sin);
+    if (a_cos)
+      set_a_cos(*a_cos);
+    if (polarization)
+      set_polarization(*polarization);
+    if (position_dependence)
+      set_position_dependence(*position_dependence);
+  }
 
   double amp() const; // 0D_NOT_real
   void set_amp(double value);
@@ -11323,6 +11632,35 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit WakeSrStruct(
+      optional_ref<const std::string> file = std::nullopt,
+      optional_ref<const WakeSrZLongStruct> z_long = std::nullopt,
+      std::optional<double> z_ref_long = std::nullopt,
+      std::optional<double> z_ref_trans = std::nullopt,
+      std::optional<double> z_max = std::nullopt,
+      std::optional<double> amp_scale = std::nullopt,
+      std::optional<double> z_scale = std::nullopt,
+      std::optional<bool> scale_with_length = std::nullopt
+  )
+      : FortranProxy() {
+    if (file)
+      set_file(file->get());
+    if (z_long)
+      set_z_long(z_long->get());
+    if (z_ref_long)
+      set_z_ref_long(*z_ref_long);
+    if (z_ref_trans)
+      set_z_ref_trans(*z_ref_trans);
+    if (z_max)
+      set_z_max(*z_max);
+    if (amp_scale)
+      set_amp_scale(*amp_scale);
+    if (z_scale)
+      set_z_scale(*z_scale);
+    if (scale_with_length)
+      set_scale_with_length(*scale_with_length);
+  }
+
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
   WakeSrZLongStruct z_long() const; // 0D_NOT_type
@@ -11358,6 +11696,50 @@ class WakeLrModeStruct : public FortranProxy<WakeLrModeStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit WakeLrModeStruct(
+      std::optional<double> freq = std::nullopt,
+      std::optional<double> freq_in = std::nullopt,
+      std::optional<double> R_over_Q = std::nullopt,
+      std::optional<double> Q = std::nullopt,
+      std::optional<double> damp = std::nullopt,
+      std::optional<double> phi = std::nullopt,
+      std::optional<double> angle = std::nullopt,
+      std::optional<double> b_sin = std::nullopt,
+      std::optional<double> b_cos = std::nullopt,
+      std::optional<double> a_sin = std::nullopt,
+      std::optional<double> a_cos = std::nullopt,
+      std::optional<int> m = std::nullopt,
+      std::optional<bool> polarized = std::nullopt
+  )
+      : FortranProxy() {
+    if (freq)
+      set_freq(*freq);
+    if (freq_in)
+      set_freq_in(*freq_in);
+    if (R_over_Q)
+      set_R_over_Q(*R_over_Q);
+    if (Q)
+      set_Q(*Q);
+    if (damp)
+      set_damp(*damp);
+    if (phi)
+      set_phi(*phi);
+    if (angle)
+      set_angle(*angle);
+    if (b_sin)
+      set_b_sin(*b_sin);
+    if (b_cos)
+      set_b_cos(*b_cos);
+    if (a_sin)
+      set_a_sin(*a_sin);
+    if (a_cos)
+      set_a_cos(*a_cos);
+    if (m)
+      set_m(*m);
+    if (polarized)
+      set_polarized(*polarized);
+  }
 
   double freq() const; // 0D_NOT_real
   void set_freq(double value);
@@ -11403,6 +11785,29 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit WakeLrStruct(
+      optional_ref<const std::string> file = std::nullopt,
+      std::optional<double> t_ref = std::nullopt,
+      std::optional<double> freq_spread = std::nullopt,
+      std::optional<double> amp_scale = std::nullopt,
+      std::optional<double> time_scale = std::nullopt,
+      std::optional<bool> self_wake_on = std::nullopt
+  )
+      : FortranProxy() {
+    if (file)
+      set_file(file->get());
+    if (t_ref)
+      set_t_ref(*t_ref);
+    if (freq_spread)
+      set_freq_spread(*freq_spread);
+    if (amp_scale)
+      set_amp_scale(*amp_scale);
+    if (time_scale)
+      set_time_scale(*time_scale);
+    if (self_wake_on)
+      set_self_wake_on(*self_wake_on);
+  }
+
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
   WakeLrModeStructArray1D mode() const; // 1D_ALLOC_type
@@ -11434,6 +11839,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit LatEleLocStruct(
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+  }
+
   int ix_ele() const; // 0D_NOT_integer
   void set_ix_ele(int value);
   int ix_branch() const; // 0D_NOT_integer
@@ -11455,6 +11871,17 @@ class WakeStruct : public FortranProxy<WakeStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit WakeStruct(
+      optional_ref<const WakeSrStruct> sr = std::nullopt,
+      optional_ref<const WakeLrStruct> lr = std::nullopt
+  )
+      : FortranProxy() {
+    if (sr)
+      set_sr(sr->get());
+    if (lr)
+      set_lr(lr->get());
+  }
 
   WakeSrStruct sr() const; // 0D_NOT_type
   void set_sr(const WakeSrStruct &src);
@@ -11478,6 +11905,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaylorTermStruct(
+      std::optional<double> coef = std::nullopt,
+      optional_ref<const std::vector<int>> expn = std::nullopt
+  )
+      : FortranProxy() {
+    if (coef)
+      set_coef(*coef);
+    if (expn)
+      set_expn(expn->get());
+  }
+
   double coef() const; // 0D_NOT_real
   void set_coef(double value);
   FArray1D<int> expn() const; // 1D_NOT_integer
@@ -11500,6 +11938,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaylorStruct(std::optional<double> ref = std::nullopt)
+      : FortranProxy() {
+    if (ref)
+      set_ref(*ref);
+  }
+
   double ref() const; // 0D_NOT_real
   void set_ref(double value);
   TaylorTermStructArray1D term() const; // 1D_PTR_type
@@ -11520,6 +11964,17 @@ class EmTaylorTermStruct : public FortranProxy<EmTaylorTermStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit EmTaylorTermStruct(
+      std::optional<double> coef = std::nullopt,
+      optional_ref<const std::vector<int>> expn = std::nullopt
+  )
+      : FortranProxy() {
+    if (coef)
+      set_coef(*coef);
+    if (expn)
+      set_expn(expn->get());
+  }
 
   double coef() const; // 0D_NOT_real
   void set_coef(double value);
@@ -11542,6 +11997,12 @@ class EmTaylorStruct : public FortranProxy<EmTaylorStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit EmTaylorStruct(std::optional<double> ref = std::nullopt)
+      : FortranProxy() {
+    if (ref)
+      set_ref(*ref);
+  }
 
   double ref() const; // 0D_NOT_real
   void set_ref(double value);
@@ -11567,6 +12028,38 @@ class CartesianMapTerm1Struct : public FortranProxy<CartesianMapTerm1Struct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit CartesianMapTerm1Struct(
+      std::optional<double> coef = std::nullopt,
+      std::optional<double> kx = std::nullopt,
+      std::optional<double> ky = std::nullopt,
+      std::optional<double> kz = std::nullopt,
+      std::optional<double> x0 = std::nullopt,
+      std::optional<double> y0 = std::nullopt,
+      std::optional<double> phi_z = std::nullopt,
+      std::optional<int> family = std::nullopt,
+      std::optional<int> form = std::nullopt
+  )
+      : FortranProxy() {
+    if (coef)
+      set_coef(*coef);
+    if (kx)
+      set_kx(*kx);
+    if (ky)
+      set_ky(*ky);
+    if (kz)
+      set_kz(*kz);
+    if (x0)
+      set_x0(*x0);
+    if (y0)
+      set_y0(*y0);
+    if (phi_z)
+      set_phi_z(*phi_z);
+    if (family)
+      set_family(*family);
+    if (form)
+      set_form(*form);
+  }
 
   double coef() const; // 0D_NOT_real
   void set_coef(double value);
@@ -11606,6 +12099,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit CartesianMapTermStruct(
+      optional_ref<const std::string> file = std::nullopt,
+      std::optional<int> n_link = std::nullopt
+  )
+      : FortranProxy() {
+    if (file)
+      set_file(file->get());
+    if (n_link)
+      set_n_link(*n_link);
+  }
+
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
   int n_link() const; // 0D_NOT_integer
@@ -11628,6 +12132,29 @@ class CartesianMapStruct : public FortranProxy<CartesianMapStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit CartesianMapStruct(
+      std::optional<double> field_scale = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<int> master_parameter = std::nullopt,
+      std::optional<int> ele_anchor_pt = std::nullopt,
+      std::optional<int> field_type = std::nullopt,
+      optional_ref<const CartesianMapTermStruct> ptr = std::nullopt
+  )
+      : FortranProxy() {
+    if (field_scale)
+      set_field_scale(*field_scale);
+    if (r0)
+      set_r0(r0->get());
+    if (master_parameter)
+      set_master_parameter(*master_parameter);
+    if (ele_anchor_pt)
+      set_ele_anchor_pt(*ele_anchor_pt);
+    if (field_type)
+      set_field_type(*field_type);
+    if (ptr)
+      set_ptr(ptr->get());
+  }
 
   double field_scale() const; // 0D_NOT_real
   void set_field_scale(double value);
@@ -11663,6 +12190,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit CylindricalMapTerm1Struct(
+      std::optional<std::complex<double>> e_coef = std::nullopt,
+      std::optional<std::complex<double>> b_coef = std::nullopt
+  )
+      : FortranProxy() {
+    if (e_coef)
+      set_e_coef(*e_coef);
+    if (b_coef)
+      set_b_coef(*b_coef);
+  }
+
   std::complex<double> e_coef() const; // 0D_NOT_complex
   void set_e_coef(std::complex<double> value);
   std::complex<double> b_coef() const; // 0D_NOT_complex
@@ -11689,6 +12227,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit CylindricalMapTermStruct(
+      optional_ref<const std::string> file = std::nullopt,
+      std::optional<int> n_link = std::nullopt
+  )
+      : FortranProxy() {
+    if (file)
+      set_file(file->get());
+    if (n_link)
+      set_n_link(*n_link);
+  }
+
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
   int n_link() const; // 0D_NOT_integer
@@ -11711,6 +12260,41 @@ class CylindricalMapStruct : public FortranProxy<CylindricalMapStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit CylindricalMapStruct(
+      std::optional<int> m = std::nullopt,
+      std::optional<int> harmonic = std::nullopt,
+      std::optional<double> phi0_fieldmap = std::nullopt,
+      std::optional<double> theta0_azimuth = std::nullopt,
+      std::optional<double> field_scale = std::nullopt,
+      std::optional<int> master_parameter = std::nullopt,
+      std::optional<int> ele_anchor_pt = std::nullopt,
+      std::optional<double> dz = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      optional_ref<const CylindricalMapTermStruct> ptr = std::nullopt
+  )
+      : FortranProxy() {
+    if (m)
+      set_m(*m);
+    if (harmonic)
+      set_harmonic(*harmonic);
+    if (phi0_fieldmap)
+      set_phi0_fieldmap(*phi0_fieldmap);
+    if (theta0_azimuth)
+      set_theta0_azimuth(*theta0_azimuth);
+    if (field_scale)
+      set_field_scale(*field_scale);
+    if (master_parameter)
+      set_master_parameter(*master_parameter);
+    if (ele_anchor_pt)
+      set_ele_anchor_pt(*ele_anchor_pt);
+    if (dz)
+      set_dz(*dz);
+    if (r0)
+      set_r0(r0->get());
+    if (ptr)
+      set_ptr(ptr->get());
+  }
 
   int m() const; // 0D_NOT_integer
   void set_m(int value);
@@ -11752,6 +12336,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit BicubicCmplxCoefStruct(
+      optional_ref<const std::vector<std::vector<std::complex<double>>>> coef = std::nullopt,
+      optional_ref<const std::vector<int>> i_box = std::nullopt
+  )
+      : FortranProxy() {
+    if (coef)
+      set_coef(coef->get());
+    if (i_box)
+      set_i_box(i_box->get());
+  }
+
   FArray2D<std::complex<double>> coef() const; // 2D_NOT_complex
   void set_coef(const std::vector<std::vector<std::complex<double>>> &v);
   FArray1D<int> i_box() const; // 1D_NOT_integer
@@ -11778,6 +12373,18 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TricubicCmplxCoefStruct(
+      optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>> coef =
+          std::nullopt,
+      optional_ref<const std::vector<int>> i_box = std::nullopt
+  )
+      : FortranProxy() {
+    if (coef)
+      set_coef(coef->get());
+    if (i_box)
+      set_i_box(i_box->get());
+  }
+
   FArray3D<std::complex<double>> coef() const; // 3D_NOT_complex
   void set_coef(const std::vector<std::vector<std::vector<std::complex<double>>>> &v);
   FArray1D<int> i_box() const; // 1D_NOT_integer
@@ -11799,6 +12406,17 @@ class GridFieldPt1Struct : public FortranProxy<GridFieldPt1Struct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit GridFieldPt1Struct(
+      optional_ref<const std::vector<std::complex<double>>> E = std::nullopt,
+      optional_ref<const std::vector<std::complex<double>>> B = std::nullopt
+  )
+      : FortranProxy() {
+    if (E)
+      set_E(E->get());
+    if (B)
+      set_B(B->get());
+  }
 
   FArray1D<std::complex<double>> E() const; // 1D_NOT_complex
   void set_E(const std::vector<std::complex<double>> &v);
@@ -11822,6 +12440,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit GridFieldPtStruct(
+      optional_ref<const std::string> file = std::nullopt,
+      std::optional<int> n_link = std::nullopt
+  )
+      : FortranProxy() {
+    if (file)
+      set_file(file->get());
+    if (n_link)
+      set_n_link(*n_link);
+  }
+
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
   int n_link() const; // 0D_NOT_integer
@@ -11844,6 +12473,47 @@ class GridFieldStruct : public FortranProxy<GridFieldStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit GridFieldStruct(
+      std::optional<int> geometry = std::nullopt,
+      std::optional<int> harmonic = std::nullopt,
+      std::optional<double> phi0_fieldmap = std::nullopt,
+      std::optional<double> field_scale = std::nullopt,
+      std::optional<int> field_type = std::nullopt,
+      std::optional<int> master_parameter = std::nullopt,
+      std::optional<int> ele_anchor_pt = std::nullopt,
+      std::optional<int> interpolation_order = std::nullopt,
+      optional_ref<const std::vector<double>> dr = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<bool> curved_ref_frame = std::nullopt,
+      optional_ref<const GridFieldPtStruct> ptr = std::nullopt
+  )
+      : FortranProxy() {
+    if (geometry)
+      set_geometry(*geometry);
+    if (harmonic)
+      set_harmonic(*harmonic);
+    if (phi0_fieldmap)
+      set_phi0_fieldmap(*phi0_fieldmap);
+    if (field_scale)
+      set_field_scale(*field_scale);
+    if (field_type)
+      set_field_type(*field_type);
+    if (master_parameter)
+      set_master_parameter(*master_parameter);
+    if (ele_anchor_pt)
+      set_ele_anchor_pt(*ele_anchor_pt);
+    if (interpolation_order)
+      set_interpolation_order(*interpolation_order);
+    if (dr)
+      set_dr(dr->get());
+    if (r0)
+      set_r0(r0->get());
+    if (curved_ref_frame)
+      set_curved_ref_frame(*curved_ref_frame);
+    if (ptr)
+      set_ptr(ptr->get());
+  }
 
   int geometry() const; // 0D_NOT_integer
   void set_geometry(int value);
@@ -11889,6 +12559,26 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit FloorPositionStruct(
+      optional_ref<const std::vector<double>> r = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> w = std::nullopt,
+      std::optional<double> theta = std::nullopt,
+      std::optional<double> phi = std::nullopt,
+      std::optional<double> psi = std::nullopt
+  )
+      : FortranProxy() {
+    if (r)
+      set_r(r->get());
+    if (w)
+      set_w(w->get());
+    if (theta)
+      set_theta(*theta);
+    if (phi)
+      set_phi(*phi);
+    if (psi)
+      set_psi(*psi);
+  }
+
   FArray1D<double> r() const; // 1D_NOT_real
   void set_r(const std::vector<double> &v);
   FArray2D<double> w() const; // 2D_NOT_real
@@ -11920,6 +12610,35 @@ class HighEnergySpaceChargeStruct : public FortranProxy<HighEnergySpaceChargeStr
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit HighEnergySpaceChargeStruct(
+      optional_ref<const CoordStruct> closed_orb = std::nullopt,
+      std::optional<double> kick_const = std::nullopt,
+      std::optional<double> sig_x = std::nullopt,
+      std::optional<double> sig_y = std::nullopt,
+      std::optional<double> phi = std::nullopt,
+      std::optional<double> sin_phi = std::nullopt,
+      std::optional<double> cos_phi = std::nullopt,
+      std::optional<double> sig_z = std::nullopt
+  )
+      : FortranProxy() {
+    if (closed_orb)
+      set_closed_orb(closed_orb->get());
+    if (kick_const)
+      set_kick_const(*kick_const);
+    if (sig_x)
+      set_sig_x(*sig_x);
+    if (sig_y)
+      set_sig_y(*sig_y);
+    if (phi)
+      set_phi(*phi);
+    if (sin_phi)
+      set_sin_phi(*sin_phi);
+    if (cos_phi)
+      set_cos_phi(*cos_phi);
+    if (sig_z)
+      set_sig_z(*sig_z);
+  }
 
   CoordStruct closed_orb() const; // 0D_NOT_type
   void set_closed_orb(const CoordStruct &src);
@@ -11955,6 +12674,29 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit XyDispStruct(
+      std::optional<double> eta = std::nullopt,
+      std::optional<double> etap = std::nullopt,
+      std::optional<double> deta_ds = std::nullopt,
+      std::optional<double> sigma = std::nullopt,
+      std::optional<double> deta_dpz = std::nullopt,
+      std::optional<double> detap_dpz = std::nullopt
+  )
+      : FortranProxy() {
+    if (eta)
+      set_eta(*eta);
+    if (etap)
+      set_etap(*etap);
+    if (deta_ds)
+      set_deta_ds(*deta_ds);
+    if (sigma)
+      set_sigma(*sigma);
+    if (deta_dpz)
+      set_deta_dpz(*deta_dpz);
+    if (detap_dpz)
+      set_detap_dpz(*detap_dpz);
+  }
+
   double eta() const; // 0D_NOT_real
   void set_eta(double value);
   double etap() const; // 0D_NOT_real
@@ -11984,6 +12726,59 @@ class TwissStruct : public FortranProxy<TwissStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TwissStruct(
+      std::optional<double> beta = std::nullopt,
+      std::optional<double> alpha = std::nullopt,
+      std::optional<double> gamma = std::nullopt,
+      std::optional<double> phi = std::nullopt,
+      std::optional<double> eta = std::nullopt,
+      std::optional<double> etap = std::nullopt,
+      std::optional<double> deta_ds = std::nullopt,
+      std::optional<double> sigma = std::nullopt,
+      std::optional<double> sigma_p = std::nullopt,
+      std::optional<double> emit = std::nullopt,
+      std::optional<double> norm_emit = std::nullopt,
+      std::optional<double> chrom = std::nullopt,
+      std::optional<double> dbeta_dpz = std::nullopt,
+      std::optional<double> dalpha_dpz = std::nullopt,
+      std::optional<double> deta_dpz = std::nullopt,
+      std::optional<double> detap_dpz = std::nullopt
+  )
+      : FortranProxy() {
+    if (beta)
+      set_beta(*beta);
+    if (alpha)
+      set_alpha(*alpha);
+    if (gamma)
+      set_gamma(*gamma);
+    if (phi)
+      set_phi(*phi);
+    if (eta)
+      set_eta(*eta);
+    if (etap)
+      set_etap(*etap);
+    if (deta_ds)
+      set_deta_ds(*deta_ds);
+    if (sigma)
+      set_sigma(*sigma);
+    if (sigma_p)
+      set_sigma_p(*sigma_p);
+    if (emit)
+      set_emit(*emit);
+    if (norm_emit)
+      set_norm_emit(*norm_emit);
+    if (chrom)
+      set_chrom(*chrom);
+    if (dbeta_dpz)
+      set_dbeta_dpz(*dbeta_dpz);
+    if (dalpha_dpz)
+      set_dalpha_dpz(*dalpha_dpz);
+    if (deta_dpz)
+      set_deta_dpz(*deta_dpz);
+    if (detap_dpz)
+      set_detap_dpz(*detap_dpz);
+  }
 
   double beta() const; // 0D_NOT_real
   void set_beta(double value);
@@ -12035,6 +12830,29 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit Mode3Struct(
+      optional_ref<const std::vector<std::vector<double>>> v = std::nullopt,
+      optional_ref<const TwissStruct> a = std::nullopt,
+      optional_ref<const TwissStruct> b = std::nullopt,
+      optional_ref<const TwissStruct> c = std::nullopt,
+      optional_ref<const TwissStruct> x = std::nullopt,
+      optional_ref<const TwissStruct> y = std::nullopt
+  )
+      : FortranProxy() {
+    if (v)
+      set_v(v->get());
+    if (a)
+      set_a(a->get());
+    if (b)
+      set_b(b->get());
+    if (c)
+      set_c(c->get());
+    if (x)
+      set_x(x->get());
+    if (y)
+      set_y(y->get());
+  }
+
   FArray2D<double> v() const; // 2D_NOT_real
   void set_v(const std::vector<std::vector<double>> &v);
   TwissStruct a() const; // 0D_NOT_type
@@ -12066,6 +12884,38 @@ class BookkeepingStateStruct : public FortranProxy<BookkeepingStateStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit BookkeepingStateStruct(
+      std::optional<int> attributes = std::nullopt,
+      std::optional<int> control = std::nullopt,
+      std::optional<int> floor_position = std::nullopt,
+      std::optional<int> s_position = std::nullopt,
+      std::optional<int> ref_energy = std::nullopt,
+      std::optional<int> mat6 = std::nullopt,
+      std::optional<int> rad_int = std::nullopt,
+      std::optional<int> ptc = std::nullopt,
+      std::optional<bool> has_misalign = std::nullopt
+  )
+      : FortranProxy() {
+    if (attributes)
+      set_attributes(*attributes);
+    if (control)
+      set_control(*control);
+    if (floor_position)
+      set_floor_position(*floor_position);
+    if (s_position)
+      set_s_position(*s_position);
+    if (ref_energy)
+      set_ref_energy(*ref_energy);
+    if (mat6)
+      set_mat6(*mat6);
+    if (rad_int)
+      set_rad_int(*rad_int);
+    if (ptc)
+      set_ptc(*ptc);
+    if (has_misalign)
+      set_has_misalign(*has_misalign);
+  }
 
   int attributes() const; // 0D_NOT_integer
   void set_attributes(int value);
@@ -12103,6 +12953,26 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit RadMapStruct(
+      optional_ref<const std::vector<double>> ref_orb = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> damp_dmat = std::nullopt,
+      optional_ref<const std::vector<double>> xfer_damp_vec = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> xfer_damp_mat = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> stoc_mat = std::nullopt
+  )
+      : FortranProxy() {
+    if (ref_orb)
+      set_ref_orb(ref_orb->get());
+    if (damp_dmat)
+      set_damp_dmat(damp_dmat->get());
+    if (xfer_damp_vec)
+      set_xfer_damp_vec(xfer_damp_vec->get());
+    if (xfer_damp_mat)
+      set_xfer_damp_mat(xfer_damp_mat->get());
+    if (stoc_mat)
+      set_stoc_mat(stoc_mat->get());
+  }
+
   FArray1D<double> ref_orb() const; // 1D_NOT_real
   void set_ref_orb(const std::vector<double> &v);
   FArray2D<double> damp_dmat() const; // 2D_NOT_real
@@ -12131,6 +13001,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit RadMapEleStruct(
+      optional_ref<const RadMapStruct> rm0 = std::nullopt,
+      optional_ref<const RadMapStruct> rm1 = std::nullopt,
+      std::optional<bool> stale = std::nullopt
+  )
+      : FortranProxy() {
+    if (rm0)
+      set_rm0(rm0->get());
+    if (rm1)
+      set_rm1(rm1->get());
+    if (stale)
+      set_stale(*stale);
+  }
+
   RadMapStruct rm0() const; // 0D_NOT_type
   void set_rm0(const RadMapStruct &src);
   RadMapStruct rm1() const; // 0D_NOT_type
@@ -12154,6 +13038,23 @@ class GenGrad1Struct : public FortranProxy<GenGrad1Struct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit GenGrad1Struct(
+      std::optional<int> m = std::nullopt,
+      std::optional<int> sincos = std::nullopt,
+      std::optional<int> n_deriv_max = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> deriv = std::nullopt
+  )
+      : FortranProxy() {
+    if (m)
+      set_m(*m);
+    if (sincos)
+      set_sincos(*sincos);
+    if (n_deriv_max)
+      set_n_deriv_max(*n_deriv_max);
+    if (deriv)
+      set_deriv(deriv->get());
+  }
 
   int m() const; // 0D_NOT_integer
   void set_m(int value);
@@ -12180,6 +13081,41 @@ class GenGradMapStruct : public FortranProxy<GenGradMapStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit GenGradMapStruct(
+      optional_ref<const std::string> file = std::nullopt,
+      std::optional<int> ele_anchor_pt = std::nullopt,
+      std::optional<int> field_type = std::nullopt,
+      std::optional<int> iz0 = std::nullopt,
+      std::optional<int> iz1 = std::nullopt,
+      std::optional<double> dz = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<double> field_scale = std::nullopt,
+      std::optional<int> master_parameter = std::nullopt,
+      std::optional<bool> curved_ref_frame = std::nullopt
+  )
+      : FortranProxy() {
+    if (file)
+      set_file(file->get());
+    if (ele_anchor_pt)
+      set_ele_anchor_pt(*ele_anchor_pt);
+    if (field_type)
+      set_field_type(*field_type);
+    if (iz0)
+      set_iz0(*iz0);
+    if (iz1)
+      set_iz1(*iz1);
+    if (dz)
+      set_dz(*dz);
+    if (r0)
+      set_r0(r0->get());
+    if (field_scale)
+      set_field_scale(*field_scale);
+    if (master_parameter)
+      set_master_parameter(*master_parameter);
+    if (curved_ref_frame)
+      set_curved_ref_frame(*curved_ref_frame);
+  }
 
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
@@ -12224,6 +13160,26 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit SurfaceSegmentedPtStruct(
+      std::optional<double> x0 = std::nullopt,
+      std::optional<double> y0 = std::nullopt,
+      std::optional<double> z0 = std::nullopt,
+      std::optional<double> dz_dx = std::nullopt,
+      std::optional<double> dz_dy = std::nullopt
+  )
+      : FortranProxy() {
+    if (x0)
+      set_x0(*x0);
+    if (y0)
+      set_y0(*y0);
+    if (z0)
+      set_z0(*z0);
+    if (dz_dx)
+      set_dz_dx(*dz_dx);
+    if (dz_dy)
+      set_dz_dy(*dz_dy);
+  }
+
   double x0() const; // 0D_NOT_real
   void set_x0(double value);
   double y0() const; // 0D_NOT_real
@@ -12254,6 +13210,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit SurfaceSegmentedStruct(
+      std::optional<bool> active = std::nullopt,
+      optional_ref<const std::vector<double>> dr = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt
+  )
+      : FortranProxy() {
+    if (active)
+      set_active(*active);
+    if (dr)
+      set_dr(dr->get());
+    if (r0)
+      set_r0(r0->get());
+  }
+
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
   FArray1D<double> dr() const; // 1D_NOT_real
@@ -12282,6 +13252,29 @@ class SurfaceHMisalignPtStruct : public FortranProxy<SurfaceHMisalignPtStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit SurfaceHMisalignPtStruct(
+      std::optional<double> x0 = std::nullopt,
+      std::optional<double> y0 = std::nullopt,
+      std::optional<double> rot_y = std::nullopt,
+      std::optional<double> rot_t = std::nullopt,
+      std::optional<double> rot_y_rms = std::nullopt,
+      std::optional<double> rot_t_rms = std::nullopt
+  )
+      : FortranProxy() {
+    if (x0)
+      set_x0(*x0);
+    if (y0)
+      set_y0(*y0);
+    if (rot_y)
+      set_rot_y(*rot_y);
+    if (rot_t)
+      set_rot_t(*rot_t);
+    if (rot_y_rms)
+      set_rot_y_rms(*rot_y_rms);
+    if (rot_t_rms)
+      set_rot_t_rms(*rot_t_rms);
+  }
 
   double x0() const; // 0D_NOT_real
   void set_x0(double value);
@@ -12315,6 +13308,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit SurfaceHMisalignStruct(
+      std::optional<bool> active = std::nullopt,
+      optional_ref<const std::vector<double>> dr = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt
+  )
+      : FortranProxy() {
+    if (active)
+      set_active(*active);
+    if (dr)
+      set_dr(dr->get());
+    if (r0)
+      set_r0(r0->get());
+  }
+
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
   FArray1D<double> dr() const; // 1D_NOT_real
@@ -12343,6 +13350,29 @@ class SurfaceDisplacementPtStruct : public FortranProxy<SurfaceDisplacementPtStr
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit SurfaceDisplacementPtStruct(
+      std::optional<double> x0 = std::nullopt,
+      std::optional<double> y0 = std::nullopt,
+      std::optional<double> z0 = std::nullopt,
+      std::optional<double> dz_dx = std::nullopt,
+      std::optional<double> dz_dy = std::nullopt,
+      std::optional<double> d2z_dxdy = std::nullopt
+  )
+      : FortranProxy() {
+    if (x0)
+      set_x0(*x0);
+    if (y0)
+      set_y0(*y0);
+    if (z0)
+      set_z0(*z0);
+    if (dz_dx)
+      set_dz_dx(*dz_dx);
+    if (dz_dy)
+      set_dz_dy(*dz_dy);
+    if (d2z_dxdy)
+      set_d2z_dxdy(*d2z_dxdy);
+  }
 
   double x0() const; // 0D_NOT_real
   void set_x0(double value);
@@ -12378,6 +13408,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit SurfaceDisplacementStruct(
+      std::optional<bool> active = std::nullopt,
+      optional_ref<const std::vector<double>> dr = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt
+  )
+      : FortranProxy() {
+    if (active)
+      set_active(*active);
+    if (dr)
+      set_dr(dr->get());
+    if (r0)
+      set_r0(r0->get());
+  }
+
   bool active() const; // 0D_NOT_logical
   void set_active(bool value);
   FArray1D<double> dr() const; // 1D_NOT_real
@@ -12403,6 +13447,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TargetPointStruct(optional_ref<const std::vector<double>> r = std::nullopt)
+      : FortranProxy() {
+    if (r)
+      set_r(r->get());
+  }
+
   FArray1D<double> r() const; // 1D_NOT_real
   void set_r(const std::vector<double> &v);
 };
@@ -12424,6 +13474,23 @@ class SurfaceCurvatureStruct : public FortranProxy<SurfaceCurvatureStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit SurfaceCurvatureStruct(
+      optional_ref<const std::vector<std::vector<double>>> xy = std::nullopt,
+      std::optional<double> spherical = std::nullopt,
+      optional_ref<const std::vector<double>> elliptical = std::nullopt,
+      std::optional<bool> has_curvature = std::nullopt
+  )
+      : FortranProxy() {
+    if (xy)
+      set_xy(xy->get());
+    if (spherical)
+      set_spherical(*spherical);
+    if (elliptical)
+      set_elliptical(elliptical->get());
+    if (has_curvature)
+      set_has_curvature(*has_curvature);
+  }
 
   FArray2D<double> xy() const; // 2D_NOT_real
   void set_xy(const std::vector<std::vector<double>> &v);
@@ -12451,6 +13518,23 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit PhotonTargetStruct(
+      std::optional<int> type = std::nullopt,
+      std::optional<int> n_corner = std::nullopt,
+      optional_ref<const LatEleLocStruct> ele_loc = std::nullopt,
+      optional_ref<const TargetPointStruct> center = std::nullopt
+  )
+      : FortranProxy() {
+    if (type)
+      set_type(*type);
+    if (n_corner)
+      set_n_corner(*n_corner);
+    if (ele_loc)
+      set_ele_loc(ele_loc->get());
+    if (center)
+      set_center(center->get());
+  }
+
   int type() const; // 0D_NOT_integer
   void set_type(int value);
   int n_corner() const; // 0D_NOT_integer
@@ -12477,6 +13561,35 @@ class PhotonMaterialStruct : public FortranProxy<PhotonMaterialStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit PhotonMaterialStruct(
+      std::optional<std::complex<double>> f0_m1 = std::nullopt,
+      std::optional<std::complex<double>> f0_m2 = std::nullopt,
+      std::optional<std::complex<double>> f_0 = std::nullopt,
+      std::optional<std::complex<double>> f_h = std::nullopt,
+      std::optional<std::complex<double>> f_hbar = std::nullopt,
+      std::optional<std::complex<double>> f_hkl = std::nullopt,
+      optional_ref<const std::vector<double>> h_norm = std::nullopt,
+      optional_ref<const std::vector<double>> l_ref = std::nullopt
+  )
+      : FortranProxy() {
+    if (f0_m1)
+      set_f0_m1(*f0_m1);
+    if (f0_m2)
+      set_f0_m2(*f0_m2);
+    if (f_0)
+      set_f_0(*f_0);
+    if (f_h)
+      set_f_h(*f_h);
+    if (f_hbar)
+      set_f_hbar(*f_hbar);
+    if (f_hkl)
+      set_f_hkl(*f_hkl);
+    if (h_norm)
+      set_h_norm(h_norm->get());
+    if (l_ref)
+      set_l_ref(l_ref->get());
+  }
 
   std::complex<double> f0_m1() const; // 0D_NOT_complex
   void set_f0_m1(std::complex<double> value);
@@ -12511,6 +13624,41 @@ class PixelPtStruct : public FortranProxy<PixelPtStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit PixelPtStruct(
+      std::optional<int64_t> n_photon = std::nullopt,
+      std::optional<std::complex<double>> E_x = std::nullopt,
+      std::optional<std::complex<double>> E_y = std::nullopt,
+      std::optional<double> intensity_x = std::nullopt,
+      std::optional<double> intensity_y = std::nullopt,
+      std::optional<double> intensity = std::nullopt,
+      optional_ref<const std::vector<double>> orbit = std::nullopt,
+      optional_ref<const std::vector<double>> orbit_rms = std::nullopt,
+      optional_ref<const std::vector<double>> init_orbit = std::nullopt,
+      optional_ref<const std::vector<double>> init_orbit_rms = std::nullopt
+  )
+      : FortranProxy() {
+    if (n_photon)
+      set_n_photon(*n_photon);
+    if (E_x)
+      set_E_x(*E_x);
+    if (E_y)
+      set_E_y(*E_y);
+    if (intensity_x)
+      set_intensity_x(*intensity_x);
+    if (intensity_y)
+      set_intensity_y(*intensity_y);
+    if (intensity)
+      set_intensity(*intensity);
+    if (orbit)
+      set_orbit(orbit->get());
+    if (orbit_rms)
+      set_orbit_rms(orbit_rms->get());
+    if (init_orbit)
+      set_init_orbit(init_orbit->get());
+    if (init_orbit_rms)
+      set_init_orbit_rms(init_orbit_rms->get());
+  }
 
   int64_t n_photon() const; // 0D_NOT_integer8
   void set_n_photon(int64_t value);
@@ -12550,6 +13698,26 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit PixelDetecStruct(
+      optional_ref<const std::vector<double>> dr = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<int64_t> n_track_tot = std::nullopt,
+      std::optional<int64_t> n_hit_detec = std::nullopt,
+      std::optional<int64_t> n_hit_pixel = std::nullopt
+  )
+      : FortranProxy() {
+    if (dr)
+      set_dr(dr->get());
+    if (r0)
+      set_r0(r0->get());
+    if (n_track_tot)
+      set_n_track_tot(*n_track_tot);
+    if (n_hit_detec)
+      set_n_hit_detec(*n_hit_detec);
+    if (n_hit_pixel)
+      set_n_hit_pixel(*n_hit_pixel);
+  }
+
   FArray1D<double> dr() const; // 1D_NOT_real
   void set_dr(const std::vector<double> &v);
   FArray1D<double> r0() const; // 1D_NOT_real
@@ -12578,6 +13746,44 @@ class PhotonElementStruct : public FortranProxy<PhotonElementStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit PhotonElementStruct(
+      optional_ref<const SurfaceCurvatureStruct> curvature = std::nullopt,
+      optional_ref<const PhotonTargetStruct> target = std::nullopt,
+      optional_ref<const PhotonMaterialStruct> material = std::nullopt,
+      optional_ref<const SurfaceSegmentedStruct> segmented = std::nullopt,
+      optional_ref<const SurfaceHMisalignStruct> h_misalign = std::nullopt,
+      optional_ref<const SurfaceDisplacementStruct> displacement = std::nullopt,
+      optional_ref<const PixelDetecStruct> pixel = std::nullopt,
+      std::optional<int> reflectivity_table_type = std::nullopt,
+      optional_ref<const PhotonReflectTableStruct> reflectivity_table_sigma = std::nullopt,
+      optional_ref<const PhotonReflectTableStruct> reflectivity_table_pi = std::nullopt,
+      optional_ref<const std::vector<double>> integrated_init_energy_prob = std::nullopt
+  )
+      : FortranProxy() {
+    if (curvature)
+      set_curvature(curvature->get());
+    if (target)
+      set_target(target->get());
+    if (material)
+      set_material(material->get());
+    if (segmented)
+      set_segmented(segmented->get());
+    if (h_misalign)
+      set_h_misalign(h_misalign->get());
+    if (displacement)
+      set_displacement(displacement->get());
+    if (pixel)
+      set_pixel(pixel->get());
+    if (reflectivity_table_type)
+      set_reflectivity_table_type(*reflectivity_table_type);
+    if (reflectivity_table_sigma)
+      set_reflectivity_table_sigma(reflectivity_table_sigma->get());
+    if (reflectivity_table_pi)
+      set_reflectivity_table_pi(reflectivity_table_pi->get());
+    if (integrated_init_energy_prob)
+      set_integrated_init_energy_prob(integrated_init_energy_prob->get());
+  }
 
   SurfaceCurvatureStruct curvature() const; // 0D_NOT_type
   void set_curvature(const SurfaceCurvatureStruct &src);
@@ -12620,6 +13826,38 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit Wall3dVertexStruct(
+      std::optional<double> x = std::nullopt,
+      std::optional<double> y = std::nullopt,
+      std::optional<double> radius_x = std::nullopt,
+      std::optional<double> radius_y = std::nullopt,
+      std::optional<double> tilt = std::nullopt,
+      std::optional<double> angle = std::nullopt,
+      std::optional<double> x0 = std::nullopt,
+      std::optional<double> y0 = std::nullopt,
+      std::optional<int> type = std::nullopt
+  )
+      : FortranProxy() {
+    if (x)
+      set_x(*x);
+    if (y)
+      set_y(*y);
+    if (radius_x)
+      set_radius_x(*radius_x);
+    if (radius_y)
+      set_radius_y(*radius_y);
+    if (tilt)
+      set_tilt(*tilt);
+    if (angle)
+      set_angle(*angle);
+    if (x0)
+      set_x0(*x0);
+    if (y0)
+      set_y0(*y0);
+    if (type)
+      set_type(*type);
+  }
+
   double x() const; // 0D_NOT_real
   void set_x(double value);
   double y() const; // 0D_NOT_real
@@ -12655,6 +13893,68 @@ class Wall3dSectionStruct : public FortranProxy<Wall3dSectionStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit Wall3dSectionStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const std::string> material = std::nullopt,
+      optional_ref<const PhotonReflectSurfaceStruct> surface = std::nullopt,
+      std::optional<int> type = std::nullopt,
+      std::optional<int> n_vertex_input = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> vertices_state = std::nullopt,
+      std::optional<bool> patch_in_region = std::nullopt,
+      std::optional<double> thickness = std::nullopt,
+      std::optional<double> s = std::nullopt,
+      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<double> dx0_ds = std::nullopt,
+      std::optional<double> dy0_ds = std::nullopt,
+      optional_ref<const std::vector<double>> x0_coef = std::nullopt,
+      optional_ref<const std::vector<double>> y0_coef = std::nullopt,
+      std::optional<double> dr_ds = std::nullopt,
+      optional_ref<const std::vector<double>> p1_coef = std::nullopt,
+      optional_ref<const std::vector<double>> p2_coef = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (material)
+      set_material(material->get());
+    if (surface)
+      set_surface(surface->get());
+    if (type)
+      set_type(*type);
+    if (n_vertex_input)
+      set_n_vertex_input(*n_vertex_input);
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (vertices_state)
+      set_vertices_state(*vertices_state);
+    if (patch_in_region)
+      set_patch_in_region(*patch_in_region);
+    if (thickness)
+      set_thickness(*thickness);
+    if (s)
+      set_s(*s);
+    if (r0)
+      set_r0(r0->get());
+    if (dx0_ds)
+      set_dx0_ds(*dx0_ds);
+    if (dy0_ds)
+      set_dy0_ds(*dy0_ds);
+    if (x0_coef)
+      set_x0_coef(x0_coef->get());
+    if (y0_coef)
+      set_y0_coef(y0_coef->get());
+    if (dr_ds)
+      set_dr_ds(*dr_ds);
+    if (p1_coef)
+      set_p1_coef(p1_coef->get());
+    if (p2_coef)
+      set_p2_coef(p2_coef->get());
+  }
 
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
@@ -12713,6 +14013,38 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit Wall3dStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      std::optional<int> type = std::nullopt,
+      std::optional<int> ix_wall3d = std::nullopt,
+      std::optional<int> n_link = std::nullopt,
+      std::optional<double> thickness = std::nullopt,
+      optional_ref<const std::string> clear_material = std::nullopt,
+      optional_ref<const std::string> opaque_material = std::nullopt,
+      std::optional<bool> superimpose = std::nullopt,
+      std::optional<int> ele_anchor_pt = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (type)
+      set_type(*type);
+    if (ix_wall3d)
+      set_ix_wall3d(*ix_wall3d);
+    if (n_link)
+      set_n_link(*n_link);
+    if (thickness)
+      set_thickness(*thickness);
+    if (clear_material)
+      set_clear_material(clear_material->get());
+    if (opaque_material)
+      set_opaque_material(opaque_material->get());
+    if (superimpose)
+      set_superimpose(*superimpose);
+    if (ele_anchor_pt)
+      set_ele_anchor_pt(*ele_anchor_pt);
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   int type() const; // 0D_NOT_integer
@@ -12750,6 +14082,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit RamperLordStruct(
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> ix_con = std::nullopt,
+      std::optional<double> attrib_ptr = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (ix_con)
+      set_ix_con(*ix_con);
+    if (attrib_ptr)
+      set_attrib_ptr(*attrib_ptr);
+  }
+
   int ix_ele() const; // 0D_NOT_integer
   void set_ix_ele(int value);
   int ix_con() const; // 0D_NOT_integer
@@ -12773,6 +14119,32 @@ class ControlStruct : public FortranProxy<ControlStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit ControlStruct(
+      std::optional<double> value = std::nullopt,
+      optional_ref<const std::vector<double>> y_knot = std::nullopt,
+      optional_ref<const LatEleLocStruct> slave = std::nullopt,
+      optional_ref<const LatEleLocStruct> lord = std::nullopt,
+      optional_ref<const std::string> slave_name = std::nullopt,
+      optional_ref<const std::string> attribute = std::nullopt,
+      std::optional<int> ix_attrib = std::nullopt
+  )
+      : FortranProxy() {
+    if (value)
+      set_value(*value);
+    if (y_knot)
+      set_y_knot(y_knot->get());
+    if (slave)
+      set_slave(slave->get());
+    if (lord)
+      set_lord(lord->get());
+    if (slave_name)
+      set_slave_name(slave_name->get());
+    if (attribute)
+      set_attribute(attribute->get());
+    if (ix_attrib)
+      set_ix_attrib(*ix_attrib);
+  }
 
   double value() const; // 0D_NOT_real
   void set_value(double value);
@@ -12807,6 +14179,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit ControlVar1Struct(
+      optional_ref<const std::string> name = std::nullopt,
+      std::optional<double> value = std::nullopt,
+      std::optional<double> old_value = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (value)
+      set_value(*value);
+    if (old_value)
+      set_old_value(*old_value);
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   double value() const; // 0D_NOT_real
@@ -12830,6 +14216,23 @@ class ControlRamp1Struct : public FortranProxy<ControlRamp1Struct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit ControlRamp1Struct(
+      optional_ref<const std::vector<double>> y_knot = std::nullopt,
+      optional_ref<const std::string> attribute = std::nullopt,
+      optional_ref<const std::string> slave_name = std::nullopt,
+      std::optional<bool> is_controller = std::nullopt
+  )
+      : FortranProxy() {
+    if (y_knot)
+      set_y_knot(y_knot->get());
+    if (attribute)
+      set_attribute(attribute->get());
+    if (slave_name)
+      set_slave_name(slave_name->get());
+    if (is_controller)
+      set_is_controller(*is_controller);
+  }
 
   FArray1D<double> y_knot() const; // 1D_ALLOC_real
   void set_y_knot(const std::vector<double> &v);
@@ -12858,6 +14261,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit ControllerStruct(optional_ref<const std::vector<double>> x_knot = std::nullopt)
+      : FortranProxy() {
+    if (x_knot)
+      set_x_knot(x_knot->get());
+  }
+
   ControlVar1StructArray1D var() const; // 1D_ALLOC_type
   ControlRamp1StructArray1D ramp() const; // 1D_ALLOC_type
   RamperLordStructArray1D ramper_lord() const; // 1D_ALLOC_type
@@ -12883,6 +14292,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit EllipseBeamInitStruct(
+      std::optional<int> part_per_ellipse = std::nullopt,
+      std::optional<int> n_ellipse = std::nullopt,
+      std::optional<double> sigma_cutoff = std::nullopt
+  )
+      : FortranProxy() {
+    if (part_per_ellipse)
+      set_part_per_ellipse(*part_per_ellipse);
+    if (n_ellipse)
+      set_n_ellipse(*n_ellipse);
+    if (sigma_cutoff)
+      set_sigma_cutoff(*sigma_cutoff);
+  }
+
   int part_per_ellipse() const; // 0D_NOT_integer
   void set_part_per_ellipse(int value);
   int n_ellipse() const; // 0D_NOT_integer
@@ -12907,6 +14330,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit KvBeamInitStruct(
+      optional_ref<const std::vector<int>> part_per_phi = std::nullopt,
+      std::optional<int> n_I2 = std::nullopt,
+      std::optional<double> A = std::nullopt
+  )
+      : FortranProxy() {
+    if (part_per_phi)
+      set_part_per_phi(part_per_phi->get());
+    if (n_I2)
+      set_n_I2(*n_I2);
+    if (A)
+      set_A(*A);
+  }
+
   FArray1D<int> part_per_phi() const; // 1D_NOT_integer
   void set_part_per_phi(const std::vector<int> &v);
   int n_I2() const; // 0D_NOT_integer
@@ -12930,6 +14367,29 @@ class GridBeamInitStruct : public FortranProxy<GridBeamInitStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit GridBeamInitStruct(
+      std::optional<int> n_x = std::nullopt,
+      std::optional<int> n_px = std::nullopt,
+      std::optional<double> x_min = std::nullopt,
+      std::optional<double> x_max = std::nullopt,
+      std::optional<double> px_min = std::nullopt,
+      std::optional<double> px_max = std::nullopt
+  )
+      : FortranProxy() {
+    if (n_x)
+      set_n_x(*n_x);
+    if (n_px)
+      set_n_px(*n_px);
+    if (x_min)
+      set_x_min(*x_min);
+    if (x_max)
+      set_x_max(*x_max);
+    if (px_min)
+      set_px_min(*px_min);
+    if (px_max)
+      set_px_max(*px_max);
+  }
 
   int n_x() const; // 0D_NOT_integer
   void set_n_x(int value);
@@ -12960,6 +14420,107 @@ class BeamInitStruct : public FortranProxy<BeamInitStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit BeamInitStruct(
+      optional_ref<const std::string> position_file = std::nullopt,
+      optional_ref<const std::vector<double>> spin = std::nullopt,
+      optional_ref<const KvBeamInitStruct> KV = std::nullopt,
+      optional_ref<const std::vector<double>> center_jitter = std::nullopt,
+      optional_ref<const std::vector<double>> emit_jitter = std::nullopt,
+      std::optional<double> sig_z_jitter = std::nullopt,
+      std::optional<double> sig_pz_jitter = std::nullopt,
+      std::optional<int> n_particle = std::nullopt,
+      std::optional<bool> renorm_center = std::nullopt,
+      std::optional<bool> renorm_sigma = std::nullopt,
+      optional_ref<const std::string> random_engine = std::nullopt,
+      optional_ref<const std::string> random_gauss_converter = std::nullopt,
+      std::optional<double> random_sigma_cutoff = std::nullopt,
+      std::optional<double> a_norm_emit = std::nullopt,
+      std::optional<double> b_norm_emit = std::nullopt,
+      std::optional<double> a_emit = std::nullopt,
+      std::optional<double> b_emit = std::nullopt,
+      std::optional<double> dPz_dz = std::nullopt,
+      optional_ref<const std::vector<double>> center = std::nullopt,
+      std::optional<double> t_offset = std::nullopt,
+      std::optional<double> dt_bunch = std::nullopt,
+      std::optional<double> sig_z = std::nullopt,
+      std::optional<double> sig_pz = std::nullopt,
+      std::optional<double> bunch_charge = std::nullopt,
+      std::optional<int> n_bunch = std::nullopt,
+      std::optional<int> ix_turn = std::nullopt,
+      optional_ref<const std::string> species = std::nullopt,
+      std::optional<bool> full_6D_coupling_calc = std::nullopt,
+      std::optional<bool> use_particle_start = std::nullopt,
+      std::optional<bool> use_t_coords = std::nullopt,
+      std::optional<bool> use_z_as_t = std::nullopt,
+      optional_ref<const std::string> file_name = std::nullopt
+  )
+      : FortranProxy() {
+    if (position_file)
+      set_position_file(position_file->get());
+    if (spin)
+      set_spin(spin->get());
+    if (KV)
+      set_KV(KV->get());
+    if (center_jitter)
+      set_center_jitter(center_jitter->get());
+    if (emit_jitter)
+      set_emit_jitter(emit_jitter->get());
+    if (sig_z_jitter)
+      set_sig_z_jitter(*sig_z_jitter);
+    if (sig_pz_jitter)
+      set_sig_pz_jitter(*sig_pz_jitter);
+    if (n_particle)
+      set_n_particle(*n_particle);
+    if (renorm_center)
+      set_renorm_center(*renorm_center);
+    if (renorm_sigma)
+      set_renorm_sigma(*renorm_sigma);
+    if (random_engine)
+      set_random_engine(random_engine->get());
+    if (random_gauss_converter)
+      set_random_gauss_converter(random_gauss_converter->get());
+    if (random_sigma_cutoff)
+      set_random_sigma_cutoff(*random_sigma_cutoff);
+    if (a_norm_emit)
+      set_a_norm_emit(*a_norm_emit);
+    if (b_norm_emit)
+      set_b_norm_emit(*b_norm_emit);
+    if (a_emit)
+      set_a_emit(*a_emit);
+    if (b_emit)
+      set_b_emit(*b_emit);
+    if (dPz_dz)
+      set_dPz_dz(*dPz_dz);
+    if (center)
+      set_center(center->get());
+    if (t_offset)
+      set_t_offset(*t_offset);
+    if (dt_bunch)
+      set_dt_bunch(*dt_bunch);
+    if (sig_z)
+      set_sig_z(*sig_z);
+    if (sig_pz)
+      set_sig_pz(*sig_pz);
+    if (bunch_charge)
+      set_bunch_charge(*bunch_charge);
+    if (n_bunch)
+      set_n_bunch(*n_bunch);
+    if (ix_turn)
+      set_ix_turn(*ix_turn);
+    if (species)
+      set_species(species->get());
+    if (full_6D_coupling_calc)
+      set_full_6D_coupling_calc(*full_6D_coupling_calc);
+    if (use_particle_start)
+      set_use_particle_start(*use_particle_start);
+    if (use_t_coords)
+      set_use_t_coords(*use_t_coords);
+    if (use_z_as_t)
+      set_use_z_as_t(*use_z_as_t);
+    if (file_name)
+      set_file_name(file_name->get());
+  }
 
   std::string position_file() const; // 0D_NOT_character
   void set_position_file(const std::string &value);
@@ -13046,6 +14607,62 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit LatParamStruct(
+      std::optional<double> n_part = std::nullopt,
+      std::optional<double> total_length = std::nullopt,
+      std::optional<double> unstable_factor = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> t1_with_RF = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> t1_no_RF = std::nullopt,
+      std::optional<double> spin_tune = std::nullopt,
+      std::optional<int> particle = std::nullopt,
+      std::optional<int> default_tracking_species = std::nullopt,
+      std::optional<int> geometry = std::nullopt,
+      std::optional<int> ixx = std::nullopt,
+      std::optional<bool> stable = std::nullopt,
+      std::optional<bool> live_branch = std::nullopt,
+      std::optional<double> g1_integral = std::nullopt,
+      std::optional<double> g2_integral = std::nullopt,
+      std::optional<double> g3_integral = std::nullopt,
+      optional_ref<const BookkeepingStateStruct> bookkeeping_state = std::nullopt,
+      optional_ref<const BeamInitStruct> beam_init = std::nullopt
+  )
+      : FortranProxy() {
+    if (n_part)
+      set_n_part(*n_part);
+    if (total_length)
+      set_total_length(*total_length);
+    if (unstable_factor)
+      set_unstable_factor(*unstable_factor);
+    if (t1_with_RF)
+      set_t1_with_RF(t1_with_RF->get());
+    if (t1_no_RF)
+      set_t1_no_RF(t1_no_RF->get());
+    if (spin_tune)
+      set_spin_tune(*spin_tune);
+    if (particle)
+      set_particle(*particle);
+    if (default_tracking_species)
+      set_default_tracking_species(*default_tracking_species);
+    if (geometry)
+      set_geometry(*geometry);
+    if (ixx)
+      set_ixx(*ixx);
+    if (stable)
+      set_stable(*stable);
+    if (live_branch)
+      set_live_branch(*live_branch);
+    if (g1_integral)
+      set_g1_integral(*g1_integral);
+    if (g2_integral)
+      set_g2_integral(*g2_integral);
+    if (g3_integral)
+      set_g3_integral(*g3_integral);
+    if (bookkeeping_state)
+      set_bookkeeping_state(bookkeeping_state->get());
+    if (beam_init)
+      set_beam_init(beam_init->get());
+  }
+
   double n_part() const; // 0D_NOT_real
   void set_n_part(double value);
   double total_length() const; // 0D_NOT_real
@@ -13098,6 +14715,29 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit ModeInfoStruct(
+      std::optional<bool> stable = std::nullopt,
+      std::optional<double> tune = std::nullopt,
+      std::optional<double> emit = std::nullopt,
+      std::optional<double> chrom = std::nullopt,
+      std::optional<double> sigma = std::nullopt,
+      std::optional<double> sigmap = std::nullopt
+  )
+      : FortranProxy() {
+    if (stable)
+      set_stable(*stable);
+    if (tune)
+      set_tune(*tune);
+    if (emit)
+      set_emit(*emit);
+    if (chrom)
+      set_chrom(*chrom);
+    if (sigma)
+      set_sigma(*sigma);
+    if (sigmap)
+      set_sigmap(*sigmap);
+  }
+
   bool stable() const; // 0D_NOT_logical
   void set_stable(bool value);
   double tune() const; // 0D_NOT_real
@@ -13128,6 +14768,23 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit PreTrackerStruct(
+      std::optional<int> who = std::nullopt,
+      std::optional<int> ix_ele_start = std::nullopt,
+      std::optional<int> ix_ele_end = std::nullopt,
+      optional_ref<const std::string> input_file = std::nullopt
+  )
+      : FortranProxy() {
+    if (who)
+      set_who(*who);
+    if (ix_ele_start)
+      set_ix_ele_start(*ix_ele_start);
+    if (ix_ele_end)
+      set_ix_ele_end(*ix_ele_end);
+    if (input_file)
+      set_input_file(input_file->get());
+  }
+
   int who() const; // 0D_NOT_integer
   void set_who(int value);
   int ix_ele_start() const; // 0D_NOT_integer
@@ -13153,6 +14810,32 @@ class AnormalModeStruct : public FortranProxy<AnormalModeStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit AnormalModeStruct(
+      std::optional<double> emittance = std::nullopt,
+      std::optional<double> emittance_no_vert = std::nullopt,
+      optional_ref<const std::vector<double>> synch_int = std::nullopt,
+      std::optional<double> j_damp = std::nullopt,
+      std::optional<double> alpha_damp = std::nullopt,
+      std::optional<double> chrom = std::nullopt,
+      std::optional<double> tune = std::nullopt
+  )
+      : FortranProxy() {
+    if (emittance)
+      set_emittance(*emittance);
+    if (emittance_no_vert)
+      set_emittance_no_vert(*emittance_no_vert);
+    if (synch_int)
+      set_synch_int(synch_int->get());
+    if (j_damp)
+      set_j_damp(*j_damp);
+    if (alpha_damp)
+      set_alpha_damp(*alpha_damp);
+    if (chrom)
+      set_chrom(*chrom);
+    if (tune)
+      set_tune(*tune);
+  }
 
   double emittance() const; // 0D_NOT_real
   void set_emittance(double value);
@@ -13188,6 +14871,32 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit LinacNormalModeStruct(
+      std::optional<double> i2_E4 = std::nullopt,
+      std::optional<double> i3_E7 = std::nullopt,
+      std::optional<double> i5a_E6 = std::nullopt,
+      std::optional<double> i5b_E6 = std::nullopt,
+      std::optional<double> sig_E1 = std::nullopt,
+      std::optional<double> a_emittance_end = std::nullopt,
+      std::optional<double> b_emittance_end = std::nullopt
+  )
+      : FortranProxy() {
+    if (i2_E4)
+      set_i2_E4(*i2_E4);
+    if (i3_E7)
+      set_i3_E7(*i3_E7);
+    if (i5a_E6)
+      set_i5a_E6(*i5a_E6);
+    if (i5b_E6)
+      set_i5b_E6(*i5b_E6);
+    if (sig_E1)
+      set_sig_E1(*sig_E1);
+    if (a_emittance_end)
+      set_a_emittance_end(*a_emittance_end);
+    if (b_emittance_end)
+      set_b_emittance_end(*b_emittance_end);
+  }
+
   double i2_E4() const; // 0D_NOT_real
   void set_i2_E4(double value);
   double i3_E7() const; // 0D_NOT_real
@@ -13219,6 +14928,50 @@ class NormalModesStruct : public FortranProxy<NormalModesStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit NormalModesStruct(
+      optional_ref<const std::vector<double>> synch_int = std::nullopt,
+      std::optional<double> sigE_E = std::nullopt,
+      std::optional<double> sig_z = std::nullopt,
+      std::optional<double> e_loss = std::nullopt,
+      std::optional<double> rf_voltage = std::nullopt,
+      std::optional<double> pz_aperture = std::nullopt,
+      std::optional<double> pz_average = std::nullopt,
+      std::optional<double> momentum_compaction = std::nullopt,
+      std::optional<double> dpz_damp = std::nullopt,
+      optional_ref<const AnormalModeStruct> a = std::nullopt,
+      optional_ref<const AnormalModeStruct> b = std::nullopt,
+      optional_ref<const AnormalModeStruct> z = std::nullopt,
+      optional_ref<const LinacNormalModeStruct> lin = std::nullopt
+  )
+      : FortranProxy() {
+    if (synch_int)
+      set_synch_int(synch_int->get());
+    if (sigE_E)
+      set_sigE_E(*sigE_E);
+    if (sig_z)
+      set_sig_z(*sig_z);
+    if (e_loss)
+      set_e_loss(*e_loss);
+    if (rf_voltage)
+      set_rf_voltage(*rf_voltage);
+    if (pz_aperture)
+      set_pz_aperture(*pz_aperture);
+    if (pz_average)
+      set_pz_average(*pz_average);
+    if (momentum_compaction)
+      set_momentum_compaction(*momentum_compaction);
+    if (dpz_damp)
+      set_dpz_damp(*dpz_damp);
+    if (a)
+      set_a(a->get());
+    if (b)
+      set_b(b->get());
+    if (z)
+      set_z(z->get());
+    if (lin)
+      set_lin(lin->get());
+  }
 
   FArray1D<double> synch_int() const; // 1D_NOT_real
   void set_synch_int(const std::vector<double> &v);
@@ -13264,6 +15017,32 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit EmFieldStruct(
+      optional_ref<const std::vector<double>> E = std::nullopt,
+      optional_ref<const std::vector<double>> B = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> dE = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> dB = std::nullopt,
+      std::optional<double> phi = std::nullopt,
+      std::optional<double> phi_B = std::nullopt,
+      optional_ref<const std::vector<double>> A = std::nullopt
+  )
+      : FortranProxy() {
+    if (E)
+      set_E(E->get());
+    if (B)
+      set_B(B->get());
+    if (dE)
+      set_dE(dE->get());
+    if (dB)
+      set_dB(dB->get());
+    if (phi)
+      set_phi(*phi);
+    if (phi_B)
+      set_phi_B(*phi_B);
+    if (A)
+      set_A(A->get());
+  }
+
   FArray1D<double> E() const; // 1D_NOT_real
   void set_E(const std::vector<double> &v);
   FArray1D<double> B() const; // 1D_NOT_real
@@ -13295,6 +15074,32 @@ class StrongBeamStruct : public FortranProxy<StrongBeamStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit StrongBeamStruct(
+      std::optional<int> ix_slice = std::nullopt,
+      std::optional<double> x_center = std::nullopt,
+      std::optional<double> y_center = std::nullopt,
+      std::optional<double> x_sigma = std::nullopt,
+      std::optional<double> y_sigma = std::nullopt,
+      std::optional<double> dx = std::nullopt,
+      std::optional<double> dy = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix_slice)
+      set_ix_slice(*ix_slice);
+    if (x_center)
+      set_x_center(*x_center);
+    if (y_center)
+      set_y_center(*y_center);
+    if (x_sigma)
+      set_x_sigma(*x_sigma);
+    if (y_sigma)
+      set_y_sigma(*y_sigma);
+    if (dx)
+      set_dx(*dx);
+    if (dy)
+      set_dy(*dy);
+  }
 
   int ix_slice() const; // 0D_NOT_integer
   void set_ix_slice(int value);
@@ -13328,6 +15133,32 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TrackPointStruct(
+      std::optional<double> s_lab = std::nullopt,
+      std::optional<double> s_body = std::nullopt,
+      optional_ref<const CoordStruct> orb = std::nullopt,
+      optional_ref<const EmFieldStruct> field = std::nullopt,
+      optional_ref<const StrongBeamStruct> strong_beam = std::nullopt,
+      optional_ref<const std::vector<double>> vec0 = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> mat6 = std::nullopt
+  )
+      : FortranProxy() {
+    if (s_lab)
+      set_s_lab(*s_lab);
+    if (s_body)
+      set_s_body(*s_body);
+    if (orb)
+      set_orb(orb->get());
+    if (field)
+      set_field(field->get());
+    if (strong_beam)
+      set_strong_beam(strong_beam->get());
+    if (vec0)
+      set_vec0(vec0->get());
+    if (mat6)
+      set_mat6(mat6->get());
+  }
+
   double s_lab() const; // 0D_NOT_real
   void set_s_lab(double value);
   double s_body() const; // 0D_NOT_real
@@ -13360,6 +15191,23 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TrackStruct(
+      std::optional<double> ds_save = std::nullopt,
+      std::optional<int> n_pt = std::nullopt,
+      std::optional<int> n_bad = std::nullopt,
+      std::optional<int> n_ok = std::nullopt
+  )
+      : FortranProxy() {
+    if (ds_save)
+      set_ds_save(*ds_save);
+    if (n_pt)
+      set_n_pt(*n_pt);
+    if (n_bad)
+      set_n_bad(*n_bad);
+    if (n_ok)
+      set_n_ok(*n_ok);
+  }
+
   TrackPointStructArray1D pt() const; // 1D_ALLOC_type
   double ds_save() const; // 0D_NOT_real
   void set_ds_save(double value);
@@ -13390,6 +15238,62 @@ class SpaceChargeCommonStruct : public FortranProxy<SpaceChargeCommonStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit SpaceChargeCommonStruct(
+      std::optional<double> ds_track_step = std::nullopt,
+      std::optional<double> dt_track_step = std::nullopt,
+      std::optional<double> cathode_strength_cutoff = std::nullopt,
+      std::optional<double> rel_tol_tracking = std::nullopt,
+      std::optional<double> abs_tol_tracking = std::nullopt,
+      std::optional<double> beam_chamber_height = std::nullopt,
+      std::optional<double> lsc_sigma_cutoff = std::nullopt,
+      std::optional<double> particle_sigma_cutoff = std::nullopt,
+      optional_ref<const std::vector<int>> space_charge_mesh_size = std::nullopt,
+      optional_ref<const std::vector<int>> csr3d_mesh_size = std::nullopt,
+      std::optional<int> n_bin = std::nullopt,
+      std::optional<int> particle_bin_span = std::nullopt,
+      std::optional<int> n_shield_images = std::nullopt,
+      std::optional<int> sc_min_in_bin = std::nullopt,
+      std::optional<bool> lsc_kick_transverse_dependence = std::nullopt,
+      std::optional<bool> debug = std::nullopt,
+      optional_ref<const std::string> diagnostic_output_file = std::nullopt
+  )
+      : FortranProxy() {
+    if (ds_track_step)
+      set_ds_track_step(*ds_track_step);
+    if (dt_track_step)
+      set_dt_track_step(*dt_track_step);
+    if (cathode_strength_cutoff)
+      set_cathode_strength_cutoff(*cathode_strength_cutoff);
+    if (rel_tol_tracking)
+      set_rel_tol_tracking(*rel_tol_tracking);
+    if (abs_tol_tracking)
+      set_abs_tol_tracking(*abs_tol_tracking);
+    if (beam_chamber_height)
+      set_beam_chamber_height(*beam_chamber_height);
+    if (lsc_sigma_cutoff)
+      set_lsc_sigma_cutoff(*lsc_sigma_cutoff);
+    if (particle_sigma_cutoff)
+      set_particle_sigma_cutoff(*particle_sigma_cutoff);
+    if (space_charge_mesh_size)
+      set_space_charge_mesh_size(space_charge_mesh_size->get());
+    if (csr3d_mesh_size)
+      set_csr3d_mesh_size(csr3d_mesh_size->get());
+    if (n_bin)
+      set_n_bin(*n_bin);
+    if (particle_bin_span)
+      set_particle_bin_span(*particle_bin_span);
+    if (n_shield_images)
+      set_n_shield_images(*n_shield_images);
+    if (sc_min_in_bin)
+      set_sc_min_in_bin(*sc_min_in_bin);
+    if (lsc_kick_transverse_dependence)
+      set_lsc_kick_transverse_dependence(*lsc_kick_transverse_dependence);
+    if (debug)
+      set_debug(*debug);
+    if (diagnostic_output_file)
+      set_diagnostic_output_file(diagnostic_output_file->get());
+  }
 
   double ds_track_step() const; // 0D_NOT_real
   void set_ds_track_step(double value);
@@ -13442,6 +15346,137 @@ class BmadCommonStruct : public FortranProxy<BmadCommonStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit BmadCommonStruct(
+      std::optional<double> max_aperture_limit = std::nullopt,
+      optional_ref<const std::vector<double>> d_orb = std::nullopt,
+      std::optional<double> default_ds_step = std::nullopt,
+      std::optional<double> significant_length = std::nullopt,
+      std::optional<double> rel_tol_tracking = std::nullopt,
+      std::optional<double> abs_tol_tracking = std::nullopt,
+      std::optional<double> rel_tol_adaptive_tracking = std::nullopt,
+      std::optional<double> abs_tol_adaptive_tracking = std::nullopt,
+      std::optional<double> init_ds_adaptive_tracking = std::nullopt,
+      std::optional<double> min_ds_adaptive_tracking = std::nullopt,
+      std::optional<double> fatal_ds_adaptive_tracking = std::nullopt,
+      std::optional<double> autoscale_amp_abs_tol = std::nullopt,
+      std::optional<double> autoscale_amp_rel_tol = std::nullopt,
+      std::optional<double> autoscale_phase_tol = std::nullopt,
+      std::optional<double> electric_dipole_moment = std::nullopt,
+      std::optional<double> synch_rad_scale = std::nullopt,
+      std::optional<double> sad_eps_scale = std::nullopt,
+      std::optional<double> sad_amp_max = std::nullopt,
+      std::optional<int> sad_n_div_max = std::nullopt,
+      std::optional<int> taylor_order = std::nullopt,
+      std::optional<int> runge_kutta_order = std::nullopt,
+      std::optional<int> default_integ_order = std::nullopt,
+      std::optional<int> max_num_runge_kutta_step = std::nullopt,
+      std::optional<bool> rf_phase_below_transition_ref = std::nullopt,
+      std::optional<bool> sr_wakes_on = std::nullopt,
+      std::optional<bool> lr_wakes_on = std::nullopt,
+      std::optional<bool> auto_bookkeeper = std::nullopt,
+      std::optional<bool> high_energy_space_charge_on = std::nullopt,
+      std::optional<bool> csr_and_space_charge_on = std::nullopt,
+      std::optional<bool> spin_tracking_on = std::nullopt,
+      std::optional<bool> spin_sokolov_ternov_flipping_on = std::nullopt,
+      std::optional<bool> radiation_damping_on = std::nullopt,
+      std::optional<bool> radiation_zero_average = std::nullopt,
+      std::optional<bool> radiation_fluctuations_on = std::nullopt,
+      std::optional<bool> conserve_taylor_maps = std::nullopt,
+      std::optional<bool> absolute_time_tracking = std::nullopt,
+      std::optional<bool> absolute_time_ref_shift = std::nullopt,
+      std::optional<bool> convert_to_kinetic_momentum = std::nullopt,
+      std::optional<bool> normalize_twiss = std::nullopt,
+      std::optional<bool> aperture_limit_on = std::nullopt,
+      std::optional<bool> spin_n0_direction_user_set = std::nullopt,
+      std::optional<bool> debug = std::nullopt
+  )
+      : FortranProxy() {
+    if (max_aperture_limit)
+      set_max_aperture_limit(*max_aperture_limit);
+    if (d_orb)
+      set_d_orb(d_orb->get());
+    if (default_ds_step)
+      set_default_ds_step(*default_ds_step);
+    if (significant_length)
+      set_significant_length(*significant_length);
+    if (rel_tol_tracking)
+      set_rel_tol_tracking(*rel_tol_tracking);
+    if (abs_tol_tracking)
+      set_abs_tol_tracking(*abs_tol_tracking);
+    if (rel_tol_adaptive_tracking)
+      set_rel_tol_adaptive_tracking(*rel_tol_adaptive_tracking);
+    if (abs_tol_adaptive_tracking)
+      set_abs_tol_adaptive_tracking(*abs_tol_adaptive_tracking);
+    if (init_ds_adaptive_tracking)
+      set_init_ds_adaptive_tracking(*init_ds_adaptive_tracking);
+    if (min_ds_adaptive_tracking)
+      set_min_ds_adaptive_tracking(*min_ds_adaptive_tracking);
+    if (fatal_ds_adaptive_tracking)
+      set_fatal_ds_adaptive_tracking(*fatal_ds_adaptive_tracking);
+    if (autoscale_amp_abs_tol)
+      set_autoscale_amp_abs_tol(*autoscale_amp_abs_tol);
+    if (autoscale_amp_rel_tol)
+      set_autoscale_amp_rel_tol(*autoscale_amp_rel_tol);
+    if (autoscale_phase_tol)
+      set_autoscale_phase_tol(*autoscale_phase_tol);
+    if (electric_dipole_moment)
+      set_electric_dipole_moment(*electric_dipole_moment);
+    if (synch_rad_scale)
+      set_synch_rad_scale(*synch_rad_scale);
+    if (sad_eps_scale)
+      set_sad_eps_scale(*sad_eps_scale);
+    if (sad_amp_max)
+      set_sad_amp_max(*sad_amp_max);
+    if (sad_n_div_max)
+      set_sad_n_div_max(*sad_n_div_max);
+    if (taylor_order)
+      set_taylor_order(*taylor_order);
+    if (runge_kutta_order)
+      set_runge_kutta_order(*runge_kutta_order);
+    if (default_integ_order)
+      set_default_integ_order(*default_integ_order);
+    if (max_num_runge_kutta_step)
+      set_max_num_runge_kutta_step(*max_num_runge_kutta_step);
+    if (rf_phase_below_transition_ref)
+      set_rf_phase_below_transition_ref(*rf_phase_below_transition_ref);
+    if (sr_wakes_on)
+      set_sr_wakes_on(*sr_wakes_on);
+    if (lr_wakes_on)
+      set_lr_wakes_on(*lr_wakes_on);
+    if (auto_bookkeeper)
+      set_auto_bookkeeper(*auto_bookkeeper);
+    if (high_energy_space_charge_on)
+      set_high_energy_space_charge_on(*high_energy_space_charge_on);
+    if (csr_and_space_charge_on)
+      set_csr_and_space_charge_on(*csr_and_space_charge_on);
+    if (spin_tracking_on)
+      set_spin_tracking_on(*spin_tracking_on);
+    if (spin_sokolov_ternov_flipping_on)
+      set_spin_sokolov_ternov_flipping_on(*spin_sokolov_ternov_flipping_on);
+    if (radiation_damping_on)
+      set_radiation_damping_on(*radiation_damping_on);
+    if (radiation_zero_average)
+      set_radiation_zero_average(*radiation_zero_average);
+    if (radiation_fluctuations_on)
+      set_radiation_fluctuations_on(*radiation_fluctuations_on);
+    if (conserve_taylor_maps)
+      set_conserve_taylor_maps(*conserve_taylor_maps);
+    if (absolute_time_tracking)
+      set_absolute_time_tracking(*absolute_time_tracking);
+    if (absolute_time_ref_shift)
+      set_absolute_time_ref_shift(*absolute_time_ref_shift);
+    if (convert_to_kinetic_momentum)
+      set_convert_to_kinetic_momentum(*convert_to_kinetic_momentum);
+    if (normalize_twiss)
+      set_normalize_twiss(*normalize_twiss);
+    if (aperture_limit_on)
+      set_aperture_limit_on(*aperture_limit_on);
+    if (spin_n0_direction_user_set)
+      set_spin_n0_direction_user_set(*spin_n0_direction_user_set);
+    if (debug)
+      set_debug(*debug);
+  }
 
   double max_aperture_limit() const; // 0D_NOT_real
   void set_max_aperture_limit(double value);
@@ -13545,6 +15580,65 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit RadInt1Struct(
+      std::optional<double> i0 = std::nullopt,
+      std::optional<double> i1 = std::nullopt,
+      std::optional<double> i2 = std::nullopt,
+      std::optional<double> i3 = std::nullopt,
+      std::optional<double> i4a = std::nullopt,
+      std::optional<double> i4b = std::nullopt,
+      std::optional<double> i4z = std::nullopt,
+      std::optional<double> i5a = std::nullopt,
+      std::optional<double> i5b = std::nullopt,
+      std::optional<double> i6b = std::nullopt,
+      std::optional<double> lin_i2_E4 = std::nullopt,
+      std::optional<double> lin_i3_E7 = std::nullopt,
+      std::optional<double> lin_i5a_E6 = std::nullopt,
+      std::optional<double> lin_i5b_E6 = std::nullopt,
+      std::optional<double> lin_norm_emit_a = std::nullopt,
+      std::optional<double> lin_norm_emit_b = std::nullopt,
+      std::optional<double> lin_sig_E = std::nullopt,
+      std::optional<double> n_steps = std::nullopt
+  )
+      : FortranProxy() {
+    if (i0)
+      set_i0(*i0);
+    if (i1)
+      set_i1(*i1);
+    if (i2)
+      set_i2(*i2);
+    if (i3)
+      set_i3(*i3);
+    if (i4a)
+      set_i4a(*i4a);
+    if (i4b)
+      set_i4b(*i4b);
+    if (i4z)
+      set_i4z(*i4z);
+    if (i5a)
+      set_i5a(*i5a);
+    if (i5b)
+      set_i5b(*i5b);
+    if (i6b)
+      set_i6b(*i6b);
+    if (lin_i2_E4)
+      set_lin_i2_E4(*lin_i2_E4);
+    if (lin_i3_E7)
+      set_lin_i3_E7(*lin_i3_E7);
+    if (lin_i5a_E6)
+      set_lin_i5a_E6(*lin_i5a_E6);
+    if (lin_i5b_E6)
+      set_lin_i5b_E6(*lin_i5b_E6);
+    if (lin_norm_emit_a)
+      set_lin_norm_emit_a(*lin_norm_emit_a);
+    if (lin_norm_emit_b)
+      set_lin_norm_emit_b(*lin_norm_emit_b);
+    if (lin_sig_E)
+      set_lin_sig_E(*lin_sig_E);
+    if (n_steps)
+      set_n_steps(*n_steps);
+  }
+
   double i0() const; // 0D_NOT_real
   void set_i0(double value);
   double i1() const; // 0D_NOT_real
@@ -13637,6 +15731,38 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit RfStairStepStruct(
+      std::optional<double> E_tot0 = std::nullopt,
+      std::optional<double> E_tot1 = std::nullopt,
+      std::optional<double> p0c = std::nullopt,
+      std::optional<double> p1c = std::nullopt,
+      std::optional<double> scale = std::nullopt,
+      std::optional<double> time = std::nullopt,
+      std::optional<double> s0 = std::nullopt,
+      std::optional<double> s = std::nullopt,
+      std::optional<int> ix_step = std::nullopt
+  )
+      : FortranProxy() {
+    if (E_tot0)
+      set_E_tot0(*E_tot0);
+    if (E_tot1)
+      set_E_tot1(*E_tot1);
+    if (p0c)
+      set_p0c(*p0c);
+    if (p1c)
+      set_p1c(*p1c);
+    if (scale)
+      set_scale(*scale);
+    if (time)
+      set_time(*time);
+    if (s0)
+      set_s0(*s0);
+    if (s)
+      set_s(*s);
+    if (ix_step)
+      set_ix_step(*ix_step);
+  }
+
   double E_tot0() const; // 0D_NOT_real
   void set_E_tot0(double value);
   double E_tot1() const; // 0D_NOT_real
@@ -13673,6 +15799,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit RfEleStruct(std::optional<double> ds_step = std::nullopt)
+      : FortranProxy() {
+    if (ds_step)
+      set_ds_step(*ds_step);
+  }
+
   RfStairStepStructArray1D steps() const; // 1D_ALLOC_type
   double ds_step() const; // 0D_NOT_real
   void set_ds_step(double value);
@@ -13693,6 +15825,263 @@ class EleStruct : public FortranProxy<EleStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit EleStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const std::string> type = std::nullopt,
+      optional_ref<const std::string> alias = std::nullopt,
+      optional_ref<const std::string> component_name = std::nullopt,
+      optional_ref<const std::string> descrip = std::nullopt,
+      optional_ref<const TwissStruct> a = std::nullopt,
+      optional_ref<const TwissStruct> b = std::nullopt,
+      optional_ref<const TwissStruct> z = std::nullopt,
+      optional_ref<const XyDispStruct> x = std::nullopt,
+      optional_ref<const XyDispStruct> y = std::nullopt,
+      optional_ref<const AcKickerStruct> ac_kick = std::nullopt,
+      optional_ref<const BookkeepingStateStruct> bookkeeping_state = std::nullopt,
+      optional_ref<const BranchStruct> branch = std::nullopt,
+      optional_ref<const ControllerStruct> control = std::nullopt,
+      optional_ref<const RfEleStruct> rf = std::nullopt,
+      optional_ref<const EleStruct> lord = std::nullopt,
+      optional_ref<const Fibre> ptc_fibre = std::nullopt,
+      optional_ref<const FloorPositionStruct> floor = std::nullopt,
+      optional_ref<const HighEnergySpaceChargeStruct> high_energy_space_charge = std::nullopt,
+      optional_ref<const Mode3Struct> mode3 = std::nullopt,
+      optional_ref<const PhotonElementStruct> photon = std::nullopt,
+      optional_ref<const RadMapEleStruct> rad_map = std::nullopt,
+      optional_ref<const std::vector<double>> spin_taylor_ref_orb_in = std::nullopt,
+      optional_ref<const WakeStruct> wake = std::nullopt,
+      optional_ref<const CoordStruct> map_ref_orb_in = std::nullopt,
+      optional_ref<const CoordStruct> map_ref_orb_out = std::nullopt,
+      optional_ref<const CoordStruct> time_ref_orb_in = std::nullopt,
+      optional_ref<const CoordStruct> time_ref_orb_out = std::nullopt,
+      optional_ref<const std::vector<double>> value = std::nullopt,
+      optional_ref<const std::vector<double>> old_value = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> spin_q = std::nullopt,
+      optional_ref<const std::vector<double>> vec0 = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> mat6 = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> c_mat = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> dc_mat_dpz = std::nullopt,
+      std::optional<double> gamma_c = std::nullopt,
+      std::optional<double> s_start = std::nullopt,
+      std::optional<double> s = std::nullopt,
+      std::optional<double> ref_time = std::nullopt,
+      optional_ref<const std::vector<double>> a_pole = std::nullopt,
+      optional_ref<const std::vector<double>> b_pole = std::nullopt,
+      optional_ref<const std::vector<double>> a_pole_elec = std::nullopt,
+      optional_ref<const std::vector<double>> b_pole_elec = std::nullopt,
+      optional_ref<const std::vector<double>> custom = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<double>>>> r = std::nullopt,
+      std::optional<int> key = std::nullopt,
+      std::optional<int> sub_key = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> lord_status = std::nullopt,
+      std::optional<int> n_slave = std::nullopt,
+      std::optional<int> n_slave_field = std::nullopt,
+      std::optional<int> ix1_slave = std::nullopt,
+      std::optional<int> slave_status = std::nullopt,
+      std::optional<int> n_lord = std::nullopt,
+      std::optional<int> n_lord_field = std::nullopt,
+      std::optional<int> n_lord_ramper = std::nullopt,
+      std::optional<int> ic1_lord = std::nullopt,
+      std::optional<int> ix_pointer = std::nullopt,
+      std::optional<int> ixx = std::nullopt,
+      std::optional<int> iyy = std::nullopt,
+      std::optional<int> izz = std::nullopt,
+      std::optional<int> mat6_calc_method = std::nullopt,
+      std::optional<int> tracking_method = std::nullopt,
+      std::optional<int> spin_tracking_method = std::nullopt,
+      std::optional<int> csr_method = std::nullopt,
+      std::optional<int> space_charge_method = std::nullopt,
+      std::optional<int> ptc_integration_type = std::nullopt,
+      std::optional<int> field_calc = std::nullopt,
+      std::optional<int> aperture_at = std::nullopt,
+      std::optional<int> aperture_type = std::nullopt,
+      std::optional<int> ref_species = std::nullopt,
+      std::optional<int> orientation = std::nullopt,
+      std::optional<bool> symplectify = std::nullopt,
+      std::optional<bool> mode_flip = std::nullopt,
+      std::optional<bool> multipoles_on = std::nullopt,
+      std::optional<bool> scale_multipoles = std::nullopt,
+      std::optional<bool> taylor_map_includes_offsets = std::nullopt,
+      std::optional<bool> field_master = std::nullopt,
+      std::optional<bool> is_on = std::nullopt,
+      std::optional<bool> logic = std::nullopt,
+      std::optional<bool> bmad_logic = std::nullopt,
+      std::optional<bool> select = std::nullopt,
+      std::optional<bool> offset_moves_aperture = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (type)
+      set_type(type->get());
+    if (alias)
+      set_alias(alias->get());
+    if (component_name)
+      set_component_name(component_name->get());
+    if (descrip)
+      set_descrip(descrip->get());
+    if (a)
+      set_a(a->get());
+    if (b)
+      set_b(b->get());
+    if (z)
+      set_z(z->get());
+    if (x)
+      set_x(x->get());
+    if (y)
+      set_y(y->get());
+    if (ac_kick)
+      set_ac_kick(ac_kick->get());
+    if (bookkeeping_state)
+      set_bookkeeping_state(bookkeeping_state->get());
+    if (branch)
+      set_branch(branch->get());
+    if (control)
+      set_control(control->get());
+    if (rf)
+      set_rf(rf->get());
+    if (lord)
+      set_lord(lord->get());
+    if (ptc_fibre)
+      set_ptc_fibre(ptc_fibre->get());
+    if (floor)
+      set_floor(floor->get());
+    if (high_energy_space_charge)
+      set_high_energy_space_charge(high_energy_space_charge->get());
+    if (mode3)
+      set_mode3(mode3->get());
+    if (photon)
+      set_photon(photon->get());
+    if (rad_map)
+      set_rad_map(rad_map->get());
+    if (spin_taylor_ref_orb_in)
+      set_spin_taylor_ref_orb_in(spin_taylor_ref_orb_in->get());
+    if (wake)
+      set_wake(wake->get());
+    if (map_ref_orb_in)
+      set_map_ref_orb_in(map_ref_orb_in->get());
+    if (map_ref_orb_out)
+      set_map_ref_orb_out(map_ref_orb_out->get());
+    if (time_ref_orb_in)
+      set_time_ref_orb_in(time_ref_orb_in->get());
+    if (time_ref_orb_out)
+      set_time_ref_orb_out(time_ref_orb_out->get());
+    if (value)
+      set_value(value->get());
+    if (old_value)
+      set_old_value(old_value->get());
+    if (spin_q)
+      set_spin_q(spin_q->get());
+    if (vec0)
+      set_vec0(vec0->get());
+    if (mat6)
+      set_mat6(mat6->get());
+    if (c_mat)
+      set_c_mat(c_mat->get());
+    if (dc_mat_dpz)
+      set_dc_mat_dpz(dc_mat_dpz->get());
+    if (gamma_c)
+      set_gamma_c(*gamma_c);
+    if (s_start)
+      set_s_start(*s_start);
+    if (s)
+      set_s(*s);
+    if (ref_time)
+      set_ref_time(*ref_time);
+    if (a_pole)
+      set_a_pole(a_pole->get());
+    if (b_pole)
+      set_b_pole(b_pole->get());
+    if (a_pole_elec)
+      set_a_pole_elec(a_pole_elec->get());
+    if (b_pole_elec)
+      set_b_pole_elec(b_pole_elec->get());
+    if (custom)
+      set_custom(custom->get());
+    if (r)
+      set_r(r->get());
+    if (key)
+      set_key(*key);
+    if (sub_key)
+      set_sub_key(*sub_key);
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (lord_status)
+      set_lord_status(*lord_status);
+    if (n_slave)
+      set_n_slave(*n_slave);
+    if (n_slave_field)
+      set_n_slave_field(*n_slave_field);
+    if (ix1_slave)
+      set_ix1_slave(*ix1_slave);
+    if (slave_status)
+      set_slave_status(*slave_status);
+    if (n_lord)
+      set_n_lord(*n_lord);
+    if (n_lord_field)
+      set_n_lord_field(*n_lord_field);
+    if (n_lord_ramper)
+      set_n_lord_ramper(*n_lord_ramper);
+    if (ic1_lord)
+      set_ic1_lord(*ic1_lord);
+    if (ix_pointer)
+      set_ix_pointer(*ix_pointer);
+    if (ixx)
+      set_ixx(*ixx);
+    if (iyy)
+      set_iyy(*iyy);
+    if (izz)
+      set_izz(*izz);
+    if (mat6_calc_method)
+      set_mat6_calc_method(*mat6_calc_method);
+    if (tracking_method)
+      set_tracking_method(*tracking_method);
+    if (spin_tracking_method)
+      set_spin_tracking_method(*spin_tracking_method);
+    if (csr_method)
+      set_csr_method(*csr_method);
+    if (space_charge_method)
+      set_space_charge_method(*space_charge_method);
+    if (ptc_integration_type)
+      set_ptc_integration_type(*ptc_integration_type);
+    if (field_calc)
+      set_field_calc(*field_calc);
+    if (aperture_at)
+      set_aperture_at(*aperture_at);
+    if (aperture_type)
+      set_aperture_type(*aperture_type);
+    if (ref_species)
+      set_ref_species(*ref_species);
+    if (orientation)
+      set_orientation(*orientation);
+    if (symplectify)
+      set_symplectify(*symplectify);
+    if (mode_flip)
+      set_mode_flip(*mode_flip);
+    if (multipoles_on)
+      set_multipoles_on(*multipoles_on);
+    if (scale_multipoles)
+      set_scale_multipoles(*scale_multipoles);
+    if (taylor_map_includes_offsets)
+      set_taylor_map_includes_offsets(*taylor_map_includes_offsets);
+    if (field_master)
+      set_field_master(*field_master);
+    if (is_on)
+      set_is_on(*is_on);
+    if (logic)
+      set_logic(*logic);
+    if (bmad_logic)
+      set_bmad_logic(*bmad_logic);
+    if (select)
+      set_select(*select);
+    if (offset_moves_aperture)
+      set_offset_moves_aperture(*offset_moves_aperture);
+  }
 
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
@@ -13891,6 +16280,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit ComplexTaylorTermStruct(
+      std::optional<std::complex<double>> coef = std::nullopt,
+      optional_ref<const std::vector<int>> expn = std::nullopt
+  )
+      : FortranProxy() {
+    if (coef)
+      set_coef(*coef);
+    if (expn)
+      set_expn(expn->get());
+  }
+
   std::complex<double> coef() const; // 0D_NOT_complex
   void set_coef(std::complex<double> value);
   FArray1D<int> expn() const; // 1D_NOT_integer
@@ -13913,6 +16313,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit ComplexTaylorStruct(std::optional<std::complex<double>> ref = std::nullopt)
+      : FortranProxy() {
+    if (ref)
+      set_ref(*ref);
+  }
+
   std::complex<double> ref() const; // 0D_NOT_complex
   void set_ref(std::complex<double> value);
   ComplexTaylorTermStructArray1D term() const; // 1D_PTR_type
@@ -13933,6 +16339,53 @@ class BranchStruct : public FortranProxy<BranchStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit BranchStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> ix_from_branch = std::nullopt,
+      std::optional<int> ix_from_ele = std::nullopt,
+      std::optional<int> ix_to_ele = std::nullopt,
+      std::optional<int> ix_fixer = std::nullopt,
+      std::optional<int> n_ele_track = std::nullopt,
+      std::optional<int> n_ele_max = std::nullopt,
+      optional_ref<const LatStruct> lat = std::nullopt,
+      optional_ref<const ModeInfoStruct> a = std::nullopt,
+      optional_ref<const ModeInfoStruct> b = std::nullopt,
+      optional_ref<const ModeInfoStruct> z = std::nullopt,
+      optional_ref<const LatParamStruct> param = std::nullopt,
+      optional_ref<const CoordStruct> particle_start = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (ix_from_branch)
+      set_ix_from_branch(*ix_from_branch);
+    if (ix_from_ele)
+      set_ix_from_ele(*ix_from_ele);
+    if (ix_to_ele)
+      set_ix_to_ele(*ix_to_ele);
+    if (ix_fixer)
+      set_ix_fixer(*ix_fixer);
+    if (n_ele_track)
+      set_n_ele_track(*n_ele_track);
+    if (n_ele_max)
+      set_n_ele_max(*n_ele_max);
+    if (lat)
+      set_lat(lat->get());
+    if (a)
+      set_a(a->get());
+    if (b)
+      set_b(b->get());
+    if (z)
+      set_z(z->get());
+    if (param)
+      set_param(param->get());
+    if (particle_start)
+      set_particle_start(particle_start->get());
+  }
 
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
@@ -13981,6 +16434,86 @@ class LatStruct : public FortranProxy<LatStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit LatStruct(
+      optional_ref<const std::string> use_name = std::nullopt,
+      optional_ref<const std::string> lattice = std::nullopt,
+      optional_ref<const std::string> machine = std::nullopt,
+      optional_ref<const std::string> input_file_name = std::nullopt,
+      optional_ref<const std::string> title = std::nullopt,
+      optional_ref<const ModeInfoStruct> a = std::nullopt,
+      optional_ref<const ModeInfoStruct> b = std::nullopt,
+      optional_ref<const ModeInfoStruct> z = std::nullopt,
+      optional_ref<const LatParamStruct> param = std::nullopt,
+      optional_ref<const BookkeepingStateStruct> lord_state = std::nullopt,
+      optional_ref<const EleStruct> ele_init = std::nullopt,
+      optional_ref<const CoordStruct> particle_start = std::nullopt,
+      optional_ref<const BeamInitStruct> beam_init = std::nullopt,
+      optional_ref<const PreTrackerStruct> pre_tracker = std::nullopt,
+      optional_ref<const std::vector<double>> custom = std::nullopt,
+      std::optional<int> version = std::nullopt,
+      std::optional<int> n_ele_track = std::nullopt,
+      std::optional<int> n_ele_max = std::nullopt,
+      std::optional<int> n_control_max = std::nullopt,
+      std::optional<int> n_ic_max = std::nullopt,
+      std::optional<int> input_taylor_order = std::nullopt,
+      optional_ref<const std::vector<int>> ic = std::nullopt,
+      std::optional<int> photon_type = std::nullopt,
+      std::optional<int> creation_hash = std::nullopt,
+      std::optional<int> ramper_slave_bookkeeping = std::nullopt
+  )
+      : FortranProxy() {
+    if (use_name)
+      set_use_name(use_name->get());
+    if (lattice)
+      set_lattice(lattice->get());
+    if (machine)
+      set_machine(machine->get());
+    if (input_file_name)
+      set_input_file_name(input_file_name->get());
+    if (title)
+      set_title(title->get());
+    if (a)
+      set_a(a->get());
+    if (b)
+      set_b(b->get());
+    if (z)
+      set_z(z->get());
+    if (param)
+      set_param(param->get());
+    if (lord_state)
+      set_lord_state(lord_state->get());
+    if (ele_init)
+      set_ele_init(ele_init->get());
+    if (particle_start)
+      set_particle_start(particle_start->get());
+    if (beam_init)
+      set_beam_init(beam_init->get());
+    if (pre_tracker)
+      set_pre_tracker(pre_tracker->get());
+    if (custom)
+      set_custom(custom->get());
+    if (version)
+      set_version(*version);
+    if (n_ele_track)
+      set_n_ele_track(*n_ele_track);
+    if (n_ele_max)
+      set_n_ele_max(*n_ele_max);
+    if (n_control_max)
+      set_n_control_max(*n_control_max);
+    if (n_ic_max)
+      set_n_ic_max(*n_ic_max);
+    if (input_taylor_order)
+      set_input_taylor_order(*input_taylor_order);
+    if (ic)
+      set_ic(ic->get());
+    if (photon_type)
+      set_photon_type(*photon_type);
+    if (creation_hash)
+      set_creation_hash(*creation_hash);
+    if (ramper_slave_bookkeeping)
+      set_ramper_slave_bookkeeping(*ramper_slave_bookkeeping);
+  }
 
   std::string use_name() const; // 0D_NOT_character
   void set_use_name(const std::string &value);
@@ -14055,6 +16588,50 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit BunchStruct(
+      optional_ref<const std::vector<int>> ix_z = std::nullopt,
+      std::optional<double> charge_tot = std::nullopt,
+      std::optional<double> charge_live = std::nullopt,
+      std::optional<double> z_center = std::nullopt,
+      std::optional<double> t_center = std::nullopt,
+      std::optional<double> t0 = std::nullopt,
+      std::optional<bool> drift_between_t_and_s = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> ix_bunch = std::nullopt,
+      std::optional<int> ix_turn = std::nullopt,
+      std::optional<int> n_live = std::nullopt,
+      std::optional<int> n_good = std::nullopt,
+      std::optional<int> n_bad = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix_z)
+      set_ix_z(ix_z->get());
+    if (charge_tot)
+      set_charge_tot(*charge_tot);
+    if (charge_live)
+      set_charge_live(*charge_live);
+    if (z_center)
+      set_z_center(*z_center);
+    if (t_center)
+      set_t_center(*t_center);
+    if (t0)
+      set_t0(*t0);
+    if (drift_between_t_and_s)
+      set_drift_between_t_and_s(*drift_between_t_and_s);
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (ix_bunch)
+      set_ix_bunch(*ix_bunch);
+    if (ix_turn)
+      set_ix_turn(*ix_turn);
+    if (n_live)
+      set_n_live(*n_live);
+    if (n_good)
+      set_n_good(*n_good);
+    if (n_bad)
+      set_n_bad(*n_bad);
+  }
+
   CoordStructArray1D particle() const; // 1D_ALLOC_type
   FArray1D<int> ix_z() const; // 1D_ALLOC_integer
   void set_ix_z(const std::vector<int> &v);
@@ -14099,6 +16676,80 @@ class BunchParamsStruct : public FortranProxy<BunchParamsStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit BunchParamsStruct(
+      optional_ref<const CoordStruct> centroid = std::nullopt,
+      optional_ref<const TwissStruct> x = std::nullopt,
+      optional_ref<const TwissStruct> y = std::nullopt,
+      optional_ref<const TwissStruct> z = std::nullopt,
+      optional_ref<const TwissStruct> a = std::nullopt,
+      optional_ref<const TwissStruct> b = std::nullopt,
+      optional_ref<const TwissStruct> c = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> sigma = std::nullopt,
+      optional_ref<const std::vector<double>> rel_max = std::nullopt,
+      optional_ref<const std::vector<double>> rel_min = std::nullopt,
+      std::optional<double> s = std::nullopt,
+      std::optional<double> t = std::nullopt,
+      std::optional<double> sigma_t = std::nullopt,
+      std::optional<double> charge_live = std::nullopt,
+      std::optional<double> charge_tot = std::nullopt,
+      std::optional<int> n_particle_tot = std::nullopt,
+      std::optional<int> n_particle_live = std::nullopt,
+      std::optional<int> n_particle_lost_in_ele = std::nullopt,
+      std::optional<int> n_good_steps = std::nullopt,
+      std::optional<int> n_bad_steps = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> location = std::nullopt,
+      std::optional<bool> twiss_valid = std::nullopt
+  )
+      : FortranProxy() {
+    if (centroid)
+      set_centroid(centroid->get());
+    if (x)
+      set_x(x->get());
+    if (y)
+      set_y(y->get());
+    if (z)
+      set_z(z->get());
+    if (a)
+      set_a(a->get());
+    if (b)
+      set_b(b->get());
+    if (c)
+      set_c(c->get());
+    if (sigma)
+      set_sigma(sigma->get());
+    if (rel_max)
+      set_rel_max(rel_max->get());
+    if (rel_min)
+      set_rel_min(rel_min->get());
+    if (s)
+      set_s(*s);
+    if (t)
+      set_t(*t);
+    if (sigma_t)
+      set_sigma_t(*sigma_t);
+    if (charge_live)
+      set_charge_live(*charge_live);
+    if (charge_tot)
+      set_charge_tot(*charge_tot);
+    if (n_particle_tot)
+      set_n_particle_tot(*n_particle_tot);
+    if (n_particle_live)
+      set_n_particle_live(*n_particle_live);
+    if (n_particle_lost_in_ele)
+      set_n_particle_lost_in_ele(*n_particle_lost_in_ele);
+    if (n_good_steps)
+      set_n_good_steps(*n_good_steps);
+    if (n_bad_steps)
+      set_n_bad_steps(*n_bad_steps);
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (location)
+      set_location(*location);
+    if (twiss_valid)
+      set_twiss_valid(*twiss_valid);
+  }
 
   CoordStruct centroid() const; // 0D_NOT_type
   void set_centroid(const CoordStruct &src);
@@ -14183,6 +16834,26 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit AperturePointStruct(
+      std::optional<double> x = std::nullopt,
+      std::optional<double> y = std::nullopt,
+      std::optional<int> plane = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> i_turn = std::nullopt
+  )
+      : FortranProxy() {
+    if (x)
+      set_x(*x);
+    if (y)
+      set_y(*y);
+    if (plane)
+      set_plane(*plane);
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (i_turn)
+      set_i_turn(*i_turn);
+  }
+
   double x() const; // 0D_NOT_real
   void set_x(double value);
   double y() const; // 0D_NOT_real
@@ -14210,6 +16881,38 @@ class ApertureParamStruct : public FortranProxy<ApertureParamStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit ApertureParamStruct(
+      std::optional<double> min_angle = std::nullopt,
+      std::optional<double> max_angle = std::nullopt,
+      std::optional<int> n_angle = std::nullopt,
+      std::optional<int> n_turn = std::nullopt,
+      std::optional<double> x_init = std::nullopt,
+      std::optional<double> y_init = std::nullopt,
+      std::optional<double> rel_accuracy = std::nullopt,
+      std::optional<double> abs_accuracy = std::nullopt,
+      optional_ref<const std::string> start_ele = std::nullopt
+  )
+      : FortranProxy() {
+    if (min_angle)
+      set_min_angle(*min_angle);
+    if (max_angle)
+      set_max_angle(*max_angle);
+    if (n_angle)
+      set_n_angle(*n_angle);
+    if (n_turn)
+      set_n_turn(*n_turn);
+    if (x_init)
+      set_x_init(*x_init);
+    if (y_init)
+      set_y_init(*y_init);
+    if (rel_accuracy)
+      set_rel_accuracy(*rel_accuracy);
+    if (abs_accuracy)
+      set_abs_accuracy(*abs_accuracy);
+    if (start_ele)
+      set_start_ele(start_ele->get());
+  }
 
   double min_angle() const; // 0D_NOT_real
   void set_min_angle(double value);
@@ -14247,6 +16950,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit ApertureScanStruct(
+      optional_ref<const CoordStruct> ref_orb = std::nullopt,
+      std::optional<double> pz_start = std::nullopt
+  )
+      : FortranProxy() {
+    if (ref_orb)
+      set_ref_orb(ref_orb->get());
+    if (pz_start)
+      set_pz_start(*pz_start);
+  }
+
   AperturePointStructArray1D point() const; // 1D_ALLOC_type
   CoordStruct ref_orb() const; // 0D_NOT_type
   void set_ref_orb(const CoordStruct &src);
@@ -14269,6 +16983,20 @@ class ElePointerStruct : public FortranProxy<ElePointerStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit ElePointerStruct(
+      optional_ref<const EleStruct> ele = std::nullopt,
+      optional_ref<const LatEleLocStruct> loc = std::nullopt,
+      std::optional<int> id = std::nullopt
+  )
+      : FortranProxy() {
+    if (ele)
+      set_ele(ele->get());
+    if (loc)
+      set_loc(loc->get());
+    if (id)
+      set_id(*id);
+  }
 
   std::optional<EleStruct> ele() const; // 0D_PTR_type
   void set_ele(const EleStruct &src);
@@ -14293,6 +17021,20 @@ class ExpressionTreeStruct : public FortranProxy<ExpressionTreeStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit ExpressionTreeStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      std::optional<int> type = std::nullopt,
+      std::optional<double> value = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (type)
+      set_type(*type);
+    if (value)
+      set_value(*value);
+  }
 
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
@@ -14319,6 +17061,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit NametableStruct(
+      optional_ref<const std::vector<int>> index = std::nullopt,
+      std::optional<int> n_min = std::nullopt,
+      std::optional<int> n_max = std::nullopt
+  )
+      : FortranProxy() {
+    if (index)
+      set_index(index->get());
+    if (n_min)
+      set_n_min(*n_min);
+    if (n_max)
+      set_n_max(*n_max);
+  }
+
   FCharArray1D name() const; // 1D_ALLOC_character
   FArray1D<int> index() const; // 1D_ALLOC_integer
   void set_index(const std::vector<int> &v);
@@ -14344,6 +17100,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoSpinDnDpzStruct(
+      optional_ref<const std::vector<double>> vec = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> partial = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> partial2 = std::nullopt
+  )
+      : FortranProxy() {
+    if (vec)
+      set_vec(vec->get());
+    if (partial)
+      set_partial(partial->get());
+    if (partial2)
+      set_partial2(partial2->get());
+  }
+
   FArray1D<double> vec() const; // 1D_NOT_real
   void set_vec(const std::vector<double> &v);
   FArray2D<double> partial() const; // 2D_NOT_real
@@ -14368,6 +17138,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit ResonanceHStruct(
+      optional_ref<const std::string> id = std::nullopt,
+      std::optional<std::complex<double>> c_val = std::nullopt
+  )
+      : FortranProxy() {
+    if (id)
+      set_id(id->get());
+    if (c_val)
+      set_c_val(*c_val);
+  }
+
   std::string id() const; // 0D_NOT_character
   void set_id(const std::string &value);
   std::complex<double> c_val() const; // 0D_NOT_complex
@@ -14389,6 +17170,20 @@ class SpinOrbitMap1Struct : public FortranProxy<SpinOrbitMap1Struct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit SpinOrbitMap1Struct(
+      optional_ref<const std::vector<std::vector<double>>> orb_mat = std::nullopt,
+      optional_ref<const std::vector<double>> vec0 = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> spin_q = std::nullopt
+  )
+      : FortranProxy() {
+    if (orb_mat)
+      set_orb_mat(orb_mat->get());
+    if (vec0)
+      set_vec0(vec0->get());
+    if (spin_q)
+      set_spin_q(spin_q->get());
+  }
 
   FArray2D<double> orb_mat() const; // 2D_NOT_real
   void set_orb_mat(const std::vector<std::vector<double>> &v);
@@ -14414,6 +17209,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit SpinAxisStruct(
+      optional_ref<const std::vector<double>> l = std::nullopt,
+      optional_ref<const std::vector<double>> n0 = std::nullopt,
+      optional_ref<const std::vector<double>> m = std::nullopt
+  )
+      : FortranProxy() {
+    if (l)
+      set_l(l->get());
+    if (n0)
+      set_n0(n0->get());
+    if (m)
+      set_m(m->get());
+  }
+
   FArray1D<double> l() const; // 1D_NOT_real
   void set_l(const std::vector<double> &v);
   FArray1D<double> n0() const; // 1D_NOT_real
@@ -14438,6 +17247,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit PtcNormalFormStruct(
+      optional_ref<const EleStruct> ele_origin = std::nullopt,
+      optional_ref<const std::vector<double>> orb0 = std::nullopt,
+      std::optional<bool> valid_map = std::nullopt
+  )
+      : FortranProxy() {
+    if (ele_origin)
+      set_ele_origin(ele_origin->get());
+    if (orb0)
+      set_orb0(orb0->get());
+    if (valid_map)
+      set_valid_map(*valid_map);
+  }
+
   std::optional<EleStruct> ele_origin() const; // 0D_PTR_type
   void set_ele_origin(const EleStruct &src);
   FArray1D<double> orb0() const; // 1D_NOT_real
@@ -14461,6 +17284,12 @@ class BmadNormalFormStruct : public FortranProxy<BmadNormalFormStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit BmadNormalFormStruct(optional_ref<const EleStruct> ele_origin = std::nullopt)
+      : FortranProxy() {
+    if (ele_origin)
+      set_ele_origin(ele_origin->get());
+  }
 
   std::optional<EleStruct> ele_origin() const; // 0D_PTR_type
   void set_ele_origin(const EleStruct &src);
@@ -14489,6 +17318,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit BunchTrackStruct(
+      std::optional<double> ds_save = std::nullopt,
+      std::optional<int> n_pt = std::nullopt
+  )
+      : FortranProxy() {
+    if (ds_save)
+      set_ds_save(*ds_save);
+    if (n_pt)
+      set_n_pt(*n_pt);
+  }
+
   BunchParamsStructArray1D pt() const; // 1D_ALLOC_type
   double ds_save() const; // 0D_NOT_real
   void set_ds_save(double value);
@@ -14511,6 +17351,74 @@ class SummationRdtStruct : public FortranProxy<SummationRdtStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit SummationRdtStruct(
+      std::optional<std::complex<double>> h11001 = std::nullopt,
+      std::optional<std::complex<double>> h00111 = std::nullopt,
+      std::optional<std::complex<double>> h20001 = std::nullopt,
+      std::optional<std::complex<double>> h00201 = std::nullopt,
+      std::optional<std::complex<double>> h10002 = std::nullopt,
+      std::optional<std::complex<double>> h21000 = std::nullopt,
+      std::optional<std::complex<double>> h30000 = std::nullopt,
+      std::optional<std::complex<double>> h10110 = std::nullopt,
+      std::optional<std::complex<double>> h10020 = std::nullopt,
+      std::optional<std::complex<double>> h10200 = std::nullopt,
+      std::optional<std::complex<double>> h31000 = std::nullopt,
+      std::optional<std::complex<double>> h40000 = std::nullopt,
+      std::optional<std::complex<double>> h20110 = std::nullopt,
+      std::optional<std::complex<double>> h11200 = std::nullopt,
+      std::optional<std::complex<double>> h20020 = std::nullopt,
+      std::optional<std::complex<double>> h20200 = std::nullopt,
+      std::optional<std::complex<double>> h00310 = std::nullopt,
+      std::optional<std::complex<double>> h00400 = std::nullopt,
+      std::optional<std::complex<double>> h22000 = std::nullopt,
+      std::optional<std::complex<double>> h00220 = std::nullopt,
+      std::optional<std::complex<double>> h11110 = std::nullopt
+  )
+      : FortranProxy() {
+    if (h11001)
+      set_h11001(*h11001);
+    if (h00111)
+      set_h00111(*h00111);
+    if (h20001)
+      set_h20001(*h20001);
+    if (h00201)
+      set_h00201(*h00201);
+    if (h10002)
+      set_h10002(*h10002);
+    if (h21000)
+      set_h21000(*h21000);
+    if (h30000)
+      set_h30000(*h30000);
+    if (h10110)
+      set_h10110(*h10110);
+    if (h10020)
+      set_h10020(*h10020);
+    if (h10200)
+      set_h10200(*h10200);
+    if (h31000)
+      set_h31000(*h31000);
+    if (h40000)
+      set_h40000(*h40000);
+    if (h20110)
+      set_h20110(*h20110);
+    if (h11200)
+      set_h11200(*h11200);
+    if (h20020)
+      set_h20020(*h20020);
+    if (h20200)
+      set_h20200(*h20200);
+    if (h00310)
+      set_h00310(*h00310);
+    if (h00400)
+      set_h00400(*h00400);
+    if (h22000)
+      set_h22000(*h22000);
+    if (h00220)
+      set_h00220(*h00220);
+    if (h11110)
+      set_h11110(*h11110);
+  }
 
   std::complex<double> h11001() const; // 0D_NOT_complex
   void set_h11001(std::complex<double> value);
@@ -14572,6 +17480,44 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoEleShapeStruct(
+      optional_ref<const std::string> ele_id = std::nullopt,
+      optional_ref<const std::string> shape = std::nullopt,
+      optional_ref<const std::string> color = std::nullopt,
+      std::optional<double> size = std::nullopt,
+      optional_ref<const std::string> label = std::nullopt,
+      std::optional<bool> draw = std::nullopt,
+      std::optional<bool> multi = std::nullopt,
+      std::optional<int> line_width = std::nullopt,
+      std::optional<double> offset = std::nullopt,
+      std::optional<int> ix_key = std::nullopt,
+      optional_ref<const std::string> name_ele = std::nullopt
+  )
+      : FortranProxy() {
+    if (ele_id)
+      set_ele_id(ele_id->get());
+    if (shape)
+      set_shape(shape->get());
+    if (color)
+      set_color(color->get());
+    if (size)
+      set_size(*size);
+    if (label)
+      set_label(label->get());
+    if (draw)
+      set_draw(*draw);
+    if (multi)
+      set_multi(*multi);
+    if (line_width)
+      set_line_width(*line_width);
+    if (offset)
+      set_offset(*offset);
+    if (ix_key)
+      set_ix_key(*ix_key);
+    if (name_ele)
+      set_name_ele(name_ele->get());
+  }
+
   std::string ele_id() const; // 0D_NOT_character
   void set_ele_id(const std::string &value);
   std::string shape() const; // 0D_NOT_character
@@ -14613,6 +17559,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoElePointerStruct(std::optional<int> n_loc = std::nullopt)
+      : FortranProxy() {
+    if (n_loc)
+      set_n_loc(*n_loc);
+  }
+
   ElePointerStructArray1D eles() const; // 1D_ALLOC_type
   int n_loc() const; // 0D_NOT_integer
   void set_n_loc(int value);
@@ -14633,6 +17585,128 @@ class TaoCurveStruct : public FortranProxy<TaoCurveStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoCurveStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const std::string> data_source = std::nullopt,
+      optional_ref<const std::string> data_index = std::nullopt,
+      optional_ref<const std::string> data_type_x = std::nullopt,
+      optional_ref<const std::string> data_type = std::nullopt,
+      optional_ref<const std::string> ele_ref_name = std::nullopt,
+      optional_ref<const std::string> legend_text = std::nullopt,
+      optional_ref<const std::string> message_text = std::nullopt,
+      optional_ref<const std::string> component = std::nullopt,
+      optional_ref<const std::string> why_invalid = std::nullopt,
+      optional_ref<const TaoGraphStruct> g = std::nullopt,
+      optional_ref<const TaoHistogramStruct> hist = std::nullopt,
+      optional_ref<const TaoCurveColorStruct> z_color = std::nullopt,
+      optional_ref<const std::vector<double>> x_line = std::nullopt,
+      optional_ref<const std::vector<double>> y_line = std::nullopt,
+      optional_ref<const std::vector<double>> y2_line = std::nullopt,
+      optional_ref<const std::vector<int>> ix_line = std::nullopt,
+      optional_ref<const std::vector<double>> x_symb = std::nullopt,
+      optional_ref<const std::vector<double>> y_symb = std::nullopt,
+      optional_ref<const std::vector<double>> z_symb = std::nullopt,
+      optional_ref<const std::vector<double>> err_symb = std::nullopt,
+      optional_ref<const std::vector<double>> symb_size = std::nullopt,
+      optional_ref<const std::vector<int>> ix_symb = std::nullopt,
+      std::optional<double> y_axis_scale_factor = std::nullopt,
+      optional_ref<const QpLineStruct> line = std::nullopt,
+      optional_ref<const QpSymbolStruct> symbol = std::nullopt,
+      optional_ref<const TaoCurveOrbitStruct> orbit = std::nullopt,
+      std::optional<int> ix_universe = std::nullopt,
+      std::optional<int> symbol_every = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> ix_bunch = std::nullopt,
+      std::optional<int> n_turn = std::nullopt,
+      std::optional<bool> use_y2 = std::nullopt,
+      std::optional<bool> draw_line = std::nullopt,
+      std::optional<bool> draw_symbols = std::nullopt,
+      std::optional<bool> draw_symbol_index = std::nullopt,
+      std::optional<bool> draw_error_bars = std::nullopt,
+      std::optional<bool> smooth_line_calc = std::nullopt,
+      std::optional<bool> valid = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (data_source)
+      set_data_source(data_source->get());
+    if (data_index)
+      set_data_index(data_index->get());
+    if (data_type_x)
+      set_data_type_x(data_type_x->get());
+    if (data_type)
+      set_data_type(data_type->get());
+    if (ele_ref_name)
+      set_ele_ref_name(ele_ref_name->get());
+    if (legend_text)
+      set_legend_text(legend_text->get());
+    if (message_text)
+      set_message_text(message_text->get());
+    if (component)
+      set_component(component->get());
+    if (why_invalid)
+      set_why_invalid(why_invalid->get());
+    if (g)
+      set_g(g->get());
+    if (hist)
+      set_hist(hist->get());
+    if (z_color)
+      set_z_color(z_color->get());
+    if (x_line)
+      set_x_line(x_line->get());
+    if (y_line)
+      set_y_line(y_line->get());
+    if (y2_line)
+      set_y2_line(y2_line->get());
+    if (ix_line)
+      set_ix_line(ix_line->get());
+    if (x_symb)
+      set_x_symb(x_symb->get());
+    if (y_symb)
+      set_y_symb(y_symb->get());
+    if (z_symb)
+      set_z_symb(z_symb->get());
+    if (err_symb)
+      set_err_symb(err_symb->get());
+    if (symb_size)
+      set_symb_size(symb_size->get());
+    if (ix_symb)
+      set_ix_symb(ix_symb->get());
+    if (y_axis_scale_factor)
+      set_y_axis_scale_factor(*y_axis_scale_factor);
+    if (line)
+      set_line(line->get());
+    if (symbol)
+      set_symbol(symbol->get());
+    if (orbit)
+      set_orbit(orbit->get());
+    if (ix_universe)
+      set_ix_universe(*ix_universe);
+    if (symbol_every)
+      set_symbol_every(*symbol_every);
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (ix_bunch)
+      set_ix_bunch(*ix_bunch);
+    if (n_turn)
+      set_n_turn(*n_turn);
+    if (use_y2)
+      set_use_y2(*use_y2);
+    if (draw_line)
+      set_draw_line(*draw_line);
+    if (draw_symbols)
+      set_draw_symbols(*draw_symbols);
+    if (draw_symbol_index)
+      set_draw_symbol_index(*draw_symbol_index);
+    if (draw_error_bars)
+      set_draw_error_bars(*draw_error_bars);
+    if (smooth_line_calc)
+      set_smooth_line_calc(*smooth_line_calc);
+    if (valid)
+      set_valid(*valid);
+  }
 
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
@@ -14730,6 +17804,26 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoCurveColorStruct(
+      optional_ref<const std::string> data_type = std::nullopt,
+      std::optional<bool> is_on = std::nullopt,
+      std::optional<double> min = std::nullopt,
+      std::optional<double> max = std::nullopt,
+      std::optional<bool> autoscale = std::nullopt
+  )
+      : FortranProxy() {
+    if (data_type)
+      set_data_type(data_type->get());
+    if (is_on)
+      set_is_on(*is_on);
+    if (min)
+      set_min(*min);
+    if (max)
+      set_max(*max);
+    if (autoscale)
+      set_autoscale(*autoscale);
+  }
+
   std::string data_type() const; // 0D_NOT_character
   void set_data_type(const std::string &value);
   bool is_on() const; // 0D_NOT_logical
@@ -14758,6 +17852,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoCurveOrbitStruct(
+      std::optional<double> x = std::nullopt,
+      std::optional<double> y = std::nullopt,
+      std::optional<double> t = std::nullopt
+  )
+      : FortranProxy() {
+    if (x)
+      set_x(*x);
+    if (y)
+      set_y(*y);
+    if (t)
+      set_t(*t);
+  }
+
   double x() const; // 0D_NOT_real
   void set_x(double value);
   double y() const; // 0D_NOT_real
@@ -14781,6 +17889,32 @@ class TaoHistogramStruct : public FortranProxy<TaoHistogramStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoHistogramStruct(
+      std::optional<bool> density_normalized = std::nullopt,
+      std::optional<bool> weight_by_charge = std::nullopt,
+      std::optional<double> minimum = std::nullopt,
+      std::optional<double> maximum = std::nullopt,
+      std::optional<double> width = std::nullopt,
+      std::optional<double> center = std::nullopt,
+      std::optional<int> number = std::nullopt
+  )
+      : FortranProxy() {
+    if (density_normalized)
+      set_density_normalized(*density_normalized);
+    if (weight_by_charge)
+      set_weight_by_charge(*weight_by_charge);
+    if (minimum)
+      set_minimum(*minimum);
+    if (maximum)
+      set_maximum(*maximum);
+    if (width)
+      set_width(*width);
+    if (center)
+      set_center(*center);
+    if (number)
+      set_number(*number);
+  }
 
   bool density_normalized() const; // 0D_NOT_logical
   void set_density_normalized(bool value);
@@ -14813,6 +17947,17 @@ class LatEleOrder1Struct : public FortranProxy<LatEleOrder1Struct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit LatEleOrder1Struct(
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> ix_order = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (ix_order)
+      set_ix_order(*ix_order);
+  }
 
   int ix_branch() const; // 0D_NOT_integer
   void set_ix_branch(int value);
@@ -14859,6 +18004,14 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoLatSigmaStruct(
+      optional_ref<const std::vector<std::vector<double>>> mat = std::nullopt
+  )
+      : FortranProxy() {
+    if (mat)
+      set_mat(mat->get());
+  }
+
   FArray2D<double> mat() const; // 2D_NOT_real
   void set_mat(const std::vector<std::vector<double>> &v);
 };
@@ -14878,6 +18031,26 @@ class TaoSpinEleStruct : public FortranProxy<TaoSpinEleStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoSpinEleStruct(
+      optional_ref<const TaoSpinDnDpzStruct> dn_dpz = std::nullopt,
+      optional_ref<const std::vector<double>> orb_eigen_val = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> orb_eigen_vec = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> spin_eigen_vec = std::nullopt,
+      std::optional<bool> valid = std::nullopt
+  )
+      : FortranProxy() {
+    if (dn_dpz)
+      set_dn_dpz(dn_dpz->get());
+    if (orb_eigen_val)
+      set_orb_eigen_val(orb_eigen_val->get());
+    if (orb_eigen_vec)
+      set_orb_eigen_vec(orb_eigen_vec->get());
+    if (spin_eigen_vec)
+      set_spin_eigen_vec(spin_eigen_vec->get());
+    if (valid)
+      set_valid(*valid);
+  }
 
   TaoSpinDnDpzStruct dn_dpz() const; // 0D_NOT_type
   void set_dn_dpz(const TaoSpinDnDpzStruct &src);
@@ -14907,6 +18080,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoPlotCacheStruct(
+      optional_ref<const EleStruct> ele_to_s = std::nullopt,
+      optional_ref<const CoordStruct> orbit = std::nullopt,
+      std::optional<bool> err = std::nullopt
+  )
+      : FortranProxy() {
+    if (ele_to_s)
+      set_ele_to_s(ele_to_s->get());
+    if (orbit)
+      set_orbit(orbit->get());
+    if (err)
+      set_err(*err);
+  }
+
   EleStruct ele_to_s() const; // 0D_NOT_type
   void set_ele_to_s(const EleStruct &src);
   CoordStruct orbit() const; // 0D_NOT_type
@@ -14934,6 +18121,56 @@ class TaoSpinPolarizationStruct : public FortranProxy<TaoSpinPolarizationStruct>
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoSpinPolarizationStruct(
+      std::optional<double> tune = std::nullopt,
+      std::optional<double> pol_limit_st = std::nullopt,
+      std::optional<double> pol_limit_dk = std::nullopt,
+      optional_ref<const std::vector<double>> pol_limit_dk_partial = std::nullopt,
+      optional_ref<const std::vector<double>> pol_limit_dk_partial2 = std::nullopt,
+      std::optional<double> pol_rate_bks = std::nullopt,
+      std::optional<double> depol_rate = std::nullopt,
+      optional_ref<const std::vector<double>> depol_rate_partial = std::nullopt,
+      optional_ref<const std::vector<double>> depol_rate_partial2 = std::nullopt,
+      std::optional<double> integral_bn = std::nullopt,
+      std::optional<double> integral_bdn = std::nullopt,
+      std::optional<double> integral_1ns = std::nullopt,
+      std::optional<double> integral_dn2 = std::nullopt,
+      std::optional<bool> valid = std::nullopt,
+      optional_ref<const SpinOrbitMap1Struct> q_1turn = std::nullopt
+  )
+      : FortranProxy() {
+    if (tune)
+      set_tune(*tune);
+    if (pol_limit_st)
+      set_pol_limit_st(*pol_limit_st);
+    if (pol_limit_dk)
+      set_pol_limit_dk(*pol_limit_dk);
+    if (pol_limit_dk_partial)
+      set_pol_limit_dk_partial(pol_limit_dk_partial->get());
+    if (pol_limit_dk_partial2)
+      set_pol_limit_dk_partial2(pol_limit_dk_partial2->get());
+    if (pol_rate_bks)
+      set_pol_rate_bks(*pol_rate_bks);
+    if (depol_rate)
+      set_depol_rate(*depol_rate);
+    if (depol_rate_partial)
+      set_depol_rate_partial(depol_rate_partial->get());
+    if (depol_rate_partial2)
+      set_depol_rate_partial2(depol_rate_partial2->get());
+    if (integral_bn)
+      set_integral_bn(*integral_bn);
+    if (integral_bdn)
+      set_integral_bdn(*integral_bdn);
+    if (integral_1ns)
+      set_integral_1ns(*integral_1ns);
+    if (integral_dn2)
+      set_integral_dn2(*integral_dn2);
+    if (valid)
+      set_valid(*valid);
+    if (q_1turn)
+      set_q_1turn(q_1turn->get());
+  }
 
   double tune() const; // 0D_NOT_real
   void set_tune(double value);
@@ -14985,6 +18222,86 @@ class TaoLatticeBranchStruct : public FortranProxy<TaoLatticeBranchStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoLatticeBranchStruct(
+      optional_ref<const TaoLatticeStruct> tao_lat = std::nullopt,
+      optional_ref<const TaoSpinPolarizationStruct> spin = std::nullopt,
+      optional_ref<const SummationRdtStruct> srdt = std::nullopt,
+      optional_ref<const CoordStruct> orb0 = std::nullopt,
+      optional_ref<const NormalModesStruct> modes_ri = std::nullopt,
+      optional_ref<const NormalModesStruct> modes_6d = std::nullopt,
+      optional_ref<const PtcNormalFormStruct> ptc_normal_form = std::nullopt,
+      optional_ref<const BmadNormalFormStruct> bmad_normal_form = std::nullopt,
+      std::optional<double> cache_x_min = std::nullopt,
+      std::optional<double> cache_x_max = std::nullopt,
+      std::optional<double> comb_ds_save = std::nullopt,
+      std::optional<int> ix_ref_taylor = std::nullopt,
+      std::optional<int> ix_ele_taylor = std::nullopt,
+      std::optional<int> track_state = std::nullopt,
+      std::optional<int> cache_n_pts = std::nullopt,
+      std::optional<int> ix_rad_int_cache = std::nullopt,
+      std::optional<bool> has_open_match_element = std::nullopt,
+      std::optional<bool> plot_cache_valid = std::nullopt,
+      std::optional<bool> spin_map_valid = std::nullopt,
+      std::optional<bool> twiss_valid = std::nullopt,
+      std::optional<bool> mode_flip_here = std::nullopt,
+      std::optional<bool> chrom_calc_ok = std::nullopt,
+      std::optional<bool> rad_int_calc_ok = std::nullopt,
+      std::optional<bool> emit_6d_calc_ok = std::nullopt,
+      std::optional<bool> sigma_track_ok = std::nullopt
+  )
+      : FortranProxy() {
+    if (tao_lat)
+      set_tao_lat(tao_lat->get());
+    if (spin)
+      set_spin(spin->get());
+    if (srdt)
+      set_srdt(srdt->get());
+    if (orb0)
+      set_orb0(orb0->get());
+    if (modes_ri)
+      set_modes_ri(modes_ri->get());
+    if (modes_6d)
+      set_modes_6d(modes_6d->get());
+    if (ptc_normal_form)
+      set_ptc_normal_form(ptc_normal_form->get());
+    if (bmad_normal_form)
+      set_bmad_normal_form(bmad_normal_form->get());
+    if (cache_x_min)
+      set_cache_x_min(*cache_x_min);
+    if (cache_x_max)
+      set_cache_x_max(*cache_x_max);
+    if (comb_ds_save)
+      set_comb_ds_save(*comb_ds_save);
+    if (ix_ref_taylor)
+      set_ix_ref_taylor(*ix_ref_taylor);
+    if (ix_ele_taylor)
+      set_ix_ele_taylor(*ix_ele_taylor);
+    if (track_state)
+      set_track_state(*track_state);
+    if (cache_n_pts)
+      set_cache_n_pts(*cache_n_pts);
+    if (ix_rad_int_cache)
+      set_ix_rad_int_cache(*ix_rad_int_cache);
+    if (has_open_match_element)
+      set_has_open_match_element(*has_open_match_element);
+    if (plot_cache_valid)
+      set_plot_cache_valid(*plot_cache_valid);
+    if (spin_map_valid)
+      set_spin_map_valid(*spin_map_valid);
+    if (twiss_valid)
+      set_twiss_valid(*twiss_valid);
+    if (mode_flip_here)
+      set_mode_flip_here(*mode_flip_here);
+    if (chrom_calc_ok)
+      set_chrom_calc_ok(*chrom_calc_ok);
+    if (rad_int_calc_ok)
+      set_rad_int_calc_ok(*rad_int_calc_ok);
+    if (emit_6d_calc_ok)
+      set_emit_6d_calc_ok(*emit_6d_calc_ok);
+    if (sigma_track_ok)
+      set_sigma_track_ok(*sigma_track_ok);
+  }
 
   std::optional<TaoLatticeStruct> tao_lat() const; // 0D_PTR_type
   void set_tao_lat(const TaoLatticeStruct &src);
@@ -15065,6 +18382,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoModelElementStruct(
+      optional_ref<const BeamStruct> beam = std::nullopt,
+      std::optional<bool> save_beam_internally = std::nullopt,
+      std::optional<bool> save_beam_to_file = std::nullopt
+  )
+      : FortranProxy() {
+    if (beam)
+      set_beam(beam->get());
+    if (save_beam_internally)
+      set_save_beam_internally(*save_beam_internally);
+    if (save_beam_to_file)
+      set_save_beam_to_file(*save_beam_to_file);
+  }
+
   BeamStruct beam() const; // 0D_NOT_type
   void set_beam(const BeamStruct &src);
   bool save_beam_internally() const; // 0D_NOT_logical
@@ -15088,6 +18419,38 @@ class TaoBeamBranchStruct : public FortranProxy<TaoBeamBranchStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoBeamBranchStruct(
+      optional_ref<const BeamStruct> beam_at_start = std::nullopt,
+      optional_ref<const BeamInitStruct> beam_init = std::nullopt,
+      optional_ref<const BeamInitStruct> beam_init_used = std::nullopt,
+      std::optional<bool> init_starting_distribution = std::nullopt,
+      optional_ref<const std::string> track_start = std::nullopt,
+      optional_ref<const std::string> track_end = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> ix_track_start = std::nullopt,
+      std::optional<int> ix_track_end = std::nullopt
+  )
+      : FortranProxy() {
+    if (beam_at_start)
+      set_beam_at_start(beam_at_start->get());
+    if (beam_init)
+      set_beam_init(beam_init->get());
+    if (beam_init_used)
+      set_beam_init_used(beam_init_used->get());
+    if (init_starting_distribution)
+      set_init_starting_distribution(*init_starting_distribution);
+    if (track_start)
+      set_track_start(track_start->get());
+    if (track_end)
+      set_track_end(track_end->get());
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (ix_track_start)
+      set_ix_track_start(*ix_track_start);
+    if (ix_track_end)
+      set_ix_track_end(*ix_track_end);
+  }
 
   BeamStruct beam_at_start() const; // 0D_NOT_type
   void set_beam_at_start(const BeamStruct &src);
@@ -15125,6 +18488,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoD1DataStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const TaoD2DataStruct> d2 = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (d2)
+      set_d2(d2->get());
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   std::optional<TaoD2DataStruct> d2() const; // 0D_PTR_type
@@ -15147,6 +18521,41 @@ class TaoD2DataStruct : public FortranProxy<TaoD2DataStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoD2DataStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const std::string> data_file_name = std::nullopt,
+      optional_ref<const std::string> ref_file_name = std::nullopt,
+      optional_ref<const std::string> data_date = std::nullopt,
+      optional_ref<const std::string> ref_date = std::nullopt,
+      std::optional<int> ix_universe = std::nullopt,
+      std::optional<int> ix_d2_data = std::nullopt,
+      std::optional<int> ix_ref = std::nullopt,
+      std::optional<bool> data_read_in = std::nullopt,
+      std::optional<bool> ref_read_in = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (data_file_name)
+      set_data_file_name(data_file_name->get());
+    if (ref_file_name)
+      set_ref_file_name(ref_file_name->get());
+    if (data_date)
+      set_data_date(data_date->get());
+    if (ref_date)
+      set_ref_date(ref_date->get());
+    if (ix_universe)
+      set_ix_universe(*ix_universe);
+    if (ix_d2_data)
+      set_ix_d2_data(*ix_d2_data);
+    if (ix_ref)
+      set_ix_ref(*ix_ref);
+    if (data_read_in)
+      set_data_read_in(*data_read_in);
+    if (ref_read_in)
+      set_ref_read_in(*ref_read_in);
+  }
 
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
@@ -15192,6 +18601,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoDataVarComponentStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      std::optional<double> sign = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (sign)
+      set_sign(*sign);
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   double sign() const; // 0D_NOT_real
@@ -15213,6 +18633,104 @@ class TaoGraphStruct : public FortranProxy<TaoGraphStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoGraphStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const std::string> type = std::nullopt,
+      optional_ref<const std::string> title = std::nullopt,
+      optional_ref<const std::string> title_suffix = std::nullopt,
+      optional_ref<const std::string> why_invalid = std::nullopt,
+      optional_ref<const TaoPlotStruct> p = std::nullopt,
+      optional_ref<const TaoFloorPlanStruct> floor_plan = std::nullopt,
+      optional_ref<const QpPointStruct> text_legend_origin = std::nullopt,
+      optional_ref<const QpPointStruct> curve_legend_origin = std::nullopt,
+      optional_ref<const QpLegendStruct> curve_legend = std::nullopt,
+      optional_ref<const QpAxisStruct> x = std::nullopt,
+      optional_ref<const QpAxisStruct> y = std::nullopt,
+      optional_ref<const QpAxisStruct> x2 = std::nullopt,
+      optional_ref<const QpAxisStruct> y2 = std::nullopt,
+      optional_ref<const QpRectStruct> margin = std::nullopt,
+      optional_ref<const QpRectStruct> scale_margin = std::nullopt,
+      std::optional<double> x_axis_scale_factor = std::nullopt,
+      std::optional<double> symbol_size_scale = std::nullopt,
+      optional_ref<const std::vector<int>> box = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> ix_universe = std::nullopt,
+      std::optional<bool> clip = std::nullopt,
+      std::optional<bool> y2_mirrors_y = std::nullopt,
+      std::optional<bool> limited = std::nullopt,
+      std::optional<bool> draw_axes = std::nullopt,
+      std::optional<bool> draw_curve_legend = std::nullopt,
+      std::optional<bool> draw_grid = std::nullopt,
+      std::optional<bool> draw_title = std::nullopt,
+      std::optional<bool> draw_only_good_user_data_or_vars = std::nullopt,
+      std::optional<bool> allow_wrap_around = std::nullopt,
+      std::optional<bool> is_valid = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (type)
+      set_type(type->get());
+    if (title)
+      set_title(title->get());
+    if (title_suffix)
+      set_title_suffix(title_suffix->get());
+    if (why_invalid)
+      set_why_invalid(why_invalid->get());
+    if (p)
+      set_p(p->get());
+    if (floor_plan)
+      set_floor_plan(floor_plan->get());
+    if (text_legend_origin)
+      set_text_legend_origin(text_legend_origin->get());
+    if (curve_legend_origin)
+      set_curve_legend_origin(curve_legend_origin->get());
+    if (curve_legend)
+      set_curve_legend(curve_legend->get());
+    if (x)
+      set_x(x->get());
+    if (y)
+      set_y(y->get());
+    if (x2)
+      set_x2(x2->get());
+    if (y2)
+      set_y2(y2->get());
+    if (margin)
+      set_margin(margin->get());
+    if (scale_margin)
+      set_scale_margin(scale_margin->get());
+    if (x_axis_scale_factor)
+      set_x_axis_scale_factor(*x_axis_scale_factor);
+    if (symbol_size_scale)
+      set_symbol_size_scale(*symbol_size_scale);
+    if (box)
+      set_box(box->get());
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (ix_universe)
+      set_ix_universe(*ix_universe);
+    if (clip)
+      set_clip(*clip);
+    if (y2_mirrors_y)
+      set_y2_mirrors_y(*y2_mirrors_y);
+    if (limited)
+      set_limited(*limited);
+    if (draw_axes)
+      set_draw_axes(*draw_axes);
+    if (draw_curve_legend)
+      set_draw_curve_legend(*draw_curve_legend);
+    if (draw_grid)
+      set_draw_grid(*draw_grid);
+    if (draw_title)
+      set_draw_title(*draw_title);
+    if (draw_only_good_user_data_or_vars)
+      set_draw_only_good_user_data_or_vars(*draw_only_good_user_data_or_vars);
+    if (allow_wrap_around)
+      set_allow_wrap_around(*allow_wrap_around);
+    if (is_valid)
+      set_is_valid(*is_valid);
+  }
 
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
@@ -15297,6 +18815,53 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoPlotStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const std::string> description = std::nullopt,
+      optional_ref<const TaoPlotRegionStruct> r = std::nullopt,
+      std::optional<int> ix_plot = std::nullopt,
+      std::optional<int> n_curve_pts = std::nullopt,
+      optional_ref<const std::string> type = std::nullopt,
+      optional_ref<const std::string> x_axis_type = std::nullopt,
+      std::optional<bool> autoscale_x = std::nullopt,
+      std::optional<bool> autoscale_y = std::nullopt,
+      std::optional<bool> autoscale_gang_x = std::nullopt,
+      std::optional<bool> autoscale_gang_y = std::nullopt,
+      std::optional<bool> list_with_show_plot_command = std::nullopt,
+      std::optional<bool> phantom = std::nullopt,
+      std::optional<bool> default_plot = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (description)
+      set_description(description->get());
+    if (r)
+      set_r(r->get());
+    if (ix_plot)
+      set_ix_plot(*ix_plot);
+    if (n_curve_pts)
+      set_n_curve_pts(*n_curve_pts);
+    if (type)
+      set_type(type->get());
+    if (x_axis_type)
+      set_x_axis_type(x_axis_type->get());
+    if (autoscale_x)
+      set_autoscale_x(*autoscale_x);
+    if (autoscale_y)
+      set_autoscale_y(*autoscale_y);
+    if (autoscale_gang_x)
+      set_autoscale_gang_x(*autoscale_gang_x);
+    if (autoscale_gang_y)
+      set_autoscale_gang_y(*autoscale_gang_y);
+    if (list_with_show_plot_command)
+      set_list_with_show_plot_command(*list_with_show_plot_command);
+    if (phantom)
+      set_phantom(*phantom);
+    if (default_plot)
+      set_default_plot(*default_plot);
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   std::string description() const; // 0D_NOT_character
@@ -15344,6 +18909,29 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoPlotRegionStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const TaoPlotStruct> plot = std::nullopt,
+      optional_ref<const std::vector<double>> location = std::nullopt,
+      std::optional<bool> visible = std::nullopt,
+      std::optional<bool> list_with_show_plot_command = std::nullopt,
+      std::optional<bool> setup_done = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (plot)
+      set_plot(plot->get());
+    if (location)
+      set_location(location->get());
+    if (visible)
+      set_visible(*visible);
+    if (list_with_show_plot_command)
+      set_list_with_show_plot_command(*list_with_show_plot_command);
+    if (setup_done)
+      set_setup_done(*setup_done);
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   TaoPlotStruct plot() const; // 0D_NOT_type
@@ -15378,6 +18966,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoUniversePointerStruct(optional_ref<const TaoUniverseStruct> u = std::nullopt)
+      : FortranProxy() {
+    if (u)
+      set_u(u->get());
+  }
+
   std::optional<TaoUniverseStruct> u() const; // 0D_PTR_type
   void set_u(const TaoUniverseStruct &src);
 };
@@ -15399,6 +18993,41 @@ class TaoSuperUniverseStruct : public FortranProxy<TaoSuperUniverseStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoSuperUniverseStruct(
+      optional_ref<const TaoGlobalStruct> global = std::nullopt,
+      optional_ref<const TaoInitStruct> init = std::nullopt,
+      optional_ref<const TaoCommonStruct> com = std::nullopt,
+      optional_ref<const TaoPlotPageStruct> plot_page = std::nullopt,
+      optional_ref<const std::vector<int>> key = std::nullopt,
+      optional_ref<const TaoBuildingWallStruct> building_wall = std::nullopt,
+      optional_ref<const TaoWaveStruct> wave = std::nullopt,
+      std::optional<int> n_var_used = std::nullopt,
+      std::optional<int> n_v1_var_used = std::nullopt,
+      std::optional<bool> initialized = std::nullopt
+  )
+      : FortranProxy() {
+    if (global)
+      set_global(global->get());
+    if (init)
+      set_init(init->get());
+    if (com)
+      set_com(com->get());
+    if (plot_page)
+      set_plot_page(plot_page->get());
+    if (key)
+      set_key(key->get());
+    if (building_wall)
+      set_building_wall(building_wall->get());
+    if (wave)
+      set_wave(wave->get());
+    if (n_var_used)
+      set_n_var_used(*n_var_used);
+    if (n_v1_var_used)
+      set_n_v1_var_used(*n_v1_var_used);
+    if (initialized)
+      set_initialized(*initialized);
+  }
 
   TaoGlobalStruct global() const; // 0D_NOT_type
   void set_global(const TaoGlobalStruct &src);
@@ -15441,6 +19070,122 @@ class TaoVarStruct : public FortranProxy<TaoVarStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoVarStruct(
+      optional_ref<const std::string> ele_name = std::nullopt,
+      optional_ref<const std::string> attrib_name = std::nullopt,
+      optional_ref<const std::string> id = std::nullopt,
+      std::optional<int> ix_v1 = std::nullopt,
+      std::optional<int> ix_var = std::nullopt,
+      std::optional<int> ix_dvar = std::nullopt,
+      std::optional<int> ix_attrib = std::nullopt,
+      std::optional<int> ix_key_table = std::nullopt,
+      std::optional<double> model_value = std::nullopt,
+      std::optional<double> base_value = std::nullopt,
+      std::optional<double> design_value = std::nullopt,
+      std::optional<double> scratch_value = std::nullopt,
+      std::optional<double> old_value = std::nullopt,
+      std::optional<double> meas_value = std::nullopt,
+      std::optional<double> ref_value = std::nullopt,
+      std::optional<double> correction_value = std::nullopt,
+      std::optional<double> high_lim = std::nullopt,
+      std::optional<double> low_lim = std::nullopt,
+      std::optional<double> step = std::nullopt,
+      std::optional<double> weight = std::nullopt,
+      std::optional<double> delta_merit = std::nullopt,
+      std::optional<double> merit = std::nullopt,
+      std::optional<double> dMerit_dVar = std::nullopt,
+      std::optional<double> key_val0 = std::nullopt,
+      std::optional<double> key_delta = std::nullopt,
+      std::optional<double> s = std::nullopt,
+      std::optional<double> extend_val = std::nullopt,
+      optional_ref<const std::string> merit_type = std::nullopt,
+      std::optional<bool> exists = std::nullopt,
+      std::optional<bool> good_var = std::nullopt,
+      std::optional<bool> good_user = std::nullopt,
+      std::optional<bool> good_opt = std::nullopt,
+      std::optional<bool> good_plot = std::nullopt,
+      std::optional<bool> useit_opt = std::nullopt,
+      std::optional<bool> useit_plot = std::nullopt,
+      std::optional<bool> key_bound = std::nullopt,
+      optional_ref<const TaoV1VarStruct> v1 = std::nullopt
+  )
+      : FortranProxy() {
+    if (ele_name)
+      set_ele_name(ele_name->get());
+    if (attrib_name)
+      set_attrib_name(attrib_name->get());
+    if (id)
+      set_id(id->get());
+    if (ix_v1)
+      set_ix_v1(*ix_v1);
+    if (ix_var)
+      set_ix_var(*ix_var);
+    if (ix_dvar)
+      set_ix_dvar(*ix_dvar);
+    if (ix_attrib)
+      set_ix_attrib(*ix_attrib);
+    if (ix_key_table)
+      set_ix_key_table(*ix_key_table);
+    if (model_value)
+      set_model_value(*model_value);
+    if (base_value)
+      set_base_value(*base_value);
+    if (design_value)
+      set_design_value(*design_value);
+    if (scratch_value)
+      set_scratch_value(*scratch_value);
+    if (old_value)
+      set_old_value(*old_value);
+    if (meas_value)
+      set_meas_value(*meas_value);
+    if (ref_value)
+      set_ref_value(*ref_value);
+    if (correction_value)
+      set_correction_value(*correction_value);
+    if (high_lim)
+      set_high_lim(*high_lim);
+    if (low_lim)
+      set_low_lim(*low_lim);
+    if (step)
+      set_step(*step);
+    if (weight)
+      set_weight(*weight);
+    if (delta_merit)
+      set_delta_merit(*delta_merit);
+    if (merit)
+      set_merit(*merit);
+    if (dMerit_dVar)
+      set_dMerit_dVar(*dMerit_dVar);
+    if (key_val0)
+      set_key_val0(*key_val0);
+    if (key_delta)
+      set_key_delta(*key_delta);
+    if (s)
+      set_s(*s);
+    if (extend_val)
+      set_extend_val(*extend_val);
+    if (merit_type)
+      set_merit_type(merit_type->get());
+    if (exists)
+      set_exists(*exists);
+    if (good_var)
+      set_good_var(*good_var);
+    if (good_user)
+      set_good_user(*good_user);
+    if (good_opt)
+      set_good_opt(*good_opt);
+    if (good_plot)
+      set_good_plot(*good_plot);
+    if (useit_opt)
+      set_useit_opt(*useit_opt);
+    if (useit_plot)
+      set_useit_plot(*useit_plot);
+    if (key_bound)
+      set_key_bound(*key_bound);
+    if (v1)
+      set_v1(v1->get());
+  }
 
   std::string ele_name() const; // 0D_NOT_character
   void set_ele_name(const std::string &value);
@@ -15535,6 +19280,26 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoVarSlaveStruct(
+      std::optional<int> ix_uni = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<double> model_value = std::nullopt,
+      std::optional<double> base_value = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix_uni)
+      set_ix_uni(*ix_uni);
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (model_value)
+      set_model_value(*model_value);
+    if (base_value)
+      set_base_value(*base_value);
+  }
+
   int ix_uni() const; // 0D_NOT_integer
   void set_ix_uni(int value);
   int ix_branch() const; // 0D_NOT_integer
@@ -15562,6 +19327,29 @@ class TaoLatticeStruct : public FortranProxy<TaoLatticeStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoLatticeStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const LatStruct> lat = std::nullopt,
+      optional_ref<const LatStruct> high_E_lat = std::nullopt,
+      optional_ref<const LatStruct> low_E_lat = std::nullopt,
+      optional_ref<const RadIntAllEleStruct> rad_int_by_ele_ri = std::nullopt,
+      optional_ref<const RadIntAllEleStruct> rad_int_by_ele_6d = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (lat)
+      set_lat(lat->get());
+    if (high_E_lat)
+      set_high_E_lat(high_E_lat->get());
+    if (low_E_lat)
+      set_low_E_lat(low_E_lat->get());
+    if (rad_int_by_ele_ri)
+      set_rad_int_by_ele_ri(rad_int_by_ele_ri->get());
+    if (rad_int_by_ele_6d)
+      set_rad_int_by_ele_6d(rad_int_by_ele_6d->get());
+  }
 
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
@@ -15593,6 +19381,26 @@ class TaoBeamUniStruct : public FortranProxy<TaoBeamUniStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoBeamUniStruct(
+      optional_ref<const std::string> saved_at = std::nullopt,
+      optional_ref<const std::string> dump_file = std::nullopt,
+      optional_ref<const std::string> dump_at = std::nullopt,
+      std::optional<bool> track_beam_in_universe = std::nullopt,
+      std::optional<bool> always_reinit = std::nullopt
+  )
+      : FortranProxy() {
+    if (saved_at)
+      set_saved_at(saved_at->get());
+    if (dump_file)
+      set_dump_file(dump_file->get());
+    if (dump_at)
+      set_dump_at(dump_at->get());
+    if (track_beam_in_universe)
+      set_track_beam_in_universe(*track_beam_in_universe);
+    if (always_reinit)
+      set_always_reinit(*always_reinit);
+  }
 
   std::string saved_at() const; // 0D_NOT_character
   void set_saved_at(const std::string &value);
@@ -15626,6 +19434,26 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoDynamicApertureStruct(
+      optional_ref<const ApertureParamStruct> param = std::nullopt,
+      optional_ref<const std::vector<double>> pz = std::nullopt,
+      std::optional<double> ellipse_scale = std::nullopt,
+      std::optional<double> a_emit = std::nullopt,
+      std::optional<double> b_emit = std::nullopt
+  )
+      : FortranProxy() {
+    if (param)
+      set_param(param->get());
+    if (pz)
+      set_pz(pz->get());
+    if (ellipse_scale)
+      set_ellipse_scale(*ellipse_scale);
+    if (a_emit)
+      set_a_emit(*a_emit);
+    if (b_emit)
+      set_b_emit(*b_emit);
+  }
+
   ApertureParamStruct param() const; // 0D_NOT_type
   void set_param(const ApertureParamStruct &src);
   ApertureScanStructArray1D scan() const; // 1D_ALLOC_type
@@ -15655,6 +19483,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoModelBranchStruct(optional_ref<const TaoBeamBranchStruct> beam = std::nullopt)
+      : FortranProxy() {
+    if (beam)
+      set_beam(beam->get());
+  }
+
   TaoModelElementStructArray1D ele() const; // 1D_ALLOC_type
   TaoBeamBranchStruct beam() const; // 0D_NOT_type
   void set_beam(const TaoBeamBranchStruct &src);
@@ -15675,6 +19509,41 @@ class TaoSpinMapStruct : public FortranProxy<TaoSpinMapStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoSpinMapStruct(
+      std::optional<bool> valid = std::nullopt,
+      optional_ref<const SpinOrbitMap1Struct> map1 = std::nullopt,
+      optional_ref<const SpinAxisStruct> axis_input = std::nullopt,
+      optional_ref<const SpinAxisStruct> axis0 = std::nullopt,
+      optional_ref<const SpinAxisStruct> axis1 = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> ix_ref = std::nullopt,
+      std::optional<int> ix_uni = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> mat8 = std::nullopt
+  )
+      : FortranProxy() {
+    if (valid)
+      set_valid(*valid);
+    if (map1)
+      set_map1(map1->get());
+    if (axis_input)
+      set_axis_input(axis_input->get());
+    if (axis0)
+      set_axis0(axis0->get());
+    if (axis1)
+      set_axis1(axis1->get());
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (ix_ref)
+      set_ix_ref(*ix_ref);
+    if (ix_uni)
+      set_ix_uni(*ix_uni);
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (mat8)
+      set_mat8(mat8->get());
+  }
 
   bool valid() const; // 0D_NOT_logical
   void set_valid(bool value);
@@ -15713,6 +19582,152 @@ class TaoDataStruct : public FortranProxy<TaoDataStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoDataStruct(
+      optional_ref<const std::string> ele_name = std::nullopt,
+      optional_ref<const std::string> ele_start_name = std::nullopt,
+      optional_ref<const std::string> ele_ref_name = std::nullopt,
+      optional_ref<const std::string> data_type = std::nullopt,
+      optional_ref<const std::string> merit_type = std::nullopt,
+      optional_ref<const std::string> id = std::nullopt,
+      optional_ref<const std::string> data_source = std::nullopt,
+      optional_ref<const std::string> why_invalid = std::nullopt,
+      std::optional<int> ix_uni = std::nullopt,
+      std::optional<int> ix_bunch = std::nullopt,
+      std::optional<int> ix_branch = std::nullopt,
+      std::optional<int> ix_ele = std::nullopt,
+      std::optional<int> ix_ele_start = std::nullopt,
+      std::optional<int> ix_ele_ref = std::nullopt,
+      std::optional<int> ix_ele_merit = std::nullopt,
+      std::optional<int> ix_d1 = std::nullopt,
+      std::optional<int> ix_data = std::nullopt,
+      std::optional<int> ix_dModel = std::nullopt,
+      std::optional<int> eval_point = std::nullopt,
+      std::optional<double> meas_value = std::nullopt,
+      std::optional<double> ref_value = std::nullopt,
+      std::optional<double> model_value = std::nullopt,
+      std::optional<double> design_value = std::nullopt,
+      std::optional<double> old_value = std::nullopt,
+      std::optional<double> base_value = std::nullopt,
+      std::optional<double> error_rms = std::nullopt,
+      std::optional<double> delta_merit = std::nullopt,
+      std::optional<double> weight = std::nullopt,
+      std::optional<double> invalid_value = std::nullopt,
+      std::optional<double> merit = std::nullopt,
+      std::optional<double> s = std::nullopt,
+      std::optional<double> s_offset = std::nullopt,
+      std::optional<double> ref_s_offset = std::nullopt,
+      std::optional<bool> err_message_printed = std::nullopt,
+      std::optional<bool> exists = std::nullopt,
+      std::optional<bool> good_model = std::nullopt,
+      std::optional<bool> good_base = std::nullopt,
+      std::optional<bool> good_design = std::nullopt,
+      std::optional<bool> good_meas = std::nullopt,
+      std::optional<bool> good_ref = std::nullopt,
+      std::optional<bool> good_user = std::nullopt,
+      std::optional<bool> good_opt = std::nullopt,
+      std::optional<bool> good_plot = std::nullopt,
+      std::optional<bool> useit_plot = std::nullopt,
+      std::optional<bool> useit_opt = std::nullopt,
+      optional_ref<const TaoSpinMapStruct> spin_map = std::nullopt,
+      optional_ref<const TaoD1DataStruct> d1 = std::nullopt
+  )
+      : FortranProxy() {
+    if (ele_name)
+      set_ele_name(ele_name->get());
+    if (ele_start_name)
+      set_ele_start_name(ele_start_name->get());
+    if (ele_ref_name)
+      set_ele_ref_name(ele_ref_name->get());
+    if (data_type)
+      set_data_type(data_type->get());
+    if (merit_type)
+      set_merit_type(merit_type->get());
+    if (id)
+      set_id(id->get());
+    if (data_source)
+      set_data_source(data_source->get());
+    if (why_invalid)
+      set_why_invalid(why_invalid->get());
+    if (ix_uni)
+      set_ix_uni(*ix_uni);
+    if (ix_bunch)
+      set_ix_bunch(*ix_bunch);
+    if (ix_branch)
+      set_ix_branch(*ix_branch);
+    if (ix_ele)
+      set_ix_ele(*ix_ele);
+    if (ix_ele_start)
+      set_ix_ele_start(*ix_ele_start);
+    if (ix_ele_ref)
+      set_ix_ele_ref(*ix_ele_ref);
+    if (ix_ele_merit)
+      set_ix_ele_merit(*ix_ele_merit);
+    if (ix_d1)
+      set_ix_d1(*ix_d1);
+    if (ix_data)
+      set_ix_data(*ix_data);
+    if (ix_dModel)
+      set_ix_dModel(*ix_dModel);
+    if (eval_point)
+      set_eval_point(*eval_point);
+    if (meas_value)
+      set_meas_value(*meas_value);
+    if (ref_value)
+      set_ref_value(*ref_value);
+    if (model_value)
+      set_model_value(*model_value);
+    if (design_value)
+      set_design_value(*design_value);
+    if (old_value)
+      set_old_value(*old_value);
+    if (base_value)
+      set_base_value(*base_value);
+    if (error_rms)
+      set_error_rms(*error_rms);
+    if (delta_merit)
+      set_delta_merit(*delta_merit);
+    if (weight)
+      set_weight(*weight);
+    if (invalid_value)
+      set_invalid_value(*invalid_value);
+    if (merit)
+      set_merit(*merit);
+    if (s)
+      set_s(*s);
+    if (s_offset)
+      set_s_offset(*s_offset);
+    if (ref_s_offset)
+      set_ref_s_offset(*ref_s_offset);
+    if (err_message_printed)
+      set_err_message_printed(*err_message_printed);
+    if (exists)
+      set_exists(*exists);
+    if (good_model)
+      set_good_model(*good_model);
+    if (good_base)
+      set_good_base(*good_base);
+    if (good_design)
+      set_good_design(*good_design);
+    if (good_meas)
+      set_good_meas(*good_meas);
+    if (good_ref)
+      set_good_ref(*good_ref);
+    if (good_user)
+      set_good_user(*good_user);
+    if (good_opt)
+      set_good_opt(*good_opt);
+    if (good_plot)
+      set_good_plot(*good_plot);
+    if (useit_plot)
+      set_useit_plot(*useit_plot);
+    if (useit_opt)
+      set_useit_opt(*useit_opt);
+    if (spin_map)
+      set_spin_map(spin_map->get());
+    if (d1)
+      set_d1(d1->get());
+  }
 
   std::string ele_name() const; // 0D_NOT_character
   void set_ele_name(const std::string &value);
@@ -15826,6 +19841,23 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoPingScaleStruct(
+      std::optional<double> a_mode_meas = std::nullopt,
+      std::optional<double> a_mode_ref = std::nullopt,
+      std::optional<double> b_mode_meas = std::nullopt,
+      std::optional<double> b_mode_ref = std::nullopt
+  )
+      : FortranProxy() {
+    if (a_mode_meas)
+      set_a_mode_meas(*a_mode_meas);
+    if (a_mode_ref)
+      set_a_mode_ref(*a_mode_ref);
+    if (b_mode_meas)
+      set_b_mode_meas(*b_mode_meas);
+    if (b_mode_ref)
+      set_b_mode_ref(*b_mode_ref);
+  }
+
   double a_mode_meas() const; // 0D_NOT_real
   void set_a_mode_meas(double value);
   double a_mode_ref() const; // 0D_NOT_real
@@ -15853,6 +19885,50 @@ class TaoUniverseCalcStruct : public FortranProxy<TaoUniverseCalcStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoUniverseCalcStruct(
+      std::optional<int> srdt_for_data = std::nullopt,
+      std::optional<bool> rad_int_for_data = std::nullopt,
+      std::optional<bool> rad_int_for_plotting = std::nullopt,
+      std::optional<bool> chrom_for_data = std::nullopt,
+      std::optional<bool> chrom_for_plotting = std::nullopt,
+      std::optional<bool> lat_sigma_for_data = std::nullopt,
+      std::optional<bool> lat_sigma_for_plotting = std::nullopt,
+      std::optional<bool> dynamic_aperture = std::nullopt,
+      std::optional<bool> one_turn_map = std::nullopt,
+      std::optional<bool> lattice = std::nullopt,
+      std::optional<bool> twiss = std::nullopt,
+      std::optional<bool> track = std::nullopt,
+      std::optional<bool> spin_matrices = std::nullopt
+  )
+      : FortranProxy() {
+    if (srdt_for_data)
+      set_srdt_for_data(*srdt_for_data);
+    if (rad_int_for_data)
+      set_rad_int_for_data(*rad_int_for_data);
+    if (rad_int_for_plotting)
+      set_rad_int_for_plotting(*rad_int_for_plotting);
+    if (chrom_for_data)
+      set_chrom_for_data(*chrom_for_data);
+    if (chrom_for_plotting)
+      set_chrom_for_plotting(*chrom_for_plotting);
+    if (lat_sigma_for_data)
+      set_lat_sigma_for_data(*lat_sigma_for_data);
+    if (lat_sigma_for_plotting)
+      set_lat_sigma_for_plotting(*lat_sigma_for_plotting);
+    if (dynamic_aperture)
+      set_dynamic_aperture(*dynamic_aperture);
+    if (one_turn_map)
+      set_one_turn_map(*one_turn_map);
+    if (lattice)
+      set_lattice(*lattice);
+    if (twiss)
+      set_twiss(*twiss);
+    if (track)
+      set_track(*track);
+    if (spin_matrices)
+      set_spin_matrices(*spin_matrices);
+  }
 
   int srdt_for_data() const; // 0D_NOT_integer
   void set_srdt_for_data(int value);
@@ -15921,6 +19997,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoExpressionInfoStruct(
+      std::optional<bool> good = std::nullopt,
+      optional_ref<const EleStruct> ele = std::nullopt,
+      std::optional<double> s = std::nullopt
+  )
+      : FortranProxy() {
+    if (good)
+      set_good(*good);
+    if (ele)
+      set_ele(ele->get());
+    if (s)
+      set_s(*s);
+  }
+
   bool good() const; // 0D_NOT_logical
   void set_good(bool value);
   std::optional<EleStruct> ele() const; // 0D_PTR_type
@@ -15944,6 +20034,23 @@ class TaoEvalNodeStruct : public FortranProxy<TaoEvalNodeStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoEvalNodeStruct(
+      std::optional<int> type = std::nullopt,
+      optional_ref<const std::string> name = std::nullopt,
+      std::optional<double> scale = std::nullopt,
+      optional_ref<const std::vector<double>> value = std::nullopt
+  )
+      : FortranProxy() {
+    if (type)
+      set_type(*type);
+    if (name)
+      set_name(name->get());
+    if (scale)
+      set_scale(*scale);
+    if (value)
+      set_value(value->get());
+  }
 
   int type() const; // 0D_NOT_integer
   void set_type(int value);
@@ -15972,6 +20079,29 @@ class TaoTitleStruct : public FortranProxy<TaoTitleStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoTitleStruct(
+      optional_ref<const std::string> string = std::nullopt,
+      std::optional<double> x = std::nullopt,
+      std::optional<double> y = std::nullopt,
+      optional_ref<const std::string> units = std::nullopt,
+      optional_ref<const std::string> justify = std::nullopt,
+      std::optional<bool> draw_it = std::nullopt
+  )
+      : FortranProxy() {
+    if (string)
+      set_string(string->get());
+    if (x)
+      set_x(*x);
+    if (y)
+      set_y(*y);
+    if (units)
+      set_units(units->get());
+    if (justify)
+      set_justify(justify->get());
+    if (draw_it)
+      set_draw_it(*draw_it);
+  }
 
   std::string string() const; // 0D_NOT_character
   void set_string(const std::string &value);
@@ -16002,6 +20132,26 @@ class QpRectStruct : public FortranProxy<QpRectStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit QpRectStruct(
+      std::optional<double> x1 = std::nullopt,
+      std::optional<double> x2 = std::nullopt,
+      std::optional<double> y1 = std::nullopt,
+      std::optional<double> y2 = std::nullopt,
+      optional_ref<const std::string> units = std::nullopt
+  )
+      : FortranProxy() {
+    if (x1)
+      set_x1(*x1);
+    if (x2)
+      set_x2(*x2);
+    if (y1)
+      set_y1(*y1);
+    if (y2)
+      set_y2(*y2);
+    if (units)
+      set_units(units->get());
+  }
 
   double x1() const; // 0D_NOT_real
   void set_x1(double value);
@@ -16052,6 +20202,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoShapePatternStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const QpLineStruct> line = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (line)
+      set_line(line->get());
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   QpLineStruct line() const; // 0D_NOT_type
@@ -16079,6 +20240,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoShapePatternPointStruct(
+      std::optional<double> s = std::nullopt,
+      std::optional<double> y = std::nullopt,
+      std::optional<double> radius = std::nullopt
+  )
+      : FortranProxy() {
+    if (s)
+      set_s(*s);
+    if (y)
+      set_y(*y);
+    if (radius)
+      set_radius(*radius);
+  }
+
   double s() const; // 0D_NOT_real
   void set_s(double value);
   double y() const; // 0D_NOT_real
@@ -16102,6 +20277,83 @@ class QpAxisStruct : public FortranProxy<QpAxisStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit QpAxisStruct(
+      optional_ref<const std::string> label = std::nullopt,
+      std::optional<double> min = std::nullopt,
+      std::optional<double> max = std::nullopt,
+      std::optional<double> tick_min = std::nullopt,
+      std::optional<double> tick_max = std::nullopt,
+      std::optional<double> eval_min = std::nullopt,
+      std::optional<double> eval_max = std::nullopt,
+      std::optional<double> dtick = std::nullopt,
+      std::optional<double> number_offset = std::nullopt,
+      std::optional<double> label_offset = std::nullopt,
+      std::optional<double> major_tick_len = std::nullopt,
+      std::optional<double> minor_tick_len = std::nullopt,
+      optional_ref<const std::string> label_color = std::nullopt,
+      std::optional<int> major_div = std::nullopt,
+      std::optional<int> major_div_nominal = std::nullopt,
+      std::optional<int> minor_div = std::nullopt,
+      std::optional<int> minor_div_max = std::nullopt,
+      std::optional<int> places = std::nullopt,
+      optional_ref<const std::string> type = std::nullopt,
+      optional_ref<const std::string> bounds = std::nullopt,
+      std::optional<int> tick_side = std::nullopt,
+      std::optional<int> number_side = std::nullopt,
+      std::optional<bool> draw_label = std::nullopt,
+      std::optional<bool> draw_numbers = std::nullopt
+  )
+      : FortranProxy() {
+    if (label)
+      set_label(label->get());
+    if (min)
+      set_min(*min);
+    if (max)
+      set_max(*max);
+    if (tick_min)
+      set_tick_min(*tick_min);
+    if (tick_max)
+      set_tick_max(*tick_max);
+    if (eval_min)
+      set_eval_min(*eval_min);
+    if (eval_max)
+      set_eval_max(*eval_max);
+    if (dtick)
+      set_dtick(*dtick);
+    if (number_offset)
+      set_number_offset(*number_offset);
+    if (label_offset)
+      set_label_offset(*label_offset);
+    if (major_tick_len)
+      set_major_tick_len(*major_tick_len);
+    if (minor_tick_len)
+      set_minor_tick_len(*minor_tick_len);
+    if (label_color)
+      set_label_color(label_color->get());
+    if (major_div)
+      set_major_div(*major_div);
+    if (major_div_nominal)
+      set_major_div_nominal(*major_div_nominal);
+    if (minor_div)
+      set_minor_div(*minor_div);
+    if (minor_div_max)
+      set_minor_div_max(*minor_div_max);
+    if (places)
+      set_places(*places);
+    if (type)
+      set_type(type->get());
+    if (bounds)
+      set_bounds(bounds->get());
+    if (tick_side)
+      set_tick_side(*tick_side);
+    if (number_side)
+      set_number_side(*number_side);
+    if (draw_label)
+      set_draw_label(*draw_label);
+    if (draw_numbers)
+      set_draw_numbers(*draw_numbers);
+  }
 
   std::string label() const; // 0D_NOT_character
   void set_label(const std::string &value);
@@ -16169,6 +20421,29 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit QpLegendStruct(
+      std::optional<double> row_spacing = std::nullopt,
+      std::optional<double> line_length = std::nullopt,
+      std::optional<double> text_offset = std::nullopt,
+      std::optional<bool> draw_line = std::nullopt,
+      std::optional<bool> draw_symbol = std::nullopt,
+      std::optional<bool> draw_text = std::nullopt
+  )
+      : FortranProxy() {
+    if (row_spacing)
+      set_row_spacing(*row_spacing);
+    if (line_length)
+      set_line_length(*line_length);
+    if (text_offset)
+      set_text_offset(*text_offset);
+    if (draw_line)
+      set_draw_line(*draw_line);
+    if (draw_symbol)
+      set_draw_symbol(*draw_symbol);
+    if (draw_text)
+      set_draw_text(*draw_text);
+  }
+
   double row_spacing() const; // 0D_NOT_real
   void set_row_spacing(double value);
   double line_length() const; // 0D_NOT_real
@@ -16199,6 +20474,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit QpPointStruct(
+      std::optional<double> x = std::nullopt,
+      std::optional<double> y = std::nullopt,
+      optional_ref<const std::string> units = std::nullopt
+  )
+      : FortranProxy() {
+    if (x)
+      set_x(*x);
+    if (y)
+      set_y(*y);
+    if (units)
+      set_units(units->get());
+  }
+
   double x() const; // 0D_NOT_real
   void set_x(double value);
   double y() const; // 0D_NOT_real
@@ -16223,6 +20512,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit QpLineStruct(
+      std::optional<int> width = std::nullopt,
+      optional_ref<const std::string> color = std::nullopt,
+      optional_ref<const std::string> pattern = std::nullopt
+  )
+      : FortranProxy() {
+    if (width)
+      set_width(*width);
+    if (color)
+      set_color(color->get());
+    if (pattern)
+      set_pattern(pattern->get());
+  }
+
   int width() const; // 0D_NOT_integer
   void set_width(int value);
   std::string color() const; // 0D_NOT_character
@@ -16246,6 +20549,26 @@ class QpSymbolStruct : public FortranProxy<QpSymbolStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit QpSymbolStruct(
+      optional_ref<const std::string> type = std::nullopt,
+      std::optional<double> height = std::nullopt,
+      optional_ref<const std::string> color = std::nullopt,
+      optional_ref<const std::string> fill_pattern = std::nullopt,
+      std::optional<int> line_width = std::nullopt
+  )
+      : FortranProxy() {
+    if (type)
+      set_type(type->get());
+    if (height)
+      set_height(*height);
+    if (color)
+      set_color(color->get());
+    if (fill_pattern)
+      set_fill_pattern(fill_pattern->get());
+    if (line_width)
+      set_line_width(*line_width);
+  }
 
   std::string type() const; // 0D_NOT_character
   void set_type(const std::string &value);
@@ -16274,6 +20597,47 @@ class TaoFloorPlanStruct : public FortranProxy<TaoFloorPlanStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoFloorPlanStruct(
+      optional_ref<const std::string> view = std::nullopt,
+      std::optional<double> rotation = std::nullopt,
+      std::optional<bool> correct_distortion = std::nullopt,
+      std::optional<bool> flip_label_side = std::nullopt,
+      std::optional<bool> size_is_absolute = std::nullopt,
+      std::optional<bool> draw_only_first_pass = std::nullopt,
+      std::optional<bool> draw_building_wall = std::nullopt,
+      std::optional<double> orbit_scale = std::nullopt,
+      optional_ref<const std::string> orbit_color = std::nullopt,
+      optional_ref<const std::string> orbit_pattern = std::nullopt,
+      optional_ref<const std::string> orbit_lattice = std::nullopt,
+      std::optional<int> orbit_width = std::nullopt
+  )
+      : FortranProxy() {
+    if (view)
+      set_view(view->get());
+    if (rotation)
+      set_rotation(*rotation);
+    if (correct_distortion)
+      set_correct_distortion(*correct_distortion);
+    if (flip_label_side)
+      set_flip_label_side(*flip_label_side);
+    if (size_is_absolute)
+      set_size_is_absolute(*size_is_absolute);
+    if (draw_only_first_pass)
+      set_draw_only_first_pass(*draw_only_first_pass);
+    if (draw_building_wall)
+      set_draw_building_wall(*draw_building_wall);
+    if (orbit_scale)
+      set_orbit_scale(*orbit_scale);
+    if (orbit_color)
+      set_orbit_color(orbit_color->get());
+    if (orbit_pattern)
+      set_orbit_pattern(orbit_pattern->get());
+    if (orbit_lattice)
+      set_orbit_lattice(orbit_lattice->get());
+    if (orbit_width)
+      set_orbit_width(*orbit_width);
+  }
 
   std::string view() const; // 0D_NOT_character
   void set_view(const std::string &value);
@@ -16317,6 +20681,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoV1VarStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      std::optional<int> ix_v1_var = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (ix_v1_var)
+      set_ix_v1_var(*ix_v1_var);
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   int ix_v1_var() const; // 0D_NOT_integer
@@ -16339,6 +20714,218 @@ class TaoGlobalStruct : public FortranProxy<TaoGlobalStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoGlobalStruct(
+      std::optional<double> beam_dead_cutoff = std::nullopt,
+      std::optional<double> lm_opt_deriv_reinit = std::nullopt,
+      std::optional<double> de_lm_step_ratio = std::nullopt,
+      std::optional<double> de_var_to_population_factor = std::nullopt,
+      std::optional<double> lmdif_eps = std::nullopt,
+      std::optional<double> lmdif_negligible_merit = std::nullopt,
+      std::optional<double> svd_cutoff = std::nullopt,
+      std::optional<double> unstable_penalty = std::nullopt,
+      std::optional<double> merit_stop_value = std::nullopt,
+      std::optional<double> dmerit_stop_value = std::nullopt,
+      std::optional<double> random_sigma_cutoff = std::nullopt,
+      std::optional<double> delta_e_chrom = std::nullopt,
+      std::optional<double> max_plot_time = std::nullopt,
+      std::optional<int> default_universe = std::nullopt,
+      std::optional<int> default_branch = std::nullopt,
+      std::optional<int> n_opti_cycles = std::nullopt,
+      std::optional<int> n_opti_loops = std::nullopt,
+      std::optional<int> n_threads = std::nullopt,
+      std::optional<int> phase_units = std::nullopt,
+      std::optional<int> bunch_to_plot = std::nullopt,
+      std::optional<int> random_seed = std::nullopt,
+      std::optional<int> n_top10_merit = std::nullopt,
+      std::optional<int> srdt_gen_n_slices = std::nullopt,
+      std::optional<int> datum_err_messages_max = std::nullopt,
+      std::optional<int> srdt_sxt_n_slices = std::nullopt,
+      std::optional<bool> srdt_use_cache = std::nullopt,
+      optional_ref<const std::string> quiet = std::nullopt,
+      optional_ref<const std::string> random_engine = std::nullopt,
+      optional_ref<const std::string> random_gauss_converter = std::nullopt,
+      optional_ref<const std::string> track_type = std::nullopt,
+      optional_ref<const std::string> lat_sigma_calc_uses_emit_from = std::nullopt,
+      optional_ref<const std::string> prompt_string = std::nullopt,
+      optional_ref<const std::string> prompt_color = std::nullopt,
+      optional_ref<const std::string> optimizer = std::nullopt,
+      optional_ref<const std::string> print_command = std::nullopt,
+      optional_ref<const std::string> var_out_file = std::nullopt,
+      optional_ref<const std::string> history_file = std::nullopt,
+      std::optional<bool> beam_timer_on = std::nullopt,
+      std::optional<bool> box_plots = std::nullopt,
+      std::optional<bool> blank_line_between_commands = std::nullopt,
+      std::optional<bool> cmd_file_abort_on_error = std::nullopt,
+      std::optional<bool> concatenate_maps = std::nullopt,
+      std::optional<bool> derivative_recalc = std::nullopt,
+      std::optional<bool> derivative_uses_design = std::nullopt,
+      std::optional<bool> disable_smooth_line_calc = std::nullopt,
+      std::optional<bool> draw_curve_off_scale_warn = std::nullopt,
+      std::optional<bool> external_plotting = std::nullopt,
+      std::optional<bool> label_lattice_elements = std::nullopt,
+      std::optional<bool> label_keys = std::nullopt,
+      std::optional<bool> lattice_calc_on = std::nullopt,
+      std::optional<bool> only_limit_opt_vars = std::nullopt,
+      std::optional<bool> opt_with_ref = std::nullopt,
+      std::optional<bool> opt_with_base = std::nullopt,
+      std::optional<bool> opt_match_auto_recalc = std::nullopt,
+      std::optional<bool> opti_write_var_file = std::nullopt,
+      std::optional<bool> optimizer_allow_user_abort = std::nullopt,
+      std::optional<bool> optimizer_var_limit_warn = std::nullopt,
+      std::optional<bool> plot_on = std::nullopt,
+      std::optional<bool> rad_int_user_calc_on = std::nullopt,
+      std::optional<bool> rf_on = std::nullopt,
+      std::optional<bool> single_step = std::nullopt,
+      std::optional<bool> stop_on_error = std::nullopt,
+      std::optional<bool> svd_retreat_on_merit_increase = std::nullopt,
+      std::optional<bool> var_limits_on = std::nullopt,
+      std::optional<bool> wait_for_CR_in_single_mode = std::nullopt,
+      std::optional<bool> symbol_import = std::nullopt,
+      std::optional<bool> debug_on = std::nullopt,
+      std::optional<bool> expression_tree_on = std::nullopt,
+      std::optional<bool> verbose_on = std::nullopt
+  )
+      : FortranProxy() {
+    if (beam_dead_cutoff)
+      set_beam_dead_cutoff(*beam_dead_cutoff);
+    if (lm_opt_deriv_reinit)
+      set_lm_opt_deriv_reinit(*lm_opt_deriv_reinit);
+    if (de_lm_step_ratio)
+      set_de_lm_step_ratio(*de_lm_step_ratio);
+    if (de_var_to_population_factor)
+      set_de_var_to_population_factor(*de_var_to_population_factor);
+    if (lmdif_eps)
+      set_lmdif_eps(*lmdif_eps);
+    if (lmdif_negligible_merit)
+      set_lmdif_negligible_merit(*lmdif_negligible_merit);
+    if (svd_cutoff)
+      set_svd_cutoff(*svd_cutoff);
+    if (unstable_penalty)
+      set_unstable_penalty(*unstable_penalty);
+    if (merit_stop_value)
+      set_merit_stop_value(*merit_stop_value);
+    if (dmerit_stop_value)
+      set_dmerit_stop_value(*dmerit_stop_value);
+    if (random_sigma_cutoff)
+      set_random_sigma_cutoff(*random_sigma_cutoff);
+    if (delta_e_chrom)
+      set_delta_e_chrom(*delta_e_chrom);
+    if (max_plot_time)
+      set_max_plot_time(*max_plot_time);
+    if (default_universe)
+      set_default_universe(*default_universe);
+    if (default_branch)
+      set_default_branch(*default_branch);
+    if (n_opti_cycles)
+      set_n_opti_cycles(*n_opti_cycles);
+    if (n_opti_loops)
+      set_n_opti_loops(*n_opti_loops);
+    if (n_threads)
+      set_n_threads(*n_threads);
+    if (phase_units)
+      set_phase_units(*phase_units);
+    if (bunch_to_plot)
+      set_bunch_to_plot(*bunch_to_plot);
+    if (random_seed)
+      set_random_seed(*random_seed);
+    if (n_top10_merit)
+      set_n_top10_merit(*n_top10_merit);
+    if (srdt_gen_n_slices)
+      set_srdt_gen_n_slices(*srdt_gen_n_slices);
+    if (datum_err_messages_max)
+      set_datum_err_messages_max(*datum_err_messages_max);
+    if (srdt_sxt_n_slices)
+      set_srdt_sxt_n_slices(*srdt_sxt_n_slices);
+    if (srdt_use_cache)
+      set_srdt_use_cache(*srdt_use_cache);
+    if (quiet)
+      set_quiet(quiet->get());
+    if (random_engine)
+      set_random_engine(random_engine->get());
+    if (random_gauss_converter)
+      set_random_gauss_converter(random_gauss_converter->get());
+    if (track_type)
+      set_track_type(track_type->get());
+    if (lat_sigma_calc_uses_emit_from)
+      set_lat_sigma_calc_uses_emit_from(lat_sigma_calc_uses_emit_from->get());
+    if (prompt_string)
+      set_prompt_string(prompt_string->get());
+    if (prompt_color)
+      set_prompt_color(prompt_color->get());
+    if (optimizer)
+      set_optimizer(optimizer->get());
+    if (print_command)
+      set_print_command(print_command->get());
+    if (var_out_file)
+      set_var_out_file(var_out_file->get());
+    if (history_file)
+      set_history_file(history_file->get());
+    if (beam_timer_on)
+      set_beam_timer_on(*beam_timer_on);
+    if (box_plots)
+      set_box_plots(*box_plots);
+    if (blank_line_between_commands)
+      set_blank_line_between_commands(*blank_line_between_commands);
+    if (cmd_file_abort_on_error)
+      set_cmd_file_abort_on_error(*cmd_file_abort_on_error);
+    if (concatenate_maps)
+      set_concatenate_maps(*concatenate_maps);
+    if (derivative_recalc)
+      set_derivative_recalc(*derivative_recalc);
+    if (derivative_uses_design)
+      set_derivative_uses_design(*derivative_uses_design);
+    if (disable_smooth_line_calc)
+      set_disable_smooth_line_calc(*disable_smooth_line_calc);
+    if (draw_curve_off_scale_warn)
+      set_draw_curve_off_scale_warn(*draw_curve_off_scale_warn);
+    if (external_plotting)
+      set_external_plotting(*external_plotting);
+    if (label_lattice_elements)
+      set_label_lattice_elements(*label_lattice_elements);
+    if (label_keys)
+      set_label_keys(*label_keys);
+    if (lattice_calc_on)
+      set_lattice_calc_on(*lattice_calc_on);
+    if (only_limit_opt_vars)
+      set_only_limit_opt_vars(*only_limit_opt_vars);
+    if (opt_with_ref)
+      set_opt_with_ref(*opt_with_ref);
+    if (opt_with_base)
+      set_opt_with_base(*opt_with_base);
+    if (opt_match_auto_recalc)
+      set_opt_match_auto_recalc(*opt_match_auto_recalc);
+    if (opti_write_var_file)
+      set_opti_write_var_file(*opti_write_var_file);
+    if (optimizer_allow_user_abort)
+      set_optimizer_allow_user_abort(*optimizer_allow_user_abort);
+    if (optimizer_var_limit_warn)
+      set_optimizer_var_limit_warn(*optimizer_var_limit_warn);
+    if (plot_on)
+      set_plot_on(*plot_on);
+    if (rad_int_user_calc_on)
+      set_rad_int_user_calc_on(*rad_int_user_calc_on);
+    if (rf_on)
+      set_rf_on(*rf_on);
+    if (single_step)
+      set_single_step(*single_step);
+    if (stop_on_error)
+      set_stop_on_error(*stop_on_error);
+    if (svd_retreat_on_merit_increase)
+      set_svd_retreat_on_merit_increase(*svd_retreat_on_merit_increase);
+    if (var_limits_on)
+      set_var_limits_on(*var_limits_on);
+    if (wait_for_CR_in_single_mode)
+      set_wait_for_CR_in_single_mode(*wait_for_CR_in_single_mode);
+    if (symbol_import)
+      set_symbol_import(*symbol_import);
+    if (debug_on)
+      set_debug_on(*debug_on);
+    if (expression_tree_on)
+      set_expression_tree_on(*expression_tree_on);
+    if (verbose_on)
+      set_verbose_on(*verbose_on);
+  }
 
   double beam_dead_cutoff() const; // 0D_NOT_real
   void set_beam_dead_cutoff(double value);
@@ -16496,6 +21083,134 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoInitStruct(
+      std::optional<bool> parse_cmd_args = std::nullopt,
+      std::optional<bool> debug_switch = std::nullopt,
+      std::optional<bool> external_plotting_switch = std::nullopt,
+      optional_ref<const std::string> init_name = std::nullopt,
+      optional_ref<const std::string> hook_init_file = std::nullopt,
+      optional_ref<const std::string> hook_lat_file = std::nullopt,
+      optional_ref<const std::string> hook_beam_file = std::nullopt,
+      optional_ref<const std::string> hook_data_file = std::nullopt,
+      optional_ref<const std::string> hook_plot_file = std::nullopt,
+      optional_ref<const std::string> hook_startup_file = std::nullopt,
+      optional_ref<const std::string> hook_var_file = std::nullopt,
+      optional_ref<const std::string> hook_building_wall_file = std::nullopt,
+      optional_ref<const std::string> init_file_arg_path = std::nullopt,
+      optional_ref<const std::string> lattice_file_arg = std::nullopt,
+      optional_ref<const std::string> hook_init_file_arg = std::nullopt,
+      optional_ref<const std::string> init_file_arg = std::nullopt,
+      optional_ref<const std::string> beam_file_arg = std::nullopt,
+      optional_ref<const std::string> beam_init_position_file_arg = std::nullopt,
+      optional_ref<const std::string> command_arg = std::nullopt,
+      optional_ref<const std::string> data_file_arg = std::nullopt,
+      optional_ref<const std::string> plot_file_arg = std::nullopt,
+      optional_ref<const std::string> startup_file_arg = std::nullopt,
+      optional_ref<const std::string> var_file_arg = std::nullopt,
+      optional_ref<const std::string> building_wall_file_arg = std::nullopt,
+      optional_ref<const std::string> geometry_arg = std::nullopt,
+      optional_ref<const std::string> slice_lattice_arg = std::nullopt,
+      optional_ref<const std::string> start_branch_at_arg = std::nullopt,
+      optional_ref<const std::string> log_startup_arg = std::nullopt,
+      optional_ref<const std::string> no_stopping_arg = std::nullopt,
+      optional_ref<const std::string> noplot_arg = std::nullopt,
+      optional_ref<const std::string> no_rad_int_arg = std::nullopt,
+      optional_ref<const std::string> reverse_arg = std::nullopt,
+      optional_ref<const std::string> debug_arg = std::nullopt,
+      optional_ref<const std::string> disable_smooth_line_calc_arg = std::nullopt,
+      optional_ref<const std::string> rf_on_arg = std::nullopt,
+      optional_ref<const std::string> prompt_color_arg = std::nullopt,
+      optional_ref<const std::string> quiet_arg = std::nullopt,
+      optional_ref<const std::string> noinit_arg = std::nullopt,
+      optional_ref<const std::string> nostartup_arg = std::nullopt,
+      optional_ref<const std::string> symbol_import_arg = std::nullopt,
+      optional_ref<const std::string> unique_name_suffix = std::nullopt
+  )
+      : FortranProxy() {
+    if (parse_cmd_args)
+      set_parse_cmd_args(*parse_cmd_args);
+    if (debug_switch)
+      set_debug_switch(*debug_switch);
+    if (external_plotting_switch)
+      set_external_plotting_switch(*external_plotting_switch);
+    if (init_name)
+      set_init_name(init_name->get());
+    if (hook_init_file)
+      set_hook_init_file(hook_init_file->get());
+    if (hook_lat_file)
+      set_hook_lat_file(hook_lat_file->get());
+    if (hook_beam_file)
+      set_hook_beam_file(hook_beam_file->get());
+    if (hook_data_file)
+      set_hook_data_file(hook_data_file->get());
+    if (hook_plot_file)
+      set_hook_plot_file(hook_plot_file->get());
+    if (hook_startup_file)
+      set_hook_startup_file(hook_startup_file->get());
+    if (hook_var_file)
+      set_hook_var_file(hook_var_file->get());
+    if (hook_building_wall_file)
+      set_hook_building_wall_file(hook_building_wall_file->get());
+    if (init_file_arg_path)
+      set_init_file_arg_path(init_file_arg_path->get());
+    if (lattice_file_arg)
+      set_lattice_file_arg(lattice_file_arg->get());
+    if (hook_init_file_arg)
+      set_hook_init_file_arg(hook_init_file_arg->get());
+    if (init_file_arg)
+      set_init_file_arg(init_file_arg->get());
+    if (beam_file_arg)
+      set_beam_file_arg(beam_file_arg->get());
+    if (beam_init_position_file_arg)
+      set_beam_init_position_file_arg(beam_init_position_file_arg->get());
+    if (command_arg)
+      set_command_arg(command_arg->get());
+    if (data_file_arg)
+      set_data_file_arg(data_file_arg->get());
+    if (plot_file_arg)
+      set_plot_file_arg(plot_file_arg->get());
+    if (startup_file_arg)
+      set_startup_file_arg(startup_file_arg->get());
+    if (var_file_arg)
+      set_var_file_arg(var_file_arg->get());
+    if (building_wall_file_arg)
+      set_building_wall_file_arg(building_wall_file_arg->get());
+    if (geometry_arg)
+      set_geometry_arg(geometry_arg->get());
+    if (slice_lattice_arg)
+      set_slice_lattice_arg(slice_lattice_arg->get());
+    if (start_branch_at_arg)
+      set_start_branch_at_arg(start_branch_at_arg->get());
+    if (log_startup_arg)
+      set_log_startup_arg(log_startup_arg->get());
+    if (no_stopping_arg)
+      set_no_stopping_arg(no_stopping_arg->get());
+    if (noplot_arg)
+      set_noplot_arg(noplot_arg->get());
+    if (no_rad_int_arg)
+      set_no_rad_int_arg(no_rad_int_arg->get());
+    if (reverse_arg)
+      set_reverse_arg(reverse_arg->get());
+    if (debug_arg)
+      set_debug_arg(debug_arg->get());
+    if (disable_smooth_line_calc_arg)
+      set_disable_smooth_line_calc_arg(disable_smooth_line_calc_arg->get());
+    if (rf_on_arg)
+      set_rf_on_arg(rf_on_arg->get());
+    if (prompt_color_arg)
+      set_prompt_color_arg(prompt_color_arg->get());
+    if (quiet_arg)
+      set_quiet_arg(quiet_arg->get());
+    if (noinit_arg)
+      set_noinit_arg(noinit_arg->get());
+    if (nostartup_arg)
+      set_nostartup_arg(nostartup_arg->get());
+    if (symbol_import_arg)
+      set_symbol_import_arg(symbol_import_arg->get());
+    if (unique_name_suffix)
+      set_unique_name_suffix(unique_name_suffix->get());
+  }
+
   bool parse_cmd_args() const; // 0D_NOT_logical
   void set_parse_cmd_args(bool value);
   bool debug_switch() const; // 0D_NOT_logical
@@ -16596,6 +21311,128 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoCommonStruct(
+      optional_ref<const std::vector<std::vector<double>>> covar = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> alpha = std::nullopt,
+      std::optional<double> dummy_target = std::nullopt,
+      std::optional<int> n_alias = std::nullopt,
+      std::optional<int> cmd_file_level = std::nullopt,
+      std::optional<int> ix_key_bank = std::nullopt,
+      std::optional<int> ix_history = std::nullopt,
+      std::optional<int> n_history = std::nullopt,
+      std::optional<int> lev_loop = std::nullopt,
+      std::optional<int> n_err_messages_printed = std::nullopt,
+      std::optional<int> n_universes = std::nullopt,
+      std::optional<int> ix_beam_track_active_element = std::nullopt,
+      std::optional<bool> cmd_file_paused = std::nullopt,
+      std::optional<bool> use_cmd_here = std::nullopt,
+      std::optional<bool> cmd_from_cmd_file = std::nullopt,
+      std::optional<bool> use_saved_beam_in_tracking = std::nullopt,
+      std::optional<bool> single_mode = std::nullopt,
+      std::optional<bool> combine_consecutive_elements_of_like_name = std::nullopt,
+      std::optional<bool> have_tracked_beam = std::nullopt,
+      std::optional<bool> init_plot_needed = std::nullopt,
+      std::optional<bool> init_beam = std::nullopt,
+      std::optional<bool> init_var = std::nullopt,
+      std::optional<bool> init_read_lat_info = std::nullopt,
+      std::optional<bool> optimizer_running = std::nullopt,
+      std::optional<bool> have_datums_using_expressions = std::nullopt,
+      std::optional<bool> print_to_terminal = std::nullopt,
+      std::optional<bool> lattice_calc_done = std::nullopt,
+      std::optional<bool> add_measurement_noise = std::nullopt,
+      optional_ref<const std::vector<bool>> is_err_message_printed = std::nullopt,
+      std::optional<bool> command_arg_has_been_executed = std::nullopt,
+      std::optional<bool> all_merit_weights_positive = std::nullopt,
+      std::optional<bool> multi_turn_orbit_is_plotted = std::nullopt,
+      std::optional<bool> force_chrom_calc = std::nullopt,
+      std::optional<bool> force_rad_int_calc = std::nullopt,
+      std::optional<bool> rad_int_ri_calc_on = std::nullopt,
+      std::optional<bool> rad_int_6d_calc_on = std::nullopt,
+      optional_ref<const std::string> single_mode_buffer = std::nullopt,
+      optional_ref<const std::string> cmd = std::nullopt,
+      optional_ref<const std::string> saved_cmd_line = std::nullopt
+  )
+      : FortranProxy() {
+    if (covar)
+      set_covar(covar->get());
+    if (alpha)
+      set_alpha(alpha->get());
+    if (dummy_target)
+      set_dummy_target(*dummy_target);
+    if (n_alias)
+      set_n_alias(*n_alias);
+    if (cmd_file_level)
+      set_cmd_file_level(*cmd_file_level);
+    if (ix_key_bank)
+      set_ix_key_bank(*ix_key_bank);
+    if (ix_history)
+      set_ix_history(*ix_history);
+    if (n_history)
+      set_n_history(*n_history);
+    if (lev_loop)
+      set_lev_loop(*lev_loop);
+    if (n_err_messages_printed)
+      set_n_err_messages_printed(*n_err_messages_printed);
+    if (n_universes)
+      set_n_universes(*n_universes);
+    if (ix_beam_track_active_element)
+      set_ix_beam_track_active_element(*ix_beam_track_active_element);
+    if (cmd_file_paused)
+      set_cmd_file_paused(*cmd_file_paused);
+    if (use_cmd_here)
+      set_use_cmd_here(*use_cmd_here);
+    if (cmd_from_cmd_file)
+      set_cmd_from_cmd_file(*cmd_from_cmd_file);
+    if (use_saved_beam_in_tracking)
+      set_use_saved_beam_in_tracking(*use_saved_beam_in_tracking);
+    if (single_mode)
+      set_single_mode(*single_mode);
+    if (combine_consecutive_elements_of_like_name)
+      set_combine_consecutive_elements_of_like_name(*combine_consecutive_elements_of_like_name);
+    if (have_tracked_beam)
+      set_have_tracked_beam(*have_tracked_beam);
+    if (init_plot_needed)
+      set_init_plot_needed(*init_plot_needed);
+    if (init_beam)
+      set_init_beam(*init_beam);
+    if (init_var)
+      set_init_var(*init_var);
+    if (init_read_lat_info)
+      set_init_read_lat_info(*init_read_lat_info);
+    if (optimizer_running)
+      set_optimizer_running(*optimizer_running);
+    if (have_datums_using_expressions)
+      set_have_datums_using_expressions(*have_datums_using_expressions);
+    if (print_to_terminal)
+      set_print_to_terminal(*print_to_terminal);
+    if (lattice_calc_done)
+      set_lattice_calc_done(*lattice_calc_done);
+    if (add_measurement_noise)
+      set_add_measurement_noise(*add_measurement_noise);
+    if (is_err_message_printed)
+      set_is_err_message_printed(is_err_message_printed->get());
+    if (command_arg_has_been_executed)
+      set_command_arg_has_been_executed(*command_arg_has_been_executed);
+    if (all_merit_weights_positive)
+      set_all_merit_weights_positive(*all_merit_weights_positive);
+    if (multi_turn_orbit_is_plotted)
+      set_multi_turn_orbit_is_plotted(*multi_turn_orbit_is_plotted);
+    if (force_chrom_calc)
+      set_force_chrom_calc(*force_chrom_calc);
+    if (force_rad_int_calc)
+      set_force_rad_int_calc(*force_rad_int_calc);
+    if (rad_int_ri_calc_on)
+      set_rad_int_ri_calc_on(*rad_int_ri_calc_on);
+    if (rad_int_6d_calc_on)
+      set_rad_int_6d_calc_on(*rad_int_6d_calc_on);
+    if (single_mode_buffer)
+      set_single_mode_buffer(single_mode_buffer->get());
+    if (cmd)
+      set_cmd(cmd->get());
+    if (saved_cmd_line)
+      set_saved_cmd_line(saved_cmd_line->get());
+  }
+
   TaoPlotRegionStructArray1D plot_place_buffer() const; // 1D_ALLOC_type
   FArray2D<double> covar() const; // 2D_ALLOC_real
   void set_covar(const std::vector<std::vector<double>> &v);
@@ -16694,6 +21531,77 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoPlotPageStruct(
+      optional_ref<const TaoTitleStruct> title = std::nullopt,
+      optional_ref<const TaoTitleStruct> subtitle = std::nullopt,
+      optional_ref<const QpRectStruct> border = std::nullopt,
+      optional_ref<const TaoDrawingStruct> floor_plan = std::nullopt,
+      optional_ref<const TaoDrawingStruct> lat_layout = std::nullopt,
+      optional_ref<const std::string> plot_display_type = std::nullopt,
+      optional_ref<const std::vector<double>> size = std::nullopt,
+      std::optional<double> text_height = std::nullopt,
+      std::optional<double> main_title_text_scale = std::nullopt,
+      std::optional<double> graph_title_text_scale = std::nullopt,
+      std::optional<double> axis_number_text_scale = std::nullopt,
+      std::optional<double> axis_label_text_scale = std::nullopt,
+      std::optional<double> legend_text_scale = std::nullopt,
+      std::optional<double> key_table_text_scale = std::nullopt,
+      std::optional<double> floor_plan_shape_scale = std::nullopt,
+      std::optional<double> floor_plan_text_scale = std::nullopt,
+      std::optional<double> lat_layout_shape_scale = std::nullopt,
+      std::optional<double> lat_layout_text_scale = std::nullopt,
+      std::optional<int> n_curve_pts = std::nullopt,
+      std::optional<int> id_window = std::nullopt,
+      std::optional<bool> delete_overlapping_plots = std::nullopt,
+      std::optional<bool> draw_graph_title_suffix = std::nullopt
+  )
+      : FortranProxy() {
+    if (title)
+      set_title(title->get());
+    if (subtitle)
+      set_subtitle(subtitle->get());
+    if (border)
+      set_border(border->get());
+    if (floor_plan)
+      set_floor_plan(floor_plan->get());
+    if (lat_layout)
+      set_lat_layout(lat_layout->get());
+    if (plot_display_type)
+      set_plot_display_type(plot_display_type->get());
+    if (size)
+      set_size(size->get());
+    if (text_height)
+      set_text_height(*text_height);
+    if (main_title_text_scale)
+      set_main_title_text_scale(*main_title_text_scale);
+    if (graph_title_text_scale)
+      set_graph_title_text_scale(*graph_title_text_scale);
+    if (axis_number_text_scale)
+      set_axis_number_text_scale(*axis_number_text_scale);
+    if (axis_label_text_scale)
+      set_axis_label_text_scale(*axis_label_text_scale);
+    if (legend_text_scale)
+      set_legend_text_scale(*legend_text_scale);
+    if (key_table_text_scale)
+      set_key_table_text_scale(*key_table_text_scale);
+    if (floor_plan_shape_scale)
+      set_floor_plan_shape_scale(*floor_plan_shape_scale);
+    if (floor_plan_text_scale)
+      set_floor_plan_text_scale(*floor_plan_text_scale);
+    if (lat_layout_shape_scale)
+      set_lat_layout_shape_scale(*lat_layout_shape_scale);
+    if (lat_layout_text_scale)
+      set_lat_layout_text_scale(*lat_layout_text_scale);
+    if (n_curve_pts)
+      set_n_curve_pts(*n_curve_pts);
+    if (id_window)
+      set_id_window(*id_window);
+    if (delete_overlapping_plots)
+      set_delete_overlapping_plots(*delete_overlapping_plots);
+    if (draw_graph_title_suffix)
+      set_draw_graph_title_suffix(*draw_graph_title_suffix);
+  }
+
   TaoTitleStruct title() const; // 0D_NOT_type
   void set_title(const TaoTitleStruct &src);
   TaoTitleStruct subtitle() const; // 0D_NOT_type
@@ -16761,6 +21669,14 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoBuildingWallStruct(
+      optional_ref<const TaoBuildingWallOrientationStruct> orientation = std::nullopt
+  )
+      : FortranProxy() {
+    if (orientation)
+      set_orientation(orientation->get());
+  }
+
   TaoBuildingWallOrientationStruct orientation() const; // 0D_NOT_type
   void set_orientation(const TaoBuildingWallOrientationStruct &src);
   TaoBuildingWallSectionStructArray1D section() const; // 1D_ALLOC_type
@@ -16785,6 +21701,20 @@ class TaoBuildingWallOrientationStruct : public FortranProxy<TaoBuildingWallOrie
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoBuildingWallOrientationStruct(
+      std::optional<double> theta = std::nullopt,
+      std::optional<double> x_offset = std::nullopt,
+      std::optional<double> z_offset = std::nullopt
+  )
+      : FortranProxy() {
+    if (theta)
+      set_theta(*theta);
+    if (x_offset)
+      set_x_offset(*x_offset);
+    if (z_offset)
+      set_z_offset(*z_offset);
+  }
 
   double theta() const; // 0D_NOT_real
   void set_theta(double value);
@@ -16814,6 +21744,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoBuildingWallSectionStruct(
+      optional_ref<const std::string> name = std::nullopt,
+      optional_ref<const std::string> constraint = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(name->get());
+    if (constraint)
+      set_constraint(constraint->get());
+  }
+
   std::string name() const; // 0D_NOT_character
   void set_name(const std::string &value);
   std::string constraint() const; // 0D_NOT_character
@@ -16840,6 +21781,26 @@ class TaoBuildingWallPointStruct : public FortranProxy<TaoBuildingWallPointStruc
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoBuildingWallPointStruct(
+      std::optional<double> z = std::nullopt,
+      std::optional<double> x = std::nullopt,
+      std::optional<double> radius = std::nullopt,
+      std::optional<double> z_center = std::nullopt,
+      std::optional<double> x_center = std::nullopt
+  )
+      : FortranProxy() {
+    if (z)
+      set_z(*z);
+    if (x)
+      set_x(*x);
+    if (radius)
+      set_radius(*radius);
+    if (z_center)
+      set_z_center(*z_center);
+    if (x_center)
+      set_x_center(*x_center);
+  }
 
   double z() const; // 0D_NOT_real
   void set_z(double value);
@@ -16868,6 +21829,134 @@ class TaoWaveStruct : public FortranProxy<TaoWaveStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoWaveStruct(
+      optional_ref<const std::string> data_type = std::nullopt,
+      std::optional<double> rms_rel_a = std::nullopt,
+      std::optional<double> rms_rel_b = std::nullopt,
+      std::optional<double> rms_rel_as = std::nullopt,
+      std::optional<double> rms_rel_bs = std::nullopt,
+      std::optional<double> rms_rel_ar = std::nullopt,
+      std::optional<double> rms_rel_br = std::nullopt,
+      std::optional<double> rms_rel_k = std::nullopt,
+      std::optional<double> rms_rel_ks = std::nullopt,
+      std::optional<double> rms_rel_kr = std::nullopt,
+      std::optional<double> rms_phi = std::nullopt,
+      std::optional<double> rms_phi_s = std::nullopt,
+      std::optional<double> rms_phi_r = std::nullopt,
+      std::optional<double> amp_ba_s = std::nullopt,
+      std::optional<double> amp_ba_r = std::nullopt,
+      std::optional<double> chi_a = std::nullopt,
+      std::optional<double> chi_c = std::nullopt,
+      std::optional<double> chi_ba = std::nullopt,
+      optional_ref<const std::vector<double>> amp_a = std::nullopt,
+      optional_ref<const std::vector<double>> amp_b = std::nullopt,
+      optional_ref<const std::vector<double>> amp_ba = std::nullopt,
+      optional_ref<const std::vector<double>> coef_a = std::nullopt,
+      optional_ref<const std::vector<double>> coef_b = std::nullopt,
+      optional_ref<const std::vector<double>> coef_ba = std::nullopt,
+      std::optional<int> n_func = std::nullopt,
+      std::optional<int> ix_a1 = std::nullopt,
+      std::optional<int> ix_a2 = std::nullopt,
+      std::optional<int> ix_b1 = std::nullopt,
+      std::optional<int> ix_b2 = std::nullopt,
+      std::optional<int> i_a1 = std::nullopt,
+      std::optional<int> i_a2 = std::nullopt,
+      std::optional<int> i_b1 = std::nullopt,
+      std::optional<int> i_b2 = std::nullopt,
+      std::optional<int> n_a = std::nullopt,
+      std::optional<int> n_b = std::nullopt,
+      std::optional<int> i_curve_wrap_pt = std::nullopt,
+      optional_ref<const std::vector<int>> ix_data = std::nullopt,
+      std::optional<int> n_kick = std::nullopt,
+      optional_ref<const TaoGraphStruct> base_graph = std::nullopt,
+      optional_ref<const TaoPlotRegionStruct> region = std::nullopt,
+      optional_ref<const TaoD1DataStruct> d1_dat = std::nullopt
+  )
+      : FortranProxy() {
+    if (data_type)
+      set_data_type(data_type->get());
+    if (rms_rel_a)
+      set_rms_rel_a(*rms_rel_a);
+    if (rms_rel_b)
+      set_rms_rel_b(*rms_rel_b);
+    if (rms_rel_as)
+      set_rms_rel_as(*rms_rel_as);
+    if (rms_rel_bs)
+      set_rms_rel_bs(*rms_rel_bs);
+    if (rms_rel_ar)
+      set_rms_rel_ar(*rms_rel_ar);
+    if (rms_rel_br)
+      set_rms_rel_br(*rms_rel_br);
+    if (rms_rel_k)
+      set_rms_rel_k(*rms_rel_k);
+    if (rms_rel_ks)
+      set_rms_rel_ks(*rms_rel_ks);
+    if (rms_rel_kr)
+      set_rms_rel_kr(*rms_rel_kr);
+    if (rms_phi)
+      set_rms_phi(*rms_phi);
+    if (rms_phi_s)
+      set_rms_phi_s(*rms_phi_s);
+    if (rms_phi_r)
+      set_rms_phi_r(*rms_phi_r);
+    if (amp_ba_s)
+      set_amp_ba_s(*amp_ba_s);
+    if (amp_ba_r)
+      set_amp_ba_r(*amp_ba_r);
+    if (chi_a)
+      set_chi_a(*chi_a);
+    if (chi_c)
+      set_chi_c(*chi_c);
+    if (chi_ba)
+      set_chi_ba(*chi_ba);
+    if (amp_a)
+      set_amp_a(amp_a->get());
+    if (amp_b)
+      set_amp_b(amp_b->get());
+    if (amp_ba)
+      set_amp_ba(amp_ba->get());
+    if (coef_a)
+      set_coef_a(coef_a->get());
+    if (coef_b)
+      set_coef_b(coef_b->get());
+    if (coef_ba)
+      set_coef_ba(coef_ba->get());
+    if (n_func)
+      set_n_func(*n_func);
+    if (ix_a1)
+      set_ix_a1(*ix_a1);
+    if (ix_a2)
+      set_ix_a2(*ix_a2);
+    if (ix_b1)
+      set_ix_b1(*ix_b1);
+    if (ix_b2)
+      set_ix_b2(*ix_b2);
+    if (i_a1)
+      set_i_a1(*i_a1);
+    if (i_a2)
+      set_i_a2(*i_a2);
+    if (i_b1)
+      set_i_b1(*i_b1);
+    if (i_b2)
+      set_i_b2(*i_b2);
+    if (n_a)
+      set_n_a(*n_a);
+    if (n_b)
+      set_n_b(*n_b);
+    if (i_curve_wrap_pt)
+      set_i_curve_wrap_pt(*i_curve_wrap_pt);
+    if (ix_data)
+      set_ix_data(ix_data->get());
+    if (n_kick)
+      set_n_kick(*n_kick);
+    if (base_graph)
+      set_base_graph(base_graph->get());
+    if (region)
+      set_region(region->get());
+    if (d1_dat)
+      set_d1_dat(d1_dat->get());
+  }
 
   std::string data_type() const; // 0D_NOT_character
   void set_data_type(const std::string &value);
@@ -16970,6 +22059,32 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoWaveKickPtStruct(
+      std::optional<double> phi_s = std::nullopt,
+      std::optional<double> phi_r = std::nullopt,
+      std::optional<double> phi = std::nullopt,
+      std::optional<double> amp = std::nullopt,
+      std::optional<double> s = std::nullopt,
+      std::optional<int> ix_dat_before_kick = std::nullopt,
+      optional_ref<const EleStruct> ele = std::nullopt
+  )
+      : FortranProxy() {
+    if (phi_s)
+      set_phi_s(*phi_s);
+    if (phi_r)
+      set_phi_r(*phi_r);
+    if (phi)
+      set_phi(*phi);
+    if (amp)
+      set_amp(*amp);
+    if (s)
+      set_s(*s);
+    if (ix_dat_before_kick)
+      set_ix_dat_before_kick(*ix_dat_before_kick);
+    if (ele)
+      set_ele(ele->get());
+  }
+
   double phi_s() const; // 0D_NOT_real
   void set_phi_s(double value);
   double phi_r() const; // 0D_NOT_real
@@ -17002,6 +22117,17 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TaoCmdHistoryStruct(
+      optional_ref<const std::string> cmd = std::nullopt,
+      std::optional<int> ix = std::nullopt
+  )
+      : FortranProxy() {
+    if (cmd)
+      set_cmd(cmd->get());
+    if (ix)
+      set_ix(*ix);
+  }
+
   std::string cmd() const; // 0D_ALLOC_character
   void set_cmd(const std::string &value);
   int ix() const; // 0D_NOT_integer
@@ -17023,6 +22149,62 @@ class TaoUniverseStruct : public FortranProxy<TaoUniverseStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TaoUniverseStruct(
+      optional_ref<const TaoLatticeStruct> model = std::nullopt,
+      optional_ref<const TaoLatticeStruct> design = std::nullopt,
+      optional_ref<const TaoLatticeStruct> base = std::nullopt,
+      optional_ref<const TaoBeamUniStruct> beam = std::nullopt,
+      optional_ref<const TaoDynamicApertureStruct> dynamic_aperture = std::nullopt,
+      optional_ref<const TaoPingScaleStruct> ping_scale = std::nullopt,
+      optional_ref<const LatStruct> scratch_lat = std::nullopt,
+      optional_ref<const TaoUniverseCalcStruct> calc = std::nullopt,
+      optional_ref<const LatEleOrderStruct> ele_order = std::nullopt,
+      optional_ref<const TaoSpinMapStruct> spin_map = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> dModel_dVar = std::nullopt,
+      std::optional<int> ix_uni = std::nullopt,
+      std::optional<int> n_d2_data_used = std::nullopt,
+      std::optional<int> n_data_used = std::nullopt,
+      std::optional<bool> is_on = std::nullopt,
+      std::optional<bool> design_same_as_previous = std::nullopt,
+      std::optional<bool> picked_uni = std::nullopt
+  )
+      : FortranProxy() {
+    if (model)
+      set_model(model->get());
+    if (design)
+      set_design(design->get());
+    if (base)
+      set_base(base->get());
+    if (beam)
+      set_beam(beam->get());
+    if (dynamic_aperture)
+      set_dynamic_aperture(dynamic_aperture->get());
+    if (ping_scale)
+      set_ping_scale(ping_scale->get());
+    if (scratch_lat)
+      set_scratch_lat(scratch_lat->get());
+    if (calc)
+      set_calc(calc->get());
+    if (ele_order)
+      set_ele_order(ele_order->get());
+    if (spin_map)
+      set_spin_map(spin_map->get());
+    if (dModel_dVar)
+      set_dModel_dVar(dModel_dVar->get());
+    if (ix_uni)
+      set_ix_uni(*ix_uni);
+    if (n_d2_data_used)
+      set_n_d2_data_used(*n_d2_data_used);
+    if (n_data_used)
+      set_n_data_used(*n_data_used);
+    if (is_on)
+      set_is_on(*is_on);
+    if (design_same_as_previous)
+      set_design_same_as_previous(*design_same_as_previous);
+    if (picked_uni)
+      set_picked_uni(*picked_uni);
+  }
 
   std::optional<TaoLatticeStruct> model() const; // 0D_PTR_type
   void set_model(const TaoLatticeStruct &src);
@@ -17079,6 +22261,29 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit MadEnergyStruct(
+      std::optional<double> total = std::nullopt,
+      std::optional<double> beta = std::nullopt,
+      std::optional<double> gamma = std::nullopt,
+      std::optional<double> kinetic = std::nullopt,
+      std::optional<double> p0c = std::nullopt,
+      std::optional<int> particle = std::nullopt
+  )
+      : FortranProxy() {
+    if (total)
+      set_total(*total);
+    if (beta)
+      set_beta(*beta);
+    if (gamma)
+      set_gamma(*gamma);
+    if (kinetic)
+      set_kinetic(*kinetic);
+    if (p0c)
+      set_p0c(*p0c);
+    if (particle)
+      set_particle(*particle);
+  }
+
   double total() const; // 0D_NOT_real
   void set_total(double value);
   double beta() const; // 0D_NOT_real
@@ -17109,6 +22314,20 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit MadMapStruct(
+      optional_ref<const std::vector<double>> k = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> r = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<double>>>> t = std::nullopt
+  )
+      : FortranProxy() {
+    if (k)
+      set_k(k->get());
+    if (r)
+      set_r(r->get());
+    if (t)
+      set_t(t->get());
+  }
+
   FArray1D<double> k() const; // 1D_NOT_real
   void set_k(const std::vector<double> &v);
   FArray2D<double> r() const; // 2D_NOT_real
@@ -17132,6 +22351,47 @@ class RandomStateStruct : public FortranProxy<RandomStateStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit RandomStateStruct(
+      std::optional<int64_t> ix = std::nullopt,
+      std::optional<int64_t> iy = std::nullopt,
+      std::optional<bool> number_stored = std::nullopt,
+      std::optional<double> h_saved = std::nullopt,
+      std::optional<int> engine = std::nullopt,
+      std::optional<int> seed = std::nullopt,
+      std::optional<double> am = std::nullopt,
+      std::optional<int> gauss_converter = std::nullopt,
+      std::optional<double> gauss_sigma_cut = std::nullopt,
+      std::optional<int64_t> in_sobseq = std::nullopt,
+      optional_ref<const std::vector<int64_t>> ix_sobseq = std::nullopt,
+      optional_ref<const std::vector<double>> x_sobseq = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix)
+      set_ix(*ix);
+    if (iy)
+      set_iy(*iy);
+    if (number_stored)
+      set_number_stored(*number_stored);
+    if (h_saved)
+      set_h_saved(*h_saved);
+    if (engine)
+      set_engine(*engine);
+    if (seed)
+      set_seed(*seed);
+    if (am)
+      set_am(*am);
+    if (gauss_converter)
+      set_gauss_converter(*gauss_converter);
+    if (gauss_sigma_cut)
+      set_gauss_sigma_cut(*gauss_sigma_cut);
+    if (in_sobseq)
+      set_in_sobseq(*in_sobseq);
+    if (ix_sobseq)
+      set_ix_sobseq(ix_sobseq->get());
+    if (x_sobseq)
+      set_x_sobseq(x_sobseq->get());
+  }
 
   int64_t ix() const; // 0D_NOT_integer8
   void set_ix(int64_t value);
@@ -17174,6 +22434,50 @@ class BbuStageStruct : public FortranProxy<BbuStageStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit BbuStageStruct(
+      std::optional<int> ix_ele_lr_wake = std::nullopt,
+      std::optional<int> ix_ele_stage_end = std::nullopt,
+      std::optional<int> ix_pass = std::nullopt,
+      std::optional<int> ix_stage_pass1 = std::nullopt,
+      std::optional<int> ix_head_bunch = std::nullopt,
+      std::optional<int> ix_hom_max = std::nullopt,
+      std::optional<double> hom_voltage_max = std::nullopt,
+      std::optional<double> time_at_wake_ele = std::nullopt,
+      optional_ref<const std::vector<double>> ave_orb = std::nullopt,
+      optional_ref<const std::vector<double>> rms_orb = std::nullopt,
+      optional_ref<const std::vector<double>> min_orb = std::nullopt,
+      optional_ref<const std::vector<double>> max_orb = std::nullopt,
+      std::optional<int> n_orb = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix_ele_lr_wake)
+      set_ix_ele_lr_wake(*ix_ele_lr_wake);
+    if (ix_ele_stage_end)
+      set_ix_ele_stage_end(*ix_ele_stage_end);
+    if (ix_pass)
+      set_ix_pass(*ix_pass);
+    if (ix_stage_pass1)
+      set_ix_stage_pass1(*ix_stage_pass1);
+    if (ix_head_bunch)
+      set_ix_head_bunch(*ix_head_bunch);
+    if (ix_hom_max)
+      set_ix_hom_max(*ix_hom_max);
+    if (hom_voltage_max)
+      set_hom_voltage_max(*hom_voltage_max);
+    if (time_at_wake_ele)
+      set_time_at_wake_ele(*time_at_wake_ele);
+    if (ave_orb)
+      set_ave_orb(ave_orb->get());
+    if (rms_orb)
+      set_rms_orb(rms_orb->get());
+    if (min_orb)
+      set_min_orb(min_orb->get());
+    if (max_orb)
+      set_max_orb(max_orb->get());
+    if (n_orb)
+      set_n_orb(*n_orb);
+  }
 
   int ix_ele_lr_wake() const; // 0D_NOT_integer
   void set_ix_ele_lr_wake(int value);
@@ -17219,6 +22523,38 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit BbuBeamStruct(
+      optional_ref<const std::vector<int>> ix_ele_bunch = std::nullopt,
+      std::optional<int> ix_bunch_head = std::nullopt,
+      std::optional<int> ix_bunch_end = std::nullopt,
+      std::optional<int> n_bunch_in_lat = std::nullopt,
+      std::optional<int> ix_stage_voltage_max = std::nullopt,
+      std::optional<double> hom_voltage_max = std::nullopt,
+      std::optional<double> time_now = std::nullopt,
+      std::optional<double> one_turn_time = std::nullopt,
+      std::optional<double> rf_wavelength_max = std::nullopt
+  )
+      : FortranProxy() {
+    if (ix_ele_bunch)
+      set_ix_ele_bunch(ix_ele_bunch->get());
+    if (ix_bunch_head)
+      set_ix_bunch_head(*ix_bunch_head);
+    if (ix_bunch_end)
+      set_ix_bunch_end(*ix_bunch_end);
+    if (n_bunch_in_lat)
+      set_n_bunch_in_lat(*n_bunch_in_lat);
+    if (ix_stage_voltage_max)
+      set_ix_stage_voltage_max(*ix_stage_voltage_max);
+    if (hom_voltage_max)
+      set_hom_voltage_max(*hom_voltage_max);
+    if (time_now)
+      set_time_now(*time_now);
+    if (one_turn_time)
+      set_one_turn_time(*one_turn_time);
+    if (rf_wavelength_max)
+      set_rf_wavelength_max(*rf_wavelength_max);
+  }
+
   BunchStructArray1D bunch() const; // 1D_ALLOC_type
   BbuStageStructArray1D stage() const; // 1D_ALLOC_type
   FArray1D<int> ix_ele_bunch() const; // 1D_ALLOC_integer
@@ -17256,6 +22592,119 @@ class BbuParamStruct : public FortranProxy<BbuParamStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit BbuParamStruct(
+      optional_ref<const std::string> lat_filename = std::nullopt,
+      optional_ref<const std::string> lat2_filename = std::nullopt,
+      optional_ref<const std::string> bunch_by_bunch_info_file = std::nullopt,
+      std::optional<bool> hybridize = std::nullopt,
+      std::optional<bool> write_digested_hybrid_lat = std::nullopt,
+      std::optional<bool> write_voltage_vs_time_dat = std::nullopt,
+      std::optional<bool> keep_overlays_and_groups = std::nullopt,
+      std::optional<bool> keep_all_lcavities = std::nullopt,
+      std::optional<bool> use_taylor_for_hybrids = std::nullopt,
+      std::optional<bool> stable_orbit_anal = std::nullopt,
+      std::optional<double> limit_factor = std::nullopt,
+      std::optional<double> simulation_turns_max = std::nullopt,
+      std::optional<double> bunch_freq = std::nullopt,
+      std::optional<double> init_particle_offset = std::nullopt,
+      std::optional<double> current = std::nullopt,
+      std::optional<double> rel_tol = std::nullopt,
+      std::optional<bool> drscan = std::nullopt,
+      std::optional<bool> use_interpolated_threshold = std::nullopt,
+      std::optional<bool> write_hom_info = std::nullopt,
+      std::optional<int> elindex = std::nullopt,
+      optional_ref<const std::string> elname = std::nullopt,
+      std::optional<int> nstep = std::nullopt,
+      std::optional<double> begdr = std::nullopt,
+      std::optional<double> enddr = std::nullopt,
+      std::optional<int> nrep = std::nullopt,
+      std::optional<int> ran_seed = std::nullopt,
+      std::optional<int> hom_order_cutoff = std::nullopt,
+      std::optional<double> ran_gauss_sigma_cut = std::nullopt,
+      optional_ref<const std::string> ele_track_end = std::nullopt,
+      std::optional<int> ix_ele_track_end = std::nullopt,
+      std::optional<bool> regression = std::nullopt,
+      std::optional<bool> normalize_z_to_rf = std::nullopt,
+      std::optional<bool> ramp_on = std::nullopt,
+      optional_ref<const std::vector<double>> ramp_pattern = std::nullopt,
+      std::optional<int> ramp_n_start = std::nullopt,
+      std::optional<int> n_ramp_pattern = std::nullopt
+  )
+      : FortranProxy() {
+    if (lat_filename)
+      set_lat_filename(lat_filename->get());
+    if (lat2_filename)
+      set_lat2_filename(lat2_filename->get());
+    if (bunch_by_bunch_info_file)
+      set_bunch_by_bunch_info_file(bunch_by_bunch_info_file->get());
+    if (hybridize)
+      set_hybridize(*hybridize);
+    if (write_digested_hybrid_lat)
+      set_write_digested_hybrid_lat(*write_digested_hybrid_lat);
+    if (write_voltage_vs_time_dat)
+      set_write_voltage_vs_time_dat(*write_voltage_vs_time_dat);
+    if (keep_overlays_and_groups)
+      set_keep_overlays_and_groups(*keep_overlays_and_groups);
+    if (keep_all_lcavities)
+      set_keep_all_lcavities(*keep_all_lcavities);
+    if (use_taylor_for_hybrids)
+      set_use_taylor_for_hybrids(*use_taylor_for_hybrids);
+    if (stable_orbit_anal)
+      set_stable_orbit_anal(*stable_orbit_anal);
+    if (limit_factor)
+      set_limit_factor(*limit_factor);
+    if (simulation_turns_max)
+      set_simulation_turns_max(*simulation_turns_max);
+    if (bunch_freq)
+      set_bunch_freq(*bunch_freq);
+    if (init_particle_offset)
+      set_init_particle_offset(*init_particle_offset);
+    if (current)
+      set_current(*current);
+    if (rel_tol)
+      set_rel_tol(*rel_tol);
+    if (drscan)
+      set_drscan(*drscan);
+    if (use_interpolated_threshold)
+      set_use_interpolated_threshold(*use_interpolated_threshold);
+    if (write_hom_info)
+      set_write_hom_info(*write_hom_info);
+    if (elindex)
+      set_elindex(*elindex);
+    if (elname)
+      set_elname(elname->get());
+    if (nstep)
+      set_nstep(*nstep);
+    if (begdr)
+      set_begdr(*begdr);
+    if (enddr)
+      set_enddr(*enddr);
+    if (nrep)
+      set_nrep(*nrep);
+    if (ran_seed)
+      set_ran_seed(*ran_seed);
+    if (hom_order_cutoff)
+      set_hom_order_cutoff(*hom_order_cutoff);
+    if (ran_gauss_sigma_cut)
+      set_ran_gauss_sigma_cut(*ran_gauss_sigma_cut);
+    if (ele_track_end)
+      set_ele_track_end(ele_track_end->get());
+    if (ix_ele_track_end)
+      set_ix_ele_track_end(*ix_ele_track_end);
+    if (regression)
+      set_regression(*regression);
+    if (normalize_z_to_rf)
+      set_normalize_z_to_rf(*normalize_z_to_rf);
+    if (ramp_on)
+      set_ramp_on(*ramp_on);
+    if (ramp_pattern)
+      set_ramp_pattern(ramp_pattern->get());
+    if (ramp_n_start)
+      set_ramp_n_start(*ramp_n_start);
+    if (n_ramp_pattern)
+      set_n_ramp_pattern(*n_ramp_pattern);
+  }
 
   std::string lat_filename() const; // 0D_NOT_character
   void set_lat_filename(const std::string &value);
@@ -17347,6 +22796,53 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit Fibre(
+      std::optional<int> DIR = std::nullopt,
+      optional_ref<const Fibre> PREVIOUS = std::nullopt,
+      optional_ref<const Fibre> NEXT = std::nullopt,
+      optional_ref<const Layout> PARENT_LAYOUT = std::nullopt,
+      std::optional<int> pos = std::nullopt,
+      std::optional<double> BETA0 = std::nullopt,
+      std::optional<double> GAMMA0I = std::nullopt,
+      std::optional<double> GAMBET = std::nullopt,
+      std::optional<double> MASS = std::nullopt,
+      std::optional<double> CHARGE = std::nullopt,
+      std::optional<double> AG = std::nullopt,
+      optional_ref<const Fibre> P = std::nullopt,
+      optional_ref<const Fibre> N = std::nullopt,
+      std::optional<int> loc = std::nullopt
+  )
+      : FortranProxy() {
+    if (DIR)
+      set_DIR(*DIR);
+    if (PREVIOUS)
+      set_PREVIOUS(PREVIOUS->get());
+    if (NEXT)
+      set_NEXT(NEXT->get());
+    if (PARENT_LAYOUT)
+      set_PARENT_LAYOUT(PARENT_LAYOUT->get());
+    if (pos)
+      set_pos(*pos);
+    if (BETA0)
+      set_BETA0(*BETA0);
+    if (GAMMA0I)
+      set_GAMMA0I(*GAMMA0I);
+    if (GAMBET)
+      set_GAMBET(*GAMBET);
+    if (MASS)
+      set_MASS(*MASS);
+    if (CHARGE)
+      set_CHARGE(*CHARGE);
+    if (AG)
+      set_AG(*AG);
+    if (P)
+      set_P(P->get());
+    if (N)
+      set_N(N->get());
+    if (loc)
+      set_loc(*loc);
+  }
+
   int *DIR() const; // 0D_PTR_integer
   void set_DIR(int value);
   std::optional<Fibre> PREVIOUS() const; // 0D_PTR_type
@@ -17392,6 +22888,56 @@ class Layout : public FortranProxy<Layout> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit Layout(
+      optional_ref<const std::string> NAME = std::nullopt,
+      std::optional<int> INDEX = std::nullopt,
+      std::optional<double> HARMONIC_NUMBER = std::nullopt,
+      std::optional<bool> CLOSED = std::nullopt,
+      std::optional<int> N = std::nullopt,
+      std::optional<int> NTHIN = std::nullopt,
+      std::optional<double> THIN = std::nullopt,
+      std::optional<int> LASTPOS = std::nullopt,
+      optional_ref<const Fibre> LAST = std::nullopt,
+      optional_ref<const Fibre> END = std::nullopt,
+      optional_ref<const Fibre> START = std::nullopt,
+      optional_ref<const Fibre> START_GROUND = std::nullopt,
+      optional_ref<const Fibre> END_GROUND = std::nullopt,
+      optional_ref<const Layout> NEXT = std::nullopt,
+      optional_ref<const Layout> PREVIOUS = std::nullopt
+  )
+      : FortranProxy() {
+    if (NAME)
+      set_NAME(NAME->get());
+    if (INDEX)
+      set_INDEX(*INDEX);
+    if (HARMONIC_NUMBER)
+      set_HARMONIC_NUMBER(*HARMONIC_NUMBER);
+    if (CLOSED)
+      set_CLOSED(*CLOSED);
+    if (N)
+      set_N(*N);
+    if (NTHIN)
+      set_NTHIN(*NTHIN);
+    if (THIN)
+      set_THIN(*THIN);
+    if (LASTPOS)
+      set_LASTPOS(*LASTPOS);
+    if (LAST)
+      set_LAST(LAST->get());
+    if (END)
+      set_END(END->get());
+    if (START)
+      set_START(START->get());
+    if (START_GROUND)
+      set_START_GROUND(START_GROUND->get());
+    if (END_GROUND)
+      set_END_GROUND(END_GROUND->get());
+    if (NEXT)
+      set_NEXT(NEXT->get());
+    if (PREVIOUS)
+      set_PREVIOUS(PREVIOUS->get());
+  }
 
   std::string NAME() const; // 0D_PTR_character
   void set_NAME(const std::string &value);
@@ -17440,6 +22986,205 @@ class AllEncompassingStruct : public FortranProxy<AllEncompassingStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit AllEncompassingStruct(
+      std::optional<double> real_rp_0d = std::nullopt,
+      optional_ref<const std::vector<double>> real_rp_1d = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> real_rp_2d = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_rp_3d = std::nullopt,
+      std::optional<double> real_rp_0d_ptr = std::nullopt,
+      optional_ref<const std::vector<double>> real_rp_1d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> real_rp_2d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_rp_3d_ptr =
+          std::nullopt,
+      optional_ref<const std::vector<double>> real_rp_1d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> real_rp_2d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_rp_3d_alloc =
+          std::nullopt,
+      std::optional<double> real_dp_0d = std::nullopt,
+      optional_ref<const std::vector<double>> real_dp_1d = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> real_dp_2d = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_dp_3d = std::nullopt,
+      std::optional<double> real_dp_0d_ptr = std::nullopt,
+      optional_ref<const std::vector<double>> real_dp_1d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> real_dp_2d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_dp_3d_ptr =
+          std::nullopt,
+      optional_ref<const std::vector<double>> real_dp_1d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<double>>> real_dp_2d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_dp_3d_alloc =
+          std::nullopt,
+      std::optional<std::complex<double>> complex_dp_0d = std::nullopt,
+      optional_ref<const std::vector<std::complex<double>>> complex_dp_1d = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::complex<double>>>> complex_dp_2d =
+          std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>
+          complex_dp_3d = std::nullopt,
+      optional_ref<const std::vector<std::complex<double>>> complex_dp_1d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::complex<double>>>> complex_dp_2d_ptr =
+          std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>
+          complex_dp_3d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::complex<double>>> complex_dp_1d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::complex<double>>>> complex_dp_2d_alloc =
+          std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>
+          complex_dp_3d_alloc = std::nullopt,
+      std::optional<int> int_0d = std::nullopt,
+      optional_ref<const std::vector<int>> int_1d = std::nullopt,
+      optional_ref<const std::vector<std::vector<int>>> int_2d = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<int>>>> int_3d = std::nullopt,
+      std::optional<int> int_0d_ptr = std::nullopt,
+      optional_ref<const std::vector<int>> int_1d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<int>>> int_2d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<int>>>> int_3d_ptr = std::nullopt,
+      optional_ref<const std::vector<int>> int_1d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<int>>> int_2d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<int>>>> int_3d_alloc = std::nullopt,
+      std::optional<int64_t> int8_0d = std::nullopt,
+      optional_ref<const std::vector<int64_t>> int8_1d = std::nullopt,
+      optional_ref<const std::vector<std::vector<int64_t>>> int8_2d = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<int64_t>>>> int8_3d = std::nullopt,
+      std::optional<int64_t> int8_0d_ptr = std::nullopt,
+      optional_ref<const std::vector<int64_t>> int8_1d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<int64_t>>> int8_2d_ptr = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<int64_t>>>> int8_3d_ptr = std::nullopt,
+      optional_ref<const std::vector<int64_t>> int8_1d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<int64_t>>> int8_2d_alloc = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<int64_t>>>> int8_3d_alloc =
+          std::nullopt,
+      std::optional<bool> logical_0d = std::nullopt,
+      optional_ref<const std::vector<bool>> logical_1d = std::nullopt,
+      optional_ref<const std::vector<std::vector<bool>>> logical_2d = std::nullopt,
+      optional_ref<const std::vector<std::vector<std::vector<bool>>>> logical_3d = std::nullopt,
+      std::optional<bool> logical_0d_ptr = std::nullopt,
+      optional_ref<const TestSubStruct> type_0d = std::nullopt,
+      optional_ref<const TestSubStruct> type_0d_ptr = std::nullopt
+  )
+      : FortranProxy() {
+    if (real_rp_0d)
+      set_real_rp_0d(*real_rp_0d);
+    if (real_rp_1d)
+      set_real_rp_1d(real_rp_1d->get());
+    if (real_rp_2d)
+      set_real_rp_2d(real_rp_2d->get());
+    if (real_rp_3d)
+      set_real_rp_3d(real_rp_3d->get());
+    if (real_rp_0d_ptr)
+      set_real_rp_0d_ptr(*real_rp_0d_ptr);
+    if (real_rp_1d_ptr)
+      set_real_rp_1d_ptr(real_rp_1d_ptr->get());
+    if (real_rp_2d_ptr)
+      set_real_rp_2d_ptr(real_rp_2d_ptr->get());
+    if (real_rp_3d_ptr)
+      set_real_rp_3d_ptr(real_rp_3d_ptr->get());
+    if (real_rp_1d_alloc)
+      set_real_rp_1d_alloc(real_rp_1d_alloc->get());
+    if (real_rp_2d_alloc)
+      set_real_rp_2d_alloc(real_rp_2d_alloc->get());
+    if (real_rp_3d_alloc)
+      set_real_rp_3d_alloc(real_rp_3d_alloc->get());
+    if (real_dp_0d)
+      set_real_dp_0d(*real_dp_0d);
+    if (real_dp_1d)
+      set_real_dp_1d(real_dp_1d->get());
+    if (real_dp_2d)
+      set_real_dp_2d(real_dp_2d->get());
+    if (real_dp_3d)
+      set_real_dp_3d(real_dp_3d->get());
+    if (real_dp_0d_ptr)
+      set_real_dp_0d_ptr(*real_dp_0d_ptr);
+    if (real_dp_1d_ptr)
+      set_real_dp_1d_ptr(real_dp_1d_ptr->get());
+    if (real_dp_2d_ptr)
+      set_real_dp_2d_ptr(real_dp_2d_ptr->get());
+    if (real_dp_3d_ptr)
+      set_real_dp_3d_ptr(real_dp_3d_ptr->get());
+    if (real_dp_1d_alloc)
+      set_real_dp_1d_alloc(real_dp_1d_alloc->get());
+    if (real_dp_2d_alloc)
+      set_real_dp_2d_alloc(real_dp_2d_alloc->get());
+    if (real_dp_3d_alloc)
+      set_real_dp_3d_alloc(real_dp_3d_alloc->get());
+    if (complex_dp_0d)
+      set_complex_dp_0d(*complex_dp_0d);
+    if (complex_dp_1d)
+      set_complex_dp_1d(complex_dp_1d->get());
+    if (complex_dp_2d)
+      set_complex_dp_2d(complex_dp_2d->get());
+    if (complex_dp_3d)
+      set_complex_dp_3d(complex_dp_3d->get());
+    if (complex_dp_1d_ptr)
+      set_complex_dp_1d_ptr(complex_dp_1d_ptr->get());
+    if (complex_dp_2d_ptr)
+      set_complex_dp_2d_ptr(complex_dp_2d_ptr->get());
+    if (complex_dp_3d_ptr)
+      set_complex_dp_3d_ptr(complex_dp_3d_ptr->get());
+    if (complex_dp_1d_alloc)
+      set_complex_dp_1d_alloc(complex_dp_1d_alloc->get());
+    if (complex_dp_2d_alloc)
+      set_complex_dp_2d_alloc(complex_dp_2d_alloc->get());
+    if (complex_dp_3d_alloc)
+      set_complex_dp_3d_alloc(complex_dp_3d_alloc->get());
+    if (int_0d)
+      set_int_0d(*int_0d);
+    if (int_1d)
+      set_int_1d(int_1d->get());
+    if (int_2d)
+      set_int_2d(int_2d->get());
+    if (int_3d)
+      set_int_3d(int_3d->get());
+    if (int_0d_ptr)
+      set_int_0d_ptr(*int_0d_ptr);
+    if (int_1d_ptr)
+      set_int_1d_ptr(int_1d_ptr->get());
+    if (int_2d_ptr)
+      set_int_2d_ptr(int_2d_ptr->get());
+    if (int_3d_ptr)
+      set_int_3d_ptr(int_3d_ptr->get());
+    if (int_1d_alloc)
+      set_int_1d_alloc(int_1d_alloc->get());
+    if (int_2d_alloc)
+      set_int_2d_alloc(int_2d_alloc->get());
+    if (int_3d_alloc)
+      set_int_3d_alloc(int_3d_alloc->get());
+    if (int8_0d)
+      set_int8_0d(*int8_0d);
+    if (int8_1d)
+      set_int8_1d(int8_1d->get());
+    if (int8_2d)
+      set_int8_2d(int8_2d->get());
+    if (int8_3d)
+      set_int8_3d(int8_3d->get());
+    if (int8_0d_ptr)
+      set_int8_0d_ptr(*int8_0d_ptr);
+    if (int8_1d_ptr)
+      set_int8_1d_ptr(int8_1d_ptr->get());
+    if (int8_2d_ptr)
+      set_int8_2d_ptr(int8_2d_ptr->get());
+    if (int8_3d_ptr)
+      set_int8_3d_ptr(int8_3d_ptr->get());
+    if (int8_1d_alloc)
+      set_int8_1d_alloc(int8_1d_alloc->get());
+    if (int8_2d_alloc)
+      set_int8_2d_alloc(int8_2d_alloc->get());
+    if (int8_3d_alloc)
+      set_int8_3d_alloc(int8_3d_alloc->get());
+    if (logical_0d)
+      set_logical_0d(*logical_0d);
+    if (logical_1d)
+      set_logical_1d(logical_1d->get());
+    if (logical_2d)
+      set_logical_2d(logical_2d->get());
+    if (logical_3d)
+      set_logical_3d(logical_3d->get());
+    if (logical_0d_ptr)
+      set_logical_0d_ptr(*logical_0d_ptr);
+    if (type_0d)
+      set_type_0d(type_0d->get());
+    if (type_0d_ptr)
+      set_type_0d_ptr(type_0d_ptr->get());
+  }
 
   double real_rp_0d() const; // 0D_NOT_real
   void set_real_rp_0d(double value);
@@ -17591,6 +23336,12 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
+  explicit TestSubStruct(optional_ref<const TestSubSubStruct> sr = std::nullopt)
+      : FortranProxy() {
+    if (sr)
+      set_sr(sr->get());
+  }
+
   TestSubSubStruct sr() const; // 0D_NOT_type
   void set_sr(const TestSubSubStruct &src);
 };
@@ -17610,6 +23361,26 @@ class TestSubSubStruct : public FortranProxy<TestSubSubStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
+
+  explicit TestSubSubStruct(
+      std::optional<int64_t> aaa = std::nullopt,
+      std::optional<int> bbb = std::nullopt,
+      optional_ref<const std::string> file = std::nullopt,
+      std::optional<double> t_ref = std::nullopt,
+      std::optional<double> freq_spread = std::nullopt
+  )
+      : FortranProxy() {
+    if (aaa)
+      set_aaa(*aaa);
+    if (bbb)
+      set_bbb(*bbb);
+    if (file)
+      set_file(file->get());
+    if (t_ref)
+      set_t_ref(*t_ref);
+    if (freq_spread)
+      set_freq_spread(*freq_spread);
+  }
 
   int64_t aaa() const; // 0D_NOT_integer8
   void set_aaa(int64_t value);

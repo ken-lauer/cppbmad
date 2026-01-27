@@ -34,18 +34,8 @@ phic : float
 
 mc : float
 
-b : float
-
-d : float
-
 Returns
 -------
-phi : float
-
-phic : float
-
-mc : float
-
 b : float
 
 d : float
@@ -77,16 +67,8 @@ c0 : float
 
 mc : float
 
-b : float
-
-dx : float
-
 Returns
 -------
-c0 : float
-
-mc : float
-
 b : float
 
 dx : float
@@ -149,16 +131,8 @@ s0 : float
 
 mc : float
 
-b : float
-
-d : float
-
 Returns
 -------
-s0 : float
-
-mc : float
-
 b : float
 
 d : float
@@ -182,13 +156,6 @@ spline : 1D array of SplineStruct
 
 which_end : int
     0 => calculate slopes for the start end of the array. 1 => calculate slopes for the end end of the array.
-
-Returns
--------
-spline : 1D array of SplineStruct
-    Array of splines.
-    This parameter is an input/output and is modified in-place.
-    As an output, spline: Array with slopes at end calculated.
 )"""
   );
   m.def(
@@ -199,10 +166,6 @@ spline : 1D array of SplineStruct
 
 Parameters
 ----------
-err_str : character, optional
-
-Returns
--------
 err_str : character, optional
 )"""
   );

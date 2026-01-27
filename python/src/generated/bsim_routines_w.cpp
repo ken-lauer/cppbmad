@@ -23,16 +23,6 @@ bbu_beam : BbuBeamStruct
 bbu_param : BbuParamStruct
 
 this_stage : BbuStageStruct
-
-Returns
--------
-lat : LatStruct
-
-bbu_beam : BbuBeamStruct
-
-bbu_param : BbuParamStruct
-
-this_stage : BbuStageStruct
 )"""
   );
 }

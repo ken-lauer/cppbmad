@@ -29,20 +29,6 @@ descrip : character
 width : int
 
 digits : int
-
-Returns
--------
-format_str : character
-
-n_repeat : int
-
-power : int
-
-descrip : character
-
-width : int
-
-digits : int
 )"""
   );
   m.def(
@@ -106,10 +92,6 @@ x : float
     Function argument.
 
 prob : float
-
-Returns
--------
-prob : float
 )"""
   );
   m.def(
@@ -122,12 +104,6 @@ prob : float
 
 Parameters
 ----------
-a : 1D array of complex
-
-b : 1D array of complex
-
-Returns
--------
 a : 1D array of complex
 
 b : 1D array of complex

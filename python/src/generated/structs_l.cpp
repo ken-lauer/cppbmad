@@ -11,7 +11,11 @@ namespace py = pybind11;
 // =============================================================================
 // lat_ele_loc_struct
 void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<int>, std::optional<int>>(),
+         py::arg("ix_ele") = py::none(),
+         py::arg("ix_branch") = py::none()
+  )
       // LatEleLocStruct.ix_ele (0D_NOT_integer -
       .def_property("ix_ele", &LatEleLocStruct::ix_ele, &LatEleLocStruct::set_ix_ele)
       // LatEleLocStruct.ix_branch (0D_NOT_integer -
@@ -47,7 +51,11 @@ void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
 // =============================================================================
 // lat_ele_order1_struct
 void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<std::optional<int>, std::optional<int>>(),
+         py::arg("ix_branch") = py::none(),
+         py::arg("ix_order") = py::none()
+  )
       // LatEleOrder1Struct.ix_branch (0D_NOT_integer - Branch index
       .def_property("ix_branch", &LatEleOrder1Struct::ix_branch, &LatEleOrder1Struct::set_ix_branch)
       // LatEleOrder1Struct.ix_order (0D_NOT_integer - Order index. -1 -> Unique in lattice, 0 ->
@@ -147,7 +155,43 @@ void init_lat_ele_order_struct(py::module &m, py::class_<LatEleOrderStruct> &cls
 // =============================================================================
 // lat_param_struct
 void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             optional_ref<const BookkeepingStateStruct>,
+             optional_ref<const BeamInitStruct>>(),
+         py::arg("n_part") = py::none(),
+         py::arg("total_length") = py::none(),
+         py::arg("unstable_factor") = py::none(),
+         py::arg("t1_with_RF") = py::none(),
+         py::arg("t1_no_RF") = py::none(),
+         py::arg("spin_tune") = py::none(),
+         py::arg("particle") = py::none(),
+         py::arg("default_tracking_species") = py::none(),
+         py::arg("geometry") = py::none(),
+         py::arg("ixx") = py::none(),
+         py::arg("stable") = py::none(),
+         py::arg("live_branch") = py::none(),
+         py::arg("g1_integral") = py::none(),
+         py::arg("g2_integral") = py::none(),
+         py::arg("g3_integral") = py::none(),
+         py::arg("bookkeeping_state") = py::none(),
+         py::arg("beam_init") = py::none()
+  )
       // LatParamStruct.n_part (0D_NOT_real - Particles/bunch (for BeamBeam elements).
       .def_property("n_part", &LatParamStruct::n_part, &LatParamStruct::set_n_part)
       // LatParamStruct.total_length (0D_NOT_real - total_length of branch. Warning: branch may not
@@ -227,7 +271,59 @@ void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
 // =============================================================================
 // lat_struct
 void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const std::string>,
+             optional_ref<const ModeInfoStruct>,
+             optional_ref<const ModeInfoStruct>,
+             optional_ref<const ModeInfoStruct>,
+             optional_ref<const LatParamStruct>,
+             optional_ref<const BookkeepingStateStruct>,
+             optional_ref<const EleStruct>,
+             optional_ref<const CoordStruct>,
+             optional_ref<const BeamInitStruct>,
+             optional_ref<const PreTrackerStruct>,
+             optional_ref<const std::vector<double>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             optional_ref<const std::vector<int>>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>>(),
+         py::arg("use_name") = py::none(),
+         py::arg("lattice") = py::none(),
+         py::arg("machine") = py::none(),
+         py::arg("input_file_name") = py::none(),
+         py::arg("title") = py::none(),
+         py::arg("a") = py::none(),
+         py::arg("b") = py::none(),
+         py::arg("z") = py::none(),
+         py::arg("param") = py::none(),
+         py::arg("lord_state") = py::none(),
+         py::arg("ele_init") = py::none(),
+         py::arg("particle_start") = py::none(),
+         py::arg("beam_init") = py::none(),
+         py::arg("pre_tracker") = py::none(),
+         py::arg("custom") = py::none(),
+         py::arg("version") = py::none(),
+         py::arg("n_ele_track") = py::none(),
+         py::arg("n_ele_max") = py::none(),
+         py::arg("n_control_max") = py::none(),
+         py::arg("n_ic_max") = py::none(),
+         py::arg("input_taylor_order") = py::none(),
+         py::arg("ic") = py::none(),
+         py::arg("photon_type") = py::none(),
+         py::arg("creation_hash") = py::none(),
+         py::arg("ramper_slave_bookkeeping") = py::none()
+  )
       // LatStruct.use_name (0D_NOT_character - Name of lat given by USE statement
       .def_property("use_name", &LatStruct::use_name, &LatStruct::set_use_name)
       // LatStruct.lattice (0D_NOT_character - Lattice
@@ -325,7 +421,23 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
 // =============================================================================
 // linac_normal_mode_struct
 void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>>(),
+         py::arg("i2_E4") = py::none(),
+         py::arg("i3_E7") = py::none(),
+         py::arg("i5a_E6") = py::none(),
+         py::arg("i5b_E6") = py::none(),
+         py::arg("sig_E1") = py::none(),
+         py::arg("a_emittance_end") = py::none(),
+         py::arg("b_emittance_end") = py::none()
+  )
       // LinacNormalModeStruct.i2_E4 (0D_NOT_real - Integral: g^2 * gamma^4
       .def_property("i2_E4", &LinacNormalModeStruct::i2_E4, &LinacNormalModeStruct::set_i2_E4)
       // LinacNormalModeStruct.i3_E7 (0D_NOT_real - Integral: g^3 * gamma^7
@@ -374,7 +486,39 @@ void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStru
 // =============================================================================
 // layout
 void init_layout(py::module &m, py::class_<Layout> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<
+             optional_ref<const std::string>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<bool>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<int>,
+             optional_ref<const Fibre>,
+             optional_ref<const Fibre>,
+             optional_ref<const Fibre>,
+             optional_ref<const Fibre>,
+             optional_ref<const Fibre>,
+             optional_ref<const Layout>,
+             optional_ref<const Layout>>(),
+         py::arg("NAME") = py::none(),
+         py::arg("INDEX") = py::none(),
+         py::arg("HARMONIC_NUMBER") = py::none(),
+         py::arg("CLOSED") = py::none(),
+         py::arg("N") = py::none(),
+         py::arg("NTHIN") = py::none(),
+         py::arg("THIN") = py::none(),
+         py::arg("LASTPOS") = py::none(),
+         py::arg("LAST") = py::none(),
+         py::arg("END") = py::none(),
+         py::arg("START") = py::none(),
+         py::arg("START_GROUND") = py::none(),
+         py::arg("END_GROUND") = py::none(),
+         py::arg("NEXT") = py::none(),
+         py::arg("PREVIOUS") = py::none()
+  )
       // Layout.NAME (0D_PTR_character - IDENTIFICATION
       .def_property("NAME", &Layout::NAME, &Layout::set_NAME)
       // Layout.INDEX (0D_PTR_integer - IDENTIFICATION, CHARGE SIGN

@@ -37,14 +37,6 @@ z : 1D array of float (shape: 2)
 w : 1D array of float (shape: 2)
 
 dw : 2D array of float (shape: 2,2)
-
-Returns
--------
-z : 1D array of float (shape: 2)
-
-w : 1D array of float (shape: 2)
-
-dw : 2D array of float (shape: 2,2)
 )"""
   );
   m.def(
@@ -68,13 +60,6 @@ arr : 1D array of complex
 
 isign : int
     -1 => "Forward" transform, +1 => "Backwards" transform.
-
-Returns
--------
-arr : 1D array of complex
-    Input array.
-    This parameter is an input/output and is modified in-place.
-    As an output, arr: FFT of array.
 )"""
   );
   m.def(
@@ -88,16 +73,6 @@ arr : 1D array of complex
 
 Parameters
 ----------
-in_file : character
-
-out_file : character
-
-directory : character
-
-add_switch : bool
-
-Returns
--------
 in_file : character
 
 out_file : character
@@ -122,14 +97,6 @@ string : character
 dflt_file_name : character
 
 file_name : character
-
-Returns
--------
-string : character
-
-dflt_file_name : character
-
-file_name : character
 )"""
   );
   m.def(
@@ -144,18 +111,6 @@ file_name : character
 
 Parameters
 ----------
-string : character
-
-dflt_file_name : character
-
-file_name : character
-
-file_unit : int
-
-readonly : bool
-
-Returns
--------
 string : character
 
 dflt_file_name : character
@@ -185,16 +140,6 @@ out_file_name : character
 suffix : character
 
 add_switch : bool
-
-Returns
--------
-in_file_name : character
-
-out_file_name : character
-
-suffix : character
-
-add_switch : bool
 )"""
   );
   m.def(
@@ -212,14 +157,6 @@ arr : 1D array of int
 value : int
 
 ix_match : int
-
-Returns
--------
-arr : 1D array of int
-
-value : int
-
-ix_match : int
 )"""
   );
   m.def(
@@ -232,14 +169,6 @@ ix_match : int
 
 Parameters
 ----------
-arr : 1D array of bool
-
-value : bool
-
-ix_match : int
-
-Returns
--------
 arr : 1D array of bool
 
 value : bool

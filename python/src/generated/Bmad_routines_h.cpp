@@ -49,18 +49,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
-
-Returns
--------
-orbit : CoordStruct
-    Starting coordinates.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Ending coordinates.
-
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the fringe.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix including the fringe.
 )"""
   );
   m.def(
@@ -73,14 +61,6 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 Parameters
 ----------
-ele : EleStruct
-
-attrib : character
-
-has_it : bool
-
-Returns
--------
 ele : EleStruct
 
 attrib : character
@@ -151,20 +131,6 @@ error : bool
 lat : LatStruct, optional
 
 alive_only : bool, optional
-
-Returns
--------
-file_name : character
-
-bunches : 1D array of BunchStruct
-
-append : bool
-
-error : bool
-
-lat : LatStruct, optional
-
-alive_only : bool, optional
 )"""
   );
   m.def(
@@ -178,16 +144,6 @@ alive_only : bool, optional
 
 Parameters
 ----------
-file_name : character
-
-ele : EleStruct
-
-g_field : 1D array of GridFieldStruct
-
-err_flag : bool
-
-Returns
--------
 file_name : character
 
 ele : EleStruct
@@ -217,11 +173,6 @@ See the Bmad manual for details.
 
 Parameters
 ----------
-orb : CoordStruct
-    Starting coords.
-    This parameter is an input/output and is modified in-place.
-    As an output, orb: Coords after tracking.
-
 ele : EleStruct
     SBend element.
 
@@ -231,16 +182,6 @@ param : LatParamStruct
 particle_at : int
     first_track_edge$, or second_track_edge$
 
-mat6 : 2D array of float (shape: 6,6), optional
-    Transfer matrix up to the edge.
-    This parameter is an input/output and is modified in-place.
-    As an output, mat6: Transfer matrix including the edge.
-
-make_matrix : bool, optional
-    Propagate the transfer matrix? Default is False.
-
-Returns
--------
 orb : CoordStruct
     Starting coords.
     This parameter is an input/output and is modified in-place.
@@ -250,6 +191,9 @@ mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix up to the edge.
     This parameter is an input/output and is modified in-place.
     As an output, mat6: Transfer matrix including the edge.
+
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is False.
 )"""
   );
 }

@@ -11,7 +11,13 @@ namespace py = pybind11;
 // =============================================================================
 // kv_beam_init_struct
 void init_kv_beam_init_struct(py::module &m, py::class_<KvBeamInitStruct> &cls) {
-  cls.def(py::init<>())
+  cls.def(
+         py::init<optional_ref<const std::vector<int>>, std::optional<int>, std::optional<double>>(
+         ),
+         py::arg("part_per_phi") = py::none(),
+         py::arg("n_I2") = py::none(),
+         py::arg("A") = py::none()
+  )
       // KvBeamInitStruct.part_per_phi (1D_NOT_integer - number of particles per angle variable.
       .def_property(
           "part_per_phi",

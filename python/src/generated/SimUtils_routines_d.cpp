@@ -20,14 +20,6 @@ string : character
 numeric_month : bool, optional
 
 include_zone : bool, optional
-
-Returns
--------
-string : character
-
-numeric_month : bool, optional
-
-include_zone : bool, optional
 )"""
   );
   m.def(
@@ -39,10 +31,6 @@ include_zone : bool, optional
 Parameters
 ----------
 id : int
-
-Returns
--------
-id : int
 )"""
   );
   m.def(
@@ -53,10 +41,6 @@ id : int
 
 Parameters
 ----------
-str : character
-
-Returns
--------
 str : character
 )"""
   );
@@ -72,18 +56,6 @@ str : character
 
 Parameters
 ----------
-ix_screen : int
-
-x_size : float
-
-y_size : float
-
-x_res : float
-
-y_res : float
-
-Returns
--------
 ix_screen : int
 
 x_size : float
@@ -111,8 +83,6 @@ arg : float
 
 Returns
 -------
-m : int
-
 dj_bes : float
     Bessel value.
 )"""
@@ -132,14 +102,6 @@ str : character
 old_hash : int, optional
 
 hash : int
-
-Returns
--------
-str : character
-
-old_hash : int, optional
-
-hash : int
 )"""
   );
   m.def(
@@ -154,12 +116,6 @@ Parameters
 in_str : character
 
 hash_str : character
-
-Returns
--------
-in_str : character
-
-hash_str : character
 )"""
   );
   m.def(
@@ -170,10 +126,6 @@ hash_str : character
 
 Parameters
 ----------
-string : character
-
-Returns
--------
 string : character
 )"""
   );
