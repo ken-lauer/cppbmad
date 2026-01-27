@@ -287,6 +287,118 @@ harvest : 1D array of float
 )"""
   );
   m.def(
+      "rcelbd",
+      &SimUtils::rcelbd,
+      py::arg("mc"),
+      py::arg("elb"),
+      py::arg("eld"),
+      R"""(Wrapper for Fortran routine rcelbd
+
+Parameters
+----------
+mc : float
+
+elb : float
+
+eld : float
+
+Returns
+-------
+mc : float
+
+elb : float
+
+eld : float
+)"""
+  );
+  m.def(
+      "read_a_line",
+      &SimUtils::read_a_line,
+      py::arg("prompt"),
+      py::arg("trim_prompt") = py::none(),
+      py::arg("prompt_color") = py::none(),
+      py::arg("prompt_bold") = py::none(),
+      py::arg("history_file") = py::none(),
+      R"""(Subroutine read_a_line (prompt, line_out, trim_prompt, prompt_color, prompt_bold, history_file)
+
+Subroutine to read a line of input from the terminal.
+The line is also add to the history buffer so that the up-arrow
+and down-arrow keys can be used to recall past commands.
+
+Also see:
+  readline_read_history
+  readline_write_history
+
+System Libraries that need to be linked to:
+  readline curses
+
+Parameters
+----------
+prompt : character
+    Prompt string to use.
+
+trim_prompt : bool, optional
+    If present and True then trim the prompt string and add a single blank before printing the prompt string.
+    Default is True.
+
+prompt_color : character, optional
+    Color of the prompt. Possibilities are: 'BLACK', 'RED', 'GREEN', 'YELLOW', 'BLUE', 'MAGENTA', 'CYAN',
+    'GRAY', 'DEFAULT'. The 'DEFAULT' setting (the default) does not set the prompt color.
+
+prompt_bold : bool, optional
+    If present and True then the prompt will be printed in bold.
+
+history_file : character, optional
+    If present, add line_out to a file whose name is given by history_file. History files are useful for
+    saving the command history in between when a program is run multiple times.
+
+Returns
+-------
+line_out : character
+    Line typed by the user. Note: If cntl-D is pressed, line_out = achar(24).
+)"""
+  );
+  m.def(
+      "readline_read_history",
+      &SimUtils::readline_read_history,
+      py::arg("history_file"),
+      R"""(Subroutine readline_read_history (history_file, status)
+
+Routine to add the contents of a file to the readline history list.
+Use this routine with the read_a_line routine.
+
+Parameters
+----------
+history_file : character
+    Name of the history file. EG: '~/.my_history'
+
+Returns
+-------
+status : int
+    0 = Success, otherwise failure.
+)"""
+  );
+  m.def(
+      "readline_write_history",
+      &SimUtils::readline_write_history,
+      py::arg("history_file"),
+      R"""(Subroutine readline_write_history (history_file, status)
+
+Routine to write the contents of the readline history list to a file.
+Use this routine with the read_a_line routine.
+
+Parameters
+----------
+history_file : character
+    Name of the history file. EG: '~/.my_history'
+
+Returns
+-------
+status : int
+    0 = Success, otherwise failure.
+)"""
+  );
+  m.def(
       "real_num_fortran_format",
       &SimUtils::real_num_fortran_format,
       py::arg("number"),
@@ -443,6 +555,131 @@ spline : 1D array of SplineStruct
     As an output, spline: Allocated spline.
 )"""
   );
+  m.def(
+      "relbd",
+      &SimUtils::relbd,
+      py::arg("phi"),
+      py::arg("phic"),
+      py::arg("mc"),
+      py::arg("b"),
+      py::arg("d"),
+      R"""(Wrapper for Fortran routine relbd
+
+Parameters
+----------
+phi : float
+
+phic : float
+
+mc : float
+
+b : float
+
+d : float
+
+Returns
+-------
+phi : float
+
+phic : float
+
+mc : float
+
+b : float
+
+d : float
+)"""
+  );
+  m.def(
+      "relcbd",
+      &SimUtils::relcbd,
+      py::arg("c0"),
+      py::arg("mc"),
+      py::arg("b"),
+      py::arg("dx"),
+      R"""(Wrapper for Fortran routine relcbd
+
+Parameters
+----------
+c0 : float
+
+mc : float
+
+b : float
+
+dx : float
+
+Returns
+-------
+c0 : float
+
+mc : float
+
+b : float
+
+dx : float
+)"""
+  );
+  m.def(
+      "relsbd",
+      &SimUtils::relsbd,
+      py::arg("s0"),
+      py::arg("mc"),
+      py::arg("b"),
+      py::arg("d"),
+      R"""(Wrapper for Fortran routine relsbd
+
+Parameters
+----------
+s0 : float
+
+mc : float
+
+b : float
+
+d : float
+
+Returns
+-------
+s0 : float
+
+mc : float
+
+b : float
+
+d : float
+)"""
+  );
+  m.def(
+      "rgelbd",
+      &SimUtils::rgelbd,
+      py::arg("phi"),
+      py::arg("mc"),
+      py::arg("elb"),
+      py::arg("eld"),
+      R"""(Wrapper for Fortran routine rgelbd
+
+Parameters
+----------
+phi : float
+
+mc : float
+
+elb : float
+
+eld : float
+
+Returns
+-------
+phi : float
+
+mc : float
+
+elb : float
+
+eld : float
+)"""
+  );
   py::class_<SimUtils::RmsValue, std::unique_ptr<SimUtils::RmsValue>>(
       m,
       "RmsValue",
@@ -582,6 +819,36 @@ Returns
 -------
 re_out : float
     Equiv real.
+)"""
+  );
+  m.def(
+      "rserbd",
+      &SimUtils::rserbd,
+      py::arg("y"),
+      py::arg("m"),
+      py::arg("b"),
+      py::arg("d"),
+      R"""(Wrapper for Fortran routine rserbd
+
+Parameters
+----------
+y : float
+
+m : float
+
+b : float
+
+d : float
+
+Returns
+-------
+y : float
+
+m : float
+
+b : float
+
+d : float
 )"""
   );
   m.def(

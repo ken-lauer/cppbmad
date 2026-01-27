@@ -9,20 +9,17 @@ void init_SimUtils_routines_f(py::module &m) {
       "factorial",
       &SimUtils::factorial,
       py::arg("n"),
-      py::arg("fact"),
       R"""(Wrapper for Fortran routine factorial
 
 Parameters
 ----------
 n : int
-
-fact : float
+    Must be non-negative
 
 Returns
 -------
-n : int
-
 fact : float
+    n!. Will return negative number if there is an error.
 )"""
   );
   m.def(

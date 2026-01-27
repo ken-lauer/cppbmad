@@ -126,4 +126,108 @@ Returns
 milli_sec : int
 )"""
   );
+  m.def(
+      "modulo2_dp",
+      &SimUtils::modulo2_dp,
+      py::arg("x"),
+      py::arg("amp"),
+      R"""(Function modulo2 (x, amp) result (mod2)
+
+Function to return
+    mod2 = x + 2 * n * amp
+where n is an integer chosen such that
+   -amp <= mod2 < amp
+
+Parameters
+----------
+x : float
+    Real(sp), Real(rp), or Integer
+
+amp : float
+    Must be positive.
+
+Returns
+-------
+mod2 : float
+    Result
+)"""
+  );
+  m.def(
+      "modulo2_int",
+      &SimUtils::modulo2_int,
+      py::arg("x"),
+      py::arg("amp"),
+      R"""(Function modulo2 (x, amp) result (mod2)
+
+Function to return
+    mod2 = x + 2 * n * amp
+where n is an integer chosen such that
+   -amp <= mod2 < amp
+
+Parameters
+----------
+x : int
+    Real(sp), Real(rp), or Integer
+
+amp : int
+    Must be positive.
+
+Returns
+-------
+mod2 : int
+    Result
+)"""
+  );
+  m.def(
+      "modulo2_qp",
+      &SimUtils::modulo2_qp,
+      py::arg("x"),
+      py::arg("amp"),
+      R"""(Function modulo2 (x, amp) result (mod2)
+
+Function to return
+    mod2 = x + 2 * n * amp
+where n is an integer chosen such that
+   -amp <= mod2 < amp
+
+Parameters
+----------
+x : float
+    Real(sp), Real(rp), or Integer
+
+amp : float
+    Must be positive.
+
+Returns
+-------
+mod2 : float
+    Result
+)"""
+  );
+  m.def(
+      "modulo2_sp",
+      &SimUtils::modulo2_sp,
+      py::arg("x"),
+      py::arg("amp"),
+      R"""(Function modulo2 (x, amp) result (mod2)
+
+Function to return
+    mod2 = x + 2 * n * amp
+where n is an integer chosen such that
+   -amp <= mod2 < amp
+
+Parameters
+----------
+x : float
+    Real(sp), Real(rp), or Integer
+
+amp : float
+    Must be positive.
+
+Returns
+-------
+mod2 : float
+    Result
+)"""
+  );
 }

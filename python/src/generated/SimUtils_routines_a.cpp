@@ -151,7 +151,6 @@ by the corrected apfft subroutine in this module.
       &SimUtils::asinc,
       py::arg("x"),
       py::arg("nd") = py::none(),
-      py::arg("y"),
       R"""(Wrapper for Fortran routine asinc
 
 Parameters
@@ -159,16 +158,13 @@ Parameters
 x : float
 
 nd : int, optional
-
-y : float
+    Derivative order. nd = 0 (default) -> compute arcsin(x) / x NOTE: Currently only nd = 0 and nd = 1 are
+    implemented.
 
 Returns
 -------
-x : float
-
-nd : int, optional
-
 y : float
+    nd^th derivative. of arcsin(x)/x
 )"""
   );
   m.def(

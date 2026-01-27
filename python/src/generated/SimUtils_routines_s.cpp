@@ -5,6 +5,47 @@ using namespace pybind11::literals;
 using namespace Pybmad;
 
 void init_SimUtils_routines_s(py::module &m) {
+  py::class_<SimUtils::Serbd, std::unique_ptr<SimUtils::Serbd>>(m, "Serbd", "serbd return type")
+      .def_readonly("b", &SimUtils::Serbd::b)
+      .def_readonly("d", &SimUtils::Serbd::d)
+      .def("__len__", [](const SimUtils::Serbd &) { return 2; })
+      .def("__getitem__", [](const SimUtils::Serbd &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.b);
+        if (i == 1)
+          return py::cast(s.d);
+        throw py::index_error();
+      });
+  m.def(
+      "serbd",
+      &SimUtils::serbd,
+      py::arg("y"),
+      py::arg("m"),
+      R"""(Wrapper for Fortran routine serbd
+
+Parameters
+----------
+y : float
+
+m : float
+
+b : float
+
+d : float
+
+Returns
+-------
+y : float
+
+m : float
+
+b : float
+
+d : float
+)"""
+  );
   m.def(
       "set_parameter",
       py::overload_cast<int, int, int>(&SimUtils::set_parameter),
@@ -106,28 +147,75 @@ species_charged : int
 )"""
   );
   m.def(
+      "sign_of",
+      py::overload_cast<int, std::optional<bool>>(&SimUtils::sign_of),
+      py::arg("num"),
+      py::arg("zero_is_zero") = py::none(),
+      R"""(Function sign_of (num, zero_is_zero) result (num_sign)
+
+Routine to return the sign of a number.
+Note: Fortran instrinsic sign function is similar to sign_of with zero_is_zero = False.
+
+Parameters
+----------
+num : int
+    Input number
+
+zero_is_zero : bool, optional
+    If True (default), num = 0 gives num_sign = 0. If False, num = 0 gives num_sign = 1.
+
+Returns
+-------
+num_sign : int
+    +1 if num is positive, -1 if num is negative, and 0 or +1 if num is zero depending upon setting of
+    zero_is_zero.
+)"""
+  );
+  m.def(
+      "sign_of",
+      py::overload_cast<double, std::optional<bool>>(&SimUtils::sign_of),
+      py::arg("num"),
+      py::arg("zero_is_zero") = py::none(),
+      R"""(Function sign_of (num, zero_is_zero) result (num_sign)
+
+Routine to return the sign of a number.
+Note: Fortran instrinsic sign function is similar to sign_of with zero_is_zero = False.
+
+Parameters
+----------
+num : float
+    Input number
+
+zero_is_zero : bool, optional
+    If True (default), num = 0 gives num_sign = 0. If False, num = 0 gives num_sign = 1.
+
+Returns
+-------
+num_sign : int
+    +1 if num is positive, -1 if num is negative, and 0 or +1 if num is zero depending upon setting of
+    zero_is_zero.
+)"""
+  );
+  m.def(
       "sinc",
       &SimUtils::sinc,
       py::arg("x"),
       py::arg("nd") = py::none(),
-      py::arg("y"),
       R"""(Wrapper for Fortran routine sinc
 
 Parameters
 ----------
 x : float
+    Number.
 
 nd : int, optional
-
-y : float
+    Derivative order. nd = 0 (default) -> compute sin(x) / x NOTE: Currently only nd = 0 and nd = 1 are
+    implemented.
 
 Returns
 -------
-x : float
-
-nd : int, optional
-
 y : float
+    nd^th derivative of sin(x) / x
 )"""
   );
   m.def(
@@ -135,24 +223,21 @@ y : float
       &SimUtils::sincc,
       py::arg("x"),
       py::arg("nd") = py::none(),
-      py::arg("y"),
       R"""(Wrapper for Fortran routine sincc
 
 Parameters
 ----------
 x : float
+    Number.
 
 nd : int, optional
-
-y : float
+    Derivative order. nd = 0 (default) -> compute (x - sin(x)) / x^3 NOTE: Currently only nd = 0 and nd = 1
+    are implemented.
 
 Returns
 -------
-x : float
-
-nd : int, optional
-
 y : float
+    nd^th derivative of (x - sin(x)) / x^3
 )"""
   );
   m.def(
@@ -160,24 +245,21 @@ y : float
       &SimUtils::sinhx_x,
       py::arg("x"),
       py::arg("nd") = py::none(),
-      py::arg("y"),
       R"""(Wrapper for Fortran routine sinhx_x
 
 Parameters
 ----------
 x : float
+    Number.
 
 nd : int, optional
-
-y : float
+    Derivative order. nd = 0 (default) -> compute sinh(x) / x NOTE: Currently only nd = 0 and nd = 1 are
+    implemented.
 
 Returns
 -------
-x : float
-
-nd : int, optional
-
 y : float
+    nd^th derivative of sinh(x) / x.
 )"""
   );
   m.def(
@@ -514,24 +596,20 @@ dy : float, optional
       &SimUtils::sqrt_alpha,
       py::arg("alpha"),
       py::arg("x"),
-      py::arg("y"),
       R"""(Wrapper for Fortran routine sqrt_alpha
 
 Parameters
 ----------
 alpha : float
+    Number
 
 x : float
-
-y : float
+    Number
 
 Returns
 -------
-alpha : float
-
-x : float
-
 y : float
+    Result.
 )"""
   );
   m.def(
@@ -545,17 +623,16 @@ y : float
 Parameters
 ----------
 x : float
+    Number
 
 nd : int, optional
+    Derivative order. nd = 0 (default) -> compute Sqrt[1+x] - 1. NOTE: Currently only nd = 0 and nd = 1 are
+    implemented.
 
 ds1 : float
 
 Returns
 -------
-x : float
-
-nd : int, optional
-
 ds1 : float
 )"""
   );
@@ -923,6 +1000,59 @@ ix_next : int
 )"""
   );
   m.def(
+      "suggest_lmdif",
+      &SimUtils::suggest_lmdif,
+      py::arg("XV"),
+      py::arg("FV"),
+      py::arg("eps"),
+      py::arg("itermx"),
+      py::arg("reset_flag") = py::none(),
+      R"""(subroutine suggest_lmdif (xv, fv, eps, itermx, at_end, reset_flag)
+
+Reverse communication subroutine.
+It suggests values for your input variables based on
+the previous value of your merit function.
+
+Use initial_lmdif to initialize internal variables
+
+Parameters
+----------
+xv : 1D array of float
+    Array of variables
+    This parameter is an input/output and is modified in-place.
+    As an output, xv: Suggested new values
+
+fv : 1D array of float
+    Array of function value/s that should be optimized to zero
+    This parameter is an input/output and is modified in-place.
+    As an output, fv: After the last optimization this returns the best values ever.
+
+eps : float
+    Desired accuracy with which the optimum should be found.
+
+itermx : int
+    Max number of iterations
+
+reset_flag : bool, optional
+    Optional. Used by initial_lmdif to clear previous saved values
+
+Returns
+-------
+xv : 1D array of float
+    Array of variables
+    This parameter is an input/output and is modified in-place.
+    As an output, xv: Suggested new values
+
+fv : 1D array of float
+    Array of function value/s that should be optimized to zero
+    This parameter is an input/output and is modified in-place.
+    As an output, fv: After the last optimization this returns the best values ever.
+
+at_end : bool
+    Set to False if more optimization is recommended. If set to True then xv(:) will be the minimum found.
+)"""
+  );
+  m.def(
       "super_bicubic_coef",
       &SimUtils::super_bicubic_coef,
       py::arg("y"),
@@ -1163,20 +1293,17 @@ arr : 1D array of int
       "system_command",
       &SimUtils::system_command,
       py::arg("line"),
-      py::arg("err_flag") = py::none(),
       R"""(Wrapper for Fortran routine system_command
 
 Parameters
 ----------
 line : character
-
-err_flag : bool, optional
+    Command to pass to the system shell.
 
 Returns
 -------
-line : character
-
 err_flag : bool, optional
+    Set True if there is an error (bad command, etc.).
 )"""
   );
 }

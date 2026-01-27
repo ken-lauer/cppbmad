@@ -18,24 +18,20 @@ void init_SimUtils_routines_n(py::module &m) {
       &SimUtils::n_choose_k,
       py::arg("n"),
       py::arg("k"),
-      py::arg("nck"),
       R"""(Wrapper for Fortran routine n_choose_k
 
 Parameters
 ----------
 n : int
+    Must be non-negative with n >= k.
 
 k : int
-
-nck : float
+    Must be non-negative with n >= k.
 
 Returns
 -------
-n : int
-
-k : int
-
 nck : float
+    N choose K will return negative number if there is an error.
 )"""
   );
   m.def(

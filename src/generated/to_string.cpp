@@ -2838,6 +2838,13 @@ std::string to_string(const Bmad::CalcWallRadius &self) {
        std::pair{"ix_vertex", to_string(self.ix_vertex)}}
   );
 }
+std::string to_string(const SimUtils::Celbd &self) {
+  return repr(
+      &self,
+      "SimUtils::Celbd",
+      {std::pair{"elb", to_string(self.elb)}, std::pair{"eld", to_string(self.eld)}}
+  );
+}
 std::string to_string(const Bmad::CheckIfSInBounds &self) {
   return repr(
       &self,
@@ -3023,6 +3030,20 @@ std::string to_string(const Bmad::EigenDecomp6mat &self) {
        std::pair{"tunes", to_string(self.tunes)}}
   );
 }
+std::string to_string(const SimUtils::Elbd &self) {
+  return repr(
+      &self,
+      "SimUtils::Elbd",
+      {std::pair{"b", to_string(self.b)}, std::pair{"d", to_string(self.d)}}
+  );
+}
+std::string to_string(const SimUtils::Elcbd &self) {
+  return repr(
+      &self,
+      "SimUtils::Elcbd",
+      {std::pair{"b", to_string(self.b)}, std::pair{"dx", to_string(self.dx)}}
+  );
+}
 std::string to_string(const Bmad::EleMisalignmentLSCalc &self) {
   return repr(
       &self,
@@ -3073,6 +3094,21 @@ std::string to_string(const Bmad::ElementAtSLat &self) {
        std::pair{"s_eff", to_string(self.s_eff)},
        std::pair{"position", to_string(self.position)},
        std::pair{"ix_ele", to_string(self.ix_ele)}}
+  );
+}
+std::string to_string(const SimUtils::Ellipinc &self) {
+  return repr(
+      &self,
+      "SimUtils::Ellipinc",
+      {std::pair{"ellipkinc", to_string(self.ellipkinc)},
+       std::pair{"ellipeinc", to_string(self.ellipeinc)}}
+  );
+}
+std::string to_string(const SimUtils::Elsbd &self) {
+  return repr(
+      &self,
+      "SimUtils::Elsbd",
+      {std::pair{"b", to_string(self.b)}, std::pair{"d", to_string(self.d)}}
   );
 }
 std::string to_string(const Bmad::EmFieldCalc &self) {
@@ -3212,6 +3248,13 @@ std::string to_string(const Bmad::GBendingStrengthFromEmField &self) {
       &self,
       "Bmad::GBendingStrengthFromEmField",
       {std::pair{"g", to_string(self.g)}, std::pair{"dg", to_string(self.dg)}}
+  );
+}
+std::string to_string(const SimUtils::Gelbd &self) {
+  return repr(
+      &self,
+      "SimUtils::Gelbd",
+      {std::pair{"elb", to_string(self.elb)}, std::pair{"eld", to_string(self.eld)}}
   );
 }
 std::string to_string(const Bmad::GetEmitFromSigmaMat &self) {
@@ -3864,6 +3907,13 @@ std::string to_string(const SimUtils::RmsValue &self) {
       &self,
       "SimUtils::RmsValue",
       {std::pair{"ave_val", to_string(self.ave_val)}, std::pair{"rms_val", to_string(self.rms_val)}}
+  );
+}
+std::string to_string(const SimUtils::Serbd &self) {
+  return repr(
+      &self,
+      "SimUtils::Serbd",
+      {std::pair{"b", to_string(self.b)}, std::pair{"d", to_string(self.d)}}
   );
 }
 std::string to_string(const Bmad::SetEleAttribute &self) {

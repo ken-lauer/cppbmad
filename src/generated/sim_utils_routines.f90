@@ -49,15 +49,31 @@ use bit_mod, only: bit_set
 use spline_mod, only: bracket_index_for_spline, create_a_spline, end_akima_spline_calc, &
     reallocate_spline, spline1, spline_akima, spline_akima_interpolate, spline_evaluate
 
+use elliptic_integral_mod, only: celbd, elbd, elcbd, ellipinc, elsbd, gelbd, rcelbd, relbd, &
+    relcbd, relsbd, rgelbd, rserbd, serbd, test_xgelbd
+
+use command_line_mod, only: cesr_getarg, cesr_iargc
+
 use fourier_mod, only: coarse_frequency_estimate, fine_frequency_estimate, fourier_amplitude
 
 use windowls_mod, only: destfixedwindowls, fixedwindowls, initfixedwindowls
+
+use input_mod, only: get_tty_char, read_a_line, readline_read_history, readline_write_history
+
+use lmdif_mod, only: initial_lmdif, suggest_lmdif
 
 use naff_mod, only: interpolated_fft, interpolated_fft_gsl, maximize_projection, naff, projdd
 
 use sim_utils_struct, only: is_false, is_true
 
+use modulo2_mod, only: modulo2_dp, modulo2_int, modulo2_qp, modulo2_sp
+
+use output_mod, only: out_io, out_io_buffer_get_line, out_io_buffer_num_lines, &
+    out_io_buffer_reset, out_io_print_and_capture_setup
+
 use precision_def, only: rp8
+
+use sign_of_mod, only: sign_of
 
 use super_recipes_mod, only: super_bicubic_coef, super_bicubic_interpolation, super_polint, &
     super_poly, super_sort
@@ -720,6 +736,67 @@ subroutine fortran_calc_file_number (file_name, num_in, num_out, err_flag) bind(
   call calc_file_number(f_file_name, f_num_in, f_num_out, f_err_flag)
 
 end subroutine
+subroutine fortran_celbd (mc, elb, eld) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(dp) :: f_mc
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: elb  ! 0D_NOT_real
+  real(dp) :: f_elb
+  real(c_double), pointer :: f_elb_ptr
+  type(c_ptr), intent(in), value :: eld  ! 0D_NOT_real
+  real(dp) :: f_eld
+  real(c_double), pointer :: f_eld_ptr
+  ! ** End of parameters **
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  call celbd(f_mc, f_elb, f_eld)
+
+  ! out: f_elb 0D_NOT_real
+  call c_f_pointer(elb, f_elb_ptr)
+  f_elb_ptr = f_elb
+  ! out: f_eld 0D_NOT_real
+  call c_f_pointer(eld, f_eld_ptr)
+  f_eld_ptr = f_eld
+end subroutine
+subroutine fortran_cesr_getarg (i_arg, arg) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: i_arg  ! 0D_NOT_integer
+  integer :: f_i_arg
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arg
+  character(len=4096), target :: f_arg
+  character(kind=c_char), pointer :: f_arg_ptr(:)
+  ! ** End of parameters **
+  ! in: f_i_arg 0D_NOT_integer
+  f_i_arg = i_arg
+  call cesr_getarg(f_i_arg, f_arg)
+
+  ! out: f_arg 0D_NOT_character
+  call c_f_pointer(arg, f_arg_ptr, [len_trim(f_arg) + 1])
+  call to_c_str(f_arg, f_arg_ptr)
+end subroutine
+subroutine fortran_cesr_iargc (func_retval__) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: func_retval__  ! 0D_NOT_integer
+  integer :: f_func_retval__
+  integer(c_int), pointer :: f_func_retval___ptr
+  ! ** End of parameters **
+  f_func_retval__ = cesr_iargc()
+
+  ! out: f_func_retval__ 0D_NOT_integer
+  call c_f_pointer(func_retval__, f_func_retval___ptr)
+  f_func_retval___ptr = f_func_retval__
+end subroutine
 subroutine fortran_change_file_number (file_name, change) bind(c)
 
   use array_desc_mod
@@ -1189,6 +1266,130 @@ subroutine fortran_downcase_string (string) bind(c)
   call downcase_string(f_string)
 
 end subroutine
+subroutine fortran_elbd (phi, phic, mc, b, d) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: phi  ! 0D_NOT_real
+  real(dp) :: f_phi
+  real(c_double) :: phic  ! 0D_NOT_real
+  real(dp) :: f_phic
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(dp) :: f_mc
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: b  ! 0D_NOT_real
+  real(dp) :: f_b
+  real(c_double), pointer :: f_b_ptr
+  type(c_ptr), intent(in), value :: d  ! 0D_NOT_real
+  real(dp) :: f_d
+  real(c_double), pointer :: f_d_ptr
+  ! ** End of parameters **
+  ! in: f_phi 0D_NOT_real
+  f_phi = phi
+  ! in: f_phic 0D_NOT_real
+  f_phic = phic
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  call elbd(f_phi, f_phic, f_mc, f_b, f_d)
+
+  ! out: f_b 0D_NOT_real
+  call c_f_pointer(b, f_b_ptr)
+  f_b_ptr = f_b
+  ! out: f_d 0D_NOT_real
+  call c_f_pointer(d, f_d_ptr)
+  f_d_ptr = f_d
+end subroutine
+subroutine fortran_elcbd (c0, mc, b, dx) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: c0  ! 0D_NOT_real
+  real(dp) :: f_c0
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(dp) :: f_mc
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: b  ! 0D_NOT_real
+  real(dp) :: f_b
+  real(c_double), pointer :: f_b_ptr
+  type(c_ptr), intent(in), value :: dx  ! 0D_NOT_real
+  real(dp) :: f_dx
+  real(c_double), pointer :: f_dx_ptr
+  ! ** End of parameters **
+  ! in: f_c0 0D_NOT_real
+  f_c0 = c0
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  call elcbd(f_c0, f_mc, f_b, f_dx)
+
+  ! out: f_b 0D_NOT_real
+  call c_f_pointer(b, f_b_ptr)
+  f_b_ptr = f_b
+  ! out: f_dx 0D_NOT_real
+  call c_f_pointer(dx, f_dx_ptr)
+  f_dx_ptr = f_dx
+end subroutine
+subroutine fortran_ellipinc (phi, m, ellipkinc, ellipeinc) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: phi  ! 0D_NOT_real
+  real(dp) :: f_phi
+  real(c_double) :: m  ! 0D_NOT_real
+  real(dp) :: f_m
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ellipkinc  ! 0D_NOT_real
+  real(dp) :: f_ellipkinc
+  real(c_double), pointer :: f_ellipkinc_ptr
+  type(c_ptr), intent(in), value :: ellipeinc  ! 0D_NOT_real
+  real(dp) :: f_ellipeinc
+  real(c_double), pointer :: f_ellipeinc_ptr
+  ! ** End of parameters **
+  ! in: f_phi 0D_NOT_real
+  f_phi = phi
+  ! in: f_m 0D_NOT_real
+  f_m = m
+  call ellipinc(f_phi, f_m, f_ellipkinc, f_ellipeinc)
+
+  ! out: f_ellipkinc 0D_NOT_real
+  call c_f_pointer(ellipkinc, f_ellipkinc_ptr)
+  f_ellipkinc_ptr = f_ellipkinc
+  ! out: f_ellipeinc 0D_NOT_real
+  call c_f_pointer(ellipeinc, f_ellipeinc_ptr)
+  f_ellipeinc_ptr = f_ellipeinc
+end subroutine
+subroutine fortran_elsbd (s0, mc, b, d) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: s0  ! 0D_NOT_real
+  real(dp) :: f_s0
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(dp) :: f_mc
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: b  ! 0D_NOT_real
+  real(dp) :: f_b
+  real(c_double), pointer :: f_b_ptr
+  type(c_ptr), intent(in), value :: d  ! 0D_NOT_real
+  real(dp) :: f_d
+  real(c_double), pointer :: f_d_ptr
+  ! ** End of parameters **
+  ! in: f_s0 0D_NOT_real
+  f_s0 = s0
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  call elsbd(f_s0, f_mc, f_b, f_d)
+
+  ! out: f_b 0D_NOT_real
+  call c_f_pointer(b, f_b_ptr)
+  f_b_ptr = f_b
+  ! out: f_d 0D_NOT_real
+  call c_f_pointer(d, f_d_ptr)
+  f_d_ptr = f_d
+end subroutine
 subroutine fortran_end_akima_spline_calc (spline, which_end) bind(c)
 
   use array_desc_mod
@@ -1648,6 +1849,36 @@ subroutine fortran_fourier_amplitude (data, frequency, cos_amp, sin_amp, dcos_am
   ! out: f_dsin_amp 0D_NOT_real
   ! no output conversion for f_dsin_amp
 end subroutine
+subroutine fortran_gelbd (phi, mc, elb, eld) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: phi  ! 0D_NOT_real
+  real(dp) :: f_phi
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(dp) :: f_mc
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: elb  ! 0D_NOT_real
+  real(dp) :: f_elb
+  real(c_double), pointer :: f_elb_ptr
+  type(c_ptr), intent(in), value :: eld  ! 0D_NOT_real
+  real(dp) :: f_eld
+  real(c_double), pointer :: f_eld_ptr
+  ! ** End of parameters **
+  ! in: f_phi 0D_NOT_real
+  f_phi = phi
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  call gelbd(f_phi, f_mc, f_elb, f_eld)
+
+  ! out: f_elb 0D_NOT_real
+  call c_f_pointer(elb, f_elb_ptr)
+  f_elb_ptr = f_elb
+  ! out: f_eld 0D_NOT_real
+  call c_f_pointer(eld, f_eld_ptr)
+  f_eld_ptr = f_eld
+end subroutine
 subroutine fortran_gen_complete_elliptic (kc, p, c, s, err_tol, value) bind(c)
 
   use array_desc_mod
@@ -1742,6 +1973,30 @@ subroutine fortran_get_file_time_stamp (file, time_stamp) bind(c)
   call to_f_str(f_time_stamp_ptr, f_time_stamp)
   call get_file_time_stamp(f_file, f_time_stamp)
 
+end subroutine
+subroutine fortran_get_tty_char (this_char, wait, flush) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  logical(c_bool) :: wait  ! 0D_NOT_logical
+  logical :: f_wait
+  logical(c_bool) :: flush  ! 0D_NOT_logical
+  logical :: f_flush
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: this_char
+  character(len=4096), target :: f_this_char
+  character(kind=c_char), pointer :: f_this_char_ptr(:)
+  ! ** End of parameters **
+  ! in: f_wait 0D_NOT_logical
+  f_wait = wait
+  ! in: f_flush 0D_NOT_logical
+  f_flush = flush
+  call get_tty_char(f_this_char, f_wait, f_flush)
+
+  ! out: f_this_char 0D_NOT_character
+  call c_f_pointer(this_char, f_this_char_ptr, [len_trim(f_this_char) + 1])
+  call to_c_str(f_this_char, f_this_char_ptr)
 end subroutine
 subroutine fortran_hanhan (N, hh) bind(c)
 
@@ -1907,6 +2162,14 @@ subroutine fortran_initfixedwindowls (N, dt, order, der, id) bind(c)
   ! out: f_id 0D_NOT_integer
   call c_f_pointer(id, f_id_ptr)
   f_id_ptr = f_id
+end subroutine
+subroutine fortran_initial_lmdif () bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** End of parameters **
+  call initial_lmdif()
+
 end subroutine
 subroutine fortran_int_str (int_, width, str) bind(c)
 
@@ -2657,6 +2920,102 @@ subroutine fortran_milli_sleep (milli_sec) bind(c)
   call milli_sleep(f_milli_sec)
 
 end subroutine
+subroutine fortran_modulo2_dp (x, amp, mod2) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: x  ! 0D_NOT_real
+  real(rp) :: f_x
+  real(c_double) :: amp  ! 0D_NOT_real
+  real(rp) :: f_amp
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: mod2  ! 0D_NOT_real
+  real(rp) :: f_mod2
+  real(c_double), pointer :: f_mod2_ptr
+  ! ** End of parameters **
+  ! in: f_x 0D_NOT_real
+  f_x = x
+  ! in: f_amp 0D_NOT_real
+  f_amp = amp
+  f_mod2 = modulo2_dp(f_x, f_amp)
+
+  ! out: f_mod2 0D_NOT_real
+  call c_f_pointer(mod2, f_mod2_ptr)
+  f_mod2_ptr = f_mod2
+end subroutine
+subroutine fortran_modulo2_int (x, amp, mod2) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: x  ! 0D_NOT_integer
+  integer :: f_x
+  integer(c_int) :: amp  ! 0D_NOT_integer
+  integer :: f_amp
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: mod2  ! 0D_NOT_integer
+  integer :: f_mod2
+  integer(c_int), pointer :: f_mod2_ptr
+  ! ** End of parameters **
+  ! in: f_x 0D_NOT_integer
+  f_x = x
+  ! in: f_amp 0D_NOT_integer
+  f_amp = amp
+  f_mod2 = modulo2_int(f_x, f_amp)
+
+  ! out: f_mod2 0D_NOT_integer
+  call c_f_pointer(mod2, f_mod2_ptr)
+  f_mod2_ptr = f_mod2
+end subroutine
+subroutine fortran_modulo2_qp (x, amp, mod2) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: x  ! 0D_NOT_real
+  real(quadp) :: f_x
+  real(c_double) :: amp  ! 0D_NOT_real
+  real(quadp) :: f_amp
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: mod2  ! 0D_NOT_real
+  real(quadp) :: f_mod2
+  real(c_double), pointer :: f_mod2_ptr
+  ! ** End of parameters **
+  ! in: f_x 0D_NOT_real
+  f_x = x
+  ! in: f_amp 0D_NOT_real
+  f_amp = amp
+  f_mod2 = modulo2_qp(f_x, f_amp)
+
+  ! out: f_mod2 0D_NOT_real
+  call c_f_pointer(mod2, f_mod2_ptr)
+  f_mod2_ptr = f_mod2
+end subroutine
+subroutine fortran_modulo2_sp (x, amp, mod2) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: x  ! 0D_NOT_real
+  real(sp) :: f_x
+  real(c_double) :: amp  ! 0D_NOT_real
+  real(sp) :: f_amp
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: mod2  ! 0D_NOT_real
+  real(sp) :: f_mod2
+  real(c_double), pointer :: f_mod2_ptr
+  ! ** End of parameters **
+  ! in: f_x 0D_NOT_real
+  f_x = x
+  ! in: f_amp 0D_NOT_real
+  f_amp = amp
+  f_mod2 = modulo2_sp(f_x, f_amp)
+
+  ! out: f_mod2 0D_NOT_real
+  call c_f_pointer(mod2, f_mod2_ptr)
+  f_mod2_ptr = f_mod2
+end subroutine
 subroutine fortran_n_bins_automatic (n_data, n) bind(c)
 
   use array_desc_mod
@@ -3028,6 +3387,432 @@ subroutine fortran_ordinal_str (n, str) bind(c)
   ! out: f_str 0D_ALLOC_character
   call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
+end subroutine
+subroutine fortran_out_io_buffer_get_line (ix_line, line) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: ix_line  ! 0D_NOT_integer
+  integer :: f_ix_line
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
+  ! ** End of parameters **
+  ! in: f_ix_line 0D_NOT_integer
+  f_ix_line = ix_line
+  f_line = out_io_buffer_get_line(f_ix_line)
+
+  ! out: f_line 0D_NOT_character
+  call c_f_pointer(line, f_line_ptr, [len_trim(f_line) + 1])
+  call to_c_str(f_line, f_line_ptr)
+end subroutine
+subroutine fortran_out_io_buffer_num_lines (n_lines) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: n_lines  ! 0D_NOT_integer
+  integer :: f_n_lines
+  integer(c_int), pointer :: f_n_lines_ptr
+  ! ** End of parameters **
+  f_n_lines = out_io_buffer_num_lines()
+
+  ! out: f_n_lines 0D_NOT_integer
+  call c_f_pointer(n_lines, f_n_lines_ptr)
+  f_n_lines_ptr = f_n_lines
+end subroutine
+subroutine fortran_out_io_buffer_reset () bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** End of parameters **
+  call out_io_buffer_reset()
+
+end subroutine
+subroutine fortran_out_io_int (level, routine_name, line, i_num, insert_tag_line) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: level  ! 0D_NOT_integer
+  integer :: f_level
+  type(c_ptr), intent(in), value :: routine_name
+  character(len=4096), target :: f_routine_name
+  character(kind=c_char), pointer :: f_routine_name_ptr(:)
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
+  integer(c_int) :: i_num  ! 0D_NOT_integer
+  integer :: f_i_num
+  type(c_ptr), intent(in), value :: insert_tag_line  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_insert_tag_line
+  logical, target :: f_insert_tag_line_native
+  logical, pointer :: f_insert_tag_line_native_ptr
+  logical(c_bool), pointer :: f_insert_tag_line_ptr
+  ! ** End of parameters **
+  ! in: f_level 0D_NOT_integer
+  f_level = level
+  ! in: f_routine_name 0D_NOT_character
+  if (.not. c_associated(routine_name)) return
+  call c_f_pointer(routine_name, f_routine_name_ptr, [huge(0)])
+  call to_f_str(f_routine_name_ptr, f_routine_name)
+  ! in: f_line 0D_NOT_character
+  if (.not. c_associated(line)) return
+  call c_f_pointer(line, f_line_ptr, [huge(0)])
+  call to_f_str(f_line_ptr, f_line)
+  ! in: f_i_num 0D_NOT_integer
+  f_i_num = i_num
+  ! in: f_insert_tag_line 0D_NOT_logical
+  if (c_associated(insert_tag_line)) then
+    call c_f_pointer(insert_tag_line, f_insert_tag_line_ptr)
+    f_insert_tag_line_native = f_insert_tag_line_ptr
+    f_insert_tag_line_native_ptr => f_insert_tag_line_native
+  else
+    f_insert_tag_line_native_ptr => null()
+  endif
+  call out_io(f_level, f_routine_name, f_line, f_i_num, f_insert_tag_line_native_ptr)
+
+end subroutine
+subroutine fortran_out_io_line12 (level, routine_name, line1, line2, line3, line4, line5, &
+    line6, line7, line8, line9, line10, line11, line12, r_array, i_array, l_array, &
+    insert_tag_line) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: level  ! 0D_NOT_integer
+  integer :: f_level
+  type(c_ptr), intent(in), value :: routine_name
+  character(len=4096), target :: f_routine_name
+  character(kind=c_char), pointer :: f_routine_name_ptr(:)
+  type(c_ptr), intent(in), value :: line1
+  character(len=4096), target :: f_line1
+  character(kind=c_char), pointer :: f_line1_ptr(:)
+  type(c_ptr), intent(in), value :: line2
+  character(len=4096), target :: f_line2
+  character(kind=c_char), pointer :: f_line2_ptr(:)
+  character(len=4096), pointer :: f_line2_call_ptr
+  type(c_ptr), intent(in), value :: line3
+  character(len=4096), target :: f_line3
+  character(kind=c_char), pointer :: f_line3_ptr(:)
+  character(len=4096), pointer :: f_line3_call_ptr
+  type(c_ptr), intent(in), value :: line4
+  character(len=4096), target :: f_line4
+  character(kind=c_char), pointer :: f_line4_ptr(:)
+  character(len=4096), pointer :: f_line4_call_ptr
+  type(c_ptr), intent(in), value :: line5
+  character(len=4096), target :: f_line5
+  character(kind=c_char), pointer :: f_line5_ptr(:)
+  character(len=4096), pointer :: f_line5_call_ptr
+  type(c_ptr), intent(in), value :: line6
+  character(len=4096), target :: f_line6
+  character(kind=c_char), pointer :: f_line6_ptr(:)
+  character(len=4096), pointer :: f_line6_call_ptr
+  type(c_ptr), intent(in), value :: line7
+  character(len=4096), target :: f_line7
+  character(kind=c_char), pointer :: f_line7_ptr(:)
+  character(len=4096), pointer :: f_line7_call_ptr
+  type(c_ptr), intent(in), value :: line8
+  character(len=4096), target :: f_line8
+  character(kind=c_char), pointer :: f_line8_ptr(:)
+  character(len=4096), pointer :: f_line8_call_ptr
+  type(c_ptr), intent(in), value :: line9
+  character(len=4096), target :: f_line9
+  character(kind=c_char), pointer :: f_line9_ptr(:)
+  character(len=4096), pointer :: f_line9_call_ptr
+  type(c_ptr), intent(in), value :: line10
+  character(len=4096), target :: f_line10
+  character(kind=c_char), pointer :: f_line10_ptr(:)
+  character(len=4096), pointer :: f_line10_call_ptr
+  type(c_ptr), intent(in), value :: line11
+  character(len=4096), target :: f_line11
+  character(kind=c_char), pointer :: f_line11_ptr(:)
+  character(len=4096), pointer :: f_line11_call_ptr
+  type(c_ptr), intent(in), value :: line12
+  character(len=4096), target :: f_line12
+  character(kind=c_char), pointer :: f_line12_ptr(:)
+  character(len=4096), pointer :: f_line12_call_ptr
+  type(c_ptr), intent(in), value :: insert_tag_line  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_insert_tag_line
+  logical, target :: f_insert_tag_line_native
+  logical, pointer :: f_insert_tag_line_native_ptr
+  logical(c_bool), pointer :: f_insert_tag_line_ptr
+  ! ** Inout parameters **
+  type(array_descriptor_t), intent(in) :: r_array
+  real(rp), pointer :: f_r_array(:)
+  real(c_double), pointer :: f_r_array_ptr(:)
+  type(array_descriptor_t), intent(in) :: i_array
+  integer, pointer :: f_i_array(:)
+  integer(c_int), pointer :: f_i_array_ptr(:)
+  type(c_ptr), intent(in), value :: l_array
+  type(logical_container_alloc), pointer :: f_l_array
+  ! ** End of parameters **
+  ! in: f_level 0D_NOT_integer
+  f_level = level
+  ! in: f_routine_name 0D_NOT_character
+  if (.not. c_associated(routine_name)) return
+  call c_f_pointer(routine_name, f_routine_name_ptr, [huge(0)])
+  call to_f_str(f_routine_name_ptr, f_routine_name)
+  ! in: f_line1 0D_NOT_character
+  if (.not. c_associated(line1)) return
+  call c_f_pointer(line1, f_line1_ptr, [huge(0)])
+  call to_f_str(f_line1_ptr, f_line1)
+  ! in: f_line2 0D_NOT_character
+  if (c_associated(line2)) then
+    call c_f_pointer(line2, f_line2_ptr, [huge(0)])
+    call to_f_str(f_line2_ptr, f_line2)
+    f_line2_call_ptr => f_line2
+  else
+    f_line2_call_ptr => null()
+  endif
+  ! in: f_line3 0D_NOT_character
+  if (c_associated(line3)) then
+    call c_f_pointer(line3, f_line3_ptr, [huge(0)])
+    call to_f_str(f_line3_ptr, f_line3)
+    f_line3_call_ptr => f_line3
+  else
+    f_line3_call_ptr => null()
+  endif
+  ! in: f_line4 0D_NOT_character
+  if (c_associated(line4)) then
+    call c_f_pointer(line4, f_line4_ptr, [huge(0)])
+    call to_f_str(f_line4_ptr, f_line4)
+    f_line4_call_ptr => f_line4
+  else
+    f_line4_call_ptr => null()
+  endif
+  ! in: f_line5 0D_NOT_character
+  if (c_associated(line5)) then
+    call c_f_pointer(line5, f_line5_ptr, [huge(0)])
+    call to_f_str(f_line5_ptr, f_line5)
+    f_line5_call_ptr => f_line5
+  else
+    f_line5_call_ptr => null()
+  endif
+  ! in: f_line6 0D_NOT_character
+  if (c_associated(line6)) then
+    call c_f_pointer(line6, f_line6_ptr, [huge(0)])
+    call to_f_str(f_line6_ptr, f_line6)
+    f_line6_call_ptr => f_line6
+  else
+    f_line6_call_ptr => null()
+  endif
+  ! in: f_line7 0D_NOT_character
+  if (c_associated(line7)) then
+    call c_f_pointer(line7, f_line7_ptr, [huge(0)])
+    call to_f_str(f_line7_ptr, f_line7)
+    f_line7_call_ptr => f_line7
+  else
+    f_line7_call_ptr => null()
+  endif
+  ! in: f_line8 0D_NOT_character
+  if (c_associated(line8)) then
+    call c_f_pointer(line8, f_line8_ptr, [huge(0)])
+    call to_f_str(f_line8_ptr, f_line8)
+    f_line8_call_ptr => f_line8
+  else
+    f_line8_call_ptr => null()
+  endif
+  ! in: f_line9 0D_NOT_character
+  if (c_associated(line9)) then
+    call c_f_pointer(line9, f_line9_ptr, [huge(0)])
+    call to_f_str(f_line9_ptr, f_line9)
+    f_line9_call_ptr => f_line9
+  else
+    f_line9_call_ptr => null()
+  endif
+  ! in: f_line10 0D_NOT_character
+  if (c_associated(line10)) then
+    call c_f_pointer(line10, f_line10_ptr, [huge(0)])
+    call to_f_str(f_line10_ptr, f_line10)
+    f_line10_call_ptr => f_line10
+  else
+    f_line10_call_ptr => null()
+  endif
+  ! in: f_line11 0D_NOT_character
+  if (c_associated(line11)) then
+    call c_f_pointer(line11, f_line11_ptr, [huge(0)])
+    call to_f_str(f_line11_ptr, f_line11)
+    f_line11_call_ptr => f_line11
+  else
+    f_line11_call_ptr => null()
+  endif
+  ! in: f_line12 0D_NOT_character
+  if (c_associated(line12)) then
+    call c_f_pointer(line12, f_line12_ptr, [huge(0)])
+    call to_f_str(f_line12_ptr, f_line12)
+    f_line12_call_ptr => f_line12
+  else
+    f_line12_call_ptr => null()
+  endif
+  !! general array (1D_NOT_real) inout
+  if (c_associated(r_array%data_ptr)) then
+    call c_f_pointer(r_array%data_ptr, f_r_array_ptr, [r_array%dims(1)])
+    f_r_array => f_r_array_ptr
+  else
+    f_r_array => null()
+  endif
+  !! general array (1D_NOT_integer) inout
+  if (c_associated(i_array%data_ptr)) then
+    call c_f_pointer(i_array%data_ptr, f_i_array_ptr, [i_array%dims(1)])
+    f_i_array => f_i_array_ptr
+  else
+    f_i_array => null()
+  endif
+  !! container general array (1D_ALLOC_logical)
+  if (c_associated(l_array))   call c_f_pointer(l_array, f_l_array)
+  ! in: f_insert_tag_line 0D_NOT_logical
+  if (c_associated(insert_tag_line)) then
+    call c_f_pointer(insert_tag_line, f_insert_tag_line_ptr)
+    f_insert_tag_line_native = f_insert_tag_line_ptr
+    f_insert_tag_line_native_ptr => f_insert_tag_line_native
+  else
+    f_insert_tag_line_native_ptr => null()
+  endif
+  call out_io(f_level, f_routine_name, f_line1, f_line2_call_ptr, f_line3_call_ptr, &
+      f_line4_call_ptr, f_line5_call_ptr, f_line6_call_ptr, f_line7_call_ptr, f_line8_call_ptr, &
+      f_line9_call_ptr, f_line10_call_ptr, f_line11_call_ptr, f_line12_call_ptr, f_r_array, &
+      f_i_array, f_l_array%data, f_insert_tag_line_native_ptr)
+
+end subroutine
+subroutine fortran_out_io_logical (level, routine_name, line, l_num, insert_tag_line) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: level  ! 0D_NOT_integer
+  integer :: f_level
+  type(c_ptr), intent(in), value :: routine_name
+  character(len=4096), target :: f_routine_name
+  character(kind=c_char), pointer :: f_routine_name_ptr(:)
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
+  logical(c_bool) :: l_num  ! 0D_NOT_logical
+  logical :: f_l_num
+  type(c_ptr), intent(in), value :: insert_tag_line  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_insert_tag_line
+  logical, target :: f_insert_tag_line_native
+  logical, pointer :: f_insert_tag_line_native_ptr
+  logical(c_bool), pointer :: f_insert_tag_line_ptr
+  ! ** End of parameters **
+  ! in: f_level 0D_NOT_integer
+  f_level = level
+  ! in: f_routine_name 0D_NOT_character
+  if (.not. c_associated(routine_name)) return
+  call c_f_pointer(routine_name, f_routine_name_ptr, [huge(0)])
+  call to_f_str(f_routine_name_ptr, f_routine_name)
+  ! in: f_line 0D_NOT_character
+  if (.not. c_associated(line)) return
+  call c_f_pointer(line, f_line_ptr, [huge(0)])
+  call to_f_str(f_line_ptr, f_line)
+  ! in: f_l_num 0D_NOT_logical
+  f_l_num = l_num
+  ! in: f_insert_tag_line 0D_NOT_logical
+  if (c_associated(insert_tag_line)) then
+    call c_f_pointer(insert_tag_line, f_insert_tag_line_ptr)
+    f_insert_tag_line_native = f_insert_tag_line_ptr
+    f_insert_tag_line_native_ptr => f_insert_tag_line_native
+  else
+    f_insert_tag_line_native_ptr => null()
+  endif
+  call out_io(f_level, f_routine_name, f_line, f_l_num, f_insert_tag_line_native_ptr)
+
+end subroutine
+subroutine fortran_out_io_print_and_capture_setup (print_on, capture_state, capture_add_null) &
+    bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: print_on  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_on
+  logical, target :: f_print_on_native
+  logical, pointer :: f_print_on_native_ptr
+  logical(c_bool), pointer :: f_print_on_ptr
+  type(c_ptr), intent(in), value :: capture_state
+  character(len=4096), target :: f_capture_state
+  character(kind=c_char), pointer :: f_capture_state_ptr(:)
+  character(len=4096), pointer :: f_capture_state_call_ptr
+  type(c_ptr), intent(in), value :: capture_add_null  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_capture_add_null
+  logical, target :: f_capture_add_null_native
+  logical, pointer :: f_capture_add_null_native_ptr
+  logical(c_bool), pointer :: f_capture_add_null_ptr
+  ! ** End of parameters **
+  ! in: f_print_on 0D_NOT_logical
+  if (c_associated(print_on)) then
+    call c_f_pointer(print_on, f_print_on_ptr)
+    f_print_on_native = f_print_on_ptr
+    f_print_on_native_ptr => f_print_on_native
+  else
+    f_print_on_native_ptr => null()
+  endif
+  ! in: f_capture_state 0D_NOT_character
+  if (c_associated(capture_state)) then
+    call c_f_pointer(capture_state, f_capture_state_ptr, [huge(0)])
+    call to_f_str(f_capture_state_ptr, f_capture_state)
+    f_capture_state_call_ptr => f_capture_state
+  else
+    f_capture_state_call_ptr => null()
+  endif
+  ! in: f_capture_add_null 0D_NOT_logical
+  if (c_associated(capture_add_null)) then
+    call c_f_pointer(capture_add_null, f_capture_add_null_ptr)
+    f_capture_add_null_native = f_capture_add_null_ptr
+    f_capture_add_null_native_ptr => f_capture_add_null_native
+  else
+    f_capture_add_null_native_ptr => null()
+  endif
+  call out_io_print_and_capture_setup(f_print_on_native_ptr, f_capture_state_call_ptr, &
+      f_capture_add_null_native_ptr)
+
+end subroutine
+subroutine fortran_out_io_real (level, routine_name, line, r_num, insert_tag_line) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: level  ! 0D_NOT_integer
+  integer :: f_level
+  type(c_ptr), intent(in), value :: routine_name
+  character(len=4096), target :: f_routine_name
+  character(kind=c_char), pointer :: f_routine_name_ptr(:)
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
+  real(c_double) :: r_num  ! 0D_NOT_real
+  real(rp) :: f_r_num
+  type(c_ptr), intent(in), value :: insert_tag_line  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_insert_tag_line
+  logical, target :: f_insert_tag_line_native
+  logical, pointer :: f_insert_tag_line_native_ptr
+  logical(c_bool), pointer :: f_insert_tag_line_ptr
+  ! ** End of parameters **
+  ! in: f_level 0D_NOT_integer
+  f_level = level
+  ! in: f_routine_name 0D_NOT_character
+  if (.not. c_associated(routine_name)) return
+  call c_f_pointer(routine_name, f_routine_name_ptr, [huge(0)])
+  call to_f_str(f_routine_name_ptr, f_routine_name)
+  ! in: f_line 0D_NOT_character
+  if (.not. c_associated(line)) return
+  call c_f_pointer(line, f_line_ptr, [huge(0)])
+  call to_f_str(f_line_ptr, f_line)
+  ! in: f_r_num 0D_NOT_real
+  f_r_num = r_num
+  ! in: f_insert_tag_line 0D_NOT_logical
+  if (c_associated(insert_tag_line)) then
+    call c_f_pointer(insert_tag_line, f_insert_tag_line_ptr)
+    f_insert_tag_line_native = f_insert_tag_line_ptr
+    f_insert_tag_line_native_ptr => f_insert_tag_line_native
+  else
+    f_insert_tag_line_native_ptr => null()
+  endif
+  call out_io(f_level, f_routine_name, f_line, f_r_num, f_insert_tag_line_native_ptr)
+
 end subroutine
 subroutine fortran_parse_fortran_format (format_str, n_repeat, power, descrip, width, digits) &
     bind(c)
@@ -4115,6 +4900,148 @@ subroutine fortran_ran_uniform_vector (harvest, ran_state) bind(c)
   call ran_uniform(f_harvest, f_ran_state)
 
 end subroutine
+subroutine fortran_rcelbd (mc, elb, eld) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(sp) :: f_mc
+  real(c_double) :: elb  ! 0D_NOT_real
+  real(sp) :: f_elb
+  real(c_double) :: eld  ! 0D_NOT_real
+  real(sp) :: f_eld
+  ! ** End of parameters **
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  ! in: f_elb 0D_NOT_real
+  f_elb = elb
+  ! in: f_eld 0D_NOT_real
+  f_eld = eld
+  call rcelbd(f_mc, f_elb, f_eld)
+
+end subroutine
+subroutine fortran_read_a_line (prompt, line_out, trim_prompt, prompt_color, prompt_bold, &
+    history_file) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: prompt
+  character(len=4096), target :: f_prompt
+  character(kind=c_char), pointer :: f_prompt_ptr(:)
+  type(c_ptr), intent(in), value :: trim_prompt  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_trim_prompt
+  logical, target :: f_trim_prompt_native
+  logical, pointer :: f_trim_prompt_native_ptr
+  logical(c_bool), pointer :: f_trim_prompt_ptr
+  type(c_ptr), intent(in), value :: prompt_color
+  character(len=4096), target :: f_prompt_color
+  character(kind=c_char), pointer :: f_prompt_color_ptr(:)
+  character(len=4096), pointer :: f_prompt_color_call_ptr
+  type(c_ptr), intent(in), value :: prompt_bold  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_prompt_bold
+  logical, target :: f_prompt_bold_native
+  logical, pointer :: f_prompt_bold_native_ptr
+  logical(c_bool), pointer :: f_prompt_bold_ptr
+  type(c_ptr), intent(in), value :: history_file
+  character(len=4096), target :: f_history_file
+  character(kind=c_char), pointer :: f_history_file_ptr(:)
+  character(len=4096), pointer :: f_history_file_call_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: line_out
+  character(len=4096), target :: f_line_out
+  character(kind=c_char), pointer :: f_line_out_ptr(:)
+  ! ** End of parameters **
+  ! in: f_prompt 0D_NOT_character
+  if (.not. c_associated(prompt)) return
+  call c_f_pointer(prompt, f_prompt_ptr, [huge(0)])
+  call to_f_str(f_prompt_ptr, f_prompt)
+  ! in: f_trim_prompt 0D_NOT_logical
+  if (c_associated(trim_prompt)) then
+    call c_f_pointer(trim_prompt, f_trim_prompt_ptr)
+    f_trim_prompt_native = f_trim_prompt_ptr
+    f_trim_prompt_native_ptr => f_trim_prompt_native
+  else
+    f_trim_prompt_native_ptr => null()
+  endif
+  ! in: f_prompt_color 0D_NOT_character
+  if (c_associated(prompt_color)) then
+    call c_f_pointer(prompt_color, f_prompt_color_ptr, [huge(0)])
+    call to_f_str(f_prompt_color_ptr, f_prompt_color)
+    f_prompt_color_call_ptr => f_prompt_color
+  else
+    f_prompt_color_call_ptr => null()
+  endif
+  ! in: f_prompt_bold 0D_NOT_logical
+  if (c_associated(prompt_bold)) then
+    call c_f_pointer(prompt_bold, f_prompt_bold_ptr)
+    f_prompt_bold_native = f_prompt_bold_ptr
+    f_prompt_bold_native_ptr => f_prompt_bold_native
+  else
+    f_prompt_bold_native_ptr => null()
+  endif
+  ! in: f_history_file 0D_NOT_character
+  if (c_associated(history_file)) then
+    call c_f_pointer(history_file, f_history_file_ptr, [huge(0)])
+    call to_f_str(f_history_file_ptr, f_history_file)
+    f_history_file_call_ptr => f_history_file
+  else
+    f_history_file_call_ptr => null()
+  endif
+  call read_a_line(f_prompt, f_line_out, f_trim_prompt_native_ptr, f_prompt_color_call_ptr, &
+      f_prompt_bold_native_ptr, f_history_file_call_ptr)
+
+  ! out: f_line_out 0D_NOT_character
+  call c_f_pointer(line_out, f_line_out_ptr, [len_trim(f_line_out) + 1])
+  call to_c_str(f_line_out, f_line_out_ptr)
+end subroutine
+subroutine fortran_readline_read_history (history_file, status) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: history_file
+  character(len=4096), target :: f_history_file
+  character(kind=c_char), pointer :: f_history_file_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** End of parameters **
+  ! in: f_history_file 0D_NOT_character
+  if (.not. c_associated(history_file)) return
+  call c_f_pointer(history_file, f_history_file_ptr, [huge(0)])
+  call to_f_str(f_history_file_ptr, f_history_file)
+  call readline_read_history(f_history_file, f_status)
+
+  ! out: f_status 0D_NOT_integer
+  call c_f_pointer(status, f_status_ptr)
+  f_status_ptr = f_status
+end subroutine
+subroutine fortran_readline_write_history (history_file, status) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: history_file
+  character(len=4096), target :: f_history_file
+  character(kind=c_char), pointer :: f_history_file_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** End of parameters **
+  ! in: f_history_file 0D_NOT_character
+  if (.not. c_associated(history_file)) return
+  call c_f_pointer(history_file, f_history_file_ptr, [huge(0)])
+  call to_f_str(f_history_file_ptr, f_history_file)
+  call readline_write_history(f_history_file, f_status)
+
+  ! out: f_status 0D_NOT_integer
+  call c_f_pointer(status, f_status_ptr)
+  f_status_ptr = f_status
+end subroutine
 subroutine fortran_real_num_fortran_format (number, width, n_blanks, fmt_str) bind(c)
 
   use array_desc_mod
@@ -4299,6 +5226,110 @@ subroutine fortran_reallocate_spline (spline, n, n_min, exact) bind(c)
   call reallocate_spline(f_spline%data, f_n, f_n_min_ptr, f_exact_native_ptr)
 
 end subroutine
+subroutine fortran_relbd (phi, phic, mc, b, d) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: phi  ! 0D_NOT_real
+  real(sp) :: f_phi
+  real(c_double) :: phic  ! 0D_NOT_real
+  real(sp) :: f_phic
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(sp) :: f_mc
+  real(c_double) :: b  ! 0D_NOT_real
+  real(sp) :: f_b
+  real(c_double) :: d  ! 0D_NOT_real
+  real(sp) :: f_d
+  ! ** End of parameters **
+  ! in: f_phi 0D_NOT_real
+  f_phi = phi
+  ! in: f_phic 0D_NOT_real
+  f_phic = phic
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  ! in: f_b 0D_NOT_real
+  f_b = b
+  ! in: f_d 0D_NOT_real
+  f_d = d
+  call relbd(f_phi, f_phic, f_mc, f_b, f_d)
+
+end subroutine
+subroutine fortran_relcbd (c0, mc, b, dx) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: c0  ! 0D_NOT_real
+  real(sp) :: f_c0
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(sp) :: f_mc
+  real(c_double) :: b  ! 0D_NOT_real
+  real(sp) :: f_b
+  real(c_double) :: dx  ! 0D_NOT_real
+  real(sp) :: f_dx
+  ! ** End of parameters **
+  ! in: f_c0 0D_NOT_real
+  f_c0 = c0
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  ! in: f_b 0D_NOT_real
+  f_b = b
+  ! in: f_dx 0D_NOT_real
+  f_dx = dx
+  call relcbd(f_c0, f_mc, f_b, f_dx)
+
+end subroutine
+subroutine fortran_relsbd (s0, mc, b, d) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: s0  ! 0D_NOT_real
+  real(sp) :: f_s0
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(sp) :: f_mc
+  real(c_double) :: b  ! 0D_NOT_real
+  real(sp) :: f_b
+  real(c_double) :: d  ! 0D_NOT_real
+  real(sp) :: f_d
+  ! ** End of parameters **
+  ! in: f_s0 0D_NOT_real
+  f_s0 = s0
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  ! in: f_b 0D_NOT_real
+  f_b = b
+  ! in: f_d 0D_NOT_real
+  f_d = d
+  call relsbd(f_s0, f_mc, f_b, f_d)
+
+end subroutine
+subroutine fortran_rgelbd (phi, mc, elb, eld) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: phi  ! 0D_NOT_real
+  real(sp) :: f_phi
+  real(c_double) :: mc  ! 0D_NOT_real
+  real(sp) :: f_mc
+  real(c_double) :: elb  ! 0D_NOT_real
+  real(sp) :: f_elb
+  real(c_double) :: eld  ! 0D_NOT_real
+  real(sp) :: f_eld
+  ! ** End of parameters **
+  ! in: f_phi 0D_NOT_real
+  f_phi = phi
+  ! in: f_mc 0D_NOT_real
+  f_mc = mc
+  ! in: f_elb 0D_NOT_real
+  f_elb = elb
+  ! in: f_eld 0D_NOT_real
+  f_eld = eld
+  call rgelbd(f_phi, f_mc, f_elb, f_eld)
+
+end subroutine
 subroutine fortran_rms_value (val_arr, good_val, ave_val, rms_val) bind(c)
 
   use array_desc_mod
@@ -4476,6 +5507,31 @@ subroutine fortran_rp8 (int_in, re_out) bind(c)
   call c_f_pointer(re_out, f_re_out_ptr)
   f_re_out_ptr = f_re_out
 end subroutine
+subroutine fortran_rserbd (y, m, b, d) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: y  ! 0D_NOT_real
+  real(sp) :: f_y
+  real(c_double) :: m  ! 0D_NOT_real
+  real(sp) :: f_m
+  real(c_double) :: b  ! 0D_NOT_real
+  real(sp) :: f_b
+  real(c_double) :: d  ! 0D_NOT_real
+  real(sp) :: f_d
+  ! ** End of parameters **
+  ! in: f_y 0D_NOT_real
+  f_y = y
+  ! in: f_m 0D_NOT_real
+  f_m = m
+  ! in: f_b 0D_NOT_real
+  f_b = b
+  ! in: f_d 0D_NOT_real
+  f_d = d
+  call rserbd(f_y, f_m, f_b, f_d)
+
+end subroutine
 subroutine fortran_run_timer (command, time, time0) bind(c)
 
   use array_desc_mod
@@ -4509,6 +5565,36 @@ subroutine fortran_run_timer (command, time, time0) bind(c)
   endif
   call run_timer(f_command, f_time_ptr, f_time0_ptr)
 
+end subroutine
+subroutine fortran_serbd (y, m, b, d) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: y  ! 0D_NOT_real
+  real(dp) :: f_y
+  real(c_double) :: m  ! 0D_NOT_real
+  real(dp) :: f_m
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: b  ! 0D_NOT_real
+  real(dp) :: f_b
+  real(c_double), pointer :: f_b_ptr
+  type(c_ptr), intent(in), value :: d  ! 0D_NOT_real
+  real(dp) :: f_d
+  real(c_double), pointer :: f_d_ptr
+  ! ** End of parameters **
+  ! in: f_y 0D_NOT_real
+  f_y = y
+  ! in: f_m 0D_NOT_real
+  f_m = m
+  call serbd(f_y, f_m, f_b, f_d)
+
+  ! out: f_b 0D_NOT_real
+  call c_f_pointer(b, f_b_ptr)
+  f_b_ptr = f_b
+  ! out: f_d 0D_NOT_real
+  call c_f_pointer(d, f_d_ptr)
+  f_d_ptr = f_d
 end subroutine
 subroutine fortran_set_parameter_int (param_val, set_val, save_val) bind(c)
 
@@ -4605,6 +5691,72 @@ subroutine fortran_set_species_charge (species_in, charge, species_charged) bind
   ! out: f_species_charged 0D_NOT_integer
   call c_f_pointer(species_charged, f_species_charged_ptr)
   f_species_charged_ptr = f_species_charged
+end subroutine
+subroutine fortran_sign_of_int (num, zero_is_zero, num_sign) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: num  ! 0D_NOT_integer
+  integer :: f_num
+  type(c_ptr), intent(in), value :: zero_is_zero  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_zero_is_zero
+  logical, target :: f_zero_is_zero_native
+  logical, pointer :: f_zero_is_zero_native_ptr
+  logical(c_bool), pointer :: f_zero_is_zero_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: num_sign  ! 0D_NOT_integer
+  integer :: f_num_sign
+  integer(c_int), pointer :: f_num_sign_ptr
+  ! ** End of parameters **
+  ! in: f_num 0D_NOT_integer
+  f_num = num
+  ! in: f_zero_is_zero 0D_NOT_logical
+  if (c_associated(zero_is_zero)) then
+    call c_f_pointer(zero_is_zero, f_zero_is_zero_ptr)
+    f_zero_is_zero_native = f_zero_is_zero_ptr
+    f_zero_is_zero_native_ptr => f_zero_is_zero_native
+  else
+    f_zero_is_zero_native_ptr => null()
+  endif
+  f_num_sign = sign_of(f_num, f_zero_is_zero_native_ptr)
+
+  ! out: f_num_sign 0D_NOT_integer
+  call c_f_pointer(num_sign, f_num_sign_ptr)
+  f_num_sign_ptr = f_num_sign
+end subroutine
+subroutine fortran_sign_of_real (num, zero_is_zero, num_sign) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: num  ! 0D_NOT_real
+  real(rp) :: f_num
+  type(c_ptr), intent(in), value :: zero_is_zero  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_zero_is_zero
+  logical, target :: f_zero_is_zero_native
+  logical, pointer :: f_zero_is_zero_native_ptr
+  logical(c_bool), pointer :: f_zero_is_zero_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: num_sign  ! 0D_NOT_integer
+  integer :: f_num_sign
+  integer(c_int), pointer :: f_num_sign_ptr
+  ! ** End of parameters **
+  ! in: f_num 0D_NOT_real
+  f_num = num
+  ! in: f_zero_is_zero 0D_NOT_logical
+  if (c_associated(zero_is_zero)) then
+    call c_f_pointer(zero_is_zero, f_zero_is_zero_ptr)
+    f_zero_is_zero_native = f_zero_is_zero_ptr
+    f_zero_is_zero_native_ptr => f_zero_is_zero_native
+  else
+    f_zero_is_zero_native_ptr => null()
+  endif
+  f_num_sign = sign_of(f_num, f_zero_is_zero_native_ptr)
+
+  ! out: f_num_sign 0D_NOT_integer
+  call c_f_pointer(num_sign, f_num_sign_ptr)
+  f_num_sign_ptr = f_num_sign
 end subroutine
 subroutine fortran_sinc (x, nd, y) bind(c)
 
@@ -5548,6 +6700,64 @@ subroutine fortran_string_trim2 (in_str, delimitors, out_str, ix_word, delim, ix
   call string_trim2(f_in_str, f_delimitors, f_out_str, f_ix_word, f_delim, f_ix_next)
 
 end subroutine
+subroutine fortran_suggest_lmdif (XV, FV, eps, itermx, at_end, reset_flag) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: eps  ! 0D_NOT_real
+  real(dp) :: f_eps
+  integer(c_int) :: itermx  ! 0D_NOT_integer
+  integer :: f_itermx
+  type(c_ptr), intent(in), value :: reset_flag  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_reset_flag
+  logical, target :: f_reset_flag_native
+  logical, pointer :: f_reset_flag_native_ptr
+  logical(c_bool), pointer :: f_reset_flag_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: at_end  ! 0D_NOT_logical
+  logical :: f_at_end
+  logical(c_bool), pointer :: f_at_end_ptr
+  ! ** Inout parameters **
+  type(array_descriptor_t), intent(in) :: XV
+  real(dp), pointer :: f_XV(:)
+  real(c_double), pointer :: f_XV_ptr(:)
+  type(array_descriptor_t), intent(in) :: FV
+  real(dp), pointer :: f_FV(:)
+  real(c_double), pointer :: f_FV_ptr(:)
+  ! ** End of parameters **
+  !! general array (1D_NOT_real) inout
+  if (c_associated(XV%data_ptr)) then
+    call c_f_pointer(XV%data_ptr, f_XV_ptr, [XV%dims(1)])
+    f_XV => f_XV_ptr
+  else
+    f_XV => null()
+  endif
+  !! general array (1D_NOT_real) inout
+  if (c_associated(FV%data_ptr)) then
+    call c_f_pointer(FV%data_ptr, f_FV_ptr, [FV%dims(1)])
+    f_FV => f_FV_ptr
+  else
+    f_FV => null()
+  endif
+  ! in: f_eps 0D_NOT_real
+  f_eps = eps
+  ! in: f_itermx 0D_NOT_integer
+  f_itermx = itermx
+  ! in: f_reset_flag 0D_NOT_logical
+  if (c_associated(reset_flag)) then
+    call c_f_pointer(reset_flag, f_reset_flag_ptr)
+    f_reset_flag_native = f_reset_flag_ptr
+    f_reset_flag_native_ptr => f_reset_flag_native
+  else
+    f_reset_flag_native_ptr => null()
+  endif
+  call suggest_lmdif(f_XV, f_FV, f_eps, f_itermx, f_at_end, f_reset_flag_native_ptr)
+
+  ! out: f_at_end 0D_NOT_logical
+  call c_f_pointer(at_end, f_at_end_ptr)
+  f_at_end_ptr = f_at_end
+end subroutine
 subroutine fortran_super_bicubic_coef (y, y1, y2, y12, d1, d2, c) bind(c)
 
   use array_desc_mod
@@ -5839,25 +7049,36 @@ subroutine fortran_system_command (line, err_flag) bind(c)
   type(c_ptr), intent(in), value :: line
   character(len=4096), target :: f_line
   character(kind=c_char), pointer :: f_line_ptr(:)
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_err_flag
-  logical, target :: f_err_flag_native
-  logical, pointer :: f_err_flag_native_ptr
+  logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_line 0D_NOT_character
-  if (.not. c_associated(line)) return
+  if (.not. c_associated(line)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
   call c_f_pointer(line, f_line_ptr, [huge(0)])
   call to_f_str(f_line_ptr, f_line)
-  ! in: f_err_flag 0D_NOT_logical
+  ! out: f_err_flag 0D_NOT_logical
   if (c_associated(err_flag)) then
     call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_native = f_err_flag_ptr
-    f_err_flag_native_ptr => f_err_flag_native
   else
-    f_err_flag_native_ptr => null()
+    f_err_flag_ptr => null()
   endif
-  call system_command(f_line, f_err_flag_native_ptr)
+  call system_command(f_line, f_err_flag)
+
+  ! out: f_err_flag 0D_NOT_logical
+  ! no output conversion for f_err_flag
+end subroutine
+subroutine fortran_test_xgelbd () bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** End of parameters **
+  call test_xgelbd()
 
 end subroutine
 subroutine fortran_to_str (num, max_signif, string) bind(c)

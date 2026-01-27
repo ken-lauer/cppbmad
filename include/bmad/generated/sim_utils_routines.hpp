@@ -80,9 +80,9 @@ void apfft_ext(
 extern "C" bool fortran_asinc(
     double &x /* 0D_NOT_real in */,
     int *nd /* 0D_NOT_integer in */,
-    double &y /* 0D_NOT_real in */
+    double &y /* 0D_NOT_real out */
 );
-void asinc(double x, std::optional<int> nd, double y);
+double asinc(double x, std::optional<int> nd = std::nullopt);
 extern "C" bool fortran_assert_equal(
     Bmad::array_descriptor_t &int_arr /* 1D_NOT_integer in */,
     const char *err_str /* 0D_NOT_character in */,
@@ -218,6 +218,21 @@ extern "C" void fortran_calc_file_number(
     bool &err_flag /* 0D_NOT_logical in */
 );
 void calc_file_number(std::string file_name, int num_in, int num_out, bool err_flag);
+extern "C" void fortran_celbd(
+    double &mc /* 0D_NOT_real in */,
+    double &elb /* 0D_NOT_real out */,
+    double &eld /* 0D_NOT_real out */
+);
+struct Celbd {
+  double elb;
+  double eld;
+};
+SimUtils::Celbd celbd(double mc);
+extern "C" void
+fortran_cesr_getarg(int &i_arg /* 0D_NOT_integer in */, const char *arg /* 0D_NOT_character out */);
+std::string cesr_getarg(int i_arg);
+extern "C" bool fortran_cesr_iargc(int &func_retval__ /* 0D_NOT_integer in */);
+void cesr_iargc(int func_retval__);
 extern "C" void fortran_change_file_number(
     const char *file_name /* 0D_NOT_character in */,
     int &change /* 0D_NOT_integer in */
@@ -248,14 +263,14 @@ extern "C" void fortran_complex_error_function(
 );
 void complex_error_function(double wr, double wi, double zr, double zi);
 extern "C" bool
-fortran_cos_one(double &angle /* 0D_NOT_real in */, double &cos1 /* 0D_NOT_real in */);
-void cos_one(double angle, double cos1);
+fortran_cos_one(double &angle /* 0D_NOT_real in */, double &cos1 /* 0D_NOT_real out */);
+double cos_one(double angle);
 extern "C" bool fortran_cosc(
     double &x /* 0D_NOT_real in */,
     int *nd /* 0D_NOT_integer in */,
-    double &y /* 0D_NOT_real in */
+    double &y /* 0D_NOT_real out */
 );
-void cosc(double x, std::optional<int> nd, double y);
+double cosc(double x, std::optional<int> nd = std::nullopt);
 
 // Skipped unusable routine count_at_index:
 // - Untranslated type: bin_struct (0D)
@@ -264,7 +279,7 @@ void cosc(double x, std::optional<int> nd, double y);
 // - Variable inout sized array: 2D_NOT_real
 
 // Skipped unusable routine cplx_mat_inverse:
-// - Variable inout sized array: 2D_NOT_complex
+// - Variable in sized array: 2D_NOT_complex
 // - Variable inout sized array: 2D_NOT_complex
 
 // Skipped unusable routine cplx_mat_make_unit:
@@ -319,7 +334,7 @@ extern "C" void fortran_detab(const char *str /* 0D_NOT_character in */);
 void detab(std::string str);
 
 // Skipped unusable routine determinant:
-// - Variable inout sized array: 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 extern "C" void fortran_display_size_and_resolution(
     int &ix_screen /* 0D_NOT_integer in */,
     double &x_size /* 0D_NOT_real in */,
@@ -337,9 +352,9 @@ void display_size_and_resolution(
 extern "C" bool fortran_dj_bessel(
     int &m /* 0D_NOT_integer in */,
     double &arg /* 0D_NOT_real in */,
-    double &dj_bes /* 0D_NOT_real in */
+    double &dj_bes /* 0D_NOT_real out */
 );
-void dj_bessel(int m, double arg, double dj_bes);
+double dj_bessel(int m, double arg);
 extern "C" bool fortran_djb_hash(
     const char *str /* 0D_NOT_character in */,
     int *old_hash /* 0D_NOT_integer in */,
@@ -362,6 +377,51 @@ void downcase_string(std::string string);
 
 // Skipped unusable routine ed:
 // - Routine in configuration skip list
+extern "C" void fortran_elbd(
+    double &phi /* 0D_NOT_real in */,
+    double &phic /* 0D_NOT_real in */,
+    double &mc /* 0D_NOT_real in */,
+    double &b /* 0D_NOT_real out */,
+    double &d /* 0D_NOT_real out */
+);
+struct Elbd {
+  double b;
+  double d;
+};
+SimUtils::Elbd elbd(double phi, double phic, double mc);
+extern "C" void fortran_elcbd(
+    double &c0 /* 0D_NOT_real in */,
+    double &mc /* 0D_NOT_real in */,
+    double &b /* 0D_NOT_real out */,
+    double &dx /* 0D_NOT_real out */
+);
+struct Elcbd {
+  double b;
+  double dx;
+};
+SimUtils::Elcbd elcbd(double c0, double mc);
+extern "C" void fortran_ellipinc(
+    double &phi /* 0D_NOT_real in */,
+    double &m /* 0D_NOT_real in */,
+    double &ellipkinc /* 0D_NOT_real out */,
+    double &ellipeinc /* 0D_NOT_real out */
+);
+struct Ellipinc {
+  double ellipkinc;
+  double ellipeinc;
+};
+SimUtils::Ellipinc ellipinc(double phi, double m);
+extern "C" void fortran_elsbd(
+    double &s0 /* 0D_NOT_real in */,
+    double &mc /* 0D_NOT_real in */,
+    double &b /* 0D_NOT_real out */,
+    double &d /* 0D_NOT_real out */
+);
+struct Elsbd {
+  double b;
+  double d;
+};
+SimUtils::Elsbd elsbd(double s0, double mc);
 extern "C" void fortran_end_akima_spline_calc(
     Bmad::array_descriptor_t &spline /* 1D_NOT_type inout */,
     int &which_end /* 0D_NOT_integer in */
@@ -370,8 +430,8 @@ void end_akima_spline_calc(SplineStructArray1D spline, int which_end);
 extern "C" void fortran_err_exit(const char *err_str /* 0D_NOT_character in */);
 void err_exit(std::optional<std::string> err_str = std::nullopt);
 extern "C" bool
-fortran_factorial(int &n /* 0D_NOT_integer in */, double &fact /* 0D_NOT_real in */);
-void factorial(int n, double fact);
+fortran_factorial(int &n /* 0D_NOT_integer in */, double &fact /* 0D_NOT_real out */);
+double factorial(int n);
 extern "C" void fortran_faddeeva_function(
     Bmad::array_descriptor_t &z /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &w /* 1D_NOT_real inout */,
@@ -382,6 +442,13 @@ void faddeeva_function(
     FixedArray1D<Real, 2> w,
     FixedArray2D<Real, 2, 2> dw
 );
+
+// Skipped unusable routine fdjac2:
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'M' found in bounds 'M' but not in provided map."
+// - Array bounds handling: "Enum 'LDFJAC' found in bounds 'LDFJAC' but not in provided map."
+// - Array bounds handling: "Enum 'M' found in bounds 'M' but not in provided map."
+// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_fft_1d(
     Bmad::array_descriptor_t &arr /* 1D_NOT_complex inout */,
     int &isign /* 0D_NOT_integer in */
@@ -479,21 +546,31 @@ struct FourierAmplitude {
   double dsin_amp;
 };
 SimUtils::FourierAmplitude fourier_amplitude(FArray1D<Real> &data, double frequency);
+extern "C" void fortran_gelbd(
+    double &phi /* 0D_NOT_real in */,
+    double &mc /* 0D_NOT_real in */,
+    double &elb /* 0D_NOT_real out */,
+    double &eld /* 0D_NOT_real out */
+);
+struct Gelbd {
+  double elb;
+  double eld;
+};
+SimUtils::Gelbd gelbd(double phi, double mc);
 extern "C" bool fortran_gen_complete_elliptic(
     double &kc /* 0D_NOT_real in */,
     double &p /* 0D_NOT_real in */,
     double &c /* 0D_NOT_real in */,
     double &s /* 0D_NOT_real in */,
     double *err_tol /* 0D_NOT_real in */,
-    double &value /* 0D_NOT_real in */
+    double &value /* 0D_NOT_real out */
 );
-void gen_complete_elliptic(
+double gen_complete_elliptic(
     double kc,
     double p,
     double c,
     double s,
-    std::optional<double> err_tol,
-    double value
+    std::optional<double> err_tol = std::nullopt
 );
 
 // Skipped unusable routine general_bin_count:
@@ -504,6 +581,10 @@ void gen_complete_elliptic(
 
 // Skipped unusable routine general_bin_index_in_bounds:
 // - Untranslated type: general_bin_struct (0D)
+
+// Skipped unusable routine get_a_char:
+// - Variable-sized in character array: 1D_NOT_character
+// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_get_file_number(
     const char *file_name /* 0D_NOT_character in */,
     const char *cnum_in /* 0D_NOT_character in */,
@@ -516,6 +597,12 @@ extern "C" void fortran_get_file_time_stamp(
     const char *time_stamp /* 0D_NOT_character in */
 );
 void get_file_time_stamp(std::string file, std::string time_stamp);
+extern "C" void fortran_get_tty_char(
+    const char *this_char /* 0D_NOT_character out */,
+    bool &wait /* 0D_NOT_logical in */,
+    bool &flush /* 0D_NOT_logical in */
+);
+std::string get_tty_char(bool wait, bool flush);
 
 // Skipped unusable routine han:
 // - Routine in configuration skip list
@@ -527,15 +614,15 @@ void hanhan(int N, FArray1D<Real> &hh);
 extern "C" bool fortran_i_bessel(
     int &m /* 0D_NOT_integer in */,
     double &arg /* 0D_NOT_real in */,
-    double &i_bes /* 0D_NOT_real in */
+    double &i_bes /* 0D_NOT_real out */
 );
-void i_bessel(int m, double arg, double i_bes);
+double i_bessel(int m, double arg);
 extern "C" bool fortran_i_bessel_extended(
     int &m /* 0D_NOT_integer in */,
     double &arg /* 0D_NOT_real in */,
-    std::complex<double> &i_bes /* 0D_NOT_complex in */
+    std::complex<double> &i_bes /* 0D_NOT_complex out */
 );
-void i_bessel_extended(int m, double arg, std::complex<double> i_bes);
+std::complex<double> i_bessel_extended(int m, double arg);
 extern "C" void fortran_increment_file_number(
     const char *file_name /* 0D_NOT_character in */,
     int &digits /* 0D_NOT_integer in */,
@@ -557,6 +644,8 @@ extern "C" bool fortran_initfixedwindowls(
     int &id /* 0D_NOT_integer in */
 );
 void initfixedwindowls(int N, double dt, int order, int der, int id);
+extern "C" void fortran_initial_lmdif();
+void initial_lmdif();
 
 // Skipped unusable routine int_logic:
 // - Routine in configuration skip list
@@ -670,9 +759,9 @@ bool is_true(double param);
 extern "C" bool fortran_j_bessel(
     int &m /* 0D_NOT_integer in */,
     double &arg /* 0D_NOT_real in */,
-    double &j_bes /* 0D_NOT_real in */
+    double &j_bes /* 0D_NOT_real out */
 );
-void j_bessel(int m, double arg, double j_bes);
+double j_bessel(int m, double arg);
 extern "C" void fortran_linear_fit(
     Bmad::array_descriptor_t &x /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &y /* 1D_NOT_real inout */,
@@ -699,6 +788,30 @@ extern "C" void fortran_linear_fit_2d(
 );
 FixedArray1D<Real, 3> linear_fit_2d(FArray1D<Real> &x, FArray1D<Real> &y, FArray1D<Real> &z);
 
+// Skipped unusable routine lmdif:
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'M' found in bounds 'M' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'LDFJAC' found in bounds 'LDFJAC' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'M' found in bounds 'M' but not in provided map."
+// - Translated arg count mismatch (unsupported?)
+
+// Skipped unusable routine lmpar:
+// - Array bounds handling: "Enum 'LDR' found in bounds 'LDR' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Translated arg count mismatch (unsupported?)
+
 // Skipped unusable routine location_decode:
 // - Array bounds handling: "Enum 'IX_MIN' found in bounds 'ix_min' but not in provided map."
 // - Array bounds handling: "Enum 'IX_MIN' found in bounds 'ix_min' but not in provided map."
@@ -718,50 +831,37 @@ fortran_mass_of(int &species /* 0D_NOT_integer in */, double &mass /* 0D_NOT_rea
 double mass_of(int species);
 
 // Skipped unusable routine mat_eigen:
-// - Variable inout sized array: 2D_NOT_real
-// - Variable inout sized array: 2D_NOT_complex
+// - Module name unset
 
 // Skipped unusable routine mat_inverse:
-// - Variable inout sized array: 2D_NOT_real
-// - Variable inout sized array: 2D_NOT_real
+// - Module name unset
 
 // Skipped unusable routine mat_make_unit:
-// - Variable inout sized array: 2D_NOT_real
+// - Module name unset
 
 // Skipped unusable routine mat_pseudoinverse:
-// - Variable inout sized array: 2D_NOT_real
-// - Variable inout sized array: 2D_NOT_real
+// - Module name unset
 
 // Skipped unusable routine mat_rotation:
-// - Variable inout sized array: 2D_NOT_real
+// - Module name unset
 
 // Skipped unusable routine mat_scale_p0:
-// - Variable in sized array: 2D_NOT_real
-// - Array bounds handling: Calls in array bounds are not supported
-// - Translated arg count mismatch (unsupported?)
+// - Module name unset
 
 // Skipped unusable routine mat_symp_conj:
-// - Variable inout sized array: 2D_NOT_real
-// - Array bounds handling: Calls in array bounds are not supported
-// - Translated arg count mismatch (unsupported?)
+// - Module name unset
 
 // Skipped unusable routine mat_symp_conj_i:
-// - Variable inout sized array: 2D_NOT_complex
-// - Array bounds handling: Calls in array bounds are not supported
-// - Translated arg count mismatch (unsupported?)
+// - Module name unset
 
 // Skipped unusable routine mat_symp_error:
-// - Variable in sized array: 2D_NOT_real
-// - Variable inout sized array: 2D_NOT_real
+// - Module name unset
 
 // Skipped unusable routine mat_symplectify:
-// - Variable in sized array: 2D_NOT_real
-// - Variable inout sized array: 2D_NOT_real
+// - Module name unset
 
 // Skipped unusable routine mat_type:
-// - Variable inout sized array: 2D_NOT_real
-// - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
+// - Module name unset
 extern "C" bool fortran_match_reg(
     const char *str /* 0D_NOT_character in */,
     const char *pat /* 0D_NOT_character in */,
@@ -789,6 +889,30 @@ extern "C" bool fortran_maximize_projection(
 void maximize_projection(double seed, FArray1D<Complex> &cdata, double func_retval__);
 extern "C" void fortran_milli_sleep(int &milli_sec /* 0D_NOT_integer in */);
 void milli_sleep(int milli_sec);
+extern "C" bool fortran_modulo2_dp(
+    double &x /* 0D_NOT_real in */,
+    double &amp /* 0D_NOT_real in */,
+    double &mod2 /* 0D_NOT_real out */
+);
+double modulo2_dp(double x, double amp);
+extern "C" bool fortran_modulo2_int(
+    int &x /* 0D_NOT_integer in */,
+    int &amp /* 0D_NOT_integer in */,
+    int &mod2 /* 0D_NOT_integer out */
+);
+int modulo2_int(int x, int amp);
+extern "C" bool fortran_modulo2_qp(
+    double &x /* 0D_NOT_real in */,
+    double &amp /* 0D_NOT_real in */,
+    double &mod2 /* 0D_NOT_real out */
+);
+double modulo2_qp(double x, double amp);
+extern "C" bool fortran_modulo2_sp(
+    double &x /* 0D_NOT_real in */,
+    double &amp /* 0D_NOT_real in */,
+    double &mod2 /* 0D_NOT_real out */
+);
+double modulo2_sp(double x, double amp);
 
 // Skipped unusable routine molecular_components:
 // - Untranslated type: molecular_component_struct (1D)
@@ -798,9 +922,9 @@ void n_bins_automatic(int n_data, int n);
 extern "C" bool fortran_n_choose_k(
     int &n /* 0D_NOT_integer in */,
     int &k /* 0D_NOT_integer in */,
-    double &nck /* 0D_NOT_real in */
+    double &nck /* 0D_NOT_real out */
 );
-void n_choose_k(int n, int k, double nck);
+double n_choose_k(int n, int k);
 extern "C" void fortran_n_spline_create(
     Bmad::array_descriptor_t &deriv0 /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &deriv1 /* 1D_NOT_real in */,
@@ -879,12 +1003,158 @@ extern "C" bool fortran_openpmd_species_name(
     const char *pmd_name /* 0D_NOT_character out */
 );
 std::string openpmd_species_name(int species);
+
+// Skipped unusable routine opti_de:
+// - Argument not defined: v_best (have: [])
+// - Argument not defined: generations (have: [])
+// - Argument not defined: population (have: [])
+// - Argument not defined: merit_func (have: [])
+// - Argument not defined: v_del (have: [])
+// - Argument not defined: status (have: [])
+// - Argument not defined: best_merit (have: [])
+// - Translated arg count mismatch (unsupported?)
+
+// Skipped unusable routine opti_de_openmp:
+// - Argument not defined: v_best (have: [])
+// - Argument not defined: generations (have: [])
+// - Argument not defined: population (have: [])
+// - Argument not defined: merit_func (have: [])
+// - Argument not defined: v_del (have: [])
+// - Argument not defined: status (have: [])
+// - Argument not defined: best_merit (have: [])
+// - Translated arg count mismatch (unsupported?)
+
+// Skipped unusable routine opti_lmdif:
+// - Argument not defined: vec (have: [])
+// - Argument not defined: n (have: [])
+// - Argument not defined: merit (have: [])
+// - Argument not defined: eps (have: [])
+// - Argument not defined: this_opti (have: [])
+// - Translated arg count mismatch (unsupported?)
 extern "C" bool
 fortran_ordinal_str(int &n /* 0D_NOT_integer in */, const char *str /* 0D_ALLOC_character in */);
 void ordinal_str(int n, std::string str);
+extern "C" bool fortran_out_io_buffer_get_line(
+    int &ix_line /* 0D_NOT_integer in */,
+    const char *line /* 0D_NOT_character in */
+);
+void out_io_buffer_get_line(int ix_line, std::string line);
+extern "C" bool fortran_out_io_buffer_num_lines(int &n_lines /* 0D_NOT_integer in */);
+void out_io_buffer_num_lines(int n_lines);
+extern "C" void fortran_out_io_buffer_reset();
+void out_io_buffer_reset();
+
+// Skipped unusable routine out_io_called:
+// - Module name unset
+
+// Skipped unusable routine out_io_end:
+// - Module name unset
+extern "C" void fortran_out_io_int(
+    int &level /* 0D_NOT_integer in */,
+    const char *routine_name /* 0D_NOT_character in */,
+    const char *line /* 0D_NOT_character in */,
+    int &i_num /* 0D_NOT_integer in */,
+    bool *insert_tag_line /* 0D_NOT_logical in */
+);
+void out_io(
+    int level,
+    std::string routine_name,
+    std::string line,
+    int i_num,
+    std::optional<bool> insert_tag_line = std::nullopt
+);
+
+// Skipped unusable routine out_io_line:
+// - Module name unset
+extern "C" void fortran_out_io_line12(
+    int &level /* 0D_NOT_integer in */,
+    const char *routine_name /* 0D_NOT_character in */,
+    const char *line1 /* 0D_NOT_character in */,
+    const char *line2 /* 0D_NOT_character in */,
+    const char *line3 /* 0D_NOT_character in */,
+    const char *line4 /* 0D_NOT_character in */,
+    const char *line5 /* 0D_NOT_character in */,
+    const char *line6 /* 0D_NOT_character in */,
+    const char *line7 /* 0D_NOT_character in */,
+    const char *line8 /* 0D_NOT_character in */,
+    const char *line9 /* 0D_NOT_character in */,
+    const char *line10 /* 0D_NOT_character in */,
+    const char *line11 /* 0D_NOT_character in */,
+    const char *line12 /* 0D_NOT_character in */,
+    Bmad::array_descriptor_t &r_array /* 1D_NOT_real inout */,
+    Bmad::array_descriptor_t &i_array /* 1D_NOT_integer inout */,
+    void *l_array /* 1D_ALLOC_logical inout */,
+    bool *insert_tag_line /* 0D_NOT_logical in */
+);
+void out_io(
+    int level,
+    std::string routine_name,
+    std::string line1,
+    std::optional<std::string> line2 = std::nullopt,
+    std::optional<std::string> line3 = std::nullopt,
+    std::optional<std::string> line4 = std::nullopt,
+    std::optional<std::string> line5 = std::nullopt,
+    std::optional<std::string> line6 = std::nullopt,
+    std::optional<std::string> line7 = std::nullopt,
+    std::optional<std::string> line8 = std::nullopt,
+    std::optional<std::string> line9 = std::nullopt,
+    std::optional<std::string> line10 = std::nullopt,
+    std::optional<std::string> line11 = std::nullopt,
+    std::optional<std::string> line12 = std::nullopt,
+    std::optional<FArray1D<Real>> r_array = std::nullopt,
+    std::optional<FArray1D<Int>> i_array = std::nullopt,
+    optional_ref<BoolAlloc1D> l_array = std::nullopt,
+    std::optional<bool> insert_tag_line = std::nullopt
+);
+
+// Skipped unusable routine out_io_lines:
+// - Variable-sized inout character array: 1D_NOT_character
+// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_out_io_logical(
+    int &level /* 0D_NOT_integer in */,
+    const char *routine_name /* 0D_NOT_character in */,
+    const char *line /* 0D_NOT_character in */,
+    bool &l_num /* 0D_NOT_logical in */,
+    bool *insert_tag_line /* 0D_NOT_logical in */
+);
+void out_io(
+    int level,
+    std::string routine_name,
+    std::string line,
+    bool l_num,
+    std::optional<bool> insert_tag_line = std::nullopt
+);
+extern "C" void fortran_out_io_print_and_capture_setup(
+    bool *print_on /* 0D_NOT_logical in */,
+    const char *capture_state /* 0D_NOT_character in */,
+    bool *capture_add_null /* 0D_NOT_logical in */
+);
+void out_io_print_and_capture_setup(
+    std::optional<bool> print_on = std::nullopt,
+    std::optional<std::string> capture_state = std::nullopt,
+    std::optional<bool> capture_add_null = std::nullopt
+);
+extern "C" void fortran_out_io_real(
+    int &level /* 0D_NOT_integer in */,
+    const char *routine_name /* 0D_NOT_character in */,
+    const char *line /* 0D_NOT_character in */,
+    double &r_num /* 0D_NOT_real in */,
+    bool *insert_tag_line /* 0D_NOT_logical in */
+);
+void out_io(
+    int level,
+    std::string routine_name,
+    std::string line,
+    double r_num,
+    std::optional<bool> insert_tag_line = std::nullopt
+);
 
 // Skipped unusable routine outer_product:
 // - Module name unset
+
+// Skipped unusable routine output_direct:
+// - Untranslated type: out_io_output_direct_struct (0D)
+// - Untranslated type: out_io_output_direct_struct (0D)
 extern "C" void fortran_parse_fortran_format(
     const char *format_str /* 0D_NOT_character in */,
     int &n_repeat /* 0D_NOT_integer in */,
@@ -921,6 +1191,9 @@ extern "C" bool fortran_poly_eval(
     double &y /* 0D_NOT_real out */
 );
 double poly_eval(FArray1D<Real> &poly, double x, std::optional<bool> diff_coef = std::nullopt);
+
+// Skipped unusable routine print_mat:
+// - Variable in sized array: 2D_NOT_real
 extern "C" bool
 fortran_probability_funct(double &x /* 0D_NOT_real in */, double &prob /* 0D_NOT_real in */);
 void probability_funct(double x, double prob);
@@ -930,6 +1203,29 @@ extern "C" bool fortran_projdd(
     std::complex<double> &func_retval__ /* 0D_NOT_complex in */
 );
 void projdd(FArray1D<Complex> &a, FArray1D<Complex> &b, std::complex<double> func_retval__);
+
+// Skipped unusable routine qr:
+// - Variable in sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
+
+// Skipped unusable routine qrfac:
+// - Array bounds handling: "Enum 'LDA' found in bounds 'LDA' but not in provided map."
+// - Array bounds handling: "Enum 'LIPVT' found in bounds 'LIPVT' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Translated arg count mismatch (unsupported?)
+
+// Skipped unusable routine qrsolv:
+// - Array bounds handling: "Enum 'LDR' found in bounds 'LDR' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Array bounds handling: "Enum 'N' found in bounds 'N' but not in provided map."
+// - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_quadratic_roots(
     Bmad::array_descriptor_t &coefs /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &root /* 1D_NOT_complex out */
@@ -1117,6 +1413,40 @@ extern "C" void fortran_ran_uniform_vector(
     void *ran_state /* 0D_NOT_type in */
 );
 void ran_uniform(FArray1D<Real> &harvest, optional_ref<RandomStateStruct> ran_state = std::nullopt);
+
+// Skipped unusable routine rbacks:
+// - Variable in sized array: 2D_NOT_real
+extern "C" void fortran_rcelbd(
+    double &mc /* 0D_NOT_real in */,
+    double &elb /* 0D_NOT_real in */,
+    double &eld /* 0D_NOT_real in */
+);
+void rcelbd(double mc, double elb, double eld);
+extern "C" void fortran_read_a_line(
+    const char *prompt /* 0D_NOT_character in */,
+    const char *line_out /* 0D_NOT_character out */,
+    bool *trim_prompt /* 0D_NOT_logical in */,
+    const char *prompt_color /* 0D_NOT_character in */,
+    bool *prompt_bold /* 0D_NOT_logical in */,
+    const char *history_file /* 0D_NOT_character in */
+);
+std::string read_a_line(
+    std::string prompt,
+    std::optional<bool> trim_prompt = std::nullopt,
+    std::optional<std::string> prompt_color = std::nullopt,
+    std::optional<bool> prompt_bold = std::nullopt,
+    std::optional<std::string> history_file = std::nullopt
+);
+extern "C" void fortran_readline_read_history(
+    const char *history_file /* 0D_NOT_character in */,
+    int &status /* 0D_NOT_integer out */
+);
+int readline_read_history(std::string history_file);
+extern "C" void fortran_readline_write_history(
+    const char *history_file /* 0D_NOT_character in */,
+    int &status /* 0D_NOT_integer out */
+);
+int readline_write_history(std::string history_file);
 extern "C" bool fortran_real_num_fortran_format(
     double &number /* 0D_NOT_real in */,
     int &width /* 0D_NOT_integer in */,
@@ -1179,6 +1509,35 @@ void reallocate_spline(
 
 // Skipped unusable routine reals_to_table_row:
 // - No matching docstring
+extern "C" void fortran_relbd(
+    double &phi /* 0D_NOT_real in */,
+    double &phic /* 0D_NOT_real in */,
+    double &mc /* 0D_NOT_real in */,
+    double &b /* 0D_NOT_real in */,
+    double &d /* 0D_NOT_real in */
+);
+void relbd(double phi, double phic, double mc, double b, double d);
+extern "C" void fortran_relcbd(
+    double &c0 /* 0D_NOT_real in */,
+    double &mc /* 0D_NOT_real in */,
+    double &b /* 0D_NOT_real in */,
+    double &dx /* 0D_NOT_real in */
+);
+void relcbd(double c0, double mc, double b, double dx);
+extern "C" void fortran_relsbd(
+    double &s0 /* 0D_NOT_real in */,
+    double &mc /* 0D_NOT_real in */,
+    double &b /* 0D_NOT_real in */,
+    double &d /* 0D_NOT_real in */
+);
+void relsbd(double s0, double mc, double b, double d);
+extern "C" void fortran_rgelbd(
+    double &phi /* 0D_NOT_real in */,
+    double &mc /* 0D_NOT_real in */,
+    double &elb /* 0D_NOT_real in */,
+    double &eld /* 0D_NOT_real in */
+);
+void rgelbd(double phi, double mc, double elb, double eld);
 extern "C" bool fortran_rms_value(
     Bmad::array_descriptor_t &val_arr /* 1D_NOT_real in */,
     void *good_val /* 1D_ALLOC_logical in */,
@@ -1217,6 +1576,13 @@ rotate_vec_given_axis_angle(FixedArray1D<Real, 3> vec_in, FArray1D<Real> &axis, 
 extern "C" bool
 fortran_rp8(int &int_in /* 0D_NOT_integer in */, double &re_out /* 0D_NOT_real out */);
 double rp8(int int_in);
+extern "C" void fortran_rserbd(
+    double &y /* 0D_NOT_real in */,
+    double &m /* 0D_NOT_real in */,
+    double &b /* 0D_NOT_real in */,
+    double &d /* 0D_NOT_real in */
+);
+void rserbd(double y, double m, double b, double d);
 extern "C" void fortran_run_timer(
     const char *command /* 0D_NOT_character in */,
     double *time /* 0D_NOT_real in */,
@@ -1227,6 +1593,17 @@ void run_timer(
     std::optional<double> time = std::nullopt,
     std::optional<double> time0 = std::nullopt
 );
+extern "C" void fortran_serbd(
+    double &y /* 0D_NOT_real in */,
+    double &m /* 0D_NOT_real in */,
+    double &b /* 0D_NOT_real out */,
+    double &d /* 0D_NOT_real out */
+);
+struct Serbd {
+  double b;
+  double d;
+};
+SimUtils::Serbd serbd(double y, double m);
 
 // Skipped unusable routine set_all_ptr:
 // - Untranslated type: all_pointer_struct (0D)
@@ -1254,24 +1631,36 @@ extern "C" bool fortran_set_species_charge(
     int &species_charged /* 0D_NOT_integer out */
 );
 int set_species_charge(int species_in, int charge);
+extern "C" bool fortran_sign_of_int(
+    int &num /* 0D_NOT_integer in */,
+    bool *zero_is_zero /* 0D_NOT_logical in */,
+    int &num_sign /* 0D_NOT_integer out */
+);
+int sign_of(int num, std::optional<bool> zero_is_zero = std::nullopt);
+extern "C" bool fortran_sign_of_real(
+    double &num /* 0D_NOT_real in */,
+    bool *zero_is_zero /* 0D_NOT_logical in */,
+    int &num_sign /* 0D_NOT_integer out */
+);
+int sign_of(double num, std::optional<bool> zero_is_zero = std::nullopt);
 extern "C" bool fortran_sinc(
     double &x /* 0D_NOT_real in */,
     int *nd /* 0D_NOT_integer in */,
-    double &y /* 0D_NOT_real in */
+    double &y /* 0D_NOT_real out */
 );
-void sinc(double x, std::optional<int> nd, double y);
+double sinc(double x, std::optional<int> nd = std::nullopt);
 extern "C" bool fortran_sincc(
     double &x /* 0D_NOT_real in */,
     int *nd /* 0D_NOT_integer in */,
-    double &y /* 0D_NOT_real in */
+    double &y /* 0D_NOT_real out */
 );
-void sincc(double x, std::optional<int> nd, double y);
+double sincc(double x, std::optional<int> nd = std::nullopt);
 extern "C" bool fortran_sinhx_x(
     double &x /* 0D_NOT_real in */,
     int *nd /* 0D_NOT_integer in */,
-    double &y /* 0D_NOT_real in */
+    double &y /* 0D_NOT_real out */
 );
-void sinhx_x(double x, std::optional<int> nd, double y);
+double sinhx_x(double x, std::optional<int> nd = std::nullopt);
 extern "C" void
 fortran_skip_header(int &ix_unit /* 0D_NOT_integer in */, bool &error_flag /* 0D_NOT_logical in */);
 void skip_header(int ix_unit, bool error_flag);
@@ -1352,9 +1741,9 @@ SimUtils::SplineEvaluate spline_evaluate(SplineStructArray1D spline, double x);
 extern "C" bool fortran_sqrt_alpha(
     double &alpha /* 0D_NOT_real in */,
     double &x /* 0D_NOT_real in */,
-    double &y /* 0D_NOT_real in */
+    double &y /* 0D_NOT_real out */
 );
-void sqrt_alpha(double alpha, double x, double y);
+double sqrt_alpha(double alpha, double x);
 extern "C" bool fortran_sqrt_one(
     double &x /* 0D_NOT_real in */,
     int *nd /* 0D_NOT_integer in */,
@@ -1483,6 +1872,21 @@ void string_trim2(
 
 // Skipped unusable routine substr:
 // - Routine in configuration skip list
+extern "C" void fortran_suggest_lmdif(
+    Bmad::array_descriptor_t &XV /* 1D_NOT_real inout */,
+    Bmad::array_descriptor_t &FV /* 1D_NOT_real inout */,
+    double &eps /* 0D_NOT_real in */,
+    int &itermx /* 0D_NOT_integer in */,
+    bool &at_end /* 0D_NOT_logical out */,
+    bool *reset_flag /* 0D_NOT_logical in */
+);
+bool suggest_lmdif(
+    FArray1D<Real> &XV,
+    FArray1D<Real> &FV,
+    double eps,
+    int itermx,
+    std::optional<bool> reset_flag = std::nullopt
+);
 extern "C" void fortran_super_bicubic_coef(
     Bmad::array_descriptor_t &y /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &y1 /* 1D_NOT_real in */,
@@ -1688,13 +2092,19 @@ void super_sort(FArray1D<Int> &arr);
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine svd_fit:
-// - Variable inout sized array: 2D_NOT_real
-// - Variable inout sized array: 2D_NOT_real
+// - Module name unset
 extern "C" void fortran_system_command(
     const char *line /* 0D_NOT_character in */,
-    bool *err_flag /* 0D_NOT_logical in */
+    bool &err_flag /* 0D_NOT_logical out */
 );
-void system_command(std::string line, std::optional<bool> err_flag = std::nullopt);
+bool system_command(std::string line);
+extern "C" void fortran_test_xgelbd();
+void test_xgelbd();
+
+// Skipped unusable routine thin_qr:
+// - Variable in sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
+// - Variable inout sized array: 2D_NOT_real
 extern "C" bool fortran_to_str(
     double &num /* 0D_NOT_real in */,
     int *max_signif /* 0D_NOT_integer in */,

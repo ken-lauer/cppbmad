@@ -100,7 +100,6 @@ y_res : float
       &SimUtils::dj_bessel,
       py::arg("m"),
       py::arg("arg"),
-      py::arg("dj_bes"),
       R"""(Wrapper for Fortran routine dj_bessel
 
 Parameters
@@ -108,16 +107,14 @@ Parameters
 m : int
 
 arg : float
-
-dj_bes : float
+    Bessel argument.
 
 Returns
 -------
 m : int
 
-arg : float
-
 dj_bes : float
+    Bessel value.
 )"""
   );
   m.def(

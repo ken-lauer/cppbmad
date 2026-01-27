@@ -6,6 +6,12 @@ using namespace Pybmad;
 
 void init_SimUtils_routines_t(py::module &m) {
   m.def(
+      "test_xgelbd",
+      &SimUtils::test_xgelbd,
+      R"""(Wrapper for Fortran routine test_xgelbd
+)"""
+  );
+  m.def(
       "to_str",
       &SimUtils::to_str,
       py::arg("num"),

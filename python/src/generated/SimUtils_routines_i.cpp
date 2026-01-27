@@ -10,24 +10,20 @@ void init_SimUtils_routines_i(py::module &m) {
       &SimUtils::i_bessel,
       py::arg("m"),
       py::arg("arg"),
-      py::arg("i_bes"),
       R"""(Wrapper for Fortran routine i_bessel
 
 Parameters
 ----------
 m : int
+    Bessel order.
 
 arg : float
-
-i_bes : float
+    Bessel argument.
 
 Returns
 -------
-m : int
-
-arg : float
-
 i_bes : float
+    Bessel value.
 )"""
   );
   m.def(
@@ -35,24 +31,20 @@ i_bes : float
       &SimUtils::i_bessel_extended,
       py::arg("m"),
       py::arg("arg"),
-      py::arg("i_bes"),
       R"""(Wrapper for Fortran routine i_bessel_extended
 
 Parameters
 ----------
 m : int
+    Bessel order.
 
 arg : float
-
-i_bes : complex
+    Bessel argument.
 
 Returns
 -------
-m : int
-
-arg : float
-
 i_bes : complex
+    Bessel value.
 )"""
   );
   m.def(
@@ -137,6 +129,12 @@ order : int
 
 der : int
     Order of derivative to be returned. Set der=0 to obtain the fit.
+)"""
+  );
+  m.def(
+      "initial_lmdif",
+      &SimUtils::initial_lmdif,
+      R"""(Wrapper for Fortran routine initial_lmdif
 )"""
   );
   m.def(

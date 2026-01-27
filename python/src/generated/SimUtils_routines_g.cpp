@@ -5,6 +5,47 @@ using namespace pybind11::literals;
 using namespace Pybmad;
 
 void init_SimUtils_routines_g(py::module &m) {
+  py::class_<SimUtils::Gelbd, std::unique_ptr<SimUtils::Gelbd>>(m, "Gelbd", "gelbd return type")
+      .def_readonly("elb", &SimUtils::Gelbd::elb)
+      .def_readonly("eld", &SimUtils::Gelbd::eld)
+      .def("__len__", [](const SimUtils::Gelbd &) { return 2; })
+      .def("__getitem__", [](const SimUtils::Gelbd &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.elb);
+        if (i == 1)
+          return py::cast(s.eld);
+        throw py::index_error();
+      });
+  m.def(
+      "gelbd",
+      &SimUtils::gelbd,
+      py::arg("phi"),
+      py::arg("mc"),
+      R"""(Wrapper for Fortran routine gelbd
+
+Parameters
+----------
+phi : float
+
+mc : float
+
+elb : float
+
+eld : float
+
+Returns
+-------
+phi : float
+
+mc : float
+
+elb : float
+
+eld : float
+)"""
+  );
   m.def(
       "gen_complete_elliptic",
       &SimUtils::gen_complete_elliptic,
@@ -13,36 +54,29 @@ void init_SimUtils_routines_g(py::module &m) {
       py::arg("c"),
       py::arg("s"),
       py::arg("err_tol") = py::none(),
-      py::arg("value"),
       R"""(Wrapper for Fortran routine gen_complete_elliptic
 
 Parameters
 ----------
 kc : float
+    Fuction input values.
 
 p : float
+    Fuction input values.
 
 c : float
+    Fuction input values.
 
 s : float
+    Fuction input values.
 
 err_tol : float, optional
-
-value : float
+    Relative error tolerance. Default = 1d-12
 
 Returns
 -------
-kc : float
-
-p : float
-
-c : float
-
-s : float
-
-err_tol : float, optional
-
 value : float
+    Output value.
 )"""
   );
   m.def(
@@ -87,6 +121,34 @@ subroutine get_next_number (filein, cnum, digits)
   character(*) cnum
   integer digits
 end subroutine
+)"""
+  );
+  m.def(
+      "get_tty_char",
+      &SimUtils::get_tty_char,
+      py::arg("wait"),
+      py::arg("flush"),
+      R"""(Subroutine get_tty_char (this_char, wait, flush)
+
+Subroutine for getting a single character from the terminal.
+Also see: get_a_char
+
+System Libraries that need to be linked to:
+  readline curses
+
+Parameters
+----------
+wait : bool
+    If True then routine will wait until a keystroke has occured. If False and no keystroke is in the buffer
+    then achar(0) will be returned as this_char.
+
+flush : bool
+    If True then the keystroke buffer will be cleared first before any processing.
+
+Returns
+-------
+this_char : character
+    Character returned
 )"""
   );
 }

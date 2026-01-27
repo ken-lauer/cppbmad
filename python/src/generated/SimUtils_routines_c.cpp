@@ -35,6 +35,81 @@ num_out : int
 err_flag : bool
 )"""
   );
+  py::class_<SimUtils::Celbd, std::unique_ptr<SimUtils::Celbd>>(m, "Celbd", "celbd return type")
+      .def_readonly("elb", &SimUtils::Celbd::elb)
+      .def_readonly("eld", &SimUtils::Celbd::eld)
+      .def("__len__", [](const SimUtils::Celbd &) { return 2; })
+      .def("__getitem__", [](const SimUtils::Celbd &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.elb);
+        if (i == 1)
+          return py::cast(s.eld);
+        throw py::index_error();
+      });
+  m.def(
+      "celbd",
+      &SimUtils::celbd,
+      py::arg("mc"),
+      R"""(Wrapper for Fortran routine celbd
+
+Parameters
+----------
+mc : float
+
+elb : float
+
+eld : float
+
+Returns
+-------
+mc : float
+
+elb : float
+
+eld : float
+)"""
+  );
+  m.def(
+      "cesr_getarg",
+      &SimUtils::cesr_getarg,
+      py::arg("i_arg"),
+      R"""(Subroutine cesr_getarg (i_arg, arg)
+
+Platform independent function to return the i'th command line argument.
+Use this with cesr_iargc.
+
+Note: The difference between this routine and the Fortran instrinsic
+get_command_argument is that for i_arg = 0, this routine returns the
+command line with the name of the executable removed from the beginning of the line.
+get_command_argument, on the other hand returns the name of the
+executable when the argument is 0.
+
+Parameters
+----------
+i_arg : int
+    Index of argument to return. i_arg = 0 => Entire line minus the executable string. i_arg = 1 => First
+    argument.
+
+Returns
+-------
+arg : character
+    i'th command line argument. If i_arg > number_of_args then arg is a blank string.
+)"""
+  );
+  m.def(
+      "cesr_iargc",
+      &SimUtils::cesr_iargc,
+      py::arg("func_retval__"),
+      R"""(Function cesr_iargc ()
+
+Note: Use the Fortran intrinsic command_argument_count instead
+
+Platform independent function to return the number of command line arguments.
+Use this with cesr_getarg.
+)"""
+  );
   m.def(
       "change_file_number",
       &SimUtils::change_file_number,
@@ -152,20 +227,17 @@ zi : float
       "cos_one",
       &SimUtils::cos_one,
       py::arg("angle"),
-      py::arg("cos1"),
       R"""(Wrapper for Fortran routine cos_one
 
 Parameters
 ----------
 angle : float
-
-cos1 : float
+    Angle.
 
 Returns
 -------
-angle : float
-
 cos1 : float
+    Result.
 )"""
   );
   m.def(
@@ -173,7 +245,6 @@ cos1 : float
       &SimUtils::cosc,
       py::arg("x"),
       py::arg("nd") = py::none(),
-      py::arg("y"),
       R"""(Wrapper for Fortran routine cosc
 
 Parameters
@@ -181,16 +252,13 @@ Parameters
 x : float
 
 nd : int, optional
-
-y : float
+    Derivative order. nd = 0 (default) -> compute (1 - cos(x)) / x^2 NOTE: Currently only nd = 0 and nd = 1
+    are implemented.
 
 Returns
 -------
-x : float
-
-nd : int, optional
-
 y : float
+    nd^th derivative of (1 - cos(x)) / x^2
 )"""
   );
   m.def(

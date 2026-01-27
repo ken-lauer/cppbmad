@@ -10,7 +10,6 @@ void init_SimUtils_routines_j(py::module &m) {
       &SimUtils::j_bessel,
       py::arg("m"),
       py::arg("arg"),
-      py::arg("j_bes"),
       R"""(Wrapper for Fortran routine j_bessel
 
 Parameters
@@ -18,16 +17,14 @@ Parameters
 m : int
 
 arg : float
-
-j_bes : float
+    Bessel argument.
 
 Returns
 -------
 m : int
 
-arg : float
-
 j_bes : float
+    Bessel value.
 )"""
   );
 }
