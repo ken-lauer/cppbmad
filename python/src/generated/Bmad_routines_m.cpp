@@ -19,7 +19,7 @@ Parameters
 ele : EleStruct
     Drift element.
 
-energy : MadEnergyStruct
+energy : mad_energy_struct
     particle energy structure.
 
 Returns
@@ -122,7 +122,7 @@ energy : MadEnergyStruct
 
 Returns
 -------
-taylor : TaylorStruct
+taylor : 1D array of TaylorStruct
     Taylor map.
 )"""
   );
@@ -216,7 +216,7 @@ ele : EleStruct
 energy : MadEnergyStruct
     particle energy structure.
 
-into : bool
+into : logical
     If True then map is for particle entering a dipole
 
 Returns
@@ -252,13 +252,13 @@ Returns
 map : MadMapStruct
     Fringe dipole map.
 
-%k : 
+%k : None
     0th order map.
 
-%r : 
+%r : None
     1st order map.
 
-%t : 
+%t : None
     2nd order map.
 )"""
   );
@@ -377,9 +377,17 @@ The equivalent MAD-8 routine is: tmsymm
 
 Parameters
 ----------
-te : float
+te : 3D array of float (shape: 6,6,6)
     array to be symmertrized.
-    This parameter is an input/output and is modified in-place. As an output: symmetrized array.
+    This parameter is an input/output and is modified in-place.
+    As an output, te: symmetrized array.
+
+Returns
+-------
+te : 3D array of float (shape: 6,6,6)
+    array to be symmertrized.
+    This parameter is an input/output and is modified in-place.
+    As an output, te: symmetrized array.
 )"""
   );
   m.def(
@@ -396,19 +404,36 @@ Parameters
 ----------
 map : MadMapStruct
     Unrotated transport map.
-    This parameter is an input/output and is modified in-place. As an output: Rotated transport map.
+    This parameter is an input/output and is modified in-place.
+    As an output, map: Rotated transport map.
 
-%k : 
+%k : None
     0th order map.
 
-%r : 
+%r : None
     1st order map.
 
-%t : 
+%t : None
     2nd order map.
 
 tilt : float
     Tilt
+
+Returns
+-------
+map : MadMapStruct
+    Unrotated transport map.
+    This parameter is an input/output and is modified in-place.
+    As an output, map: Rotated transport map.
+
+%k : None
+    0th order map.
+
+%r : None
+    1st order map.
+
+%t : None
+    2nd order map.
 )"""
   );
   m.def(
@@ -448,8 +473,15 @@ Parameters
 twiss : TwissStruct
     Twiss parameters.
 
-g2_mat : 
-g2_inv_mat : 
+g2_mat : 2D array of float (shape: 2,2)
+
+g2_inv_mat : 2D array of float (shape: 2,2)
+
+Returns
+-------
+g2_mat : 2D array of float (shape: 2,2)
+
+g2_inv_mat : 2D array of float (shape: 2,2)
 )"""
   );
   py::class_<Bmad::MakeGMats, std::unique_ptr<Bmad::MakeGMats>>(
@@ -480,10 +512,12 @@ Parameters
 ele : EleStruct
     Element
 
-g_mat : float
+Returns
+-------
+g_mat : 2D array of float (shape: 4,4)
     Normal mode to betaless coords
 
-g_inv_mat : float
+g_inv_mat : 2D array of float (shape: 4,4)
     The inverse of G_MAT
 )"""
   );
@@ -538,24 +572,24 @@ H "Dispersion matrix" has 8 free parameters (xz, xpz, pxz, pxpz, yz, ypz, pyz, p
 
 Parameters
 ----------
-N : float
+N : 2D array of float (shape: 6,6)
     Matrix of eigenvectors prepared by make_N
 
 Returns
 -------
-B : float
+B : 2D array of float (shape: 6,6)
     Block diagonal matrix of Twiss parameters
 
-V : float
+V : 2D array of float (shape: 6,6)
     horizontal-vertical coupling information
 
-H : float
+H : 2D array of float (shape: 6,6)
     horizontal-longitudinal and vertical-longitudinal coupling information
 
-Vbar : float
+Vbar : 2D array of float (shape: 6,6), optional
     mat_symp_conj(B).V.B
 
-Hbar : float
+Hbar : 2D array of float (shape: 6,6), optional
     mat_symp_conj(B).H.B
 )"""
   );
@@ -572,16 +606,18 @@ Parameters
 lat_in : LatStruct
     Input lattice.
 
-lat_out : LatStruct
-    Lattice with hybrid elements. Note: Lat_out must not be the same actual argument as lat_in.
-
 use_taylor : bool, optional
     If present and True then the hybrid elements will have a taylor series instead of a simple linear matrix.
     If an element to be concatenated has a taylor series then this taylor series will be concatenated with the
     other elements
 
-orb0_arr : CoordArrayStruct, optional
+orb0_arr : 1D array of CoordArrayStruct, optional
     Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
+
+Returns
+-------
+lat_out : LatStruct
+    Lattice with hybrid elements. Note: Lat_out must not be the same actual argument as lat_in.
 )"""
   );
   py::class_<Bmad::MakeMadMap, std::unique_ptr<Bmad::MakeMadMap>>(
@@ -663,10 +699,15 @@ param : LatParamStruct
 start_orb : CoordStruct, optional
     Reference coordinates at the beginning of element. If not present, default is to use the zero orbit.
 
-end_orb : CoordStruct
+Returns
+-------
+ele : EleStruct
+    Element holding the transfer matrix.
+
+end_orb : CoordStruct, optional
     Reference coordinates at the end of element.
 
-err_flag : bool
+err_flag : bool, optional
     Set True if there is an error. False otherwise.
 )"""
   );
@@ -699,7 +740,8 @@ Parameters
 ----------
 ele : EleStruct
     Element to track through.
-    This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
 
 param : LatParamStruct
     Parameters are needed for some elements.
@@ -707,10 +749,17 @@ param : LatParamStruct
 start_orb : CoordStruct
     Starting coords.
 
+Returns
+-------
+ele : EleStruct
+    Element to track through.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
+
 end_orb : CoordStruct
     Coordinates at the end of element.
 
-err : bool
+err : bool, optional
     Set True if there is an error. False otherwise.
 )"""
   );
@@ -743,7 +792,8 @@ Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
-    This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
 
 param : LatParamStruct
     Parameters are needed for some elements.
@@ -751,10 +801,17 @@ param : LatParamStruct
 start_orb : CoordStruct
     Coordinates at the beginning of element.
 
+Returns
+-------
+ele : EleStruct
+    Element with transfer matrix
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
+
 end_orb : CoordStruct
     Coordinates at the end of element.
 
-err : bool
+err : bool, optional
     Set True if there is an error. False otherwise.
 )"""
   );
@@ -780,7 +837,7 @@ param : LatParamStruct
 
 Returns
 -------
-end : CoordStruct
+end : coord_struct
     End position
 )"""
   );
@@ -805,7 +862,7 @@ ele : EleStruct
 param : LatParamStruct
     Lattice parameters.
 
-map : MadMapStruct
+map : mad_map_struct
     2nd order map.
 
 c0 : CoordStruct
@@ -813,10 +870,13 @@ c0 : CoordStruct
 
 Returns
 -------
-%c0 : 
+ele : EleStruct
+    Element with transfer matrix.
+
+%c0 : None
     0th order transfer matrix.
 
-%mat6 : 
+%mat6 : None
     6x6 1st order transfer matrix.
 
 c1 : CoordStruct
@@ -834,10 +894,18 @@ Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
-    This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
 
 start_orb : CoordStruct
     Coordinates at the beginning of element.
+
+Returns
+-------
+ele : EleStruct
+    Element with transfer matrix
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
 
 end_orb : CoordStruct
     Coordinates at end of element.
@@ -855,15 +923,25 @@ Parameters
 ----------
 ele : EleStruct
     Element to track through.
-    This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
 
 start_orb : CoordStruct
     Starting coords.
 
+err_flag : bool, optional
+
+Returns
+-------
+ele : EleStruct
+    Element to track through.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
+
 end_orb : CoordStruct
     Coordinates at the end of element.
 
-err_flag : 
+err_flag : bool, optional
 )"""
   );
   py::class_<Bmad::MakeMat6Tracking, std::unique_ptr<Bmad::MakeMat6Tracking>>(
@@ -896,7 +974,8 @@ Parameters
 ----------
 ele : EleStruct
     Element with transfer matrix
-    This parameter is an input/output and is modified in-place. As an output: Element with transfer matrix.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
 
 param : LatParamStruct
     Parameters are needed for some elements.
@@ -904,14 +983,21 @@ param : LatParamStruct
 start_orb : CoordStruct
     Coordinates at the beginning of element.
 
+spin_only : bool, optional
+    Default False. If True, only calculate ele.spin_taylor.
+
+Returns
+-------
+ele : EleStruct
+    Element with transfer matrix
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with transfer matrix.
+
 end_orb : CoordStruct
     Coordinates at the end of element.
 
 err_flag : bool
     Set True if there is an error. False otherwise.
-
-spin_only : bool, optional
-    Default False. If True, only calculate ele.spin_taylor.
 )"""
   );
   py::class_<Bmad::MakeN, std::unique_ptr<Bmad::MakeN>>(m, "MakeN", "make_n return type")
@@ -955,24 +1041,24 @@ It is assumed that the synchrotron tune is less than pi.
 
 Parameters
 ----------
-t6 : float
+t6 : 2D array of float (shape: 6,6)
     1-turn transfer matrix
 
-abz_tunes : float, optional
+abz_tunes : 1D array of float (shape: 3), optional
     a-mode is abz_tunes(1), b-mode is abz_tunes(2), synch tune is abz_tunes(3)
 
 Returns
 -------
-N : float
+N : 2D array of float (shape: 6,6)
     X = N.J
 
 err_flag : bool
     Set to true on error.  Often means Eigen decomposition failed.
 
-tunes_out : float
+tunes_out : 1D array of float (shape: 3), optional
     Fractional tune (in radians) of the 3 normal modes of t6.
 
-U : float
+U : 2D array of float (shape: 6,6), optional
     U = Inverse(N).t6.N.  Block diagonal matrix of 2x2 rotation matrices.
 )"""
   );
@@ -1014,24 +1100,24 @@ Note:  The Twiss parameters generated by this function are identical to those de
 
 Parameters
 ----------
-M : float
+M : 2D array of float (shape: 6,6)
     1-turn transfer matrix
 
-abz_tunes : float
+abz_tunes : 1D array of float (shape: 3)
     tunes for a,b, and c modes.  Used to identify which eigenvector is associated with which mode.
 
 Returns
 -------
-P : complex
+P : 2D array of complex (shape: 6,6)
     Eqn. 97.  Phase advances.
 
-Bp : complex
+Bp : 2D array of complex (shape: 6,6)
     Eqns. 89 & 101.  Beta functions.
 
-R : complex
+R : 2D array of complex (shape: 6,6)
     Eqn. 99.  Transverse coupling.
 
-H : complex
+H : 2D array of complex (shape: 6,6)
     Eqn. 100.  Longitudinal coupling.
 )"""
   );
@@ -1074,39 +1160,39 @@ One way to populate mode%a%tune and mode%b%tune:
 
 Parameters
 ----------
-t6 : float
+t6 : 2D array of float (shape: 6,6)
     1-turn transfer matrix
 
 mode : NormalModesStruct
     normal mode emittances
 
-%a%emittance : float
+%a%emittance : real(rp)
     a-mode emittance
 
-%b%emittance : float
+%b%emittance : real(rp)
     b-mode emittance
 
-%z%emittance : float
+%z%emittance : real(rp)
     z-mode emittance
 
-%a%tune : float
+%a%tune : real(rp)
     a-mode tune.  Used to associate emittances with the proper mode.
 
-%b%tune : float
+%b%tune : real(rp)
     b-mode tune.  Used to associate emittances with the proper mode.
 
-%z%tune : float
+%z%tune : real(rp)
     z-mode tune.  Used to associate emittances with the proper mode.
 
 Returns
 -------
-sigma_mat : float
+sigma_mat : 2D array of float (shape: 6,6)
     beam envelop sigma matrix
 
 err_flag : bool
     set to true if something goes wrong.  Usually means Eigen decomposition of the 1-turn matrix failed.
 
-Nout : float
+Nout : 2D array of float (shape: 6,6), optional
     Contains the normalized eigenvectors that were used to make the sigma matrix.
 )"""
   );
@@ -1122,7 +1208,15 @@ Parameters
 ----------
 map : MadMapStruct
     2nd order transport map.
-    This parameter is an input/output and is modified in-place. As an output: Unity 2nd order map.
+    This parameter is an input/output and is modified in-place.
+    As an output, map: Unity 2nd order map.
+
+Returns
+-------
+map : MadMapStruct
+    2nd order transport map.
+    This parameter is an input/output and is modified in-place.
+    As an output, map: Unity 2nd order map.
 )"""
   );
   m.def(
@@ -1166,10 +1260,12 @@ Parameters
 ele : EleStruct
     Element
 
-v_mat : float
+Returns
+-------
+v_mat : 2D array of float (shape: 4,4), optional
     Normal mode to X-Y coords transformation
 
-v_inv_mat : float
+v_inv_mat : 2D array of float (shape: 4,4), optional
     X-Y coords to Normal mode transformation
 )"""
   );
@@ -1238,8 +1334,8 @@ Parameters
 ----------
 slave : EleStruct
     Slave element.
-    This parameter is an input/output and is modified in-place. As an output: Slave element with appropriate
-    values set.
+    This parameter is an input/output and is modified in-place.
+    As an output, slave: Slave element with appropriate values set.
 
 lord : EleStruct
     Lord element.
@@ -1258,6 +1354,11 @@ include_downstream_end : bool
 
 Returns
 -------
+slave : EleStruct
+    Slave element.
+    This parameter is an input/output and is modified in-place.
+    As an output, slave: Slave element with appropriate values set.
+
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -1273,6 +1374,8 @@ Parameters
 map1 : SpinOrbitMap1Struct
     Input map.
 
+Returns
+-------
 inv_map1 : SpinOrbitMap1Struct
     Inverse map.
 )"""
@@ -1282,8 +1385,8 @@ inv_map1 : SpinOrbitMap1Struct
       &Bmad::map1_make_unit,
       R"""(Wrapper for Fortran routine map1_make_unit
 
-Parameters
-----------
+Returns
+-------
 map1 : SpinOrbitMap1Struct
     Unit map.
 )"""
@@ -1298,9 +1401,19 @@ map1 : SpinOrbitMap1Struct
 
 Parameters
 ----------
-map2 : 
-map1 : 
-map_out : 
+map2 : SpinOrbitMap1Struct
+
+map1 : SpinOrbitMap1Struct
+
+map_out : SpinOrbitMap1Struct
+
+Returns
+-------
+map2 : SpinOrbitMap1Struct
+
+map1 : SpinOrbitMap1Struct
+
+map_out : SpinOrbitMap1Struct
 )"""
   );
   m.def(
@@ -1311,10 +1424,12 @@ map_out :
 
 Parameters
 ----------
-t_canon : TaylorStruct
+t_canon : 1D array of TaylorStruct (shape: 6)
     Taylor map in canonical coords.
 
-t_angle : TaylorStruct
+Returns
+-------
+t_angle : 1D array of TaylorStruct (shape: 6)
     Taylor map in angle coords.
 )"""
   );
@@ -1331,8 +1446,15 @@ Parameters
 ----------
 branch : BranchStruct
     Lattice branch with .wall3d beam chamber wall.
-    This parameter is an input/output and is modified in-place. As an output: Lattice branch with
-    .wall3d.section(i).patch_in_region marked.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Lattice branch with .wall3d.section(i).patch_in_region marked.
+
+Returns
+-------
+branch : BranchStruct
+    Lattice branch with .wall3d beam chamber wall.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Lattice branch with .wall3d.section(i).patch_in_region marked.
 )"""
   );
   m.def(
@@ -1350,6 +1472,8 @@ master_parameter : int
 ele : EleStruct
     Element containing the fieldmap.
 
+Returns
+-------
 value : float
     Value of the master parameter.
 )"""
@@ -1371,11 +1495,16 @@ knl : float
 tilt : float
     Tilt of multipole
 
-n : 
+n : int
+
 orbit : CoordStruct
     coordinates of particle
 
-kick_mat : float
+Returns
+-------
+n : int
+
+kick_mat : 2D array of float (shape: 4,4)
     Kick matrix (Jacobian) at orbit.
 )"""
   );
@@ -1392,6 +1521,11 @@ ele : EleStruct
     Element with given orientation.
 
 param : LatParamStruct
+
+Returns
+-------
+ele : EleStruct
+    Element with given orientation.
 )"""
   );
   m.def(
@@ -1414,9 +1548,17 @@ y_pitch_tot : float
 orientation : int
     Element longitudinal orientation. +1 or -1.
 
-mat6 : float
+mat6 : 2D array of float (shape: 6,6)
     1st order part of the transfer map (Jacobian).
-    This parameter is an input/output and is modified in-place. As an output: 1st order xfer map with pitches.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: 1st order xfer map with pitches.
+
+Returns
+-------
+mat6 : 2D array of float (shape: 6,6)
+    1st order part of the transfer map (Jacobian).
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: 1st order xfer map with pitches.
 )"""
   );
   m.def(
@@ -1431,15 +1573,15 @@ matrix and the 0th order transfer vector.
 
 Parameters
 ----------
-vec0 : 
+vec0 : 1D array of complex (shape: 6)
     0th order transfer vector.
 
-mat6 : 
+mat6 : 2D array of complex (shape: 6,6)
     6x6 transfer matrix.
 
 Returns
 -------
-complex_taylor : ComplexTaylorStruct
+complex_taylor : 1D array of ComplexTaylorStruct (shape: 6)
     first order complex_taylor map.
 )"""
   );
@@ -1490,25 +1632,30 @@ complex_taylor : ComplexTaylorStruct
 
 Parameters
 ----------
-t0 : float
+t0 : 2D array of float (shape: 4,4)
     Input matrix
 
+type_out : bool
+    If .true. then an error message is typed out for a non ok$ STAT
+
+Returns
+-------
 stat : int
     status of results: ok$, in_stop_band$, or unstable$
 
-u : unknown
+u : 2D array of float (shape: 4,4)
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
 
-v : unknown
+v : 2D array of float (shape: 4,4)
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
 
-ubar : unknown
+ubar : 2D array of float (shape: 4,4)
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
 
-vbar : unknown
+vbar : 2D array of float (shape: 4,4)
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
 
-g : unknown
+g : 2D array of float (shape: 4,4)
     See MGB CBN 85-2 and PPB/DLR PAC89 papers for more info.
 
 twiss1 : TwissStruct
@@ -1519,9 +1666,6 @@ twiss2 : TwissStruct
 
 gamma : float
     gamma_c factor.
-
-type_out : bool
-    If .true. then an error message is typed out for a non ok$ STAT
 )"""
   );
   py::class_<Bmad::MatchEleToMat6, std::unique_ptr<Bmad::MatchEleToMat6>>(
@@ -1561,21 +1705,23 @@ ele : EleStruct
 start_orb : CoordStruct
     Starting orbit.
 
-mat6 : float
-    Transfer matrix (1st order part of xfer map).
-
-vec0 : float
-    0th order part of the transfer map.
-
-err_flag : bool
-    Set true if there is an error. False otherwise.
-
 include_delta_time : bool, optional
     If False, ignore any finite ele.value(delta_time$).
 
 set_trombone : bool, optional
     Default is False. If True, set the beginning and ending Twiss values in the element to create a phase
     trombone.
+
+Returns
+-------
+mat6 : 2D array of float (shape: 6,6)
+    Transfer matrix (1st order part of xfer map).
+
+vec0 : 1D array of float (shape: 6)
+    0th order part of the transfer map.
+
+err_flag : bool
+    Set true if there is an error. False otherwise.
 )"""
   );
   m.def(
@@ -1593,6 +1739,8 @@ x : float
 m : int
     Exponent.
 
+Returns
+-------
 this_exp : float
     Result.
 )"""
@@ -1609,12 +1757,31 @@ this_exp : float
 
 Parameters
 ----------
-a : 
-b : 
-n : 
-ndim : 
-isn : 
-ierr : 
+a : 1D array of float
+
+b : 1D array of float
+
+n : 1D array of int
+
+ndim : int
+
+isn : int
+
+ierr : int
+
+Returns
+-------
+a : 1D array of float
+
+b : 1D array of float
+
+n : 1D array of int
+
+ndim : int
+
+isn : int
+
+ierr : int
 )"""
   );
   m.def(
@@ -1635,13 +1802,14 @@ ele : EleStruct
 use_offsets : bool
     Does ptc_fibre include element offsets, pitches and tilt?
 
-This argument is ignored if the element is a patch. : 
+This argument is ignored if the element is a patch. : None
+
 for_layout : bool
     If True then fibre is being created as part of a layout as opposed to a stand-alone fibre
 
 Returns
 -------
-ptc_fibre : unknown
+ptc_fibre : Fibre, optional
     PTC fibre element with misalignments.
 )"""
   );
@@ -1656,6 +1824,8 @@ Parameters
 branch : BranchStruct
     Lattice branch to calculate on.
 
+Returns
+-------
 mom_comp : float
     Momentum compaction.
 )"""
@@ -1698,12 +1868,14 @@ mom_comp : float
 
 Parameters
 ----------
-track : CooordStruct
+track : 1D array of CoordStruct
     multi-turn tracking data to analyze. track(i) is the particle position at a given point
 
 i_dim : int
     number of dimensions used in the tracking: 2, or 4.
 
+Returns
+-------
 track0 : CoordStruct
     Closed orbit.
 
@@ -1740,16 +1912,21 @@ Parameters
 ele : EleStruct
     Multilayer element.
 
-%component_name : unknown
+%component_name : character
     Multilayer type name. Assumed upper case.
 
-A blank name is not an error and results in nothing set. : 
-%value : 
+A blank name is not an error and results in nothing set. : None
+
+%value : None
     Photon energy in eV.
 
 Returns
 -------
-%photon%material%f0_m2 : 
+ele : EleStruct
+    Multilayer element.
+
+%photon%material%f0_m2 : None
+
 err_flag : bool
     Set True if multilayer type is unrecognized. False otherwise.
 )"""
@@ -1781,21 +1958,23 @@ err_flag : bool
 
 Parameters
 ----------
-ele : ElePointerStruct
+ele : EleStruct
     Element in a multipass chain.
 
+use_super_lord : bool, optional
+    If present and True and if ele is a super_slave, construct the chain_ele(:) array using the corresponding
+    super_lords.
+
+Returns
+-------
 ix_pass : int
     Multipass pass number of the input element.
 
 n_links : int
     Number of times the physical element is passed through.
 
-chain_ele : ElePointerStruct
+chain_ele : 1D array of ElePointerStruct, optional
     pointers to the elements of the chain. Note: chain_ele(ix_pass).ele => ele
-
-use_super_lord : bool, optional
-    If present and True and if ele is a super_slave, construct the chain_ele(:) array using the corresponding
-    super_lords.
 )"""
   );
   py::class_<Bmad::Multipole1AbToKt, std::unique_ptr<Bmad::Multipole1AbToKt>>(
@@ -1834,6 +2013,8 @@ bn : float
 n : int
     Order of multipole.
 
+Returns
+-------
 knl : float
     Multitude magnatude.
 
@@ -1881,6 +2062,8 @@ tn : float
 n : int
     Multipole order.
 
+Returns
+-------
 an : float
     Skew multipole component.
 
@@ -1899,16 +2082,18 @@ bn : float
 
 Parameters
 ----------
-an : float
+an : 1D array of float
     Skew multipole component.
 
-bn : float
+bn : 1D array of float
     Normal multipole component.
 
-knl : float
+Returns
+-------
+knl : 1D array of float
     Multitude magnatude.
 
-tn : float
+tn : 1D array of float
     Multipole angle.
 )"""
   );
@@ -1953,28 +2138,30 @@ ele : EleStruct
 use_ele_tilt : bool
     If True then include ele.value(tilt_tot$) in calculations.
 
-ix_pole_max : int
-    Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero.
-
-a : float
-    Array of multipole values.
-
-b : float
-    Array of multipole values.
-
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 
 include_kicks : int, optional
     Ignored for for pole_type == electric$ for non-elseparator elements.
 
-b1 : float
+original : bool, optional
+    Default is false. If True, no scaling is applied.
+
+Returns
+-------
+ix_pole_max : int
+    Index of largest nonzero a(:) or b(:) pole. Set to -1 if all multipoles are zero.
+
+a : 1D array of float (shape: 0:n_pole_maxx)
+    Array of multipole values.
+
+b : 1D array of float (shape: 0:n_pole_maxx)
+    Array of multipole values.
+
+b1 : float, optional
     If present, b1 is set to the value of the b(1) component of the b(:) array and b(1) is set to zero. Also
     ix_pole_max is ajusted as needed. This is used by routines that want to handle b(1) in a special way in
     tracking.
-
-original : bool, optional
-    Default is false. If True, no scaling is applied.
 )"""
   );
   m.def(
@@ -1996,20 +2183,22 @@ ele : EleStruct
 use_ele_tilt : bool
     If True then include ele.value(tilt_tot$) in calculations.
 
-ix_pole_max : int
-    Index of largest nonzero pole.
-
-knl : float
-    Vector of strengths, MAD units.
-
-tilt : float
-    Vector of tilts.
-
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 
 include_kicks : int, optional
     Possibilities are:
+
+Returns
+-------
+ix_pole_max : int
+    Index of largest nonzero pole.
+
+knl : 1D array of float
+    Vector of strengths, MAD units.
+
+tilt : 1D array of float
+    Vector of tilts.
 )"""
   );
   m.def(
@@ -2021,15 +2210,17 @@ include_kicks : int, optional
 
 Parameters
 ----------
-ele : EleStruct
-    Element holding the multipoles.
-
 who : int
     electric$, magnetic$, or all$
 
 zero : bool, optional
     If present and True then zero the arrays even if they already exist when this routine is called. Default
     is False which means that if the arrays already exist then this routine will do nothing.
+
+Returns
+-------
+ele : EleStruct
+    Element holding the multipoles.
 )"""
   );
   m.def(
@@ -2056,7 +2247,7 @@ knl : float
 tilt : float
     Multipole tilt.
 
-n : float
+n : int
     Multipole order.
 
 ref_species : int
@@ -2077,7 +2268,11 @@ ref_orb_offset : bool, optional
 
 Returns
 -------
-%vec : unknown
+coord : CoordStruct
+    Particle position and direction of travel.
+
+%vec : x kick.
+as an output
     Y kick.
 )"""
   );
@@ -2094,10 +2289,10 @@ Returns
 
 Parameters
 ----------
-knl : float
+knl : 1D array of float
     Strength of multipoles
 
-tilt : float
+tilt : 1D array of float
     Tilt of multipoles
 
 ref_species : int
@@ -2112,7 +2307,9 @@ orbit : CoordStruct
 factor : float
     Factor to scale knl by.
 
-mat6 : float
+Returns
+-------
+mat6 : 2D array of float (shape: 6,6)
     matrix with kick values at mat6(2:4:2, 1:3:2). The rest of the matrix is untouched.
 )"""
   );
@@ -2132,10 +2329,10 @@ Also see the ab_multipole_kicks routine.
 
 Parameters
 ----------
-knl : float
+knl : 1D array of float
     Multipole strengths.
 
-tilt : float
+tilt : 1D array of float
     Multipole tilts.
 
 ele : EleStruct
@@ -2143,13 +2340,21 @@ ele : EleStruct
 
 orbit : CoordStruct
     Particle position.
-    This parameter is an input/output and is modified in-place. As an output: Kicked particle.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Kicked particle.
 
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
 
 ref_orb_offset : bool, optional
     If present and n = 0 then the multipole simulates a zero length bend with bending angle knl.
+
+Returns
+-------
+orbit : CoordStruct
+    Particle position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Kicked particle.
 )"""
   );
   m.def(
@@ -2164,19 +2369,21 @@ ref_orb_offset : bool, optional
 
 Parameters
 ----------
-knl : float
+knl : 1D array of float
     Normal multitude component.
 
-knsl : float
+knsl : 1D array of float
     Skew multitude component.
 
-tn : float
+tn : 1D array of float
     Multipole angle.
 
-an : float
+Returns
+-------
+an : 1D array of float
     Skew multipole component.
 
-bn : float
+bn : 1D array of float
     Normal multipole component.
 )"""
   );
@@ -2193,9 +2400,14 @@ Parameters
 ele : EleStruct
     Element
 
-param : 
+param : LatParamStruct
     Lat_param_struct
 
+orbit : CoordStruct
+    Particle coordinates.
+
+Returns
+-------
 orbit : CoordStruct
     Particle coordinates.
 )"""
@@ -2210,9 +2422,19 @@ orbit : CoordStruct
 
 Parameters
 ----------
-y : 
-x : 
-arg : 
+y : float
+
+x : float
+
+arg : float
+
+Returns
+-------
+y : float
+
+x : float
+
+arg : float
 )"""
   );
 }

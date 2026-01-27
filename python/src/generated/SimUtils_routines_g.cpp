@@ -18,12 +18,31 @@ void init_SimUtils_routines_g(py::module &m) {
 
 Parameters
 ----------
-kc : 
-p : 
-c : 
-s : 
-err_tol : 
-value : 
+kc : float
+
+p : float
+
+c : float
+
+s : float
+
+err_tol : float, optional
+
+value : float
+
+Returns
+-------
+kc : float
+
+p : float
+
+c : float
+
+s : float
+
+err_tol : float, optional
+
+value : float
 )"""
   );
   m.def(
@@ -37,10 +56,23 @@ value :
 
 Parameters
 ----------
-file_name : 
-cnum_in : 
-num_out : 
-err_flag : 
+file_name : character
+
+cnum_in : character
+
+num_out : int
+
+err_flag : bool
+
+Returns
+-------
+file_name : character
+
+cnum_in : character
+
+num_out : int
+
+err_flag : bool
 )"""
   );
   m.def(

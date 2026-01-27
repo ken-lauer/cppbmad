@@ -16,10 +16,23 @@ void init_Bmad_routines_y(py::module &m) {
 
 Parameters
 ----------
-x : 
-y : 
-z : 
-res : 
+x : float
+
+y : float
+
+z : float
+
+res : float
+
+Returns
+-------
+x : float
+
+y : float
+
+z : float
+
+res : float
 )"""
   );
 }

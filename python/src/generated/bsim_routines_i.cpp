@@ -15,8 +15,15 @@ Parameters
 ----------
 branch : BranchStruct
     Lattice branch.
-    This parameter is an input/output and is modified in-place. As an output: Lattice branch with trumbone at
-    branch.ele(1).
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Lattice branch with trumbone at branch.ele(1).
+
+Returns
+-------
+branch : BranchStruct
+    Lattice branch.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Lattice branch with trumbone at branch.ele(1).
 )"""
   );
 }

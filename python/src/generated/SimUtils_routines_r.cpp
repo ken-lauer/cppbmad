@@ -21,7 +21,7 @@ set_state : RandomStateStruct, optional
 
 Returns
 -------
-get_state : RandomStateStruct
+get_state : RandomStateStruct, optional
     Returns the state of the default generator.
 )"""
   );
@@ -39,12 +39,13 @@ With sobseq quasi-random numbers the maximum dimension is 6.
 
 Parameters
 ----------
-set : unknown, optional
+set : character, optional
     Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
     'quasi'  -> Uses sobseq from Numerical Recipes.
 
-''       -> Do nothing. : 
-get : unknown, optional
+''       -> Do nothing. : None
+
+get : character, optional
     Get the current (before any set) random number engine.
 
 ran_state : RandomStateStruct, optional
@@ -95,10 +96,11 @@ used independent of what was set with this routine.
 
 Parameters
 ----------
-set : unknown, optional
+set : character, optional
     Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited'
 
-''       ! Do nothing : 
+''       ! Do nothing : None
+
 set_sigma_cut : float, optional
     Sigma cutoff. Initially: sigma_cut = -1.
 
@@ -107,10 +109,10 @@ ran_state : RandomStateStruct, optional
 
 Returns
 -------
-get : unknown
+get : character, optional
     Get the current (before any set) gaussian converter.
 
-get_sigma_cut : float
+get_sigma_cut : float, optional
     Get the current (before any set) sigma cutoff.
 )"""
   );
@@ -138,7 +140,8 @@ Parameters
 ran_state : RandomStateStruct, optional
     Internal state.
 
-See the ran_seed_put documentation for more details. : 
+See the ran_seed_put documentation for more details. : None
+
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
 
@@ -146,9 +149,9 @@ Returns
 -------
 harvest : float
     Random number.
-    This parameter is an input/output and is modified in-place. As an output: Random number array.
+    As an output, harvest: Random number array.
 
-Or : 
+Or : None
 
 Notes
 -----
@@ -179,17 +182,18 @@ Parameters
 ran_state : RandomStateStruct, optional
     Internal state.
 
-See the ran_seed_put documentation for more details. : 
+See the ran_seed_put documentation for more details. : None
+
 sigma_cut : float, optional
     If present and positive will override setting of ran_state.gauss_sigma_cut.
 
 Returns
 -------
-harvest : float
+harvest : 1D array of float
     Random number.
-    This parameter is an input/output and is modified in-place. As an output: Random number array.
+    As an output, harvest: Random number array.
 
-Or : 
+Or : None
 
 Notes
 -----
@@ -205,7 +209,7 @@ Routine to return the seed used for the random number generator.
 
 Parameters
 ----------
-ran_state : RandomStateStruct, optional
+ran_state : random_state_struct, optional
     Internal state. See the ran_seed_put documentation for more details.
 
 Returns
@@ -235,7 +239,8 @@ Parameters
 seed : int
     Seed number. If seed = 0 then a
 
-seed will be choosen based upon the system clock. : 
+seed will be choosen based upon the system clock. : None
+
 mpi_offset : int, optional
     Offset added to seed. Default is zero. Used with MPI processes ensure different threads use different
     random numbers.
@@ -270,9 +275,9 @@ Returns
 -------
 harvest : float
     Random number.
-    This parameter is an input/output and is modified in-place. As an output: Random number array.
+    As an output, harvest: Random number array.
 
-Or : 
+Or : None
 
 Notes
 -----
@@ -305,11 +310,11 @@ ran_state : RandomStateStruct, optional
 
 Returns
 -------
-harvest : float
+harvest : 1D array of float
     Random number.
-    This parameter is an input/output and is modified in-place. As an output: Random number array.
+    As an output, harvest: Random number array.
 
-Or : 
+Or : None
 
 Notes
 -----
@@ -327,10 +332,23 @@ Overloaded versions:
 
 Parameters
 ----------
-number : 
-width : 
-n_blanks : 
-fmt_str : 
+number : float
+
+width : int
+
+n_blanks : int, optional
+
+fmt_str : character
+
+Returns
+-------
+number : float
+
+width : int
+
+n_blanks : int, optional
+
+fmt_str : character
 )"""
   );
   m.def(
@@ -343,9 +361,19 @@ fmt_str :
 
 Parameters
 ----------
-path_in : 
-path_out : 
-is_ok : 
+path_in : character
+
+path_out : character
+
+is_ok : bool
+
+Returns
+-------
+path_in : character
+
+path_out : character
+
+is_ok : bool
 )"""
   );
   m.def(
@@ -359,10 +387,23 @@ is_ok :
 
 Parameters
 ----------
-r_num : 
-n_signif : 
-n_decimal : 
-str : 
+r_num : float
+
+n_signif : int, optional
+
+n_decimal : int, optional
+
+str : character
+
+Returns
+-------
+r_num : float
+
+n_signif : int, optional
+
+n_decimal : int, optional
+
+str : character
 )"""
   );
   m.def(
@@ -377,11 +418,27 @@ str :
 
 Parameters
 ----------
-real_num : 
-width : 
-n_signif : 
-n_decimal : 
-str : 
+real_num : float
+
+width : int
+
+n_signif : int, optional
+
+n_decimal : int, optional
+
+str : character
+
+Returns
+-------
+real_num : float
+
+width : int
+
+n_signif : int, optional
+
+n_decimal : int, optional
+
+str : character
 )"""
   );
   m.def(
@@ -399,9 +456,10 @@ array will be lost if n is less than the original size of the array
 
 Parameters
 ----------
-spline : SplineStruct
+spline : 1D array of SplineStruct
     Spline to reallocate.
-    This parameter is an input/output and is modified in-place. As an output: Allocated spline.
+    This parameter is an input/output and is modified in-place.
+    As an output, spline: Allocated spline.
 
 n : int
     Upper bound needed for 1-dimensional arrays.
@@ -411,6 +469,13 @@ n_min : int, optional
 
 exact : bool, optional
     If present and False then the size of the output array is permitted to be larger than n. Default is True.
+
+Returns
+-------
+spline : 1D array of SplineStruct
+    Spline to reallocate.
+    This parameter is an input/output and is modified in-place.
+    As an output, spline: Allocated spline.
 )"""
   );
   py::class_<SimUtils::RmsValue, std::unique_ptr<SimUtils::RmsValue>>(
@@ -439,13 +504,15 @@ exact : bool, optional
 
 Parameters
 ----------
-val_arr : float
+val_arr : 1D array of float
     Array of reals.
 
-good_val : bool, optional
+good_val : 1D array of bool, optional
     If present, only calculate RMS where good_val(i) = True.
 
-ave_val : float
+Returns
+-------
+ave_val : float, optional
     average value.
 
 rms_val : float
@@ -461,13 +528,15 @@ rms_val : float
 
 Parameters
 ----------
-vec_in : float
+vec_in : 1D array of float (shape: 2)
     Init vec
 
 angle : float
     angle in radians.
 
-vec_out : float
+Returns
+-------
+vec_out : 1D array of float (shape: 2)
     Rotated vec.
 )"""
   );
@@ -483,15 +552,23 @@ Basic routine to rotate vector components around the x, y, or z axis.
 
 Parameters
 ----------
-vec : float
+vec : 1D array of float
     vector
-    This parameter is an input/output and is modified in-place. As an output: Rotated vector.
+    This parameter is an input/output and is modified in-place.
+    As an output, vec: Rotated vector.
 
 axis : int
     x_axis$, y_axis$, or z_axis$
 
 angle : float
     angle to rotate.
+
+Returns
+-------
+vec : 1D array of float
+    vector
+    This parameter is an input/output and is modified in-place.
+    As an output, vec: Rotated vector.
 )"""
   );
   m.def(
@@ -506,10 +583,10 @@ Routine to rotate a vector.
 
 Parameters
 ----------
-vec_in : float
+vec_in : 1D array of float (shape: 3)
     Initial vector.
 
-axis : float
+axis : 1D array of float
     Axis of rotation. Must be normalized to 1.
 
 angle : float
@@ -517,7 +594,7 @@ angle : float
 
 Returns
 -------
-vec_out : float
+vec_out : 1D array of float (shape: 3)
     Final vector.
 )"""
   );
@@ -552,9 +629,19 @@ re_out : float
 
 Parameters
 ----------
-command : 
-time : 
-time0 : 
+command : character
+
+time : float, optional
+
+time0 : float, optional
+
+Returns
+-------
+command : character
+
+time : float, optional
+
+time0 : float, optional
 )"""
   );
 }

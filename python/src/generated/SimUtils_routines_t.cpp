@@ -76,13 +76,13 @@ Returns
 f_val : complex
     Value of f.
 
-df_dx : complex
+df_dx : complex, optional
     Normalized first derivative: True df/dx = df_dx * dx
 
-df_dy : complex
+df_dy : complex, optional
     Normalized first derivative: True df/dy = df_dy * dy
 
-df_dz : complex
+df_dz : complex, optional
     Normalized first derivative: True df/dz = df_dz * dz
 )"""
   );
@@ -94,7 +94,11 @@ df_dz : complex
 
 Parameters
 ----------
-filename : 
+filename : character
+
+Returns
+-------
+filename : character
 )"""
   );
 }

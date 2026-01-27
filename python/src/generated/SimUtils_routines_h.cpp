@@ -14,8 +14,15 @@ void init_SimUtils_routines_h(py::module &m) {
 
 Parameters
 ----------
-N : 
-hh : 
+N : int
+
+hh : 1D array of float
+
+Returns
+-------
+N : int
+
+hh : 1D array of float
 )"""
   );
 }

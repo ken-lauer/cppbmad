@@ -60,8 +60,9 @@ z : float
 err_flag : bool
     Set True if cannot compute z due to, say, point
 
-being outside of ellipseoid or grid bounds. : 
-dz_dxy : float
+being outside of ellipseoid or grid bounds. : None
+
+dz_dxy : 1D array of float (shape: 2), optional
     Surface slope at (x, y).
 
 Notes
@@ -79,7 +80,15 @@ Parameters
 ----------
 ele : EleStruct
     Element with possible nonzero kicks.
-    This parameter is an input/output and is modified in-place. As an output: Element with no kicks.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with no kicks.
+
+Returns
+-------
+ele : EleStruct
+    Element with possible nonzero kicks.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with no kicks.
 )"""
   );
   m.def(
@@ -92,8 +101,15 @@ Parameters
 ----------
 ele : EleStruct
     Element with possible nonzero offsets, etc.
-    This parameter is an input/output and is modified in-place. As an output: Element with no
-    (mis)orientation.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with no (mis)orientation.
+
+Returns
+-------
+ele : EleStruct
+    Element with possible nonzero offsets, etc.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with no (mis)orientation.
 )"""
   );
   m.def(
@@ -112,7 +128,10 @@ lat : LatStruct
 
 Returns
 -------
-%ele : unknown
+lat : LatStruct
+    Lattice
+
+%ele : L
     :).b_cos -> Set to zero .wake.lr.mode(:).a_sin -> Set to zero .wake.lr.mode(:).a_cos -> Set to zero
 )"""
   );
@@ -127,10 +146,23 @@ Returns
 
 Parameters
 ----------
-x : 
-y : 
-z : 
-res : 
+x : float
+
+y : float
+
+z : float
+
+res : float
+
+Returns
+-------
+x : float
+
+y : float
+
+z : float
+
+res : float
 )"""
   );
 }

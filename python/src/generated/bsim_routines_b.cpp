@@ -16,10 +16,23 @@ void init_bsim_routines_b(py::module &m) {
 
 Parameters
 ----------
-lat : 
-bbu_beam : 
-bbu_param : 
-beam_init : 
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+bbu_param : BbuParamStruct
+
+beam_init : BeamInitStruct
+
+Returns
+-------
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+bbu_param : BbuParamStruct
+
+beam_init : BeamInitStruct
 )"""
   );
   m.def(
@@ -33,10 +46,23 @@ beam_init :
 
 Parameters
 ----------
-lat : 
-bbu_beam : 
-n_period : 
-ix_stage_last_tracked : 
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+n_period : int
+
+ix_stage_last_tracked : int
+
+Returns
+-------
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+n_period : int
+
+ix_stage_last_tracked : int
 )"""
   );
   m.def(
@@ -47,7 +73,11 @@ ix_stage_last_tracked :
 
 Parameters
 ----------
-bbu_beam : 
+bbu_beam : BbuBeamStruct
+
+Returns
+-------
+bbu_beam : BbuBeamStruct
 )"""
   );
   m.def(
@@ -61,10 +91,23 @@ bbu_beam :
 
 Parameters
 ----------
-lat : 
-dt_bunch : 
-bbu_param : 
-bbu_beam : 
+lat : LatStruct
+
+dt_bunch : float
+
+bbu_param : BbuParamStruct
+
+bbu_beam : BbuBeamStruct
+
+Returns
+-------
+lat : LatStruct
+
+dt_bunch : float
+
+bbu_param : BbuParamStruct
+
+bbu_beam : BbuBeamStruct
 )"""
   );
   m.def(
@@ -79,11 +122,27 @@ bbu_beam :
 
 Parameters
 ----------
-lat : 
-bbu_beam : 
-bbu_param : 
-lost : 
-ix_stage_tracked : 
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+bbu_param : BbuParamStruct
+
+lost : bool
+
+ix_stage_tracked : int
+
+Returns
+-------
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+bbu_param : BbuParamStruct
+
+lost : bool
+
+ix_stage_tracked : int
 )"""
   );
   m.def(
@@ -101,14 +160,39 @@ ix_stage_tracked :
 
 Parameters
 ----------
-lat : 
-bbu_beam : 
-bbu_param : 
-beam_init : 
-hom_voltage_normalized : 
-growth_rate : 
-lost : 
-irep : 
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+bbu_param : BbuParamStruct
+
+beam_init : BeamInitStruct
+
+hom_voltage_normalized : float
+
+growth_rate : float
+
+lost : bool
+
+irep : int
+
+Returns
+-------
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+bbu_param : BbuParamStruct
+
+beam_init : BeamInitStruct
+
+hom_voltage_normalized : float
+
+growth_rate : float
+
+lost : bool
+
+irep : int
 )"""
   );
 }

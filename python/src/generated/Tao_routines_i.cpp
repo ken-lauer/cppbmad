@@ -19,13 +19,35 @@ void init_Tao_routines_i(py::module &m) {
 
 Parameters
 ----------
-ix_start : 
-ix_ele : 
-datum_value : 
-ix_m : 
-branch : 
-vec : 
-datum : 
+ix_start : int
+
+ix_ele : int
+
+datum_value : float
+
+ix_m : int
+
+branch : BranchStruct
+
+vec : 1D array of float
+
+datum : TaoDataStruct
+
+Returns
+-------
+ix_start : int
+
+ix_ele : int
+
+datum_value : float
+
+ix_m : int
+
+branch : BranchStruct
+
+vec : 1D array of float
+
+datum : TaoDataStruct
 )"""
   );
   m.def(
@@ -42,13 +64,35 @@ datum :
 
 Parameters
 ----------
-ix_start : 
-ix_ele : 
-datum_value : 
-ix_m : 
-branch : 
-vec : 
-datum : 
+ix_start : int
+
+ix_ele : int
+
+datum_value : float
+
+ix_m : int
+
+branch : BranchStruct
+
+vec : 1D array of float
+
+datum : TaoDataStruct
+
+Returns
+-------
+ix_start : int
+
+ix_ele : int
+
+datum_value : float
+
+ix_m : int
+
+branch : BranchStruct
+
+vec : 1D array of float
+
+datum : TaoDataStruct
 )"""
   );
 }

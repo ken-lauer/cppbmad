@@ -99,12 +99,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
-  opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  arr_in : 1D array of BunchStruct
+
+  arr_inout : 1D array of BunchStruct
+
+  arr_out : 1D array of BunchStruct
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of BunchStruct, optional
+
+  arr_inout_opt : 1D array of BunchStruct, optional
+
+  Returns
+  -------
+  arr_in : 1D array of BunchStruct
+
+  arr_inout : 1D array of BunchStruct
+
+  arr_out : 1D array of BunchStruct
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of BunchStruct, optional
+
+  arr_inout_opt : 1D array of BunchStruct, optional
   )"""
   );
   py::class_<
@@ -137,12 +156,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
-  opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  val_in : BunchStruct
+
+  val_inout : BunchStruct
+
+  val_out : BunchStruct
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : BunchStruct, optional
+
+  val_inout_opt : BunchStruct, optional
+
+  Returns
+  -------
+  val_in : BunchStruct
+
+  val_inout : BunchStruct
+
+  val_out : BunchStruct
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : BunchStruct, optional
+
+  val_inout_opt : BunchStruct, optional
   )"""
   );
   py::class_<PyTestCharacterScalar, std::unique_ptr<PyTestCharacterScalar>>(
@@ -179,12 +217,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
-  opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  val_in : character
+
+  val_inout : character
+
+  val_out : character
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : character, optional
+
+  val_inout_opt : character, optional
+
+  Returns
+  -------
+  val_in : character
+
+  val_inout : character
+
+  val_out : character
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : character, optional
+
+  val_inout_opt : character, optional
   )"""
   );
   m.def(
@@ -199,12 +256,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
-  opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  arr_in : 1D array of complex
+
+  arr_inout : 1D array of complex
+
+  arr_out : 1D array of complex
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of complex, optional
+
+  arr_inout_opt : 1D array of complex, optional
+
+  Returns
+  -------
+  arr_in : 1D array of complex
+
+  arr_inout : 1D array of complex
+
+  arr_out : 1D array of complex
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of complex, optional
+
+  arr_inout_opt : 1D array of complex, optional
   )"""
   );
   py::class_<PyTestComplexScalar, std::unique_ptr<PyTestComplexScalar>>(
@@ -241,12 +317,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
-  opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  val_in : complex
+
+  val_inout : complex
+
+  val_out : complex
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : complex, optional
+
+  val_inout_opt : complex, optional
+
+  Returns
+  -------
+  val_in : complex
+
+  val_inout : complex
+
+  val_out : complex
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : complex, optional
+
+  val_inout_opt : complex, optional
   )"""
   );
   m.def(
@@ -261,12 +356,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
-  opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  arr_in : 1D array of int
+
+  arr_inout : 1D array of int
+
+  arr_out : 1D array of int
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of int, optional
+
+  arr_inout_opt : 1D array of int, optional
+
+  Returns
+  -------
+  arr_in : 1D array of int
+
+  arr_inout : 1D array of int
+
+  arr_out : 1D array of int
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of int, optional
+
+  arr_inout_opt : 1D array of int, optional
   )"""
   );
   py::class_<PyTestInteger8Scalar, std::unique_ptr<PyTestInteger8Scalar>>(
@@ -303,12 +417,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
-  opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  val_in : int
+
+  val_inout : int
+
+  val_out : int
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : int, optional
+
+  val_inout_opt : int, optional
+
+  Returns
+  -------
+  val_in : int
+
+  val_inout : int
+
+  val_out : int
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : int, optional
+
+  val_inout_opt : int, optional
   )"""
   );
   m.def(
@@ -323,12 +456,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
-  opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  arr_in : 1D array of int
+
+  arr_inout : 1D array of int
+
+  arr_out : 1D array of int
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of int, optional
+
+  arr_inout_opt : 1D array of int, optional
+
+  Returns
+  -------
+  arr_in : 1D array of int
+
+  arr_inout : 1D array of int
+
+  arr_out : 1D array of int
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of int, optional
+
+  arr_inout_opt : 1D array of int, optional
   )"""
   );
   py::class_<PyTestIntegerScalar, std::unique_ptr<PyTestIntegerScalar>>(
@@ -365,12 +517,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
-  opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  val_in : int
+
+  val_inout : int
+
+  val_out : int
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : int, optional
+
+  val_inout_opt : int, optional
+
+  Returns
+  -------
+  val_in : int
+
+  val_inout : int
+
+  val_out : int
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : int, optional
+
+  val_inout_opt : int, optional
   )"""
   );
   m.def(
@@ -385,12 +556,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
-  opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  arr_in : 1D array of bool
+
+  arr_inout : 1D array of bool
+
+  arr_out : 1D array of bool
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of bool, optional
+
+  arr_inout_opt : 1D array of bool, optional
+
+  Returns
+  -------
+  arr_in : 1D array of bool
+
+  arr_inout : 1D array of bool
+
+  arr_out : 1D array of bool
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of bool, optional
+
+  arr_inout_opt : 1D array of bool, optional
   )"""
   );
   py::class_<PyTestLogicalScalar, std::unique_ptr<PyTestLogicalScalar>>(
@@ -427,12 +617,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
-  opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  val_in : bool
+
+  val_inout : bool
+
+  val_out : bool
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : bool, optional
+
+  val_inout_opt : bool, optional
+
+  Returns
+  -------
+  val_in : bool
+
+  val_inout : bool
+
+  val_out : bool
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : bool, optional
+
+  val_inout_opt : bool, optional
   )"""
   );
   m.def(
@@ -447,12 +656,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
-  opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  arr_in : 1D array of float
+
+  arr_inout : 1D array of float
+
+  arr_out : 1D array of float
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of float, optional
+
+  arr_inout_opt : 1D array of float, optional
+
+  Returns
+  -------
+  arr_in : 1D array of float
+
+  arr_inout : 1D array of float
+
+  arr_out : 1D array of float
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of float, optional
+
+  arr_inout_opt : 1D array of float, optional
   )"""
   );
   py::class_<PyTestReal16Scalar, std::unique_ptr<PyTestReal16Scalar>>(
@@ -489,12 +717,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
-  opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  val_in : float
+
+  val_inout : float
+
+  val_out : float
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : float, optional
+
+  val_inout_opt : float, optional
+
+  Returns
+  -------
+  val_in : float
+
+  val_inout : float
+
+  val_out : float
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : float, optional
+
+  val_inout_opt : float, optional
   )"""
   );
   m.def(
@@ -509,12 +756,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  arr_in : 
-  arr_inout : 
-  arr_out : 
-  opt_status : 
-  arr_in_opt : 
-  arr_inout_opt : 
+  arr_in : 1D array of float
+
+  arr_inout : 1D array of float
+
+  arr_out : 1D array of float
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of float, optional
+
+  arr_inout_opt : 1D array of float, optional
+
+  Returns
+  -------
+  arr_in : 1D array of float
+
+  arr_inout : 1D array of float
+
+  arr_out : 1D array of float
+
+  opt_status : 1D array of int (shape: 2)
+
+  arr_in_opt : 1D array of float, optional
+
+  arr_inout_opt : 1D array of float, optional
   )"""
   );
   py::class_<PyTestRealScalar, std::unique_ptr<PyTestRealScalar>>(
@@ -551,12 +817,31 @@ void init_CppBmadTest_routines_t(py::module &m) {
 
   Parameters
   ----------
-  val_in : 
-  val_inout : 
-  val_out : 
-  opt_status : 
-  val_in_opt : 
-  val_inout_opt : 
+  val_in : float
+
+  val_inout : float
+
+  val_out : float
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : float, optional
+
+  val_inout_opt : float, optional
+
+  Returns
+  -------
+  val_in : float
+
+  val_inout : float
+
+  val_out : float
+
+  opt_status : 1D array of int (shape: 2)
+
+  val_in_opt : float, optional
+
+  val_inout_opt : float, optional
   )"""
   );
 }

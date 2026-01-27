@@ -20,6 +20,8 @@ ele : EleStruct
 field_calc : int
     bmad_standard$, etc.
 
+Returns
+-------
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -39,6 +41,8 @@ ele : EleStruct
 fringe_type : int
     bmad_standard$, etc.
 
+Returns
+-------
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -56,12 +60,14 @@ Parameters
 ele : EleStruct
     Lattice element.
 
-species : 
+species : int
     Type of particle being tracked. electron$, etc. or not_set$
 
 mat6_calc_method : int
     bmad_standard$, etc.
 
+Returns
+-------
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -81,6 +87,8 @@ ele : EleStruct
 spin_tracking_method : int
     bmad_standard$, etc.
 
+Returns
+-------
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -98,12 +106,14 @@ Parameters
 ele : EleStruct
     Lattice element.
 
-species : 
+species : int
     Type of particle being tracked. electron$, etc. or not_set$
 
 tracking_method : int
     bmad_standard$, etc.
 
+Returns
+-------
 is_valid : bool
     True if a valid method. False otherwise.
 )"""
@@ -139,17 +149,19 @@ Parameters
 ele : EleStruct
     After this routine finishes Ptr_attrib
 
-attrib_name : unknown
+attrib_name : character
     Name of attribute. Must be uppercase.
-
-err_flag : bool
-    Set True if attribtute not found. False otherwise.
 
 err_print_flag : bool, optional
     If present and True then print an error message if there is an  error.
 
 err_value : float, optional
     Value to set value argument if there is an error. Default is 0.
+
+Returns
+-------
+err_flag : bool, optional
+    Set True if attribtute not found. False otherwise.
 
 value : float
     Value of the attribute. Set to err_value if not found.
@@ -168,12 +180,31 @@ value : float
 
 Parameters
 ----------
-line : 
-value : 
-str : 
-typ : 
-ignore_if_zero : 
-use_comma : 
+line : character
+
+value : float
+
+str : character
+
+typ : character
+
+ignore_if_zero : bool, optional
+
+use_comma : bool, optional
+
+Returns
+-------
+line : character
+
+value : float
+
+str : character
+
+typ : character
+
+ignore_if_zero : bool, optional
+
+use_comma : bool, optional
 )"""
   );
   m.def(
@@ -185,12 +216,14 @@ use_comma :
 
 Parameters
 ----------
-vec : float
+vec : 1D array of float (shape: 3)
     unitary spin vector
 
 phase : float, optional
     Phase of the spinor, if not given then set to zero
 
+Returns
+-------
 polar : SpinPolarStruct
 )"""
   );
@@ -203,13 +236,15 @@ polar : SpinPolarStruct
 
 Parameters
 ----------
-vec : float
+vec : 1D array of float (shape: 3)
     Spin vector in cartesian coordinates
 
-phase : float
+phase : float, optional
     Phase of the spinor, if not given then set to zero
 
-spinor : complex
+Returns
+-------
+spinor : 1D array of complex (shape: 2)
     Spinor.
 )"""
   );
@@ -234,7 +269,7 @@ This subroutine is not intended for general use.
 
 Parameters
 ----------
-name : unknown
+name : character
     Name(1:ix_name) is the string to check.
 
 ix_name : int
@@ -243,7 +278,8 @@ ix_name : int
 pure_name : bool, optional
     If True, reject names that contain "[", "]", "(", ")", "." characters.
 
-Default is False. : 
+Default is False. : None
+
 include_wild : bool, optional
     Name can include wild card characters and additionally type prefixes like "QUAD::". Default is False.
 

@@ -19,13 +19,35 @@ void init_SimUtils_routines_l(py::module &m) {
 
 Parameters
 ----------
-x : 
-y : 
-n_data : 
-a : 
-b : 
-sig_a : 
-sig_b : 
+x : 1D array of float
+
+y : 1D array of float
+
+n_data : int
+
+a : float
+
+b : float
+
+sig_a : float
+
+sig_b : float
+
+Returns
+-------
+x : 1D array of float
+
+y : 1D array of float
+
+n_data : int
+
+a : float
+
+b : float
+
+sig_a : float
+
+sig_b : float
 )"""
   );
   m.def(
@@ -38,16 +60,18 @@ sig_b :
 
 Parameters
 ----------
-x : float
+x : 1D array of float
     Array of x-values.
 
-y : float
+y : 1D array of float
     Array of y-values.
 
-z : float
+z : 1D array of float
     Array of z-values
 
-coef : float
+Returns
+-------
+coef : 1D array of float (shape: 3)
     Coefficients of the linear fit
 )"""
   );
@@ -60,8 +84,15 @@ coef : float
 
 Parameters
 ----------
-logic : 
-str : 
+logic : bool
+
+str : character
+
+Returns
+-------
+logic : bool
+
+str : character
 )"""
   );
   m.def(
@@ -72,7 +103,11 @@ str :
 
 Parameters
 ----------
-lunget : 
+lunget : None
+
+Returns
+-------
+lunget : None
 )"""
   );
 }

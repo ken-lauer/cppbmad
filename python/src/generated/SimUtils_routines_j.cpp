@@ -15,9 +15,19 @@ void init_SimUtils_routines_j(py::module &m) {
 
 Parameters
 ----------
-m : 
-arg : 
-j_bes : 
+m : int
+
+arg : float
+
+j_bes : float
+
+Returns
+-------
+m : int
+
+arg : float
+
+j_bes : float
 )"""
   );
 }

@@ -16,13 +16,20 @@ Routine to calculate the slopes at the ends of a spline array
 
 Parameters
 ----------
-spline : SplineStruct
+spline : 1D array of SplineStruct
     Array of splines.
-    This parameter is an input/output and is modified in-place. As an output: Array with slopes at end
-    calculated.
+    This parameter is an input/output and is modified in-place.
+    As an output, spline: Array with slopes at end calculated.
 
 which_end : int
     0 => calculate slopes for the start end of the array. 1 => calculate slopes for the end end of the array.
+
+Returns
+-------
+spline : 1D array of SplineStruct
+    Array of splines.
+    This parameter is an input/output and is modified in-place.
+    As an output, spline: Array with slopes at end calculated.
 )"""
   );
   m.def(
@@ -33,7 +40,11 @@ which_end : int
 
 Parameters
 ----------
-err_str : 
+err_str : character, optional
+
+Returns
+-------
+err_str : character, optional
 )"""
   );
 }

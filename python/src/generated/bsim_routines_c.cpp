@@ -14,8 +14,15 @@ void init_bsim_routines_c(py::module &m) {
 
 Parameters
 ----------
-lat : 
-fb : 
+lat : LatStruct
+
+fb : float
+
+Returns
+-------
+lat : LatStruct
+
+fb : float
 )"""
   );
   m.def(
@@ -26,8 +33,15 @@ fb :
 
 Parameters
 ----------
-file_name : 
-lines : 
+file_name : character
+
+lines : int
+
+Returns
+-------
+file_name : character
+
+lines : int
 )"""
   );
 }

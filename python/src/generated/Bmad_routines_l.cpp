@@ -40,10 +40,23 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
-  x : 
-  y : 
-  z : 
-  res : 
+  x : float
+
+  y : float
+
+  z : float
+
+  res : float
+
+  Returns
+  -------
+  x : float
+
+  y : float
+
+  z : float
+
+  res : float
   )"""
   );
   m.def(
@@ -54,6 +67,11 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
+  lat : LatStruct
+      Input lattice.
+
+  Returns
+  -------
   lat : LatStruct
       Input lattice.
 
@@ -93,24 +111,23 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
-  loc_str : unknown
+  loc_str : character
       Element names or indexes. May be lower case.
 
   lat : LatStruct
       Lattice to search through.
 
-  eles : ElePointerStruct
+  eles : 1D array of ElePointerStruct
       If append_eles is True, save existing elements.
-      This parameter is an input/output and is modified in-place. As an output: Array of matching elements.
+      This parameter is an input/output and is modified in-place.
+      As an output, eles: Array of matching elements.
 
   n_loc : int
       Number of existing elements. Used if append_eles is True.
-      This parameter is an input/output and is modified in-place. As an output: Number of locations found.
+      This parameter is an input/output and is modified in-place.
+      As an output, n_loc: Number of locations found.
 
-  err : bool
-      Set True if there is a decode error. Note: Not finding any matching element is not an error.
-
-  above_ubound_is_err : unknown, optional
+  above_ubound_is_err : bool, optional
       Default is True. If the upper bound "e2" on an "e1:e2" range construct is an integer and above the maximum
       element index then treat this as an error?
 
@@ -124,6 +141,21 @@ void init_Bmad_routines_l(py::module &m) {
 
   append_eles : bool, optional
       Default is False. If True, found elements are appended to eles(:) array.
+
+  Returns
+  -------
+  eles : 1D array of ElePointerStruct
+      If append_eles is True, save existing elements.
+      This parameter is an input/output and is modified in-place.
+      As an output, eles: Array of matching elements.
+
+  n_loc : int
+      Number of existing elements. Used if append_eles is True.
+      This parameter is an input/output and is modified in-place.
+      As an output, n_loc: Number of locations found.
+
+  err : bool, optional
+      Set True if there is a decode error. Note: Not finding any matching element is not an error.
   )"""
   );
   m.def(
@@ -135,8 +167,15 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
-  lat_out : 
-  lat_in : 
+  lat_out : LatStruct
+
+  lat_in : LatStruct
+
+  Returns
+  -------
+  lat_out : LatStruct
+
+  lat_in : LatStruct
   )"""
   );
   m.def(
@@ -147,6 +186,11 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
+  lat : LatStruct
+      The lattice.
+
+  Returns
+  -------
   lat : LatStruct
       The lattice.
   )"""
@@ -168,14 +212,19 @@ void init_Bmad_routines_l(py::module &m) {
   ix_ele : int, optional
       Index of the element. If not present
 
-  ref_orb : CoordStruct, optional
+  ref_orb : 1D array of CoordStruct, optional
       Coordinates of the reference orbit around which the matrix is calculated. If not present
 
   ix_branch : int, optional
       Branch index. Default is 0 (main lattice). -1 => All branches/all elements (ref_orb & ix_ele will be
       ignored).
 
-  err_flag : bool
+  Returns
+  -------
+  lat : LatStruct
+      Lat containing the elements.
+
+  err_flag : bool, optional
       True if there is an error. False otherwise.
   )"""
   );
@@ -190,6 +239,8 @@ void init_Bmad_routines_l(py::module &m) {
   lat : LatStruct
       Lattice to check
 
+  Returns
+  -------
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -215,8 +266,15 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
-  lat1 : 
-  lat2 : 
+  lat1 : 1D array of LatStruct
+
+  lat2 : 1D array of LatStruct
+
+  Returns
+  -------
+  lat1 : 1D array of LatStruct
+
+  lat2 : 1D array of LatStruct
   )"""
   );
   m.def(
@@ -229,9 +287,17 @@ void init_Bmad_routines_l(py::module &m) {
   ----------
   lat : LatStruct
       Lattice needing bookkeeping.
-      This parameter is an input/output and is modified in-place. As an output: Lattice with bookkeeping done.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice with bookkeeping done.
 
-  err_flag : bool
+  Returns
+  -------
+  lat : LatStruct
+      Lattice needing bookkeeping.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice with bookkeeping done.
+
+  err_flag : bool, optional
       Set true if there is an error. False otherwise.
   )"""
   );
@@ -245,8 +311,15 @@ void init_Bmad_routines_l(py::module &m) {
   ----------
   ele : EleStruct
       Lcavity element.
-      This parameter is an input/output and is modified in-place. As an output: Element with ele.rf properly
-      setup.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Element with ele.rf properly setup.
+
+  Returns
+  -------
+  ele : EleStruct
+      Lcavity element.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Element with ele.rf properly setup.
   )"""
   );
   m.def(
@@ -276,15 +349,28 @@ void init_Bmad_routines_l(py::module &m) {
 
   orb : CoordStruct
       Starting coords.
-      This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+      This parameter is an input/output and is modified in-place.
+      As an output, orb: Coords after tracking.
 
-  mat6 : float, optional
+  mat6 : 2D array of float (shape: 6,6), optional
       Transfer matrix up to the edge.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
-      edge.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix including the edge.
 
-  make_matrix : float, optional
+  make_matrix : bool, optional
       Propagate the transfer matrix? Default is False.
+
+  Returns
+  -------
+  orb : CoordStruct
+      Starting coords.
+      This parameter is an input/output and is modified in-place.
+      As an output, orb: Coords after tracking.
+
+  mat6 : 2D array of float (shape: 6,6), optional
+      Transfer matrix up to the edge.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix including the edge.
   )"""
   );
   py::class_<Bmad::LinearCoef, std::unique_ptr<Bmad::LinearCoef>>(
@@ -314,7 +400,7 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
-  stack : ExpressionAtomStruct
+  stack : 1D array of ExpressionAtomStruct
       Expression stack.
 
   Returns
@@ -334,10 +420,12 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
-  q_map : float
+  q_map : 2D array of float (shape: 0:3, 0:6)
       Linear quaternion map.
 
-  spin_taylor : TaylorStruct
+  Returns
+  -------
+  spin_taylor : 1D array of TaylorStruct (shape: 0:3)
       Taylor map
   )"""
   );
@@ -371,7 +459,7 @@ void init_Bmad_routines_l(py::module &m) {
 
   Parameters
   ----------
-  action : unknown
+  action : character
       'continue', 'new_command', or 'init'
 
   ix_start : int
@@ -382,10 +470,10 @@ void init_Bmad_routines_l(py::module &m) {
   end_of_file : bool
       End of file reached?
 
-  err_flag : bool
+  err_flag : bool, optional
       Set True if there is an error. False otherwise
 
-  bp_com%parse_line : 
+  bp_com%parse_line : None
       string to append to.
   )"""
   );
@@ -408,7 +496,9 @@ void init_Bmad_routines_l(py::module &m) {
   lord : EleStruct
       Lord element.
 
-  is_aligned : int
+  Returns
+  -------
+  is_aligned : bool
       True if a lord edge is aligned with the slave edge. If slave_edge is not entrance_end$ nor exit_end$ then
       is_aligned is False.
   )"""
@@ -428,19 +518,26 @@ void init_Bmad_routines_l(py::module &m) {
   orbit : CoordStruct
       Position before correction
 
-  ele : unknown
+  ele : EleStruct
       Element being tracked through.
 
   ds : float
       Longitudinal distance traveled by reference particle.
 
-  mat6 : float, optional
+  mat6 : 2D array of float (shape: 6,6), optional
       Transfer matrix before the multipole.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-      including multipole.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix transfer matrix including multipole.
 
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
+
+  Returns
+  -------
+  mat6 : 2D array of float (shape: 6,6), optional
+      Transfer matrix before the multipole.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix transfer matrix including multipole.
 
   dz : float
       Change in z.

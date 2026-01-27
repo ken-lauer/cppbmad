@@ -23,9 +23,19 @@ void init_SimUtils_routines_n(py::module &m) {
 
 Parameters
 ----------
-n : 
-k : 
-nck : 
+n : int
+
+k : int
+
+nck : float
+
+Returns
+-------
+n : int
+
+k : int
+
+nck : float
 )"""
   );
   m.def(
@@ -39,16 +49,18 @@ nck :
 
 Parameters
 ----------
-deriv0 : float
+deriv0 : 1D array of float
     Derivative vector from order 0 to some order n at x = 0.
 
-deriv1 : float
+deriv1 : 1D array of float
     Derivative vector from order 0 to some order n at x = x1.
 
 x1 : float
     Location where deriv1 derivatives have been evaluated.
 
-n_spline : 
+Returns
+-------
+n_spline : 1D array of float
     real(rp), Derivative vector from order 0 to order 2*n+1 of the interpolation spline.
 )"""
   );
@@ -83,9 +95,19 @@ decomposition loop until all elements of freqs and amps are populated.
 
 Parameters
 ----------
-nametable : 
-name : 
-ix_name : 
+nametable : NametableStruct
+
+name : character
+
+ix_name : int
+
+Returns
+-------
+nametable : NametableStruct
+
+name : character
+
+ix_name : int
 )"""
   );
   m.def(
@@ -99,10 +121,23 @@ ix_name :
 
 Parameters
 ----------
-nametable : 
-name : 
-n_match : 
-ix_max : 
+nametable : NametableStruct
+
+name : character
+
+n_match : int, optional
+
+ix_max : int
+
+Returns
+-------
+nametable : NametableStruct
+
+name : character
+
+n_match : int, optional
+
+ix_max : int
 )"""
   );
   m.def(
@@ -115,9 +150,19 @@ ix_max :
 
 Parameters
 ----------
-nametable : 
-name : 
-ix_name : 
+nametable : NametableStruct
+
+name : character
+
+ix_name : int
+
+Returns
+-------
+nametable : NametableStruct
+
+name : character
+
+ix_name : int
 )"""
   );
   m.def(
@@ -130,9 +175,19 @@ ix_name :
 
 Parameters
 ----------
-nametable : 
-n_min : 
-n_max : 
+nametable : NametableStruct
+
+n_min : int, optional
+
+n_max : int, optional
+
+Returns
+-------
+nametable : NametableStruct
+
+n_min : int, optional
+
+n_max : int, optional
 )"""
   );
   m.def(
@@ -144,8 +199,15 @@ n_max :
 
 Parameters
 ----------
-nametable : 
-ix_name : 
+nametable : NametableStruct
+
+ix_name : int
+
+Returns
+-------
+nametable : NametableStruct
+
+ix_name : int
 )"""
   );
 }

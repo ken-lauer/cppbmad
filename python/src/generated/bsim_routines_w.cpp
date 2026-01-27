@@ -16,10 +16,23 @@ void init_bsim_routines_w(py::module &m) {
 
 Parameters
 ----------
-lat : 
-bbu_beam : 
-bbu_param : 
-this_stage : 
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+bbu_param : BbuParamStruct
+
+this_stage : BbuStageStruct
+
+Returns
+-------
+lat : LatStruct
+
+bbu_beam : BbuBeamStruct
+
+bbu_param : BbuParamStruct
+
+this_stage : BbuStageStruct
 )"""
   );
 }

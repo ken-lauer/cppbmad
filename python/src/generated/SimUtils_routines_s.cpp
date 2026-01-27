@@ -15,9 +15,19 @@ void init_SimUtils_routines_s(py::module &m) {
 
 Parameters
 ----------
-param_val : 
-set_val : 
-save_val : 
+param_val : int
+
+set_val : int
+
+save_val : int
+
+Returns
+-------
+param_val : int
+
+set_val : int
+
+save_val : int
 )"""
   );
   m.def(
@@ -30,9 +40,19 @@ save_val :
 
 Parameters
 ----------
-param_val : 
-set_val : 
-save_val : 
+param_val : bool
+
+set_val : bool
+
+save_val : bool
+
+Returns
+-------
+param_val : bool
+
+set_val : bool
+
+save_val : bool
 )"""
   );
   m.def(
@@ -45,9 +65,19 @@ save_val :
 
 Parameters
 ----------
-param_val : 
-set_val : 
-save_val : 
+param_val : float
+
+set_val : float
+
+save_val : float
+
+Returns
+-------
+param_val : float
+
+set_val : float
+
+save_val : float
 )"""
   );
   m.def(
@@ -85,9 +115,19 @@ species_charged : int
 
 Parameters
 ----------
-x : 
-nd : 
-y : 
+x : float
+
+nd : int, optional
+
+y : float
+
+Returns
+-------
+x : float
+
+nd : int, optional
+
+y : float
 )"""
   );
   m.def(
@@ -100,9 +140,19 @@ y :
 
 Parameters
 ----------
-x : 
-nd : 
-y : 
+x : float
+
+nd : int, optional
+
+y : float
+
+Returns
+-------
+x : float
+
+nd : int, optional
+
+y : float
 )"""
   );
   m.def(
@@ -115,9 +165,19 @@ y :
 
 Parameters
 ----------
-x : 
-nd : 
-y : 
+x : float
+
+nd : int, optional
+
+y : float
+
+Returns
+-------
+x : float
+
+nd : int, optional
+
+y : float
 )"""
   );
   m.def(
@@ -129,8 +189,15 @@ y :
 
 Parameters
 ----------
-ix_unit : 
-error_flag : 
+ix_unit : int
+
+error_flag : bool
+
+Returns
+-------
+ix_unit : int
+
+error_flag : bool
 )"""
   );
   m.def(
@@ -148,14 +215,16 @@ For all other types of particles, the case does matter.
 
 Parameters
 ----------
-name : unknown
+name : character
     Name of the species.
 
-default : int, optional
+default : integer, optional
     Default species to use if name is blank or 'ref_species'.
 
-If not present : 
-a blank name is an error. : 
+If not present : None
+
+a blank name is an error. : None
+
 print_err : bool, optional
     Print error message? Default is True. If False, return species = invalid$,
 
@@ -177,7 +246,7 @@ Note: If pmd_name corresponds to a subatomic particle, the charge argument is ig
 
 Parameters
 ----------
-pmd_name : unknown
+pmd_name : character
     OpenPMD species name.
 
 charge : int
@@ -204,7 +273,7 @@ species : int
 
 Returns
 -------
-name : unknown
+name : character
     Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
 )"""
   );
@@ -312,17 +381,19 @@ Modules used:
 
 Parameters
 ----------
-spline : SplineStruct
+spline : 1D array of SplineStruct
 
-%x0 : unknown
+%x0 : x-component of a point. note
     points must be in assending order.
 
-%y0 : 
+%y0 : None
     Y-component of a point.
 
 Returns
 -------
-%coef : 
+spline : 1D array of SplineStruct
+
+%coef : None
     Spline coefficients at a point.
 
 ok : bool
@@ -370,11 +441,12 @@ length between an end point and the point just inside the end point.
 
 Parameters
 ----------
-x_knot : float
+x_knot : 1D array of float
     Array of x values for the knot points.
 
-Must have more than 2 points and be in asending order. : 
-y_knot : float
+Must have more than 2 points and be in asending order. : None
+
+y_knot : 1D array of float
     Array of y values for the knot points. Must be same size as x_knot(:).
 
 x : float
@@ -385,10 +457,10 @@ Returns
 ok : bool
     Set .true. if everything ok, That is, x is within the spline range.
 
-y : float
+y : float, optional
     Spline interpolation.
 
-dy : float
+dy : float, optional
     Spline derivative interpolation.
 )"""
   );
@@ -425,7 +497,7 @@ A point outside of the range of knot points is an error.
 
 Parameters
 ----------
-spline : SplineStruct
+spline : 1D array of SplineStruct
     Spline structure.
 
 x : float
@@ -436,10 +508,10 @@ Returns
 ok : bool
     Set .true. if everything ok. That is, x is within the spline range.
 
-y : float
+y : float, optional
     Spline interpolation.
 
-dy : float
+dy : float, optional
     Spline derivative interpolation.
 
 Notes
@@ -459,9 +531,19 @@ spline_mod
 
 Parameters
 ----------
-alpha : 
-x : 
-y : 
+alpha : float
+
+x : float
+
+y : float
+
+Returns
+-------
+alpha : float
+
+x : float
+
+y : float
 )"""
   );
   m.def(
@@ -474,9 +556,19 @@ y :
 
 Parameters
 ----------
-x : 
-nd : 
-ds1 : 
+x : float
+
+nd : int, optional
+
+ds1 : float
+
+Returns
+-------
+x : float
+
+nd : int, optional
+
+ds1 : float
 )"""
   );
   m.def(
@@ -489,9 +581,19 @@ ds1 :
 
 Parameters
 ----------
-str : 
-match : 
-num : 
+str : character
+
+match : character
+
+num : int
+
+Returns
+-------
+str : character
+
+match : character
+
+num : int
 )"""
   );
   m.def(
@@ -502,8 +604,15 @@ num :
 
 Parameters
 ----------
-dst : 
-src : 
+dst : character
+
+src : character
+
+Returns
+-------
+dst : character
+
+src : character
 )"""
   );
   m.def(
@@ -517,10 +626,23 @@ src :
 
 Parameters
 ----------
-line : 
-set : 
-ignore_clauses : 
-ix_match : 
+line : character
+
+set : character
+
+ignore_clauses : bool, optional
+
+ix_match : int
+
+Returns
+-------
+line : character
+
+set : character
+
+ignore_clauses : bool, optional
+
+ix_match : int
 )"""
   );
   m.def(
@@ -533,9 +655,19 @@ ix_match :
 
 Parameters
 ----------
-line : 
-set : 
-ix_match : 
+line : character
+
+set : character
+
+ix_match : int
+
+Returns
+-------
+line : character
+
+set : character
+
+ix_match : int
 )"""
   );
   m.def(
@@ -548,9 +680,19 @@ ix_match :
 
 Parameters
 ----------
-line : 
-set : 
-ix_match : 
+line : character
+
+set : character
+
+ix_match : int
+
+Returns
+-------
+line : character
+
+set : character
+
+ix_match : int
 )"""
   );
   m.def(
@@ -563,9 +705,19 @@ ix_match :
 
 Parameters
 ----------
-line : 
-set : 
-ix_match : 
+line : character
+
+set : character
+
+ix_match : int
+
+Returns
+-------
+line : character
+
+set : character
+
+ix_match : int
 )"""
   );
   m.def(
@@ -578,9 +730,19 @@ ix_match :
 
 Parameters
 ----------
-str : 
-pat : 
-a_match : 
+str : character
+
+pat : character
+
+a_match : bool
+
+Returns
+-------
+str : character
+
+pat : character
+
+a_match : bool
 )"""
   );
   m.def(
@@ -595,11 +757,27 @@ a_match :
 
 Parameters
 ----------
-string : 
-str_match : 
-str_replace : 
-do_trim : 
-ignore_escaped : 
+string : character
+
+str_match : character, optional
+
+str_replace : character, optional
+
+do_trim : bool, optional
+
+ignore_escaped : bool, optional
+
+Returns
+-------
+string : character
+
+str_match : character, optional
+
+str_replace : character, optional
+
+do_trim : bool, optional
+
+ignore_escaped : bool, optional
 )"""
   );
   m.def(
@@ -610,8 +788,15 @@ ignore_escaped :
 
 Parameters
 ----------
-dst : 
-src : 
+dst : character
+
+src : character
+
+Returns
+-------
+dst : character
+
+src : character
 )"""
   );
   m.def(
@@ -626,11 +811,27 @@ src :
 
 Parameters
 ----------
-line : 
-default : 
-err_flag : 
-err_print_flag : 
-value : 
+line : character
+
+default : None
+
+err_flag : bool
+
+err_print_flag : bool, optional
+
+value : int
+
+Returns
+-------
+line : character
+
+default : None
+
+err_flag : bool
+
+err_print_flag : bool, optional
+
+value : int
 )"""
   );
   m.def(
@@ -645,11 +846,27 @@ value :
 
 Parameters
 ----------
-line : 
-default : 
-err_flag : 
-err_print_flag : 
-value : 
+line : character
+
+default : None
+
+err_flag : bool
+
+err_print_flag : bool, optional
+
+value : float
+
+Returns
+-------
+line : character
+
+default : None
+
+err_flag : bool
+
+err_print_flag : bool, optional
+
+value : float
 )"""
   );
   m.def(
@@ -662,9 +879,19 @@ value :
 
 Parameters
 ----------
-in_string : 
-out_string : 
-word_len : 
+in_string : character
+
+out_string : character
+
+word_len : int
+
+Returns
+-------
+in_string : character
+
+out_string : character
+
+word_len : int
 )"""
   );
   m.def(
@@ -680,12 +907,31 @@ word_len :
 
 Parameters
 ----------
-in_str : 
-delimitors : 
-out_str : 
-ix_word : 
-delim : 
-ix_next : 
+in_str : character
+
+delimitors : character
+
+out_str : character
+
+ix_word : int
+
+delim : character
+
+ix_next : int
+
+Returns
+-------
+in_str : character
+
+delimitors : character
+
+out_str : character
+
+ix_word : int
+
+delim : character
+
+ix_next : int
 )"""
   );
   m.def(
@@ -704,16 +950,16 @@ This is from NR bcucof.
 
 Parameters
 ----------
-y : float
+y : 1D array of float (shape: 4)
     Function values at grid points.
 
-y1 : float
+y1 : 1D array of float (shape: 4)
     dy/dx1 derivatives.
 
-y2 : float
+y2 : 1D array of float (shape: 4)
     dy/dx2 derivatives.
 
-y12 : float
+y12 : 1D array of float (shape: 4)
     d2y/dx1*dx2 second derivatives.
 
 d1 : float
@@ -724,7 +970,7 @@ d2 : float
 
 Returns
 -------
-c : float
+c : 2D array of float (shape: 4,4)
     Coefficients.
 )"""
   );
@@ -773,16 +1019,16 @@ So, for example, y = [y_ll, y_lu, y_uu, y_ul] where "l" = lower, "u" = upper ind
 
 Parameters
 ----------
-y : float
+y : 1D array of float (shape: 4)
     Function values at grid points.
 
-y1 : float
+y1 : 1D array of float (shape: 4)
     dy/dx1 derivatives.
 
-y2 : float
+y2 : 1D array of float (shape: 4)
     dy/dx2 derivatives.
 
-y12 : float
+y12 : 1D array of float (shape: 4)
     d2y/dx1*dx2 second derivatives.
 
 x1l : float
@@ -844,9 +1090,9 @@ This is essentially polint from Numerical Recipes.
 
 Parameters
 ----------
-xa : float
+xa : 1D array of float
 
-ya : float
+ya : 1D array of float
 
 x : float
 
@@ -871,7 +1117,7 @@ Parameters
 x : float
     Variable.
 
-coef : float
+coef : real(rp)
     Coefficients.
 
 Returns
@@ -897,7 +1143,10 @@ ran_state : RandomStateStruct, optional
 
 Returns
 -------
-x : float
+ran_state : RandomStateStruct, optional
+    Generator state. See the ran_seed_put documentation for more details.
+
+x : 1D array of float
     Random vector.
 )"""
   );
@@ -912,9 +1161,17 @@ This is the NR routine sort modified to sort integers.
 
 Parameters
 ----------
-arr : int
+arr : 1D array of int
     Array of integers.
-    This parameter is an input/output and is modified in-place. As an output: Sorted array.
+    This parameter is an input/output and is modified in-place.
+    As an output, arr: Sorted array.
+
+Returns
+-------
+arr : 1D array of int
+    Array of integers.
+    This parameter is an input/output and is modified in-place.
+    As an output, arr: Sorted array.
 )"""
   );
   m.def(
@@ -926,8 +1183,15 @@ arr : int
 
 Parameters
 ----------
-line : 
-err_flag : 
+line : character
+
+err_flag : bool, optional
+
+Returns
+-------
+line : character
+
+err_flag : bool, optional
 )"""
   );
 }

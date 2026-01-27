@@ -48,7 +48,7 @@ a : float
 b : float
     Multipole normal component.
 
-n : float
+n : int
     Multipole order.
 
 ref_species : int
@@ -57,7 +57,8 @@ ref_species : int
 ele_orientation : int
     Element orientation +1 = normal, -1 = reversed,
 
-0 = Ignore orientation and tracking species : 
+0 = Ignore orientation and tracking species : None
+
 coord : CoordStruct
     Particle position and direction of travel.
 
@@ -76,7 +77,7 @@ kx : float
 ky : float
     Y kick.
 
-dk : float
+dk : 2D array of float (shape: 2,2), optional
     Kick derivative: dkick(x,y)/d(x,y).
 )"""
   );
@@ -102,10 +103,10 @@ Also see the multipole_kicks routine.
 
 Parameters
 ----------
-an : float
+an : 1D array of float
     Skew multipole strengths.
 
-bn : float
+bn : 1D array of float
     Normal multipole strengths.
 
 ix_pole_max : int
@@ -116,7 +117,8 @@ ele : EleStruct
 
 orbit : CoordStruct
     Particle position.
-    This parameter is an input/output and is modified in-place. As an output: Kicked particle.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Kicked particle.
 
 pole_type : int, optional
     Type of multipole. magnetic$ (default) or electric$.
@@ -124,15 +126,29 @@ pole_type : int, optional
 scale : float, optional
     Factor to scale the kicks. Default is 1.
 
-For pole_type = electric$ : 
-set scale to the longitudinal length of the field region : 
-mat6 : float, optional
+For pole_type = electric$ : None
+
+set scale to the longitudinal length of the field region : None
+
+mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix before the multipole.
-    This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-    including multipole.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix including multipole.
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
+
+Returns
+-------
+orbit : CoordStruct
+    Particle position.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Kicked particle.
+
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before the multipole.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix including multipole.
 )"""
   );
   m.def(
@@ -155,7 +171,15 @@ e_orb : CoordStruct
 
 photon_orb : CoordStruct
     Photon position relative to e_orb.
-    This parameter is an input/output and is modified in-place. As an output: Absolute photon position.
+    This parameter is an input/output and is modified in-place.
+    As an output, photon_orb: Absolute photon position.
+
+Returns
+-------
+photon_orb : CoordStruct
+    Photon position relative to e_orb.
+    This parameter is an input/output and is modified in-place.
+    As an output, photon_orb: Absolute photon position.
 )"""
   );
   m.def(
@@ -169,6 +193,8 @@ Parameters
 ele : EleStruct
     Element being tracked through.
 
+Returns
+-------
 is_abs_time : bool
     True if absolute time tracking is needed.
 )"""
@@ -193,6 +219,8 @@ true_time : float, optional
     The actual time. Normally this time is calculated using orbit.t or orbit.vec(5) but sometimes it is
     convenient to be able to override this. For example, time_runge_kutta uses this.
 
+Returns
+-------
 ac_amp : float
     Amplitude. Will be set to 1 if the element is not an ac_kicker.
 )"""
@@ -236,24 +264,24 @@ Parameters
 ring : LatStruct
     lattice
 
-%a%tune : 
+%a%tune : None
     a-mode tune (horizontal-like)
 
-%b%tune : 
+%b%tune : None
     b-mode tune (vertical-like)
 
-%z%tune : 
+%z%tune : None
     c-mode tune (synchrotron-like)
 
 ix : int
     element index at which to calculate J
 
-J : float
+J : 1D array of float (shape: 1:6)
     Vector containing normal mode invariants and phases
 
 Returns
 -------
-X : float
+X : 1D array of float (shape: 1:6)
     canonical phase space coordinates of the particle
 
 err_flag : bool
@@ -339,15 +367,17 @@ Parameters
 ----------
 lat : LatStruct
     Lat to modify.
-    This parameter is an input/output and is modified in-place. As an output: Modified lat.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Modified lat.
 
 super_ele_in : EleStruct
     Element to superimpose.
 
-%s : 
+%s : None
     Position of end of element.
 
-Negative distances mean distance from the end. : 
+Negative distances mean distance from the end. : None
+
 ix_branch : int
     Branch index to put element.
 
@@ -356,22 +386,26 @@ save_null_drift : bool, optional
     drift as a reference element. After all superpositions are done, remove_eles_from_lat can be called to
     remove all null_eles.
 
-Default is False. : 
+Default is False. : None
+
 create_jumbo_slave : bool, optional
     Default is False. If True then super_slaves that are created that have super_ele_in as their super_lord
     are
 
-em_field elements. : 
+em_field elements. : None
+
 ix_insert : int, optional
     If present and positive, and super_ele_in has zero length, use ix_insert as the index to insert
     super_ele_in at. ix_insert is useful when superposing next to another element that has zero or negative
     length (EG a patch) and you want
 
-to make sure that the superimposed element is on the correct side of the element. : 
+to make sure that the superimposed element is on the correct side of the element. : None
+
 mangle_slave_names : bool, optional
     If True (default), adjust slave names appropriately. Name
 
-mangeling can take time so bmad_parser will do this all at once at the end. : 
+mangeling can take time so bmad_parser will do this all at once at the end. : None
+
 wrap : bool, optional
     If True (default), and if the superimposed element has an end that extends beyond the starting or ending
     edge of the lattice, wrap the element around the lattice so that the beginning portion of the element is
@@ -381,10 +415,15 @@ wrap : bool, optional
 
 Returns
 -------
+lat : LatStruct
+    Lat to modify.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Modified lat.
+
 err_flag : bool
     Set True if there is an error. False otherwise
 
-super_ele_out : EleStruct
+super_ele_out : EleStruct, optional
     Pointer to the super element in the lattice.
 )"""
   );
@@ -398,9 +437,19 @@ super_ele_out : EleStruct
 
 Parameters
 ----------
-lat : 
-m_slaves : 
-lord_in : 
+lat : LatStruct
+
+m_slaves : 1D array of LatEleLocStruct
+
+lord_in : EleStruct, optional
+
+Returns
+-------
+lat : LatStruct
+
+m_slaves : 1D array of LatEleLocStruct
+
+lord_in : EleStruct, optional
 )"""
   );
   m.def(
@@ -442,6 +491,10 @@ lat : LatStruct
 
 upper_bound : int
     Desired upper bound.
+
+Returns
+-------
+lat : LatStruct
 )"""
   );
   m.def(
@@ -467,6 +520,11 @@ ix_branch : int, optional
 do_ramper_slave_setup : bool, optional
     Default False. If true, setup ramper slaves. Generally this needs to be done if reallocating with a fully
     formed lattice.
+
+Returns
+-------
+lat : LatStruct
+    Lattice with element array.
 )"""
   );
   m.def(
@@ -478,12 +536,14 @@ do_ramper_slave_setup : bool, optional
 
 Parameters
 ----------
-polar1 : 
+polar1 : SpinPolarStruct
     (spin_polar_struct)
 
-polar2 : 
+polar2 : SpinPolarStruct
     (spin_polar_struct)
 
+Returns
+-------
 angle : float
     Angle between the polar vectors
 )"""
@@ -499,11 +559,19 @@ Parameters
 ----------
 orbit : CoordStruct
     Orbit in angular coordinates.
-    This parameter is an input/output and is modified in-place. As an output: Orbit in canonical coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Orbit in canonical coordinates.
 
-coord_type : unknown, optional
+coord_type : character, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
+
+Returns
+-------
+orbit : CoordStruct
+    Orbit in angular coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Orbit in canonical coordinates.
 )"""
   );
   m.def(
@@ -518,7 +586,15 @@ Parameters
 ----------
 ele : EleStruct
     Element with aperture.
-    This parameter is an input/output and is modified in-place. As an output: Element with apertures set.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with apertures set.
+
+Returns
+-------
+ele : EleStruct
+    Element with aperture.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with apertures set.
 )"""
   );
   m.def(
@@ -531,7 +607,15 @@ Parameters
 ----------
 lat : LatStruct
     Lattice.
-    This parameter is an input/output and is modified in-place. As an output: Lattice with rampers applied.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with rampers applied.
+
+Returns
+-------
+lat : LatStruct
+    Lattice.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with rampers applied.
 
 err_flag : bool
     Set True if there is an error. False otherwise.
@@ -554,19 +638,31 @@ dE : float
 
 orbit : CoordStruct
     Beginning coordinates
-    This parameter is an input/output and is modified in-place. As an output: coordinates with added dE energy
-    kick.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: coordinates with added dE energy kick.
 
-ddE_dr : 
+ddE_dr : 1D array of float (shape: 2)
     real(rp), Derivatives of dE [ddE_dx, ddE_dy].
 
-mat6 : float, optional
+mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix before fringe.
-    This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-    including energy kick.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix including energy kick.
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
+
+Returns
+-------
+orbit : CoordStruct
+    Beginning coordinates
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: coordinates with added dE energy kick.
+
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before fringe.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix including energy kick.
 )"""
   );
   m.def(
@@ -585,7 +681,7 @@ ele : EleStruct
 
 Returns
 -------
-ele%ptc_fibre : 
+ele%ptc_fibre : None
     PTC Fibre which should be a marker.
 )"""
   );
@@ -600,6 +696,8 @@ Parameters
 slave : EleStruct
     Element to apply ramper elements to.
 
+Returns
+-------
 err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
@@ -614,9 +712,19 @@ err_flag : bool
 
 Parameters
 ----------
-arr : 
-parens_in : 
-str_out : 
+arr : 1D array of float
+
+parens_in : character, optional
+
+str_out : character
+
+Returns
+-------
+arr : 1D array of float
+
+parens_in : character, optional
+
+str_out : character
 )"""
   );
   m.def(
@@ -629,9 +737,19 @@ str_out :
 
 Parameters
 ----------
-pt0 : 
-ele : 
-field_value : 
+pt0 : GridFieldPt1Struct
+
+ele : EleStruct
+
+field_value : float
+
+Returns
+-------
+pt0 : GridFieldPt1Struct
+
+ele : EleStruct
+
+field_value : float
 )"""
   );
   m.def(
@@ -650,6 +768,8 @@ where_at : int
     Which ends have the aperture or fringe field: entrance_end$, exit_end$, continuous$, both_ends$,
     no_aperture$, surface$, wall_transition$.
 
+Returns
+-------
 is_at_this_end : bool
     True if at this end. False otherwise.
 )"""
@@ -665,13 +785,20 @@ Parameters
 ----------
 ele : EleStruct
     Element with attributes
-    This parameter is an input/output and is modified in-place. As an output: Element with self-consistant
-    attributes.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with self-consistant attributes.
 
-force_bookkeeping : unknown, optional
+force_bookkeeping : bool, optional
     If present and True then force attribute bookkeeping to be done independent of the state of
     ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
     bookkeeping.
+
+Returns
+-------
+ele : EleStruct
+    Element with attributes
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with self-consistant attributes.
 )"""
   );
   py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
@@ -730,13 +857,13 @@ Parameters
 ix_ele : int
     Index of element in element array.
 
-ix_branch : int
+ix_branch : integer
     Branch index of element.
 
-ele : EleStruct
+ele : ele_struct
     Element containing the attribute
 
-attrib_name : unknown
+attrib_name : character
     Name of the attribute. Assumed upper case.
 
 lat : LatStruct
@@ -745,13 +872,17 @@ lat : LatStruct
 err_print_flag : bool, optional
     If present and False then suppress
 
-printing of an error message if attribute is not free. : 
+printing of an error message if attribute is not free. : None
+
 except_overlay : bool, optional
     If present and True then an attribute that is controlled by an overlay will be treated as free.
 
-This is used by : 
-for example : 
-the create_overlay routine. : 
+This is used by : None
+
+for example : None
+
+the create_overlay routine. : None
+
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -761,8 +892,9 @@ Returns
 free : bool
     Set True if attribtute not found or attriubte
 
-cannot be changed directly. : 
-why_not_free : int
+cannot be changed directly. : None
+
+why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
@@ -821,31 +953,35 @@ Also dependent variables such as the angle of a bend cannot be
 
 Parameters
 ----------
-ix_ele : int
+ix_ele : integer
     Index of element in element array.
 
-ix_branch : int
+ix_branch : integer
     Branch index of element.
 
 ele : EleStruct
     Element containing the attribute
 
-attrib_name : unknown
+attrib_name : character
     Name of the attribute. Assumed upper case.
 
-lat : LatStruct
+lat : lat_struct
     Lattice structure.
 
 err_print_flag : bool, optional
     If present and False then suppress
 
-printing of an error message if attribute is not free. : 
+printing of an error message if attribute is not free. : None
+
 except_overlay : bool, optional
     If present and True then an attribute that is controlled by an overlay will be treated as free.
 
-This is used by : 
-for example : 
-the create_overlay routine. : 
+This is used by : None
+
+for example : None
+
+the create_overlay routine. : None
+
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -855,8 +991,9 @@ Returns
 free : bool
     Set True if attribtute not found or attriubte
 
-cannot be changed directly. : 
-why_not_free : int
+cannot be changed directly. : None
+
+why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
@@ -925,10 +1062,10 @@ ix_ele : int
 ix_branch : int
     Branch index of element.
 
-ele : EleStruct
+ele : ele_struct
     Element containing the attribute
 
-attrib_name : unknown
+attrib_name : character
     Name of the attribute. Assumed upper case.
 
 lat : LatStruct
@@ -937,13 +1074,17 @@ lat : LatStruct
 err_print_flag : bool, optional
     If present and False then suppress
 
-printing of an error message if attribute is not free. : 
+printing of an error message if attribute is not free. : None
+
 except_overlay : bool, optional
     If present and True then an attribute that is controlled by an overlay will be treated as free.
 
-This is used by : 
-for example : 
-the create_overlay routine. : 
+This is used by : None
+
+for example : None
+
+the create_overlay routine. : None
+
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
     b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
@@ -953,8 +1094,9 @@ Returns
 free : bool
     Set True if attribtute not found or attriubte
 
-cannot be changed directly. : 
-why_not_free : int
+cannot be changed directly. : None
+
+why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
@@ -1012,11 +1154,12 @@ Parameters
 ele : EleStruct
     attribute_index will restrict the name search to
 
-valid attributes of the given element. : 
-key : int
+valid attributes of the given element. : None
+
+key : integer
     Equivalent to ele.key.
 
-name : unknown
+name : character
     Attribute name. Must be uppercase.
 
 can_abbreviate : bool, optional
@@ -1027,7 +1170,7 @@ print_error : bool, optional
 
 Returns
 -------
-full_name : unknown
+full_name : character, optional
     Non-abbreviated name.
 
 attrib_index : int
@@ -1086,14 +1229,15 @@ See also:
 
 Parameters
 ----------
-ele : EleStruct
+ele : ele_struct
     attribute_index will restrict the name search to
 
-valid attributes of the given element. : 
+valid attributes of the given element. : None
+
 key : int
     Equivalent to ele.key.
 
-name : unknown
+name : character
     Attribute name. Must be uppercase.
 
 can_abbreviate : bool, optional
@@ -1104,7 +1248,7 @@ print_error : bool, optional
 
 Returns
 -------
-full_name : unknown
+full_name : character, optional
     Non-abbreviated name.
 
 attrib_index : int
@@ -1136,9 +1280,9 @@ Use attributge_name (ele, ix_att) is this is needed.
 
 Parameters
 ----------
-ele : EleStruct
+ele : ele_struct
 
-%key : int
+%key : integer
     Key name of element type (e.g. SBEND$, etc.)
 
 key : int
@@ -1152,7 +1296,7 @@ show_private : bool, optional
 
 Returns
 -------
-attrib_name : unknown
+attrib_name : character
     Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
     private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
     invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
@@ -1185,10 +1329,10 @@ Parameters
 ----------
 ele : EleStruct
 
-%key : int
+%key : integer
     Key name of element type (e.g. SBEND$, etc.)
 
-key : int
+key : integer
     Key name of element type (e.g. sbend$, etc.)
 
 ix_att : int
@@ -1199,7 +1343,7 @@ show_private : bool, optional
 
 Returns
 -------
-attrib_name : unknown
+attrib_name : character
     Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
     private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
     invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
@@ -1234,7 +1378,7 @@ value of "n_slice" is stored as a real number in the ele_struct [in ele%value(n_
 
 Parameters
 ----------
-attrib_name : unknown
+attrib_name : character
     Name of the attribute. Must be upper case.
 
 ele : EleStruct, optional
@@ -1260,16 +1404,16 @@ Example: attrib_units('P0C') -> 'eV'
 
 Parameters
 ----------
-attrib_name : unknown
+attrib_name : character
     Name of the attribute. Must be upper case.
 
-unrecognized_units : unknown, optional
+unrecognized_units : character, optional
     String to use if the attribute name is unrecognized. Note: Non-real attributes (EG: 'TRACKING_METHOD') are
     not recognized. Default is ""
 
 Returns
 -------
-attrib_units : unknown
+attrib_units : character
     Units associated with the attribute.
 )"""
   );
@@ -1287,14 +1431,11 @@ Parameters
 ----------
 ele : EleStruct
     RF element or e_gun.
-    This parameter is an input/output and is modified in-place. As an output: element with phase and amplitude
-    adjusted.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: element with phase and amplitude adjusted.
 
 param : LatParamStruct
     lattice parameters
-
-err_flag : 
-    Logical, Set true if there is an error. False otherwise.
 
 scale_phase : bool, optional
     Scale the phase? See above.
@@ -1304,6 +1445,16 @@ scale_amp : bool, optional
 
 call_bookkeeper : bool, optional
     Call lattice_bookkeeper at end? Default is True.
+
+Returns
+-------
+ele : EleStruct
+    RF element or e_gun.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: element with phase and amplitude adjusted.
+
+err_flag : bool
+    Logical, Set true if there is an error. False otherwise.
 )"""
   );
   m.def(
@@ -1322,7 +1473,12 @@ frac1 : float
 twiss1 : TwissStruct
     Twiss parameters to average.
 
-twiss2 : 
+twiss2 : TwissStruct
+
+Returns
+-------
+twiss2 : TwissStruct
+
 ave_twiss : TwissStruct
     Average twiss.
 )"""

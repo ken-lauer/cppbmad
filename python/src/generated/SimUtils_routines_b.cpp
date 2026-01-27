@@ -67,10 +67,10 @@ void init_SimUtils_routines_b(py::module &m) {
   f_val : complex
       Value of f.
 
-  df_dx : complex
+  df_dx : complex, optional
       Normalized first derivative: True df/dx = df_dx * dx
 
-  df_dy : complex
+  df_dy : complex, optional
       Normalized first derivative: True df/dy = df_dy * dy
   )"""
   );
@@ -139,7 +139,8 @@ void init_SimUtils_routines_b(py::module &m) {
 
   Returns
   -------
-  x_center
+  ix_bin : int
+      Index of bin under question.
   )"""
   );
   py::class_<PyBitSet, std::unique_ptr<PyBitSet>>(m, "BitSet", "bit_set return type")
@@ -166,13 +167,21 @@ void init_SimUtils_routines_b(py::module &m) {
   ----------
   word : int
       Input word
-      This parameter is an input/output and is modified in-place. As an output: Word with bit set.
+      This parameter is an input/output and is modified in-place.
+      As an output, word: Word with bit set.
 
   pos : int
       position to set.
 
   set_to_1 : bool
       If True then bit is set to 1. If False bit is set to 0.
+
+  Returns
+  -------
+  word : int
+      Input word
+      This parameter is an input/output and is modified in-place.
+      As an output, word: Word with bit set.
   )"""
   );
   py::class_<SimUtils::BracketIndexForSpline, std::unique_ptr<SimUtils::BracketIndexForSpline>>(
@@ -210,7 +219,7 @@ void init_SimUtils_routines_b(py::module &m) {
 
   Parameters
   ----------
-  x_knot : float
+  x_knot : 1D array of float
       Array of x values.
 
   x : float

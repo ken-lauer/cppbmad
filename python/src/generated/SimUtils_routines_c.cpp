@@ -16,10 +16,23 @@ void init_SimUtils_routines_c(py::module &m) {
 
 Parameters
 ----------
-file_name : 
-num_in : 
-num_out : 
-err_flag : 
+file_name : character
+
+num_in : int
+
+num_out : int
+
+err_flag : bool
+
+Returns
+-------
+file_name : character
+
+num_in : int
+
+num_out : int
+
+err_flag : bool
 )"""
   );
   m.def(
@@ -31,8 +44,15 @@ err_flag :
 
 Parameters
 ----------
-file_name : 
-change : 
+file_name : character
+
+change : int
+
+Returns
+-------
+file_name : character
+
+change : int
 )"""
   );
   m.def(
@@ -49,7 +69,7 @@ Parameters
 species : int
     Species ID.
 
-default : int, optional
+default : integer, optional
     If present then use default value if species = not_set$.
 
 Returns
@@ -89,7 +109,7 @@ the most dominant frequency by FFT.
 
 Parameters
 ----------
-data : float
+data : 1D array of float
     data to analyze. Preferably size(data) is a power of 2 Otherwise the data is padded with zeros.
 
 Returns
@@ -97,7 +117,7 @@ Returns
 frequency : float
     Frequency corresponding to the largest FFT amplitude
 
-err : bool
+err : logical
     Error: not enough data. Frequency is near 0 or 0.5
 )"""
   );
@@ -112,10 +132,23 @@ err : bool
 
 Parameters
 ----------
-wr : 
-wi : 
-zr : 
-zi : 
+wr : float
+
+wi : float
+
+zr : float
+
+zi : float
+
+Returns
+-------
+wr : float
+
+wi : float
+
+zr : float
+
+zi : float
 )"""
   );
   m.def(
@@ -127,8 +160,15 @@ zi :
 
 Parameters
 ----------
-angle : 
-cos1 : 
+angle : float
+
+cos1 : float
+
+Returns
+-------
+angle : float
+
+cos1 : float
 )"""
   );
   m.def(
@@ -141,9 +181,19 @@ cos1 :
 
 Parameters
 ----------
-x : 
-nd : 
-y : 
+x : float
+
+nd : int, optional
+
+y : float
+
+Returns
+-------
+x : float
+
+nd : int, optional
+
+y : float
 )"""
   );
   m.def(
@@ -164,10 +214,10 @@ Modules used:
 
 Parameters
 ----------
-r0 : float
+r0 : 1D array of float
     Start (x, y) point.
 
-r1 : float
+r1 : 1D array of float
     End (x, y) point.
 
 slope0 : float
@@ -191,13 +241,15 @@ spline : SplineStruct
 
 Parameters
 ----------
-a : float
+a : 1D array of float
     Input vectors.
 
-b : float
+b : 1D array of float
     Input vectors.
 
-c : float
+Returns
+-------
+c : 1D array of float (shape: 3)
     Cross product: a X b.
 )"""
   );

@@ -32,13 +32,35 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  sigma_mat : 
-  tail_cut : 
-  tau : 
-  energy : 
-  n_part : 
-  species : 
-  ibs_mat : 
+  sigma_mat : 2D array of float (shape: 6,6)
+
+  tail_cut : bool
+
+  tau : float
+
+  energy : float
+
+  n_part : float
+
+  species : int
+
+  ibs_mat : 2D array of float (shape: 6,6)
+
+  Returns
+  -------
+  sigma_mat : 2D array of float (shape: 6,6)
+
+  tail_cut : bool
+
+  tau : float
+
+  energy : float
+
+  n_part : float
+
+  species : int
+
+  ibs_mat : 2D array of float (shape: 6,6)
   )"""
   );
   m.def(
@@ -56,14 +78,39 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  u : 
-  v : 
-  w : 
-  gam : 
-  dx : 
-  dy : 
-  dz : 
-  res : 
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  dx : float
+
+  dy : float
+
+  dz : float
+
+  res : float
+
+  Returns
+  -------
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  dx : float
+
+  dy : float
+
+  dz : float
+
+  res : float
   )"""
   );
   m.def(
@@ -81,14 +128,39 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  u : 
-  v : 
-  w : 
-  gam : 
-  dx : 
-  dy : 
-  dz : 
-  res : 
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  dx : float
+
+  dy : float
+
+  dz : float
+
+  res : float
+
+  Returns
+  -------
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  dx : float
+
+  dy : float
+
+  dz : float
+
+  res : float
   )"""
   );
   m.def(
@@ -106,14 +178,39 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  u : 
-  v : 
-  w : 
-  gam : 
-  dx : 
-  dy : 
-  dz : 
-  res : 
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  dx : float
+
+  dy : float
+
+  dz : float
+
+  res : float
+
+  Returns
+  -------
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  dx : float
+
+  dy : float
+
+  dz : float
+
+  res : float
   )"""
   );
   m.def(
@@ -131,14 +228,39 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  u : 
-  v : 
-  w : 
-  gam : 
-  dx : 
-  dy : 
-  dz : 
-  res : 
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  dx : float
+
+  dy : float
+
+  dz : float
+
+  res : float
+
+  Returns
+  -------
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  dx : float
+
+  dy : float
+
+  dz : float
+
+  res : float
   )"""
   );
   py::class_<PyInitAttributeName1, std::unique_ptr<PyInitAttributeName1>>(
@@ -172,8 +294,8 @@ void init_Bmad_routines_i(py::module &m) {
   ----------
   is_ok : bool
       Initial setting.
-      This parameter is an input/output and is modified in-place. As an output: Set False if there is a problem.
-      Otherwise untouched.
+      This parameter is an input/output and is modified in-place.
+      As an output, is_ok: Set False if there is a problem. Otherwise untouched.
 
   ix_key : int
       Key index.
@@ -181,17 +303,26 @@ void init_Bmad_routines_i(py::module &m) {
   ix_attrib : int
       Attribute index.
 
-  name : unknown
+  name : character
       Attribute name. Should be uppercase if attrib_state = is_free$.
 
-  Should contain non-uppercase characters if attrib_state = private$. : 
+  Should contain non-uppercase characters if attrib_state = private$. : None
+
   attrib_state : int, optional
       Class of attribute: does_not_exist$, is_free$, etc.
 
-  Defaults to is_free$. : 
+  Defaults to is_free$. : None
+
   override : bool, optional
       Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
       True then the set is done and no error is generated.
+
+  Returns
+  -------
+  is_ok : bool
+      Initial setting.
+      This parameter is an input/output and is modified in-place.
+      As an output, is_ok: Set False if there is a problem. Otherwise untouched.
   )"""
   );
   m.def(
@@ -258,7 +389,7 @@ void init_Bmad_routines_i(py::module &m) {
   param : LatParamStruct
       Lattice parameters
 
-  %particle : 
+  %particle : None
       Type of particle.
 
   beam_init : BeamInitStruct
@@ -270,7 +401,7 @@ void init_Bmad_routines_i(py::module &m) {
   print_p0c_shift_warning : bool, optional
       Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
-  shift_momentum : bool, optional
+  shift_momentum : logical, optional
       Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
   Returns
@@ -278,10 +409,10 @@ void init_Bmad_routines_i(py::module &m) {
   beam : BeamStruct
       Structure with initialized particles.
 
-  err_flag : bool
+  err_flag : bool, optional
       Set true if there is an error, false otherwise.
 
-  beam_init_set : BeamInitStruct
+  beam_init_set : BeamInitStruct, optional
       Set to input beam_init with components like .a_emit set what is used in constructing the beam (which is
       different from beam_init.a_emit if this is set negative).
   )"""
@@ -300,7 +431,11 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  lat : 
+  lat : LatStruct, optional
+
+  Returns
+  -------
+  lat : LatStruct, optional
   )"""
   );
   py::class_<Bmad::InitBunchDistribution, std::unique_ptr<Bmad::InitBunchDistribution>>(
@@ -385,7 +520,7 @@ void init_Bmad_routines_i(py::module &m) {
   print_p0c_shift_warning : bool, optional
       Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
-  shift_momentum : bool, optional
+  shift_momentum : logical, optional
       Default is True. See hdf5_read_beam doc. Only used when reading hdf5 file.
 
   Returns
@@ -393,10 +528,10 @@ void init_Bmad_routines_i(py::module &m) {
   bunch : BunchStruct
       Structure with initialized particles.
 
-  err_flag : bool
+  err_flag : bool, optional
       Set True if there is an error. False otherwise.
 
-  beam_init_used : BeamInitStruct
+  beam_init_used : BeamInitStruct, optional
       Set to input beam_init with components like .a_emit set what is used in constructing the beam (which can
       be different from beam_init.a_emit if this is set negative). If reading from a file, beam_init_used will
       equal beam_init.
@@ -418,14 +553,23 @@ void init_Bmad_routines_i(py::module &m) {
   ----------
   complex_taylor : ComplexTaylorStruct
       Old structure.
-      This parameter is an input/output and is modified in-place. As an output: Initalized structure.
+      This parameter is an input/output and is modified in-place.
+      As an output, complex_taylor: Initalized structure.
 
   n_term : int
       Number of terms to allocate.
 
-  n_term < 1 => complex_taylor%term pointer will be disassociated. : 
+  n_term < 1 => complex_taylor%term pointer will be disassociated. : None
+
   save : bool, optional
       If True then save any old terms when complex_taylor is resized. Default is False.
+
+  Returns
+  -------
+  complex_taylor : ComplexTaylorStruct
+      Old structure.
+      This parameter is an input/output and is modified in-place.
+      As an output, complex_taylor: Initalized structure.
   )"""
   );
   m.def(
@@ -478,10 +622,10 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  orb_in : CoordStruct
+  orb_in : coord_struct
       Input orbit.
 
-  vec : float
+  vec : 1D array of float (shape: 6)
       Coordinate vector. If not present then taken to be zero.
 
   ele : EleStruct, optional
@@ -492,17 +636,21 @@ void init_Bmad_routines_i(py::module &m) {
       start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
       upstream_end$. Note: If ele is the beginning element (index zero), the
 
-  setting of element_end will not matter. : 
+  setting of element_end will not matter. : None
+
   particle : int, optional
       Particle type (electron$, etc.).
 
-  If particle = not_set$ and orb_in is present : 
-  use orb_in%species instead. : 
+  If particle = not_set$ and orb_in is present : None
+
+  use orb_in%species instead. : None
+
   direction : int, optional
       +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
       orb.direction except for photons which get set
 
-  according to orb%vec : 
+  according to orb%vec : None
+
   E_photon : float, optional
       Photon energy if particle is a photon. Ignored otherwise.
 
@@ -510,11 +658,12 @@ void init_Bmad_routines_i(py::module &m) {
       Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
       a particular particle
 
-  is pegged to the time of the center of the bunch. : 
+  is pegged to the time of the center of the bunch. : None
+
   shift_vec6 : bool, optional
       If present and False, prevent the shift of orb.vec(6).
 
-  spin : float, optional
+  spin : 1D array of float (shape: 3), optional
       Particle spin. Taken to be zero if not present.
 
   s_pos : float, optional
@@ -525,9 +674,12 @@ void init_Bmad_routines_i(py::module &m) {
       photon coords using a random number generator. If False, the photon coords will be centered within the
       distribution specified in the photon_init ele.
 
+  orb : CoordStruct
+      Input orbit
+
   Returns
   -------
-  orb : coord_struct
+  orb : CoordStruct
       Input orbit
 
   Notes
@@ -583,10 +735,10 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  orb_in : coord_struct
+  orb_in : CoordStruct
       Input orbit
 
-  vec : float
+  vec : real(rp)
       Coordinate vector. If not present then taken to be zero.
 
   ele : EleStruct, optional
@@ -597,17 +749,21 @@ void init_Bmad_routines_i(py::module &m) {
       start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
       upstream_end$. Note: If ele is the beginning element (index zero), the
 
-  setting of element_end will not matter. : 
+  setting of element_end will not matter. : None
+
   particle : int, optional
       Particle type (electron$, etc.).
 
-  If particle = not_set$ and orb_in is present : 
-  use orb_in%species instead. : 
+  If particle = not_set$ and orb_in is present : None
+
+  use orb_in%species instead. : None
+
   direction : int, optional
       +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
       orb.direction except for photons which get set
 
-  according to orb%vec : 
+  according to orb%vec : None
+
   E_photon : float, optional
       Photon energy if particle is a photon. Ignored otherwise.
 
@@ -615,11 +771,12 @@ void init_Bmad_routines_i(py::module &m) {
       Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
       a particular particle
 
-  is pegged to the time of the center of the bunch. : 
+  is pegged to the time of the center of the bunch. : None
+
   shift_vec6 : bool, optional
       If present and False, prevent the shift of orb.vec(6).
 
-  spin : float, optional
+  spin : 1D array of float (shape: 3), optional
       Particle spin. Taken to be zero if not present.
 
   s_pos : float, optional
@@ -632,11 +789,14 @@ void init_Bmad_routines_i(py::module &m) {
 
   Returns
   -------
-  orb : CoordStruct
+  orb_in : CoordStruct
+      Input orbit
+
+  orb : coord_struct
       Initialized coordinate. Note: For photons, orb.vec(6) is computed as sqrt(1 - vec(2)^2 - vec(4)^2) if
       needed.
 
-  orb_out : coord_struct
+  orb_out : CoordStruct
       Initialized coordinate
 
   Notes
@@ -688,10 +848,10 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  orb_in : CoordStruct
+  orb_in : coord_struct
       Input orbit.
 
-  vec : float
+  vec : real(rp)
       Coordinate vector. If not present then taken to be zero.
 
   ele : EleStruct, optional
@@ -702,17 +862,21 @@ void init_Bmad_routines_i(py::module &m) {
       start_end$ -> upstream_end$ if dir = 1 and start_end$ -> downstream_end$ if dir = -1. Default is
       upstream_end$. Note: If ele is the beginning element (index zero), the
 
-  setting of element_end will not matter. : 
+  setting of element_end will not matter. : None
+
   particle : int, optional
       Particle type (electron$, etc.).
 
-  If particle = not_set$ and orb_in is present : 
-  use orb_in%species instead. : 
+  If particle = not_set$ and orb_in is present : None
+
+  use orb_in%species instead. : None
+
   direction : int, optional
       +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
       orb.direction except for photons which get set
 
-  according to orb%vec : 
+  according to orb%vec : None
+
   E_photon : float, optional
       Photon energy if particle is a photon. Ignored otherwise.
 
@@ -720,24 +884,28 @@ void init_Bmad_routines_i(py::module &m) {
       Offset of the reference time. This is non-zero when there are multiple bunches and the reference time for
       a particular particle
 
-  is pegged to the time of the center of the bunch. : 
+  is pegged to the time of the center of the bunch. : None
+
   shift_vec6 : bool, optional
       If present and False, prevent the shift of orb.vec(6).
 
-  spin : float, optional
+  spin : 1D array of float (shape: 3), optional
       Particle spin. Taken to be zero if not present.
 
-  s_pos : float, optional
+  s_pos : real(rp), optional
       Particle s-position. Only relavent if element_end = inside$.
 
-  random_on : bool, optional
+  random_on : logical, optional
       Default is True. Used only for photons being initalized with a photon_init element. If True, vary the
       photon coords using a random number generator. If False, the photon coords will be centered within the
       distribution specified in the photon_init ele.
 
+  orb : CoordStruct
+      Input orbit
+
   Returns
   -------
-  orb : coord_struct
+  orb : CoordStruct
       Input orbit
 
   Notes
@@ -753,7 +921,11 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  lat : 
+  lat : LatStruct
+
+  Returns
+  -------
+  lat : LatStruct
   )"""
   );
   m.def(
@@ -767,9 +939,6 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  ele : EleStruct
-      Initialized element.
-
   key : int, optional
       Key to initialize to. EG: quadrupole$, etc.
 
@@ -781,6 +950,11 @@ void init_Bmad_routines_i(py::module &m) {
 
   branch : BranchStruct, optional
       Branch to point ele.branch and ele.ix_branch to. Otherwise ele.branch is nullified and ele.ix_branch = 0.
+
+  Returns
+  -------
+  ele : EleStruct
+      Initialized element.
   )"""
   );
   m.def(
@@ -799,14 +973,23 @@ void init_Bmad_routines_i(py::module &m) {
   ----------
   em_taylor : EmTaylorStruct
       Old structure.
-      This parameter is an input/output and is modified in-place. As an output: Initalized structure.
+      This parameter is an input/output and is modified in-place.
+      As an output, em_taylor: Initalized structure.
 
   n_term : int
       Number of terms to allocate.
 
-  n_term < 0 => em_taylor%term pointer will be disassociated. : 
+  n_term < 0 => em_taylor%term pointer will be disassociated. : None
+
   save_old : bool, optional
       If True then save any old terms when em_taylor is resized. Default is False.
+
+  Returns
+  -------
+  em_taylor : EmTaylorStruct
+      Old structure.
+      This parameter is an input/output and is modified in-place.
+      As an output, em_taylor: Initalized structure.
   )"""
   );
   m.def(
@@ -818,14 +1001,16 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  lat : LatStruct
-      Initialized lat.
-
   n : int, optional
       Upper bound lat.ele(0:) array is initialized to.
 
   init_beginning_ele : bool, optional
       Init lat.ele(0)? Default is False.
+
+  Returns
+  -------
+  lat : LatStruct
+      Initialized lat.
   )"""
   );
   m.def(
@@ -838,7 +1023,15 @@ void init_Bmad_routines_i(py::module &m) {
   ----------
   ele : EleStruct
       Element to init
-      This parameter is an input/output and is modified in-place. As an output: Initalized element.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Initalized element.
+
+  Returns
+  -------
+  ele : EleStruct
+      Element to init
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Initalized element.
   )"""
   );
   m.def(
@@ -854,14 +1047,16 @@ void init_Bmad_routines_i(py::module &m) {
   ele : EleStruct
       patch element.
 
-  param : 
+  param : LatParamStruct
       lat_param_struct.
-
-  orbit : CoordStruct
-      Output photon coords.
 
   random_on : bool, optional
       : Default is True. If False then use zero for all random numbers needed in the calc.
+
+  Returns
+  -------
+  orbit : CoordStruct
+      Output photon coords.
   )"""
   );
   py::class_<Bmad::InitPhotonIntegProb, std::unique_ptr<Bmad::InitPhotonIntegProb>>(
@@ -918,12 +1113,15 @@ void init_Bmad_routines_i(py::module &m) {
   vert_angle_max : float, optional
       Upper bound of vertical angle range.
 
-  vert_angle_symmetric : float, optional
+  vert_angle_symmetric : bool, optional
       Use two symmetric ranges [-vert_angle_max, -vert_angle_min] and
 
-  [vert_angle_min : 
-  vert_angle_max] instead of just [vert_angle_min : 
-  vert_angle_max]? : 
+  [vert_angle_min : None
+
+  vert_angle_max] instead of just [vert_angle_min : None
+
+  vert_angle_max]? : None
+
   energy_integ_prob : float, optional
       If present, E_photon will be set to the photon energy such that the integrated probability of generating a
       photon in the given angle and energy range in the interval [E_min, E_photon] is energy_integ_prob. That
@@ -931,7 +1129,7 @@ void init_Bmad_routines_i(py::module &m) {
 
   Returns
   -------
-  E_photon : float
+  E_photon : float, optional
       See energy_integ_prob. E_photon must be present if energy_integ_prob is.
 
   integ_prob : float
@@ -952,7 +1150,7 @@ void init_Bmad_routines_i(py::module &m) {
   beam_init : BeamInitStruct
       Initialization parameters
 
-  %spin : 
+  %spin : None
       (x, y, z) spin coordinates ele
 
   Returns
@@ -973,7 +1171,7 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  phot : 
+  phot : PhotonElementStruct
       Surface structure.
 
   ix : int
@@ -995,7 +1193,8 @@ void init_Bmad_routines_i(py::module &m) {
   ----------
   bmad_taylor : TaylorStruct
       Old structure.
-      This parameter is an input/output and is modified in-place. As an output: Initalized structure.
+      This parameter is an input/output and is modified in-place.
+      As an output, bmad_taylor: Initalized structure.
 
   n_term : int
       Number of terms to allocate.
@@ -1003,6 +1202,13 @@ void init_Bmad_routines_i(py::module &m) {
   save_old : bool, optional
       If True then save any old terms and ref orbit when bmad_taylor is resized. If False zero the ref orbit.
       Default is False.
+
+  Returns
+  -------
+  bmad_taylor : TaylorStruct
+      Old structure.
+      This parameter is an input/output and is modified in-place.
+      As an output, bmad_taylor: Initalized structure.
   )"""
   );
   m.def(
@@ -1017,9 +1223,6 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  wake : WakeStruct
-      Initialized structure.
-
   n_sr_long : int
       Number of terms: wake.sr.long.
 
@@ -1034,6 +1237,11 @@ void init_Bmad_routines_i(py::module &m) {
 
   always_allocate : bool, optional
       If present and True then allways allocate wake even if n_lr_mode, etc. are all 0. Default is False.
+
+  Returns
+  -------
+  wake : WakeStruct, optional
+      Initialized structure.
   )"""
   );
   m.def(
@@ -1050,8 +1258,8 @@ void init_Bmad_routines_i(py::module &m) {
   ----------
   lat : LatStruct
       lattice that will be modified
-      This parameter is an input/output and is modified in-place. As an output: lattice with new element
-      inserted
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: lattice with new element inserted
 
   insert_ele : EleStruct
       element to insert into the lat
@@ -1062,9 +1270,22 @@ void init_Bmad_routines_i(py::module &m) {
   ix_branch : int, optional
       : branch index for the insertion. Default = 0.
 
-  orbit : CoordStruct, optional
+  orbit : 1D array of CoordStruct, optional
       orbit array to enlarge.
-      This parameter is an input/output and is modified in-place. As an output: Enlarged orbit array.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Enlarged orbit array.
+
+  Returns
+  -------
+  lat : LatStruct
+      lattice that will be modified
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: lattice with new element inserted
+
+  orbit : 1D array of CoordStruct, optional
+      orbit array to enlarge.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Enlarged orbit array.
   )"""
   );
   m.def(
@@ -1091,7 +1312,7 @@ void init_Bmad_routines_i(py::module &m) {
 
   Returns
   -------
-  <return value> : float
+  <return value> : real(rp)
       Array of reals containing values of integrand at t(:).
   )"""
   );
@@ -1114,7 +1335,7 @@ void init_Bmad_routines_i(py::module &m) {
   p0 : float
       psi(0).  Boundary condition.
 
-  args : float
+  args : 1D array of float (shape: 1:8)
       Parameters and constants of DEQ.  See psi_prime comments for details.
 
   Returns
@@ -1149,11 +1370,27 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  ele : 
-  param : 
-  start : 
-  orb_max : 
-  tol : 
+  ele : EleStruct
+
+  param : LatParamStruct
+
+  start : CoordStruct
+
+  orb_max : CoordStruct
+
+  tol : float
+
+  Returns
+  -------
+  ele : EleStruct
+
+  param : LatParamStruct
+
+  start : CoordStruct
+
+  orb_max : CoordStruct
+
+  tol : float
   )"""
   );
   m.def(
@@ -1169,10 +1406,23 @@ void init_Bmad_routines_i(py::module &m) {
 
   Parameters
   ----------
-  a_fibre : 
-  orbit : 
-  orbit_max : 
-  tol_dp : 
+  a_fibre : Fibre
+
+  orbit : 1D array of float (shape: 6)
+
+  orbit_max : 1D array of float (shape: 6)
+
+  tol_dp : float
+
+  Returns
+  -------
+  a_fibre : Fibre
+
+  orbit : 1D array of float (shape: 6)
+
+  orbit_max : 1D array of float (shape: 6)
+
+  tol_dp : float
   )"""
   );
   m.def(
@@ -1191,7 +1441,7 @@ void init_Bmad_routines_i(py::module &m) {
   orbit : CoordStruct
       Ion position.
 
-  r_beam : float
+  r_beam : 1D array of float (shape: 2)
       Beam (x, y) position.
 
   n_beam_part : float
@@ -1206,7 +1456,9 @@ void init_Bmad_routines_i(py::module &m) {
   sig_ee : float
       Sigma_E/E beam energy spread.
 
-  kick : float
+  Returns
+  -------
+  kick : 1D array of float (shape: 3)
       (x, y, s) kick in m/sec.
   )"""
   );

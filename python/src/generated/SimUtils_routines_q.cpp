@@ -13,10 +13,12 @@ void init_SimUtils_routines_q(py::module &m) {
 
 Parameters
 ----------
-coefs : float
+coefs : 1D array of float (shape: 3)
     Coefficients of the quadratic equation with 0 = coefs(1) + coefs(2) * x + coefs(3) * x^2
 
-root : complex
+Returns
+-------
+root : 1D array of complex (shape: 2)
     Complex roots.
 )"""
   );
@@ -33,12 +35,12 @@ Overloaded functions are:
 
 Parameters
 ----------
-q_in : float
+q_in : 1D array of complex (shape: 0:3)
     Quaternion input.
 
 Returns
 -------
-q_out : float
+q_out : 1D array of complex (shape: 0:3)
     Conjugate quaternion.
 )"""
   );
@@ -55,12 +57,12 @@ Overloaded functions are:
 
 Parameters
 ----------
-q_in : float
+q_in : 1D array of float (shape: 0:3)
     Quaternion input.
 
 Returns
 -------
-q_out : float
+q_out : 1D array of float (shape: 0:3)
     Conjugate quaternion.
 )"""
   );
@@ -74,12 +76,12 @@ Routine to create the inverse of a quaternian.
 
 Parameters
 ----------
-q_in : float
+q_in : 1D array of float (shape: 0:3)
     Quaternion input.
 
 Returns
 -------
-q_out : float
+q_out : 1D array of float (shape: 0:3)
     Inverse quaternion.
 )"""
   );
@@ -114,24 +116,24 @@ Overloaded functions are:
 
 Parameters
 ----------
-q1 : float
+q1 : 1D array of complex (shape: 0:3)
     Quaternions.
 
-q2 : float
+q2 : 1D array of complex (shape: 0:3)
     Quaternions.
 
-q3 : float, optional
+q3 : 1D array of complex (shape: 0:3), optional
     More quaternions.
 
-... : float, optional
+... : real(rp) or complex(rp), optional
     More quaternions.
 
-q9 : float, optional
+q9 : 1D array of complex (shape: 0:3), optional
     More quaternions.
 
 Returns
 -------
-q_out : float
+q_out : 1D array of complex (shape: 0:3)
     Resultant q1 * q2
 )"""
   );
@@ -166,24 +168,24 @@ Overloaded functions are:
 
 Parameters
 ----------
-q1 : float
+q1 : 1D array of float (shape: 0:3)
     Quaternions.
 
-q2 : float
+q2 : 1D array of float (shape: 0:3)
     Quaternions.
 
-q3 : float, optional
+q3 : 1D array of float (shape: 0:3), optional
     More quaternions.
 
-... : float, optional
+... : real(rp) or complex(rp), optional
     More quaternions.
 
-q9 : float, optional
+q9 : 1D array of float (shape: 0:3), optional
     More quaternions.
 
 Returns
 -------
-q_out : float
+q_out : 1D array of float (shape: 0:3)
     Resultant q1 * q2
 )"""
   );
@@ -201,15 +203,15 @@ Overloaded functions are:
 
 Parameters
 ----------
-quat : float
+quat : 1D array of complex (shape: 0:3)
     Quaternion to rotate with. Does not have to be normalized.
 
-vec_in : float
+vec_in : 1D array of complex (shape: 3)
     Initial vector.
 
 Returns
 -------
-vec_out : float
+vec_out : 1D array of complex (shape: 3)
     Final vector.
 )"""
   );
@@ -227,15 +229,15 @@ Overloaded functions are:
 
 Parameters
 ----------
-quat : float
+quat : 1D array of float (shape: 0:3)
     Quaternion to rotate with. Does not have to be normalized.
 
-vec_in : float
+vec_in : 1D array of float (shape: 3)
     Initial vector.
 
 Returns
 -------
-vec_out : float
+vec_out : 1D array of float (shape: 3)
     Final vector.
 )"""
   );
@@ -267,12 +269,12 @@ The angle will be in the range 0 <= angle <= pi.
 
 Parameters
 ----------
-quat : float
+quat : 1D array of float (shape: 0:3)
     Rotation quaternion. Assumed normalized.
 
 Returns
 -------
-axis : float
+axis : 1D array of float (shape: 3)
     Axis of rotation.
 
 angle : float
@@ -289,12 +291,12 @@ Routine to convert rotation from quaternion representation to omega (axis + angl
 
 Parameters
 ----------
-quat : float
+quat : 1D array of float (shape: 0:3)
     Rotation quaternion. Assumed normalized.
 
 Returns
 -------
-omega : float
+omega : 1D array of float (shape: 3)
     Axis of rotation + magnitude = rotation angle.
 )"""
   );
@@ -308,12 +310,12 @@ Routine to construct the 3D rotation matrix w_mat given a rotation quaternion
 
 Parameters
 ----------
-quat : float
+quat : 1D array of float (shape: 0:3)
     Quaternion.
 
 Returns
 -------
-w_mat : float
+w_mat : 2D array of float (shape: 3,3)
     Rotation matrix
 )"""
   );
@@ -329,11 +331,27 @@ w_mat : float
 
 Parameters
 ----------
-query_str : 
-upcase : 
-return_str : 
-ix : 
-ios : 
+query_str : character
+
+upcase : bool
+
+return_str : character
+
+ix : int
+
+ios : int
+
+Returns
+-------
+query_str : character
+
+upcase : bool
+
+return_str : character
+
+ix : int
+
+ios : int
 )"""
   );
   m.def(
@@ -345,8 +363,15 @@ ios :
 
 Parameters
 ----------
-str : 
-q_str : 
+str : character
+
+q_str : character
+
+Returns
+-------
+str : character
+
+q_str : character
 )"""
   );
 }

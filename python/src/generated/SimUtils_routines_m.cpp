@@ -14,8 +14,15 @@ void init_SimUtils_routines_m(py::module &m) {
 
 Parameters
 ----------
-comment_in : 
-comment_out : 
+comment_in : character
+
+comment_out : character
+
+Returns
+-------
+comment_in : character
+
+comment_out : character
 )"""
   );
   m.def(
@@ -52,9 +59,19 @@ mass : float
 
 Parameters
 ----------
-str : 
-pat : 
-is_match : 
+str : character
+
+pat : character
+
+is_match : bool
+
+Returns
+-------
+str : character
+
+pat : character
+
+is_match : bool
 )"""
   );
   m.def(
@@ -67,9 +84,19 @@ is_match :
 
 Parameters
 ----------
-string : 
-template : 
-is_match : 
+string : character
+
+template : None
+
+is_match : bool
+
+Returns
+-------
+string : character
+
+template : None
+
+is_match : bool
 )"""
   );
   m.def(
@@ -92,7 +119,11 @@ which is the frequency that maximizes the projection.
 
 Parameters
 ----------
-milli_sec : 
+milli_sec : int
+
+Returns
+-------
+milli_sec : int
 )"""
   );
 }

@@ -20,24 +20,33 @@ void init_bsim_routines_s(py::module &m) {
 Parameters
 ----------
 branch : BranchStruct
-    This parameter is an input/output and is modified in-place. As an output: with adjusted quads and RF to
-    match desired tunes.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: with adjusted quads and RF to match desired tunes.
 
-target_tunes : float
+target_tunes : 1D array of float (shape: 3)
     tunes for a, b, z modes (rad/2pi). Must include integer part.
 
-mask : 
+mask : character, optional
+
 use_phase_trombone : bool, optional
     Default False. If true, use a match element in phase trombone mode to adjust the tunes.
 
 z_tune_set : bool, optional
     Default True. If false, do not try to set the synch tune.
 
-group_knobs : unknown, optional
+group_knobs : 1D array of character (shape: 2), optional
     If set non-blank, use these group elements for tuning.
 
 print_err : bool, optional
     Print error message if there is a problem? Default is True.
+
+Returns
+-------
+branch : BranchStruct
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: with adjusted quads and RF to match desired tunes.
+
+mask : character, optional
 
 everything_ok : bool
     Returns true or false if set was successful.

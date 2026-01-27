@@ -16,10 +16,23 @@ void init_Bmad_routines_x(py::module &m) {
 
 Parameters
 ----------
-x : 
-y : 
-z : 
-res : 
+x : float
+
+y : float
+
+z : float
+
+res : float
+
+Returns
+-------
+x : float
+
+y : float
+
+z : float
+
+res : float
 )"""
   );
   m.def(
@@ -33,7 +46,7 @@ Taken from file xraylib/include/xraylib-nist_compounds.h
 
 Parameters
 ----------
-name : unknown
+name : character
     Name of compound
 
 Returns

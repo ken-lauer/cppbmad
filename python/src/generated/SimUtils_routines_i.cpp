@@ -15,9 +15,19 @@ void init_SimUtils_routines_i(py::module &m) {
 
 Parameters
 ----------
-m : 
-arg : 
-i_bes : 
+m : int
+
+arg : float
+
+i_bes : float
+
+Returns
+-------
+m : int
+
+arg : float
+
+i_bes : float
 )"""
   );
   m.def(
@@ -30,9 +40,19 @@ i_bes :
 
 Parameters
 ----------
-m : 
-arg : 
-i_bes : 
+m : int
+
+arg : float
+
+i_bes : complex
+
+Returns
+-------
+m : int
+
+arg : float
+
+i_bes : complex
 )"""
   );
   m.def(
@@ -46,10 +66,23 @@ i_bes :
 
 Parameters
 ----------
-file_name : 
-digits : 
-number : 
-cnumber : 
+file_name : character
+
+digits : int
+
+number : int
+
+cnumber : character
+
+Returns
+-------
+file_name : character
+
+digits : int
+
+number : int
+
+cnumber : character
 )"""
   );
   m.def(
@@ -62,9 +95,19 @@ cnumber :
 
 Parameters
 ----------
-string1 : 
-string2 : 
-indx : 
+string1 : character
+
+string2 : character
+
+indx : int
+
+Returns
+-------
+string1 : character
+
+string2 : character
+
+indx : int
 )"""
   );
   m.def(
@@ -89,7 +132,8 @@ N : int
 dt : float
     Time interval between data points. It is assumed that the data is
 
-separated by fixed time intervals. : 
+separated by fixed time intervals. : None
+
 order : int
     Order of fit polynomial.  Must be greater than or equal to der.
 
@@ -98,7 +142,7 @@ der : int
 
 Returns
 -------
-<return value> : int
+<return value> : integer
     id of windowLS instance created.
 )"""
   );
@@ -112,9 +156,19 @@ Returns
 
 Parameters
 ----------
-int : 
-width : 
-str : 
+int : None
+
+width : int, optional
+
+str : character
+
+Returns
+-------
+int : None
+
+width : int, optional
+
+str : character
 )"""
   );
   m.def(
@@ -179,12 +233,14 @@ prob
 
 Parameters
 ----------
-array : float
+array : 1D array of float
     Sequence.
 
 strict : bool, optional
     If True (default) sequence must be strictly decreasing.
 
+Returns
+-------
 is_decreasing : bool
     Set True if sequence is decreasing.
 )"""
@@ -230,12 +286,14 @@ boolian attributes. For example quadrupoles use ele%value(scale_multipoles$).
 
 Parameters
 ----------
-array : float
+array : 1D array of float
     Sequence.
 
 strict : bool, optional
     If True (default) sequence must be strictly increasing.
 
+Returns
+-------
 is_increasing : bool
     Set True if sequence is increasing.
 )"""
@@ -252,11 +310,27 @@ is_increasing : bool
 
 Parameters
 ----------
-string : 
-int : 
-delims : 
-ix_word : 
-valid : 
+string : character
+
+int : None
+
+delims : character, optional
+
+ix_word : int, optional
+
+valid : bool
+
+Returns
+-------
+string : character
+
+int : None
+
+delims : character, optional
+
+ix_word : int, optional
+
+valid : bool
 )"""
   );
   m.def(
@@ -269,9 +343,19 @@ valid :
 
 Parameters
 ----------
-string : 
-ignore : 
-valid : 
+string : character
+
+ignore : bool, optional
+
+valid : bool
+
+Returns
+-------
+string : character
+
+ignore : bool, optional
+
+valid : bool
 )"""
   );
   m.def(
@@ -285,10 +369,23 @@ valid :
 
 Parameters
 ----------
-string : 
-ignore : 
-real_num : 
-valid : 
+string : character
+
+ignore : bool, optional
+
+real_num : float, optional
+
+valid : bool
+
+Returns
+-------
+string : character
+
+ignore : bool, optional
+
+real_num : float, optional
+
+valid : bool
 )"""
   );
   m.def(

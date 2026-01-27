@@ -14,8 +14,15 @@ void init_bsim_routines_h(py::module &m) {
 
 Parameters
 ----------
-lr_wake : 
-voltage : 
+lr_wake : WakeLrModeStruct
+
+voltage : float
+
+Returns
+-------
+lr_wake : WakeLrModeStruct
+
+voltage : float
 )"""
   );
 }

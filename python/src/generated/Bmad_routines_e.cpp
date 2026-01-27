@@ -37,6 +37,8 @@ void init_Bmad_routines_e(py::module &m) {
   bmad_standard_tracking : bool, optional
       Using bmad_standard tracking? Default is False.
 
+  Returns
+  -------
   field : float
       Cavity field or gradient.
   )"""
@@ -98,21 +100,21 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  mat : float
+  mat : 2D array of float (shape: 6,6)
       6x6 real matrix.  Usually a transfer matrix or sigma matrix.
 
   Returns
   -------
-  eval : complex
+  eval : 1D array of complex (shape: 6)
       complex eigenvalues.
 
-  evec : complex
+  evec : 2D array of complex (shape: 6,6)
       complex eigenvectors arranged down columns.
 
   err_flag : bool
       set to true if an error has occured.
 
-  tunes : float
+  tunes : 1D array of float (shape: 3), optional
       Mode tunes, in radians.
   )"""
   );
@@ -132,14 +134,21 @@ void init_Bmad_routines_e(py::module &m) {
 
   ele : EleStruct
       Lattice element
-      This parameter is an input/output and is modified in-place. As an output: Lattice element with reference
-      energy and time.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Lattice element with reference energy and time.
 
   param : LatParamStruct
       Lattice parameters.
 
   err_flag : bool
       Set true if there is an error. False otherwise.
+
+  Returns
+  -------
+  ele : EleStruct
+      Lattice element
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Lattice element with reference energy and time.
   )"""
   );
   m.def(
@@ -151,8 +160,15 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  ele_out : 
-  ele_in : 
+  ele_out : EleStruct
+
+  ele_in : EleStruct
+
+  Returns
+  -------
+  ele_out : EleStruct
+
+  ele_in : EleStruct
   )"""
   );
   m.def(
@@ -193,8 +209,15 @@ void init_Bmad_routines_e(py::module &m) {
   ----------
   ele : EleStruct
       Element to cleanup.
-      This parameter is an input/output and is modified in-place. As an output: Element with pointers
-      deallocated as needed.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Element with pointers deallocated as needed.
+
+  Returns
+  -------
+  ele : EleStruct
+      Element to cleanup.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Element with pointers deallocated as needed.
   )"""
   );
   m.def(
@@ -209,10 +232,12 @@ void init_Bmad_routines_e(py::module &m) {
   ele : EleStruct
       Element in a lattice
 
-  template : unknown, optional
+  template : character(*), optional
       Encoding template. Default is "@N (&#)".
 
-  str : unknown
+  Returns
+  -------
+  str : character
       : Name/location string.
   )"""
   );
@@ -227,14 +252,11 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  floor_start : 
+  floor_start : FloorPositionStruct
       Starting floor coordinates at upstream end.
 
   ele : EleStruct
       Element to propagate the geometry through.
-
-  floor_end : FloorPositionStruct
-      Output floor position. If not present then
 
   len_scale : float, optional
       factor to scale the length of the element. 1.0_rp => Output is geometry at end of element (default).
@@ -243,6 +265,11 @@ void init_Bmad_routines_e(py::module &m) {
   ignore_patch_err : bool, optional
       If present and True, ignore flexible patch errors. This is used by ele_compute_ref_energy_and_time to
       suppress unnecessary messages.
+
+  Returns
+  -------
+  floor_end : FloorPositionStruct, optional
+      Output floor position. If not present then
   )"""
   );
   m.def(
@@ -261,6 +288,8 @@ void init_Bmad_routines_e(py::module &m) {
       factor to scale the length of the element. 1.0_rp => Output is geometry at end of element (default).
       0.5_rp => Output is geometry at center of element. -1.0_rp => Used to propagate geometry in reverse.
 
+  Returns
+  -------
   floor : FloorPositionStruct
       Floor position with misalignments
   )"""
@@ -276,6 +305,8 @@ void init_Bmad_routines_e(py::module &m) {
   ele : EleStruct
       Element.
 
+  Returns
+  -------
   is_const : bool
       True if reference velocity must be a constant.
   )"""
@@ -291,9 +322,19 @@ void init_Bmad_routines_e(py::module &m) {
   ----------
   ele : EleStruct
       Element with possible nonzero kicks.
-      This parameter is an input/output and is modified in-place. As an output: Element with no kicks.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Element with no kicks.
 
-  has_kick : 
+  has_kick : bool
+
+  Returns
+  -------
+  ele : EleStruct
+      Element with possible nonzero kicks.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Element with no kicks.
+
+  has_kick : bool
   )"""
   );
   m.def(
@@ -307,6 +348,8 @@ void init_Bmad_routines_e(py::module &m) {
   ele : EleStruct
       Element with possible nonzero offsets.
 
+  Returns
+  -------
   has_offset : bool
       Set true is element has a non-zero offset.
   )"""
@@ -346,6 +389,8 @@ void init_Bmad_routines_e(py::module &m) {
   ele : EleStruct
       Element to be identified
 
+  Returns
+  -------
   loc : LatEleLocStruct
       Element identifier.
   )"""
@@ -366,11 +411,13 @@ void init_Bmad_routines_e(py::module &m) {
   show_branch0 : bool, optional
       Explicitly show branch for main
 
-  parens : unknown, optional
+  parens : character, optional
       If present, enclose location string using the two characters supplied. Typically parens will be set to
       "()" or "[]".
 
-  str : unknown
+  Returns
+  -------
+  str : character
       Output string. Left justified.
   )"""
   );
@@ -399,13 +446,15 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  ele : float
+  ele : EleStruct
       Element
 
-  L_mis : float
+  Returns
+  -------
+  L_mis : 1D array of float (shape: 3)
       Misalignment vector relative to center of element
 
-  S_mis : float
+  S_mis : 2D array of float (shape: 3,3)
       Misalignment matrix relative to center of element
   )"""
   );
@@ -420,6 +469,8 @@ void init_Bmad_routines_e(py::module &m) {
   ele : EleStruct
       Element in a lattice.
 
+  Returns
+  -------
   ix_nt : int
       Nametable index. lat.nametable.name(ix_nt) and lat.nametable.index(ix_nt) correspond with ele. Set to -1
       if ele is not a lattice element. For example, a slice_slave is not a lattice element.
@@ -436,6 +487,8 @@ void init_Bmad_routines_e(py::module &m) {
   lat : LatStruct
       Lattice to analyze.
 
+  Returns
+  -------
   order : LatEleOrderStruct
       Structure holding the element order information.
   )"""
@@ -462,13 +515,23 @@ void init_Bmad_routines_e(py::module &m) {
       first_track_edge$ (that is, entering the element), or second_track_edge$ (that is, leaving the element),
       or upstream_end$ (inherit ele.value(p0c_start$) ref), or downstream_end$ (inherit ele.value(p0c$)).
 
-  mat6 : float, optional
+  mat6 : 2D array of float (shape: 6,6), optional
       Transfer matrix before correction.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-      including correction.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix transfer matrix including correction.
 
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
+
+  Returns
+  -------
+  orbit : CoordStruct
+      Coordinates to correct.
+
+  mat6 : 2D array of float (shape: 6,6), optional
+      Transfer matrix before correction.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix transfer matrix including correction.
   )"""
   );
   m.def(
@@ -487,9 +550,11 @@ void init_Bmad_routines_e(py::module &m) {
   s_rel : float
       S-position relative to the beginning of the element
 
-  ele : float
+  ele : EleStruct
       RF cavity.
 
+  Returns
+  -------
   ix_step : int
       Corresponding index in the ele.rf.steps(:) array.
   )"""
@@ -527,14 +592,8 @@ void init_Bmad_routines_e(py::module &m) {
   ele : EleStruct
       Bmad element.
 
-  ptc_fibre : unknown
-      PTC fibre element.
-
   use_offsets : bool
       Does ptc_fibre include element offsets, pitches and tilt?
-
-  err_flag : bool
-      Set True if setup OK. False otherwise.
 
   integ_order : int, optional
       Order for the sympletic integrator. Possibilities are: 2, 4, or 6 Overrides ele.value(integrator_order$).
@@ -548,6 +607,14 @@ void init_Bmad_routines_e(py::module &m) {
   ref_in : CoordStruct, optional
       Particle to be tracked. ref_particle$, electron$, etc. This argument should only be present when the fibre
       is not to be put in a layout.
+
+  Returns
+  -------
+  ptc_fibre : Fibre, optional
+      PTC fibre element.
+
+  err_flag : bool
+      Set True if setup OK. False otherwise.
   )"""
   );
   m.def(
@@ -573,13 +640,13 @@ void init_Bmad_routines_e(py::module &m) {
 
   Returns
   -------
-  bn : float
+  bn : 1D array of float
       Normal multipole component.
 
-  an : float
+  an : 1D array of float
       Skew multipole component.
 
-  n_max : int
+  n_max : int, optional
       Maximum non-zero multipole component. Set to zero if there are no multipoles.
   )"""
   );
@@ -595,13 +662,21 @@ void init_Bmad_routines_e(py::module &m) {
   ----------
   ele : EleStruct
       Lattice element.
-      This parameter is an input/output and is modified in-place. As an output: Element with spin map.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Element with spin map.
 
-  param : unknown
+  param : LatParamStruct
       Branch parameters.
 
   orb0 : CoordStruct
       Starting ref coords.
+
+  Returns
+  -------
+  ele : EleStruct
+      Lattice element.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Element with spin map.
   )"""
   );
   py::class_<Bmad::EleToTaylor, std::unique_ptr<Bmad::EleToTaylor>>(
@@ -632,22 +707,24 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  ele : ElementStruct
+  ele : EleStruct
       Element to construct map for.
 
   orb0 : CoordStruct, optional
       Starting coords around which the Taylor map is evaluated. Default is the zero orbit.
 
-  taylor_map_includes_offsets : unknown, optional
+  taylor_map_includes_offsets : bool, optional
       If present then value overrides ele.taylor_map_includes_offsets.
 
   include_damping : bool, optional
       Sets if radiation damping is included. Default is what is set in ptc_private.base_state.
 
-  orbital_taylor : TaylorStruct
+  Returns
+  -------
+  orbital_taylor : 1D array of TaylorStruct (shape: 6), optional
       Orbital taylor map.
 
-  spin_taylor : TaylorStruct
+  spin_taylor : 1D array of TaylorStruct (shape: 0:3), optional
       Spin taylor map. If not present then the map is put in ele.spin_taylor.
   )"""
   );
@@ -667,7 +744,9 @@ void init_Bmad_routines_e(py::module &m) {
       Information on element ordering. Before calling this routine, use the routine ele_order_calc to compute
       this argument.
 
-  unique_name : unknown
+  Returns
+  -------
+  unique_name : character
       Unique name that can can be used to identify ele. The simplist name will be constructed. For example, if
       the element name is unique, unique_name will be set to the element name.
   )"""
@@ -685,17 +764,24 @@ void init_Bmad_routines_e(py::module &m) {
   ----------
   ele : EleStruct
       Element under consideration.
-      This parameter is an input/output and is modified in-place. As an output: ele.old_value may be set
-      depending upon setting of set_old
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: ele.old_value may be set depending upon setting of set_old
 
-  list : int
+  list : 1D array of int
       List of indexes of ele.value(:) array to check.
 
-  abs_tol : float
+  abs_tol : 1D array of float
       List of values such that if the change in parameter value is
 
   set_old : bool
       If True then set ele.old_value(j) = ele.value(j) for j in list
+
+  Returns
+  -------
+  ele : EleStruct
+      Element under consideration.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: ele.old_value may be set depending upon setting of set_old
 
   has_changed : bool
       Set True if a value has changed significantly.
@@ -710,8 +796,15 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  ele1 : 
-  ele2 : 
+  ele1 : 1D array of EleStruct
+
+  ele2 : 1D array of EleStruct
+
+  Returns
+  -------
+  ele1 : 1D array of EleStruct
+
+  ele2 : 1D array of EleStruct
   )"""
   );
   py::class_<Bmad::ElecMultipoleField, std::unique_ptr<Bmad::ElecMultipoleField>>(
@@ -754,21 +847,23 @@ void init_Bmad_routines_e(py::module &m) {
   b : float
       Multipole normal component.
 
-  n : float
+  n : int
       Multipole order.
 
   coord : CoordStruct
 
+  Returns
+  -------
   Ex : float
       X field component
 
   Ey : float
       Y field component.
 
-  dE : float
+  dE : 2D array of float (shape: 2,2), optional
       Field derivatives: dfield(x,y)/d(x,y).
 
-  compute_dE : bool
+  compute_dE : bool, optional
       If False, do not compute the field derivatives even if dE is present. Default is True.
   )"""
   );
@@ -837,7 +932,7 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  lat : LatStruct
+  lat : lat_struct
       Lattice of elements.
 
   branch : BranchStruct
@@ -849,7 +944,7 @@ void init_Bmad_routines_e(py::module &m) {
   choose_max : bool
       See above
 
-  ix_branch : int, optional
+  ix_branch : integer, optional
       Branch index. Default is 0.
 
   print_err : bool, optional
@@ -860,22 +955,22 @@ void init_Bmad_routines_e(py::module &m) {
   ix_ele : int
       Index of element at s.
 
-  err_flag : bool
+  err_flag : bool, optional
       Set True if s is out of bounds. False otherwise.
 
-  s_eff : float
+  s_eff : float, optional
       Effective s. Equal to s with a open lattice. See above.
 
-  position : CoordStruct
+  position : CoordStruct, optional
       Positional information.
 
-  %s : 
+  %s : None
       Same as input s.
 
-  %ix_ele : 
+  %ix_ele : None
       Same as output ix_ele
 
-  %location : 
+  %location : None
       Location relative to element. Upstream_end$, downstream_end$, or inside$
 
   Notes
@@ -961,7 +1056,7 @@ void init_Bmad_routines_e(py::module &m) {
   lat : LatStruct
       Lattice of elements.
 
-  branch : BranchStruct
+  branch : branch_struct
       Branch to use
 
   s : float
@@ -981,22 +1076,22 @@ void init_Bmad_routines_e(py::module &m) {
   ix_ele : int
       Index of element at s.
 
-  err_flag : bool
+  err_flag : bool, optional
       Set True if s is out of bounds. False otherwise.
 
-  s_eff : float
+  s_eff : float, optional
       Effective s. Equal to s with a open lattice. See above.
 
-  position : CoordStruct
+  position : CoordStruct, optional
       Positional information.
 
-  %s : 
+  %s : None
       Same as input s.
 
-  %ix_ele : 
+  %ix_ele : None
       Same as output ix_ele
 
-  %location : 
+  %location : None
       Location relative to element. Upstream_end$, downstream_end$, or inside$
 
   Notes
@@ -1037,12 +1132,17 @@ void init_Bmad_routines_e(py::module &m) {
   n_slice_tot : int
       Total number of slices.
 
-  sliced_ele : 
+  sliced_ele : EleStruct
+
   s_start : float, optional
       Starting edge of slice relative to beginning of element.
 
   s_end : float, optional
       Ending edge of slice relative to beginning of element.
+
+  Returns
+  -------
+  sliced_ele : EleStruct
   )"""
   );
   m.def(
@@ -1101,17 +1201,11 @@ void init_Bmad_routines_e(py::module &m) {
   orbit : CoordStruct
       Transverse coordinates.
 
-  local_ref_frame : 
+  local_ref_frame : bool
       Logical, If True then take the input coordinates and output fields
-
-  field : EmFieldStruct
-      E and B fields and derivatives.
 
   calc_dfield : bool, optional
       If present and True then calculate the field derivatives.
-
-  err_flag : bool
-      Set True if there is an error. False otherwise.
 
   calc_potential : bool, optional
       Calc electric and magnetic potentials? Default is false. This is experimental and only implemented for
@@ -1120,14 +1214,14 @@ void init_Bmad_routines_e(py::module &m) {
   use_overlap : bool, optional
       Add in overlap fields from other elements? Default is True.
 
-  grid_allow_s_out_of_bounds : unknown, optional
+  grid_allow_s_out_of_bounds : bool, optional
       For grids, allow s-coordinate to be grossly out of bounds
 
   rf_time : float, optional
       Set the time relative to the RF clock. Normally this time is calculated using orbit.t or orbit.vec(5) but
       sometimes it is convenient to be able to override this.
 
-  used_eles : ElePointerStruct, optional
+  used_eles : 1D array of ElePointerStruct, optional
       For internal use only when this routine is
 
   print_err : bool, optional
@@ -1136,6 +1230,14 @@ void init_Bmad_routines_e(py::module &m) {
   original_ele : EleStruct, optional
       Used with recursive calls that pass the lord as the ele argument. In this case original_ele is the
       original ele argument.
+
+  Returns
+  -------
+  field : EmFieldStruct
+      E and B fields and derivatives.
+
+  err_flag : bool, optional
+      Set True if there is an error. False otherwise.
   )"""
   );
   m.def(
@@ -1180,27 +1282,26 @@ void init_Bmad_routines_e(py::module &m) {
   s_pos : float
       Longitudinal position relative to the upstream edge of the element.
 
-  time : float
+  time : real(rp)
       Particle time. For absolute time tracking this is the absolute time.
 
-  For relative time tracking this is relative to the reference particle entering the element. : 
+  For relative time tracking this is relative to the reference particle entering the element. : None
+
   orbit : CoordStruct
       Transverse coordinates.
 
-  %vec : 
+  %vec : None
       Transverse coords. These are the only components used in the calculation.
 
-  %vec : 
-      Transverse coords. These are the only components used in the calculation.
-
-  local_ref_frame : 
+  local_ref_frame : bool
       Logical, If True then take the input coordinates and output fields as being with respect to the frame of
       referene of the element (ignore misalignments).
 
-  grid_allow_s_out_of_bounds : unknown, optional
+  grid_allow_s_out_of_bounds : bool, optional
       For grids, allow s-coordinate to be grossly out of bounds
 
-  and return zero instead of an error? Default: False. Used internally for overlapping fields. : 
+  and return zero instead of an error? Default: False. Used internally for overlapping fields. : None
+
   rf_time : float, optional
       RF clock time. If not present then the time will be calculated using the standard algorithm.
 
@@ -1226,10 +1327,10 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  ele : CoordStruct
+  ele : EleStruct
       input particle
 
-  param : float
+  param : LatParamStruct
       Reference momentum. The sign indicates direction of p_s.
 
   rf_time : float
@@ -1249,7 +1350,7 @@ void init_Bmad_routines_e(py::module &m) {
 
   Returns
   -------
-  dvec_dt : float
+  dvec_dt : 1D array of float (shape: 10)
       Derivatives.
   )"""
   );
@@ -1263,9 +1364,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  field1 : 
-  field2 : 
-  field_tot : 
+  field1 : EmFieldStruct
+
+  field2 : EmFieldStruct
+
+  field_tot : EmFieldStruct
+
+  Returns
+  -------
+  field1 : EmFieldStruct
+
+  field2 : EmFieldStruct
+
+  field_tot : EmFieldStruct
   )"""
   );
   m.def(
@@ -1277,8 +1388,15 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  em_taylor1 : 
-  em_taylor2 : 
+  em_taylor1 : EmTaylorStruct
+
+  em_taylor2 : EmTaylorStruct
+
+  Returns
+  -------
+  em_taylor1 : EmTaylorStruct
+
+  em_taylor2 : EmTaylorStruct
   )"""
   );
   m.def(
@@ -1290,8 +1408,15 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  em_taylor1 : 
-  em_taylor2 : 
+  em_taylor1 : 1D array of EmTaylorStruct
+
+  em_taylor2 : 1D array of EmTaylorStruct
+
+  Returns
+  -------
+  em_taylor1 : 1D array of EmTaylorStruct
+
+  em_taylor2 : 1D array of EmTaylorStruct
   )"""
   );
   py::class_<Bmad::Emit6d, std::unique_ptr<Bmad::Emit6d>>(m, "Emit6d", "emit_6d return type")
@@ -1332,8 +1457,9 @@ void init_Bmad_routines_e(py::module &m) {
   include_opening_angle : bool
       If True include the effect of the vertical opening angle of emitted radiation.
 
-  Generally use True unless comparing against other codes. : 
-  closed_orbit : CoordStruct, optional
+  Generally use True unless comparing against other codes. : None
+
+  closed_orbit : 1D array of CoordStruct, optional
       Closed orbit. If not present this routine will calculate it.
 
   Returns
@@ -1341,10 +1467,10 @@ void init_Bmad_routines_e(py::module &m) {
   mode : NormalModesStruct
       Emittance and other info.
 
-  sigma_mat : float
+  sigma_mat : 2D array of float (shape: 6,6)
       Sigma matrix.
 
-  rad_int_by_ele : RadIntAllEleStruct
+  rad_int_by_ele : RadIntAllEleStruct, optional
       Radiation integrals element-by-element.
   )"""
   );
@@ -1363,6 +1489,8 @@ void init_Bmad_routines_e(py::module &m) {
   particle_at : int
       First_track_edge$ or second_track_edge$
 
+  Returns
+  -------
   is_entering : bool
       Set True if particle is going from outside to inside and vice versa.
   )"""
@@ -1434,37 +1562,35 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  Lambda : float
+  Lambda : 2D array of complex (shape: 6,6)
       Integrated damping matrix.
 
-  Theta : float
+  Theta : 2D array of complex (shape: 6,6)
       Integrated diffusion matrix.
 
-  Iota : float
+  Iota : 2D array of complex (shape: 6,6)
       Integrated vertical excitation matrix.
 
-  eles : EleStruct
+  eles : 1D array of EleStruct
       array of element structures representing ring.
 
-  %mat6 : float
+  %mat6 : real(rp)
       element transfer matrix.
 
-  %value : float
+  %value : real(rp)
       element (slice) length.
+      As an output, .value: Beam energy in element.
 
-  %value : float
-      Beam energy in element.
-
-  mode : 
+  mode : NormalModesStruct
       normal_modes_struct
 
-  %a%tune : float
+  %a%tune : real(rp)
       tune of a-mode.
 
-  %b%tune : float
+  %b%tune : real(rp)
       tune of b-mode.
 
-  %z%tune : float
+  %z%tune : real(rp)
       tune of z-mode.
 
   tail_cut : bool
@@ -1478,10 +1604,10 @@ void init_Bmad_routines_e(py::module &m) {
 
   Returns
   -------
-  alpha : float
+  alpha : 1D array of float (shape: 3)
       Normal mode damping decrements.
 
-  emit : float
+  emit : 1D array of float (shape: 3)
       Normal mode emittances.
   )"""
   );
@@ -1495,9 +1621,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : AcKickerStruct
+
+  f2 : AcKickerStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : AcKickerStruct
+
+  f2 : AcKickerStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1510,9 +1646,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : AcKickerFreqStruct
+
+  f2 : AcKickerFreqStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : AcKickerFreqStruct
+
+  f2 : AcKickerFreqStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1525,9 +1671,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : AcKickerTimeStruct
+
+  f2 : AcKickerTimeStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : AcKickerTimeStruct
+
+  f2 : AcKickerTimeStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1540,9 +1696,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : AnormalModeStruct
+
+  f2 : AnormalModeStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : AnormalModeStruct
+
+  f2 : AnormalModeStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1555,9 +1721,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ApertureParamStruct
+
+  f2 : ApertureParamStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ApertureParamStruct
+
+  f2 : ApertureParamStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1570,9 +1746,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : AperturePointStruct
+
+  f2 : AperturePointStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : AperturePointStruct
+
+  f2 : AperturePointStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1585,9 +1771,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ApertureScanStruct
+
+  f2 : ApertureScanStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ApertureScanStruct
+
+  f2 : ApertureScanStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1600,9 +1796,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : BeamStruct
+
+  f2 : BeamStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : BeamStruct
+
+  f2 : BeamStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1615,9 +1821,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : BeamInitStruct
+
+  f2 : BeamInitStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : BeamInitStruct
+
+  f2 : BeamInitStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1630,9 +1846,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : BmadCommonStruct
+
+  f2 : BmadCommonStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : BmadCommonStruct
+
+  f2 : BmadCommonStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1645,9 +1871,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : BookkeepingStateStruct
+
+  f2 : BookkeepingStateStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : BookkeepingStateStruct
+
+  f2 : BookkeepingStateStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1660,9 +1896,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : BpmPhaseCouplingStruct
+
+  f2 : BpmPhaseCouplingStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : BpmPhaseCouplingStruct
+
+  f2 : BpmPhaseCouplingStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1675,9 +1921,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : BranchStruct
+
+  f2 : BranchStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : BranchStruct
+
+  f2 : BranchStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1690,9 +1946,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : BunchStruct
+
+  f2 : BunchStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : BunchStruct
+
+  f2 : BunchStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1705,9 +1971,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : BunchParamsStruct
+
+  f2 : BunchParamsStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : BunchParamsStruct
+
+  f2 : BunchParamsStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1720,9 +1996,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : CartesianMapStruct
+
+  f2 : CartesianMapStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : CartesianMapStruct
+
+  f2 : CartesianMapStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1735,9 +2021,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : CartesianMapTermStruct
+
+  f2 : CartesianMapTermStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : CartesianMapTermStruct
+
+  f2 : CartesianMapTermStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1750,9 +2046,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : CartesianMapTerm1Struct
+
+  f2 : CartesianMapTerm1Struct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : CartesianMapTerm1Struct
+
+  f2 : CartesianMapTerm1Struct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1765,9 +2071,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ComplexTaylorStruct
+
+  f2 : ComplexTaylorStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ComplexTaylorStruct
+
+  f2 : ComplexTaylorStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1780,9 +2096,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ComplexTaylorTermStruct
+
+  f2 : ComplexTaylorTermStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ComplexTaylorTermStruct
+
+  f2 : ComplexTaylorTermStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1795,9 +2121,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ControlStruct
+
+  f2 : ControlStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ControlStruct
+
+  f2 : ControlStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1810,9 +2146,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ControlRamp1Struct
+
+  f2 : ControlRamp1Struct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ControlRamp1Struct
+
+  f2 : ControlRamp1Struct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1825,9 +2171,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ControlVar1Struct
+
+  f2 : ControlVar1Struct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ControlVar1Struct
+
+  f2 : ControlVar1Struct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1840,9 +2196,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ControllerStruct
+
+  f2 : ControllerStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ControllerStruct
+
+  f2 : ControllerStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1855,9 +2221,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : CoordStruct
+
+  f2 : CoordStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : CoordStruct
+
+  f2 : CoordStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1870,9 +2246,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : CoordArrayStruct
+
+  f2 : CoordArrayStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : CoordArrayStruct
+
+  f2 : CoordArrayStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1885,9 +2271,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : CylindricalMapStruct
+
+  f2 : CylindricalMapStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : CylindricalMapStruct
+
+  f2 : CylindricalMapStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1900,9 +2296,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : CylindricalMapTermStruct
+
+  f2 : CylindricalMapTermStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : CylindricalMapTermStruct
+
+  f2 : CylindricalMapTermStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1915,9 +2321,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : CylindricalMapTerm1Struct
+
+  f2 : CylindricalMapTerm1Struct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : CylindricalMapTerm1Struct
+
+  f2 : CylindricalMapTerm1Struct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1930,9 +2346,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : EleStruct
+
+  f2 : EleStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : EleStruct
+
+  f2 : EleStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1945,9 +2371,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : EllipseBeamInitStruct
+
+  f2 : EllipseBeamInitStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : EllipseBeamInitStruct
+
+  f2 : EllipseBeamInitStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1960,9 +2396,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : EmFieldStruct
+
+  f2 : EmFieldStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : EmFieldStruct
+
+  f2 : EmFieldStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1975,9 +2421,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : EmTaylorStruct
+
+  f2 : EmTaylorStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : EmTaylorStruct
+
+  f2 : EmTaylorStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -1990,9 +2446,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : EmTaylorTermStruct
+
+  f2 : EmTaylorTermStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : EmTaylorTermStruct
+
+  f2 : EmTaylorTermStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2005,9 +2471,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ExpressionAtomStruct
+
+  f2 : ExpressionAtomStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ExpressionAtomStruct
+
+  f2 : ExpressionAtomStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2020,9 +2496,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : FloorPositionStruct
+
+  f2 : FloorPositionStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : FloorPositionStruct
+
+  f2 : FloorPositionStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2035,9 +2521,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : GenGrad1Struct
+
+  f2 : GenGrad1Struct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : GenGrad1Struct
+
+  f2 : GenGrad1Struct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2050,9 +2546,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : GenGradMapStruct
+
+  f2 : GenGradMapStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : GenGradMapStruct
+
+  f2 : GenGradMapStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2065,9 +2571,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : GridBeamInitStruct
+
+  f2 : GridBeamInitStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : GridBeamInitStruct
+
+  f2 : GridBeamInitStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2080,9 +2596,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : GridFieldStruct
+
+  f2 : GridFieldStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : GridFieldStruct
+
+  f2 : GridFieldStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2095,9 +2621,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : GridFieldPtStruct
+
+  f2 : GridFieldPtStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : GridFieldPtStruct
+
+  f2 : GridFieldPtStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2110,9 +2646,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : GridFieldPt1Struct
+
+  f2 : GridFieldPt1Struct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : GridFieldPt1Struct
+
+  f2 : GridFieldPt1Struct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2125,9 +2671,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : HighEnergySpaceChargeStruct
+
+  f2 : HighEnergySpaceChargeStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : HighEnergySpaceChargeStruct
+
+  f2 : HighEnergySpaceChargeStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2140,9 +2696,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : Interval1CoefStruct
+
+  f2 : Interval1CoefStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : Interval1CoefStruct
+
+  f2 : Interval1CoefStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2155,9 +2721,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : KvBeamInitStruct
+
+  f2 : KvBeamInitStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : KvBeamInitStruct
+
+  f2 : KvBeamInitStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2170,9 +2746,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : LatStruct
+
+  f2 : LatStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : LatStruct
+
+  f2 : LatStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2185,9 +2771,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : LatEleLocStruct
+
+  f2 : LatEleLocStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : LatEleLocStruct
+
+  f2 : LatEleLocStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2200,9 +2796,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : LatParamStruct
+
+  f2 : LatParamStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : LatParamStruct
+
+  f2 : LatParamStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2215,9 +2821,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : LinacNormalModeStruct
+
+  f2 : LinacNormalModeStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : LinacNormalModeStruct
+
+  f2 : LinacNormalModeStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2230,9 +2846,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : Mode3Struct
+
+  f2 : Mode3Struct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : Mode3Struct
+
+  f2 : Mode3Struct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2245,9 +2871,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : ModeInfoStruct
+
+  f2 : ModeInfoStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : ModeInfoStruct
+
+  f2 : ModeInfoStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2260,9 +2896,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : NormalModesStruct
+
+  f2 : NormalModesStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : NormalModesStruct
+
+  f2 : NormalModesStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2275,9 +2921,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : PhotonElementStruct
+
+  f2 : PhotonElementStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : PhotonElementStruct
+
+  f2 : PhotonElementStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2290,9 +2946,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : PhotonMaterialStruct
+
+  f2 : PhotonMaterialStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : PhotonMaterialStruct
+
+  f2 : PhotonMaterialStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2305,9 +2971,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : PhotonReflectSurfaceStruct
+
+  f2 : PhotonReflectSurfaceStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : PhotonReflectSurfaceStruct
+
+  f2 : PhotonReflectSurfaceStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2320,9 +2996,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : PhotonReflectTableStruct
+
+  f2 : PhotonReflectTableStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : PhotonReflectTableStruct
+
+  f2 : PhotonReflectTableStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2335,9 +3021,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : PhotonTargetStruct
+
+  f2 : PhotonTargetStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : PhotonTargetStruct
+
+  f2 : PhotonTargetStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2350,9 +3046,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : PixelDetecStruct
+
+  f2 : PixelDetecStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : PixelDetecStruct
+
+  f2 : PixelDetecStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2365,9 +3071,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : PixelPtStruct
+
+  f2 : PixelPtStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : PixelPtStruct
+
+  f2 : PixelPtStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2380,9 +3096,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : PreTrackerStruct
+
+  f2 : PreTrackerStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : PreTrackerStruct
+
+  f2 : PreTrackerStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2395,9 +3121,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : RadInt1Struct
+
+  f2 : RadInt1Struct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : RadInt1Struct
+
+  f2 : RadInt1Struct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2410,9 +3146,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : RadIntAllEleStruct
+
+  f2 : RadIntAllEleStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : RadIntAllEleStruct
+
+  f2 : RadIntAllEleStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2425,9 +3171,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : RadIntBranchStruct
+
+  f2 : RadIntBranchStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : RadIntBranchStruct
+
+  f2 : RadIntBranchStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2440,9 +3196,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : RadMapStruct
+
+  f2 : RadMapStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : RadMapStruct
+
+  f2 : RadMapStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2455,9 +3221,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : RadMapEleStruct
+
+  f2 : RadMapEleStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : RadMapEleStruct
+
+  f2 : RadMapEleStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2470,9 +3246,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : RamperLordStruct
+
+  f2 : RamperLordStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : RamperLordStruct
+
+  f2 : RamperLordStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2485,9 +3271,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SpaceChargeCommonStruct
+
+  f2 : SpaceChargeCommonStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SpaceChargeCommonStruct
+
+  f2 : SpaceChargeCommonStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2500,9 +3296,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SpinPolarStruct
+
+  f2 : SpinPolarStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SpinPolarStruct
+
+  f2 : SpinPolarStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2515,9 +3321,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SplineStruct
+
+  f2 : SplineStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SplineStruct
+
+  f2 : SplineStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2530,9 +3346,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : StrongBeamStruct
+
+  f2 : StrongBeamStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : StrongBeamStruct
+
+  f2 : StrongBeamStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2545,9 +3371,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SurfaceCurvatureStruct
+
+  f2 : SurfaceCurvatureStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SurfaceCurvatureStruct
+
+  f2 : SurfaceCurvatureStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2560,9 +3396,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SurfaceDisplacementStruct
+
+  f2 : SurfaceDisplacementStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SurfaceDisplacementStruct
+
+  f2 : SurfaceDisplacementStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2575,9 +3421,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SurfaceDisplacementPtStruct
+
+  f2 : SurfaceDisplacementPtStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SurfaceDisplacementPtStruct
+
+  f2 : SurfaceDisplacementPtStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2590,9 +3446,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SurfaceHMisalignStruct
+
+  f2 : SurfaceHMisalignStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SurfaceHMisalignStruct
+
+  f2 : SurfaceHMisalignStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2605,9 +3471,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SurfaceHMisalignPtStruct
+
+  f2 : SurfaceHMisalignPtStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SurfaceHMisalignPtStruct
+
+  f2 : SurfaceHMisalignPtStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2620,9 +3496,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SurfaceSegmentedStruct
+
+  f2 : SurfaceSegmentedStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SurfaceSegmentedStruct
+
+  f2 : SurfaceSegmentedStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2635,9 +3521,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : SurfaceSegmentedPtStruct
+
+  f2 : SurfaceSegmentedPtStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : SurfaceSegmentedPtStruct
+
+  f2 : SurfaceSegmentedPtStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2650,9 +3546,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : TargetPointStruct
+
+  f2 : TargetPointStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : TargetPointStruct
+
+  f2 : TargetPointStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2665,9 +3571,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : TaylorStruct
+
+  f2 : TaylorStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : TaylorStruct
+
+  f2 : TaylorStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2680,9 +3596,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : TaylorTermStruct
+
+  f2 : TaylorTermStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : TaylorTermStruct
+
+  f2 : TaylorTermStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2695,9 +3621,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : TrackStruct
+
+  f2 : TrackStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : TrackStruct
+
+  f2 : TrackStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2710,9 +3646,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : TrackPointStruct
+
+  f2 : TrackPointStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : TrackPointStruct
+
+  f2 : TrackPointStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2725,9 +3671,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : TwissStruct
+
+  f2 : TwissStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : TwissStruct
+
+  f2 : TwissStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2740,9 +3696,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : WakeStruct
+
+  f2 : WakeStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : WakeStruct
+
+  f2 : WakeStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2755,9 +3721,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : WakeLrStruct
+
+  f2 : WakeLrStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : WakeLrStruct
+
+  f2 : WakeLrStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2770,9 +3746,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : WakeLrModeStruct
+
+  f2 : WakeLrModeStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : WakeLrModeStruct
+
+  f2 : WakeLrModeStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2785,9 +3771,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : WakeSrStruct
+
+  f2 : WakeSrStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : WakeSrStruct
+
+  f2 : WakeSrStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2800,9 +3796,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : WakeSrModeStruct
+
+  f2 : WakeSrModeStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : WakeSrModeStruct
+
+  f2 : WakeSrModeStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2815,9 +3821,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : WakeSrZLongStruct
+
+  f2 : WakeSrZLongStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : WakeSrZLongStruct
+
+  f2 : WakeSrZLongStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2830,9 +3846,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : Wall3DStruct
+
+  f2 : Wall3DStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : Wall3DStruct
+
+  f2 : Wall3DStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2845,9 +3871,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : Wall3DSectionStruct
+
+  f2 : Wall3DSectionStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : Wall3DSectionStruct
+
+  f2 : Wall3DSectionStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2860,9 +3896,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : Wall3DVertexStruct
+
+  f2 : Wall3DVertexStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : Wall3DVertexStruct
+
+  f2 : Wall3DVertexStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2875,9 +3921,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  f1 : 
-  f2 : 
-  is_eq : 
+  f1 : XyDispStruct
+
+  f2 : XyDispStruct
+
+  is_eq : bool
+
+  Returns
+  -------
+  f1 : XyDispStruct
+
+  f2 : XyDispStruct
+
+  is_eq : bool
   )"""
   );
   m.def(
@@ -2890,9 +3946,19 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  ele : 
-  delim : 
-  is_here : 
+  ele : EleStruct
+
+  delim : character
+
+  is_here : bool
+
+  Returns
+  -------
+  ele : EleStruct
+
+  delim : character
+
+  is_here : bool
   )"""
   );
   m.def(
@@ -2910,6 +3976,8 @@ void init_Bmad_routines_e(py::module &m) {
   ele2 : EleStruct
       Element that might receive the Taylor map from ele_taylor.
 
+  Returns
+  -------
   equiv : bool
       True if elements are equivalent.
   )"""
@@ -2927,12 +3995,31 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  A : 
-  B : 
-  C : 
-  D : 
-  E : 
-  F : 
+  A : float
+
+  B : float
+
+  C : float
+
+  D : float
+
+  E : float
+
+  F : float
+
+  Returns
+  -------
+  A : float
+
+  B : float
+
+  C : float
+
+  D : float
+
+  E : float
+
+  F : float
   )"""
   );
   py::class_<Bmad::EvaluateArrayIndex, std::unique_ptr<Bmad::EvaluateArrayIndex>>(
@@ -2971,10 +4058,10 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  delim_list1 : unknown
+  delim_list1 : character
       Delimitor after the integer. Normally ')'.
 
-  delim_list2 : unknown
+  delim_list2 : character
       Delimitor list to mark the end of word2. Normally '='.
 
   Returns
@@ -2982,10 +4069,10 @@ void init_Bmad_routines_e(py::module &m) {
   err_flag : bool
       Set True if there is an error. False otherwise.
 
-  word2 : unknown
+  word2 : character
       Word found after delim1. Normally this should be blank.
 
-  delim2 : unknown
+  delim2 : character
       Actual delimitor found after word2.
 
   this_index : int
@@ -3023,7 +4110,7 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  word : unknown
+  word : character
       Input string.
 
   Returns
@@ -3062,13 +4149,23 @@ void init_Bmad_routines_e(py::module &m) {
   orb : CoordStruct
       Coords after tracking.
 
-  mat6 : float, optional
+  mat6 : 2D array of float (shape: 6,6), optional
       Transfer matrix up to the edge.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix through the
-      edge.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix through the edge.
 
-  make_matrix : float, optional
+  make_matrix : bool, optional
       Propagate the transfer matrix? Default is False.
+
+  Returns
+  -------
+  orb : CoordStruct
+      Coords after tracking.
+
+  mat6 : 2D array of float (shape: 6,6), optional
+      Transfer matrix up to the edge.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix through the edge.
   )"""
   );
   m.def(
@@ -3099,7 +4196,7 @@ void init_Bmad_routines_e(py::module &m) {
 
   Returns
   -------
-  <return value> : float
+  <return value> : real(rp)
       Scalar return value.
   )"""
   );
@@ -3136,26 +4233,31 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  delim_list : unknown
+  delim_list : character
       List of expected (valid) delimitors. If list contains a space character then no delimitor (indicating the
       end of the command) is a valid possibility.
 
-  check_input_delim : unknown
+  check_input_delim : bool
       If True, then check if delim argument is in the delim_list.
 
-  If False : 
-  check that the next character in the parse stream is an expected delimitor. : 
-  ele_name : unknown
+  If False : None
+
+  check that the next character in the parse stream is an expected delimitor. : None
+
+  ele_name : character
       Lattice element under construction. Used for error messages.
 
-  delim : unknown
+  delim : character
       Current delimitor that will be checked if check_input_delim = .true.
-      This parameter is an input/output and is modified in-place. As an output: Next delim if check_input_delim
-      = False.
+      This parameter is an input/output and is modified in-place.
+      As an output, delim: Next delim if check_input_delim = False.
 
   Returns
   -------
-  is_ok
+  delim : character
+      Current delimitor that will be checked if check_input_delim = .true.
+      This parameter is an input/output and is modified in-place.
+      As an output, delim: Next delim if check_input_delim = False.
 
   Notes
   -----
@@ -3199,17 +4301,18 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  expecting : unknown
+  expecting : character
       list of characters that are expected to be next in the parse stream.
 
   check_delim : bool
       If True then use delim argument as first token to check.
 
-  A blank character indicates end of command is expected. : 
+  A blank character indicates end of command is expected. : None
+
   call_check : bool
       If True then check for 'call::<filename>' construct.
 
-  err_str : unknown
+  err_str : character
       String used for error messages.
 
   ele : EleStruct
@@ -3217,7 +4320,7 @@ void init_Bmad_routines_e(py::module &m) {
 
   Returns
   -------
-  delim : unknown
+  delim : character
       Final delim
 
   delim_found : bool
@@ -3240,15 +4343,15 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  stack : ExpressionAtomStruct
+  stack : 1D array of ExpressionAtomStruct
       arithmetic expression
 
-  polish : , optional
+  polish : bool, optional
       logical, optional, Construct expression in reverse polish? Default is False.
 
   Returns
   -------
-  str : unknown
+  str : character
       : Expression in string form.
   )"""
   );
@@ -3288,13 +4391,14 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  stack : ExpressionAtomStruct
+  stack : 1D array of ExpressionAtomStruct
       Expression to evaluate.
 
-  var : ControlVar1Struct, optional
+  var : 1D array of ControlVar1Struct, optional
       Array of control variables.
 
-  Used with Bmad controller elements. : 
+  Used with Bmad controller elements. : None
+
   use_old : bool, optional
       Use var.old_value? Must be present if var(:) is present.
 
@@ -3306,7 +4410,7 @@ void init_Bmad_routines_e(py::module &m) {
   err_flag : bool
       True if there is an evaluation problem. False otherwise.
 
-  err_str : unknown
+  err_str : character
       Error string explaining error if there is one.
 
   Notes
@@ -3352,12 +4456,12 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  string : unknown
+  string : character
       Expression to be converted.
 
   Returns
   -------
-  stack : ExpressionAtomStruct
+  stack : 1D array of ExpressionAtomStruct
       Expression evaluation stack.
 
   n_stack : int
@@ -3366,7 +4470,7 @@ void init_Bmad_routines_e(py::module &m) {
   err_flag : bool
       Set True if there is an error (EG divide by 0).
 
-  err_str : unknown
+  err_str : character
       String describing the error.
 
   Notes
@@ -3407,18 +4511,18 @@ void init_Bmad_routines_e(py::module &m) {
   root_tree : ExpressionTreeStruct
       Only used when recursively called.
 
-  string : unknown
+  string : character
       Expression to be converted.
 
   Returns
   -------
-  tree : ExpressionTreeStruct
+  tree : expression_tree_struct
       Expression evaluation tree.
 
   err_flag : bool
       Set True if there is an error (EG divide by 0).
 
-  err_str : unknown
+  err_str : character
       String describing the error. Make length large to hold the expression.
 
   Notes
@@ -3462,17 +4566,19 @@ void init_Bmad_routines_e(py::module &m) {
       Default is True. If True, do not inculde in the output string the root node. Note: If the root node is of
       type root$, this node is
 
-  always ignored. : 
+  always ignored. : None
+
   n_node : int, optional
       Node index. parent.node(n_node) === tree.
 
-  Internal use only. Used with recursive calls. : 
+  Internal use only. Used with recursive calls. : None
+
   parent : ExpressionTreeStruct, optional
       Internal use only. Used with recusive calls.
 
   Returns
   -------
-  str_out : unknown
+  str_out : character
       Expression string.
   )"""
   );
@@ -3508,13 +4614,14 @@ void init_Bmad_routines_e(py::module &m) {
 
   Parameters
   ----------
-  expression : unknown
+  expression : character
       Expression string.
 
-  var : ControlVar1Struct, optional
+  var : 1D array of ControlVar1Struct, optional
       Array of control variables.
 
-  Used with Bmad controller elements. : 
+  Used with Bmad controller elements. : None
+
   use_old : bool, optional
       Use var.old_value? Must be present if var(:) is present.
 
@@ -3526,7 +4633,7 @@ void init_Bmad_routines_e(py::module &m) {
   err_flag : bool
       True if there is an evaluation problem. False otherwise.
 
-  err_str : unknown
+  err_str : character, optional
       Error string explaining error if there is one.
 
   Notes

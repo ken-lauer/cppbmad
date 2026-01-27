@@ -14,13 +14,15 @@ void init_Bmad_routines_k(py::module &m) {
 
 Parameters
 ----------
-key_str : unknown
+key_str : character
     Name of the key. Result is case insensitive.
 
 abbrev_allowed : bool, optional
     Abbreviations (eg: "quad") allowed? Default is False. At least 3 characters are needed (except for
     rfcavity elements) if True.
 
+Returns
+-------
 key_index : int
     Index of the key. Set to -1 if key_name not recognized.
 )"""
@@ -102,22 +104,22 @@ ele : EleStruct
 param : LatParamStruct
     Lattice parameters.
 
-s_rel : float
+s_rel : real(rp)
     Distance from the start of the element to the particle.
 
 orbit : CoordStruct
     Position of particle.
 
-local_ref_frame : 
+local_ref_frame : None
     -- Logical, If True then take the input coordinates as being with respect to the frame of referene of the
     element.
 
 Returns
 -------
-dr_ds : float
+dr_ds : 1D array of float (shape: 11)
     Kick vector.
 
-field : EmFieldStruct
+field : em_field_struct
     Local field.
 
 err : bool
@@ -138,10 +140,17 @@ Subroutine to deallocate a Bmad complex_taylor map.
 
 Parameters
 ----------
-complex_taylor : ComplexTaylorStruct
+complex_taylor : 1D array of ComplexTaylorStruct
     complex_taylor to be deallocated. It is OK if complex_taylor has already been deallocated.
-    This parameter is an input/output and is modified in-place. As an output: deallocated complex_taylor
-    structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, complex_taylor: deallocated complex_taylor structure.
+
+Returns
+-------
+complex_taylor : 1D array of ComplexTaylorStruct
+    complex_taylor to be deallocated. It is OK if complex_taylor has already been deallocated.
+    This parameter is an input/output and is modified in-place.
+    As an output, complex_taylor: deallocated complex_taylor structure.
 )"""
   );
   m.def(
@@ -164,9 +173,17 @@ lat : LatStruct
 
 Parameters
 ----------
-bmad_taylor : TaylorStruct
+bmad_taylor : 1D array of TaylorStruct
     Taylor to be deallocated.
-    This parameter is an input/output and is modified in-place. As an output: deallocated Taylor structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, bmad_taylor: deallocated Taylor structure.
+
+Returns
+-------
+bmad_taylor : 1D array of TaylorStruct
+    Taylor to be deallocated.
+    This parameter is an input/output and is modified in-place.
+    As an output, bmad_taylor: deallocated Taylor structure.
 )"""
   );
   m.def(
@@ -184,7 +201,7 @@ this_kind : int
 
 Returns
 -------
-kind_str : unknown
+kind_str : character
     String representation
 )"""
   );
@@ -216,10 +233,10 @@ kind_str : unknown
 
 Parameters
 ----------
-x_knot : float
+x_knot : 1D array of float
     Knot x-values.
 
-y_knot : float
+y_knot : 1D array of float
     Knot y-values.
 
 x_pt : float
@@ -228,6 +245,8 @@ x_pt : float
 interpolation : int
     Interpolation type. cubic$ or linear$.
 
+Returns
+-------
 err_flag : bool
     Set True if there is an error. False otherwise.
 
@@ -245,9 +264,19 @@ y_pt : float
 
 Parameters
 ----------
-x_knot : 
-y_knot : 
-str : 
+x_knot : 1D array of float
+
+y_knot : 1D array of float
+
+str : character
+
+Returns
+-------
+x_knot : 1D array of float
+
+y_knot : 1D array of float
+
+str : character
 )"""
   );
 }

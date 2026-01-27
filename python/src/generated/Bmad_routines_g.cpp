@@ -18,10 +18,10 @@ This will include the dipole bending field of an sbend.
 
 Parameters
 ----------
-B : float
+B : 1D array of float (shape: 3)
     Magnetic field.
 
-E : float
+E : 1D array of float (shape: 3)
     Electric field
 
 orbit : CoordStruct
@@ -29,7 +29,7 @@ orbit : CoordStruct
 
 Returns
 -------
-g_bend : float
+g_bend : 1D array of float (shape: 3)
     bending strength vector.
 )"""
   );
@@ -74,14 +74,16 @@ s_rel : float
 orbit : CoordStruct
     Particle position in lab (not element) frame.
 
-local_ref_frame : 
+local_ref_frame : bool
     Logical, If True then take the input coordinates and output g as being with respect to the frame of
     referene of the element (ignore misalignments).
 
-g : float
+Returns
+-------
+g : 1D array of float (shape: 3)
     g = (g_x, g_y, g_s) bending strength vector (|g| = 1/bend_radius).
 
-dg : float
+dg : 2D array of float (shape: 3,3), optional
     dg(:)/dr gradient. Takes into account dg_x/dx in a bend due to curvilinear coords.
 )"""
   );
@@ -93,6 +95,11 @@ dg : float
 
 Parameters
 ----------
+lat : LatStruct
+    Lattice to integrate through.
+
+Returns
+-------
 lat : LatStruct
     Lattice to integrate through.
 )"""
@@ -108,6 +115,8 @@ Parameters
 ele : EleStruct
     Element to evaluate at.
 
+Returns
+-------
 gamma : float
     Relativistic gamma factor Energy/mass*c^2.
 )"""
@@ -122,7 +131,7 @@ gamma : float
 
 Parameters
 ----------
-ele : unknown
+ele : EleStruct
     Element containing the map.
 
 gen_grad : GenGradMapStruct
@@ -131,7 +140,9 @@ gen_grad : GenGradMapStruct
 iz : int
     z-plane index to evaluate.
 
-em_taylor : EmTaylorStruct
+Returns
+-------
+em_taylor : 1D array of EmTaylorStruct (shape: 3)
     Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
 )"""
   );
@@ -145,7 +156,7 @@ em_taylor : EmTaylorStruct
 
 Parameters
 ----------
-ele : unknown
+ele : EleStruct
     Element containing the map.
 
 gen_grad : GenGradMapStruct
@@ -154,7 +165,9 @@ gen_grad : GenGradMapStruct
 s_pos : float
     Position to evaluate em_taylor at.
 
-em_taylor : EmTaylorStruct
+Returns
+-------
+em_taylor : 1D array of EmTaylorStruct (shape: 3)
     Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
 )"""
   );
@@ -170,11 +183,27 @@ em_taylor : EmTaylorStruct
 
 Parameters
 ----------
-deriv : 
-gg : 
-rho : 
-theta : 
-field : 
+deriv : 1D array of float
+
+gg : GenGrad1Struct
+
+rho : float
+
+theta : float
+
+field : 1D array of float (shape: 3)
+
+Returns
+-------
+deriv : 1D array of float
+
+gg : GenGrad1Struct
+
+rho : float
+
+theta : float
+
+field : 1D array of float (shape: 3)
 )"""
   );
   m.def(
@@ -192,7 +221,7 @@ Parameters
 bound : float
     -bound and +bound are lower and upper integration bound.
 
-args : float
+args : 1D array of float (shape: 1:8)
     Parameters and constants of dpsi/dt.  See comments of psi_prime for details.
 
 Returns
@@ -211,9 +240,19 @@ sigma : float
 
 Parameters
 ----------
-delim : 
-call_file : 
-err : 
+delim : character
+
+call_file : character
+
+err : bool
+
+Returns
+-------
+delim : character
+
+call_file : character
+
+err : bool
 )"""
   );
   py::class_<Bmad::GetEmitFromSigmaMat, std::unique_ptr<Bmad::GetEmitFromSigmaMat>>(
@@ -259,15 +298,15 @@ S = | 0  0  0  1  0  0 |
 
 Parameters
 ----------
-sigma_mat : float
+sigma_mat : 2D array of float (shape: 6,6)
     beam envelop sigma matrix
 
-Nmat : float, optional
+Nmat : 2D array of float (shape: 6,6), optional
     If present, then the emittanced will be ordered such that the eigensystem most closely resembles Nmat.
 
 Returns
 -------
-normal : float
+normal : 1D array of float (shape: 3)
     normal mode emittances
 
 err_flag : bool
@@ -312,16 +351,17 @@ This subroutine is not intended for general use.
 
 Parameters
 ----------
-word : unknown
+word : character
     Word returned
 
-delim_list : unknown
+delim_list : character
     List of valid delimiters
 
 upper_case_word : bool, optional
     if True then convert word to
 
-upper case. Default is True. : 
+upper case. Default is True. : None
+
 call_check : bool, optional
     If present and True then check for 'call::<filename>' construct. Default is False.
 
@@ -330,14 +370,15 @@ Returns
 ix_word : int
     length of word argument
 
-delim : unknown
+delim : character
     Actual delimiter found
 
 delim_found : bool
     Set true if a delimiter found. A delimiter
 
-may not be found if the end of the line is reached first. : 
-err_flag : bool
+may not be found if the end of the line is reached first. : None
+
+err_flag : bool, optional
     Set True if there is an error. False otherwise.
 )"""
   );
@@ -353,7 +394,9 @@ Parameters
 lord : EleStruct
     The lord element.
 
-slaves : ElePointerStruct
+Returns
+-------
+slaves : 1D array of ElePointerStruct
     : Array of slaves.
 
 n_slave : int
@@ -371,10 +414,23 @@ n_slave : int
 
 Parameters
 ----------
-ele : 
-dimensions : 
-field_scale : 
-ref_time : 
+ele : EleStruct
+
+dimensions : int
+
+field_scale : float
+
+ref_time : float
+
+Returns
+-------
+ele : EleStruct
+
+dimensions : int
+
+field_scale : float
+
+ref_time : float
 )"""
   );
   m.def(
@@ -387,9 +443,19 @@ ref_time :
 
 Parameters
 ----------
-pt0 : 
-ele : 
-field_value : 
+pt0 : GridFieldPt1Struct
+
+ele : EleStruct
+
+field_value : float
+
+Returns
+-------
+pt0 : GridFieldPt1Struct
+
+ele : EleStruct
+
+field_value : float
 )"""
   );
   py::class_<Bmad::GptToParticleBunch, std::unique_ptr<Bmad::GptToParticleBunch>>(
@@ -420,7 +486,7 @@ Routine to initialize a bunch of particles from a GPT screen file.
 
 Parameters
 ----------
-gpt_file : unknown
+gpt_file : character
     Name of GPT data file.
 
 ele : EleStruct
@@ -450,6 +516,8 @@ ele : EleStruct
 param : LatParamStruct
     Lattice parameters
 
+Returns
+-------
 grad_shift : float
     Shift in gradient
 )"""
@@ -498,13 +566,14 @@ allow_s_out_of_bounds : bool, optional
     allow s-coordinate grossly out of bounds to return zero field without an error. This is used when the
     field of one element overlaps
 
-the field of another. Default is False. : 
+the field of another. Default is False. : None
+
 print_err : bool, optional
     print an error message if the particle is out of bounds? Default is True.
 
 Returns
 -------
-field : GridFieldPtStruct
+field : grid_field_pt_struct
     Interpolated field (complex)
 )"""
   );

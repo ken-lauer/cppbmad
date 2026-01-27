@@ -104,13 +104,13 @@ components can be investigated by varying bounds appropriately.
 
 Parameters
 ----------
-rdata_in : float
+rdata_in : 1D array of float
     signal data.
 
-bounds : float
+bounds : 1D array of float (shape: 2), optional
     range within which to search for peak.
 
-window : unknown
+window : character
     'rec' or 'han' for rectangular or Hann window.
 
 diag : int, optional
@@ -156,9 +156,19 @@ by the corrected apfft subroutine in this module.
 
 Parameters
 ----------
-x : 
-nd : 
-y : 
+x : float
+
+nd : int, optional
+
+y : float
+
+Returns
+-------
+x : float
+
+nd : int, optional
+
+y : float
 )"""
   );
   m.def(
@@ -171,9 +181,19 @@ y :
 
 Parameters
 ----------
-int_arr : 
-err_str : 
-ival : 
+int_arr : 1D array of int
+
+err_str : character
+
+ival : int
+
+Returns
+-------
+int_arr : 1D array of int
+
+err_str : character
+
+ival : int
 )"""
   );
   m.def(
@@ -239,7 +259,7 @@ Routine to convert from axis + angle representation to a quaternion.
 
 Parameters
 ----------
-axis : float
+axis : 1D array of float (shape: 3)
     Axis of rotation.
 
 angle : float
@@ -247,7 +267,7 @@ angle : float
 
 Returns
 -------
-quat : float
+quat : 1D array of float (shape: 0:3)
     Rotation quaternion.
 )"""
   );
@@ -263,7 +283,7 @@ and a rotation angle.
 
 Parameters
 ----------
-axis : float
+axis : 1D array of float (shape: 3)
     Rotation axis. Does not have to be normalized.
 
 angle : float
@@ -271,7 +291,7 @@ angle : float
 
 Returns
 -------
-w_mat : float
+w_mat : 2D array of float (shape: 3,3)
     Rotation matrix
 )"""
   );

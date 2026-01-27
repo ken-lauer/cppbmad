@@ -17,6 +17,7 @@ class EleAttribute(enum.IntEnum):
     TAYLOR_ORDER = 3
     R_SOLENOID = 3
     FINAL_CHARGE = 3
+    K0L_STATUS = 3
     K1 = 4
     KX = 4
     HARMON = 4
@@ -394,7 +395,7 @@ class EleKey(enum.IntEnum):
     N_KEY = 70
 
 # Constants from bmad_struct.f90
-BMAD_INC_VERSION = 352
+BMAD_INC_VERSION = 353
 NONE = 1
 # maximum multipole order
 N_POLE_MAXX = 21
@@ -493,6 +494,9 @@ USER_SET = 0
 FIRST_PASS = 1
 HIGHLAND = 2
 LYNCH_DAHL = 3
+NOT_ALLOWED = 1
+STRAIGHT_REFERENCE = 2
+BENDS_REFERENCE = 3
 INCOHERENT = 1
 COHERENT = 2
 ASCII = 1
@@ -820,6 +824,7 @@ X_GAIN_ERR = 3
 TAYLOR_ORDER = 3
 R_SOLENOID = 3
 FINAL_CHARGE = 3
+K0L_STATUS = 3
 K1 = 4
 KX = 4
 HARMON = 4

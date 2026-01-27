@@ -31,11 +31,13 @@ Parameters
 lat : LatStruct
     Lat used
 
+ele_name : character, optional
+    Name of the new element.
+
+Returns
+-------
 ix_ele : int
     Index of the new control element
-
-ele_name : unknown, optional
-    Name of the new element.
 )"""
   );
   m.def(
@@ -73,13 +75,35 @@ int_val : int
 
 Parameters
 ----------
-one_turn_taylor : 
-rf_on : 
-F : 
-L : 
-A : 
-A_inverse : 
-order : 
+one_turn_taylor : 1D array of TaylorStruct (shape: 6)
+
+rf_on : bool
+
+F : 1D array of ComplexTaylorStruct (shape: 6), optional
+
+L : 1D array of ComplexTaylorStruct (shape: 6), optional
+
+A : 1D array of TaylorStruct (shape: 6), optional
+
+A_inverse : 1D array of TaylorStruct (shape: 6), optional
+
+order : int, optional
+
+Returns
+-------
+one_turn_taylor : 1D array of TaylorStruct (shape: 6)
+
+rf_on : bool
+
+F : 1D array of ComplexTaylorStruct (shape: 6), optional
+
+L : 1D array of ComplexTaylorStruct (shape: 6), optional
+
+A : 1D array of TaylorStruct (shape: 6), optional
+
+A_inverse : 1D array of TaylorStruct (shape: 6), optional
+
+order : int, optional
 )"""
   );
   py::class_<Bmad::NormalFormTaylors, std::unique_ptr<Bmad::NormalFormTaylors>>(
@@ -125,7 +149,7 @@ The mapping procedure for one turn is:
 
 Parameters
 ----------
-one_turn_taylor : TaylorStruct
+one_turn_taylor : 1D array of TaylorStruct (shape: 6)
     one turn taylor map
 
 rf_on : bool
@@ -133,13 +157,13 @@ rf_on : bool
 
 Returns
 -------
-A : TaylorStruct
+A : 1D array of TaylorStruct (shape: 6), optional
     Map from Floquet coordinates to Lab coordinates
 
-A_inverse : TaylorStruct
+A_inverse : 1D array of TaylorStruct (shape: 6), optional
     Map from Lab coordinates to Floquet coordinates
 
-dhdj : TaylorStruct
+dhdj : 1D array of TaylorStruct (shape: 6), optional
     Map from Floquet coordinates to phase advances
 )"""
   );
@@ -180,25 +204,26 @@ Default is True ==> z-mode has a negative slip factor so the mode rotates clock-
 
 Parameters
 ----------
-mat : float
+mat : real(rp)
     1-turn transfer matrix
 
 above_transition : bool, optional
     If present and false, then z-mode assumes positive slip factor.
 
-Else negative slip factor assumed. : 
-abz_tunes : float, optional
+Else negative slip factor assumed. : None
+
+abz_tunes : 1D array of float (shape: 3), optional
     Tunes to order eigensystem by.
 
 Returns
 -------
-tune : float
+tune : 1D array of float (shape: 3)
     Tunes of the 3 normal modes (radians)
 
-B : float
+B : 2D array of float (shape: 6,6)
     B is block diagonal and related to the normal mode Twiss parameters.
 
-HV : float
+HV : 2D array of float (shape: 6,6)
     Transforms from normal mode coordinates to canonical coordinates: x = H.V.a
 )"""
   );
@@ -213,11 +238,18 @@ Parameters
 ----------
 ele : EleStruct
     Element whose dispersions are to be adjusted.
-    This parameter is an input/output and is modified in-place. As an output: Element with adjusted
-    dispersions.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with adjusted dispersions.
 
 reverse : bool, optional
     Default is False. If True, calculate the x,y dispersions from the normal mode ones.
+
+Returns
+-------
+ele : EleStruct
+    Element whose dispersions are to be adjusted.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with adjusted dispersions.
 )"""
   );
   m.def(
@@ -230,13 +262,18 @@ Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i ev
 
 Parameters
 ----------
-evec : float
+evec : 2D array of complex (shape: 6,6)
     complex eigenvectors arranged down columns.
-    This parameter is an input/output and is modified in-place. As an output: Eigensystem normalized to be
-    symplectic.
+    This parameter is an input/output and is modified in-place.
+    As an output, evec: Eigensystem normalized to be symplectic.
 
 Returns
 -------
+evec : 2D array of complex (shape: 6,6)
+    complex eigenvectors arranged down columns.
+    This parameter is an input/output and is modified in-place.
+    As an output, evec: Eigensystem normalized to be symplectic.
+
 err_flag : bool
     Set true of normalization is not possible due to amplitude is zero.
 )"""
@@ -252,6 +289,8 @@ Parameters
 ele : EleStruct
     Element with sum number of associated field elements.
 
+Returns
+-------
 n_field_ele : int
     Number of associated field elements.
 )"""
@@ -272,6 +311,8 @@ lord_type : int
     Type of lord. super_lord$, multipass_lord$, girder_lord$, group_lord$, overlay_lord$, and governor$ (=
     group + overlay + control + girder)
 
+Returns
+-------
 num : int
     Number of lords of the given type.
 )"""

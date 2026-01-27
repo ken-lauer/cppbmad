@@ -15,12 +15,12 @@ Routine to convert from omega + angle representation to a quaternion.
 
 Parameters
 ----------
-omega : float
+omega : 1D array of float (shape: 3)
     Axis of rotation + magnitude = rotation angle.
 
 Returns
 -------
-quat : float
+quat : 1D array of float (shape: 0:3)
     Rotation quaternion.
 )"""
   );
@@ -41,7 +41,7 @@ species : int
 
 Returns
 -------
-pmd_name : unknown
+pmd_name : character
     Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
 )"""
   );
@@ -54,8 +54,15 @@ pmd_name : unknown
 
 Parameters
 ----------
-n : 
-str : 
+n : int
+
+str : character
+
+Returns
+-------
+n : int
+
+str : character
 )"""
   );
 }

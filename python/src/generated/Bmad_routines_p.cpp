@@ -43,12 +43,31 @@ This must read in:
 
 Parameters
 ----------
-cl_map : 
-ele : 
-lat : 
-delim : 
-delim_found : 
-err_flag : 
+cl_map : CylindricalMapStruct
+
+ele : EleStruct
+
+lat : LatStruct
+
+delim : character
+
+delim_found : bool
+
+err_flag : bool
+
+Returns
+-------
+cl_map : CylindricalMapStruct
+
+ele : EleStruct
+
+lat : LatStruct
+
+delim : character
+
+delim_found : bool
+
+err_flag : bool
 )"""
   );
   m.def(
@@ -78,12 +97,31 @@ Subroutine to parse a "gen_grad_map = {}" construct
 
 Parameters
 ----------
-g_field : 
-ele : 
-lat : 
-delim : 
-delim_found : 
-err_flag : 
+g_field : GridFieldStruct
+
+ele : EleStruct
+
+lat : LatStruct
+
+delim : character
+
+delim_found : bool
+
+err_flag : bool
+
+Returns
+-------
+g_field : GridFieldStruct
+
+ele : EleStruct
+
+lat : LatStruct
+
+delim : character
+
+delim_found : bool
+
+err_flag : bool
 )"""
   );
   m.def(
@@ -154,44 +192,51 @@ Example:   (1, 2, 4, 8)
 
 Parameters
 ----------
-err_str : unknown
+err_str : character
     Error string to print if there is an error.
 
 lat : LatStruct
     lattice
 
-int_array : int
+int_array : 1D array of int
     the array to be read in
-    This parameter is an input/output and is modified in-place. As an output: Array of values.
+    This parameter is an input/output and is modified in-place.
+    As an output, int_array: Array of values.
 
-Optional: : 
-num_expected = 1 : int
+Optional: : None
+
+num_expected = 1 : integer
     number of expected arguments. Used to initialize int_array.
 
-open_delim   = ' : unknown
+open_delim   = ' : character(1)
     opening delimeter.
 
-separator    = ' : unknown
+separator    = ' : character(1)
     separating character.
 
-' : unknown
+' : character(1)
     separating character.
 
-close_delim  = ')' : unknown
+close_delim  = ')' : character(1)
     closing delimeter.
 
-default_value = 0 : float
+default_value = 0 : real(rp)
     inital assignment of int_array elements.
 
 Returns
 -------
+int_array : 1D array of int
+    the array to be read in
+    This parameter is an input/output and is modified in-place.
+    As an output, int_array: Array of values.
+
 is_ok : bool
     Set True if everything is ok.
 
 num_found : int
     number of elements.
 
-delim : unknown
+delim : character
     Delimiter found where the parsing of the input line stops.
 
 delim_found : bool
@@ -245,21 +290,28 @@ Parameters
 lat : LatStruct
     Lattice
 
-err_str : unknown
+err_str : character
     Error string to print if there is an error.
 
-exact_size : 
-open_delim : 
-separator : 
-close_delim : 
-default_value : 
+exact_size : bool
+
+open_delim : character, optional
+
+separator : character, optional
+
+close_delim : character, optional
+
+default_value : float, optional
 
 Returns
 -------
-real_array : 
-delim : 
-delim_found : 
-num_found : 
+real_array : 1D array of float
+
+delim : character
+
+delim_found : bool
+
+num_found : int, optional
 
 Notes
 -----
@@ -314,44 +366,51 @@ Parameters
 lat : LatStruct
     lattice
 
-err_str : unknown
+err_str : character
     Error string to print if there is an error.
 
-real_array : float
+real_array : 1D array of float
     the array to be read in
-    This parameter is an input/output and is modified in-place. As an output: Array of values
+    This parameter is an input/output and is modified in-place.
+    As an output, real_array: Array of values
 
-num_expected = 10 : int, optional
+num_expected = 10 : integer, optional
     number of expected arguments
 
-Used to initialize real_array : 
-open_brace   = ' : unknown, optional
+Used to initialize real_array : None
+
+open_brace   = ' : character(1), optional
     opening delimeter.
 
-separator    = ' : unknown, optional
+separator    = ' : character(1), optional
     separating character
 
-' : unknown, optional
+' : character(1), optional
     separating character
 
-close_brace  = ')' : unknown, optional
+close_brace  = ')' : character(1), optional
     closing delimeter
 
-default_value = 0.0_rp : float, optional
+default_value = 0.0_rp : real(rp), optional
     inital assignment of real_array elements.
 
-single_value = False : bool, optional
+single_value = False : logical, optional
     If true then an array with a single value and no braces is accepted.
 
 Returns
 -------
+real_array : 1D array of float
+    the array to be read in
+    This parameter is an input/output and is modified in-place.
+    As an output, real_array: Array of values
+
 is_ok : bool
     Set True if everything is ok
 
 num_found : int
     number of elements
 
-delim : unknown
+delim : character
     Delimiter found where the parsing of the input line stops.
 
 delim_found : bool
@@ -373,9 +432,19 @@ pase_real_list parse_real_matrix.
 
 Parameters
 ----------
-word : 
-lat : 
-redef_is_error : 
+word : character
+
+lat : LatStruct
+
+redef_is_error : bool
+
+Returns
+-------
+word : character
+
+lat : LatStruct
+
+redef_is_error : bool
 )"""
   );
   m.def(
@@ -428,15 +497,15 @@ Parameters
 ele : EleStruct
     Lattice element associated with the array. Used for error messages.
 
-err_str : unknown
+err_str : character
     String used when printing error messages identifying where in the lattice file the error is occuring.
 
 Returns
 -------
-cmplx_vec : complex
+cmplx_vec : 1D array of complex
     Complex vector.
 
-delim : unknown
+delim : character
     Delimitor at end of array. Must be "," or "}"
 
 is_ok : bool
@@ -501,28 +570,29 @@ Parameters
 ele : EleStruct
     Lattice element associated with the array. Used for error messages.
 
-end_delims : unknown
+end_delims : character
     List of possible ending delimitors.
 
-err_str : unknown
+err_str : character
     String used when printing error messages identifying where in
 
-the lattice file the error is occuring. : 
+the lattice file the error is occuring. : None
+
 exact_size : bool, optional
     If True (default), number of values must match real_vec size.
 
 Returns
 -------
-real_vec : complex
+real_vec : 1D array of float
     Real vector.
 
-delim : unknown
+delim : character
     Delimitor at end of array.
 
 is_ok : bool
     True if everything OK. False otherwise.
 
-n_real : int
+n_real : int, optional
     Number of elements found.
 )"""
   );
@@ -557,14 +627,39 @@ This subroutine is not intended for general use.
 
 Parameters
 ----------
-int_val : 
-word : 
-ix_word : 
-delim : 
-delim_found : 
-err : 
-str1 : 
-str2 : 
+int_val : int
+
+word : character
+
+ix_word : int
+
+delim : character
+
+delim_found : bool
+
+err : bool
+
+str1 : character, optional
+
+str2 : character, optional
+
+Returns
+-------
+int_val : int
+
+word : character
+
+ix_word : int
+
+delim : character
+
+delim_found : bool
+
+err : bool
+
+str1 : character, optional
+
+str2 : character, optional
 )"""
   );
   m.def(
@@ -580,12 +675,31 @@ str2 :
 
 Parameters
 ----------
-attrib_name : 
-this_logic : 
-ele_name : 
-delim : 
-delim_found : 
-err : 
+attrib_name : character
+
+this_logic : bool
+
+ele_name : character
+
+delim : character
+
+delim_found : bool
+
+err : bool
+
+Returns
+-------
+attrib_name : character
+
+this_logic : bool
+
+ele_name : character
+
+delim : character
+
+delim_found : bool
+
+err : bool
 )"""
   );
   m.def(
@@ -633,11 +747,17 @@ Parameters
 ----------
 ele : EleStruct
     Element containing wake structure.
-    This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with wake information.
 
 Returns
 -------
-%wake%lr : 
+ele : EleStruct
+    Element containing wake structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with wake information.
+
+%wake%lr : None
     Long-range wake.
 )"""
   );
@@ -655,14 +775,20 @@ Parameters
 ----------
 ele : EleStruct
     Element containing wake structure.
-    This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with wake information.
 
-lr_file_name : unknown
+lr_file_name : character
     Name of long-range wake field file.
 
 Returns
 -------
-%wake%lr%mode : 
+ele : EleStruct
+    Element containing wake structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with wake information.
+
+%wake%lr%mode : None
     Long-range wake potential.
 )"""
   );
@@ -680,20 +806,26 @@ Parameters
 ----------
 ele : EleStruct
     Element containing wake structure.
-    This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with wake information.
 
-sr_file_name : unknown
+sr_file_name : character
     Name of short-range wake field file.
 
 Returns
 -------
-%wake%sr%table : 
+ele : EleStruct
+    Element containing wake structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with wake information.
+
+%wake%sr%table : None
     Short-range wake potential.
 
-%wake%sr%long : 
+%wake%sr%long : None
     Short-range wake potential.
 
-%wake%sr%trans : 
+%wake%sr%trans : None
     Short-range wake potential.
 )"""
   );
@@ -713,11 +845,17 @@ Parameters
 ----------
 ele : EleStruct
     Element containing wake structure.
-    This parameter is an input/output and is modified in-place. As an output: Element with wake information.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with wake information.
 
 Returns
 -------
-%wake%sr : 
+ele : EleStruct
+    Element containing wake structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with wake information.
+
+%wake%sr : None
     Short-range wake potential.
 )"""
   );
@@ -772,14 +910,16 @@ orb : CoordStruct
 branch : BranchStruct
     branch that contains branch.ele(orb.ix_ele)
 
-in_time_coordinates : bool
+in_time_coordinates : bool, optional
     Default is false. If true, orb
 
-will taken as in time coordinates. : 
-in_body_frame : bool
+will taken as in time coordinates. : None
+
+in_body_frame : bool, optional
     Default is true. If false, ele offsets will be ignored.
 
-Result: : 
+Result: : None
+
 particle : CoordStruct
     particle in global time coordinates
 
@@ -799,6 +939,8 @@ Parameters
 orbit : CoordStruct
     Particle coordinates
 
+Returns
+-------
 is_moving_backwards : bool
     True if moving backward. False otherwise.
 )"""
@@ -818,6 +960,8 @@ orbit : CoordStruct
 dir : int, optional
     +1 if tracking forward(default) or -1 to return True if tracking backwards.
 
+Returns
+-------
 is_moving_forward : bool
     True if moving forward. False otherwise.
 )"""
@@ -843,7 +987,7 @@ orbit : CoordStruct
 ele : EleStruct
     Element being tracked through.
 
-reference_active_edge : unknown
+reference_active_edge : bool, optional
     If True, and ele is a rfcavity or lcavity, use the active edge (edge of the
 
 s_rel : float, optional
@@ -856,7 +1000,7 @@ rf_freq : float, optional
     If present, the returned time shifted by an integer multiple of 1/rf_freq to be in the range
     [-1/2*rf_freq, 1/2*rf_freq]. This is useful to
 
-abs_time : float, optional
+abs_time : bool, optional
     If False (default) use setting of bmad_com.absolute_time_tracking. If True, use absolute time instead of
     relative time.
 
@@ -879,6 +1023,8 @@ x_pitch : float
 y_pitch : float
     Rotation around x-axis.
 
+Returns
+-------
 is_flip : bool
     True if patch does a flip
 )"""
@@ -898,6 +1044,8 @@ patch : EleStruct
 ref_coords : int, optional
     Reference coords to use. entrance_end$, exit_end$ Default is nint(patch.value(ref_coords$)).
 
+Returns
+-------
 length : float
     Length of patch.
 )"""
@@ -936,7 +1084,7 @@ energy going through a particular material.
 
 Parameters
 ----------
-material : unknown
+material : character
     Material name.
 
 Energy : float
@@ -997,7 +1145,8 @@ orbit : CoordStruct
 
 ele : EleStruct
     Element with grid.
-    This parameter is an input/output and is modified in-place. As an output: Element with updatted grid.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with updatted grid.
 
 pixel_pt : PixelPtStruct, optional
     If present then use this grid point instead of the grid point determined by the (x, y) coords of the
@@ -1005,11 +1154,16 @@ pixel_pt : PixelPtStruct, optional
 
 Returns
 -------
-ix_pt : int
+ele : EleStruct
+    Element with grid.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element with updatted grid.
+
+ix_pt : int, optional
     Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
     argument is present.
 
-iy_pt : int
+iy_pt : int, optional
     Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
     argument is present.
 )"""
@@ -1073,7 +1227,7 @@ the surface roughness correlation length is 5.5 um.
 
 Returns
 -------
-surface : 
+surface : PhotonReflectSurfaceStruct
     photon_reflect_surface_struct
 )"""
   );
@@ -1178,8 +1332,15 @@ Parameters
 ----------
 ele : EleStruct
     Source element to setup. Element will be of type: sample, diffraction_plate or photon_init.
-    This parameter is an input/output and is modified in-place. As an output: Source element with target
-    parameters setup in ele.photon.target.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Source element with target parameters setup in ele.photon.target.
+
+Returns
+-------
+ele : EleStruct
+    Source element to setup. Element will be of type: sample, diffraction_plate or photon_init.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Source element with target parameters setup in ele.photon.target.
 )"""
   );
   m.def(
@@ -1224,6 +1385,8 @@ ele_orientation : int
 return_stream_end : bool, optional
     If True return the stream end instead of the physical end. Default is False.
 
+Returns
+-------
 physical_end : int
     Return_stream_end ->  Possibilities False             ->  entrance_end$, exit_end$, surface$, or
     in_between$ True              ->  upstream_end$, downstream_end$
@@ -1253,7 +1416,8 @@ param : LatParamStruct
 
 orbit : CoordStruct
     phase-space coords of photon. --   Will be in curved surface coords if there is a curved surface.
-    This parameter is an input/output and is modified in-place. As an output: Final phase-space coords
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Final phase-space coords
 
 direction : int
     +1 -> Emit in forward +z direction, -1 -> emit backwards.
@@ -1262,9 +1426,17 @@ max_target_area : float
     Area of the solid angle photons may be emitted over. max_target_area is used for normalizing the photon
     field.
 
-generally will be equal to twopi or fourpi. : 
-w_to_surface : float, optional
+generally will be equal to twopi or fourpi. : None
+
+w_to_surface : 2D array of float (shape: 3,3), optional
     Rotation matrix for curved surface.
+
+Returns
+-------
+orbit : CoordStruct
+    phase-space coords of photon. --   Will be in curved surface coords if there is a curved surface.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Final phase-space coords
 )"""
   );
   m.def(
@@ -1294,22 +1466,23 @@ Parameters
 ele : EleStruct
     Element contained in the branch.
 
-branch_name : unknown
+branch_name : character(*)
     May be a branch name or a branch index.
 
-lat : LatStruct
+lat : lat_struct
     Lattice to search.
 
-parameter_is_branch0 : bool, optional
+parameter_is_branch0 : logical, optional
     If True, 'PARAMETER' is taken to be
 
-an alternative name for branch : 
-blank_branch : int, optional
+an alternative name for branch : None
+
+blank_branch : integer, optional
     Branch index if branch_name = ''. Default is blank is an error.
 
 Returns
 -------
-branch_ptr : BranchStruct
+branch_ptr : BranchStruct, optional
     Pointer to the branch. Nullified if there is no associated branch.
 
 Notes
@@ -1346,10 +1519,10 @@ which can happen, for example, with overlay elements.
 
 Parameters
 ----------
-ele : EleStruct
+ele : ele_struct
     Element contained in the branch.
 
-branch_name : unknown
+branch_name : character
     May be a branch name or a branch index.
 
 lat : LatStruct
@@ -1358,13 +1531,14 @@ lat : LatStruct
 parameter_is_branch0 : bool, optional
     If True, 'PARAMETER' is taken to be
 
-an alternative name for branch : 
+an alternative name for branch : None
+
 blank_branch : int, optional
     Branch index if branch_name = ''. Default is blank is an error.
 
 Returns
 -------
-branch_ptr : BranchStruct
+branch_ptr : BranchStruct, optional
     Pointer to the branch. Nullified if there is no associated branch.
 
 Notes
@@ -1403,24 +1577,24 @@ lat : LatStruct
 ix_ele : int
     Index of element in lat.branch(ix_branch).
 
-ix_branch : int
+ix_branch : int, optional
     Index of the lat.branch(:) containing the element.
 
-ix_nametable : int
+ix_nametable : integer
     Nametable index. See above
 
-ele_loc : LatEleLocStruct
+ele_loc : lat_ele_loc_struct
     Location identification.
 
-ele_name : unknown
+ele_name : character(*)
     Name or index of element.
 
-foreign_ele : EleStruct
+foreign_ele : ele_struct
     Lattice element in another lattice.
 
 Returns
 -------
-ele_ptr : EleStruct
+ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
 
 Notes
@@ -1459,27 +1633,27 @@ Parameters
 lat : LatStruct
     Lattice.
 
-ix_ele : int
+ix_ele : integer
     Index of element in lat.branch(ix_branch).
 
-ix_branch : int
+ix_branch : integer
     Index of the lat.branch(:) containing the element.
 
-ix_nametable : int
+ix_nametable : integer
     Nametable index. See above
 
 ele_loc : LatEleLocStruct
     Location identification.
 
-ele_name : unknown
+ele_name : character(*)
     Name or index of element.
 
-foreign_ele : EleStruct
+foreign_ele : ele_struct
     Lattice element in another lattice.
 
 Returns
 -------
-ele_ptr : EleStruct
+ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
 
 Notes
@@ -1518,27 +1692,27 @@ Parameters
 lat : LatStruct
     Lattice.
 
-ix_ele : int
+ix_ele : integer
     Index of element in lat.branch(ix_branch).
 
-ix_branch : int
+ix_branch : integer
     Index of the lat.branch(:) containing the element.
 
-ix_nametable : int
+ix_nametable : integer
     Nametable index. See above
 
-ele_loc : LatEleLocStruct
+ele_loc : lat_ele_loc_struct
     Location identification.
 
-ele_name : unknown
+ele_name : character
     Name or index of element.
 
-foreign_ele : EleStruct
+foreign_ele : ele_struct
     Lattice element in another lattice.
 
 Returns
 -------
-ele_ptr : EleStruct
+ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
 
 Notes
@@ -1577,19 +1751,19 @@ Parameters
 lat : LatStruct
     Lattice.
 
-ix_ele : int
+ix_ele : integer
     Index of element in lat.branch(ix_branch).
 
-ix_branch : int
+ix_branch : integer
     Index of the lat.branch(:) containing the element.
 
-ix_nametable : int
+ix_nametable : integer
     Nametable index. See above
 
-ele_loc : LatEleLocStruct
+ele_loc : lat_ele_loc_struct
     Location identification.
 
-ele_name : unknown
+ele_name : character(*)
     Name or index of element.
 
 foreign_ele : EleStruct
@@ -1597,7 +1771,7 @@ foreign_ele : EleStruct
 
 Returns
 -------
-ele_ptr : EleStruct
+ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
 
 Notes
@@ -1680,25 +1854,25 @@ print_err : bool, optional
 
 Returns
 -------
-ele : EleStruct
+ele : EleStruct, optional
     Pointer to element at s.
 
-err_flag : bool
+err_flag : bool, optional
     Set True if s is out of bounds. False otherwise.
 
-s_eff : float
+s_eff : float, optional
     Effective s. Equal to s with a open lattice. See above.
 
-position : CoordStruct
+position : CoordStruct, optional
     Positional information.
 
-%s : 
+%s : None
     Same as input s.
 
-%ix_ele : 
+%ix_ele : None
     Same as output ix_ele
 
-%location : 
+%location : None
     Location relative to element. Upstream_end$, downstream_end$, or inside$
 
 Notes
@@ -1721,7 +1895,9 @@ Parameters
 ele : EleStruct
     Bmad element
 
-assoc_fibre : unknown
+Returns
+-------
+assoc_fibre : Fibre, optional
     Pointer to the associated fibre.
 )"""
   );
@@ -1757,10 +1933,12 @@ ele : EleStruct
 ix_field_ele : int
     Index of the field element to point to. This index runs from 1 to num_field_eles(ele).
 
-dz_offset : float
+Returns
+-------
+dz_offset : float, optional
     Longitudinal offset of ele upstream edge from the field ele pointed to.
 
-field_ele : EleStruct
+field_ele : EleStruct, optional
     Pointer to the field element with index ix_field_ele.
 )"""
   );
@@ -1792,10 +1970,12 @@ Parameters
 ele : EleStruct
     Element to check.
 
-ix_slave_back : int
+Returns
+-------
+ix_slave_back : int, optional
     Index back to ele. That is, pointer_to_slave(girder, ix_slave_back)
 
-girder : EleStruct
+girder : EleStruct, optional
     : Pointer to the girder. Null if ele is not girder supported.
 )"""
   );
@@ -1841,22 +2021,24 @@ slave : EleStruct
 ix_lord : int
     Index of the lord.
 
-control : ControlStruct
-    Pointer to control info for this lord/slave relationship.
-
-ix_slave_back : int
-    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
-
 lord_type : int, optional
     See above.
 
-ix_control : int
+Returns
+-------
+control : ControlStruct, optional
+    Pointer to control info for this lord/slave relationship.
+
+ix_slave_back : int, optional
+    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
+
+ix_control : int, optional
     Index in lat.control(:) array the control argument is at.
 
-ix_ic : int
+ix_ic : int, optional
     Index of the lat.ic(:) element associated with the control argument.
 
-lord_ptr : EleStruct
+lord_ptr : EleStruct, optional
     Pointer to the lord.
 )"""
   );
@@ -1891,13 +2073,15 @@ Parameters
 ele : EleStruct
     Lattice element.
 
-ix_pass : int
+Returns
+-------
+ix_pass : int, optional
     Multipass turn number. Set to 0 if element is a multipass_lord.
 
-super_lord : EleStruct
+super_lord : EleStruct, optional
     super_lord of the element. Set to NULL if ele is not a super_slave or super_lord.
 
-multi_lord : EleStruct
+multi_lord : EleStruct, optional
     multipass_lord if there is one. Set to NULL if there is no multipass_lord.
 )"""
   );
@@ -1986,22 +2170,25 @@ lord_type : int, optional
 
 Returns
 -------
-slave_ptr : EleStruct
+slave_ptr : EleStruct, optional
     Pointer to the slave.
 
-Nullified if there is an error. : 
-control : ControlStruct
+Nullified if there is an error. : None
+
+control : ControlStruct, optional
     Pointer to control info for this lord/slave relationship.
 
-Nullified if there is an error. : 
-ix_lord_back : int
+Nullified if there is an error. : None
+
+ix_lord_back : int, optional
     Index back to the lord. That is, pointer_to_lord(slave_ptr, ix_lord_back)
 
-will point back to the lord. Set to -1 if there is an error. : 
-ix_control : int
+will point back to the lord. Set to -1 if there is an error. : None
+
+ix_control : int, optional
     Index in lat.control(:) array the control argument is at.
 
-ix_ic : int
+ix_ic : int, optional
     Index of the lat.ic(:) element associated with the control argument.
 
 Notes
@@ -2048,22 +2235,24 @@ Parameters
 slave : EleStruct
     Slave element.
 
-control : ControlStruct
-    Pointer to control info for this lord/slave relationship.
-
-ix_slave_back : int
-    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
-
-ix_control : int
-    Index in lat.control(:) array the control argument is at.
-
-ix_ic : int
-    Index of the lat.ic(:) element associated with the control argument.
-
 lord_type : int, optional
     If present, only return a super_lord of this type.
 
-lord_ptr : EleStruct
+Returns
+-------
+control : ControlStruct, optional
+    Pointer to control info for this lord/slave relationship.
+
+ix_slave_back : int, optional
+    Index back to the slave. That is, pointer_to_slave(lord_ptr, ix_slave_back)
+
+ix_control : int, optional
+    Index in lat.control(:) array the control argument is at.
+
+ix_ic : int, optional
+    Index of the lat.ic(:) element associated with the control argument.
+
+lord_ptr : EleStruct, optional
     Pointer to the lord.
 )"""
   );
@@ -2117,8 +2306,10 @@ ele : EleStruct
 nearest : bool
     If True, return pointer to nearest grid point.
 
-If False : 
-return pointer to the grid point lower and left of : 
+If False : None
+
+return pointer to the grid point lower and left of : None
+
 x : float
     Photon position.
 
@@ -2130,21 +2321,22 @@ extend_grid : bool, optional
 
 Returns
 -------
-ix : int
+ix : int, optional
     Grid point index.
 
-iy : int
+iy : int, optional
     Grid point index.
 
-pt : GridPointStruct
+pt : SurfaceDisplacementPtStruct, optional
     Pointer to grid point.
 
-Will not be associated if : 
-xx : float
+Will not be associated if : None
+
+xx : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
 
-yy : float
+yy : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
 )"""
@@ -2197,8 +2389,10 @@ ele : EleStruct
 nearest : bool
     If True, return pointer to nearest grid point.
 
-If False : 
-return pointer to the grid point lower and left of : 
+If False : None
+
+return pointer to the grid point lower and left of : None
+
 x : float
     Photon position.
 
@@ -2210,21 +2404,22 @@ extend_grid : bool, optional
 
 Returns
 -------
-ix : int
+ix : int, optional
     Grid point index.
 
-iy : int
+iy : int, optional
     Grid point index.
 
-pt : GridPointStruct
+pt : SurfaceSegmentedPtStruct, optional
     Pointer to grid point.
 
-Will not be associated if : 
-xx : float
+Will not be associated if : None
+
+xx : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
 
-yy : float
+yy : float, optional
     Set equal to (x, y) except if (x,y) is outside of the grid. In this case, (xx, yy) will be set to be on
     the nearest grid boundary point.
 )"""
@@ -2257,10 +2452,12 @@ Parameters
 ele : EleStruct
     Lattice element.
 
-delta_s : float
+Returns
+-------
+delta_s : float, optional
     distance of wake locaiton from beginning of ele.
 
-wake_ele : EleStruct
+wake_ele : EleStruct, optional
     Element having the associated wake.
 )"""
   );
@@ -2306,14 +2503,15 @@ ix_wall : int, optional
 
 Returns
 -------
-wall3d : Wall3DStruct
+wall3d : Wall3DStruct, optional
     Pointer to the associated wall structure.
 
-Will be nullified if there is no associated wall. : 
-ds_offset : float
+Will be nullified if there is no associated wall. : None
+
+ds_offset : float, optional
     Element offset: s(beginning of ele) - s(beginning of wall3d)
 
-is_branch_wall : bool
+is_branch_wall : bool, optional
     Set True if wall3d points to branch.wall3d.
 )"""
   );
@@ -2328,7 +2526,9 @@ Parameters
 polar : SpinPolarStruct
     includes polar phase
 
-spinor : complex
+Returns
+-------
+spinor : 1D array of complex (shape: 2)
     Spinor
 )"""
   );
@@ -2340,10 +2540,12 @@ spinor : complex
 
 Parameters
 ----------
-polar : 
+polar : SpinPolarStruct
     Spin_polar_struct
 
-vec : 
+Returns
+-------
+vec : 1D array of float (shape: 3)
     Real(3)
 )"""
   );
@@ -2399,19 +2601,19 @@ ix : int
 mode : NormalModesStruct
     normal mode emittances
 
-%a%emittance : float
+%a%emittance : real(rp)
     a-mode emittance
 
-%b%emittance : float
+%b%emittance : real(rp)
     b-mode emittance
 
-%z%emittance : float
+%z%emittance : real(rp)
     z-mode emittance
 
-%a%tune : float
+%a%tune : real(rp)
     a-mode tune.  Used to associate emittances with the proper mode.
 
-%b%tune : float
+%b%tune : real(rp)
     b-mode tune.  Used to associate emittances with the proper mode.
 
 Returns
@@ -2446,7 +2648,7 @@ t : float
 p : float
     psi(t)
 
-args : float
+args : 1D array of float (shape: 1:8)
     parameters and constants of DEQ
 
 Returns
@@ -2463,6 +2665,11 @@ dpdt : float
 
 Parameters
 ----------
+lat : LatStruct
+    Bmad lattice.
+
+Returns
+-------
 lat : LatStruct
     Bmad lattice.
 )"""
@@ -2489,37 +2696,47 @@ See the Bmad manual chapter on PTC for more details.
 
 Parameters
 ----------
-ptc_layout : unknown
-    This parameter is an input/output and is modified in-place. As an output: Lattice with the optimum number
-    of tracking steps and integrator order.
+ptc_layout : Layout
+    This parameter is an input/output and is modified in-place.
+    As an output, ptc_layout: Lattice with the optimum number of tracking steps and integrator order.
 
 kl_max : float
     Maximum K1*L per tracking step.
 
-ds_max : float
+ds_max : float, optional
     Maximum ds for any step.
 
-Useful when including other physicas like space charge. : 
-even_steps : bool, optional
+Useful when including other physicas like space charge. : None
+
+even_steps : 1D array of bool (shape: 2), optional
     Always use an even number of steps for a fibre?
 
-Useful if need to evaluate at the center of fibres. : 
+Useful if need to evaluate at the center of fibres. : None
+
 r_typical : float, optional
     Typical transverse offset. Used for computing the
 
-effective contribution of K1*L due to sextupoles. : 
-dx_tol_bend : float
+effective contribution of K1*L due to sextupoles. : None
+
+dx_tol_bend : float, optional
     Tolerable residual orbit in a bend.
 
 use_2nd_order : bool, optional
     If present and True then force the use of 2nd order
 
-integrator. : 
-crossover : int, optional
+integrator. : None
+
+crossover : 1D array of int (shape: 2), optional
     crossover points between orders for all elements except wigglers. Default is [4, 18].
 
-crossover_wiggler : unknown, optional
+crossover_wiggler : 1D array of int (shape: 2), optional
     crossover points for wigglers. Default is [30, 60].
+
+Returns
+-------
+ptc_layout : Layout
+    This parameter is an input/output and is modified in-place.
+    As an output, ptc_layout: Lattice with the optimum number of tracking steps and integrator order.
 )"""
   );
   py::class_<Bmad::PtcCheckForLostParticle, std::unique_ptr<Bmad::PtcCheckForLostParticle>>(
@@ -2557,7 +2774,7 @@ Returns
 state : int
     Same as coord_struct.state. alive$, lost$, lost_neg_x$, etc.
 
-ptc_fibre : unknown
+ptc_fibre : Fibre, optional
     Pointer to fibre where particle lost. Nullified if particle alive.
 )"""
   );
@@ -2578,13 +2795,13 @@ Parameters
 branch : BranchStruct
     Branch of a lattice.
 
-radiation_damping_on : unknown, optional
+radiation_damping_on : bool, optional
     If True, radiation dampling is included in the calculation. Default is the setting of
     bmad_com..radiation_damping_on.
 
 Returns
 -------
-closed_orbit : CoordStruct
+closed_orbit : 1D array of CoordStruct
     closed_orbit
 )"""
   );
@@ -2623,12 +2840,14 @@ ele : EleStruct
 
 Returns
 -------
-norm_mode : 
+norm_mode : NormalModesStruct
     Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
 
-%a%emittance : 
-etc. : 
-sigma_map : float
+%a%emittance : None
+
+etc. : None
+
+sigma_map : real(rp)
     Sigma matrix (Bmad coordinates).
 
 closed_orb : CoordStruct
@@ -2658,11 +2877,12 @@ Parameters
 dKL_max : float
     Maximum K1 * L quadrupole strength allowed for an integration step.
 
-Reasonable value would be something like 0.04. : 
+Reasonable value would be something like 0.04. : None
+
 l_max : float
     Maximum step length. Ignored if set to 0.
 
-l_max_drift_only : unknown
+l_max_drift_only : bool
     If True then l_max is only used for splitting drifts.
 
 bend_dorb : float
@@ -2672,25 +2892,28 @@ bend_dorb : float
     related to bend_dorb and can be larger. In any case, lowering bend_dorb (without making it zero) will
     lower the
 
-orbit deviation. : 
+orbit deviation. : None
+
 sex_dx : float
     To split sextupoles, sex_dx is used as the reference position about which the quadrupole strength is
     calculated. This quadrupole strength is then used with dKL_max to calculate the number of integration
     steps.
 
-Set to zero to ignore. : 
+Set to zero to ignore. : None
+
 even : bool, optional
     If True then each fibre  will have an even number of steps. If False then the number of steps will be odd.
     If not present then number
 
-of steps is not constrained to be even or odd. : 
-crossover : int, optional
+of steps is not constrained to be even or odd. : None
+
+crossover : 1D array of int (shape: 2), optional
     crossover(1) sets the maximum number of 2nd order integration steps to use. If the number of steps would
     exceed crossover(1) then integration is switched to 4th order. crossover(2) sets the maximum number of 4th
     order integration steps. If this number is exceeded, 6th order integration is used. Currently the default
     in PTC is [4, 18].
 
-crossover_wiggler : unknown, optional
+crossover_wiggler : 1D array of int (shape: 2), optional
     crossover for wiggler elements.
 )"""
   );
@@ -2710,17 +2933,23 @@ Parameters
 ----------
 branch : BranchStruct
     Lattice branch.
-    This parameter is an input/output and is modified in-place. As an output: Lattice branch containing the
-    matrices.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Lattice branch containing the matrices.
 
 pz : float, optional
     energy offset around which to calculate the matrices if there is no RF.
 
 Returns
 -------
-%ele : unknown
+branch : BranchStruct
+    Lattice branch.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Lattice branch containing the matrices.
+
+%ele : matrices.
+as an output
     Closed orbit at entrance.
-    This parameter is an input/output and is modified in-place. As an output: Closed orbit at exit.
+    As an output, .ele: Closed orbit at exit.
 )"""
   );
   m.def(
@@ -2789,12 +3018,14 @@ ele : EleStruct
 
 Returns
 -------
-norm_mode : 
+norm_mode : NormalModesStruct
     Normal_modes_struct %a%tune, %b%tune, %z%tune %a%alpha_damp, etc.
 
-%a%emittance : 
-etc. : 
-sigma_map : float
+%a%emittance : None
+
+etc. : None
+
+sigma_map : real(rp)
     Sigma matrix (Bmad coordinates).
 
 closed_orb : CoordStruct
@@ -2829,20 +3060,27 @@ Routine to track from the start to the end of a lattice branch.
 
 Parameters
 ----------
-branch : LatStruct
+branch : BranchStruct
     Lat to track through.
 
-orbit : CoordStruct
+orbit : 1D array of CoordStruct
     Coordinates at beginning of branch.
-    This parameter is an input/output and is modified in-place. As an output: Orbit array.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Orbit array.
 
 Returns
 -------
-track_state : int
+orbit : 1D array of CoordStruct
+    Coordinates at beginning of branch.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Orbit array.
+
+track_state : int, optional
     Set to moving_forward$ if everything is OK.
 
-Otherwise: set to index of element where particle was lost. : 
-err_flag : bool
+Otherwise: set to index of element where particle was lost. : None
+
+err_flag : bool, optional
     Set true if particle lost or error. False otherwise
 )"""
   );
@@ -2864,19 +3102,18 @@ Parameters
 branch : BranchStruct
     Lattice branch used in the calculation.
 
-t_map : TaylorStruct
+t_map : 1D array of TaylorStruct (shape: 6)
     Initial orbital map (used when unit_start = False)
-    This parameter is an input/output and is modified in-place. As an output: Orbital transfer map.
+    This parameter is an input/output and is modified in-place.
+    As an output, t_map: Orbital transfer map.
 
-s_map : TaylorStruct
+s_map : 1D array of TaylorStruct (shape: 4)
     Initial spin map (used when unit_start = False)
-    This parameter is an input/output and is modified in-place. As an output: Quaternion spin transfer map.
+    This parameter is an input/output and is modified in-place.
+    As an output, s_map: Quaternion spin transfer map.
 
 orb0 : CoordStruct
     Initial orbit around which the map is made.
-
-err_flag : bool
-    Set True if problem like number overflow, etc.
 
 ix1 : int, optional
     Element start index for the calculation.
@@ -2889,6 +3126,21 @@ one_turn : bool, optional
 
 unit_start : bool, optional
     If present and False then t_map will be used as the starting map instead of the unit map. Default = True
+
+Returns
+-------
+t_map : 1D array of TaylorStruct (shape: 6)
+    Initial orbital map (used when unit_start = False)
+    This parameter is an input/output and is modified in-place.
+    As an output, t_map: Orbital transfer map.
+
+s_map : 1D array of TaylorStruct (shape: 4)
+    Initial spin map (used when unit_start = False)
+    This parameter is an input/output and is modified in-place.
+    As an output, s_map: Quaternion spin transfer map.
+
+err_flag : bool
+    Set True if problem like number overflow, etc.
 )"""
   );
   m.def(
@@ -2908,16 +3160,16 @@ Mpwd(6,5) = omega_RF * Vpwd / c_light / lat%ele(0)%value(E_TOT$) * branch%ele(i)
 
 Parameters
 ----------
-lat : 
+lat : LatStruct
     TYPE(lat_struct)
 
-%param%n_part : float
+%param%n_part : real(rp)
     Bunch current in # per bunch
 
-%ele : float
+%ele : real(rp)
     Beam energy
 
-t6 : float
+t6 : 2D array of float (shape: 6,6)
     1-turn transfer matrix
 
 inductance : float
@@ -2928,7 +3180,7 @@ sig_z : float
 
 Returns
 -------
-t6_pwd : float
+t6_pwd : 2D array of float (shape: 6,6)
     1-turn transfer matrix with PWD defocusing applied
 )"""
   );

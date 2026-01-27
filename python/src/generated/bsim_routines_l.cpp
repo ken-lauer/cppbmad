@@ -14,8 +14,15 @@ void init_bsim_routines_l(py::module &m) {
 
 Parameters
 ----------
-logic : 
-string : 
+logic : bool
+
+string : character
+
+Returns
+-------
+logic : bool
+
+string : character
 )"""
   );
 }

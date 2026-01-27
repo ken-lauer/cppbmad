@@ -18,12 +18,31 @@ void init_SimUtils_routines_p(py::module &m) {
 
 Parameters
 ----------
-format_str : 
-n_repeat : 
-power : 
-descrip : 
-width : 
-digits : 
+format_str : character
+
+n_repeat : int
+
+power : int
+
+descrip : character
+
+width : int
+
+digits : int
+
+Returns
+-------
+format_str : character
+
+n_repeat : int
+
+power : int
+
+descrip : character
+
+width : int
+
+digits : int
 )"""
   );
   m.def(
@@ -40,13 +59,14 @@ Parameters
 ran_state : RandomStateStruct, optional
     Point to this if present.
 
-Otherwise point to the global saved state. : 
+Otherwise point to the global saved state. : None
+
 ix_thread : int, optional
     Thread index.
 
 Returns
 -------
-ran_state_ptr : RandomStateStruct
+ran_state_ptr : RandomStateStruct, optional
     Pointer to the appropriate state.
 )"""
   );
@@ -60,7 +80,7 @@ ran_state_ptr : RandomStateStruct
 
 Parameters
 ----------
-poly : float
+poly : 1D array of float
     Polynomial
 
 x : float
@@ -69,6 +89,8 @@ x : float
 diff_coef : bool, optional
     poly(:) array are differentials? Default is False.
 
+Returns
+-------
 y : float
     Value of polynomial.
 )"""
@@ -85,7 +107,11 @@ Parameters
 x : float
     Function argument.
 
-prob : 
+prob : float
+
+Returns
+-------
+prob : float
 )"""
   );
   m.def(
@@ -98,9 +124,19 @@ prob :
 
 Parameters
 ----------
-a : 
-b : 
-projdd : 
+a : 1D array of complex
+
+b : 1D array of complex
+
+projdd : None
+
+Returns
+-------
+a : 1D array of complex
+
+b : 1D array of complex
+
+projdd : None
 )"""
   );
 }

@@ -14,8 +14,15 @@ void init_SimUtils_routines_f(py::module &m) {
 
 Parameters
 ----------
-n : 
-fact : 
+n : int
+
+fact : float
+
+Returns
+-------
+n : int
+
+fact : float
 )"""
   );
   m.def(
@@ -28,9 +35,19 @@ fact :
 
 Parameters
 ----------
-z : 
-w : 
-dw : 
+z : 1D array of float (shape: 2)
+
+w : 1D array of float (shape: 2)
+
+dw : 2D array of float (shape: 2,2)
+
+Returns
+-------
+z : 1D array of float (shape: 2)
+
+w : 1D array of float (shape: 2)
+
+dw : 2D array of float (shape: 2,2)
 )"""
   );
   m.def(
@@ -47,12 +64,20 @@ end subroutine
 
 Parameters
 ----------
-arr : complex
+arr : 1D array of complex
     Input array.
-    This parameter is an input/output and is modified in-place. As an output: FFT of array.
+    This parameter is an input/output and is modified in-place.
+    As an output, arr: FFT of array.
 
 isign : int
     -1 => "Forward" transform, +1 => "Backwards" transform.
+
+Returns
+-------
+arr : 1D array of complex
+    Input array.
+    This parameter is an input/output and is modified in-place.
+    As an output, arr: FFT of array.
 )"""
   );
   m.def(
@@ -66,10 +91,23 @@ isign : int
 
 Parameters
 ----------
-in_file : 
-out_file : 
-directory : 
-add_switch : 
+in_file : character
+
+out_file : character
+
+directory : character
+
+add_switch : bool
+
+Returns
+-------
+in_file : character
+
+out_file : character
+
+directory : character
+
+add_switch : bool
 )"""
   );
   m.def(
@@ -82,9 +120,19 @@ add_switch :
 
 Parameters
 ----------
-string : 
-dflt_file_name : 
-file_name : 
+string : character
+
+dflt_file_name : character
+
+file_name : character
+
+Returns
+-------
+string : character
+
+dflt_file_name : character
+
+file_name : character
 )"""
   );
   m.def(
@@ -99,11 +147,27 @@ file_name :
 
 Parameters
 ----------
-string : 
-dflt_file_name : 
-file_name : 
-file_unit : 
-readonly : 
+string : character
+
+dflt_file_name : character
+
+file_name : character
+
+file_unit : int
+
+readonly : bool
+
+Returns
+-------
+string : character
+
+dflt_file_name : character
+
+file_name : character
+
+file_unit : int
+
+readonly : bool
 )"""
   );
   m.def(
@@ -117,10 +181,23 @@ readonly :
 
 Parameters
 ----------
-in_file_name : 
-out_file_name : 
-suffix : 
-add_switch : 
+in_file_name : character
+
+out_file_name : character
+
+suffix : character
+
+add_switch : bool
+
+Returns
+-------
+in_file_name : character
+
+out_file_name : character
+
+suffix : character
+
+add_switch : bool
 )"""
   );
   m.def(
@@ -133,9 +210,19 @@ add_switch :
 
 Parameters
 ----------
-arr : 
-value : 
-ix_match : 
+arr : 1D array of int
+
+value : int
+
+ix_match : int
+
+Returns
+-------
+arr : 1D array of int
+
+value : int
+
+ix_match : int
 )"""
   );
   m.def(
@@ -148,9 +235,19 @@ ix_match :
 
 Parameters
 ----------
-arr : 
-value : 
-ix_match : 
+arr : 1D array of bool
+
+value : bool
+
+ix_match : int
+
+Returns
+-------
+arr : 1D array of bool
+
+value : bool
+
+ix_match : int
 )"""
   );
   m.def(
@@ -162,12 +259,14 @@ ix_match :
 
 Parameters
 ----------
-arr : 
+arr : 1D array of float
     real(rp), logical, or integer
 
-value : unknown
+value : float
     :).
 
+Returns
+-------
 ix_match : int
     Index of match. Zero if no match found.
 )"""
@@ -183,7 +282,7 @@ A coarse estimate is first made by FFT.
 
 Parameters
 ----------
-data : float
+data : 1D array of float
     data to analyze
 
 Returns
@@ -211,12 +310,12 @@ called when the instance is no longer needed.
 
 Parameters
 ----------
-ynew: : float
+ynew: : real(rp)
     New data point.
 
 Returns
 -------
-<return value) : float
+<return value) : real(rp)
     Derivative of fit polynomial evaluated at end of window.
 )"""
   );
@@ -257,7 +356,7 @@ Computes cos_amp = (1/N) * sum_n=0^{N-1} data(n-1) cos(twopi*frequency*n)
 
 Parameters
 ----------
-data : float
+data : 1D array of float
     data to analyze
 
 frequency : float
@@ -271,10 +370,10 @@ cos_amp : float
 sin_amp : float
     sine amplitude
 
-dcos_amp : float
+dcos_amp : float, optional
     cosine amplitude derivative
 
-dsin_amp : float
+dsin_amp : float, optional
     sine amplitude derivative
 )"""
   );

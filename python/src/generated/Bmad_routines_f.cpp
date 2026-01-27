@@ -27,11 +27,27 @@ void init_Bmad_routines_f(py::module &m) {
 
   Parameters
   ----------
-  a : 
-  b : 
-  n : 
-  isn : 
-  ierr : 
+  a : 1D array of float
+
+  b : 1D array of float
+
+  n : int
+
+  isn : int
+
+  ierr : int
+
+  Returns
+  -------
+  a : 1D array of float
+
+  b : 1D array of float
+
+  n : int
+
+  isn : int
+
+  ierr : int
   )"""
   );
   py::class_<PyFibreToEle, std::unique_ptr<PyFibreToEle>>(
@@ -62,7 +78,7 @@ void init_Bmad_routines_f(py::module &m) {
 
   Parameters
   ----------
-  ptc_fibre : unknown
+  ptc_fibre : Fibre
       PTC fibre.
 
   branch : BranchStruct
@@ -70,16 +86,26 @@ void init_Bmad_routines_f(py::module &m) {
 
   ix_ele : int
       Index in ele(:) array of element last used.
-      This parameter is an input/output and is modified in-place. As an output: Index to element created (upper
-      index if more than one created).
-
-  err_flag : bool
-      Set true if there is an error. False otherwise. To do: lcavity energy change !? open or closed geometry?
-      Energy patch
+      This parameter is an input/output and is modified in-place.
+      As an output, ix_ele: Index to element created (upper index if more than one created).
 
   from_mad : bool, optional
       If True, ignore PTC specific parameters like integrator_order. Default is False. True is used when the
       fibre has been created via MAD. In this case, the PTC specific parameters may not have good values.
+
+  Returns
+  -------
+  branch : BranchStruct
+      branch containing elements.
+
+  ix_ele : int
+      Index in ele(:) array of element last used.
+      This parameter is an input/output and is modified in-place.
+      As an output, ix_ele: Index to element created (upper index if more than one created).
+
+  err_flag : bool
+      Set true if there is an error. False otherwise. To do: lcavity energy change !? open or closed geometry?
+      Energy patch
   )"""
   );
   m.def(
@@ -101,7 +127,7 @@ void init_Bmad_routines_f(py::module &m) {
   ele : EleStruct
       Element containing the attribute
 
-  attrib_name : unknown
+  attrib_name : character
       Name of the field attribute. Assumed upper case.
 
   Returns
@@ -123,10 +149,18 @@ void init_Bmad_routines_f(py::module &m) {
   ----------
   table : PhotonReflectTableStruct
       Surface tables to be finalized.
-      This parameter is an input/output and is modified in-place. As an output: Finalized surface tables.
+      This parameter is an input/output and is modified in-place.
+      As an output, table: Finalized surface tables.
 
   in_degrees : bool
       Table angles in degrees?
+
+  Returns
+  -------
+  table : PhotonReflectTableStruct
+      Surface tables to be finalized.
+      This parameter is an input/output and is modified in-place.
+      As an output, table: Finalized surface tables.
   )"""
   );
   py::class_<Bmad::FindElementEnds, std::unique_ptr<Bmad::FindElementEnds>>(
@@ -158,17 +192,19 @@ void init_Bmad_routines_f(py::module &m) {
   ele : EleStruct
       Element to find the ends for.
 
-  ele1 : EleStruct
+  ix_multipass : int, optional
+      Which multipass pass to follow. Default is 1. This is ignored if there is no multipass elements.
+
+  Returns
+  -------
+  ele1 : EleStruct, optional
       Pointer to element just before ele.
 
-  ele2 : EleStruct
+  ele2 : EleStruct, optional
       Pointer to ele itself or the last sub-element within ele. Note: ele1 and ele2 will be nullified if ele is
       in the lord part of the lattice and does not have any slaves. Note: For an element in the tracking part of
       the lattice: ele1.ix_ele = ele.ix_ele - 1 ele2        => ele Exception: For Beginning element (index 0),
       ele1 => ele
-
-  ix_multipass : int, optional
-      Which multipass pass to follow. Default is 1. This is ignored if there is no multipass elements.
   )"""
   );
   m.def(
@@ -192,7 +228,7 @@ void init_Bmad_routines_f(py::module &m) {
   bound : float
       -bound and +bound is integration bound.
 
-  args : float
+  args : 1D array of float (shape: 1:8)
       Parameters and constants of dpsi/dt.  See comments of psi_prime for details.
 
   Returns
@@ -229,7 +265,7 @@ void init_Bmad_routines_f(py::module &m) {
 
   Parameters
   ----------
-  file_name : unknown
+  file_name : character
       File name associated with field to match to.
 
   ele : EleStruct
@@ -238,15 +274,17 @@ void init_Bmad_routines_f(py::module &m) {
   fm_type : int
       Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_grad_map$, grid_field$
 
-  match_ele : EleStruct
+  ignore_slaves : bool, optional
+      If True, ignore any multipass slaves. Default is False.
+
+  Returns
+  -------
+  match_ele : EleStruct, optional
       Pointer to element with matched field. Nullified if no match found.
 
   ix_field : int
       index of field. For example: matching field => match_ele.cartesian_map(ix_field) Set to -1 if no match
       found.
-
-  ignore_slaves : bool, optional
-      If True, ignore any multipass slaves. Default is False.
   )"""
   );
   m.def(
@@ -269,7 +307,7 @@ void init_Bmad_routines_f(py::module &m) {
   p0 : float
       Boundary condition psi(0)
 
-  args : float
+  args : 1D array of float (shape: 1:8)
       Parameters and constants of DEQ.  See psi_prime comments for details.
 
   Returns
@@ -314,10 +352,12 @@ void init_Bmad_routines_f(py::module &m) {
   psi : float
       Roll angle.
 
-  w_mat : float
+  Returns
+  -------
+  w_mat : 2D array of float (shape: 3,3), optional
       Orientation matrix.
 
-  w_mat_inv : float
+  w_mat_inv : 2D array of float (shape: 3,3), optional
       Inverse Orientation matrix.
   )"""
   );
@@ -350,9 +390,15 @@ void init_Bmad_routines_f(py::module &m) {
 
   Parameters
   ----------
-  w_mat : float
+  w_mat : 2D array of float (shape: 3,3)
       Orientation matrix.
 
+  floor0 : FloorPositionStruct, optional
+      There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
+      choose the solution "nearest" the angles in floor0.
+
+  Returns
+  -------
   theta : float
       Azimuth angle.
 
@@ -361,10 +407,6 @@ void init_Bmad_routines_f(py::module &m) {
 
   psi : float
       Roll angle.
-
-  floor0 : FloorPositionStruct, optional
-      There are two solutions related by: [theta, phi, psi] & [pi+theta, pi-phi, pi+psi] If floor0 is present,
-      choose the solution "nearest" the angles in floor0.
   )"""
   );
   m.def(
@@ -423,19 +465,19 @@ void init_Bmad_routines_f(py::module &m) {
 
   Parameters
   ----------
-  lat_file : unknown
+  lat_file : character
       Input lattice file name.
 
-  use_line : unknown, optional
+  use_line : character, optional
       Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
       the lattice file.
 
   Returns
   -------
-  digested_file : unknown
+  digested_file : character
       Name of the digested file.
 
-  full_lat_file : unknown
+  full_lat_file : character, optional
       Input lattice file name with full directory. Can be used for error messages.
   )"""
   );
@@ -458,6 +500,8 @@ void init_Bmad_routines_f(py::module &m) {
   particle_at : int
       Either first_track_edge$ or second_track_edge$.
 
+  Returns
+  -------
   is_here : bool
       True if there is a fringe. False if not.
   )"""

@@ -15,7 +15,7 @@
 namespace Bmad {
 
 // Enums from bmad_struct.f90
-const int BMAD_INC_VERSION = 352;
+const int BMAD_INC_VERSION = 353;
 const int NONE = 1;
 // maximum multipole order
 const int N_POLE_MAXX = 21;
@@ -114,6 +114,9 @@ const int USER_SET = 0;
 const int FIRST_PASS = 1;
 const int HIGHLAND = 2;
 const int LYNCH_DAHL = 3;
+const int NOT_ALLOWED = 1;
+const int STRAIGHT_REFERENCE = 2;
+const int BENDS_REFERENCE = 3;
 const int INCOHERENT = 1;
 const int COHERENT = 2;
 const int ASCII = 1;
@@ -441,6 +444,7 @@ const int X_GAIN_ERR = 3;
 const int TAYLOR_ORDER = 3;
 const int R_SOLENOID = 3;
 const int FINAL_CHARGE = 3;
+const int K0L_STATUS = 3;
 const int K1 = 4;
 const int KX = 4;
 const int HARMON = 4;
@@ -1011,6 +1015,7 @@ enum class EleAttribute : size_t {
   TAYLOR_ORDER = 3 - 1,
   R_SOLENOID = 3 - 1,
   FINAL_CHARGE = 3 - 1,
+  K0L_STATUS = 3 - 1,
   K1 = 4 - 1,
   KX = 4 - 1,
   HARMON = 4 - 1,
@@ -1335,6 +1340,7 @@ enum class EleAttributeFortran : size_t {
   TAYLOR_ORDER = 3,
   R_SOLENOID = 3,
   FINAL_CHARGE = 3,
+  K0L_STATUS = 3,
   K1 = 4,
   KX = 4,
   HARMON = 4,

@@ -41,7 +41,9 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       Element with C matrix and Twiss parameters.
 
-  cbar_mat : float
+  Returns
+  -------
+  cbar_mat : 2D array of float (shape: 2,2)
       Cbar matrix.
   )"""
   );
@@ -86,13 +88,14 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  bunch : 
+  bunch : BunchStruct
       Bunch_struct
 
   print_err : bool, optional
       If present and False then suppress
 
-  "no eigen-system found" messages. : 
+  "no eigen-system found" messages. : None
+
   is_time_coords : bool, optional
       Are particle coords using time coords. Default is False.
 
@@ -106,7 +109,7 @@ void init_Bmad_routines_c(py::module &m) {
   error : bool
       Set True if there is an error.
 
-  n_mat : float
+  n_mat : 2D array of float (shape: 6,6), optional
       N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
       51.).
   )"""
@@ -128,7 +131,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  bunch : 
+  bunch : BunchStruct
       bunch_struct
 
   plane : int
@@ -143,17 +146,19 @@ void init_Bmad_routines_c(py::module &m) {
   print_err : bool, optional
       If present and False then suppress
 
-  "no eigen-system found" messages. : 
+  "no eigen-system found" messages. : None
+
   is_time_coords : bool, optional
       Default is False. If True, input bunch is using time coordinates in which
 
-  case there will be a conversion to s-coords before bunch_params are computed. : 
+  case there will be a conversion to s-coords before bunch_params are computed. : None
+
   ele : EleStruct, optional
       Element being tracked through. Must be present if is_time_coords = True.
 
   Returns
   -------
-  params : BunchParamsStruct
+  params : bunch_params_struct
 
   err : bool
       Set True if there is an error.
@@ -177,27 +182,30 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  bunch : 
+  bunch : BunchStruct
       bunch_struct
 
-  slice_bounds : float
+  slice_bounds : 1D array of float (shape: 2)
       Slice bounds in percentage of particles ordered by z-position.
 
-  0.0 is the back of the bunch and 1.0 is the front of the bunch. : 
+  0.0 is the back of the bunch and 1.0 is the front of the bunch. : None
+
   print_err : bool, optional
       If present and False then suppress
 
-  "no eigen-system found" messages. : 
+  "no eigen-system found" messages. : None
+
   is_time_coords : bool, optional
       Default is False. If True, input bunch is using time coordinates in which
 
-  case there will be a conversion to s-coords before bunch_params are computed. : 
+  case there will be a conversion to s-coords before bunch_params are computed. : None
+
   ele : EleStruct, optional
       Element being tracked through. Must be present if is_time_coords = True.
 
   Returns
   -------
-  params : BunchParamsStruct
+  params : bunch_params_struct
 
   err : bool
       Set True if there is an error.
@@ -216,10 +224,10 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  particle : CoordStruct
+  particle : 1D array of CoordStruct
       Array of particles.
 
-  charge : float
+  charge : 1D array of float
       Particle charge or photon intensity.
 
   Returns
@@ -265,7 +273,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  sigma_mat : float
+  sigma_mat : 2D array of float (shape: 6,6)
       Sigma matrix.
 
   print_err : bool, optional
@@ -279,7 +287,7 @@ void init_Bmad_routines_c(py::module &m) {
   error : bool
       Set True if there is an error. Can happen if the emittance of a mode is zero.
 
-  n_mat : float
+  n_mat : 2D array of float (shape: 6,6), optional
       N matrix defined in Wolski Eq 44 and used to convert from action-angle coords to lab coords (Wolski Eq
       51.).
   )"""
@@ -299,10 +307,10 @@ void init_Bmad_routines_c(py::module &m) {
 
   Returns
   -------
-  bunch_params : BunchParamStruct
+  bunch_params : BunchParamsStruct
       Structure holding average
 
-  centroid%spin : 
+  centroid%spin : None
       (x,y,z) polarization.
   )"""
   );
@@ -322,11 +330,13 @@ void init_Bmad_routines_c(py::module &m) {
   lord2 : EleStruct
       Second slave. .key .sub_key
 
+  create_jumbo_slave : bool, optional
+      If True then slave.key will be set to em_field. Default is False.
+
+  Returns
+  -------
   slave : EleStruct
       Super_slave element.
-
-  create_jumbo_slave : unknown, optional
-      If True then slave.key will be set to em_field. Default is False.
   )"""
   );
   py::class_<Bmad::CalcWallRadius, std::unique_ptr<Bmad::CalcWallRadius>>(
@@ -365,7 +375,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  v : Wall3DVertexStruct
+  v : 1D array of Wall3DVertexStruct
       Array of vertices that make up the cross-section.
 
   cos_ang : float
@@ -382,7 +392,7 @@ void init_Bmad_routines_c(py::module &m) {
   dr_dtheta : float
       derivative of r_wall.
 
-  ix_vertex : int
+  ix_vertex : int, optional
       Wall at given angle is between v(ix_vertex-1) and v(ix_vertex). If ix_vertex = 1 then Wall at given angle
       is between v(N) and v(1) where N = size(v).
   )"""
@@ -397,11 +407,23 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   branch : BranchStruct
       Lattice branch
-      This parameter is an input/output and is modified in-place. As an output: Synchrotron tune (radians). If
-      unstable tune = 0.
-      This parameter is an input/output and is modified in-place. As an output: Is the mode stable? If no rf
-      then tune is zero but is stable.
-      This parameter is an input/output and is modified in-place. As an output: 6x6 1-turn matrix.
+      This parameter is an input/output and is modified in-place.
+      As an output, branch: Synchrotron tune (radians). If unstable tune = 0.
+      This parameter is an input/output and is modified in-place.
+      As an output, branch: Is the mode stable? If no rf then tune is zero but is stable.
+      This parameter is an input/output and is modified in-place.
+      As an output, branch: 6x6 1-turn matrix.
+
+  Returns
+  -------
+  branch : BranchStruct
+      Lattice branch
+      This parameter is an input/output and is modified in-place.
+      As an output, branch: Synchrotron tune (radians). If unstable tune = 0.
+      This parameter is an input/output and is modified in-place.
+      As an output, branch: Is the mode stable? If no rf then tune is zero but is stable.
+      This parameter is an input/output and is modified in-place.
+      As an output, branch: 6x6 1-turn matrix.
   )"""
   );
   m.def(
@@ -415,11 +437,19 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   orbit : CoordStruct
       Orbit in canonical coordinates.
-      This parameter is an input/output and is modified in-place. As an output: Orbit in angular coordinates.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Orbit in angular coordinates.
 
-  coord_type : unknown, optional
+  coord_type : character, optional
       Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
       y, y' = dy/ds, dt = -z / (beta * c), pz)
+
+  Returns
+  -------
+  orbit : CoordStruct
+      Orbit in canonical coordinates.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Orbit in angular coordinates.
   )"""
   );
   m.def(
@@ -432,7 +462,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  cbar_mat : float
+  cbar_mat : 2D array of float (shape: 2,2)
       Cbar matrix.
 
   a : TwissStruct
@@ -441,7 +471,9 @@ void init_Bmad_routines_c(py::module &m) {
   b : TwissStruct
       b-mode Twiss parameters
 
-  c_mat : float
+  Returns
+  -------
+  c_mat : 2D array of float (shape: 2,2)
       C matrix.
   )"""
   );
@@ -475,6 +507,14 @@ void init_Bmad_routines_c(py::module &m) {
 
   check_momentum : bool, optional
       If present and false then checking of p_x and p_y will be disabled.
+
+  Returns
+  -------
+  orb : CoordStruct
+      coordinates of a particle.
+
+  param : LatParamStruct
+      Lattice global parameter structure.
   )"""
   );
   m.def(
@@ -490,12 +530,14 @@ void init_Bmad_routines_c(py::module &m) {
   ele_key : int
       Element type. overlay$, etc.
 
-  contrl : ControlStruct
+  contrl : 1D array of ControlStruct
       control info. 1 element for each slave.
 
-  name : unknown
+  name : character
       Lord name. Used for error reporting.
 
+  Returns
+  -------
   err : bool
       Set true if there is a problem. False otherwise.
   )"""
@@ -555,14 +597,16 @@ void init_Bmad_routines_c(py::module &m) {
   s : float
       longitudinal position in the given branch.
 
+  print_err : bool, optional
+      Print error message if there is an error? Default is True.
+
+  Returns
+  -------
   err_flag : bool
       Set True if s position is out-of-bounds. False otherwise.
 
-  translated_s : float
+  translated_s : float, optional
       position translated to the range [0, branch_length]
-
-  print_err : bool, optional
-      Print error message if there is an error? Default is True.
   )"""
   );
   m.def(
@@ -579,17 +623,19 @@ void init_Bmad_routines_c(py::module &m) {
   branch : BranchStruct
       Lattice branch.
 
-  dk1 : float
-      Weights for the quadrupoles. All values will be +1 or -1.
-
-  eles : ElePointerStruct
-      eles(i).ele points to element with dk1(i) weight.
-
-  mask : unknown, optional
+  mask : character, optional
       If present, assign weight of zero for all quads that do not match. That is, no variation for matching
       quads.
 
-  err_flag : bool
+  Returns
+  -------
+  dk1 : 1D array of float
+      Weights for the quadrupoles. All values will be +1 or -1.
+
+  eles : 1D array of ElePointerStruct
+      eles(i).ele points to element with dk1(i) weight.
+
+  err_flag : bool, optional
       Set True if there is not one quad with positive dk1 and one quad with negative dk1.
   )"""
   );
@@ -637,32 +683,11 @@ void init_Bmad_routines_c(py::module &m) {
 
   delta_e : float
       +/- Delta energy used for the calculation. Notice that the energy difference
-      This parameter is an input/output and is modified in-place. As an output: Set to 1.0d-4 if on input
-      DELTA_E =< 0.
-
-  chrom_a : float
-      a-mode chromaticity.
-
-  chrom_b : float
-      b-mode chromaticity.
-
-  err_flag : bool
-      Set true if there is an error. False otherwise.
+      This parameter is an input/output and is modified in-place.
+      As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
 
   pz : float, optional
       reference momentum about which to calculate. Default is 0.
-
-  low_E_lat : LatStruct
-      Lattice with RF off and matrices computed at E_lat +pz - delta_e
-
-  high_E_lat : LatStruct
-      Lattice with RF off and matrices computed at E_lat +pz + delta_e
-
-  low_E_orb : CoordStruct
-      Orbit computed at E_lat + pz - delta_e.
-
-  high_E_orb : CoordStruct
-      Orbit computed at E_lat + pz + delta_e.
 
   ix_branch : int, optional
       Index of the lattice branch to use. Default is 0.
@@ -670,6 +695,34 @@ void init_Bmad_routines_c(py::module &m) {
   orb0 : CoordStruct, optional
       On-energy orbit at start (fixer point). Default is the branch.particle_start. Only needed if lattice
       branch has an open geometry.
+
+  Returns
+  -------
+  delta_e : float
+      +/- Delta energy used for the calculation. Notice that the energy difference
+      This parameter is an input/output and is modified in-place.
+      As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
+
+  chrom_a : float
+      a-mode chromaticity.
+
+  chrom_b : float
+      b-mode chromaticity.
+
+  err_flag : bool, optional
+      Set true if there is an error. False otherwise.
+
+  low_E_lat : LatStruct, optional
+      Lattice with RF off and matrices computed at E_lat +pz - delta_e
+
+  high_E_lat : LatStruct, optional
+      Lattice with RF off and matrices computed at E_lat +pz + delta_e
+
+  low_E_orb : 1D array of CoordStruct, optional
+      Orbit computed at E_lat + pz - delta_e.
+
+  high_E_orb : 1D array of CoordStruct, optional
+      Orbit computed at E_lat + pz + delta_e.
   )"""
   );
   py::class_<PyChromTune, std::unique_ptr<PyChromTune>>(m, "ChromTune", "chrom_tune return type")
@@ -699,12 +752,13 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lat : LatStruct
       Lat to use,
-      This parameter is an input/output and is modified in-place. As an output: Lat with sextupole set
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lat with sextupole set
 
   delta_e : float
       Delta energy used for the calculation.
-      This parameter is an input/output and is modified in-place. As an output: Set to 1.0d-4 if on input
-      DELTA_E =< 0.
+      This parameter is an input/output and is modified in-place.
+      As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
 
   target_x : float
       Target X Chromaticity
@@ -715,6 +769,18 @@ void init_Bmad_routines_c(py::module &m) {
   err_tol : float
       Max allowable Error: Error = | X_Target - X_Actual | + | Y_Target -Y_Actual | A good number is: err_tol =
       0.05_rp
+
+  Returns
+  -------
+  lat : LatStruct
+      Lat to use,
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lat with sextupole set
+
+  delta_e : float
+      Delta energy used for the calculation.
+      This parameter is an input/output and is modified in-place.
+      As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
 
   err_flag : bool
       .false. if match successful, .true. if failed Fails if takes longer than 100 iterations. If it fails the
@@ -733,6 +799,8 @@ void init_Bmad_routines_c(py::module &m) {
   species : int
       Species of particle.
 
+  Returns
+  -------
   radius : float
       Classical radius.
   )"""
@@ -742,8 +810,8 @@ void init_Bmad_routines_c(py::module &m) {
       &Bmad::clear_lat_1turn_mats,
       R"""(Wrapper for Fortran routine clear_lat_1turn_mats
 
-  Parameters
-  ----------
+  Returns
+  -------
   lat : LatStruct
       Lat with 1-turn matrices cleared.
   )"""
@@ -758,7 +826,15 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lat : LatStruct
       Lattice
-      This parameter is an input/output and is modified in-place. As an output: Lattice with all maps cleared
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice with all maps cleared
+
+  Returns
+  -------
+  lat : LatStruct
+      Lattice
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice with all maps cleared
   )"""
   );
   m.def(
@@ -777,10 +853,11 @@ void init_Bmad_routines_c(py::module &m) {
   lat : LatStruct
       Lat to track through.
 
-  closed_orb : CoordStruct
+  closed_orb : 1D array of CoordStruct
       closed_orb(nt) is the initial guess where nt = 0 for direction = 1 and nt = lat.n_ele_track for direction
       = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy
-      This parameter is an input/output and is modified in-place. As an output: Closed orbit. closed_orb(i)
+      This parameter is an input/output and is modified in-place.
+      As an output, closed_orb: Closed orbit. closed_orb(i)
 
   i_dim : int, optional
       Phase space dimensions to use: = 4  Transverse closed orbit at constant energy (RF off). (dE/E =
@@ -793,12 +870,23 @@ void init_Bmad_routines_c(py::module &m) {
   ix_branch : int, optional
       Lattice branch to find the closed orbit of.
 
-  err_flag : bool
-      Set true if there is an error. False otherwise.
-
   print_err : bool, optional
       Print error message if calc does not converge? Default is True. Note: Condition messages like no RF
       voltage with i_dim = 6 will always be printed.
+
+  Returns
+  -------
+  lat : LatStruct
+      Lat to track through.
+
+  closed_orb : 1D array of CoordStruct
+      closed_orb(nt) is the initial guess where nt = 0 for direction = 1 and nt = lat.n_ele_track for direction
+      = -1. Additionally, if i_dim = 4, then closed_orb(nt).vec(6) is used as the energy
+      This parameter is an input/output and is modified in-place.
+      As an output, closed_orb: Closed orbit. closed_orb(i)
+
+  err_flag : bool, optional
+      Set true if there is an error. False otherwise.
   )"""
   );
   m.def(
@@ -817,23 +905,25 @@ void init_Bmad_routines_c(py::module &m) {
   lat : LatStruct
       Lat to track through.
 
-  closed_orb : CoordStruct
-      closed orbit.
-
   i_dim : int
       = 2,4  Transverse closed orbit at constant energy.
 
-  eps_rel : float, optional
+  eps_rel : 1D array of float, optional
       Relative allowed error.
 
-  eps_abs : float, optional
+  eps_abs : 1D array of float, optional
       Absolute allowed error.
 
   init_guess : CoordStruct, optional
       Starting guess for the closed orbit at the start of the lattice. Set init_guess.vec(6) to the appropriate
       value of pz when calculating off-energy orbits. If not present then the origin will be used.
 
-  err_flag : bool
+  Returns
+  -------
+  closed_orb : 1D array of CoordStruct
+      closed orbit.
+
+  err_flag : bool, optional
       Set True if there is an error. False otherwise.
   )"""
   );
@@ -846,8 +936,15 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  cmp : 
-  str_out : 
+  cmp : complex
+
+  str_out : character
+
+  Returns
+  -------
+  cmp : complex
+
+  str_out : character
   )"""
   );
   m.def(
@@ -860,7 +957,15 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lat : LatStruct
       Lattice.
-      This parameter is an input/output and is modified in-place. As an output: Lattice with elements combined.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice with elements combined.
+
+  Returns
+  -------
+  lat : LatStruct
+      Lattice.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice with elements combined.
 
   error : bool
       Set True if there is an error. False otherwise.
@@ -874,7 +979,11 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  complex_taylor : 
+  complex_taylor : ComplexTaylorStruct
+
+  Returns
+  -------
+  complex_taylor : ComplexTaylorStruct
   )"""
   );
   m.def(
@@ -917,7 +1026,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Returns
   -------
-  complex_taylor_coef : complex
+  complex_taylor_coef : complex(rp)
       Coefficient.
   )"""
   );
@@ -978,7 +1087,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Returns
   -------
-  complex_taylor_coef : complex
+  complex_taylor_coef : complex(rp)
       Coefficient.
   )"""
   );
@@ -991,8 +1100,15 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  complex_taylor1 : 
-  complex_taylor2 : 
+  complex_taylor1 : ComplexTaylorStruct
+
+  complex_taylor2 : ComplexTaylorStruct
+
+  Returns
+  -------
+  complex_taylor1 : ComplexTaylorStruct
+
+  complex_taylor2 : ComplexTaylorStruct
   )"""
   );
   m.def(
@@ -1009,7 +1125,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  expn : int
+  expn : 1D array of int (shape: 6)
       complex_taylor exponent
 
   Returns
@@ -1029,7 +1145,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Returns
   -------
-  complex_taylor : ComplexTaylorStruct
+  complex_taylor : 1D array of ComplexTaylorStruct
       Unit complex_taylor map .
   )"""
   );
@@ -1063,21 +1179,21 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  a_complex_taylor : ComplexTaylorStruct
+  a_complex_taylor : 1D array of ComplexTaylorStruct (shape: 6)
       complex_taylor map.
 
-  r_in : complex
+  r_in : 1D array of complex
       Coordinates at the input.
 
   Returns
   -------
-  vec0 : complex
+  vec0 : 1D array of complex (shape: 6)
       0th order tranfsfer map
 
-  mat6 : complex
+  mat6 : 2D array of complex (shape: 6,6)
       1st order transfer map (6x6 matrix).
 
-  r_out : complex
+  r_out : 1D array of complex, optional
       Coordinates at output.
   )"""
   );
@@ -1090,8 +1206,15 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  complex_taylor1 : 
-  complex_taylor2 : 
+  complex_taylor1 : 1D array of ComplexTaylorStruct
+
+  complex_taylor2 : 1D array of ComplexTaylorStruct
+
+  Returns
+  -------
+  complex_taylor1 : 1D array of ComplexTaylorStruct
+
+  complex_taylor2 : 1D array of ComplexTaylorStruct
   )"""
   );
   m.def(
@@ -1123,19 +1246,31 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  orb_taylor : TaylorStruct
+  orb_taylor : 1D array of TaylorStruct
       Orbital Taylor map.
-      This parameter is an input/output and is modified in-place. As an output: Concatinated orbital map
+      This parameter is an input/output and is modified in-place.
+      As an output, orb_taylor: Concatinated orbital map
 
   ele : EleStruct
       Element containing a Taylor map.
 
-  spin_taylor : TaylorStruct, optional
+  spin_taylor : 1D array of TaylorStruct, optional
       Spin map to propagate
-      This parameter is an input/output and is modified in-place. As an output: Concatinated spin map.
+      This parameter is an input/output and is modified in-place.
+      As an output, spin_taylor: Concatinated spin map.
 
   Returns
   -------
+  orb_taylor : 1D array of TaylorStruct
+      Orbital Taylor map.
+      This parameter is an input/output and is modified in-place.
+      As an output, orb_taylor: Concatinated orbital map
+
+  spin_taylor : 1D array of TaylorStruct, optional
+      Spin map to propagate
+      This parameter is an input/output and is modified in-place.
+      As an output, spin_taylor: Concatinated spin map.
+
   err_flag : bool
       Set True if there is an error. False otherwise.
 
@@ -1161,15 +1296,15 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  taylor1 : TaylorStruct
+  taylor1 : 1D array of TaylorStruct
       Taylor map.
 
-  taylor2 : TaylorStruct
+  taylor2 : 1D array of TaylorStruct
       Taylor map.
 
   Returns
   -------
-  taylor3 : TaylorStruct
+  taylor3 : 1D array of TaylorStruct
       Concatinated map
   )"""
   );
@@ -1205,24 +1340,24 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  mat_1 : float
+  mat_1 : 2D array of float (shape: 6,6)
       Map from s1 to s2
 
-  vec_1 : float
+  vec_1 : 1D array of float (shape: 6)
       Map from s1 to s2
 
-  mat_0 : float
+  mat_0 : 2D array of float (shape: 6,6)
       Map from s0 to s1
 
-  vec_0 : float
+  vec_0 : 1D array of float (shape: 6)
       Map from s0 to s1
 
   Returns
   -------
-  mat_out : float
+  mat_out : 2D array of float (shape: 6,6)
       Map from s0 to s2
 
-  vec_out : float
+  vec_out : 1D array of float (shape: 6)
       Map from s0 to s2
   )"""
   );
@@ -1263,13 +1398,27 @@ void init_Bmad_routines_c(py::module &m) {
   out_type : int
       Output type: horizontally_pure$ or vertically_pure$.
 
-  an : float
+  an : 1D array of float (shape: 0:n_pole_maxx)
       Skew multipoles.
-      This parameter is an input/output and is modified in-place. As an output: Converted skew multipoles.
+      This parameter is an input/output and is modified in-place.
+      As an output, an: Converted skew multipoles.
 
-  bn : float
+  bn : 1D array of float (shape: 0:n_pole_maxx)
       Non-skew multipoles.
-      This parameter is an input/output and is modified in-place. As an output: Converted Non-skew multipoles.
+      This parameter is an input/output and is modified in-place.
+      As an output, bn: Converted Non-skew multipoles.
+
+  Returns
+  -------
+  an : 1D array of float (shape: 0:n_pole_maxx)
+      Skew multipoles.
+      This parameter is an input/output and is modified in-place.
+      As an output, an: Converted skew multipoles.
+
+  bn : 1D array of float (shape: 0:n_pole_maxx)
+      Non-skew multipoles.
+      This parameter is an input/output and is modified in-place.
+      As an output, bn: Converted Non-skew multipoles.
   )"""
   );
   py::class_<Bmad::ConvertCoords, std::unique_ptr<Bmad::ConvertCoords>>(
@@ -1302,7 +1451,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  in_type_str : unknown
+  in_type_str : character
       type of the input coords.
 
   coord_in : CoordStruct
@@ -1311,13 +1460,15 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       Provides the Twiss parameters.
 
-  out_type_str : unknown
+  Returns
+  -------
+  out_type_str : character
       type of the output coords.
 
   coord_out : CoordStruct
       Output coordinates.
 
-  err_flag : bool
+  err_flag : bool, optional
       Set True if there is an error. False otherwise. in_type_str and out_type_str can be: 'LAB'
       {x, x', y, y', z, z'} 'MODE'               {a, a', b, b', z, z'} 'NORMALIZED'         {a_bar, a'_bar,
       b_bar, b'_bar, z_bar, z'_bar} 'ACTION-ANGLE'       {j_a, phi_a, j_b, phi_b, j_z,  phi_z} x_vec = V_mat *
@@ -1342,10 +1493,10 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       Lattice element.
 
-  s_here : 
+  s_here : float
       real(rp) S-position.
 
-  forward_transform : 
+  forward_transform : bool
       Transform foward (to lab) or reverse.
 
   calc_dfield : bool, optional
@@ -1373,11 +1524,27 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  x : 
-  z : 
-  g : 
-  xout : 
-  sout : 
+  x : float
+
+  z : float
+
+  g : float
+
+  xout : float
+
+  sout : float
+
+  Returns
+  -------
+  x : float
+
+  z : float
+
+  g : float
+
+  xout : float
+
+  sout : float
   )"""
   );
   m.def(
@@ -1392,11 +1559,27 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  x : 
-  s : 
-  g : 
-  xout : 
-  zout : 
+  x : float
+
+  s : float
+
+  g : float
+
+  xout : float
+
+  zout : float
+
+  Returns
+  -------
+  x : float
+
+  s : float
+
+  g : float
+
+  xout : float
+
+  zout : float
   )"""
   );
   m.def(
@@ -1417,6 +1600,11 @@ void init_Bmad_routines_c(py::module &m) {
 
   orientation : int
       ele.orientation for vec(6).
+
+  Returns
+  -------
+  particle : CoordStruct
+      Particle with .vec(:) in s-coords.
   )"""
   );
   m.def(
@@ -1435,12 +1623,17 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       Element particle is going through.
 
-  s_body : float
-      s-position in element body coords.
-
   use_downstream_p0c : bool, optional
       If True (the default), use ele.value(p0c$) as the reference momentum. If False, use ele.value(p0c_start$)
       as the reference.
+
+  Returns
+  -------
+  particle : CoordStruct
+      Particle with .vec(:) in t-coords.
+
+  s_body : float, optional
+      s-position in element body coords.
   )"""
   );
   py::class_<Bmad::ConvertPcTo, std::unique_ptr<Bmad::ConvertPcTo>>(
@@ -1490,25 +1683,27 @@ void init_Bmad_routines_c(py::module &m) {
   particle : int
       Type of particle. positron$, etc.
 
-  E_tot : float
+  Returns
+  -------
+  E_tot : float, optional
       Total energy of the particle.
 
-  gamma : float
+  gamma : float, optional
       Gamma factor.
 
-  kinetic : float
+  kinetic : float, optional
       Kinetic energy
 
-  beta : float
+  beta : float, optional
       velocity / c_light
 
-  brho : float
+  brho : float, optional
       Nominal B_field*rho_bend
 
-  beta1 : float
+  beta1 : float, optional
       1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
 
-  err_flag : bool
+  err_flag : bool, optional
       Set true if there is an error. False otherwise.
   )"""
   );
@@ -1560,29 +1755,31 @@ void init_Bmad_routines_c(py::module &m) {
   particle : int
       Type of particle. positron$, etc.
 
-  gamma : float
-      Gamma factor. Set to -1 for photons.
-
-  kinetic : float
-      Kinetic energy
-
-  beta : float
-      velocity / c_light
-
-  pc : float
-      Particle momentum
-
-  brho : float
-      Nominal B_field*rho_bend
-
-  beta1 : float
-      1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
-
-  err_flag : bool
-      Set true if there is an error. False otherwise.
-
   print_err : bool, optional
       Print error message if E_tot < particle mass? Default is True.
+
+  Returns
+  -------
+  gamma : float, optional
+      Gamma factor. Set to -1 for photons.
+
+  kinetic : float, optional
+      Kinetic energy
+
+  beta : float, optional
+      velocity / c_light
+
+  pc : float, optional
+      Particle momentum
+
+  brho : float, optional
+      Nominal B_field*rho_bend
+
+  beta1 : float, optional
+      1 - beta. Equal to 1/(2*gamma^2) in ultra-rel limit.
+
+  err_flag : bool, optional
+      Set true if there is an error. False otherwise.
   )"""
   );
   py::class_<Bmad::ConverterDistributionParser, std::unique_ptr<Bmad::ConverterDistributionParser>>(
@@ -1615,10 +1812,17 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   ele : EleStruct
       Converter element.
-      This parameter is an input/output and is modified in-place. As an output: Converter element with
-      .converter field set.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Converter element with .converter field set.
 
-  delim : unknown
+  Returns
+  -------
+  ele : EleStruct
+      Converter element.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Converter element with .converter field set.
+
+  delim : character
       Ending delimitor.
 
   delim_found : bool
@@ -1666,7 +1870,7 @@ void init_Bmad_routines_c(py::module &m) {
 
   Returns
   -------
-  state_str : unknown
+  state_str : character
       String representation.
   )"""
   );
@@ -1703,12 +1907,14 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       element that local_position coordinates are relative to.
 
-  w_mat : float
-      W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
-
   calculate_angles : bool, optional
       calculate angles for local_position Default: True. False returns local_position angles (.theta, .phi,
       .psi) = 0.
+
+  Returns
+  -------
+  w_mat : 2D array of float (shape: 3,3), optional
+      W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
 
   local_position : FloorPositionStruct
       Local laboratory coordinates.
@@ -1747,11 +1953,13 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       element that rel_exit coordinates are relative to.
 
-  w_mat : float
-      W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
-
   calculate_angles : bool, optional
       calculate angles for rel_exit Default: True. False returns rel_exit angles (.theta, .phi, .psi) = 0.
+
+  Returns
+  -------
+  w_mat : 2D array of float (shape: 3,3), optional
+      W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
 
   rel_exit : FloorPositionStruct
       Cartesian coordinates relative to exit of the element.
@@ -1783,12 +1991,14 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  xys : float
+  xys : 1D array of float (shape: 3)
       (x, y, s) lab frame position vector.
 
   branch : BranchStruct
       Lattice branch that defines the local reference coordinates.
 
+  Returns
+  -------
   err_flag : bool
       Set True if global floor position cannot be computed.
 
@@ -1835,13 +2045,15 @@ void init_Bmad_routines_c(py::module &m) {
   ele0 : EleStruct
       Element to start the search at.
 
-  ele1 : EleStruct
+  Returns
+  -------
+  ele1 : EleStruct, optional
       Element that local_coords is with respect to.
 
-  status : bool
+  status : int
       ok$             -> Local_coords found. patch_problem$  -> No solution due to a patch element.
 
-  w_mat : float
+  w_mat : 2D array of float (shape: 3,3), optional
       W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
 
   local_coords : FloorPositionStruct
@@ -1886,16 +2098,18 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       element to find local coordinates of.
 
-  status : bool
-      longitudinal position: inside$: Inside the element. upstream_end$: At upstream end of element or beyound.
-
-  w_mat : float
-      W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
-
   relative_to : int, optional
       not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
       upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
       ele.orientation = -1.
+
+  Returns
+  -------
+  status : int
+      longitudinal position: inside$: Inside the element. upstream_end$: At upstream end of element or beyound.
+
+  w_mat : 2D array of float (shape: 3,3), optional
+      W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
 
   local_position : FloorPositionStruct
       .r = [x, y, z] position in local curvilinear coordinates.
@@ -1925,6 +2139,8 @@ void init_Bmad_routines_c(py::module &m) {
       If True then treat global_position.r as a difference position in global space and only rotate the position
       but not shift it. Default: False.
 
+  Returns
+  -------
   local_position : FloorPositionStruct
       position relative to floor0
   )"""
@@ -1964,12 +2180,14 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       element that coordinates are relative to.
 
-  w_mat : float
-      W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
-
   calculate_angles : bool, optional
       calculate angles for body_position Default: True. False returns body_position angles (.theta, .phi, .psi)
       = 0.
+
+  Returns
+  -------
+  w_mat : 2D array of float (shape: 3,3), optional
+      W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
 
   body_position : FloorPositionStruct
       Element coordinates relative to exit of the element.
@@ -2017,9 +2235,6 @@ void init_Bmad_routines_c(py::module &m) {
   in_body_frame : bool, optional
       True => local_position is in ele body frame and includes misalignments.
 
-  w_mat : float
-      W matrix at z, to transform vectors. v_global     = w_mat . v_local/body
-
   calculate_angles : bool, optional
       calculate angles for global_position Default: True.
 
@@ -2027,6 +2242,11 @@ void init_Bmad_routines_c(py::module &m) {
       not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
       upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
       ele.orientation = -1.
+
+  Returns
+  -------
+  w_mat : 2D array of float (shape: 3,3), optional
+      W matrix at z, to transform vectors. v_global     = w_mat . v_local/body
 
   global_position : FloorPositionStruct
       Position in global coordinates.
@@ -2047,21 +2267,23 @@ void init_Bmad_routines_c(py::module &m) {
   floor0 : FloorPositionStruct
       Initial reference frame.
 
-  dr : float
+  dr : 1D array of float (shape: 3)
       (x, y, z) positional shift of the reference frame.
 
-  theta : unknown, optional
+  theta : float, optional
       Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
       details. All angles must either be absent or present.
 
-  phi : unknown, optional
+  phi : float, optional
       Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
       details. All angles must either be absent or present.
 
-  psi : unknown, optional
+  psi : float, optional
       Angular shift of the reference frame. See the Bmad manual on the Global Coordinate system for more
       details. All angles must either be absent or present.
 
+  Returns
+  -------
   floor1 : FloorPositionStruct
       Shifted reference frame.
   )"""
@@ -2078,11 +2300,27 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  u : 
-  v : 
-  w : 
-  gam : 
-  res : 
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  res : float
+
+  Returns
+  -------
+  u : float
+
+  v : float
+
+  w : float
+
+  gam : float
+
+  res : float
   )"""
   );
   m.def(
@@ -2104,11 +2342,17 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lat : LatStruct
       lattice
-      This parameter is an input/output and is modified in-place. As an output: Lattice
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice
 
   Returns
   -------
-  err_flag : bool
+  lat : LatStruct
+      lattice
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice
+
+  err_flag : logical
       Set True if there is an error, false otherwise.
   )"""
   );
@@ -2144,9 +2388,6 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  sliced_ele : EleStruct
-      Sliced_ele element with appropriate values set.
-
   ele_in : EleStruct
       Original element to slice
 
@@ -2165,9 +2406,6 @@ void init_Bmad_routines_c(py::module &m) {
   include_downstream_end : bool
       Sliced_ele contains the ele's exit end?
 
-  err_flag : bool
-      Set True if there is an error. False otherwise.
-
   old_slice : EleStruct, optional
       Previous slice or, if offset = 0, the previous element. If present this saves computation time of the
       reference energy and time at the start of the present slice. Also makes the ref energy continuous (there
@@ -2177,6 +2415,14 @@ void init_Bmad_routines_c(py::module &m) {
       Incoming orbit if calling routine is doing tracking through the slice. This is used when old_slice is not
       present and there may be an adjustment needed to the orbit ref energy (EG space charge tracking does not
       keep track of ref energy through an lcavity).
+
+  Returns
+  -------
+  sliced_ele : EleStruct
+      Sliced_ele element with appropriate values set.
+
+  err_flag : bool
+      Set True if there is an error. False otherwise.
   )"""
   );
   m.def(
@@ -2192,11 +2438,16 @@ void init_Bmad_routines_c(py::module &m) {
   lat : LatStruct
       Lattice
 
-  lord_name : unknown
+  lord_name : character
       Name of the element with a field extending beyound it's bounds.
 
-  slave_name : unknown
+  slave_name : character
       Name of the element the lord's field overlaps.
+
+  Returns
+  -------
+  lat : LatStruct
+      Lattice
 
   err_flag : bool
       Set true if there is a problem (like no elements found).
@@ -2216,19 +2467,29 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lat : LatStruct
       Lat to modify.
-      This parameter is an input/output and is modified in-place. As an output: Modified lattice.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Modified lattice.
 
   ix_girder : int
       Index of girder element.
 
-  contrl : ControlStruct
+  contrl : 1D array of ControlStruct
       Array of elements that are supported by the girder.
 
   girder_info : EleStruct
       Element containing attributes to be transfered to the Girder element: girder_info.name girder_info.alias
       girder_info.descrip girder_info.value(:)
 
-  err_flag : 
+  err_flag : bool
+
+  Returns
+  -------
+  lat : LatStruct
+      Lat to modify.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Modified lattice.
+
+  err_flag : bool
   )"""
   );
   m.def(
@@ -2243,13 +2504,21 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lord : EleStruct
       Group element.
-      This parameter is an input/output and is modified in-place. As an output: Modified group elment
+      This parameter is an input/output and is modified in-place.
+      As an output, lord: Modified group elment
 
-  contrl : ControlStruct
+  contrl : 1D array of ControlStruct
       control info. 1 element for each slave.
 
   err : bool
       Set True if an attribute is not free to be controlled.
+
+  Returns
+  -------
+  lord : EleStruct
+      Group element.
+      This parameter is an input/output and is modified in-place.
+      As an output, lord: Modified group elment
   )"""
   );
   m.def(
@@ -2280,13 +2549,21 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lord : EleStruct
       Overlay element.
-      This parameter is an input/output and is modified in-place. As an output: Modified overlay elment
+      This parameter is an input/output and is modified in-place.
+      As an output, lord: Modified overlay elment
 
-  contrl : ControlStruct
+  contrl : 1D array of ControlStruct
       control info. 1 element for each slave.
 
   err : bool
       Set True if an attribute is not free to be controlled.
+
+  Returns
+  -------
+  lord : EleStruct
+      Overlay element.
+      This parameter is an input/output and is modified in-place.
+      As an output, lord: Modified overlay elment
   )"""
   );
   py::class_<Bmad::CreatePlanarWigglerModel, std::unique_ptr<Bmad::CreatePlanarWigglerModel>>(
@@ -2332,13 +2609,14 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
-  wiggler : EleStruct
+  wiggler : ele_struct
       Planar model wiggler to match to.
 
-  wig_model_com : WigglerModelingCommonStruct
+  wig_model_com : wiggler_modeling_common_struct
       Global variable that can be used
 
-  to set weights and step sizes for the optimization. : 
+  to set weights and step sizes for the optimization. : None
+
   print_err : bool, optional
       If True (default) print an error message if there is an error.
 
@@ -2347,13 +2625,13 @@ void init_Bmad_routines_c(py::module &m) {
   lat : LatStruct
       Lattice containing the wiggler model
 
-  %ele : 
+  %ele : None
       Array of bends and drifts.
 
-  %n_ele_track : 
+  %n_ele_track : None
       Number of elements in the model.
 
-  err_flag : bool
+  err_flag : bool, optional
       Set True if there is an error.
   )"""
   );
@@ -2369,13 +2647,21 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lord : EleStruct
       Ramper element.
-      This parameter is an input/output and is modified in-place. As an output: Modified ramper elment
+      This parameter is an input/output and is modified in-place.
+      As an output, lord: Modified ramper elment
 
-  contrl : ControlStruct
+  contrl : 1D array of ControlStruct
       control info. 1 element for each slave.
 
   err : bool
       Set True if an attribute is not free to be controlled.
+
+  Returns
+  -------
+  lord : EleStruct
+      Ramper element.
+      This parameter is an input/output and is modified in-place.
+      As an output, lord: Modified ramper elment
   )"""
   );
   m.def(
@@ -2406,13 +2692,21 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   lat : LatStruct
       Lattice holding the elements.
-      This parameter is an input/output and is modified in-place. As an output: Lattice with names made unique.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice with names made unique.
 
   key : int
       Class key of elements to consider.
 
-  suffix : unknown
+  suffix : character
       Suffix string. Must have a single "?" character.
+
+  Returns
+  -------
+  lat : LatStruct
+      Lattice holding the elements.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lattice with names made unique.
   )"""
   );
   m.def(
@@ -2426,6 +2720,8 @@ void init_Bmad_routines_c(py::module &m) {
   ele : EleStruct
       Wiggler or undulator element.
 
+  Returns
+  -------
   cart_map : CartesianMapStruct
       Cartesian map.
   )"""
@@ -2438,6 +2734,11 @@ void init_Bmad_routines_c(py::module &m) {
 
   Parameters
   ----------
+  ele : EleStruct
+      Crystal element.
+
+  Returns
+  -------
   ele : EleStruct
       Crystal element.
   )"""
@@ -2460,9 +2761,17 @@ void init_Bmad_routines_c(py::module &m) {
   orbit : CoordStruct
       Photon position at crystal surface.
 
-  h_vec : float
+  h_vec : 1D array of float (shape: 3)
       H vector before misalignment.
-      This parameter is an input/output and is modified in-place. As an output: H vector after misalignment.
+      This parameter is an input/output and is modified in-place.
+      As an output, h_vec: H vector after misalignment.
+
+  Returns
+  -------
+  h_vec : 1D array of float (shape: 3)
+      H vector before misalignment.
+      This parameter is an input/output and is modified in-place.
+      As an output, h_vec: H vector after misalignment.
   )"""
   );
   m.def(
@@ -2482,18 +2791,24 @@ void init_Bmad_routines_c(py::module &m) {
   ----------
   ele : EleStruct
       Crystal element.
-      This parameter is an input/output and is modified in-place. As an output: Crystal element with computed
-      parameter..
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Crystal element with computed parameter..
 
-  %component_name : unknown
+  %component_name : character
       Crystal type name. Assumed upper case.
 
-  A blank name is not an error and results in nothing set. : 
-  %value : 
+  A blank name is not an error and results in nothing set. : None
+
+  %value : None
       Photon energy in eV.
 
   Returns
   -------
+  ele : EleStruct
+      Crystal element.
+      This parameter is an input/output and is modified in-place.
+      As an output, ele: Crystal element with computed parameter..
+
   err_flag : bool
       Set True if crystal type is unrecognized. False otherwise.
   )"""

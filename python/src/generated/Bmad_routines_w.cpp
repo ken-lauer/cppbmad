@@ -33,12 +33,19 @@ void init_Bmad_routines_w(py::module &m) {
   ref_tilt : float
       Reference tilt.
 
-  r_vec : float, optional
+  r_vec : 1D array of float (shape: 3), optional
       Starting position.
-      This parameter is an input/output and is modified in-place. As an output: position with ref_tilt
-      transformation
+      This parameter is an input/output and is modified in-place.
+      As an output, r_vec: position with ref_tilt transformation
 
-  w_mat : float
+  Returns
+  -------
+  r_vec : 1D array of float (shape: 3), optional
+      Starting position.
+      This parameter is an input/output and is modified in-place.
+      As an output, r_vec: position with ref_tilt transformation
+
+  w_mat : 2D array of float (shape: 3,3)
       W matrix
   )"""
   );
@@ -57,7 +64,9 @@ void init_Bmad_routines_w(py::module &m) {
   return_inverse : bool, optional
       If True, return the inverse matrix. Default is False.
 
-  w_mat : float
+  Returns
+  -------
+  w_mat : 2D array of float (shape: 3,3)
       Transformation matrix.
   )"""
   );
@@ -76,7 +85,9 @@ void init_Bmad_routines_w(py::module &m) {
   return_inverse : bool, optional
       If True, return the inverse matrix. Default is False.
 
-  w_mat : float
+  Returns
+  -------
+  w_mat : 2D array of float (shape: 3,3)
       Transformation matrix.
   )"""
   );
@@ -95,7 +106,9 @@ void init_Bmad_routines_w(py::module &m) {
   return_inverse : bool, optional
       If True, return the inverse matrix. Default is False.
 
-  w_mat : float
+  Returns
+  -------
+  w_mat : 2D array of float (shape: 3,3)
       Transformation matrix.
   )"""
   );
@@ -150,12 +163,11 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  position : float
+  position : 1D array of float
       Particle position in element coordinates. In a patch, with respect to entrance coords. [position(1),
       position(3)] = [x, y] transverse coords. position(5)                = Longitudinal position relative to
       beginning of element.
 
-  position : 
   ele : EleStruct
       Element with wall
 
@@ -167,25 +179,28 @@ void init_Bmad_routines_w(py::module &m) {
   d_radius : float
       r_particle - r_wall
 
-  perp : float
+  perp : 1D array of float (shape: 3), optional
       Perpendicular normal to the wall.
 
-  ix_section : int
+  ix_section : int, optional
       Set to wall slice section particle is in.
 
-  That is between ix_section and ix_section+1. : 
-  no_wall_here : bool
+  That is between ix_section and ix_section+1. : None
+
+  no_wall_here : bool, optional
       True if the sub-chamber under consideration does not exist at the
 
-  longitudinal location of the particle. : 
-  origin : float
+  longitudinal location of the particle. : None
+
+  origin : 1D array of float (shape: 3), optional
       (x, y, s) origin with respect to the radius is measured.
 
-  Uses the same coords as position. : 
-  radius_wall : float
+  Uses the same coords as position. : None
+
+  radius_wall : float, optional
       Radius of the wall.
 
-  err_flag : bool
+  err_flag : bool, optional
       Set True if error. (EG noassociated .wall3d), false otherwise.
   )"""
   );
@@ -204,10 +219,16 @@ void init_Bmad_routines_w(py::module &m) {
   ----------
   wall3d : Wall3DStruct
       Wall.
-      This parameter is an input/output and is modified in-place. As an output: Initialized wall.
+      This parameter is an input/output and is modified in-place.
+      As an output, wall3d: Initialized wall.
 
   Returns
   -------
+  wall3d : Wall3DStruct
+      Wall.
+      This parameter is an input/output and is modified in-place.
+      As an output, wall3d: Initialized wall.
+
   err : bool
       Set true if there is a problem.
   )"""
@@ -226,10 +247,16 @@ void init_Bmad_routines_w(py::module &m) {
   ----------
   section : Wall3DSectionStruct
       Wall3d section.
-      This parameter is an input/output and is modified in-place. As an output: Initialized section-section.
+      This parameter is an input/output and is modified in-place.
+      As an output, section: Initialized section-section.
 
   Returns
   -------
+  section : Wall3DSectionStruct
+      Wall3d section.
+      This parameter is an input/output and is modified in-place.
+      As an output, section: Initialized section-section.
+
   err : bool
       Set true if there is a problem.
   )"""
@@ -256,7 +283,7 @@ void init_Bmad_routines_w(py::module &m) {
 
   Returns
   -------
-  position : float
+  position : 1D array of float (shape: 6)
       Position used in wall3d_d_radius call.
   )"""
   );
@@ -272,11 +299,27 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  word : 
-  lat : 
-  value : 
-  err_flag : 
-  ele : 
+  word : character
+
+  lat : LatStruct
+
+  value : float
+
+  err_flag : bool
+
+  ele : EleStruct, optional
+
+  Returns
+  -------
+  word : character
+
+  lat : LatStruct
+
+  value : float
+
+  err_flag : bool
+
+  ele : EleStruct, optional
   )"""
   );
   m.def(
@@ -292,7 +335,7 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  file_name : unknown
+  file_name : character
       Name of file.
 
   beam : BeamStruct
@@ -319,13 +362,35 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  iu : 
-  strength : 
-  id : 
-  d1 : 
-  d2 : 
-  d3 : 
-  d4 : 
+  iu : int
+
+  strength : float
+
+  id : int
+
+  d1 : 1D array of float (shape: 2)
+
+  d2 : 1D array of float (shape: 2)
+
+  d3 : 1D array of float (shape: 2)
+
+  d4 : 1D array of float (shape: 2)
+
+  Returns
+  -------
+  iu : int
+
+  strength : float
+
+  id : int
+
+  d1 : 1D array of float (shape: 2)
+
+  d2 : 1D array of float (shape: 2)
+
+  d3 : 1D array of float (shape: 2)
+
+  d4 : 1D array of float (shape: 2)
   )"""
   );
   py::class_<Bmad::WriteAstraFieldGridFile, std::unique_ptr<Bmad::WriteAstraFieldGridFile>>(
@@ -364,9 +429,12 @@ void init_Bmad_routines_w(py::module &m) {
   astra_file_unit : int
       unit number to write to, if > 0
 
-  if < 0 : 
-  nothing is written : 
-  and only maxfield is returned : 
+  if < 0 : None
+
+  nothing is written : None
+
+  and only maxfield is returned : None
+
   ele : EleStruct
       element to make map
 
@@ -378,7 +446,7 @@ void init_Bmad_routines_w(py::module &m) {
   maxfield : float
       absolute maximum found for element field scaling
 
-  err : bool
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -421,11 +489,13 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  base_filename : unknown
+  base_filename : character
       Base filename. Files will be written as: base_filename.ex, .ey, .ez, .bx, .by, .bz
 
-  If set to '' : 
-  no files will be written : 
+  If set to '' : None
+
+  no files will be written : None
+
   ele : EleStruct
       element to make map
 
@@ -437,7 +507,7 @@ void init_Bmad_routines_w(py::module &m) {
   maxfield : float
       absolute maximum on-axis field found for element field scaling
 
-  err : bool
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -459,7 +529,7 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  file_name : unknown
+  file_name : character
       Name of file.
 
   beam : BeamStruct
@@ -468,7 +538,7 @@ void init_Bmad_routines_w(py::module &m) {
   new_file : bool, optional
       New file or append? Default = True.
 
-  file_format : bool, optional
+  file_format : int, optional
       ascii$, or hdf5$ (default). old_ascii$ (deprecated) is still accepted.
 
   lat : LatStruct, optional
@@ -489,7 +559,7 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  file_name : unknown
+  file_name : character
       Name of file.
 
   beam : BeamStruct
@@ -516,7 +586,7 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  file_name : unknown
+  file_name : character
       File to create.
 
   ele : EleStruct
@@ -525,7 +595,8 @@ void init_Bmad_routines_w(py::module &m) {
   cart_map : CartesianMapStruct
       Cartesian map.
 
-  Ouput: : 
+  Ouput: : None
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -544,7 +615,7 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  file_name : unknown
+  file_name : character
       File to create.
 
   ele : EleStruct
@@ -553,7 +624,8 @@ void init_Bmad_routines_w(py::module &m) {
   cl_map : CylindricalMapStruct
       Cylindrical map.
 
-  Ouput: : 
+  Ouput: : None
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -572,7 +644,7 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  file_name : unknown
+  file_name : character
       File to create.
 
   ele : EleStruct
@@ -581,7 +653,8 @@ void init_Bmad_routines_w(py::module &m) {
   g_field : GridFieldStruct
       Cylindrical map.
 
-  Ouput: : 
+  Ouput: : None
+
   err_flag : bool
       Set True if there is an error. False otherwise.
   )"""
@@ -596,9 +669,19 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  iu : 
-  ele : 
-  old_format : 
+  iu : int
+
+  ele : EleStruct
+
+  old_format : bool, optional
+
+  Returns
+  -------
+  iu : int
+
+  ele : EleStruct
+
+  old_format : bool, optional
   )"""
   );
   m.def(
@@ -610,8 +693,15 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  file_name : 
-  lat : 
+  file_name : character
+
+  lat : LatStruct
+
+  Returns
+  -------
+  file_name : character
+
+  lat : LatStruct
   )"""
   );
   m.def(
@@ -625,14 +715,11 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  bmad_file : unknown
+  bmad_file : character
       Name of the output lattice file.
 
   lat : LatStruct
       Holds the lattice information.
-
-  err : bool
-      Set True if, say a file could not be opened.
 
   output_form : int, optional
       binary$   -> Write grid_field info in binary hdf5 form in separate files. Default. All other fields are
@@ -640,6 +727,11 @@ void init_Bmad_routines_w(py::module &m) {
 
   orbit0 : CoordStruct, optional
       Initial orbit. Used to write the inital orbit if the lattice geometry is closed.
+
+  Returns
+  -------
+  err : bool, optional
+      Set True if, say a file could not be opened.
   )"""
   );
   py::class_<Bmad::WriteGptFieldGridFile1d, std::unique_ptr<Bmad::WriteGptFieldGridFile1d>>(
@@ -681,9 +773,12 @@ void init_Bmad_routines_w(py::module &m) {
   gpt_file_unit : int
       unit number to write to, if > 0
 
-  if < 0 : 
-  nothing is written : 
-  and only maxfield is returned : 
+  if < 0 : None
+
+  nothing is written : None
+
+  and only maxfield is returned : None
+
   ele : EleStruct
       element to make map
 
@@ -698,7 +793,7 @@ void init_Bmad_routines_w(py::module &m) {
   ref_time : float
       time that the field was evaluated at
 
-  err : bool
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -740,9 +835,12 @@ void init_Bmad_routines_w(py::module &m) {
   gpt_file_unit : int
       unit number to write to, if > 0
 
-  if < 0 : 
-  nothing is written : 
-  and only maxfield is returned : 
+  if < 0 : None
+
+  nothing is written : None
+
+  and only maxfield is returned : None
+
   ele : EleStruct
       element to make map
 
@@ -763,7 +861,7 @@ void init_Bmad_routines_w(py::module &m) {
   ref_time : float
       time that the field was evaluated at
 
-  err : bool
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -808,11 +906,13 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  base_filename : unknown
+  base_filename : character
       Base filename. Files will be written as: base_filename_E_ASCII.gpt, _H_ASCII.gpt
 
-  If set to '' : 
-  no files will be written : 
+  If set to '' : None
+
+  no files will be written : None
+
   ele : EleStruct
       element to make map
 
@@ -827,7 +927,7 @@ void init_Bmad_routines_w(py::module &m) {
   ref_time : float
       time that the field was evaluated at
 
-  err : bool
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -864,9 +964,10 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  line : unknown
+  line : character
       String of text.
-      This parameter is an input/output and is modified in-place. As an output: part of the string not written.
+      This parameter is an input/output and is modified in-place.
+      As an output, line: part of the string not written.
 
   iu : int
       Unit number to write to.
@@ -874,14 +975,23 @@ void init_Bmad_routines_w(py::module &m) {
   end_is_neigh : bool
       If true then write out everything.
 
-  Otherwise wait for a full line of max_char characters or so. : 
+  Otherwise wait for a full line of max_char characters or so. : None
+
   do_split : bool, optional
       Split line if overlength? Default is True. False is used when line has already been split for expressions
       since
 
-  the expression splitting routine does a much better job of it. : 
+  the expression splitting routine does a much better job of it. : None
+
   scibmad : bool, optional
       Default False. If True then do not include "&" line continuation
+
+  Returns
+  -------
+  line : character
+      String of text.
+      This parameter is an input/output and is modified in-place.
+      As an output, line: part of the string not written.
   )"""
   );
   m.def(
@@ -898,13 +1008,13 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  out_file_name : unknown
+  out_file_name : character
       Name of the mad output lattice file.
 
   lat : LatStruct
       Holds the lattice information.
 
-  ref_orbit : CoordStruct, optional
+  ref_orbit : 1D array of CoordStruct, optional
       Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
       or patch elements and is
 
@@ -923,7 +1033,9 @@ void init_Bmad_routines_w(py::module &m) {
   ix_branch : int, optional
       Index of lattice branch to use. Default = 0.
 
-  err : bool
+  Returns
+  -------
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -942,16 +1054,16 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  out_type : unknown
+  out_type : character
       Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', or 'OPAL-T', 'SCIBMAD'.
 
-  out_file_name : unknown
+  out_file_name : character
       Name of the mad output lattice file.
 
   lat : LatStruct
       Holds the lattice information.
 
-  ref_orbit : CoordStruct, optional
+  ref_orbit : 1D array of CoordStruct, optional
       Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
       or patch elements and is
 
@@ -970,7 +1082,9 @@ void init_Bmad_routines_w(py::module &m) {
   ix_branch : int, optional
       Index of lattice branch to use. Default = 0.
 
-  err : bool
+  Returns
+  -------
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -989,16 +1103,16 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  out_type : unknown
+  out_type : character
       Either 'MAD-8', or 'MAD-X'
 
-  out_file_name : unknown
+  out_file_name : character
       Name of the mad output lattice file.
 
   lat : LatStruct
       Holds the lattice information.
 
-  ref_orbit : CoordStruct, optional
+  ref_orbit : 1D array of CoordStruct, optional
       Referece orbit for sad_mult and patch elements. This argument must be present if the lattice has sad_mult
       or patch elements and is
 
@@ -1017,7 +1131,9 @@ void init_Bmad_routines_w(py::module &m) {
   ix_branch : int, optional
       Index of lattice branch to use. Default = 0.
 
-  err : bool
+  Returns
+  -------
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -1033,11 +1149,27 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  out_file_name : 
-  lat : 
-  include_apertures : 
-  ix_branch : 
-  err : 
+  out_file_name : character
+
+  lat : LatStruct
+
+  include_apertures : bool, optional
+
+  ix_branch : int, optional
+
+  err : bool, optional
+
+  Returns
+  -------
+  out_file_name : character
+
+  lat : LatStruct
+
+  include_apertures : bool, optional
+
+  ix_branch : int, optional
+
+  err : bool, optional
   )"""
   );
   py::class_<Bmad::WriteLatticeInScibmad, std::unique_ptr<Bmad::WriteLatticeInScibmad>>(
@@ -1065,13 +1197,15 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  scibmad_file : unknown
-      SciBmad lattice file name.
-
   lat : LatStruct
       Lattice
 
-  err_flag : bool
+  Returns
+  -------
+  scibmad_file : character
+      SciBmad lattice file name.
+
+  err_flag : bool, optional
       Error flag
   )"""
   );
@@ -1086,10 +1220,23 @@ void init_Bmad_routines_w(py::module &m) {
 
   Parameters
   ----------
-  line : 
-  iu : 
-  ele : 
-  lat : 
+  line : character
+
+  iu : int
+
+  ele : EleStruct
+
+  lat : LatStruct
+
+  Returns
+  -------
+  line : character
+
+  iu : int
+
+  ele : EleStruct
+
+  lat : LatStruct
   )"""
   );
   py::class_<Bmad::WriteOpalFieldGridFile, std::unique_ptr<Bmad::WriteOpalFieldGridFile>>(
@@ -1125,9 +1272,12 @@ void init_Bmad_routines_w(py::module &m) {
   opal_file_unit : int
       unit number to write to, if > 0
 
-  if < 0 : 
-  nothing is written : 
-  and only maxfield is returned : 
+  if < 0 : None
+
+  nothing is written : None
+
+  and only maxfield is returned : None
+
   ele : EleStruct
       element to make map
 
@@ -1139,7 +1289,7 @@ void init_Bmad_routines_w(py::module &m) {
   maxfield : float
       absolute maximum found for element field scaling
 
-  err : bool
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -1163,7 +1313,7 @@ void init_Bmad_routines_w(py::module &m) {
 
   Returns
   -------
-  err : bool
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );
@@ -1202,26 +1352,31 @@ void init_Bmad_routines_w(py::module &m) {
   bunch : BunchStruct
       bunch to be written.
 
-  Particles are drifted to bmad_bunch%t_center for output : 
+  Particles are drifted to bmad_bunch%t_center for output : None
+
   ele : EleStruct
       Element being tracked through.
 
-  style : unknown, optional
+  style : character, optional
       Style of output file:
 
-  'BMAD' : 
-  'OPAL' : 
-  'ASTRA' : 
-  'GPT' : 
+  'BMAD' : None
+
+  'OPAL' : None
+
+  'ASTRA' : None
+
+  'GPT' : None
+
   branch : BranchStruct, optional
       Required for 'ASTRA' style
 
-  format : unknown
+  format : character, optional
       format for numerical output. default: 'es15.7'
 
   Returns
   -------
-  err : bool
+  err : bool, optional
       Set True if, say a file could not be opened.
   )"""
   );

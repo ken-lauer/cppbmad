@@ -39,15 +39,28 @@ particle_at : int
 
 orbit : CoordStruct
     Starting coordinates.
-    This parameter is an input/output and is modified in-place. As an output: Ending coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coordinates.
 
-mat6 : float, optional
+mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix up to the fringe.
-    This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
-    fringe.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix including the fringe.
 
-make_matrix : float, optional
+make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
+
+Returns
+-------
+orbit : CoordStruct
+    Starting coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending coordinates.
+
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the fringe.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix including the fringe.
 )"""
   );
   m.def(
@@ -60,9 +73,19 @@ make_matrix : float, optional
 
 Parameters
 ----------
-ele : 
-attrib : 
-has_it : 
+ele : EleStruct
+
+attrib : character
+
+has_it : bool
+
+Returns
+-------
+ele : EleStruct
+
+attrib : character
+
+has_it : bool
 )"""
   );
   m.def(
@@ -122,12 +145,31 @@ has_attribute function.
 
 Parameters
 ----------
-file_name : 
-bunches : 
-append : 
-error : 
-lat : 
-alive_only : 
+file_name : character
+
+bunches : 1D array of BunchStruct
+
+append : bool
+
+error : bool
+
+lat : LatStruct, optional
+
+alive_only : bool, optional
+
+Returns
+-------
+file_name : character
+
+bunches : 1D array of BunchStruct
+
+append : bool
+
+error : bool
+
+lat : LatStruct, optional
+
+alive_only : bool, optional
 )"""
   );
   m.def(
@@ -141,10 +183,23 @@ alive_only :
 
 Parameters
 ----------
-file_name : 
-ele : 
-g_field : 
-err_flag : 
+file_name : character
+
+ele : EleStruct
+
+g_field : 1D array of GridFieldStruct
+
+err_flag : bool
+
+Returns
+-------
+file_name : character
+
+ele : EleStruct
+
+g_field : 1D array of GridFieldStruct
+
+err_flag : bool
 )"""
   );
   m.def(
@@ -169,7 +224,8 @@ Parameters
 ----------
 orb : CoordStruct
     Starting coords.
-    This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Coords after tracking.
 
 ele : EleStruct
     SBend element.
@@ -180,13 +236,25 @@ param : LatParamStruct
 particle_at : int
     first_track_edge$, or second_track_edge$
 
-mat6 : float, optional
+mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix up to the edge.
-    This parameter is an input/output and is modified in-place. As an output: Transfer matrix including the
-    edge.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix including the edge.
 
-make_matrix : float, optional
+make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
+
+Returns
+-------
+orb : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Coords after tracking.
+
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the edge.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix including the edge.
 )"""
   );
 }

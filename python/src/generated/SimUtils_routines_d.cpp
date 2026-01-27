@@ -15,9 +15,19 @@ void init_SimUtils_routines_d(py::module &m) {
 
 Parameters
 ----------
-string : 
-numeric_month : 
-include_zone : 
+string : character
+
+numeric_month : bool, optional
+
+include_zone : bool, optional
+
+Returns
+-------
+string : character
+
+numeric_month : bool, optional
+
+include_zone : bool, optional
 )"""
   );
   m.def(
@@ -28,7 +38,11 @@ include_zone :
 
 Parameters
 ----------
-id : 
+id : int
+
+Returns
+-------
+id : int
 )"""
   );
   m.def(
@@ -39,7 +53,11 @@ id :
 
 Parameters
 ----------
-str : 
+str : character
+
+Returns
+-------
+str : character
 )"""
   );
   m.def(
@@ -54,11 +72,27 @@ str :
 
 Parameters
 ----------
-ix_screen : 
-x_size : 
-y_size : 
-x_res : 
-y_res : 
+ix_screen : int
+
+x_size : float
+
+y_size : float
+
+x_res : float
+
+y_res : float
+
+Returns
+-------
+ix_screen : int
+
+x_size : float
+
+y_size : float
+
+x_res : float
+
+y_res : float
 )"""
   );
   m.def(
@@ -71,9 +105,19 @@ y_res :
 
 Parameters
 ----------
-m : 
-arg : 
-dj_bes : 
+m : int
+
+arg : float
+
+dj_bes : float
+
+Returns
+-------
+m : int
+
+arg : float
+
+dj_bes : float
 )"""
   );
   m.def(
@@ -86,9 +130,19 @@ dj_bes :
 
 Parameters
 ----------
-str : 
-old_hash : 
-hash : 
+str : character
+
+old_hash : int, optional
+
+hash : int
+
+Returns
+-------
+str : character
+
+old_hash : int, optional
+
+hash : int
 )"""
   );
   m.def(
@@ -100,8 +154,15 @@ hash :
 
 Parameters
 ----------
-in_str : 
-hash_str : 
+in_str : character
+
+hash_str : character
+
+Returns
+-------
+in_str : character
+
+hash_str : character
 )"""
   );
   m.def(
@@ -112,7 +173,11 @@ hash_str :
 
 Parameters
 ----------
-string : 
+string : character
+
+Returns
+-------
+string : character
 )"""
   );
 }

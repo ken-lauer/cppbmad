@@ -35,12 +35,12 @@ The rotation angle is chosen in the range [0, pi].
 
 Parameters
 ----------
-w_mat : float
+w_mat : 2D array of float (shape: 3,3)
     Rotation matrix.
 
 Returns
 -------
-axis : float
+axis : 1D array of float (shape: 3)
     Rotation axis. Normalized to 1.
 
 angle : float
@@ -57,12 +57,12 @@ Routine to find the quaternion corresponding to a given 3D rotation matrix.
 
 Parameters
 ----------
-w_mat : float
+w_mat : 2D array of float (shape: 3,3)
     Rotation matrix
 
 Returns
 -------
-quat : float
+quat : 1D array of float (shape: 0:3)
     Quaternion.
 )"""
   );
@@ -75,8 +75,15 @@ quat : float
 
 Parameters
 ----------
-wording : 
-wlen : 
+wording : character
+
+wlen : int
+
+Returns
+-------
+wording : character
+
+wlen : int
 )"""
   );
   m.def(
@@ -94,14 +101,39 @@ wlen :
 
 Parameters
 ----------
-in_str : 
-delim_list : 
-word : 
-ix_word : 
-delim : 
-delim_found : 
-out_str : 
-ignore_interior : 
+in_str : character
+
+delim_list : character
+
+word : character
+
+ix_word : int
+
+delim : character
+
+delim_found : bool
+
+out_str : character
+
+ignore_interior : bool, optional
+
+Returns
+-------
+in_str : character
+
+delim_list : character
+
+word : character
+
+ix_word : int
+
+delim : character
+
+delim_found : bool
+
+out_str : character
+
+ignore_interior : bool, optional
 )"""
   );
 }

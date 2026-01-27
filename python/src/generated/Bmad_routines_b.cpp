@@ -34,14 +34,16 @@ x : float
 y : float
     Y coordinate.
 
-sigma : float
+sigma : 1D array of float (shape: 2)
     Beam (x,y) sigmas.
 
-nk : float
+Returns
+-------
+nk : 1D array of float (shape: 2)
     Normalized, dimensionless kick component. In terms of the the actual kick: nk = [kick_x / (xi_x * sigma_x
     / beta_x), kick_y / (xi_y * sigma_y / beta_y)
 
-dnk : float
+dnk : 2D array of float (shape: 2,2)
     derivatives of nk. EG: dnk(2,1) = dnk(2)/dy Note: xi_x = beta_x * bbi_const / sig_x     ! Horizontal tune
     shift parameter xi_y = beta_y * bbi_const / sig_y     ! Vertical   tune shift parameter where bbi_const =
     N_particles_bunch * r_e / (2 * pi * gamma * (sig_x + sig_y)) And the tune shifts are: dQ_x = xi_x = beta_x
@@ -77,7 +79,9 @@ ele : EleStruct
 n_slice : int
     Number of slices
 
-z_slice : float
+Returns
+-------
+z_slice : 1D array of float
     Array of slice positions 1:n_slice. zero padded for indexes greater than n_slice
 )"""
   );
@@ -102,7 +106,7 @@ See subroutine transport_with_sr_and_ibs in this module.
 
 Parameters
 ----------
-sigma_mat : float
+sigma_mat : 2D array of float (shape: 6,6)
     beam sigma_matrix at element entrance
 
 tail_cut : bool
@@ -122,7 +126,7 @@ species : int
 
 Returns
 -------
-ibs_mat : float
+ibs_mat : 2D array of float (shape: 6,6)
     changes in 2nd order moments due to IBS are ibs_mat*element_length
 )"""
   );
@@ -135,8 +139,15 @@ ibs_mat : float
 
 Parameters
 ----------
-beam1 : 
-beam2 : 
+beam1 : BeamStruct
+
+beam2 : BeamStruct
+
+Returns
+-------
+beam1 : BeamStruct
+
+beam2 : BeamStruct
 )"""
   );
   m.def(
@@ -220,7 +231,7 @@ and the +z axis.  Positive angles are measured towards the +y axis.
 
 Parameters
 ----------
-S : float
+S : 2D array of float (shape: 6,6)
     matrix of second order moments of beam envelope
 
 Returns
@@ -256,7 +267,7 @@ ele : EleStruct
 
 Returns
 -------
-ptc_fibre : 
+ptc_fibre : Fibre
     Corresponding PTC fibre.
 )"""
   );
@@ -288,18 +299,31 @@ particle_at : int
 
 orb : CoordStruct
     Starting coords.
-    This parameter is an input/output and is modified in-place. As an output: Coords after tracking.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Coords after tracking.
 
-mat6 : float, optional
+mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix before fringe.
-    This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-    including fringe.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix including fringe.
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
 
 track_spin : bool, optional
     If True then track the spin through the edge fields. Default: False.
+
+Returns
+-------
+orb : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Coords after tracking.
+
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before fringe.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix including fringe.
 )"""
   );
   m.def(
@@ -315,7 +339,7 @@ track_spin : bool, optional
 
 Parameters
 ----------
-ele : unknown
+ele : EleStruct
     Bend element.
 
 param : LatParamStruct
@@ -327,14 +351,16 @@ orbit : CoordStruct
 local_ref_frame : bool
     Is the particle position in the local element ref
 
-field : EmFieldStruct
-    Field
-
 calc_dfield : bool, optional
     If present and True then calculate the field derivatives.
 
 calc_potential : bool, optional
     Calc electric and magnetic potentials? Default is false.
+
+Returns
+-------
+field : EmFieldStruct
+    Field
 )"""
   );
   m.def(
@@ -492,27 +518,35 @@ E_min : float, optional
 E_max : float, optional
     Maximum photon energy.  Default is Infinity. Ignored if negative.
 
-If non-positive then E_max will be taken to be Infinity. : 
-E_integ_prob : float
+If non-positive then E_max will be taken to be Infinity. : None
+
+E_integ_prob : float, optional
     , optional :: integrated energy probability. See above.
 
-If E_integ_prob is non-negative : 
-it must be in the range [0 : 
-1]. : 
+If E_integ_prob is non-negative : None
+
+it must be in the range [0 : None
+
+1]. : None
+
 vert_angle_min : float, optional
     Minimum vertical angle to emit a photon.
 
--pi/2 is used if argument not present or if argument is less than -pi/2. : 
+-pi/2 is used if argument not present or if argument is less than -pi/2. : None
+
 vert_angle_max : float, optional
     Maximum vertical angle to emit a photon.
 
-pi/2 is used if argument not present or if argument is greater than pi/2. : 
+pi/2 is used if argument not present or if argument is greater than pi/2. : None
+
 vert_angle_symmetric : bool, optional
     Default is False. If True, photons will be emitted in the range [-vert_angle_max, -vert_angle_min] as well
     as the range
 
-[vert_angle_min : 
-vert_angle_max]. In this case vert_angle_min/max must be positive. : 
+[vert_angle_min : None
+
+vert_angle_max]. In this case vert_angle_min/max must be positive. : None
+
 emit_probability : float, optional
     Probability of emitting a photon in the range [E_min, E_max] or in the vertical angular range given. The
     probability is normalized so that the probability of emitting if no ranges are given is 1.
@@ -555,10 +589,10 @@ Returns
 orbit : CoordStruct
     Photon coords
 
-%field : 
+%field : None
     (x,y) polaraization. Will have unit magnitude
 
-%phase : 
+%phase : None
     (x,y) phases. Will be [0, pi/2].
 )"""
   );
@@ -586,9 +620,11 @@ gamma : float
 r_in : float, optional
     Integrated probability in the range [0,1].
 
-If not present : 
-a random number will be used. : 
-invert : float, optional
+If not present : None
+
+a random number will be used. : None
+
+invert : bool, optional
     If True then take r_in as the inverse integrated probability with inverted probability = 1 - probability.
     This is useful to avoid round-off errors when for looking at the tail of the distribution where the
     integrated prob is very close to 1 and small deviations can have large effects. Default is False.
@@ -636,11 +672,13 @@ g : float
 delta_s : float
     S-position of final frame relative to the initial frame.
 
-w_mat : float
-    W matrix used in the transformation
-
 ref_tilt : float, optional
     ref_tilt. Default: 0
+
+Returns
+-------
+w_mat : 2D array of float (shape: 3,3), optional
+    W matrix used in the transformation
 
 position2 : FloorPositionStruct
     particle coordinates relative to the final frame.
@@ -767,26 +805,28 @@ sigma_z : float
 
 Parameters
 ----------
-lat_file : unknown
+lat_file : character
     Name of the input file.
-
-lat : LatStruct
-    Lat structure. See bmad_struct.f90 for more details.
 
 make_mats6 : bool, optional
     Compute the 6x6 transport matrices for the Elements?
 
-digested_read_ok : bool
-    Set True if the digested file was
-
-use_line : unknown, optional
+use_line : character, optional
     If present and not blank, override the use statement in the lattice file and use use_line instead.
 
-err_flag : bool
+Returns
+-------
+lat : LatStruct
+    Lat structure. See bmad_struct.f90 for more details.
+
+digested_read_ok : bool, optional
+    Set True if the digested file was
+
+err_flag : bool, optional
     Set true if there is an error, false otherwise. Note: err_flag does *not* include errors in lat_make_mat6
     since if there is a match element, there is an error raised since
 
-parse_lat : LatStruct
+parse_lat : LatStruct, optional
     List of elements used to construct the lattice. Useful if bmad_parser2 will be called. See bmad_parser2
     documentation.
 )"""
@@ -804,24 +844,35 @@ parse_lat : LatStruct
 
 Parameters
 ----------
-lat_file : unknown
+lat_file : character
     Input file name.
 
 lat : LatStruct
     lattice with existing layout.
-    This parameter is an input/output and is modified in-place. As an output: lattice with modifications.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: lattice with modifications.
 
-orbit : CoordStruct, optional
+orbit : 1D array of CoordStruct, optional
     closed orbit for when
 
 make_mats6 : bool, optional
     Make the 6x6 transport matrices for then
 
-err_flag : 
+err_flag : bool, optional
+
 parse_lat : LatStruct, optional
     Used by bmad_parser to pass to bmad_parser2 a list of elements that were defined in the lattice file but
     not used. This is useful in preventing errors being generated if group/overlay elements definded by
     lat_file refer to unused slaves in parse_lat.
+
+Returns
+-------
+lat : LatStruct
+    lattice with existing layout.
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: lattice with modifications.
+
+err_flag : bool, optional
 )"""
   );
   m.def(
@@ -833,8 +884,15 @@ parse_lat : LatStruct, optional
 
 Parameters
 ----------
-ang : 
-exi : 
+ang : 1D array of float (shape: 3)
+
+exi : 2D array of float (shape: 3,3)
+
+Returns
+-------
+ang : 1D array of float (shape: 3)
+
+exi : 2D array of float (shape: 3,3)
 )"""
   );
   m.def(
@@ -852,8 +910,15 @@ exi :
 
 Parameters
 ----------
-branch1 : 
-branch2 : 
+branch1 : BranchStruct
+
+branch2 : BranchStruct
+
+Returns
+-------
+branch1 : BranchStruct
+
+branch2 : BranchStruct
 )"""
   );
   m.def(
@@ -867,7 +932,9 @@ Parameters
 branch : BranchStruct
     Lattice branch
 
-name : unknown
+Returns
+-------
+name : character
     Encoded name
 )"""
   );
@@ -895,8 +962,19 @@ Parameters
 ----------
 branch : BranchStruct
     Input branch.
-    This parameter is an input/output and is modified in-place. As an output: Pointers to generated layouts.
-    This parameter is an input/output and is modified in-place. As an output: Pointer to PTC fibres
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Pointers to generated layouts.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Pointer to PTC fibres
+
+Returns
+-------
+branch : BranchStruct
+    Input branch.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Pointers to generated layouts.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Pointer to PTC fibres
 )"""
   );
   m.def(
@@ -908,8 +986,15 @@ branch : BranchStruct
 
 Parameters
 ----------
-bunch1 : 
-bunch2 : 
+bunch1 : BunchStruct
+
+bunch2 : BunchStruct
+
+Returns
+-------
+bunch1 : BunchStruct
+
+bunch2 : BunchStruct
 )"""
   );
 }

@@ -93,7 +93,8 @@ void init_Bmad_routines_o(py::module &m) {
   ----------
   orbit : CoordStruct
       Starting coords: (x, px, y, py, z, delta) in element body coords.
-      This parameter is an input/output and is modified in-place. As an output: Ending coords
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Ending coords
 
   ele : EleStruct
       Element to track through.
@@ -107,23 +108,36 @@ void init_Bmad_routines_o(py::module &m) {
   s2_body : float
       Ending point relative physical entrance.
 
-  mat6 : float, optional
+  mat6 : 2D array of float (shape: 6,6), optional
       Transfer matrix before the element.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix propagated
-      through the element.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix propagated through the element.
 
   make_matrix : bool, optional
       If True then make the 6x6 transfer matrix.
 
   Returns
   -------
+  orbit : CoordStruct
+      Starting coords: (x, px, y, py, z, delta) in element body coords.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Ending coords
+
+  mat6 : 2D array of float (shape: 6,6), optional
+      Transfer matrix before the element.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix propagated through the element.
+
   err_flag : bool
       Set True if there is an error. False otherwise. Note: a particle getting
 
-  lost : 
-  for example hitting an aperture : 
-  is *not* an error. : 
-  track : TrackStruct
+  lost : None
+
+  for example hitting an aperture : None
+
+  is *not* an error. : None
+
+  track : TrackStruct, optional
       Structure holding the track information.
   )"""
   );
@@ -169,45 +183,62 @@ void init_Bmad_routines_o(py::module &m) {
   ----------
   orb : CoordStruct
       Starting coords: (x, px, y, py, s, ps) [t-based]
-      This parameter is an input/output and is modified in-place. As an output: Ending coords
+      This parameter is an input/output and is modified in-place.
+      As an output, orb: Ending coords
 
   ele : EleStruct
       Element to track through.
 
-  %tracking_method : unknown
+  %tracking_method : determines which subroutine to use to calculate the field. note
       BMAD does no supply em_field_custom. == custom$ then use em_field_custom
 
-  /= custom$ then use em_field_standard : 
+  /= custom$ then use em_field_standard : None
+
   param : LatParamStruct
       Beam parameters.
 
-  t_dir : float
+  t_dir : int
       Direction of time travel = +/-1. Can be negative for patches. Will be -1 if element has a negative length.
 
   rf_time : float
       Time relative to RF clock.
-      This parameter is an input/output and is modified in-place. As an output: Updated time.
+      This parameter is an input/output and is modified in-place.
+      As an output, rf_time: Updated time.
 
   track : TrackStruct, optional
       Structure holding the track information.
 
-  %save_track : bool
+  %save_track : logical
       Set True if track is to be saved.
 
   t_end : float, optional
       If present, maximum time to which the particle will be tracked. Used for tracking with given time steps.
       The time orb.t at which tracking stops
 
-  may be less than this if the particle gets to the end of the element : 
+  may be less than this if the particle gets to the end of the element : None
+
   extra_field : EmFieldStruct, optional
       Static field to be added to the element field. Eg used with space charge.
 
   Returns
   -------
+  orb : CoordStruct
+      Starting coords: (x, px, y, py, s, ps) [t-based]
+      This parameter is an input/output and is modified in-place.
+      As an output, orb: Ending coords
+
+  rf_time : float
+      Time relative to RF clock.
+      This parameter is an input/output and is modified in-place.
+      As an output, rf_time: Updated time.
+
+  track : TrackStruct, optional
+      Structure holding the track information.
+
   err_flag : bool
       Set True if there is an error. False otherwise.
 
-  dt_step : float
+  dt_step : float, optional
       Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
   )"""
   );
@@ -257,7 +288,8 @@ void init_Bmad_routines_o(py::module &m) {
 
   orbit : CoordStruct
       Coordinates of the particle.
-      This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Coordinates of particle.
 
   set_tilt : bool, optional
       Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends.
@@ -273,26 +305,44 @@ void init_Bmad_routines_o(py::module &m) {
   s_pos : float, optional
       Longitudinal particle position: If set = set$: Relative to upstream end (in lab coords).
 
-  s_out : float
-      Longitudinal particle position. If set = set$: Relative to entrance end (in body coords).
-
   set_spin : bool, optional
       Default if False.
 
-  mat6 : float, optional
+  mat6 : 2D array of float (shape: 6,6), optional
       Transfer matrix before off setting.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-      after offsets applied.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix transfer matrix after offsets applied.
 
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
 
-  spin_qrot : float
+  time : float, optional
+      Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
+      This parameter is an input/output and is modified in-place.
+      As an output, time: Updated time.
+
+  Returns
+  -------
+  orbit : CoordStruct
+      Coordinates of the particle.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Coordinates of particle.
+
+  s_out : float, optional
+      Longitudinal particle position. If set = set$: Relative to entrance end (in body coords).
+
+  mat6 : 2D array of float (shape: 6,6), optional
+      Transfer matrix before off setting.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix transfer matrix after offsets applied.
+
+  spin_qrot : 1D array of float (shape: 0:3), optional
       Spin rotation quaternion
 
   time : float, optional
       Particle time before drifting. Typically this is an RF clock time which may not be equal to orb.t
-      This parameter is an input/output and is modified in-place. As an output: Updated time.
+      This parameter is an input/output and is modified in-place.
+      As an output, time: Updated time.
   )"""
   );
   m.def(
@@ -312,17 +362,25 @@ void init_Bmad_routines_o(py::module &m) {
 
   orbit : CoordStruct
       Coordinates of the particle.
-      This parameter is an input/output and is modified in-place. As an output: Coordinates of particle.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Coordinates of particle.
 
   set : bool
       T (= set$)   -> Translate from lab coords to element coords. F (= unset$) -> Translate from element coords
       to lab coords.
 
-  offset_position_only : unknown, optional
+  offset_position_only : bool, optional
       If present and True, only offset the position coordinates.
 
-  rot_mat : float, optional
+  rot_mat : 2D array of float (shape: 3,3), optional
       Rotation matrix from starting coords to ending coords.
+
+  Returns
+  -------
+  orbit : CoordStruct
+      Coordinates of the particle.
+      This parameter is an input/output and is modified in-place.
+      As an output, orbit: Coordinates of particle.
   )"""
   );
   m.def(
@@ -344,7 +402,9 @@ void init_Bmad_routines_o(py::module &m) {
   phi_b : float
       "b" mode tune in radians.
 
-  mat4 : float
+  Returns
+  -------
+  mat4 : 2D array of float (shape: 4,4)
       1-Turn coupled matrix.
   )"""
   );
@@ -380,13 +440,13 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  file_name : unknown
+  file_name : character
       File to create.
 
-  action : unknown
+  action : character
       'READ' or 'WRITE'
 
-  r_name : unknown
+  r_name : character
       Calling routine name for error messages.
 
   Returns
@@ -439,16 +499,18 @@ void init_Bmad_routines_o(py::module &m) {
   orb : CoordStruct
       Orbit coordinates at the exit end of ele.
 
-  amp_a : float
+  Returns
+  -------
+  amp_a : float, optional
       a-mode amplitude
 
-  amp_b : float
+  amp_b : float, optional
       b-mode amplitude
 
-  amp_na : float
+  amp_na : float, optional
       a-mode, energy normalized, amplitude.
 
-  amp_nb : float
+  amp_nb : float, optional
       b-mode, energy normalized, amplitude.
   )"""
   );
@@ -469,13 +531,23 @@ void init_Bmad_routines_o(py::module &m) {
   p0c_new : float
       New reference momentum.
 
-  mat6 : float, optional
+  mat6 : 2D array of float (shape: 6,6), optional
       Transfer matrix before correction.
-      This parameter is an input/output and is modified in-place. As an output: Transfer matrix transfer matrix
-      including correction.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix transfer matrix including correction.
 
   make_matrix : bool, optional
       Propagate the transfer matrix? Default is false.
+
+  Returns
+  -------
+  orbit : CoordStruct
+      Coordinates to correct.
+
+  mat6 : 2D array of float (shape: 6,6), optional
+      Transfer matrix before correction.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat6: Transfer matrix transfer matrix including correction.
   )"""
   );
   m.def(
@@ -493,7 +565,9 @@ void init_Bmad_routines_o(py::module &m) {
   ele : EleStruct
       Lattice element particle is in.
 
-  floor_phase_space : float
+  Returns
+  -------
+  floor_phase_space : 1D array of float (shape: 6)
       Floor phase space
   )"""
   );
@@ -520,6 +594,8 @@ void init_Bmad_routines_o(py::module &m) {
   relative_to : int, optional
       not_set$ (default), upstream_end$, downstream_end$. If not_set$ then origin is at the entrance end.
 
+  Returns
+  -------
   local_position : FloorPositionStruct
       Position in local coordinates.
   )"""
@@ -553,10 +629,15 @@ void init_Bmad_routines_o(py::module &m) {
   orbit : CoordStruct
       Particle orbit.
 
-  param : LatParamStruct
-
   check_momentum : bool, optional
       If True (default) check the momentum.
+
+  Returns
+  -------
+  orbit : CoordStruct
+      Particle orbit.
+
+  param : LatParamStruct, optional
 
   is_too_large : bool
       True if orbit is too large. False otherwise.
@@ -592,23 +673,31 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  eval : complex
+  eval : 1D array of complex (shape: 6)
       complex eigenvalues.
 
-  evecr : complex
+  evecr : complex(rp)
       complex eigenvectors arranged down columns.
 
-  mat_tunes : float
+  mat_tunes : 1D array of float (shape: 3)
       Three normal mode tunes, in radians.
-      This parameter is an input/output and is modified in-place. As an output: Ordered normal mode tunes, in
-      radians.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat_tunes: Ordered normal mode tunes, in radians.
 
-  Nmat : float
+  Nmat : 2D array of float (shape: 6,6)
       Normalized, real eigen matrix from make_N.
 
   Returns
   -------
-  evec : complex
+  eval : 1D array of complex (shape: 6)
+      complex eigenvalues.
+
+  mat_tunes : 1D array of float (shape: 3)
+      Three normal mode tunes, in radians.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat_tunes: Ordered normal mode tunes, in radians.
+
+  evec : 2D array of complex (shape: 6,6)
       complex eigenvectors arranged down columns.
 
   err_flag : bool
@@ -631,17 +720,37 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  eval : complex
+  eval : 1D array of complex (shape: 6)
       complex eigenvalues.
-      This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvalues.
+      This parameter is an input/output and is modified in-place.
+      As an output, eval: Ordered complex eigenvalues.
 
-  evec : complex
+  evec : 2D array of complex (shape: 6,6)
       complex eigenvectors arranged down columns.
-      This parameter is an input/output and is modified in-place. As an output: Ordered complex eigenvectors.
+      This parameter is an input/output and is modified in-place.
+      As an output, evec: Ordered complex eigenvectors.
 
-  mat_tunes : float, optional
+  mat_tunes : 1D array of float (shape: 3), optional
       Three normal mode tunes, in radians.
-      This parameter is an input/output and is modified in-place. As an output: Reordered same as evecs.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat_tunes: Reordered same as evecs.
+
+  Returns
+  -------
+  eval : 1D array of complex (shape: 6)
+      complex eigenvalues.
+      This parameter is an input/output and is modified in-place.
+      As an output, eval: Ordered complex eigenvalues.
+
+  evec : 2D array of complex (shape: 6,6)
+      complex eigenvectors arranged down columns.
+      This parameter is an input/output and is modified in-place.
+      As an output, evec: Ordered complex eigenvectors.
+
+  mat_tunes : 1D array of float (shape: 3), optional
+      Three normal mode tunes, in radians.
+      This parameter is an input/output and is modified in-place.
+      As an output, mat_tunes: Reordered same as evecs.
   )"""
   );
   m.def(
@@ -658,22 +767,34 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  eval : complex
+  eval : 1D array of complex (shape: 6)
       complex eigenvalues.
-      This parameter is an input/output and is modified in-place. As an output: Ordered eigenvalues.
+      This parameter is an input/output and is modified in-place.
+      As an output, eval: Ordered eigenvalues.
 
-  evec : complex
+  evec : 2D array of complex (shape: 6,6)
       complex eigenvectors arranged down columns.
-      This parameter is an input/output and is modified in-place. As an output: Ordered eigenvectors.
+      This parameter is an input/output and is modified in-place.
+      As an output, evec: Ordered eigenvectors.
 
-  mat_tunes : float
+  mat_tunes : 1D array of float (shape: 3)
       Three normal mode tunes, in radians.
 
-  abz_tunes : float
+  abz_tunes : 1D array of float (shape: 3)
       Tunes to order eigensystem by.
 
   Returns
   -------
+  eval : 1D array of complex (shape: 6)
+      complex eigenvalues.
+      This parameter is an input/output and is modified in-place.
+      As an output, eval: Ordered eigenvalues.
+
+  evec : 2D array of complex (shape: 6,6)
+      complex eigenvectors arranged down columns.
+      This parameter is an input/output and is modified in-place.
+      As an output, evec: Ordered eigenvectors.
+
   err_flag : bool
       Set to true if an error occured.
   )"""
@@ -693,12 +814,15 @@ void init_Bmad_routines_o(py::module &m) {
   bunch : BunchStruct
       collection of particles.
 
-  %particle : 
+  %particle : None
       Longitudinal position of j^th particle.
 
   Returns
   -------
-  %ix_z : unknown
+  bunch : BunchStruct
+      collection of particles.
+
+  %ix_z : index for the ordering. order is from large z (head of bunch) to small z. that is
       .bunch.ix_z(1) is the particle at the bunch head. Only live particles are ordered so if particle with
       index .bunch.ix_z(i) is dead, all particles with index .bunch.ix_z(j) with j > i are dead.
   )"""
@@ -714,10 +838,18 @@ void init_Bmad_routines_o(py::module &m) {
   ----------
   lat : LatStruct
       Lat.
-      This parameter is an input/output and is modified in-place. As an output: Lat with fixed controls.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lat with fixed controls.
 
   ix_lord : int
       Index of lord element.
+
+  Returns
+  -------
+  lat : LatStruct
+      Lat.
+      This parameter is an input/output and is modified in-place.
+      As an output, lat: Lat with fixed controls.
   )"""
   );
   m.def(
@@ -730,9 +862,19 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  nlo : 
-  nhi : 
-  npad : 
+  nlo : 1D array of int (shape: 3)
+
+  nhi : 1D array of int (shape: 3)
+
+  npad : 1D array of int (shape: 3)
+
+  Returns
+  -------
+  nlo : 1D array of int (shape: 3)
+
+  nhi : 1D array of int (shape: 3)
+
+  npad : 1D array of int (shape: 3)
   )"""
   );
   m.def(
@@ -745,9 +887,19 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  nlo : 
-  nhi : 
-  npad : 
+  nlo : 1D array of int (shape: 3)
+
+  nhi : 1D array of int (shape: 3)
+
+  npad : 1D array of int (shape: 3)
+
+  Returns
+  -------
+  nlo : 1D array of int (shape: 3)
+
+  nhi : 1D array of int (shape: 3)
+
+  npad : 1D array of int (shape: 3)
   )"""
   );
   m.def(
@@ -760,9 +912,19 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  nlo : 
-  nhi : 
-  npad : 
+  nlo : 1D array of int (shape: 3)
+
+  nhi : 1D array of int (shape: 3)
+
+  npad : 1D array of int (shape: 3)
+
+  Returns
+  -------
+  nlo : 1D array of int (shape: 3)
+
+  nhi : 1D array of int (shape: 3)
+
+  npad : 1D array of int (shape: 3)
   )"""
   );
   m.def(
@@ -778,12 +940,31 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  gam : 
-  a : 
-  b : 
-  delta : 
-  umin : 
-  npad : 
+  gam : float
+
+  a : float
+
+  b : float
+
+  delta : 1D array of float (shape: 3)
+
+  umin : 1D array of float (shape: 3)
+
+  npad : 1D array of int (shape: 3)
+
+  Returns
+  -------
+  gam : float
+
+  a : float
+
+  b : float
+
+  delta : 1D array of float (shape: 3)
+
+  umin : 1D array of float (shape: 3)
+
+  npad : 1D array of int (shape: 3)
   )"""
   );
   m.def(
@@ -807,14 +988,39 @@ void init_Bmad_routines_o(py::module &m) {
 
   Parameters
   ----------
-  apipe : 
-  bpipe : 
-  delta : 
-  umin : 
-  umax : 
-  nlo : 
-  nhi : 
-  gamma : 
+  apipe : float
+
+  bpipe : float
+
+  delta : 1D array of float (shape: 3)
+
+  umin : 1D array of float (shape: 3)
+
+  umax : 1D array of float (shape: 3)
+
+  nlo : 1D array of int (shape: 3)
+
+  nhi : 1D array of int (shape: 3)
+
+  gamma : float
+
+  Returns
+  -------
+  apipe : float
+
+  bpipe : float
+
+  delta : 1D array of float (shape: 3)
+
+  umin : 1D array of float (shape: 3)
+
+  umax : 1D array of float (shape: 3)
+
+  nlo : 1D array of int (shape: 3)
+
+  nhi : 1D array of int (shape: 3)
+
+  gamma : float
   )"""
   );
 }
