@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import pathlib
+
 import pytest
 
 import pybmad
+
+TESTS_ROOT = pathlib.Path(__file__).resolve().parent
+CPPBMAD_REPO_ROOT = TESTS_ROOT.parents[1]
 
 
 @pytest.fixture(autouse=True, scope="session")
