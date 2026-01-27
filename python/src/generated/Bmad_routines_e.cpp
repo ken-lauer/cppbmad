@@ -4319,18 +4319,21 @@ err_str : character
       "ExpressionStringToStack",
       "expression_string_to_stack return type"
   )
+      .def_readonly("stack", &Bmad::ExpressionStringToStack::stack)
       .def_readonly("n_stack", &Bmad::ExpressionStringToStack::n_stack)
       .def_readonly("err_flag", &Bmad::ExpressionStringToStack::err_flag)
       .def_readonly("err_str", &Bmad::ExpressionStringToStack::err_str)
-      .def("__len__", [](const Bmad::ExpressionStringToStack &) { return 3; })
+      .def("__len__", [](const Bmad::ExpressionStringToStack &) { return 4; })
       .def("__getitem__", [](const Bmad::ExpressionStringToStack &s, int i) -> py::object {
         if (i < 0)
-          i += 3;
+          i += 4;
         if (i == 0)
-          return py::cast(s.n_stack);
+          return py::cast(s.stack);
         if (i == 1)
-          return py::cast(s.err_flag);
+          return py::cast(s.n_stack);
         if (i == 2)
+          return py::cast(s.err_flag);
+        if (i == 3)
           return py::cast(s.err_str);
         throw py::index_error();
       });
@@ -4338,7 +4341,6 @@ err_str : character
       "expression_string_to_stack",
       &Bmad::expression_string_to_stack,
       py::arg("string"),
-      py::arg("stack"),
       R"""(Subroutine expression_string_to_stack (string, stack, n_stack, err_flag, err_str)
 
 This routine creates an expression stack array which can be used

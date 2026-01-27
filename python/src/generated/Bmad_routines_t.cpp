@@ -3163,14 +3163,17 @@ track : TrackStruct, optional
   )
       .def_readonly("track_state", &Bmad::TrackAll::track_state)
       .def_readonly("err_flag", &Bmad::TrackAll::err_flag)
-      .def("__len__", [](const Bmad::TrackAll &) { return 2; })
+      .def_readonly("orbit0", &Bmad::TrackAll::orbit0)
+      .def("__len__", [](const Bmad::TrackAll &) { return 3; })
       .def("__getitem__", [](const Bmad::TrackAll &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.track_state);
         if (i == 1)
           return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.orbit0);
         throw py::index_error();
       });
   m.def(
@@ -3179,7 +3182,6 @@ track : TrackStruct, optional
       py::arg("lat"),
       py::arg("orbit"),
       py::arg("ix_branch") = py::none(),
-      py::arg("orbit0") = py::none(),
       py::arg("init_lost") = py::none(),
       R"""(Wrapper for Fortran routine track_all
 
@@ -3485,14 +3487,17 @@ end_orb : 1D array of complex
       "track_from_s_to_s return type"
   )
       .def_readonly("orbit_end", &Bmad::TrackFromSToS::orbit_end)
+      .def_readonly("all_orb", &Bmad::TrackFromSToS::all_orb)
       .def_readonly("track_state", &Bmad::TrackFromSToS::track_state)
-      .def("__len__", [](const Bmad::TrackFromSToS &) { return 2; })
+      .def("__len__", [](const Bmad::TrackFromSToS &) { return 3; })
       .def("__getitem__", [](const Bmad::TrackFromSToS &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.orbit_end);
         if (i == 1)
+          return py::cast(s.all_orb);
+        if (i == 2)
           return py::cast(s.track_state);
         throw py::index_error();
       });
@@ -3503,7 +3508,6 @@ end_orb : 1D array of complex
       py::arg("s_start"),
       py::arg("s_end"),
       py::arg("orbit_start"),
-      py::arg("all_orb") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("ix_ele_end") = py::none(),
       R"""(Wrapper for Fortran routine track_from_s_to_s

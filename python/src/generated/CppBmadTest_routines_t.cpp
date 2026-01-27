@@ -87,12 +87,28 @@ PyTestRealScalar python_test_real_scalar(
 }
 
 void init_CppBmadTest_routines_t(py::module &m) {
+  py::class_<CppBmadTest::TestBunchStructArray, std::unique_ptr<CppBmadTest::TestBunchStructArray>>(
+      m,
+      "TestBunchStructArray",
+      "test_bunch_struct_array return type"
+  )
+      .def_readonly("arr_out", &CppBmadTest::TestBunchStructArray::arr_out)
+      .def_readonly("opt_status", &CppBmadTest::TestBunchStructArray::opt_status)
+      .def("__len__", [](const CppBmadTest::TestBunchStructArray &) { return 2; })
+      .def("__getitem__", [](const CppBmadTest::TestBunchStructArray &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.arr_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        throw py::index_error();
+      });
   m.def(
       "test_bunch_struct_array",
       &CppBmadTest::test_bunch_struct_array,
       py::arg("arr_in"),
       py::arg("arr_inout"),
-      py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_bunch_struct_array
@@ -244,12 +260,28 @@ val_in_opt : character, optional
 val_inout_opt : character, optional
 )"""
   );
+  py::class_<CppBmadTest::TestComplexArray, std::unique_ptr<CppBmadTest::TestComplexArray>>(
+      m,
+      "TestComplexArray",
+      "test_complex_array return type"
+  )
+      .def_readonly("arr_out", &CppBmadTest::TestComplexArray::arr_out)
+      .def_readonly("opt_status", &CppBmadTest::TestComplexArray::opt_status)
+      .def("__len__", [](const CppBmadTest::TestComplexArray &) { return 2; })
+      .def("__getitem__", [](const CppBmadTest::TestComplexArray &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.arr_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        throw py::index_error();
+      });
   m.def(
       "test_complex_array",
       &CppBmadTest::test_complex_array,
       py::arg("arr_in"),
       py::arg("arr_inout"),
-      py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_complex_array
@@ -344,12 +376,28 @@ val_in_opt : complex, optional
 val_inout_opt : complex, optional
 )"""
   );
+  py::class_<CppBmadTest::TestInteger8Array, std::unique_ptr<CppBmadTest::TestInteger8Array>>(
+      m,
+      "TestInteger8Array",
+      "test_integer8_array return type"
+  )
+      .def_readonly("arr_out", &CppBmadTest::TestInteger8Array::arr_out)
+      .def_readonly("opt_status", &CppBmadTest::TestInteger8Array::opt_status)
+      .def("__len__", [](const CppBmadTest::TestInteger8Array &) { return 2; })
+      .def("__getitem__", [](const CppBmadTest::TestInteger8Array &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.arr_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        throw py::index_error();
+      });
   m.def(
       "test_integer8_array",
       &CppBmadTest::test_integer8_array,
       py::arg("arr_in"),
       py::arg("arr_inout"),
-      py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_integer8_array
@@ -444,12 +492,28 @@ val_in_opt : int, optional
 val_inout_opt : int, optional
 )"""
   );
+  py::class_<CppBmadTest::TestIntegerArray, std::unique_ptr<CppBmadTest::TestIntegerArray>>(
+      m,
+      "TestIntegerArray",
+      "test_integer_array return type"
+  )
+      .def_readonly("arr_out", &CppBmadTest::TestIntegerArray::arr_out)
+      .def_readonly("opt_status", &CppBmadTest::TestIntegerArray::opt_status)
+      .def("__len__", [](const CppBmadTest::TestIntegerArray &) { return 2; })
+      .def("__getitem__", [](const CppBmadTest::TestIntegerArray &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.arr_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        throw py::index_error();
+      });
   m.def(
       "test_integer_array",
       &CppBmadTest::test_integer_array,
       py::arg("arr_in"),
       py::arg("arr_inout"),
-      py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_integer_array
@@ -544,12 +608,28 @@ val_in_opt : int, optional
 val_inout_opt : int, optional
 )"""
   );
+  py::class_<CppBmadTest::TestLogicalArray, std::unique_ptr<CppBmadTest::TestLogicalArray>>(
+      m,
+      "TestLogicalArray",
+      "test_logical_array return type"
+  )
+      .def_readonly("arr_out", &CppBmadTest::TestLogicalArray::arr_out)
+      .def_readonly("opt_status", &CppBmadTest::TestLogicalArray::opt_status)
+      .def("__len__", [](const CppBmadTest::TestLogicalArray &) { return 2; })
+      .def("__getitem__", [](const CppBmadTest::TestLogicalArray &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.arr_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        throw py::index_error();
+      });
   m.def(
       "test_logical_array",
       &CppBmadTest::test_logical_array,
       py::arg("arr_in"),
       py::arg("arr_inout"),
-      py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_logical_array
@@ -644,12 +724,28 @@ val_in_opt : bool, optional
 val_inout_opt : bool, optional
 )"""
   );
+  py::class_<CppBmadTest::TestReal16Array, std::unique_ptr<CppBmadTest::TestReal16Array>>(
+      m,
+      "TestReal16Array",
+      "test_real16_array return type"
+  )
+      .def_readonly("arr_out", &CppBmadTest::TestReal16Array::arr_out)
+      .def_readonly("opt_status", &CppBmadTest::TestReal16Array::opt_status)
+      .def("__len__", [](const CppBmadTest::TestReal16Array &) { return 2; })
+      .def("__getitem__", [](const CppBmadTest::TestReal16Array &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.arr_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        throw py::index_error();
+      });
   m.def(
       "test_real16_array",
       &CppBmadTest::test_real16_array,
       py::arg("arr_in"),
       py::arg("arr_inout"),
-      py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_real16_array
@@ -744,12 +840,28 @@ val_in_opt : float, optional
 val_inout_opt : float, optional
 )"""
   );
+  py::class_<CppBmadTest::TestRealArray, std::unique_ptr<CppBmadTest::TestRealArray>>(
+      m,
+      "TestRealArray",
+      "test_real_array return type"
+  )
+      .def_readonly("arr_out", &CppBmadTest::TestRealArray::arr_out)
+      .def_readonly("opt_status", &CppBmadTest::TestRealArray::opt_status)
+      .def("__len__", [](const CppBmadTest::TestRealArray &) { return 2; })
+      .def("__getitem__", [](const CppBmadTest::TestRealArray &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.arr_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        throw py::index_error();
+      });
   m.def(
       "test_real_array",
       &CppBmadTest::test_real_array,
       py::arg("arr_in"),
       py::arg("arr_inout"),
-      py::arg("arr_out"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
       R"""(Wrapper for Fortran routine test_real_array

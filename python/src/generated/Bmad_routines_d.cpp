@@ -531,7 +531,6 @@ ap_point : AperturePointStruct
   m.def(
       "dynamic_aperture_scan",
       &Bmad::dynamic_aperture_scan,
-      py::arg("aperture_scan"),
       py::arg("aperture_param"),
       py::arg("pz_start"),
       py::arg("lat"),

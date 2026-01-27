@@ -2384,7 +2384,6 @@ srdt_sums : SummationRdtStruct
       &Bmad::srdt_lsq_solution,
       py::arg("lat"),
       py::arg("var_indexes"),
-      py::arg("ls_soln"),
       py::arg("n_slices_gen_opt") = py::none(),
       py::arg("n_slices_sxt_opt") = py::none(),
       py::arg("chrom_set_x_opt") = py::none(),

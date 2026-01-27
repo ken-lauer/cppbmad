@@ -80,7 +80,6 @@ force_abort : bool, optional
       "tao_add_to_normal_mode_h_array",
       &Tao::tao_add_to_normal_mode_h_array,
       py::arg("h_str"),
-      py::arg("h_array"),
       R"""(Subroutine tao_add_to_normal_mode_h_array(h_str, h_array)
 
 Routine to add on to the "h(:)" array holding the list of normal form
@@ -561,7 +560,6 @@ datum_name : character
       "tao_control_tree_list",
       &Tao::tao_control_tree_list,
       py::arg("ele"),
-      py::arg("tree"),
       R"""(Wrapper for Fortran routine tao_control_tree_list
 
 Parameters
@@ -1741,18 +1739,36 @@ value : float
     Datum value.
 )"""
   );
+  py::class_<Tao::TaoEvaluateElementParameters, std::unique_ptr<Tao::TaoEvaluateElementParameters>>(
+      m,
+      "TaoEvaluateElementParameters",
+      "tao_evaluate_element_parameters return type"
+  )
+      .def_readonly("err", &Tao::TaoEvaluateElementParameters::err)
+      .def_readonly("values", &Tao::TaoEvaluateElementParameters::values)
+      .def_readonly("info", &Tao::TaoEvaluateElementParameters::info)
+      .def("__len__", [](const Tao::TaoEvaluateElementParameters &) { return 3; })
+      .def("__getitem__", [](const Tao::TaoEvaluateElementParameters &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.err);
+        if (i == 1)
+          return py::cast(s.values);
+        if (i == 2)
+          return py::cast(s.info);
+        throw py::index_error();
+      });
   m.def(
       "tao_evaluate_element_parameters",
       &Tao::tao_evaluate_element_parameters,
       py::arg("param_name"),
-      py::arg("values"),
       py::arg("print_err"),
       py::arg("dflt_ele") = py::none(),
       py::arg("dflt_source"),
       py::arg("dflt_component") = py::none(),
       py::arg("dflt_uni") = py::none(),
       py::arg("eval_point") = py::none(),
-      py::arg("info") = py::none(),
       R"""(Wrapper for Fortran routine tao_evaluate_element_parameters
 
 Parameters
@@ -1790,16 +1806,36 @@ eval_point : int, optional
 info : 1D array of TaoExpressionInfoStruct, optional
 )"""
   );
+  py::class_<Tao::TaoEvaluateExpression, std::unique_ptr<Tao::TaoEvaluateExpression>>(
+      m,
+      "TaoEvaluateExpression",
+      "tao_evaluate_expression return type"
+  )
+      .def_readonly("value", &Tao::TaoEvaluateExpression::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateExpression::err_flag)
+      .def_readonly("info", &Tao::TaoEvaluateExpression::info)
+      .def_readonly("stack", &Tao::TaoEvaluateExpression::stack)
+      .def("__len__", [](const Tao::TaoEvaluateExpression &) { return 4; })
+      .def("__getitem__", [](const Tao::TaoEvaluateExpression &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.value);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.info);
+        if (i == 3)
+          return py::cast(s.stack);
+        throw py::index_error();
+      });
   m.def(
       "tao_evaluate_expression",
       &Tao::tao_evaluate_expression,
       py::arg("expression"),
       py::arg("n_size"),
       py::arg("use_good_user"),
-      py::arg("value"),
       py::arg("print_err") = py::none(),
-      py::arg("info") = py::none(),
-      py::arg("stack") = py::none(),
       py::arg("dflt_component") = py::none(),
       py::arg("dflt_source") = py::none(),
       py::arg("dflt_ele_ref") = py::none(),
@@ -1881,16 +1917,36 @@ stack : 1D array of TaoEvalNodeStruct, optional
     expression.
 )"""
   );
+  py::class_<Tao::TaoEvaluateExpressionNew, std::unique_ptr<Tao::TaoEvaluateExpressionNew>>(
+      m,
+      "TaoEvaluateExpressionNew",
+      "tao_evaluate_expression_new return type"
+  )
+      .def_readonly("value", &Tao::TaoEvaluateExpressionNew::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateExpressionNew::err_flag)
+      .def_readonly("info", &Tao::TaoEvaluateExpressionNew::info)
+      .def_readonly("stack", &Tao::TaoEvaluateExpressionNew::stack)
+      .def("__len__", [](const Tao::TaoEvaluateExpressionNew &) { return 4; })
+      .def("__getitem__", [](const Tao::TaoEvaluateExpressionNew &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.value);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.info);
+        if (i == 3)
+          return py::cast(s.stack);
+        throw py::index_error();
+      });
   m.def(
       "tao_evaluate_expression_new",
       &Tao::tao_evaluate_expression_new,
       py::arg("expression"),
       py::arg("n_size"),
       py::arg("use_good_user"),
-      py::arg("value"),
       py::arg("print_err") = py::none(),
-      py::arg("info") = py::none(),
-      py::arg("stack") = py::none(),
       py::arg("dflt_component") = py::none(),
       py::arg("dflt_source") = py::none(),
       py::arg("dflt_ele_ref") = py::none(),
@@ -1972,16 +2028,36 @@ stack : 1D array of TaoEvalNodeStruct, optional
     expression.
 )"""
   );
+  py::class_<Tao::TaoEvaluateExpressionOld, std::unique_ptr<Tao::TaoEvaluateExpressionOld>>(
+      m,
+      "TaoEvaluateExpressionOld",
+      "tao_evaluate_expression_old return type"
+  )
+      .def_readonly("value", &Tao::TaoEvaluateExpressionOld::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateExpressionOld::err_flag)
+      .def_readonly("info", &Tao::TaoEvaluateExpressionOld::info)
+      .def_readonly("stack", &Tao::TaoEvaluateExpressionOld::stack)
+      .def("__len__", [](const Tao::TaoEvaluateExpressionOld &) { return 4; })
+      .def("__getitem__", [](const Tao::TaoEvaluateExpressionOld &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.value);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        if (i == 2)
+          return py::cast(s.info);
+        if (i == 3)
+          return py::cast(s.stack);
+        throw py::index_error();
+      });
   m.def(
       "tao_evaluate_expression_old",
       &Tao::tao_evaluate_expression_old,
       py::arg("expression"),
       py::arg("n_size"),
       py::arg("use_good_user"),
-      py::arg("value"),
       py::arg("print_err") = py::none(),
-      py::arg("info") = py::none(),
-      py::arg("stack") = py::none(),
       py::arg("dflt_component") = py::none(),
       py::arg("dflt_source") = py::none(),
       py::arg("dflt_ele_ref") = py::none(),
@@ -2063,11 +2139,27 @@ stack : 1D array of TaoEvalNodeStruct, optional
     expression.
 )"""
   );
+  py::class_<Tao::TaoEvaluateLatOrBeamData, std::unique_ptr<Tao::TaoEvaluateLatOrBeamData>>(
+      m,
+      "TaoEvaluateLatOrBeamData",
+      "tao_evaluate_lat_or_beam_data return type"
+  )
+      .def_readonly("err", &Tao::TaoEvaluateLatOrBeamData::err)
+      .def_readonly("values", &Tao::TaoEvaluateLatOrBeamData::values)
+      .def("__len__", [](const Tao::TaoEvaluateLatOrBeamData &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoEvaluateLatOrBeamData &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err);
+        if (i == 1)
+          return py::cast(s.values);
+        throw py::index_error();
+      });
   m.def(
       "tao_evaluate_lat_or_beam_data",
       &Tao::tao_evaluate_lat_or_beam_data,
       py::arg("data_name"),
-      py::arg("values"),
       py::arg("print_err"),
       py::arg("default_source"),
       py::arg("dflt_ele_ref") = py::none(),
@@ -2123,13 +2215,29 @@ values : 1D array of float
     Array of datum valuse.
 )"""
   );
+  py::class_<Tao::TaoEvaluateStackOld, std::unique_ptr<Tao::TaoEvaluateStackOld>>(
+      m,
+      "TaoEvaluateStackOld",
+      "tao_evaluate_stack_old return type"
+  )
+      .def_readonly("value", &Tao::TaoEvaluateStackOld::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateStackOld::err_flag)
+      .def("__len__", [](const Tao::TaoEvaluateStackOld &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoEvaluateStackOld &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.value);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "tao_evaluate_stack_old",
       &Tao::tao_evaluate_stack_old,
       py::arg("stack"),
       py::arg("n_size_in"),
       py::arg("use_good_user"),
-      py::arg("value"),
       py::arg("print_err"),
       py::arg("expression"),
       py::arg("info_in") = py::none(),
@@ -2165,13 +2273,29 @@ err_flag : bool
     True on error. False otherwise
 )"""
   );
+  py::class_<Tao::TaoEvaluateTree, std::unique_ptr<Tao::TaoEvaluateTree>>(
+      m,
+      "TaoEvaluateTree",
+      "tao_evaluate_tree return type"
+  )
+      .def_readonly("value", &Tao::TaoEvaluateTree::value)
+      .def_readonly("err_flag", &Tao::TaoEvaluateTree::err_flag)
+      .def("__len__", [](const Tao::TaoEvaluateTree &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoEvaluateTree &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.value);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "tao_evaluate_tree",
       &Tao::tao_evaluate_tree,
       py::arg("tao_tree"),
       py::arg("n_size"),
       py::arg("use_good_user"),
-      py::arg("value"),
       py::arg("print_err"),
       py::arg("expression"),
       py::arg("info_in") = py::none(),
@@ -2436,13 +2560,32 @@ abort : bool
     Set True if an user stop signal detected.
 )"""
   );
+  py::class_<Tao::TaoGetData, std::unique_ptr<Tao::TaoGetData>>(
+      m,
+      "TaoGetData",
+      "tao_get_data return type"
+  )
+      .def_readonly("data_value", &Tao::TaoGetData::data_value)
+      .def_readonly("data_weight", &Tao::TaoGetData::data_weight)
+      .def_readonly("data_meas_value", &Tao::TaoGetData::data_meas_value)
+      .def_readonly("data_ix_dModel", &Tao::TaoGetData::data_ix_dModel)
+      .def("__len__", [](const Tao::TaoGetData &) { return 4; })
+      .def("__getitem__", [](const Tao::TaoGetData &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.data_value);
+        if (i == 1)
+          return py::cast(s.data_weight);
+        if (i == 2)
+          return py::cast(s.data_meas_value);
+        if (i == 3)
+          return py::cast(s.data_ix_dModel);
+        throw py::index_error();
+      });
   m.def(
       "tao_get_data",
       &Tao::tao_get_data,
-      py::arg("data_value") = py::none(),
-      py::arg("data_weight") = py::none(),
-      py::arg("data_meas_value") = py::none(),
-      py::arg("data_ix_dModel") = py::none(),
       R"""(Subroutine tao_get_data (data_value, data_weight, data_meas_value, dat_ix_dModel)
 
 Subroutine to get the values of the data used in optimization and put them
@@ -2468,26 +2611,36 @@ data_ix_dModel : 1D array of int, optional
       "TaoGetOptVars",
       "tao_get_opt_vars return type"
   )
+      .def_readonly("var_value", &Tao::TaoGetOptVars::var_value)
+      .def_readonly("var_step", &Tao::TaoGetOptVars::var_step)
+      .def_readonly("var_delta", &Tao::TaoGetOptVars::var_delta)
+      .def_readonly("var_weight", &Tao::TaoGetOptVars::var_weight)
+      .def_readonly("var_ix", &Tao::TaoGetOptVars::var_ix)
       .def_readonly("ignore_if_weight_is_zero", &Tao::TaoGetOptVars::ignore_if_weight_is_zero)
       .def_readonly("ignore_if_not_limited", &Tao::TaoGetOptVars::ignore_if_not_limited)
-      .def("__len__", [](const Tao::TaoGetOptVars &) { return 2; })
+      .def("__len__", [](const Tao::TaoGetOptVars &) { return 7; })
       .def("__getitem__", [](const Tao::TaoGetOptVars &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 7;
         if (i == 0)
-          return py::cast(s.ignore_if_weight_is_zero);
+          return py::cast(s.var_value);
         if (i == 1)
+          return py::cast(s.var_step);
+        if (i == 2)
+          return py::cast(s.var_delta);
+        if (i == 3)
+          return py::cast(s.var_weight);
+        if (i == 4)
+          return py::cast(s.var_ix);
+        if (i == 5)
+          return py::cast(s.ignore_if_weight_is_zero);
+        if (i == 6)
           return py::cast(s.ignore_if_not_limited);
         throw py::index_error();
       });
   m.def(
       "tao_get_opt_vars",
       &Tao::tao_get_opt_vars,
-      py::arg("var_value") = py::none(),
-      py::arg("var_step") = py::none(),
-      py::arg("var_delta") = py::none(),
-      py::arg("var_weight") = py::none(),
-      py::arg("var_ix") = py::none(),
       R"""(Wrapper for Fortran routine tao_get_opt_vars
 
 Returns
@@ -2873,12 +3026,28 @@ init_file : character
     File setting dynamic_aperture parameters.
 )"""
   );
+  py::class_<Tao::TaoInitFindElements, std::unique_ptr<Tao::TaoInitFindElements>>(
+      m,
+      "TaoInitFindElements",
+      "tao_init_find_elements return type"
+  )
+      .def_readonly("eles", &Tao::TaoInitFindElements::eles)
+      .def_readonly("found_one", &Tao::TaoInitFindElements::found_one)
+      .def("__len__", [](const Tao::TaoInitFindElements &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoInitFindElements &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.eles);
+        if (i == 1)
+          return py::cast(s.found_one);
+        throw py::index_error();
+      });
   m.def(
       "tao_init_find_elements",
       &Tao::tao_init_find_elements,
       py::arg("u"),
       py::arg("search_string"),
-      py::arg("eles"),
       py::arg("attribute") = py::none(),
       R"""(Wrapper for Fortran routine tao_init_find_elements
 
@@ -3400,11 +3569,27 @@ why_invalid : character, optional
 good : 1D array of bool, optional
 )"""
   );
+  py::class_<Tao::TaoLocateAllElements, std::unique_ptr<Tao::TaoLocateAllElements>>(
+      m,
+      "TaoLocateAllElements",
+      "tao_locate_all_elements return type"
+  )
+      .def_readonly("eles", &Tao::TaoLocateAllElements::eles)
+      .def_readonly("err", &Tao::TaoLocateAllElements::err)
+      .def("__len__", [](const Tao::TaoLocateAllElements &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoLocateAllElements &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.eles);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "tao_locate_all_elements",
       &Tao::tao_locate_all_elements,
       py::arg("ele_list"),
-      py::arg("eles"),
       py::arg("ignore_blank") = py::none(),
       R"""(Wrapper for Fortran routine tao_locate_all_elements
 
@@ -3425,12 +3610,28 @@ err : bool
     Set true on error.
 )"""
   );
+  py::class_<Tao::TaoLocateElements, std::unique_ptr<Tao::TaoLocateElements>>(
+      m,
+      "TaoLocateElements",
+      "tao_locate_elements return type"
+  )
+      .def_readonly("eles", &Tao::TaoLocateElements::eles)
+      .def_readonly("err", &Tao::TaoLocateElements::err)
+      .def("__len__", [](const Tao::TaoLocateElements &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoLocateElements &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.eles);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "tao_locate_elements",
       &Tao::tao_locate_elements,
       py::arg("ele_list"),
       py::arg("ix_universe"),
-      py::arg("eles"),
       py::arg("lat_type") = py::none(),
       py::arg("ignore_blank") = py::none(),
       py::arg("err_stat_level") = py::none(),
@@ -3943,12 +4144,28 @@ component : character
     One of "model", "design", or "base".
 )"""
   );
+  py::class_<Tao::TaoParticleDataValue, std::unique_ptr<Tao::TaoParticleDataValue>>(
+      m,
+      "TaoParticleDataValue",
+      "tao_particle_data_value return type"
+  )
+      .def_readonly("value", &Tao::TaoParticleDataValue::value)
+      .def_readonly("err", &Tao::TaoParticleDataValue::err)
+      .def("__len__", [](const Tao::TaoParticleDataValue &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoParticleDataValue &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.value);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "tao_particle_data_value",
       &Tao::tao_particle_data_value,
       py::arg("data_type"),
       py::arg("p"),
-      py::arg("value"),
       py::arg("ele"),
       py::arg("ix_bunch"),
       R"""(Subroutine tao_particle_data_value (data_type, p, value, err, ele, ix_bunch)
@@ -4026,20 +4243,23 @@ ix_axis : int
       "tao_pick_universe return type"
   )
       .def_readonly("name_out", &Tao::TaoPickUniverse::name_out)
+      .def_readonly("picked", &Tao::TaoPickUniverse::picked)
       .def_readonly("err", &Tao::TaoPickUniverse::err)
       .def_readonly("ix_uni", &Tao::TaoPickUniverse::ix_uni)
       .def_readonly("explicit_uni", &Tao::TaoPickUniverse::explicit_uni)
-      .def("__len__", [](const Tao::TaoPickUniverse &) { return 4; })
+      .def("__len__", [](const Tao::TaoPickUniverse &) { return 5; })
       .def("__getitem__", [](const Tao::TaoPickUniverse &s, int i) -> py::object {
         if (i < 0)
-          i += 4;
+          i += 5;
         if (i == 0)
           return py::cast(s.name_out);
         if (i == 1)
-          return py::cast(s.err);
+          return py::cast(s.picked);
         if (i == 2)
-          return py::cast(s.ix_uni);
+          return py::cast(s.err);
         if (i == 3)
+          return py::cast(s.ix_uni);
+        if (i == 4)
           return py::cast(s.explicit_uni);
         throw py::index_error();
       });
@@ -4047,7 +4267,6 @@ ix_axis : int
       "tao_pick_universe",
       &Tao::tao_pick_universe,
       py::arg("name_in"),
-      py::arg("picked"),
       py::arg("dflt_uni") = py::none(),
       py::arg("pure_uni") = py::none(),
       R"""(Wrapper for Fortran routine tao_pick_universe
@@ -4503,18 +4722,21 @@ u : TaoUniverseStruct, optional
       "TaoPointerToUniverses",
       "tao_pointer_to_universes return type"
   )
+      .def_readonly("unis", &Tao::TaoPointerToUniverses::unis)
       .def_readonly("err", &Tao::TaoPointerToUniverses::err)
       .def_readonly("name_out", &Tao::TaoPointerToUniverses::name_out)
       .def_readonly("explicit_uni", &Tao::TaoPointerToUniverses::explicit_uni)
-      .def("__len__", [](const Tao::TaoPointerToUniverses &) { return 3; })
+      .def("__len__", [](const Tao::TaoPointerToUniverses &) { return 4; })
       .def("__getitem__", [](const Tao::TaoPointerToUniverses &s, int i) -> py::object {
         if (i < 0)
-          i += 3;
+          i += 4;
         if (i == 0)
-          return py::cast(s.err);
+          return py::cast(s.unis);
         if (i == 1)
-          return py::cast(s.name_out);
+          return py::cast(s.err);
         if (i == 2)
+          return py::cast(s.name_out);
+        if (i == 3)
           return py::cast(s.explicit_uni);
         throw py::index_error();
       });
@@ -4522,7 +4744,6 @@ u : TaoUniverseStruct, optional
       "tao_pointer_to_universes",
       &Tao::tao_pointer_to_universes,
       py::arg("name_in"),
-      py::arg("unis"),
       py::arg("dflt_uni") = py::none(),
       R"""(Wrapper for Fortran routine tao_pointer_to_universes
 
@@ -6311,11 +6532,27 @@ do_calc : bool
       R"""(Wrapper for Fortran routine tao_spin_tracking_turn_on
 )"""
   );
+  py::class_<Tao::TaoSplitComponent, std::unique_ptr<Tao::TaoSplitComponent>>(
+      m,
+      "TaoSplitComponent",
+      "tao_split_component return type"
+  )
+      .def_readonly("comp", &Tao::TaoSplitComponent::comp)
+      .def_readonly("err", &Tao::TaoSplitComponent::err)
+      .def("__len__", [](const Tao::TaoSplitComponent &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoSplitComponent &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.comp);
+        if (i == 1)
+          return py::cast(s.err);
+        throw py::index_error();
+      });
   m.def(
       "tao_split_component",
       &Tao::tao_split_component,
       py::arg("comp_str"),
-      py::arg("comp"),
       R"""(Wrapper for Fortran routine tao_split_component
 
 Parameters

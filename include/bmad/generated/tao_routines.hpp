@@ -64,9 +64,9 @@ extern "C" void fortran_tao_abort_command_file(bool *force_abort /* 0D_NOT_logic
 void tao_abort_command_file(std::optional<bool> force_abort = std::nullopt);
 extern "C" void fortran_tao_add_to_normal_mode_h_array(
     const char *h_str /* 0D_NOT_character in */,
-    void *h_array /* 1D_ALLOC_type inout */
+    void *h_array /* 1D_ALLOC_type out */
 );
-void tao_add_to_normal_mode_h_array(std::string h_str, ResonanceHStructAlloc1D h_array);
+ResonanceHStructAlloc1D tao_add_to_normal_mode_h_array(std::string h_str);
 extern "C" void fortran_tao_alias_cmd(
     const char *alias /* 0D_NOT_character in */,
     const char *string /* 0D_NOT_character in */
@@ -231,8 +231,8 @@ extern "C" bool fortran_tao_constraint_type_name(
 );
 std::string tao_constraint_type_name(TaoDataStruct &datum);
 extern "C" void
-fortran_tao_control_tree_list(void *ele /* 0D_NOT_type in */, void *tree /* 1D_ALLOC_type inout */);
-void tao_control_tree_list(EleStruct &ele, ElePointerStructAlloc1D tree);
+fortran_tao_control_tree_list(void *ele /* 0D_NOT_type in */, void *tree /* 1D_ALLOC_type out */);
+ElePointerStructAlloc1D tao_control_tree_list(EleStruct &ele);
 extern "C" void fortran_tao_count_strings(
     const char *string /* 0D_NOT_character in */,
     const char *pattern /* 0D_NOT_character in */,
@@ -579,35 +579,38 @@ Tao::TaoEvaluateDatumAtS tao_evaluate_datum_at_s(
 extern "C" void fortran_tao_evaluate_element_parameters(
     bool &err /* 0D_NOT_logical out */,
     const char *param_name /* 0D_NOT_character in */,
-    void *values /* 1D_ALLOC_real inout */,
+    void *values /* 1D_ALLOC_real out */,
     bool &print_err /* 0D_NOT_logical in */,
     void *dflt_ele /* 0D_PTR_type in */,
     const char *dflt_source /* 0D_NOT_character in */,
     const char *dflt_component /* 0D_NOT_character in */,
     int *dflt_uni /* 0D_NOT_integer in */,
     int *eval_point /* 0D_NOT_integer in */,
-    void *info /* 1D_ALLOC_type inout */
+    void *info /* 1D_ALLOC_type out */
 );
-bool tao_evaluate_element_parameters(
+struct TaoEvaluateElementParameters {
+  bool err;
+  RealAlloc1D values;
+  TaoExpressionInfoStructAlloc1D info;
+};
+Tao::TaoEvaluateElementParameters tao_evaluate_element_parameters(
     std::string param_name,
-    RealAlloc1D &values,
     bool print_err,
     optional_ref<EleStruct> dflt_ele,
     std::string dflt_source,
     std::optional<std::string> dflt_component = std::nullopt,
     std::optional<int> dflt_uni = std::nullopt,
-    std::optional<int> eval_point = std::nullopt,
-    std::optional<TaoExpressionInfoStructAlloc1D> info = std::nullopt
+    std::optional<int> eval_point = std::nullopt
 );
 extern "C" void fortran_tao_evaluate_expression(
     const char *expression /* 0D_NOT_character in */,
     int &n_size /* 0D_NOT_integer in */,
     bool &use_good_user /* 0D_NOT_logical in */,
-    void *value /* 1D_ALLOC_real inout */,
+    void *value /* 1D_ALLOC_real out */,
     bool &err_flag /* 0D_NOT_logical out */,
     bool *print_err /* 0D_NOT_logical in */,
-    void *info /* 1D_ALLOC_type inout */,
-    void *stack /* 1D_ALLOC_type inout */,
+    void *info /* 1D_ALLOC_type out */,
+    void *stack /* 1D_ALLOC_type out */,
     const char *dflt_component /* 0D_NOT_character in */,
     const char *dflt_source /* 0D_NOT_character in */,
     void *dflt_ele_ref /* 0D_PTR_type in */,
@@ -620,14 +623,17 @@ extern "C" void fortran_tao_evaluate_expression(
     void *dflt_orbit /* 0D_NOT_type in */,
     void *datum /* 0D_NOT_type in */
 );
-bool tao_evaluate_expression(
+struct TaoEvaluateExpression {
+  RealAlloc1D value;
+  bool err_flag;
+  TaoExpressionInfoStructAlloc1D info;
+  TaoEvalNodeStructAlloc1D stack;
+};
+Tao::TaoEvaluateExpression tao_evaluate_expression(
     std::string expression,
     int n_size,
     bool use_good_user,
-    RealAlloc1D &value,
     std::optional<bool> print_err = std::nullopt,
-    std::optional<TaoExpressionInfoStructAlloc1D> info = std::nullopt,
-    std::optional<TaoEvalNodeStructAlloc1D> stack = std::nullopt,
     std::optional<std::string> dflt_component = std::nullopt,
     std::optional<std::string> dflt_source = std::nullopt,
     optional_ref<EleStruct> dflt_ele_ref = std::nullopt,
@@ -644,11 +650,11 @@ extern "C" void fortran_tao_evaluate_expression_new(
     const char *expression /* 0D_NOT_character in */,
     int &n_size /* 0D_NOT_integer in */,
     bool &use_good_user /* 0D_NOT_logical in */,
-    void *value /* 1D_ALLOC_real inout */,
+    void *value /* 1D_ALLOC_real out */,
     bool &err_flag /* 0D_NOT_logical out */,
     bool *print_err /* 0D_NOT_logical in */,
-    void *info /* 1D_ALLOC_type inout */,
-    void *stack /* 1D_ALLOC_type inout */,
+    void *info /* 1D_ALLOC_type out */,
+    void *stack /* 1D_ALLOC_type out */,
     const char *dflt_component /* 0D_NOT_character in */,
     const char *dflt_source /* 0D_NOT_character in */,
     void *dflt_ele_ref /* 0D_PTR_type in */,
@@ -661,14 +667,17 @@ extern "C" void fortran_tao_evaluate_expression_new(
     void *dflt_orbit /* 0D_NOT_type in */,
     void *datum /* 0D_NOT_type in */
 );
-bool tao_evaluate_expression_new(
+struct TaoEvaluateExpressionNew {
+  RealAlloc1D value;
+  bool err_flag;
+  TaoExpressionInfoStructAlloc1D info;
+  TaoEvalNodeStructAlloc1D stack;
+};
+Tao::TaoEvaluateExpressionNew tao_evaluate_expression_new(
     std::string expression,
     int n_size,
     bool use_good_user,
-    RealAlloc1D &value,
     std::optional<bool> print_err = std::nullopt,
-    std::optional<TaoExpressionInfoStructAlloc1D> info = std::nullopt,
-    std::optional<TaoEvalNodeStructAlloc1D> stack = std::nullopt,
     std::optional<std::string> dflt_component = std::nullopt,
     std::optional<std::string> dflt_source = std::nullopt,
     optional_ref<EleStruct> dflt_ele_ref = std::nullopt,
@@ -685,11 +694,11 @@ extern "C" void fortran_tao_evaluate_expression_old(
     const char *expression /* 0D_NOT_character in */,
     int &n_size /* 0D_NOT_integer in */,
     bool &use_good_user /* 0D_NOT_logical in */,
-    void *value /* 1D_ALLOC_real inout */,
+    void *value /* 1D_ALLOC_real out */,
     bool &err_flag /* 0D_NOT_logical out */,
     bool *print_err /* 0D_NOT_logical in */,
-    void *info /* 1D_ALLOC_type inout */,
-    void *stack /* 1D_ALLOC_type inout */,
+    void *info /* 1D_ALLOC_type out */,
+    void *stack /* 1D_ALLOC_type out */,
     const char *dflt_component /* 0D_NOT_character in */,
     const char *dflt_source /* 0D_NOT_character in */,
     void *dflt_ele_ref /* 0D_PTR_type in */,
@@ -702,14 +711,17 @@ extern "C" void fortran_tao_evaluate_expression_old(
     void *dflt_orbit /* 0D_NOT_type in */,
     void *datum /* 0D_NOT_type in */
 );
-bool tao_evaluate_expression_old(
+struct TaoEvaluateExpressionOld {
+  RealAlloc1D value;
+  bool err_flag;
+  TaoExpressionInfoStructAlloc1D info;
+  TaoEvalNodeStructAlloc1D stack;
+};
+Tao::TaoEvaluateExpressionOld tao_evaluate_expression_old(
     std::string expression,
     int n_size,
     bool use_good_user,
-    RealAlloc1D &value,
     std::optional<bool> print_err = std::nullopt,
-    std::optional<TaoExpressionInfoStructAlloc1D> info = std::nullopt,
-    std::optional<TaoEvalNodeStructAlloc1D> stack = std::nullopt,
     std::optional<std::string> dflt_component = std::nullopt,
     std::optional<std::string> dflt_source = std::nullopt,
     optional_ref<EleStruct> dflt_ele_ref = std::nullopt,
@@ -725,7 +737,7 @@ bool tao_evaluate_expression_old(
 extern "C" void fortran_tao_evaluate_lat_or_beam_data(
     bool &err /* 0D_NOT_logical out */,
     const char *data_name /* 0D_NOT_character in */,
-    void *values /* 1D_ALLOC_real inout */,
+    void *values /* 1D_ALLOC_real out */,
     bool &print_err /* 0D_NOT_logical in */,
     const char *default_source /* 0D_NOT_character in */,
     void *dflt_ele_ref /* 0D_PTR_type in */,
@@ -736,9 +748,12 @@ extern "C" void fortran_tao_evaluate_lat_or_beam_data(
     int *dflt_eval_point /* 0D_NOT_integer in */,
     double *dflt_s_offset /* 0D_NOT_real in */
 );
-bool tao_evaluate_lat_or_beam_data(
+struct TaoEvaluateLatOrBeamData {
+  bool err;
+  RealAlloc1D values;
+};
+Tao::TaoEvaluateLatOrBeamData tao_evaluate_lat_or_beam_data(
     std::string data_name,
-    RealAlloc1D &values,
     bool print_err,
     std::string default_source,
     optional_ref<EleStruct> dflt_ele_ref = std::nullopt,
@@ -753,17 +768,20 @@ extern "C" void fortran_tao_evaluate_stack_old(
     Bmad::array_descriptor_t &stack /* 1D_NOT_type in */,
     int &n_size_in /* 0D_NOT_integer in */,
     bool &use_good_user /* 0D_NOT_logical in */,
-    void *value /* 1D_ALLOC_real inout */,
+    void *value /* 1D_ALLOC_real out */,
     bool &err_flag /* 0D_NOT_logical out */,
     bool &print_err /* 0D_NOT_logical in */,
     const char *expression /* 0D_NOT_character in */,
     void *info_in /* 1D_ALLOC_type inout */
 );
-bool tao_evaluate_stack_old(
+struct TaoEvaluateStackOld {
+  RealAlloc1D value;
+  bool err_flag;
+};
+Tao::TaoEvaluateStackOld tao_evaluate_stack_old(
     TaoEvalNodeStructArray1D stack,
     int n_size_in,
     bool use_good_user,
-    RealAlloc1D &value,
     bool print_err,
     std::string expression,
     std::optional<TaoExpressionInfoStructAlloc1D> info_in = std::nullopt
@@ -772,17 +790,20 @@ extern "C" void fortran_tao_evaluate_tree(
     void *tao_tree /* 0D_NOT_type in */,
     int &n_size /* 0D_NOT_integer in */,
     bool &use_good_user /* 0D_NOT_logical in */,
-    void *value /* 1D_ALLOC_real inout */,
+    void *value /* 1D_ALLOC_real out */,
     bool &err_flag /* 0D_NOT_logical out */,
     bool &print_err /* 0D_NOT_logical in */,
     const char *expression /* 0D_NOT_character in */,
     void *info_in /* 1D_ALLOC_type inout */
 );
-bool tao_evaluate_tree(
+struct TaoEvaluateTree {
+  RealAlloc1D value;
+  bool err_flag;
+};
+Tao::TaoEvaluateTree tao_evaluate_tree(
     TaoEvalNodeStruct &tao_tree,
     int n_size,
     bool use_good_user,
-    RealAlloc1D &value,
     bool print_err,
     std::string expression,
     std::optional<TaoExpressionInfoStructAlloc1D> info_in = std::nullopt
@@ -878,37 +899,37 @@ FloorPositionStruct tao_floor_to_screen_coords(TaoGraphStruct &graph, FloorPosit
 extern "C" void fortran_tao_geodesic_lm_optimizer(bool &abort /* 0D_NOT_logical out */);
 bool tao_geodesic_lm_optimizer();
 extern "C" void fortran_tao_get_data(
-    void *data_value /* 1D_ALLOC_real inout */,
-    void *data_weight /* 1D_ALLOC_real inout */,
-    void *data_meas_value /* 1D_ALLOC_real inout */,
-    void *data_ix_dModel /* 1D_ALLOC_integer inout */
+    void *data_value /* 1D_ALLOC_real out */,
+    void *data_weight /* 1D_ALLOC_real out */,
+    void *data_meas_value /* 1D_ALLOC_real out */,
+    void *data_ix_dModel /* 1D_ALLOC_integer out */
 );
-void tao_get_data(
-    optional_ref<RealAlloc1D> data_value = std::nullopt,
-    optional_ref<RealAlloc1D> data_weight = std::nullopt,
-    optional_ref<RealAlloc1D> data_meas_value = std::nullopt,
-    optional_ref<IntAlloc1D> data_ix_dModel = std::nullopt
-);
+struct TaoGetData {
+  RealAlloc1D data_value;
+  RealAlloc1D data_weight;
+  RealAlloc1D data_meas_value;
+  IntAlloc1D data_ix_dModel;
+};
+Tao::TaoGetData tao_get_data();
 extern "C" void fortran_tao_get_opt_vars(
-    void *var_value /* 1D_ALLOC_real inout */,
-    void *var_step /* 1D_ALLOC_real inout */,
-    void *var_delta /* 1D_ALLOC_real inout */,
-    void *var_weight /* 1D_ALLOC_real inout */,
-    void *var_ix /* 1D_ALLOC_integer inout */,
+    void *var_value /* 1D_ALLOC_real out */,
+    void *var_step /* 1D_ALLOC_real out */,
+    void *var_delta /* 1D_ALLOC_real out */,
+    void *var_weight /* 1D_ALLOC_real out */,
+    void *var_ix /* 1D_ALLOC_integer out */,
     bool &ignore_if_weight_is_zero /* 0D_NOT_logical out */,
     bool &ignore_if_not_limited /* 0D_NOT_logical out */
 );
 struct TaoGetOptVars {
+  RealAlloc1D var_value;
+  RealAlloc1D var_step;
+  RealAlloc1D var_delta;
+  RealAlloc1D var_weight;
+  IntAlloc1D var_ix;
   bool ignore_if_weight_is_zero;
   bool ignore_if_not_limited;
 };
-Tao::TaoGetOptVars tao_get_opt_vars(
-    optional_ref<RealAlloc1D> var_value = std::nullopt,
-    optional_ref<RealAlloc1D> var_step = std::nullopt,
-    optional_ref<RealAlloc1D> var_delta = std::nullopt,
-    optional_ref<RealAlloc1D> var_weight = std::nullopt,
-    optional_ref<IntAlloc1D> var_ix = std::nullopt
-);
+Tao::TaoGetOptVars tao_get_opt_vars();
 extern "C" void fortran_tao_get_user_input(
     const char *cmd_out /* 0D_NOT_character out */,
     const char *prompt_str /* 0D_NOT_character in */,
@@ -969,7 +990,7 @@ fortran_tao_graph_setup(void *plot /* 0D_NOT_type inout */, void *graph /* 0D_NO
 void tao_graph_setup(TaoPlotStruct &plot, TaoGraphStruct &graph);
 
 // Skipped unusable routine tao_help:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tao_hook_branch_calc_def:
@@ -1092,14 +1113,17 @@ void tao_init_dynamic_aperture(std::string init_file);
 extern "C" void fortran_tao_init_find_elements(
     void *u /* 0D_NOT_type in */,
     const char *search_string /* 0D_NOT_character in */,
-    void *eles /* 1D_ALLOC_type inout */,
+    void *eles /* 1D_ALLOC_type out */,
     const char *attribute /* 0D_NOT_character in */,
     bool &found_one /* 0D_NOT_logical out */
 );
-bool tao_init_find_elements(
+struct TaoInitFindElements {
+  ElePointerStructAlloc1D eles;
+  bool found_one;
+};
+Tao::TaoInitFindElements tao_init_find_elements(
     TaoUniverseStruct &u,
     std::string search_string,
-    ElePointerStructAlloc1D eles,
     std::optional<std::string> attribute = std::nullopt
 );
 extern "C" void fortran_tao_init_global(const char *init_file /* 0D_NOT_character in */);
@@ -1244,19 +1268,20 @@ void tao_load_this_datum(
 );
 extern "C" void fortran_tao_locate_all_elements(
     const char *ele_list /* 0D_NOT_character in */,
-    void *eles /* 1D_ALLOC_type inout */,
+    void *eles /* 1D_ALLOC_type out */,
     bool &err /* 0D_NOT_logical out */,
     bool *ignore_blank /* 0D_NOT_logical in */
 );
-bool tao_locate_all_elements(
-    std::string ele_list,
-    ElePointerStructAlloc1D eles,
-    std::optional<bool> ignore_blank = std::nullopt
-);
+struct TaoLocateAllElements {
+  ElePointerStructAlloc1D eles;
+  bool err;
+};
+Tao::TaoLocateAllElements
+tao_locate_all_elements(std::string ele_list, std::optional<bool> ignore_blank = std::nullopt);
 extern "C" void fortran_tao_locate_elements(
     const char *ele_list /* 0D_NOT_character in */,
     int &ix_universe /* 0D_NOT_integer in */,
-    void *eles /* 1D_ALLOC_type inout */,
+    void *eles /* 1D_ALLOC_type out */,
     bool &err /* 0D_NOT_logical out */,
     int *lat_type /* 0D_NOT_integer in */,
     bool *ignore_blank /* 0D_NOT_logical in */,
@@ -1265,10 +1290,13 @@ extern "C" void fortran_tao_locate_elements(
     int *ix_branch /* 0D_NOT_integer in */,
     bool *multiple_eles_is_err /* 0D_NOT_logical in */
 );
-bool tao_locate_elements(
+struct TaoLocateElements {
+  ElePointerStructAlloc1D eles;
+  bool err;
+};
+Tao::TaoLocateElements tao_locate_elements(
     std::string ele_list,
     int ix_universe,
-    ElePointerStructAlloc1D eles,
     std::optional<int> lat_type = std::nullopt,
     std::optional<bool> ignore_blank = std::nullopt,
     std::optional<int> err_stat_level = std::nullopt,
@@ -1427,18 +1455,17 @@ Tao::TaoParseElementParamStr tao_parse_element_param_str(std::string in_str);
 extern "C" void fortran_tao_particle_data_value(
     const char *data_type /* 0D_NOT_character in */,
     Bmad::array_descriptor_t &p /* 1D_NOT_type in */,
-    void *value /* 1D_ALLOC_real inout */,
+    void *value /* 1D_ALLOC_real out */,
     bool &err /* 0D_NOT_logical out */,
     void *ele /* 0D_NOT_type in */,
     int &ix_bunch /* 0D_NOT_integer in */
 );
-bool tao_particle_data_value(
-    std::string data_type,
-    CoordStructArray1D p,
-    RealAlloc1D &value,
-    EleStruct &ele,
-    int ix_bunch
-);
+struct TaoParticleDataValue {
+  RealAlloc1D value;
+  bool err;
+};
+Tao::TaoParticleDataValue
+tao_particle_data_value(std::string data_type, CoordStructArray1D p, EleStruct &ele, int ix_bunch);
 extern "C" void fortran_tao_pause_cmd(double &time /* 0D_NOT_real in */);
 void tao_pause_cmd(double time);
 extern "C" bool fortran_tao_phase_space_axis_index(
@@ -1452,7 +1479,7 @@ void tao_phase_wave_anal(TaoPlotStruct &plot);
 extern "C" void fortran_tao_pick_universe(
     const char *name_in /* 0D_NOT_character in */,
     const char *name_out /* 0D_NOT_character out */,
-    void *picked /* 1D_ALLOC_logical inout */,
+    void *picked /* 1D_ALLOC_logical out */,
     bool &err /* 0D_NOT_logical out */,
     int &ix_uni /* 0D_NOT_integer out */,
     bool &explicit_uni /* 0D_NOT_logical out */,
@@ -1461,13 +1488,13 @@ extern "C" void fortran_tao_pick_universe(
 );
 struct TaoPickUniverse {
   std::string name_out;
+  BoolAlloc1D picked;
   bool err;
   int ix_uni;
   bool explicit_uni;
 };
 Tao::TaoPickUniverse tao_pick_universe(
     std::string name_in,
-    BoolAlloc1D &picked,
     std::optional<int> dflt_uni = std::nullopt,
     std::optional<bool> pure_uni = std::nullopt
 );
@@ -1594,22 +1621,20 @@ std::optional<TaoUniverseStruct>
 tao_pointer_to_universe(std::string &string, std::optional<bool> neg2_to_default = std::nullopt);
 extern "C" void fortran_tao_pointer_to_universes(
     const char *name_in /* 0D_NOT_character in */,
-    void *unis /* 1D_ALLOC_type inout */,
+    void *unis /* 1D_ALLOC_type out */,
     bool &err /* 0D_NOT_logical out */,
     const char *name_out /* 0D_NOT_character out */,
     bool &explicit_uni /* 0D_NOT_logical out */,
     int *dflt_uni /* 0D_NOT_integer in */
 );
 struct TaoPointerToUniverses {
+  TaoUniversePointerStructAlloc1D unis;
   bool err;
   std::string name_out;
   bool explicit_uni;
 };
-Tao::TaoPointerToUniverses tao_pointer_to_universes(
-    std::string name_in,
-    TaoUniversePointerStructAlloc1D unis,
-    std::optional<int> dflt_uni = std::nullopt
-);
+Tao::TaoPointerToUniverses
+tao_pointer_to_universes(std::string name_in, std::optional<int> dflt_uni = std::nullopt);
 extern "C" void fortran_tao_pointer_to_var_in_lattice(
     void *var /* 0D_NOT_type in */,
     int &ix_uni /* 0D_NOT_integer in */,
@@ -2165,7 +2190,7 @@ extern "C" void fortran_tao_show_constraints(
 void tao_show_constraints(int iunit, std::string form);
 
 // Skipped unusable routine tao_show_this:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_single_mode(const char *char_ /* 0D_NOT_character in */);
 void tao_single_mode(std::string char_);
@@ -2196,10 +2221,14 @@ extern "C" void fortran_tao_spin_tracking_turn_on();
 void tao_spin_tracking_turn_on();
 extern "C" void fortran_tao_split_component(
     const char *comp_str /* 0D_NOT_character in */,
-    void *comp /* 1D_ALLOC_type inout */,
+    void *comp /* 1D_ALLOC_type out */,
     bool &err /* 0D_NOT_logical out */
 );
-bool tao_split_component(std::string comp_str, TaoDataVarComponentStructAlloc1D comp);
+struct TaoSplitComponent {
+  TaoDataVarComponentStructAlloc1D comp;
+  bool err;
+};
+Tao::TaoSplitComponent tao_split_component(std::string comp_str);
 extern "C" bool fortran_tao_srdt_calc_needed(
     const char *data_type /* 0D_NOT_character in */,
     const char *data_source /* 0D_NOT_character in */,

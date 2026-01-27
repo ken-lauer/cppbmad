@@ -71,26 +71,27 @@ void bsim::bbu_track_a_stage(
       /* int& */ ix_stage_tracked
   );
 }
-void bsim::bbu_track_all(
+bsim::BbuTrackAll bsim::bbu_track_all(
     LatStruct &lat,
     BbuBeamStruct &bbu_beam,
     BbuParamStruct &bbu_param,
-    BeamInitStruct &beam_init,
-    double hom_voltage_normalized,
-    double growth_rate,
-    bool lost,
-    int irep
+    BeamInitStruct &beam_init
 ) {
+  double _hom_voltage_normalized{};
+  double _growth_rate{};
+  bool _lost{};
+  int _irep{};
   fortran_bbu_track_all(
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ bbu_beam.get_fortran_ptr(),
       /* void* */ bbu_param.get_fortran_ptr(),
       /* void* */ beam_init.get_fortran_ptr(),
-      /* double& */ hom_voltage_normalized,
-      /* double& */ growth_rate,
-      /* bool& */ lost,
-      /* int& */ irep
+      /* double& */ _hom_voltage_normalized,
+      /* double& */ _growth_rate,
+      /* bool& */ _lost,
+      /* int& */ _irep
   );
+  return BbuTrackAll{_hom_voltage_normalized, _growth_rate, _lost, _irep};
 }
 void bsim::check_rf_freq(LatStruct &lat, double fb) {
   fortran_check_rf_freq(/* void* */ lat.get_fortran_ptr(), /* double& */ fb);

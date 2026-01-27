@@ -149,7 +149,7 @@ subroutine fortran_apfft (rdata_in, bounds, window, phase, diag) bind(c)
     call c_f_pointer(rdata_in%data_ptr, f_rdata_in_ptr, [rdata_in%dims(1)])
     f_rdata_in => f_rdata_in_ptr
   else
-    f_rdata_in_ptr => null()
+    f_rdata_in => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(bounds%data_ptr)) then
@@ -206,7 +206,7 @@ subroutine fortran_apfft_corr (rdata_in, bounds, window, phase, amp, freq, diag)
     call c_f_pointer(rdata_in%data_ptr, f_rdata_in_ptr, [rdata_in%dims(1)])
     f_rdata_in => f_rdata_in_ptr
   else
-    f_rdata_in_ptr => null()
+    f_rdata_in => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(bounds%data_ptr)) then
@@ -267,7 +267,7 @@ subroutine fortran_apfft_ext (rdata, bounds, window, phase, amp, freq, diag) bin
     call c_f_pointer(rdata%data_ptr, f_rdata_ptr, [rdata%dims(1)])
     f_rdata => f_rdata_ptr
   else
-    f_rdata_ptr => null()
+    f_rdata => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(bounds%data_ptr)) then
@@ -345,7 +345,7 @@ subroutine fortran_assert_equal (int_arr, err_str, ival) bind(c)
     call c_f_pointer(int_arr%data_ptr, f_int_arr_ptr, [int_arr%dims(1)])
     f_int_arr => f_int_arr_ptr
   else
-    f_int_arr_ptr => null()
+    f_int_arr => null()
   endif
   ! in: f_err_str 0D_NOT_character
   if (.not. c_associated(err_str)) return
@@ -662,7 +662,7 @@ subroutine fortran_bracket_index_for_spline (x_knot, x, ix0, strict, print_err, 
     call c_f_pointer(x_knot%data_ptr, f_x_knot_ptr, [x_knot%dims(1)])
     f_x_knot => f_x_knot_ptr
   else
-    f_x_knot_ptr => null()
+    f_x_knot => null()
   endif
   ! in: f_x 0D_NOT_real
   f_x = x
@@ -812,7 +812,7 @@ subroutine fortran_coarse_frequency_estimate (data, error, frequency) bind(c)
     call c_f_pointer(data%data_ptr, f_data_ptr, [data%dims(1)])
     f_data => f_data_ptr
   else
-    f_data_ptr => null()
+    f_data => null()
   endif
   ! in: f_error 0D_NOT_logical
   if (c_associated(error)) then
@@ -927,14 +927,14 @@ subroutine fortran_create_a_spline (r0, r1, slope0, slope1, spline) bind(c)
     call c_f_pointer(r0%data_ptr, f_r0_ptr, [r0%dims(1)])
     f_r0 => f_r0_ptr
   else
-    f_r0_ptr => null()
+    f_r0 => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(r1%data_ptr)) then
     call c_f_pointer(r1%data_ptr, f_r1_ptr, [r1%dims(1)])
     f_r1 => f_r1_ptr
   else
-    f_r1_ptr => null()
+    f_r1 => null()
   endif
   ! in: f_slope0 0D_NOT_real
   f_slope0 = slope0
@@ -969,14 +969,14 @@ subroutine fortran_cross_product (a, b, c) bind(c)
     call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
     f_a => f_a_ptr
   else
-    f_a_ptr => null()
+    f_a => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b => f_b_ptr
   else
-    f_b_ptr => null()
+    f_b => null()
   endif
   !! general array (1D_NOT_real) out
   if (c_associated(c%data_ptr)) then
@@ -1309,7 +1309,7 @@ subroutine fortran_fft_1d (arr, isign) bind(c)
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
   else
-    f_arr_ptr => null()
+    f_arr => null()
   endif
   ! in: f_isign 0D_NOT_integer
   f_isign = isign
@@ -1474,7 +1474,7 @@ subroutine fortran_find_location_int (arr, value, ix_match) bind(c)
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
   else
-    f_arr_ptr => null()
+    f_arr => null()
   endif
   ! in: f_value 0D_NOT_integer
   f_value = value
@@ -1529,7 +1529,7 @@ subroutine fortran_find_location_real (arr, value, ix_match) bind(c)
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
   else
-    f_arr_ptr => null()
+    f_arr => null()
   endif
   ! in: f_value 0D_NOT_real
   f_value = value
@@ -1557,7 +1557,7 @@ subroutine fortran_fine_frequency_estimate (data, frequency) bind(c)
     call c_f_pointer(data%data_ptr, f_data_ptr, [data%dims(1)])
     f_data => f_data_ptr
   else
-    f_data_ptr => null()
+    f_data => null()
   endif
   f_frequency = fine_frequency_estimate(f_data)
 
@@ -1619,7 +1619,7 @@ subroutine fortran_fourier_amplitude (data, frequency, cos_amp, sin_amp, dcos_am
     call c_f_pointer(data%data_ptr, f_data_ptr, [data%dims(1)])
     f_data => f_data_ptr
   else
-    f_data_ptr => null()
+    f_data => null()
   endif
   ! in: f_frequency 0D_NOT_real
   f_frequency = frequency
@@ -1762,7 +1762,7 @@ subroutine fortran_hanhan (N, hh) bind(c)
     call c_f_pointer(hh%data_ptr, f_hh_ptr, [hh%dims(1)])
     f_hh => f_hh_ptr
   else
-    f_hh_ptr => null()
+    f_hh => null()
   endif
   call hanhan(f_N, f_hh)
 
@@ -1965,7 +1965,7 @@ subroutine fortran_interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump
     call c_f_pointer(cdata%data_ptr, f_cdata_ptr, [cdata%dims(1)])
     f_cdata => f_cdata_ptr
   else
-    f_cdata_ptr => null()
+    f_cdata => null()
   endif
   ! in: f_calc_ok 0D_NOT_logical
   f_calc_ok = calc_ok
@@ -2016,7 +2016,7 @@ subroutine fortran_interpolated_fft_gsl (cdata, calc_ok, opt_dump_spectrum, opt_
     call c_f_pointer(cdata%data_ptr, f_cdata_ptr, [cdata%dims(1)])
     f_cdata => f_cdata_ptr
   else
-    f_cdata_ptr => null()
+    f_cdata => null()
   endif
   ! in: f_calc_ok 0D_NOT_logical
   f_calc_ok = calc_ok
@@ -2097,7 +2097,7 @@ subroutine fortran_is_decreasing_sequence (array, strict, is_decreasing) bind(c)
     call c_f_pointer(array%data_ptr, f_array_ptr, [array%dims(1)])
     f_array => f_array_ptr
   else
-    f_array_ptr => null()
+    f_array => null()
   endif
   ! in: f_strict 0D_NOT_logical
   if (c_associated(strict)) then
@@ -2156,7 +2156,7 @@ subroutine fortran_is_increasing_sequence (array, strict, is_increasing) bind(c)
     call c_f_pointer(array%data_ptr, f_array_ptr, [array%dims(1)])
     f_array => f_array_ptr
   else
-    f_array_ptr => null()
+    f_array => null()
   endif
   ! in: f_strict 0D_NOT_logical
   if (c_associated(strict)) then
@@ -2398,14 +2398,14 @@ subroutine fortran_linear_fit (x, y, n_data, a, b, sig_a, sig_b) bind(c)
     call c_f_pointer(x%data_ptr, f_x_ptr, [x%dims(1)])
     f_x => f_x_ptr
   else
-    f_x_ptr => null()
+    f_x => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(y%data_ptr)) then
     call c_f_pointer(y%data_ptr, f_y_ptr, [y%dims(1)])
     f_y => f_y_ptr
   else
-    f_y_ptr => null()
+    f_y => null()
   endif
   ! in: f_n_data 0D_NOT_integer
   f_n_data = n_data
@@ -2444,21 +2444,21 @@ subroutine fortran_linear_fit_2d (x, y, z, coef) bind(c)
     call c_f_pointer(x%data_ptr, f_x_ptr, [x%dims(1)])
     f_x => f_x_ptr
   else
-    f_x_ptr => null()
+    f_x => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(y%data_ptr)) then
     call c_f_pointer(y%data_ptr, f_y_ptr, [y%dims(1)])
     f_y => f_y_ptr
   else
-    f_y_ptr => null()
+    f_y => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(z%data_ptr)) then
     call c_f_pointer(z%data_ptr, f_z_ptr, [z%dims(1)])
     f_z => f_z_ptr
   else
-    f_z_ptr => null()
+    f_z => null()
   endif
   !! general array (1D_NOT_real) out
   if (c_associated(coef%data_ptr)) then
@@ -2636,7 +2636,7 @@ subroutine fortran_maximize_projection (seed, cdata, func_retval__) bind(c)
     call c_f_pointer(cdata%data_ptr, f_cdata_ptr, [cdata%dims(1)])
     f_cdata => f_cdata_ptr
   else
-    f_cdata_ptr => null()
+    f_cdata => null()
   endif
   f_func_retval__ = maximize_projection(f_seed, f_cdata)
 
@@ -2724,14 +2724,14 @@ subroutine fortran_n_spline_create (deriv0, deriv1, x1, n_spline) bind(c)
     call c_f_pointer(deriv0%data_ptr, f_deriv0_ptr, [deriv0%dims(1)])
     f_deriv0(0:) => f_deriv0_ptr
   else
-    f_deriv0_ptr => null()
+    f_deriv0 => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(deriv1%data_ptr)) then
     call c_f_pointer(deriv1%data_ptr, f_deriv1_ptr, [deriv1%dims(1)])
     f_deriv1(0:) => f_deriv1_ptr
   else
-    f_deriv1_ptr => null()
+    f_deriv1 => null()
   endif
   ! in: f_x1 0D_NOT_real
   f_x1 = x1
@@ -2740,9 +2740,9 @@ subroutine fortran_n_spline_create (deriv0, deriv1, x1, n_spline) bind(c)
     call c_f_pointer(n_spline%data_ptr, f_n_spline_ptr, [n_spline%dims(1)])
     f_n_spline(0:) => f_n_spline_ptr
   else
-    f_n_spline_ptr => null()
+    f_n_spline => null()
   endif
-  call n_spline_create(f_deriv0, f_deriv1, f_x1, f_n_spline)
+  call n_spline_create(f_deriv0(0:), f_deriv1(0:), f_x1, f_n_spline(0:))
 
 end subroutine
 subroutine fortran_naff (cdata, freqs, amps, opt_dump_spectra, opt_zero_first) bind(c)
@@ -2774,21 +2774,21 @@ subroutine fortran_naff (cdata, freqs, amps, opt_dump_spectra, opt_zero_first) b
     call c_f_pointer(cdata%data_ptr, f_cdata_ptr, [cdata%dims(1)])
     f_cdata => f_cdata_ptr
   else
-    f_cdata_ptr => null()
+    f_cdata => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(freqs%data_ptr)) then
     call c_f_pointer(freqs%data_ptr, f_freqs_ptr, [freqs%dims(1)])
     f_freqs => f_freqs_ptr
   else
-    f_freqs_ptr => null()
+    f_freqs => null()
   endif
   !! general array (1D_NOT_complex) inout
   if (c_associated(amps%data_ptr)) then
     call c_f_pointer(amps%data_ptr, f_amps_ptr, [amps%dims(1)])
     f_amps => f_amps_ptr
   else
-    f_amps_ptr => null()
+    f_amps => null()
   endif
   ! in: f_opt_dump_spectra 0D_NOT_integer
   if (c_associated(opt_dump_spectra)) then
@@ -3124,7 +3124,7 @@ subroutine fortran_poly_eval (poly, x, diff_coef, y) bind(c)
     call c_f_pointer(poly%data_ptr, f_poly_ptr, [poly%dims(1)])
     f_poly(0:) => f_poly_ptr
   else
-    f_poly_ptr => null()
+    f_poly => null()
   endif
   ! in: f_x 0D_NOT_real
   f_x = x
@@ -3136,7 +3136,7 @@ subroutine fortran_poly_eval (poly, x, diff_coef, y) bind(c)
   else
     f_diff_coef_native_ptr => null()
   endif
-  f_y = poly_eval(f_poly, f_x, f_diff_coef_native_ptr)
+  f_y = poly_eval(f_poly(0:), f_x, f_diff_coef_native_ptr)
 
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
@@ -3183,14 +3183,14 @@ subroutine fortran_projdd (a, b, func_retval__) bind(c)
     call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
     f_a => f_a_ptr
   else
-    f_a_ptr => null()
+    f_a => null()
   endif
   !! general array (1D_NOT_complex) inout
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b => f_b_ptr
   else
-    f_b_ptr => null()
+    f_b => null()
   endif
   f_func_retval__ = projdd(f_a, f_b)
 
@@ -4010,7 +4010,7 @@ subroutine fortran_ran_gauss_vector (harvest, ran_state, sigma_cut) bind(c)
     call c_f_pointer(harvest%data_ptr, f_harvest_ptr, [harvest%dims(1)])
     f_harvest => f_harvest_ptr
   else
-    f_harvest_ptr => null()
+    f_harvest => null()
   endif
   ! in: f_ran_state 0D_NOT_type
   if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
@@ -4108,7 +4108,7 @@ subroutine fortran_ran_uniform_vector (harvest, ran_state) bind(c)
     call c_f_pointer(harvest%data_ptr, f_harvest_ptr, [harvest%dims(1)])
     f_harvest => f_harvest_ptr
   else
-    f_harvest_ptr => null()
+    f_harvest => null()
   endif
   ! in: f_ran_state 0D_NOT_type
   if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
@@ -4322,7 +4322,7 @@ subroutine fortran_rms_value (val_arr, good_val, ave_val, rms_val) bind(c)
     call c_f_pointer(val_arr%data_ptr, f_val_arr_ptr, [val_arr%dims(1)])
     f_val_arr => f_val_arr_ptr
   else
-    f_val_arr_ptr => null()
+    f_val_arr => null()
   endif
   !! container general array (1D_ALLOC_logical)
   if (c_associated(good_val))   call c_f_pointer(good_val, f_good_val)
@@ -4398,7 +4398,7 @@ subroutine fortran_rotate_vec (vec, axis, angle) bind(c)
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec => f_vec_ptr
   else
-    f_vec_ptr => null()
+    f_vec => null()
   endif
   ! in: f_axis 0D_NOT_integer
   f_axis = axis
@@ -4437,7 +4437,7 @@ subroutine fortran_rotate_vec_given_axis_angle (vec_in, axis, angle, vec_out) bi
     call c_f_pointer(axis%data_ptr, f_axis_ptr, [axis%dims(1)])
     f_axis => f_axis_ptr
   else
-    f_axis_ptr => null()
+    f_axis => null()
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
@@ -4944,14 +4944,14 @@ subroutine fortran_spline_akima_interpolate (x_knot, y_knot, x, ok, y, dy) bind(
     call c_f_pointer(x_knot%data_ptr, f_x_knot_ptr, [x_knot%dims(1)])
     f_x_knot => f_x_knot_ptr
   else
-    f_x_knot_ptr => null()
+    f_x_knot => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(y_knot%data_ptr)) then
     call c_f_pointer(y_knot%data_ptr, f_y_knot_ptr, [y_knot%dims(1)])
     f_y_knot => f_y_knot_ptr
   else
-    f_y_knot_ptr => null()
+    f_y_knot => null()
   endif
   ! in: f_x 0D_NOT_real
   f_x = x
@@ -5738,14 +5738,14 @@ subroutine fortran_super_polint (xa, ya, x, y, dy) bind(c)
     call c_f_pointer(xa%data_ptr, f_xa_ptr, [xa%dims(1)])
     f_xa => f_xa_ptr
   else
-    f_xa_ptr => null()
+    f_xa => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(ya%data_ptr)) then
     call c_f_pointer(ya%data_ptr, f_ya_ptr, [ya%dims(1)])
     f_ya => f_ya_ptr
   else
-    f_ya_ptr => null()
+    f_ya => null()
   endif
   ! in: f_x 0D_NOT_real
   f_x = x
@@ -5780,7 +5780,7 @@ subroutine fortran_super_poly (x, coeffs, value) bind(c)
     call c_f_pointer(coeffs%data_ptr, f_coeffs_ptr, [coeffs%dims(1)])
     f_coeffs => f_coeffs_ptr
   else
-    f_coeffs_ptr => null()
+    f_coeffs => null()
   endif
   f_value = super_poly(f_x, f_coeffs)
 
@@ -5805,7 +5805,7 @@ subroutine fortran_super_sobseq (x, ran_state) bind(c)
     call c_f_pointer(x%data_ptr, f_x_ptr, [x%dims(1)])
     f_x => f_x_ptr
   else
-    f_x_ptr => null()
+    f_x => null()
   endif
   ! inout: f_ran_state 0D_NOT_type
   if (c_associated(ran_state))   call c_f_pointer(ran_state, f_ran_state)
@@ -5826,7 +5826,7 @@ subroutine fortran_super_sort (arr) bind(c)
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
   else
-    f_arr_ptr => null()
+    f_arr => null()
   endif
   call super_sort(f_arr)
 

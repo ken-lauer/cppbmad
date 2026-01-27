@@ -170,12 +170,12 @@ subroutine fortran_integrate_max (ix_start, ix_ele, datum_value, ix_m, branch, v
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec(0:) => f_vec_ptr
   else
-    f_vec_ptr => null()
+    f_vec => null()
   endif
   ! inout: f_datum 0D_NOT_type
   if (.not. c_associated(datum)) return
   call c_f_pointer(datum, f_datum)
-  call integrate_max(f_ix_start, f_ix_ele, f_datum_value, f_ix_m, f_branch, f_vec, f_datum)
+  call integrate_max(f_ix_start, f_ix_ele, f_datum_value, f_ix_m, f_branch, f_vec(0:), f_datum)
 
 end subroutine
 subroutine fortran_integrate_min (ix_start, ix_ele, datum_value, ix_m, branch, vec, datum) &
@@ -219,12 +219,12 @@ subroutine fortran_integrate_min (ix_start, ix_ele, datum_value, ix_m, branch, v
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec(0:) => f_vec_ptr
   else
-    f_vec_ptr => null()
+    f_vec => null()
   endif
   ! inout: f_datum 0D_NOT_type
   if (.not. c_associated(datum)) return
   call c_f_pointer(datum, f_datum)
-  call integrate_min(f_ix_start, f_ix_ele, f_datum_value, f_ix_m, f_branch, f_vec, f_datum)
+  call integrate_min(f_ix_start, f_ix_ele, f_datum_value, f_ix_m, f_branch, f_vec(0:), f_datum)
 
 end subroutine
 subroutine fortran_tao_abort_command_file (force_abort) bind(c)
@@ -258,7 +258,7 @@ subroutine fortran_tao_add_to_normal_mode_h_array (h_str, h_array) bind(c)
   type(c_ptr), intent(in), value :: h_str
   character(len=4096), target :: f_h_str
   character(kind=c_char), pointer :: f_h_str_ptr(:)
-  ! ** Inout parameters **
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: h_array
   type(resonance_h_struct_container_alloc), pointer :: f_h_array
   ! ** End of parameters **
@@ -901,7 +901,7 @@ subroutine fortran_tao_control_tree_list (ele, tree) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  ! ** Inout parameters **
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: tree
   type(ele_pointer_struct_container_alloc), pointer :: f_tree
   ! ** End of parameters **
@@ -1448,14 +1448,14 @@ subroutine fortran_tao_datum_integrate (datum, branch, s_pos, values, valid_valu
     call c_f_pointer(s_pos%data_ptr, f_s_pos_ptr, [s_pos%dims(1)])
     f_s_pos => f_s_pos_ptr
   else
-    f_s_pos_ptr => null()
+    f_s_pos => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(values%data_ptr)) then
     call c_f_pointer(values%data_ptr, f_values_ptr, [values%dims(1)])
     f_values => f_values_ptr
   else
-    f_values_ptr => null()
+    f_values => null()
   endif
   f_result = tao_datum_integrate(f_datum, f_branch, f_s_pos, f_values, f_valid_value, &
       f_why_invalid)
@@ -2222,7 +2222,6 @@ subroutine fortran_tao_evaluate_element_parameters (err, param_name, values, pri
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
-  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: values
   type(real_container_alloc), pointer :: f_values
   type(c_ptr), intent(in), value :: info
@@ -2326,12 +2325,11 @@ subroutine fortran_tao_evaluate_expression (expression, n_size, use_good_user, v
   type(c_ptr), value :: datum  ! 0D_NOT_type
   type(tao_data_struct), pointer :: f_datum
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: value
-  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: info
   type(tao_expression_info_struct_container_alloc), pointer :: f_info
   type(c_ptr), intent(in), value :: stack
@@ -2479,12 +2477,11 @@ subroutine fortran_tao_evaluate_expression_new (expression, n_size, use_good_use
   type(c_ptr), value :: datum  ! 0D_NOT_type
   type(tao_data_struct), pointer :: f_datum
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: value
-  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: info
   type(tao_expression_info_struct_container_alloc), pointer :: f_info
   type(c_ptr), intent(in), value :: stack
@@ -2632,12 +2629,11 @@ subroutine fortran_tao_evaluate_expression_old (expression, n_size, use_good_use
   type(c_ptr), value :: datum  ! 0D_NOT_type
   type(tao_data_struct), pointer :: f_datum
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: value
-  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: info
   type(tao_expression_info_struct_container_alloc), pointer :: f_info
   type(c_ptr), intent(in), value :: stack
@@ -2770,7 +2766,6 @@ subroutine fortran_tao_evaluate_lat_or_beam_data (err, data_name, values, print_
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
-  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: values
   type(real_container_alloc), pointer :: f_values
   ! ** End of parameters **
@@ -2845,12 +2840,12 @@ subroutine fortran_tao_evaluate_stack_old (stack, n_size_in, use_good_user, valu
   character(len=4096), target :: f_expression
   character(kind=c_char), pointer :: f_expression_ptr(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
   ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: value
-  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: info_in
   type(tao_expression_info_struct_container_alloc), pointer :: f_info_in
   ! ** End of parameters **
@@ -2904,12 +2899,12 @@ subroutine fortran_tao_evaluate_tree (tao_tree, n_size, use_good_user, value, er
   character(len=4096), target :: f_expression
   character(kind=c_char), pointer :: f_expression_ptr(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
   ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: value
-  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: info_in
   type(tao_expression_info_struct_container_alloc), pointer :: f_info_in
   ! ** End of parameters **
@@ -3216,7 +3211,7 @@ subroutine fortran_tao_get_data (data_value, data_weight, data_meas_value, data_
 
   use array_desc_mod
   implicit none
-  ! ** Inout parameters **
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: data_value
   type(real_container_alloc), pointer :: f_data_value
   type(c_ptr), intent(in), value :: data_weight
@@ -3244,13 +3239,6 @@ subroutine fortran_tao_get_opt_vars (var_value, var_step, var_delta, var_weight,
   use array_desc_mod
   implicit none
   ! ** Out parameters **
-  type(c_ptr), intent(in), value :: ignore_if_weight_is_zero  ! 0D_NOT_logical
-  logical :: f_ignore_if_weight_is_zero
-  logical(c_bool), pointer :: f_ignore_if_weight_is_zero_ptr
-  type(c_ptr), intent(in), value :: ignore_if_not_limited  ! 0D_NOT_logical
-  logical :: f_ignore_if_not_limited
-  logical(c_bool), pointer :: f_ignore_if_not_limited_ptr
-  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: var_value
   type(real_container_alloc), pointer :: f_var_value
   type(c_ptr), intent(in), value :: var_step
@@ -3261,6 +3249,12 @@ subroutine fortran_tao_get_opt_vars (var_value, var_step, var_delta, var_weight,
   type(real_container_alloc), pointer :: f_var_weight
   type(c_ptr), intent(in), value :: var_ix
   type(integer_container_alloc), pointer :: f_var_ix
+  type(c_ptr), intent(in), value :: ignore_if_weight_is_zero  ! 0D_NOT_logical
+  logical :: f_ignore_if_weight_is_zero
+  logical(c_bool), pointer :: f_ignore_if_weight_is_zero_ptr
+  type(c_ptr), intent(in), value :: ignore_if_not_limited  ! 0D_NOT_logical
+  logical :: f_ignore_if_not_limited
+  logical(c_bool), pointer :: f_ignore_if_not_limited_ptr
   ! ** End of parameters **
   !! container general array (1D_ALLOC_real)
   if (c_associated(var_value))   call c_f_pointer(var_value, f_var_value)
@@ -3713,12 +3707,11 @@ subroutine fortran_tao_init_find_elements (u, search_string, eles, attribute, fo
   character(kind=c_char), pointer :: f_attribute_ptr(:)
   character(len=4096), pointer :: f_attribute_call_ptr
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: eles
+  type(ele_pointer_struct_container_alloc), pointer :: f_eles
   type(c_ptr), intent(in), value :: found_one  ! 0D_NOT_logical
   logical :: f_found_one
   logical(c_bool), pointer :: f_found_one_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: eles
-  type(ele_pointer_struct_container_alloc), pointer :: f_eles
   ! ** End of parameters **
   ! in: f_u 0D_NOT_type
   if (.not. c_associated(u)) return
@@ -4273,7 +4266,7 @@ subroutine fortran_tao_load_this_datum (vec, ele_ref, ele_start, ele, datum_valu
     call c_f_pointer(vec%data_ptr, f_vec_ptr, [vec%dims(1)])
     f_vec(0:) => f_vec_ptr
   else
-    f_vec_ptr => null()
+    f_vec => null()
   endif
   ! inout: f_ele_ref 0D_PTR_type
   if (.not. c_associated(ele_ref)) return
@@ -4304,8 +4297,8 @@ subroutine fortran_tao_load_this_datum (vec, ele_ref, ele_start, ele, datum_valu
   endif
   !! container general array (1D_ALLOC_logical)
   if (c_associated(good))   call c_f_pointer(good, f_good)
-  call tao_load_this_datum(f_vec, f_ele_ref, f_ele_start, f_ele, f_datum_value, f_valid_value, &
-      f_datum, f_branch, f_why_invalid_call_ptr, f_good%data)
+  call tao_load_this_datum(f_vec(0:), f_ele_ref, f_ele_start, f_ele, f_datum_value, &
+      f_valid_value, f_datum, f_branch, f_why_invalid_call_ptr, f_good%data)
 
 end subroutine
 subroutine fortran_tao_locate_all_elements (ele_list, eles, err, ignore_blank) bind(c)
@@ -4323,12 +4316,11 @@ subroutine fortran_tao_locate_all_elements (ele_list, eles, err, ignore_blank) b
   logical, pointer :: f_ignore_blank_native_ptr
   logical(c_bool), pointer :: f_ignore_blank_ptr
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: eles
+  type(ele_pointer_struct_container_alloc), pointer :: f_eles
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: eles
-  type(ele_pointer_struct_container_alloc), pointer :: f_eles
   ! ** End of parameters **
   ! in: f_ele_list 0D_NOT_character
   if (.not. c_associated(ele_list)) return
@@ -4387,12 +4379,11 @@ subroutine fortran_tao_locate_elements (ele_list, ix_universe, eles, err, lat_ty
   logical, pointer :: f_multiple_eles_is_err_native_ptr
   logical(c_bool), pointer :: f_multiple_eles_is_err_ptr
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: eles
+  type(ele_pointer_struct_container_alloc), pointer :: f_eles
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: eles
-  type(ele_pointer_struct_container_alloc), pointer :: f_eles
   ! ** End of parameters **
   ! in: f_ele_list 0D_NOT_character
   if (.not. c_associated(ele_list)) return
@@ -5009,12 +5000,11 @@ subroutine fortran_tao_particle_data_value (data_type, p, value, err, ele, ix_bu
   integer(c_int) :: ix_bunch  ! 0D_NOT_integer
   integer :: f_ix_bunch
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value
+  type(real_container_alloc), pointer :: f_value
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: value
-  type(real_container_alloc), pointer :: f_value
   ! ** End of parameters **
   ! in: f_data_type 0D_NOT_character
   if (.not. c_associated(data_type)) return
@@ -5115,6 +5105,8 @@ subroutine fortran_tao_pick_universe (name_in, name_out, picked, err, ix_uni, ex
   type(c_ptr), intent(in), value :: name_out
   character(len=4096), target :: f_name_out
   character(kind=c_char), pointer :: f_name_out_ptr(:)
+  type(c_ptr), intent(in), value :: picked
+  type(logical_container_alloc), pointer :: f_picked
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
@@ -5124,9 +5116,6 @@ subroutine fortran_tao_pick_universe (name_in, name_out, picked, err, ix_uni, ex
   type(c_ptr), intent(in), value :: explicit_uni  ! 0D_NOT_logical
   logical :: f_explicit_uni
   logical(c_bool), pointer :: f_explicit_uni_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: picked
-  type(logical_container_alloc), pointer :: f_picked
   ! ** End of parameters **
   ! in: f_name_in 0D_NOT_character
   if (.not. c_associated(name_in)) return
@@ -5685,6 +5674,8 @@ subroutine fortran_tao_pointer_to_universes (name_in, unis, err, name_out, expli
   integer(c_int) :: f_dflt_uni
   integer(c_int), pointer :: f_dflt_uni_ptr
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: unis
+  type(tao_universe_pointer_struct_container_alloc), pointer :: f_unis
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
@@ -5695,9 +5686,6 @@ subroutine fortran_tao_pointer_to_universes (name_in, unis, err, name_out, expli
   type(c_ptr), intent(in), value :: explicit_uni  ! 0D_NOT_logical
   logical :: f_explicit_uni
   logical(c_bool), pointer :: f_explicit_uni_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: unis
-  type(tao_universe_pointer_struct_container_alloc), pointer :: f_unis
   ! ** End of parameters **
   ! in: f_name_in 0D_NOT_character
   if (.not. c_associated(name_in)) return
@@ -7156,7 +7144,7 @@ subroutine fortran_tao_set_opt_vars (var_vec, print_limit_warning) bind(c)
     call c_f_pointer(var_vec%data_ptr, f_var_vec_ptr, [var_vec%dims(1)])
     f_var_vec => f_var_vec_ptr
   else
-    f_var_vec_ptr => null()
+    f_var_vec => null()
   endif
   ! in: f_print_limit_warning 0D_NOT_logical
   if (c_associated(print_limit_warning)) then
@@ -8025,12 +8013,11 @@ subroutine fortran_tao_split_component (comp_str, comp, err) bind(c)
   character(len=4096), target :: f_comp_str
   character(kind=c_char), pointer :: f_comp_str_ptr(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: comp
+  type(tao_data_var_component_struct_container_alloc), pointer :: f_comp
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: comp
-  type(tao_data_var_component_struct_container_alloc), pointer :: f_comp
   ! ** End of parameters **
   ! in: f_comp_str 0D_NOT_character
   if (.not. c_associated(comp_str)) return
@@ -8807,42 +8794,42 @@ subroutine fortran_tao_wave_fit (curve, ix1, n_dat, coef, rms, f1, f2, f3, f4) b
     call c_f_pointer(coef%data_ptr, f_coef_ptr, [coef%dims(1)])
     f_coef => f_coef_ptr
   else
-    f_coef_ptr => null()
+    f_coef => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(rms%data_ptr)) then
     call c_f_pointer(rms%data_ptr, f_rms_ptr, [rms%dims(1)])
     f_rms => f_rms_ptr
   else
-    f_rms_ptr => null()
+    f_rms => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(f1%data_ptr)) then
     call c_f_pointer(f1%data_ptr, f_f1_ptr, [f1%dims(1)])
     f_f1 => f_f1_ptr
   else
-    f_f1_ptr => null()
+    f_f1 => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(f2%data_ptr)) then
     call c_f_pointer(f2%data_ptr, f_f2_ptr, [f2%dims(1)])
     f_f2 => f_f2_ptr
   else
-    f_f2_ptr => null()
+    f_f2 => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(f3%data_ptr)) then
     call c_f_pointer(f3%data_ptr, f_f3_ptr, [f3%dims(1)])
     f_f3 => f_f3_ptr
   else
-    f_f3_ptr => null()
+    f_f3 => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(f4%data_ptr)) then
     call c_f_pointer(f4%data_ptr, f_f4_ptr, [f4%dims(1)])
     f_f4 => f_f4_ptr
   else
-    f_f4_ptr => null()
+    f_f4 => null()
   endif
   call tao_wave_fit(f_curve, f_ix1, f_n_dat, f_coef, f_rms, f_f1, f_f2, f_f3, f_f4)
 

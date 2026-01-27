@@ -1734,14 +1734,12 @@ Bmad::check_if_s_in_bounds(BranchStruct &branch, double s, std::optional<bool> p
   );
   return CheckIfSInBounds{_err_flag, _translated_s};
 }
-bool Bmad::choose_quads_for_set_tune(
-    BranchStruct &branch,
-    RealAlloc1D &dk1,
-    ElePointerStructAlloc1D eles,
-    std::optional<std::string> mask
-) {
-  // intent=inout allocatable general array
-  // intent=inout allocatable type array
+Bmad::ChooseQuadsForSetTune
+Bmad::choose_quads_for_set_tune(BranchStruct &branch, std::optional<std::string> mask) {
+  // intent=out allocatable general array
+  auto dk1{RealAlloc1D()};
+  // intent=out allocatable type array
+  auto eles{ElePointerStructAlloc1D()};
   const char *_mask = mask.has_value() ? mask->c_str() : nullptr;
   bool _err_flag{};
   fortran_choose_quads_for_set_tune(
@@ -1751,14 +1749,12 @@ bool Bmad::choose_quads_for_set_tune(
       /* const char* */ _mask,
       /* bool& */ _err_flag
   );
-  return _err_flag;
+  return ChooseQuadsForSetTune{std::move(dk1), std::move(eles), _err_flag};
 }
 Bmad::ChromCalc Bmad::chrom_calc(
     LatStruct &lat,
     double &delta_e,
     std::optional<double> pz,
-    std::optional<CoordStructAlloc1D> low_E_orb,
-    std::optional<CoordStructAlloc1D> high_E_orb,
     std::optional<int> ix_branch,
     optional_ref<CoordStruct> orb0
 ) {
@@ -1774,12 +1770,10 @@ Bmad::ChromCalc Bmad::chrom_calc(
   }
   LatStruct _low_E_lat;
   LatStruct _high_E_lat;
-  // intent=inout allocatable type array
-  auto *_low_E_orb =
-      low_E_orb.has_value() ? low_E_orb->get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable type array
-  auto *_high_E_orb =
-      high_E_orb.has_value() ? high_E_orb->get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto low_E_orb{CoordStructAlloc1D()};
+  // intent=out allocatable type array
+  auto high_E_orb{CoordStructAlloc1D()};
   int ix_branch_lvalue;
   auto *_ix_branch{&ix_branch_lvalue};
   if (ix_branch.has_value()) {
@@ -1797,12 +1791,20 @@ Bmad::ChromCalc Bmad::chrom_calc(
       /* double* */ _pz,
       /* void* */ _low_E_lat.get_fortran_ptr(),
       /* void* */ _high_E_lat.get_fortran_ptr(),
-      /* void* */ _low_E_orb,
-      /* void* */ _high_E_orb,
+      /* void* */ low_E_orb.get_fortran_ptr(),
+      /* void* */ high_E_orb.get_fortran_ptr(),
       /* int* */ _ix_branch,
       /* void* */ _orb0
   );
-  return ChromCalc{_chrom_a, _chrom_b, _err_flag, std::move(_low_E_lat), std::move(_high_E_lat)};
+  return ChromCalc{
+      _chrom_a,
+      _chrom_b,
+      _err_flag,
+      std::move(_low_E_lat),
+      std::move(_high_E_lat),
+      std::move(low_E_orb),
+      std::move(high_E_orb)
+  };
 }
 bool Bmad::chrom_tune(
     LatStruct &lat,
@@ -1884,15 +1886,15 @@ bool Bmad::closed_orbit_calc(
   );
   return _err_flag;
 }
-bool Bmad::closed_orbit_from_tracking(
+Bmad::ClosedOrbitFromTracking Bmad::closed_orbit_from_tracking(
     LatStruct &lat,
-    CoordStructAlloc1D closed_orb,
     int i_dim,
     std::optional<FArray1D<Real>> eps_rel,
     std::optional<FArray1D<Real>> eps_abs,
     optional_ref<CoordStruct> init_guess
 ) {
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto closed_orb{CoordStructAlloc1D()};
   // eps_rel: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _eps_rel_desc;
   _eps_rel_desc.rank = 1;
@@ -1925,7 +1927,7 @@ bool Bmad::closed_orbit_from_tracking(
       /* void* */ _init_guess,
       /* bool& */ _err_flag
   );
-  return _err_flag;
+  return ClosedOrbitFromTracking{std::move(closed_orb), _err_flag};
 }
 void Bmad::cmplx_re_str(std::complex<double> cmp, std::string str_out) {
   auto _str_out = str_out.c_str();
@@ -3229,14 +3231,14 @@ AperturePointStruct Bmad::dynamic_aperture_point(
   );
   return std::move(_ap_point);
 }
-void Bmad::dynamic_aperture_scan(
-    ApertureScanStructAlloc1D aperture_scan,
+ApertureScanStructAlloc1D Bmad::dynamic_aperture_scan(
     ApertureParamStruct &aperture_param,
     FArray1D<Real> &pz_start,
     LatStruct &lat,
     std::optional<bool> print_timing
 ) {
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto aperture_scan{ApertureScanStructAlloc1D()};
   // pz_start: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _pz_start_desc;
   _pz_start_desc.rank = 1;
@@ -3256,6 +3258,7 @@ void Bmad::dynamic_aperture_scan(
       /* void* */ lat.get_fortran_ptr(),
       /* bool* */ _print_timing
   );
+  return std::move(aperture_scan);
 }
 double Bmad::e_accel_field(
     EleStruct &ele,
@@ -5131,10 +5134,10 @@ Bmad::ExpressionStackValue Bmad::expression_stack_value(
   );
   return ExpressionStackValue{_err_flag, _err_str, _value};
 }
-Bmad::ExpressionStringToStack
-Bmad::expression_string_to_stack(std::string string, ExpressionAtomStructAlloc1D stack) {
+Bmad::ExpressionStringToStack Bmad::expression_string_to_stack(std::string string) {
   auto _string = string.c_str();
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto stack{ExpressionAtomStructAlloc1D()};
   int _n_stack{};
   bool _err_flag{};
   char _err_str[4096];
@@ -5145,7 +5148,7 @@ Bmad::expression_string_to_stack(std::string string, ExpressionAtomStructAlloc1D
       /* bool& */ _err_flag,
       /* const char* */ _err_str
   );
-  return ExpressionStringToStack{_n_stack, _err_flag, _err_str};
+  return ExpressionStringToStack{std::move(stack), _n_stack, _err_flag, _err_str};
 }
 Bmad::ExpressionStringToTree
 Bmad::expression_string_to_tree(std::string string, ExpressionTreeStruct &root_tree) {
@@ -5676,15 +5679,16 @@ Bmad::GetNextWord Bmad::get_next_word(
   );
   return GetNextWord{_ix_word, _delim, _delim_found, _err_flag};
 }
-int Bmad::get_slave_list(EleStruct &lord, ElePointerStructAlloc1D slaves) {
-  // intent=inout allocatable type array
+Bmad::GetSlaveList Bmad::get_slave_list(EleStruct &lord) {
+  // intent=out allocatable type array
+  auto slaves{ElePointerStructAlloc1D()};
   int _n_slave{};
   fortran_get_slave_list(
       /* void* */ lord.get_fortran_ptr(),
       /* void* */ slaves.get_fortran_ptr(),
       /* int& */ _n_slave
   );
-  return _n_slave;
+  return GetSlaveList{std::move(slaves), _n_slave};
 }
 void Bmad::gpt_field_grid_scaling(
     EleStruct &ele,
@@ -8290,16 +8294,11 @@ bool Bmad::multilayer_type_to_multilayer_params(EleStruct &ele) {
   );
   return _err_flag;
 }
-Bmad::MultipassChain Bmad::multipass_chain(
-    EleStruct &ele,
-    std::optional<ElePointerStructAlloc1D> chain_ele,
-    std::optional<bool> use_super_lord
-) {
+Bmad::MultipassChain Bmad::multipass_chain(EleStruct &ele, std::optional<bool> use_super_lord) {
   int _ix_pass{};
   int _n_links{};
-  // intent=inout allocatable type array
-  auto *_chain_ele =
-      chain_ele.has_value() ? chain_ele->get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto chain_ele{ElePointerStructAlloc1D()};
   bool use_super_lord_lvalue;
   auto *_use_super_lord{&use_super_lord_lvalue};
   if (use_super_lord.has_value()) {
@@ -8311,10 +8310,10 @@ Bmad::MultipassChain Bmad::multipass_chain(
       /* void* */ ele.get_fortran_ptr(),
       /* int& */ _ix_pass,
       /* int& */ _n_links,
-      /* void* */ _chain_ele,
+      /* void* */ chain_ele.get_fortran_ptr(),
       /* bool* */ _use_super_lord
   );
-  return MultipassChain{_ix_pass, _n_links};
+  return MultipassChain{_ix_pass, _n_links, std::move(chain_ele)};
 }
 Bmad::Multipole1AbToKt Bmad::multipole1_ab_to_kt(double an, double bn, int n) {
   double _knl{};
@@ -10905,12 +10904,10 @@ Bmad::PtcCheckForLostParticle Bmad::ptc_check_for_lost_particle(bool do_reset) {
       std::move((_ptc_fibre ? std::make_optional<Fibre>(_ptc_fibre) : std::nullopt))
   };
 }
-void Bmad::ptc_closed_orbit_calc(
-    BranchStruct &branch,
-    CoordStructAlloc1D closed_orbit,
-    std::optional<bool> radiation_damping_on
-) {
-  // intent=inout allocatable type array
+CoordStructAlloc1D
+Bmad::ptc_closed_orbit_calc(BranchStruct &branch, std::optional<bool> radiation_damping_on) {
+  // intent=out allocatable type array
+  auto closed_orbit{CoordStructAlloc1D()};
   bool radiation_damping_on_lvalue;
   auto *_radiation_damping_on{&radiation_damping_on_lvalue};
   if (radiation_damping_on.has_value()) {
@@ -10923,6 +10920,7 @@ void Bmad::ptc_closed_orbit_calc(
       /* void* */ closed_orbit.get_fortran_ptr(),
       /* bool* */ _radiation_damping_on
   );
+  return std::move(closed_orbit);
 }
 Bmad::PtcEmitCalc Bmad::ptc_emit_calc(EleStruct &ele, FixedArray2D<Real, 6, 6> sigma_mat) {
   NormalModesStruct _norm_mode;
@@ -13544,10 +13542,9 @@ SummationRdtStruct Bmad::srdt_calc(
   );
   return std::move(_srdt_sums);
 }
-void Bmad::srdt_lsq_solution(
+RealAlloc1D Bmad::srdt_lsq_solution(
     LatStruct &lat,
     FArray1D<Int> &var_indexes,
-    RealAlloc1D &ls_soln,
     std::optional<int> n_slices_gen_opt,
     std::optional<int> n_slices_sxt_opt,
     std::optional<double> chrom_set_x_opt,
@@ -13559,7 +13556,8 @@ void Bmad::srdt_lsq_solution(
   _var_indexes_desc.rank = 1;
   _var_indexes_desc.data_ptr = var_indexes.data();
   _var_indexes_desc.dims[0] = var_indexes.size();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto ls_soln{RealAlloc1D()};
   int n_slices_gen_opt_lvalue;
   auto *_n_slices_gen_opt{&n_slices_gen_opt_lvalue};
   if (n_slices_gen_opt.has_value()) {
@@ -13608,6 +13606,7 @@ void Bmad::srdt_lsq_solution(
       /* double* */ _chrom_set_y_opt,
       /* Bmad::array_descriptor_t& */ _weight_in_desc
   );
+  return std::move(ls_soln);
 }
 bool Bmad::start_branch_at(LatStruct &lat, std::string ele_start, bool move_end_marker) {
   auto _ele_start = ele_start.c_str();
@@ -15563,7 +15562,6 @@ Bmad::TrackAll Bmad::track_all(
     LatStruct &lat,
     CoordStructAlloc1D orbit,
     std::optional<int> ix_branch,
-    std::optional<CoordStructAlloc1D> orbit0,
     std::optional<bool> init_lost
 ) {
   // intent=inout allocatable type array
@@ -15576,8 +15574,8 @@ Bmad::TrackAll Bmad::track_all(
   }
   int _track_state{};
   bool _err_flag{};
-  // intent=inout allocatable type array
-  auto *_orbit0 = orbit0.has_value() ? orbit0->get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto orbit0{CoordStructAlloc1D()};
   bool init_lost_lvalue;
   auto *_init_lost{&init_lost_lvalue};
   if (init_lost.has_value()) {
@@ -15591,10 +15589,10 @@ Bmad::TrackAll Bmad::track_all(
       /* int* */ _ix_branch,
       /* int& */ _track_state,
       /* bool& */ _err_flag,
-      /* void* */ _orbit0,
+      /* void* */ orbit0.get_fortran_ptr(),
       /* bool* */ _init_lost
   );
-  return TrackAll{_track_state, _err_flag};
+  return TrackAll{_track_state, _err_flag, std::move(orbit0)};
 }
 bool Bmad::track_beam(
     LatStruct &lat,
@@ -15777,13 +15775,12 @@ Bmad::TrackFromSToS Bmad::track_from_s_to_s(
     double s_start,
     double s_end,
     CoordStruct &orbit_start,
-    std::optional<CoordStructAlloc1D> all_orb,
     std::optional<int> ix_branch,
     std::optional<int> ix_ele_end
 ) {
   CoordStruct _orbit_end;
-  // intent=inout allocatable type array
-  auto *_all_orb = all_orb.has_value() ? all_orb->get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto all_orb{CoordStructAlloc1D()};
   int ix_branch_lvalue;
   auto *_ix_branch{&ix_branch_lvalue};
   if (ix_branch.has_value()) {
@@ -15805,12 +15802,12 @@ Bmad::TrackFromSToS Bmad::track_from_s_to_s(
       /* double& */ s_end,
       /* void* */ orbit_start.get_fortran_ptr(),
       /* void* */ _orbit_end.get_fortran_ptr(),
-      /* void* */ _all_orb,
+      /* void* */ all_orb.get_fortran_ptr(),
       /* int* */ _ix_branch,
       /* int& */ _track_state,
       /* int* */ _ix_ele_end
   );
-  return TrackFromSToS{std::move(_orbit_end), _track_state};
+  return TrackFromSToS{std::move(_orbit_end), std::move(all_orb), _track_state};
 }
 int Bmad::track_many(
     LatStruct &lat,

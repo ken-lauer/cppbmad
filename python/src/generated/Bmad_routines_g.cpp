@@ -378,11 +378,27 @@ err_flag : bool, optional
     Set True if there is an error. False otherwise.
 )"""
   );
+  py::class_<Bmad::GetSlaveList, std::unique_ptr<Bmad::GetSlaveList>>(
+      m,
+      "GetSlaveList",
+      "get_slave_list return type"
+  )
+      .def_readonly("slaves", &Bmad::GetSlaveList::slaves)
+      .def_readonly("n_slave", &Bmad::GetSlaveList::n_slave)
+      .def("__len__", [](const Bmad::GetSlaveList &) { return 2; })
+      .def("__getitem__", [](const Bmad::GetSlaveList &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.slaves);
+        if (i == 1)
+          return py::cast(s.n_slave);
+        throw py::index_error();
+      });
   m.def(
       "get_slave_list",
       &Bmad::get_slave_list,
       py::arg("lord"),
-      py::arg("slaves"),
       R"""(Wrapper for Fortran routine get_slave_list
 
 Parameters

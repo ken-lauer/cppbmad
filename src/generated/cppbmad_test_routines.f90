@@ -38,14 +38,14 @@ subroutine fortran_test_bunch_struct_array (arr_in, arr_inout, arr_out, opt_stat
   type(array_descriptor_t), intent(in) :: arr_in_opt
   type(bunch_struct), pointer :: f_arr_in_opt(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arr_out
+  type(bunch_struct_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: opt_status
   integer :: f_opt_status(2)
   integer(c_int), pointer :: f_opt_status_ptr(:)
   ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: arr_inout
   type(bunch_struct), pointer :: f_arr_inout(:)
-  type(c_ptr), intent(in), value :: arr_out
-  type(bunch_struct_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: arr_inout_opt
   type(bunch_struct), pointer :: f_arr_inout_opt(:)
   ! ** End of parameters **
@@ -238,6 +238,8 @@ subroutine fortran_test_complex_array (arr_in, arr_inout, arr_out, opt_status, a
   complex(rp), pointer :: f_arr_in_opt(:)
   complex(c_double_complex), pointer :: f_arr_in_opt_ptr(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arr_out
+  type(complex_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: opt_status
   integer :: f_opt_status(2)
   integer(c_int), pointer :: f_opt_status_ptr(:)
@@ -245,8 +247,6 @@ subroutine fortran_test_complex_array (arr_in, arr_inout, arr_out, opt_status, a
   type(array_descriptor_t), intent(in) :: arr_inout
   complex(rp), pointer :: f_arr_inout(:)
   complex(c_double_complex), pointer :: f_arr_inout_ptr(:)
-  type(c_ptr), intent(in), value :: arr_out
-  type(complex_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: arr_inout_opt
   complex(rp), pointer :: f_arr_inout_opt(:)
   complex(c_double_complex), pointer :: f_arr_inout_opt_ptr(:)
@@ -256,14 +256,14 @@ subroutine fortran_test_complex_array (arr_in, arr_inout, arr_out, opt_status, a
     call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
     f_arr_in => f_arr_in_ptr
   else
-    f_arr_in_ptr => null()
+    f_arr_in => null()
   endif
   !! general array (1D_NOT_complex) inout
   if (c_associated(arr_inout%data_ptr)) then
     call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
     f_arr_inout => f_arr_inout_ptr
   else
-    f_arr_inout_ptr => null()
+    f_arr_inout => null()
   endif
   !! container general array (1D_ALLOC_complex)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
@@ -279,14 +279,14 @@ subroutine fortran_test_complex_array (arr_in, arr_inout, arr_out, opt_status, a
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
     f_arr_in_opt => f_arr_in_opt_ptr
   else
-    f_arr_in_opt_ptr => null()
+    f_arr_in_opt => null()
   endif
   !! general array (1D_NOT_complex) inout
   if (c_associated(arr_inout_opt%data_ptr)) then
     call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
     f_arr_inout_opt => f_arr_inout_opt_ptr
   else
-    f_arr_inout_opt_ptr => null()
+    f_arr_inout_opt => null()
   endif
   call test_complex_array(f_arr_in, f_arr_inout, f_arr_out%data, f_opt_status, f_arr_in_opt, &
       f_arr_inout_opt)
@@ -379,6 +379,8 @@ subroutine fortran_test_integer8_array (arr_in, arr_inout, arr_out, opt_status, 
   integer(8), pointer :: f_arr_in_opt(:)
   integer(c_int64_t), pointer :: f_arr_in_opt_ptr(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arr_out
+  type(integer8_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: opt_status
   integer :: f_opt_status(2)
   integer(c_int), pointer :: f_opt_status_ptr(:)
@@ -386,8 +388,6 @@ subroutine fortran_test_integer8_array (arr_in, arr_inout, arr_out, opt_status, 
   type(array_descriptor_t), intent(in) :: arr_inout
   integer(8), pointer :: f_arr_inout(:)
   integer(c_int64_t), pointer :: f_arr_inout_ptr(:)
-  type(c_ptr), intent(in), value :: arr_out
-  type(integer8_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: arr_inout_opt
   integer(8), pointer :: f_arr_inout_opt(:)
   integer(c_int64_t), pointer :: f_arr_inout_opt_ptr(:)
@@ -397,14 +397,14 @@ subroutine fortran_test_integer8_array (arr_in, arr_inout, arr_out, opt_status, 
     call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
     f_arr_in => f_arr_in_ptr
   else
-    f_arr_in_ptr => null()
+    f_arr_in => null()
   endif
   !! general array (1D_NOT_integer8) inout
   if (c_associated(arr_inout%data_ptr)) then
     call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
     f_arr_inout => f_arr_inout_ptr
   else
-    f_arr_inout_ptr => null()
+    f_arr_inout => null()
   endif
   !! container general array (1D_ALLOC_integer8)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
@@ -420,14 +420,14 @@ subroutine fortran_test_integer8_array (arr_in, arr_inout, arr_out, opt_status, 
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
     f_arr_in_opt => f_arr_in_opt_ptr
   else
-    f_arr_in_opt_ptr => null()
+    f_arr_in_opt => null()
   endif
   !! general array (1D_NOT_integer8) inout
   if (c_associated(arr_inout_opt%data_ptr)) then
     call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
     f_arr_inout_opt => f_arr_inout_opt_ptr
   else
-    f_arr_inout_opt_ptr => null()
+    f_arr_inout_opt => null()
   endif
   call test_integer8_array(f_arr_in, f_arr_inout, f_arr_out%data, f_opt_status, f_arr_in_opt, &
       f_arr_inout_opt)
@@ -520,6 +520,8 @@ subroutine fortran_test_integer_array (arr_in, arr_inout, arr_out, opt_status, a
   integer, pointer :: f_arr_in_opt(:)
   integer(c_int), pointer :: f_arr_in_opt_ptr(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arr_out
+  type(integer_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: opt_status
   integer :: f_opt_status(2)
   integer(c_int), pointer :: f_opt_status_ptr(:)
@@ -527,8 +529,6 @@ subroutine fortran_test_integer_array (arr_in, arr_inout, arr_out, opt_status, a
   type(array_descriptor_t), intent(in) :: arr_inout
   integer, pointer :: f_arr_inout(:)
   integer(c_int), pointer :: f_arr_inout_ptr(:)
-  type(c_ptr), intent(in), value :: arr_out
-  type(integer_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: arr_inout_opt
   integer, pointer :: f_arr_inout_opt(:)
   integer(c_int), pointer :: f_arr_inout_opt_ptr(:)
@@ -538,14 +538,14 @@ subroutine fortran_test_integer_array (arr_in, arr_inout, arr_out, opt_status, a
     call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
     f_arr_in => f_arr_in_ptr
   else
-    f_arr_in_ptr => null()
+    f_arr_in => null()
   endif
   !! general array (1D_NOT_integer) inout
   if (c_associated(arr_inout%data_ptr)) then
     call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
     f_arr_inout => f_arr_inout_ptr
   else
-    f_arr_inout_ptr => null()
+    f_arr_inout => null()
   endif
   !! container general array (1D_ALLOC_integer)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
@@ -561,14 +561,14 @@ subroutine fortran_test_integer_array (arr_in, arr_inout, arr_out, opt_status, a
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
     f_arr_in_opt => f_arr_in_opt_ptr
   else
-    f_arr_in_opt_ptr => null()
+    f_arr_in_opt => null()
   endif
   !! general array (1D_NOT_integer) inout
   if (c_associated(arr_inout_opt%data_ptr)) then
     call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
     f_arr_inout_opt => f_arr_inout_opt_ptr
   else
-    f_arr_inout_opt_ptr => null()
+    f_arr_inout_opt => null()
   endif
   call test_integer_array(f_arr_in, f_arr_inout, f_arr_out%data, f_opt_status, f_arr_in_opt, &
       f_arr_inout_opt)
@@ -659,14 +659,14 @@ subroutine fortran_test_logical_array (arr_in, arr_inout, arr_out, opt_status, a
   type(c_ptr), intent(in), value :: arr_in_opt
   type(logical_container_alloc), pointer :: f_arr_in_opt
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arr_out
+  type(logical_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: opt_status
   integer :: f_opt_status(2)
   integer(c_int), pointer :: f_opt_status_ptr(:)
   ! ** Inout parameters **
   type(c_ptr), intent(in), value :: arr_inout
   type(logical_container_alloc), pointer :: f_arr_inout
-  type(c_ptr), intent(in), value :: arr_out
-  type(logical_container_alloc), pointer :: f_arr_out
   type(c_ptr), intent(in), value :: arr_inout_opt
   type(logical_container_alloc), pointer :: f_arr_inout_opt
   ! ** End of parameters **
@@ -798,14 +798,14 @@ subroutine fortran_test_real16_array (arr_in, arr_inout, arr_out, opt_status, ar
   type(c_ptr), intent(in), value :: arr_in_opt
   type(real16_container_alloc), pointer :: f_arr_in_opt
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arr_out
+  type(real16_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: opt_status
   integer :: f_opt_status(2)
   integer(c_int), pointer :: f_opt_status_ptr(:)
   ! ** Inout parameters **
   type(c_ptr), intent(in), value :: arr_inout
   type(real16_container_alloc), pointer :: f_arr_inout
-  type(c_ptr), intent(in), value :: arr_out
-  type(real16_container_alloc), pointer :: f_arr_out
   type(c_ptr), intent(in), value :: arr_inout_opt
   type(real16_container_alloc), pointer :: f_arr_inout_opt
   ! ** End of parameters **
@@ -939,6 +939,8 @@ subroutine fortran_test_real_array (arr_in, arr_inout, arr_out, opt_status, arr_
   real(rp), pointer :: f_arr_in_opt(:)
   real(c_double), pointer :: f_arr_in_opt_ptr(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arr_out
+  type(real_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: opt_status
   integer :: f_opt_status(2)
   integer(c_int), pointer :: f_opt_status_ptr(:)
@@ -946,8 +948,6 @@ subroutine fortran_test_real_array (arr_in, arr_inout, arr_out, opt_status, arr_
   type(array_descriptor_t), intent(in) :: arr_inout
   real(rp), pointer :: f_arr_inout(:)
   real(c_double), pointer :: f_arr_inout_ptr(:)
-  type(c_ptr), intent(in), value :: arr_out
-  type(real_container_alloc), pointer :: f_arr_out
   type(array_descriptor_t), intent(in) :: arr_inout_opt
   real(rp), pointer :: f_arr_inout_opt(:)
   real(c_double), pointer :: f_arr_inout_opt_ptr(:)
@@ -957,14 +957,14 @@ subroutine fortran_test_real_array (arr_in, arr_inout, arr_out, opt_status, arr_
     call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
     f_arr_in => f_arr_in_ptr
   else
-    f_arr_in_ptr => null()
+    f_arr_in => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(arr_inout%data_ptr)) then
     call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
     f_arr_inout => f_arr_inout_ptr
   else
-    f_arr_inout_ptr => null()
+    f_arr_inout => null()
   endif
   !! container general array (1D_ALLOC_real)
   if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
@@ -980,14 +980,14 @@ subroutine fortran_test_real_array (arr_in, arr_inout, arr_out, opt_status, arr_
     call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
     f_arr_in_opt => f_arr_in_opt_ptr
   else
-    f_arr_in_opt_ptr => null()
+    f_arr_in_opt => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(arr_inout_opt%data_ptr)) then
     call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
     f_arr_inout_opt => f_arr_inout_opt_ptr
   else
-    f_arr_inout_opt_ptr => null()
+    f_arr_inout_opt => null()
   endif
   call test_real_array(f_arr_in, f_arr_inout, f_arr_out%data, f_opt_status, f_arr_in_opt, &
       f_arr_inout_opt)

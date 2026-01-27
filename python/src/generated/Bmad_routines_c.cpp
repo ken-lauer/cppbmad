@@ -8,12 +8,10 @@ PyChromCalc python_chrom_calc(
     LatStruct &lat,
     double delta_e,
     std::optional<double> pz = std::nullopt,
-    std::optional<CoordStructAlloc1D> low_E_orb = std::nullopt,
-    std::optional<CoordStructAlloc1D> high_E_orb = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
     optional_ref<CoordStruct> orb0 = std::nullopt
 ) {
-  auto _result = Bmad::chrom_calc(lat, delta_e, pz, low_E_orb, high_E_orb, ix_branch, orb0);
+  auto _result = Bmad::chrom_calc(lat, delta_e, pz, ix_branch, orb0);
   auto py_result{PyChromCalc{_result, delta_e}};
   return py_result;
 }
@@ -594,12 +592,30 @@ translated_s : float, optional
     position translated to the range [0, branch_length]
 )"""
   );
+  py::class_<Bmad::ChooseQuadsForSetTune, std::unique_ptr<Bmad::ChooseQuadsForSetTune>>(
+      m,
+      "ChooseQuadsForSetTune",
+      "choose_quads_for_set_tune return type"
+  )
+      .def_readonly("dk1", &Bmad::ChooseQuadsForSetTune::dk1)
+      .def_readonly("eles", &Bmad::ChooseQuadsForSetTune::eles)
+      .def_readonly("err_flag", &Bmad::ChooseQuadsForSetTune::err_flag)
+      .def("__len__", [](const Bmad::ChooseQuadsForSetTune &) { return 3; })
+      .def("__getitem__", [](const Bmad::ChooseQuadsForSetTune &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.dk1);
+        if (i == 1)
+          return py::cast(s.eles);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "choose_quads_for_set_tune",
       &Bmad::choose_quads_for_set_tune,
       py::arg("branch"),
-      py::arg("dk1"),
-      py::arg("eles"),
       py::arg("mask") = py::none(),
       R"""(Wrapper for Fortran routine choose_quads_for_set_tune
 
@@ -630,11 +646,13 @@ err_flag : bool, optional
       .def_readonly("err_flag", &PyChromCalc::err_flag)
       .def_readonly("low_E_lat", &PyChromCalc::low_E_lat)
       .def_readonly("high_E_lat", &PyChromCalc::high_E_lat)
+      .def_readonly("low_E_orb", &PyChromCalc::low_E_orb)
+      .def_readonly("high_E_orb", &PyChromCalc::high_E_orb)
       .def_readonly("delta_e", &PyChromCalc::delta_e)
-      .def("__len__", [](const PyChromCalc &) { return 6; })
+      .def("__len__", [](const PyChromCalc &) { return 8; })
       .def("__getitem__", [](const PyChromCalc &s, int i) -> py::object {
         if (i < 0)
-          i += 6;
+          i += 8;
         if (i == 0)
           return py::cast(s.chrom_a);
         if (i == 1)
@@ -646,6 +664,10 @@ err_flag : bool, optional
         if (i == 4)
           return py::cast(s.high_E_lat);
         if (i == 5)
+          return py::cast(s.low_E_orb);
+        if (i == 6)
+          return py::cast(s.high_E_orb);
+        if (i == 7)
           return py::cast(s.delta_e);
         throw py::index_error();
       });
@@ -655,8 +677,6 @@ err_flag : bool, optional
       py::arg("lat"),
       py::arg("delta_e"),
       py::arg("pz") = py::none(),
-      py::arg("low_E_orb") = py::none(),
-      py::arg("high_E_orb") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("orb0") = py::none(),
       R"""(Wrapper for Fortran routine chrom_calc
@@ -879,11 +899,27 @@ err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
   );
+  py::class_<Bmad::ClosedOrbitFromTracking, std::unique_ptr<Bmad::ClosedOrbitFromTracking>>(
+      m,
+      "ClosedOrbitFromTracking",
+      "closed_orbit_from_tracking return type"
+  )
+      .def_readonly("closed_orb", &Bmad::ClosedOrbitFromTracking::closed_orb)
+      .def_readonly("err_flag", &Bmad::ClosedOrbitFromTracking::err_flag)
+      .def("__len__", [](const Bmad::ClosedOrbitFromTracking &) { return 2; })
+      .def("__getitem__", [](const Bmad::ClosedOrbitFromTracking &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.closed_orb);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
   m.def(
       "closed_orbit_from_tracking",
       &Bmad::closed_orbit_from_tracking,
       py::arg("lat"),
-      py::arg("closed_orb"),
       py::arg("i_dim"),
       py::arg("eps_rel") = py::none(),
       py::arg("eps_abs") = py::none(),

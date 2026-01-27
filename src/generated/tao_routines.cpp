@@ -72,13 +72,15 @@ void Tao::tao_abort_command_file(std::optional<bool> force_abort) {
   }
   fortran_tao_abort_command_file(/* bool* */ _force_abort);
 }
-void Tao::tao_add_to_normal_mode_h_array(std::string h_str, ResonanceHStructAlloc1D h_array) {
+ResonanceHStructAlloc1D Tao::tao_add_to_normal_mode_h_array(std::string h_str) {
   auto _h_str = h_str.c_str();
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto h_array{ResonanceHStructAlloc1D()};
   fortran_tao_add_to_normal_mode_h_array(
       /* const char* */ _h_str,
       /* void* */ h_array.get_fortran_ptr()
   );
+  return std::move(h_array);
 }
 void Tao::tao_alias_cmd(std::string alias, std::string string) {
   auto _alias = alias.c_str();
@@ -281,12 +283,14 @@ std::string Tao::tao_constraint_type_name(TaoDataStruct &datum) {
   );
   return _datum_name;
 }
-void Tao::tao_control_tree_list(EleStruct &ele, ElePointerStructAlloc1D tree) {
-  // intent=inout allocatable type array
+ElePointerStructAlloc1D Tao::tao_control_tree_list(EleStruct &ele) {
+  // intent=out allocatable type array
+  auto tree{ElePointerStructAlloc1D()};
   fortran_tao_control_tree_list(
       /* void* */ ele.get_fortran_ptr(),
       /* void* */ tree.get_fortran_ptr()
   );
+  return std::move(tree);
 }
 int Tao::tao_count_strings(std::string string, std::string pattern) {
   auto _string = string.c_str();
@@ -765,20 +769,19 @@ Tao::TaoEvaluateDatumAtS Tao::tao_evaluate_datum_at_s(
   );
   return TaoEvaluateDatumAtS{_err_str, _bad_datum, _value};
 }
-bool Tao::tao_evaluate_element_parameters(
+Tao::TaoEvaluateElementParameters Tao::tao_evaluate_element_parameters(
     std::string param_name,
-    RealAlloc1D &values,
     bool print_err,
     optional_ref<EleStruct> dflt_ele,
     std::string dflt_source,
     std::optional<std::string> dflt_component,
     std::optional<int> dflt_uni,
-    std::optional<int> eval_point,
-    std::optional<TaoExpressionInfoStructAlloc1D> info
+    std::optional<int> eval_point
 ) {
   bool _err{};
   auto _param_name = param_name.c_str();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto values{RealAlloc1D()};
   auto *_dflt_ele =
       dflt_ele.has_value() ? dflt_ele->get().get_fortran_ptr() : nullptr; // input, optional
   auto _dflt_source = dflt_source.c_str();
@@ -797,8 +800,8 @@ bool Tao::tao_evaluate_element_parameters(
   } else {
     _eval_point = nullptr;
   }
-  // intent=inout allocatable type array
-  auto *_info = info.has_value() ? info->get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto info{TaoExpressionInfoStructAlloc1D()};
   fortran_tao_evaluate_element_parameters(
       /* bool& */ _err,
       /* const char* */ _param_name,
@@ -809,18 +812,15 @@ bool Tao::tao_evaluate_element_parameters(
       /* const char* */ _dflt_component,
       /* int* */ _dflt_uni,
       /* int* */ _eval_point,
-      /* void* */ _info
+      /* void* */ info.get_fortran_ptr()
   );
-  return _err;
+  return TaoEvaluateElementParameters{_err, std::move(values), std::move(info)};
 }
-bool Tao::tao_evaluate_expression(
+Tao::TaoEvaluateExpression Tao::tao_evaluate_expression(
     std::string expression,
     int n_size,
     bool use_good_user,
-    RealAlloc1D &value,
     std::optional<bool> print_err,
-    std::optional<TaoExpressionInfoStructAlloc1D> info,
-    std::optional<TaoEvalNodeStructAlloc1D> stack,
     std::optional<std::string> dflt_component,
     std::optional<std::string> dflt_source,
     optional_ref<EleStruct> dflt_ele_ref,
@@ -834,7 +834,8 @@ bool Tao::tao_evaluate_expression(
     optional_ref<TaoDataStruct> datum
 ) {
   auto _expression = expression.c_str();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
   bool _err_flag{};
   bool print_err_lvalue;
   auto *_print_err{&print_err_lvalue};
@@ -843,10 +844,10 @@ bool Tao::tao_evaluate_expression(
   } else {
     _print_err = nullptr;
   }
-  // intent=inout allocatable type array
-  auto *_info = info.has_value() ? info->get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable type array
-  auto *_stack = stack.has_value() ? stack->get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto info{TaoExpressionInfoStructAlloc1D()};
+  // intent=out allocatable type array
+  auto stack{TaoEvalNodeStructAlloc1D()};
   const char *_dflt_component = dflt_component.has_value() ? dflt_component->c_str() : nullptr;
   const char *_dflt_source = dflt_source.has_value() ? dflt_source->c_str() : nullptr;
   auto *_dflt_ele_ref =
@@ -888,8 +889,8 @@ bool Tao::tao_evaluate_expression(
       /* void* */ value.get_fortran_ptr(),
       /* bool& */ _err_flag,
       /* bool* */ _print_err,
-      /* void* */ _info,
-      /* void* */ _stack,
+      /* void* */ info.get_fortran_ptr(),
+      /* void* */ stack.get_fortran_ptr(),
       /* const char* */ _dflt_component,
       /* const char* */ _dflt_source,
       /* void* */ _dflt_ele_ref,
@@ -902,16 +903,13 @@ bool Tao::tao_evaluate_expression(
       /* void* */ _dflt_orbit,
       /* void* */ _datum
   );
-  return _err_flag;
+  return TaoEvaluateExpression{std::move(value), _err_flag, std::move(info), std::move(stack)};
 }
-bool Tao::tao_evaluate_expression_new(
+Tao::TaoEvaluateExpressionNew Tao::tao_evaluate_expression_new(
     std::string expression,
     int n_size,
     bool use_good_user,
-    RealAlloc1D &value,
     std::optional<bool> print_err,
-    std::optional<TaoExpressionInfoStructAlloc1D> info,
-    std::optional<TaoEvalNodeStructAlloc1D> stack,
     std::optional<std::string> dflt_component,
     std::optional<std::string> dflt_source,
     optional_ref<EleStruct> dflt_ele_ref,
@@ -925,7 +923,8 @@ bool Tao::tao_evaluate_expression_new(
     optional_ref<TaoDataStruct> datum
 ) {
   auto _expression = expression.c_str();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
   bool _err_flag{};
   bool print_err_lvalue;
   auto *_print_err{&print_err_lvalue};
@@ -934,10 +933,10 @@ bool Tao::tao_evaluate_expression_new(
   } else {
     _print_err = nullptr;
   }
-  // intent=inout allocatable type array
-  auto *_info = info.has_value() ? info->get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable type array
-  auto *_stack = stack.has_value() ? stack->get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto info{TaoExpressionInfoStructAlloc1D()};
+  // intent=out allocatable type array
+  auto stack{TaoEvalNodeStructAlloc1D()};
   const char *_dflt_component = dflt_component.has_value() ? dflt_component->c_str() : nullptr;
   const char *_dflt_source = dflt_source.has_value() ? dflt_source->c_str() : nullptr;
   auto *_dflt_ele_ref =
@@ -979,8 +978,8 @@ bool Tao::tao_evaluate_expression_new(
       /* void* */ value.get_fortran_ptr(),
       /* bool& */ _err_flag,
       /* bool* */ _print_err,
-      /* void* */ _info,
-      /* void* */ _stack,
+      /* void* */ info.get_fortran_ptr(),
+      /* void* */ stack.get_fortran_ptr(),
       /* const char* */ _dflt_component,
       /* const char* */ _dflt_source,
       /* void* */ _dflt_ele_ref,
@@ -993,16 +992,13 @@ bool Tao::tao_evaluate_expression_new(
       /* void* */ _dflt_orbit,
       /* void* */ _datum
   );
-  return _err_flag;
+  return TaoEvaluateExpressionNew{std::move(value), _err_flag, std::move(info), std::move(stack)};
 }
-bool Tao::tao_evaluate_expression_old(
+Tao::TaoEvaluateExpressionOld Tao::tao_evaluate_expression_old(
     std::string expression,
     int n_size,
     bool use_good_user,
-    RealAlloc1D &value,
     std::optional<bool> print_err,
-    std::optional<TaoExpressionInfoStructAlloc1D> info,
-    std::optional<TaoEvalNodeStructAlloc1D> stack,
     std::optional<std::string> dflt_component,
     std::optional<std::string> dflt_source,
     optional_ref<EleStruct> dflt_ele_ref,
@@ -1016,7 +1012,8 @@ bool Tao::tao_evaluate_expression_old(
     optional_ref<TaoDataStruct> datum
 ) {
   auto _expression = expression.c_str();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
   bool _err_flag{};
   bool print_err_lvalue;
   auto *_print_err{&print_err_lvalue};
@@ -1025,10 +1022,10 @@ bool Tao::tao_evaluate_expression_old(
   } else {
     _print_err = nullptr;
   }
-  // intent=inout allocatable type array
-  auto *_info = info.has_value() ? info->get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable type array
-  auto *_stack = stack.has_value() ? stack->get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto info{TaoExpressionInfoStructAlloc1D()};
+  // intent=out allocatable type array
+  auto stack{TaoEvalNodeStructAlloc1D()};
   const char *_dflt_component = dflt_component.has_value() ? dflt_component->c_str() : nullptr;
   const char *_dflt_source = dflt_source.has_value() ? dflt_source->c_str() : nullptr;
   auto *_dflt_ele_ref =
@@ -1070,8 +1067,8 @@ bool Tao::tao_evaluate_expression_old(
       /* void* */ value.get_fortran_ptr(),
       /* bool& */ _err_flag,
       /* bool* */ _print_err,
-      /* void* */ _info,
-      /* void* */ _stack,
+      /* void* */ info.get_fortran_ptr(),
+      /* void* */ stack.get_fortran_ptr(),
       /* const char* */ _dflt_component,
       /* const char* */ _dflt_source,
       /* void* */ _dflt_ele_ref,
@@ -1084,11 +1081,10 @@ bool Tao::tao_evaluate_expression_old(
       /* void* */ _dflt_orbit,
       /* void* */ _datum
   );
-  return _err_flag;
+  return TaoEvaluateExpressionOld{std::move(value), _err_flag, std::move(info), std::move(stack)};
 }
-bool Tao::tao_evaluate_lat_or_beam_data(
+Tao::TaoEvaluateLatOrBeamData Tao::tao_evaluate_lat_or_beam_data(
     std::string data_name,
-    RealAlloc1D &values,
     bool print_err,
     std::string default_source,
     optional_ref<EleStruct> dflt_ele_ref,
@@ -1101,7 +1097,8 @@ bool Tao::tao_evaluate_lat_or_beam_data(
 ) {
   bool _err{};
   auto _data_name = data_name.c_str();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto values{RealAlloc1D()};
   auto _default_source = default_source.c_str();
   auto *_dflt_ele_ref =
       dflt_ele_ref.has_value() ? dflt_ele_ref->get().get_fortran_ptr() : nullptr; // input, optional
@@ -1145,13 +1142,12 @@ bool Tao::tao_evaluate_lat_or_beam_data(
       /* int* */ _dflt_eval_point,
       /* double* */ _dflt_s_offset
   );
-  return _err;
+  return TaoEvaluateLatOrBeamData{_err, std::move(values)};
 }
-bool Tao::tao_evaluate_stack_old(
+Tao::TaoEvaluateStackOld Tao::tao_evaluate_stack_old(
     TaoEvalNodeStructArray1D stack,
     int n_size_in,
     bool use_good_user,
-    RealAlloc1D &value,
     bool print_err,
     std::string expression,
     std::optional<TaoExpressionInfoStructAlloc1D> info_in
@@ -1162,7 +1158,8 @@ bool Tao::tao_evaluate_stack_old(
   _stack_desc.data_ptr = stack.data();
   _stack_desc.dims[0] = stack.size();
   _stack_desc.strides[0] = 1;
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
   bool _err_flag{};
   auto _expression = expression.c_str();
   // intent=inout allocatable type array
@@ -1177,18 +1174,18 @@ bool Tao::tao_evaluate_stack_old(
       /* const char* */ _expression,
       /* void* */ _info_in
   );
-  return _err_flag;
+  return TaoEvaluateStackOld{std::move(value), _err_flag};
 }
-bool Tao::tao_evaluate_tree(
+Tao::TaoEvaluateTree Tao::tao_evaluate_tree(
     TaoEvalNodeStruct &tao_tree,
     int n_size,
     bool use_good_user,
-    RealAlloc1D &value,
     bool print_err,
     std::string expression,
     std::optional<TaoExpressionInfoStructAlloc1D> info_in
 ) {
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
   bool _err_flag{};
   auto _expression = expression.c_str();
   // intent=inout allocatable type array
@@ -1203,7 +1200,7 @@ bool Tao::tao_evaluate_tree(
       /* const char* */ _expression,
       /* void* */ _info_in
   );
-  return _err_flag;
+  return TaoEvaluateTree{std::move(value), _err_flag};
 }
 double Tao::tao_evaluate_tune(std::string q_str, double q0, bool delta_input) {
   auto _q_str = q_str.c_str();
@@ -1321,64 +1318,59 @@ bool Tao::tao_geodesic_lm_optimizer() {
   fortran_tao_geodesic_lm_optimizer(/* bool& */ _abort);
   return _abort;
 }
-void Tao::tao_get_data(
-    optional_ref<RealAlloc1D> data_value,
-    optional_ref<RealAlloc1D> data_weight,
-    optional_ref<RealAlloc1D> data_meas_value,
-    optional_ref<IntAlloc1D> data_ix_dModel
-) {
-  // intent=inout allocatable general array
-  auto *_data_value =
-      data_value.has_value() ? data_value->get().get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable general array
-  auto *_data_weight =
-      data_weight.has_value() ? data_weight->get().get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable general array
-  auto *_data_meas_value = data_meas_value.has_value() ? data_meas_value->get().get_fortran_ptr()
-                                                       : nullptr; // input, optional
-  // intent=inout allocatable general array
-  auto *_data_ix_dModel = data_ix_dModel.has_value() ? data_ix_dModel->get().get_fortran_ptr()
-                                                     : nullptr; // input, optional
+Tao::TaoGetData Tao::tao_get_data() {
+  // intent=out allocatable general array
+  auto data_value{RealAlloc1D()};
+  // intent=out allocatable general array
+  auto data_weight{RealAlloc1D()};
+  // intent=out allocatable general array
+  auto data_meas_value{RealAlloc1D()};
+  // intent=out allocatable general array
+  auto data_ix_dModel{IntAlloc1D()};
   fortran_tao_get_data(
-      /* void* */ _data_value,
-      /* void* */ _data_weight,
-      /* void* */ _data_meas_value,
-      /* void* */ _data_ix_dModel
+      /* void* */ data_value.get_fortran_ptr(),
+      /* void* */ data_weight.get_fortran_ptr(),
+      /* void* */ data_meas_value.get_fortran_ptr(),
+      /* void* */ data_ix_dModel.get_fortran_ptr()
   );
+  return TaoGetData{
+      std::move(data_value),
+      std::move(data_weight),
+      std::move(data_meas_value),
+      std::move(data_ix_dModel)
+  };
 }
-Tao::TaoGetOptVars Tao::tao_get_opt_vars(
-    optional_ref<RealAlloc1D> var_value,
-    optional_ref<RealAlloc1D> var_step,
-    optional_ref<RealAlloc1D> var_delta,
-    optional_ref<RealAlloc1D> var_weight,
-    optional_ref<IntAlloc1D> var_ix
-) {
-  // intent=inout allocatable general array
-  auto *_var_value =
-      var_value.has_value() ? var_value->get().get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable general array
-  auto *_var_step =
-      var_step.has_value() ? var_step->get().get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable general array
-  auto *_var_delta =
-      var_delta.has_value() ? var_delta->get().get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable general array
-  auto *_var_weight =
-      var_weight.has_value() ? var_weight->get().get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable general array
-  auto *_var_ix = var_ix.has_value() ? var_ix->get().get_fortran_ptr() : nullptr; // input, optional
+Tao::TaoGetOptVars Tao::tao_get_opt_vars() {
+  // intent=out allocatable general array
+  auto var_value{RealAlloc1D()};
+  // intent=out allocatable general array
+  auto var_step{RealAlloc1D()};
+  // intent=out allocatable general array
+  auto var_delta{RealAlloc1D()};
+  // intent=out allocatable general array
+  auto var_weight{RealAlloc1D()};
+  // intent=out allocatable general array
+  auto var_ix{IntAlloc1D()};
   bool _ignore_if_weight_is_zero{};
   bool _ignore_if_not_limited{};
   fortran_tao_get_opt_vars(
-      /* void* */ _var_value,
-      /* void* */ _var_step,
-      /* void* */ _var_delta,
-      /* void* */ _var_weight,
-      /* void* */ _var_ix,
+      /* void* */ var_value.get_fortran_ptr(),
+      /* void* */ var_step.get_fortran_ptr(),
+      /* void* */ var_delta.get_fortran_ptr(),
+      /* void* */ var_weight.get_fortran_ptr(),
+      /* void* */ var_ix.get_fortran_ptr(),
       /* bool& */ _ignore_if_weight_is_zero,
       /* bool& */ _ignore_if_not_limited
   );
-  return TaoGetOptVars{_ignore_if_weight_is_zero, _ignore_if_not_limited};
+  return TaoGetOptVars{
+      std::move(var_value),
+      std::move(var_step),
+      std::move(var_delta),
+      std::move(var_weight),
+      std::move(var_ix),
+      _ignore_if_weight_is_zero,
+      _ignore_if_not_limited
+  };
 }
 std::string Tao::tao_get_user_input(
     std::optional<std::string> prompt_str,
@@ -1520,14 +1512,14 @@ void Tao::tao_init_dynamic_aperture(std::string init_file) {
   auto _init_file = init_file.c_str();
   fortran_tao_init_dynamic_aperture(/* const char* */ _init_file);
 }
-bool Tao::tao_init_find_elements(
+Tao::TaoInitFindElements Tao::tao_init_find_elements(
     TaoUniverseStruct &u,
     std::string search_string,
-    ElePointerStructAlloc1D eles,
     std::optional<std::string> attribute
 ) {
   auto _search_string = search_string.c_str();
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto eles{ElePointerStructAlloc1D()};
   const char *_attribute = attribute.has_value() ? attribute->c_str() : nullptr;
   bool _found_one{};
   fortran_tao_init_find_elements(
@@ -1537,7 +1529,7 @@ bool Tao::tao_init_find_elements(
       /* const char* */ _attribute,
       /* bool& */ _found_one
   );
-  return _found_one;
+  return TaoInitFindElements{std::move(eles), _found_one};
 }
 void Tao::tao_init_global(std::string init_file) {
   auto _init_file = init_file.c_str();
@@ -1754,13 +1746,11 @@ void Tao::tao_load_this_datum(
       /* void* */ _good
   );
 }
-bool Tao::tao_locate_all_elements(
-    std::string ele_list,
-    ElePointerStructAlloc1D eles,
-    std::optional<bool> ignore_blank
-) {
+Tao::TaoLocateAllElements
+Tao::tao_locate_all_elements(std::string ele_list, std::optional<bool> ignore_blank) {
   auto _ele_list = ele_list.c_str();
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto eles{ElePointerStructAlloc1D()};
   bool _err{};
   bool ignore_blank_lvalue;
   auto *_ignore_blank{&ignore_blank_lvalue};
@@ -1775,12 +1765,11 @@ bool Tao::tao_locate_all_elements(
       /* bool& */ _err,
       /* bool* */ _ignore_blank
   );
-  return _err;
+  return TaoLocateAllElements{std::move(eles), _err};
 }
-bool Tao::tao_locate_elements(
+Tao::TaoLocateElements Tao::tao_locate_elements(
     std::string ele_list,
     int ix_universe,
-    ElePointerStructAlloc1D eles,
     std::optional<int> lat_type,
     std::optional<bool> ignore_blank,
     std::optional<int> err_stat_level,
@@ -1789,7 +1778,8 @@ bool Tao::tao_locate_elements(
     std::optional<bool> multiple_eles_is_err
 ) {
   auto _ele_list = ele_list.c_str();
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto eles{ElePointerStructAlloc1D()};
   bool _err{};
   int lat_type_lvalue;
   auto *_lat_type{&lat_type_lvalue};
@@ -1845,7 +1835,7 @@ bool Tao::tao_locate_elements(
       /* int* */ _ix_branch,
       /* bool* */ _multiple_eles_is_err
   );
-  return _err;
+  return TaoLocateElements{std::move(eles), _err};
 }
 void Tao::tao_mark_lattice_ele(LatStruct &lat) {
   fortran_tao_mark_lattice_ele(/* void* */ lat.get_fortran_ptr());
@@ -2047,10 +2037,9 @@ Tao::TaoParseElementParamStr Tao::tao_parse_element_param_str(std::string in_str
   );
   return TaoParseElementParamStr{_err, _uni, _element, _parameter, _where, _component};
 }
-bool Tao::tao_particle_data_value(
+Tao::TaoParticleDataValue Tao::tao_particle_data_value(
     std::string data_type,
     CoordStructArray1D p,
-    RealAlloc1D &value,
     EleStruct &ele,
     int ix_bunch
 ) {
@@ -2061,7 +2050,8 @@ bool Tao::tao_particle_data_value(
   _p_desc.data_ptr = p.data();
   _p_desc.dims[0] = p.size();
   _p_desc.strides[0] = 1;
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto value{RealAlloc1D()};
   bool _err{};
   fortran_tao_particle_data_value(
       /* const char* */ _data_type,
@@ -2071,7 +2061,7 @@ bool Tao::tao_particle_data_value(
       /* void* */ ele.get_fortran_ptr(),
       /* int& */ ix_bunch
   );
-  return _err;
+  return TaoParticleDataValue{std::move(value), _err};
 }
 void Tao::tao_pause_cmd(double time) { fortran_tao_pause_cmd(/* double& */ time); }
 int Tao::tao_phase_space_axis_index(std::string data_type, bool err) {
@@ -2089,13 +2079,13 @@ void Tao::tao_phase_wave_anal(TaoPlotStruct &plot) {
 }
 Tao::TaoPickUniverse Tao::tao_pick_universe(
     std::string name_in,
-    BoolAlloc1D &picked,
     std::optional<int> dflt_uni,
     std::optional<bool> pure_uni
 ) {
   auto _name_in = name_in.c_str();
   char _name_out[4096];
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto picked{BoolAlloc1D()};
   bool _err{};
   int _ix_uni{};
   bool _explicit_uni{};
@@ -2123,7 +2113,7 @@ Tao::TaoPickUniverse Tao::tao_pick_universe(
       /* int* */ _dflt_uni,
       /* bool* */ _pure_uni
   );
-  return TaoPickUniverse{_name_out, _err, _ix_uni, _explicit_uni};
+  return TaoPickUniverse{_name_out, std::move(picked), _err, _ix_uni, _explicit_uni};
 }
 void Tao::tao_pipe_cmd(std::string input_str) {
   auto _input_str = input_str.c_str();
@@ -2307,13 +2297,11 @@ Tao::tao_pointer_to_universe(std::string &string, std::optional<bool> neg2_to_de
   );
   return std::move((_u ? std::make_optional<TaoUniverseStruct>(_u) : std::nullopt));
 }
-Tao::TaoPointerToUniverses Tao::tao_pointer_to_universes(
-    std::string name_in,
-    TaoUniversePointerStructAlloc1D unis,
-    std::optional<int> dflt_uni
-) {
+Tao::TaoPointerToUniverses
+Tao::tao_pointer_to_universes(std::string name_in, std::optional<int> dflt_uni) {
   auto _name_in = name_in.c_str();
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto unis{TaoUniversePointerStructAlloc1D()};
   bool _err{};
   char _name_out[4096];
   bool _explicit_uni{};
@@ -2332,7 +2320,7 @@ Tao::TaoPointerToUniverses Tao::tao_pointer_to_universes(
       /* bool& */ _explicit_uni,
       /* int* */ _dflt_uni
   );
-  return TaoPointerToUniverses{_err, _name_out, _explicit_uni};
+  return TaoPointerToUniverses{std::move(unis), _err, _name_out, _explicit_uni};
 }
 bool Tao::tao_pointer_to_var_in_lattice(TaoVarStruct &var, int ix_uni, EleStruct &ele) {
   bool _err{};
@@ -3243,16 +3231,17 @@ void Tao::tao_spin_matrices_calc_needed(
   );
 }
 void Tao::tao_spin_tracking_turn_on() { fortran_tao_spin_tracking_turn_on(); }
-bool Tao::tao_split_component(std::string comp_str, TaoDataVarComponentStructAlloc1D comp) {
+Tao::TaoSplitComponent Tao::tao_split_component(std::string comp_str) {
   auto _comp_str = comp_str.c_str();
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto comp{TaoDataVarComponentStructAlloc1D()};
   bool _err{};
   fortran_tao_split_component(
       /* const char* */ _comp_str,
       /* void* */ comp.get_fortran_ptr(),
       /* bool& */ _err
   );
-  return _err;
+  return TaoSplitComponent{std::move(comp), _err};
 }
 void Tao::tao_srdt_calc_needed(std::string data_type, std::string data_source, int do_srdt) {
   auto _data_type = data_type.c_str();

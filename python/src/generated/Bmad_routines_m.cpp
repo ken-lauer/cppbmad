@@ -1863,21 +1863,23 @@ err_flag : bool
   )
       .def_readonly("ix_pass", &Bmad::MultipassChain::ix_pass)
       .def_readonly("n_links", &Bmad::MultipassChain::n_links)
-      .def("__len__", [](const Bmad::MultipassChain &) { return 2; })
+      .def_readonly("chain_ele", &Bmad::MultipassChain::chain_ele)
+      .def("__len__", [](const Bmad::MultipassChain &) { return 3; })
       .def("__getitem__", [](const Bmad::MultipassChain &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.ix_pass);
         if (i == 1)
           return py::cast(s.n_links);
+        if (i == 2)
+          return py::cast(s.chain_ele);
         throw py::index_error();
       });
   m.def(
       "multipass_chain",
       &Bmad::multipass_chain,
       py::arg("ele"),
-      py::arg("chain_ele") = py::none(),
       py::arg("use_super_lord") = py::none(),
       R"""(Wrapper for Fortran routine multipass_chain
 

@@ -445,14 +445,14 @@ subroutine fortran_ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_typ
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an(0:) => f_an_ptr
   else
-    f_an_ptr => null()
+    f_an => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(bn%data_ptr)) then
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn(0:) => f_bn_ptr
   else
-    f_bn_ptr => null()
+    f_bn => null()
   endif
   ! in: f_ix_pole_max 0D_NOT_integer
   f_ix_pole_max = ix_pole_max
@@ -489,7 +489,7 @@ subroutine fortran_ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_typ
   else
     f_make_matrix_native_ptr => null()
   endif
-  call ab_multipole_kicks(f_an, f_bn, f_ix_pole_max, f_ele, f_orbit, f_pole_type_ptr, &
+  call ab_multipole_kicks(f_an(0:), f_bn(0:), f_ix_pole_max, f_ele, f_orbit, f_pole_type_ptr, &
       f_scale_ptr, f_mat6, f_make_matrix_native_ptr)
 
 end subroutine
@@ -1183,7 +1183,7 @@ subroutine fortran_array_re_str (arr, parens_in, str_out) bind(c)
     call c_f_pointer(arr%data_ptr, f_arr_ptr, [arr%dims(1)])
     f_arr => f_arr_ptr
   else
-    f_arr_ptr => null()
+    f_arr => null()
   endif
   ! in: f_parens_in 0D_NOT_character
   if (c_associated(parens_in)) then
@@ -2008,7 +2008,7 @@ subroutine fortran_bbi_slice_calc (ele, n_slice, z_slice) bind(c)
     call c_f_pointer(z_slice%data_ptr, f_z_slice_ptr, [z_slice%dims(1)])
     f_z_slice => f_z_slice_ptr
   else
-    f_z_slice_ptr => null()
+    f_z_slice => null()
   endif
   call bbi_slice_calc(f_ele, f_n_slice, f_z_slice)
 
@@ -3314,7 +3314,7 @@ subroutine fortran_calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, 
     call c_f_pointer(charge%data_ptr, f_charge_ptr, [charge%dims(1)])
     f_charge => f_charge_ptr
   else
-    f_charge_ptr => null()
+    f_charge => null()
   endif
   ! out: f_bunch_params 0D_NOT_type
   if (.not. c_associated(bunch_params)) return
@@ -3782,14 +3782,13 @@ subroutine fortran_choose_quads_for_set_tune (branch, dk1, eles, mask, err_flag)
   character(kind=c_char), pointer :: f_mask_ptr(:)
   character(len=4096), pointer :: f_mask_call_ptr
   ! ** Out parameters **
-  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
-  logical :: f_err_flag
-  logical(c_bool), pointer :: f_err_flag_ptr
-  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: dk1
   type(real_container_alloc), pointer :: f_dk1
   type(c_ptr), intent(in), value :: eles
   type(ele_pointer_struct_container_alloc), pointer :: f_eles
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
   ! in: f_branch 0D_NOT_type
   if (.not. c_associated(branch)) then
@@ -3853,14 +3852,14 @@ subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low
   type(lat_struct), pointer :: f_low_E_lat
   type(c_ptr), value :: high_E_lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_high_E_lat
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: delta_e  ! 0D_NOT_real
-  real(c_double) :: f_delta_e
-  real(c_double), pointer :: f_delta_e_ptr
   type(c_ptr), intent(in), value :: low_E_orb
   type(coord_struct_container_alloc), pointer :: f_low_E_orb
   type(c_ptr), intent(in), value :: high_E_orb
   type(coord_struct_container_alloc), pointer :: f_high_E_orb
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: delta_e  ! 0D_NOT_real
+  real(c_double) :: f_delta_e
+  real(c_double), pointer :: f_delta_e_ptr
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) then
@@ -4121,12 +4120,11 @@ subroutine fortran_closed_orbit_from_tracking (lat, closed_orb, i_dim, eps_rel, 
   type(c_ptr), value :: init_guess  ! 0D_NOT_type
   type(coord_struct), pointer :: f_init_guess
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: closed_orb
+  type(coord_struct_container_alloc), pointer :: f_closed_orb
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: closed_orb
-  type(coord_struct_container_alloc), pointer :: f_closed_orb
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) then
@@ -4144,14 +4142,14 @@ subroutine fortran_closed_orbit_from_tracking (lat, closed_orb, i_dim, eps_rel, 
     call c_f_pointer(eps_rel%data_ptr, f_eps_rel_ptr, [eps_rel%dims(1)])
     f_eps_rel => f_eps_rel_ptr
   else
-    f_eps_rel_ptr => null()
+    f_eps_rel => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(eps_abs%data_ptr)) then
     call c_f_pointer(eps_abs%data_ptr, f_eps_abs_ptr, [eps_abs%dims(1)])
     f_eps_abs => f_eps_abs_ptr
   else
-    f_eps_abs_ptr => null()
+    f_eps_abs => null()
   endif
   ! in: f_init_guess 0D_NOT_type
   if (c_associated(init_guess))   call c_f_pointer(init_guess, f_init_guess)
@@ -4248,7 +4246,7 @@ subroutine fortran_complex_taylor_coef1 (complex_taylor, exp, coef) bind(c)
     call c_f_pointer(exp%data_ptr, f_exp_ptr, [exp%dims(1)])
     f_exp => f_exp_ptr
   else
-    f_exp_ptr => null()
+    f_exp => null()
   endif
   f_coef = complex_taylor_coef(f_complex_taylor, f_exp)
 
@@ -4461,7 +4459,7 @@ subroutine fortran_complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r
     call c_f_pointer(r_in%data_ptr, f_r_in_ptr, [r_in%dims(1)])
     f_r_in => f_r_in_ptr
   else
-    f_r_in_ptr => null()
+    f_r_in => null()
   endif
   !! general array (1D_NOT_complex) out
   if (c_associated(vec0%data_ptr)) then
@@ -4482,7 +4480,7 @@ subroutine fortran_complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r
     call c_f_pointer(r_out%data_ptr, f_r_out_ptr, [r_out%dims(1)])
     f_r_out => f_r_out_ptr
   else
-    f_r_out_ptr => null()
+    f_r_out => null()
   endif
   call complex_taylor_to_mat6(f_a_complex_taylor, f_r_in, f_vec0, f_mat6, f_r_out)
 
@@ -6956,7 +6954,7 @@ subroutine fortran_dynamic_aperture_scan (aperture_scan, aperture_param, pz_star
   logical, target :: f_print_timing_native
   logical, pointer :: f_print_timing_native_ptr
   logical(c_bool), pointer :: f_print_timing_ptr
-  ! ** Inout parameters **
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: aperture_scan
   type(aperture_scan_struct_container_alloc), pointer :: f_aperture_scan
   ! ** End of parameters **
@@ -6970,7 +6968,7 @@ subroutine fortran_dynamic_aperture_scan (aperture_scan, aperture_param, pz_star
     call c_f_pointer(pz_start%data_ptr, f_pz_start_ptr, [pz_start%dims(1)])
     f_pz_start => f_pz_start_ptr
   else
-    f_pz_start_ptr => null()
+    f_pz_start => null()
   endif
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
@@ -7770,14 +7768,14 @@ subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max) bind(c)
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn => f_bn_ptr
   else
-    f_bn_ptr => null()
+    f_bn => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(an%data_ptr)) then
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an => f_an_ptr
   else
-    f_an_ptr => null()
+    f_an => null()
   endif
   ! out: f_n_max 0D_NOT_integer
   if (c_associated(n_max)) then
@@ -7941,14 +7939,14 @@ subroutine fortran_ele_value_has_changed (ele, list, abs_tol, set_old, has_chang
     call c_f_pointer(list%data_ptr, f_list_ptr, [list%dims(1)])
     f_list => f_list_ptr
   else
-    f_list_ptr => null()
+    f_list => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(abs_tol%data_ptr)) then
     call c_f_pointer(abs_tol%data_ptr, f_abs_tol_ptr, [abs_tol%dims(1)])
     f_abs_tol => f_abs_tol_ptr
   else
-    f_abs_tol_ptr => null()
+    f_abs_tol => null()
   endif
   ! in: f_set_old 0D_NOT_logical
   f_set_old = set_old
@@ -11863,6 +11861,8 @@ subroutine fortran_expression_string_to_stack (string, stack, n_stack, err_flag,
   character(len=4096), target :: f_string
   character(kind=c_char), pointer :: f_string_ptr(:)
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: stack
+  type(expression_atom_struct_container_alloc), pointer :: f_stack
   type(c_ptr), intent(in), value :: n_stack  ! 0D_NOT_integer
   integer :: f_n_stack
   integer(c_int), pointer :: f_n_stack_ptr
@@ -11872,9 +11872,6 @@ subroutine fortran_expression_string_to_stack (string, stack, n_stack, err_flag,
   type(c_ptr), intent(in), value :: err_str
   character(len=4096), target :: f_err_str
   character(kind=c_char), pointer :: f_err_str_ptr(:)
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: stack
-  type(expression_atom_struct_container_alloc), pointer :: f_stack
   ! ** End of parameters **
   ! in: f_string 0D_NOT_character
   if (.not. c_associated(string)) then
@@ -12090,14 +12087,14 @@ subroutine fortran_fft1 (a, b, n, isn, ierr) bind(c)
     call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
     f_a => f_a_ptr
   else
-    f_a_ptr => null()
+    f_a => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b => f_b_ptr
   else
-    f_b_ptr => null()
+    f_b => null()
   endif
   ! in: f_n 0D_NOT_integer
   f_n = n
@@ -12822,7 +12819,7 @@ subroutine fortran_gen_grad_field (deriv, gg, rho, theta, field) bind(c)
     call c_f_pointer(deriv%data_ptr, f_deriv_ptr, [deriv%dims(1)])
     f_deriv(0:) => f_deriv_ptr
   else
-    f_deriv_ptr => null()
+    f_deriv => null()
   endif
   ! inout: f_gg 0D_NOT_type
   if (.not. c_associated(gg)) return
@@ -12838,7 +12835,7 @@ subroutine fortran_gen_grad_field (deriv, gg, rho, theta, field) bind(c)
   else
     f_field_ptr => null()
   endif
-  f_field = gen_grad_field(f_deriv, f_gg, f_rho, f_theta)
+  f_field = gen_grad_field(f_deriv(0:), f_gg, f_rho, f_theta)
 
   ! out: f_field 1D_NOT_real
   if (c_associated(field%data_ptr)) then
@@ -13052,12 +13049,11 @@ subroutine fortran_get_slave_list (lord, slaves, n_slave) bind(c)
   type(c_ptr), value :: lord  ! 0D_NOT_type
   type(ele_struct), pointer :: f_lord
   ! ** Out parameters **
+  type(c_ptr), intent(in), value :: slaves
+  type(ele_pointer_struct_container_alloc), pointer :: f_slaves
   type(c_ptr), intent(in), value :: n_slave  ! 0D_NOT_integer
   integer :: f_n_slave
   integer(c_int), pointer :: f_n_slave_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: slaves
-  type(ele_pointer_struct_container_alloc), pointer :: f_slaves
   ! ** End of parameters **
   ! in: f_lord 0D_NOT_type
   if (.not. c_associated(lord)) return
@@ -14928,7 +14924,7 @@ subroutine fortran_integrand_base (t, args, func_retval__) bind(c)
     call c_f_pointer(args%data_ptr, f_args_ptr, [args%dims(1)])
     f_args => f_args_ptr
   else
-    f_args_ptr => null()
+    f_args => null()
   endif
   f_func_retval__ = integrand_base(f_t, f_args)
 
@@ -15395,14 +15391,14 @@ subroutine fortran_knot_interpolate (x_knot, y_knot, x_pt, interpolation, err_fl
     call c_f_pointer(x_knot%data_ptr, f_x_knot_ptr, [x_knot%dims(1)])
     f_x_knot => f_x_knot_ptr
   else
-    f_x_knot_ptr => null()
+    f_x_knot => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(y_knot%data_ptr)) then
     call c_f_pointer(y_knot%data_ptr, f_y_knot_ptr, [y_knot%dims(1)])
     f_y_knot => f_y_knot_ptr
   else
-    f_y_knot_ptr => null()
+    f_y_knot => null()
   endif
   ! in: f_x_pt 0D_NOT_real
   f_x_pt = x_pt
@@ -15438,14 +15434,14 @@ subroutine fortran_knots_to_string (x_knot, y_knot, str) bind(c)
     call c_f_pointer(x_knot%data_ptr, f_x_knot_ptr, [x_knot%dims(1)])
     f_x_knot => f_x_knot_ptr
   else
-    f_x_knot_ptr => null()
+    f_x_knot => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(y_knot%data_ptr)) then
     call c_f_pointer(y_knot%data_ptr, f_y_knot_ptr, [y_knot%dims(1)])
     f_y_knot => f_y_knot_ptr
   else
-    f_y_knot_ptr => null()
+    f_y_knot => null()
   endif
   f_str = knots_to_string(f_x_knot, f_y_knot)
 
@@ -18085,21 +18081,21 @@ subroutine fortran_mfft1 (a, b, n, ndim, isn, ierr) bind(c)
     call c_f_pointer(a%data_ptr, f_a_ptr, [a%dims(1)])
     f_a => f_a_ptr
   else
-    f_a_ptr => null()
+    f_a => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(b%data_ptr)) then
     call c_f_pointer(b%data_ptr, f_b_ptr, [b%dims(1)])
     f_b => f_b_ptr
   else
-    f_b_ptr => null()
+    f_b => null()
   endif
   !! general array (1D_NOT_integer) in
   if (c_associated(n%data_ptr)) then
     call c_f_pointer(n%data_ptr, f_n_ptr, [n%dims(1)])
     f_n => f_n_ptr
   else
-    f_n_ptr => null()
+    f_n => null()
   endif
   ! in: f_ndim 0D_NOT_integer
   f_ndim = ndim
@@ -18281,7 +18277,6 @@ subroutine fortran_multipass_chain (ele, ix_pass, n_links, chain_ele, use_super_
   type(c_ptr), intent(in), value :: n_links  ! 0D_NOT_integer
   integer :: f_n_links
   integer(c_int), pointer :: f_n_links_ptr
-  ! ** Inout parameters **
   type(c_ptr), intent(in), value :: chain_ele
   type(ele_pointer_struct_container_alloc), pointer :: f_chain_ele
   ! ** End of parameters **
@@ -18404,30 +18399,30 @@ subroutine fortran_multipole_ab_to_kt (an, bn, knl, tn) bind(c)
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an(0:) => f_an_ptr
   else
-    f_an_ptr => null()
+    f_an => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(bn%data_ptr)) then
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn(0:) => f_bn_ptr
   else
-    f_bn_ptr => null()
+    f_bn => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(knl%data_ptr)) then
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
-    f_knl_ptr => null()
+    f_knl => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(tn%data_ptr)) then
     call c_f_pointer(tn%data_ptr, f_tn_ptr, [tn%dims(1)])
     f_tn(0:) => f_tn_ptr
   else
-    f_tn_ptr => null()
+    f_tn => null()
   endif
-  call multipole_ab_to_kt(f_an, f_bn, f_knl, f_tn)
+  call multipole_ab_to_kt(f_an(0:), f_bn(0:), f_knl(0:), f_tn(0:))
 
 end subroutine
 subroutine fortran_multipole_ele_to_ab (ele, use_ele_tilt, ix_pole_max, a, b, pole_type, &
@@ -18569,14 +18564,14 @@ subroutine fortran_multipole_ele_to_kt (ele, use_ele_tilt, ix_pole_max, knl, til
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
-    f_knl_ptr => null()
+    f_knl => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(tilt%data_ptr)) then
     call c_f_pointer(tilt%data_ptr, f_tilt_ptr, [tilt%dims(1)])
     f_tilt(0:) => f_tilt_ptr
   else
-    f_tilt_ptr => null()
+    f_tilt => null()
   endif
   ! in: f_pole_type 0D_NOT_integer
   if (c_associated(pole_type)) then
@@ -18590,7 +18585,7 @@ subroutine fortran_multipole_ele_to_kt (ele, use_ele_tilt, ix_pole_max, knl, til
   else
     f_include_kicks_ptr => null()
   endif
-  call multipole_ele_to_kt(f_ele, f_use_ele_tilt, f_ix_pole_max, f_knl, f_tilt, &
+  call multipole_ele_to_kt(f_ele, f_use_ele_tilt, f_ix_pole_max, f_knl(0:), f_tilt(0:), &
       f_pole_type_ptr, f_include_kicks_ptr)
 
   ! out: f_ix_pole_max 0D_NOT_integer
@@ -18723,14 +18718,14 @@ subroutine fortran_multipole_kick_mat (knl, tilt, ref_species, ele, orbit, facto
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
-    f_knl_ptr => null()
+    f_knl => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(tilt%data_ptr)) then
     call c_f_pointer(tilt%data_ptr, f_tilt_ptr, [tilt%dims(1)])
     f_tilt(0:) => f_tilt_ptr
   else
-    f_tilt_ptr => null()
+    f_tilt => null()
   endif
   ! in: f_ref_species 0D_NOT_integer
   f_ref_species = ref_species
@@ -18749,7 +18744,8 @@ subroutine fortran_multipole_kick_mat (knl, tilt, ref_species, ele, orbit, facto
   else
     f_mat6_ptr => null()
   endif
-  call multipole_kick_mat(f_knl, f_tilt, f_ref_species, f_ele, f_orbit, f_factor, f_mat6)
+  call multipole_kick_mat(f_knl(0:), f_tilt(0:), f_ref_species, f_ele, f_orbit, f_factor, &
+      f_mat6)
 
   ! out: f_mat6 2D_NOT_real
   if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
@@ -18785,14 +18781,14 @@ subroutine fortran_multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_of
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
-    f_knl_ptr => null()
+    f_knl => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(tilt%data_ptr)) then
     call c_f_pointer(tilt%data_ptr, f_tilt_ptr, [tilt%dims(1)])
     f_tilt(0:) => f_tilt_ptr
   else
-    f_tilt_ptr => null()
+    f_tilt => null()
   endif
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -18814,7 +18810,7 @@ subroutine fortran_multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_of
   else
     f_ref_orb_offset_native_ptr => null()
   endif
-  call multipole_kicks(f_knl, f_tilt, f_ele, f_orbit, f_pole_type_ptr, &
+  call multipole_kicks(f_knl(0:), f_tilt(0:), f_ele, f_orbit, f_pole_type_ptr, &
       f_ref_orb_offset_native_ptr)
 
 end subroutine
@@ -18845,37 +18841,37 @@ subroutine fortran_multipole_kt_to_ab (knl, knsl, tn, an, bn) bind(c)
     call c_f_pointer(knl%data_ptr, f_knl_ptr, [knl%dims(1)])
     f_knl(0:) => f_knl_ptr
   else
-    f_knl_ptr => null()
+    f_knl => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(knsl%data_ptr)) then
     call c_f_pointer(knsl%data_ptr, f_knsl_ptr, [knsl%dims(1)])
     f_knsl(0:) => f_knsl_ptr
   else
-    f_knsl_ptr => null()
+    f_knsl => null()
   endif
   !! general array (1D_NOT_real) in
   if (c_associated(tn%data_ptr)) then
     call c_f_pointer(tn%data_ptr, f_tn_ptr, [tn%dims(1)])
     f_tn(0:) => f_tn_ptr
   else
-    f_tn_ptr => null()
+    f_tn => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(an%data_ptr)) then
     call c_f_pointer(an%data_ptr, f_an_ptr, [an%dims(1)])
     f_an(0:) => f_an_ptr
   else
-    f_an_ptr => null()
+    f_an => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(bn%data_ptr)) then
     call c_f_pointer(bn%data_ptr, f_bn_ptr, [bn%dims(1)])
     f_bn(0:) => f_bn_ptr
   else
-    f_bn_ptr => null()
+    f_bn => null()
   endif
-  call multipole_kt_to_ab(f_knl, f_knsl, f_tn, f_an, f_bn)
+  call multipole_kt_to_ab(f_knl(0:), f_knsl(0:), f_tn(0:), f_an(0:), f_bn(0:))
 
 end subroutine
 subroutine fortran_multipole_spin_tracking (ele, param, orbit) bind(c)
@@ -20650,7 +20646,7 @@ subroutine fortran_parse_integer_list (err_str, lat, int_array, exact_size, deli
     call c_f_pointer(int_array%data_ptr, f_int_array_ptr, [int_array%dims(1)])
     f_int_array => f_int_array_ptr
   else
-    f_int_array_ptr => null()
+    f_int_array => null()
   endif
   ! in: f_exact_size 0D_NOT_logical
   f_exact_size = exact_size
@@ -20866,7 +20862,7 @@ subroutine fortran_parse_real_list (lat, err_str, real_array, exact_size, delim,
     call c_f_pointer(real_array%data_ptr, f_real_array_ptr, [real_array%dims(1)])
     f_real_array => f_real_array_ptr
   else
-    f_real_array_ptr => null()
+    f_real_array => null()
   endif
   ! in: f_exact_size 0D_NOT_logical
   f_exact_size = exact_size
@@ -21150,7 +21146,7 @@ subroutine fortran_parser_fast_complex_read (cmplx_vec, ele, delim, err_str, is_
     call c_f_pointer(cmplx_vec%data_ptr, f_cmplx_vec_ptr, [cmplx_vec%dims(1)])
     f_cmplx_vec => f_cmplx_vec_ptr
   else
-    f_cmplx_vec_ptr => null()
+    f_cmplx_vec => null()
   endif
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -21197,7 +21193,7 @@ subroutine fortran_parser_fast_integer_read (int_vec, ele, delim_wanted, err_str
     call c_f_pointer(int_vec%data_ptr, f_int_vec_ptr, [int_vec%dims(1)])
     f_int_vec => f_int_vec_ptr
   else
-    f_int_vec_ptr => null()
+    f_int_vec => null()
   endif
   ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -21256,7 +21252,7 @@ subroutine fortran_parser_fast_real_read (real_vec, ele, end_delims, delim, err_
     call c_f_pointer(real_vec%data_ptr, f_real_vec_ptr, [real_vec%dims(1)])
     f_real_vec => f_real_vec_ptr
   else
-    f_real_vec_ptr => null()
+    f_real_vec => null()
   endif
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -23537,7 +23533,7 @@ subroutine fortran_ptc_closed_orbit_calc (branch, closed_orbit, radiation_dampin
   logical, target :: f_radiation_damping_on_native
   logical, pointer :: f_radiation_damping_on_native_ptr
   logical(c_bool), pointer :: f_radiation_damping_on_ptr
-  ! ** Inout parameters **
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: closed_orbit
   type(coord_struct_container_alloc), pointer :: f_closed_orbit
   ! ** End of parameters **
@@ -25193,7 +25189,7 @@ subroutine fortran_remove_constant_taylor (taylor_in, taylor_out, c0, &
     call c_f_pointer(c0%data_ptr, f_c0_ptr, [c0%dims(1)])
     f_c0 => f_c0_ptr
   else
-    f_c0_ptr => null()
+    f_c0 => null()
   endif
   ! in: f_remove_higher_order_terms 0D_NOT_logical
   f_remove_higher_order_terms = remove_higher_order_terms
@@ -27321,7 +27317,7 @@ subroutine fortran_set_tune (phi_a_set, phi_b_set, dk1, eles, branch, orb, print
     call c_f_pointer(dk1%data_ptr, f_dk1_ptr, [dk1%dims(1)])
     f_dk1 => f_dk1_ptr
   else
-    f_dk1_ptr => null()
+    f_dk1 => null()
   endif
   !! type array (1D_NOT_type)
   if (c_associated(eles%data_ptr)) then
@@ -27837,14 +27833,14 @@ subroutine fortran_solve_psi_fixed_steps (t0, t1, p0, args, t, p) bind(c)
     call c_f_pointer(t%data_ptr, f_t_ptr, [t%dims(1)])
     f_t => f_t_ptr
   else
-    f_t_ptr => null()
+    f_t => null()
   endif
   !! general array (1D_NOT_real) inout
   if (c_associated(p%data_ptr)) then
     call c_f_pointer(p%data_ptr, f_p_ptr, [p%dims(1)])
     f_p => f_p_ptr
   else
-    f_p_ptr => null()
+    f_p => null()
   endif
   call solve_psi_fixed_steps(f_t0, f_t1, f_p0, f_args, f_t, f_p)
 
@@ -28695,7 +28691,7 @@ subroutine fortran_srdt_lsq_solution (lat, var_indexes, ls_soln, n_slices_gen_op
   type(array_descriptor_t), intent(in) :: weight_in
   real(rp) :: f_weight_in(10)
   real(c_double), pointer :: f_weight_in_ptr(:)
-  ! ** Inout parameters **
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: ls_soln
   type(real_container_alloc), pointer :: f_ls_soln
   ! ** End of parameters **
@@ -28707,7 +28703,7 @@ subroutine fortran_srdt_lsq_solution (lat, var_indexes, ls_soln, n_slices_gen_op
     call c_f_pointer(var_indexes%data_ptr, f_var_indexes_ptr, [var_indexes%dims(1)])
     f_var_indexes => f_var_indexes_ptr
   else
-    f_var_indexes_ptr => null()
+    f_var_indexes => null()
   endif
   !! container general array (1D_ALLOC_real)
   if (c_associated(ls_soln))   call c_f_pointer(ls_soln, f_ls_soln)
@@ -29505,7 +29501,7 @@ subroutine fortran_tilt_coords (tilt_val, coord, mat6, make_matrix) bind(c)
     call c_f_pointer(coord%data_ptr, f_coord_ptr, [coord%dims(1)])
     f_coord => f_coord_ptr
   else
-    f_coord_ptr => null()
+    f_coord => null()
   endif
   !! general array (2D_NOT_real) inout
   if (c_associated(mat6%data_ptr)) then
@@ -29547,7 +29543,7 @@ subroutine fortran_tilt_coords_photon (tilt_val, coord, w_mat) bind(c)
     call c_f_pointer(coord%data_ptr, f_coord_ptr, [coord%dims(1)])
     f_coord => f_coord_ptr
   else
-    f_coord_ptr => null()
+    f_coord => null()
   endif
   !! general array (2D_NOT_real) inout
   if (c_associated(w_mat%data_ptr)) then
@@ -29611,7 +29607,7 @@ subroutine fortran_to_eta_reading (eta_actual, ele, axis, add_noise, reading, er
     call c_f_pointer(eta_actual%data_ptr, f_eta_actual_ptr, [eta_actual%dims(1)])
     f_eta_actual => f_eta_actual_ptr
   else
-    f_eta_actual_ptr => null()
+    f_eta_actual => null()
   endif
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -32485,11 +32481,11 @@ subroutine fortran_track_all (lat, orbit, ix_branch, track_state, err_flag, orbi
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: orbit0
+  type(coord_struct_container_alloc), pointer :: f_orbit0
   ! ** Inout parameters **
   type(c_ptr), intent(in), value :: orbit
   type(coord_struct_container_alloc), pointer :: f_orbit
-  type(c_ptr), intent(in), value :: orbit0
-  type(coord_struct_container_alloc), pointer :: f_orbit0
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) then
@@ -32694,7 +32690,7 @@ subroutine fortran_track_bunch_time (bunch, branch, t_end, s_end, dt_step, extra
     call c_f_pointer(dt_step%data_ptr, f_dt_step_ptr, [dt_step%dims(1)])
     f_dt_step => f_dt_step_ptr
   else
-    f_dt_step_ptr => null()
+    f_dt_step => null()
   endif
   !! type array (1D_NOT_type)
   if (c_associated(extra_field%data_ptr)) then
@@ -32776,7 +32772,7 @@ subroutine fortran_track_complex_taylor (start_orb, complex_taylor, end_orb) bin
     call c_f_pointer(start_orb%data_ptr, f_start_orb_ptr, [start_orb%dims(1)])
     f_start_orb => f_start_orb_ptr
   else
-    f_start_orb_ptr => null()
+    f_start_orb => null()
   endif
   !! type array (1D_NOT_type)
   if (c_associated(complex_taylor%data_ptr)) then
@@ -32789,7 +32785,7 @@ subroutine fortran_track_complex_taylor (start_orb, complex_taylor, end_orb) bin
     call c_f_pointer(end_orb%data_ptr, f_end_orb_ptr, [end_orb%dims(1)])
     f_end_orb => f_end_orb_ptr
   else
-    f_end_orb_ptr => null()
+    f_end_orb => null()
   endif
   call track_complex_taylor(f_start_orb, f_complex_taylor, f_end_orb)
 
@@ -32818,12 +32814,11 @@ subroutine fortran_track_from_s_to_s (lat, s_start, s_end, orbit_start, orbit_en
   ! ** Out parameters **
   type(c_ptr), value :: orbit_end  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orbit_end
+  type(c_ptr), intent(in), value :: all_orb
+  type(coord_struct_container_alloc), pointer :: f_all_orb
   type(c_ptr), intent(in), value :: track_state  ! 0D_NOT_integer
   integer :: f_track_state
   integer(c_int), pointer :: f_track_state_ptr
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: all_orb
-  type(coord_struct_container_alloc), pointer :: f_all_orb
   ! ** End of parameters **
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) return
@@ -34536,7 +34531,7 @@ subroutine fortran_twiss_from_tracking (lat, ref_orb0, symp_err, err_flag, d_orb
     call c_f_pointer(d_orb%data_ptr, f_d_orb_ptr, [d_orb%dims(1)])
     f_d_orb => f_d_orb_ptr
   else
-    f_d_orb_ptr => null()
+    f_d_orb => null()
   endif
   call twiss_from_tracking(f_lat, f_ref_orb0, f_symp_err, f_err_flag, f_d_orb)
 
@@ -35410,7 +35405,7 @@ subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no
     call c_f_pointer(position%data_ptr, f_position_ptr, [position%dims(1)])
     f_position => f_position_ptr
   else
-    f_position_ptr => null()
+    f_position => null()
   endif
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) then

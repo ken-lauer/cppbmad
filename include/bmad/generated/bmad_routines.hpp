@@ -964,17 +964,18 @@ Bmad::CheckIfSInBounds
 check_if_s_in_bounds(BranchStruct &branch, double s, std::optional<bool> print_err = std::nullopt);
 extern "C" void fortran_choose_quads_for_set_tune(
     void *branch /* 0D_NOT_type in */,
-    void *dk1 /* 1D_ALLOC_real inout */,
-    void *eles /* 1D_ALLOC_type inout */,
+    void *dk1 /* 1D_ALLOC_real out */,
+    void *eles /* 1D_ALLOC_type out */,
     const char *mask /* 0D_NOT_character in */,
     bool &err_flag /* 0D_NOT_logical out */
 );
-bool choose_quads_for_set_tune(
-    BranchStruct &branch,
-    RealAlloc1D &dk1,
-    ElePointerStructAlloc1D eles,
-    std::optional<std::string> mask = std::nullopt
-);
+struct ChooseQuadsForSetTune {
+  RealAlloc1D dk1;
+  ElePointerStructAlloc1D eles;
+  bool err_flag;
+};
+Bmad::ChooseQuadsForSetTune
+choose_quads_for_set_tune(BranchStruct &branch, std::optional<std::string> mask = std::nullopt);
 extern "C" void fortran_chrom_calc(
     void *lat /* 0D_NOT_type in */,
     double &delta_e /* 0D_NOT_real inout */,
@@ -984,8 +985,8 @@ extern "C" void fortran_chrom_calc(
     double *pz /* 0D_NOT_real in */,
     void *low_E_lat /* 0D_NOT_type out */,
     void *high_E_lat /* 0D_NOT_type out */,
-    void *low_E_orb /* 1D_ALLOC_type inout */,
-    void *high_E_orb /* 1D_ALLOC_type inout */,
+    void *low_E_orb /* 1D_ALLOC_type out */,
+    void *high_E_orb /* 1D_ALLOC_type out */,
     int *ix_branch /* 0D_NOT_integer in */,
     void *orb0 /* 0D_NOT_type in */
 );
@@ -995,13 +996,13 @@ struct ChromCalc {
   bool err_flag;
   LatStruct low_E_lat;
   LatStruct high_E_lat;
+  CoordStructAlloc1D low_E_orb;
+  CoordStructAlloc1D high_E_orb;
 };
 Bmad::ChromCalc chrom_calc(
     LatStruct &lat,
     double &delta_e,
     std::optional<double> pz = std::nullopt,
-    std::optional<CoordStructAlloc1D> low_E_orb = std::nullopt,
-    std::optional<CoordStructAlloc1D> high_E_orb = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
     optional_ref<CoordStruct> orb0 = std::nullopt
 );
@@ -1045,16 +1046,19 @@ bool closed_orbit_calc(
 );
 extern "C" void fortran_closed_orbit_from_tracking(
     void *lat /* 0D_NOT_type in */,
-    void *closed_orb /* 1D_ALLOC_type inout */,
+    void *closed_orb /* 1D_ALLOC_type out */,
     int &i_dim /* 0D_NOT_integer in */,
     Bmad::array_descriptor_t &eps_rel /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &eps_abs /* 1D_NOT_real in */,
     void *init_guess /* 0D_NOT_type in */,
     bool &err_flag /* 0D_NOT_logical out */
 );
-bool closed_orbit_from_tracking(
+struct ClosedOrbitFromTracking {
+  CoordStructAlloc1D closed_orb;
+  bool err_flag;
+};
+Bmad::ClosedOrbitFromTracking closed_orbit_from_tracking(
     LatStruct &lat,
-    CoordStructAlloc1D closed_orb,
     int i_dim,
     std::optional<FArray1D<Real>> eps_rel = std::nullopt,
     std::optional<FArray1D<Real>> eps_abs = std::nullopt,
@@ -1667,7 +1671,7 @@ extern "C" bool fortran_custom_attribute_ubound_index(
 int custom_attribute_ubound_index(int ele_class);
 
 // Skipped unusable routine custom_ele_attrib_name_list:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine damap_equal_bmad_taylor:
@@ -1820,14 +1824,13 @@ AperturePointStruct dynamic_aperture_point(
     std::optional<bool> check_xy_init = std::nullopt
 );
 extern "C" void fortran_dynamic_aperture_scan(
-    void *aperture_scan /* 1D_ALLOC_type inout */,
+    void *aperture_scan /* 1D_ALLOC_type out */,
     void *aperture_param /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &pz_start /* 1D_NOT_real in */,
     void *lat /* 0D_NOT_type in */,
     bool *print_timing /* 0D_NOT_logical in */
 );
-void dynamic_aperture_scan(
-    ApertureScanStructAlloc1D aperture_scan,
+ApertureScanStructAlloc1D dynamic_aperture_scan(
     ApertureParamStruct &aperture_param,
     FArray1D<Real> &pz_start,
     LatStruct &lat,
@@ -3065,18 +3068,18 @@ Bmad::ExpressionStackValue expression_stack_value(
 );
 extern "C" void fortran_expression_string_to_stack(
     const char *string /* 0D_NOT_character in */,
-    void *stack /* 1D_ALLOC_type inout */,
+    void *stack /* 1D_ALLOC_type out */,
     int &n_stack /* 0D_NOT_integer out */,
     bool &err_flag /* 0D_NOT_logical out */,
     const char *err_str /* 0D_NOT_character out */
 );
 struct ExpressionStringToStack {
+  ExpressionAtomStructAlloc1D stack;
   int n_stack;
   bool err_flag;
   std::string err_str;
 };
-Bmad::ExpressionStringToStack
-expression_string_to_stack(std::string string, ExpressionAtomStructAlloc1D stack);
+Bmad::ExpressionStringToStack expression_string_to_stack(std::string string);
 extern "C" void fortran_expression_string_to_tree(
     const char *string /* 0D_NOT_character in */,
     void *root_tree /* 0D_NOT_type in */,
@@ -3399,10 +3402,14 @@ Bmad::GetNextWord get_next_word(
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_get_slave_list(
     void *lord /* 0D_NOT_type in */,
-    void *slaves /* 1D_ALLOC_type inout */,
+    void *slaves /* 1D_ALLOC_type out */,
     int &n_slave /* 0D_NOT_integer out */
 );
-int get_slave_list(EleStruct &lord, ElePointerStructAlloc1D slaves);
+struct GetSlaveList {
+  ElePointerStructAlloc1D slaves;
+  int n_slave;
+};
+Bmad::GetSlaveList get_slave_list(EleStruct &lord);
 
 // Skipped unusable routine get_switch:
 // - Variable-sized inout character array: 1D_NOT_character
@@ -4818,18 +4825,16 @@ extern "C" void fortran_multipass_chain(
     void *ele /* 0D_NOT_type in */,
     int &ix_pass /* 0D_NOT_integer out */,
     int &n_links /* 0D_NOT_integer out */,
-    void *chain_ele /* 1D_ALLOC_type inout */,
+    void *chain_ele /* 1D_ALLOC_type out */,
     bool *use_super_lord /* 0D_NOT_logical in */
 );
 struct MultipassChain {
   int ix_pass;
   int n_links;
+  ElePointerStructAlloc1D chain_ele;
 };
-Bmad::MultipassChain multipass_chain(
-    EleStruct &ele,
-    std::optional<ElePointerStructAlloc1D> chain_ele = std::nullopt,
-    std::optional<bool> use_super_lord = std::nullopt
-);
+Bmad::MultipassChain
+multipass_chain(EleStruct &ele, std::optional<bool> use_super_lord = std::nullopt);
 
 // Skipped unusable routine multipass_region_info:
 // - Untranslated type: multipass_region_lat_struct (0D)
@@ -6308,12 +6313,11 @@ struct PtcCheckForLostParticle {
 Bmad::PtcCheckForLostParticle ptc_check_for_lost_particle(bool do_reset);
 extern "C" void fortran_ptc_closed_orbit_calc(
     void *branch /* 0D_NOT_type in */,
-    void *closed_orbit /* 1D_ALLOC_type inout */,
+    void *closed_orbit /* 1D_ALLOC_type out */,
     bool *radiation_damping_on /* 0D_NOT_logical in */
 );
-void ptc_closed_orbit_calc(
+CoordStructAlloc1D ptc_closed_orbit_calc(
     BranchStruct &branch,
-    CoordStructAlloc1D closed_orbit,
     std::optional<bool> radiation_damping_on = std::nullopt
 );
 extern "C" void fortran_ptc_emit_calc(
@@ -6710,7 +6714,7 @@ struct ReadBinaryGridField {
 Bmad::ReadBinaryGridField read_binary_grid_field(std::string file_name, EleStruct &ele);
 
 // Skipped unusable routine read_digested_bmad_file:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_read_surface_reflection_file(
     const char *file_name /* 0D_NOT_character in */,
@@ -7677,7 +7681,7 @@ void spline_fit_orbit(
 );
 
 // Skipped unusable routine split_expression_string:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_split_lat(
     void *lat /* 0D_NOT_type inout */,
@@ -7753,17 +7757,16 @@ SummationRdtStruct srdt_calc(
 extern "C" void fortran_srdt_lsq_solution(
     void *lat /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &var_indexes /* 1D_NOT_integer in */,
-    void *ls_soln /* 1D_ALLOC_real inout */,
+    void *ls_soln /* 1D_ALLOC_real out */,
     int *n_slices_gen_opt /* 0D_NOT_integer in */,
     int *n_slices_sxt_opt /* 0D_NOT_integer in */,
     double *chrom_set_x_opt /* 0D_NOT_real in */,
     double *chrom_set_y_opt /* 0D_NOT_real in */,
     Bmad::array_descriptor_t &weight_in /* 1D_NOT_real in */
 );
-void srdt_lsq_solution(
+RealAlloc1D srdt_lsq_solution(
     LatStruct &lat,
     FArray1D<Int> &var_indexes,
-    RealAlloc1D &ls_soln,
     std::optional<int> n_slices_gen_opt = std::nullopt,
     std::optional<int> n_slices_sxt_opt = std::nullopt,
     std::optional<double> chrom_set_x_opt = std::nullopt,
@@ -7829,7 +7832,7 @@ Bmad::SurfaceGridDisplacement surface_grid_displacement(
 );
 
 // Skipped unusable routine switch_attrib_value_name:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_symp_lie_bmad(
     void *ele /* 0D_NOT_type inout */,
@@ -8758,18 +8761,18 @@ extern "C" void fortran_track_all(
     int *ix_branch /* 0D_NOT_integer in */,
     int &track_state /* 0D_NOT_integer out */,
     bool &err_flag /* 0D_NOT_logical out */,
-    void *orbit0 /* 1D_ALLOC_type inout */,
+    void *orbit0 /* 1D_ALLOC_type out */,
     bool *init_lost /* 0D_NOT_logical in */
 );
 struct TrackAll {
   int track_state;
   bool err_flag;
+  CoordStructAlloc1D orbit0;
 };
 Bmad::TrackAll track_all(
     LatStruct &lat,
     CoordStructAlloc1D orbit,
     std::optional<int> ix_branch = std::nullopt,
-    std::optional<CoordStructAlloc1D> orbit0 = std::nullopt,
     std::optional<bool> init_lost = std::nullopt
 );
 extern "C" void fortran_track_beam(
@@ -8854,13 +8857,14 @@ extern "C" void fortran_track_from_s_to_s(
     double &s_end /* 0D_NOT_real in */,
     void *orbit_start /* 0D_NOT_type in */,
     void *orbit_end /* 0D_NOT_type out */,
-    void *all_orb /* 1D_ALLOC_type inout */,
+    void *all_orb /* 1D_ALLOC_type out */,
     int *ix_branch /* 0D_NOT_integer in */,
     int &track_state /* 0D_NOT_integer out */,
     int *ix_ele_end /* 0D_NOT_integer in */
 );
 struct TrackFromSToS {
   CoordStruct orbit_end;
+  CoordStructAlloc1D all_orb;
   int track_state;
 };
 Bmad::TrackFromSToS track_from_s_to_s(
@@ -8868,7 +8872,6 @@ Bmad::TrackFromSToS track_from_s_to_s(
     double s_start,
     double s_end,
     CoordStruct &orbit_start,
-    std::optional<CoordStructAlloc1D> all_orb = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
     std::optional<int> ix_ele_end = std::nullopt
 );
@@ -9324,13 +9327,13 @@ extern "C" void fortran_twiss_to_1_turn_mat(
 FixedArray2D<Real, 2, 2> twiss_to_1_turn_mat(TwissStruct &twiss, double phi);
 
 // Skipped unusable routine type_complex_taylors:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_type_coord(void *coord /* 0D_NOT_type in */);
 void type_coord(CoordStruct &coord);
 
 // Skipped unusable routine type_ele:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_end_stuff:
@@ -9348,12 +9351,12 @@ void type_expression_tree(ExpressionTreeStruct &tree, std::optional<int> indent 
 // - Untranslated type: real_8 (1D)
 
 // Skipped unusable routine type_ptc_fibre:
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine type_ptc_internal_state:
 // - Untranslated type: internal_state (0D)
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_type_ptc_layout(void *lay /* 0D_NOT_type inout */);
 void type_ptc_layout(Layout &lay);

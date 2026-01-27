@@ -145,6 +145,29 @@ lost : bool
 ix_stage_tracked : int
 )"""
   );
+  py::class_<bsim::BbuTrackAll, std::unique_ptr<bsim::BbuTrackAll>>(
+      m,
+      "BbuTrackAll",
+      "bbu_track_all return type"
+  )
+      .def_readonly("hom_voltage_normalized", &bsim::BbuTrackAll::hom_voltage_normalized)
+      .def_readonly("growth_rate", &bsim::BbuTrackAll::growth_rate)
+      .def_readonly("lost", &bsim::BbuTrackAll::lost)
+      .def_readonly("irep", &bsim::BbuTrackAll::irep)
+      .def("__len__", [](const bsim::BbuTrackAll &) { return 4; })
+      .def("__getitem__", [](const bsim::BbuTrackAll &s, int i) -> py::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return py::cast(s.hom_voltage_normalized);
+        if (i == 1)
+          return py::cast(s.growth_rate);
+        if (i == 2)
+          return py::cast(s.lost);
+        if (i == 3)
+          return py::cast(s.irep);
+        throw py::index_error();
+      });
   m.def(
       "bbu_track_all",
       &bsim::bbu_track_all,
@@ -152,10 +175,6 @@ ix_stage_tracked : int
       py::arg("bbu_beam"),
       py::arg("bbu_param"),
       py::arg("beam_init"),
-      py::arg("hom_voltage_normalized"),
-      py::arg("growth_rate"),
-      py::arg("lost"),
-      py::arg("irep"),
       R"""(Wrapper for Fortran routine bbu_track_all
 
 Parameters
@@ -168,14 +187,6 @@ bbu_param : BbuParamStruct
 
 beam_init : BeamInitStruct
 
-hom_voltage_normalized : float
-
-growth_rate : float
-
-lost : bool
-
-irep : int
-
 Returns
 -------
 lat : LatStruct
@@ -187,12 +198,16 @@ bbu_param : BbuParamStruct
 beam_init : BeamInitStruct
 
 hom_voltage_normalized : float
+    HOM voltage normalized
 
 growth_rate : float
+    Growth rate
 
 lost : bool
+    Lost
 
 irep : int
+    irep
 )"""
   );
 }

@@ -2553,7 +2553,6 @@ ptc_fibre : Fibre, optional
       "ptc_closed_orbit_calc",
       &Bmad::ptc_closed_orbit_calc,
       py::arg("branch"),
-      py::arg("closed_orbit"),
       py::arg("radiation_damping_on") = py::none(),
       R"""(Subroutine ptc_closed_orbit_calc (branch, closed_orbit, radiation_damping_on)
 

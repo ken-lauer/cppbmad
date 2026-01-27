@@ -178,15 +178,19 @@ subroutine fortran_bbu_track_all (lat, bbu_beam, bbu_param, beam_init, hom_volta
   use bmad_struct, only: beam_init_struct, lat_struct
   use bbu_track_mod, only: bbu_beam_struct, bbu_param_struct
   implicit none
-  ! ** In parameters **
-  real(c_double) :: hom_voltage_normalized  ! 0D_NOT_real
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: hom_voltage_normalized  ! 0D_NOT_real
   real(rp) :: f_hom_voltage_normalized
-  real(c_double) :: growth_rate  ! 0D_NOT_real
+  real(c_double), pointer :: f_hom_voltage_normalized_ptr
+  type(c_ptr), intent(in), value :: growth_rate  ! 0D_NOT_real
   real(rp) :: f_growth_rate
-  logical(c_bool) :: lost  ! 0D_NOT_logical
+  real(c_double), pointer :: f_growth_rate_ptr
+  type(c_ptr), intent(in), value :: lost  ! 0D_NOT_logical
   logical :: f_lost
-  integer(c_int) :: irep  ! 0D_NOT_integer
+  logical(c_bool), pointer :: f_lost_ptr
+  type(c_ptr), intent(in), value :: irep  ! 0D_NOT_integer
   integer :: f_irep
+  integer(c_int), pointer :: f_irep_ptr
   ! ** Inout parameters **
   type(c_ptr), value :: lat  ! 0D_NOT_type
   type(lat_struct), pointer :: f_lat
@@ -209,17 +213,21 @@ subroutine fortran_bbu_track_all (lat, bbu_beam, bbu_param, beam_init, hom_volta
   ! inout: f_beam_init 0D_NOT_type
   if (.not. c_associated(beam_init)) return
   call c_f_pointer(beam_init, f_beam_init)
-  ! in: f_hom_voltage_normalized 0D_NOT_real
-  f_hom_voltage_normalized = hom_voltage_normalized
-  ! in: f_growth_rate 0D_NOT_real
-  f_growth_rate = growth_rate
-  ! in: f_lost 0D_NOT_logical
-  f_lost = lost
-  ! in: f_irep 0D_NOT_integer
-  f_irep = irep
   call bbu_track_all(f_lat, f_bbu_beam, f_bbu_param, f_beam_init, f_hom_voltage_normalized, &
       f_growth_rate, f_lost, f_irep)
 
+  ! out: f_hom_voltage_normalized 0D_NOT_real
+  call c_f_pointer(hom_voltage_normalized, f_hom_voltage_normalized_ptr)
+  f_hom_voltage_normalized_ptr = f_hom_voltage_normalized
+  ! out: f_growth_rate 0D_NOT_real
+  call c_f_pointer(growth_rate, f_growth_rate_ptr)
+  f_growth_rate_ptr = f_growth_rate
+  ! out: f_lost 0D_NOT_logical
+  call c_f_pointer(lost, f_lost_ptr)
+  f_lost_ptr = f_lost
+  ! out: f_irep 0D_NOT_integer
+  call c_f_pointer(irep, f_irep_ptr)
+  f_irep_ptr = f_irep
 end subroutine
 subroutine fortran_check_rf_freq (lat, fb) bind(c)
 

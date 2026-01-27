@@ -13,15 +13,18 @@ namespace CppBmadTest {
 extern "C" void fortran_test_bunch_struct_array(
     Bmad::array_descriptor_t &arr_in /* 1D_NOT_type in */,
     Bmad::array_descriptor_t &arr_inout /* 1D_NOT_type inout */,
-    void *arr_out /* 1D_ALLOC_type inout */,
+    void *arr_out /* 1D_ALLOC_type out */,
     Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
     Bmad::array_descriptor_t &arr_in_opt /* 1D_NOT_type in */,
     Bmad::array_descriptor_t &arr_inout_opt /* 1D_NOT_type inout */
 );
-FixedArray1D<Int, 2> test_bunch_struct_array(
+struct TestBunchStructArray {
+  BunchStructAlloc1D arr_out;
+  FixedArray1D<Int, 2> opt_status;
+};
+CppBmadTest::TestBunchStructArray test_bunch_struct_array(
     BunchStructArray1D arr_in,
     BunchStructArray1D arr_inout,
-    BunchStructAlloc1D arr_out,
     std::optional<BunchStructArray1D> arr_in_opt = std::nullopt,
     std::optional<BunchStructArray1D> arr_inout_opt = std::nullopt
 );
@@ -47,7 +50,7 @@ CppBmadTest::TestBunchStructScalar test_bunch_struct_scalar(
 // Skipped unusable routine test_character_array:
 // - Variable-sized in character array: 1D_NOT_character
 // - Variable-sized inout character array: 1D_NOT_character
-// - Variable-sized inout character array: 1D_ALLOC_character
+// - Variable-sized out character array: 1D_ALLOC_character
 // - Variable-sized in character array: 1D_NOT_character
 // - Variable-sized inout character array: 1D_NOT_character
 // - Translated arg count mismatch (unsupported?)
@@ -72,15 +75,18 @@ CppBmadTest::TestCharacterScalar test_character_scalar(
 extern "C" void fortran_test_complex_array(
     Bmad::array_descriptor_t &arr_in /* 1D_NOT_complex in */,
     Bmad::array_descriptor_t &arr_inout /* 1D_NOT_complex inout */,
-    void *arr_out /* 1D_ALLOC_complex inout */,
+    void *arr_out /* 1D_ALLOC_complex out */,
     Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
     Bmad::array_descriptor_t &arr_in_opt /* 1D_NOT_complex in */,
     Bmad::array_descriptor_t &arr_inout_opt /* 1D_NOT_complex inout */
 );
-FixedArray1D<Int, 2> test_complex_array(
+struct TestComplexArray {
+  ComplexAlloc1D arr_out;
+  FixedArray1D<Int, 2> opt_status;
+};
+CppBmadTest::TestComplexArray test_complex_array(
     FArray1D<Complex> &arr_in,
     FArray1D<Complex> &arr_inout,
-    ComplexAlloc1D &arr_out,
     std::optional<FArray1D<Complex>> arr_in_opt = std::nullopt,
     std::optional<FArray1D<Complex>> arr_inout_opt = std::nullopt
 );
@@ -105,15 +111,18 @@ CppBmadTest::TestComplexScalar test_complex_scalar(
 extern "C" void fortran_test_integer8_array(
     Bmad::array_descriptor_t &arr_in /* 1D_NOT_integer8 in */,
     Bmad::array_descriptor_t &arr_inout /* 1D_NOT_integer8 inout */,
-    void *arr_out /* 1D_ALLOC_integer8 inout */,
+    void *arr_out /* 1D_ALLOC_integer8 out */,
     Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
     Bmad::array_descriptor_t &arr_in_opt /* 1D_NOT_integer8 in */,
     Bmad::array_descriptor_t &arr_inout_opt /* 1D_NOT_integer8 inout */
 );
-FixedArray1D<Int, 2> test_integer8_array(
+struct TestInteger8Array {
+  Int8Alloc1D arr_out;
+  FixedArray1D<Int, 2> opt_status;
+};
+CppBmadTest::TestInteger8Array test_integer8_array(
     FArray1D<Int8> &arr_in,
     FArray1D<Int8> &arr_inout,
-    Int8Alloc1D &arr_out,
     std::optional<FArray1D<Int8>> arr_in_opt = std::nullopt,
     std::optional<FArray1D<Int8>> arr_inout_opt = std::nullopt
 );
@@ -138,15 +147,18 @@ CppBmadTest::TestInteger8Scalar test_integer8_scalar(
 extern "C" void fortran_test_integer_array(
     Bmad::array_descriptor_t &arr_in /* 1D_NOT_integer in */,
     Bmad::array_descriptor_t &arr_inout /* 1D_NOT_integer inout */,
-    void *arr_out /* 1D_ALLOC_integer inout */,
+    void *arr_out /* 1D_ALLOC_integer out */,
     Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
     Bmad::array_descriptor_t &arr_in_opt /* 1D_NOT_integer in */,
     Bmad::array_descriptor_t &arr_inout_opt /* 1D_NOT_integer inout */
 );
-FixedArray1D<Int, 2> test_integer_array(
+struct TestIntegerArray {
+  IntAlloc1D arr_out;
+  FixedArray1D<Int, 2> opt_status;
+};
+CppBmadTest::TestIntegerArray test_integer_array(
     FArray1D<Int> &arr_in,
     FArray1D<Int> &arr_inout,
-    IntAlloc1D &arr_out,
     std::optional<FArray1D<Int>> arr_in_opt = std::nullopt,
     std::optional<FArray1D<Int>> arr_inout_opt = std::nullopt
 );
@@ -171,15 +183,18 @@ CppBmadTest::TestIntegerScalar test_integer_scalar(
 extern "C" void fortran_test_logical_array(
     void *arr_in /* 1D_ALLOC_logical in */,
     void *arr_inout /* 1D_ALLOC_logical inout */,
-    void *arr_out /* 1D_ALLOC_logical inout */,
+    void *arr_out /* 1D_ALLOC_logical out */,
     Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
     void *arr_in_opt /* 1D_ALLOC_logical in */,
     void *arr_inout_opt /* 1D_ALLOC_logical inout */
 );
-FixedArray1D<Int, 2> test_logical_array(
+struct TestLogicalArray {
+  BoolAlloc1D arr_out;
+  FixedArray1D<Int, 2> opt_status;
+};
+CppBmadTest::TestLogicalArray test_logical_array(
     BoolAlloc1D &arr_in,
     BoolAlloc1D &arr_inout,
-    BoolAlloc1D &arr_out,
     optional_ref<BoolAlloc1D> arr_in_opt = std::nullopt,
     optional_ref<BoolAlloc1D> arr_inout_opt = std::nullopt
 );
@@ -204,15 +219,18 @@ CppBmadTest::TestLogicalScalar test_logical_scalar(
 extern "C" void fortran_test_real16_array(
     void *arr_in /* 1D_ALLOC_real16 in */,
     void *arr_inout /* 1D_ALLOC_real16 inout */,
-    void *arr_out /* 1D_ALLOC_real16 inout */,
+    void *arr_out /* 1D_ALLOC_real16 out */,
     Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
     void *arr_in_opt /* 1D_ALLOC_real16 in */,
     void *arr_inout_opt /* 1D_ALLOC_real16 inout */
 );
-FixedArray1D<Int, 2> test_real16_array(
+struct TestReal16Array {
+  Real16Alloc1D arr_out;
+  FixedArray1D<Int, 2> opt_status;
+};
+CppBmadTest::TestReal16Array test_real16_array(
     Real16Alloc1D &arr_in,
     Real16Alloc1D &arr_inout,
-    Real16Alloc1D &arr_out,
     optional_ref<Real16Alloc1D> arr_in_opt = std::nullopt,
     optional_ref<Real16Alloc1D> arr_inout_opt = std::nullopt
 );
@@ -237,15 +255,18 @@ CppBmadTest::TestReal16Scalar test_real16_scalar(
 extern "C" void fortran_test_real_array(
     Bmad::array_descriptor_t &arr_in /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &arr_inout /* 1D_NOT_real inout */,
-    void *arr_out /* 1D_ALLOC_real inout */,
+    void *arr_out /* 1D_ALLOC_real out */,
     Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
     Bmad::array_descriptor_t &arr_in_opt /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &arr_inout_opt /* 1D_NOT_real inout */
 );
-FixedArray1D<Int, 2> test_real_array(
+struct TestRealArray {
+  RealAlloc1D arr_out;
+  FixedArray1D<Int, 2> opt_status;
+};
+CppBmadTest::TestRealArray test_real_array(
     FArray1D<Real> &arr_in,
     FArray1D<Real> &arr_inout,
-    RealAlloc1D &arr_out,
     std::optional<FArray1D<Real>> arr_in_opt = std::nullopt,
     std::optional<FArray1D<Real>> arr_inout_opt = std::nullopt
 );

@@ -14,10 +14,9 @@
 using namespace Bmad;
 
 using json = nlohmann::json;
-FixedArray1D<Int, 2> CppBmadTest::test_bunch_struct_array(
+CppBmadTest::TestBunchStructArray CppBmadTest::test_bunch_struct_array(
     BunchStructArray1D arr_in,
     BunchStructArray1D arr_inout,
-    BunchStructAlloc1D arr_out,
     std::optional<BunchStructArray1D> arr_in_opt,
     std::optional<BunchStructArray1D> arr_inout_opt
 ) {
@@ -33,7 +32,8 @@ FixedArray1D<Int, 2> CppBmadTest::test_bunch_struct_array(
   _arr_inout_desc.data_ptr = arr_inout.data();
   _arr_inout_desc.dims[0] = arr_inout.size();
   _arr_inout_desc.strides[0] = 1;
-  // intent=inout allocatable type array
+  // intent=out allocatable type array
+  auto arr_out{BunchStructAlloc1D()};
   // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _opt_status_desc;
   _opt_status_desc.rank = 1;
@@ -70,7 +70,7 @@ FixedArray1D<Int, 2> CppBmadTest::test_bunch_struct_array(
       /* Bmad::array_descriptor_t& */ _arr_in_opt_desc,
       /* Bmad::array_descriptor_t& */ _arr_inout_opt_desc
   );
-  return _opt_status;
+  return TestBunchStructArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestBunchStructScalar CppBmadTest::test_bunch_struct_scalar(
     BunchStruct &val_in,
@@ -126,10 +126,9 @@ CppBmadTest::TestCharacterScalar CppBmadTest::test_character_scalar(
   );
   return TestCharacterScalar{_val_out, _opt_status};
 }
-FixedArray1D<Int, 2> CppBmadTest::test_complex_array(
+CppBmadTest::TestComplexArray CppBmadTest::test_complex_array(
     FArray1D<Complex> &arr_in,
     FArray1D<Complex> &arr_inout,
-    ComplexAlloc1D &arr_out,
     std::optional<FArray1D<Complex>> arr_in_opt,
     std::optional<FArray1D<Complex>> arr_inout_opt
 ) {
@@ -143,7 +142,8 @@ FixedArray1D<Int, 2> CppBmadTest::test_complex_array(
   _arr_inout_desc.rank = 1;
   _arr_inout_desc.data_ptr = arr_inout.data();
   _arr_inout_desc.dims[0] = arr_inout.size();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto arr_out{ComplexAlloc1D()};
   // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _opt_status_desc;
   _opt_status_desc.rank = 1;
@@ -178,7 +178,7 @@ FixedArray1D<Int, 2> CppBmadTest::test_complex_array(
       /* Bmad::array_descriptor_t& */ _arr_in_opt_desc,
       /* Bmad::array_descriptor_t& */ _arr_inout_opt_desc
   );
-  return _opt_status;
+  return TestComplexArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestComplexScalar CppBmadTest::test_complex_scalar(
     std::complex<double> val_in,
@@ -212,10 +212,9 @@ CppBmadTest::TestComplexScalar CppBmadTest::test_complex_scalar(
   );
   return TestComplexScalar{_val_out, _opt_status};
 }
-FixedArray1D<Int, 2> CppBmadTest::test_integer8_array(
+CppBmadTest::TestInteger8Array CppBmadTest::test_integer8_array(
     FArray1D<Int8> &arr_in,
     FArray1D<Int8> &arr_inout,
-    Int8Alloc1D &arr_out,
     std::optional<FArray1D<Int8>> arr_in_opt,
     std::optional<FArray1D<Int8>> arr_inout_opt
 ) {
@@ -229,7 +228,8 @@ FixedArray1D<Int, 2> CppBmadTest::test_integer8_array(
   _arr_inout_desc.rank = 1;
   _arr_inout_desc.data_ptr = arr_inout.data();
   _arr_inout_desc.dims[0] = arr_inout.size();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto arr_out{Int8Alloc1D()};
   // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _opt_status_desc;
   _opt_status_desc.rank = 1;
@@ -264,7 +264,7 @@ FixedArray1D<Int, 2> CppBmadTest::test_integer8_array(
       /* Bmad::array_descriptor_t& */ _arr_in_opt_desc,
       /* Bmad::array_descriptor_t& */ _arr_inout_opt_desc
   );
-  return _opt_status;
+  return TestInteger8Array{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestInteger8Scalar CppBmadTest::test_integer8_scalar(
     int64_t val_in,
@@ -298,10 +298,9 @@ CppBmadTest::TestInteger8Scalar CppBmadTest::test_integer8_scalar(
   );
   return TestInteger8Scalar{_val_out, _opt_status};
 }
-FixedArray1D<Int, 2> CppBmadTest::test_integer_array(
+CppBmadTest::TestIntegerArray CppBmadTest::test_integer_array(
     FArray1D<Int> &arr_in,
     FArray1D<Int> &arr_inout,
-    IntAlloc1D &arr_out,
     std::optional<FArray1D<Int>> arr_in_opt,
     std::optional<FArray1D<Int>> arr_inout_opt
 ) {
@@ -315,7 +314,8 @@ FixedArray1D<Int, 2> CppBmadTest::test_integer_array(
   _arr_inout_desc.rank = 1;
   _arr_inout_desc.data_ptr = arr_inout.data();
   _arr_inout_desc.dims[0] = arr_inout.size();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto arr_out{IntAlloc1D()};
   // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _opt_status_desc;
   _opt_status_desc.rank = 1;
@@ -350,7 +350,7 @@ FixedArray1D<Int, 2> CppBmadTest::test_integer_array(
       /* Bmad::array_descriptor_t& */ _arr_in_opt_desc,
       /* Bmad::array_descriptor_t& */ _arr_inout_opt_desc
   );
-  return _opt_status;
+  return TestIntegerArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestIntegerScalar CppBmadTest::test_integer_scalar(
     int val_in,
@@ -384,16 +384,16 @@ CppBmadTest::TestIntegerScalar CppBmadTest::test_integer_scalar(
   );
   return TestIntegerScalar{_val_out, _opt_status};
 }
-FixedArray1D<Int, 2> CppBmadTest::test_logical_array(
+CppBmadTest::TestLogicalArray CppBmadTest::test_logical_array(
     BoolAlloc1D &arr_in,
     BoolAlloc1D &arr_inout,
-    BoolAlloc1D &arr_out,
     optional_ref<BoolAlloc1D> arr_in_opt,
     optional_ref<BoolAlloc1D> arr_inout_opt
 ) {
   // intent=in allocatable general array
   // intent=inout allocatable general array
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto arr_out{BoolAlloc1D()};
   // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _opt_status_desc;
   _opt_status_desc.rank = 1;
@@ -414,7 +414,7 @@ FixedArray1D<Int, 2> CppBmadTest::test_logical_array(
       /* void* */ _arr_in_opt,
       /* void* */ _arr_inout_opt
   );
-  return _opt_status;
+  return TestLogicalArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestLogicalScalar CppBmadTest::test_logical_scalar(
     bool val_in,
@@ -448,16 +448,16 @@ CppBmadTest::TestLogicalScalar CppBmadTest::test_logical_scalar(
   );
   return TestLogicalScalar{_val_out, _opt_status};
 }
-FixedArray1D<Int, 2> CppBmadTest::test_real16_array(
+CppBmadTest::TestReal16Array CppBmadTest::test_real16_array(
     Real16Alloc1D &arr_in,
     Real16Alloc1D &arr_inout,
-    Real16Alloc1D &arr_out,
     optional_ref<Real16Alloc1D> arr_in_opt,
     optional_ref<Real16Alloc1D> arr_inout_opt
 ) {
   // intent=in allocatable general array
   // intent=inout allocatable general array
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto arr_out{Real16Alloc1D()};
   // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _opt_status_desc;
   _opt_status_desc.rank = 1;
@@ -478,7 +478,7 @@ FixedArray1D<Int, 2> CppBmadTest::test_real16_array(
       /* void* */ _arr_in_opt,
       /* void* */ _arr_inout_opt
   );
-  return _opt_status;
+  return TestReal16Array{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestReal16Scalar CppBmadTest::test_real16_scalar(
     long double val_in,
@@ -512,10 +512,9 @@ CppBmadTest::TestReal16Scalar CppBmadTest::test_real16_scalar(
   );
   return TestReal16Scalar{_val_out, _opt_status};
 }
-FixedArray1D<Int, 2> CppBmadTest::test_real_array(
+CppBmadTest::TestRealArray CppBmadTest::test_real_array(
     FArray1D<Real> &arr_in,
     FArray1D<Real> &arr_inout,
-    RealAlloc1D &arr_out,
     std::optional<FArray1D<Real>> arr_in_opt,
     std::optional<FArray1D<Real>> arr_inout_opt
 ) {
@@ -529,7 +528,8 @@ FixedArray1D<Int, 2> CppBmadTest::test_real_array(
   _arr_inout_desc.rank = 1;
   _arr_inout_desc.data_ptr = arr_inout.data();
   _arr_inout_desc.dims[0] = arr_inout.size();
-  // intent=inout allocatable general array
+  // intent=out allocatable general array
+  auto arr_out{RealAlloc1D()};
   // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
   Bmad::array_descriptor_t _opt_status_desc;
   _opt_status_desc.rank = 1;
@@ -564,7 +564,7 @@ FixedArray1D<Int, 2> CppBmadTest::test_real_array(
       /* Bmad::array_descriptor_t& */ _arr_in_opt_desc,
       /* Bmad::array_descriptor_t& */ _arr_inout_opt_desc
   );
-  return _opt_status;
+  return TestRealArray{std::move(arr_out), _opt_status};
 }
 CppBmadTest::TestRealScalar CppBmadTest::test_real_scalar(
     double val_in,

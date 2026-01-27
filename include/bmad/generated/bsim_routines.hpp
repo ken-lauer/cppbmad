@@ -62,20 +62,22 @@ extern "C" void fortran_bbu_track_all(
     void *bbu_beam /* 0D_NOT_type inout */,
     void *bbu_param /* 0D_NOT_type inout */,
     void *beam_init /* 0D_NOT_type inout */,
-    double &hom_voltage_normalized /* 0D_NOT_real in */,
-    double &growth_rate /* 0D_NOT_real in */,
-    bool &lost /* 0D_NOT_logical in */,
-    int &irep /* 0D_NOT_integer in */
+    double &hom_voltage_normalized /* 0D_NOT_real out */,
+    double &growth_rate /* 0D_NOT_real out */,
+    bool &lost /* 0D_NOT_logical out */,
+    int &irep /* 0D_NOT_integer out */
 );
-void bbu_track_all(
+struct BbuTrackAll {
+  double hom_voltage_normalized;
+  double growth_rate;
+  bool lost;
+  int irep;
+};
+bsim::BbuTrackAll bbu_track_all(
     LatStruct &lat,
     BbuBeamStruct &bbu_beam,
     BbuParamStruct &bbu_param,
-    BeamInitStruct &beam_init,
-    double hom_voltage_normalized,
-    double growth_rate,
-    bool lost,
-    int irep
+    BeamInitStruct &beam_init
 );
 extern "C" void
 fortran_check_rf_freq(void *lat /* 0D_NOT_type inout */, double &fb /* 0D_NOT_real in */);
