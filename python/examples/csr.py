@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import pathlib
@@ -14,16 +15,16 @@ if res.err_flag:
 lat = res.lat
 pybmad.ran_seed_put(123456)
 
-beam_init = pybmad.BeamInitStruct()
-beam_init.a_norm_emit = 4e-12
-beam_init.b_norm_emit = 4e-12
-beam_init.dPz_dz = 0.0
-beam_init.sig_z = 0.3e-3
-beam_init.sig_pz = 0e-20
-beam_init.bunch_charge = 0.01e-10
-beam_init.n_particle = 1000
-beam_init.n_bunch = 1
-
+beam_init = pybmad.BeamInitStruct(
+    a_norm_emit=4e-12,
+    b_norm_emit=4e-12,
+    dPz_dz=0.0,
+    sig_z=0.3e-3,
+    sig_pz=0e-20,
+    bunch_charge=0.01e-10,
+    n_particle=1000,
+    n_bunch=1,
+)
 bmad_com = pybmad.get_bmad_com()
 bmad_com.csr_and_space_charge_on = True
 
