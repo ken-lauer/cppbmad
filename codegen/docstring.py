@@ -6,8 +6,7 @@ import re
 import textwrap
 from dataclasses import dataclass, field
 
-import pydantic
-import pydantic.alias_generators
+from codegen.util import struct_to_proxy_class_name
 
 from .structs import (
     TypeInformation,
@@ -145,6 +144,7 @@ class RoutineDocstring:
     overloaded_versions: list[str] = field(default_factory=list)
     related_routines: list[str] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
+    examples: list[str] = field(default_factory=list)
 
     @property
     def arguments_by_name(self) -> dict[str, DocstringParameter]:
@@ -194,11 +194,6 @@ class RoutineDocstring:
             for note in self.notes:
                 result += f"  {note}\n"
 
-        if self.is_overloaded:
-            result += "\nOverloaded versions:\n"
-            for version in self.overloaded_versions:
-                result += f"  {version}\n"
-
         if self.related_routines:
             result += "\nRelated routines:\n"
             for routine in self.related_routines:
@@ -226,7 +221,7 @@ class RoutineDocstring:
 
         return result
 
-    def to_numpy_docstring(self) -> str:
+    def to_numpy_docstring(self, overload_args: list[str] | None = None) -> str:
         """Create a NumPy-style docstring from the routine information."""
         lines = []
 
@@ -245,9 +240,11 @@ class RoutineDocstring:
             if param.arg_type:
                 # we have parsed code argument info, use that
                 data_type = type_information_to_python_type(param.arg_type)
-            else:
+            elif param.data_type:
                 # otherwise, use the data type from the docstring
-                data_type = param.data_type
+                data_type = type_information_to_python_type(TypeInformation(type=param.data_type))
+            else:
+                data_type = "(unknown)"
 
             if not data_type and not param.description.strip():
                 logger.warning("Unknown parameter in docstring? %r: %s", self.name, param)
@@ -261,22 +258,25 @@ class RoutineDocstring:
             if not is_last and (type_str or param.description.lstrip()):
                 lines.append("")
 
+        inputs = list(self.inputs)
+        outputs = list(self.outputs)
+
+        if overload_args:
+            overload_lower = [arg.lower() for arg in overload_args]
+            inputs = [arg for arg in inputs if arg.name.lower() in overload_lower]
+            outputs = [arg for arg in outputs if arg.name.lower() in overload_lower]
+
         if self.inputs:
             lines.extend(["Parameters", "----------"])
-            for i, param in enumerate(self.inputs):
-                add_param(param, is_last=(i == len(self.inputs) - 1))
+            for i, param in enumerate(inputs):
+                add_param(param, is_last=(i == len(inputs) - 1))
 
-        has_returns = bool(self.result_variable or self.outputs)
-        if has_returns:
+        if outputs:
             lines.extend(["", "Returns", "-------"])
+            for i, param in enumerate(outputs):
+                add_param(param, is_last=(i == len(outputs) - 1))
 
-            if self.result_variable and not self.outputs:
-                lines.append(f"{self.result_variable}")
-
-            for i, param in enumerate(self.outputs):
-                add_param(param, is_last=(i == len(self.outputs) - 1))
-
-        if self.notes or self.related_routines or self.is_overloaded:
+        if self.notes or self.related_routines:
             lines.extend(["", "Notes", "-----"])
             for note in self.notes:
                 lines.append(_wrap_docstring_lines(note))
@@ -284,11 +284,6 @@ class RoutineDocstring:
             if self.related_routines:
                 lines.append("Related routines:")
                 lines.append(_wrap_docstring_lines(" ".join(self.related_routines)))
-
-            if self.is_overloaded:
-                lines.append(
-                    _wrap_docstring_lines("Overloaded versions: " + ", ".join(self.overloaded_versions))
-                )
 
         lines.append("")
 
@@ -305,11 +300,12 @@ class RoutineDocstring:
 
 
 def type_information_to_python_type(dt: TypeInformation) -> str:
-    if dt.type.lower() == "type":
+    if dt.type.lower() in {"type", "class"}:
         assert dt.kind is not None
-        type_name = pydantic.alias_generators.to_pascal(dt.kind)
+        type_name = struct_to_proxy_class_name(dt.kind.lower())
     elif dt.type.lower().endswith("_struct"):
-        type_name = pydantic.alias_generators.to_pascal(dt.type.split()[0])
+        # TODO: this shouldn't be a thing, right?
+        type_name = struct_to_proxy_class_name(dt.type.lower())
     else:
         try:
             type_name = base_fortran_to_python_type[dt.type.lower()]
@@ -330,14 +326,14 @@ def type_information_to_python_type(dt: TypeInformation) -> str:
 separator_regex = re.compile(r"^!\-+$")
 
 
-def _extract_related_routines(line: str) -> list[str]:
-    """Extract related routine names from a line."""
-
-    if ":" in line:
-        line = line.split(":", 1)[1]
-
-    related = [name.strip() for name in re.split(r"[,\s]+", line) if name.strip()]
-    return [name for name in related if name and name.lower() not in {"and", "or", "see", "also"}]
+# def _extract_related_routines(line: str) -> list[str]:
+#     """Extract related routine names from a line."""
+#
+#     if ":" in line:
+#         line = line.split(":", 1)[1]
+#
+#     related = [name.strip() for name in re.split(r"[,\s]+", line) if name.strip()]
+#     return [name for name in related if name and name.lower() not in {"and", "or", "see", "also"}]
 
 
 def split_param_names(name: str) -> list[str]:
@@ -451,14 +447,19 @@ def parse_routine_comment_block(
             return m.groups()[0]
         return ""
 
+    known_sections = {
+        "input": "inputs",
+        "output": "outputs",
+        "note": "notes",
+        "notes": "notes",
+        "example": "examples",
+        "examples": "examples",
+    }
+
     description = []
     for line in lines:
         line = clean_line(line)
-        if line.lower().strip() in (
-            "input:",
-            "output:",
-            "also see:",
-        ):
+        if line.lower().strip().rstrip(": ") in known_sections:
             break
         if line or description:
             description.append(line)
@@ -470,6 +471,7 @@ def parse_routine_comment_block(
         routine_type=routine_type,
         result_variable=result_var,
         description=description or ["No docstring available."],
+        notes=[],
     )
 
     current_section = "description"
@@ -479,51 +481,31 @@ def parse_routine_comment_block(
     param_desc = ""
     i = lines.index(definition_line) + 1
 
-    while i < len(lines):
+    for i in range(lines.index(definition_line) + 1, len(lines)):
         line = lines[i].strip()
         next_line = lines[i + 1].strip() if i < len(lines) - 1 else ""
 
         if not line or re.match(r"^![-+]*$", line):
-            i += 1
             continue
 
         if line.startswith("!"):
             line = line.removeprefix("!").strip()
 
-        if line.lower().rstrip(": ") == "input":
-            current_section = "inputs"
-            i += 1
-            continue
-        if line.lower().rstrip(": ") == "output":
-            current_section = "outputs"
-            i += 1
-            continue
-        if "also see:" in line.lower():
-            current_section = "related"
-            docstring.related_routines.extend(_extract_related_routines(line))
-            i += 1
+        maybe_section_name = line.lower().rstrip(": ")
+        if maybe_section_name in known_sections:
+            current_section = known_sections[maybe_section_name]
             continue
 
-        if current_section == "description":
-            if "is an overloaded name for" in line.lower():
-                docstring.is_overloaded = True
-                i += 1
+        # if "also see:" in line.lower():
+        #     current_section = "related"
+        #     docstring.related_routines.extend(_extract_related_routines(line))
+        #     continue
 
-                while i < len(lines):
-                    next_line = lines[i].strip()
-                    if next_line.startswith("!"):
-                        next_line = next_line[1:].strip()
+        if current_section == "notes":
+            docstring.notes.append(line)
 
-                    if re.match(r"^\s*Function\s+\w+", next_line):
-                        docstring.overloaded_versions.append(next_line)
-                        i += 1
-                    else:
-                        break
-
-            else:
-                if re.match(r"^remember(?:\s*\:|\s+)", line.lower()):
-                    docstring.notes.append(line)
-                i += 1
+        elif current_section == "examples":
+            docstring.examples.append(line)
 
         elif current_section in {"inputs", "outputs"}:
             param_name = ""
@@ -578,12 +560,8 @@ def parse_routine_comment_block(
                     if line not in current_param.description:
                         current_param.description += " " + line
 
-            i += 1
-        elif current_section == "related":
-            docstring.related_routines.extend(_extract_related_routines(line))
-            i += 1
-        else:
-            i += 1
+        # elif current_section == "related":
+        #     docstring.related_routines.extend(_extract_related_routines(line))
 
     for arg in docstring.params:
         arg.fix()

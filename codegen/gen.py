@@ -297,6 +297,7 @@ def load_context(
 def generate(
     config_file: pathlib.Path = CODEGEN_ROOT / "default.toml",
     pybmad: bool = True,
+    write: bool = True,
 ):
     ctx = load_context(config_file, pybmad)
 
@@ -312,6 +313,10 @@ def generate(
     to_string_header = ctx.cpp_to_string_header
     to_string_code = ctx.cpp_to_string_code
     enum_code = get_enum_code(ctx.enums)
+
+    if not write:
+        logger.info("File writing disabled.")
+        return ctx
 
     cpp_gen_src = PYBMAD_SRC / "generated"
     hpp_gen_src = PYBMAD_INCLUDE / "generated"
@@ -361,6 +366,11 @@ def main():
         help="Do not generate pybmad pybind11 bindings",
     )
     parser.add_argument(
+        "--no-write",
+        action="store_true",
+        help="Do not write files",
+    )
+    parser.add_argument(
         "--debug",
         action="store_true",
         help="Enable debug mode",
@@ -372,7 +382,7 @@ def main():
     )
     logging.getLogger("codegen").setLevel(args.log_level)
 
-    return generate(config_file=args.config_file, pybmad=not args.no_pybmad)
+    return generate(config_file=args.config_file, pybmad=not args.no_pybmad, write=not args.no_write)
 
 
 if __name__ == "__main__":

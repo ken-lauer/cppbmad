@@ -303,7 +303,7 @@ def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[Fortran
             else:
                 lines.append(f'py::arg("{arg.c_name}"),')
 
-    doc = routine.docstring.to_numpy_docstring()
+    doc = routine.docstring.to_numpy_docstring(routine.arg_names_with_result)
     lines.append(rf'R"""({doc})"""')
     lines.append(");")
 
@@ -582,7 +582,7 @@ def _generate_routine_files(
             init_calls.append(f"{init_fn_name}(m);")
 
             defs_block = generate_py_routine_defs(subset_routines)
-            defs_block_indented = textwrap.indent(defs_block, "  ")
+            # defs_block_indented = textwrap.indent(defs_block, "  ")
 
             cpp_content = textwrap.dedent(f"""\
                 #include "pybmad/generated/{header_name}"
@@ -594,7 +594,7 @@ def _generate_routine_files(
                 {wrappers_code}
                 
                 void {init_fn_name}(py::module &m) {{
-                {defs_block_indented}
+                {defs_block}
                 }}
             """)
 
