@@ -78,15 +78,15 @@ def test_integer_array(use_in_opt: bool, use_inout_opt: bool):
     arr_in = container_create(pybmad.IntAlloc1D, input_data)
     arr_inout = container_create(pybmad.IntAlloc1D, [10, 20, 30])
 
-    kw_args = {"arr_in": arr_in, "arr_inout": arr_inout}
+    kw_args = {"arr_in": arr_in.view(), "arr_inout": arr_inout.view()}
 
     if use_in_opt:
         arr_in_opt = container_create(pybmad.IntAlloc1D, [5, 5, 5])
-        kw_args["arr_in_opt"] = arr_in_opt
+        kw_args["arr_in_opt"] = arr_in_opt.view()
 
     if use_inout_opt:
         arr_inout_opt = container_create(pybmad.IntAlloc1D, [100, 100, 100])
-        kw_args["arr_inout_opt"] = arr_inout_opt
+        kw_args["arr_inout_opt"] = arr_inout_opt.view()
 
     res = pybmad.test_integer_array(**kw_args)
 
@@ -96,7 +96,10 @@ def test_integer_array(use_in_opt: bool, use_inout_opt: bool):
     # arr_inout modified in place due to C++ reference wrapper
     assert list(arr_inout) == [11, 21, 31]
 
-    expected_stat = [1 if use_in_opt else 0, 1 if use_inout_opt else 0]
+    expected_stat = [
+        1 if use_in_opt else 0,
+        1 if use_inout_opt else 0,
+    ]
     assert list(res.opt_status) == expected_stat
 
     if use_inout_opt:
@@ -110,14 +113,16 @@ def test_integer8_array(use_in_opt: bool, use_inout_opt: bool):
 
     arr_in = container_create(pybmad.Int8Alloc1D, input_data)
     arr_inout = container_create(pybmad.Int8Alloc1D, [10, 20])
+    opt = container_create(pybmad.Int8Alloc1D, [1, 1])
+    inout = container_create(pybmad.Int8Alloc1D, [5, 5])
 
-    kw_args = {"arr_in": arr_in, "arr_inout": arr_inout}
+    kw_args = {"arr_in": arr_in.view(), "arr_inout": arr_inout.view()}
 
     if use_in_opt:
-        kw_args["arr_in_opt"] = container_create(pybmad.Int8Alloc1D, [1, 1])
+        kw_args["arr_in_opt"] = opt.view()
 
     if use_inout_opt:
-        kw_args["arr_inout_opt"] = container_create(pybmad.Int8Alloc1D, [5, 5])
+        kw_args["arr_inout_opt"] = inout.view()
 
     res = pybmad.test_integer8_array(**kw_args)
 
@@ -153,12 +158,14 @@ def test_real_array(use_in_opt: bool, use_inout_opt: bool):
     arr_in = container_create(pybmad.RealAlloc1D, [1.1, 2.2])
     arr_inout = container_create(pybmad.RealAlloc1D, [0.0, 0.0])
 
-    kw = {"arr_in": arr_in, "arr_inout": arr_inout}
+    in_opt = container_create(pybmad.RealAlloc1D, [10.0, 10.0])
+    inout_opt = container_create(pybmad.RealAlloc1D, [-1.0, -1.0])
+    kw = {"arr_in": arr_in.view(), "arr_inout": arr_inout.view()}
 
     if use_in_opt:
-        kw["arr_in_opt"] = container_create(pybmad.RealAlloc1D, [10.0, 10.0])
+        kw["arr_in_opt"] = in_opt.view()
     if use_inout_opt:
-        kw["arr_inout_opt"] = container_create(pybmad.RealAlloc1D, [-1.0, -1.0])
+        kw["arr_inout_opt"] = inout_opt.view()
 
     res = pybmad.test_real_array(**kw)
 
@@ -196,12 +203,14 @@ def test_real16_array(use_in_opt: bool, use_inout_opt: bool):
     """Note: mapped to Real16Alloc1D in types description provided."""
     arr_in = container_create(pybmad.Real16Alloc1D, [1.0])
     arr_inout = container_create(pybmad.Real16Alloc1D, [2.0])
+    inopt = container_create(pybmad.Real16Alloc1D, [0.5])
+    inout_opt = container_create(pybmad.Real16Alloc1D, [3.0])
 
-    kw = {"arr_in": arr_in, "arr_inout": arr_inout}
+    kw = {"arr_in": arr_in.view(), "arr_inout": arr_inout.view()}
     if use_in_opt:
-        kw["arr_in_opt"] = container_create(pybmad.Real16Alloc1D, [0.5])
+        kw["arr_in_opt"] = inopt.view()
     if use_inout_opt:
-        kw["arr_inout_opt"] = container_create(pybmad.Real16Alloc1D, [3.0])
+        kw["arr_inout_opt"] = inout_opt.view()
 
     res = pybmad.test_real16_array(**kw)
 
@@ -219,12 +228,13 @@ def test_complex_array(use_in_opt: bool, use_inout_opt: bool):
     arr_in = container_create(pybmad.ComplexAlloc1D, val_in)
     arr_inout = container_create(pybmad.ComplexAlloc1D, [complex(0, 0), complex(0, 0)])
     arr_inout_opt = container_create(pybmad.ComplexAlloc1D, [complex(0, 0), complex(0, 0)])
+    in_opt = container_create(pybmad.ComplexAlloc1D, [complex(1, 1), complex(1, 1)])
 
-    kw = {"arr_in": arr_in, "arr_inout": arr_inout}
+    kw = {"arr_in": arr_in.view(), "arr_inout": arr_inout.view()}
     if use_in_opt:
-        kw["arr_in_opt"] = container_create(pybmad.ComplexAlloc1D, [complex(1, 1), complex(1, 1)])
+        kw["arr_in_opt"] = in_opt.view()
     if use_inout_opt:
-        kw["arr_inout_opt"] = arr_inout_opt
+        kw["arr_inout_opt"] = arr_inout_opt.view()
 
     res = pybmad.test_complex_array(**kw)
 
@@ -271,13 +281,15 @@ def test_logical_array(use_in_opt: bool, use_inout_opt: bool):
     arr_in = container_create(pybmad.BoolAlloc1D, [True, False])
     arr_inout = container_create(pybmad.BoolAlloc1D, [True, False])
     arr_inout_opt = container_create(pybmad.BoolAlloc1D, [False, True])
+    inopt = container_create(pybmad.BoolAlloc1D, [False, True])
 
+    # TODO: we require logical alloc containers for now so that the data is
+    # always Fortran owned and represented (1 byte vs bitmap/byte...), however
+    # inconvenient that is
     kw = {"arr_in": arr_in, "arr_inout": arr_inout}
     if use_in_opt:
-        # Pass opposite to verify EQV
-        kw["arr_in_opt"] = container_create(pybmad.BoolAlloc1D, [False, True])
+        kw["arr_in_opt"] = inopt
     if use_inout_opt:
-        # Pass opposite to verify EQV
         kw["arr_inout_opt"] = arr_inout_opt
 
     res = pybmad.test_logical_array(**kw)

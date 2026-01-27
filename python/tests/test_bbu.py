@@ -134,11 +134,6 @@ def test_bbu_tracking(bbu_setup_data, case_data: BbuExpectedResult):
         bbu_beam=bbu_beam,
         bbu_param=bbu_param,
         beam_init=beam_init,
-        # TODO: these aren't marked as output, so we have to specify them
-        hom_voltage_normalized=0.0,
-        growth_rate=0.0,
-        lost=False,
-        irep=0,
     )
 
     assert lost == case_data.expected_lost, f"Lost status mismatch for {case_data.current}A"
