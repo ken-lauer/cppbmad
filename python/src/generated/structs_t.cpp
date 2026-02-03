@@ -373,8 +373,8 @@ void init_tao_beam_branch_struct(py::module &m, py::class_<TaoBeamBranchStruct> 
              optional_ref<const BeamInitStruct>,
              optional_ref<const BeamInitStruct>,
              std::optional<bool>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>>(),
@@ -469,9 +469,9 @@ void init_tao_beam_branch_struct(py::module &m, py::class_<TaoBeamBranchStruct> 
 void init_tao_beam_uni_struct(py::module &m, py::class_<TaoBeamUniStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<bool>>(),
          py::arg("saved_at") = py::none(),
@@ -652,7 +652,7 @@ void init_tao_building_wall_section_struct(
     py::class_<TaoBuildingWallSectionStruct> &cls
 ) {
   cls.def(
-         py::init<optional_ref<const std::string>, optional_ref<const std::string>>(),
+         py::init<std::optional<std::string>, std::optional<std::string>>(),
          py::arg("name") = py::none(),
          py::arg("constraint") = py::none()
   )
@@ -743,7 +743,7 @@ void init_tao_building_wall_struct(py::module &m, py::class_<TaoBuildingWallStru
 // tao_cmd_history_struct
 void init_tao_cmd_history_struct(py::module &m, py::class_<TaoCmdHistoryStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::init<std::optional<std::string>, std::optional<int>>(),
          py::arg("cmd") = py::none(),
          py::arg("ix") = py::none()
   )
@@ -821,9 +821,9 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>>(),
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>>(),
          py::arg("covar") = py::none(),
          py::arg("alpha") = py::none(),
          py::arg("dummy_target") = py::none(),
@@ -1097,7 +1097,7 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
 void init_tao_curve_color_struct(py::module &m, py::class_<TaoCurveColorStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<double>,
              std::optional<double>,
@@ -1189,16 +1189,16 @@ void init_tao_curve_orbit_struct(py::module &m, py::class_<TaoCurveOrbitStruct> 
 void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              optional_ref<const TaoGraphStruct>,
              optional_ref<const TaoHistogramStruct>,
              optional_ref<const TaoCurveColorStruct>,
@@ -1417,7 +1417,7 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
 // tao_d1_data_struct
 void init_tao_d1_data_struct(py::module &m, py::class_<TaoD1DataStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, optional_ref<const TaoD2DataStruct>>(),
+         py::init<std::optional<std::string>, optional_ref<const TaoD2DataStruct>>(),
          py::arg("name") = py::none(),
          py::arg("d2") = py::none()
   )
@@ -1460,11 +1460,11 @@ void init_tao_d1_data_struct(py::module &m, py::class_<TaoD1DataStruct> &cls) {
 void init_tao_d2_data_struct(py::module &m, py::class_<TaoD2DataStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -1550,14 +1550,14 @@ void init_tao_d2_data_struct(py::module &m, py::class_<TaoD2DataStruct> &cls) {
 void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -1794,7 +1794,7 @@ void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
 // tao_data_var_component_struct
 void init_tao_data_var_component_struct(py::module &m, py::class_<TaoDataVarComponentStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<double>>(),
+         py::init<std::optional<std::string>, std::optional<double>>(),
          py::arg("name") = py::none(),
          py::arg("sign") = py::none()
   )
@@ -1963,17 +1963,17 @@ void init_tao_ele_pointer_struct(py::module &m, py::class_<TaoElePointerStruct> 
 void init_tao_ele_shape_struct(py::module &m, py::class_<TaoEleShapeStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<double>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<int>,
              std::optional<double>,
              std::optional<int>,
-             optional_ref<const std::string>>(),
+             std::optional<std::string>>(),
          py::arg("ele_id") = py::none(),
          py::arg("shape") = py::none(),
          py::arg("color") = py::none(),
@@ -2049,7 +2049,7 @@ void init_tao_eval_node_struct(py::module &m, py::class_<TaoEvalNodeStruct> &cls
   cls.def(
          py::init<
              std::optional<int>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              optional_ref<const std::vector<double>>>(),
          py::arg("type") = py::none(),
@@ -2147,7 +2147,7 @@ void init_tao_expression_info_struct(py::module &m, py::class_<TaoExpressionInfo
 void init_tao_floor_plan_struct(py::module &m, py::class_<TaoFloorPlanStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              std::optional<bool>,
              std::optional<bool>,
@@ -2155,9 +2155,9 @@ void init_tao_floor_plan_struct(py::module &m, py::class_<TaoFloorPlanStruct> &c
              std::optional<bool>,
              std::optional<bool>,
              std::optional<double>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<int>>(),
          py::arg("view") = py::none(),
          py::arg("rotation") = py::none(),
@@ -2293,17 +2293,17 @@ void init_tao_global_struct(py::module &m, py::class_<TaoGlobalStruct> &cls) {
              std::optional<int>,
              std::optional<int>,
              std::optional<bool>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
@@ -2814,11 +2814,11 @@ void init_tao_global_struct(py::module &m, py::class_<TaoGlobalStruct> &cls) {
 void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              optional_ref<const TaoPlotStruct>,
              optional_ref<const TaoFloorPlanStruct>,
              optional_ref<const QpPointStruct>,
@@ -3093,44 +3093,44 @@ void init_tao_init_struct(py::module &m, py::class_<TaoInitStruct> &cls) {
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>>(),
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>>(),
          py::arg("parse_cmd_args") = py::none(),
          py::arg("debug_switch") = py::none(),
          py::arg("external_plotting_switch") = py::none(),
@@ -3700,7 +3700,7 @@ void init_tao_lattice_branch_struct(py::module &m, py::class_<TaoLatticeBranchSt
 void init_tao_lattice_struct(py::module &m, py::class_<TaoLatticeStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              optional_ref<const LatStruct>,
              optional_ref<const LatStruct>,
              optional_ref<const LatStruct>,
@@ -3965,7 +3965,7 @@ void init_tao_plot_page_struct(py::module &m, py::class_<TaoPlotPageStruct> &cls
              optional_ref<const QpRectStruct>,
              optional_ref<const TaoDrawingStruct>,
              optional_ref<const TaoDrawingStruct>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              optional_ref<const std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
@@ -4154,7 +4154,7 @@ void init_tao_plot_page_struct(py::module &m, py::class_<TaoPlotPageStruct> &cls
 void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              optional_ref<const TaoPlotStruct>,
              optional_ref<const std::vector<double>>,
              std::optional<bool>,
@@ -4221,13 +4221,13 @@ void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> 
 void init_tao_plot_struct(py::module &m, py::class_<TaoPlotStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              optional_ref<const TaoPlotRegionStruct>,
              std::optional<int>,
              std::optional<int>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
@@ -4381,7 +4381,7 @@ void init_tao_shape_pattern_point_struct(
 // tao_shape_pattern_struct
 void init_tao_shape_pattern_struct(py::module &m, py::class_<TaoShapePatternStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, optional_ref<const QpLineStruct>>(),
+         py::init<std::optional<std::string>, optional_ref<const QpLineStruct>>(),
          py::arg("name") = py::none(),
          py::arg("line") = py::none()
   )
@@ -4854,11 +4854,11 @@ void init_tao_super_universe_struct(py::module &m, py::class_<TaoSuperUniverseSt
 void init_tao_title_struct(py::module &m, py::class_<TaoTitleStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<bool>>(),
          py::arg("string") = py::none(),
          py::arg("x") = py::none(),
@@ -5207,7 +5207,7 @@ void init_tao_universe_struct(py::module &m, py::class_<TaoUniverseStruct> &cls)
 // tao_v1_var_struct
 void init_tao_v1_var_struct(py::module &m, py::class_<TaoV1VarStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::init<std::optional<std::string>, std::optional<int>>(),
          py::arg("name") = py::none(),
          py::arg("ix_v1_var") = py::none()
   )
@@ -5312,9 +5312,9 @@ void init_tao_var_slave_struct(py::module &m, py::class_<TaoVarSlaveStruct> &cls
 void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -5339,7 +5339,7 @@ void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
@@ -5568,7 +5568,7 @@ void init_tao_wave_kick_pt_struct(py::module &m, py::class_<TaoWaveKickPtStruct>
 void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -5802,7 +5802,7 @@ void init_test_sub_sub_struct(py::module &m, py::class_<TestSubSubStruct> &cls) 
          py::init<
              std::optional<int64_t>,
              std::optional<int>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              std::optional<double>>(),
          py::arg("aaa") = py::none(),

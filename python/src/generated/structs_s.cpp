@@ -29,7 +29,7 @@ void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommon
              std::optional<int>,
              std::optional<bool>,
              std::optional<bool>,
-             optional_ref<const std::string>>(),
+             std::optional<std::string>>(),
          py::arg("ds_track_step") = py::none(),
          py::arg("dt_track_step") = py::none(),
          py::arg("cathode_strength_cutoff") = py::none(),

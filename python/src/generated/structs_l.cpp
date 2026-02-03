@@ -273,11 +273,11 @@ void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
 void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              optional_ref<const ModeInfoStruct>,
              optional_ref<const ModeInfoStruct>,
              optional_ref<const ModeInfoStruct>,
@@ -497,7 +497,7 @@ void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStru
 void init_layout(py::module &m, py::class_<Layout> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<double>,
              std::optional<bool>,

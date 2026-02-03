@@ -201,7 +201,7 @@ void init_aperture_param_struct(py::module &m, py::class_<ApertureParamStruct> &
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::string>>(),
+             std::optional<std::string>>(),
          py::arg("min_angle") = py::none(),
          py::arg("max_angle") = py::none(),
          py::arg("n_angle") = py::none(),

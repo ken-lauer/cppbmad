@@ -321,7 +321,7 @@ void init_ramper_lord_struct(py::module &m, py::class_<RamperLordStruct> &cls) {
 // resonance_h_struct
 void init_resonance_h_struct(py::module &m, py::class_<ResonanceHStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<std::complex<double>>>(),
+         py::init<std::optional<std::string>, std::optional<std::complex<double>>>(),
          py::arg("id") = py::none(),
          py::arg("c_val") = py::none()
   )

@@ -99,7 +99,7 @@ void init_wake_lr_mode_struct(py::module &m, py::class_<WakeLrModeStruct> &cls) 
 void init_wake_lr_struct(py::module &m, py::class_<WakeLrStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -237,7 +237,7 @@ void init_wake_sr_mode_struct(py::module &m, py::class_<WakeSrModeStruct> &cls) 
 void init_wake_sr_struct(py::module &m, py::class_<WakeSrStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              optional_ref<const WakeSrZLongStruct>,
              std::optional<double>,
              std::optional<double>,
@@ -411,8 +411,8 @@ void init_wake_struct(py::module &m, py::class_<WakeStruct> &cls) {
 void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              optional_ref<const PhotonReflectSurfaceStruct>,
              std::optional<int>,
              std::optional<int>,
@@ -548,13 +548,13 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
 void init_wall3d_struct(py::module &m, py::class_<Wall3dStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
              std::optional<double>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<int>>(),
          py::arg("name") = py::none(),

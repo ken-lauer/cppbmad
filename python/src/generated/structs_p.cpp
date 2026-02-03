@@ -184,9 +184,9 @@ void init_photon_reflect_surface_struct(
 ) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              std::optional<double>,
              std::optional<int>>(),
@@ -529,7 +529,7 @@ void init_pre_tracker_struct(py::module &m, py::class_<PreTrackerStruct> &cls) {
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
-             optional_ref<const std::string>>(),
+             std::optional<std::string>>(),
          py::arg("who") = py::none(),
          py::arg("ix_ele_start") = py::none(),
          py::arg("ix_ele_end") = py::none(),

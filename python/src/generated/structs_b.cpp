@@ -104,9 +104,9 @@ void init_bbu_beam_struct(py::module &m, py::class_<BbuBeamStruct> &cls) {
 void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
@@ -124,7 +124,7 @@ void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
              std::optional<bool>,
              std::optional<bool>,
              std::optional<int>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<double>,
              std::optional<double>,
@@ -132,7 +132,7 @@ void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
              std::optional<int>,
              std::optional<int>,
              std::optional<double>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<bool>,
              std::optional<bool>,
@@ -483,7 +483,7 @@ void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
 void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              optional_ref<const std::vector<double>>,
              optional_ref<const KvBeamInitStruct>,
              optional_ref<const std::vector<double>>,
@@ -493,8 +493,8 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
              std::optional<int>,
              std::optional<bool>,
              std::optional<bool>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -509,12 +509,12 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
              std::optional<double>,
              std::optional<int>,
              std::optional<int>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
-             optional_ref<const std::string>>(),
+             std::optional<std::string>>(),
          py::arg("position_file") = py::none(),
          py::arg("spin") = py::none(),
          py::arg("KV") = py::none(),
@@ -1338,7 +1338,7 @@ void init_bpm_phase_coupling_struct(py::module &m, py::class_<BpmPhaseCouplingSt
 void init_branch_struct(py::module &m, py::class_<BranchStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,

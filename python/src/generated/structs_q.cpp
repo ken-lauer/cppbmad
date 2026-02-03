@@ -13,7 +13,7 @@ namespace py = pybind11;
 void init_qp_axis_struct(py::module &m, py::class_<QpAxisStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -25,14 +25,14 @@ void init_qp_axis_struct(py::module &m, py::class_<QpAxisStruct> &cls) {
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<bool>,
@@ -202,10 +202,7 @@ void init_qp_legend_struct(py::module &m, py::class_<QpLegendStruct> &cls) {
 // qp_line_struct
 void init_qp_line_struct(py::module &m, py::class_<QpLineStruct> &cls) {
   cls.def(
-         py::init<
-             std::optional<int>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>>(),
+         py::init<std::optional<int>, std::optional<std::string>, std::optional<std::string>>(),
          py::arg("width") = py::none(),
          py::arg("color") = py::none(),
          py::arg("pattern") = py::none()
@@ -241,7 +238,7 @@ void init_qp_line_struct(py::module &m, py::class_<QpLineStruct> &cls) {
 // qp_point_struct
 void init_qp_point_struct(py::module &m, py::class_<QpPointStruct> &cls) {
   cls.def(
-         py::init<std::optional<double>, std::optional<double>, optional_ref<const std::string>>(),
+         py::init<std::optional<double>, std::optional<double>, std::optional<std::string>>(),
          py::arg("x") = py::none(),
          py::arg("y") = py::none(),
          py::arg("units") = py::none()
@@ -282,7 +279,7 @@ void init_qp_rect_struct(py::module &m, py::class_<QpRectStruct> &cls) {
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::string>>(),
+             std::optional<std::string>>(),
          py::arg("x1") = py::none(),
          py::arg("x2") = py::none(),
          py::arg("y1") = py::none(),
@@ -325,10 +322,10 @@ void init_qp_rect_struct(py::module &m, py::class_<QpRectStruct> &cls) {
 void init_qp_symbol_struct(py::module &m, py::class_<QpSymbolStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<double>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<int>>(),
          py::arg("type") = py::none(),
          py::arg("height") = py::none(),

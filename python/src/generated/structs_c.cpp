@@ -164,7 +164,7 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
 // cartesian_map_term_struct
 void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::init<std::optional<std::string>, std::optional<int>>(),
          py::arg("file") = py::none(),
          py::arg("n_link") = py::none()
   )
@@ -282,8 +282,8 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
   cls.def(
          py::init<
              optional_ref<const std::vector<double>>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<bool>>(),
          py::arg("y_knot") = py::none(),
          py::arg("attribute") = py::none(),
@@ -347,8 +347,8 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
              optional_ref<const std::vector<double>>,
              optional_ref<const LatEleLocStruct>,
              optional_ref<const LatEleLocStruct>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<int>>(),
          py::arg("value") = py::none(),
          py::arg("y_knot") = py::none(),
@@ -407,7 +407,7 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
 // control_var1_struct
 void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<double>, std::optional<double>>(),
+         py::init<std::optional<std::string>, std::optional<double>, std::optional<double>>(),
          py::arg("name") = py::none(),
          py::arg("value") = py::none(),
          py::arg("old_value") = py::none()
@@ -799,7 +799,7 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
 // cylindrical_map_term_struct
 void init_cylindrical_map_term_struct(py::module &m, py::class_<CylindricalMapTermStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::init<std::optional<std::string>, std::optional<int>>(),
          py::arg("file") = py::none(),
          py::arg("n_link") = py::none()
   )

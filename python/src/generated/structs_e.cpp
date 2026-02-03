@@ -60,11 +60,11 @@ void init_ele_pointer_struct(py::module &m, py::class_<ElePointerStruct> &cls) {
 void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
-             optional_ref<const std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
              optional_ref<const TwissStruct>,
              optional_ref<const TwissStruct>,
              optional_ref<const TwissStruct>,
@@ -696,7 +696,7 @@ void init_em_taylor_term_struct(py::module &m, py::class_<EmTaylorTermStruct> &c
 // expression_atom_struct
 void init_expression_atom_struct(py::module &m, py::class_<ExpressionAtomStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<int>, std::optional<double>>(),
+         py::init<std::optional<std::string>, std::optional<int>, std::optional<double>>(),
          py::arg("name") = py::none(),
          py::arg("type") = py::none(),
          py::arg("value") = py::none()
@@ -742,7 +742,7 @@ void init_expression_atom_struct(py::module &m, py::class_<ExpressionAtomStruct>
 // expression_tree_struct
 void init_expression_tree_struct(py::module &m, py::class_<ExpressionTreeStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<int>, std::optional<double>>(),
+         py::init<std::optional<std::string>, std::optional<int>, std::optional<double>>(),
          py::arg("name") = py::none(),
          py::arg("type") = py::none(),
          py::arg("value") = py::none()

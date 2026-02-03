@@ -64,7 +64,7 @@ void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
 void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::string>,
+             std::optional<std::string>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -250,7 +250,7 @@ void init_grid_field_pt1_struct(py::module &m, py::class_<GridFieldPt1Struct> &c
 // grid_field_pt_struct
 void init_grid_field_pt_struct(py::module &m, py::class_<GridFieldPtStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::string>, std::optional<int>>(),
+         py::init<std::optional<std::string>, std::optional<int>>(),
          py::arg("file") = py::none(),
          py::arg("n_link") = py::none()
   )
