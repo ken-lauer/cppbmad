@@ -41,7 +41,7 @@ def struct_array_usage_dimensions(
     return by_kind
 
 
-def generate_enum_wrapper(clsname: str, enums: list[EnumValue]) -> str:
+def generate_enum_wrapper(clsname: str, enums: list[EnumValue], *, offset: int | None = 0) -> str:
     """
     Generate a Python enum.IntEnum class definition string.
     """
@@ -51,14 +51,25 @@ def generate_enum_wrapper(clsname: str, enums: list[EnumValue]) -> str:
         code.append("    pass")
         return "\n".join(code)
 
+    offset_suffix = f"+ {offset}" if offset else ""
     for attr in enums:
         comment = f"  # {attr.comment}" if attr.comment else ""
-        code.append(f"    {attr.name} = {attr.value}{comment}")
+        code.append(f"    {attr.name} = {attr.value}{offset_suffix}{comment}")
 
+    if offset:
+        f_offset = -offset
+        code.append(f"""
+    @property
+    def fortran_value(self) -> int:
+        return self.value + {f_offset}
+    """)
     return "\n".join(code)
 
 
-def generate_enum_constants(all_enums: dict[str, dict[str, EnumValue]]) -> str:
+def generate_enum_constants(
+    all_enums: dict[str, dict[str, EnumValue]],
+    custom_enums: dict[str, str],
+) -> str:
     """
     Generate Python module-level constants.
     """
@@ -70,19 +81,30 @@ def generate_enum_constants(all_enums: dict[str, dict[str, EnumValue]]) -> str:
             if enum.comment:
                 result.append(f"# {enum.comment}")
 
-            result.append(f"{enum.name} = {enum.value}")
+            if enum.name in custom_enums:
+                enum_cls = custom_enums[enum.name]
+                result.append(f"{enum.name} = {enum_cls}.{enum.name}")
+            else:
+                result.append(f"{enum.name} = {enum.value}")
 
     return "\n".join(result)
 
 
 def generate_enum_wrapper_code(enums: dict[str, dict[str, EnumValue]]) -> str:
+    ele_attrs = get_ele_attributes(enums["bmad_struct.f90"])
+    ele_keys = get_ele_keys(enums["bmad_struct.f90"])
+    custom_enums = {}
+    for enum in ele_attrs:
+        custom_enums[enum.name] = "EleAttribute"
+    for enum in ele_keys:
+        custom_enums[enum.name] = "EleKey"
     return "\n".join(
         (
             "import enum",
             "",
-            generate_enum_wrapper("EleAttribute", get_ele_attributes(enums["bmad_struct.f90"])),
-            generate_enum_wrapper("EleKey", get_ele_keys(enums["bmad_struct.f90"])),
-            generate_enum_constants(enums),
+            generate_enum_wrapper("EleAttribute", ele_attrs, offset=-1),
+            generate_enum_wrapper("EleKey", ele_keys),
+            generate_enum_constants(enums, custom_enums),
         )
     )
 

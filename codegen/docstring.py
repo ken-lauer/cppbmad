@@ -464,6 +464,7 @@ def parse_routine_comment_block(
     known_sections = {
         "input": "inputs",
         "output": "outputs",
+        "result": "outputs",  # function result - same thing
         "note": "notes",
         "notes": "notes",
         "example": "examples",

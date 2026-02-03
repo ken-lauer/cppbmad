@@ -215,6 +215,10 @@ struct_list = [
   "bbu_beam_struct",
   "bbu_param_struct",
 
+  # dark current tracker
+  # "dark_current_param_struct",
+  # "dark_current_tally_struct",
+
   # ptc
   "fibre",
   "layout",
@@ -476,7 +480,10 @@ fortran_output_filename = "bsim_routines.f90"
 cpp_output_filename = "bsim_routines.cpp"
 cpp_namespace = "bsim"
 # interface_path = "$ACC_ROOT_DIR/bsim/"
-source_paths = ["$ACC_ROOT_DIR/bsim/code"]
+source_paths = [
+  "$ACC_ROOT_DIR/bsim/code",
+  # "$ACC_ROOT_DIR/bsim/dark_current_tracker/",
+]
 skip_files = []
 skip_procedures = []
 
