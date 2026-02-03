@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 from string import Template
-from typing import TYPE_CHECKING
+from typing import IO, TYPE_CHECKING
 
 from .types import STANDARD_TYPES, ArgumentType, FullType, PointerType, native_type_containers
 from .util import struct_to_proxy_class_name
@@ -1041,7 +1041,7 @@ def generate_accessor_code(
     }
 
 
-def create_fortran_proxy_code(fout, structs: list[CodegenStructure]):
+def create_fortran_proxy_code(fout: IO[str], structs: list[CodegenStructure]):
     container_types = []
     # TODO: only generate containers if they're used
     for struct in structs:

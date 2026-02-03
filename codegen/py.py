@@ -51,7 +51,13 @@ def generate_enum_wrapper(clsname: str, enums: list[EnumValue], *, offset: int |
         code.append("    pass")
         return "\n".join(code)
 
-    offset_suffix = f"+ {offset}" if offset else ""
+    if not offset:
+        offset_suffix = ""
+    elif offset < 0:
+        offset_suffix = f" - {abs(offset)}"
+    else:
+        offset_suffix = f" + {offset}"
+
     for attr in enums:
         comment = f"  # {attr.comment}" if attr.comment else ""
         code.append(f"    {attr.name} = {attr.value}{offset_suffix}{comment}")
