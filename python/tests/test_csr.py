@@ -7,15 +7,15 @@ import numpy.testing
 import pytest
 from conftest import CPPBMAD_REPO_ROOT, TESTS_ROOT
 
-import pybmad
+import pybmad as pb
 
 
 def test_csr():
-    lat = pybmad.bmad_parser(f"{CPPBMAD_REPO_ROOT}/data/csr_example/lat.bmad").lat
+    lat = pb.bmad_parser(f"{CPPBMAD_REPO_ROOT}/data/csr_example/lat.bmad").lat
 
-    pybmad.ran_seed_put(123456)
+    pb.ran_seed_put(123456)
 
-    beam_init = pybmad.BeamInitStruct(
+    beam_init = pb.BeamInitStruct(
         a_norm_emit=4e-12,
         b_norm_emit=4e-12,
         dPz_dz=0,
@@ -26,10 +26,10 @@ def test_csr():
         n_bunch=1,
     )
 
-    bmad_com = pybmad.get_bmad_com()
+    bmad_com = pb.get_bmad_com()
     bmad_com.csr_and_space_charge_on = True
 
-    space_charge_com = pybmad.get_space_charge_com()
+    space_charge_com = pb.get_space_charge_com()
     space_charge_com.ds_track_step = 0.1
     space_charge_com.n_bin = 400
     space_charge_com.beam_chamber_height = 0.02
@@ -41,7 +41,7 @@ def test_csr():
 
     if lat_param is None:
         raise RuntimeError("lat_param is None?")
-    beam = pybmad.init_beam_distribution(ele0, lat_param, beam_init).beam
+    beam = pb.init_beam_distribution(ele0, lat_param, beam_init).beam
 
     # First bunch and its particles
     bunch = beam.bunch[0]
@@ -54,16 +54,16 @@ def test_csr():
     if n_particles > 0:
         ave = np.mean(pmatrix, axis=0)
 
-    centroid = pybmad.CoordStructAlloc1D()
-    pybmad.reallocate_coord(centroid, lat, 0)
+    centroid = pb.CoordStructAlloc1D()
+    pb.reallocate_coord(centroid, lat, 0)
     centroid0 = centroid[0]
-    pybmad.init_coord(centroid0, ave.tolist(), ele0, pybmad.DOWNSTREAM_END)
+    pb.init_coord(centroid0, ave.tolist(), ele0, pb.DOWNSTREAM_END)
 
-    pybmad.track_all(lat, centroid)
+    pb.track_all(lat, centroid)
 
-    beam1 = pybmad.init_beam_distribution(ele0, lat_param, beam_init).beam
+    beam1 = pb.init_beam_distribution(ele0, lat_param, beam_init).beam
 
-    pybmad.track_beam(lat, beam1, centroid=centroid.view())
+    pb.track_beam(lat, beam1, centroid=centroid.view())
 
     first_particle_vec = np.asarray(beam1.bunch[0].particle[0].vec)
 
