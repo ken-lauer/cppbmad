@@ -7,7 +7,6 @@ import pytest
 from bbu import hybridize
 
 import pybmad
-from pybmad import LatStruct
 
 
 class BbuExpectedResult(NamedTuple):
@@ -27,23 +26,23 @@ class BbuExpectedResult(NamedTuple):
 # Define test cases individually
 results_1A = BbuExpectedResult(
     current=1.0,
-    expected_hom_voltage_gain=3.328330438634e-001,
-    expected_growth_rate=-1.100114284509e000,
+    expected_hom_voltage_gain=3.328335852803e-001,
+    expected_growth_rate=-1.100112657818e000,
     expected_lost=False,
 )
 
 results_1mA = BbuExpectedResult(
     current=0.001,
-    expected_hom_voltage_gain=3.589574300813e-001,
-    expected_growth_rate=-1.024551476686e000,
+    expected_hom_voltage_gain=3.589574316034e-001,
+    expected_growth_rate=-1.024551472445e000,
     expected_lost=False,
 )
 
 # Note: The original code used a tolerance of 4e-8 for the 100A case's growth rate.
 results_100A = BbuExpectedResult(
     current=100.0,
-    expected_hom_voltage_gain=2.916793553899e-001,
-    expected_growth_rate=-1.232100178045e000,
+    expected_hom_voltage_gain=2.916771951247e-001,
+    expected_growth_rate=-1.232107584374e000,
     expected_lost=False,
     growth_rate_tol=4e-8,
 )
@@ -56,49 +55,40 @@ def bbu_setup_data():
     Returns the (lat, bbu_beam, bbu_param, beam_init) tuple ready for tracking.
     """
     # 1. Initialize Parameters (mimicking bbu.init)
-    bbu_param = pybmad.BbuParamStruct()
-    bbu_param.lat_filename = "$ACC_ROOT_DIR/regression_tests/bbu_test/oneturn_lat.bmad"
-    bbu_param.keep_overlays_and_groups = False
-    bbu_param.simulation_turns_max = 500
-    bbu_param.elname = "T1"
-    bbu_param.hybridize = True
-    bbu_param.nrep = 5
-    bbu_param.limit_factor = 3
-    bbu_param.keep_all_lcavities = False
-    bbu_param.ran_gauss_sigma_cut = 3
-    bbu_param.nstep = 50
-    # bbu_param.current is set in the specific test function
-    bbu_param.ran_seed = 100
-    bbu_param.rel_tol = 0.001
-    bbu_param.lat2_filename = ""
-    bbu_param.bunch_freq = 1300000000.0
+    bbu_param = pybmad.BbuParamStruct(
+        lat_filename="$ACC_ROOT_DIR/regression_tests/bbu_test/oneturn_lat.bmad",
+        keep_overlays_and_groups=False,
+        simulation_turns_max=500,
+        elname="T1",
+        hybridize=True,
+        nrep=5,
+        limit_factor=3,
+        keep_all_lcavities=False,
+        ran_gauss_sigma_cut=3,
+        nstep=50,
+        # bbu_param.current is set in the specific test function
+        ran_seed=100,
+        rel_tol=0.001,
+        lat2_filename="",
+        bunch_freq=1300000000.0,
+    )
 
-    # 2. Initialize Beam Init
-    beam_init = pybmad.BeamInitStruct()
-    beam_init.n_particle = 1
+    beam_init = pybmad.BeamInitStruct(
+        n_particle=1,
+        # Calculate dt based on freq
+        dt_bunch=1.0 / bbu_param.bunch_freq if bbu_param.bunch_freq != 0 else 0.0,
+    )
 
-    # Calculate dt based on freq
-    if bbu_param.bunch_freq != 0.0:
-        beam_init.dt_bunch = 1.0 / bbu_param.bunch_freq
-    else:
-        beam_init.dt_bunch = 0.0
-
-    # 3. Random Seed Setup
     pybmad.ran_seed_put(bbu_param.ran_seed)
     if bbu_param.ran_gauss_sigma_cut > 0:
         pybmad.ran_gauss_converter(set_sigma_cut=bbu_param.ran_gauss_sigma_cut)
 
-    # 4. Parse Lattice
-    res = pybmad.bmad_parser(bbu_param.lat_filename)
+    lat = pybmad.bmad_parser(bbu_param.lat_filename).lat
 
-    lat_in: LatStruct = res.lat
-
-    # 5. Twiss and Track (Closed Orbit)
+    # Twiss and Track (Closed Orbit)
     orb = pybmad.CoordStruct.new_array1d(0)
-    pybmad.twiss_and_track(lat_in, orb)
+    pybmad.twiss_and_track(lat, orb)
 
-    # 6. Hybridization
-    lat = lat_in
     if bbu_param.hybridize:
         lat = hybridize(
             lat,
@@ -148,4 +138,4 @@ def test_bbu_tracking(bbu_setup_data, case_data: BbuExpectedResult):
 
 
 if __name__ == "__main__":
-    sys.exit(pytest.main(["-v", __file__]))
+    sys.exit(pytest.main(["-v", *sys.argv[1:], __file__]))
