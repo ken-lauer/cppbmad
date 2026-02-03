@@ -592,7 +592,6 @@ def _generate_routine_files(
 
     for src, chars_dict in sorted(routines_map.items()):
         for char, routine_list in sorted(chars_dict.items()):
-            # Reconstruct the dictionary using r.name as the key
             subset_routines = {r.name: r for r in routine_list}
 
             base_name = f"{src}_routines_{char}"

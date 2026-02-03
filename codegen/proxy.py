@@ -1382,7 +1382,7 @@ def _generate_proxy_constructor_arg(
     if not cpp_type:
         return None, None
 
-    use_ref = (arg.full_type.dim > 0) or (arg.full_type.type in {"character", "type"})
+    use_ref = (arg.full_type.dim > 0) or (arg.full_type.type in {"type"})
 
     if use_ref:
         # optional_ref<const T>
