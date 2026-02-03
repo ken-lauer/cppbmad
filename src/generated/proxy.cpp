@@ -5788,6 +5788,14 @@ int LatStruct::ramper_slave_bookkeeping() const {
 void LatStruct::set_ramper_slave_bookkeeping(int value) {
   lat_struct_set_ramper_slave_bookkeeping(fortran_ptr_, value);
 }
+bool LatStruct::parser_make_xfer_mats() const {
+  bool value;
+  lat_struct_get_parser_make_xfer_mats(fortran_ptr_, &value);
+  return value;
+}
+void LatStruct::set_parser_make_xfer_mats(bool value) {
+  lat_struct_set_parser_make_xfer_mats(fortran_ptr_, value);
+}
 CoordStructArray1D BunchStruct::particle() const {
   return ProxyHelpers::get_type_array_1d<CoordStructArray1D>(
       fortran_ptr_,

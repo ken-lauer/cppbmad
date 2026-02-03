@@ -30258,6 +30258,25 @@ contains
     struct_obj%ramper_slave_bookkeeping = value_in
   end subroutine
 
+  ! lat_struct%parser_make_xfer_mats: 0D_NOT_logical
+
+  subroutine lat_struct_get_parser_make_xfer_mats(struct_obj_ptr, value_out) bind(c, name='lat_struct_get_parser_make_xfer_mats')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(lat_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%parser_make_xfer_mats
+  end subroutine
+
+
+  subroutine lat_struct_set_parser_make_xfer_mats(struct_obj_ptr, value_in) bind(c, name='lat_struct_set_parser_make_xfer_mats')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(lat_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%parser_make_xfer_mats = value_in
+  end subroutine
+
   !! bunch_struct
 
     function allocate_fortran_bunch_struct(n, element_size) result(ptr) bind(c)

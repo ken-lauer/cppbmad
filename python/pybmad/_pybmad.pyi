@@ -7119,6 +7119,7 @@ class LatStruct:
     lattice: str
     lord_state: BookkeepingStateStruct
     machine: str
+    parser_make_xfer_mats: bool
     pre_tracker: PreTrackerStruct
     title: str
     use_name: str
@@ -7129,7 +7130,7 @@ class LatStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatStruct:
         ...
-    def __init__(self, use_name: str | None = None, lattice: str | None = None, machine: str | None = None, input_file_name: str | None = None, title: str | None = None, a: ModeInfoStruct | None = None, b: ModeInfoStruct | None = None, z: ModeInfoStruct | None = None, param: LatParamStruct | None = None, lord_state: BookkeepingStateStruct | None = None, ele_init: EleStruct | None = None, particle_start: CoordStruct | None = None, beam_init: BeamInitStruct | None = None, pre_tracker: PreTrackerStruct | None = None, custom: collections.abc.Sequence[typing.SupportsFloat] | None = None, version: typing.SupportsInt | None = None, n_ele_track: typing.SupportsInt | None = None, n_ele_max: typing.SupportsInt | None = None, n_control_max: typing.SupportsInt | None = None, n_ic_max: typing.SupportsInt | None = None, input_taylor_order: typing.SupportsInt | None = None, ic: collections.abc.Sequence[typing.SupportsInt] | None = None, photon_type: typing.SupportsInt | None = None, creation_hash: typing.SupportsInt | None = None, ramper_slave_bookkeeping: typing.SupportsInt | None = None) -> None:
+    def __init__(self, use_name: str | None = None, lattice: str | None = None, machine: str | None = None, input_file_name: str | None = None, title: str | None = None, a: ModeInfoStruct | None = None, b: ModeInfoStruct | None = None, z: ModeInfoStruct | None = None, param: LatParamStruct | None = None, lord_state: BookkeepingStateStruct | None = None, ele_init: EleStruct | None = None, particle_start: CoordStruct | None = None, beam_init: BeamInitStruct | None = None, pre_tracker: PreTrackerStruct | None = None, custom: collections.abc.Sequence[typing.SupportsFloat] | None = None, version: typing.SupportsInt | None = None, n_ele_track: typing.SupportsInt | None = None, n_ele_max: typing.SupportsInt | None = None, n_control_max: typing.SupportsInt | None = None, n_ic_max: typing.SupportsInt | None = None, input_taylor_order: typing.SupportsInt | None = None, ic: collections.abc.Sequence[typing.SupportsInt] | None = None, photon_type: typing.SupportsInt | None = None, creation_hash: typing.SupportsInt | None = None, ramper_slave_bookkeeping: typing.SupportsInt | None = None, parser_make_xfer_mats: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
         ...
@@ -19505,7 +19506,7 @@ def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = Non
         Non-abbreviated name.
     
     attrib_index : int
-        Index of the attribute. If the attribute name is not appropriate then 0 will be returned.
+        Index of the attribute. If the attribute name is not appropriate then 0 will be returned. ix -> k1$
     
     Notes
     -----
@@ -19549,7 +19550,7 @@ def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | N
         Non-abbreviated name.
     
     attrib_index : int
-        Index of the attribute. If the attribute name is not appropriate then 0 will be returned.
+        Index of the attribute. If the attribute name is not appropriate then 0 will be returned. ix -> k1$
     
     Notes
     -----
@@ -19591,7 +19592,7 @@ def attribute_name(key: typing.SupportsInt, ix_att: typing.SupportsInt, show_pri
         Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
         private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
         invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
-        private.
+        private. name -> "K1"
     """
 @typing.overload
 def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: bool | None = None) -> str:
@@ -19624,7 +19625,7 @@ def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: boo
         Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
         private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
         invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
-        private.
+        private. name -> "K1"
     """
 def attribute_type(attrib_name: str, ele: EleStruct | None = None) -> int:
     """
@@ -29660,7 +29661,7 @@ def match_ele_to_mat6(ele: EleStruct, start_orb: CoordStruct, include_delta_time
         0th order part of the transfer map.
     
     err_flag : bool
-        Set true if there is an error. False otherwise.
+        Set true if there is an error. False otherwise. Note: Currently err_flag is never set True.
     """
 def match_reg(str: str, pat: str, is_match: bool) -> None:
     """
@@ -31738,7 +31739,7 @@ def parser_transfer_control_struct(con_in: ControlStruct, lord: EleStruct, ix_va
     con_out : ControlStruct
         Output control structure.
     """
-def particle_in_global_frame(orb: CoordStruct, branch: BranchStruct, in_time_coordinates: bool | None = None, in_body_frame: bool | None = None, w_mat_out: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None, particle: CoordStruct) -> None:
+def particle_in_global_frame(orb: CoordStruct, branch: BranchStruct, in_time_coordinates: bool | None = None, in_body_frame: bool | None = None, w_mat_out: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]], "FixedSize(3)"] | None = None) -> CoordStruct:
     """
     Function particle_in_global_frame (orb, in_time_coordinates, in_body_frame, w_mat_out) result (particle)
     
@@ -31756,8 +31757,10 @@ def particle_in_global_frame(orb: CoordStruct, branch: BranchStruct, in_time_coo
         Default is false. If true, orb will taken as in time coordinates.
     
     in_body_frame : bool, optional
-        Default is true. If false, ele offsets will be ignored. Result:
+        Default is true. If false, ele offsets will be ignored.
     
+    Returns
+    -------
     particle : CoordStruct
         particle in global time coordinates
     """

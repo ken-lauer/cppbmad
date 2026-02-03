@@ -2122,6 +2122,8 @@ void lat_struct_get_creation_hash(const void *struct_obj, int *value_out);
 void lat_struct_set_creation_hash(void *struct_obj, int value_in);
 void lat_struct_get_ramper_slave_bookkeeping(const void *struct_obj, int *value_out);
 void lat_struct_set_ramper_slave_bookkeeping(void *struct_obj, int value_in);
+void lat_struct_get_parser_make_xfer_mats(const void *struct_obj, bool *value_out);
+void lat_struct_set_parser_make_xfer_mats(void *struct_obj, bool value_in);
 
 void bunch_struct_get_particle_info(
     const void *s,
@@ -16460,7 +16462,8 @@ public:
       optional_ref<const std::vector<int>> ic = std::nullopt,
       std::optional<int> photon_type = std::nullopt,
       std::optional<int> creation_hash = std::nullopt,
-      std::optional<int> ramper_slave_bookkeeping = std::nullopt
+      std::optional<int> ramper_slave_bookkeeping = std::nullopt,
+      std::optional<bool> parser_make_xfer_mats = std::nullopt
   )
       : FortranProxy() {
     if (use_name)
@@ -16513,6 +16516,8 @@ public:
       set_creation_hash(*creation_hash);
     if (ramper_slave_bookkeeping)
       set_ramper_slave_bookkeeping(*ramper_slave_bookkeeping);
+    if (parser_make_xfer_mats)
+      set_parser_make_xfer_mats(*parser_make_xfer_mats);
   }
 
   std::string use_name() const; // 0D_NOT_character
@@ -16570,6 +16575,8 @@ public:
   void set_creation_hash(int value);
   int ramper_slave_bookkeeping() const; // 0D_NOT_integer
   void set_ramper_slave_bookkeeping(int value);
+  bool parser_make_xfer_mats() const; // 0D_NOT_logical
+  void set_parser_make_xfer_mats(bool value);
 };
 
 template <>

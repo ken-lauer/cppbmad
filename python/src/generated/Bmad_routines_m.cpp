@@ -1560,7 +1560,7 @@ vec0 : 1D array of float (shape: 6)
     0th order part of the transfer map.
 
 err_flag : bool
-    Set true if there is an error. False otherwise.
+    Set true if there is an error. False otherwise. Note: Currently err_flag is never set True.
 )"""
   );
   m.def(

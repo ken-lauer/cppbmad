@@ -10053,13 +10053,12 @@ Bmad::parser_transfer_control_struct(ControlStruct &con_in, EleStruct &lord, int
   );
   return std::move(_con_out);
 }
-void Bmad::particle_in_global_frame(
+CoordStruct Bmad::particle_in_global_frame(
     CoordStruct &orb,
     BranchStruct &branch,
     std::optional<bool> in_time_coordinates,
     std::optional<bool> in_body_frame,
-    std::optional<FixedArray2D<Real, 3, 3>> w_mat_out,
-    CoordStruct &particle
+    std::optional<FixedArray2D<Real, 3, 3>> w_mat_out
 ) {
   bool in_time_coordinates_lvalue;
   auto *_in_time_coordinates{&in_time_coordinates_lvalue};
@@ -10087,16 +10086,18 @@ void Bmad::particle_in_global_frame(
   } else {
     _w_mat_out_desc.data_ptr = nullptr;
   }
+  CoordStruct _particle;
   fortran_particle_in_global_frame(
       /* void* */ orb.get_fortran_ptr(),
       /* void* */ branch.get_fortran_ptr(),
       /* bool* */ _in_time_coordinates,
       /* bool* */ _in_body_frame,
       /* Bmad::array_descriptor_t& */ _w_mat_out_desc,
-      /* void* */ particle.get_fortran_ptr()
+      /* void* */ _particle.get_fortran_ptr()
   );
   if (w_mat_out.has_value())
     vec_to_matrix(_w_mat_out_vec, w_mat_out.value());
+  return std::move(_particle);
 }
 bool Bmad::particle_is_moving_backwards(CoordStruct &orbit) {
   bool _is_moving_backwards{};

@@ -15,7 +15,7 @@
 namespace Bmad {
 
 // Enums from bmad_struct.f90
-const int BMAD_INC_VERSION = 353;
+const int BMAD_INC_VERSION = 354;
 const int NONE = 1;
 // maximum multipole order
 const int N_POLE_MAXX = 21;
@@ -770,6 +770,7 @@ const int PX_REF = 84;
 const int ETAP_X = 84;
 const int SLAVE = 84;
 const int DENSITY_USED = 84;
+const int PARSER_MAKE_XFER_MATS = 84;
 const int LR_FREQ_SPREAD = 85;
 const int Y_REF = 85;
 const int ETAP_Y = 85;

@@ -297,7 +297,8 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
              optional_ref<const std::vector<int>>,
              std::optional<int>,
              std::optional<int>,
-             std::optional<int>>(),
+             std::optional<int>,
+             std::optional<bool>>(),
          py::arg("use_name") = py::none(),
          py::arg("lattice") = py::none(),
          py::arg("machine") = py::none(),
@@ -322,7 +323,8 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
          py::arg("ic") = py::none(),
          py::arg("photon_type") = py::none(),
          py::arg("creation_hash") = py::none(),
-         py::arg("ramper_slave_bookkeeping") = py::none()
+         py::arg("ramper_slave_bookkeeping") = py::none(),
+         py::arg("parser_make_xfer_mats") = py::none()
   )
       // LatStruct.use_name (0D_NOT_character - Name of lat given by USE statement
       .def_property("use_name", &LatStruct::use_name, &LatStruct::set_use_name)
@@ -392,6 +394,13 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
           "ramper_slave_bookkeeping",
           &LatStruct::ramper_slave_bookkeeping,
           &LatStruct::set_ramper_slave_bookkeeping
+      )
+      // LatStruct.parser_make_xfer_mats (0D_NOT_logical - Is Bmad parser to make element transfer
+      // matrices?
+      .def_property(
+          "parser_make_xfer_mats",
+          &LatStruct::parser_make_xfer_mats,
+          &LatStruct::set_parser_make_xfer_mats
       )
       .def_static(
           "new_array1d",

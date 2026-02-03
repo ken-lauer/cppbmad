@@ -5805,15 +5805,14 @@ extern "C" bool fortran_particle_in_global_frame(
     bool *in_time_coordinates /* 0D_NOT_logical in */,
     bool *in_body_frame /* 0D_NOT_logical in */,
     Bmad::array_descriptor_t &w_mat_out /* 2D_NOT_real inout */,
-    void *particle /* 0D_NOT_type in */
+    void *particle /* 0D_NOT_type out */
 );
-void particle_in_global_frame(
+CoordStruct particle_in_global_frame(
     CoordStruct &orb,
     BranchStruct &branch,
-    std::optional<bool> in_time_coordinates,
-    std::optional<bool> in_body_frame,
-    std::optional<FixedArray2D<Real, 3, 3>> w_mat_out,
-    CoordStruct &particle
+    std::optional<bool> in_time_coordinates = std::nullopt,
+    std::optional<bool> in_body_frame = std::nullopt,
+    std::optional<FixedArray2D<Real, 3, 3>> w_mat_out = std::nullopt
 );
 extern "C" bool fortran_particle_is_moving_backwards(
     void *orbit /* 0D_NOT_type in */,

@@ -718,7 +718,6 @@ con_out : ControlStruct
       py::arg("in_time_coordinates") = py::none(),
       py::arg("in_body_frame") = py::none(),
       py::arg("w_mat_out") = py::none(),
-      py::arg("particle"),
       R"""(Function particle_in_global_frame (orb, in_time_coordinates, in_body_frame, w_mat_out) result (particle)
 
 Returns the particle in global time coordinates given is coordinates orb in lattice lat.
@@ -735,8 +734,10 @@ in_time_coordinates : bool, optional
     Default is false. If true, orb will taken as in time coordinates.
 
 in_body_frame : bool, optional
-    Default is true. If false, ele offsets will be ignored. Result:
+    Default is true. If false, ele offsets will be ignored.
 
+Returns
+-------
 particle : CoordStruct
     particle in global time coordinates
 )"""

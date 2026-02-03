@@ -992,7 +992,7 @@ full_name : character, optional
     Non-abbreviated name.
 
 attrib_index : int
-    Index of the attribute. If the attribute name is not appropriate then 0 will be returned.
+    Index of the attribute. If the attribute name is not appropriate then 0 will be returned. ix -> k1$
 
 Notes
 -----
@@ -1060,7 +1060,7 @@ full_name : character, optional
     Non-abbreviated name.
 
 attrib_index : int
-    Index of the attribute. If the attribute name is not appropriate then 0 will be returned.
+    Index of the attribute. If the attribute name is not appropriate then 0 will be returned. ix -> k1$
 
 Notes
 -----
@@ -1106,7 +1106,7 @@ attrib_name : character
     Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
     private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
     invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
-    private.
+    private. name -> "K1"
 )"""
   );
   m.def(
@@ -1143,7 +1143,7 @@ attrib_name : character
     Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
     private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
     invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
-    private.
+    private. name -> "K1"
 )"""
   );
   m.def(
