@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import pathlib
 
 import pytest
@@ -12,6 +13,9 @@ CPPBMAD_REPO_ROOT = TESTS_ROOT.parents[1]
 
 @pytest.fixture(autouse=True, scope="session")
 def do_not_print():
+    if os.environ.get("PYBMAD_NO_CAPTURE", "").lower() in ("1", "y"):
+        return
+
     pybmad.out_io_print_and_capture_setup(
         print_on=False,
         capture_state="BUFFERED",
