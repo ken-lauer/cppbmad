@@ -27,7 +27,7 @@ base_fortran_to_python_type = {
     "integer": "int",
     "integer8": "int",
     "logical": "bool",
-    "character(*)": "str",
+    "character": "str",
 }
 
 

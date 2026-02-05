@@ -369,7 +369,19 @@ class FortranRoutine:
             result_arg = [self.result_name.lower()]
         else:
             result_arg = []
+
         return [*self.declared_argument_list, *result_arg]
+
+    @property
+    def wrapper_args(self):
+        required = []
+        optional = []
+        for arg in self.args:
+            if arg.is_optional:
+                optional.append(arg)
+            else:
+                required.append(arg)
+        return [*required, *optional]
 
     def parse(self, *, config: CodegenConfig) -> None:
         """
@@ -489,7 +501,7 @@ class FortranRoutine:
         # only a continuous block at the end can have defaults
         specs = []
 
-        for arg in reversed(self.args):
+        for arg in reversed(self.wrapper_args):
             if not arg.is_input:
                 continue
             if allow_defaults and arg.transform.cpp_default:

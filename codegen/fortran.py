@@ -574,18 +574,17 @@ class FortranWrapperTypeArrayArgument(FortranWrapperTypeArgument):
 def generate_fortran_routine_with_c_binding(routine: FortranRoutine) -> str:
     assert routine.docstring is not None
     lines = []
-    args = routine.args
     structs = ctx().codegen_structs_by_name
 
     imports = {}
-    for arg in args:
+    for arg in routine.args:
         if arg.type == "type":
             module = structs[arg.kind].module
             imports.setdefault(module, set())
             imports[module].add(arg.member.kind)
 
-    have_err_flag = any(arg.c_name == "err_flag" and arg.intent == "out" for arg in args)
-    arg_names = [arg.c_name for arg in routine.args]
+    have_err_flag = any(arg.c_name == "err_flag" and arg.intent == "out" for arg in routine.args)
+    arg_names = [arg.c_name for arg in routine.wrapper_args]
     routine_and_args = f"fortran_{routine.name} ({', '.join(arg_names)})"
 
     lines.append(wrap_line(f"subroutine {routine_and_args} bind(c)"))
@@ -594,7 +593,7 @@ def generate_fortran_routine_with_c_binding(routine: FortranRoutine) -> str:
     for module, imps in imports.items():
         lines.append(f"  use {module}, only: " + ", ".join(sorted(imps)))
 
-    handlers = [FortranWrapperArgument.from_arg(arg, routine, lines, have_err_flag) for arg in args]
+    handlers = [FortranWrapperArgument.from_arg(arg, routine, lines, have_err_flag) for arg in routine.args]
 
     lines.append("  implicit none")
 

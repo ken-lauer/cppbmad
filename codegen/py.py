@@ -8,7 +8,7 @@ from .arg import CodegenStructure
 from .context import SUPPORTED_ARRAY_DIMS
 from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys
-from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_LIB, PYBMAD_SRC
+from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_LIB, PYBMAD_ROOT, PYBMAD_SRC
 from .proxy import _generate_proxy_constructor_arg
 from .proxy import templates as proxy_templates
 from .routines import FortranRoutine, RoutineArg
@@ -314,25 +314,26 @@ def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[Fortran
     else:
         routine_ref = f"&{routine.cpp_namespace}::{routine.overloaded_name}"
 
+    args = routine.wrapper_args
     if overloads:
         if routine.needs_python_wrapper:
-            arg_types = [_get_py_routine_arg_type(arg) for arg in routine.args if arg.is_input]
+            arg_types = [_get_py_routine_arg_type(arg) for arg in args if arg.is_input]
         else:
-            arg_types = [arg.transform.cpp_type for arg in routine.args if arg.is_input]
+            arg_types = [arg.transform.cpp_type for arg in args if arg.is_input]
         overload_args = ", ".join(arg_types)
         lines.append(f"py::overload_cast<{overload_args}>({routine_ref}),")
 
     else:
         lines.append(f"{routine_ref},")
 
-    for arg in routine.args:
+    for arg in args:
         if arg.is_input:
             if arg.is_optional:
-                lines.append(f'py::arg("{arg.c_name}") = py::none(),')
+                lines.append(f'py::arg("{arg.python_name}") = py::none(),')
             else:
-                lines.append(f'py::arg("{arg.c_name}"),')
+                lines.append(f'py::arg("{arg.python_name}"),')
 
-    doc = routine.docstring.to_numpy_docstring(routine.args)
+    doc = routine.docstring.to_numpy_docstring(args)
     lines.append(rf'R"""({doc})"""')
     lines.append(");")
 
@@ -592,6 +593,9 @@ def _generate_routine_files(
 
     for src, chars_dict in sorted(routines_map.items()):
         for char, routine_list in sorted(chars_dict.items()):
+            if not routine_list:
+                continue
+
             subset_routines = {r.name: r for r in routine_list}
 
             base_name = f"{src}_routines_{char}"
@@ -697,6 +701,55 @@ def _generate_main_module_file(
     files[PYBMAD_LIB / "_enums.py"] = generate_enum_wrapper_code(enums)
 
 
+def generate_init_dot_py(
+    structs: list[CodegenStructure],
+    routines_by_name: dict[str, FortranRoutine],
+    enums: dict[str, dict[str, EnumValue]],
+    module_name: str = "_pybmad",
+) -> str:
+    imports = ["# Classes"]
+    all_ = ["    # Classes"]
+
+    def add_name(name: str, mod: str):
+        import_line = f"from .{mod} import {name}"
+        all_line = f'    "{name}",'
+        if import_line not in imports:
+            imports.append(import_line)
+            all_.append(all_line)
+
+    for struct in structs:
+        add_name(struct.python_class_name, module_name)
+
+    imports.append("")
+    imports.append("# Functions")
+    all_.append("")
+    all_.append("    # Functions")
+    for _, rt in sorted(routines_by_name.items(), key=lambda item: item[0]):
+        if rt.usable:
+            add_name(rt.overloaded_name, module_name)
+
+    imports.append("")
+    imports.append("# Enums")
+    all_.append("")
+    all_.append("    # Enums")
+    for per_file_enums in enums.values():
+        for enum in per_file_enums.values():
+            add_name(enum.name, "_enums")
+
+    nl = "\n"
+    return f"""
+from __future__ import annotations
+
+__version__ = "0.0.1"
+
+{nl.join(imports)}
+
+__all__ = [
+{nl.join(all_)}
+]
+    """
+
+
 def generate_pybmad(
     structs: list[CodegenStructure],
     routines_by_name: dict[str, FortranRoutine],
@@ -722,6 +775,8 @@ def generate_pybmad(
     files: dict[pathlib.Path, str] = {}
     array_usage = struct_array_usage_dimensions(routines_by_name, structs)
 
+    init_dot_py = generate_init_dot_py(structs, routines_by_name, enums)
+
     structs_by_char = _group_structures_by_char(structs)
     routines_map = _group_routines_by_source_and_char(routines_by_name)
 
@@ -732,6 +787,7 @@ def generate_pybmad(
 
     files[PYBMAD_INCLUDE / "pybmad" / "generated" / "structs.hpp"] = "\n".join(struct_headers)
     files[PYBMAD_INCLUDE / "pybmad" / "generated" / "routines.hpp"] = "\n".join(routine_headers)
+    files[PYBMAD_ROOT / "pybmad" / "__init__.py"] = init_dot_py
 
     _generate_main_module_file(files, enums, struct_inits, routine_inits)
 

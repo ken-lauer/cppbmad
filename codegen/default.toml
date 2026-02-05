@@ -421,6 +421,8 @@ skips = [
 
 [c_to_python_name_translation]
 "global" = "global_"
+"except" = "except_"
+"match" = "match_"
 
 [[routines]]
 fortran_output_filename = "bmad_routines.f90"
