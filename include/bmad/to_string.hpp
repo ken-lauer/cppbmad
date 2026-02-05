@@ -187,16 +187,14 @@ std::string to_string(const FTypeArrayND<ProxyType, N, AllocFunc, DeallocFunc> &
 template std::string to_string(const FArray1D<std::complex<double>> &);
 
 // Template overload for FTypeAlloc1D (Allocatable Derived Types)
-template <typename ViewType, auto AllocFunc, auto DeallocFunc, auto ReallocFunc, auto AccessFunc>
-std::string to_string(
-    const FTypeAlloc1D<ViewType, AllocFunc, DeallocFunc, ReallocFunc, AccessFunc> &arr
-) {
+template <typename ViewType>
+std::string to_string(const FTypeAlloc1D<ViewType> &arr) {
   return to_string(arr.view());
 }
 
 // Template overload for FAlloc1D (Allocatable Native/Primitive Types)
-template <typename T, auto AllocFunc, auto DeallocFunc, auto ReallocFunc, auto AccessFunc>
-std::string to_string(const FAlloc1D<T, AllocFunc, DeallocFunc, ReallocFunc, AccessFunc> &arr) {
+template <typename T>
+std::string to_string(const FAlloc1D<T> &arr) {
   return to_string(arr.view());
 }
 } // namespace Bmad

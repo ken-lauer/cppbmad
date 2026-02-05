@@ -584,7 +584,7 @@ def generate_fortran_routine_with_c_binding(routine: FortranRoutine) -> str:
             imports[module].add(arg.member.kind)
 
     have_err_flag = any(arg.c_name == "err_flag" and arg.intent == "out" for arg in routine.args)
-    arg_names = [arg.c_name for arg in routine.wrapper_args]
+    arg_names = [arg.c_name for arg in routine.args]
     routine_and_args = f"fortran_{routine.name} ({', '.join(arg_names)})"
 
     lines.append(wrap_line(f"subroutine {routine_and_args} bind(c)"))

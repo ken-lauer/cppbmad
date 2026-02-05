@@ -5,7 +5,7 @@ import string
 import textwrap
 
 from .arg import CodegenStructure
-from .context import SUPPORTED_ARRAY_DIMS
+from .context import SUPPORTED_ARRAY_DIMS, CodegenConfig
 from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys
 from .paths import CODEGEN_ROOT, PYBMAD_INCLUDE, PYBMAD_LIB, PYBMAD_ROOT, PYBMAD_SRC
@@ -702,23 +702,37 @@ def _generate_main_module_file(
 
 
 def generate_init_dot_py(
+    config: CodegenConfig,
     structs: list[CodegenStructure],
     routines_by_name: dict[str, FortranRoutine],
     enums: dict[str, dict[str, EnumValue]],
-    module_name: str = "_pybmad",
+    array_usage: dict[str, set[int]],
 ) -> str:
-    imports = ["# Classes"]
-    all_ = ["    # Classes"]
+    imports = []
+    all_ = []
 
-    def add_name(name: str, mod: str):
+    def add_name(name: str, mod: str = config.python_module_name):
         import_line = f"from .{mod} import {name}"
         all_line = f'    "{name}",'
         if import_line not in imports:
             imports.append(import_line)
             all_.append(all_line)
 
+    imports.append("# Globals")
+    all_.append("    # Globals")
+    for name in config.python_imports:
+        add_name(name)
+
+    imports.append("# Classes")
+    all_.append("    # Classes")
+
     for struct in structs:
-        add_name(struct.python_class_name, module_name)
+        add_name(struct.python_class_name)
+        for n in sorted(array_usage.get(struct.f_name.lower(), [])):
+            if n > 0:
+                add_name(f"{struct.python_class_name}Array{n}D")
+                if n == 1:
+                    add_name(f"{struct.python_class_name}Alloc{n}D")
 
     imports.append("")
     imports.append("# Functions")
@@ -726,7 +740,7 @@ def generate_init_dot_py(
     all_.append("    # Functions")
     for _, rt in sorted(routines_by_name.items(), key=lambda item: item[0]):
         if rt.usable:
-            add_name(rt.overloaded_name, module_name)
+            add_name(rt.overloaded_name)
 
     imports.append("")
     imports.append("# Enums")
@@ -751,6 +765,7 @@ __all__ = [
 
 
 def generate_pybmad(
+    config: CodegenConfig,
     structs: list[CodegenStructure],
     routines_by_name: dict[str, FortranRoutine],
     enums: dict[str, dict[str, EnumValue]],
@@ -775,7 +790,7 @@ def generate_pybmad(
     files: dict[pathlib.Path, str] = {}
     array_usage = struct_array_usage_dimensions(routines_by_name, structs)
 
-    init_dot_py = generate_init_dot_py(structs, routines_by_name, enums)
+    init_dot_py = generate_init_dot_py(config, structs, routines_by_name, enums, array_usage)
 
     structs_by_char = _group_structures_by_char(structs)
     routines_map = _group_routines_by_source_and_char(routines_by_name)

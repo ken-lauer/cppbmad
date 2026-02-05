@@ -228,6 +228,10 @@ void bind_FAlloc1D(py::module &m, const std::string &name) {
 }
 
 // BoolAlloc1D specialization; avoid wrapping ReferenceProxy
+// Specialization must match the typedef in bmad/fortran_arrays.hpp
+// using BoolAlloc1D = FAlloc1D<bool, ...>;
+// We cannot verify the exact full type easily, so we use a templated helper if possible
+// or just rely on the fact that if we use the EXACT typedef, it works.
 
 template <>
 inline void bind_FAlloc1D<BoolAlloc1D>(py::module &m, const std::string &name) {
@@ -246,7 +250,8 @@ inline void bind_FAlloc1D<BoolAlloc1D>(py::module &m, const std::string &name) {
           [](AllocClass &self, int i) -> bool {
             if (i < 0)
               i += self.size();
-            return self.view().at(i);
+            // .view() is FArray1D<bool>, .at(i) returns ReferenceProxy
+            return static_cast<bool>(self.view().at(i));
           }
       )
       .def(
@@ -260,9 +265,10 @@ inline void bind_FAlloc1D<BoolAlloc1D>(py::module &m, const std::string &name) {
       .def(
           "__iter__",
           [](AllocClass &self) {
-            struct BoolIndexIterator {
+            // Safe iterator wrapper
+            struct BoolAllocIterator {
               int index;
-              AllocClass *container; // Keep unsafe ptr, reliant on keep_alive below
+              AllocClass *container;
 
               using iterator_category = std::forward_iterator_tag;
               using value_type = bool;
@@ -270,18 +276,20 @@ inline void bind_FAlloc1D<BoolAlloc1D>(py::module &m, const std::string &name) {
               using pointer = void;
               using reference = bool;
 
-              bool operator==(const BoolIndexIterator &other) const { return index == other.index; }
-              bool operator!=(const BoolIndexIterator &other) const { return index != other.index; }
-              BoolIndexIterator &operator++() {
+              bool operator==(const BoolAllocIterator &other) const {
+                return index == other.index && container == other.container;
+              }
+              bool operator!=(const BoolAllocIterator &other) const { return !(*this == other); }
+              BoolAllocIterator &operator++() {
                 ++index;
                 return *this;
               }
-              bool operator*() const { return container->view().at(index); }
+              bool operator*() const { return static_cast<bool>(container->view().at(index)); }
             };
 
             return py::make_iterator(
-                BoolIndexIterator{0, &self},
-                BoolIndexIterator{self.size(), &self}
+                BoolAllocIterator{0, &self},
+                BoolAllocIterator{self.size(), &self}
             );
           },
           py::keep_alive<0, 1>()

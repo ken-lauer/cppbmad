@@ -55,6 +55,8 @@ class CodegenConfig(pydantic.BaseModel):
     skips: list[str]
     routines: list[RoutineSettings] = []
     enum_filenames: list[NormalizedPath] = []
+    python_imports: list[str] = []
+    python_module_name: str = "_pybmad"
 
     @classmethod
     def from_file(cls, filename: pathlib.Path) -> CodegenConfig:

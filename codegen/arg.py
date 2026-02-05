@@ -124,6 +124,7 @@ class Argument:
 
         f_to_c_name = params.c_side_name_translation
         c_name = f_to_c_name.get(member.name, f_to_c_name.get(f"{fstruct.name}%{member.name}", member.name))
+
         python_name = params.c_to_python_name_translation.get(c_name, c_name)
         if keyword.iskeyword(python_name):
             python_name = f"{python_name}_"

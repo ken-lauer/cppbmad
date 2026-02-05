@@ -256,7 +256,7 @@ def load_context(
     ctx.routines, ctx.routines_by_name, ctx.routine_files = generate_routines(params, settings_and_routines)
 
     if pybmad:
-        ctx.pybmad_files = generate_pybmad(ctx.codegen_structs, ctx.routines_by_name, ctx.enums)
+        ctx.pybmad_files = generate_pybmad(ctx.params, ctx.codegen_structs, ctx.routines_by_name, ctx.enums)
 
     return ctx
 

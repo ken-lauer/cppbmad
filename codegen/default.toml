@@ -406,6 +406,23 @@ skips = [
 
 ]
 
+python_imports = [
+  "get_bmad_com",
+  "get_space_charge_com",
+  "get_super_universe",
+  "BoolAlloc1D",
+  "ComplexAlloc1D",
+  "Int8Alloc1D",
+  "IntAlloc1D",
+  "RealAlloc1D",
+  # 
+  "BoolArray1D",
+  "ComplexArray1D",
+  "Int8Array1D",
+  "IntArray1D",
+  "RealArray1D",
+]
+
 # Translations on C++ side to avoid clash with reserved words
 [c_side_name_translation]
 "wake_sr_struct%long" = "long_wake"

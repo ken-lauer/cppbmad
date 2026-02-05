@@ -62,20 +62,22 @@ using FTypeArray3D = FTypeArrayND<ProxyType, 3>;
 
 class FCharArray1D;
 
-template <
-    typename ViewType,
-    void *(*AllocFunc)(),
-    void (*DeallocFunc)(void *),
-    void (*ReallocFunc)(void *, int, size_t),
-    void (*AccessFunc)(void *, void **, int *, int *, size_t *, bool *)>
+// Function pointer types for allocatable arrays
+using AllocFuncPtr = void *(*)(int, size_t *);
+using DeallocFuncPtr = void (*)(void *, int);
+using ReallocFuncPtr = void (*)(void *, int, size_t);
+// AccessFunc signature differs for types vs primitives
+using TypeAccessFuncPtr = void (*)(const void *, void **, int *, bool *, size_t *);
+using PrimAccessFuncPtr = void (*)(const void *, void **, int *, bool *);
+
+// Convenience for container allocators (parameterless alloc/dealloc wrappers)
+using ContainerAllocFuncPtr = void *(*)();
+using ContainerDeallocFuncPtr = void (*)(void *);
+
+template <typename ViewType>
 class FTypeAlloc1D;
 
-template <
-    typename T,
-    void *(*AllocFunc)(),
-    void (*DeallocFunc)(void *),
-    void (*ReallocFunc)(void *, int, size_t),
-    void (*AccessFunc)(void *, void **, int *, int *, size_t *, bool *)>
+template <typename T>
 class FAlloc1D;
 
 using std::to_string;
@@ -998,48 +1000,92 @@ public:
 // FTypeAlloc1D - Container for Fortran allocatable arrays
 // =============================================================================
 
-template <
-    typename ViewType,
-    void *(*AllocFunc)(),
-    void (*DeallocFunc)(void *),
-    void (*ReallocFunc)(void *, int, size_t),
-    void (*AccessFunc)(void *, void **, int *, int *, size_t *, bool *)>
+static void NullDeleter(void *) {}
+
+template <typename ViewType>
 class FTypeAlloc1D {
 public:
   using view_type = ViewType;
 
 private:
   std::shared_ptr<void> handle_;
+  ContainerAllocFuncPtr alloc_func_ = nullptr;
+  ContainerDeallocFuncPtr dealloc_func_ = nullptr;
+  ReallocFuncPtr realloc_func_ = nullptr;
+  TypeAccessFuncPtr access_func_ = nullptr;
+
   mutable ViewType view_;
   mutable bool stale_ = true;
 
   void refresh() const {
     void *data = nullptr;
-    int lbound = 1, size = 0;
+    int bounds[2] = {1, 0};
     size_t elem_size = 0;
     bool alloc = false;
-    AccessFunc(handle_.get(), &data, &lbound, &size, &elem_size, &alloc);
+    if (access_func_)
+      access_func_(handle_.get(), &data, bounds, &alloc, &elem_size);
+    int size = alloc ? (bounds[1] - bounds[0] + 1) : 0;
     view_ = (alloc && data && size > 0)
-                ? ViewType(data, size, lbound, lbound + size - 1, true, elem_size)
+                ? ViewType(data, size, bounds[0], bounds[1], true, elem_size)
                 : ViewType();
     stale_ = false;
   }
 
 public:
-  FTypeAlloc1D() { handle_ = std::shared_ptr<void>(AllocFunc(), DeallocFunc); }
-  explicit FTypeAlloc1D(int lbound, int n)
-      : FTypeAlloc1D() {
+  // Default constructor (unusable state, requires assignment or proper init)
+  FTypeAlloc1D() = default;
+
+  // Fully specified constructor (creates new handle)
+  FTypeAlloc1D(
+      ContainerAllocFuncPtr alloc,
+      ContainerDeallocFuncPtr dealloc,
+      ReallocFuncPtr realloc,
+      TypeAccessFuncPtr access
+  )
+      : alloc_func_(alloc)
+      , dealloc_func_(dealloc)
+      , realloc_func_(realloc)
+      , access_func_(access) {
+    if (!alloc_func_)
+      throw std::logic_error("Construction failed: AllocFunc is null");
+    handle_ = std::shared_ptr<void>(alloc_func_(), dealloc_func_);
+  }
+
+  // Constructor for EXISTING handle (e.g. from struct component)
+  // Does not take ownership of handle (no dealloc), but needs realloc/access logic.
+  FTypeAlloc1D(void *existing_handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : realloc_func_(realloc)
+      , access_func_(access) {
+    if (!existing_handle)
+      throw std::runtime_error("handle is NULL");
+    // Non-owned variant.
+    handle_ = std::shared_ptr<void>(existing_handle, NullDeleter);
+  }
+
+  // Constructor that creates AND resizes immediately
+  FTypeAlloc1D(
+      int lbound,
+      int n,
+      ContainerAllocFuncPtr alloc,
+      ContainerDeallocFuncPtr dealloc,
+      ReallocFuncPtr realloc,
+      TypeAccessFuncPtr access
+  )
+      : FTypeAlloc1D(alloc, dealloc, realloc, access) {
     if (n > 0)
       resize(lbound, n);
   }
+
   // Destructor: Rule of Zero (handled by shared_ptr + DeallocFunc)
 
   void resize(int lbound, int n) {
-    ReallocFunc(handle_.get(), lbound, n);
+    if (realloc_func_)
+      realloc_func_(handle_.get(), lbound, n);
     stale_ = true;
   }
   void clear() {
-    ReallocFunc(handle_.get(), 0, 0);
+    if (realloc_func_)
+      realloc_func_(handle_.get(), 0, 0);
     stale_ = true;
   }
 
@@ -1063,48 +1109,81 @@ public:
 // FAlloc1D - Container for Fortran allocatable arrays (native types)
 // =============================================================================
 
-template <
-    typename T,
-    void *(*AllocFunc)(),
-    void (*DeallocFunc)(void *),
-    void (*ReallocFunc)(void *, int, size_t),
-    void (*AccessFunc)(void *, void **, int *, int *, size_t *, bool *)>
+template <typename T>
 class FAlloc1D {
 public:
   using view_type = FArray1D<T>;
 
 private:
   std::shared_ptr<void> handle_;
+  ContainerAllocFuncPtr alloc_func_ = nullptr;
+  ContainerDeallocFuncPtr dealloc_func_ = nullptr;
+  ReallocFuncPtr realloc_func_ = nullptr;
+  PrimAccessFuncPtr access_func_ = nullptr;
+
   mutable FArray1D<T> view_;
   mutable bool stale_ = true;
 
   void refresh() const {
     void *data_ptr = nullptr;
-    int lbound = 1, size = 0;
-    size_t elem_size = 0;
+    int bounds[2] = {1, 0};
     bool alloc = false;
-    AccessFunc(handle_.get(), &data_ptr, &lbound, &size, &elem_size, &alloc);
+    if (access_func_)
+      access_func_(handle_.get(), &data_ptr, bounds, &alloc);
     T *data = static_cast<T *>(data_ptr);
-    view_ = (alloc && data && size > 0) ? FArray1D<T>(data, size, lbound, lbound + size - 1, true)
+    int size = alloc ? (bounds[1] - bounds[0] + 1) : 0;
+    view_ = (alloc && data && size > 0) ? FArray1D<T>(data, size, bounds[0], bounds[1], true)
                                         : FArray1D<T>();
     stale_ = false;
   }
 
 public:
-  FAlloc1D() { handle_ = std::shared_ptr<void>(AllocFunc(), DeallocFunc); }
-  explicit FAlloc1D(int lbound, int n)
-      : FAlloc1D() {
+  FAlloc1D() = default;
+
+  FAlloc1D(
+      ContainerAllocFuncPtr alloc,
+      ContainerDeallocFuncPtr dealloc,
+      ReallocFuncPtr realloc,
+      PrimAccessFuncPtr access
+  )
+      : alloc_func_(alloc)
+      , dealloc_func_(dealloc)
+      , realloc_func_(realloc)
+      , access_func_(access) {
+    if (!alloc_func_)
+      throw std::logic_error("Default construction not supported (no AllocFunc)");
+    handle_ = std::shared_ptr<void>(alloc_func_(), dealloc_func_);
+  }
+
+  FAlloc1D(
+      int lbound,
+      int n,
+      ContainerAllocFuncPtr alloc,
+      ContainerDeallocFuncPtr dealloc,
+      ReallocFuncPtr realloc,
+      PrimAccessFuncPtr access
+  )
+      : FAlloc1D(alloc, dealloc, realloc, access) {
     if (n > 0)
       resize(lbound, n);
   }
-  // Destructor: Rule of Zero (handled by shared_ptr + DeallocFunc)
+
+  FAlloc1D(void *existing_handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
+      : realloc_func_(realloc)
+      , access_func_(access) {
+    if (!existing_handle)
+      throw std::runtime_error("handle is NULL");
+    handle_ = std::shared_ptr<void>(existing_handle, NullDeleter);
+  }
 
   void resize(int lbound, int n) {
-    ReallocFunc(handle_.get(), lbound, n);
+    if (realloc_func_)
+      realloc_func_(handle_.get(), lbound, n);
     stale_ = true;
   }
   void clear() {
-    ReallocFunc(handle_.get(), 0, 0);
+    if (realloc_func_)
+      realloc_func_(handle_.get(), 0, 0);
     stale_ = true;
   }
 
@@ -1141,6 +1220,13 @@ public:
     f(ptr, &data, bounds, &alloc);
     int size = alloc ? (bounds[1] - bounds[0] + 1) : 0;
     return FArray1D<T>(data, size, bounds[0], bounds[1], alloc);
+  }
+
+  template <typename AllocCls>
+  static AllocCls get_struct_alloc(const void *ptr) {
+    // Cast away const because FAlloc1D might need mutable handle for realloc,
+    // although we generally only realloc if we are allowed to.
+    return AllocCls(const_cast<void *>(ptr));
   }
 
   template <typename T, typename Func>
@@ -1250,6 +1336,44 @@ public:
         static_cast<size_t>(strides_in[2])
     };
     return ArrayT(data, sizes, lowers, uppers, strides, alloc, elem_size);
+  }
+
+  template <typename T, typename SetterFunc>
+  static void set_array_2d(void *fparse, SetterFunc setter, const std::vector<std::vector<T>> &v) {
+    int rows = static_cast<int>(v.size());
+    int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+    int shape[] = {cols, rows};
+
+    std::vector<T> flat;
+    flat.reserve(rows * cols);
+    for (int j = 0; j < cols; ++j) {
+      for (int i = 0; i < rows; ++i) {
+        flat.push_back(v[i][j]);
+      }
+    }
+
+    setter(fparse, flat.data(), shape);
+  }
+
+  template <typename T, typename SetterFunc>
+  static void
+  set_array_3d(void *fparse, SetterFunc setter, const std::vector<std::vector<std::vector<T>>> &v) {
+    int n3 = static_cast<int>(v.size());
+    int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+    int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+    int shape[] = {n1, n2, n3};
+
+    std::vector<T> flat;
+    flat.reserve(n1 * n2 * n3);
+    for (int k = 0; k < n3; ++k) {
+      for (int j = 0; j < n2; ++j) {
+        for (int i = 0; i < n1; ++i) {
+          flat.push_back(v[k][j][i]);
+        }
+      }
+    }
+
+    setter(fparse, flat.data(), shape);
   }
 };
 

@@ -723,6 +723,10 @@ def arg_to_cpp_string(arg: Argument, use_call: bool = True) -> str | None:
     # elif arg.full_type.type == "complex":
     #     return '"cplxTODO"'
 
+    # if arg.array and arg.full_type.ptr == "ALLOC":
+    #     return f"to_string({arg_name}.has_value() ? {arg_name}
+    #     )"
+
     return f"to_string({arg_name})"
 
 
