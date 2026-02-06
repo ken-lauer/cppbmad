@@ -23,42 +23,41 @@ void reset_counters() {
 }
 
 // -----------------------------------------------------------------------------
-// Mock: FAlloc1D Handle (Simulating a Fortran Descriptor)
+// Mock: FAlloc1D (Simulating a Fortran Descriptor)
 // -----------------------------------------------------------------------------
 struct IntDescriptor {
   std::vector<int> buffer;
   int cur_lbound = 1;
 
-  const void *data_ptr() const { return buffer.empty() ? nullptr : buffer.data(); }
   void *data_ptr() { return buffer.empty() ? nullptr : buffer.data(); }
   int size() const { return static_cast<int>(buffer.size()); }
 };
 
-void *Alloc_IntDesc() {
+void *Alloc_IntContainer() {
   g_alloc_count++;
   return new IntDescriptor();
 }
 
-void Dealloc_IntDesc(void *ptr) {
+void Dealloc_IntContainer(void *ptr) {
   if (ptr) {
     g_dealloc_count++;
     delete static_cast<IntDescriptor *>(ptr);
   }
 }
 
-void Realloc_IntDesc(void *ptr, int lb, size_t n) {
+void Realloc_IntContainer(void *ptr, int lb, size_t n) {
   auto *desc = static_cast<IntDescriptor *>(ptr);
   desc->cur_lbound = lb;
   desc->buffer.resize(n);
-  // Fill with predictable data for testing: i * 10
+  // Fill with predictable data: (index_0) * 10
   for (size_t i = 0; i < n; ++i)
     desc->buffer[i] = static_cast<int>(i) * 10;
 }
 
-void Access_IntDesc(const void *ptr, void **d, int *bounds, bool *alloc) {
-  auto *desc = static_cast<const IntDescriptor *>(ptr);
-  *d = const_cast<void *>(desc->data_ptr()); // Mock hack: desc->data_ptr() isn't const-correct here
-  // FAlloc1D expects bounds[0] = lb, bounds[1] = ub
+void Access_IntContainer(const void *ptr, void **d, int *bounds, bool *alloc) {
+  // Cast away const because Mocks use vector::data()
+  auto *desc = static_cast<IntDescriptor *>(const_cast<void *>(ptr));
+  *d = desc->data_ptr();
   int lb = desc->cur_lbound;
   int sz = desc->size();
   bounds[0] = lb;
@@ -70,36 +69,55 @@ void Access_IntDesc(const void *ptr, void **d, int *bounds, bool *alloc) {
 // Mock: FTypeArray1D Lifecycle (Simulating Derived Type allocators)
 // -----------------------------------------------------------------------------
 
-struct MyType {
-  int val;
-  void *raw_addr; // Store access address to verify pointer arithmetic
+struct MyTypeRaw {
+  int value;
 };
 
-// A "Proxy" class that users would write to wrap the raw void*
+// The proxy class users would write
 class MyTypeProxy {
   void *ptr_;
 
 public:
   explicit MyTypeProxy(void *p)
       : ptr_(p) {}
-
-  // Getter simply treats the void* as an int* for this test
-  int get_val() const { return *static_cast<int *>(ptr_); }
-  void set_val(int v) { *static_cast<int *>(ptr_) = v; }
+  int get() const { return static_cast<MyTypeRaw *>(ptr_)->value; }
+  void set(int v) { static_cast<MyTypeRaw *>(ptr_)->value = v; }
   void *raw() const { return ptr_; }
 };
 
-void *Alloc_Type(int n, size_t *elem_size) {
+struct TypeDescriptor {
+  std::vector<MyTypeRaw> buffer; // The actual storage
+  int cur_lbound = 1;
+};
+
+void *Alloc_TypeContainer() {
   g_alloc_count++;
-  *elem_size = sizeof(int);
-  return new int[n]; // Simple int array to simulate a structure
+  return new TypeDescriptor();
 }
 
-void Dealloc_Type(void *ptr, int /*size_context*/) {
+void Dealloc_TypeContainer(void *ptr) {
   if (ptr) {
     g_dealloc_count++;
-    delete[] static_cast<int *>(ptr);
+    delete static_cast<TypeDescriptor *>(ptr);
   }
+}
+
+void Realloc_TypeContainer(void *ptr, int lb, size_t n) {
+  auto *desc = static_cast<TypeDescriptor *>(ptr);
+  desc->cur_lbound = lb;
+  desc->buffer.resize(n);
+  // Initialize
+  for (size_t i = 0; i < n; ++i)
+    desc->buffer[i].value = (int)i + 200;
+}
+
+void Access_TypeContainer(const void *ptr, void **d, int *bounds, bool *alloc, size_t *elem_size) {
+  auto *desc = static_cast<TypeDescriptor *>(const_cast<void *>(ptr));
+  *d = desc->buffer.empty() ? nullptr : desc->buffer.data();
+  bounds[0] = desc->cur_lbound;
+  bounds[1] = desc->cur_lbound + static_cast<int>(desc->buffer.size()) - 1;
+  *alloc = (!desc->buffer.empty());
+  *elem_size = sizeof(MyTypeRaw);
 }
 
 } // namespace Mocks
@@ -154,6 +172,142 @@ TEST_CASE("FArrayND<Primitive, 1> : Explicit 1D Specialization") {
     CHECK(vec.size() == 5);
     CHECK(vec[0] == 100);
   }
+}
+
+TEST_CASE("FArrayND<bool, 1> : Logical Array Specialization") {
+  // Fortran Logicals are usually 4 bytes (C_INT).
+  // 0 = False, Non-Zero = True.
+  // We mock a data buffer of ints.
+  std::vector<int> raw = {0, 1, 0, 99};
+  // Map index 1..4
+
+  // Note: Cast raw int* to bool* merely to satisfy constructor signature.
+  // The class internally casts it back to int*.
+  bool *ptr_cast = reinterpret_cast<bool *>(raw.data());
+
+  FArray1D<bool> log_arr(ptr_cast, 4, 1, 4, true);
+
+  SUBCASE("Reading Proxy") {
+    CHECK(log_arr(1) == false); // raw 0
+    CHECK(log_arr(2) == true); // raw 1
+    CHECK(log_arr(3) == false); // raw 0
+    CHECK(log_arr(4) == true); // raw 99
+  }
+
+  SUBCASE("Writing Proxy") {
+    log_arr(1) = true;
+    CHECK(raw[0] == 1);
+
+    log_arr(2) = false;
+    CHECK(raw[1] == 0);
+  }
+
+  SUBCASE("Algorithms") {
+    // std::count
+    int true_count = 0;
+    for (auto b : log_arr) {
+      if (b)
+        true_count++;
+    }
+    CHECK(true_count == 2); // default data {0,1,0,99}
+  }
+
+  SUBCASE("At/Square Bracket") {
+    CHECK(log_arr[1] == true); // 0-based index 1 -> raw[1] -> 1 -> true
+  }
+}
+
+TEST_CASE("FAlloc1D : Primitive Allocatable Container") {
+  Mocks::reset_counters();
+
+  // Instantiate container with function pointers for the "runtime"
+  Bmad::FAlloc1D<int> container(
+      Mocks::Alloc_IntContainer,
+      Mocks::Dealloc_IntContainer,
+      Mocks::Realloc_IntContainer,
+      Mocks::Access_IntContainer
+  );
+
+  CHECK(Mocks::g_alloc_count == 1); // Constructor creates handle
+  CHECK(container.empty());
+  CHECK(!container.get().is_valid());
+
+  // 1. Resize/Allocate
+  // Mock fills with 0, 10, 20...
+  container.resize_bounds(1, 5);
+
+  CHECK(container.size() == 5);
+  CHECK(container.view().lower_bound() == 1);
+  CHECK(container.view().upper_bound() == 5);
+  CHECK(container.view().is_valid());
+
+  // 2. Data Access (Fortran index)
+  CHECK(container(1) == 0);
+  CHECK(container(2) == 10);
+  container(1) = 999;
+  CHECK(container(1) == 999);
+
+  // 3. Data Access (C index)
+  CHECK(container[1] == 10); // index 1 -> second element
+
+  // 4. Clear/Deallocate underlying data (handle keeps existing)
+  container.clear();
+  CHECK(container.empty());
+  CHECK(!container.view().is_valid());
+
+  // 5. Destructor validation
+  // container goes out of scope here
+}
+// Check that destructor cleaned up handle
+TEST_CASE("FAlloc1D : RAII Cleanup") {
+  CHECK(Mocks::g_dealloc_count == 1); // From previous test case destruction
+}
+
+TEST_CASE("FTypeAlloc1D : Derived Type Lifecycle & Container") {
+  Mocks::reset_counters();
+
+  // 1. Defining a wrapper class pattern (common in Bmad generated code)
+  struct TypeAllocWrapper
+      : public FTypeAlloc1D<FTypeArray1D<Mocks::MyTypeProxy, nullptr, nullptr>> {
+    TypeAllocWrapper()
+        : FTypeAlloc1D(
+              Mocks::Alloc_TypeContainer,
+              Mocks::Dealloc_TypeContainer,
+              Mocks::Realloc_TypeContainer,
+              Mocks::Access_TypeContainer
+          ) {}
+  };
+
+  {
+    TypeAllocWrapper arr;
+
+    CHECK(Mocks::g_alloc_count == 1); // Handle allocated
+    CHECK(arr.empty());
+
+    // Allocate data: 10 items, lbound 5
+    // Mock initializes data to index+200
+    arr.resize_bounds(5, 14);
+
+    CHECK(!arr.empty());
+    CHECK(arr.size() == 10);
+    CHECK(arr.view().lower_bound() == 5);
+    CHECK(arr.view().upper_bound() == 14);
+
+    // Access
+    CHECK(arr(5).get() == 200); // index 0
+    CHECK(arr(6).get() == 201); // index 1
+    CHECK(arr[0].get() == 200); // C-index 0
+
+    // Modify
+    arr(5).set(9999);
+    CHECK(arr(5).get() == 9999);
+
+    // Address consistency (proxy check)
+    CHECK(arr(5).raw() == arr[0].raw());
+  }
+
+  // Destructor called on AcKickerWrapper
+  CHECK(Mocks::g_dealloc_count == 1);
 }
 
 TEST_CASE("FArrayND<T, 2> : Multidimensional Array") {
@@ -258,99 +412,6 @@ TEST_CASE("FCharArray1D : String helper") {
   }
 }
 
-TEST_CASE("FTypeArrayND<T, 1> : Ownership and Lifecycle") {
-  Mocks::reset_counters();
-
-  // 1. Test "Owned" array (created via .allocate)
-  {
-    // Allocate array of 10 items, lower bound 5
-    auto arr =
-        FTypeArray1D<Mocks::MyTypeProxy, Mocks::Alloc_Type, Mocks::Dealloc_Type>::allocate(10, 5);
-
-    CHECK(Mocks::g_alloc_count == 1);
-    CHECK(arr.size() == 10);
-    CHECK(arr.lower_bound() == 5);
-    CHECK(arr.upper_bound() == 14);
-
-    // Access/Modify
-    arr(5).set_val(999);
-    CHECK(arr(5).get_val() == 999);
-
-    // C-style access
-    arr[0].set_val(111);
-    CHECK(arr[0].get_val() == 111); // Same memory loc as arr(5)
-
-    // Address consistency
-    CHECK(arr.at(0).raw() == arr(5).raw());
-  }
-  // Destructor should have successfully fired DeallocFunc here (or shared_ptr deleter)
-  CHECK(Mocks::g_dealloc_count == 1);
-
-  // 2. Test "View" array (Non-owning)
-  int raw_int = 42;
-  {
-    // Create view manually
-    FTypeArray1D<Mocks::MyTypeProxy, nullptr, nullptr> view(&raw_int, 1, 1, 1, true, sizeof(int));
-    CHECK(view(1).get_val() == 42);
-  }
-  // View destruction should NOT trigger mock dealloc
-  CHECK(Mocks::g_dealloc_count == 1); // logic check: still 1 from previous test
-}
-
-// TEST_CASE("FAlloc1D : Allocatable Container Refactoring Support") {
-//   Mocks::reset_counters();
-//
-//   // Instantiate container. Constructor calls AllocFunc immediately to create handle.
-//   Bmad::FAlloc1D<
-//       int,
-//       Mocks::Alloc_IntDesc,
-//       Mocks::Dealloc_IntDesc,
-//       Mocks::Realloc_IntDesc,
-//       Mocks::Access_IntDesc>
-//       container;
-//
-//   CHECK(Mocks::g_alloc_count == 1); // Handle created
-//   CHECK(container.empty());
-//
-//   // Resize (Allocation)
-//   container.resize(1, 5);
-//   CHECK(!container.empty());
-//   CHECK(container.size() == 5);
-//
-//   // Check internal View generation
-//   // logic in Mock: fill with i*10 -> 0, 10, 20...
-//   CHECK(container(1) == 0);
-//   CHECK(container(3) == 20); // 0, 10, 20
-//   CHECK(container[2] == 20);
-//
-//   // Modify data
-//   container(1) = 999;
-//   CHECK(container(1) == 999);
-//
-//   // Clear
-//   container.clear();
-//   CHECK(container.empty()); // View size should be 0 or !valid
-//
-//   // Scope exit: destructor should clean up handle
-// }
-// // g_dealloc_count check outside scope
-// TEST_CASE("FAlloc1D : RAII Check") {
-//   // Relying on previous test running, or simpler:
-//   Mocks::reset_counters();
-//   {
-//     Bmad::FAlloc1D<
-//         int,
-//         Mocks::Alloc_IntDesc,
-//         Mocks::Dealloc_IntDesc,
-//         Mocks::Realloc_IntDesc,
-//         Mocks::Access_IntDesc>
-//         temp;
-//     // Created
-//   }
-//   // Destroyed
-//   CHECK(Mocks::g_dealloc_count == 1);
-// }
-
 // Helper to check FArray1D logic manually
 TEST_CASE("FArray1D basic operations") {
   std::vector<double> data = {1.0, 2.0, 3.0, 4.0, 5.0};
@@ -374,10 +435,6 @@ TEST_CASE("FArray1D basic operations") {
   }
 }
 
-// Mimics the nesting in Beam/Bunch/Particle
-// We don't have BeamStruct directly instantiable with data here without calling Fortran,
-// but we can allocate one.
-
 TEST_CASE("Nested Allocatable Structure Access") {
   // Allocate a BeamStruct using factory (which calls Fortran)
   BeamStruct beam;
@@ -390,7 +447,7 @@ TEST_CASE("Nested Allocatable Structure Access") {
   // Wait, beam.bunch is Alloc1D.
 
   auto bunches = beam.bunch(); // Alloc1D
-  bunches.resize(1, 1);
+  bunches.resize_bounds(1, 1);
 
   REQUIRE(bunches.size() == 1);
 
@@ -399,7 +456,7 @@ TEST_CASE("Nested Allocatable Structure Access") {
 
   // Allocate particles
   auto particles = bunch.particle();
-  particles.resize(1, 2);
+  particles.resize(2);
 
   REQUIRE(particles.size() == 2);
 

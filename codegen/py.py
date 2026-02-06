@@ -427,8 +427,12 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
     if 1 in used_array_dims:
         container_cls = f"{struct.cpp_class}Alloc1D"
         code_lines.append(
-            f'      .def_static("new_array1d", [](int sz, int lbound) {{ return {container_cls}(lbound, sz); }}, '
-            f'py::arg("sz"), py::arg("lbound") = 1)'
+            f'      .def_static("new_array1d", [](int sz) {{ return {container_cls}(sz); }}, '
+            f'py::arg("sz") = 0)'
+        )
+        code_lines.append(
+            f'      .def_static("new_array1d_bounds", [](int lbound, int ubound) {{ auto cnt = {container_cls}(); cnt.resize_bounds(lbound, ubound); return cnt; }}, '
+            f'py::arg("lbound"), py::arg("ubound"))'
         )
 
     # TODO json
@@ -495,6 +499,9 @@ def _group_routines_by_source_and_char(
     routines_map = {}
 
     for routine in routines_by_name.values():
+        if not routine.usable:
+            continue
+
         src = routine.cpp_namespace
         char = routine.name[0].lower()
 

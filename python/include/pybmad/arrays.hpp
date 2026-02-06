@@ -198,8 +198,9 @@ template <typename AllocClass>
 void bind_FAlloc1D(py::module &m, const std::string &name) {
   py::class_<AllocClass>(m, name.c_str())
       .def(py::init<>())
-      .def(py::init<int, int>(), py::arg("lbound"), py::arg("n"))
-      .def("resize", &AllocClass::resize, py::arg("lbound"), py::arg("n"))
+      .def(py::init<int>(), py::arg("n"))
+      .def("resize", &AllocClass::resize, py::arg("n"))
+      .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
       .def("clear", &AllocClass::clear)
       .def("__len__", &AllocClass::size)
       .def(
@@ -239,8 +240,9 @@ inline void bind_FAlloc1D<BoolAlloc1D>(py::module &m, const std::string &name) {
 
   py::class_<AllocClass>(m, name.c_str())
       .def(py::init<>())
-      .def(py::init<int, int>(), py::arg("lbound"), py::arg("n"))
-      .def("resize", &AllocClass::resize, py::arg("lbound"), py::arg("n"))
+      .def(py::init<int>(), py::arg("n"))
+      .def("resize", &AllocClass::resize, py::arg("n"))
+      .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
       .def("clear", &AllocClass::clear)
       .def("__len__", &AllocClass::size)
       .def("view", [](AllocClass &self) { return self.view(); })
@@ -362,8 +364,9 @@ template <typename AllocClass>
 void bind_FTypeAlloc1D(py::module &m, const std::string &name) {
   py::class_<AllocClass>(m, name.c_str())
       .def(py::init<>())
-      .def(py::init<int, int>(), py::arg("lbound"), py::arg("n"))
-      .def("resize", &AllocClass::resize, py::arg("lbound"), py::arg("n"))
+      .def(py::init<int>(), py::arg("n"))
+      .def("resize", &AllocClass::resize, py::arg("n"))
+      .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
       .def("clear", &AllocClass::clear)
       .def("__len__", &AllocClass::size)
 

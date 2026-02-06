@@ -49,6 +49,15 @@ std::string to_string(const std::optional<T> &opt) {
   return "nullopt";
 }
 
+inline std::string to_string(void *ptr) {
+  if (!ptr)
+    return "nullptr";
+  // std::ostringstream oss;
+  // oss << "<raw ptr 0x" << std::hex << reinterpret_cast<std::uintptr_t>(ptr) << ">";
+  // return oss.str();
+  return "(ptr)";
+}
+
 template <typename T>
 std::string to_string(const T *opt) {
   if (opt) {

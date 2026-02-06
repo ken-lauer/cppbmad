@@ -13,9 +13,9 @@ extern "C" char *tao_c_out_io_buffer_get_line(int n);
 extern "C" int tao_c_out_io_buffer_num_lines();
 
 void test_allocatable() {
-  auto ctr{EleStructAlloc1D(0, 10)};
+  auto ctr{EleStructAlloc1D()};
 
-  ctr.resize(0, 5);
+  ctr.resize_bounds(0, 5);
   ctr[0].set_name("foo0");
   ctr[1].set_name("foo1");
   ctr[2].set_name("foo2");
@@ -31,8 +31,8 @@ void test_real_container() {
   auto a{RealAlloc1D()};
   auto b{RealAlloc1D()};
 
-  a.resize(0, 20);
-  b.resize(0, 20);
+  a.resize_bounds(0, 20);
+  b.resize_bounds(0, 20);
   int n{10}, isn{1};
 
   auto aview{a.view()}, bview{b.view()};

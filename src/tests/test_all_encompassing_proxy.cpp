@@ -463,8 +463,7 @@ TEST_CASE("TestSubStruct standalone") {
 TEST_CASE("TestSubStructAlloc1D") {
   SUBCASE("allocate and access") {
     auto arr = TestSubStructAlloc1D();
-    // resize(lbound, ubound) allocates array from lbound to ubound inclusive
-    arr.resize(1, 5); // Fortran array(1:5)
+    arr.resize(5); // Fortran array(1:5)
     CHECK(arr.view().lower_bound() == 1);
 
     REQUIRE(arr.size() == 5);
@@ -482,8 +481,8 @@ TEST_CASE("TestSubStructAlloc1D") {
 
   SUBCASE("resize with lbound 0") {
     auto arr = TestSubStructAlloc1D();
-    arr.resize(0, 2); // Fortran array(0:2)
-    REQUIRE(arr.size() == 2);
+    arr.resize_bounds(0, 2); // Fortran array(0:2)
+    REQUIRE(arr.size() == 3);
     CHECK(arr.view().lower_bound() == 0);
 
     for (int i = 0; i < arr.size(); ++i) {
@@ -502,7 +501,7 @@ TEST_CASE("TestSubStructAlloc1D") {
     CHECK(arr.empty());
 
     // Allocate
-    arr.resize(1, 3);
+    arr.resize(3);
     CHECK(arr.size() == 3);
     CHECK(arr.view().lower_bound() == 1);
 

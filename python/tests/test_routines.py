@@ -11,7 +11,7 @@ def container_create(container_cls, values: list):
     arr = container_cls()
     n = len(values)
     if values:
-        arr.resize(0, n)
+        arr.resize(n)
         for i, val in enumerate(values):
             arr[i] = val
     return arr

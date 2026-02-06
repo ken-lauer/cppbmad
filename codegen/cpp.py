@@ -162,7 +162,7 @@ class CppWrapperTypeArgumentArray(CppWrapperArgument):
         elif self.arg.intent == "out":
             lines.append(f"""\
         // Output-only type array
-        auto {argname} = {clsname}Array1D::allocate({self.arg.c_dim1}, 1);
+        auto {argname} = {clsname}Alloc1D({self.arg.c_dim1});
         {desc_name}.data_ptr = {argname}.get_fortran_ptr();
         {desc_name}.dims[0] = {argname}.size();
         """)

@@ -1555,8 +1555,8 @@ struct {nt.cpp_container_name} : public FAlloc1D<{nt.cpp_type}> {{
         reallocate_{name}_container_data,
         access_{name}_container
     ) {{}}
-    {nt.cpp_container_name}(int lb, int n) : Base(
-        lb, n,
+    {nt.cpp_container_name}(int n) : Base(
+        n,
         allocate_{name}_container,
         deallocate_{name}_container,
         reallocate_{name}_container_data,
@@ -1589,8 +1589,8 @@ struct {class_name}Alloc1D : public FTypeAlloc1D<{class_name}Array1D> {{
         reallocate_{struct_name}_container_data,
         access_{struct_name}_container
     ) {{}}
-    {class_name}Alloc1D(int lb, int n) : Base(
-        lb, n,
+    {class_name}Alloc1D(int n) : Base(
+        n,
         allocate_{struct_name}_container,
         deallocate_{struct_name}_container,
         reallocate_{struct_name}_container_data,

@@ -35,8 +35,8 @@ space_charge_com.beam_chamber_height = 0.02
 space_charge_com.n_shield_images = 0
 space_charge_com.particle_bin_span = 8
 
+assert lat.param is not None  # just for the type checker
 
-assert lat.param is not None
 init = pybmad.init_beam_distribution(lat.ele[0], lat.param, beam_init)
 if init.err_flag:
     raise RuntimeError("init_beam_distribution failed (1)")

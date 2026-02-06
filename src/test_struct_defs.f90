@@ -18,10 +18,10 @@ end type
 
 type all_encompassing_struct
   ! Real(rp)
-  real(rp) real_rp_0d
-  real(rp) :: real_rp_1d(3)
-  real(rp) :: real_rp_2d(3, 4)
-  real(rp) :: real_rp_3d(3, 4, 5)
+  real(rp) :: real_rp_0d = 0.0
+  real(rp) :: real_rp_1d(3) = 1.0
+  real(rp) :: real_rp_2d(3, 4) = 2.0
+  real(rp) :: real_rp_3d(3, 4, 5) = 3.0
 
   real(rp), pointer :: real_rp_0d_ptr
   real(rp), pointer :: real_rp_1d_ptr(:)
@@ -33,10 +33,10 @@ type all_encompassing_struct
   real(rp), allocatable :: real_rp_3d_alloc(:,:,:)
 
   ! Real(dp)
-  real(dp) real_dp_0d
-  real(dp) :: real_dp_1d(3)
-  real(dp) :: real_dp_2d(3, 4)
-  real(dp) :: real_dp_3d(3, 4, 5)
+  real(dp) real_dp_0d = 0.0
+  real(dp) :: real_dp_1d(3) = 1.0
+  real(dp) :: real_dp_2d(3, 4) = 2.0
+  real(dp) :: real_dp_3d(3, 4, 5) = 3.0
 
   real(dp), pointer :: real_dp_0d_ptr
   real(dp), pointer :: real_dp_1d_ptr(:)
