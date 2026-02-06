@@ -395,13 +395,13 @@ Routine to open a binary file for reading or writing.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     File to create.
 
-action : character
+action : str
     'READ' or 'WRITE'
 
-r_name : character
+r_name : str
     Calling routine name for error messages.
 
 Returns
@@ -580,10 +580,10 @@ check_momentum : bool, optional
 
 Returns
 -------
-param : LatParamStruct, optional
-
 is_too_large : bool
     True if orbit is too large. False otherwise.
+
+param : LatParamStruct, optional
 )"""
   );
   py::class_<Bmad::OrderEvecsByNSimilarity, std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(

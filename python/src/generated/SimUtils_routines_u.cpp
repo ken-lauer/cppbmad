@@ -13,7 +13,7 @@ void init_SimUtils_routines_u(py::module &m) {
 
 Parameters
 ----------
-string : character
+string : str
 )"""
   );
 }

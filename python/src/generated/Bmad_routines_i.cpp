@@ -215,7 +215,7 @@ ix_key : int
 ix_attrib : int
     Attribute index.
 
-name : character
+name : str
     Attribute name. Should be uppercase if attrib_state = is_free$. Should contain non-uppercase characters if
     attrib_state = private$.
 
@@ -915,11 +915,11 @@ energy_integ_prob : float, optional
 
 Returns
 -------
-E_photon : float, optional
-    See energy_integ_prob. E_photon must be present if energy_integ_prob is.
-
 integ_prob : float
     Integrated probablility of emitting a photon in given angle and energy range.
+
+E_photon : float, optional
+    See energy_integ_prob. E_photon must be present if energy_integ_prob is.
 )"""
   );
   m.def(

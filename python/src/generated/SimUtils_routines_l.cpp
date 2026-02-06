@@ -70,7 +70,7 @@ Parameters
 ----------
 logic : bool
 
-str : character
+str : str
 )"""
   );
   m.def(

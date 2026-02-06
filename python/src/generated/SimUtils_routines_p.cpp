@@ -18,13 +18,13 @@ void init_SimUtils_routines_p(py::module &m) {
 
 Parameters
 ----------
-format_str : character
+format_str : str
 
 n_repeat : int
 
 power : int
 
-descrip : character
+descrip : str
 
 width : int
 

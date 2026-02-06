@@ -112,10 +112,10 @@ class AcKickerStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def amp_vs_time(self) -> AcKickerTimeStructArray1D:
+    def amp_vs_time(self) -> AcKickerTimeStructAlloc1D:
         ...
     @property
-    def frequency(self) -> AcKickerFreqStructArray1D:
+    def frequency(self) -> AcKickerFreqStructAlloc1D:
         ...
 class AcKickerTimeStruct:
     """
@@ -240,7 +240,7 @@ class AllEncompassingStruct:
     def complex_dp_1d(self, arg1: collections.abc.Sequence[complex]) -> None:
         ...
     @property
-    def complex_dp_1d_alloc(self) -> ComplexArray1D:
+    def complex_dp_1d_alloc(self) -> ComplexAlloc1D:
         ...
     @complex_dp_1d_alloc.setter
     def complex_dp_1d_alloc(self, arg1: collections.abc.Sequence[complex]) -> None:
@@ -306,7 +306,7 @@ class AllEncompassingStruct:
     def int8_1d(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
-    def int8_1d_alloc(self) -> Int8Array1D:
+    def int8_1d_alloc(self) -> Int8Alloc1D:
         ...
     @int8_1d_alloc.setter
     def int8_1d_alloc(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -372,7 +372,7 @@ class AllEncompassingStruct:
     def int_1d(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
-    def int_1d_alloc(self) -> IntArray1D:
+    def int_1d_alloc(self) -> IntAlloc1D:
         ...
     @int_1d_alloc.setter
     def int_1d_alloc(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -456,7 +456,7 @@ class AllEncompassingStruct:
     def real_dp_1d(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def real_dp_1d_alloc(self) -> RealArray1D:
+    def real_dp_1d_alloc(self) -> RealAlloc1D:
         ...
     @real_dp_1d_alloc.setter
     def real_dp_1d_alloc(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -522,7 +522,7 @@ class AllEncompassingStruct:
     def real_rp_1d(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def real_rp_1d_alloc(self) -> RealArray1D:
+    def real_rp_1d_alloc(self) -> RealAlloc1D:
         ...
     @real_rp_1d_alloc.setter
     def real_rp_1d_alloc(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -823,7 +823,7 @@ class ApertureScanStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def point(self) -> AperturePointStructArray1D:
+    def point(self) -> AperturePointStructAlloc1D:
         ...
     @property
     def pz_start(self) -> float:
@@ -989,7 +989,7 @@ class BbuBeamStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def bunch(self) -> BunchStructArray1D:
+    def bunch(self) -> BunchStructAlloc1D:
         ...
     @property
     def hom_voltage_max(self) -> float:
@@ -1010,7 +1010,7 @@ class BbuBeamStruct:
     def ix_bunch_head(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def ix_ele_bunch(self) -> IntArray1D:
+    def ix_ele_bunch(self) -> IntAlloc1D:
         ...
     @ix_ele_bunch.setter
     def ix_ele_bunch(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -1040,7 +1040,7 @@ class BbuBeamStruct:
     def rf_wavelength_max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def stage(self) -> BbuStageStructArray1D:
+    def stage(self) -> BbuStageStructAlloc1D:
         ...
     @property
     def time_now(self) -> float:
@@ -1523,7 +1523,7 @@ class BeamStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def bunch(self) -> BunchStructArray1D:
+    def bunch(self) -> BunchStructAlloc1D:
         ...
 class BeamTilts:
     """
@@ -1850,7 +1850,7 @@ class BmadNormalFormStruct:
     def ele_origin(self, arg1: EleStruct) -> None:
         ...
     @property
-    def h(self) -> ResonanceHStructArray1D:
+    def h(self) -> ResonanceHStructAlloc1D:
         ...
 class BmadParser:
     """
@@ -2442,7 +2442,7 @@ class BunchStruct:
     def ix_turn(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def ix_z(self) -> IntArray1D:
+    def ix_z(self) -> IntAlloc1D:
         ...
     @ix_z.setter
     def ix_z(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -2466,7 +2466,7 @@ class BunchStruct:
     def n_live(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def particle(self) -> CoordStructArray1D:
+    def particle(self) -> CoordStructAlloc1D:
         ...
     @property
     def t0(self) -> float:
@@ -2558,7 +2558,7 @@ class BunchTrackStruct:
     def n_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def pt(self) -> BunchParamsStructArray1D:
+    def pt(self) -> BunchParamsStructAlloc1D:
         ...
 class BunchTrackStructAlloc1D:
     @typing.overload
@@ -2883,7 +2883,7 @@ class CartesianMapTermStruct:
     def n_link(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def term(self) -> CartesianMapTerm1StructArray1D:
+    def term(self) -> CartesianMapTerm1StructAlloc1D:
         ...
 class Celbd:
     """
@@ -3274,10 +3274,10 @@ class ControlRamp1Struct:
     def __repr__(self) -> str:
         ...
     @property
-    def stack(self) -> ExpressionAtomStructArray1D:
+    def stack(self) -> ExpressionAtomStructAlloc1D:
         ...
     @property
-    def y_knot(self) -> RealArray1D:
+    def y_knot(self) -> RealAlloc1D:
         ...
     @y_knot.setter
     def y_knot(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -3352,7 +3352,7 @@ class ControlStruct:
     def ix_attrib(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def stack(self) -> ExpressionAtomStructArray1D:
+    def stack(self) -> ExpressionAtomStructAlloc1D:
         ...
     @property
     def value(self) -> float:
@@ -3361,7 +3361,7 @@ class ControlStruct:
     def value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def y_knot(self) -> RealArray1D:
+    def y_knot(self) -> RealAlloc1D:
         ...
     @y_knot.setter
     def y_knot(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -3495,16 +3495,16 @@ class ControllerStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ramp(self) -> ControlRamp1StructArray1D:
+    def ramp(self) -> ControlRamp1StructAlloc1D:
         ...
     @property
-    def ramper_lord(self) -> RamperLordStructArray1D:
+    def ramper_lord(self) -> RamperLordStructAlloc1D:
         ...
     @property
-    def var(self) -> ControlVar1StructArray1D:
+    def var(self) -> ControlVar1StructAlloc1D:
         ...
     @property
-    def x_knot(self) -> RealArray1D:
+    def x_knot(self) -> RealAlloc1D:
         ...
     @x_knot.setter
     def x_knot(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -3617,7 +3617,7 @@ class CoordArrayStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def orbit(self) -> CoordStructArray1D:
+    def orbit(self) -> CoordStructAlloc1D:
         ...
 class CoordArrayStructAlloc1D:
     @typing.overload
@@ -4183,7 +4183,7 @@ class CylindricalMapTermStruct:
     def n_link(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def term(self) -> CylindricalMapTerm1StructArray1D:
+    def term(self) -> CylindricalMapTerm1StructAlloc1D:
         ...
 class DistanceToAperture:
     """
@@ -5112,7 +5112,7 @@ class EmTaylorStruct:
     def ref(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def term(self) -> EmTaylorTermStructArray1D:
+    def term(self) -> EmTaylorTermStructAlloc1D:
         ...
 class EmTaylorStructAlloc1D:
     @typing.overload
@@ -5949,7 +5949,7 @@ class GenGradMapStruct:
     def field_type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def gg(self) -> GenGrad1StructArray1D:
+    def gg(self) -> GenGrad1StructAlloc1D:
         ...
     @property
     def iz0(self) -> int:
@@ -6954,7 +6954,7 @@ class LatEleOrderArrayStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele(self) -> LatEleOrder1StructArray1D:
+    def ele(self) -> LatEleOrder1StructAlloc1D:
         ...
 class LatEleOrderArrayStructAlloc1D:
     @typing.overload
@@ -7013,7 +7013,7 @@ class LatEleOrderStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def branch(self) -> LatEleOrderArrayStructArray1D:
+    def branch(self) -> LatEleOrderArrayStructAlloc1D:
         ...
 class LatParamStruct:
     """
@@ -7147,13 +7147,13 @@ class LatStruct:
     def b(self, arg1: ModeInfoStruct) -> None:
         ...
     @property
-    def branch(self) -> BranchStructArray1D:
+    def branch(self) -> BranchStructAlloc1D:
         ...
     @property
-    def constant(self) -> ExpressionAtomStructArray1D:
+    def constant(self) -> ExpressionAtomStructAlloc1D:
         ...
     @property
-    def control(self) -> ControlStructArray1D:
+    def control(self) -> ControlStructAlloc1D:
         ...
     @property
     def creation_hash(self) -> int:
@@ -7162,7 +7162,7 @@ class LatStruct:
     def creation_hash(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def custom(self) -> RealArray1D:
+    def custom(self) -> RealAlloc1D:
         ...
     @custom.setter
     def custom(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -7171,7 +7171,7 @@ class LatStruct:
     def ele(self) -> EleStructArray1D:
         ...
     @property
-    def ic(self) -> IntArray1D:
+    def ic(self) -> IntAlloc1D:
         ...
     @ic.setter
     def ic(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -7961,7 +7961,7 @@ class NametableStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def index(self) -> IntArray1D:
+    def index(self) -> IntAlloc1D:
         ...
     @index.setter
     def index(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -8339,10 +8339,10 @@ class PhotonElementStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def init_energy_prob(self) -> SplineStructArray1D:
+    def init_energy_prob(self) -> SplineStructAlloc1D:
         ...
     @property
-    def integrated_init_energy_prob(self) -> RealArray1D:
+    def integrated_init_energy_prob(self) -> RealAlloc1D:
         ...
     @integrated_init_energy_prob.setter
     def integrated_init_energy_prob(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -8417,7 +8417,7 @@ class PhotonReflectSurfaceStruct:
     def surface_roughness_rms(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def table(self) -> PhotonReflectTableStructArray1D:
+    def table(self) -> PhotonReflectTableStructAlloc1D:
         ...
 class PhotonReflectTableStruct:
     """
@@ -8435,25 +8435,25 @@ class PhotonReflectTableStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def angle(self) -> RealArray1D:
+    def angle(self) -> RealAlloc1D:
         ...
     @angle.setter
     def angle(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def bragg_angle(self) -> RealArray1D:
+    def bragg_angle(self) -> RealAlloc1D:
         ...
     @bragg_angle.setter
     def bragg_angle(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def energy(self) -> RealArray1D:
+    def energy(self) -> RealAlloc1D:
         ...
     @energy.setter
     def energy(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def int1(self) -> Interval1CoefStructArray1D:
+    def int1(self) -> Interval1CoefStructAlloc1D:
         ...
     @property
     def max_energy(self) -> float:
@@ -8468,7 +8468,7 @@ class PhotonReflectTableStruct:
     def p_reflect(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
-    def p_reflect_scratch(self) -> RealArray1D:
+    def p_reflect_scratch(self) -> RealAlloc1D:
         ...
     @p_reflect_scratch.setter
     def p_reflect_scratch(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -9556,7 +9556,7 @@ class RadIntAllEleStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def branch(self) -> RadIntBranchStructArray1D:
+    def branch(self) -> RadIntBranchStructAlloc1D:
         ...
 class RadIntBranchStruct:
     """
@@ -9574,7 +9574,7 @@ class RadIntBranchStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele(self) -> RadInt1StructArray1D:
+    def ele(self) -> RadInt1StructAlloc1D:
         ...
 class RadIntBranchStructAlloc1D:
     @typing.overload
@@ -10199,7 +10199,7 @@ class RfEleStruct:
     def ds_step(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def steps(self) -> RfStairStepStructArray1D:
+    def steps(self) -> RfStairStepStructAlloc1D:
         ...
 class RfStairStepStruct:
     """
@@ -11845,7 +11845,7 @@ class TaoCommonStruct:
     def n_universes(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def plot_place_buffer(self) -> TaoPlotRegionStructArray1D:
+    def plot_place_buffer(self) -> TaoPlotRegionStructAlloc1D:
         ...
     @property
     def valid_plot_who(self) -> FCharArray1D:
@@ -11959,7 +11959,7 @@ class TaoCurveStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def err_symb(self) -> RealArray1D:
+    def err_symb(self) -> RealAlloc1D:
         ...
     @err_symb.setter
     def err_symb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -11983,13 +11983,13 @@ class TaoCurveStruct:
     def ix_bunch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def ix_line(self) -> IntArray1D:
+    def ix_line(self) -> IntAlloc1D:
         ...
     @ix_line.setter
     def ix_line(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
-    def ix_symb(self) -> IntArray1D:
+    def ix_symb(self) -> IntAlloc1D:
         ...
     @ix_symb.setter
     def ix_symb(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -12007,7 +12007,7 @@ class TaoCurveStruct:
     def n_turn(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def symb_size(self) -> RealArray1D:
+    def symb_size(self) -> RealAlloc1D:
         ...
     @symb_size.setter
     def symb_size(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -12019,19 +12019,19 @@ class TaoCurveStruct:
     def symbol_every(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def x_line(self) -> RealArray1D:
+    def x_line(self) -> RealAlloc1D:
         ...
     @x_line.setter
     def x_line(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def x_symb(self) -> RealArray1D:
+    def x_symb(self) -> RealAlloc1D:
         ...
     @x_symb.setter
     def x_symb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def y2_line(self) -> RealArray1D:
+    def y2_line(self) -> RealAlloc1D:
         ...
     @y2_line.setter
     def y2_line(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -12043,19 +12043,19 @@ class TaoCurveStruct:
     def y_axis_scale_factor(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def y_line(self) -> RealArray1D:
+    def y_line(self) -> RealAlloc1D:
         ...
     @y_line.setter
     def y_line(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def y_symb(self) -> RealArray1D:
+    def y_symb(self) -> RealAlloc1D:
         ...
     @y_symb.setter
     def y_symb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def z_symb(self) -> RealArray1D:
+    def z_symb(self) -> RealAlloc1D:
         ...
     @z_symb.setter
     def z_symb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -12196,7 +12196,7 @@ class TaoD2DataStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def d1(self) -> TaoD1DataStructArray1D:
+    def d1(self) -> TaoD1DataStructAlloc1D:
         ...
     @property
     def descrip(self) -> FCharArray1D:
@@ -12617,7 +12617,7 @@ class TaoDrawingStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele_shape(self) -> TaoEleShapeStructArray1D:
+    def ele_shape(self) -> TaoEleShapeStructAlloc1D:
         ...
 class TaoDynamicApertureStruct:
     """
@@ -12651,13 +12651,13 @@ class TaoDynamicApertureStruct:
     def ellipse_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def pz(self) -> RealArray1D:
+    def pz(self) -> RealAlloc1D:
         ...
     @pz.setter
     def pz(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def scan(self) -> ApertureScanStructArray1D:
+    def scan(self) -> ApertureScanStructAlloc1D:
         ...
 class TaoEleGeometryWithMisalignments:
     """
@@ -12692,7 +12692,7 @@ class TaoElePointerStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def eles(self) -> ElePointerStructArray1D:
+    def eles(self) -> ElePointerStructAlloc1D:
         ...
     @property
     def n_loc(self) -> int:
@@ -12894,7 +12894,7 @@ class TaoEvalNodeStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def info(self) -> TaoExpressionInfoStructArray1D:
+    def info(self) -> TaoExpressionInfoStructAlloc1D:
         ...
     @property
     def node(self) -> ...:
@@ -12912,7 +12912,7 @@ class TaoEvalNodeStruct:
     def type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def value(self) -> RealArray1D:
+    def value(self) -> RealAlloc1D:
         ...
     @value.setter
     def value(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
@@ -13569,7 +13569,7 @@ class TaoGraphStruct:
     def box(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
-    def curve(self) -> TaoCurveStructArray1D:
+    def curve(self) -> TaoCurveStructAlloc1D:
         ...
     @property
     def ix_branch(self) -> int:
@@ -13887,10 +13887,10 @@ class TaoLatticeBranchStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def bunch_params(self) -> BunchParamsStructArray1D:
+    def bunch_params(self) -> BunchParamsStructAlloc1D:
         ...
     @property
-    def bunch_params_comb(self) -> BunchTrackStructArray1D:
+    def bunch_params_comb(self) -> BunchTrackStructAlloc1D:
         ...
     @property
     def cache_n_pts(self) -> int:
@@ -13917,7 +13917,7 @@ class TaoLatticeBranchStruct:
     def comb_ds_save(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def high_E_orb(self) -> CoordStructArray1D:
+    def high_E_orb(self) -> CoordStructAlloc1D:
         ...
     @property
     def ix_ele_taylor(self) -> int:
@@ -13938,19 +13938,19 @@ class TaoLatticeBranchStruct:
     def ix_ref_taylor(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def lat_sigma(self) -> TaoLatSigmaStructArray1D:
+    def lat_sigma(self) -> TaoLatSigmaStructAlloc1D:
         ...
     @property
-    def low_E_orb(self) -> CoordStructArray1D:
+    def low_E_orb(self) -> CoordStructAlloc1D:
         ...
     @property
-    def orbit(self) -> CoordStructArray1D:
+    def orbit(self) -> CoordStructAlloc1D:
         ...
     @property
-    def plot_cache(self) -> TaoPlotCacheStructArray1D:
+    def plot_cache(self) -> TaoPlotCacheStructAlloc1D:
         ...
     @property
-    def spin_ele(self) -> TaoSpinEleStructArray1D:
+    def spin_ele(self) -> TaoSpinEleStructAlloc1D:
         ...
     @property
     def tao_lat(self) -> TaoLatticeStruct | None:
@@ -14044,7 +14044,7 @@ class TaoLatticeStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def tao_branch(self) -> TaoLatticeBranchStructArray1D:
+    def tao_branch(self) -> TaoLatticeBranchStructAlloc1D:
         ...
 class TaoLocateAllElements:
     """
@@ -14105,7 +14105,7 @@ class TaoModelBranchStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ele(self) -> TaoModelElementStructArray1D:
+    def ele(self) -> TaoModelElementStructAlloc1D:
         ...
 class TaoModelBranchStructAlloc1D:
     @typing.overload
@@ -14518,10 +14518,10 @@ class TaoPlotPageStruct:
     def n_curve_pts(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def pattern(self) -> TaoShapePatternStructArray1D:
+    def pattern(self) -> TaoShapePatternStructAlloc1D:
         ...
     @property
-    def region(self) -> TaoPlotRegionStructArray1D:
+    def region(self) -> TaoPlotRegionStructAlloc1D:
         ...
     @property
     def size(self) -> RealArray1D:
@@ -14530,7 +14530,7 @@ class TaoPlotPageStruct:
     def size(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def template_(self) -> TaoPlotStructArray1D:
+    def template_(self) -> TaoPlotStructAlloc1D:
         ...
     @property
     def text_height(self) -> float:
@@ -14635,7 +14635,7 @@ class TaoPlotStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def graph(self) -> TaoGraphStructArray1D:
+    def graph(self) -> TaoGraphStructAlloc1D:
         ...
     @property
     def ix_plot(self) -> int:
@@ -15263,7 +15263,7 @@ class TaoSpinPolarizationStruct:
     def pol_rate_bks(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def q_ele(self) -> SpinOrbitMap1StructArray1D:
+    def q_ele(self) -> SpinOrbitMap1StructAlloc1D:
         ...
     @property
     def tune(self) -> float:
@@ -15322,7 +15322,7 @@ class TaoSuperUniverseStruct:
     def history(self) -> ...:
         ...
     @property
-    def key(self) -> IntArray1D:
+    def key(self) -> IntAlloc1D:
         ...
     @key.setter
     def key(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -15545,7 +15545,7 @@ class TaoUniverseStruct:
     def base(self, arg1: TaoLatticeStruct) -> None:
         ...
     @property
-    def d2_data(self) -> TaoD2DataStructArray1D:
+    def d2_data(self) -> TaoD2DataStructAlloc1D:
         ...
     @property
     def dModel_dVar(self) -> RealArray2D:
@@ -15554,7 +15554,7 @@ class TaoUniverseStruct:
     def dModel_dVar(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
-    def data(self) -> TaoDataStructArray1D:
+    def data(self) -> TaoDataStructAlloc1D:
         ...
     @property
     def design(self) -> TaoLatticeStruct | None:
@@ -16257,7 +16257,7 @@ class TaoWaveStruct:
     def ix_b2(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def ix_data(self) -> IntArray1D:
+    def ix_data(self) -> IntAlloc1D:
         ...
     @ix_data.setter
     def ix_data(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
@@ -17332,7 +17332,7 @@ class TrackStruct:
     def n_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def pt(self) -> TrackPointStructArray1D:
+    def pt(self) -> TrackPointStructAlloc1D:
         ...
 class TrackUntilDead:
     """
@@ -17810,7 +17810,7 @@ class WakeLrStruct:
     def freq_spread(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def mode(self) -> WakeLrModeStructArray1D:
+    def mode(self) -> WakeLrModeStructAlloc1D:
         ...
     @property
     def t_ref(self) -> float:
@@ -17965,10 +17965,10 @@ class WakeSrStruct:
     def amp_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def long_wake(self) -> WakeSrModeStructArray1D:
+    def long_wake(self) -> WakeSrModeStructAlloc1D:
         ...
     @property
-    def trans_wake(self) -> WakeSrModeStructArray1D:
+    def trans_wake(self) -> WakeSrModeStructAlloc1D:
         ...
     @property
     def z_max(self) -> float:
@@ -18014,13 +18014,13 @@ class WakeSrZLongStruct:
     def dz(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def fbunch(self) -> ComplexArray1D:
+    def fbunch(self) -> ComplexAlloc1D:
         ...
     @fbunch.setter
     def fbunch(self, arg1: collections.abc.Sequence[complex]) -> None:
         ...
     @property
-    def fw(self) -> ComplexArray1D:
+    def fw(self) -> ComplexAlloc1D:
         ...
     @fw.setter
     def fw(self, arg1: collections.abc.Sequence[complex]) -> None:
@@ -18038,13 +18038,13 @@ class WakeSrZLongStruct:
     def smoothing_sigma(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def w(self) -> RealArray1D:
+    def w(self) -> RealAlloc1D:
         ...
     @w.setter
     def w(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def w_out(self) -> ComplexArray1D:
+    def w_out(self) -> ComplexAlloc1D:
         ...
     @w_out.setter
     def w_out(self, arg1: collections.abc.Sequence[complex]) -> None:
@@ -18166,7 +18166,7 @@ class Wall3DSectionStruct:
     def type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def v(self) -> Wall3DVertexStructArray1D:
+    def v(self) -> Wall3DVertexStructAlloc1D:
         ...
     @property
     def vertices_state(self) -> int:
@@ -18268,7 +18268,7 @@ class Wall3DStruct:
     def n_link(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def section(self) -> Wall3DSectionStructArray1D:
+    def section(self) -> Wall3DSectionStructAlloc1D:
         ...
     @property
     def thickness(self) -> float:
@@ -19005,7 +19005,7 @@ def angle_to_canonical_coords(orbit: CoordStruct, coord_type: str | None = None)
         This parameter is an input/output and is modified in-place.
         As an output, orbit: Orbit in canonical coordinates.
     
-    coord_type : character, optional
+    coord_type : str, optional
         Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
         y, y' = dy/ds, dt = -z / (beta * c), pz)
     """
@@ -19063,7 +19063,7 @@ def apfft(rdata_in: RealArray1D, bounds: typing.Annotated[collections.abc.Sequen
     
     The signal data is truncated to an odd length, and the phase is relative to the central point.
     """
-def apfft_corr(rdata_in: RealArray1D, bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"] | None = None, window: str, diag: typing.SupportsInt | None = None) -> ApfftCorr:
+def apfft_corr(rdata_in: RealArray1D, window: str, bounds: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"] | None = None, diag: typing.SupportsInt | None = None) -> ApfftCorr:
     """
     subroutine apfft_corr(rdata_in, bounds, window, phase, amp, freq, diag)
     
@@ -19078,11 +19078,11 @@ def apfft_corr(rdata_in: RealArray1D, bounds: typing.Annotated[collections.abc.S
     rdata_in : 1D array of float
         signal data.
     
+    window : str
+        'rec' or 'han' for rectangular or Hann window.
+    
     bounds : 1D array of float (shape: 2), optional
         range within which to search for peak.
-    
-    window : character
-        'rec' or 'han' for rectangular or Hann window.
     
     diag : int, optional
         causes low-level routine apfft_ext to produce a fort.X file where X=9000+fid containing diag information.
@@ -19174,7 +19174,7 @@ def apply_rampers_to_slave(slave: EleStruct) -> bool:
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
-def array_re_str(arr: RealArray1D, parens_in: str | None = None, str_out: str) -> None:
+def array_re_str(arr: RealArray1D, str_out: str, parens_in: str | None = None) -> None:
     """
     Wrapper for Fortran routine array_re_str
     
@@ -19182,9 +19182,9 @@ def array_re_str(arr: RealArray1D, parens_in: str | None = None, str_out: str) -
     ----------
     arr : 1D array of float
     
-    parens_in : character, optional
+    str_out : str
     
-    str_out : character
+    parens_in : str, optional
     """
 def asinc(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None) -> float:
     """
@@ -19211,7 +19211,7 @@ def assert_equal(int_arr: IntArray1D, err_str: str, ival: typing.SupportsInt) ->
     ----------
     int_arr : 1D array of int
     
-    err_str : character
+    err_str : str
     
     ival : int
     """
@@ -19331,7 +19331,7 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
     ix_ele : int
         Index of element in element array.
     
-    attrib_name : character
+    attrib_name : str
         Name of the attribute. Assumed upper case.
     
     lat : LatStruct
@@ -19350,15 +19350,15 @@ def attribute_free(ix_ele: typing.SupportsInt, attrib_name: str, lat: LatStruct,
     
     Returns
     -------
+    free : bool
+        Set True if attribtute not found or attriubte cannot be changed directly.
+    
     why_not_free : int, optional
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
         -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
         Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
         element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-    
-    free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
     """
 @typing.overload
 def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> AttributeFree2:
@@ -19387,7 +19387,7 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
     ele : EleStruct
         Element containing the attribute
     
-    attrib_name : character
+    attrib_name : str
         Name of the attribute. Assumed upper case.
     
     err_print_flag : bool, optional
@@ -19403,15 +19403,15 @@ def attribute_free(ele: EleStruct, attrib_name: str, err_print_flag: bool | None
     
     Returns
     -------
+    free : bool
+        Set True if attribtute not found or attriubte cannot be changed directly.
+    
     why_not_free : int, optional
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
         -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
         Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
         element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-    
-    free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
     """
 @typing.overload
 def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, attrib_name: str, lat: LatStruct, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> AttributeFree3:
@@ -19443,7 +19443,7 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
     ix_branch : int
         Branch index of element.
     
-    attrib_name : character
+    attrib_name : str
         Name of the attribute. Assumed upper case.
     
     lat : LatStruct
@@ -19462,15 +19462,15 @@ def attribute_free(ix_ele: typing.SupportsInt, ix_branch: typing.SupportsInt, at
     
     Returns
     -------
+    free : bool
+        Set True if attribtute not found or attriubte cannot be changed directly.
+    
     why_not_free : int, optional
         Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
         -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
         -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
         Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
         element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-    
-    free : bool
-        Set True if attribtute not found or attriubte cannot be changed directly.
     """
 @typing.overload
 def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = None, print_error: bool | None = None) -> AttributeIndex1:
@@ -19491,7 +19491,7 @@ def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = Non
     ele : EleStruct
         attribute_index will restrict the name search to valid attributes of the given element.
     
-    name : character
+    name : str
         Attribute name. Must be uppercase.
     
     can_abbreviate : bool, optional
@@ -19502,11 +19502,11 @@ def attribute_index(ele: EleStruct, name: str, can_abbreviate: bool | None = Non
     
     Returns
     -------
-    full_name : character, optional
-        Non-abbreviated name.
-    
     attrib_index : int
         Index of the attribute. If the attribute name is not appropriate then 0 will be returned. ix -> k1$
+    
+    full_name : str, optional
+        Non-abbreviated name.
     
     Notes
     -----
@@ -19535,7 +19535,7 @@ def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | N
     key : int
         Equivalent to ele.key.
     
-    name : character
+    name : str
         Attribute name. Must be uppercase.
     
     can_abbreviate : bool, optional
@@ -19546,11 +19546,11 @@ def attribute_index(key: typing.SupportsInt, name: str, can_abbreviate: bool | N
     
     Returns
     -------
-    full_name : character, optional
-        Non-abbreviated name.
-    
     attrib_index : int
         Index of the attribute. If the attribute name is not appropriate then 0 will be returned. ix -> k1$
+    
+    full_name : str, optional
+        Non-abbreviated name.
     
     Notes
     -----
@@ -19588,7 +19588,7 @@ def attribute_name(key: typing.SupportsInt, ix_att: typing.SupportsInt, show_pri
     
     Returns
     -------
-    attrib_name : character
+    attrib_name : str
         Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
         private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
         invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
@@ -19621,7 +19621,7 @@ def attribute_name(ele: EleStruct, ix_att: typing.SupportsInt, show_private: boo
     
     Returns
     -------
-    attrib_name : character
+    attrib_name : str
         Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
         private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
         invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
@@ -19648,7 +19648,7 @@ def attribute_type(attrib_name: str, ele: EleStruct | None = None) -> int:
     
     Parameters
     ----------
-    attrib_name : character
+    attrib_name : str
         Name of the attribute. Must be upper case.
     
     ele : EleStruct, optional
@@ -19670,16 +19670,16 @@ def attribute_units(attrib_name: str, unrecognized_units: str | None = None) -> 
     
     Parameters
     ----------
-    attrib_name : character
+    attrib_name : str
         Name of the attribute. Must be upper case.
     
-    unrecognized_units : character, optional
+    unrecognized_units : str, optional
         String to use if the attribute name is unrecognized. Note: Non-real attributes (EG: 'TRACKING_METHOD') are
         not recognized. Default is ""
     
     Returns
     -------
-    attrib_units : character
+    attrib_units : str
         Units associated with the attribute.
     """
 def autoscale_phase_and_amp(ele: EleStruct, param: LatParamStruct, scale_phase: bool | None = None, scale_amp: bool | None = None, call_bookkeeper: bool | None = None) -> bool:
@@ -19967,11 +19967,11 @@ def beam_init_setup(beam_init_in: BeamInitStruct, ele: EleStruct, species: typin
     
     Returns
     -------
-    err_flag : bool, optional
-        Set true if there is an error. False otherwise.
-    
     beam_init_set : BeamInitStruct
         See above.
+    
+    err_flag : bool, optional
+        Set true if there is an error. False otherwise.
     """
 def beam_tilts(S: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> BeamTilts:
     """
@@ -20327,11 +20327,11 @@ def bend_shift(position1: FloorPositionStruct, g: typing.SupportsFloat, delta_s:
     
     Returns
     -------
-    w_mat : 2D array of float (shape: 3,3), optional
-        W matrix used in the transformation
-    
     position2 : FloorPositionStruct
         particle coordinates relative to the final frame.
+    
+    w_mat : 2D array of float (shape: 3,3), optional
+        W matrix used in the transformation
     """
 def bend_vert_angle_integ_prob(vert_angle: typing.SupportsFloat, E_rel: typing.SupportsFloat, gamma: typing.SupportsFloat) -> float:
     """
@@ -20383,14 +20383,14 @@ def bicubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFloa
     
     Returns
     -------
+    f_val : complex
+        Value of f.
+    
     df_dx : complex, optional
         Normalized first derivative: True df/dx = df_dx * dx
     
     df_dy : complex, optional
         Normalized first derivative: True df/dy = df_dy * dy
-    
-    f_val : complex
-        Value of f.
     """
 def bin_index(x: typing.SupportsFloat, bin1_x_min: typing.SupportsFloat, bin_delta: typing.SupportsFloat) -> int:
     """
@@ -20513,14 +20513,14 @@ def bmad_parser(lat_file: str, make_mats6: bool | None = None, use_line: str | N
     
     Parameters
     ----------
-    lat_file : character
+    lat_file : str
         Name of the input file.
     
     make_mats6 : bool, optional
         Compute the 6x6 transport matrices for the Elements? Default is True. Do not set False unless you know
         what you are doing.
     
-    use_line : character, optional
+    use_line : str, optional
         If present and not blank, override the use statement in the lattice file and use use_line instead.
     
     Returns
@@ -20546,7 +20546,7 @@ def bmad_parser2(lat_file: str, lat: LatStruct, orbit: CoordStructArray1D | None
     
     Parameters
     ----------
-    lat_file : character
+    lat_file : str
         Input file name.
     
     lat : LatStruct
@@ -20635,7 +20635,7 @@ def branch_name(branch: BranchStruct) -> str:
     
     Returns
     -------
-    name : character
+    name : str
         Encoded name
     """
 def branch_to_ptc_m_u(branch: BranchStruct) -> None:
@@ -20848,7 +20848,7 @@ def calc_file_number(file_name: str, num_in: typing.SupportsInt, num_out: typing
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
     
     num_in : int
     
@@ -20951,7 +20951,7 @@ def canonical_to_angle_coords(orbit: CoordStruct, coord_type: str | None = None)
         This parameter is an input/output and is modified in-place.
         As an output, orbit: Orbit in angular coordinates.
     
-    coord_type : character, optional
+    coord_type : str, optional
         Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
         y, y' = dy/ds, dt = -z / (beta * c), pz)
     """
@@ -21010,7 +21010,7 @@ def cesr_getarg(i_arg: typing.SupportsInt) -> str:
     
     Returns
     -------
-    arg : character
+    arg : str
         i'th command line argument. If i_arg > number_of_args then arg is a blank string.
     """
 def cesr_iargc(func_retval__: typing.SupportsInt) -> None:
@@ -21028,7 +21028,7 @@ def change_file_number(file_name: str, change: typing.SupportsInt) -> None:
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
     
     change : int
     """
@@ -21101,7 +21101,7 @@ def check_controller_controls(ele_key: typing.SupportsInt, contrl: ControlStruct
     contrl : 1D array of ControlStruct
         control info. 1 element for each slave.
     
-    name : character
+    name : str
         Lord name. Used for error reporting.
     
     Returns
@@ -21109,7 +21109,7 @@ def check_controller_controls(ele_key: typing.SupportsInt, contrl: ControlStruct
     err : bool
         Set true if there is a problem. False otherwise.
     """
-def check_for_superimpose_problem(branch: BranchStruct, super_ele: EleStruct, err_flag: bool, ref_ele: EleStruct | None = None, wrap: bool) -> None:
+def check_for_superimpose_problem(branch: BranchStruct, super_ele: EleStruct, err_flag: bool, wrap: bool, ref_ele: EleStruct | None = None) -> None:
     """
     Subroutine check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap)
     
@@ -21166,7 +21166,7 @@ def choose_quads_for_set_tune(branch: BranchStruct, mask: str | None = None) -> 
     branch : BranchStruct
         Lattice branch.
     
-    mask : character, optional
+    mask : str, optional
         If present, assign weight of zero for all quads that do not match. That is, no variation for matching
         quads.
     
@@ -21383,7 +21383,7 @@ def cmplx_re_str(cmp: complex, str_out: str) -> None:
     ----------
     cmp : complex
     
-    str_out : character
+    str_out : str
     """
 def coarse_frequency_estimate(data: RealArray1D, error: bool | None = None) -> float:
     """
@@ -21474,7 +21474,7 @@ def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, exp: IntArray1D, co
       i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
     """
 @typing.overload
-def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, i1: typing.SupportsInt | None = None, i2: typing.SupportsInt | None = None, i3: typing.SupportsInt | None = None, i4: typing.SupportsInt | None = None, i5: typing.SupportsInt | None = None, i6: typing.SupportsInt | None = None, i7: typing.SupportsInt | None = None, i8: typing.SupportsInt | None = None, i9: typing.SupportsInt | None = None, coef: complex) -> None:
+def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, coef: complex, i1: typing.SupportsInt | None = None, i2: typing.SupportsInt | None = None, i3: typing.SupportsInt | None = None, i4: typing.SupportsInt | None = None, i5: typing.SupportsInt | None = None, i6: typing.SupportsInt | None = None, i7: typing.SupportsInt | None = None, i8: typing.SupportsInt | None = None, i9: typing.SupportsInt | None = None) -> None:
     """
     Function complex_taylor_coef (complex_taylor, exp)
     Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
@@ -21714,7 +21714,7 @@ def convert_coords(in_type_str: str, coord_in: CoordStruct, ele: EleStruct) -> C
     
     Parameters
     ----------
-    in_type_str : character
+    in_type_str : str
         type of the input coords.
     
     coord_in : CoordStruct
@@ -21725,7 +21725,7 @@ def convert_coords(in_type_str: str, coord_in: CoordStruct, ele: EleStruct) -> C
     
     Returns
     -------
-    out_type_str : character
+    out_type_str : str
         type of the output coords.
     
     coord_out : CoordStruct
@@ -21920,7 +21920,7 @@ def converter_distribution_parser(ele: EleStruct) -> ConverterDistributionParser
     
     Returns
     -------
-    delim : character
+    delim : str
         Ending delimitor.
     
     delim_found : bool
@@ -21961,7 +21961,7 @@ def coord_state_name(coord_state: typing.SupportsInt, one_word: bool | None = No
     
     Returns
     -------
-    state_str : character
+    state_str : str
         String representation.
     """
 def coords_body_to_local(body_position: FloorPositionStruct, ele: EleStruct, calculate_angles: bool | None = None) -> CoordsBodyToLocal:
@@ -21983,12 +21983,12 @@ def coords_body_to_local(body_position: FloorPositionStruct, ele: EleStruct, cal
     
     Returns
     -------
-    w_mat : 2D array of float (shape: 3,3), optional
-        W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
-    
     local_position : FloorPositionStruct
         Local laboratory coordinates. .r(3)               [x, y, s] position with s = Position from entrance end
         of element.
+    
+    w_mat : 2D array of float (shape: 3,3), optional
+        W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
     """
 def coords_body_to_rel_exit(body_position: FloorPositionStruct, ele: EleStruct, calculate_angles: bool | None = None) -> CoordsBodyToRelExit:
     """
@@ -22008,11 +22008,11 @@ def coords_body_to_rel_exit(body_position: FloorPositionStruct, ele: EleStruct, 
     
     Returns
     -------
-    w_mat : 2D array of float (shape: 3,3), optional
-        W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
-    
     rel_exit : FloorPositionStruct
         Cartesian coordinates relative to exit of the element.
+    
+    w_mat : 2D array of float (shape: 3,3), optional
+        W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
     """
 def coords_curvilinear_to_floor(xys: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], branch: BranchStruct) -> CoordsCurvilinearToFloor:
     """
@@ -22049,19 +22049,19 @@ def coords_floor_to_curvilinear(floor_coords: FloorPositionStruct, ele0: EleStru
     
     Returns
     -------
-    ele1 : EleStruct, optional
-        Element that local_coords is with respect to.
-    
     status : int
         ok$             -> Local_coords found. patch_problem$  -> No solution due to a patch element. outside$
         -> Outside of lattice ends (for open lattices).
     
-    w_mat : 2D array of float (shape: 3,3), optional
-        W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
-    
     local_coords : FloorPositionStruct
         .r = [x, y, s] position in curvilinear coordinates with respect to ele1 with s relative to start the
         lattice branch.
+    
+    ele1 : EleStruct, optional
+        Element that local_coords is with respect to.
+    
+    w_mat : 2D array of float (shape: 3,3), optional
+        W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
     """
 def coords_floor_to_local_curvilinear(global_position: FloorPositionStruct, ele: EleStruct, relative_to: typing.SupportsInt | None = None) -> CoordsFloorToLocalCurvilinear:
     """
@@ -22086,11 +22086,11 @@ def coords_floor_to_local_curvilinear(global_position: FloorPositionStruct, ele:
         longitudinal position: inside$: Inside the element. upstream_end$: At upstream end of element or beyound.
         downstream_end$: At downstream end of element or beyound.
     
-    w_mat : 2D array of float (shape: 3,3), optional
-        W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
-    
     local_position : FloorPositionStruct
         .r = [x, y, z] position in local curvilinear coordinates.
+    
+    w_mat : 2D array of float (shape: 3,3), optional
+        W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
     """
 def coords_floor_to_relative(floor0: FloorPositionStruct, global_position: FloorPositionStruct, calculate_angles: bool | None = None, is_delta_position: bool | None = None) -> FloorPositionStruct:
     """
@@ -22135,12 +22135,12 @@ def coords_local_curvilinear_to_body(local_position: FloorPositionStruct, ele: E
     
     Returns
     -------
-    w_mat : 2D array of float (shape: 3,3), optional
-        W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
-    
     body_position : FloorPositionStruct
         Element coordinates relative to exit of the element. .r(3)               [x, y, s] position with s =
         Position from entrance end of element.
+    
+    w_mat : 2D array of float (shape: 3,3), optional
+        W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
     """
 def coords_local_curvilinear_to_floor(local_position: FloorPositionStruct, ele: EleStruct, in_body_frame: bool | None = None, calculate_angles: bool | None = None, relative_to: typing.SupportsInt | None = None) -> CoordsLocalCurvilinearToFloor:
     """
@@ -22171,12 +22171,12 @@ def coords_local_curvilinear_to_floor(local_position: FloorPositionStruct, ele: 
     
     Returns
     -------
+    global_position : FloorPositionStruct
+        Position in global coordinates.
+    
     w_mat : 2D array of float (shape: 3,3), optional
         W matrix at z, to transform vectors. v_global     = w_mat . v_local/body v_local/body = transpose(w_mat) .
         v_global
-    
-    global_position : FloorPositionStruct
-        Position in global coordinates.
     """
 def coords_relative_to_floor(floor0: FloorPositionStruct, dr: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], theta: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, psi: typing.SupportsFloat | None = None) -> FloorPositionStruct:
     """
@@ -22260,7 +22260,7 @@ def count_lines_in_file(file_name: str) -> int:
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
     
     Returns
     -------
@@ -22366,10 +22366,10 @@ def create_field_overlap(lat: LatStruct, lord_name: str, slave_name: str) -> boo
     lat : LatStruct
         Lattice
     
-    lord_name : character
+    lord_name : str
         Name of the element with a field extending beyound it's bounds.
     
-    slave_name : character
+    slave_name : str
         Name of the element the lord's field overlaps.
     
     Returns
@@ -22525,7 +22525,7 @@ def create_unique_ele_names(lat: LatStruct, key: typing.SupportsInt, suffix: str
     key : int
         Class key of elements to consider.
     
-    suffix : character
+    suffix : str
         Suffix string. Must have a single "?" character.
     """
 def create_wiggler_cartesian_map(ele: EleStruct) -> CartesianMapStruct:
@@ -22653,7 +22653,7 @@ def date_and_time_stamp(string: str, numeric_month: bool | None = None, include_
     
     Parameters
     ----------
-    string : character
+    string : str
     
     numeric_month : bool, optional
     
@@ -22731,7 +22731,7 @@ def detab(str: str) -> None:
     
     Parameters
     ----------
-    str : character
+    str : str
     """
 def detector_pixel_pt(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[list[int], "FixedSize(2)"]:
     """
@@ -22838,17 +22838,17 @@ def dj_bessel(m: typing.SupportsInt, arg: typing.SupportsFloat) -> float:
     dj_bes : float
         Bessel value.
     """
-def djb_hash(str: str, old_hash: typing.SupportsInt | None = None, hash: typing.SupportsInt) -> None:
+def djb_hash(str: str, hash: typing.SupportsInt, old_hash: typing.SupportsInt | None = None) -> None:
     """
     Wrapper for Fortran routine djb_hash
     
     Parameters
     ----------
-    str : character
-    
-    old_hash : int, optional
+    str : str
     
     hash : int
+    
+    old_hash : int, optional
     """
 def djb_str_hash(in_str: str, hash_str: str) -> None:
     """
@@ -22856,9 +22856,9 @@ def djb_str_hash(in_str: str, hash_str: str) -> None:
     
     Parameters
     ----------
-    in_str : character
+    in_str : str
     
-    hash_str : character
+    hash_str : str
     """
 def do_mode_flip(ele: EleStruct) -> bool:
     """
@@ -22882,7 +22882,7 @@ def downcase_string(string: str) -> None:
     
     Parameters
     ----------
-    string : character
+    string : str
     """
 def dpc_given_de(pc_old: typing.SupportsFloat, mass: typing.SupportsFloat, dE: typing.SupportsFloat, dpc: typing.SupportsFloat) -> None:
     """
@@ -23243,7 +23243,7 @@ def ele_full_name(ele: EleStruct, template_: str | None = None) -> str:
     
     Returns
     -------
-    str : character
+    str : str
         : Name/location string.
     """
 def ele_geometry(floor_start: FloorPositionStruct, ele: EleStruct, len_scale: typing.SupportsFloat | None = None, ignore_patch_err: bool | None = None) -> FloorPositionStruct:
@@ -23377,13 +23377,13 @@ def ele_loc_name(ele: EleStruct, show_branch0: bool | None = None, parens: str |
     show_branch0 : bool, optional
         Explicitly show branch for main lattice elements? Default is False.
     
-    parens : character, optional
+    parens : str, optional
         If present, enclose location string using the two characters supplied. Typically parens will be set to
         "()" or "[]".
     
     Returns
     -------
-    str : character
+    str : str
         Output string. Left justified.
     """
 def ele_misalignment_l_s_calc(ele: EleStruct) -> EleMisalignmentLSCalc:
@@ -23505,11 +23505,11 @@ def ele_to_fibre(ele: EleStruct, use_offsets: bool, integ_order: typing.Supports
     
     Returns
     -------
-    ptc_fibre : Fibre, optional
-        PTC fibre element.
-    
     err_flag : bool
         Set True if setup OK. False otherwise.
+    
+    ptc_fibre : Fibre, optional
+        PTC fibre element.
     """
 def ele_to_ptc_magnetic_bn_an(ele: EleStruct, bn: RealArray1D, an: RealArray1D) -> int:
     """
@@ -23597,7 +23597,7 @@ def ele_unique_name(ele: EleStruct, order: LatEleOrderStruct) -> str:
     
     Returns
     -------
-    unique_name : character
+    unique_name : str
         Unique name that can can be used to identify ele. The simplist name will be constructed. For example, if
         the element name is unique, unique_name will be set to the element name.
     """
@@ -23720,6 +23720,9 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
     
     Returns
     -------
+    ix_ele : int
+        Index of element at s.
+    
     err_flag : bool, optional
         Set True if s is out of bounds. False otherwise.
     
@@ -23728,9 +23731,6 @@ def element_at_s(branch: BranchStruct, s: typing.SupportsFloat, choose_max: bool
     
     position : CoordStruct, optional
         Positional information.
-    
-    ix_ele : int
-        Index of element at s.
     """
 @typing.overload
 def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_branch: typing.SupportsInt | None = None, print_err: bool | None = None) -> ElementAtSLat:
@@ -23787,6 +23787,9 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
     
     Returns
     -------
+    ix_ele : int
+        Index of element at s.
+    
     err_flag : bool, optional
         Set True if s is out of bounds. False otherwise.
     
@@ -23795,9 +23798,6 @@ def element_at_s(lat: LatStruct, s: typing.SupportsFloat, choose_max: bool, ix_b
     
     position : CoordStruct, optional
         Positional information.
-    
-    ix_ele : int
-        Index of element at s.
     """
 def element_slice_iterator(ele: EleStruct, param: LatParamStruct, i_slice: typing.SupportsInt, n_slice_tot: typing.SupportsInt, sliced_ele: EleStruct, s_start: typing.SupportsFloat | None = None, s_end: typing.SupportsFloat | None = None) -> None:
     """
@@ -25275,7 +25275,7 @@ def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> None:
     ----------
     ele : EleStruct
     
-    delim : character
+    delim : str
     
     is_here : bool
     """
@@ -25302,7 +25302,7 @@ def err_exit(err_str: str | None = None) -> None:
     
     Parameters
     ----------
-    err_str : character, optional
+    err_str : str, optional
     """
 def etdiv(A: typing.SupportsFloat, B: typing.SupportsFloat, C: typing.SupportsFloat, D: typing.SupportsFloat, E: typing.SupportsFloat, F: typing.SupportsFloat) -> None:
     """
@@ -25332,10 +25332,10 @@ def evaluate_array_index(delim_list1: str, delim_list2: str) -> EvaluateArrayInd
     
     Parameters
     ----------
-    delim_list1 : character
+    delim_list1 : str
         Delimitor after the integer. Normally ')'.
     
-    delim_list2 : character
+    delim_list2 : str
         Delimitor list to mark the end of word2. Normally '='.
     
     Returns
@@ -25343,10 +25343,10 @@ def evaluate_array_index(delim_list1: str, delim_list2: str) -> EvaluateArrayInd
     err_flag : bool
         Set True if there is an error. False otherwise.
     
-    word2 : character
+    word2 : str
         Word found after delim1. Normally this should be blank.
     
-    delim2 : character
+    delim2 : str
         Actual delimitor found after word2.
     
     this_index : int
@@ -25364,7 +25364,7 @@ def evaluate_logical(word: str) -> EvaluateLogical:
     
     Parameters
     ----------
-    word : character
+    word : str
         Input string.
     
     Returns
@@ -25436,7 +25436,7 @@ def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim
     
     Parameters
     ----------
-    delim_list : character
+    delim_list : str
         List of expected (valid) delimitors. If list contains a space character then no delimitor (indicating the
         end of the command) is a valid possibility.
     
@@ -25444,17 +25444,17 @@ def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim
         If True, then check if delim argument is in the delim_list. If False, check that the next character in the
         parse stream is an expected delimitor.
     
-    ele_name : character
+    ele_name : str
         Lattice element under construction. Used for error messages.
     
-    delim : character
+    delim : str
         Current delimitor that will be checked if check_input_delim = .true.
         This parameter is an input/output and is modified in-place.
         As an output, delim: Next delim if check_input_delim = False.
     
     Returns
     -------
-    delim : character
+    delim : str
         Current delimitor that will be checked if check_input_delim = .true.
         This parameter is an input/output and is modified in-place.
         As an output, delim: Next delim if check_input_delim = False.
@@ -25471,7 +25471,7 @@ def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: st
     
     Parameters
     ----------
-    expecting : character
+    expecting : str
         list of characters that are expected to be next in the parse stream.
     
     check_delim : bool
@@ -25481,7 +25481,7 @@ def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: st
     call_check : bool
         If True then check for 'call::<filename>' construct.
     
-    err_str : character
+    err_str : str
         String used for error messages.
     
     ele : EleStruct
@@ -25489,7 +25489,7 @@ def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: st
     
     Returns
     -------
-    delim : character
+    delim : str
         Final delim
     
     delim_found : bool
@@ -25511,7 +25511,7 @@ def expression_stack_to_string(stack: ExpressionAtomStructArray1D, polish: bool 
     
     Returns
     -------
-    str : character
+    str : str
         : Expression in string form.
     """
 def expression_stack_value(stack: ExpressionAtomStructArray1D, var: ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionStackValue:
@@ -25544,7 +25544,7 @@ def expression_stack_value(stack: ExpressionAtomStructArray1D, var: ControlVar1S
     err_flag : bool
         True if there is an evaluation problem. False otherwise.
     
-    err_str : character
+    err_str : str
         Error string explaining error if there is one.
     
     value : float
@@ -25568,7 +25568,7 @@ def expression_string_to_stack(string: str) -> ExpressionStringToStack:
     
     Parameters
     ----------
-    string : character
+    string : str
         Expression to be converted.
     
     Returns
@@ -25582,7 +25582,7 @@ def expression_string_to_stack(string: str) -> ExpressionStringToStack:
     err_flag : bool
         Set True if there is an error (EG divide by 0).
     
-    err_str : character
+    err_str : str
         String describing the error.
     """
 def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> ExpressionStringToTree:
@@ -25622,7 +25622,7 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> E
     
     Parameters
     ----------
-    string : character
+    string : str
         Expression to be converted.
     
     root_tree : ExpressionTreeStruct
@@ -25633,7 +25633,7 @@ def expression_string_to_tree(string: str, root_tree: ExpressionTreeStruct) -> E
     err_flag : bool
         Set True if there is an error (EG divide by 0).
     
-    err_str : character
+    err_str : str
         String describing the error. Make length large to hold the expression.
     """
 def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: ExpressionTreeStruct | None = None) -> str:
@@ -25659,7 +25659,7 @@ def expression_tree_to_string(tree: ExpressionTreeStruct, include_root: bool | N
     
     Returns
     -------
-    str_out : character
+    str_out : str
         Expression string.
     """
 def expression_value(expression: str, var: ControlVar1StructArray1D | None = None, use_old: bool | None = None) -> ExpressionValue:
@@ -25674,7 +25674,7 @@ def expression_value(expression: str, var: ControlVar1StructArray1D | None = Non
     
     Parameters
     ----------
-    expression : character
+    expression : str
         Expression string.
     
     var : 1D array of ControlVar1Struct, optional
@@ -25688,11 +25688,11 @@ def expression_value(expression: str, var: ControlVar1StructArray1D | None = Non
     err_flag : bool
         True if there is an evaluation problem. False otherwise.
     
-    err_str : character, optional
-        Error string explaining error if there is one.
-    
     value : float
         Value of the expression.
+    
+    err_str : str, optional
+        Error string explaining error if there is one.
     """
 def factorial(n: typing.SupportsInt) -> float:
     """
@@ -25805,7 +25805,7 @@ def field_attribute_free(ele: EleStruct, attrib_name: str) -> bool:
     ele : EleStruct
         Element containing the attribute
     
-    attrib_name : character
+    attrib_name : str
         Name of the field attribute. Assumed upper case.
     
     Returns
@@ -25819,11 +25819,11 @@ def file_directorizer(in_file: str, out_file: str, directory: str, add_switch: b
     
     Parameters
     ----------
-    in_file : character
+    in_file : str
     
-    out_file : character
+    out_file : str
     
-    directory : character
+    directory : str
     
     add_switch : bool
     """
@@ -25833,11 +25833,11 @@ def file_get(string: str, dflt_file_name: str, file_name: str) -> None:
     
     Parameters
     ----------
-    string : character
+    string : str
     
-    dflt_file_name : character
+    dflt_file_name : str
     
-    file_name : character
+    file_name : str
     """
 def file_get_open(string: str, dflt_file_name: str, file_name: str, file_unit: typing.SupportsInt, readonly: bool) -> None:
     """
@@ -25845,11 +25845,11 @@ def file_get_open(string: str, dflt_file_name: str, file_name: str, file_unit: t
     
     Parameters
     ----------
-    string : character
+    string : str
     
-    dflt_file_name : character
+    dflt_file_name : str
     
-    file_name : character
+    file_name : str
     
     file_unit : int
     
@@ -25861,11 +25861,11 @@ def file_suffixer(in_file_name: str, out_file_name: str, suffix: str, add_switch
     
     Parameters
     ----------
-    in_file_name : character
+    in_file_name : str
     
-    out_file_name : character
+    out_file_name : str
     
-    suffix : character
+    suffix : str
     
     add_switch : bool
     """
@@ -25984,7 +25984,7 @@ def find_matching_fieldmap(file_name: str, ele: EleStruct, fm_type: typing.Suppo
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         File name associated with field to match to.
     
     ele : EleStruct
@@ -25998,12 +25998,12 @@ def find_matching_fieldmap(file_name: str, ele: EleStruct, fm_type: typing.Suppo
     
     Returns
     -------
-    match_ele : EleStruct, optional
-        Pointer to element with matched field. Nullified if no match found.
-    
     ix_field : int
         index of field. For example: matching field => match_ele.cartesian_map(ix_field) Set to -1 if no match
         found.
+    
+    match_ele : EleStruct, optional
+        Pointer to element with matched field. Nullified if no match found.
     """
 def find_normalization(bound: typing.SupportsFloat, p0: typing.SupportsFloat, args: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(8)"]) -> float:
     """
@@ -26141,19 +26141,19 @@ def form_digested_bmad_file_name(lat_file: str, use_line: str | None = None) -> 
     
     Parameters
     ----------
-    lat_file : character
+    lat_file : str
         Input lattice file name.
     
-    use_line : character, optional
+    use_line : str, optional
         Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
         the lattice file.
     
     Returns
     -------
-    digested_file : character
+    digested_file : str
         Name of the digested file.
     
-    full_lat_file : character, optional
+    full_lat_file : str, optional
         Input lattice file name with full directory. Can be used for error messages.
     """
 def fourier_amplitude(data: RealArray1D, frequency: typing.SupportsFloat) -> FourierAmplitude:
@@ -26411,9 +26411,9 @@ def get_called_file(delim: str, call_file: str, err: bool) -> None:
     
     Parameters
     ----------
-    delim : character
+    delim : str
     
-    call_file : character
+    call_file : str
     
     err : bool
     """
@@ -26460,9 +26460,9 @@ def get_file_number(file_name: str, cnum_in: str, num_out: typing.SupportsInt, e
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
     
-    cnum_in : character
+    cnum_in : str
     
     num_out : int
     
@@ -26488,10 +26488,10 @@ def get_next_word(word: str, delim_list: str, upper_case_word: bool | None = Non
     
     Parameters
     ----------
-    word : character
+    word : str
         Word returned
     
-    delim_list : character
+    delim_list : str
         List of valid delimiters
     
     upper_case_word : bool, optional
@@ -26505,7 +26505,7 @@ def get_next_word(word: str, delim_list: str, upper_case_word: bool | None = Non
     ix_word : int
         length of word argument
     
-    delim : character
+    delim : str
         Actual delimiter found
     
     delim_found : bool
@@ -26560,7 +26560,7 @@ def get_tty_char(wait: bool, flush: bool) -> str:
     
     Returns
     -------
-    this_char : character
+    this_char : str
         Character returned
     """
 def gpt_field_grid_scaling(ele: EleStruct, dimensions: typing.SupportsInt, field_scale: typing.SupportsFloat, ref_time: typing.SupportsFloat) -> None:
@@ -26597,7 +26597,7 @@ def gpt_to_particle_bunch(gpt_file: str, ele: EleStruct) -> GptToParticleBunch:
     
     Parameters
     ----------
-    gpt_file : character
+    gpt_file : str
         Name of GPT data file.
     
     ele : EleStruct
@@ -26721,7 +26721,7 @@ def has_attribute(ele: EleStruct, attrib: str, has_it: bool) -> None:
     ----------
     ele : EleStruct
     
-    attrib : character
+    attrib : str
     
     has_it : bool
     """
@@ -26764,7 +26764,7 @@ def hdf5_write_beam(file_name: str, bunches: BunchStructArray1D, append: bool, e
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
     
     bunches : 1D array of BunchStruct
     
@@ -26782,7 +26782,7 @@ def hdf5_write_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStru
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
     
     ele : EleStruct
     
@@ -26983,13 +26983,13 @@ def increment_file_number(file_name: str, digits: typing.SupportsInt, number: ty
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
     
     digits : int
     
     number : int
     
-    cnumber : character
+    cnumber : str
     """
 def index_nocase(string1: str, string2: str, indx: typing.SupportsInt) -> None:
     """
@@ -26997,9 +26997,9 @@ def index_nocase(string1: str, string2: str, indx: typing.SupportsInt) -> None:
     
     Parameters
     ----------
-    string1 : character
+    string1 : str
     
-    string2 : character
+    string2 : str
     
     indx : int
     """
@@ -27022,7 +27022,7 @@ def init_attribute_name1(is_ok: bool, ix_key: typing.SupportsInt, ix_attrib: typ
     ix_attrib : int
         Attribute index.
     
-    name : character
+    name : str
         Attribute name. Should be uppercase if attrib_state = is_free$. Should contain non-uppercase characters if
         attrib_state = private$.
     
@@ -27533,11 +27533,11 @@ def init_photon_integ_prob(gamma: typing.SupportsFloat, g: typing.SupportsFloat,
     
     Returns
     -------
-    E_photon : float, optional
-        See energy_integ_prob. E_photon must be present if energy_integ_prob is.
-    
     integ_prob : float
         Integrated probablility of emitting a photon in given angle and energy range.
+    
+    E_photon : float, optional
+        See energy_integ_prob. E_photon must be present if energy_integ_prob is.
     """
 def init_spin_distribution(beam_init: BeamInitStruct, ele: EleStruct) -> BunchStruct:
     """
@@ -27678,15 +27678,15 @@ def insert_phase_trombone(branch: BranchStruct) -> None:
         This parameter is an input/output and is modified in-place.
         As an output, branch: Lattice branch with trumbone at branch.ele(1).
     """
-def int_str(int_: typing.SupportsInt, width: typing.SupportsInt | None = None, str: str) -> None:
+def int_str(int_: typing.SupportsInt, str: str, width: typing.SupportsInt | None = None) -> None:
     """
     Wrapper for Fortran routine int_str
     
     Parameters
     ----------
-    width : int, optional
+    str : str
     
-    str : character
+    width : int, optional
     """
 def integrand_base(t: typing.SupportsFloat, args: RealArray1D, func_retval__: typing.SupportsFloat) -> None:
     """
@@ -27805,7 +27805,7 @@ def integration_timer(a_fibre: Fibre, orbit: typing.Annotated[collections.abc.Se
     
     tol_dp : float
     """
-def interpolated_fft(cdata: ComplexArray1D, calc_ok: bool, opt_dump_spectrum: typing.SupportsInt | None = None, opt_dump_index: typing.SupportsInt | None = None, this_fft: typing.SupportsFloat) -> None:
+def interpolated_fft(cdata: ComplexArray1D, calc_ok: bool, this_fft: typing.SupportsFloat, opt_dump_spectrum: typing.SupportsInt | None = None, opt_dump_index: typing.SupportsInt | None = None) -> None:
     """
     Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
     
@@ -27813,7 +27813,7 @@ def interpolated_fft(cdata: ComplexArray1D, calc_ok: bool, opt_dump_spectrum: ty
     The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
     available.
     """
-def interpolated_fft_gsl(cdata: ComplexArray1D, calc_ok: bool, opt_dump_spectrum: typing.SupportsInt | None = None, opt_dump_index: typing.SupportsInt | None = None, this_fft: typing.SupportsFloat) -> None:
+def interpolated_fft_gsl(cdata: ComplexArray1D, calc_ok: bool, this_fft: typing.SupportsFloat, opt_dump_spectrum: typing.SupportsInt | None = None, opt_dump_index: typing.SupportsInt | None = None) -> None:
     """
     function interpolated_fft_gsl
     
@@ -27850,7 +27850,7 @@ def ion_kick(orbit: CoordStruct, r_beam: typing.Annotated[collections.abc.Sequen
     kick : 1D array of float (shape: 3)
         (x, y, s) kick in m/sec.
     """
-def is_alphabetic(string: str, valid_chars: str | None = None, is_alpha: bool) -> None:
+def is_alphabetic(string: str, is_alpha: bool, valid_chars: str | None = None) -> None:
     """
     no longer exists
     function inverse_prob (val) result (prob)
@@ -27936,45 +27936,45 @@ def is_increasing_sequence(array: RealArray1D, strict: bool | None = None) -> bo
     is_increasing : bool
         Set True if sequence is increasing.
     """
-def is_integer(string: str, int_: typing.SupportsInt | None = None, delims: str | None = None, ix_word: typing.SupportsInt | None = None, valid: bool) -> None:
+def is_integer(string: str, valid: bool, int_: typing.SupportsInt | None = None, delims: str | None = None, ix_word: typing.SupportsInt | None = None) -> None:
     """
     Wrapper for Fortran routine is_integer
     
     Parameters
     ----------
-    string : character
-    
-    delims : character, optional
-    
-    ix_word : int, optional
+    string : str
     
     valid : bool
+    
+    delims : str, optional
+    
+    ix_word : int, optional
     """
-def is_logical(string: str, ignore: bool | None = None, valid: bool) -> None:
+def is_logical(string: str, valid: bool, ignore: bool | None = None) -> None:
     """
     Wrapper for Fortran routine is_logical
     
     Parameters
     ----------
-    string : character
-    
-    ignore : bool, optional
+    string : str
     
     valid : bool
+    
+    ignore : bool, optional
     """
-def is_real(string: str, ignore: bool | None = None, real_num: typing.SupportsFloat | None = None, valid: bool) -> None:
+def is_real(string: str, valid: bool, ignore: bool | None = None, real_num: typing.SupportsFloat | None = None) -> None:
     """
     Wrapper for Fortran routine is_real
     
     Parameters
     ----------
-    string : character
+    string : str
+    
+    valid : bool
     
     ignore : bool, optional
     
     real_num : float, optional
-    
-    valid : bool
     """
 def is_subatomic_species(species: typing.SupportsInt) -> bool:
     """
@@ -28037,7 +28037,7 @@ def key_name_to_key_index(key_str: str, abbrev_allowed: bool | None = None) -> i
     
     Parameters
     ----------
-    key_str : character
+    key_str : str
         Name of the key. Result is case insensitive.
     
     abbrev_allowed : bool, optional
@@ -28160,7 +28160,7 @@ def kind_name(this_kind: typing.SupportsInt) -> str:
     
     Returns
     -------
-    kind_str : character
+    kind_str : str
         String representation
     """
 def knot_interpolate(x_knot: RealArray1D, y_knot: RealArray1D, x_pt: typing.SupportsFloat, interpolation: typing.SupportsInt) -> KnotInterpolate:
@@ -28199,7 +28199,7 @@ def knots_to_string(x_knot: RealArray1D, y_knot: RealArray1D, str: str) -> None:
     
     y_knot : 1D array of float
     
-    str : character
+    str : str
     """
 def lafun(x: typing.SupportsFloat, y: typing.SupportsFloat, z: typing.SupportsFloat, res: typing.SupportsFloat) -> None:
     """
@@ -28235,7 +28235,7 @@ def lat_ele_locator(loc_str: str, lat: LatStruct, eles: ElePointerStructAlloc1D,
     
     Parameters
     ----------
-    loc_str : character
+    loc_str : str
         Element names or indexes. May be lower case.
     
     lat : LatStruct
@@ -28496,7 +28496,7 @@ def load_parse_line(action: str, ix_start: typing.SupportsInt) -> LoadParseLine:
     
     Parameters
     ----------
-    action : character
+    action : str
         'continue', 'new_command', or 'init'
     
     ix_start : int
@@ -28518,7 +28518,7 @@ def logic_str(logic: bool, str: str) -> None:
     ----------
     logic : bool
     
-    str : character
+    str : str
     """
 def logical_to_python(logic: bool, string: str) -> None:
     """
@@ -28528,7 +28528,7 @@ def logical_to_python(logic: bool, string: str) -> None:
     ----------
     logic : bool
     
-    string : character
+    string : str
     """
 def lord_edge_aligned(slave: EleStruct, slave_edge: typing.SupportsInt, lord: EleStruct) -> bool:
     """
@@ -29006,9 +29006,9 @@ def make_legal_comment(comment_in: str, comment_out: str) -> None:
     
     Parameters
     ----------
-    comment_in : character
+    comment_in : str
     
-    comment_out : character
+    comment_out : str
     """
 def make_mad_map(ele: EleStruct, param: LatParamStruct) -> MakeMadMap:
     """
@@ -29669,9 +29669,9 @@ def match_reg(str: str, pat: str, is_match: bool) -> None:
     
     Parameters
     ----------
-    str : character
+    str : str
     
-    pat : character
+    pat : str
     
     is_match : bool
     """
@@ -29681,7 +29681,7 @@ def match_wild(string: str, template_: str, is_match: bool) -> None:
     
     Parameters
     ----------
-    string : character
+    string : str
     
     is_match : bool
     """
@@ -30306,11 +30306,11 @@ def nametable_add(nametable: NametableStruct, name: str, ix_name: typing.Support
     ----------
     nametable : NametableStruct
     
-    name : character
+    name : str
     
     ix_name : int
     """
-def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typing.SupportsInt | None = None, ix_max: typing.SupportsInt) -> None:
+def nametable_bracket_indexx(nametable: NametableStruct, name: str, ix_max: typing.SupportsInt, n_match: typing.SupportsInt | None = None) -> None:
     """
     Wrapper for Fortran routine nametable_bracket_indexx
     
@@ -30318,11 +30318,11 @@ def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typ
     ----------
     nametable : NametableStruct
     
-    name : character
-    
-    n_match : int, optional
+    name : str
     
     ix_max : int
+    
+    n_match : int, optional
     """
 def nametable_change1(nametable: NametableStruct, name: str, ix_name: typing.SupportsInt) -> None:
     """
@@ -30332,7 +30332,7 @@ def nametable_change1(nametable: NametableStruct, name: str, ix_name: typing.Sup
     ----------
     nametable : NametableStruct
     
-    name : character
+    name : str
     
     ix_name : int
     """
@@ -30367,7 +30367,7 @@ def new_control(lat: LatStruct, ele_name: str | None = None) -> int:
     lat : LatStruct
         Lat used
     
-    ele_name : character, optional
+    ele_name : str, optional
         Name of the new element.
     
     Returns
@@ -30781,13 +30781,13 @@ def open_binary_file(file_name: str, action: str, r_name: str) -> OpenBinaryFile
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         File to create.
     
-    action : character
+    action : str
         'READ' or 'WRITE'
     
-    r_name : character
+    r_name : str
         Calling routine name for error messages.
     
     Returns
@@ -30816,7 +30816,7 @@ def openpmd_species_name(species: typing.SupportsInt) -> str:
     
     Returns
     -------
-    pmd_name : character
+    pmd_name : str
         Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
     """
 def orbit_amplitude_calc(ele: EleStruct, orb: CoordStruct) -> OrbitAmplitudeCalc:
@@ -30920,10 +30920,10 @@ def orbit_too_large(orbit: CoordStruct, check_momentum: bool | None = None) -> O
     
     Returns
     -------
-    param : LatParamStruct, optional
-    
     is_too_large : bool
         True if orbit is too large. False otherwise.
+    
+    param : LatParamStruct, optional
     """
 def order_evecs_by_n_similarity(eval: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], mat_tunes: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], Nmat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(6)"]], "FixedSize(6)"]) -> OrderEvecsByNSimilarity:
     """
@@ -31045,7 +31045,7 @@ def ordinal_str(n: typing.SupportsInt, str: str) -> None:
     ----------
     n : int
     
-    str : character
+    str : str
     """
 def osc_alloc_freespace_array(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt], "FixedSize(3)"]) -> None:
     """
@@ -31136,9 +31136,9 @@ def out_io(level: typing.SupportsInt, routine_name: str, line: str, i_num: typin
     ----------
     level : int
     
-    routine_name : character
+    routine_name : str
     
-    line : character
+    line : str
     
     i_num : int
     
@@ -31153,31 +31153,31 @@ def out_io(level: typing.SupportsInt, routine_name: str, line1: str, line2: str 
     ----------
     level : int
     
-    routine_name : character
+    routine_name : str
     
-    line1 : character
+    line1 : str
     
-    line2 : character, optional
+    line2 : str, optional
     
-    line3 : character, optional
+    line3 : str, optional
     
-    line4 : character, optional
+    line4 : str, optional
     
-    line5 : character, optional
+    line5 : str, optional
     
-    line6 : character, optional
+    line6 : str, optional
     
-    line7 : character, optional
+    line7 : str, optional
     
-    line8 : character, optional
+    line8 : str, optional
     
-    line9 : character, optional
+    line9 : str, optional
     
-    line10 : character, optional
+    line10 : str, optional
     
-    line11 : character, optional
+    line11 : str, optional
     
-    line12 : character, optional
+    line12 : str, optional
     
     r_array : 1D array of float, optional
     
@@ -31196,9 +31196,9 @@ def out_io(level: typing.SupportsInt, routine_name: str, line: str, l_num: bool,
     ----------
     level : int
     
-    routine_name : character
+    routine_name : str
     
-    line : character
+    line : str
     
     l_num : bool
     
@@ -31213,9 +31213,9 @@ def out_io(level: typing.SupportsInt, routine_name: str, line: str, r_num: typin
     ----------
     level : int
     
-    routine_name : character
+    routine_name : str
     
-    line : character
+    line : str
     
     r_num : float
     
@@ -31283,7 +31283,7 @@ def out_io_print_and_capture_setup(print_on: bool | None = None, capture_state: 
     print_on : bool, optional
         If present, set the internal print_on flag to the value of this argument.
     
-    capture_state : character, optional
+    capture_state : str, optional
         If present, set the internal capture_state to the value of this argument. Possible values:
     
     capture_add_null : bool, optional
@@ -31318,7 +31318,7 @@ def parse_cylindrical_map(cl_map: CylindricalMapStruct, ele: EleStruct, lat: Lat
     
     lat : LatStruct
     
-    delim : character
+    delim : str
     
     delim_found : bool
     
@@ -31330,13 +31330,13 @@ def parse_fortran_format(format_str: str, n_repeat: typing.SupportsInt, power: t
     
     Parameters
     ----------
-    format_str : character
+    format_str : str
     
     n_repeat : int
     
     power : int
     
-    descrip : character
+    descrip : str
     
     width : int
     
@@ -31360,13 +31360,13 @@ def parse_grid_field(g_field: GridFieldStruct, ele: EleStruct, lat: LatStruct, d
     
     lat : LatStruct
     
-    delim : character
+    delim : str
     
     delim_found : bool
     
     err_flag : bool
     """
-def parse_integer_list(err_str: str, lat: LatStruct, int_array: IntArray1D, exact_size: bool, delim: str, delim_found: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsInt | None = None, is_ok: bool) -> None:
+def parse_integer_list(err_str: str, lat: LatStruct, int_array: IntArray1D, exact_size: bool, delim: str, delim_found: bool, is_ok: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsInt | None = None) -> None:
     """
     Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
                                           separator, close_delim, default_value) result (is_ok)
@@ -31389,7 +31389,7 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     
     Parameters
     ----------
-    err_str : character
+    err_str : str
         Error string to print if there is an error.
     
     lat : LatStruct
@@ -31405,7 +31405,7 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     num_found : int
         number of elements.
     
-    delim : character
+    delim : str
         Delimiter found where the parsing of the input line stops.
     
     delim_found : bool
@@ -31414,7 +31414,7 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     is_ok : bool
         Set True if everything is ok.
     """
-def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact_size: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsFloat | None = None, is_ok: bool) -> ParseRealList:
+def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact_size: bool, is_ok: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsFloat | None = None) -> ParseRealList:
     """
     Function parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, open_delim,
                                    separator, close_delim, default_value, num_found) result (is_ok)
@@ -31431,24 +31431,24 @@ def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact
     lat : LatStruct
         Lattice
     
-    err_str : character
+    err_str : str
         Error string to print if there is an error.
     
     real_array : 1D array of float
     
     exact_size : bool
     
-    open_delim : character, optional
+    open_delim : str, optional
     
-    separator : character, optional
+    separator : str, optional
     
-    close_delim : character, optional
+    close_delim : str, optional
     
     default_value : float, optional
     
     Returns
     -------
-    delim : character
+    delim : str
     
     delim_found : bool
     
@@ -31472,7 +31472,7 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     lat : LatStruct
         lattice
     
-    err_str : character
+    err_str : str
         Error string to print if there is an error.
     
     real_array : 1D array of float
@@ -31485,7 +31485,7 @@ def parse_real_list2(lat: LatStruct, err_str: str, real_array: RealAlloc1D, num_
     num_found : int
         number of elements
     
-    delim : character
+    delim : str
         Delimiter found where the parsing of the input line stops.
     
     delim_found : bool
@@ -31500,7 +31500,7 @@ def parser_add_constant(word: str, lat: LatStruct, redef_is_error: bool) -> None
     
     Parameters
     ----------
-    word : character
+    word : str
     
     lat : LatStruct
     
@@ -31530,12 +31530,12 @@ def parser_fast_complex_read(cmplx_vec: ComplexArray1D, ele: EleStruct, err_str:
     ele : EleStruct
         Lattice element associated with the array. Used for error messages.
     
-    err_str : character
+    err_str : str
         String used when printing error messages identifying where in the lattice file the error is occuring.
     
     Returns
     -------
-    delim : character
+    delim : str
         Delimitor at end of array. Must be "," or "}"
     
     is_ok : bool
@@ -31565,10 +31565,10 @@ def parser_fast_real_read(real_vec: RealArray1D, ele: EleStruct, end_delims: str
     ele : EleStruct
         Lattice element associated with the array. Used for error messages.
     
-    end_delims : character
+    end_delims : str
         List of possible ending delimitors.
     
-    err_str : character
+    err_str : str
         String used when printing error messages identifying where in the lattice file the error is occuring.
     
     exact_size : bool, optional
@@ -31576,14 +31576,14 @@ def parser_fast_real_read(real_vec: RealArray1D, ele: EleStruct, end_delims: str
     
     Returns
     -------
-    delim : character
+    delim : str
         Delimitor at end of array.
-    
-    n_real : int, optional
-        Number of elements found.
     
     is_ok : bool
         True if everything OK. False otherwise.
+    
+    n_real : int, optional
+        Number of elements found.
     """
 def parser_file_stack(how: str, file_name_in: str | None = None, finished: bool | None = None, err: bool | None = None, open_file: bool | None = None, abort_on_open_error: bool | None = None) -> None:
     """
@@ -31601,19 +31601,19 @@ def parser_get_integer(int_val: typing.SupportsInt, word: str, ix_word: typing.S
     ----------
     int_val : int
     
-    word : character
+    word : str
     
     ix_word : int
     
-    delim : character
+    delim : str
     
     delim_found : bool
     
     err : bool
     
-    str1 : character, optional
+    str1 : str, optional
     
-    str2 : character, optional
+    str2 : str, optional
     """
 def parser_get_logical(attrib_name: str, this_logic: bool, ele_name: str, delim: str, delim_found: bool, err: bool) -> None:
     """
@@ -31621,13 +31621,13 @@ def parser_get_logical(attrib_name: str, this_logic: bool, ele_name: str, delim:
     
     Parameters
     ----------
-    attrib_name : character
+    attrib_name : str
     
     this_logic : bool
     
-    ele_name : character
+    ele_name : str
     
-    delim : character
+    delim : str
     
     delim_found : bool
     
@@ -31680,7 +31680,7 @@ def parser_read_old_format_lr_wake(ele: EleStruct, lr_file_name: str) -> None:
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with wake information.
     
-    lr_file_name : character
+    lr_file_name : str
         Name of long-range wake field file.
     """
 def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
@@ -31697,7 +31697,7 @@ def parser_read_old_format_sr_wake(ele: EleStruct, sr_file_name: str) -> None:
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with wake information.
     
-    sr_file_name : character
+    sr_file_name : str
         Name of short-range wake field file.
     """
 def parser_read_sr_wake(ele: EleStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
@@ -31874,7 +31874,7 @@ def photon_absorption_and_phase_shift(material: str, Energy: typing.SupportsFloa
     
     Parameters
     ----------
-    material : character
+    material : str
         Material name.
     
     Energy : float
@@ -32163,7 +32163,7 @@ def pointer_to_branch(branch_name: str, lat: LatStruct, parameter_is_branch0: bo
     
     Parameters
     ----------
-    branch_name : character
+    branch_name : str
         May be a branch name or a branch index.
     
     lat : LatStruct
@@ -32286,7 +32286,7 @@ def pointer_to_ele(lat: LatStruct, ele_name: str) -> EleStruct | None:
     lat : LatStruct
         Lattice.
     
-    ele_name : character
+    ele_name : str
         Name or index of element.
     
     Returns
@@ -32494,7 +32494,7 @@ def pointer_to_multipass_lord(ele: EleStruct) -> PointerToMultipassLord:
     multi_lord : EleStruct, optional
         multipass_lord if there is one. Set to NULL if there is no multipass_lord.
     """
-def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None = None, skip_beginning: bool | None = None, follow_fork: bool | None = None, next_ele: EleStruct) -> None:
+def pointer_to_next_ele(this_ele: EleStruct, next_ele: EleStruct, offset: typing.SupportsInt | None = None, skip_beginning: bool | None = None, follow_fork: bool | None = None) -> None:
     """
     Wrapper for Fortran routine pointer_to_next_ele
     
@@ -32502,6 +32502,9 @@ def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None =
     ----------
     this_ele : EleStruct
         Starting element.
+    
+    next_ele : EleStruct
+        Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
     
     offset : int, optional
         +1 -> return next element, +2 -> element after that, etc. Can be negative. Default = +1.
@@ -32511,9 +32514,6 @@ def pointer_to_next_ele(this_ele: EleStruct, offset: typing.SupportsInt | None =
     
     follow_fork : bool, optional
         If True then fork at any fork element. Default is False.
-    
-    next_ele : EleStruct
-        Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
     """
 def pointer_to_ran_state(ran_state: RandomStateStruct | None = None, ix_thread: typing.SupportsInt | None = None) -> RandomStateStruct | None:
     """
@@ -33428,11 +33428,11 @@ def query_string(query_str: str, upcase: bool, return_str: str, ix: typing.Suppo
     
     Parameters
     ----------
-    query_str : character
+    query_str : str
     
     upcase : bool
     
-    return_str : character
+    return_str : str
     
     ix : int
     
@@ -33444,9 +33444,9 @@ def quote(str: str, q_str: str) -> None:
     
     Parameters
     ----------
-    str : character
+    str : str
     
-    q_str : character
+    q_str : str
     """
 def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in: CoordStruct, orb_out: CoordStruct, g2_tol: typing.SupportsFloat, g3_tol: typing.SupportsFloat, ele0: EleStruct | None = None) -> Rad1DampAndStocMats:
     """
@@ -33685,11 +33685,11 @@ def ran_engine(set: str | None = None, get: str | None = None, ran_state: Random
     
     Parameters
     ----------
-    set : character, optional
+    set : str, optional
         Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
         'quasi'  -> Uses sobseq from Numerical Recipes. ''       -> Do nothing.
     
-    get : character, optional
+    get : str, optional
         Get the current (before any set) random number engine.
     
     ran_state : RandomStateStruct, optional
@@ -33718,7 +33718,7 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
     
     Parameters
     ----------
-    set : character, optional
+    set : str, optional
         Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' ''       !
         Do nothing
     
@@ -33730,7 +33730,7 @@ def ran_gauss_converter(set: str | None = None, set_sigma_cut: typing.SupportsFl
     
     Returns
     -------
-    get : character, optional
+    get : str, optional
         Get the current (before any set) gaussian converter.
     
     get_sigma_cut : float, optional
@@ -33924,7 +33924,7 @@ def rchomp(rel: typing.SupportsFloat, plc: typing.SupportsInt, out: str) -> None
     
     plc : int
     
-    out : character
+    out : str
     """
 @typing.overload
 def re_allocate(section: Wall3DSectionStructAlloc1D, n: typing.SupportsInt, exact: bool | None = None) -> None:
@@ -34001,7 +34001,7 @@ def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
     ----------
     rel : float
     
-    str_out : character
+    str_out : str
     """
 @typing.overload
 def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
@@ -34012,7 +34012,7 @@ def re_str(rel: typing.SupportsFloat, str_out: str) -> None:
     ----------
     rel : float
     
-    str_out : character
+    str_out : str
     """
 def read_a_line(prompt: str, trim_prompt: bool | None = None, prompt_color: str | None = None, prompt_bold: bool | None = None, history_file: str | None = None) -> str:
     """
@@ -34031,27 +34031,27 @@ def read_a_line(prompt: str, trim_prompt: bool | None = None, prompt_color: str 
     
     Parameters
     ----------
-    prompt : character
+    prompt : str
         Prompt string to use.
     
     trim_prompt : bool, optional
         If present and True then trim the prompt string and add a single blank before printing the prompt string.
         Default is True.
     
-    prompt_color : character, optional
+    prompt_color : str, optional
         Color of the prompt. Possibilities are: 'BLACK', 'RED', 'GREEN', 'YELLOW', 'BLUE', 'MAGENTA', 'CYAN',
         'GRAY', 'DEFAULT'. The 'DEFAULT' setting (the default) does not set the prompt color.
     
     prompt_bold : bool, optional
         If present and True then the prompt will be printed in bold.
     
-    history_file : character, optional
+    history_file : str, optional
         If present, add line_out to a file whose name is given by history_file. History files are useful for
         saving the command history in between when a program is run multiple times.
     
     Returns
     -------
-    line_out : character
+    line_out : str
         Line typed by the user. Note: If cntl-D is pressed, line_out = achar(24).
     """
 def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ReadBeamAscii:
@@ -34069,7 +34069,7 @@ def read_beam_ascii(file_name: str, beam_init: BeamInitStruct) -> ReadBeamAscii:
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         Name of beam file.
     
     beam_init : BeamInitStruct
@@ -34099,7 +34099,7 @@ def read_beam_file(file_name: str, beam_init: BeamInitStruct, ele: EleStruct | N
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         Name of beam file.
     
     beam_init : BeamInitStruct
@@ -34127,7 +34127,7 @@ def read_binary_cartesian_map(file_name: str, ele: EleStruct) -> ReadBinaryCarte
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         File to create.
     
     ele : EleStruct
@@ -34149,7 +34149,7 @@ def read_binary_cylindrical_map(file_name: str, ele: EleStruct) -> ReadBinaryCyl
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         File to create.
     
     ele : EleStruct
@@ -34171,7 +34171,7 @@ def read_binary_grid_field(file_name: str, ele: EleStruct) -> ReadBinaryGridFiel
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         File to create.
     
     ele : EleStruct
@@ -34193,7 +34193,7 @@ def read_surface_reflection_file(file_name: str) -> PhotonReflectSurfaceStruct:
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         Name of the file.
     
     Returns
@@ -34210,7 +34210,7 @@ def readline_read_history(history_file: str) -> int:
     
     Parameters
     ----------
-    history_file : character
+    history_file : str
         Name of the history file. EG: '~/.my_history'
     
     Returns
@@ -34227,7 +34227,7 @@ def readline_write_history(history_file: str) -> int:
     
     Parameters
     ----------
-    history_file : character
+    history_file : str
         Name of the history file. EG: '~/.my_history'
     
     Returns
@@ -34235,7 +34235,7 @@ def readline_write_history(history_file: str) -> int:
     status : int
         0 = Success, otherwise failure.
     """
-def real_num_fortran_format(number: typing.SupportsFloat, width: typing.SupportsInt, n_blanks: typing.SupportsInt | None = None, fmt_str: str) -> None:
+def real_num_fortran_format(number: typing.SupportsFloat, width: typing.SupportsInt, fmt_str: str, n_blanks: typing.SupportsInt | None = None) -> None:
     """
     Wrapper for Fortran routine real_num_fortran_format
     
@@ -34245,9 +34245,9 @@ def real_num_fortran_format(number: typing.SupportsFloat, width: typing.Supports
     
     width : int
     
-    n_blanks : int, optional
+    fmt_str : str
     
-    fmt_str : character
+    n_blanks : int, optional
     """
 def real_path(path_in: str, path_out: str, is_ok: bool) -> None:
     """
@@ -34255,13 +34255,13 @@ def real_path(path_in: str, path_out: str, is_ok: bool) -> None:
     
     Parameters
     ----------
-    path_in : character
+    path_in : str
     
-    path_out : character
+    path_out : str
     
     is_ok : bool
     """
-def real_str(r_num: typing.SupportsFloat, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None, str: str) -> None:
+def real_str(r_num: typing.SupportsFloat, str: str, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None) -> None:
     """
     Wrapper for Fortran routine real_str
     
@@ -34269,13 +34269,13 @@ def real_str(r_num: typing.SupportsFloat, n_signif: typing.SupportsInt | None = 
     ----------
     r_num : float
     
+    str : str
+    
     n_signif : int, optional
     
     n_decimal : int, optional
-    
-    str : character
     """
-def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None, str: str) -> None:
+def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, str: str, n_signif: typing.SupportsInt | None = None, n_decimal: typing.SupportsInt | None = None) -> None:
     """
     Wrapper for Fortran routine real_to_string
     
@@ -34285,11 +34285,11 @@ def real_to_string(real_num: typing.SupportsFloat, width: typing.SupportsInt, n_
     
     width : int
     
+    str : str
+    
     n_signif : int, optional
     
     n_decimal : int, optional
-    
-    str : character
     """
 def reallocate_beam(beam: BeamStruct, n_bunch: typing.SupportsInt, n_particle: typing.SupportsInt | None = None, extend: bool | None = None) -> None:
     """
@@ -34798,7 +34798,7 @@ def rk_adaptive_time_step(ele: EleStruct, param: LatParamStruct, orb: CoordStruc
     
     extra_field : EmFieldStruct, optional
     """
-def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orb: CoordStruct, dt: typing.SupportsFloat, new_orb: CoordStruct, dr_dt: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None, err_flag: bool, print_err: bool | None = None, extra_field: EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
+def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.SupportsFloat, orb: CoordStruct, dt: typing.SupportsFloat, new_orb: CoordStruct, err_flag: bool, dr_dt: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(10)"] | None = None, print_err: bool | None = None, extra_field: EmFieldStruct | None = None) -> typing.Annotated[list[float], "FixedSize(10)"]:
     """
     Wrapper for Fortran routine rk_time_step1
     
@@ -34816,9 +34816,9 @@ def rk_time_step1(ele: EleStruct, param: LatParamStruct, rf_time: typing.Support
     
     new_orb : CoordStruct
     
-    dr_dt : 1D array of float (shape: 10), optional
-    
     err_flag : bool
+    
+    dr_dt : 1D array of float (shape: 10), optional
     
     print_err : bool, optional
     
@@ -34842,11 +34842,11 @@ def rms_value(val_arr: RealArray1D, good_val: BoolAlloc1D | None = None) -> RmsV
     
     Returns
     -------
-    ave_val : float, optional
-        average value.
-    
     rms_val : float
         RMS value. Set to real_garbage$ if there is a problem.
+    
+    ave_val : float, optional
+        average value.
     """
 def rot_2d(vec_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(2)"], angle: typing.SupportsFloat) -> typing.Annotated[list[float], "FixedSize(2)"]:
     """
@@ -35074,7 +35074,7 @@ def run_timer(command: str, time: typing.SupportsFloat | None = None, time0: typ
     
     Parameters
     ----------
-    command : character
+    command : str
     
     time : float, optional
     
@@ -35430,7 +35430,7 @@ def set_custom_attribute_name(custom_name: str, custom_index: typing.SupportsInt
     
     Parameters
     ----------
-    custom_name : character
+    custom_name : str
         Name of the custom attribute. If prefixed by "<class>::" then the custom name will be set only for that
         element class. Example: "quadrupole::error" will set the alias custom namefor quadrupoles.
     
@@ -35454,7 +35454,7 @@ def set_ele_attribute(ele: EleStruct, set_string: str, err_print_flag: bool | No
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with attribute set.
     
-    set_string : character
+    set_string : str
         Attribute and value for set.
     
     err_print_flag : bool, optional
@@ -35497,7 +35497,7 @@ def set_ele_name(ele: EleStruct, name: str) -> None:
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with name set.
     
-    name : character
+    name : str
         Name to set.
     """
 def set_ele_real_attribute(ele: EleStruct, attrib_name: str, value: typing.SupportsFloat, err_print_flag: bool | None = None) -> bool:
@@ -35511,7 +35511,7 @@ def set_ele_real_attribute(ele: EleStruct, attrib_name: str, value: typing.Suppo
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with attribute set.
     
-    attrib_name : character
+    attrib_name : str
         Attribute name.
     
     value : float
@@ -35763,7 +35763,7 @@ def set_on_off(key: typing.SupportsInt, lat: LatStruct, switch_: typing.Supports
         This parameter is an input/output and is modified in-place.
         As an output, saved_values: Saved values of the component.
     
-    attribute : character, optional
+    attribute : str, optional
         Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc. Default is 'IS_ON'. Must be upper case.
     
     set_val : int, optional
@@ -35860,7 +35860,7 @@ def set_ptc_base_state(component: str, set_val: bool) -> bool:
     
     Parameters
     ----------
-    component : character
+    component : str
         Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc. See the PTC internal_state structure for
         component names.
     
@@ -36020,7 +36020,7 @@ def set_tune_3d(branch: BranchStruct, target_tunes: typing.Annotated[collections
     target_tunes : 1D array of float (shape: 3)
         tunes for a, b, z modes (rad/2pi). Must include integer part.
     
-    mask : character, optional
+    mask : str, optional
     
     use_phase_trombone : bool, optional
         Default False. If true, use a match element in phase trombone mode to adjust the tunes. The match element
@@ -36029,7 +36029,7 @@ def set_tune_3d(branch: BranchStruct, target_tunes: typing.Annotated[collections
     z_tune_set : bool, optional
         Default True. If false, do not try to set the synch tune.
     
-    group_knobs : 1D array of character (shape: 2), optional
+    group_knobs : 1D array of str (shape: 2), optional
         If set non-blank, use these group elements for tuning.
     
     print_err : bool, optional
@@ -36304,7 +36304,7 @@ def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = N
         This parameter is an input/output and is modified in-place.
         As an output, lat: Lattice with unwanted elements sliced out.
     
-    ele_list : character
+    ele_list : str
         List of elements to retain. See the documentation for the lat_ele_locator routine for the syntax of the
         list.
     
@@ -36473,7 +36473,7 @@ def species_id(name: str, default_: typing.SupportsInt | None = None, print_err:
     
     Parameters
     ----------
-    name : character
+    name : str
         Name of the species.
     
     print_err : bool, optional
@@ -36493,7 +36493,7 @@ def species_id_from_openpmd(pmd_name: str, charge: typing.SupportsInt) -> int:
     
     Parameters
     ----------
-    pmd_name : character
+    pmd_name : str
         OpenPMD species name.
     
     charge : int
@@ -36517,7 +36517,7 @@ def species_name(species: typing.SupportsInt) -> str:
     
     Returns
     -------
-    name : character
+    name : str
         Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
     """
 def species_of(mass: typing.SupportsFloat, charge: typing.SupportsInt) -> int:
@@ -36673,7 +36673,7 @@ def spin_of(species: typing.SupportsInt, non_subatomic_default: typing.SupportsF
     spin : float
         Particle spin.
     """
-def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.SupportsInt, phase_space_coords: bool | None = None, omega: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> None:
+def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.SupportsInt, omega: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"], phase_space_coords: bool | None = None) -> None:
     """
     Wrapper for Fortran routine spin_omega
     
@@ -36685,9 +36685,9 @@ def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.Supp
     
     sign_z_vel : int
     
-    phase_space_coords : bool, optional
-    
     omega : 1D array of float (shape: 3)
+    
+    phase_space_coords : bool, optional
     """
 def spin_quat_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Sequence[complex], "FixedSize(6)"], spin_q: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(7)"]], "FixedSize(4)"]) -> SpinQuatResonanceStrengths:
     """
@@ -36989,7 +36989,7 @@ def sqrt_alpha(alpha: typing.SupportsFloat, x: typing.SupportsFloat) -> float:
     y : float
         Result.
     """
-def sqrt_one(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, ds1: typing.SupportsFloat) -> None:
+def sqrt_one(x: typing.SupportsFloat, ds1: typing.SupportsFloat, nd: typing.SupportsInt | None = None) -> None:
     """
     Wrapper for Fortran routine sqrt_one
     
@@ -36998,11 +36998,11 @@ def sqrt_one(x: typing.SupportsFloat, nd: typing.SupportsInt | None = None, ds1:
     x : float
         Number
     
+    ds1 : float
+    
     nd : int, optional
         Derivative order. nd = 0 (default) -> compute Sqrt[1+x] - 1. NOTE: Currently only nd = 0 and nd = 1 are
         implemented.
-    
-    ds1 : float
     """
 def sr_longitudinal_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
     """
@@ -37143,7 +37143,7 @@ def start_branch_at(lat: LatStruct, ele_start: str, move_end_marker: bool) -> bo
         This parameter is an input/output and is modified in-place.
         As an output, lat: Modified lattice.
     
-    ele_start : character
+    ele_start : str
         Start element. Ele_start will identify the lattice branch to modify.
     
     move_end_marker : bool
@@ -37155,15 +37155,15 @@ def start_branch_at(lat: LatStruct, ele_start: str, move_end_marker: bool) -> bo
     error : bool
         Set True if there is an error Set False if not.
     """
-def str_count(str: str, match: str, num: typing.SupportsInt) -> None:
+def str_count(str: str, match_: str, num: typing.SupportsInt) -> None:
     """
     Wrapper for Fortran routine str_count
     
     Parameters
     ----------
-    str : character
+    str : str
     
-    match : character
+    match : str
     
     num : int
     """
@@ -37173,25 +37173,25 @@ def str_downcase(src: str) -> str:
     
     Parameters
     ----------
-    src : character
+    src : str
     
     Returns
     -------
-    dst : character
+    dst : str
     """
-def str_first_in_set(line: str, set: str, ignore_clauses: bool | None = None, ix_match: typing.SupportsInt) -> None:
+def str_first_in_set(line: str, set: str, ix_match: typing.SupportsInt, ignore_clauses: bool | None = None) -> None:
     """
     Wrapper for Fortran routine str_first_in_set
     
     Parameters
     ----------
-    line : character
+    line : str
     
-    set : character
-    
-    ignore_clauses : bool, optional
+    set : str
     
     ix_match : int
+    
+    ignore_clauses : bool, optional
     """
 def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> None:
     """
@@ -37199,9 +37199,9 @@ def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> N
     
     Parameters
     ----------
-    line : character
+    line : str
     
-    set : character
+    set : str
     
     ix_match : int
     """
@@ -37211,9 +37211,9 @@ def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> None:
     
     Parameters
     ----------
-    line : character
+    line : str
     
-    set : character
+    set : str
     
     ix_match : int
     """
@@ -37223,9 +37223,9 @@ def str_last_not_in_set(line: str, set: str, ix_match: typing.SupportsInt) -> No
     
     Parameters
     ----------
-    line : character
+    line : str
     
-    set : character
+    set : str
     
     ix_match : int
     """
@@ -37235,9 +37235,9 @@ def str_match_wild(str: str, pat: str, a_match: bool) -> None:
     
     Parameters
     ----------
-    str : character
+    str : str
     
-    pat : character
+    pat : str
     
     a_match : bool
     """
@@ -37247,11 +37247,11 @@ def str_substitute(string: str, str_match: str | None = None, str_replace: str |
     
     Parameters
     ----------
-    string : character
+    string : str
     
-    str_match : character, optional
+    str_match : str, optional
     
-    str_replace : character, optional
+    str_replace : str, optional
     
     do_trim : bool, optional
     
@@ -37263,11 +37263,11 @@ def str_upcase(src: str) -> str:
     
     Parameters
     ----------
-    src : character
+    src : str
     
     Returns
     -------
-    dst : character
+    dst : str
     """
 def stream_ele_end(physical_end: typing.SupportsInt, ele_orientation: typing.SupportsInt) -> int:
     """
@@ -37299,7 +37299,7 @@ def string_attrib(attrib_name: str, ele: EleStruct) -> str:
     
     Parameters
     ----------
-    attrib_name : character
+    attrib_name : str
         Name of the type of element attribute.
     
     ele : EleStruct
@@ -37307,36 +37307,36 @@ def string_attrib(attrib_name: str, ele: EleStruct) -> str:
     
     Returns
     -------
-    attrib_value : character
+    attrib_value : str
         The string associated with the attribute.
     """
-def string_to_int(line: str, default_: typing.SupportsInt, err_flag: bool, err_print_flag: bool | None = None, value: typing.SupportsInt) -> None:
+def string_to_int(line: str, default_: typing.SupportsInt, err_flag: bool, value: typing.SupportsInt, err_print_flag: bool | None = None) -> None:
     """
     Wrapper for Fortran routine string_to_int
     
     Parameters
     ----------
-    line : character
+    line : str
     
     err_flag : bool
     
-    err_print_flag : bool, optional
-    
     value : int
+    
+    err_print_flag : bool, optional
     """
-def string_to_real(line: str, default_: typing.SupportsFloat, err_flag: bool, err_print_flag: bool | None = None, value: typing.SupportsFloat) -> None:
+def string_to_real(line: str, default_: typing.SupportsFloat, err_flag: bool, value: typing.SupportsFloat, err_print_flag: bool | None = None) -> None:
     """
     Wrapper for Fortran routine string_to_real
     
     Parameters
     ----------
-    line : character
+    line : str
     
     err_flag : bool
     
-    err_print_flag : bool, optional
-    
     value : float
+    
+    err_print_flag : bool, optional
     """
 def string_trim(in_string: str, out_string: str, word_len: typing.SupportsInt) -> None:
     """
@@ -37344,9 +37344,9 @@ def string_trim(in_string: str, out_string: str, word_len: typing.SupportsInt) -
     
     Parameters
     ----------
-    in_string : character
+    in_string : str
     
-    out_string : character
+    out_string : str
     
     word_len : int
     """
@@ -37356,15 +37356,15 @@ def string_trim2(in_str: str, delimitors: str, out_str: str, ix_word: typing.Sup
     
     Parameters
     ----------
-    in_str : character
+    in_str : str
     
-    delimitors : character
+    delimitors : str
     
-    out_str : character
+    out_str : str
     
     ix_word : int
     
-    delim : character
+    delim : str
     
     ix_next : int
     """
@@ -37664,7 +37664,7 @@ def system_command(line: str) -> bool:
     
     Parameters
     ----------
-    line : character
+    line : str
         Command to pass to the system shell.
     
     Returns
@@ -37722,7 +37722,7 @@ def tao_add_to_normal_mode_h_array(h_str: str) -> ResonanceHStructAlloc1D:
     
     Parameters
     ----------
-    h_str : character
+    h_str : str
         Resonance driving term ID. EG: "110000"
     
     Returns
@@ -37736,10 +37736,10 @@ def tao_alias_cmd(alias: str, string: str) -> None:
     
     Parameters
     ----------
-    alias : character
+    alias : str
         Name of the tao command file.
     
-    string : character
+    string : str
         Command file arguments.
     """
 def tao_allocate_data_array(u: TaoUniverseStruct, n_data: typing.SupportsInt, exact: bool | None = None) -> None:
@@ -37831,16 +37831,16 @@ def tao_beam_track_endpoint(ele_id: str, lat: LatStruct, branch_str: str, where:
     
     Parameters
     ----------
-    ele_id : character
+    ele_id : str
         Name or index of the element.
     
     lat : LatStruct
         Lattice.
     
-    branch_str : character
+    branch_str : str
         Branch where the tracking is done. '' => Branch not specified.
     
-    where : character
+    where : str
         'TRACK_END', 'TRACK_START', etc.. Used for error messages.
     
     u : TaoUniverseStruct
@@ -37892,13 +37892,13 @@ def tao_change_ele(ele_name: str, attrib_name: str, num_str: str, update: bool) 
     
     Parameters
     ----------
-    ele_name : character
+    ele_name : str
         Name of variable or element.
     
-    attrib_name : character
+    attrib_name : str
         Attribute name of element.
     
-    num_str : character
+    num_str : str
         Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
     
     Returns
@@ -37912,19 +37912,19 @@ def tao_change_tune(branch_str: str, mask_str: str, print_list: bool, dqa_str: s
     
     Parameters
     ----------
-    branch_str : character
+    branch_str : str
         List of branches to apply tune set to.
     
-    mask_str : character
+    mask_str : str
         List of quadrupoles to veto.
     
     print_list : bool
         If True, print a list of elements varied and coefficients.
     
-    dqa_str : character
+    dqa_str : str
         Expression for dQa tune.
     
-    dqb_str : character
+    dqb_str : str
         Expression for dQb tune.
     
     Returns
@@ -37940,10 +37940,10 @@ def tao_change_var(name: str, num_str: str, silent: bool) -> bool:
     
     Parameters
     ----------
-    name : character
+    name : str
         Name of variable or element.
     
-    num_str : character
+    num_str : str
         Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
     
     silent : bool
@@ -37960,10 +37960,10 @@ def tao_change_z_tune(branch_str: str, dq_str: str) -> bool:
     
     Parameters
     ----------
-    branch_str : character
+    branch_str : str
         List of branches to apply tune set to.
     
-    dq_str : character
+    dq_str : str
         Expression for dQc tune.
     
     Returns
@@ -37977,9 +37977,9 @@ def tao_chrom_calc_needed(data_type: str, data_source: str, do_chrom: bool) -> N
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
     
-    data_source : character
+    data_source : str
     
     do_chrom : bool
     """
@@ -37989,7 +37989,7 @@ def tao_clear_cmd(cmd_line: str) -> None:
     
     Parameters
     ----------
-    cmd_line : character
+    cmd_line : str
         Should be set to 'maps'.
     """
 def tao_clip_cmd(gang: bool, where: str, value1: typing.SupportsFloat, value2: typing.SupportsFloat) -> None:
@@ -38001,7 +38001,7 @@ def tao_clip_cmd(gang: bool, where: str, value1: typing.SupportsFloat, value2: t
     gang : bool
         Gang all data d1 arrays together.
     
-    where : character
+    where : str
         Graph() to clip. Eg: 'top:x'
     
     value1 : float
@@ -38024,7 +38024,7 @@ def tao_command(command_line: str, err: bool) -> bool:
     
     Parameters
     ----------
-    command_line : character
+    command_line : str
         command line
     
     err : bool
@@ -38045,7 +38045,7 @@ def tao_constraint_type_name(datum: TaoDataStruct) -> str:
     
     Returns
     -------
-    datum_name : character
+    datum_name : str
         Appropriate name.
     """
 def tao_control_tree_list(ele: EleStruct) -> ElePointerStructAlloc1D:
@@ -38068,10 +38068,10 @@ def tao_count_strings(string: str, pattern: str) -> int:
     
     Parameters
     ----------
-    string : character
+    string : str
         the string to look at
     
-    pattern : character
+    pattern : str
         the search pattern
     
     Returns
@@ -38145,7 +38145,7 @@ def tao_curve_datum_calc(eles: ElePointerStructAlloc1D, plot: TaoPlotStruct, cur
         This parameter is an input/output and is modified in-place.
         As an output, curve: Structure holding the datum values
     
-    who : character
+    who : str
         Where to put the data. Either: "SYMBOL" or "LINE".
     """
 def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool, ele_track: EleStruct) -> None:
@@ -38190,7 +38190,7 @@ def tao_curve_name(curve: TaoCurveStruct, use_region: bool | None = None) -> str
     
     Returns
     -------
-    curve_name : character
+    curve_name : str
         Appropriate name.
     """
 def tao_curve_rms_calc(curve: TaoCurveStruct, who: str) -> TaoCurveRmsCalc:
@@ -38202,7 +38202,7 @@ def tao_curve_rms_calc(curve: TaoCurveStruct, who: str) -> TaoCurveRmsCalc:
     curve : TaoCurveStruct
         Curve to analyze.
     
-    who : character
+    who : str
         "LINE" or "SYMBOL".
     
     Returns
@@ -38227,7 +38227,7 @@ def tao_d2_d1_name(d1: TaoD1DataStruct, show_universe: bool | None = None) -> st
     
     Returns
     -------
-    d2_d1_name : character
+    d2_d1_name : str
         Appropriate name.
     """
 def tao_d2_data_stuffit(u: TaoUniverseStruct, d2_name: str, n_d1_data: typing.SupportsInt) -> None:
@@ -38238,7 +38238,7 @@ def tao_d2_data_stuffit(u: TaoUniverseStruct, d2_name: str, n_d1_data: typing.Su
     ----------
     u : TaoUniverseStruct
     
-    d2_name : character
+    d2_name : str
     
     n_d1_data : int
     """
@@ -38271,7 +38271,7 @@ def tao_data_sanity_check(datum: TaoDataStruct, print_err: bool, default_data_ty
     print_err : bool
         Print error message if data is not valid?
     
-    default_data_type : character
+    default_data_type : str
         Default data type associated with the datum's d2 structure.
     
     uni : TaoUniverseStruct, optional
@@ -38301,7 +38301,7 @@ def tao_data_type_substitute(template_: str, curve: TaoCurveStruct, graph: TaoGr
     
     Returns
     -------
-    str_out : character
+    str_out : str
         String with substitutions.
     """
 def tao_data_useit_plot_calc(curve: TaoCurveStruct, graph: TaoGraphStruct, data: TaoDataStructArray1D, check_s_position: bool) -> str:
@@ -38325,7 +38325,7 @@ def tao_data_useit_plot_calc(curve: TaoCurveStruct, graph: TaoGraphStruct, data:
     
     Returns
     -------
-    most_invalid : character
+    most_invalid : str
         String documenting biggest invalid data problem.
     """
 def tao_datum_has_associated_ele(data_type: str, branch_geometry: typing.SupportsInt | None = None) -> int:
@@ -38334,7 +38334,7 @@ def tao_datum_has_associated_ele(data_type: str, branch_geometry: typing.Support
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
         Type of data.
     
     branch_geometry : int, optional
@@ -38369,7 +38369,7 @@ def tao_datum_integrate(datum: TaoDataStruct, branch: BranchStruct, s_pos: RealA
     valid_value : bool
         Set false if, for example, all s_pos(:) are the same.
     
-    why_invalid : character
+    why_invalid : str
         Information string if there is a problem.
     
     result : float
@@ -38389,7 +38389,7 @@ def tao_datum_name(datum: TaoDataStruct, show_universe: bool | None = None) -> s
     
     Returns
     -------
-    datum_name : character
+    datum_name : str
         Appropriate name.
     """
 def tao_datum_s_position(datum: TaoDataStruct, ele: EleStruct) -> float:
@@ -38561,7 +38561,7 @@ def tao_draw_ele_for_floor_plan(plot: TaoPlotStruct, graph: TaoGraphStruct, tao_
         Shape to draw from s.plot_page.floor_plan.ele_shape(:) array. Will be NULL if no associated shape for this
         element.
     
-    label_name : character
+    label_name : str
         Shape label.
     
     offset1 : float
@@ -38673,7 +38673,7 @@ def tao_ele_geometry_with_misalignments(datum: TaoDataStruct, ele: EleStruct) ->
     valid_value : bool
         Was able to evalute the datum?
     
-    why_invalid : character
+    why_invalid : str
         If not valid, why not.
     
     value : float
@@ -38701,10 +38701,7 @@ def tao_ele_shape_info(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shapes: T
     
     Returns
     -------
-    e_shape : TaoEleShapeStruct, optional
-        element shape. Will be nullified if no associated shape.
-    
-    label_name : character
+    label_name : str
         Label name.
     
     y1 : float
@@ -38712,6 +38709,9 @@ def tao_ele_shape_info(ix_uni: typing.SupportsInt, ele: EleStruct, ele_shapes: T
     
     y2 : float
         shape transverse sizes.
+    
+    e_shape : TaoEleShapeStruct, optional
+        element shape. Will be nullified if no associated shape.
     
     ix_shape_min : int, optional
         Index of minimum ele_shape(:) index to start search from. Default is 1.
@@ -38744,7 +38744,7 @@ def tao_eval_floor_orbit(datum: TaoDataStruct, ele: EleStruct, orbit: CoordStruc
     valid_value : bool
         Was able to evalute the datum?
     
-    why_invalid : character
+    why_invalid : str
         If not valid, why not.
     
     value : float
@@ -38779,7 +38779,7 @@ def tao_evaluate_a_datum(datum: TaoDataStruct, u: TaoUniverseStruct, tao_lat: Ta
     valid_value : bool
         Set false when there is a problem. Set true otherwise.
     
-    why_invalid : character, optional
+    why_invalid : str, optional
         Tells why datum value is invalid.
     """
 def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele: EleStruct, ele_ref: EleStruct, valid_value: bool) -> TaoEvaluateDatumAtS:
@@ -38806,7 +38806,7 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
     
     Returns
     -------
-    err_str : character
+    err_str : str
         Error string for printing an error message.
     
     bad_datum : bool
@@ -38816,25 +38816,25 @@ def tao_evaluate_datum_at_s(datum: TaoDataStruct, tao_lat: TaoLatticeStruct, ele
     value : float
         Datum value.
     """
-def tao_evaluate_element_parameters(param_name: str, print_err: bool, dflt_ele: EleStruct | None = None, dflt_source: str, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, eval_point: typing.SupportsInt | None = None) -> TaoEvaluateElementParameters:
+def tao_evaluate_element_parameters(param_name: str, print_err: bool, dflt_source: str, dflt_ele: EleStruct | None = None, dflt_component: str | None = None, dflt_uni: typing.SupportsInt | None = None, eval_point: typing.SupportsInt | None = None) -> TaoEvaluateElementParameters:
     """
     Wrapper for Fortran routine tao_evaluate_element_parameters
     
     Parameters
     ----------
-    param_name : character
+    param_name : str
         parameter name.
     
     print_err : bool
         Print error message?
     
+    dflt_source : str
+        Default source
+    
     dflt_ele : EleStruct, optional
         Default element if not specified by param_name.
     
-    dflt_source : character
-        Default source
-    
-    dflt_component : character, optional
+    dflt_component : str, optional
         Default component
     
     dflt_uni : int, optional
@@ -38858,7 +38858,7 @@ def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_goo
     
     Parameters
     ----------
-    expression : character
+    expression : str
         Arithmetic expression.
     
     n_size : int
@@ -38872,10 +38872,10 @@ def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_goo
         If False then supress evaluation error messages. This does not affect syntax error messages. Default is
         True.
     
-    dflt_component : character, optional
+    dflt_component : str, optional
         Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
     
-    dflt_source : character, optional
+    dflt_source : str, optional
         Default source ('lat', 'data', etc.). Default is ''.
     
     dflt_ele_ref : EleStruct, optional
@@ -38887,7 +38887,7 @@ def tao_evaluate_expression(expression: str, n_size: typing.SupportsInt, use_goo
     dflt_ele : EleStruct, optional
         Default element to evaluate at.
     
-    dflt_dat_or_var_index : character, optional
+    dflt_dat_or_var_index : str, optional
         Default datum or variable index to use.
     
     dflt_uni : int, optional
@@ -38929,7 +38929,7 @@ def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use
     
     Parameters
     ----------
-    expression : character
+    expression : str
         Arithmetic expression.
     
     n_size : int
@@ -38943,10 +38943,10 @@ def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use
         If False then supress evaluation error messages. This does not affect syntax error messages. Default is
         True.
     
-    dflt_component : character, optional
+    dflt_component : str, optional
         Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
     
-    dflt_source : character, optional
+    dflt_source : str, optional
         Default source ('lat', 'data', etc.). Default is ''.
     
     dflt_ele_ref : EleStruct, optional
@@ -38958,7 +38958,7 @@ def tao_evaluate_expression_new(expression: str, n_size: typing.SupportsInt, use
     dflt_ele : EleStruct, optional
         Default element to evaluate at.
     
-    dflt_dat_or_var_index : character, optional
+    dflt_dat_or_var_index : str, optional
         Default datum or variable index to use.
     
     dflt_uni : int, optional
@@ -39000,7 +39000,7 @@ def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use
     
     Parameters
     ----------
-    expression : character
+    expression : str
         Arithmetic expression.
     
     n_size : int
@@ -39014,10 +39014,10 @@ def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use
         If False then supress evaluation error messages. This does not affect syntax error messages. Default is
         True.
     
-    dflt_component : character, optional
+    dflt_component : str, optional
         Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
     
-    dflt_source : character, optional
+    dflt_source : str, optional
         Default source ('lat', 'data', etc.). Default is ''.
     
     dflt_ele_ref : EleStruct, optional
@@ -39029,7 +39029,7 @@ def tao_evaluate_expression_old(expression: str, n_size: typing.SupportsInt, use
     dflt_ele : EleStruct, optional
         Default element to evaluate at.
     
-    dflt_dat_or_var_index : character, optional
+    dflt_dat_or_var_index : str, optional
         Default datum or variable index to use.
     
     dflt_uni : int, optional
@@ -39077,7 +39077,7 @@ def tao_evaluate_lat_or_beam_data(data_name: str, print_err: bool, default_sourc
     
     Parameters
     ----------
-    data_name : character
+    data_name : str
         data name.
     
     print_err : bool
@@ -39092,7 +39092,7 @@ def tao_evaluate_lat_or_beam_data(data_name: str, print_err: bool, default_sourc
     dflt_ele : EleStruct, optional
         Default element to evaluate at.
     
-    dflt_component : character, optional
+    dflt_component : str, optional
         Default component: 'model' (default), 'base', or 'design'.
     
     dflt_uni : int, optional
@@ -39134,7 +39134,7 @@ def tao_evaluate_stack_old(stack: TaoEvalNodeStructArray1D, n_size_in: typing.Su
         If False then supress evaluation error messages. This does not affect syntax error messages. Default is
         True.
     
-    expression : character
+    expression : str
         Original expression. Used for error messages.
     
     Returns
@@ -39163,7 +39163,7 @@ def tao_evaluate_tree(tao_tree: TaoEvalNodeStruct, n_size: typing.SupportsInt, u
         If False then supress evaluation error messages. This does not affect syntax error messages. Default is
         True.
     
-    expression : character
+    expression : str
         Original expression. Used for error messages.
     
     info_in : 1D array of TaoExpressionInfoStruct, optional
@@ -39182,7 +39182,7 @@ def tao_evaluate_tune(q_str: str, q0: typing.SupportsFloat, delta_input: bool) -
     
     Parameters
     ----------
-    q_str : character
+    q_str : str
         String expression.
     
     q0 : float
@@ -39210,7 +39210,7 @@ def tao_expression_hash_substitute(expression_in: str, eval_ele: EleStruct | Non
     
     Parameters
     ----------
-    expression_in : character
+    expression_in : str
         Expression.
     
     eval_ele : EleStruct, optional
@@ -39218,7 +39218,7 @@ def tao_expression_hash_substitute(expression_in: str, eval_ele: EleStruct | Non
     
     Returns
     -------
-    expression_out : character
+    expression_out : str
         Expression with substitutions made.
     """
 def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | None = None, n_node: typing.SupportsInt | None = None, parent: TaoEvalNodeStruct | None = None) -> str:
@@ -39244,7 +39244,7 @@ def tao_expression_tree_to_string(tree: TaoEvalNodeStruct, include_root: bool | 
     
     Returns
     -------
-    str_out : character
+    str_out : str
         Expression string.
     """
 def tao_find_plot_region(where: str, print_flag: bool | None = None) -> TaoFindPlotRegion:
@@ -39253,7 +39253,7 @@ def tao_find_plot_region(where: str, print_flag: bool | None = None) -> TaoFindP
     
     Parameters
     ----------
-    where : character
+    where : str
         Region name.
     
     print_flag : bool, optional
@@ -39273,10 +39273,10 @@ def tao_fixer(switch_: str, word1: str, word2: str) -> None:
     
     Parameters
     ----------
-    word1 : character
+    word1 : str
         First word of command.
     
-    word2 : character
+    word2 : str
         Secton word of command.
     """
 def tao_floor_to_screen(graph: TaoGraphStruct, r_floor: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat], "FixedSize(3)"]) -> TaoFloorToScreen:
@@ -39399,18 +39399,18 @@ def tao_get_user_input(prompt_str: str | None = None, wait_flag: bool | None = N
     
     Parameters
     ----------
-    prompt_str : character, optional
+    prompt_str : str, optional
         Primpt string to print at terminal. If not present then s.global.prompt_string will be used.
     
     wait_flag : bool, optional
         Used for single mode: Wait state for get_a_char call.
     
-    cmd_in : character, optional
+    cmd_in : str, optional
         Command to be used in place getting user input.
     
     Returns
     -------
-    cmd_out : character
+    cmd_out : str
         Command from the user.
     """
 def tao_graph_controller_setup(graph: TaoGraphStruct) -> None:
@@ -39476,7 +39476,7 @@ def tao_graph_name(graph: TaoGraphStruct, use_region: bool | None = None) -> str
     
     Returns
     -------
-    graph_name : character
+    graph_name : str
         Appropriate name.
     """
 def tao_graph_phase_space_setup(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
@@ -39540,9 +39540,9 @@ def tao_init_beam_in_universe(u: TaoUniverseStruct, beam_init: BeamInitStruct, t
     
     beam_init : BeamInitStruct
     
-    track_start : character
+    track_start : str
     
-    track_end : character
+    track_end : str
     
     comb_ds_save : float
     """
@@ -39554,7 +39554,7 @@ def tao_init_beams(init_file: str) -> None:
     
     Parameters
     ----------
-    init_file : character
+    init_file : str
         Tao initialization file. If blank, there is no file so just use the defaults.
     """
 def tao_init_data(data_file: str) -> None:
@@ -39565,7 +39565,7 @@ def tao_init_data(data_file: str) -> None:
     
     Parameters
     ----------
-    data_file : character
+    data_file : str
         Tao data initialization file. If blank, there is no file so just use the defaults.
     """
 def tao_init_data_end_stuff() -> None:
@@ -39592,7 +39592,7 @@ def tao_init_dynamic_aperture(init_file: str) -> None:
     
     Parameters
     ----------
-    init_file : character
+    init_file : str
         File setting dynamic_aperture parameters.
     """
 def tao_init_find_elements(u: TaoUniverseStruct, search_string: str, attribute: str | None = None) -> TaoInitFindElements:
@@ -39604,10 +39604,10 @@ def tao_init_find_elements(u: TaoUniverseStruct, search_string: str, attribute: 
     u : TaoUniverseStruct
         Universe to search
     
-    search_string : character
+    search_string : str
         What to search for
     
-    attribute : character, optional
+    attribute : str, optional
         Check that attribute of element is free to vary.
     
     Returns
@@ -39626,7 +39626,7 @@ def tao_init_global(init_file: str) -> None:
     
     Parameters
     ----------
-    init_file : character
+    init_file : str
         Tao initialization file. If blank, there is no file so just use the defaults.
     """
 def tao_init_lattice(lat_file: str, err_flag: bool) -> None:
@@ -39635,7 +39635,7 @@ def tao_init_lattice(lat_file: str, err_flag: bool) -> None:
     
     Parameters
     ----------
-    lat_file : character
+    lat_file : str
     
     err_flag : bool
     """
@@ -39645,7 +39645,7 @@ def tao_init_plotting(plot_file: str) -> None:
     
     Parameters
     ----------
-    plot_file : character
+    plot_file : str
     """
 def tao_init_variables(var_file: str) -> None:
     """
@@ -39655,7 +39655,7 @@ def tao_init_variables(var_file: str) -> None:
     
     Parameters
     ----------
-    var_file : character
+    var_file : str
         Tao variable initialization file. If blank, there is no file so just use the defaults.
     """
 def tao_inject_beam(u: TaoUniverseStruct, model: TaoLatticeStruct, ix_branch: typing.SupportsInt) -> TaoInjectBeam:
@@ -39705,12 +39705,12 @@ def tao_is_valid_name(name: str) -> TaoIsValidName:
     
     Parameters
     ----------
-    name : character
+    name : str
         Name to be checked.
     
     Returns
     -------
-    why_invalid : character
+    why_invalid : str
         Why invalid description.
     
     is_valid : bool
@@ -39722,7 +39722,7 @@ def tao_json_cmd(input_str: str) -> None:
     
     Parameters
     ----------
-    input_str : character
+    input_str : str
         What to show.
     """
 def tao_key_info_to_str(ix_key: typing.SupportsInt, ix_min_key: typing.SupportsInt, ix_max_key: typing.SupportsInt, key_str: str, header_str: str) -> None:
@@ -39737,9 +39737,9 @@ def tao_key_info_to_str(ix_key: typing.SupportsInt, ix_min_key: typing.SupportsI
     
     ix_max_key : int
     
-    key_str : character
+    key_str : str
     
-    header_str : character
+    header_str : str
     """
 def tao_lat_bookkeeper(u: TaoUniverseStruct, tao_lat: TaoLatticeStruct) -> bool:
     """
@@ -39785,9 +39785,9 @@ def tao_lat_sigma_calc_needed(data_type: str, data_source: str, do_lat_sigma: bo
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
     
-    data_source : character
+    data_source : str
     
     do_lat_sigma : bool
     """
@@ -39904,7 +39904,7 @@ def tao_load_this_datum(vec: RealArray1D, ele_ref: EleStruct, ele_start: EleStru
     
     branch : BranchStruct
     
-    why_invalid : character, optional
+    why_invalid : str, optional
     
     good : 1D array of bool, optional
     """
@@ -39914,7 +39914,7 @@ def tao_locate_all_elements(ele_list: str, ignore_blank: bool | None = None) -> 
     
     Parameters
     ----------
-    ele_list : character
+    ele_list : str
         String with element names using element list format.
     
     ignore_blank : bool, optional
@@ -39934,7 +39934,7 @@ def tao_locate_elements(ele_list: str, ix_universe: typing.SupportsInt, lat_type
     
     Parameters
     ----------
-    ele_list : character
+    ele_list : str
         String with element names using element list format.
     
     ix_universe : int
@@ -39985,11 +39985,11 @@ def tao_merit() -> TaoMerit:
     
     Returns
     -------
-    calc_ok : bool, optional
-        Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
-    
     this_merit : float
         Merit value.
+    
+    calc_ok : bool, optional
+        Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
     """
 def tao_next_word(line: str) -> TaoNextWord:
     """
@@ -40003,19 +40003,19 @@ def tao_next_word(line: str) -> TaoNextWord:
     
     Parameters
     ----------
-    line : character
+    line : str
         String to parse.
         This parameter is an input/output and is modified in-place.
         As an output, line: String with first word removed.
     
     Returns
     -------
-    line : character
+    line : str
         String to parse.
         This parameter is an input/output and is modified in-place.
         As an output, line: String with first word removed.
     
-    word : character
+    word : str
         First word of line.
     """
 def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_map: bool) -> None:
@@ -40024,9 +40024,9 @@ def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_m
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
     
-    data_source : character
+    data_source : str
     
     do_one_turn_map : bool
     """
@@ -40036,9 +40036,9 @@ def tao_open_file(file: str, file_name: str, error_severity: typing.SupportsInt,
     
     Parameters
     ----------
-    file : character
+    file : str
     
-    file_name : character
+    file_name : str
         File name.
     
     error_severity : int
@@ -40076,7 +40076,7 @@ def tao_optimization_status(datum: TaoDataStruct) -> str:
     
     Returns
     -------
-    why_str : character
+    why_str : str
         Optimization status of the datum.
     """
 def tao_orbit_beta_wave_anal(plot: TaoPlotStruct) -> None:
@@ -40103,7 +40103,7 @@ def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct
     
     Parameters
     ----------
-    dat_name : character
+    dat_name : str
     
     ele_to_s : EleStruct
         Element whose exit end is at the evaluation s-position.
@@ -40119,7 +40119,10 @@ def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct
     err_flag : bool
         Set true if parameter cannot be evaluated.
     
-    why_invalid : character, optional
+    value : float
+        Parameter value.
+    
+    why_invalid : str, optional
         Set if  err_flag = True to document why is there a problem.
     
     print_err : bool, optional
@@ -40127,9 +40130,6 @@ def tao_param_value_at_s(dat_name: str, ele_to_s: EleStruct, ele_here: EleStruct
     
     bad_datum : bool, optional
         Data_type is malformed.
-    
-    value : float
-        Parameter value.
     """
 def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, stack: TaoEvalNodeStruct, err_flag: bool, print_err: bool, dflt_component: str | None = None, dflt_source: str | None = None, dflt_ele_ref: EleStruct | None = None, dflt_ele_start: EleStruct | None = None, dflt_ele: EleStruct | None = None, dflt_dat_or_var_index: str | None = None, dflt_uni: typing.SupportsInt | None = None, dflt_eval_point: typing.SupportsInt | None = None, dflt_s_offset: typing.SupportsFloat | None = None, dflt_orbit: CoordStruct | None = None, datum: TaoDataStruct | None = None) -> None:
     """
@@ -40137,11 +40137,11 @@ def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, st
     
     Parameters
     ----------
-    str : character
+    str : str
     
     use_good_user : bool
     
-    saved_prefix : character
+    saved_prefix : str
     
     stack : TaoEvalNodeStruct
     
@@ -40149,9 +40149,9 @@ def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, st
     
     print_err : bool
     
-    dflt_component : character, optional
+    dflt_component : str, optional
     
-    dflt_source : character, optional
+    dflt_source : str, optional
     
     dflt_ele_ref : EleStruct, optional
     
@@ -40159,7 +40159,7 @@ def tao_param_value_routine(str: str, use_good_user: bool, saved_prefix: str, st
     
     dflt_ele : EleStruct, optional
     
-    dflt_dat_or_var_index : character, optional
+    dflt_dat_or_var_index : str, optional
     
     dflt_uni : int, optional
     
@@ -40177,7 +40177,7 @@ def tao_parse_command_args(cmd_line: str | None = None) -> bool:
     
     Parameters
     ----------
-    cmd_line : character, optional
+    cmd_line : str, optional
     
     Returns
     -------
@@ -40190,7 +40190,7 @@ def tao_parse_element_param_str(in_str: str) -> TaoParseElementParamStr:
     
     Parameters
     ----------
-    in_str : character
+    in_str : str
         String specifying a parameter of an element or elements.
     
     Returns
@@ -40198,19 +40198,19 @@ def tao_parse_element_param_str(in_str: str) -> TaoParseElementParamStr:
     err : bool
         Set True if there is a parse error. False otherwise.
     
-    uni : character
+    uni : str
         Universe substring.
     
-    element : character
+    element : str
         Element name.
     
-    parameter : character
+    parameter : str
         Element parameter name.
     
     where : int
         One of not_set$, anchor_beginning$, anchor_center$, or anchor_end$.
     
-    component : character
+    component : str
         One of "model", "design", or "base".
     """
 def tao_particle_data_value(data_type: str, p: CoordStructArray1D, ele: EleStruct, ix_bunch: typing.SupportsInt) -> TaoParticleDataValue:
@@ -40221,7 +40221,7 @@ def tao_particle_data_value(data_type: str, p: CoordStructArray1D, ele: EleStruc
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
         Type of data.
     
     p : 1D array of CoordStruct
@@ -40258,7 +40258,7 @@ def tao_phase_space_axis_index(data_type: str, err: bool) -> int:
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
         Type of data.
     
     err : bool
@@ -40279,7 +40279,7 @@ def tao_pick_universe(name_in: str, dflt_uni: typing.SupportsInt | None = None, 
     
     Parameters
     ----------
-    name_in : character
+    name_in : str
         data name with possible universe spec.
     
     dflt_uni : int, optional
@@ -40290,7 +40290,7 @@ def tao_pick_universe(name_in: str, dflt_uni: typing.SupportsInt | None = None, 
     
     Returns
     -------
-    name_out : character
+    name_out : str
         name_in without any "n@" beginning.
     
     picked : 1D array of bool
@@ -40311,7 +40311,7 @@ def tao_pipe_cmd(input_str: str) -> None:
     
     Parameters
     ----------
-    input_str : character
+    input_str : str
         What to show.
     """
 def tao_place_cmd(where: str, who: str, no_buffer: bool | None = None) -> None:
@@ -40320,10 +40320,10 @@ def tao_place_cmd(where: str, who: str, no_buffer: bool | None = None) -> None:
     
     Parameters
     ----------
-    where : character
+    where : str
         Region where the plot goes. Eg: 'top'.
     
-    who : character
+    who : str
         Type of plot. Eg: 'orbit'.
     
     no_buffer : bool, optional
@@ -40335,10 +40335,10 @@ def tao_plot_cmd(where: str, component: str) -> None:
     
     Parameters
     ----------
-    where : character
+    where : str
         Region name to identify the plot to set.
     
-    component : character
+    component : str
         Who to plot. EG: 'meas - design'
     """
 def tao_plot_data(plot: TaoPlotStruct, graph: TaoGraphStruct) -> None:
@@ -40421,7 +40421,7 @@ def tao_pointer_to_building_wall_shape(wall_name: str) -> TaoEleShapeStruct | No
     
     Parameters
     ----------
-    wall_name : character
+    wall_name : str
         Name of the wall.
     
     Returns
@@ -40438,7 +40438,7 @@ def tao_pointer_to_datum(d1: TaoD1DataStruct, ele_name: str) -> TaoDataStruct | 
     d1 : TaoD1DataStruct
         D1 data struct to search.
     
-    ele_name : character
+    ele_name : str
         Name of lattice element to match to.
     
     Returns
@@ -40475,7 +40475,7 @@ def tao_pointer_to_datum_ele(lat: LatStruct, ele_name: str, ix_ele: typing.Suppo
     valid : bool
         Set False if element does not have a definite location. Set True otherwise
     
-    why_invalid : character, optional
+    why_invalid : str, optional
         Tells why datum value is invalid.
     
     ele : EleStruct, optional
@@ -40503,7 +40503,7 @@ def tao_pointer_to_ele_shape(ix_uni: typing.SupportsInt, ele: EleStruct, ele_sha
     
     Returns
     -------
-    dat_var_name : character, optional
+    dat_var_name : str, optional
         Name of datum or variable associated with e_shape. Will be set to "" if there is no associated datum or
         variable.
     
@@ -40581,7 +40581,7 @@ def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) ->
     
     Parameters
     ----------
-    string : character
+    string : str
         String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
         This parameter is an input/output and is modified in-place.
         As an output, string: String with universe prefix stripped off.
@@ -40591,7 +40591,7 @@ def tao_pointer_to_universe(string: str, neg2_to_default: bool | None = None) ->
     
     Returns
     -------
-    string : character
+    string : str
         String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
         This parameter is an input/output and is modified in-place.
         As an output, string: String with universe prefix stripped off.
@@ -40605,7 +40605,7 @@ def tao_pointer_to_universes(name_in: str, dflt_uni: typing.SupportsInt | None =
     
     Parameters
     ----------
-    name_in : character
+    name_in : str
         data name with possible universe spec.
     
     dflt_uni : int, optional
@@ -40619,7 +40619,7 @@ def tao_pointer_to_universes(name_in: str, dflt_uni: typing.SupportsInt | None =
     err : bool
         Set True if an error is detected.
     
-    name_out : character, optional
+    name_out : str, optional
         name_in without any "n@" beginning.
     
     explicit_uni : bool, optional
@@ -40693,7 +40693,7 @@ def tao_python_cmd(input_str: str) -> None:
     
     Parameters
     ----------
-    input_str : character
+    input_str : str
         What to show.
     """
 def tao_quiet_set(set: str) -> None:
@@ -40702,7 +40702,7 @@ def tao_quiet_set(set: str) -> None:
     
     Parameters
     ----------
-    set : character
+    set : str
         True is silent running is wanted.
     """
 def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) -> None:
@@ -40711,9 +40711,9 @@ def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) 
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
     
-    data_source : character
+    data_source : str
     
     do_rad_int : bool
     """
@@ -40764,12 +40764,12 @@ def tao_read_cmd(which: str, unis: str, file: str, silent: bool) -> None:
     
     Parameters
     ----------
-    which : character
+    which : str
     
-    unis : character
+    unis : str
         Universes to apply to
     
-    file : character
+    file : str
     
     silent : bool
         Silent
@@ -40780,7 +40780,7 @@ def tao_read_phase_space_index(name: str, ixc: typing.SupportsInt, print_err: bo
     
     Parameters
     ----------
-    name : character
+    name : str
         character array holding the index. Must be in the range 1-6.
     
     ixc : int
@@ -40800,7 +40800,7 @@ def tao_regression_test(cmd_str: str) -> None:
     
     Parameters
     ----------
-    cmd_str : character
+    cmd_str : str
     """
 def tao_remove_blank_characters(str: str) -> TaoRemoveBlankCharacters:
     """
@@ -40808,14 +40808,14 @@ def tao_remove_blank_characters(str: str) -> TaoRemoveBlankCharacters:
     
     Parameters
     ----------
-    str : character
+    str : str
         Input string.
         This parameter is an input/output and is modified in-place.
         As an output, str: String with blank characters removed.
     
     Returns
     -------
-    str : character
+    str : str
         Input string.
         This parameter is an input/output and is modified in-place.
         As an output, str: String with blank characters removed.
@@ -40826,7 +40826,7 @@ def tao_run_cmd(which: str) -> bool:
     
     Parameters
     ----------
-    which : character
+    which : str
         which optimizer to use.
     
     Returns
@@ -40844,7 +40844,7 @@ def tao_scale_cmd(where: str, y_min_in: typing.SupportsFloat, y_max_in: typing.S
     
     Parameters
     ----------
-    where : character
+    where : str
         Region to scale. Eg: "top:x"
     
     y_min_in : float
@@ -40853,14 +40853,14 @@ def tao_scale_cmd(where: str, y_min_in: typing.SupportsFloat, y_max_in: typing.S
     y_max_in : float
         Plot y-axis max value.
     
-    axis : character, optional
+    axis : str, optional
         'y', 'y2', or '' (both). Default = ''.
     
     include_wall : bool, optional
         Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
         include the building wall position will be included in determining the the scale.
     
-    gang : character, optional
+    gang : str, optional
         'gang', 'nogang', ''. Default = ''.
     
     exact : bool, optional
@@ -40891,7 +40891,7 @@ def tao_scale_graph(graph: TaoGraphStruct, y_min: typing.SupportsFloat, y_max: t
     y_max : float
         Axis [min, max] must cover [y_min, y_max] if not autoscaling.
     
-    axis : character, optional
+    axis : str, optional
         Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
     
     include_wall : bool, optional
@@ -40935,14 +40935,14 @@ def tao_scale_plot(plot: TaoPlotStruct, y_min_in: typing.SupportsFloat, y_max_in
     y_max_in : float
         Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
     
-    axis : character, optional
+    axis : str, optional
         Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
     
     include_wall : bool, optional
         Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
         include the building wall position will be included in determining the the scale.
     
-    gang : character, optional
+    gang : str, optional
         If autoscale then make all graph y-axes the same and/or make all y2-axes the same? ''        -> (default)
         Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs. 'nogang'  -> Do not gang graphs.
     
@@ -40975,13 +40975,13 @@ def tao_set_beam_cmd(who: str, value_str: str, branch_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which parameter to set.
     
-    value_str : character
+    value_str : str
         Value to set to.
     
-    branch_str : character
+    branch_str : str
         Branch to use. '' => branch 0.
     """
 def tao_set_beam_init_cmd(who: str, value_str: str, branch_str: str) -> None:
@@ -40992,13 +40992,13 @@ def tao_set_beam_init_cmd(who: str, value_str: str, branch_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which beam_init variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     
-    branch_str : character
+    branch_str : str
         Branch to use. '' => branch 0
     """
 def tao_set_bmad_com_cmd(who: str, value_str: str) -> None:
@@ -41009,10 +41009,10 @@ def tao_set_bmad_com_cmd(who: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which bmad_com variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_branch_cmd(branch_str: str, component_str: str, value_str: str) -> None:
@@ -41023,13 +41023,13 @@ def tao_set_branch_cmd(branch_str: str, component_str: str, value_str: str) -> N
     
     Parameters
     ----------
-    branch_str : character
+    branch_str : str
         Which branch to set.
     
-    component_str : character
+    component_str : str
         Which branch parameter to set.
     
-    value_str : character
+    value_str : str
         What value to set it to.
     """
 def tao_set_calculate_cmd(switch_: str | None = None) -> None:
@@ -41046,13 +41046,13 @@ def tao_set_curve_cmd(curve_name: str, component: str, value_str: str) -> None:
     
     Parameters
     ----------
-    curve_name : character
+    curve_name : str
         Which curve to set.
     
-    component : character
+    component : str
         Which component to set.
     
-    value_str : character
+    value_str : str
         What value to set it to.
     """
 def tao_set_curve_invalid(curve: TaoCurveStruct, why_invalid: str, print_err: bool | None = None) -> None:
@@ -41068,7 +41068,7 @@ def tao_set_curve_invalid(curve: TaoCurveStruct, why_invalid: str, print_err: bo
         This parameter is an input/output and is modified in-place.
         As an output, curve: Curve properly set.
     
-    why_invalid : character
+    why_invalid : str
         Invalid information.
     
     print_err : bool, optional
@@ -41082,10 +41082,10 @@ def tao_set_data_cmd(who_str: str, value_str: str, silent: bool | None = None) -
     
     Parameters
     ----------
-    who_str : character
+    who_str : str
         Which data component(s) to set.
     
-    value_str : character
+    value_str : str
         What value to set it to.
     """
 def tao_set_data_useit_opt(data: TaoDataStructArray1D | None = None) -> None:
@@ -41105,10 +41105,10 @@ def tao_set_default_cmd(who_str: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who_str : character
+    who_str : str
         Which default component(s) to set.
     
-    value_str : character
+    value_str : str
         What value to set it to.
     """
 def tao_set_drawing_cmd(drawing: TaoDrawingStruct, component: str, value_str: str) -> None:
@@ -41122,10 +41122,10 @@ def tao_set_drawing_cmd(drawing: TaoDrawingStruct, component: str, value_str: st
     drawing : TaoDrawingStruct
         s.plot_page.floor_plan or s.plot_page.lat_layout.
     
-    component : character
+    component : str
         Which shape component to set.
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_dynamic_aperture_cmd(who: str, value_str: str) -> None:
@@ -41136,10 +41136,10 @@ def tao_set_dynamic_aperture_cmd(who: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which parameter to set.
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_elements_cmd(ele_list: str, attribute: str, value: str, update: bool) -> None:
@@ -41150,13 +41150,13 @@ def tao_set_elements_cmd(ele_list: str, attribute: str, value: str, update: bool
     
     Parameters
     ----------
-    ele_list : character
+    ele_list : str
         which elements.
     
-    attribute : character
+    attribute : str
         Attribute to set.
     
-    value : character
+    value : str
         Value to set.
     """
 def tao_set_floor_plan_axis_label(graph: TaoGraphStruct, axis_in: QpAxisStruct, axis_out: QpAxisStruct, which: str) -> None:
@@ -41171,7 +41171,7 @@ def tao_set_floor_plan_axis_label(graph: TaoGraphStruct, axis_in: QpAxisStruct, 
     
     axis_out : QpAxisStruct
     
-    which : character
+    which : str
     """
 def tao_set_geodesic_lm_cmd(who: str, value_str: str) -> None:
     """
@@ -41181,10 +41181,10 @@ def tao_set_geodesic_lm_cmd(who: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which geodesic_lm variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_global_cmd(who: str, value_str: str) -> None:
@@ -41195,10 +41195,10 @@ def tao_set_global_cmd(who: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which global variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_graph_cmd(graph_name: str, component: str, value_str: str) -> None:
@@ -41209,13 +41209,13 @@ def tao_set_graph_cmd(graph_name: str, component: str, value_str: str) -> None:
     
     Parameters
     ----------
-    graph_name : character
+    graph_name : str
         Which graph to set.
     
-    component : character
+    component : str
         Which component to set.
     
-    value_str : character
+    value_str : str
         What value to set it to.
     """
 def tao_set_integer_value(var_str: str, value_str: str, min_val: typing.SupportsInt | None = None, max_val: typing.SupportsInt | None = None, print_err: bool | None = None) -> TaoSetIntegerValue:
@@ -41229,10 +41229,10 @@ def tao_set_integer_value(var_str: str, value_str: str, min_val: typing.Supports
     
     Parameters
     ----------
-    var_str : character
+    var_str : str
         Used for error messages.
     
-    value_str : character
+    value_str : str
         String with encoded value.
     
     min_val : int, optional
@@ -41261,7 +41261,7 @@ def tao_set_invalid(datum: TaoDataStruct, message: str, exterminate: bool | None
     datum : TaoDataStruct
         Bad datum.
     
-    message : character
+    message : str
         Error message.
     
     exterminate : bool, optional
@@ -41275,7 +41275,7 @@ def tao_set_invalid(datum: TaoDataStruct, message: str, exterminate: bool | None
     
     Returns
     -------
-    why_invalid : character, optional
+    why_invalid : str, optional
         Set to message if present.
     """
 def tao_set_key_cmd(key_str: str, cmd_str: str) -> None:
@@ -41286,10 +41286,10 @@ def tao_set_key_cmd(key_str: str, cmd_str: str) -> None:
     
     Parameters
     ----------
-    key_str : character
+    key_str : str
         keyboard key.
     
-    cmd_str : character
+    cmd_str : str
         Command associated with key.
     """
 def tao_set_lattice_cmd(dest_lat: str, source_lat: str) -> None:
@@ -41300,10 +41300,10 @@ def tao_set_lattice_cmd(dest_lat: str, source_lat: str) -> None:
     
     Parameters
     ----------
-    dest_lat : character
+    dest_lat : str
         Maybe: 'model', 'design', or 'base' with optional '@n' at beginning to indicate the universe
     
-    source_lat : character
+    source_lat : str
         Maybe: 'model', 'design', or 'base'
     """
 def tao_set_logical_value(var_str: str, value_str: str) -> TaoSetLogicalValue:
@@ -41317,10 +41317,10 @@ def tao_set_logical_value(var_str: str, value_str: str) -> TaoSetLogicalValue:
     
     Parameters
     ----------
-    var_str : character
+    var_str : str
         Used for error messages.
     
-    value_str : character
+    value_str : str
         String with encoded value.
     
     Returns
@@ -41362,10 +41362,10 @@ def tao_set_opti_de_param_cmd(who: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which opti_de_param variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_particle_start_cmd(who: str, value_str: str) -> None:
@@ -41376,10 +41376,10 @@ def tao_set_particle_start_cmd(who: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which particle_start variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_plot_cmd(plot_name: str, component: str, value_str: str) -> None:
@@ -41390,13 +41390,13 @@ def tao_set_plot_cmd(plot_name: str, component: str, value_str: str) -> None:
     
     Parameters
     ----------
-    plot_name : character
+    plot_name : str
         Which plot to set.
     
-    component : character
+    component : str
         Which component to set.
     
-    value_str : character
+    value_str : str
         What value to set it to.
     """
 def tao_set_plot_page_cmd(component: str, value_str: str, value_str2: str | None = None) -> None:
@@ -41407,13 +41407,13 @@ def tao_set_plot_page_cmd(component: str, value_str: str, value_str2: str | None
     
     Parameters
     ----------
-    component : character
+    component : str
         Which component to set.
     
-    value_str : character
+    value_str : str
         What value to set to.
     
-    value_str2 : character, optional
+    value_str2 : str, optional
         2nd value if component is an array.
     """
 def tao_set_ptc_com_cmd(who: str, value_str: str) -> None:
@@ -41424,10 +41424,10 @@ def tao_set_ptc_com_cmd(who: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which ptc_com variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStruct, value: str) -> TaoSetQpAxisStruct:
@@ -41438,10 +41438,10 @@ def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStr
     
     Parameters
     ----------
-    qp_axis_name : character
+    qp_axis_name : str
         qp_axis name. Used for error messages.
     
-    component : character
+    component : str
         qp_axis component name.
     
     qp_axis : QpAxisStruct
@@ -41449,7 +41449,7 @@ def tao_set_qp_axis_struct(qp_axis_name: str, component: str, qp_axis: QpAxisStr
         This parameter is an input/output and is modified in-place.
         As an output, qp_axis: qp_axis_struct with changed component value.
     
-    value : character
+    value : str
         Component value.
     
     Returns
@@ -41468,10 +41468,10 @@ def tao_set_qp_point_struct(qp_point_name: str, component: str, qp_point: QpPoin
     
     Parameters
     ----------
-    qp_point_name : character
+    qp_point_name : str
         qp_point name. Used for error messages.
     
-    component : character
+    component : str
         qp_point component name.
     
     qp_point : QpPointStruct
@@ -41479,7 +41479,7 @@ def tao_set_qp_point_struct(qp_point_name: str, component: str, qp_point: QpPoin
         This parameter is an input/output and is modified in-place.
         As an output, qp_point: qp_point_struct with changed component value.
     
-    value : character
+    value : str
         Component value.
     
     Returns
@@ -41498,10 +41498,10 @@ def tao_set_qp_rect_struct(qp_rect_name: str, component: str, qp_rect: QpRectStr
     
     Parameters
     ----------
-    qp_rect_name : character
+    qp_rect_name : str
         qp_rect name. Used for error messages.
     
-    component : character
+    component : str
         qp_rect component name.
     
     qp_rect : QpRectStruct
@@ -41509,7 +41509,7 @@ def tao_set_qp_rect_struct(qp_rect_name: str, component: str, qp_rect: QpRectStr
         This parameter is an input/output and is modified in-place.
         As an output, qp_rect: qp_rect_struct with changed component value.
     
-    value : character
+    value : str
         Component value.
     
     Returns
@@ -41528,7 +41528,7 @@ def tao_set_ran_state_cmd(state_string: str) -> None:
     
     Parameters
     ----------
-    state_string : character
+    state_string : str
         Encoded random number state.
     """
 def tao_set_real_value(var_str: str, value_str: str, min_val: typing.SupportsFloat | None = None, max_val: typing.SupportsFloat | None = None, dflt_uni: typing.SupportsInt | None = None) -> TaoSetRealValue:
@@ -41542,10 +41542,10 @@ def tao_set_real_value(var_str: str, value_str: str, min_val: typing.SupportsFlo
     
     Parameters
     ----------
-    var_str : character
+    var_str : str
         Used for error messages.
     
-    value_str : character
+    value_str : str
         String with encoded value.
     
     min_val : float, optional
@@ -41573,13 +41573,13 @@ def tao_set_region_cmd(region_name: str, component: str, value_str: str) -> None
     
     Parameters
     ----------
-    region_name : character
+    region_name : str
         Which region to set.
     
-    component : character
+    component : str
         Which component to set.
     
-    value_str : character
+    value_str : str
         What value to set it to.
     """
 def tao_set_space_charge_com_cmd(who: str, value_str: str) -> None:
@@ -41590,10 +41590,10 @@ def tao_set_space_charge_com_cmd(who: str, value_str: str) -> None:
     
     Parameters
     ----------
-    who : character
+    who : str
         which space_charge_com variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     """
 def tao_set_symbolic_number_cmd(sym_str: str, num_str: str | None = None, val: typing.SupportsFloat | None = None) -> None:
@@ -41605,10 +41605,10 @@ def tao_set_symbolic_number_cmd(sym_str: str, num_str: str | None = None, val: t
     
     Parameters
     ----------
-    sym_str : character
+    sym_str : str
         Symbol.
     
-    num_str : character, optional
+    num_str : str, optional
         Symbol value expression.
     
     val : float, optional
@@ -41622,19 +41622,19 @@ def tao_set_tune_cmd(branch_str: str, mask_str: str, print_list: bool, qa_str: s
     
     Parameters
     ----------
-    branch_str : character
+    branch_str : str
         List of branches to apply tune set to.
     
-    mask_str : character
+    mask_str : str
         List of quadrupoles to veto.
     
     print_list : bool
         If True, print a list of elements varied and coefficients.
     
-    qa_str : character
+    qa_str : str
         Expression for Qa tune.
     
-    qb_str : character
+    qb_str : str
         Expression for Qb tune.
     
     delta_input : bool
@@ -41648,13 +41648,13 @@ def tao_set_universe_cmd(uni: str, who: str, what: str) -> None:
     
     Parameters
     ----------
-    uni : character
+    uni : str
         which universe; 0 => current viewed universe
     
-    who : character
+    who : str
         "on", "off", "recalculate", "dynamic_aperture_calc", "one_turn_map_calc", or "twiss_calc"
     
-    what : character
+    what : str
         "on" or "off" for who = "dynamic_aperture_calc", "one_turn_map_calc" or "twiss_calc".
     """
 def tao_set_var_cmd(var_str: str, value_str: str) -> None:
@@ -41665,10 +41665,10 @@ def tao_set_var_cmd(var_str: str, value_str: str) -> None:
     
     Parameters
     ----------
-    var_str : character
+    var_str : str
         Which var name to set.
     
-    value_str : character
+    value_str : str
         What value to set it to.
     """
 def tao_set_var_model_value(var: TaoVarStruct, value: typing.SupportsFloat, print_limit_warning: bool | None = None) -> None:
@@ -41698,10 +41698,10 @@ def tao_set_wave_cmd(who: str, value_str: str) -> bool:
     
     Parameters
     ----------
-    who : character
+    who : str
         which wave variable to set
     
-    value_str : character
+    value_str : str
         Value to set to.
     
     Returns
@@ -41717,10 +41717,10 @@ def tao_set_z_tune_cmd(branch_str: str, q_str: str, delta_input: bool) -> None:
     
     Parameters
     ----------
-    branch_str : character
+    branch_str : str
         List of branches to apply tune set to.
     
-    q_str : character
+    q_str : str
         Expression for Qc tune.
     
     delta_input : bool
@@ -41753,7 +41753,7 @@ def tao_show_cmd(what: str) -> None:
     
     Parameters
     ----------
-    what : character
+    what : str
         What to show.
     """
 def tao_show_constraints(iunit: typing.SupportsInt, form: str) -> None:
@@ -41767,7 +41767,7 @@ def tao_show_constraints(iunit: typing.SupportsInt, form: str) -> None:
     iunit : int
         File unit to write to. 0 => print to the terminal.
     
-    form : character
+    form : str
         What to output: 'ALL'   -> All datums and variables. 'TOP10' -> Top datums and variables that contribute
         to the merit function.
     """
@@ -41806,9 +41806,9 @@ def tao_spin_matrices_calc_needed(data_type: str, data_source: str, do_calc: boo
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
     
-    data_source : character
+    data_source : str
     
     do_calc : bool
     """
@@ -41822,7 +41822,7 @@ def tao_split_component(comp_str: str) -> TaoSplitComponent:
     
     Parameters
     ----------
-    comp_str : character
+    comp_str : str
         Components. EG: 'meas - design'
     
     Returns
@@ -41839,9 +41839,9 @@ def tao_srdt_calc_needed(data_type: str, data_source: str, do_srdt: typing.Suppo
     
     Parameters
     ----------
-    data_type : character
+    data_type : str
     
-    data_source : character
+    data_source : str
     
     do_srdt : int
     """
@@ -41851,7 +41851,7 @@ def tao_subin_uni_number(name_in: str, ix_uni: typing.SupportsInt) -> TaoSubinUn
     
     Parameters
     ----------
-    name_in : character
+    name_in : str
         Input name with "#" character
     
     ix_uni : int
@@ -41859,7 +41859,7 @@ def tao_subin_uni_number(name_in: str, ix_uni: typing.SupportsInt) -> TaoSubinUn
     
     Returns
     -------
-    name_out : character
+    name_out : str
         Output name.
     
     ok : bool
@@ -41884,16 +41884,16 @@ def tao_symbol_import_from_lat(lat: LatStruct) -> None:
     ----------
     lat : LatStruct
     """
-def tao_taper_cmd(except: str, uni_names: str) -> None:
+def tao_taper_cmd(except_: str, uni_names: str) -> None:
     """
     Wrapper for Fortran routine tao_taper_cmd
     
     Parameters
     ----------
-    except : character
+    except : str
         List of elements not to vary.
     
-    uni_names : character
+    uni_names : str
         Universes to taper.
     """
 def tao_to_change_number(num_str: str, n_size: typing.SupportsInt, change_number: RealAlloc1D, abs_or_rel: str, err: bool) -> None:
@@ -41902,13 +41902,13 @@ def tao_to_change_number(num_str: str, n_size: typing.SupportsInt, change_number
     
     Parameters
     ----------
-    num_str : character
+    num_str : str
     
     n_size : int
     
     change_number : 1D array of float
     
-    abs_or_rel : character
+    abs_or_rel : str
     
     err : bool
     """
@@ -41945,7 +41945,7 @@ def tao_to_real(expression: str) -> TaoToReal:
     
     Parameters
     ----------
-    expression : character
+    expression : str
         arithmetic expression
     
     Returns
@@ -41990,7 +41990,7 @@ def tao_top_level(command: str | None = None) -> int:
     
     Parameters
     ----------
-    command : character, optional
+    command : str, optional
         Tao command string. If present, getting user input from the terminal is bypassed. This is used when
         interfacing to Python.
     
@@ -42015,11 +42015,11 @@ def tao_tracking_ele_index(ele: EleStruct, datum: TaoDataStruct) -> TaoTrackingE
     
     Returns
     -------
-    ix_branch : int, optional
-        Lattice branch associated with element
-    
     ix_ele : int
         Element index associated with ele.
+    
+    ix_branch : int, optional
+        Lattice branch associated with element
     """
 def tao_turn_on_special_calcs_if_needed_for_plotting() -> None:
     """
@@ -42053,7 +42053,7 @@ def tao_uni_atsign_index(string: str) -> int:
     
     Parameters
     ----------
-    string : character
+    string : str
         String to parse
     
     Returns
@@ -42084,10 +42084,10 @@ def tao_use_data(action: str, data_name: str) -> None:
     
     Parameters
     ----------
-    action : character
+    action : str
         veto, use or restore
     
-    data_name : character
+    data_name : str
         the selected data
     """
 def tao_use_var(action: str, var_name: str) -> None:
@@ -42096,10 +42096,10 @@ def tao_use_var(action: str, var_name: str) -> None:
     
     Parameters
     ----------
-    action : character
+    action : str
         'use', 'veto', or 'restore'
     
-    var_name : character
+    var_name : str
         the selected variable name or all
     """
 def tao_user_is_terminating_optimization() -> bool:
@@ -42122,7 +42122,7 @@ def tao_var1_name(var: TaoVarStruct) -> str:
     
     Returns
     -------
-    var1_name : character
+    var1_name : str
         Appropriate name.
     """
 def tao_var_attrib_name(var: TaoVarStruct) -> str:
@@ -42136,7 +42136,7 @@ def tao_var_attrib_name(var: TaoVarStruct) -> str:
     
     Returns
     -------
-    var_attrib_name : character
+    var_attrib_name : str
         Attribute list.
     """
 def tao_var_check(eles: ElePointerStructAlloc1D, attribute: str, silent: bool) -> None:
@@ -42148,7 +42148,7 @@ def tao_var_check(eles: ElePointerStructAlloc1D, attribute: str, silent: bool) -
     eles : 1D array of ElePointerStruct
         Array of elements which have a changed attribute.
     
-    attribute : character
+    attribute : str
         Name of attribute changed.
     
     silent : bool
@@ -42190,7 +42190,7 @@ def tao_var_write(out_file: str, show_good_opt_only: bool | None = None, tao_for
     
     Parameters
     ----------
-    out_file : character
+    out_file : str
         Name of output file. If blank. Ouput to the terminal.
     
     show_good_opt_only : bool, optional
@@ -42227,10 +42227,10 @@ def tao_wave_cmd(curve_name: str, plot_place: str, err_flag: bool) -> None:
     
     Parameters
     ----------
-    curve_name : character
+    curve_name : str
         Character(*) curve for wave analysis.
     
-    plot_place : character
+    plot_place : str
         Character(*) place on plot page to put the wave plot.
     """
 def tao_wave_fit(curve: TaoCurveStruct, ix1: typing.SupportsInt, n_dat: typing.SupportsInt, coef: RealArray1D, rms: RealArray1D, f1: RealArray1D, f2: RealArray1D | None = None, f3: RealArray1D | None = None, f4: RealArray1D | None = None) -> None:
@@ -42275,7 +42275,7 @@ def tao_write_cmd(what: str) -> None:
     
     Parameters
     ----------
-    what : character
+    what : str
         What to output. See the code for more details.
     """
 def tao_x_axis_cmd(where: str, what: str) -> None:
@@ -42284,10 +42284,10 @@ def tao_x_axis_cmd(where: str, what: str) -> None:
     
     Parameters
     ----------
-    where : character
+    where : str
         Region to axis. Eg: "top"
     
-    what : character
+    what : str
         "s" or "index"
     """
 def tao_x_scale_cmd(where: str, x_min_in: typing.SupportsFloat, x_max_in: typing.SupportsFloat, include_wall: bool | None = None, gang: str | None = None, exact: bool | None = None, turn_autoscale_off: bool | None = None) -> bool:
@@ -42299,7 +42299,7 @@ def tao_x_scale_cmd(where: str, x_min_in: typing.SupportsFloat, x_max_in: typing
     
     Parameters
     ----------
-    where : character
+    where : str
         Region to scale. Eg: "top"
     
     x_min_in : float
@@ -42312,7 +42312,7 @@ def tao_x_scale_cmd(where: str, x_min_in: typing.SupportsFloat, x_max_in: typing
         Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
         include the building wall position will be included in determining the the scale.
     
-    gang : character, optional
+    gang : str, optional
         'gang', 'nogang', ''. Default = ''.
     
     exact : bool, optional
@@ -42365,7 +42365,7 @@ def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_
         Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
         include the building wall position will be included in determining the the scale.
     
-    gang : character, optional
+    gang : str, optional
         'gang', 'nogang', ''. Default = ''.
     
     Returns
@@ -42373,7 +42373,7 @@ def tao_x_scale_plot(plot: TaoPlotStruct, x_min_in: typing.SupportsFloat, x_max_
     have_scaled : bool, optional
         Has a graph been scaled?
     """
-def taper_mag_strengths(lat: LatStruct, ref_lat: LatStruct | None = None, except: str | None = None, err_flag: bool | None = None) -> None:
+def taper_mag_strengths(lat: LatStruct, ref_lat: LatStruct | None = None, except_: str | None = None, err_flag: bool | None = None) -> None:
     """
     Wrapper for Fortran routine taper_mag_strengths
     
@@ -42387,7 +42387,7 @@ def taper_mag_strengths(lat: LatStruct, ref_lat: LatStruct | None = None, except
     ref_lat : LatStruct, optional
         Reference lattice. If not present, lat will be used as the ref.
     
-    except : character, optional
+    except : str, optional
         List of elements not to vary.
     
     err_flag : bool, optional
@@ -42598,23 +42598,23 @@ def test_character_scalar(val_in: str, val_inout: str, val_in_opt: str | None = 
     
     Parameters
     ----------
-    val_in : character
+    val_in : str
     
-    val_inout : character
+    val_inout : str
     
-    val_in_opt : character, optional
+    val_in_opt : str, optional
     
-    val_inout_opt : character, optional
+    val_inout_opt : str, optional
     
     Returns
     -------
-    val_inout : character
+    val_inout : str
     
-    val_out : character
+    val_out : str
     
     opt_status : 1D array of int (shape: 2)
     
-    val_inout_opt : character, optional
+    val_inout_opt : str, optional
     """
 def test_complex_array(arr_in: ComplexArray1D, arr_inout: ComplexArray1D, arr_in_opt: ComplexArray1D | None = None, arr_inout_opt: ComplexArray1D | None = None) -> TestComplexArray:
     """
@@ -43095,7 +43095,7 @@ def to_photon_angle_coords(orb_in: CoordStruct, ele: EleStruct) -> CoordStruct:
     orb_out : CoordStruct
         Transformed coordinates.
     """
-def to_str(num: typing.SupportsFloat, max_signif: typing.SupportsInt | None = None, string: str) -> None:
+def to_str(num: typing.SupportsFloat, string: str, max_signif: typing.SupportsInt | None = None) -> None:
     """
     no longer exists
     subroutine test_tune_tracker_lock (tracker_locked)
@@ -45064,7 +45064,7 @@ def transfer_fixer_params(fixer: EleStruct, to_stored: bool, orbit: CoordStruct 
     orbit : CoordStruct, optional
         Used for 'phase_space' transfers.
     
-    who : character, optional
+    who : str, optional
         Who to set. Possibilities are: Groups: 'all', ' ' (default and same as 'all') Note: This excludes all
         'start' sets., 'twiss', 'a_twiss', 'b_twiss', 'cmat', 'x_dispersion', 'y_dispersion', 'dispersion',
         'chromatic', 'orbit', 'phase_space', 'spin', 'x_plane', 'y_plane', 'z_plane', 'start', 'start_spin',
@@ -45337,6 +45337,9 @@ def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFlo
     
     Returns
     -------
+    f_val : complex
+        Value of f.
+    
     df_dx : complex, optional
         Normalized first derivative: True df/dx = df_dx * dx
     
@@ -45345,9 +45348,6 @@ def tricubic_cmplx_eval(x_norm: typing.SupportsFloat, y_norm: typing.SupportsFlo
     
     df_dz : complex, optional
         Normalized first derivative: True df/dz = df_dz * dz
-    
-    f_val : complex
-        Value of f.
     """
 def truncate_complex_taylor_to_order(complex_taylor_in: ComplexTaylorStructArray1D, order: typing.SupportsInt, complex_taylor_out: ComplexTaylorStructArray1D) -> None:
     """
@@ -45900,7 +45900,7 @@ def type_this_file(filename: str) -> None:
     
     Parameters
     ----------
-    filename : character
+    filename : str
     """
 def upcase_string(string: str) -> None:
     """
@@ -45908,7 +45908,7 @@ def upcase_string(string: str) -> None:
     
     Parameters
     ----------
-    string : character
+    string : str
     """
 def update_ele_from_fibre(ele: EleStruct) -> None:
     """
@@ -46054,7 +46054,7 @@ def value_of_attribute(ele: EleStruct, attrib_name: str, err_print_flag: bool | 
     ele : EleStruct
         After this routine finishes Ptr_attrib will point to a variable within this element.
     
-    attrib_name : character
+    attrib_name : str
         Name of attribute. Must be uppercase. For example: "HKICK".
     
     err_print_flag : bool, optional
@@ -46065,11 +46065,11 @@ def value_of_attribute(ele: EleStruct, attrib_name: str, err_print_flag: bool | 
     
     Returns
     -------
-    err_flag : bool, optional
-        Set True if attribtute not found. False otherwise.
-    
     value : float
         Value of the attribute. Set to err_value if not found.
+    
+    err_flag : bool, optional
+        Set True if attribtute not found. False otherwise.
     """
 def value_to_line(line: str, value: typing.SupportsFloat, str: str, typ: str, ignore_if_zero: bool | None = None, use_comma: bool | None = None) -> None:
     """
@@ -46077,13 +46077,13 @@ def value_to_line(line: str, value: typing.SupportsFloat, str: str, typ: str, ig
     
     Parameters
     ----------
-    line : character
+    line : str
     
     value : float
     
-    str : character
+    str : str
     
-    typ : character
+    typ : str
     
     ignore_if_zero : bool, optional
     
@@ -46138,7 +46138,7 @@ def verify_valid_name(name: str, ix_name: typing.SupportsInt, pure_name: bool | 
     
     Parameters
     ----------
-    name : character
+    name : str
         Name(1:ix_name) is the string to check.
     
     ix_name : int
@@ -46302,6 +46302,9 @@ def wall3d_d_radius(position: RealArray1D, ele: EleStruct, ix_wall: typing.Suppo
     
     Returns
     -------
+    d_radius : float
+        r_particle - r_wall
+    
     perp : 1D array of float (shape: 3), optional
         Perpendicular normal to the wall.
     
@@ -46319,9 +46322,6 @@ def wall3d_d_radius(position: RealArray1D, ele: EleStruct, ix_wall: typing.Suppo
     
     err_flag : bool, optional
         Set True if error. (EG noassociated .wall3d), false otherwise.
-    
-    d_radius : float
-        r_particle - r_wall
     """
 def wall3d_initializer(wall3d: Wall3DStruct) -> bool:
     """
@@ -46392,7 +46392,7 @@ def word_len(wording: str, wlen: typing.SupportsInt) -> None:
     
     Parameters
     ----------
-    wording : character
+    wording : str
     
     wlen : int
     """
@@ -46402,19 +46402,19 @@ def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsI
     
     Parameters
     ----------
-    in_str : character
+    in_str : str
     
-    delim_list : character
+    delim_list : str
     
-    word : character
+    word : str
     
     ix_word : int
     
-    delim : character
+    delim : str
     
     delim_found : bool
     
-    out_str : character
+    out_str : str
     
     ignore_interior : bool, optional
     """
@@ -46424,7 +46424,7 @@ def word_to_value(word: str, lat: LatStruct, value: typing.SupportsFloat, err_fl
     
     Parameters
     ----------
-    word : character
+    word : str
     
     lat : LatStruct
     
@@ -46442,7 +46442,7 @@ def write_ascii_beam_file(file_name: str, beam: BeamStruct, new_file: bool | Non
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         Name of file.
     
     beam : BeamStruct
@@ -46521,7 +46521,7 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typin
     
     Parameters
     ----------
-    base_filename : character
+    base_filename : str
         Base filename. Files will be written as: base_filename.ex, .ey, .ez, .bx, .by, .bz If set to '', no files
         will be written
     
@@ -46550,7 +46550,7 @@ def write_beam_file(file_name: str, beam: BeamStruct, new_file: bool | None = No
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         Name of file.
     
     beam : BeamStruct
@@ -46574,7 +46574,7 @@ def write_beam_floor_positions(file_name: str, beam: BeamStruct, ele: EleStruct,
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         Name of file.
     
     beam : BeamStruct
@@ -46595,7 +46595,7 @@ def write_binary_cartesian_map(file_name: str, ele: EleStruct, cart_map: Cartesi
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         File to create.
     
     ele : EleStruct
@@ -46618,7 +46618,7 @@ def write_binary_cylindrical_map(file_name: str, ele: EleStruct, cl_map: Cylindr
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         File to create.
     
     ele : EleStruct
@@ -46641,7 +46641,7 @@ def write_binary_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldSt
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
         File to create.
     
     ele : EleStruct
@@ -46673,7 +46673,7 @@ def write_blender_lat_layout(file_name: str, lat: LatStruct) -> None:
     
     Parameters
     ----------
-    file_name : character
+    file_name : str
     
     lat : LatStruct
     """
@@ -46683,7 +46683,7 @@ def write_bmad_lattice_file(bmad_file: str, lat: LatStruct, output_form: typing.
     
     Parameters
     ----------
-    bmad_file : character
+    bmad_file : str
         Name of the output lattice file.
     
     lat : LatStruct
@@ -46800,7 +46800,7 @@ def write_gpt_field_grid_file_3d(base_filename: str, ele: EleStruct, dz: typing.
     
     Parameters
     ----------
-    base_filename : character
+    base_filename : str
         Base filename. Files will be written as: base_filename_E_ASCII.gpt, _H_ASCII.gpt If set to '', no files
         will be written
     
@@ -46834,7 +46834,7 @@ def write_lat_line(line: str, iu: typing.SupportsInt, end_is_neigh: bool, do_spl
     
     Parameters
     ----------
-    line : character
+    line : str
         String of text.
         This parameter is an input/output and is modified in-place.
         As an output, line: part of the string not written.
@@ -46854,7 +46854,7 @@ def write_lat_line(line: str, iu: typing.SupportsInt, end_is_neigh: bool, do_spl
     
     Returns
     -------
-    line : character
+    line : str
         String of text.
         This parameter is an input/output and is modified in-place.
         As an output, line: part of the string not written.
@@ -46865,7 +46865,7 @@ def write_lattice_in_elegant_format(out_file_name: str, lat: LatStruct, ref_orbi
     
     Parameters
     ----------
-    out_file_name : character
+    out_file_name : str
         Name of the mad output lattice file.
     
     lat : LatStruct
@@ -46903,10 +46903,10 @@ def write_lattice_in_foreign_format(out_type: str, out_file_name: str, lat: LatS
     
     Parameters
     ----------
-    out_type : character
+    out_type : str
         Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', or 'OPAL-T', 'SCIBMAD'.
     
-    out_file_name : character
+    out_file_name : str
         Name of the mad output lattice file.
     
     lat : LatStruct
@@ -46944,10 +46944,10 @@ def write_lattice_in_mad_format(out_type: str, out_file_name: str, lat: LatStruc
     
     Parameters
     ----------
-    out_type : character
+    out_type : str
         Either 'MAD-8', or 'MAD-X'
     
-    out_file_name : character
+    out_file_name : str
         Name of the mad output lattice file.
     
     lat : LatStruct
@@ -46985,7 +46985,7 @@ def write_lattice_in_sad_format(out_file_name: str, lat: LatStruct, include_aper
     
     Parameters
     ----------
-    out_file_name : character
+    out_file_name : str
     
     lat : LatStruct
     
@@ -47006,7 +47006,7 @@ def write_lattice_in_scibmad(lat: LatStruct) -> WriteLatticeInScibmad:
     
     Returns
     -------
-    scibmad_file : character
+    scibmad_file : str
         SciBmad lattice file name.
     
     err_flag : bool, optional
@@ -47018,7 +47018,7 @@ def write_line_element(line: str, iu: typing.SupportsInt, ele: EleStruct, lat: L
     
     Parameters
     ----------
-    line : character
+    line : str
     
     iu : int
     
@@ -47103,13 +47103,13 @@ def write_time_particle_distribution(time_file_unit: typing.SupportsInt, bunch: 
     ele : EleStruct
         Element being tracked through.
     
-    style : character, optional
+    style : str, optional
         Style of output file: 'BMAD' (default), 'OPAL', 'ASTRA', 'GPT'
     
     branch : BranchStruct, optional
         Required for 'ASTRA' style
     
-    format : character, optional
+    format : str, optional
         format for numerical output. default: 'es15.7'
     
     Returns
@@ -47157,7 +47157,7 @@ def xraylib_nist_compound(name: str) -> int:
     
     Parameters
     ----------
-    name : character
+    name : str
         Name of compound
     
     Returns
@@ -47206,11 +47206,11 @@ def z_at_surface(ele: EleStruct, x: typing.SupportsFloat, y: typing.SupportsFloa
     err_flag : bool
         Set True if cannot compute z due to, say, point being outside of ellipseoid or grid bounds.
     
-    dz_dxy : 1D array of float (shape: 2), optional
-        Surface slope at (x, y).
-    
     z : float
         z coordinate.
+    
+    dz_dxy : 1D array of float (shape: 2), optional
+        Surface slope at (x, y).
     """
 def zero_ele_kicks(ele: EleStruct) -> None:
     """

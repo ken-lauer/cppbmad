@@ -114,7 +114,7 @@ err_flag : bool
       &Bmad::taper_mag_strengths,
       py::arg("lat"),
       py::arg("ref_lat") = py::none(),
-      py::arg("except") = py::none(),
+      py::arg("except_") = py::none(),
       py::arg("err_flag") = py::none(),
       R"""(Wrapper for Fortran routine taper_mag_strengths
 
@@ -128,7 +128,7 @@ lat : LatStruct
 ref_lat : LatStruct, optional
     Reference lattice. If not present, lat will be used as the ref.
 
-except : character, optional
+except : str, optional
     List of elements not to vary.
 
 err_flag : bool, optional
@@ -3331,7 +3331,7 @@ to_stored : bool
 orbit : CoordStruct, optional
     Used for 'phase_space' transfers.
 
-who : character, optional
+who : str, optional
     Who to set. Possibilities are: Groups: 'all', ' ' (default and same as 'all') Note: This excludes all
     'start' sets., 'twiss', 'a_twiss', 'b_twiss', 'cmat', 'x_dispersion', 'y_dispersion', 'dispersion',
     'chromatic', 'orbit', 'phase_space', 'spin', 'x_plane', 'y_plane', 'z_plane', 'start', 'start_spin',

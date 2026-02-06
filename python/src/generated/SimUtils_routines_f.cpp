@@ -73,11 +73,11 @@ isign : int
 
 Parameters
 ----------
-in_file : character
+in_file : str
 
-out_file : character
+out_file : str
 
-directory : character
+directory : str
 
 add_switch : bool
 )"""
@@ -92,11 +92,11 @@ add_switch : bool
 
 Parameters
 ----------
-string : character
+string : str
 
-dflt_file_name : character
+dflt_file_name : str
 
-file_name : character
+file_name : str
 )"""
   );
   m.def(
@@ -111,11 +111,11 @@ file_name : character
 
 Parameters
 ----------
-string : character
+string : str
 
-dflt_file_name : character
+dflt_file_name : str
 
-file_name : character
+file_name : str
 
 file_unit : int
 
@@ -133,11 +133,11 @@ readonly : bool
 
 Parameters
 ----------
-in_file_name : character
+in_file_name : str
 
-out_file_name : character
+out_file_name : str
 
-suffix : character
+suffix : str
 
 add_switch : bool
 )"""

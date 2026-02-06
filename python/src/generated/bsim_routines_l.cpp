@@ -16,7 +16,7 @@ Parameters
 ----------
 logic : bool
 
-string : character
+string : str
 )"""
   );
 }

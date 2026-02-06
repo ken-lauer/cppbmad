@@ -14,9 +14,9 @@ void init_SimUtils_routines_m(py::module &m) {
 
 Parameters
 ----------
-comment_in : character
+comment_in : str
 
-comment_out : character
+comment_out : str
 )"""
   );
   m.def(
@@ -53,9 +53,9 @@ mass : float
 
 Parameters
 ----------
-str : character
+str : str
 
-pat : character
+pat : str
 
 is_match : bool
 )"""
@@ -70,7 +70,7 @@ is_match : bool
 
 Parameters
 ----------
-string : character
+string : str
 
 is_match : bool
 )"""

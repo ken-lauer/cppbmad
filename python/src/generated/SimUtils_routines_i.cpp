@@ -58,13 +58,13 @@ i_bes : complex
 
 Parameters
 ----------
-file_name : character
+file_name : str
 
 digits : int
 
 number : int
 
-cnumber : character
+cnumber : str
 )"""
   );
   m.def(
@@ -77,9 +77,9 @@ cnumber : character
 
 Parameters
 ----------
-string1 : character
+string1 : str
 
-string2 : character
+string2 : str
 
 indx : int
 )"""
@@ -123,15 +123,15 @@ der : int
       "int_str",
       &SimUtils::int_str,
       py::arg("int_"),
-      py::arg("width") = py::none(),
       py::arg("str"),
+      py::arg("width") = py::none(),
       R"""(Wrapper for Fortran routine int_str
 
 Parameters
 ----------
-width : int, optional
+str : str
 
-str : character
+width : int, optional
 )"""
   );
   m.def(
@@ -139,9 +139,9 @@ str : character
       &SimUtils::interpolated_fft,
       py::arg("cdata"),
       py::arg("calc_ok"),
+      py::arg("this_fft"),
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
-      py::arg("this_fft"),
       R"""(Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
 
 Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
@@ -154,9 +154,9 @@ available.
       &SimUtils::interpolated_fft_gsl,
       py::arg("cdata"),
       py::arg("calc_ok"),
+      py::arg("this_fft"),
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
-      py::arg("this_fft"),
       R"""(function interpolated_fft_gsl
 
 Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
@@ -168,8 +168,8 @@ available.
       "is_alphabetic",
       &SimUtils::is_alphabetic,
       py::arg("string"),
-      py::arg("valid_chars") = py::none(),
       py::arg("is_alpha"),
+      py::arg("valid_chars") = py::none(),
       R"""(no longer exists
 function inverse_prob (val) result (prob)
   import
@@ -251,58 +251,58 @@ is_increasing : bool
       "is_integer",
       &SimUtils::is_integer,
       py::arg("string"),
+      py::arg("valid"),
       py::arg("int_") = py::none(),
       py::arg("delims") = py::none(),
       py::arg("ix_word") = py::none(),
-      py::arg("valid"),
       R"""(Wrapper for Fortran routine is_integer
 
 Parameters
 ----------
-string : character
-
-delims : character, optional
-
-ix_word : int, optional
+string : str
 
 valid : bool
+
+delims : str, optional
+
+ix_word : int, optional
 )"""
   );
   m.def(
       "is_logical",
       &SimUtils::is_logical,
       py::arg("string"),
-      py::arg("ignore") = py::none(),
       py::arg("valid"),
+      py::arg("ignore") = py::none(),
       R"""(Wrapper for Fortran routine is_logical
 
 Parameters
 ----------
-string : character
-
-ignore : bool, optional
+string : str
 
 valid : bool
+
+ignore : bool, optional
 )"""
   );
   m.def(
       "is_real",
       &SimUtils::is_real,
       py::arg("string"),
+      py::arg("valid"),
       py::arg("ignore") = py::none(),
       py::arg("real_num") = py::none(),
-      py::arg("valid"),
       R"""(Wrapper for Fortran routine is_real
 
 Parameters
 ----------
-string : character
+string : str
+
+valid : bool
 
 ignore : bool, optional
 
 real_num : float, optional
-
-valid : bool
 )"""
   );
   m.def(

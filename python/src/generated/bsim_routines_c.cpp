@@ -27,7 +27,7 @@ fb : float
 
 Parameters
 ----------
-file_name : character
+file_name : str
 
 Returns
 -------

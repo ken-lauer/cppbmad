@@ -114,7 +114,7 @@ Parameters
 ele : EleStruct
     Element containing the attribute
 
-attrib_name : character
+attrib_name : str
     Name of the field attribute. Assumed upper case.
 
 Returns
@@ -245,7 +245,7 @@ fwhm : float
 
 Parameters
 ----------
-file_name : character
+file_name : str
     File name associated with field to match to.
 
 ele : EleStruct
@@ -259,12 +259,12 @@ ignore_slaves : bool, optional
 
 Returns
 -------
-match_ele : EleStruct, optional
-    Pointer to element with matched field. Nullified if no match found.
-
 ix_field : int
     index of field. For example: matching field => match_ele.cartesian_map(ix_field) Set to -1 if no match
     found.
+
+match_ele : EleStruct, optional
+    Pointer to element with matched field. Nullified if no match found.
 )"""
   );
   m.def(
@@ -445,19 +445,19 @@ Exception: If the use_line argument is present and not blank, the suffix will be
 
 Parameters
 ----------
-lat_file : character
+lat_file : str
     Input lattice file name.
 
-use_line : character, optional
+use_line : str, optional
     Line used for lattice expansion. If not present or blank, the line used is the one that was specified in
     the lattice file.
 
 Returns
 -------
-digested_file : character
+digested_file : str
     Name of the digested file.
 
-full_lat_file : character, optional
+full_lat_file : str, optional
     Input lattice file name with full directory. Can be used for error messages.
 )"""
   );

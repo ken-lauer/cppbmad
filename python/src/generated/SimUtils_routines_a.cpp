@@ -91,8 +91,8 @@ The signal data is truncated to an odd length, and the phase is relative to the 
       "apfft_corr",
       &SimUtils::apfft_corr,
       py::arg("rdata_in"),
-      py::arg("bounds") = py::none(),
       py::arg("window"),
+      py::arg("bounds") = py::none(),
       py::arg("diag") = py::none(),
       R"""(subroutine apfft_corr(rdata_in, bounds, window, phase, amp, freq, diag)
 
@@ -107,11 +107,11 @@ Parameters
 rdata_in : 1D array of float
     signal data.
 
+window : str
+    'rec' or 'han' for rectangular or Hann window.
+
 bounds : 1D array of float (shape: 2), optional
     range within which to search for peak.
-
-window : character
-    'rec' or 'han' for rectangular or Hann window.
 
 diag : int, optional
     causes low-level routine apfft_ext to produce a fort.X file where X=9000+fid containing diag information.
@@ -179,7 +179,7 @@ Parameters
 ----------
 int_arr : 1D array of int
 
-err_str : character
+err_str : str
 
 ival : int
 )"""

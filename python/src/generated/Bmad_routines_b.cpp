@@ -167,11 +167,11 @@ modes : NormalModesStruct, optional
 
 Returns
 -------
-err_flag : bool, optional
-    Set true if there is an error. False otherwise.
-
 beam_init_set : BeamInitStruct
     See above.
+
+err_flag : bool, optional
+    Set true if there is an error. False otherwise.
 )"""
   );
   py::class_<Bmad::BeamTilts, std::unique_ptr<Bmad::BeamTilts>>(
@@ -637,11 +637,11 @@ ref_tilt : float, optional
 
 Returns
 -------
-w_mat : 2D array of float (shape: 3,3), optional
-    W matrix used in the transformation
-
 position2 : FloorPositionStruct
     particle coordinates relative to the final frame.
+
+w_mat : 2D array of float (shape: 3,3), optional
+    W matrix used in the transformation
 )"""
   );
   m.def(
@@ -765,14 +765,14 @@ sigma_z : float
 
 Parameters
 ----------
-lat_file : character
+lat_file : str
     Name of the input file.
 
 make_mats6 : bool, optional
     Compute the 6x6 transport matrices for the Elements? Default is True. Do not set False unless you know
     what you are doing.
 
-use_line : character, optional
+use_line : str, optional
     If present and not blank, override the use statement in the lattice file and use use_line instead.
 
 Returns
@@ -806,7 +806,7 @@ parse_lat : LatStruct, optional
 
 Parameters
 ----------
-lat_file : character
+lat_file : str
     Input file name.
 
 lat : LatStruct
@@ -875,7 +875,7 @@ branch : BranchStruct
 
 Returns
 -------
-name : character
+name : str
     Encoded name
 )"""
   );

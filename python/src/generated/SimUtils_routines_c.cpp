@@ -16,7 +16,7 @@ void init_SimUtils_routines_c(py::module &m) {
 
 Parameters
 ----------
-file_name : character
+file_name : str
 
 num_in : int
 
@@ -78,7 +78,7 @@ i_arg : int
 
 Returns
 -------
-arg : character
+arg : str
     i'th command line argument. If i_arg > number_of_args then arg is a blank string.
 )"""
   );
@@ -103,7 +103,7 @@ Use this with cesr_getarg.
 
 Parameters
 ----------
-file_name : character
+file_name : str
 
 change : int
 )"""

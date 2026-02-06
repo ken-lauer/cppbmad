@@ -536,7 +536,7 @@ subroutine fortran_absolute_time_tracking (ele, is_abs_time) bind(c)
   call c_f_pointer(is_abs_time, f_is_abs_time_ptr)
   f_is_abs_time_ptr = f_is_abs_time
 end subroutine
-subroutine fortran_ac_kicker_amp (ele, orbit, true_time, ac_amp) bind(c)
+subroutine fortran_ac_kicker_amp (ele, orbit, ac_amp, true_time) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct
@@ -1160,7 +1160,7 @@ subroutine fortran_apply_rampers_to_slave (slave, err_flag) bind(c)
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
-subroutine fortran_array_re_str (arr, parens_in, str_out) bind(c)
+subroutine fortran_array_re_str (arr, str_out, parens_in) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1279,8 +1279,8 @@ subroutine fortran_attribute_bookkeeper (ele, force_bookkeeping) bind(c)
   call attribute_bookkeeper(f_ele, f_force_bookkeeping_native_ptr)
 
 end subroutine
-subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, except_overlay, &
-    dependent_attribs_free, why_not_free, free) bind(c)
+subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, free, err_print_flag, &
+    except_overlay, dependent_attribs_free, why_not_free) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -1364,8 +1364,8 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   call c_f_pointer(free, f_free_ptr)
   f_free_ptr = f_free
 end subroutine
-subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_overlay, &
-    dependent_attribs_free, why_not_free, free) bind(c)
+subroutine fortran_attribute_free2 (ele, attrib_name, free, err_print_flag, except_overlay, &
+    dependent_attribs_free, why_not_free) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -1445,8 +1445,8 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   call c_f_pointer(free, f_free_ptr)
   f_free_ptr = f_free
 end subroutine
-subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag, &
-    except_overlay, dependent_attribs_free, why_not_free, free) bind(c)
+subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, free, err_print_flag, &
+    except_overlay, dependent_attribs_free, why_not_free) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -1535,8 +1535,8 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
   call c_f_pointer(free, f_free_ptr)
   f_free_ptr = f_free
 end subroutine
-subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print_error, &
-    attrib_index) bind(c)
+subroutine fortran_attribute_index1 (ele, name, attrib_index, full_name, can_abbreviate, &
+    print_error) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -1608,8 +1608,8 @@ subroutine fortran_attribute_index1 (ele, name, full_name, can_abbreviate, print
   call c_f_pointer(attrib_index, f_attrib_index_ptr)
   f_attrib_index_ptr = f_attrib_index
 end subroutine
-subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print_error, &
-    attrib_index) bind(c)
+subroutine fortran_attribute_index2 (key, name, attrib_index, full_name, can_abbreviate, &
+    print_error) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1679,7 +1679,7 @@ subroutine fortran_attribute_index2 (key, name, full_name, can_abbreviate, print
   call c_f_pointer(attrib_index, f_attrib_index_ptr)
   f_attrib_index_ptr = f_attrib_index
 end subroutine
-subroutine fortran_attribute_name1 (key, ix_att, show_private, attrib_name) bind(c)
+subroutine fortran_attribute_name1 (key, ix_att, attrib_name, show_private) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1716,7 +1716,7 @@ subroutine fortran_attribute_name1 (key, ix_att, show_private, attrib_name) bind
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1])
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
 end subroutine
-subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind(c)
+subroutine fortran_attribute_name2 (ele, ix_att, attrib_name, show_private) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -1755,7 +1755,7 @@ subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1])
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
 end subroutine
-subroutine fortran_attribute_type (attrib_name, ele, attrib_type) bind(c)
+subroutine fortran_attribute_type (attrib_name, attrib_type, ele) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -1783,7 +1783,7 @@ subroutine fortran_attribute_type (attrib_name, ele, attrib_type) bind(c)
   call c_f_pointer(attrib_type, f_attrib_type_ptr)
   f_attrib_type_ptr = f_attrib_type
 end subroutine
-subroutine fortran_attribute_units (attrib_name, unrecognized_units, attrib_units) bind(c)
+subroutine fortran_attribute_units (attrib_name, attrib_units, unrecognized_units) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2088,7 +2088,7 @@ subroutine fortran_beam_equal_beam (beam1, beam2) bind(c)
   call beam_equal_beam(f_beam1, f_beam2)
 
 end subroutine
-subroutine fortran_beam_init_setup (beam_init_in, ele, species, modes, err_flag, beam_init_set) &
+subroutine fortran_beam_init_setup (beam_init_in, ele, species, beam_init_set, modes, err_flag) &
     bind(c)
 
   use array_desc_mod
@@ -2377,7 +2377,7 @@ subroutine fortran_bend_length_has_been_set (ele, is_set) bind(c)
   call c_f_pointer(is_set, f_is_set_ptr)
   f_is_set_ptr = f_is_set
 end subroutine
-subroutine fortran_bend_photon_e_rel_init (r_in, E_rel) bind(c)
+subroutine fortran_bend_photon_e_rel_init (E_rel, r_in) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2586,7 +2586,7 @@ subroutine fortran_bend_photon_polarization_init (g_bend_x, g_bend_y, E_rel, gam
   ! out: f_orbit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_bend_photon_vert_angle_init (E_rel, gamma, r_in, invert, phi) bind(c)
+subroutine fortran_bend_photon_vert_angle_init (E_rel, gamma, phi, r_in, invert) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2632,7 +2632,7 @@ subroutine fortran_bend_photon_vert_angle_init (E_rel, gamma, r_in, invert, phi)
   call c_f_pointer(phi, f_phi_ptr)
   f_phi_ptr = f_phi
 end subroutine
-subroutine fortran_bend_shift (position1, g, delta_s, w_mat, ref_tilt, position2) bind(c)
+subroutine fortran_bend_shift (position1, g, delta_s, position2, w_mat, ref_tilt) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: floor_position_struct
@@ -3681,7 +3681,7 @@ subroutine fortran_check_controller_controls (ele_key, contrl, name, err) bind(c
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
 end subroutine
-subroutine fortran_check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap) &
+subroutine fortran_check_for_superimpose_problem (branch, super_ele, err_flag, wrap, ref_ele) &
     bind(c)
 
   use array_desc_mod
@@ -4254,8 +4254,8 @@ subroutine fortran_complex_taylor_coef1 (complex_taylor, exp, coef) bind(c)
   call c_f_pointer(coef, f_coef_ptr)
   f_coef_ptr = f_coef
 end subroutine
-subroutine fortran_complex_taylor_coef2 (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9, &
-    coef) bind(c)
+subroutine fortran_complex_taylor_coef2 (complex_taylor, coef, i1, i2, i3, i4, i5, i6, i7, i8, &
+    i9) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: complex_taylor_struct
@@ -5287,7 +5287,7 @@ subroutine fortran_coord_equal_coord (coord1, coord2) bind(c)
   ! out: f_coord1 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_coord_state_name (coord_state, one_word, state_str) bind(c)
+subroutine fortran_coord_state_name (coord_state, state_str, one_word) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5320,8 +5320,8 @@ subroutine fortran_coord_state_name (coord_state, one_word, state_str) bind(c)
   call c_f_pointer(state_str, f_state_str_ptr, [len_trim(f_state_str) + 1])
   call to_c_str(f_state_str, f_state_str_ptr)
 end subroutine
-subroutine fortran_coords_body_to_local (body_position, ele, w_mat, calculate_angles, &
-    local_position) bind(c)
+subroutine fortran_coords_body_to_local (body_position, ele, local_position, w_mat, &
+    calculate_angles) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct, floor_position_struct
@@ -5375,8 +5375,8 @@ subroutine fortran_coords_body_to_local (body_position, ele, w_mat, calculate_an
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_coords_body_to_rel_exit (body_position, ele, w_mat, calculate_angles, &
-    rel_exit) bind(c)
+subroutine fortran_coords_body_to_rel_exit (body_position, ele, rel_exit, w_mat, &
+    calculate_angles) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct, floor_position_struct
@@ -5477,8 +5477,8 @@ subroutine fortran_coords_curvilinear_to_floor (xys, branch, err_flag, global) b
   ! out: f_global 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status, w_mat, &
-    local_coords) bind(c)
+subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, status, local_coords, ele1, &
+    w_mat) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct, floor_position_struct
@@ -5531,8 +5531,8 @@ subroutine fortran_coords_floor_to_curvilinear (floor_coords, ele0, ele1, status
   ! out: f_local_coords 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_coords_floor_to_local_curvilinear (global_position, ele, status, w_mat, &
-    relative_to, local_position) bind(c)
+subroutine fortran_coords_floor_to_local_curvilinear (global_position, ele, status, &
+    local_position, w_mat, relative_to) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct, floor_position_struct
@@ -5588,8 +5588,8 @@ subroutine fortran_coords_floor_to_local_curvilinear (global_position, ele, stat
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_coords_floor_to_relative (floor0, global_position, calculate_angles, &
-    is_delta_position, local_position) bind(c)
+subroutine fortran_coords_floor_to_relative (floor0, global_position, local_position, &
+    calculate_angles, is_delta_position) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: floor_position_struct
@@ -5644,8 +5644,8 @@ subroutine fortran_coords_floor_to_relative (floor0, global_position, calculate_
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_coords_local_curvilinear_to_body (local_position, ele, w_mat, &
-    calculate_angles, body_position) bind(c)
+subroutine fortran_coords_local_curvilinear_to_body (local_position, ele, body_position, w_mat, &
+    calculate_angles) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct, floor_position_struct
@@ -5699,8 +5699,8 @@ subroutine fortran_coords_local_curvilinear_to_body (local_position, ele, w_mat,
   ! out: f_body_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_body_frame, &
-    w_mat, calculate_angles, relative_to, global_position) bind(c)
+subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, global_position, &
+    in_body_frame, w_mat, calculate_angles, relative_to) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct, floor_position_struct
@@ -5776,7 +5776,7 @@ subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_bo
   ! out: f_global_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_coords_relative_to_floor (floor0, dr, theta, phi, psi, floor1) bind(c)
+subroutine fortran_coords_relative_to_floor (floor0, dr, floor1, theta, phi, psi) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: floor_position_struct
@@ -6839,7 +6839,7 @@ subroutine fortran_drift_particle_to_t (p, t, branch) bind(c)
   call drift_particle_to_t(f_p, f_t, f_branch)
 
 end subroutine
-subroutine fortran_dspline_len (s_chord0, s_chord1, spline, dtheta_ref, dlen) bind(c)
+subroutine fortran_dspline_len (s_chord0, s_chord1, spline, dlen, dtheta_ref) bind(c)
 
   use array_desc_mod
   use spline_mod, only: spline_struct
@@ -6985,7 +6985,7 @@ subroutine fortran_dynamic_aperture_scan (aperture_scan, aperture_param, pz_star
       f_print_timing_native_ptr)
 
 end subroutine
-subroutine fortran_e_accel_field (ele, voltage_or_gradient, bmad_standard_tracking, field) &
+subroutine fortran_e_accel_field (ele, voltage_or_gradient, field, bmad_standard_tracking) &
     bind(c)
 
   use array_desc_mod
@@ -7210,7 +7210,7 @@ subroutine fortran_ele_finalizer (ele) bind(c)
   call ele_finalizer(f_ele)
 
 end subroutine
-subroutine fortran_ele_full_name (ele, template_, str) bind(c)
+subroutine fortran_ele_full_name (ele, str, template_) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -7295,7 +7295,7 @@ subroutine fortran_ele_geometry (floor_start, ele, floor_end, len_scale, ignore_
   ! out: f_floor_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_ele_geometry_with_misalignments (ele, len_scale, floor) bind(c)
+subroutine fortran_ele_geometry_with_misalignments (ele, floor, len_scale) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct, floor_position_struct
@@ -7393,7 +7393,7 @@ subroutine fortran_ele_has_nonzero_offset (ele, has_offset) bind(c)
   call c_f_pointer(has_offset, f_has_offset_ptr)
   f_has_offset_ptr = f_has_offset
 end subroutine
-subroutine fortran_ele_is_monitor (ele, print_warning, is_monitor) bind(c)
+subroutine fortran_ele_is_monitor (ele, is_monitor, print_warning) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -7451,7 +7451,7 @@ subroutine fortran_ele_loc (ele, loc) bind(c)
   ! out: f_loc 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_ele_loc_name (ele, show_branch0, parens, str) bind(c)
+subroutine fortran_ele_loc_name (ele, str, show_branch0, parens) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -7666,7 +7666,7 @@ subroutine fortran_ele_rf_step_index (E_ref, s_rel, ele, ix_step) bind(c)
   call c_f_pointer(ix_step, f_ix_step_ptr)
   f_ix_step_ptr = f_ix_step
 end subroutine
-subroutine fortran_ele_to_fibre (ele, ptc_fibre, use_offsets, err_flag, integ_order, steps, &
+subroutine fortran_ele_to_fibre (ele, use_offsets, err_flag, ptc_fibre, integ_order, steps, &
     for_layout, ref_in) bind(c)
 
   use array_desc_mod
@@ -8046,8 +8046,8 @@ subroutine fortran_elec_multipole_field (a, b, n, coord, Ex, Ey, dE, compute_dE)
   ! out: f_compute_dE 0D_NOT_logical
   ! no output conversion for f_compute_dE
 end subroutine
-subroutine fortran_element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, &
-    print_err, ix_ele) bind(c)
+subroutine fortran_element_at_s_branch (branch, s, choose_max, ix_ele, err_flag, s_eff, &
+    position, print_err) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: branch_struct, coord_struct
@@ -8123,8 +8123,8 @@ subroutine fortran_element_at_s_branch (branch, s, choose_max, err_flag, s_eff, 
   call c_f_pointer(ix_ele, f_ix_ele_ptr)
   f_ix_ele_ptr = f_ix_ele
 end subroutine
-subroutine fortran_element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, &
-    print_err, ix_ele) bind(c)
+subroutine fortran_element_at_s_lat (lat, s, choose_max, ix_ele, ix_branch, err_flag, s_eff, &
+    position, print_err) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, lat_struct
@@ -11753,7 +11753,7 @@ subroutine fortran_expect_this (expecting, check_delim, call_check, err_str, ele
   call c_f_pointer(is_ok, f_is_ok_ptr)
   f_is_ok_ptr = f_is_ok
 end subroutine
-subroutine fortran_expression_stack_to_string (stack, polish, str) bind(c)
+subroutine fortran_expression_stack_to_string (stack, str, polish) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: expression_atom_struct
@@ -11791,7 +11791,7 @@ subroutine fortran_expression_stack_to_string (stack, polish, str) bind(c)
   call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
-subroutine fortran_expression_stack_value (stack, err_flag, err_str, var, use_old, value) &
+subroutine fortran_expression_stack_value (stack, err_flag, err_str, value, var, use_old) &
     bind(c)
 
   use array_desc_mod
@@ -11938,7 +11938,7 @@ subroutine fortran_expression_string_to_tree (string, root_tree, err_flag, err_s
   call c_f_pointer(err_str, f_err_str_ptr, [len_trim(f_err_str) + 1])
   call to_c_str(f_err_str, f_err_str_ptr)
 end subroutine
-subroutine fortran_expression_tree_to_string (tree, include_root, n_node, parent, str_out) &
+subroutine fortran_expression_tree_to_string (tree, str_out, include_root, n_node, parent) &
     bind(c)
 
   use array_desc_mod
@@ -11988,7 +11988,7 @@ subroutine fortran_expression_tree_to_string (tree, include_root, n_node, parent
   call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
-subroutine fortran_expression_value (expression, err_flag, err_str, var, use_old, value) &
+subroutine fortran_expression_value (expression, err_flag, value, err_str, var, use_old) &
     bind(c)
 
   use array_desc_mod
@@ -12283,7 +12283,7 @@ subroutine fortran_find_fwhm (bound, args, fwhm) bind(c)
   call c_f_pointer(fwhm, f_fwhm_ptr)
   f_fwhm_ptr = f_fwhm
 end subroutine
-subroutine fortran_find_matching_fieldmap (file_name, ele, fm_type, match_ele, ix_field, &
+subroutine fortran_find_matching_fieldmap (file_name, ele, fm_type, ix_field, match_ele, &
     ignore_slaves) bind(c)
 
   use array_desc_mod
@@ -12900,7 +12900,7 @@ subroutine fortran_get_called_file (delim, call_file, err) bind(c)
   call get_called_file(f_delim, f_call_file, f_err)
 
 end subroutine
-subroutine fortran_get_emit_from_sigma_mat (sigma_mat, normal, Nmat, err_flag) bind(c)
+subroutine fortran_get_emit_from_sigma_mat (sigma_mat, normal, err_flag, Nmat) bind(c)
 
   use array_desc_mod
   implicit none
@@ -14644,8 +14644,8 @@ subroutine fortran_init_photon_from_a_photon_init_ele (ele, param, orbit, random
   ! out: f_orbit 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_init_photon_integ_prob (gamma, g, E_min, E_max, vert_angle_min, &
-    vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon, integ_prob) bind(c)
+subroutine fortran_init_photon_integ_prob (gamma, g, E_min, E_max, integ_prob, vert_angle_min, &
+    vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) bind(c)
 
   use array_desc_mod
   implicit none
@@ -14815,7 +14815,7 @@ subroutine fortran_init_taylor_series (bmad_taylor, n_term, save_old) bind(c)
   call init_taylor_series(f_bmad_taylor, f_n_term, f_save_old_native_ptr)
 
 end subroutine
-subroutine fortran_init_wake (wake, n_sr_long, n_sr_trans, n_sr_z, n_lr_mode, always_allocate) &
+subroutine fortran_init_wake (n_sr_long, n_sr_trans, n_sr_z, n_lr_mode, wake, always_allocate) &
     bind(c)
 
   use array_desc_mod
@@ -15186,7 +15186,7 @@ subroutine fortran_is_attribute (ix_attrib, which, is_attrib) bind(c)
   call c_f_pointer(is_attrib, f_is_attrib_ptr)
   f_is_attrib_ptr = f_is_attrib
 end subroutine
-subroutine fortran_key_name_to_key_index (key_str, abbrev_allowed, key_index) bind(c)
+subroutine fortran_key_name_to_key_index (key_str, key_index, abbrev_allowed) bind(c)
 
   use array_desc_mod
   implicit none
@@ -16002,7 +16002,7 @@ subroutine fortran_lord_edge_aligned (slave, slave_edge, lord, is_aligned) bind(
   call c_f_pointer(is_aligned, f_is_aligned_ptr)
   f_is_aligned_ptr = f_is_aligned
 end subroutine
-subroutine fortran_low_energy_z_correction (orbit, ele, ds, mat6, make_matrix, dz) bind(c)
+subroutine fortran_low_energy_z_correction (orbit, ele, ds, dz, mat6, make_matrix) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct
@@ -18107,7 +18107,7 @@ subroutine fortran_mfft1 (a, b, n, ndim, isn, ierr) bind(c)
   call c_f_pointer(ierr, f_ierr_ptr)
   f_ierr_ptr = f_ierr
 end subroutine
-subroutine fortran_misalign_ptc_fibre (ele, use_offsets, ptc_fibre, for_layout) bind(c)
+subroutine fortran_misalign_ptc_fibre (ele, use_offsets, for_layout, ptc_fibre) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -19896,8 +19896,8 @@ subroutine fortran_orbit_to_floor_phase_space (orbit, ele, floor_phase_space) bi
     f_floor_phase_space_ptr = f_floor_phase_space(:)
   endif
 end subroutine
-subroutine fortran_orbit_to_local_curvilinear (orbit, ele, z_direction, relative_to, &
-    local_position) bind(c)
+subroutine fortran_orbit_to_local_curvilinear (orbit, ele, local_position, z_direction, &
+    relative_to) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct, floor_position_struct
@@ -19944,7 +19944,7 @@ subroutine fortran_orbit_to_local_curvilinear (orbit, ele, z_direction, relative
   ! out: f_local_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_orbit_too_large (orbit, param, check_momentum, is_too_large) bind(c)
+subroutine fortran_orbit_too_large (orbit, is_too_large, param, check_momentum) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, lat_param_struct
@@ -20592,7 +20592,7 @@ subroutine fortran_parse_grid_field (g_field, ele, lat, delim, delim_found, err_
 
 end subroutine
 subroutine fortran_parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, &
-    open_delim, separator, close_delim, default_value, is_ok) bind(c)
+    is_ok, open_delim, separator, close_delim, default_value) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -20695,7 +20695,7 @@ subroutine fortran_parse_integer_list (err_str, lat, int_array, exact_size, deli
   f_is_ok_ptr = f_is_ok
 end subroutine
 subroutine fortran_parse_integer_list2 (err_str, lat, int_array, num_found, delim, delim_found, &
-    num_expected, open_delim, separator, close_delim, default_value, is_ok) bind(c)
+    is_ok, num_expected, open_delim, separator, close_delim, default_value) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -20804,7 +20804,7 @@ subroutine fortran_parse_integer_list2 (err_str, lat, int_array, num_found, deli
   f_is_ok_ptr = f_is_ok
 end subroutine
 subroutine fortran_parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, &
-    open_delim, separator, close_delim, default_value, num_found, is_ok) bind(c)
+    is_ok, open_delim, separator, close_delim, default_value, num_found) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -20919,7 +20919,7 @@ subroutine fortran_parse_real_list (lat, err_str, real_array, exact_size, delim,
   f_is_ok_ptr = f_is_ok
 end subroutine
 subroutine fortran_parse_real_list2 (lat, err_str, real_array, num_found, delim, delim_found, &
-    num_expected, open_brace, separator, close_brace, default_value, single_value, is_ok) &
+    is_ok, num_expected, open_brace, separator, close_brace, default_value, single_value) &
     bind(c)
 
   use array_desc_mod
@@ -21212,8 +21212,8 @@ subroutine fortran_parser_fast_integer_read (int_vec, ele, delim_wanted, err_str
   call c_f_pointer(is_ok, f_is_ok_ptr)
   f_is_ok_ptr = f_is_ok
 end subroutine
-subroutine fortran_parser_fast_real_read (real_vec, ele, end_delims, delim, err_str, &
-    exact_size, n_real, is_ok) bind(c)
+subroutine fortran_parser_fast_real_read (real_vec, ele, end_delims, delim, err_str, is_ok, &
+    exact_size, n_real) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -21672,8 +21672,8 @@ subroutine fortran_parser_transfer_control_struct (con_in, con_out, lord, ix_var
   ! out: f_con_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_particle_in_global_frame (orb, branch, in_time_coordinates, in_body_frame, &
-    w_mat_out, particle) bind(c)
+subroutine fortran_particle_in_global_frame (orb, branch, particle, in_time_coordinates, &
+    in_body_frame, w_mat_out) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: branch_struct, coord_struct
@@ -21761,7 +21761,7 @@ subroutine fortran_particle_is_moving_backwards (orbit, is_moving_backwards) bin
   call c_f_pointer(is_moving_backwards, f_is_moving_backwards_ptr)
   f_is_moving_backwards_ptr = f_is_moving_backwards
 end subroutine
-subroutine fortran_particle_is_moving_forward (orbit, dir, is_moving_forward) bind(c)
+subroutine fortran_particle_is_moving_forward (orbit, is_moving_forward, dir) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct
@@ -21792,8 +21792,8 @@ subroutine fortran_particle_is_moving_forward (orbit, dir, is_moving_forward) bi
   call c_f_pointer(is_moving_forward, f_is_moving_forward_ptr)
   f_is_moving_forward_ptr = f_is_moving_forward
 end subroutine
-subroutine fortran_particle_rf_time (orbit, ele, reference_active_edge, s_rel, time_coords, &
-    rf_freq, abs_time, time) bind(c)
+subroutine fortran_particle_rf_time (orbit, ele, time, reference_active_edge, s_rel, &
+    time_coords, rf_freq, abs_time) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct
@@ -21902,7 +21902,7 @@ subroutine fortran_patch_flips_propagation_direction (x_pitch, y_pitch, is_flip)
   call c_f_pointer(is_flip, f_is_flip_ptr)
   f_is_flip_ptr = f_is_flip
 end subroutine
-subroutine fortran_patch_length (patch, ref_coords, length) bind(c)
+subroutine fortran_patch_length (patch, length, ref_coords) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -22203,8 +22203,8 @@ subroutine fortran_photon_type (ele, e_type) bind(c)
   call c_f_pointer(e_type, f_e_type_ptr)
   f_e_type_ptr = f_e_type
 end subroutine
-subroutine fortran_physical_ele_end (track_end, orbit, ele_orientation, return_stream_end, &
-    physical_end) bind(c)
+subroutine fortran_physical_ele_end (track_end, orbit, ele_orientation, physical_end, &
+    return_stream_end) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct
@@ -22772,8 +22772,8 @@ subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lo
   ! out: f_multi_lord 0D_PTR_type
   multi_lord = c_loc(f_multi_lord)
 end subroutine
-subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow_fork, &
-    next_ele) bind(c)
+subroutine fortran_pointer_to_next_ele (this_ele, next_ele, offset, skip_beginning, &
+    follow_fork) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -23493,7 +23493,7 @@ subroutine fortran_ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max,
       f_crossover, f_crossover_wiggler)
 
 end subroutine
-subroutine fortran_ptc_check_for_lost_particle (state, ptc_fibre, do_reset) bind(c)
+subroutine fortran_ptc_check_for_lost_particle (state, do_reset, ptc_fibre) bind(c)
 
   use array_desc_mod
   use definition, only: fibre
@@ -25363,7 +25363,7 @@ subroutine fortran_rf_coupler_kick (ele, param, particle_at, phase, orbit, mat6,
       f_make_matrix_native_ptr)
 
 end subroutine
-subroutine fortran_rf_is_on (branch, ix_ele1, ix_ele2, is_on) bind(c)
+subroutine fortran_rf_is_on (branch, is_on, ix_ele1, ix_ele2) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: branch_struct
@@ -25403,7 +25403,7 @@ subroutine fortran_rf_is_on (branch, ix_ele1, ix_ele2, is_on) bind(c)
   call c_f_pointer(is_on, f_is_on_ptr)
   f_is_on_ptr = f_is_on
 end subroutine
-subroutine fortran_rf_ref_time_offset (ele, ds, time) bind(c)
+subroutine fortran_rf_ref_time_offset (ele, time, ds) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -25542,8 +25542,8 @@ subroutine fortran_rk_adaptive_time_step (ele, param, orb, t_dir, rf_time, dt_tr
       f_dt_next, f_err_flag, f_extra_field)
 
 end subroutine
-subroutine fortran_rk_time_step1 (ele, param, rf_time, orb, dt, new_orb, r_err, dr_dt, &
-    err_flag, print_err, extra_field) bind(c)
+subroutine fortran_rk_time_step1 (ele, param, rf_time, orb, dt, new_orb, r_err, err_flag, &
+    dr_dt, print_err, extra_field) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct, em_field_struct, lat_param_struct
@@ -27277,7 +27277,7 @@ subroutine fortran_set_status_flags (bookkeeping_state, stat) bind(c)
   ! out: f_bookkeeping_state 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_set_tune (phi_a_set, phi_b_set, dk1, eles, branch, orb, print_err, ok) &
+subroutine fortran_set_tune (phi_a_set, phi_b_set, dk1, eles, branch, orb, ok, print_err) &
     bind(c)
 
   use array_desc_mod
@@ -27530,7 +27530,7 @@ subroutine fortran_sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad) 
   ! out: f_sigma_mat_bmad 2D_NOT_real
   if (c_associated(sigma_mat_bmad%data_ptr)) f_sigma_mat_bmad_ptr = mat2vec(f_sigma_mat_bmad, product(sigma_mat_bmad%dims(1:sigma_mat_bmad%rank)))
 end subroutine
-subroutine fortran_significant_difference (value1, value2, abs_tol, rel_tol, is_different) &
+subroutine fortran_significant_difference (value1, value2, is_different, abs_tol, rel_tol) &
     bind(c)
 
   use array_desc_mod
@@ -27868,7 +27868,7 @@ subroutine fortran_sort_complex_taylor_terms (complex_taylor_in, complex_taylor_
   ! out: f_complex_taylor_sorted 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_spin_dn_dpz_from_mat8 (mat_1turn, dn_dpz_partial, error, dn_dpz) bind(c)
+subroutine fortran_spin_dn_dpz_from_mat8 (mat_1turn, error, dn_dpz, dn_dpz_partial) bind(c)
 
   use array_desc_mod
   implicit none
@@ -27920,7 +27920,7 @@ subroutine fortran_spin_dn_dpz_from_mat8 (mat_1turn, dn_dpz_partial, error, dn_d
   endif
 end subroutine
 subroutine fortran_spin_dn_dpz_from_qmap (orb_mat, q_map, dn_dpz_partial, dn_dpz_partial2, &
-    error, n0, dn_dpz) bind(c)
+    error, dn_dpz, n0) bind(c)
 
   use array_desc_mod
   implicit none
@@ -28155,7 +28155,7 @@ subroutine fortran_spin_mat_to_eigen (orb_mat, spin_map, orb_eval, orb_evec, n0,
   call c_f_pointer(error, f_error_ptr)
   f_error_ptr = f_error
 end subroutine
-subroutine fortran_spin_omega (field, orbit, sign_z_vel, phase_space_coords, omega) bind(c)
+subroutine fortran_spin_omega (field, orbit, sign_z_vel, omega, phase_space_coords) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, em_field_struct
@@ -32532,7 +32532,7 @@ subroutine fortran_track_all (lat, orbit, ix_branch, track_state, err_flag, orbi
   ! out: f_err_flag 0D_NOT_logical
   ! no output conversion for f_err_flag
 end subroutine
-subroutine fortran_track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks) &
+subroutine fortran_track_beam (lat, beam, err, ele1, ele2, centroid, direction, bunch_tracks) &
     bind(c)
 
   use array_desc_mod
@@ -32595,7 +32595,7 @@ subroutine fortran_track_beam (lat, beam, ele1, ele2, err, centroid, direction, 
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
 end subroutine
-subroutine fortran_track_bunch (lat, bunch, ele1, ele2, err, centroid, direction, bunch_track) &
+subroutine fortran_track_bunch (lat, bunch, err, ele1, ele2, centroid, direction, bunch_track) &
     bind(c)
 
   use array_desc_mod
@@ -33256,7 +33256,7 @@ subroutine fortran_transfer_fieldmap (ele_in, ele_out, who) bind(c)
   ! out: f_ele_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_transfer_fixer_params (fixer, to_stored, orbit, who, is_ok) bind(c)
+subroutine fortran_transfer_fixer_params (fixer, to_stored, is_ok, orbit, who) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct
@@ -34936,8 +34936,8 @@ subroutine fortran_valid_tracking_method (ele, species, tracking_method, is_vali
   call c_f_pointer(is_valid, f_is_valid_ptr)
   f_is_valid_ptr = f_is_valid
 end subroutine
-subroutine fortran_value_of_attribute (ele, attrib_name, err_flag, err_print_flag, err_value, &
-    value) bind(c)
+subroutine fortran_value_of_attribute (ele, attrib_name, value, err_flag, err_print_flag, &
+    err_value) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -35069,7 +35069,7 @@ subroutine fortran_value_to_line (line, value, str, typ, ignore_if_zero, use_com
       f_use_comma_native_ptr)
 
 end subroutine
-subroutine fortran_vec_to_polar (vec, phase, polar) bind(c)
+subroutine fortran_vec_to_polar (vec, polar, phase) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: spin_polar_struct
@@ -35106,7 +35106,7 @@ subroutine fortran_vec_to_polar (vec, phase, polar) bind(c)
   ! out: f_polar 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_vec_to_spinor (vec, phase, spinor) bind(c)
+subroutine fortran_vec_to_spinor (vec, spinor, phase) bind(c)
 
   use array_desc_mod
   implicit none
@@ -35150,7 +35150,7 @@ subroutine fortran_vec_to_spinor (vec, phase, spinor) bind(c)
     f_spinor_ptr = f_spinor(:)
   endif
 end subroutine
-subroutine fortran_verify_valid_name (name, ix_name, pure_name, include_wild, is_valid) bind(c)
+subroutine fortran_verify_valid_name (name, ix_name, is_valid, pure_name, include_wild) bind(c)
 
   use array_desc_mod
   implicit none
@@ -35204,7 +35204,7 @@ subroutine fortran_verify_valid_name (name, ix_name, pure_name, include_wild, is
   call c_f_pointer(is_valid, f_is_valid_ptr)
   f_is_valid_ptr = f_is_valid
 end subroutine
-subroutine fortran_w_mat_for_bend_angle (angle, ref_tilt, r_vec, w_mat) bind(c)
+subroutine fortran_w_mat_for_bend_angle (angle, ref_tilt, w_mat, r_vec) bind(c)
 
   use array_desc_mod
   implicit none
@@ -35245,7 +35245,7 @@ subroutine fortran_w_mat_for_bend_angle (angle, ref_tilt, r_vec, w_mat) bind(c)
   ! out: f_w_mat 2D_NOT_real
   if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
-subroutine fortran_w_mat_for_tilt (tilt, return_inverse, w_mat) bind(c)
+subroutine fortran_w_mat_for_tilt (tilt, w_mat, return_inverse) bind(c)
 
   use array_desc_mod
   implicit none
@@ -35284,7 +35284,7 @@ subroutine fortran_w_mat_for_tilt (tilt, return_inverse, w_mat) bind(c)
   ! out: f_w_mat 2D_NOT_real
   if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
-subroutine fortran_w_mat_for_x_pitch (x_pitch, return_inverse, w_mat) bind(c)
+subroutine fortran_w_mat_for_x_pitch (x_pitch, w_mat, return_inverse) bind(c)
 
   use array_desc_mod
   implicit none
@@ -35323,7 +35323,7 @@ subroutine fortran_w_mat_for_x_pitch (x_pitch, return_inverse, w_mat) bind(c)
   ! out: f_w_mat 2D_NOT_real
   if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
-subroutine fortran_w_mat_for_y_pitch (y_pitch, return_inverse, w_mat) bind(c)
+subroutine fortran_w_mat_for_y_pitch (y_pitch, w_mat, return_inverse) bind(c)
 
   use array_desc_mod
   implicit none
@@ -35362,8 +35362,8 @@ subroutine fortran_w_mat_for_y_pitch (y_pitch, return_inverse, w_mat) bind(c)
   ! out: f_w_mat 2D_NOT_real
   if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
-subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no_wall_here, &
-    origin, radius_wall, err_flag, d_radius) bind(c)
+subroutine fortran_wall3d_d_radius (position, ele, d_radius, ix_wall, perp, ix_section, &
+    no_wall_here, origin, radius_wall, err_flag) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -37005,7 +37005,7 @@ subroutine fortran_ylafun (x, y, z, res) bind(c)
   call c_f_pointer(res, f_res_ptr)
   f_res_ptr = f_res
 end subroutine
-subroutine fortran_z_at_surface (ele, x, y, err_flag, extend_grid, dz_dxy, z) bind(c)
+subroutine fortran_z_at_surface (ele, x, y, err_flag, z, extend_grid, dz_dxy) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct

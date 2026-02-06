@@ -64,14 +64,14 @@ bi_coef : BicubicCmplxCoefStruct
 
 Returns
 -------
+f_val : complex
+    Value of f.
+
 df_dx : complex, optional
     Normalized first derivative: True df/dx = df_dx * dx
 
 df_dy : complex, optional
     Normalized first derivative: True df/dy = df_dy * dy
-
-f_val : complex
-    Value of f.
 )"""
   );
   m.def(

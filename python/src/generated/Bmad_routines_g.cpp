@@ -223,9 +223,9 @@ sigma : float
 
 Parameters
 ----------
-delim : character
+delim : str
 
-call_file : character
+call_file : str
 
 err : bool
 )"""
@@ -326,10 +326,10 @@ This subroutine is not intended for general use.
 
 Parameters
 ----------
-word : character
+word : str
     Word returned
 
-delim_list : character
+delim_list : str
     List of valid delimiters
 
 upper_case_word : bool, optional
@@ -343,7 +343,7 @@ Returns
 ix_word : int
     length of word argument
 
-delim : character
+delim : str
     Actual delimiter found
 
 delim_found : bool
@@ -455,7 +455,7 @@ Routine to initialize a bunch of particles from a GPT screen file.
 
 Parameters
 ----------
-gpt_file : character
+gpt_file : str
     Name of GPT data file.
 
 ele : EleStruct

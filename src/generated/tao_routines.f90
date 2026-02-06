@@ -1102,7 +1102,7 @@ subroutine fortran_tao_curve_ix_uni (curve, ix_uni) bind(c)
   call c_f_pointer(ix_uni, f_ix_uni_ptr)
   f_ix_uni_ptr = f_ix_uni
 end subroutine
-subroutine fortran_tao_curve_name (curve, use_region, curve_name) bind(c)
+subroutine fortran_tao_curve_name (curve, curve_name, use_region) bind(c)
 
   use array_desc_mod
   use tao_struct, only: tao_curve_struct
@@ -1172,7 +1172,7 @@ subroutine fortran_tao_curve_rms_calc (curve, who, rms, mean) bind(c)
   call c_f_pointer(mean, f_mean_ptr)
   f_mean_ptr = f_mean
 end subroutine
-subroutine fortran_tao_d2_d1_name (d1, show_universe, d2_d1_name) bind(c)
+subroutine fortran_tao_d2_d1_name (d1, d2_d1_name, show_universe) bind(c)
 
   use array_desc_mod
   use tao_struct, only: tao_d1_data_struct
@@ -1262,7 +1262,7 @@ subroutine fortran_tao_data_coupling_init (branch) bind(c)
   call tao_data_coupling_init(f_branch)
 
 end subroutine
-subroutine fortran_tao_data_sanity_check (datum, print_err, default_data_type, uni, is_valid) &
+subroutine fortran_tao_data_sanity_check (datum, print_err, default_data_type, is_valid, uni) &
     bind(c)
 
   use array_desc_mod
@@ -1375,8 +1375,8 @@ subroutine fortran_tao_data_useit_plot_calc (curve, graph, data, check_s_positio
   call c_f_pointer(most_invalid, f_most_invalid_ptr, [len_trim(f_most_invalid) + 1])
   call to_c_str(f_most_invalid, f_most_invalid_ptr)
 end subroutine
-subroutine fortran_tao_datum_has_associated_ele (data_type, branch_geometry, &
-    has_associated_ele) bind(c)
+subroutine fortran_tao_datum_has_associated_ele (data_type, has_associated_ele, &
+    branch_geometry) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1470,7 +1470,7 @@ subroutine fortran_tao_datum_integrate (datum, branch, s_pos, values, valid_valu
   call c_f_pointer(result, f_result_ptr)
   f_result_ptr = f_result
 end subroutine
-subroutine fortran_tao_datum_name (datum, show_universe, datum_name) bind(c)
+subroutine fortran_tao_datum_name (datum, datum_name, show_universe) bind(c)
 
   use array_desc_mod
   use tao_struct, only: tao_data_struct
@@ -1932,7 +1932,7 @@ subroutine fortran_tao_ele_geometry_with_misalignments (datum, ele, valid_value,
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
 end subroutine
-subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_name, y1, y2, &
+subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, label_name, y1, y2, e_shape, &
     ix_shape_min) bind(c)
 
   use array_desc_mod
@@ -2191,7 +2191,7 @@ subroutine fortran_tao_evaluate_datum_at_s (datum, tao_lat, ele, ele_ref, valid_
   f_value_ptr = f_value
 end subroutine
 subroutine fortran_tao_evaluate_element_parameters (err, param_name, values, print_err, &
-    dflt_ele, dflt_source, dflt_component, dflt_uni, eval_point, info) bind(c)
+    dflt_source, dflt_ele, dflt_component, dflt_uni, eval_point, info) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -3000,7 +3000,7 @@ subroutine fortran_tao_expression_hash_substitute (expression_in, expression_out
   call c_f_pointer(expression_out, f_expression_out_ptr, [len_trim(f_expression_out) + 1])
   call to_c_str(f_expression_out, f_expression_out_ptr)
 end subroutine
-subroutine fortran_tao_expression_tree_to_string (tree, include_root, n_node, parent, str_out) &
+subroutine fortran_tao_expression_tree_to_string (tree, str_out, include_root, n_node, parent) &
     bind(c)
 
   use array_desc_mod
@@ -3435,7 +3435,7 @@ subroutine fortran_tao_graph_histogram_setup (plot, graph) bind(c)
   call tao_graph_histogram_setup(f_plot, f_graph)
 
 end subroutine
-subroutine fortran_tao_graph_name (graph, use_region, graph_name) bind(c)
+subroutine fortran_tao_graph_name (graph, graph_name, use_region) bind(c)
 
   use array_desc_mod
   use tao_struct, only: tao_graph_struct
@@ -4458,7 +4458,7 @@ subroutine fortran_tao_mark_lattice_ele (lat) bind(c)
   call tao_mark_lattice_ele(f_lat)
 
 end subroutine
-subroutine fortran_tao_merit (calc_ok, this_merit) bind(c)
+subroutine fortran_tao_merit (this_merit, calc_ok) bind(c)
 
   use array_desc_mod
   implicit none
@@ -4669,8 +4669,8 @@ subroutine fortran_tao_oreint_building_wall_pt (pt_in, pt_out) bind(c)
   ! out: f_pt_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_tao_param_value_at_s (dat_name, ele_to_s, ele_here, orbit, err_flag, &
-    why_invalid, print_err, bad_datum, value) bind(c)
+subroutine fortran_tao_param_value_at_s (dat_name, ele_to_s, ele_here, orbit, err_flag, value, &
+    why_invalid, print_err, bad_datum) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, ele_struct
@@ -6006,7 +6006,7 @@ subroutine fortran_tao_read_cmd (which, unis, file, silent) bind(c)
   call tao_read_cmd(f_which, f_unis, f_file, f_silent)
 
 end subroutine
-subroutine fortran_tao_read_phase_space_index (name, ixc, print_err, ix_ps) bind(c)
+subroutine fortran_tao_read_phase_space_index (name, ixc, ix_ps, print_err) bind(c)
 
   use array_desc_mod
   implicit none
@@ -8362,7 +8362,7 @@ subroutine fortran_tao_top_level (command, errcode) bind(c)
   ! out: f_errcode 0D_NOT_integer
   ! no output conversion for f_errcode
 end subroutine
-subroutine fortran_tao_tracking_ele_index (ele, datum, ix_branch, ix_ele) bind(c)
+subroutine fortran_tao_tracking_ele_index (ele, datum, ix_ele, ix_branch) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -8456,7 +8456,7 @@ subroutine fortran_tao_uni_atsign_index (string, ix_amp) bind(c)
   call c_f_pointer(ix_amp, f_ix_amp_ptr)
   f_ix_amp_ptr = f_ix_amp
 end subroutine
-subroutine fortran_tao_universe_index (i_uni, neg2_to_default, i_this_uni) bind(c)
+subroutine fortran_tao_universe_index (i_uni, i_this_uni, neg2_to_default) bind(c)
 
   use array_desc_mod
   implicit none

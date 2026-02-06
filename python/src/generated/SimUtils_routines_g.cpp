@@ -82,9 +82,9 @@ value : float
 
 Parameters
 ----------
-file_name : character
+file_name : str
 
-cnum_in : character
+cnum_in : str
 
 num_out : int
 
@@ -129,7 +129,7 @@ flush : bool
 
 Returns
 -------
-this_char : character
+this_char : str
     Character returned
 )"""
   );

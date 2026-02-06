@@ -15,7 +15,7 @@ void init_SimUtils_routines_d(py::module &m) {
 
 Parameters
 ----------
-string : character
+string : str
 
 numeric_month : bool, optional
 
@@ -41,7 +41,7 @@ id : int
 
 Parameters
 ----------
-str : character
+str : str
 )"""
   );
   m.def(
@@ -91,17 +91,17 @@ dj_bes : float
       "djb_hash",
       &SimUtils::djb_hash,
       py::arg("str"),
-      py::arg("old_hash") = py::none(),
       py::arg("hash"),
+      py::arg("old_hash") = py::none(),
       R"""(Wrapper for Fortran routine djb_hash
 
 Parameters
 ----------
-str : character
-
-old_hash : int, optional
+str : str
 
 hash : int
+
+old_hash : int, optional
 )"""
   );
   m.def(
@@ -113,9 +113,9 @@ hash : int
 
 Parameters
 ----------
-in_str : character
+in_str : str
 
-hash_str : character
+hash_str : str
 )"""
   );
   m.def(
@@ -126,7 +126,7 @@ hash_str : character
 
 Parameters
 ----------
-string : character
+string : str
 )"""
   );
 }

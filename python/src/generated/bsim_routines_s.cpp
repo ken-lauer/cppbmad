@@ -26,7 +26,7 @@ branch : BranchStruct
 target_tunes : 1D array of float (shape: 3)
     tunes for a, b, z modes (rad/2pi). Must include integer part.
 
-mask : character, optional
+mask : str, optional
 
 use_phase_trombone : bool, optional
     Default False. If true, use a match element in phase trombone mode to adjust the tunes. The match element
@@ -35,7 +35,7 @@ use_phase_trombone : bool, optional
 z_tune_set : bool, optional
     Default True. If false, do not try to set the synch tune.
 
-group_knobs : 1D array of character (shape: 2), optional
+group_knobs : 1D array of str (shape: 2), optional
     If set non-blank, use these group elements for tuning.
 
 print_err : bool, optional

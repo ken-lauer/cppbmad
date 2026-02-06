@@ -49,7 +49,7 @@ ele : EleStruct
 
 lat : LatStruct
 
-delim : character
+delim : str
 
 delim_found : bool
 
@@ -89,7 +89,7 @@ ele : EleStruct
 
 lat : LatStruct
 
-delim : character
+delim : str
 
 delim_found : bool
 
@@ -105,11 +105,11 @@ err_flag : bool
       py::arg("exact_size"),
       py::arg("delim"),
       py::arg("delim_found"),
+      py::arg("is_ok"),
       py::arg("open_delim") = py::none(),
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
-      py::arg("is_ok"),
       R"""(Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
                                       separator, close_delim, default_value) result (is_ok)
 
@@ -164,7 +164,7 @@ Example:   (1, 2, 4, 8)
 
 Parameters
 ----------
-err_str : character
+err_str : str
     Error string to print if there is an error.
 
 lat : LatStruct
@@ -180,7 +180,7 @@ Returns
 num_found : int
     number of elements.
 
-delim : character
+delim : str
     Delimiter found where the parsing of the input line stops.
 
 delim_found : bool
@@ -217,11 +217,11 @@ is_ok : bool
       py::arg("err_str"),
       py::arg("real_array"),
       py::arg("exact_size"),
+      py::arg("is_ok"),
       py::arg("open_delim") = py::none(),
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
-      py::arg("is_ok"),
       R"""(Function parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, open_delim,
                                separator, close_delim, default_value, num_found) result (is_ok)
 
@@ -237,24 +237,24 @@ Parameters
 lat : LatStruct
     Lattice
 
-err_str : character
+err_str : str
     Error string to print if there is an error.
 
 real_array : 1D array of float
 
 exact_size : bool
 
-open_delim : character, optional
+open_delim : str, optional
 
-separator : character, optional
+separator : str, optional
 
-close_delim : character, optional
+close_delim : str, optional
 
 default_value : float, optional
 
 Returns
 -------
-delim : character
+delim : str
 
 delim_found : bool
 
@@ -312,7 +312,7 @@ Parameters
 lat : LatStruct
     lattice
 
-err_str : character
+err_str : str
     Error string to print if there is an error.
 
 real_array : 1D array of float
@@ -325,7 +325,7 @@ Returns
 num_found : int
     number of elements
 
-delim : character
+delim : str
     Delimiter found where the parsing of the input line stops.
 
 delim_found : bool
@@ -345,7 +345,7 @@ is_ok : bool
 
 Parameters
 ----------
-word : character
+word : str
 
 lat : LatStruct
 
@@ -405,12 +405,12 @@ cmplx_vec : 1D array of complex
 ele : EleStruct
     Lattice element associated with the array. Used for error messages.
 
-err_str : character
+err_str : str
     String used when printing error messages identifying where in the lattice file the error is occuring.
 
 Returns
 -------
-delim : character
+delim : str
     Delimitor at end of array. Must be "," or "}"
 
 is_ok : bool
@@ -474,10 +474,10 @@ real_vec : 1D array of float
 ele : EleStruct
     Lattice element associated with the array. Used for error messages.
 
-end_delims : character
+end_delims : str
     List of possible ending delimitors.
 
-err_str : character
+err_str : str
     String used when printing error messages identifying where in the lattice file the error is occuring.
 
 exact_size : bool, optional
@@ -485,14 +485,14 @@ exact_size : bool, optional
 
 Returns
 -------
-delim : character
+delim : str
     Delimitor at end of array.
-
-n_real : int, optional
-    Number of elements found.
 
 is_ok : bool
     True if everything OK. False otherwise.
+
+n_real : int, optional
+    Number of elements found.
 )"""
   );
   m.def(
@@ -528,19 +528,19 @@ Parameters
 ----------
 int_val : int
 
-word : character
+word : str
 
 ix_word : int
 
-delim : character
+delim : str
 
 delim_found : bool
 
 err : bool
 
-str1 : character, optional
+str1 : str, optional
 
-str2 : character, optional
+str2 : str, optional
 )"""
   );
   m.def(
@@ -556,13 +556,13 @@ str2 : character, optional
 
 Parameters
 ----------
-attrib_name : character
+attrib_name : str
 
 this_logic : bool
 
-ele_name : character
+ele_name : str
 
-delim : character
+delim : str
 
 delim_found : bool
 
@@ -635,7 +635,7 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with wake information.
 
-lr_file_name : character
+lr_file_name : str
     Name of long-range wake field file.
 )"""
   );
@@ -656,7 +656,7 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with wake information.
 
-sr_file_name : character
+sr_file_name : str
     Name of short-range wake field file.
 )"""
   );
@@ -901,7 +901,7 @@ energy going through a particular material.
 
 Parameters
 ----------
-material : character
+material : str
     Material name.
 
 Energy : float
@@ -1297,7 +1297,7 @@ which can happen, for example, with overlay elements.
 
 Parameters
 ----------
-branch_name : character
+branch_name : str
     May be a branch name or a branch index.
 
 lat : LatStruct
@@ -1430,7 +1430,7 @@ Parameters
 lat : LatStruct
     Lattice.
 
-ele_name : character
+ele_name : str
     Name or index of element.
 
 Returns
@@ -1773,16 +1773,19 @@ multi_lord : EleStruct, optional
       "pointer_to_next_ele",
       &Bmad::pointer_to_next_ele,
       py::arg("this_ele"),
+      py::arg("next_ele"),
       py::arg("offset") = py::none(),
       py::arg("skip_beginning") = py::none(),
       py::arg("follow_fork") = py::none(),
-      py::arg("next_ele"),
       R"""(Wrapper for Fortran routine pointer_to_next_ele
 
 Parameters
 ----------
 this_ele : EleStruct
     Starting element.
+
+next_ele : EleStruct
+    Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
 
 offset : int, optional
     +1 -> return next element, +2 -> element after that, etc. Can be negative. Default = +1.
@@ -1792,9 +1795,6 @@ skip_beginning : bool, optional
 
 follow_fork : bool, optional
     If True then fork at any fork element. Default is False.
-
-next_ele : EleStruct
-    Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
 )"""
   );
   py::class_<Bmad::PointerToSlave, std::unique_ptr<Bmad::PointerToSlave>>(

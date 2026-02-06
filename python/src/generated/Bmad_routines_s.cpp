@@ -488,7 +488,7 @@ Routine to add custom element attributes to the element attribute name table.
 
 Parameters
 ----------
-custom_name : character
+custom_name : str
     Name of the custom attribute. If prefixed by "<class>::" then the custom name will be set only for that
     element class. Example: "quadrupole::error" will set the alias custom namefor quadrupoles.
 
@@ -535,7 +535,7 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with attribute set.
 
-set_string : character
+set_string : str
     Attribute and value for set.
 
 err_print_flag : bool, optional
@@ -586,7 +586,7 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with name set.
 
-name : character
+name : str
     Name to set.
 )"""
   );
@@ -606,7 +606,7 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with attribute set.
 
-attrib_name : character
+attrib_name : str
     Attribute name.
 
 value : float
@@ -937,7 +937,7 @@ saved_values : 1D array of float, optional
     This parameter is an input/output and is modified in-place.
     As an output, saved_values: Saved values of the component.
 
-attribute : character, optional
+attribute : str, optional
     Attribute to turn on/off. Eg: 'K2', 'MULTIPOLE_ON', etc. Default is 'IS_ON'. Must be upper case.
 
 set_val : int, optional
@@ -1014,7 +1014,7 @@ force_init : bool, optional
 
 Parameters
 ----------
-component : character
+component : str
     Name of component. "TOTALPATH", "SPIN", "NOCAVITY", "TIME", etc. See the PTC internal_state structure for
     component names.
 
@@ -1380,7 +1380,7 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place.
     As an output, lat: Lattice with unwanted elements sliced out.
 
-ele_list : character
+ele_list : str
     List of elements to retain. See the documentation for the lat_ele_locator routine for the syntax of the
     list.
 
@@ -1791,8 +1791,8 @@ error : bool
       py::arg("field"),
       py::arg("orbit"),
       py::arg("sign_z_vel"),
-      py::arg("phase_space_coords") = py::none(),
       py::arg("omega"),
+      py::arg("phase_space_coords") = py::none(),
       R"""(Wrapper for Fortran routine spin_omega
 
 Parameters
@@ -1803,9 +1803,9 @@ orbit : CoordStruct
 
 sign_z_vel : int
 
-phase_space_coords : bool, optional
-
 omega : 1D array of float (shape: 3)
+
+phase_space_coords : bool, optional
 )"""
   );
   py::class_<Bmad::SpinQuatResonanceStrengths, std::unique_ptr<Bmad::SpinQuatResonanceStrengths>>(
@@ -2208,7 +2208,7 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place.
     As an output, lat: Modified lattice.
 
-ele_start : character
+ele_start : str
     Start element. Ele_start will identify the lattice branch to modify.
 
 move_end_marker : bool
@@ -2258,7 +2258,7 @@ For example:
 
 Parameters
 ----------
-attrib_name : character
+attrib_name : str
     Name of the type of element attribute.
 
 ele : EleStruct
@@ -2266,7 +2266,7 @@ ele : EleStruct
 
 Returns
 -------
-attrib_value : character
+attrib_value : str
     The string associated with the attribute.
 )"""
   );

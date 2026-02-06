@@ -462,8 +462,8 @@ bool Bmad::apply_rampers_to_slave(EleStruct &slave) {
 }
 void Bmad::array_re_str(
     FArray1D<Real> &arr,
-    std::optional<std::string> parens_in,
-    std::string str_out
+    std::string str_out,
+    std::optional<std::string> parens_in
 ) {
   // arr: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _arr_desc;
@@ -1701,8 +1701,8 @@ void Bmad::check_for_superimpose_problem(
     BranchStruct &branch,
     EleStruct &super_ele,
     bool err_flag,
-    optional_ref<EleStruct> ref_ele,
-    bool wrap
+    bool wrap,
+    optional_ref<EleStruct> ref_ele
 ) {
   auto *_ref_ele =
       ref_ele.has_value() ? ref_ele->get().get_fortran_ptr() : nullptr; // input, optional
@@ -1959,6 +1959,7 @@ void Bmad::complex_taylor_coef(
 }
 void Bmad::complex_taylor_coef(
     ComplexTaylorStruct &complex_taylor,
+    std::complex<double> coef,
     std::optional<int> i1,
     std::optional<int> i2,
     std::optional<int> i3,
@@ -1967,8 +1968,7 @@ void Bmad::complex_taylor_coef(
     std::optional<int> i6,
     std::optional<int> i7,
     std::optional<int> i8,
-    std::optional<int> i9,
-    std::complex<double> coef
+    std::optional<int> i9
 ) {
   int i1_lvalue;
   auto *_i1{&i1_lvalue};
@@ -9608,11 +9608,11 @@ void Bmad::parse_integer_list(
     bool exact_size,
     std::string delim,
     bool delim_found,
+    bool is_ok,
     std::optional<std::string> open_delim,
     std::optional<std::string> separator,
     std::optional<std::string> close_delim,
-    std::optional<int> default_value,
-    bool is_ok
+    std::optional<int> default_value
 ) {
   auto _err_str = err_str.c_str();
   // int_array: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
@@ -9699,11 +9699,11 @@ Bmad::ParseRealList Bmad::parse_real_list(
     std::string err_str,
     FArray1D<Real> &real_array,
     bool exact_size,
+    bool is_ok,
     std::optional<std::string> open_delim,
     std::optional<std::string> separator,
     std::optional<std::string> close_delim,
-    std::optional<double> default_value,
-    bool is_ok
+    std::optional<double> default_value
 ) {
   auto _err_str = err_str.c_str();
   // real_array: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
@@ -10547,10 +10547,10 @@ Bmad::PointerToMultipassLord Bmad::pointer_to_multipass_lord(EleStruct &ele) {
 }
 void Bmad::pointer_to_next_ele(
     EleStruct &this_ele,
+    EleStruct &next_ele,
     std::optional<int> offset,
     std::optional<bool> skip_beginning,
-    std::optional<bool> follow_fork,
-    EleStruct &next_ele
+    std::optional<bool> follow_fork
 ) {
   int offset_lvalue;
   auto *_offset{&offset_lvalue};
@@ -11812,8 +11812,8 @@ FixedArray1D<Real, 10> Bmad::rk_time_step1(
     CoordStruct &orb,
     double dt,
     CoordStruct &new_orb,
-    std::optional<FixedArray1D<Real, 10>> dr_dt,
     bool err_flag,
+    std::optional<FixedArray1D<Real, 10>> dr_dt,
     std::optional<bool> print_err,
     optional_ref<EmFieldStruct> extra_field
 ) {
@@ -13268,8 +13268,8 @@ void Bmad::spin_omega(
     EmFieldStruct &field,
     CoordStruct &orbit,
     int sign_z_vel,
-    std::optional<bool> phase_space_coords,
-    FixedArray1D<Real, 3> omega
+    FixedArray1D<Real, 3> omega,
+    std::optional<bool> phase_space_coords
 ) {
   bool phase_space_coords_lvalue;
   auto *_phase_space_coords{&phase_space_coords_lvalue};

@@ -166,7 +166,7 @@ which_end : int
 
 Parameters
 ----------
-err_str : character, optional
+err_str : str, optional
 )"""
   );
 }

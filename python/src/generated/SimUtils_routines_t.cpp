@@ -15,8 +15,8 @@ void init_SimUtils_routines_t(py::module &m) {
       "to_str",
       &SimUtils::to_str,
       py::arg("num"),
-      py::arg("max_signif") = py::none(),
       py::arg("string"),
+      py::arg("max_signif") = py::none(),
       R"""(no longer exists
 subroutine test_tune_tracker_lock (tracker_locked)
   implicit none
@@ -79,6 +79,9 @@ tri_coef : TricubicCmplxCoefStruct
 
 Returns
 -------
+f_val : complex
+    Value of f.
+
 df_dx : complex, optional
     Normalized first derivative: True df/dx = df_dx * dx
 
@@ -87,9 +90,6 @@ df_dy : complex, optional
 
 df_dz : complex, optional
     Normalized first derivative: True df/dz = df_dz * dz
-
-f_val : complex
-    Value of f.
 )"""
   );
   m.def(
@@ -100,7 +100,7 @@ f_val : complex
 
 Parameters
 ----------
-filename : character
+filename : str
 )"""
   );
 }

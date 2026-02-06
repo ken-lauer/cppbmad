@@ -149,7 +149,7 @@ Parameters
 ele : EleStruct
     After this routine finishes Ptr_attrib will point to a variable within this element.
 
-attrib_name : character
+attrib_name : str
     Name of attribute. Must be uppercase. For example: "HKICK".
 
 err_print_flag : bool, optional
@@ -160,11 +160,11 @@ err_value : float, optional
 
 Returns
 -------
-err_flag : bool, optional
-    Set True if attribtute not found. False otherwise.
-
 value : float
     Value of the attribute. Set to err_value if not found.
+
+err_flag : bool, optional
+    Set True if attribtute not found. False otherwise.
 )"""
   );
   m.def(
@@ -180,13 +180,13 @@ value : float
 
 Parameters
 ----------
-line : character
+line : str
 
 value : float
 
-str : character
+str : str
 
-typ : character
+typ : str
 
 ignore_if_zero : bool, optional
 
@@ -255,7 +255,7 @@ This subroutine is not intended for general use.
 
 Parameters
 ----------
-name : character
+name : str
     Name(1:ix_name) is the string to check.
 
 ix_name : int

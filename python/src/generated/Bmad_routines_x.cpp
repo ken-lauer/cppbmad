@@ -36,7 +36,7 @@ Taken from file xraylib/include/xraylib-nist_compounds.h
 
 Parameters
 ----------
-name : character
+name : str
     Name of compound
 
 Returns

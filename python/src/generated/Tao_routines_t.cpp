@@ -88,7 +88,7 @@ If h_str is already in the h_array(:) list, nothing is done.
 
 Parameters
 ----------
-h_str : character
+h_str : str
     Resonance driving term ID. EG: "110000"
 
 Returns
@@ -106,10 +106,10 @@ h_array : 1D array of ResonanceHStruct
 
 Parameters
 ----------
-alias : character
+alias : str
     Name of the tao command file.
 
-string : character
+string : str
     Command file arguments.
 )"""
   );
@@ -233,16 +233,16 @@ calc_ok : bool
 
 Parameters
 ----------
-ele_id : character
+ele_id : str
     Name or index of the element.
 
 lat : LatStruct
     Lattice.
 
-branch_str : character
+branch_str : str
     Branch where the tracking is done. '' => Branch not specified.
 
-where : character
+where : str
     'TRACK_END', 'TRACK_START', etc.. Used for error messages.
 
 u : TaoUniverseStruct
@@ -312,13 +312,13 @@ Routine to change a variable in the model lattice.
 
 Parameters
 ----------
-ele_name : character
+ele_name : str
     Name of variable or element.
 
-attrib_name : character
+attrib_name : str
     Attribute name of element.
 
-num_str : character
+num_str : str
     Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
 
 Returns
@@ -339,19 +339,19 @@ err_flag : bool
 
 Parameters
 ----------
-branch_str : character
+branch_str : str
     List of branches to apply tune set to.
 
-mask_str : character
+mask_str : str
     List of quadrupoles to veto.
 
 print_list : bool
     If True, print a list of elements varied and coefficients.
 
-dqa_str : character
+dqa_str : str
     Expression for dQa tune.
 
-dqb_str : character
+dqb_str : str
     Expression for dQb tune.
 
 Returns
@@ -372,10 +372,10 @@ Routine to change a variable in the model lattice.
 
 Parameters
 ----------
-name : character
+name : str
     Name of variable or element.
 
-num_str : character
+num_str : str
     Change in value. A '@' signifies a absolute set. A 'd' signifies a set relative design.
 
 silent : bool
@@ -396,10 +396,10 @@ err_flag : bool
 
 Parameters
 ----------
-branch_str : character
+branch_str : str
     List of branches to apply tune set to.
 
-dq_str : character
+dq_str : str
     Expression for dQc tune.
 
 Returns
@@ -418,9 +418,9 @@ err_flag : bool
 
 Parameters
 ----------
-data_type : character
+data_type : str
 
-data_source : character
+data_source : str
 
 do_chrom : bool
 )"""
@@ -433,7 +433,7 @@ do_chrom : bool
 
 Parameters
 ----------
-cmd_line : character
+cmd_line : str
     Should be set to 'maps'.
 )"""
   );
@@ -451,7 +451,7 @@ Parameters
 gang : bool
     Gang all data d1 arrays together.
 
-where : character
+where : str
     Graph() to clip. Eg: 'top:x'
 
 value1 : float
@@ -483,7 +483,7 @@ Subroutine to record a cmd in the command history stack
 
 Parameters
 ----------
-command_line : character
+command_line : str
     command line
 
 err : bool
@@ -507,7 +507,7 @@ datum : TaoDataStruct
 
 Returns
 -------
-datum_name : character
+datum_name : str
     Appropriate name.
 )"""
   );
@@ -537,10 +537,10 @@ tree : 1D array of ElePointerStruct
 
 Parameters
 ----------
-string : character
+string : str
     the string to look at
 
-pattern : character
+pattern : str
     the search pattern
 
 Returns
@@ -634,7 +634,7 @@ curve : TaoCurveStruct
     This parameter is an input/output and is modified in-place.
     As an output, curve: Structure holding the datum values
 
-who : character
+who : str
     Where to put the data. Either: "SYMBOL" or "LINE".
 )"""
   );
@@ -691,7 +691,7 @@ use_region : bool, optional
 
 Returns
 -------
-curve_name : character
+curve_name : str
     Appropriate name.
 )"""
   );
@@ -724,7 +724,7 @@ Parameters
 curve : TaoCurveStruct
     Curve to analyze.
 
-who : character
+who : str
     "LINE" or "SYMBOL".
 
 Returns
@@ -753,7 +753,7 @@ show_universe : bool, optional
 
 Returns
 -------
-d2_d1_name : character
+d2_d1_name : str
     Appropriate name.
 )"""
   );
@@ -769,7 +769,7 @@ Parameters
 ----------
 u : TaoUniverseStruct
 
-d2_name : character
+d2_name : str
 
 n_d1_data : int
 )"""
@@ -814,7 +814,7 @@ datum : TaoDataStruct
 print_err : bool
     Print error message if data is not valid?
 
-default_data_type : character
+default_data_type : str
     Default data type associated with the datum's d2 structure.
 
 uni : TaoUniverseStruct, optional
@@ -849,7 +849,7 @@ graph : TaoGraphStruct
 
 Returns
 -------
-str_out : character
+str_out : str
     String with substitutions.
 )"""
   );
@@ -879,7 +879,7 @@ check_s_position : bool
 
 Returns
 -------
-most_invalid : character
+most_invalid : str
     String documenting biggest invalid data problem.
 )"""
   );
@@ -892,7 +892,7 @@ most_invalid : character
 
 Parameters
 ----------
-data_type : character
+data_type : str
     Type of data.
 
 branch_geometry : int, optional
@@ -953,7 +953,7 @@ Returns
 valid_value : bool
     Set false if, for example, all s_pos(:) are the same.
 
-why_invalid : character
+why_invalid : str
     Information string if there is a problem.
 
 result : float
@@ -977,7 +977,7 @@ show_universe : bool, optional
 
 Returns
 -------
-datum_name : character
+datum_name : str
     Appropriate name.
 )"""
   );
@@ -1207,7 +1207,7 @@ ele_shape : TaoEleShapeStruct
     Shape to draw from s.plot_page.floor_plan.ele_shape(:) array. Will be NULL if no associated shape for this
     element.
 
-label_name : character
+label_name : str
     Shape label.
 
 offset1 : float
@@ -1380,7 +1380,7 @@ Returns
 valid_value : bool
     Was able to evalute the datum?
 
-why_invalid : character
+why_invalid : str
     If not valid, why not.
 
 value : float
@@ -1440,10 +1440,7 @@ ix_shape_min : int, optional
 
 Returns
 -------
-e_shape : TaoEleShapeStruct, optional
-    element shape. Will be nullified if no associated shape.
-
-label_name : character
+label_name : str
     Label name.
 
 y1 : float
@@ -1451,6 +1448,9 @@ y1 : float
 
 y2 : float
     shape transverse sizes.
+
+e_shape : TaoEleShapeStruct, optional
+    element shape. Will be nullified if no associated shape.
 
 ix_shape_min : int, optional
     Index of minimum ele_shape(:) index to start search from. Default is 1.
@@ -1509,7 +1509,7 @@ Returns
 valid_value : bool
     Was able to evalute the datum?
 
-why_invalid : character
+why_invalid : str
     If not valid, why not.
 
 value : float
@@ -1571,7 +1571,7 @@ datum_value : float
 valid_value : bool
     Set false when there is a problem. Set true otherwise.
 
-why_invalid : character, optional
+why_invalid : str, optional
     Tells why datum value is invalid.
 )"""
   );
@@ -1625,7 +1625,7 @@ valid_value : bool
 
 Returns
 -------
-err_str : character
+err_str : str
     Error string for printing an error message.
 
 bad_datum : bool
@@ -1661,8 +1661,8 @@ value : float
       &Tao::tao_evaluate_element_parameters,
       py::arg("param_name"),
       py::arg("print_err"),
-      py::arg("dflt_ele") = py::none(),
       py::arg("dflt_source"),
+      py::arg("dflt_ele") = py::none(),
       py::arg("dflt_component") = py::none(),
       py::arg("dflt_uni") = py::none(),
       py::arg("eval_point") = py::none(),
@@ -1670,19 +1670,19 @@ value : float
 
 Parameters
 ----------
-param_name : character
+param_name : str
     parameter name.
 
 print_err : bool
     Print error message?
 
+dflt_source : str
+    Default source
+
 dflt_ele : EleStruct, optional
     Default element if not specified by param_name.
 
-dflt_source : character
-    Default source
-
-dflt_component : character, optional
+dflt_component : str, optional
     Default component
 
 dflt_uni : int, optional
@@ -1746,7 +1746,7 @@ info : 1D array of TaoExpressionInfoStruct, optional
 
 Parameters
 ----------
-expression : character
+expression : str
     Arithmetic expression.
 
 n_size : int
@@ -1760,10 +1760,10 @@ print_err : bool, optional
     If False then supress evaluation error messages. This does not affect syntax error messages. Default is
     True.
 
-dflt_component : character, optional
+dflt_component : str, optional
     Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
 
-dflt_source : character, optional
+dflt_source : str, optional
     Default source ('lat', 'data', etc.). Default is ''.
 
 dflt_ele_ref : EleStruct, optional
@@ -1775,7 +1775,7 @@ dflt_ele_start : EleStruct, optional
 dflt_ele : EleStruct, optional
     Default element to evaluate at.
 
-dflt_dat_or_var_index : character, optional
+dflt_dat_or_var_index : str, optional
     Default datum or variable index to use.
 
 dflt_uni : int, optional
@@ -1857,7 +1857,7 @@ stack : 1D array of TaoEvalNodeStruct, optional
 
 Parameters
 ----------
-expression : character
+expression : str
     Arithmetic expression.
 
 n_size : int
@@ -1871,10 +1871,10 @@ print_err : bool, optional
     If False then supress evaluation error messages. This does not affect syntax error messages. Default is
     True.
 
-dflt_component : character, optional
+dflt_component : str, optional
     Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
 
-dflt_source : character, optional
+dflt_source : str, optional
     Default source ('lat', 'data', etc.). Default is ''.
 
 dflt_ele_ref : EleStruct, optional
@@ -1886,7 +1886,7 @@ dflt_ele_start : EleStruct, optional
 dflt_ele : EleStruct, optional
     Default element to evaluate at.
 
-dflt_dat_or_var_index : character, optional
+dflt_dat_or_var_index : str, optional
     Default datum or variable index to use.
 
 dflt_uni : int, optional
@@ -1968,7 +1968,7 @@ stack : 1D array of TaoEvalNodeStruct, optional
 
 Parameters
 ----------
-expression : character
+expression : str
     Arithmetic expression.
 
 n_size : int
@@ -1982,10 +1982,10 @@ print_err : bool, optional
     If False then supress evaluation error messages. This does not affect syntax error messages. Default is
     True.
 
-dflt_component : character, optional
+dflt_component : str, optional
     Component to use if not specified in the expression. 'model' (default), 'base', or 'design'.
 
-dflt_source : character, optional
+dflt_source : str, optional
     Default source ('lat', 'data', etc.). Default is ''.
 
 dflt_ele_ref : EleStruct, optional
@@ -1997,7 +1997,7 @@ dflt_ele_start : EleStruct, optional
 dflt_ele : EleStruct, optional
     Default element to evaluate at.
 
-dflt_dat_or_var_index : character, optional
+dflt_dat_or_var_index : str, optional
     Default datum or variable index to use.
 
 dflt_uni : int, optional
@@ -2074,7 +2074,7 @@ stack : 1D array of TaoEvalNodeStruct, optional
 
 Parameters
 ----------
-data_name : character
+data_name : str
     data name.
 
 print_err : bool
@@ -2089,7 +2089,7 @@ dflt_ele_start : EleStruct, optional
 dflt_ele : EleStruct, optional
     Default element to evaluate at.
 
-dflt_component : character, optional
+dflt_component : str, optional
     Default component: 'model' (default), 'base', or 'design'.
 
 dflt_uni : int, optional
@@ -2156,7 +2156,7 @@ print_err : bool
     If False then supress evaluation error messages. This does not affect syntax error messages. Default is
     True.
 
-expression : character
+expression : str
     Original expression. Used for error messages.
 
 Returns
@@ -2210,7 +2210,7 @@ print_err : bool
     If False then supress evaluation error messages. This does not affect syntax error messages. Default is
     True.
 
-expression : character
+expression : str
     Original expression. Used for error messages.
 
 info_in : 1D array of TaoExpressionInfoStruct, optional
@@ -2234,7 +2234,7 @@ err_flag : bool
 
 Parameters
 ----------
-q_str : character
+q_str : str
     String expression.
 
 q0 : float
@@ -2266,7 +2266,7 @@ character after are one of:
 
 Parameters
 ----------
-expression_in : character
+expression_in : str
     Expression.
 
 eval_ele : EleStruct, optional
@@ -2274,7 +2274,7 @@ eval_ele : EleStruct, optional
 
 Returns
 -------
-expression_out : character
+expression_out : str
     Expression with substitutions made.
 )"""
   );
@@ -2306,7 +2306,7 @@ parent : TaoEvalNodeStruct, optional
 
 Returns
 -------
-str_out : character
+str_out : str
     Expression string.
 )"""
   );
@@ -2336,7 +2336,7 @@ str_out : character
 
 Parameters
 ----------
-where : character
+where : str
     Region name.
 
 print_flag : bool, optional
@@ -2361,10 +2361,10 @@ region : TaoPlotRegionStruct, optional
 
 Parameters
 ----------
-word1 : character
+word1 : str
     First word of command.
 
-word2 : character
+word2 : str
     Secton word of command.
 )"""
   );
@@ -2578,18 +2578,18 @@ Note: In single character mode, the input precedence order is ignored and input 
 
 Parameters
 ----------
-prompt_str : character, optional
+prompt_str : str, optional
     Primpt string to print at terminal. If not present then s.global.prompt_string will be used.
 
 wait_flag : bool, optional
     Used for single mode: Wait state for get_a_char call.
 
-cmd_in : character, optional
+cmd_in : str, optional
     Command to be used in place getting user input.
 
 Returns
 -------
-cmd_out : character
+cmd_out : str
     Command from the user.
 )"""
   );
@@ -2678,7 +2678,7 @@ use_region : bool, optional
 
 Returns
 -------
-graph_name : character
+graph_name : str
     Appropriate name.
 )"""
   );
@@ -2780,9 +2780,9 @@ u : TaoUniverseStruct
 
 beam_init : BeamInitStruct
 
-track_start : character
+track_start : str
 
-track_end : character
+track_end : str
 
 comb_ds_save : float
 )"""
@@ -2797,7 +2797,7 @@ Subroutine to initialize beam stuff.
 
 Parameters
 ----------
-init_file : character
+init_file : str
     Tao initialization file. If blank, there is no file so just use the defaults.
 )"""
   );
@@ -2811,7 +2811,7 @@ Subroutine to initialize the tao data structures.
 
 Parameters
 ----------
-data_file : character
+data_file : str
     Tao data initialization file. If blank, there is no file so just use the defaults.
 )"""
   );
@@ -2848,7 +2848,7 @@ Routine to initalize dynamic aperture simulations.
 
 Parameters
 ----------
-init_file : character
+init_file : str
     File setting dynamic_aperture parameters.
 )"""
   );
@@ -2882,10 +2882,10 @@ Parameters
 u : TaoUniverseStruct
     Universe to search
 
-search_string : character
+search_string : str
     What to search for
 
-attribute : character, optional
+attribute : str, optional
     Check that attribute of element is free to vary.
 
 Returns
@@ -2907,7 +2907,7 @@ Subroutine to initialize the tao global structures.
 
 Parameters
 ----------
-init_file : character
+init_file : str
     Tao initialization file. If blank, there is no file so just use the defaults.
 )"""
   );
@@ -2920,7 +2920,7 @@ init_file : character
 
 Parameters
 ----------
-lat_file : character
+lat_file : str
 
 err_flag : bool
 )"""
@@ -2933,7 +2933,7 @@ err_flag : bool
 
 Parameters
 ----------
-plot_file : character
+plot_file : str
 )"""
   );
   m.def(
@@ -2946,7 +2946,7 @@ Subroutine to initialize the tao variable structures.
 
 Parameters
 ----------
-var_file : character
+var_file : str
     Tao variable initialization file. If blank, there is no file so just use the defaults.
 )"""
   );
@@ -3043,12 +3043,12 @@ ix_branch : int
 
 Parameters
 ----------
-name : character
+name : str
     Name to be checked.
 
 Returns
 -------
-why_invalid : character
+why_invalid : str
     Why invalid description.
 
 is_valid : bool
@@ -3063,7 +3063,7 @@ is_valid : bool
 
 Parameters
 ----------
-input_str : character
+input_str : str
     What to show.
 )"""
   );
@@ -3085,9 +3085,9 @@ ix_min_key : int
 
 ix_max_key : int
 
-key_str : character
+key_str : str
 
-header_str : character
+header_str : str
 )"""
   );
   m.def(
@@ -3148,9 +3148,9 @@ emit : float
 
 Parameters
 ----------
-data_type : character
+data_type : str
 
-data_source : character
+data_source : str
 
 do_lat_sigma : bool
 )"""
@@ -3318,7 +3318,7 @@ datum : TaoDataStruct
 
 branch : BranchStruct
 
-why_invalid : character, optional
+why_invalid : str, optional
 
 good : 1D array of bool, optional
 )"""
@@ -3349,7 +3349,7 @@ good : 1D array of bool, optional
 
 Parameters
 ----------
-ele_list : character
+ele_list : str
     String with element names using element list format.
 
 ignore_blank : bool, optional
@@ -3396,7 +3396,7 @@ err : bool
 
 Parameters
 ----------
-ele_list : character
+ele_list : str
     String with element names using element list format.
 
 ix_universe : int
@@ -3465,11 +3465,11 @@ lat : LatStruct
 
 Returns
 -------
-calc_ok : bool, optional
-    Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
-
 this_merit : float
     Merit value.
+
+calc_ok : bool, optional
+    Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
 )"""
   );
   py::class_<PyTaoNextWord, std::unique_ptr<PyTaoNextWord>>(
@@ -3503,19 +3503,19 @@ Outer quote marks will be removed in the returned word.
 
 Parameters
 ----------
-line : character
+line : str
     String to parse.
     This parameter is an input/output and is modified in-place.
     As an output, line: String with first word removed.
 
 Returns
 -------
-line : character
+line : str
     String to parse.
     This parameter is an input/output and is modified in-place.
     As an output, line: String with first word removed.
 
-word : character
+word : str
     First word of line.
 )"""
   );
@@ -3529,9 +3529,9 @@ word : character
 
 Parameters
 ----------
-data_type : character
+data_type : str
 
-data_source : character
+data_source : str
 
 do_one_turn_map : bool
 )"""
@@ -3547,9 +3547,9 @@ do_one_turn_map : bool
 
 Parameters
 ----------
-file : character
+file : str
 
-file_name : character
+file_name : str
     File name.
 
 error_severity : int
@@ -3609,7 +3609,7 @@ datum : TaoDataStruct
 
 Returns
 -------
-why_str : character
+why_str : str
     Optimization status of the datum.
 )"""
   );
@@ -3674,7 +3674,7 @@ pt_out : TaoBuildingWallPointStruct
 
 Parameters
 ----------
-dat_name : character
+dat_name : str
 
 ele_to_s : EleStruct
     Element whose exit end is at the evaluation s-position.
@@ -3690,7 +3690,10 @@ Returns
 err_flag : bool
     Set true if parameter cannot be evaluated.
 
-why_invalid : character, optional
+value : float
+    Parameter value.
+
+why_invalid : str, optional
     Set if  err_flag = True to document why is there a problem.
 
 print_err : bool, optional
@@ -3698,9 +3701,6 @@ print_err : bool, optional
 
 bad_datum : bool, optional
     Data_type is malformed.
-
-value : float
-    Parameter value.
 )"""
   );
   m.def(
@@ -3727,11 +3727,11 @@ value : float
 
 Parameters
 ----------
-str : character
+str : str
 
 use_good_user : bool
 
-saved_prefix : character
+saved_prefix : str
 
 stack : TaoEvalNodeStruct
 
@@ -3739,9 +3739,9 @@ err_flag : bool
 
 print_err : bool
 
-dflt_component : character, optional
+dflt_component : str, optional
 
-dflt_source : character, optional
+dflt_source : str, optional
 
 dflt_ele_ref : EleStruct, optional
 
@@ -3749,7 +3749,7 @@ dflt_ele_start : EleStruct, optional
 
 dflt_ele : EleStruct, optional
 
-dflt_dat_or_var_index : character, optional
+dflt_dat_or_var_index : str, optional
 
 dflt_uni : int, optional
 
@@ -3770,7 +3770,7 @@ datum : TaoDataStruct, optional
 
 Parameters
 ----------
-cmd_line : character, optional
+cmd_line : str, optional
 
 Returns
 -------
@@ -3815,7 +3815,7 @@ error : bool
 
 Parameters
 ----------
-in_str : character
+in_str : str
     String specifying a parameter of an element or elements.
 
 Returns
@@ -3823,19 +3823,19 @@ Returns
 err : bool
     Set True if there is a parse error. False otherwise.
 
-uni : character
+uni : str
     Universe substring.
 
-element : character
+element : str
     Element name.
 
-parameter : character
+parameter : str
     Element parameter name.
 
 where : int
     One of not_set$, anchor_beginning$, anchor_center$, or anchor_end$.
 
-component : character
+component : str
     One of "model", "design", or "base".
 )"""
   );
@@ -3869,7 +3869,7 @@ Routine to calculate the value array of a data_type for an array of particles.
 
 Parameters
 ----------
-data_type : character
+data_type : str
     Type of data.
 
 p : 1D array of CoordStruct
@@ -3913,7 +3913,7 @@ Routine to calculate the phase space axis index for a given data type.
 
 Parameters
 ----------
-data_type : character
+data_type : str
     Type of data.
 
 err : bool
@@ -3968,7 +3968,7 @@ ix_axis : int
 
 Parameters
 ----------
-name_in : character
+name_in : str
     data name with possible universe spec.
 
 dflt_uni : int, optional
@@ -3979,7 +3979,7 @@ pure_uni : bool, optional
 
 Returns
 -------
-name_out : character
+name_out : str
     name_in without any "n@" beginning.
 
 picked : 1D array of bool
@@ -4003,7 +4003,7 @@ explicit_uni : bool, optional
 
 Parameters
 ----------
-input_str : character
+input_str : str
     What to show.
 )"""
   );
@@ -4017,10 +4017,10 @@ input_str : character
 
 Parameters
 ----------
-where : character
+where : str
     Region where the plot goes. Eg: 'top'.
 
-who : character
+who : str
     Type of plot. Eg: 'orbit'.
 
 no_buffer : bool, optional
@@ -4036,10 +4036,10 @@ no_buffer : bool, optional
 
 Parameters
 ----------
-where : character
+where : str
     Region name to identify the plot to set.
 
-component : character
+component : str
     Who to plot. EG: 'meas - design'
 )"""
   );
@@ -4146,7 +4146,7 @@ graph : TaoGraphStruct
 
 Parameters
 ----------
-wall_name : character
+wall_name : str
     Name of the wall.
 
 Returns
@@ -4167,7 +4167,7 @@ Parameters
 d1 : TaoD1DataStruct
     D1 data struct to search.
 
-ele_name : character
+ele_name : str
     Name of lattice element to match to.
 
 Returns
@@ -4231,7 +4231,7 @@ Returns
 valid : bool
     Set False if element does not have a definite location. Set True otherwise
 
-why_invalid : character, optional
+why_invalid : str, optional
     Tells why datum value is invalid.
 
 ele : EleStruct, optional
@@ -4288,7 +4288,7 @@ ix_shape_min : int, optional
 
 Returns
 -------
-dat_var_name : character, optional
+dat_var_name : str, optional
     Name of datum or variable associated with e_shape. Will be set to "" if there is no associated datum or
     variable.
 
@@ -4393,7 +4393,7 @@ That is, it cannot handlle something like "[1,3,4]@...". To handle multiple univ
 
 Parameters
 ----------
-string : character
+string : str
     String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
     This parameter is an input/output and is modified in-place.
     As an output, string: String with universe prefix stripped off.
@@ -4403,7 +4403,7 @@ neg2_to_default : bool, optional
 
 Returns
 -------
-string : character
+string : str
     String in the form "<ix_uni>@..." or, if no "@" is present, u will point to the default universe.
     This parameter is an input/output and is modified in-place.
     As an output, string: String with universe prefix stripped off.
@@ -4444,7 +4444,7 @@ u : TaoUniverseStruct, optional
 
 Parameters
 ----------
-name_in : character
+name_in : str
     data name with possible universe spec.
 
 dflt_uni : int, optional
@@ -4458,7 +4458,7 @@ unis : 1D array of TaoUniversePointerStruct
 err : bool
     Set True if an error is detected.
 
-name_out : character, optional
+name_out : str, optional
     name_in without any "n@" beginning.
 
 explicit_uni : bool, optional
@@ -4552,7 +4552,7 @@ rf_on : int, optional
 
 Parameters
 ----------
-input_str : character
+input_str : str
     What to show.
 )"""
   );
@@ -4564,7 +4564,7 @@ input_str : character
 
 Parameters
 ----------
-set : character
+set : str
     True is silent running is wanted.
 )"""
   );
@@ -4578,9 +4578,9 @@ set : character
 
 Parameters
 ----------
-data_type : character
+data_type : str
 
-data_source : character
+data_source : str
 
 do_rad_int : bool
 )"""
@@ -4651,12 +4651,12 @@ Subroutine to execute a previous command.
 
 Parameters
 ----------
-which : character
+which : str
 
-unis : character
+unis : str
     Universes to apply to
 
-file : character
+file : str
 
 silent : bool
     Silent
@@ -4672,7 +4672,7 @@ silent : bool
 
 Parameters
 ----------
-name : character
+name : str
     character array holding the index. Must be in the range 1-6.
 
 ixc : int
@@ -4695,7 +4695,7 @@ ix_ps : int
 
 Parameters
 ----------
-cmd_str : character
+cmd_str : str
 )"""
   );
   py::class_<PyTaoRemoveBlankCharacters, std::unique_ptr<PyTaoRemoveBlankCharacters>>(
@@ -4720,14 +4720,14 @@ cmd_str : character
 
 Parameters
 ----------
-str : character
+str : str
     Input string.
     This parameter is an input/output and is modified in-place.
     As an output, str: String with blank characters removed.
 
 Returns
 -------
-str : character
+str : str
     Input string.
     This parameter is an input/output and is modified in-place.
     As an output, str: String with blank characters removed.
@@ -4741,7 +4741,7 @@ str : character
 
 Parameters
 ----------
-which : character
+which : str
     which optimizer to use.
 
 Returns
@@ -4769,7 +4769,7 @@ If y_min = y_max, the scales will be chosen to show all the data.
 
 Parameters
 ----------
-where : character
+where : str
     Region to scale. Eg: "top:x"
 
 y_min_in : float
@@ -4778,14 +4778,14 @@ y_min_in : float
 y_max_in : float
     Plot y-axis max value.
 
-axis : character, optional
+axis : str, optional
     'y', 'y2', or '' (both). Default = ''.
 
 include_wall : bool, optional
     Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
     include the building wall position will be included in determining the the scale.
 
-gang : character, optional
+gang : str, optional
     'gang', 'nogang', ''. Default = ''.
 
 exact : bool, optional
@@ -4840,7 +4840,7 @@ y_min : float
 y_max : float
     Axis [min, max] must cover [y_min, y_max] if not autoscaling.
 
-axis : character, optional
+axis : str, optional
     Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
 
 include_wall : bool, optional
@@ -4896,14 +4896,14 @@ y_min_in : float
 y_max_in : float
     Axis [min, max] must cover [y_min_in, y_max_in] if not autoscaling.
 
-axis : character, optional
+axis : str, optional
     Axis to scale. ''   -> scale y and y2 (default). 'y'  -> scale y-axis. 'y2' -> scale y2-axis
 
 include_wall : bool, optional
     Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
     include the building wall position will be included in determining the the scale.
 
-gang : character, optional
+gang : str, optional
     If autoscale then make all graph y-axes the same and/or make all y2-axes the same? ''        -> (default)
     Use setting of plot.autoscale_gang_y 'gang'    -> Gang graphs. 'nogang'  -> Do not gang graphs.
 
@@ -4949,13 +4949,13 @@ Routine to set various beam parameters.
 
 Parameters
 ----------
-who : character
+who : str
     which parameter to set.
 
-value_str : character
+value_str : str
     Value to set to.
 
-branch_str : character
+branch_str : str
     Branch to use. '' => branch 0.
 )"""
   );
@@ -4971,13 +4971,13 @@ Routine to set beam_init variables
 
 Parameters
 ----------
-who : character
+who : str
     which beam_init variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 
-branch_str : character
+branch_str : str
     Branch to use. '' => branch 0
 )"""
   );
@@ -4992,10 +4992,10 @@ Routine to set bmad_com variables
 
 Parameters
 ----------
-who : character
+who : str
     which bmad_com variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5011,13 +5011,13 @@ Routine to set lattice branch values.
 
 Parameters
 ----------
-branch_str : character
+branch_str : str
     Which branch to set.
 
-component_str : character
+component_str : str
     Which branch parameter to set.
 
-value_str : character
+value_str : str
     What value to set it to.
 )"""
   );
@@ -5042,13 +5042,13 @@ Routine to set var values.
 
 Parameters
 ----------
-curve_name : character
+curve_name : str
     Which curve to set.
 
-component : character
+component : str
     Which component to set.
 
-value_str : character
+value_str : str
     What value to set it to.
 )"""
   );
@@ -5069,7 +5069,7 @@ curve : TaoCurveStruct
     This parameter is an input/output and is modified in-place.
     As an output, curve: Curve properly set.
 
-why_invalid : character
+why_invalid : str
     Invalid information.
 
 print_err : bool, optional
@@ -5088,10 +5088,10 @@ Routine to set data values.
 
 Parameters
 ----------
-who_str : character
+who_str : str
     Which data component(s) to set.
 
-value_str : character
+value_str : str
     What value to set it to.
 )"""
   );
@@ -5118,10 +5118,10 @@ Routine to set default values.
 
 Parameters
 ----------
-who_str : character
+who_str : str
     Which default component(s) to set.
 
-value_str : character
+value_str : str
     What value to set it to.
 )"""
   );
@@ -5140,10 +5140,10 @@ Parameters
 drawing : TaoDrawingStruct
     s.plot_page.floor_plan or s.plot_page.lat_layout.
 
-component : character
+component : str
     Which shape component to set.
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5158,10 +5158,10 @@ Sets dynamic aperture parameters.
 
 Parameters
 ----------
-who : character
+who : str
     which parameter to set.
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5178,13 +5178,13 @@ Sets element parameters.
 
 Parameters
 ----------
-ele_list : character
+ele_list : str
     which elements.
 
-attribute : character
+attribute : str
     Attribute to set.
 
-value : character
+value : str
     Value to set.
 )"""
   );
@@ -5205,7 +5205,7 @@ axis_in : QpAxisStruct
 
 axis_out : QpAxisStruct
 
-which : character
+which : str
 )"""
   );
   m.def(
@@ -5219,10 +5219,10 @@ Routine to set geodesic_lm variables
 
 Parameters
 ----------
-who : character
+who : str
     which geodesic_lm variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5237,10 +5237,10 @@ Routine to set global variables
 
 Parameters
 ----------
-who : character
+who : str
     which global variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5256,13 +5256,13 @@ Routine to set var values.
 
 Parameters
 ----------
-graph_name : character
+graph_name : str
     Which graph to set.
 
-component : character
+component : str
     Which component to set.
 
-value_str : character
+value_str : str
     What value to set it to.
 )"""
   );
@@ -5300,10 +5300,10 @@ be generated and the variable will not be set.
 
 Parameters
 ----------
-var_str : character
+var_str : str
     Used for error messages.
 
-value_str : character
+value_str : str
     String with encoded value.
 
 min_val : int, optional
@@ -5339,7 +5339,7 @@ Parameters
 datum : TaoDataStruct
     Bad datum.
 
-message : character
+message : str
     Error message.
 
 exterminate : bool, optional
@@ -5353,7 +5353,7 @@ print_err : bool, optional
 
 Returns
 -------
-why_invalid : character, optional
+why_invalid : str, optional
     Set to message if present.
 )"""
   );
@@ -5368,10 +5368,10 @@ Associates a command with a key press for single mode.
 
 Parameters
 ----------
-key_str : character
+key_str : str
     keyboard key.
 
-cmd_str : character
+cmd_str : str
     Command associated with key.
 )"""
   );
@@ -5386,10 +5386,10 @@ Sets a lattice equal to another. This will also update the data structs
 
 Parameters
 ----------
-dest_lat : character
+dest_lat : str
     Maybe: 'model', 'design', or 'base' with optional '@n' at beginning to indicate the universe
 
-source_lat : character
+source_lat : str
     Maybe: 'model', 'design', or 'base'
 )"""
   );
@@ -5424,10 +5424,10 @@ be generated and the variable will not be set.
 
 Parameters
 ----------
-var_str : character
+var_str : str
     Used for error messages.
 
-value_str : character
+value_str : str
     String with encoded value.
 
 Returns
@@ -5480,10 +5480,10 @@ Routine to set opti_de_param variables
 
 Parameters
 ----------
-who : character
+who : str
     which opti_de_param variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5498,10 +5498,10 @@ Routine to set particle_start variables.
 
 Parameters
 ----------
-who : character
+who : str
     which particle_start variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5517,13 +5517,13 @@ Routine to set plot parameters.
 
 Parameters
 ----------
-plot_name : character
+plot_name : str
     Which plot to set.
 
-component : character
+component : str
     Which component to set.
 
-value_str : character
+value_str : str
     What value to set it to.
 )"""
   );
@@ -5539,13 +5539,13 @@ value_str : character
 
 Parameters
 ----------
-component : character
+component : str
     Which component to set.
 
-value_str : character
+value_str : str
     What value to set to.
 
-value_str2 : character, optional
+value_str2 : str, optional
     2nd value if component is an array.
 )"""
   );
@@ -5560,10 +5560,10 @@ Routine to set ptc_com variables
 
 Parameters
 ----------
-who : character
+who : str
     which ptc_com variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5597,10 +5597,10 @@ Routine to set qp_axis_names of a qp_axis_struct.
 
 Parameters
 ----------
-qp_axis_name : character
+qp_axis_name : str
     qp_axis name. Used for error messages.
 
-component : character
+component : str
     qp_axis component name.
 
 qp_axis : QpAxisStruct
@@ -5608,7 +5608,7 @@ qp_axis : QpAxisStruct
     This parameter is an input/output and is modified in-place.
     As an output, qp_axis: qp_axis_struct with changed component value.
 
-value : character
+value : str
     Component value.
 
 Returns
@@ -5650,10 +5650,10 @@ Routine to set qp_point_names of a qp_point_struct.
 
 Parameters
 ----------
-qp_point_name : character
+qp_point_name : str
     qp_point name. Used for error messages.
 
-component : character
+component : str
     qp_point component name.
 
 qp_point : QpPointStruct
@@ -5661,7 +5661,7 @@ qp_point : QpPointStruct
     This parameter is an input/output and is modified in-place.
     As an output, qp_point: qp_point_struct with changed component value.
 
-value : character
+value : str
     Component value.
 
 Returns
@@ -5703,10 +5703,10 @@ Routine to set qp_rect_names of a qp_rect_struct.
 
 Parameters
 ----------
-qp_rect_name : character
+qp_rect_name : str
     qp_rect name. Used for error messages.
 
-component : character
+component : str
     qp_rect component name.
 
 qp_rect : QpRectStruct
@@ -5714,7 +5714,7 @@ qp_rect : QpRectStruct
     This parameter is an input/output and is modified in-place.
     As an output, qp_rect: qp_rect_struct with changed component value.
 
-value : character
+value : str
     Component value.
 
 Returns
@@ -5736,7 +5736,7 @@ Sets the random number generator state.
 
 Parameters
 ----------
-state_string : character
+state_string : str
     Encoded random number state.
 )"""
   );
@@ -5774,10 +5774,10 @@ be generated and the variable will not be set.
 
 Parameters
 ----------
-var_str : character
+var_str : str
     Used for error messages.
 
-value_str : character
+value_str : str
     String with encoded value.
 
 min_val : float, optional
@@ -5810,13 +5810,13 @@ Routine to set region parameters.
 
 Parameters
 ----------
-region_name : character
+region_name : str
     Which region to set.
 
-component : character
+component : str
     Which component to set.
 
-value_str : character
+value_str : str
     What value to set it to.
 )"""
   );
@@ -5831,10 +5831,10 @@ Routine to set space_charge_com variables
 
 Parameters
 ----------
-who : character
+who : str
     which space_charge_com variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 )"""
   );
@@ -5851,10 +5851,10 @@ Note: Either num_str or val argument must be present.
 
 Parameters
 ----------
-sym_str : character
+sym_str : str
     Symbol.
 
-num_str : character, optional
+num_str : str, optional
     Symbol value expression.
 
 val : float, optional
@@ -5876,19 +5876,19 @@ Routine to set the transverse tunes.
 
 Parameters
 ----------
-branch_str : character
+branch_str : str
     List of branches to apply tune set to.
 
-mask_str : character
+mask_str : str
     List of quadrupoles to veto.
 
 print_list : bool
     If True, print a list of elements varied and coefficients.
 
-qa_str : character
+qa_str : str
     Expression for Qa tune.
 
-qb_str : character
+qb_str : str
     Expression for Qb tune.
 
 delta_input : bool
@@ -5907,13 +5907,13 @@ Sets a universe on or off, or sets the recalculate or twiss_calc logicals, etc.
 
 Parameters
 ----------
-uni : character
+uni : str
     which universe; 0 => current viewed universe
 
-who : character
+who : str
     "on", "off", "recalculate", "dynamic_aperture_calc", "one_turn_map_calc", or "twiss_calc"
 
-what : character
+what : str
     "on" or "off" for who = "dynamic_aperture_calc", "one_turn_map_calc" or "twiss_calc".
 )"""
   );
@@ -5928,10 +5928,10 @@ Routine to set var values.
 
 Parameters
 ----------
-var_str : character
+var_str : str
     Which var name to set.
 
-value_str : character
+value_str : str
     What value to set it to.
 )"""
   );
@@ -5972,10 +5972,10 @@ Routine to set wave variables
 
 Parameters
 ----------
-who : character
+who : str
     which wave variable to set
 
-value_str : character
+value_str : str
     Value to set to.
 
 Returns
@@ -5996,10 +5996,10 @@ Routine to set the z-tune.
 
 Parameters
 ----------
-branch_str : character
+branch_str : str
     List of branches to apply tune set to.
 
-q_str : character
+q_str : str
     Expression for Qc tune.
 
 delta_input : bool
@@ -6041,7 +6041,7 @@ err : bool
 
 Parameters
 ----------
-what : character
+what : str
     What to show.
 )"""
   );
@@ -6059,7 +6059,7 @@ Parameters
 iunit : int
     File unit to write to. 0 => print to the terminal.
 
-form : character
+form : str
     What to output: 'ALL'   -> All datums and variables. 'TOP10' -> Top datums and variables that contribute
     to the merit function.
 )"""
@@ -6111,9 +6111,9 @@ calc_ok : bool
 
 Parameters
 ----------
-data_type : character
+data_type : str
 
-data_source : character
+data_source : str
 
 do_calc : bool
 )"""
@@ -6149,7 +6149,7 @@ do_calc : bool
 
 Parameters
 ----------
-comp_str : character
+comp_str : str
     Components. EG: 'meas - design'
 
 Returns
@@ -6171,9 +6171,9 @@ err : bool
 
 Parameters
 ----------
-data_type : character
+data_type : str
 
-data_source : character
+data_source : str
 
 do_srdt : int
 )"""
@@ -6204,7 +6204,7 @@ do_srdt : int
 
 Parameters
 ----------
-name_in : character
+name_in : str
     Input name with "#" character
 
 ix_uni : int
@@ -6212,7 +6212,7 @@ ix_uni : int
 
 Returns
 -------
-name_out : character
+name_out : str
     Output name.
 
 ok : bool
@@ -6246,16 +6246,16 @@ lat : LatStruct
   m.def(
       "tao_taper_cmd",
       &Tao::tao_taper_cmd,
-      py::arg("except"),
+      py::arg("except_"),
       py::arg("uni_names"),
       R"""(Wrapper for Fortran routine tao_taper_cmd
 
 Parameters
 ----------
-except : character
+except : str
     List of elements not to vary.
 
-uni_names : character
+uni_names : str
     Universes to taper.
 )"""
   );
@@ -6271,13 +6271,13 @@ uni_names : character
 
 Parameters
 ----------
-num_str : character
+num_str : str
 
 n_size : int
 
 change_number : 1D array of float
 
-abs_or_rel : character
+abs_or_rel : str
 
 err : bool
 )"""
@@ -6361,7 +6361,7 @@ valid_value : bool
 
 Parameters
 ----------
-expression : character
+expression : str
     arithmetic expression
 
 Returns
@@ -6418,7 +6418,7 @@ iunit : int
 
 Parameters
 ----------
-command : character, optional
+command : str, optional
     Tao command string. If present, getting user input from the terminal is bypassed. This is used when
     interfacing to Python.
 
@@ -6464,11 +6464,11 @@ datum : TaoDataStruct
 
 Returns
 -------
-ix_branch : int, optional
-    Lattice branch associated with element
-
 ix_ele : int
     Element index associated with ele.
+
+ix_branch : int, optional
+    Lattice branch associated with element
 )"""
   );
   m.def(
@@ -6511,7 +6511,7 @@ For example:
 
 Parameters
 ----------
-string : character
+string : str
     String to parse
 
 Returns
@@ -6550,10 +6550,10 @@ i_this_uni : int
 
 Parameters
 ----------
-action : character
+action : str
     veto, use or restore
 
-data_name : character
+data_name : str
     the selected data
 )"""
   );
@@ -6566,10 +6566,10 @@ data_name : character
 
 Parameters
 ----------
-action : character
+action : str
     'use', 'veto', or 'restore'
 
-var_name : character
+var_name : str
     the selected variable name or all
 )"""
   );
@@ -6597,7 +6597,7 @@ var : TaoVarStruct
 
 Returns
 -------
-var1_name : character
+var1_name : str
     Appropriate name.
 )"""
   );
@@ -6614,7 +6614,7 @@ var : TaoVarStruct
 
 Returns
 -------
-var_attrib_name : character
+var_attrib_name : str
     Attribute list.
 )"""
   );
@@ -6631,7 +6631,7 @@ Parameters
 eles : 1D array of ElePointerStruct
     Array of elements which have a changed attribute.
 
-attribute : character
+attribute : str
     Name of attribute changed.
 
 silent : bool
@@ -6686,7 +6686,7 @@ is suitable for inclusion in a Bmad lattice file.
 
 Parameters
 ----------
-out_file : character
+out_file : str
     Name of output file. If blank. Ouput to the terminal.
 
 show_good_opt_only : bool, optional
@@ -6733,10 +6733,10 @@ The wave analysis is done by the routine tao_wave_analysis.
 
 Parameters
 ----------
-curve_name : character
+curve_name : str
     Character(*) curve for wave analysis.
 
-plot_place : character
+plot_place : str
     Character(*) place on plot page to put the wave plot.
 )"""
   );
@@ -6795,7 +6795,7 @@ f4 : 1D array of float, optional
 
 Parameters
 ----------
-what : character
+what : str
     What to output. See the code for more details.
 )"""
   );
@@ -6808,10 +6808,10 @@ what : character
 
 Parameters
 ----------
-where : character
+where : str
     Region to axis. Eg: "top"
 
-what : character
+what : str
     "s" or "index"
 )"""
   );
@@ -6832,7 +6832,7 @@ Then the scales will be chosen to show all the data.
 
 Parameters
 ----------
-where : character
+where : str
     Region to scale. Eg: "top"
 
 x_min_in : float
@@ -6845,7 +6845,7 @@ include_wall : bool, optional
     Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
     include the building wall position will be included in determining the the scale.
 
-gang : character, optional
+gang : str, optional
     'gang', 'nogang', ''. Default = ''.
 
 exact : bool, optional
@@ -6912,7 +6912,7 @@ include_wall : bool, optional
     Used for floor_plan plots where a building wall is drawn and y_min_in = y_max_in. If present and True
     include the building wall position will be included in determining the the scale.
 
-gang : character, optional
+gang : str, optional
     'gang', 'nogang', ''. Default = ''.
 
 Returns

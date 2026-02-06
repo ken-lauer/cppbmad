@@ -14,7 +14,7 @@ void init_Bmad_routines_k(py::module &m) {
 
 Parameters
 ----------
-key_str : character
+key_str : str
     Name of the key. Result is case insensitive.
 
 abbrev_allowed : bool, optional
@@ -173,7 +173,7 @@ this_kind : int
 
 Returns
 -------
-kind_str : character
+kind_str : str
     String representation
 )"""
   );
@@ -240,7 +240,7 @@ x_knot : 1D array of float
 
 y_knot : 1D array of float
 
-str : character
+str : str
 )"""
   );
 }

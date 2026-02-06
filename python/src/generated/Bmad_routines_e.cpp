@@ -214,7 +214,7 @@ ele : EleStruct
 
 Returns
 -------
-str : character
+str : str
     : Name/location string.
 )"""
   );
@@ -380,13 +380,13 @@ ele : EleStruct
 show_branch0 : bool, optional
     Explicitly show branch for main lattice elements? Default is False.
 
-parens : character, optional
+parens : str, optional
     If present, enclose location string using the two characters supplied. Typically parens will be set to
     "()" or "[]".
 
 Returns
 -------
-str : character
+str : str
     Output string. Left justified.
 )"""
   );
@@ -571,11 +571,11 @@ ref_in : CoordStruct, optional
 
 Returns
 -------
-ptc_fibre : Fibre, optional
-    PTC fibre element.
-
 err_flag : bool
     Set True if setup OK. False otherwise.
+
+ptc_fibre : Fibre, optional
+    PTC fibre element.
 )"""
   );
   m.def(
@@ -700,7 +700,7 @@ order : LatEleOrderStruct
 
 Returns
 -------
-unique_name : character
+unique_name : str
     Unique name that can can be used to identify ele. The simplist name will be constructed. For example, if
     the element name is unique, unique_name will be set to the element name.
 )"""
@@ -890,6 +890,9 @@ print_err : bool, optional
 
 Returns
 -------
+ix_ele : int
+    Index of element at s.
+
 err_flag : bool, optional
     Set True if s is out of bounds. False otherwise.
 
@@ -898,9 +901,6 @@ s_eff : float, optional
 
 position : CoordStruct, optional
     Positional information.
-
-ix_ele : int
-    Index of element at s.
 )"""
   );
   py::class_<Bmad::ElementAtSLat, std::unique_ptr<Bmad::ElementAtSLat>>(
@@ -988,6 +988,9 @@ print_err : bool, optional
 
 Returns
 -------
+ix_ele : int
+    Index of element at s.
+
 err_flag : bool, optional
     Set True if s is out of bounds. False otherwise.
 
@@ -996,9 +999,6 @@ s_eff : float, optional
 
 position : CoordStruct, optional
     Positional information.
-
-ix_ele : int
-    Index of element at s.
 )"""
   );
   m.def(
@@ -3037,7 +3037,7 @@ Parameters
 ----------
 ele : EleStruct
 
-delim : character
+delim : str
 
 is_here : bool
 )"""
@@ -3125,10 +3125,10 @@ Function of evaluate the index of an array. Typically the text being parsed look
 
 Parameters
 ----------
-delim_list1 : character
+delim_list1 : str
     Delimitor after the integer. Normally ')'.
 
-delim_list2 : character
+delim_list2 : str
     Delimitor list to mark the end of word2. Normally '='.
 
 Returns
@@ -3136,10 +3136,10 @@ Returns
 err_flag : bool
     Set True if there is an error. False otherwise.
 
-word2 : character
+word2 : str
     Word found after delim1. Normally this should be blank.
 
-delim2 : character
+delim2 : str
     Actual delimitor found after word2.
 
 this_index : int
@@ -3177,7 +3177,7 @@ Accepted possibilities are:
 
 Parameters
 ----------
-word : character
+word : str
     Input string.
 
 Returns
@@ -3285,7 +3285,7 @@ Also see: expect_this
 
 Parameters
 ----------
-delim_list : character
+delim_list : str
     List of expected (valid) delimitors. If list contains a space character then no delimitor (indicating the
     end of the command) is a valid possibility.
 
@@ -3293,17 +3293,17 @@ check_input_delim : bool
     If True, then check if delim argument is in the delim_list. If False, check that the next character in the
     parse stream is an expected delimitor.
 
-ele_name : character
+ele_name : str
     Lattice element under construction. Used for error messages.
 
-delim : character
+delim : str
     Current delimitor that will be checked if check_input_delim = .true.
     This parameter is an input/output and is modified in-place.
     As an output, delim: Next delim if check_input_delim = False.
 
 Returns
 -------
-delim : character
+delim : str
     Current delimitor that will be checked if check_input_delim = .true.
     This parameter is an input/output and is modified in-place.
     As an output, delim: Next delim if check_input_delim = False.
@@ -3345,7 +3345,7 @@ Also see: expect_one_of
 
 Parameters
 ----------
-expecting : character
+expecting : str
     list of characters that are expected to be next in the parse stream.
 
 check_delim : bool
@@ -3355,7 +3355,7 @@ check_delim : bool
 call_check : bool
     If True then check for 'call::<filename>' construct.
 
-err_str : character
+err_str : str
     String used for error messages.
 
 ele : EleStruct
@@ -3363,7 +3363,7 @@ ele : EleStruct
 
 Returns
 -------
-delim : character
+delim : str
     Final delim
 
 delim_found : bool
@@ -3389,7 +3389,7 @@ polish : bool, optional
 
 Returns
 -------
-str : character
+str : str
     : Expression in string form.
 )"""
   );
@@ -3447,7 +3447,7 @@ Returns
 err_flag : bool
     True if there is an evaluation problem. False otherwise.
 
-err_str : character
+err_str : str
     Error string explaining error if there is one.
 
 value : float
@@ -3497,7 +3497,7 @@ Also see:
 
 Parameters
 ----------
-string : character
+string : str
     Expression to be converted.
 
 Returns
@@ -3511,7 +3511,7 @@ n_stack : int
 err_flag : bool
     Set True if there is an error (EG divide by 0).
 
-err_str : character
+err_str : str
     String describing the error.
 )"""
   );
@@ -3572,7 +3572,7 @@ The root node, equal nodes, and all bracket nodes, will have an array of child n
 
 Parameters
 ----------
-string : character
+string : str
     Expression to be converted.
 
 root_tree : ExpressionTreeStruct
@@ -3583,7 +3583,7 @@ Returns
 err_flag : bool
     Set True if there is an error (EG divide by 0).
 
-err_str : character
+err_str : str
     String describing the error. Make length large to hold the expression.
 )"""
   );
@@ -3615,7 +3615,7 @@ parent : ExpressionTreeStruct, optional
 
 Returns
 -------
-str_out : character
+str_out : str
     Expression string.
 )"""
   );
@@ -3655,7 +3655,7 @@ Also see:
 
 Parameters
 ----------
-expression : character
+expression : str
     Expression string.
 
 var : 1D array of ControlVar1Struct, optional
@@ -3669,11 +3669,11 @@ Returns
 err_flag : bool
     True if there is an evaluation problem. False otherwise.
 
-err_str : character, optional
-    Error string explaining error if there is one.
-
 value : float
     Value of the expression.
+
+err_str : str, optional
+    Error string explaining error if there is one.
 )"""
   );
 }

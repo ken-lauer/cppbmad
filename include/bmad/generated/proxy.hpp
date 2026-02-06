@@ -45,6 +45,7 @@ void ac_kicker_struct_get_amp_vs_time_info(
     bool *is_alloc,
     size_t *el_size
 );
+void ac_kicker_struct_reallocate_amp_vs_time(void *s, int lb, size_t n);
 
 void ac_kicker_struct_get_frequency_info(
     const void *s,
@@ -53,6 +54,7 @@ void ac_kicker_struct_get_frequency_info(
     bool *is_alloc,
     size_t *el_size
 );
+void ac_kicker_struct_reallocate_frequency(void *s, int lb, size_t n);
 
 void interval1_coef_struct_get_c0(const void *struct_obj, double *value_out);
 void interval1_coef_struct_set_c0(void *struct_obj, double value_in);
@@ -60,19 +62,25 @@ void interval1_coef_struct_get_c1(const void *struct_obj, double *value_out);
 void interval1_coef_struct_set_c1(void *struct_obj, double value_in);
 void interval1_coef_struct_get_n_exp(const void *struct_obj, double *value_out);
 void interval1_coef_struct_set_n_exp(void *struct_obj, double value_in);
+
 void photon_reflect_table_struct_get_angle_info(
     const void *s,
-    double **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void photon_reflect_table_struct_reallocate_angle(void *s, int lb, size_t n);
+
 void photon_reflect_table_struct_set_angle(void *s, const void *d, const int *shape);
+
 void photon_reflect_table_struct_get_energy_info(
     const void *s,
-    double **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void photon_reflect_table_struct_reallocate_energy(void *s, int lb, size_t n);
+
 void photon_reflect_table_struct_set_energy(void *s, const void *d, const int *shape);
 
 void photon_reflect_table_struct_get_int1_info(
@@ -82,6 +90,7 @@ void photon_reflect_table_struct_get_int1_info(
     bool *is_alloc,
     size_t *el_size
 );
+void photon_reflect_table_struct_reallocate_int1(void *s, int lb, size_t n);
 
 void photon_reflect_table_struct_get_p_reflect_info(
     const void *s,
@@ -93,19 +102,25 @@ void photon_reflect_table_struct_get_p_reflect_info(
 void photon_reflect_table_struct_set_p_reflect(void *s, const void *d, const int *shape);
 void photon_reflect_table_struct_get_max_energy(const void *struct_obj, double *value_out);
 void photon_reflect_table_struct_set_max_energy(void *struct_obj, double value_in);
+
 void photon_reflect_table_struct_get_p_reflect_scratch_info(
     const void *s,
-    double **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void photon_reflect_table_struct_reallocate_p_reflect_scratch(void *s, int lb, size_t n);
+
 void photon_reflect_table_struct_set_p_reflect_scratch(void *s, const void *d, const int *shape);
+
 void photon_reflect_table_struct_get_bragg_angle_info(
     const void *s,
-    double **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void photon_reflect_table_struct_reallocate_bragg_angle(void *s, int lb, size_t n);
+
 void photon_reflect_table_struct_set_bragg_angle(void *s, const void *d, const int *shape);
 void photon_reflect_surface_struct_get_name_info(const void *s, char **d, int *bounds, bool *a);
 void photon_reflect_surface_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
@@ -139,6 +154,7 @@ void photon_reflect_surface_struct_get_table_info(
     bool *is_alloc,
     size_t *el_size
 );
+void photon_reflect_surface_struct_reallocate_table(void *s, int lb, size_t n);
 
 void photon_reflect_surface_struct_get_surface_roughness_rms(
     const void *struct_obj,
@@ -202,6 +218,7 @@ void coord_array_struct_get_orbit_info(
     bool *is_alloc,
     size_t *el_size
 );
+void coord_array_struct_reallocate_orbit(void *s, int lb, size_t n);
 
 void bpm_phase_coupling_struct_get_K_22a(const void *struct_obj, double *value_out);
 void bpm_phase_coupling_struct_set_K_22a(void *struct_obj, double value_in);
@@ -229,28 +246,25 @@ void expression_atom_struct_get_type(const void *struct_obj, int *value_out);
 void expression_atom_struct_set_type(void *struct_obj, int value_in);
 void expression_atom_struct_get_value(const void *struct_obj, double *value_out);
 void expression_atom_struct_set_value(void *struct_obj, double value_in);
-void wake_sr_z_long_struct_get_w_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void wake_sr_z_long_struct_get_w_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void wake_sr_z_long_struct_reallocate_w(void *s, int lb, size_t n);
+
 void wake_sr_z_long_struct_set_w(void *s, const void *d, const int *shape);
-void wake_sr_z_long_struct_get_fw_info(
-    const void *s,
-    std::complex<double> **d,
-    int *bounds,
-    bool *is_alloc
-);
+
+void wake_sr_z_long_struct_get_fw_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void wake_sr_z_long_struct_reallocate_fw(void *s, int lb, size_t n);
+
 void wake_sr_z_long_struct_set_fw(void *s, const void *d, const int *shape);
-void wake_sr_z_long_struct_get_fbunch_info(
-    const void *s,
-    std::complex<double> **d,
-    int *bounds,
-    bool *is_alloc
-);
+
+void wake_sr_z_long_struct_get_fbunch_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void wake_sr_z_long_struct_reallocate_fbunch(void *s, int lb, size_t n);
+
 void wake_sr_z_long_struct_set_fbunch(void *s, const void *d, const int *shape);
-void wake_sr_z_long_struct_get_w_out_info(
-    const void *s,
-    std::complex<double> **d,
-    int *bounds,
-    bool *is_alloc
-);
+
+void wake_sr_z_long_struct_get_w_out_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void wake_sr_z_long_struct_reallocate_w_out(void *s, int lb, size_t n);
+
 void wake_sr_z_long_struct_set_w_out(void *s, const void *d, const int *shape);
 void wake_sr_z_long_struct_get_dz(const void *struct_obj, double *value_out);
 void wake_sr_z_long_struct_set_dz(void *struct_obj, double value_in);
@@ -294,6 +308,7 @@ void wake_sr_struct_get_long_info(
     bool *is_alloc,
     size_t *el_size
 );
+void wake_sr_struct_reallocate_long(void *s, int lb, size_t n);
 
 void wake_sr_struct_get_trans_info(
     const void *s,
@@ -302,6 +317,7 @@ void wake_sr_struct_get_trans_info(
     bool *is_alloc,
     size_t *el_size
 );
+void wake_sr_struct_reallocate_trans(void *s, int lb, size_t n);
 
 void wake_sr_struct_get_z_ref_long(const void *struct_obj, double *value_out);
 void wake_sr_struct_set_z_ref_long(void *struct_obj, double value_in);
@@ -351,6 +367,7 @@ void wake_lr_struct_get_mode_info(
     bool *is_alloc,
     size_t *el_size
 );
+void wake_lr_struct_reallocate_mode(void *s, int lb, size_t n);
 
 void wake_lr_struct_get_t_ref(const void *struct_obj, double *value_out);
 void wake_lr_struct_set_t_ref(void *struct_obj, double value_in);
@@ -399,6 +416,7 @@ void em_taylor_struct_get_term_info(
     bool *is_alloc,
     size_t *el_size
 );
+void em_taylor_struct_reallocate_term(void *s, int lb, size_t n);
 
 void cartesian_map_term1_struct_get_coef(const void *struct_obj, double *value_out);
 void cartesian_map_term1_struct_set_coef(void *struct_obj, double value_in);
@@ -430,6 +448,7 @@ void cartesian_map_term_struct_get_term_info(
     bool *is_alloc,
     size_t *el_size
 );
+void cartesian_map_term_struct_reallocate_term(void *s, int lb, size_t n);
 
 void cartesian_map_struct_get_field_scale(const void *struct_obj, double *value_out);
 void cartesian_map_struct_set_field_scale(void *struct_obj, double value_in);
@@ -465,6 +484,7 @@ void cylindrical_map_term_struct_get_term_info(
     bool *is_alloc,
     size_t *el_size
 );
+void cylindrical_map_term_struct_reallocate_term(void *s, int lb, size_t n);
 
 void cylindrical_map_struct_get_m(const void *struct_obj, int *value_out);
 void cylindrical_map_struct_set_m(void *struct_obj, int value_in);
@@ -741,6 +761,7 @@ void gen_grad_map_struct_get_gg_info(
     bool *is_alloc,
     size_t *el_size
 );
+void gen_grad_map_struct_reallocate_gg(void *s, int lb, size_t n);
 
 void gen_grad_map_struct_get_ele_anchor_pt(const void *struct_obj, int *value_out);
 void gen_grad_map_struct_set_ele_anchor_pt(void *struct_obj, int value_in);
@@ -979,13 +1000,16 @@ void photon_element_struct_get_init_energy_prob_info(
     bool *is_alloc,
     size_t *el_size
 );
+void photon_element_struct_reallocate_init_energy_prob(void *s, int lb, size_t n);
 
 void photon_element_struct_get_integrated_init_energy_prob_info(
     const void *s,
-    double **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void photon_element_struct_reallocate_integrated_init_energy_prob(void *s, int lb, size_t n);
+
 void photon_element_struct_set_integrated_init_energy_prob(
     void *s,
     const void *d,
@@ -1021,6 +1045,7 @@ void wall3d_section_struct_get_v_info(
     bool *is_alloc,
     size_t *el_size
 );
+void wall3d_section_struct_reallocate_v(void *s, int lb, size_t n);
 
 void wall3d_section_struct_get_surface(const void *struct_obj, void **ptr_out);
 void wall3d_section_struct_set_surface(void *struct_obj, const void *src_ptr);
@@ -1082,6 +1107,7 @@ void wall3d_struct_get_section_info(
     bool *is_alloc,
     size_t *el_size
 );
+void wall3d_struct_reallocate_section(void *s, int lb, size_t n);
 
 void ramper_lord_struct_get_ix_ele(const void *struct_obj, int *value_out);
 void ramper_lord_struct_set_ix_ele(void *struct_obj, int value_in);
@@ -1091,7 +1117,10 @@ void ramper_lord_struct_get_attrib_ptr(const void *struct_obj, double **ptr_out)
 void ramper_lord_struct_set_attrib_ptr(void *struct_obj, double value_in);
 void control_struct_get_value(const void *struct_obj, double *value_out);
 void control_struct_set_value(void *struct_obj, double value_in);
-void control_struct_get_y_knot_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void control_struct_get_y_knot_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void control_struct_reallocate_y_knot(void *s, int lb, size_t n);
+
 void control_struct_set_y_knot(void *s, const void *d, const int *shape);
 
 void control_struct_get_stack_info(
@@ -1101,6 +1130,7 @@ void control_struct_get_stack_info(
     bool *is_alloc,
     size_t *el_size
 );
+void control_struct_reallocate_stack(void *s, int lb, size_t n);
 
 void control_struct_get_slave(const void *struct_obj, void **ptr_out);
 void control_struct_set_slave(void *struct_obj, const void *src_ptr);
@@ -1118,7 +1148,10 @@ void control_var1_struct_get_value(const void *struct_obj, double *value_out);
 void control_var1_struct_set_value(void *struct_obj, double value_in);
 void control_var1_struct_get_old_value(const void *struct_obj, double *value_out);
 void control_var1_struct_set_old_value(void *struct_obj, double value_in);
-void control_ramp1_struct_get_y_knot_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void control_ramp1_struct_get_y_knot_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void control_ramp1_struct_reallocate_y_knot(void *s, int lb, size_t n);
+
 void control_ramp1_struct_set_y_knot(void *s, const void *d, const int *shape);
 
 void control_ramp1_struct_get_stack_info(
@@ -1128,6 +1161,7 @@ void control_ramp1_struct_get_stack_info(
     bool *is_alloc,
     size_t *el_size
 );
+void control_ramp1_struct_reallocate_stack(void *s, int lb, size_t n);
 
 void control_ramp1_struct_get_attribute_info(const void *s, char **d, int *bounds, bool *a);
 void control_ramp1_struct_set_attribute(void *struct_obj, const char *str_ptr, int str_len);
@@ -1143,6 +1177,7 @@ void controller_struct_get_var_info(
     bool *is_alloc,
     size_t *el_size
 );
+void controller_struct_reallocate_var(void *s, int lb, size_t n);
 
 void controller_struct_get_ramp_info(
     const void *s,
@@ -1151,6 +1186,7 @@ void controller_struct_get_ramp_info(
     bool *is_alloc,
     size_t *el_size
 );
+void controller_struct_reallocate_ramp(void *s, int lb, size_t n);
 
 void controller_struct_get_ramper_lord_info(
     const void *s,
@@ -1159,8 +1195,11 @@ void controller_struct_get_ramper_lord_info(
     bool *is_alloc,
     size_t *el_size
 );
+void controller_struct_reallocate_ramper_lord(void *s, int lb, size_t n);
 
-void controller_struct_get_x_knot_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void controller_struct_get_x_knot_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void controller_struct_reallocate_x_knot(void *s, int lb, size_t n);
+
 void controller_struct_set_x_knot(void *s, const void *d, const int *shape);
 void ellipse_beam_init_struct_get_part_per_ellipse(const void *struct_obj, int *value_out);
 void ellipse_beam_init_struct_set_part_per_ellipse(void *struct_obj, int value_in);
@@ -1479,6 +1518,7 @@ void track_struct_get_pt_info(
     bool *is_alloc,
     size_t *el_size
 );
+void track_struct_reallocate_pt(void *s, int lb, size_t n);
 
 void track_struct_get_ds_save(const void *struct_obj, double *value_out);
 void track_struct_set_ds_save(void *struct_obj, double value_in);
@@ -1685,6 +1725,7 @@ void rad_int_branch_struct_get_ele_info(
     bool *is_alloc,
     size_t *el_size
 );
+void rad_int_branch_struct_reallocate_ele(void *s, int lb, size_t n);
 
 void rad_int_all_ele_struct_get_branch_info(
     const void *s,
@@ -1693,6 +1734,7 @@ void rad_int_all_ele_struct_get_branch_info(
     bool *is_alloc,
     size_t *el_size
 );
+void rad_int_all_ele_struct_reallocate_branch(void *s, int lb, size_t n);
 
 void rf_stair_step_struct_get_E_tot0(const void *struct_obj, double *value_out);
 void rf_stair_step_struct_set_E_tot0(void *struct_obj, double value_in);
@@ -1720,6 +1762,7 @@ void rf_ele_struct_get_steps_info(
     bool *is_alloc,
     size_t *el_size
 );
+void rf_ele_struct_reallocate_steps(void *s, int lb, size_t n);
 
 void rf_ele_struct_get_ds_step(const void *struct_obj, double *value_out);
 void rf_ele_struct_set_ds_step(void *struct_obj, double value_in);
@@ -2062,6 +2105,7 @@ void lat_struct_get_constant_info(
     bool *is_alloc,
     size_t *el_size
 );
+void lat_struct_reallocate_constant(void *s, int lb, size_t n);
 
 void lat_struct_get_a(const void *struct_obj, void **ptr_out);
 void lat_struct_set_a(void *struct_obj, const void *src_ptr);
@@ -2085,6 +2129,7 @@ void lat_struct_get_branch_info(
     bool *is_alloc,
     size_t *el_size
 );
+void lat_struct_reallocate_branch(void *s, int lb, size_t n);
 
 void lat_struct_get_control_info(
     const void *s,
@@ -2093,6 +2138,7 @@ void lat_struct_get_control_info(
     bool *is_alloc,
     size_t *el_size
 );
+void lat_struct_reallocate_control(void *s, int lb, size_t n);
 
 void lat_struct_get_particle_start(const void *struct_obj, void **ptr_out);
 void lat_struct_set_particle_start(void *struct_obj, const void *src_ptr);
@@ -2100,7 +2146,10 @@ void lat_struct_get_beam_init(const void *struct_obj, void **ptr_out);
 void lat_struct_set_beam_init(void *struct_obj, const void *src_ptr);
 void lat_struct_get_pre_tracker(const void *struct_obj, void **ptr_out);
 void lat_struct_set_pre_tracker(void *struct_obj, const void *src_ptr);
-void lat_struct_get_custom_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void lat_struct_get_custom_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void lat_struct_reallocate_custom(void *s, int lb, size_t n);
+
 void lat_struct_set_custom(void *s, const void *d, const int *shape);
 void lat_struct_get_version(const void *struct_obj, int *value_out);
 void lat_struct_set_version(void *struct_obj, int value_in);
@@ -2114,7 +2163,10 @@ void lat_struct_get_n_ic_max(const void *struct_obj, int *value_out);
 void lat_struct_set_n_ic_max(void *struct_obj, int value_in);
 void lat_struct_get_input_taylor_order(const void *struct_obj, int *value_out);
 void lat_struct_set_input_taylor_order(void *struct_obj, int value_in);
-void lat_struct_get_ic_info(const void *s, int **d, int *bounds, bool *is_alloc);
+
+void lat_struct_get_ic_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void lat_struct_reallocate_ic(void *s, int lb, size_t n);
+
 void lat_struct_set_ic(void *s, const void *d, const int *shape);
 void lat_struct_get_photon_type(const void *struct_obj, int *value_out);
 void lat_struct_set_photon_type(void *struct_obj, int value_in);
@@ -2132,8 +2184,11 @@ void bunch_struct_get_particle_info(
     bool *is_alloc,
     size_t *el_size
 );
+void bunch_struct_reallocate_particle(void *s, int lb, size_t n);
 
-void bunch_struct_get_ix_z_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void bunch_struct_get_ix_z_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void bunch_struct_reallocate_ix_z(void *s, int lb, size_t n);
+
 void bunch_struct_set_ix_z(void *s, const void *d, const int *shape);
 void bunch_struct_get_charge_tot(const void *struct_obj, double *value_out);
 void bunch_struct_set_charge_tot(void *struct_obj, double value_in);
@@ -2219,6 +2274,7 @@ void beam_struct_get_bunch_info(
     bool *is_alloc,
     size_t *el_size
 );
+void beam_struct_reallocate_bunch(void *s, int lb, size_t n);
 
 void aperture_point_struct_get_x(const void *struct_obj, double *value_out);
 void aperture_point_struct_set_x(void *struct_obj, double value_in);
@@ -2256,6 +2312,7 @@ void aperture_scan_struct_get_point_info(
     bool *is_alloc,
     size_t *el_size
 );
+void aperture_scan_struct_reallocate_point(void *s, int lb, size_t n);
 
 void aperture_scan_struct_get_ref_orb(const void *struct_obj, void **ptr_out);
 void aperture_scan_struct_set_ref_orb(void *struct_obj, const void *src_ptr);
@@ -2290,7 +2347,9 @@ void nametable_struct_get_name_info(
     bool *is_alloc
 );
 
-void nametable_struct_get_index_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void nametable_struct_get_index_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void nametable_struct_reallocate_index(void *s, int lb, size_t n);
+
 void nametable_struct_set_index(void *s, const void *d, const int *shape);
 void nametable_struct_get_n_min(const void *struct_obj, int *value_out);
 void nametable_struct_set_n_min(void *struct_obj, int value_in);
@@ -2406,6 +2465,7 @@ void bmad_normal_form_struct_get_h_info(
     bool *is_alloc,
     size_t *el_size
 );
+void bmad_normal_form_struct_reallocate_h(void *s, int lb, size_t n);
 
 void bunch_track_struct_get_pt_info(
     const void *s,
@@ -2414,6 +2474,7 @@ void bunch_track_struct_get_pt_info(
     bool *is_alloc,
     size_t *el_size
 );
+void bunch_track_struct_reallocate_pt(void *s, int lb, size_t n);
 
 void bunch_track_struct_get_ds_save(const void *struct_obj, double *value_out);
 void bunch_track_struct_set_ds_save(void *struct_obj, double value_in);
@@ -2491,6 +2552,7 @@ void tao_ele_shape_struct_get_uni_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_ele_shape_struct_reallocate_uni(void *s, int lb, size_t n);
 
 void tao_ele_pointer_struct_get_eles_info(
     const void *s,
@@ -2499,6 +2561,7 @@ void tao_ele_pointer_struct_get_eles_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_ele_pointer_struct_reallocate_eles(void *s, int lb, size_t n);
 
 void tao_ele_pointer_struct_get_n_loc(const void *struct_obj, int *value_out);
 void tao_ele_pointer_struct_set_n_loc(void *struct_obj, int value_in);
@@ -2530,25 +2593,55 @@ void tao_curve_struct_get_hist(const void *struct_obj, void **ptr_out);
 void tao_curve_struct_set_hist(void *struct_obj, const void *src_ptr);
 void tao_curve_struct_get_z_color(const void *struct_obj, void **ptr_out);
 void tao_curve_struct_set_z_color(void *struct_obj, const void *src_ptr);
-void tao_curve_struct_get_x_line_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_x_line_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_x_line(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_x_line(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_y_line_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_y_line_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_y_line(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_y_line(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_y2_line_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_y2_line_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_y2_line(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_y2_line(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_ix_line_info(const void *s, int **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_ix_line_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_ix_line(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_ix_line(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_x_symb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_x_symb_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_x_symb(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_x_symb(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_y_symb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_y_symb_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_y_symb(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_y_symb(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_z_symb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_z_symb_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_z_symb(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_z_symb(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_err_symb_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_err_symb_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_err_symb(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_err_symb(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_symb_size_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_symb_size_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_symb_size(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_symb_size(void *s, const void *d, const int *shape);
-void tao_curve_struct_get_ix_symb_info(const void *s, int **d, int *bounds, bool *is_alloc);
+
+void tao_curve_struct_get_ix_symb_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_curve_struct_reallocate_ix_symb(void *s, int lb, size_t n);
+
 void tao_curve_struct_set_ix_symb(void *s, const void *d, const int *shape);
 void tao_curve_struct_get_y_axis_scale_factor(const void *struct_obj, double *value_out);
 void tao_curve_struct_set_y_axis_scale_factor(void *struct_obj, double value_in);
@@ -2624,6 +2717,7 @@ void lat_ele_order_array_struct_get_ele_info(
     bool *is_alloc,
     size_t *el_size
 );
+void lat_ele_order_array_struct_reallocate_ele(void *s, int lb, size_t n);
 
 void tao_lat_sigma_struct_get_mat_info(
     const void *s,
@@ -2732,6 +2826,7 @@ void tao_spin_polarization_struct_get_q_ele_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_spin_polarization_struct_reallocate_q_ele(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_tao_lat(const void *struct_obj, void **ptr_out);
 void tao_lattice_branch_struct_set_tao_lat(void *struct_obj, const void *src_ptr);
@@ -2743,6 +2838,7 @@ void tao_lattice_branch_struct_get_lat_sigma_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_branch_struct_reallocate_lat_sigma(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_spin_ele_info(
     const void *s,
@@ -2751,6 +2847,7 @@ void tao_lattice_branch_struct_get_spin_ele_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_branch_struct_reallocate_spin_ele(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_bunch_params_info(
     const void *s,
@@ -2759,6 +2856,7 @@ void tao_lattice_branch_struct_get_bunch_params_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_branch_struct_reallocate_bunch_params(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_bunch_params_comb_info(
     const void *s,
@@ -2767,6 +2865,7 @@ void tao_lattice_branch_struct_get_bunch_params_comb_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_branch_struct_reallocate_bunch_params_comb(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_orbit_info(
     const void *s,
@@ -2775,6 +2874,7 @@ void tao_lattice_branch_struct_get_orbit_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_branch_struct_reallocate_orbit(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_plot_cache_info(
     const void *s,
@@ -2783,6 +2883,7 @@ void tao_lattice_branch_struct_get_plot_cache_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_branch_struct_reallocate_plot_cache(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_spin(const void *struct_obj, void **ptr_out);
 void tao_lattice_branch_struct_set_spin(void *struct_obj, const void *src_ptr);
@@ -2806,6 +2907,7 @@ void tao_lattice_branch_struct_get_high_E_orb_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_branch_struct_reallocate_high_E_orb(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_low_E_orb_info(
     const void *s,
@@ -2814,6 +2916,7 @@ void tao_lattice_branch_struct_get_low_E_orb_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_branch_struct_reallocate_low_E_orb(void *s, int lb, size_t n);
 
 void tao_lattice_branch_struct_get_taylor_save_info(
     const void *s,
@@ -2920,6 +3023,7 @@ void tao_d2_data_struct_get_d1_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_d2_data_struct_reallocate_d1(void *s, int lb, size_t n);
 
 void tao_d2_data_struct_get_ix_universe(const void *struct_obj, int *value_out);
 void tao_d2_data_struct_set_ix_universe(void *struct_obj, int value_in);
@@ -2970,6 +3074,7 @@ void tao_graph_struct_get_curve_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_graph_struct_reallocate_curve(void *s, int lb, size_t n);
 
 void tao_graph_struct_get_p(const void *struct_obj, void **ptr_out);
 void tao_graph_struct_set_p(void *struct_obj, const void *src_ptr);
@@ -3035,6 +3140,7 @@ void tao_plot_struct_get_graph_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_plot_struct_reallocate_graph(void *s, int lb, size_t n);
 
 void tao_plot_struct_get_r(const void *struct_obj, void **ptr_out);
 void tao_plot_struct_set_r(void *struct_obj, const void *src_ptr);
@@ -3098,6 +3204,7 @@ void tao_super_universe_struct_get_v1_var_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_super_universe_struct_reallocate_v1_var(void *s, int lb, size_t n);
 
 void tao_super_universe_struct_get_var_info(
     const void *s,
@@ -3106,6 +3213,7 @@ void tao_super_universe_struct_get_var_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_super_universe_struct_reallocate_var(void *s, int lb, size_t n);
 
 void tao_super_universe_struct_get_u_info(
     const void *s,
@@ -3114,8 +3222,11 @@ void tao_super_universe_struct_get_u_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_super_universe_struct_reallocate_u(void *s, int lb, size_t n);
 
-void tao_super_universe_struct_get_key_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void tao_super_universe_struct_get_key_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_super_universe_struct_reallocate_key(void *s, int lb, size_t n);
+
 void tao_super_universe_struct_set_key(void *s, const void *d, const int *shape);
 void tao_super_universe_struct_get_building_wall(const void *struct_obj, void **ptr_out);
 void tao_super_universe_struct_set_building_wall(void *struct_obj, const void *src_ptr);
@@ -3150,6 +3261,7 @@ void tao_var_struct_get_slave_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_var_struct_reallocate_slave(void *s, int lb, size_t n);
 
 void tao_var_struct_get_ix_v1(const void *struct_obj, int *value_out);
 void tao_var_struct_set_ix_v1(void *struct_obj, int value_in);
@@ -3249,6 +3361,7 @@ void tao_lattice_struct_get_tao_branch_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_lattice_struct_reallocate_tao_branch(void *s, int lb, size_t n);
 
 void tao_beam_uni_struct_get_saved_at_info(const void *s, char **d, int *bounds, bool *a);
 void tao_beam_uni_struct_set_saved_at(void *struct_obj, const char *str_ptr, int str_len);
@@ -3270,13 +3383,11 @@ void tao_dynamic_aperture_struct_get_scan_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_dynamic_aperture_struct_reallocate_scan(void *s, int lb, size_t n);
 
-void tao_dynamic_aperture_struct_get_pz_info(
-    const void *s,
-    double **d,
-    int *bounds,
-    bool *is_alloc
-);
+void tao_dynamic_aperture_struct_get_pz_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_dynamic_aperture_struct_reallocate_pz(void *s, int lb, size_t n);
+
 void tao_dynamic_aperture_struct_set_pz(void *s, const void *d, const int *shape);
 void tao_dynamic_aperture_struct_get_ellipse_scale(const void *struct_obj, double *value_out);
 void tao_dynamic_aperture_struct_set_ellipse_scale(void *struct_obj, double value_in);
@@ -3292,6 +3403,7 @@ void tao_model_branch_struct_get_ele_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_model_branch_struct_reallocate_ele(void *s, int lb, size_t n);
 
 void tao_model_branch_struct_get_beam(const void *struct_obj, void **ptr_out);
 void tao_model_branch_struct_set_beam(void *struct_obj, const void *src_ptr);
@@ -3459,6 +3571,7 @@ void lat_ele_order_struct_get_branch_info(
     bool *is_alloc,
     size_t *el_size
 );
+void lat_ele_order_struct_reallocate_branch(void *s, int lb, size_t n);
 
 void tao_expression_info_struct_get_good(const void *struct_obj, bool *value_out);
 void tao_expression_info_struct_set_good(void *struct_obj, bool value_in);
@@ -3472,7 +3585,10 @@ void tao_eval_node_struct_get_name_info(const void *s, char **d, int *bounds, bo
 void tao_eval_node_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
 void tao_eval_node_struct_get_scale(const void *struct_obj, double *value_out);
 void tao_eval_node_struct_set_scale(void *struct_obj, double value_in);
-void tao_eval_node_struct_get_value_info(const void *s, double **d, int *bounds, bool *is_alloc);
+
+void tao_eval_node_struct_get_value_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_eval_node_struct_reallocate_value(void *s, int lb, size_t n);
+
 void tao_eval_node_struct_set_value(void *s, const void *d, const int *shape);
 
 void tao_eval_node_struct_get_info_info(
@@ -3482,6 +3598,7 @@ void tao_eval_node_struct_get_info_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_eval_node_struct_reallocate_info(void *s, int lb, size_t n);
 
 void tao_eval_node_struct_get_node_info(
     const void *s,
@@ -3521,6 +3638,7 @@ void tao_drawing_struct_get_ele_shape_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_drawing_struct_reallocate_ele_shape(void *s, int lb, size_t n);
 
 void tao_shape_pattern_struct_get_name_info(const void *s, char **d, int *bounds, bool *a);
 void tao_shape_pattern_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
@@ -3534,6 +3652,7 @@ void tao_shape_pattern_struct_get_pt_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_shape_pattern_struct_reallocate_pt(void *s, int lb, size_t n);
 
 void tao_shape_pattern_point_struct_get_s(const void *struct_obj, double *value_out);
 void tao_shape_pattern_point_struct_set_s(void *struct_obj, double value_in);
@@ -3933,6 +4052,7 @@ void tao_common_struct_get_plot_place_buffer_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_common_struct_reallocate_plot_place_buffer(void *s, int lb, size_t n);
 
 void tao_common_struct_get_covar_info(
     const void *s,
@@ -4062,6 +4182,7 @@ void tao_plot_page_struct_get_pattern_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_plot_page_struct_reallocate_pattern(void *s, int lb, size_t n);
 
 void tao_plot_page_struct_get_template_info(
     const void *s,
@@ -4070,6 +4191,7 @@ void tao_plot_page_struct_get_template_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_plot_page_struct_reallocate_template(void *s, int lb, size_t n);
 
 void tao_plot_page_struct_get_region_info(
     const void *s,
@@ -4078,6 +4200,7 @@ void tao_plot_page_struct_get_region_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_plot_page_struct_reallocate_region(void *s, int lb, size_t n);
 
 void tao_plot_page_struct_get_plot_display_type_info(const void *s, char **d, int *bounds, bool *a);
 void tao_plot_page_struct_set_plot_display_type(void *struct_obj, const char *str_ptr, int str_len);
@@ -4123,6 +4246,7 @@ void tao_building_wall_struct_get_section_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_building_wall_struct_reallocate_section(void *s, int lb, size_t n);
 
 void tao_building_wall_orientation_struct_get_theta(const void *struct_obj, double *value_out);
 void tao_building_wall_orientation_struct_set_theta(void *struct_obj, double value_in);
@@ -4151,6 +4275,7 @@ void tao_building_wall_section_struct_get_point_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_building_wall_section_struct_reallocate_point(void *s, int lb, size_t n);
 
 void tao_building_wall_point_struct_get_z(const void *struct_obj, double *value_out);
 void tao_building_wall_point_struct_set_z(void *struct_obj, double value_in);
@@ -4234,7 +4359,10 @@ void tao_wave_struct_get_n_b(const void *struct_obj, int *value_out);
 void tao_wave_struct_set_n_b(void *struct_obj, int value_in);
 void tao_wave_struct_get_i_curve_wrap_pt(const void *struct_obj, int *value_out);
 void tao_wave_struct_set_i_curve_wrap_pt(void *struct_obj, int value_in);
-void tao_wave_struct_get_ix_data_info(const void *s, int **d, int *bounds, bool *is_alloc);
+
+void tao_wave_struct_get_ix_data_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void tao_wave_struct_reallocate_ix_data(void *s, int lb, size_t n);
+
 void tao_wave_struct_set_ix_data(void *s, const void *d, const int *shape);
 void tao_wave_struct_get_n_kick(const void *struct_obj, int *value_out);
 void tao_wave_struct_set_n_kick(void *struct_obj, int value_in);
@@ -4246,6 +4374,7 @@ void tao_wave_struct_get_kick_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_wave_struct_reallocate_kick(void *s, int lb, size_t n);
 
 void tao_wave_struct_get_base_graph(const void *struct_obj, void **ptr_out);
 void tao_wave_struct_set_base_graph(void *struct_obj, const void *src_ptr);
@@ -4299,6 +4428,7 @@ void tao_universe_struct_get_d2_data_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_universe_struct_reallocate_d2_data(void *s, int lb, size_t n);
 
 void tao_universe_struct_get_data_info(
     const void *s,
@@ -4307,6 +4437,7 @@ void tao_universe_struct_get_data_info(
     bool *is_alloc,
     size_t *el_size
 );
+void tao_universe_struct_reallocate_data(void *s, int lb, size_t n);
 
 void tao_universe_struct_get_ping_scale(const void *struct_obj, void **ptr_out);
 void tao_universe_struct_set_ping_scale(void *struct_obj, const void *src_ptr);
@@ -4431,6 +4562,7 @@ void bbu_beam_struct_get_bunch_info(
     bool *is_alloc,
     size_t *el_size
 );
+void bbu_beam_struct_reallocate_bunch(void *s, int lb, size_t n);
 
 void bbu_beam_struct_get_stage_info(
     const void *s,
@@ -4439,8 +4571,11 @@ void bbu_beam_struct_get_stage_info(
     bool *is_alloc,
     size_t *el_size
 );
+void bbu_beam_struct_reallocate_stage(void *s, int lb, size_t n);
 
-void bbu_beam_struct_get_ix_ele_bunch_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void bbu_beam_struct_get_ix_ele_bunch_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void bbu_beam_struct_reallocate_ix_ele_bunch(void *s, int lb, size_t n);
+
 void bbu_beam_struct_set_ix_ele_bunch(void *s, const void *d, const int *shape);
 void bbu_beam_struct_get_ix_bunch_head(const void *struct_obj, int *value_out);
 void bbu_beam_struct_set_ix_bunch_head(void *struct_obj, int value_in);
@@ -4649,12 +4784,15 @@ void all_encompassing_struct_get_real_rp_3d_ptr_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_real_rp_3d_ptr(void *s, const void *d, const int *shape);
+
 void all_encompassing_struct_get_real_rp_1d_alloc_info(
     const void *s,
-    double **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_reallocate_real_rp_1d_alloc(void *s, int lb, size_t n);
+
 void all_encompassing_struct_set_real_rp_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_rp_2d_alloc_info(
     const void *s,
@@ -4722,12 +4860,15 @@ void all_encompassing_struct_get_real_dp_3d_ptr_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_real_dp_3d_ptr(void *s, const void *d, const int *shape);
+
 void all_encompassing_struct_get_real_dp_1d_alloc_info(
     const void *s,
-    double **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_reallocate_real_dp_1d_alloc(void *s, int lb, size_t n);
+
 void all_encompassing_struct_set_real_dp_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_real_dp_2d_alloc_info(
     const void *s,
@@ -4796,12 +4937,15 @@ void all_encompassing_struct_get_complex_dp_3d_ptr_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_complex_dp_3d_ptr(void *s, const void *d, const int *shape);
+
 void all_encompassing_struct_get_complex_dp_1d_alloc_info(
     const void *s,
-    std::complex<double> **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_reallocate_complex_dp_1d_alloc(void *s, int lb, size_t n);
+
 void all_encompassing_struct_set_complex_dp_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_complex_dp_2d_alloc_info(
     const void *s,
@@ -4864,12 +5008,15 @@ void all_encompassing_struct_get_int_3d_ptr_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_int_3d_ptr(void *s, const void *d, const int *shape);
+
 void all_encompassing_struct_get_int_1d_alloc_info(
     const void *s,
-    int **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_reallocate_int_1d_alloc(void *s, int lb, size_t n);
+
 void all_encompassing_struct_set_int_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int_2d_alloc_info(
     const void *s,
@@ -4937,12 +5084,15 @@ void all_encompassing_struct_get_int8_3d_ptr_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_int8_3d_ptr(void *s, const void *d, const int *shape);
+
 void all_encompassing_struct_get_int8_1d_alloc_info(
     const void *s,
-    int64_t **d,
+    void **d,
     int *bounds,
     bool *is_alloc
 );
+void all_encompassing_struct_reallocate_int8_1d_alloc(void *s, int lb, size_t n);
+
 void all_encompassing_struct_set_int8_1d_alloc(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_int8_2d_alloc_info(
     const void *s,
@@ -5052,6 +5202,7 @@ void all_encompassing_struct_get_type_1d_alloc_info(
     bool *is_alloc,
     size_t *el_size
 );
+void all_encompassing_struct_reallocate_type_1d_alloc(void *s, int lb, size_t n);
 
 void all_encompassing_struct_get_type_2d_alloc_info(
     const void *s,
@@ -5092,74 +5243,32 @@ extern "C" {
 void *allocate_real_container();
 void reallocate_real_container_data(void *, int, size_t) noexcept;
 void deallocate_real_container(void *) noexcept;
-void access_real_container(
-    void *handle,
-    void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
-);
+void access_real_container(const void *handle, void **data, int *bounds, bool *alloc);
 
 void *allocate_real16_container();
 void reallocate_real16_container_data(void *, int, size_t) noexcept;
 void deallocate_real16_container(void *) noexcept;
-void access_real16_container(
-    void *handle,
-    void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
-);
+void access_real16_container(const void *handle, void **data, int *bounds, bool *alloc);
 
 void *allocate_integer_container();
 void reallocate_integer_container_data(void *, int, size_t) noexcept;
 void deallocate_integer_container(void *) noexcept;
-void access_integer_container(
-    void *handle,
-    void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
-);
+void access_integer_container(const void *handle, void **data, int *bounds, bool *alloc);
 
 void *allocate_integer8_container();
 void reallocate_integer8_container_data(void *, int, size_t) noexcept;
 void deallocate_integer8_container(void *) noexcept;
-void access_integer8_container(
-    void *handle,
-    void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
-);
+void access_integer8_container(const void *handle, void **data, int *bounds, bool *alloc);
 
 void *allocate_logical_container();
 void reallocate_logical_container_data(void *, int, size_t) noexcept;
 void deallocate_logical_container(void *) noexcept;
-void access_logical_container(
-    void *handle,
-    void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
-);
+void access_logical_container(const void *handle, void **data, int *bounds, bool *alloc);
 
 void *allocate_complex_container();
 void reallocate_complex_container_data(void *, int, size_t) noexcept;
 void deallocate_complex_container(void *) noexcept;
-void access_complex_container(
-    void *handle,
-    void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
-);
+void access_complex_container(const void *handle, void **data, int *bounds, bool *alloc);
 
 void *allocate_fortran_spline_struct(int n, size_t *element_size);
 void deallocate_fortran_spline_struct(void *ptr, int n) noexcept;
@@ -5169,12 +5278,11 @@ void *allocate_spline_struct_container();
 void reallocate_spline_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_spline_struct_container(void *) noexcept;
 void access_spline_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_spin_polar_struct(int n, size_t *element_size);
@@ -5185,12 +5293,11 @@ void *allocate_spin_polar_struct_container();
 void reallocate_spin_polar_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_spin_polar_struct_container(void *) noexcept;
 void access_spin_polar_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_ac_kicker_time_struct(int n, size_t *element_size);
@@ -5201,12 +5308,11 @@ void *allocate_ac_kicker_time_struct_container();
 void reallocate_ac_kicker_time_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_ac_kicker_time_struct_container(void *) noexcept;
 void access_ac_kicker_time_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_ac_kicker_freq_struct(int n, size_t *element_size);
@@ -5217,12 +5323,11 @@ void *allocate_ac_kicker_freq_struct_container();
 void reallocate_ac_kicker_freq_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_ac_kicker_freq_struct_container(void *) noexcept;
 void access_ac_kicker_freq_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_ac_kicker_struct(int n, size_t *element_size);
@@ -5233,12 +5338,11 @@ void *allocate_ac_kicker_struct_container();
 void reallocate_ac_kicker_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_ac_kicker_struct_container(void *) noexcept;
 void access_ac_kicker_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_interval1_coef_struct(int n, size_t *element_size);
@@ -5249,12 +5353,11 @@ void *allocate_interval1_coef_struct_container();
 void reallocate_interval1_coef_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_interval1_coef_struct_container(void *) noexcept;
 void access_interval1_coef_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_photon_reflect_table_struct(int n, size_t *element_size);
@@ -5265,12 +5368,11 @@ void *allocate_photon_reflect_table_struct_container();
 void reallocate_photon_reflect_table_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_photon_reflect_table_struct_container(void *) noexcept;
 void access_photon_reflect_table_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_photon_reflect_surface_struct(int n, size_t *element_size);
@@ -5281,12 +5383,11 @@ void *allocate_photon_reflect_surface_struct_container();
 void reallocate_photon_reflect_surface_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_photon_reflect_surface_struct_container(void *) noexcept;
 void access_photon_reflect_surface_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_coord_struct(int n, size_t *element_size);
@@ -5297,12 +5398,11 @@ void *allocate_coord_struct_container();
 void reallocate_coord_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_coord_struct_container(void *) noexcept;
 void access_coord_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_coord_array_struct(int n, size_t *element_size);
@@ -5313,12 +5413,11 @@ void *allocate_coord_array_struct_container();
 void reallocate_coord_array_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_coord_array_struct_container(void *) noexcept;
 void access_coord_array_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bpm_phase_coupling_struct(int n, size_t *element_size);
@@ -5329,12 +5428,11 @@ void *allocate_bpm_phase_coupling_struct_container();
 void reallocate_bpm_phase_coupling_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bpm_phase_coupling_struct_container(void *) noexcept;
 void access_bpm_phase_coupling_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_expression_atom_struct(int n, size_t *element_size);
@@ -5345,12 +5443,11 @@ void *allocate_expression_atom_struct_container();
 void reallocate_expression_atom_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_expression_atom_struct_container(void *) noexcept;
 void access_expression_atom_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wake_sr_z_long_struct(int n, size_t *element_size);
@@ -5361,12 +5458,11 @@ void *allocate_wake_sr_z_long_struct_container();
 void reallocate_wake_sr_z_long_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wake_sr_z_long_struct_container(void *) noexcept;
 void access_wake_sr_z_long_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wake_sr_mode_struct(int n, size_t *element_size);
@@ -5377,12 +5473,11 @@ void *allocate_wake_sr_mode_struct_container();
 void reallocate_wake_sr_mode_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wake_sr_mode_struct_container(void *) noexcept;
 void access_wake_sr_mode_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wake_sr_struct(int n, size_t *element_size);
@@ -5393,12 +5488,11 @@ void *allocate_wake_sr_struct_container();
 void reallocate_wake_sr_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wake_sr_struct_container(void *) noexcept;
 void access_wake_sr_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wake_lr_mode_struct(int n, size_t *element_size);
@@ -5409,12 +5503,11 @@ void *allocate_wake_lr_mode_struct_container();
 void reallocate_wake_lr_mode_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wake_lr_mode_struct_container(void *) noexcept;
 void access_wake_lr_mode_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wake_lr_struct(int n, size_t *element_size);
@@ -5425,12 +5518,11 @@ void *allocate_wake_lr_struct_container();
 void reallocate_wake_lr_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wake_lr_struct_container(void *) noexcept;
 void access_wake_lr_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_lat_ele_loc_struct(int n, size_t *element_size);
@@ -5441,12 +5533,11 @@ void *allocate_lat_ele_loc_struct_container();
 void reallocate_lat_ele_loc_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_lat_ele_loc_struct_container(void *) noexcept;
 void access_lat_ele_loc_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wake_struct(int n, size_t *element_size);
@@ -5457,12 +5548,11 @@ void *allocate_wake_struct_container();
 void reallocate_wake_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wake_struct_container(void *) noexcept;
 void access_wake_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_taylor_term_struct(int n, size_t *element_size);
@@ -5473,12 +5563,11 @@ void *allocate_taylor_term_struct_container();
 void reallocate_taylor_term_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_taylor_term_struct_container(void *) noexcept;
 void access_taylor_term_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_taylor_struct(int n, size_t *element_size);
@@ -5489,12 +5578,11 @@ void *allocate_taylor_struct_container();
 void reallocate_taylor_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_taylor_struct_container(void *) noexcept;
 void access_taylor_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_em_taylor_term_struct(int n, size_t *element_size);
@@ -5505,12 +5593,11 @@ void *allocate_em_taylor_term_struct_container();
 void reallocate_em_taylor_term_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_em_taylor_term_struct_container(void *) noexcept;
 void access_em_taylor_term_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_em_taylor_struct(int n, size_t *element_size);
@@ -5521,12 +5608,11 @@ void *allocate_em_taylor_struct_container();
 void reallocate_em_taylor_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_em_taylor_struct_container(void *) noexcept;
 void access_em_taylor_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_cartesian_map_term1_struct(int n, size_t *element_size);
@@ -5537,12 +5623,11 @@ void *allocate_cartesian_map_term1_struct_container();
 void reallocate_cartesian_map_term1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_cartesian_map_term1_struct_container(void *) noexcept;
 void access_cartesian_map_term1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_cartesian_map_term_struct(int n, size_t *element_size);
@@ -5553,12 +5638,11 @@ void *allocate_cartesian_map_term_struct_container();
 void reallocate_cartesian_map_term_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_cartesian_map_term_struct_container(void *) noexcept;
 void access_cartesian_map_term_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_cartesian_map_struct(int n, size_t *element_size);
@@ -5569,12 +5653,11 @@ void *allocate_cartesian_map_struct_container();
 void reallocate_cartesian_map_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_cartesian_map_struct_container(void *) noexcept;
 void access_cartesian_map_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_cylindrical_map_term1_struct(int n, size_t *element_size);
@@ -5585,12 +5668,11 @@ void *allocate_cylindrical_map_term1_struct_container();
 void reallocate_cylindrical_map_term1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_cylindrical_map_term1_struct_container(void *) noexcept;
 void access_cylindrical_map_term1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_cylindrical_map_term_struct(int n, size_t *element_size);
@@ -5601,12 +5683,11 @@ void *allocate_cylindrical_map_term_struct_container();
 void reallocate_cylindrical_map_term_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_cylindrical_map_term_struct_container(void *) noexcept;
 void access_cylindrical_map_term_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_cylindrical_map_struct(int n, size_t *element_size);
@@ -5617,12 +5698,11 @@ void *allocate_cylindrical_map_struct_container();
 void reallocate_cylindrical_map_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_cylindrical_map_struct_container(void *) noexcept;
 void access_cylindrical_map_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bicubic_cmplx_coef_struct(int n, size_t *element_size);
@@ -5633,12 +5713,11 @@ void *allocate_bicubic_cmplx_coef_struct_container();
 void reallocate_bicubic_cmplx_coef_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bicubic_cmplx_coef_struct_container(void *) noexcept;
 void access_bicubic_cmplx_coef_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tricubic_cmplx_coef_struct(int n, size_t *element_size);
@@ -5649,12 +5728,11 @@ void *allocate_tricubic_cmplx_coef_struct_container();
 void reallocate_tricubic_cmplx_coef_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tricubic_cmplx_coef_struct_container(void *) noexcept;
 void access_tricubic_cmplx_coef_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_grid_field_pt1_struct(int n, size_t *element_size);
@@ -5665,12 +5743,11 @@ void *allocate_grid_field_pt1_struct_container();
 void reallocate_grid_field_pt1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_grid_field_pt1_struct_container(void *) noexcept;
 void access_grid_field_pt1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_grid_field_pt_struct(int n, size_t *element_size);
@@ -5681,12 +5758,11 @@ void *allocate_grid_field_pt_struct_container();
 void reallocate_grid_field_pt_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_grid_field_pt_struct_container(void *) noexcept;
 void access_grid_field_pt_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_grid_field_struct(int n, size_t *element_size);
@@ -5697,12 +5773,11 @@ void *allocate_grid_field_struct_container();
 void reallocate_grid_field_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_grid_field_struct_container(void *) noexcept;
 void access_grid_field_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_floor_position_struct(int n, size_t *element_size);
@@ -5713,12 +5788,11 @@ void *allocate_floor_position_struct_container();
 void reallocate_floor_position_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_floor_position_struct_container(void *) noexcept;
 void access_floor_position_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_high_energy_space_charge_struct(int n, size_t *element_size);
@@ -5729,12 +5803,11 @@ void *allocate_high_energy_space_charge_struct_container();
 void reallocate_high_energy_space_charge_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_high_energy_space_charge_struct_container(void *) noexcept;
 void access_high_energy_space_charge_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_xy_disp_struct(int n, size_t *element_size);
@@ -5745,12 +5818,11 @@ void *allocate_xy_disp_struct_container();
 void reallocate_xy_disp_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_xy_disp_struct_container(void *) noexcept;
 void access_xy_disp_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_twiss_struct(int n, size_t *element_size);
@@ -5761,12 +5833,11 @@ void *allocate_twiss_struct_container();
 void reallocate_twiss_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_twiss_struct_container(void *) noexcept;
 void access_twiss_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_mode3_struct(int n, size_t *element_size);
@@ -5777,12 +5848,11 @@ void *allocate_mode3_struct_container();
 void reallocate_mode3_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_mode3_struct_container(void *) noexcept;
 void access_mode3_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bookkeeping_state_struct(int n, size_t *element_size);
@@ -5793,12 +5863,11 @@ void *allocate_bookkeeping_state_struct_container();
 void reallocate_bookkeeping_state_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bookkeeping_state_struct_container(void *) noexcept;
 void access_bookkeeping_state_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_rad_map_struct(int n, size_t *element_size);
@@ -5809,12 +5878,11 @@ void *allocate_rad_map_struct_container();
 void reallocate_rad_map_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_rad_map_struct_container(void *) noexcept;
 void access_rad_map_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_rad_map_ele_struct(int n, size_t *element_size);
@@ -5825,12 +5893,11 @@ void *allocate_rad_map_ele_struct_container();
 void reallocate_rad_map_ele_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_rad_map_ele_struct_container(void *) noexcept;
 void access_rad_map_ele_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_gen_grad1_struct(int n, size_t *element_size);
@@ -5841,12 +5908,11 @@ void *allocate_gen_grad1_struct_container();
 void reallocate_gen_grad1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_gen_grad1_struct_container(void *) noexcept;
 void access_gen_grad1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_gen_grad_map_struct(int n, size_t *element_size);
@@ -5857,12 +5923,11 @@ void *allocate_gen_grad_map_struct_container();
 void reallocate_gen_grad_map_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_gen_grad_map_struct_container(void *) noexcept;
 void access_gen_grad_map_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_surface_segmented_pt_struct(int n, size_t *element_size);
@@ -5873,12 +5938,11 @@ void *allocate_surface_segmented_pt_struct_container();
 void reallocate_surface_segmented_pt_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_surface_segmented_pt_struct_container(void *) noexcept;
 void access_surface_segmented_pt_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_surface_segmented_struct(int n, size_t *element_size);
@@ -5889,12 +5953,11 @@ void *allocate_surface_segmented_struct_container();
 void reallocate_surface_segmented_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_surface_segmented_struct_container(void *) noexcept;
 void access_surface_segmented_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_surface_h_misalign_pt_struct(int n, size_t *element_size);
@@ -5905,12 +5968,11 @@ void *allocate_surface_h_misalign_pt_struct_container();
 void reallocate_surface_h_misalign_pt_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_surface_h_misalign_pt_struct_container(void *) noexcept;
 void access_surface_h_misalign_pt_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_surface_h_misalign_struct(int n, size_t *element_size);
@@ -5921,12 +5983,11 @@ void *allocate_surface_h_misalign_struct_container();
 void reallocate_surface_h_misalign_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_surface_h_misalign_struct_container(void *) noexcept;
 void access_surface_h_misalign_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_surface_displacement_pt_struct(int n, size_t *element_size);
@@ -5937,12 +5998,11 @@ void *allocate_surface_displacement_pt_struct_container();
 void reallocate_surface_displacement_pt_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_surface_displacement_pt_struct_container(void *) noexcept;
 void access_surface_displacement_pt_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_surface_displacement_struct(int n, size_t *element_size);
@@ -5953,12 +6013,11 @@ void *allocate_surface_displacement_struct_container();
 void reallocate_surface_displacement_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_surface_displacement_struct_container(void *) noexcept;
 void access_surface_displacement_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_target_point_struct(int n, size_t *element_size);
@@ -5969,12 +6028,11 @@ void *allocate_target_point_struct_container();
 void reallocate_target_point_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_target_point_struct_container(void *) noexcept;
 void access_target_point_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_surface_curvature_struct(int n, size_t *element_size);
@@ -5985,12 +6043,11 @@ void *allocate_surface_curvature_struct_container();
 void reallocate_surface_curvature_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_surface_curvature_struct_container(void *) noexcept;
 void access_surface_curvature_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_photon_target_struct(int n, size_t *element_size);
@@ -6001,12 +6058,11 @@ void *allocate_photon_target_struct_container();
 void reallocate_photon_target_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_photon_target_struct_container(void *) noexcept;
 void access_photon_target_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_photon_material_struct(int n, size_t *element_size);
@@ -6017,12 +6073,11 @@ void *allocate_photon_material_struct_container();
 void reallocate_photon_material_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_photon_material_struct_container(void *) noexcept;
 void access_photon_material_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_pixel_pt_struct(int n, size_t *element_size);
@@ -6033,12 +6088,11 @@ void *allocate_pixel_pt_struct_container();
 void reallocate_pixel_pt_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_pixel_pt_struct_container(void *) noexcept;
 void access_pixel_pt_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_pixel_detec_struct(int n, size_t *element_size);
@@ -6049,12 +6103,11 @@ void *allocate_pixel_detec_struct_container();
 void reallocate_pixel_detec_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_pixel_detec_struct_container(void *) noexcept;
 void access_pixel_detec_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_photon_element_struct(int n, size_t *element_size);
@@ -6065,12 +6118,11 @@ void *allocate_photon_element_struct_container();
 void reallocate_photon_element_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_photon_element_struct_container(void *) noexcept;
 void access_photon_element_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wall3d_vertex_struct(int n, size_t *element_size);
@@ -6081,12 +6133,11 @@ void *allocate_wall3d_vertex_struct_container();
 void reallocate_wall3d_vertex_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wall3d_vertex_struct_container(void *) noexcept;
 void access_wall3d_vertex_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wall3d_section_struct(int n, size_t *element_size);
@@ -6097,12 +6148,11 @@ void *allocate_wall3d_section_struct_container();
 void reallocate_wall3d_section_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wall3d_section_struct_container(void *) noexcept;
 void access_wall3d_section_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_wall3d_struct(int n, size_t *element_size);
@@ -6113,12 +6163,11 @@ void *allocate_wall3d_struct_container();
 void reallocate_wall3d_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_wall3d_struct_container(void *) noexcept;
 void access_wall3d_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_ramper_lord_struct(int n, size_t *element_size);
@@ -6129,12 +6178,11 @@ void *allocate_ramper_lord_struct_container();
 void reallocate_ramper_lord_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_ramper_lord_struct_container(void *) noexcept;
 void access_ramper_lord_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_control_struct(int n, size_t *element_size);
@@ -6145,12 +6193,11 @@ void *allocate_control_struct_container();
 void reallocate_control_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_control_struct_container(void *) noexcept;
 void access_control_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_control_var1_struct(int n, size_t *element_size);
@@ -6161,12 +6208,11 @@ void *allocate_control_var1_struct_container();
 void reallocate_control_var1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_control_var1_struct_container(void *) noexcept;
 void access_control_var1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_control_ramp1_struct(int n, size_t *element_size);
@@ -6177,12 +6223,11 @@ void *allocate_control_ramp1_struct_container();
 void reallocate_control_ramp1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_control_ramp1_struct_container(void *) noexcept;
 void access_control_ramp1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_controller_struct(int n, size_t *element_size);
@@ -6193,12 +6238,11 @@ void *allocate_controller_struct_container();
 void reallocate_controller_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_controller_struct_container(void *) noexcept;
 void access_controller_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_ellipse_beam_init_struct(int n, size_t *element_size);
@@ -6209,12 +6253,11 @@ void *allocate_ellipse_beam_init_struct_container();
 void reallocate_ellipse_beam_init_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_ellipse_beam_init_struct_container(void *) noexcept;
 void access_ellipse_beam_init_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_kv_beam_init_struct(int n, size_t *element_size);
@@ -6225,12 +6268,11 @@ void *allocate_kv_beam_init_struct_container();
 void reallocate_kv_beam_init_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_kv_beam_init_struct_container(void *) noexcept;
 void access_kv_beam_init_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_grid_beam_init_struct(int n, size_t *element_size);
@@ -6241,12 +6283,11 @@ void *allocate_grid_beam_init_struct_container();
 void reallocate_grid_beam_init_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_grid_beam_init_struct_container(void *) noexcept;
 void access_grid_beam_init_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_beam_init_struct(int n, size_t *element_size);
@@ -6257,12 +6298,11 @@ void *allocate_beam_init_struct_container();
 void reallocate_beam_init_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_beam_init_struct_container(void *) noexcept;
 void access_beam_init_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_lat_param_struct(int n, size_t *element_size);
@@ -6273,12 +6313,11 @@ void *allocate_lat_param_struct_container();
 void reallocate_lat_param_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_lat_param_struct_container(void *) noexcept;
 void access_lat_param_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_mode_info_struct(int n, size_t *element_size);
@@ -6289,12 +6328,11 @@ void *allocate_mode_info_struct_container();
 void reallocate_mode_info_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_mode_info_struct_container(void *) noexcept;
 void access_mode_info_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_pre_tracker_struct(int n, size_t *element_size);
@@ -6305,12 +6343,11 @@ void *allocate_pre_tracker_struct_container();
 void reallocate_pre_tracker_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_pre_tracker_struct_container(void *) noexcept;
 void access_pre_tracker_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_anormal_mode_struct(int n, size_t *element_size);
@@ -6321,12 +6358,11 @@ void *allocate_anormal_mode_struct_container();
 void reallocate_anormal_mode_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_anormal_mode_struct_container(void *) noexcept;
 void access_anormal_mode_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_linac_normal_mode_struct(int n, size_t *element_size);
@@ -6337,12 +6373,11 @@ void *allocate_linac_normal_mode_struct_container();
 void reallocate_linac_normal_mode_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_linac_normal_mode_struct_container(void *) noexcept;
 void access_linac_normal_mode_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_normal_modes_struct(int n, size_t *element_size);
@@ -6353,12 +6388,11 @@ void *allocate_normal_modes_struct_container();
 void reallocate_normal_modes_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_normal_modes_struct_container(void *) noexcept;
 void access_normal_modes_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_em_field_struct(int n, size_t *element_size);
@@ -6369,12 +6403,11 @@ void *allocate_em_field_struct_container();
 void reallocate_em_field_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_em_field_struct_container(void *) noexcept;
 void access_em_field_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_strong_beam_struct(int n, size_t *element_size);
@@ -6385,12 +6418,11 @@ void *allocate_strong_beam_struct_container();
 void reallocate_strong_beam_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_strong_beam_struct_container(void *) noexcept;
 void access_strong_beam_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_track_point_struct(int n, size_t *element_size);
@@ -6401,12 +6433,11 @@ void *allocate_track_point_struct_container();
 void reallocate_track_point_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_track_point_struct_container(void *) noexcept;
 void access_track_point_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_track_struct(int n, size_t *element_size);
@@ -6417,12 +6448,11 @@ void *allocate_track_struct_container();
 void reallocate_track_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_track_struct_container(void *) noexcept;
 void access_track_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_space_charge_common_struct(int n, size_t *element_size);
@@ -6433,12 +6463,11 @@ void *allocate_space_charge_common_struct_container();
 void reallocate_space_charge_common_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_space_charge_common_struct_container(void *) noexcept;
 void access_space_charge_common_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bmad_common_struct(int n, size_t *element_size);
@@ -6449,12 +6478,11 @@ void *allocate_bmad_common_struct_container();
 void reallocate_bmad_common_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bmad_common_struct_container(void *) noexcept;
 void access_bmad_common_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_rad_int1_struct(int n, size_t *element_size);
@@ -6465,12 +6493,11 @@ void *allocate_rad_int1_struct_container();
 void reallocate_rad_int1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_rad_int1_struct_container(void *) noexcept;
 void access_rad_int1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_rad_int_branch_struct(int n, size_t *element_size);
@@ -6481,12 +6508,11 @@ void *allocate_rad_int_branch_struct_container();
 void reallocate_rad_int_branch_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_rad_int_branch_struct_container(void *) noexcept;
 void access_rad_int_branch_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_rad_int_all_ele_struct(int n, size_t *element_size);
@@ -6497,12 +6523,11 @@ void *allocate_rad_int_all_ele_struct_container();
 void reallocate_rad_int_all_ele_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_rad_int_all_ele_struct_container(void *) noexcept;
 void access_rad_int_all_ele_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_rf_stair_step_struct(int n, size_t *element_size);
@@ -6513,12 +6538,11 @@ void *allocate_rf_stair_step_struct_container();
 void reallocate_rf_stair_step_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_rf_stair_step_struct_container(void *) noexcept;
 void access_rf_stair_step_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_rf_ele_struct(int n, size_t *element_size);
@@ -6529,12 +6553,11 @@ void *allocate_rf_ele_struct_container();
 void reallocate_rf_ele_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_rf_ele_struct_container(void *) noexcept;
 void access_rf_ele_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_ele_struct(int n, size_t *element_size);
@@ -6545,12 +6568,11 @@ void *allocate_ele_struct_container();
 void reallocate_ele_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_ele_struct_container(void *) noexcept;
 void access_ele_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_complex_taylor_term_struct(int n, size_t *element_size);
@@ -6561,12 +6583,11 @@ void *allocate_complex_taylor_term_struct_container();
 void reallocate_complex_taylor_term_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_complex_taylor_term_struct_container(void *) noexcept;
 void access_complex_taylor_term_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_complex_taylor_struct(int n, size_t *element_size);
@@ -6577,12 +6598,11 @@ void *allocate_complex_taylor_struct_container();
 void reallocate_complex_taylor_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_complex_taylor_struct_container(void *) noexcept;
 void access_complex_taylor_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_branch_struct(int n, size_t *element_size);
@@ -6593,12 +6613,11 @@ void *allocate_branch_struct_container();
 void reallocate_branch_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_branch_struct_container(void *) noexcept;
 void access_branch_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_lat_struct(int n, size_t *element_size);
@@ -6609,12 +6628,11 @@ void *allocate_lat_struct_container();
 void reallocate_lat_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_lat_struct_container(void *) noexcept;
 void access_lat_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bunch_struct(int n, size_t *element_size);
@@ -6625,12 +6643,11 @@ void *allocate_bunch_struct_container();
 void reallocate_bunch_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bunch_struct_container(void *) noexcept;
 void access_bunch_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bunch_params_struct(int n, size_t *element_size);
@@ -6641,12 +6658,11 @@ void *allocate_bunch_params_struct_container();
 void reallocate_bunch_params_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bunch_params_struct_container(void *) noexcept;
 void access_bunch_params_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_beam_struct(int n, size_t *element_size);
@@ -6657,12 +6673,11 @@ void *allocate_beam_struct_container();
 void reallocate_beam_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_beam_struct_container(void *) noexcept;
 void access_beam_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_aperture_point_struct(int n, size_t *element_size);
@@ -6673,12 +6688,11 @@ void *allocate_aperture_point_struct_container();
 void reallocate_aperture_point_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_aperture_point_struct_container(void *) noexcept;
 void access_aperture_point_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_aperture_param_struct(int n, size_t *element_size);
@@ -6689,12 +6703,11 @@ void *allocate_aperture_param_struct_container();
 void reallocate_aperture_param_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_aperture_param_struct_container(void *) noexcept;
 void access_aperture_param_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_aperture_scan_struct(int n, size_t *element_size);
@@ -6705,12 +6718,11 @@ void *allocate_aperture_scan_struct_container();
 void reallocate_aperture_scan_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_aperture_scan_struct_container(void *) noexcept;
 void access_aperture_scan_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_ele_pointer_struct(int n, size_t *element_size);
@@ -6721,12 +6733,11 @@ void *allocate_ele_pointer_struct_container();
 void reallocate_ele_pointer_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_ele_pointer_struct_container(void *) noexcept;
 void access_ele_pointer_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_expression_tree_struct(int n, size_t *element_size);
@@ -6737,12 +6748,11 @@ void *allocate_expression_tree_struct_container();
 void reallocate_expression_tree_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_expression_tree_struct_container(void *) noexcept;
 void access_expression_tree_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_nametable_struct(int n, size_t *element_size);
@@ -6753,12 +6763,11 @@ void *allocate_nametable_struct_container();
 void reallocate_nametable_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_nametable_struct_container(void *) noexcept;
 void access_nametable_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_spin_dn_dpz_struct(int n, size_t *element_size);
@@ -6769,12 +6778,11 @@ void *allocate_tao_spin_dn_dpz_struct_container();
 void reallocate_tao_spin_dn_dpz_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_spin_dn_dpz_struct_container(void *) noexcept;
 void access_tao_spin_dn_dpz_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_resonance_h_struct(int n, size_t *element_size);
@@ -6785,12 +6793,11 @@ void *allocate_resonance_h_struct_container();
 void reallocate_resonance_h_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_resonance_h_struct_container(void *) noexcept;
 void access_resonance_h_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_spin_orbit_map1_struct(int n, size_t *element_size);
@@ -6801,12 +6808,11 @@ void *allocate_spin_orbit_map1_struct_container();
 void reallocate_spin_orbit_map1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_spin_orbit_map1_struct_container(void *) noexcept;
 void access_spin_orbit_map1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_spin_axis_struct(int n, size_t *element_size);
@@ -6817,12 +6823,11 @@ void *allocate_spin_axis_struct_container();
 void reallocate_spin_axis_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_spin_axis_struct_container(void *) noexcept;
 void access_spin_axis_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_ptc_normal_form_struct(int n, size_t *element_size);
@@ -6833,12 +6838,11 @@ void *allocate_ptc_normal_form_struct_container();
 void reallocate_ptc_normal_form_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_ptc_normal_form_struct_container(void *) noexcept;
 void access_ptc_normal_form_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bmad_normal_form_struct(int n, size_t *element_size);
@@ -6849,12 +6853,11 @@ void *allocate_bmad_normal_form_struct_container();
 void reallocate_bmad_normal_form_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bmad_normal_form_struct_container(void *) noexcept;
 void access_bmad_normal_form_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bunch_track_struct(int n, size_t *element_size);
@@ -6865,12 +6868,11 @@ void *allocate_bunch_track_struct_container();
 void reallocate_bunch_track_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bunch_track_struct_container(void *) noexcept;
 void access_bunch_track_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_summation_rdt_struct(int n, size_t *element_size);
@@ -6881,12 +6883,11 @@ void *allocate_summation_rdt_struct_container();
 void reallocate_summation_rdt_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_summation_rdt_struct_container(void *) noexcept;
 void access_summation_rdt_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_ele_shape_struct(int n, size_t *element_size);
@@ -6897,12 +6898,11 @@ void *allocate_tao_ele_shape_struct_container();
 void reallocate_tao_ele_shape_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_ele_shape_struct_container(void *) noexcept;
 void access_tao_ele_shape_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_ele_pointer_struct(int n, size_t *element_size);
@@ -6913,12 +6913,11 @@ void *allocate_tao_ele_pointer_struct_container();
 void reallocate_tao_ele_pointer_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_ele_pointer_struct_container(void *) noexcept;
 void access_tao_ele_pointer_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_curve_struct(int n, size_t *element_size);
@@ -6929,12 +6928,11 @@ void *allocate_tao_curve_struct_container();
 void reallocate_tao_curve_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_curve_struct_container(void *) noexcept;
 void access_tao_curve_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_curve_color_struct(int n, size_t *element_size);
@@ -6945,12 +6943,11 @@ void *allocate_tao_curve_color_struct_container();
 void reallocate_tao_curve_color_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_curve_color_struct_container(void *) noexcept;
 void access_tao_curve_color_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_curve_orbit_struct(int n, size_t *element_size);
@@ -6961,12 +6958,11 @@ void *allocate_tao_curve_orbit_struct_container();
 void reallocate_tao_curve_orbit_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_curve_orbit_struct_container(void *) noexcept;
 void access_tao_curve_orbit_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_histogram_struct(int n, size_t *element_size);
@@ -6977,12 +6973,11 @@ void *allocate_tao_histogram_struct_container();
 void reallocate_tao_histogram_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_histogram_struct_container(void *) noexcept;
 void access_tao_histogram_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_lat_ele_order1_struct(int n, size_t *element_size);
@@ -6993,12 +6988,11 @@ void *allocate_lat_ele_order1_struct_container();
 void reallocate_lat_ele_order1_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_lat_ele_order1_struct_container(void *) noexcept;
 void access_lat_ele_order1_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_lat_ele_order_array_struct(int n, size_t *element_size);
@@ -7009,12 +7003,11 @@ void *allocate_lat_ele_order_array_struct_container();
 void reallocate_lat_ele_order_array_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_lat_ele_order_array_struct_container(void *) noexcept;
 void access_lat_ele_order_array_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_lat_sigma_struct(int n, size_t *element_size);
@@ -7025,12 +7018,11 @@ void *allocate_tao_lat_sigma_struct_container();
 void reallocate_tao_lat_sigma_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_lat_sigma_struct_container(void *) noexcept;
 void access_tao_lat_sigma_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_spin_ele_struct(int n, size_t *element_size);
@@ -7041,12 +7033,11 @@ void *allocate_tao_spin_ele_struct_container();
 void reallocate_tao_spin_ele_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_spin_ele_struct_container(void *) noexcept;
 void access_tao_spin_ele_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_plot_cache_struct(int n, size_t *element_size);
@@ -7057,12 +7048,11 @@ void *allocate_tao_plot_cache_struct_container();
 void reallocate_tao_plot_cache_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_plot_cache_struct_container(void *) noexcept;
 void access_tao_plot_cache_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_spin_polarization_struct(int n, size_t *element_size);
@@ -7073,12 +7063,11 @@ void *allocate_tao_spin_polarization_struct_container();
 void reallocate_tao_spin_polarization_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_spin_polarization_struct_container(void *) noexcept;
 void access_tao_spin_polarization_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_lattice_branch_struct(int n, size_t *element_size);
@@ -7089,12 +7078,11 @@ void *allocate_tao_lattice_branch_struct_container();
 void reallocate_tao_lattice_branch_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_lattice_branch_struct_container(void *) noexcept;
 void access_tao_lattice_branch_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_model_element_struct(int n, size_t *element_size);
@@ -7105,12 +7093,11 @@ void *allocate_tao_model_element_struct_container();
 void reallocate_tao_model_element_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_model_element_struct_container(void *) noexcept;
 void access_tao_model_element_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_beam_branch_struct(int n, size_t *element_size);
@@ -7121,12 +7108,11 @@ void *allocate_tao_beam_branch_struct_container();
 void reallocate_tao_beam_branch_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_beam_branch_struct_container(void *) noexcept;
 void access_tao_beam_branch_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_d1_data_struct(int n, size_t *element_size);
@@ -7137,12 +7123,11 @@ void *allocate_tao_d1_data_struct_container();
 void reallocate_tao_d1_data_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_d1_data_struct_container(void *) noexcept;
 void access_tao_d1_data_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_d2_data_struct(int n, size_t *element_size);
@@ -7153,12 +7138,11 @@ void *allocate_tao_d2_data_struct_container();
 void reallocate_tao_d2_data_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_d2_data_struct_container(void *) noexcept;
 void access_tao_d2_data_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_data_var_component_struct(int n, size_t *element_size);
@@ -7169,12 +7153,11 @@ void *allocate_tao_data_var_component_struct_container();
 void reallocate_tao_data_var_component_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_data_var_component_struct_container(void *) noexcept;
 void access_tao_data_var_component_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_graph_struct(int n, size_t *element_size);
@@ -7185,12 +7168,11 @@ void *allocate_tao_graph_struct_container();
 void reallocate_tao_graph_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_graph_struct_container(void *) noexcept;
 void access_tao_graph_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_plot_struct(int n, size_t *element_size);
@@ -7201,12 +7183,11 @@ void *allocate_tao_plot_struct_container();
 void reallocate_tao_plot_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_plot_struct_container(void *) noexcept;
 void access_tao_plot_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_plot_region_struct(int n, size_t *element_size);
@@ -7217,12 +7198,11 @@ void *allocate_tao_plot_region_struct_container();
 void reallocate_tao_plot_region_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_plot_region_struct_container(void *) noexcept;
 void access_tao_plot_region_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_universe_pointer_struct(int n, size_t *element_size);
@@ -7233,12 +7213,11 @@ void *allocate_tao_universe_pointer_struct_container();
 void reallocate_tao_universe_pointer_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_universe_pointer_struct_container(void *) noexcept;
 void access_tao_universe_pointer_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_super_universe_struct(int n, size_t *element_size);
@@ -7249,12 +7228,11 @@ void *allocate_tao_super_universe_struct_container();
 void reallocate_tao_super_universe_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_super_universe_struct_container(void *) noexcept;
 void access_tao_super_universe_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_var_struct(int n, size_t *element_size);
@@ -7265,12 +7243,11 @@ void *allocate_tao_var_struct_container();
 void reallocate_tao_var_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_var_struct_container(void *) noexcept;
 void access_tao_var_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_var_slave_struct(int n, size_t *element_size);
@@ -7281,12 +7258,11 @@ void *allocate_tao_var_slave_struct_container();
 void reallocate_tao_var_slave_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_var_slave_struct_container(void *) noexcept;
 void access_tao_var_slave_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_lattice_struct(int n, size_t *element_size);
@@ -7297,12 +7273,11 @@ void *allocate_tao_lattice_struct_container();
 void reallocate_tao_lattice_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_lattice_struct_container(void *) noexcept;
 void access_tao_lattice_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_beam_uni_struct(int n, size_t *element_size);
@@ -7313,12 +7288,11 @@ void *allocate_tao_beam_uni_struct_container();
 void reallocate_tao_beam_uni_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_beam_uni_struct_container(void *) noexcept;
 void access_tao_beam_uni_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_dynamic_aperture_struct(int n, size_t *element_size);
@@ -7329,12 +7303,11 @@ void *allocate_tao_dynamic_aperture_struct_container();
 void reallocate_tao_dynamic_aperture_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_dynamic_aperture_struct_container(void *) noexcept;
 void access_tao_dynamic_aperture_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_model_branch_struct(int n, size_t *element_size);
@@ -7345,12 +7318,11 @@ void *allocate_tao_model_branch_struct_container();
 void reallocate_tao_model_branch_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_model_branch_struct_container(void *) noexcept;
 void access_tao_model_branch_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_spin_map_struct(int n, size_t *element_size);
@@ -7361,12 +7333,11 @@ void *allocate_tao_spin_map_struct_container();
 void reallocate_tao_spin_map_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_spin_map_struct_container(void *) noexcept;
 void access_tao_spin_map_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_data_struct(int n, size_t *element_size);
@@ -7377,12 +7348,11 @@ void *allocate_tao_data_struct_container();
 void reallocate_tao_data_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_data_struct_container(void *) noexcept;
 void access_tao_data_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_ping_scale_struct(int n, size_t *element_size);
@@ -7393,12 +7363,11 @@ void *allocate_tao_ping_scale_struct_container();
 void reallocate_tao_ping_scale_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_ping_scale_struct_container(void *) noexcept;
 void access_tao_ping_scale_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_universe_calc_struct(int n, size_t *element_size);
@@ -7409,12 +7378,11 @@ void *allocate_tao_universe_calc_struct_container();
 void reallocate_tao_universe_calc_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_universe_calc_struct_container(void *) noexcept;
 void access_tao_universe_calc_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_lat_ele_order_struct(int n, size_t *element_size);
@@ -7425,12 +7393,11 @@ void *allocate_lat_ele_order_struct_container();
 void reallocate_lat_ele_order_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_lat_ele_order_struct_container(void *) noexcept;
 void access_lat_ele_order_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_expression_info_struct(int n, size_t *element_size);
@@ -7441,12 +7408,11 @@ void *allocate_tao_expression_info_struct_container();
 void reallocate_tao_expression_info_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_expression_info_struct_container(void *) noexcept;
 void access_tao_expression_info_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_eval_node_struct(int n, size_t *element_size);
@@ -7457,12 +7423,11 @@ void *allocate_tao_eval_node_struct_container();
 void reallocate_tao_eval_node_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_eval_node_struct_container(void *) noexcept;
 void access_tao_eval_node_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_title_struct(int n, size_t *element_size);
@@ -7473,12 +7438,11 @@ void *allocate_tao_title_struct_container();
 void reallocate_tao_title_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_title_struct_container(void *) noexcept;
 void access_tao_title_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_qp_rect_struct(int n, size_t *element_size);
@@ -7489,12 +7453,11 @@ void *allocate_qp_rect_struct_container();
 void reallocate_qp_rect_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_qp_rect_struct_container(void *) noexcept;
 void access_qp_rect_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_drawing_struct(int n, size_t *element_size);
@@ -7505,12 +7468,11 @@ void *allocate_tao_drawing_struct_container();
 void reallocate_tao_drawing_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_drawing_struct_container(void *) noexcept;
 void access_tao_drawing_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_shape_pattern_struct(int n, size_t *element_size);
@@ -7521,12 +7483,11 @@ void *allocate_tao_shape_pattern_struct_container();
 void reallocate_tao_shape_pattern_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_shape_pattern_struct_container(void *) noexcept;
 void access_tao_shape_pattern_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_shape_pattern_point_struct(int n, size_t *element_size);
@@ -7537,12 +7498,11 @@ void *allocate_tao_shape_pattern_point_struct_container();
 void reallocate_tao_shape_pattern_point_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_shape_pattern_point_struct_container(void *) noexcept;
 void access_tao_shape_pattern_point_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_qp_axis_struct(int n, size_t *element_size);
@@ -7553,12 +7513,11 @@ void *allocate_qp_axis_struct_container();
 void reallocate_qp_axis_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_qp_axis_struct_container(void *) noexcept;
 void access_qp_axis_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_qp_legend_struct(int n, size_t *element_size);
@@ -7569,12 +7528,11 @@ void *allocate_qp_legend_struct_container();
 void reallocate_qp_legend_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_qp_legend_struct_container(void *) noexcept;
 void access_qp_legend_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_qp_point_struct(int n, size_t *element_size);
@@ -7585,12 +7543,11 @@ void *allocate_qp_point_struct_container();
 void reallocate_qp_point_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_qp_point_struct_container(void *) noexcept;
 void access_qp_point_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_qp_line_struct(int n, size_t *element_size);
@@ -7601,12 +7558,11 @@ void *allocate_qp_line_struct_container();
 void reallocate_qp_line_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_qp_line_struct_container(void *) noexcept;
 void access_qp_line_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_qp_symbol_struct(int n, size_t *element_size);
@@ -7617,12 +7573,11 @@ void *allocate_qp_symbol_struct_container();
 void reallocate_qp_symbol_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_qp_symbol_struct_container(void *) noexcept;
 void access_qp_symbol_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_floor_plan_struct(int n, size_t *element_size);
@@ -7633,12 +7588,11 @@ void *allocate_tao_floor_plan_struct_container();
 void reallocate_tao_floor_plan_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_floor_plan_struct_container(void *) noexcept;
 void access_tao_floor_plan_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_v1_var_struct(int n, size_t *element_size);
@@ -7649,12 +7603,11 @@ void *allocate_tao_v1_var_struct_container();
 void reallocate_tao_v1_var_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_v1_var_struct_container(void *) noexcept;
 void access_tao_v1_var_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_global_struct(int n, size_t *element_size);
@@ -7665,12 +7618,11 @@ void *allocate_tao_global_struct_container();
 void reallocate_tao_global_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_global_struct_container(void *) noexcept;
 void access_tao_global_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_init_struct(int n, size_t *element_size);
@@ -7681,12 +7633,11 @@ void *allocate_tao_init_struct_container();
 void reallocate_tao_init_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_init_struct_container(void *) noexcept;
 void access_tao_init_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_common_struct(int n, size_t *element_size);
@@ -7697,12 +7648,11 @@ void *allocate_tao_common_struct_container();
 void reallocate_tao_common_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_common_struct_container(void *) noexcept;
 void access_tao_common_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_plot_page_struct(int n, size_t *element_size);
@@ -7713,12 +7663,11 @@ void *allocate_tao_plot_page_struct_container();
 void reallocate_tao_plot_page_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_plot_page_struct_container(void *) noexcept;
 void access_tao_plot_page_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_building_wall_struct(int n, size_t *element_size);
@@ -7729,12 +7678,11 @@ void *allocate_tao_building_wall_struct_container();
 void reallocate_tao_building_wall_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_building_wall_struct_container(void *) noexcept;
 void access_tao_building_wall_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_building_wall_orientation_struct(int n, size_t *element_size);
@@ -7745,12 +7693,11 @@ void *allocate_tao_building_wall_orientation_struct_container();
 void reallocate_tao_building_wall_orientation_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_building_wall_orientation_struct_container(void *) noexcept;
 void access_tao_building_wall_orientation_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_building_wall_section_struct(int n, size_t *element_size);
@@ -7761,12 +7708,11 @@ void *allocate_tao_building_wall_section_struct_container();
 void reallocate_tao_building_wall_section_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_building_wall_section_struct_container(void *) noexcept;
 void access_tao_building_wall_section_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_building_wall_point_struct(int n, size_t *element_size);
@@ -7777,12 +7723,11 @@ void *allocate_tao_building_wall_point_struct_container();
 void reallocate_tao_building_wall_point_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_building_wall_point_struct_container(void *) noexcept;
 void access_tao_building_wall_point_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_wave_struct(int n, size_t *element_size);
@@ -7793,12 +7738,11 @@ void *allocate_tao_wave_struct_container();
 void reallocate_tao_wave_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_wave_struct_container(void *) noexcept;
 void access_tao_wave_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_wave_kick_pt_struct(int n, size_t *element_size);
@@ -7809,12 +7753,11 @@ void *allocate_tao_wave_kick_pt_struct_container();
 void reallocate_tao_wave_kick_pt_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_wave_kick_pt_struct_container(void *) noexcept;
 void access_tao_wave_kick_pt_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_cmd_history_struct(int n, size_t *element_size);
@@ -7825,12 +7768,11 @@ void *allocate_tao_cmd_history_struct_container();
 void reallocate_tao_cmd_history_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_cmd_history_struct_container(void *) noexcept;
 void access_tao_cmd_history_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_tao_universe_struct(int n, size_t *element_size);
@@ -7841,12 +7783,11 @@ void *allocate_tao_universe_struct_container();
 void reallocate_tao_universe_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_tao_universe_struct_container(void *) noexcept;
 void access_tao_universe_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_mad_energy_struct(int n, size_t *element_size);
@@ -7857,12 +7798,11 @@ void *allocate_mad_energy_struct_container();
 void reallocate_mad_energy_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_mad_energy_struct_container(void *) noexcept;
 void access_mad_energy_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_mad_map_struct(int n, size_t *element_size);
@@ -7873,12 +7813,11 @@ void *allocate_mad_map_struct_container();
 void reallocate_mad_map_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_mad_map_struct_container(void *) noexcept;
 void access_mad_map_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_random_state_struct(int n, size_t *element_size);
@@ -7889,12 +7828,11 @@ void *allocate_random_state_struct_container();
 void reallocate_random_state_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_random_state_struct_container(void *) noexcept;
 void access_random_state_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bbu_stage_struct(int n, size_t *element_size);
@@ -7905,12 +7843,11 @@ void *allocate_bbu_stage_struct_container();
 void reallocate_bbu_stage_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bbu_stage_struct_container(void *) noexcept;
 void access_bbu_stage_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bbu_beam_struct(int n, size_t *element_size);
@@ -7921,12 +7858,11 @@ void *allocate_bbu_beam_struct_container();
 void reallocate_bbu_beam_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bbu_beam_struct_container(void *) noexcept;
 void access_bbu_beam_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_bbu_param_struct(int n, size_t *element_size);
@@ -7937,12 +7873,11 @@ void *allocate_bbu_param_struct_container();
 void reallocate_bbu_param_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_bbu_param_struct_container(void *) noexcept;
 void access_bbu_param_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_fibre(int n, size_t *element_size);
@@ -7953,12 +7888,11 @@ void *allocate_fibre_container();
 void reallocate_fibre_container_data(void *, int, size_t) noexcept;
 void deallocate_fibre_container(void *) noexcept;
 void access_fibre_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_layout(int n, size_t *element_size);
@@ -7969,12 +7903,11 @@ void *allocate_layout_container();
 void reallocate_layout_container_data(void *, int, size_t) noexcept;
 void deallocate_layout_container(void *) noexcept;
 void access_layout_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_all_encompassing_struct(int n, size_t *element_size);
@@ -7985,12 +7918,11 @@ void *allocate_all_encompassing_struct_container();
 void reallocate_all_encompassing_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_all_encompassing_struct_container(void *) noexcept;
 void access_all_encompassing_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_test_sub_struct(int n, size_t *element_size);
@@ -8001,12 +7933,11 @@ void *allocate_test_sub_struct_container();
 void reallocate_test_sub_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_test_sub_struct_container(void *) noexcept;
 void access_test_sub_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 
 void *allocate_fortran_test_sub_sub_struct(int n, size_t *element_size);
@@ -8017,59 +7948,154 @@ void *allocate_test_sub_sub_struct_container();
 void reallocate_test_sub_sub_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_test_sub_sub_struct_container(void *) noexcept;
 void access_test_sub_sub_struct_container(
-    void *handle,
+    const void *handle,
     void **data,
-    int *lbound,
-    int *size,
-    size_t *elem_size,
-    bool *alloc
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
 );
 }
 
 template <typename T>
 using optional_ref = std::optional<std::reference_wrapper<T>>;
 
-using RealAlloc1D = FAlloc1D<
-    double,
-    allocate_real_container,
-    deallocate_real_container,
-    reallocate_real_container_data,
-    access_real_container>;
+struct RealAlloc1D : public FAlloc1D<double> {
+  using Base = FAlloc1D<double>;
+  using Base::Base;
+  RealAlloc1D()
+      : Base(
+            allocate_real_container,
+            deallocate_real_container,
+            reallocate_real_container_data,
+            access_real_container
+        ) {}
+  RealAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_real_container,
+            deallocate_real_container,
+            reallocate_real_container_data,
+            access_real_container
+        ) {}
+  RealAlloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
-using Real16Alloc1D = FAlloc1D<
-    long double,
-    allocate_real16_container,
-    deallocate_real16_container,
-    reallocate_real16_container_data,
-    access_real16_container>;
+struct Real16Alloc1D : public FAlloc1D<long double> {
+  using Base = FAlloc1D<long double>;
+  using Base::Base;
+  Real16Alloc1D()
+      : Base(
+            allocate_real16_container,
+            deallocate_real16_container,
+            reallocate_real16_container_data,
+            access_real16_container
+        ) {}
+  Real16Alloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_real16_container,
+            deallocate_real16_container,
+            reallocate_real16_container_data,
+            access_real16_container
+        ) {}
+  Real16Alloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
-using IntAlloc1D = FAlloc1D<
-    int,
-    allocate_integer_container,
-    deallocate_integer_container,
-    reallocate_integer_container_data,
-    access_integer_container>;
+struct IntAlloc1D : public FAlloc1D<int> {
+  using Base = FAlloc1D<int>;
+  using Base::Base;
+  IntAlloc1D()
+      : Base(
+            allocate_integer_container,
+            deallocate_integer_container,
+            reallocate_integer_container_data,
+            access_integer_container
+        ) {}
+  IntAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_integer_container,
+            deallocate_integer_container,
+            reallocate_integer_container_data,
+            access_integer_container
+        ) {}
+  IntAlloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
-using Int8Alloc1D = FAlloc1D<
-    int64_t,
-    allocate_integer8_container,
-    deallocate_integer8_container,
-    reallocate_integer8_container_data,
-    access_integer8_container>;
+struct Int8Alloc1D : public FAlloc1D<int64_t> {
+  using Base = FAlloc1D<int64_t>;
+  using Base::Base;
+  Int8Alloc1D()
+      : Base(
+            allocate_integer8_container,
+            deallocate_integer8_container,
+            reallocate_integer8_container_data,
+            access_integer8_container
+        ) {}
+  Int8Alloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_integer8_container,
+            deallocate_integer8_container,
+            reallocate_integer8_container_data,
+            access_integer8_container
+        ) {}
+  Int8Alloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
-using BoolAlloc1D = FAlloc1D<
-    bool,
-    allocate_logical_container,
-    deallocate_logical_container,
-    reallocate_logical_container_data,
-    access_logical_container>;
+struct BoolAlloc1D : public FAlloc1D<bool> {
+  using Base = FAlloc1D<bool>;
+  using Base::Base;
+  BoolAlloc1D()
+      : Base(
+            allocate_logical_container,
+            deallocate_logical_container,
+            reallocate_logical_container_data,
+            access_logical_container
+        ) {}
+  BoolAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_logical_container,
+            deallocate_logical_container,
+            reallocate_logical_container_data,
+            access_logical_container
+        ) {}
+  BoolAlloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
-using ComplexAlloc1D = FAlloc1D<
-    std::complex<double>,
-    allocate_complex_container,
-    deallocate_complex_container,
-    reallocate_complex_container_data,
-    access_complex_container>;
+struct ComplexAlloc1D : public FAlloc1D<std::complex<double>> {
+  using Base = FAlloc1D<std::complex<double>>;
+  using Base::Base;
+  ComplexAlloc1D()
+      : Base(
+            allocate_complex_container,
+            deallocate_complex_container,
+            reallocate_complex_container_data,
+            access_complex_container
+        ) {}
+  ComplexAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_complex_container,
+            deallocate_complex_container,
+            reallocate_complex_container_data,
+            access_complex_container
+        ) {}
+  ComplexAlloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SplineStruct;
 
@@ -8078,12 +8104,28 @@ using SplineStructArray1D =
 using SplineStructArray2D = FTypeArray2D<SplineStruct>;
 using SplineStructArray3D = FTypeArray3D<SplineStruct>;
 
-using SplineStructAlloc1D = FTypeAlloc1D<
-    SplineStructArray1D,
-    allocate_spline_struct_container,
-    deallocate_spline_struct_container,
-    reallocate_spline_struct_container_data,
-    access_spline_struct_container>;
+struct SplineStructAlloc1D : public FTypeAlloc1D<SplineStructArray1D> {
+  using Base = FTypeAlloc1D<SplineStructArray1D>;
+  using Base::Base;
+  SplineStructAlloc1D()
+      : Base(
+            allocate_spline_struct_container,
+            deallocate_spline_struct_container,
+            reallocate_spline_struct_container_data,
+            access_spline_struct_container
+        ) {}
+  SplineStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_spline_struct_container,
+            deallocate_spline_struct_container,
+            reallocate_spline_struct_container_data,
+            access_spline_struct_container
+        ) {}
+  SplineStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SpinPolarStruct;
 
@@ -8094,12 +8136,28 @@ using SpinPolarStructArray1D = FTypeArray1D<
 using SpinPolarStructArray2D = FTypeArray2D<SpinPolarStruct>;
 using SpinPolarStructArray3D = FTypeArray3D<SpinPolarStruct>;
 
-using SpinPolarStructAlloc1D = FTypeAlloc1D<
-    SpinPolarStructArray1D,
-    allocate_spin_polar_struct_container,
-    deallocate_spin_polar_struct_container,
-    reallocate_spin_polar_struct_container_data,
-    access_spin_polar_struct_container>;
+struct SpinPolarStructAlloc1D : public FTypeAlloc1D<SpinPolarStructArray1D> {
+  using Base = FTypeAlloc1D<SpinPolarStructArray1D>;
+  using Base::Base;
+  SpinPolarStructAlloc1D()
+      : Base(
+            allocate_spin_polar_struct_container,
+            deallocate_spin_polar_struct_container,
+            reallocate_spin_polar_struct_container_data,
+            access_spin_polar_struct_container
+        ) {}
+  SpinPolarStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_spin_polar_struct_container,
+            deallocate_spin_polar_struct_container,
+            reallocate_spin_polar_struct_container_data,
+            access_spin_polar_struct_container
+        ) {}
+  SpinPolarStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class AcKickerTimeStruct;
 
@@ -8110,12 +8168,28 @@ using AcKickerTimeStructArray1D = FTypeArray1D<
 using AcKickerTimeStructArray2D = FTypeArray2D<AcKickerTimeStruct>;
 using AcKickerTimeStructArray3D = FTypeArray3D<AcKickerTimeStruct>;
 
-using AcKickerTimeStructAlloc1D = FTypeAlloc1D<
-    AcKickerTimeStructArray1D,
-    allocate_ac_kicker_time_struct_container,
-    deallocate_ac_kicker_time_struct_container,
-    reallocate_ac_kicker_time_struct_container_data,
-    access_ac_kicker_time_struct_container>;
+struct AcKickerTimeStructAlloc1D : public FTypeAlloc1D<AcKickerTimeStructArray1D> {
+  using Base = FTypeAlloc1D<AcKickerTimeStructArray1D>;
+  using Base::Base;
+  AcKickerTimeStructAlloc1D()
+      : Base(
+            allocate_ac_kicker_time_struct_container,
+            deallocate_ac_kicker_time_struct_container,
+            reallocate_ac_kicker_time_struct_container_data,
+            access_ac_kicker_time_struct_container
+        ) {}
+  AcKickerTimeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_ac_kicker_time_struct_container,
+            deallocate_ac_kicker_time_struct_container,
+            reallocate_ac_kicker_time_struct_container_data,
+            access_ac_kicker_time_struct_container
+        ) {}
+  AcKickerTimeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class AcKickerFreqStruct;
 
@@ -8126,12 +8200,28 @@ using AcKickerFreqStructArray1D = FTypeArray1D<
 using AcKickerFreqStructArray2D = FTypeArray2D<AcKickerFreqStruct>;
 using AcKickerFreqStructArray3D = FTypeArray3D<AcKickerFreqStruct>;
 
-using AcKickerFreqStructAlloc1D = FTypeAlloc1D<
-    AcKickerFreqStructArray1D,
-    allocate_ac_kicker_freq_struct_container,
-    deallocate_ac_kicker_freq_struct_container,
-    reallocate_ac_kicker_freq_struct_container_data,
-    access_ac_kicker_freq_struct_container>;
+struct AcKickerFreqStructAlloc1D : public FTypeAlloc1D<AcKickerFreqStructArray1D> {
+  using Base = FTypeAlloc1D<AcKickerFreqStructArray1D>;
+  using Base::Base;
+  AcKickerFreqStructAlloc1D()
+      : Base(
+            allocate_ac_kicker_freq_struct_container,
+            deallocate_ac_kicker_freq_struct_container,
+            reallocate_ac_kicker_freq_struct_container_data,
+            access_ac_kicker_freq_struct_container
+        ) {}
+  AcKickerFreqStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_ac_kicker_freq_struct_container,
+            deallocate_ac_kicker_freq_struct_container,
+            reallocate_ac_kicker_freq_struct_container_data,
+            access_ac_kicker_freq_struct_container
+        ) {}
+  AcKickerFreqStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class AcKickerStruct;
 
@@ -8142,12 +8232,28 @@ using AcKickerStructArray1D = FTypeArray1D<
 using AcKickerStructArray2D = FTypeArray2D<AcKickerStruct>;
 using AcKickerStructArray3D = FTypeArray3D<AcKickerStruct>;
 
-using AcKickerStructAlloc1D = FTypeAlloc1D<
-    AcKickerStructArray1D,
-    allocate_ac_kicker_struct_container,
-    deallocate_ac_kicker_struct_container,
-    reallocate_ac_kicker_struct_container_data,
-    access_ac_kicker_struct_container>;
+struct AcKickerStructAlloc1D : public FTypeAlloc1D<AcKickerStructArray1D> {
+  using Base = FTypeAlloc1D<AcKickerStructArray1D>;
+  using Base::Base;
+  AcKickerStructAlloc1D()
+      : Base(
+            allocate_ac_kicker_struct_container,
+            deallocate_ac_kicker_struct_container,
+            reallocate_ac_kicker_struct_container_data,
+            access_ac_kicker_struct_container
+        ) {}
+  AcKickerStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_ac_kicker_struct_container,
+            deallocate_ac_kicker_struct_container,
+            reallocate_ac_kicker_struct_container_data,
+            access_ac_kicker_struct_container
+        ) {}
+  AcKickerStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class Interval1CoefStruct;
 
@@ -8158,12 +8264,28 @@ using Interval1CoefStructArray1D = FTypeArray1D<
 using Interval1CoefStructArray2D = FTypeArray2D<Interval1CoefStruct>;
 using Interval1CoefStructArray3D = FTypeArray3D<Interval1CoefStruct>;
 
-using Interval1CoefStructAlloc1D = FTypeAlloc1D<
-    Interval1CoefStructArray1D,
-    allocate_interval1_coef_struct_container,
-    deallocate_interval1_coef_struct_container,
-    reallocate_interval1_coef_struct_container_data,
-    access_interval1_coef_struct_container>;
+struct Interval1CoefStructAlloc1D : public FTypeAlloc1D<Interval1CoefStructArray1D> {
+  using Base = FTypeAlloc1D<Interval1CoefStructArray1D>;
+  using Base::Base;
+  Interval1CoefStructAlloc1D()
+      : Base(
+            allocate_interval1_coef_struct_container,
+            deallocate_interval1_coef_struct_container,
+            reallocate_interval1_coef_struct_container_data,
+            access_interval1_coef_struct_container
+        ) {}
+  Interval1CoefStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_interval1_coef_struct_container,
+            deallocate_interval1_coef_struct_container,
+            reallocate_interval1_coef_struct_container_data,
+            access_interval1_coef_struct_container
+        ) {}
+  Interval1CoefStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PhotonReflectTableStruct;
 
@@ -8174,12 +8296,28 @@ using PhotonReflectTableStructArray1D = FTypeArray1D<
 using PhotonReflectTableStructArray2D = FTypeArray2D<PhotonReflectTableStruct>;
 using PhotonReflectTableStructArray3D = FTypeArray3D<PhotonReflectTableStruct>;
 
-using PhotonReflectTableStructAlloc1D = FTypeAlloc1D<
-    PhotonReflectTableStructArray1D,
-    allocate_photon_reflect_table_struct_container,
-    deallocate_photon_reflect_table_struct_container,
-    reallocate_photon_reflect_table_struct_container_data,
-    access_photon_reflect_table_struct_container>;
+struct PhotonReflectTableStructAlloc1D : public FTypeAlloc1D<PhotonReflectTableStructArray1D> {
+  using Base = FTypeAlloc1D<PhotonReflectTableStructArray1D>;
+  using Base::Base;
+  PhotonReflectTableStructAlloc1D()
+      : Base(
+            allocate_photon_reflect_table_struct_container,
+            deallocate_photon_reflect_table_struct_container,
+            reallocate_photon_reflect_table_struct_container_data,
+            access_photon_reflect_table_struct_container
+        ) {}
+  PhotonReflectTableStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_photon_reflect_table_struct_container,
+            deallocate_photon_reflect_table_struct_container,
+            reallocate_photon_reflect_table_struct_container_data,
+            access_photon_reflect_table_struct_container
+        ) {}
+  PhotonReflectTableStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PhotonReflectSurfaceStruct;
 
@@ -8190,12 +8328,28 @@ using PhotonReflectSurfaceStructArray1D = FTypeArray1D<
 using PhotonReflectSurfaceStructArray2D = FTypeArray2D<PhotonReflectSurfaceStruct>;
 using PhotonReflectSurfaceStructArray3D = FTypeArray3D<PhotonReflectSurfaceStruct>;
 
-using PhotonReflectSurfaceStructAlloc1D = FTypeAlloc1D<
-    PhotonReflectSurfaceStructArray1D,
-    allocate_photon_reflect_surface_struct_container,
-    deallocate_photon_reflect_surface_struct_container,
-    reallocate_photon_reflect_surface_struct_container_data,
-    access_photon_reflect_surface_struct_container>;
+struct PhotonReflectSurfaceStructAlloc1D : public FTypeAlloc1D<PhotonReflectSurfaceStructArray1D> {
+  using Base = FTypeAlloc1D<PhotonReflectSurfaceStructArray1D>;
+  using Base::Base;
+  PhotonReflectSurfaceStructAlloc1D()
+      : Base(
+            allocate_photon_reflect_surface_struct_container,
+            deallocate_photon_reflect_surface_struct_container,
+            reallocate_photon_reflect_surface_struct_container_data,
+            access_photon_reflect_surface_struct_container
+        ) {}
+  PhotonReflectSurfaceStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_photon_reflect_surface_struct_container,
+            deallocate_photon_reflect_surface_struct_container,
+            reallocate_photon_reflect_surface_struct_container_data,
+            access_photon_reflect_surface_struct_container
+        ) {}
+  PhotonReflectSurfaceStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class CoordStruct;
 
@@ -8204,12 +8358,28 @@ using CoordStructArray1D =
 using CoordStructArray2D = FTypeArray2D<CoordStruct>;
 using CoordStructArray3D = FTypeArray3D<CoordStruct>;
 
-using CoordStructAlloc1D = FTypeAlloc1D<
-    CoordStructArray1D,
-    allocate_coord_struct_container,
-    deallocate_coord_struct_container,
-    reallocate_coord_struct_container_data,
-    access_coord_struct_container>;
+struct CoordStructAlloc1D : public FTypeAlloc1D<CoordStructArray1D> {
+  using Base = FTypeAlloc1D<CoordStructArray1D>;
+  using Base::Base;
+  CoordStructAlloc1D()
+      : Base(
+            allocate_coord_struct_container,
+            deallocate_coord_struct_container,
+            reallocate_coord_struct_container_data,
+            access_coord_struct_container
+        ) {}
+  CoordStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_coord_struct_container,
+            deallocate_coord_struct_container,
+            reallocate_coord_struct_container_data,
+            access_coord_struct_container
+        ) {}
+  CoordStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class CoordArrayStruct;
 
@@ -8220,12 +8390,28 @@ using CoordArrayStructArray1D = FTypeArray1D<
 using CoordArrayStructArray2D = FTypeArray2D<CoordArrayStruct>;
 using CoordArrayStructArray3D = FTypeArray3D<CoordArrayStruct>;
 
-using CoordArrayStructAlloc1D = FTypeAlloc1D<
-    CoordArrayStructArray1D,
-    allocate_coord_array_struct_container,
-    deallocate_coord_array_struct_container,
-    reallocate_coord_array_struct_container_data,
-    access_coord_array_struct_container>;
+struct CoordArrayStructAlloc1D : public FTypeAlloc1D<CoordArrayStructArray1D> {
+  using Base = FTypeAlloc1D<CoordArrayStructArray1D>;
+  using Base::Base;
+  CoordArrayStructAlloc1D()
+      : Base(
+            allocate_coord_array_struct_container,
+            deallocate_coord_array_struct_container,
+            reallocate_coord_array_struct_container_data,
+            access_coord_array_struct_container
+        ) {}
+  CoordArrayStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_coord_array_struct_container,
+            deallocate_coord_array_struct_container,
+            reallocate_coord_array_struct_container_data,
+            access_coord_array_struct_container
+        ) {}
+  CoordArrayStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BpmPhaseCouplingStruct;
 
@@ -8236,12 +8422,28 @@ using BpmPhaseCouplingStructArray1D = FTypeArray1D<
 using BpmPhaseCouplingStructArray2D = FTypeArray2D<BpmPhaseCouplingStruct>;
 using BpmPhaseCouplingStructArray3D = FTypeArray3D<BpmPhaseCouplingStruct>;
 
-using BpmPhaseCouplingStructAlloc1D = FTypeAlloc1D<
-    BpmPhaseCouplingStructArray1D,
-    allocate_bpm_phase_coupling_struct_container,
-    deallocate_bpm_phase_coupling_struct_container,
-    reallocate_bpm_phase_coupling_struct_container_data,
-    access_bpm_phase_coupling_struct_container>;
+struct BpmPhaseCouplingStructAlloc1D : public FTypeAlloc1D<BpmPhaseCouplingStructArray1D> {
+  using Base = FTypeAlloc1D<BpmPhaseCouplingStructArray1D>;
+  using Base::Base;
+  BpmPhaseCouplingStructAlloc1D()
+      : Base(
+            allocate_bpm_phase_coupling_struct_container,
+            deallocate_bpm_phase_coupling_struct_container,
+            reallocate_bpm_phase_coupling_struct_container_data,
+            access_bpm_phase_coupling_struct_container
+        ) {}
+  BpmPhaseCouplingStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bpm_phase_coupling_struct_container,
+            deallocate_bpm_phase_coupling_struct_container,
+            reallocate_bpm_phase_coupling_struct_container_data,
+            access_bpm_phase_coupling_struct_container
+        ) {}
+  BpmPhaseCouplingStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ExpressionAtomStruct;
 
@@ -8252,12 +8454,28 @@ using ExpressionAtomStructArray1D = FTypeArray1D<
 using ExpressionAtomStructArray2D = FTypeArray2D<ExpressionAtomStruct>;
 using ExpressionAtomStructArray3D = FTypeArray3D<ExpressionAtomStruct>;
 
-using ExpressionAtomStructAlloc1D = FTypeAlloc1D<
-    ExpressionAtomStructArray1D,
-    allocate_expression_atom_struct_container,
-    deallocate_expression_atom_struct_container,
-    reallocate_expression_atom_struct_container_data,
-    access_expression_atom_struct_container>;
+struct ExpressionAtomStructAlloc1D : public FTypeAlloc1D<ExpressionAtomStructArray1D> {
+  using Base = FTypeAlloc1D<ExpressionAtomStructArray1D>;
+  using Base::Base;
+  ExpressionAtomStructAlloc1D()
+      : Base(
+            allocate_expression_atom_struct_container,
+            deallocate_expression_atom_struct_container,
+            reallocate_expression_atom_struct_container_data,
+            access_expression_atom_struct_container
+        ) {}
+  ExpressionAtomStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_expression_atom_struct_container,
+            deallocate_expression_atom_struct_container,
+            reallocate_expression_atom_struct_container_data,
+            access_expression_atom_struct_container
+        ) {}
+  ExpressionAtomStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class WakeSrZLongStruct;
 
@@ -8268,12 +8486,28 @@ using WakeSrZLongStructArray1D = FTypeArray1D<
 using WakeSrZLongStructArray2D = FTypeArray2D<WakeSrZLongStruct>;
 using WakeSrZLongStructArray3D = FTypeArray3D<WakeSrZLongStruct>;
 
-using WakeSrZLongStructAlloc1D = FTypeAlloc1D<
-    WakeSrZLongStructArray1D,
-    allocate_wake_sr_z_long_struct_container,
-    deallocate_wake_sr_z_long_struct_container,
-    reallocate_wake_sr_z_long_struct_container_data,
-    access_wake_sr_z_long_struct_container>;
+struct WakeSrZLongStructAlloc1D : public FTypeAlloc1D<WakeSrZLongStructArray1D> {
+  using Base = FTypeAlloc1D<WakeSrZLongStructArray1D>;
+  using Base::Base;
+  WakeSrZLongStructAlloc1D()
+      : Base(
+            allocate_wake_sr_z_long_struct_container,
+            deallocate_wake_sr_z_long_struct_container,
+            reallocate_wake_sr_z_long_struct_container_data,
+            access_wake_sr_z_long_struct_container
+        ) {}
+  WakeSrZLongStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wake_sr_z_long_struct_container,
+            deallocate_wake_sr_z_long_struct_container,
+            reallocate_wake_sr_z_long_struct_container_data,
+            access_wake_sr_z_long_struct_container
+        ) {}
+  WakeSrZLongStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class WakeSrModeStruct;
 
@@ -8284,12 +8518,28 @@ using WakeSrModeStructArray1D = FTypeArray1D<
 using WakeSrModeStructArray2D = FTypeArray2D<WakeSrModeStruct>;
 using WakeSrModeStructArray3D = FTypeArray3D<WakeSrModeStruct>;
 
-using WakeSrModeStructAlloc1D = FTypeAlloc1D<
-    WakeSrModeStructArray1D,
-    allocate_wake_sr_mode_struct_container,
-    deallocate_wake_sr_mode_struct_container,
-    reallocate_wake_sr_mode_struct_container_data,
-    access_wake_sr_mode_struct_container>;
+struct WakeSrModeStructAlloc1D : public FTypeAlloc1D<WakeSrModeStructArray1D> {
+  using Base = FTypeAlloc1D<WakeSrModeStructArray1D>;
+  using Base::Base;
+  WakeSrModeStructAlloc1D()
+      : Base(
+            allocate_wake_sr_mode_struct_container,
+            deallocate_wake_sr_mode_struct_container,
+            reallocate_wake_sr_mode_struct_container_data,
+            access_wake_sr_mode_struct_container
+        ) {}
+  WakeSrModeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wake_sr_mode_struct_container,
+            deallocate_wake_sr_mode_struct_container,
+            reallocate_wake_sr_mode_struct_container_data,
+            access_wake_sr_mode_struct_container
+        ) {}
+  WakeSrModeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class WakeSrStruct;
 
@@ -8298,12 +8548,28 @@ using WakeSrStructArray1D =
 using WakeSrStructArray2D = FTypeArray2D<WakeSrStruct>;
 using WakeSrStructArray3D = FTypeArray3D<WakeSrStruct>;
 
-using WakeSrStructAlloc1D = FTypeAlloc1D<
-    WakeSrStructArray1D,
-    allocate_wake_sr_struct_container,
-    deallocate_wake_sr_struct_container,
-    reallocate_wake_sr_struct_container_data,
-    access_wake_sr_struct_container>;
+struct WakeSrStructAlloc1D : public FTypeAlloc1D<WakeSrStructArray1D> {
+  using Base = FTypeAlloc1D<WakeSrStructArray1D>;
+  using Base::Base;
+  WakeSrStructAlloc1D()
+      : Base(
+            allocate_wake_sr_struct_container,
+            deallocate_wake_sr_struct_container,
+            reallocate_wake_sr_struct_container_data,
+            access_wake_sr_struct_container
+        ) {}
+  WakeSrStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wake_sr_struct_container,
+            deallocate_wake_sr_struct_container,
+            reallocate_wake_sr_struct_container_data,
+            access_wake_sr_struct_container
+        ) {}
+  WakeSrStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class WakeLrModeStruct;
 
@@ -8314,12 +8580,28 @@ using WakeLrModeStructArray1D = FTypeArray1D<
 using WakeLrModeStructArray2D = FTypeArray2D<WakeLrModeStruct>;
 using WakeLrModeStructArray3D = FTypeArray3D<WakeLrModeStruct>;
 
-using WakeLrModeStructAlloc1D = FTypeAlloc1D<
-    WakeLrModeStructArray1D,
-    allocate_wake_lr_mode_struct_container,
-    deallocate_wake_lr_mode_struct_container,
-    reallocate_wake_lr_mode_struct_container_data,
-    access_wake_lr_mode_struct_container>;
+struct WakeLrModeStructAlloc1D : public FTypeAlloc1D<WakeLrModeStructArray1D> {
+  using Base = FTypeAlloc1D<WakeLrModeStructArray1D>;
+  using Base::Base;
+  WakeLrModeStructAlloc1D()
+      : Base(
+            allocate_wake_lr_mode_struct_container,
+            deallocate_wake_lr_mode_struct_container,
+            reallocate_wake_lr_mode_struct_container_data,
+            access_wake_lr_mode_struct_container
+        ) {}
+  WakeLrModeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wake_lr_mode_struct_container,
+            deallocate_wake_lr_mode_struct_container,
+            reallocate_wake_lr_mode_struct_container_data,
+            access_wake_lr_mode_struct_container
+        ) {}
+  WakeLrModeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class WakeLrStruct;
 
@@ -8328,12 +8610,28 @@ using WakeLrStructArray1D =
 using WakeLrStructArray2D = FTypeArray2D<WakeLrStruct>;
 using WakeLrStructArray3D = FTypeArray3D<WakeLrStruct>;
 
-using WakeLrStructAlloc1D = FTypeAlloc1D<
-    WakeLrStructArray1D,
-    allocate_wake_lr_struct_container,
-    deallocate_wake_lr_struct_container,
-    reallocate_wake_lr_struct_container_data,
-    access_wake_lr_struct_container>;
+struct WakeLrStructAlloc1D : public FTypeAlloc1D<WakeLrStructArray1D> {
+  using Base = FTypeAlloc1D<WakeLrStructArray1D>;
+  using Base::Base;
+  WakeLrStructAlloc1D()
+      : Base(
+            allocate_wake_lr_struct_container,
+            deallocate_wake_lr_struct_container,
+            reallocate_wake_lr_struct_container_data,
+            access_wake_lr_struct_container
+        ) {}
+  WakeLrStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wake_lr_struct_container,
+            deallocate_wake_lr_struct_container,
+            reallocate_wake_lr_struct_container_data,
+            access_wake_lr_struct_container
+        ) {}
+  WakeLrStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class LatEleLocStruct;
 
@@ -8344,12 +8642,28 @@ using LatEleLocStructArray1D = FTypeArray1D<
 using LatEleLocStructArray2D = FTypeArray2D<LatEleLocStruct>;
 using LatEleLocStructArray3D = FTypeArray3D<LatEleLocStruct>;
 
-using LatEleLocStructAlloc1D = FTypeAlloc1D<
-    LatEleLocStructArray1D,
-    allocate_lat_ele_loc_struct_container,
-    deallocate_lat_ele_loc_struct_container,
-    reallocate_lat_ele_loc_struct_container_data,
-    access_lat_ele_loc_struct_container>;
+struct LatEleLocStructAlloc1D : public FTypeAlloc1D<LatEleLocStructArray1D> {
+  using Base = FTypeAlloc1D<LatEleLocStructArray1D>;
+  using Base::Base;
+  LatEleLocStructAlloc1D()
+      : Base(
+            allocate_lat_ele_loc_struct_container,
+            deallocate_lat_ele_loc_struct_container,
+            reallocate_lat_ele_loc_struct_container_data,
+            access_lat_ele_loc_struct_container
+        ) {}
+  LatEleLocStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_lat_ele_loc_struct_container,
+            deallocate_lat_ele_loc_struct_container,
+            reallocate_lat_ele_loc_struct_container_data,
+            access_lat_ele_loc_struct_container
+        ) {}
+  LatEleLocStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class WakeStruct;
 
@@ -8358,12 +8672,28 @@ using WakeStructArray1D =
 using WakeStructArray2D = FTypeArray2D<WakeStruct>;
 using WakeStructArray3D = FTypeArray3D<WakeStruct>;
 
-using WakeStructAlloc1D = FTypeAlloc1D<
-    WakeStructArray1D,
-    allocate_wake_struct_container,
-    deallocate_wake_struct_container,
-    reallocate_wake_struct_container_data,
-    access_wake_struct_container>;
+struct WakeStructAlloc1D : public FTypeAlloc1D<WakeStructArray1D> {
+  using Base = FTypeAlloc1D<WakeStructArray1D>;
+  using Base::Base;
+  WakeStructAlloc1D()
+      : Base(
+            allocate_wake_struct_container,
+            deallocate_wake_struct_container,
+            reallocate_wake_struct_container_data,
+            access_wake_struct_container
+        ) {}
+  WakeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wake_struct_container,
+            deallocate_wake_struct_container,
+            reallocate_wake_struct_container_data,
+            access_wake_struct_container
+        ) {}
+  WakeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaylorTermStruct;
 
@@ -8374,12 +8704,28 @@ using TaylorTermStructArray1D = FTypeArray1D<
 using TaylorTermStructArray2D = FTypeArray2D<TaylorTermStruct>;
 using TaylorTermStructArray3D = FTypeArray3D<TaylorTermStruct>;
 
-using TaylorTermStructAlloc1D = FTypeAlloc1D<
-    TaylorTermStructArray1D,
-    allocate_taylor_term_struct_container,
-    deallocate_taylor_term_struct_container,
-    reallocate_taylor_term_struct_container_data,
-    access_taylor_term_struct_container>;
+struct TaylorTermStructAlloc1D : public FTypeAlloc1D<TaylorTermStructArray1D> {
+  using Base = FTypeAlloc1D<TaylorTermStructArray1D>;
+  using Base::Base;
+  TaylorTermStructAlloc1D()
+      : Base(
+            allocate_taylor_term_struct_container,
+            deallocate_taylor_term_struct_container,
+            reallocate_taylor_term_struct_container_data,
+            access_taylor_term_struct_container
+        ) {}
+  TaylorTermStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_taylor_term_struct_container,
+            deallocate_taylor_term_struct_container,
+            reallocate_taylor_term_struct_container_data,
+            access_taylor_term_struct_container
+        ) {}
+  TaylorTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaylorStruct;
 
@@ -8388,12 +8734,28 @@ using TaylorStructArray1D =
 using TaylorStructArray2D = FTypeArray2D<TaylorStruct>;
 using TaylorStructArray3D = FTypeArray3D<TaylorStruct>;
 
-using TaylorStructAlloc1D = FTypeAlloc1D<
-    TaylorStructArray1D,
-    allocate_taylor_struct_container,
-    deallocate_taylor_struct_container,
-    reallocate_taylor_struct_container_data,
-    access_taylor_struct_container>;
+struct TaylorStructAlloc1D : public FTypeAlloc1D<TaylorStructArray1D> {
+  using Base = FTypeAlloc1D<TaylorStructArray1D>;
+  using Base::Base;
+  TaylorStructAlloc1D()
+      : Base(
+            allocate_taylor_struct_container,
+            deallocate_taylor_struct_container,
+            reallocate_taylor_struct_container_data,
+            access_taylor_struct_container
+        ) {}
+  TaylorStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_taylor_struct_container,
+            deallocate_taylor_struct_container,
+            reallocate_taylor_struct_container_data,
+            access_taylor_struct_container
+        ) {}
+  TaylorStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class EmTaylorTermStruct;
 
@@ -8404,12 +8766,28 @@ using EmTaylorTermStructArray1D = FTypeArray1D<
 using EmTaylorTermStructArray2D = FTypeArray2D<EmTaylorTermStruct>;
 using EmTaylorTermStructArray3D = FTypeArray3D<EmTaylorTermStruct>;
 
-using EmTaylorTermStructAlloc1D = FTypeAlloc1D<
-    EmTaylorTermStructArray1D,
-    allocate_em_taylor_term_struct_container,
-    deallocate_em_taylor_term_struct_container,
-    reallocate_em_taylor_term_struct_container_data,
-    access_em_taylor_term_struct_container>;
+struct EmTaylorTermStructAlloc1D : public FTypeAlloc1D<EmTaylorTermStructArray1D> {
+  using Base = FTypeAlloc1D<EmTaylorTermStructArray1D>;
+  using Base::Base;
+  EmTaylorTermStructAlloc1D()
+      : Base(
+            allocate_em_taylor_term_struct_container,
+            deallocate_em_taylor_term_struct_container,
+            reallocate_em_taylor_term_struct_container_data,
+            access_em_taylor_term_struct_container
+        ) {}
+  EmTaylorTermStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_em_taylor_term_struct_container,
+            deallocate_em_taylor_term_struct_container,
+            reallocate_em_taylor_term_struct_container_data,
+            access_em_taylor_term_struct_container
+        ) {}
+  EmTaylorTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class EmTaylorStruct;
 
@@ -8420,12 +8798,28 @@ using EmTaylorStructArray1D = FTypeArray1D<
 using EmTaylorStructArray2D = FTypeArray2D<EmTaylorStruct>;
 using EmTaylorStructArray3D = FTypeArray3D<EmTaylorStruct>;
 
-using EmTaylorStructAlloc1D = FTypeAlloc1D<
-    EmTaylorStructArray1D,
-    allocate_em_taylor_struct_container,
-    deallocate_em_taylor_struct_container,
-    reallocate_em_taylor_struct_container_data,
-    access_em_taylor_struct_container>;
+struct EmTaylorStructAlloc1D : public FTypeAlloc1D<EmTaylorStructArray1D> {
+  using Base = FTypeAlloc1D<EmTaylorStructArray1D>;
+  using Base::Base;
+  EmTaylorStructAlloc1D()
+      : Base(
+            allocate_em_taylor_struct_container,
+            deallocate_em_taylor_struct_container,
+            reallocate_em_taylor_struct_container_data,
+            access_em_taylor_struct_container
+        ) {}
+  EmTaylorStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_em_taylor_struct_container,
+            deallocate_em_taylor_struct_container,
+            reallocate_em_taylor_struct_container_data,
+            access_em_taylor_struct_container
+        ) {}
+  EmTaylorStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class CartesianMapTerm1Struct;
 
@@ -8436,12 +8830,28 @@ using CartesianMapTerm1StructArray1D = FTypeArray1D<
 using CartesianMapTerm1StructArray2D = FTypeArray2D<CartesianMapTerm1Struct>;
 using CartesianMapTerm1StructArray3D = FTypeArray3D<CartesianMapTerm1Struct>;
 
-using CartesianMapTerm1StructAlloc1D = FTypeAlloc1D<
-    CartesianMapTerm1StructArray1D,
-    allocate_cartesian_map_term1_struct_container,
-    deallocate_cartesian_map_term1_struct_container,
-    reallocate_cartesian_map_term1_struct_container_data,
-    access_cartesian_map_term1_struct_container>;
+struct CartesianMapTerm1StructAlloc1D : public FTypeAlloc1D<CartesianMapTerm1StructArray1D> {
+  using Base = FTypeAlloc1D<CartesianMapTerm1StructArray1D>;
+  using Base::Base;
+  CartesianMapTerm1StructAlloc1D()
+      : Base(
+            allocate_cartesian_map_term1_struct_container,
+            deallocate_cartesian_map_term1_struct_container,
+            reallocate_cartesian_map_term1_struct_container_data,
+            access_cartesian_map_term1_struct_container
+        ) {}
+  CartesianMapTerm1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_cartesian_map_term1_struct_container,
+            deallocate_cartesian_map_term1_struct_container,
+            reallocate_cartesian_map_term1_struct_container_data,
+            access_cartesian_map_term1_struct_container
+        ) {}
+  CartesianMapTerm1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class CartesianMapTermStruct;
 
@@ -8452,12 +8862,28 @@ using CartesianMapTermStructArray1D = FTypeArray1D<
 using CartesianMapTermStructArray2D = FTypeArray2D<CartesianMapTermStruct>;
 using CartesianMapTermStructArray3D = FTypeArray3D<CartesianMapTermStruct>;
 
-using CartesianMapTermStructAlloc1D = FTypeAlloc1D<
-    CartesianMapTermStructArray1D,
-    allocate_cartesian_map_term_struct_container,
-    deallocate_cartesian_map_term_struct_container,
-    reallocate_cartesian_map_term_struct_container_data,
-    access_cartesian_map_term_struct_container>;
+struct CartesianMapTermStructAlloc1D : public FTypeAlloc1D<CartesianMapTermStructArray1D> {
+  using Base = FTypeAlloc1D<CartesianMapTermStructArray1D>;
+  using Base::Base;
+  CartesianMapTermStructAlloc1D()
+      : Base(
+            allocate_cartesian_map_term_struct_container,
+            deallocate_cartesian_map_term_struct_container,
+            reallocate_cartesian_map_term_struct_container_data,
+            access_cartesian_map_term_struct_container
+        ) {}
+  CartesianMapTermStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_cartesian_map_term_struct_container,
+            deallocate_cartesian_map_term_struct_container,
+            reallocate_cartesian_map_term_struct_container_data,
+            access_cartesian_map_term_struct_container
+        ) {}
+  CartesianMapTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class CartesianMapStruct;
 
@@ -8468,12 +8894,28 @@ using CartesianMapStructArray1D = FTypeArray1D<
 using CartesianMapStructArray2D = FTypeArray2D<CartesianMapStruct>;
 using CartesianMapStructArray3D = FTypeArray3D<CartesianMapStruct>;
 
-using CartesianMapStructAlloc1D = FTypeAlloc1D<
-    CartesianMapStructArray1D,
-    allocate_cartesian_map_struct_container,
-    deallocate_cartesian_map_struct_container,
-    reallocate_cartesian_map_struct_container_data,
-    access_cartesian_map_struct_container>;
+struct CartesianMapStructAlloc1D : public FTypeAlloc1D<CartesianMapStructArray1D> {
+  using Base = FTypeAlloc1D<CartesianMapStructArray1D>;
+  using Base::Base;
+  CartesianMapStructAlloc1D()
+      : Base(
+            allocate_cartesian_map_struct_container,
+            deallocate_cartesian_map_struct_container,
+            reallocate_cartesian_map_struct_container_data,
+            access_cartesian_map_struct_container
+        ) {}
+  CartesianMapStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_cartesian_map_struct_container,
+            deallocate_cartesian_map_struct_container,
+            reallocate_cartesian_map_struct_container_data,
+            access_cartesian_map_struct_container
+        ) {}
+  CartesianMapStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class CylindricalMapTerm1Struct;
 
@@ -8484,12 +8926,28 @@ using CylindricalMapTerm1StructArray1D = FTypeArray1D<
 using CylindricalMapTerm1StructArray2D = FTypeArray2D<CylindricalMapTerm1Struct>;
 using CylindricalMapTerm1StructArray3D = FTypeArray3D<CylindricalMapTerm1Struct>;
 
-using CylindricalMapTerm1StructAlloc1D = FTypeAlloc1D<
-    CylindricalMapTerm1StructArray1D,
-    allocate_cylindrical_map_term1_struct_container,
-    deallocate_cylindrical_map_term1_struct_container,
-    reallocate_cylindrical_map_term1_struct_container_data,
-    access_cylindrical_map_term1_struct_container>;
+struct CylindricalMapTerm1StructAlloc1D : public FTypeAlloc1D<CylindricalMapTerm1StructArray1D> {
+  using Base = FTypeAlloc1D<CylindricalMapTerm1StructArray1D>;
+  using Base::Base;
+  CylindricalMapTerm1StructAlloc1D()
+      : Base(
+            allocate_cylindrical_map_term1_struct_container,
+            deallocate_cylindrical_map_term1_struct_container,
+            reallocate_cylindrical_map_term1_struct_container_data,
+            access_cylindrical_map_term1_struct_container
+        ) {}
+  CylindricalMapTerm1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_cylindrical_map_term1_struct_container,
+            deallocate_cylindrical_map_term1_struct_container,
+            reallocate_cylindrical_map_term1_struct_container_data,
+            access_cylindrical_map_term1_struct_container
+        ) {}
+  CylindricalMapTerm1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class CylindricalMapTermStruct;
 
@@ -8500,12 +8958,28 @@ using CylindricalMapTermStructArray1D = FTypeArray1D<
 using CylindricalMapTermStructArray2D = FTypeArray2D<CylindricalMapTermStruct>;
 using CylindricalMapTermStructArray3D = FTypeArray3D<CylindricalMapTermStruct>;
 
-using CylindricalMapTermStructAlloc1D = FTypeAlloc1D<
-    CylindricalMapTermStructArray1D,
-    allocate_cylindrical_map_term_struct_container,
-    deallocate_cylindrical_map_term_struct_container,
-    reallocate_cylindrical_map_term_struct_container_data,
-    access_cylindrical_map_term_struct_container>;
+struct CylindricalMapTermStructAlloc1D : public FTypeAlloc1D<CylindricalMapTermStructArray1D> {
+  using Base = FTypeAlloc1D<CylindricalMapTermStructArray1D>;
+  using Base::Base;
+  CylindricalMapTermStructAlloc1D()
+      : Base(
+            allocate_cylindrical_map_term_struct_container,
+            deallocate_cylindrical_map_term_struct_container,
+            reallocate_cylindrical_map_term_struct_container_data,
+            access_cylindrical_map_term_struct_container
+        ) {}
+  CylindricalMapTermStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_cylindrical_map_term_struct_container,
+            deallocate_cylindrical_map_term_struct_container,
+            reallocate_cylindrical_map_term_struct_container_data,
+            access_cylindrical_map_term_struct_container
+        ) {}
+  CylindricalMapTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class CylindricalMapStruct;
 
@@ -8516,12 +8990,28 @@ using CylindricalMapStructArray1D = FTypeArray1D<
 using CylindricalMapStructArray2D = FTypeArray2D<CylindricalMapStruct>;
 using CylindricalMapStructArray3D = FTypeArray3D<CylindricalMapStruct>;
 
-using CylindricalMapStructAlloc1D = FTypeAlloc1D<
-    CylindricalMapStructArray1D,
-    allocate_cylindrical_map_struct_container,
-    deallocate_cylindrical_map_struct_container,
-    reallocate_cylindrical_map_struct_container_data,
-    access_cylindrical_map_struct_container>;
+struct CylindricalMapStructAlloc1D : public FTypeAlloc1D<CylindricalMapStructArray1D> {
+  using Base = FTypeAlloc1D<CylindricalMapStructArray1D>;
+  using Base::Base;
+  CylindricalMapStructAlloc1D()
+      : Base(
+            allocate_cylindrical_map_struct_container,
+            deallocate_cylindrical_map_struct_container,
+            reallocate_cylindrical_map_struct_container_data,
+            access_cylindrical_map_struct_container
+        ) {}
+  CylindricalMapStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_cylindrical_map_struct_container,
+            deallocate_cylindrical_map_struct_container,
+            reallocate_cylindrical_map_struct_container_data,
+            access_cylindrical_map_struct_container
+        ) {}
+  CylindricalMapStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BicubicCmplxCoefStruct;
 
@@ -8532,12 +9022,28 @@ using BicubicCmplxCoefStructArray1D = FTypeArray1D<
 using BicubicCmplxCoefStructArray2D = FTypeArray2D<BicubicCmplxCoefStruct>;
 using BicubicCmplxCoefStructArray3D = FTypeArray3D<BicubicCmplxCoefStruct>;
 
-using BicubicCmplxCoefStructAlloc1D = FTypeAlloc1D<
-    BicubicCmplxCoefStructArray1D,
-    allocate_bicubic_cmplx_coef_struct_container,
-    deallocate_bicubic_cmplx_coef_struct_container,
-    reallocate_bicubic_cmplx_coef_struct_container_data,
-    access_bicubic_cmplx_coef_struct_container>;
+struct BicubicCmplxCoefStructAlloc1D : public FTypeAlloc1D<BicubicCmplxCoefStructArray1D> {
+  using Base = FTypeAlloc1D<BicubicCmplxCoefStructArray1D>;
+  using Base::Base;
+  BicubicCmplxCoefStructAlloc1D()
+      : Base(
+            allocate_bicubic_cmplx_coef_struct_container,
+            deallocate_bicubic_cmplx_coef_struct_container,
+            reallocate_bicubic_cmplx_coef_struct_container_data,
+            access_bicubic_cmplx_coef_struct_container
+        ) {}
+  BicubicCmplxCoefStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bicubic_cmplx_coef_struct_container,
+            deallocate_bicubic_cmplx_coef_struct_container,
+            reallocate_bicubic_cmplx_coef_struct_container_data,
+            access_bicubic_cmplx_coef_struct_container
+        ) {}
+  BicubicCmplxCoefStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TricubicCmplxCoefStruct;
 
@@ -8548,12 +9054,28 @@ using TricubicCmplxCoefStructArray1D = FTypeArray1D<
 using TricubicCmplxCoefStructArray2D = FTypeArray2D<TricubicCmplxCoefStruct>;
 using TricubicCmplxCoefStructArray3D = FTypeArray3D<TricubicCmplxCoefStruct>;
 
-using TricubicCmplxCoefStructAlloc1D = FTypeAlloc1D<
-    TricubicCmplxCoefStructArray1D,
-    allocate_tricubic_cmplx_coef_struct_container,
-    deallocate_tricubic_cmplx_coef_struct_container,
-    reallocate_tricubic_cmplx_coef_struct_container_data,
-    access_tricubic_cmplx_coef_struct_container>;
+struct TricubicCmplxCoefStructAlloc1D : public FTypeAlloc1D<TricubicCmplxCoefStructArray1D> {
+  using Base = FTypeAlloc1D<TricubicCmplxCoefStructArray1D>;
+  using Base::Base;
+  TricubicCmplxCoefStructAlloc1D()
+      : Base(
+            allocate_tricubic_cmplx_coef_struct_container,
+            deallocate_tricubic_cmplx_coef_struct_container,
+            reallocate_tricubic_cmplx_coef_struct_container_data,
+            access_tricubic_cmplx_coef_struct_container
+        ) {}
+  TricubicCmplxCoefStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tricubic_cmplx_coef_struct_container,
+            deallocate_tricubic_cmplx_coef_struct_container,
+            reallocate_tricubic_cmplx_coef_struct_container_data,
+            access_tricubic_cmplx_coef_struct_container
+        ) {}
+  TricubicCmplxCoefStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class GridFieldPt1Struct;
 
@@ -8564,12 +9086,28 @@ using GridFieldPt1StructArray1D = FTypeArray1D<
 using GridFieldPt1StructArray2D = FTypeArray2D<GridFieldPt1Struct>;
 using GridFieldPt1StructArray3D = FTypeArray3D<GridFieldPt1Struct>;
 
-using GridFieldPt1StructAlloc1D = FTypeAlloc1D<
-    GridFieldPt1StructArray1D,
-    allocate_grid_field_pt1_struct_container,
-    deallocate_grid_field_pt1_struct_container,
-    reallocate_grid_field_pt1_struct_container_data,
-    access_grid_field_pt1_struct_container>;
+struct GridFieldPt1StructAlloc1D : public FTypeAlloc1D<GridFieldPt1StructArray1D> {
+  using Base = FTypeAlloc1D<GridFieldPt1StructArray1D>;
+  using Base::Base;
+  GridFieldPt1StructAlloc1D()
+      : Base(
+            allocate_grid_field_pt1_struct_container,
+            deallocate_grid_field_pt1_struct_container,
+            reallocate_grid_field_pt1_struct_container_data,
+            access_grid_field_pt1_struct_container
+        ) {}
+  GridFieldPt1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_grid_field_pt1_struct_container,
+            deallocate_grid_field_pt1_struct_container,
+            reallocate_grid_field_pt1_struct_container_data,
+            access_grid_field_pt1_struct_container
+        ) {}
+  GridFieldPt1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class GridFieldPtStruct;
 
@@ -8580,12 +9118,28 @@ using GridFieldPtStructArray1D = FTypeArray1D<
 using GridFieldPtStructArray2D = FTypeArray2D<GridFieldPtStruct>;
 using GridFieldPtStructArray3D = FTypeArray3D<GridFieldPtStruct>;
 
-using GridFieldPtStructAlloc1D = FTypeAlloc1D<
-    GridFieldPtStructArray1D,
-    allocate_grid_field_pt_struct_container,
-    deallocate_grid_field_pt_struct_container,
-    reallocate_grid_field_pt_struct_container_data,
-    access_grid_field_pt_struct_container>;
+struct GridFieldPtStructAlloc1D : public FTypeAlloc1D<GridFieldPtStructArray1D> {
+  using Base = FTypeAlloc1D<GridFieldPtStructArray1D>;
+  using Base::Base;
+  GridFieldPtStructAlloc1D()
+      : Base(
+            allocate_grid_field_pt_struct_container,
+            deallocate_grid_field_pt_struct_container,
+            reallocate_grid_field_pt_struct_container_data,
+            access_grid_field_pt_struct_container
+        ) {}
+  GridFieldPtStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_grid_field_pt_struct_container,
+            deallocate_grid_field_pt_struct_container,
+            reallocate_grid_field_pt_struct_container_data,
+            access_grid_field_pt_struct_container
+        ) {}
+  GridFieldPtStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class GridFieldStruct;
 
@@ -8596,12 +9150,28 @@ using GridFieldStructArray1D = FTypeArray1D<
 using GridFieldStructArray2D = FTypeArray2D<GridFieldStruct>;
 using GridFieldStructArray3D = FTypeArray3D<GridFieldStruct>;
 
-using GridFieldStructAlloc1D = FTypeAlloc1D<
-    GridFieldStructArray1D,
-    allocate_grid_field_struct_container,
-    deallocate_grid_field_struct_container,
-    reallocate_grid_field_struct_container_data,
-    access_grid_field_struct_container>;
+struct GridFieldStructAlloc1D : public FTypeAlloc1D<GridFieldStructArray1D> {
+  using Base = FTypeAlloc1D<GridFieldStructArray1D>;
+  using Base::Base;
+  GridFieldStructAlloc1D()
+      : Base(
+            allocate_grid_field_struct_container,
+            deallocate_grid_field_struct_container,
+            reallocate_grid_field_struct_container_data,
+            access_grid_field_struct_container
+        ) {}
+  GridFieldStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_grid_field_struct_container,
+            deallocate_grid_field_struct_container,
+            reallocate_grid_field_struct_container_data,
+            access_grid_field_struct_container
+        ) {}
+  GridFieldStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class FloorPositionStruct;
 
@@ -8612,12 +9182,28 @@ using FloorPositionStructArray1D = FTypeArray1D<
 using FloorPositionStructArray2D = FTypeArray2D<FloorPositionStruct>;
 using FloorPositionStructArray3D = FTypeArray3D<FloorPositionStruct>;
 
-using FloorPositionStructAlloc1D = FTypeAlloc1D<
-    FloorPositionStructArray1D,
-    allocate_floor_position_struct_container,
-    deallocate_floor_position_struct_container,
-    reallocate_floor_position_struct_container_data,
-    access_floor_position_struct_container>;
+struct FloorPositionStructAlloc1D : public FTypeAlloc1D<FloorPositionStructArray1D> {
+  using Base = FTypeAlloc1D<FloorPositionStructArray1D>;
+  using Base::Base;
+  FloorPositionStructAlloc1D()
+      : Base(
+            allocate_floor_position_struct_container,
+            deallocate_floor_position_struct_container,
+            reallocate_floor_position_struct_container_data,
+            access_floor_position_struct_container
+        ) {}
+  FloorPositionStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_floor_position_struct_container,
+            deallocate_floor_position_struct_container,
+            reallocate_floor_position_struct_container_data,
+            access_floor_position_struct_container
+        ) {}
+  FloorPositionStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class HighEnergySpaceChargeStruct;
 
@@ -8628,12 +9214,29 @@ using HighEnergySpaceChargeStructArray1D = FTypeArray1D<
 using HighEnergySpaceChargeStructArray2D = FTypeArray2D<HighEnergySpaceChargeStruct>;
 using HighEnergySpaceChargeStructArray3D = FTypeArray3D<HighEnergySpaceChargeStruct>;
 
-using HighEnergySpaceChargeStructAlloc1D = FTypeAlloc1D<
-    HighEnergySpaceChargeStructArray1D,
-    allocate_high_energy_space_charge_struct_container,
-    deallocate_high_energy_space_charge_struct_container,
-    reallocate_high_energy_space_charge_struct_container_data,
-    access_high_energy_space_charge_struct_container>;
+struct HighEnergySpaceChargeStructAlloc1D
+    : public FTypeAlloc1D<HighEnergySpaceChargeStructArray1D> {
+  using Base = FTypeAlloc1D<HighEnergySpaceChargeStructArray1D>;
+  using Base::Base;
+  HighEnergySpaceChargeStructAlloc1D()
+      : Base(
+            allocate_high_energy_space_charge_struct_container,
+            deallocate_high_energy_space_charge_struct_container,
+            reallocate_high_energy_space_charge_struct_container_data,
+            access_high_energy_space_charge_struct_container
+        ) {}
+  HighEnergySpaceChargeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_high_energy_space_charge_struct_container,
+            deallocate_high_energy_space_charge_struct_container,
+            reallocate_high_energy_space_charge_struct_container_data,
+            access_high_energy_space_charge_struct_container
+        ) {}
+  HighEnergySpaceChargeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class XyDispStruct;
 
@@ -8642,12 +9245,28 @@ using XyDispStructArray1D =
 using XyDispStructArray2D = FTypeArray2D<XyDispStruct>;
 using XyDispStructArray3D = FTypeArray3D<XyDispStruct>;
 
-using XyDispStructAlloc1D = FTypeAlloc1D<
-    XyDispStructArray1D,
-    allocate_xy_disp_struct_container,
-    deallocate_xy_disp_struct_container,
-    reallocate_xy_disp_struct_container_data,
-    access_xy_disp_struct_container>;
+struct XyDispStructAlloc1D : public FTypeAlloc1D<XyDispStructArray1D> {
+  using Base = FTypeAlloc1D<XyDispStructArray1D>;
+  using Base::Base;
+  XyDispStructAlloc1D()
+      : Base(
+            allocate_xy_disp_struct_container,
+            deallocate_xy_disp_struct_container,
+            reallocate_xy_disp_struct_container_data,
+            access_xy_disp_struct_container
+        ) {}
+  XyDispStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_xy_disp_struct_container,
+            deallocate_xy_disp_struct_container,
+            reallocate_xy_disp_struct_container_data,
+            access_xy_disp_struct_container
+        ) {}
+  XyDispStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TwissStruct;
 
@@ -8656,12 +9275,28 @@ using TwissStructArray1D =
 using TwissStructArray2D = FTypeArray2D<TwissStruct>;
 using TwissStructArray3D = FTypeArray3D<TwissStruct>;
 
-using TwissStructAlloc1D = FTypeAlloc1D<
-    TwissStructArray1D,
-    allocate_twiss_struct_container,
-    deallocate_twiss_struct_container,
-    reallocate_twiss_struct_container_data,
-    access_twiss_struct_container>;
+struct TwissStructAlloc1D : public FTypeAlloc1D<TwissStructArray1D> {
+  using Base = FTypeAlloc1D<TwissStructArray1D>;
+  using Base::Base;
+  TwissStructAlloc1D()
+      : Base(
+            allocate_twiss_struct_container,
+            deallocate_twiss_struct_container,
+            reallocate_twiss_struct_container_data,
+            access_twiss_struct_container
+        ) {}
+  TwissStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_twiss_struct_container,
+            deallocate_twiss_struct_container,
+            reallocate_twiss_struct_container_data,
+            access_twiss_struct_container
+        ) {}
+  TwissStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class Mode3Struct;
 
@@ -8670,12 +9305,28 @@ using Mode3StructArray1D =
 using Mode3StructArray2D = FTypeArray2D<Mode3Struct>;
 using Mode3StructArray3D = FTypeArray3D<Mode3Struct>;
 
-using Mode3StructAlloc1D = FTypeAlloc1D<
-    Mode3StructArray1D,
-    allocate_mode3_struct_container,
-    deallocate_mode3_struct_container,
-    reallocate_mode3_struct_container_data,
-    access_mode3_struct_container>;
+struct Mode3StructAlloc1D : public FTypeAlloc1D<Mode3StructArray1D> {
+  using Base = FTypeAlloc1D<Mode3StructArray1D>;
+  using Base::Base;
+  Mode3StructAlloc1D()
+      : Base(
+            allocate_mode3_struct_container,
+            deallocate_mode3_struct_container,
+            reallocate_mode3_struct_container_data,
+            access_mode3_struct_container
+        ) {}
+  Mode3StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_mode3_struct_container,
+            deallocate_mode3_struct_container,
+            reallocate_mode3_struct_container_data,
+            access_mode3_struct_container
+        ) {}
+  Mode3StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BookkeepingStateStruct;
 
@@ -8686,12 +9337,28 @@ using BookkeepingStateStructArray1D = FTypeArray1D<
 using BookkeepingStateStructArray2D = FTypeArray2D<BookkeepingStateStruct>;
 using BookkeepingStateStructArray3D = FTypeArray3D<BookkeepingStateStruct>;
 
-using BookkeepingStateStructAlloc1D = FTypeAlloc1D<
-    BookkeepingStateStructArray1D,
-    allocate_bookkeeping_state_struct_container,
-    deallocate_bookkeeping_state_struct_container,
-    reallocate_bookkeeping_state_struct_container_data,
-    access_bookkeeping_state_struct_container>;
+struct BookkeepingStateStructAlloc1D : public FTypeAlloc1D<BookkeepingStateStructArray1D> {
+  using Base = FTypeAlloc1D<BookkeepingStateStructArray1D>;
+  using Base::Base;
+  BookkeepingStateStructAlloc1D()
+      : Base(
+            allocate_bookkeeping_state_struct_container,
+            deallocate_bookkeeping_state_struct_container,
+            reallocate_bookkeeping_state_struct_container_data,
+            access_bookkeeping_state_struct_container
+        ) {}
+  BookkeepingStateStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bookkeeping_state_struct_container,
+            deallocate_bookkeeping_state_struct_container,
+            reallocate_bookkeeping_state_struct_container_data,
+            access_bookkeeping_state_struct_container
+        ) {}
+  BookkeepingStateStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RadMapStruct;
 
@@ -8700,12 +9367,28 @@ using RadMapStructArray1D =
 using RadMapStructArray2D = FTypeArray2D<RadMapStruct>;
 using RadMapStructArray3D = FTypeArray3D<RadMapStruct>;
 
-using RadMapStructAlloc1D = FTypeAlloc1D<
-    RadMapStructArray1D,
-    allocate_rad_map_struct_container,
-    deallocate_rad_map_struct_container,
-    reallocate_rad_map_struct_container_data,
-    access_rad_map_struct_container>;
+struct RadMapStructAlloc1D : public FTypeAlloc1D<RadMapStructArray1D> {
+  using Base = FTypeAlloc1D<RadMapStructArray1D>;
+  using Base::Base;
+  RadMapStructAlloc1D()
+      : Base(
+            allocate_rad_map_struct_container,
+            deallocate_rad_map_struct_container,
+            reallocate_rad_map_struct_container_data,
+            access_rad_map_struct_container
+        ) {}
+  RadMapStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_rad_map_struct_container,
+            deallocate_rad_map_struct_container,
+            reallocate_rad_map_struct_container_data,
+            access_rad_map_struct_container
+        ) {}
+  RadMapStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RadMapEleStruct;
 
@@ -8716,12 +9399,28 @@ using RadMapEleStructArray1D = FTypeArray1D<
 using RadMapEleStructArray2D = FTypeArray2D<RadMapEleStruct>;
 using RadMapEleStructArray3D = FTypeArray3D<RadMapEleStruct>;
 
-using RadMapEleStructAlloc1D = FTypeAlloc1D<
-    RadMapEleStructArray1D,
-    allocate_rad_map_ele_struct_container,
-    deallocate_rad_map_ele_struct_container,
-    reallocate_rad_map_ele_struct_container_data,
-    access_rad_map_ele_struct_container>;
+struct RadMapEleStructAlloc1D : public FTypeAlloc1D<RadMapEleStructArray1D> {
+  using Base = FTypeAlloc1D<RadMapEleStructArray1D>;
+  using Base::Base;
+  RadMapEleStructAlloc1D()
+      : Base(
+            allocate_rad_map_ele_struct_container,
+            deallocate_rad_map_ele_struct_container,
+            reallocate_rad_map_ele_struct_container_data,
+            access_rad_map_ele_struct_container
+        ) {}
+  RadMapEleStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_rad_map_ele_struct_container,
+            deallocate_rad_map_ele_struct_container,
+            reallocate_rad_map_ele_struct_container_data,
+            access_rad_map_ele_struct_container
+        ) {}
+  RadMapEleStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class GenGrad1Struct;
 
@@ -8732,12 +9431,28 @@ using GenGrad1StructArray1D = FTypeArray1D<
 using GenGrad1StructArray2D = FTypeArray2D<GenGrad1Struct>;
 using GenGrad1StructArray3D = FTypeArray3D<GenGrad1Struct>;
 
-using GenGrad1StructAlloc1D = FTypeAlloc1D<
-    GenGrad1StructArray1D,
-    allocate_gen_grad1_struct_container,
-    deallocate_gen_grad1_struct_container,
-    reallocate_gen_grad1_struct_container_data,
-    access_gen_grad1_struct_container>;
+struct GenGrad1StructAlloc1D : public FTypeAlloc1D<GenGrad1StructArray1D> {
+  using Base = FTypeAlloc1D<GenGrad1StructArray1D>;
+  using Base::Base;
+  GenGrad1StructAlloc1D()
+      : Base(
+            allocate_gen_grad1_struct_container,
+            deallocate_gen_grad1_struct_container,
+            reallocate_gen_grad1_struct_container_data,
+            access_gen_grad1_struct_container
+        ) {}
+  GenGrad1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_gen_grad1_struct_container,
+            deallocate_gen_grad1_struct_container,
+            reallocate_gen_grad1_struct_container_data,
+            access_gen_grad1_struct_container
+        ) {}
+  GenGrad1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class GenGradMapStruct;
 
@@ -8748,12 +9463,28 @@ using GenGradMapStructArray1D = FTypeArray1D<
 using GenGradMapStructArray2D = FTypeArray2D<GenGradMapStruct>;
 using GenGradMapStructArray3D = FTypeArray3D<GenGradMapStruct>;
 
-using GenGradMapStructAlloc1D = FTypeAlloc1D<
-    GenGradMapStructArray1D,
-    allocate_gen_grad_map_struct_container,
-    deallocate_gen_grad_map_struct_container,
-    reallocate_gen_grad_map_struct_container_data,
-    access_gen_grad_map_struct_container>;
+struct GenGradMapStructAlloc1D : public FTypeAlloc1D<GenGradMapStructArray1D> {
+  using Base = FTypeAlloc1D<GenGradMapStructArray1D>;
+  using Base::Base;
+  GenGradMapStructAlloc1D()
+      : Base(
+            allocate_gen_grad_map_struct_container,
+            deallocate_gen_grad_map_struct_container,
+            reallocate_gen_grad_map_struct_container_data,
+            access_gen_grad_map_struct_container
+        ) {}
+  GenGradMapStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_gen_grad_map_struct_container,
+            deallocate_gen_grad_map_struct_container,
+            reallocate_gen_grad_map_struct_container_data,
+            access_gen_grad_map_struct_container
+        ) {}
+  GenGradMapStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SurfaceSegmentedPtStruct;
 
@@ -8764,12 +9495,28 @@ using SurfaceSegmentedPtStructArray1D = FTypeArray1D<
 using SurfaceSegmentedPtStructArray2D = FTypeArray2D<SurfaceSegmentedPtStruct>;
 using SurfaceSegmentedPtStructArray3D = FTypeArray3D<SurfaceSegmentedPtStruct>;
 
-using SurfaceSegmentedPtStructAlloc1D = FTypeAlloc1D<
-    SurfaceSegmentedPtStructArray1D,
-    allocate_surface_segmented_pt_struct_container,
-    deallocate_surface_segmented_pt_struct_container,
-    reallocate_surface_segmented_pt_struct_container_data,
-    access_surface_segmented_pt_struct_container>;
+struct SurfaceSegmentedPtStructAlloc1D : public FTypeAlloc1D<SurfaceSegmentedPtStructArray1D> {
+  using Base = FTypeAlloc1D<SurfaceSegmentedPtStructArray1D>;
+  using Base::Base;
+  SurfaceSegmentedPtStructAlloc1D()
+      : Base(
+            allocate_surface_segmented_pt_struct_container,
+            deallocate_surface_segmented_pt_struct_container,
+            reallocate_surface_segmented_pt_struct_container_data,
+            access_surface_segmented_pt_struct_container
+        ) {}
+  SurfaceSegmentedPtStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_surface_segmented_pt_struct_container,
+            deallocate_surface_segmented_pt_struct_container,
+            reallocate_surface_segmented_pt_struct_container_data,
+            access_surface_segmented_pt_struct_container
+        ) {}
+  SurfaceSegmentedPtStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SurfaceSegmentedStruct;
 
@@ -8780,12 +9527,28 @@ using SurfaceSegmentedStructArray1D = FTypeArray1D<
 using SurfaceSegmentedStructArray2D = FTypeArray2D<SurfaceSegmentedStruct>;
 using SurfaceSegmentedStructArray3D = FTypeArray3D<SurfaceSegmentedStruct>;
 
-using SurfaceSegmentedStructAlloc1D = FTypeAlloc1D<
-    SurfaceSegmentedStructArray1D,
-    allocate_surface_segmented_struct_container,
-    deallocate_surface_segmented_struct_container,
-    reallocate_surface_segmented_struct_container_data,
-    access_surface_segmented_struct_container>;
+struct SurfaceSegmentedStructAlloc1D : public FTypeAlloc1D<SurfaceSegmentedStructArray1D> {
+  using Base = FTypeAlloc1D<SurfaceSegmentedStructArray1D>;
+  using Base::Base;
+  SurfaceSegmentedStructAlloc1D()
+      : Base(
+            allocate_surface_segmented_struct_container,
+            deallocate_surface_segmented_struct_container,
+            reallocate_surface_segmented_struct_container_data,
+            access_surface_segmented_struct_container
+        ) {}
+  SurfaceSegmentedStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_surface_segmented_struct_container,
+            deallocate_surface_segmented_struct_container,
+            reallocate_surface_segmented_struct_container_data,
+            access_surface_segmented_struct_container
+        ) {}
+  SurfaceSegmentedStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SurfaceHMisalignPtStruct;
 
@@ -8796,12 +9559,28 @@ using SurfaceHMisalignPtStructArray1D = FTypeArray1D<
 using SurfaceHMisalignPtStructArray2D = FTypeArray2D<SurfaceHMisalignPtStruct>;
 using SurfaceHMisalignPtStructArray3D = FTypeArray3D<SurfaceHMisalignPtStruct>;
 
-using SurfaceHMisalignPtStructAlloc1D = FTypeAlloc1D<
-    SurfaceHMisalignPtStructArray1D,
-    allocate_surface_h_misalign_pt_struct_container,
-    deallocate_surface_h_misalign_pt_struct_container,
-    reallocate_surface_h_misalign_pt_struct_container_data,
-    access_surface_h_misalign_pt_struct_container>;
+struct SurfaceHMisalignPtStructAlloc1D : public FTypeAlloc1D<SurfaceHMisalignPtStructArray1D> {
+  using Base = FTypeAlloc1D<SurfaceHMisalignPtStructArray1D>;
+  using Base::Base;
+  SurfaceHMisalignPtStructAlloc1D()
+      : Base(
+            allocate_surface_h_misalign_pt_struct_container,
+            deallocate_surface_h_misalign_pt_struct_container,
+            reallocate_surface_h_misalign_pt_struct_container_data,
+            access_surface_h_misalign_pt_struct_container
+        ) {}
+  SurfaceHMisalignPtStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_surface_h_misalign_pt_struct_container,
+            deallocate_surface_h_misalign_pt_struct_container,
+            reallocate_surface_h_misalign_pt_struct_container_data,
+            access_surface_h_misalign_pt_struct_container
+        ) {}
+  SurfaceHMisalignPtStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SurfaceHMisalignStruct;
 
@@ -8812,12 +9591,28 @@ using SurfaceHMisalignStructArray1D = FTypeArray1D<
 using SurfaceHMisalignStructArray2D = FTypeArray2D<SurfaceHMisalignStruct>;
 using SurfaceHMisalignStructArray3D = FTypeArray3D<SurfaceHMisalignStruct>;
 
-using SurfaceHMisalignStructAlloc1D = FTypeAlloc1D<
-    SurfaceHMisalignStructArray1D,
-    allocate_surface_h_misalign_struct_container,
-    deallocate_surface_h_misalign_struct_container,
-    reallocate_surface_h_misalign_struct_container_data,
-    access_surface_h_misalign_struct_container>;
+struct SurfaceHMisalignStructAlloc1D : public FTypeAlloc1D<SurfaceHMisalignStructArray1D> {
+  using Base = FTypeAlloc1D<SurfaceHMisalignStructArray1D>;
+  using Base::Base;
+  SurfaceHMisalignStructAlloc1D()
+      : Base(
+            allocate_surface_h_misalign_struct_container,
+            deallocate_surface_h_misalign_struct_container,
+            reallocate_surface_h_misalign_struct_container_data,
+            access_surface_h_misalign_struct_container
+        ) {}
+  SurfaceHMisalignStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_surface_h_misalign_struct_container,
+            deallocate_surface_h_misalign_struct_container,
+            reallocate_surface_h_misalign_struct_container_data,
+            access_surface_h_misalign_struct_container
+        ) {}
+  SurfaceHMisalignStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SurfaceDisplacementPtStruct;
 
@@ -8828,12 +9623,29 @@ using SurfaceDisplacementPtStructArray1D = FTypeArray1D<
 using SurfaceDisplacementPtStructArray2D = FTypeArray2D<SurfaceDisplacementPtStruct>;
 using SurfaceDisplacementPtStructArray3D = FTypeArray3D<SurfaceDisplacementPtStruct>;
 
-using SurfaceDisplacementPtStructAlloc1D = FTypeAlloc1D<
-    SurfaceDisplacementPtStructArray1D,
-    allocate_surface_displacement_pt_struct_container,
-    deallocate_surface_displacement_pt_struct_container,
-    reallocate_surface_displacement_pt_struct_container_data,
-    access_surface_displacement_pt_struct_container>;
+struct SurfaceDisplacementPtStructAlloc1D
+    : public FTypeAlloc1D<SurfaceDisplacementPtStructArray1D> {
+  using Base = FTypeAlloc1D<SurfaceDisplacementPtStructArray1D>;
+  using Base::Base;
+  SurfaceDisplacementPtStructAlloc1D()
+      : Base(
+            allocate_surface_displacement_pt_struct_container,
+            deallocate_surface_displacement_pt_struct_container,
+            reallocate_surface_displacement_pt_struct_container_data,
+            access_surface_displacement_pt_struct_container
+        ) {}
+  SurfaceDisplacementPtStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_surface_displacement_pt_struct_container,
+            deallocate_surface_displacement_pt_struct_container,
+            reallocate_surface_displacement_pt_struct_container_data,
+            access_surface_displacement_pt_struct_container
+        ) {}
+  SurfaceDisplacementPtStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SurfaceDisplacementStruct;
 
@@ -8844,12 +9656,28 @@ using SurfaceDisplacementStructArray1D = FTypeArray1D<
 using SurfaceDisplacementStructArray2D = FTypeArray2D<SurfaceDisplacementStruct>;
 using SurfaceDisplacementStructArray3D = FTypeArray3D<SurfaceDisplacementStruct>;
 
-using SurfaceDisplacementStructAlloc1D = FTypeAlloc1D<
-    SurfaceDisplacementStructArray1D,
-    allocate_surface_displacement_struct_container,
-    deallocate_surface_displacement_struct_container,
-    reallocate_surface_displacement_struct_container_data,
-    access_surface_displacement_struct_container>;
+struct SurfaceDisplacementStructAlloc1D : public FTypeAlloc1D<SurfaceDisplacementStructArray1D> {
+  using Base = FTypeAlloc1D<SurfaceDisplacementStructArray1D>;
+  using Base::Base;
+  SurfaceDisplacementStructAlloc1D()
+      : Base(
+            allocate_surface_displacement_struct_container,
+            deallocate_surface_displacement_struct_container,
+            reallocate_surface_displacement_struct_container_data,
+            access_surface_displacement_struct_container
+        ) {}
+  SurfaceDisplacementStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_surface_displacement_struct_container,
+            deallocate_surface_displacement_struct_container,
+            reallocate_surface_displacement_struct_container_data,
+            access_surface_displacement_struct_container
+        ) {}
+  SurfaceDisplacementStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TargetPointStruct;
 
@@ -8860,12 +9688,28 @@ using TargetPointStructArray1D = FTypeArray1D<
 using TargetPointStructArray2D = FTypeArray2D<TargetPointStruct>;
 using TargetPointStructArray3D = FTypeArray3D<TargetPointStruct>;
 
-using TargetPointStructAlloc1D = FTypeAlloc1D<
-    TargetPointStructArray1D,
-    allocate_target_point_struct_container,
-    deallocate_target_point_struct_container,
-    reallocate_target_point_struct_container_data,
-    access_target_point_struct_container>;
+struct TargetPointStructAlloc1D : public FTypeAlloc1D<TargetPointStructArray1D> {
+  using Base = FTypeAlloc1D<TargetPointStructArray1D>;
+  using Base::Base;
+  TargetPointStructAlloc1D()
+      : Base(
+            allocate_target_point_struct_container,
+            deallocate_target_point_struct_container,
+            reallocate_target_point_struct_container_data,
+            access_target_point_struct_container
+        ) {}
+  TargetPointStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_target_point_struct_container,
+            deallocate_target_point_struct_container,
+            reallocate_target_point_struct_container_data,
+            access_target_point_struct_container
+        ) {}
+  TargetPointStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SurfaceCurvatureStruct;
 
@@ -8876,12 +9720,28 @@ using SurfaceCurvatureStructArray1D = FTypeArray1D<
 using SurfaceCurvatureStructArray2D = FTypeArray2D<SurfaceCurvatureStruct>;
 using SurfaceCurvatureStructArray3D = FTypeArray3D<SurfaceCurvatureStruct>;
 
-using SurfaceCurvatureStructAlloc1D = FTypeAlloc1D<
-    SurfaceCurvatureStructArray1D,
-    allocate_surface_curvature_struct_container,
-    deallocate_surface_curvature_struct_container,
-    reallocate_surface_curvature_struct_container_data,
-    access_surface_curvature_struct_container>;
+struct SurfaceCurvatureStructAlloc1D : public FTypeAlloc1D<SurfaceCurvatureStructArray1D> {
+  using Base = FTypeAlloc1D<SurfaceCurvatureStructArray1D>;
+  using Base::Base;
+  SurfaceCurvatureStructAlloc1D()
+      : Base(
+            allocate_surface_curvature_struct_container,
+            deallocate_surface_curvature_struct_container,
+            reallocate_surface_curvature_struct_container_data,
+            access_surface_curvature_struct_container
+        ) {}
+  SurfaceCurvatureStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_surface_curvature_struct_container,
+            deallocate_surface_curvature_struct_container,
+            reallocate_surface_curvature_struct_container_data,
+            access_surface_curvature_struct_container
+        ) {}
+  SurfaceCurvatureStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PhotonTargetStruct;
 
@@ -8892,12 +9752,28 @@ using PhotonTargetStructArray1D = FTypeArray1D<
 using PhotonTargetStructArray2D = FTypeArray2D<PhotonTargetStruct>;
 using PhotonTargetStructArray3D = FTypeArray3D<PhotonTargetStruct>;
 
-using PhotonTargetStructAlloc1D = FTypeAlloc1D<
-    PhotonTargetStructArray1D,
-    allocate_photon_target_struct_container,
-    deallocate_photon_target_struct_container,
-    reallocate_photon_target_struct_container_data,
-    access_photon_target_struct_container>;
+struct PhotonTargetStructAlloc1D : public FTypeAlloc1D<PhotonTargetStructArray1D> {
+  using Base = FTypeAlloc1D<PhotonTargetStructArray1D>;
+  using Base::Base;
+  PhotonTargetStructAlloc1D()
+      : Base(
+            allocate_photon_target_struct_container,
+            deallocate_photon_target_struct_container,
+            reallocate_photon_target_struct_container_data,
+            access_photon_target_struct_container
+        ) {}
+  PhotonTargetStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_photon_target_struct_container,
+            deallocate_photon_target_struct_container,
+            reallocate_photon_target_struct_container_data,
+            access_photon_target_struct_container
+        ) {}
+  PhotonTargetStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PhotonMaterialStruct;
 
@@ -8908,12 +9784,28 @@ using PhotonMaterialStructArray1D = FTypeArray1D<
 using PhotonMaterialStructArray2D = FTypeArray2D<PhotonMaterialStruct>;
 using PhotonMaterialStructArray3D = FTypeArray3D<PhotonMaterialStruct>;
 
-using PhotonMaterialStructAlloc1D = FTypeAlloc1D<
-    PhotonMaterialStructArray1D,
-    allocate_photon_material_struct_container,
-    deallocate_photon_material_struct_container,
-    reallocate_photon_material_struct_container_data,
-    access_photon_material_struct_container>;
+struct PhotonMaterialStructAlloc1D : public FTypeAlloc1D<PhotonMaterialStructArray1D> {
+  using Base = FTypeAlloc1D<PhotonMaterialStructArray1D>;
+  using Base::Base;
+  PhotonMaterialStructAlloc1D()
+      : Base(
+            allocate_photon_material_struct_container,
+            deallocate_photon_material_struct_container,
+            reallocate_photon_material_struct_container_data,
+            access_photon_material_struct_container
+        ) {}
+  PhotonMaterialStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_photon_material_struct_container,
+            deallocate_photon_material_struct_container,
+            reallocate_photon_material_struct_container_data,
+            access_photon_material_struct_container
+        ) {}
+  PhotonMaterialStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PixelPtStruct;
 
@@ -8924,12 +9816,28 @@ using PixelPtStructArray1D = FTypeArray1D<
 using PixelPtStructArray2D = FTypeArray2D<PixelPtStruct>;
 using PixelPtStructArray3D = FTypeArray3D<PixelPtStruct>;
 
-using PixelPtStructAlloc1D = FTypeAlloc1D<
-    PixelPtStructArray1D,
-    allocate_pixel_pt_struct_container,
-    deallocate_pixel_pt_struct_container,
-    reallocate_pixel_pt_struct_container_data,
-    access_pixel_pt_struct_container>;
+struct PixelPtStructAlloc1D : public FTypeAlloc1D<PixelPtStructArray1D> {
+  using Base = FTypeAlloc1D<PixelPtStructArray1D>;
+  using Base::Base;
+  PixelPtStructAlloc1D()
+      : Base(
+            allocate_pixel_pt_struct_container,
+            deallocate_pixel_pt_struct_container,
+            reallocate_pixel_pt_struct_container_data,
+            access_pixel_pt_struct_container
+        ) {}
+  PixelPtStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_pixel_pt_struct_container,
+            deallocate_pixel_pt_struct_container,
+            reallocate_pixel_pt_struct_container_data,
+            access_pixel_pt_struct_container
+        ) {}
+  PixelPtStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PixelDetecStruct;
 
@@ -8940,12 +9848,28 @@ using PixelDetecStructArray1D = FTypeArray1D<
 using PixelDetecStructArray2D = FTypeArray2D<PixelDetecStruct>;
 using PixelDetecStructArray3D = FTypeArray3D<PixelDetecStruct>;
 
-using PixelDetecStructAlloc1D = FTypeAlloc1D<
-    PixelDetecStructArray1D,
-    allocate_pixel_detec_struct_container,
-    deallocate_pixel_detec_struct_container,
-    reallocate_pixel_detec_struct_container_data,
-    access_pixel_detec_struct_container>;
+struct PixelDetecStructAlloc1D : public FTypeAlloc1D<PixelDetecStructArray1D> {
+  using Base = FTypeAlloc1D<PixelDetecStructArray1D>;
+  using Base::Base;
+  PixelDetecStructAlloc1D()
+      : Base(
+            allocate_pixel_detec_struct_container,
+            deallocate_pixel_detec_struct_container,
+            reallocate_pixel_detec_struct_container_data,
+            access_pixel_detec_struct_container
+        ) {}
+  PixelDetecStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_pixel_detec_struct_container,
+            deallocate_pixel_detec_struct_container,
+            reallocate_pixel_detec_struct_container_data,
+            access_pixel_detec_struct_container
+        ) {}
+  PixelDetecStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PhotonElementStruct;
 
@@ -8956,12 +9880,28 @@ using PhotonElementStructArray1D = FTypeArray1D<
 using PhotonElementStructArray2D = FTypeArray2D<PhotonElementStruct>;
 using PhotonElementStructArray3D = FTypeArray3D<PhotonElementStruct>;
 
-using PhotonElementStructAlloc1D = FTypeAlloc1D<
-    PhotonElementStructArray1D,
-    allocate_photon_element_struct_container,
-    deallocate_photon_element_struct_container,
-    reallocate_photon_element_struct_container_data,
-    access_photon_element_struct_container>;
+struct PhotonElementStructAlloc1D : public FTypeAlloc1D<PhotonElementStructArray1D> {
+  using Base = FTypeAlloc1D<PhotonElementStructArray1D>;
+  using Base::Base;
+  PhotonElementStructAlloc1D()
+      : Base(
+            allocate_photon_element_struct_container,
+            deallocate_photon_element_struct_container,
+            reallocate_photon_element_struct_container_data,
+            access_photon_element_struct_container
+        ) {}
+  PhotonElementStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_photon_element_struct_container,
+            deallocate_photon_element_struct_container,
+            reallocate_photon_element_struct_container_data,
+            access_photon_element_struct_container
+        ) {}
+  PhotonElementStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class Wall3dVertexStruct;
 
@@ -8972,12 +9912,28 @@ using Wall3dVertexStructArray1D = FTypeArray1D<
 using Wall3dVertexStructArray2D = FTypeArray2D<Wall3dVertexStruct>;
 using Wall3dVertexStructArray3D = FTypeArray3D<Wall3dVertexStruct>;
 
-using Wall3dVertexStructAlloc1D = FTypeAlloc1D<
-    Wall3dVertexStructArray1D,
-    allocate_wall3d_vertex_struct_container,
-    deallocate_wall3d_vertex_struct_container,
-    reallocate_wall3d_vertex_struct_container_data,
-    access_wall3d_vertex_struct_container>;
+struct Wall3dVertexStructAlloc1D : public FTypeAlloc1D<Wall3dVertexStructArray1D> {
+  using Base = FTypeAlloc1D<Wall3dVertexStructArray1D>;
+  using Base::Base;
+  Wall3dVertexStructAlloc1D()
+      : Base(
+            allocate_wall3d_vertex_struct_container,
+            deallocate_wall3d_vertex_struct_container,
+            reallocate_wall3d_vertex_struct_container_data,
+            access_wall3d_vertex_struct_container
+        ) {}
+  Wall3dVertexStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wall3d_vertex_struct_container,
+            deallocate_wall3d_vertex_struct_container,
+            reallocate_wall3d_vertex_struct_container_data,
+            access_wall3d_vertex_struct_container
+        ) {}
+  Wall3dVertexStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class Wall3dSectionStruct;
 
@@ -8988,12 +9944,28 @@ using Wall3dSectionStructArray1D = FTypeArray1D<
 using Wall3dSectionStructArray2D = FTypeArray2D<Wall3dSectionStruct>;
 using Wall3dSectionStructArray3D = FTypeArray3D<Wall3dSectionStruct>;
 
-using Wall3dSectionStructAlloc1D = FTypeAlloc1D<
-    Wall3dSectionStructArray1D,
-    allocate_wall3d_section_struct_container,
-    deallocate_wall3d_section_struct_container,
-    reallocate_wall3d_section_struct_container_data,
-    access_wall3d_section_struct_container>;
+struct Wall3dSectionStructAlloc1D : public FTypeAlloc1D<Wall3dSectionStructArray1D> {
+  using Base = FTypeAlloc1D<Wall3dSectionStructArray1D>;
+  using Base::Base;
+  Wall3dSectionStructAlloc1D()
+      : Base(
+            allocate_wall3d_section_struct_container,
+            deallocate_wall3d_section_struct_container,
+            reallocate_wall3d_section_struct_container_data,
+            access_wall3d_section_struct_container
+        ) {}
+  Wall3dSectionStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wall3d_section_struct_container,
+            deallocate_wall3d_section_struct_container,
+            reallocate_wall3d_section_struct_container_data,
+            access_wall3d_section_struct_container
+        ) {}
+  Wall3dSectionStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class Wall3dStruct;
 
@@ -9002,12 +9974,28 @@ using Wall3dStructArray1D =
 using Wall3dStructArray2D = FTypeArray2D<Wall3dStruct>;
 using Wall3dStructArray3D = FTypeArray3D<Wall3dStruct>;
 
-using Wall3dStructAlloc1D = FTypeAlloc1D<
-    Wall3dStructArray1D,
-    allocate_wall3d_struct_container,
-    deallocate_wall3d_struct_container,
-    reallocate_wall3d_struct_container_data,
-    access_wall3d_struct_container>;
+struct Wall3dStructAlloc1D : public FTypeAlloc1D<Wall3dStructArray1D> {
+  using Base = FTypeAlloc1D<Wall3dStructArray1D>;
+  using Base::Base;
+  Wall3dStructAlloc1D()
+      : Base(
+            allocate_wall3d_struct_container,
+            deallocate_wall3d_struct_container,
+            reallocate_wall3d_struct_container_data,
+            access_wall3d_struct_container
+        ) {}
+  Wall3dStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_wall3d_struct_container,
+            deallocate_wall3d_struct_container,
+            reallocate_wall3d_struct_container_data,
+            access_wall3d_struct_container
+        ) {}
+  Wall3dStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RamperLordStruct;
 
@@ -9018,12 +10006,28 @@ using RamperLordStructArray1D = FTypeArray1D<
 using RamperLordStructArray2D = FTypeArray2D<RamperLordStruct>;
 using RamperLordStructArray3D = FTypeArray3D<RamperLordStruct>;
 
-using RamperLordStructAlloc1D = FTypeAlloc1D<
-    RamperLordStructArray1D,
-    allocate_ramper_lord_struct_container,
-    deallocate_ramper_lord_struct_container,
-    reallocate_ramper_lord_struct_container_data,
-    access_ramper_lord_struct_container>;
+struct RamperLordStructAlloc1D : public FTypeAlloc1D<RamperLordStructArray1D> {
+  using Base = FTypeAlloc1D<RamperLordStructArray1D>;
+  using Base::Base;
+  RamperLordStructAlloc1D()
+      : Base(
+            allocate_ramper_lord_struct_container,
+            deallocate_ramper_lord_struct_container,
+            reallocate_ramper_lord_struct_container_data,
+            access_ramper_lord_struct_container
+        ) {}
+  RamperLordStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_ramper_lord_struct_container,
+            deallocate_ramper_lord_struct_container,
+            reallocate_ramper_lord_struct_container_data,
+            access_ramper_lord_struct_container
+        ) {}
+  RamperLordStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ControlStruct;
 
@@ -9032,12 +10036,28 @@ using ControlStructArray1D =
 using ControlStructArray2D = FTypeArray2D<ControlStruct>;
 using ControlStructArray3D = FTypeArray3D<ControlStruct>;
 
-using ControlStructAlloc1D = FTypeAlloc1D<
-    ControlStructArray1D,
-    allocate_control_struct_container,
-    deallocate_control_struct_container,
-    reallocate_control_struct_container_data,
-    access_control_struct_container>;
+struct ControlStructAlloc1D : public FTypeAlloc1D<ControlStructArray1D> {
+  using Base = FTypeAlloc1D<ControlStructArray1D>;
+  using Base::Base;
+  ControlStructAlloc1D()
+      : Base(
+            allocate_control_struct_container,
+            deallocate_control_struct_container,
+            reallocate_control_struct_container_data,
+            access_control_struct_container
+        ) {}
+  ControlStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_control_struct_container,
+            deallocate_control_struct_container,
+            reallocate_control_struct_container_data,
+            access_control_struct_container
+        ) {}
+  ControlStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ControlVar1Struct;
 
@@ -9048,12 +10068,28 @@ using ControlVar1StructArray1D = FTypeArray1D<
 using ControlVar1StructArray2D = FTypeArray2D<ControlVar1Struct>;
 using ControlVar1StructArray3D = FTypeArray3D<ControlVar1Struct>;
 
-using ControlVar1StructAlloc1D = FTypeAlloc1D<
-    ControlVar1StructArray1D,
-    allocate_control_var1_struct_container,
-    deallocate_control_var1_struct_container,
-    reallocate_control_var1_struct_container_data,
-    access_control_var1_struct_container>;
+struct ControlVar1StructAlloc1D : public FTypeAlloc1D<ControlVar1StructArray1D> {
+  using Base = FTypeAlloc1D<ControlVar1StructArray1D>;
+  using Base::Base;
+  ControlVar1StructAlloc1D()
+      : Base(
+            allocate_control_var1_struct_container,
+            deallocate_control_var1_struct_container,
+            reallocate_control_var1_struct_container_data,
+            access_control_var1_struct_container
+        ) {}
+  ControlVar1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_control_var1_struct_container,
+            deallocate_control_var1_struct_container,
+            reallocate_control_var1_struct_container_data,
+            access_control_var1_struct_container
+        ) {}
+  ControlVar1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ControlRamp1Struct;
 
@@ -9064,12 +10100,28 @@ using ControlRamp1StructArray1D = FTypeArray1D<
 using ControlRamp1StructArray2D = FTypeArray2D<ControlRamp1Struct>;
 using ControlRamp1StructArray3D = FTypeArray3D<ControlRamp1Struct>;
 
-using ControlRamp1StructAlloc1D = FTypeAlloc1D<
-    ControlRamp1StructArray1D,
-    allocate_control_ramp1_struct_container,
-    deallocate_control_ramp1_struct_container,
-    reallocate_control_ramp1_struct_container_data,
-    access_control_ramp1_struct_container>;
+struct ControlRamp1StructAlloc1D : public FTypeAlloc1D<ControlRamp1StructArray1D> {
+  using Base = FTypeAlloc1D<ControlRamp1StructArray1D>;
+  using Base::Base;
+  ControlRamp1StructAlloc1D()
+      : Base(
+            allocate_control_ramp1_struct_container,
+            deallocate_control_ramp1_struct_container,
+            reallocate_control_ramp1_struct_container_data,
+            access_control_ramp1_struct_container
+        ) {}
+  ControlRamp1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_control_ramp1_struct_container,
+            deallocate_control_ramp1_struct_container,
+            reallocate_control_ramp1_struct_container_data,
+            access_control_ramp1_struct_container
+        ) {}
+  ControlRamp1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ControllerStruct;
 
@@ -9080,12 +10132,28 @@ using ControllerStructArray1D = FTypeArray1D<
 using ControllerStructArray2D = FTypeArray2D<ControllerStruct>;
 using ControllerStructArray3D = FTypeArray3D<ControllerStruct>;
 
-using ControllerStructAlloc1D = FTypeAlloc1D<
-    ControllerStructArray1D,
-    allocate_controller_struct_container,
-    deallocate_controller_struct_container,
-    reallocate_controller_struct_container_data,
-    access_controller_struct_container>;
+struct ControllerStructAlloc1D : public FTypeAlloc1D<ControllerStructArray1D> {
+  using Base = FTypeAlloc1D<ControllerStructArray1D>;
+  using Base::Base;
+  ControllerStructAlloc1D()
+      : Base(
+            allocate_controller_struct_container,
+            deallocate_controller_struct_container,
+            reallocate_controller_struct_container_data,
+            access_controller_struct_container
+        ) {}
+  ControllerStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_controller_struct_container,
+            deallocate_controller_struct_container,
+            reallocate_controller_struct_container_data,
+            access_controller_struct_container
+        ) {}
+  ControllerStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class EllipseBeamInitStruct;
 
@@ -9096,12 +10164,28 @@ using EllipseBeamInitStructArray1D = FTypeArray1D<
 using EllipseBeamInitStructArray2D = FTypeArray2D<EllipseBeamInitStruct>;
 using EllipseBeamInitStructArray3D = FTypeArray3D<EllipseBeamInitStruct>;
 
-using EllipseBeamInitStructAlloc1D = FTypeAlloc1D<
-    EllipseBeamInitStructArray1D,
-    allocate_ellipse_beam_init_struct_container,
-    deallocate_ellipse_beam_init_struct_container,
-    reallocate_ellipse_beam_init_struct_container_data,
-    access_ellipse_beam_init_struct_container>;
+struct EllipseBeamInitStructAlloc1D : public FTypeAlloc1D<EllipseBeamInitStructArray1D> {
+  using Base = FTypeAlloc1D<EllipseBeamInitStructArray1D>;
+  using Base::Base;
+  EllipseBeamInitStructAlloc1D()
+      : Base(
+            allocate_ellipse_beam_init_struct_container,
+            deallocate_ellipse_beam_init_struct_container,
+            reallocate_ellipse_beam_init_struct_container_data,
+            access_ellipse_beam_init_struct_container
+        ) {}
+  EllipseBeamInitStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_ellipse_beam_init_struct_container,
+            deallocate_ellipse_beam_init_struct_container,
+            reallocate_ellipse_beam_init_struct_container_data,
+            access_ellipse_beam_init_struct_container
+        ) {}
+  EllipseBeamInitStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class KvBeamInitStruct;
 
@@ -9112,12 +10196,28 @@ using KvBeamInitStructArray1D = FTypeArray1D<
 using KvBeamInitStructArray2D = FTypeArray2D<KvBeamInitStruct>;
 using KvBeamInitStructArray3D = FTypeArray3D<KvBeamInitStruct>;
 
-using KvBeamInitStructAlloc1D = FTypeAlloc1D<
-    KvBeamInitStructArray1D,
-    allocate_kv_beam_init_struct_container,
-    deallocate_kv_beam_init_struct_container,
-    reallocate_kv_beam_init_struct_container_data,
-    access_kv_beam_init_struct_container>;
+struct KvBeamInitStructAlloc1D : public FTypeAlloc1D<KvBeamInitStructArray1D> {
+  using Base = FTypeAlloc1D<KvBeamInitStructArray1D>;
+  using Base::Base;
+  KvBeamInitStructAlloc1D()
+      : Base(
+            allocate_kv_beam_init_struct_container,
+            deallocate_kv_beam_init_struct_container,
+            reallocate_kv_beam_init_struct_container_data,
+            access_kv_beam_init_struct_container
+        ) {}
+  KvBeamInitStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_kv_beam_init_struct_container,
+            deallocate_kv_beam_init_struct_container,
+            reallocate_kv_beam_init_struct_container_data,
+            access_kv_beam_init_struct_container
+        ) {}
+  KvBeamInitStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class GridBeamInitStruct;
 
@@ -9128,12 +10228,28 @@ using GridBeamInitStructArray1D = FTypeArray1D<
 using GridBeamInitStructArray2D = FTypeArray2D<GridBeamInitStruct>;
 using GridBeamInitStructArray3D = FTypeArray3D<GridBeamInitStruct>;
 
-using GridBeamInitStructAlloc1D = FTypeAlloc1D<
-    GridBeamInitStructArray1D,
-    allocate_grid_beam_init_struct_container,
-    deallocate_grid_beam_init_struct_container,
-    reallocate_grid_beam_init_struct_container_data,
-    access_grid_beam_init_struct_container>;
+struct GridBeamInitStructAlloc1D : public FTypeAlloc1D<GridBeamInitStructArray1D> {
+  using Base = FTypeAlloc1D<GridBeamInitStructArray1D>;
+  using Base::Base;
+  GridBeamInitStructAlloc1D()
+      : Base(
+            allocate_grid_beam_init_struct_container,
+            deallocate_grid_beam_init_struct_container,
+            reallocate_grid_beam_init_struct_container_data,
+            access_grid_beam_init_struct_container
+        ) {}
+  GridBeamInitStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_grid_beam_init_struct_container,
+            deallocate_grid_beam_init_struct_container,
+            reallocate_grid_beam_init_struct_container_data,
+            access_grid_beam_init_struct_container
+        ) {}
+  GridBeamInitStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BeamInitStruct;
 
@@ -9144,12 +10260,28 @@ using BeamInitStructArray1D = FTypeArray1D<
 using BeamInitStructArray2D = FTypeArray2D<BeamInitStruct>;
 using BeamInitStructArray3D = FTypeArray3D<BeamInitStruct>;
 
-using BeamInitStructAlloc1D = FTypeAlloc1D<
-    BeamInitStructArray1D,
-    allocate_beam_init_struct_container,
-    deallocate_beam_init_struct_container,
-    reallocate_beam_init_struct_container_data,
-    access_beam_init_struct_container>;
+struct BeamInitStructAlloc1D : public FTypeAlloc1D<BeamInitStructArray1D> {
+  using Base = FTypeAlloc1D<BeamInitStructArray1D>;
+  using Base::Base;
+  BeamInitStructAlloc1D()
+      : Base(
+            allocate_beam_init_struct_container,
+            deallocate_beam_init_struct_container,
+            reallocate_beam_init_struct_container_data,
+            access_beam_init_struct_container
+        ) {}
+  BeamInitStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_beam_init_struct_container,
+            deallocate_beam_init_struct_container,
+            reallocate_beam_init_struct_container_data,
+            access_beam_init_struct_container
+        ) {}
+  BeamInitStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class LatParamStruct;
 
@@ -9160,12 +10292,28 @@ using LatParamStructArray1D = FTypeArray1D<
 using LatParamStructArray2D = FTypeArray2D<LatParamStruct>;
 using LatParamStructArray3D = FTypeArray3D<LatParamStruct>;
 
-using LatParamStructAlloc1D = FTypeAlloc1D<
-    LatParamStructArray1D,
-    allocate_lat_param_struct_container,
-    deallocate_lat_param_struct_container,
-    reallocate_lat_param_struct_container_data,
-    access_lat_param_struct_container>;
+struct LatParamStructAlloc1D : public FTypeAlloc1D<LatParamStructArray1D> {
+  using Base = FTypeAlloc1D<LatParamStructArray1D>;
+  using Base::Base;
+  LatParamStructAlloc1D()
+      : Base(
+            allocate_lat_param_struct_container,
+            deallocate_lat_param_struct_container,
+            reallocate_lat_param_struct_container_data,
+            access_lat_param_struct_container
+        ) {}
+  LatParamStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_lat_param_struct_container,
+            deallocate_lat_param_struct_container,
+            reallocate_lat_param_struct_container_data,
+            access_lat_param_struct_container
+        ) {}
+  LatParamStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ModeInfoStruct;
 
@@ -9176,12 +10324,28 @@ using ModeInfoStructArray1D = FTypeArray1D<
 using ModeInfoStructArray2D = FTypeArray2D<ModeInfoStruct>;
 using ModeInfoStructArray3D = FTypeArray3D<ModeInfoStruct>;
 
-using ModeInfoStructAlloc1D = FTypeAlloc1D<
-    ModeInfoStructArray1D,
-    allocate_mode_info_struct_container,
-    deallocate_mode_info_struct_container,
-    reallocate_mode_info_struct_container_data,
-    access_mode_info_struct_container>;
+struct ModeInfoStructAlloc1D : public FTypeAlloc1D<ModeInfoStructArray1D> {
+  using Base = FTypeAlloc1D<ModeInfoStructArray1D>;
+  using Base::Base;
+  ModeInfoStructAlloc1D()
+      : Base(
+            allocate_mode_info_struct_container,
+            deallocate_mode_info_struct_container,
+            reallocate_mode_info_struct_container_data,
+            access_mode_info_struct_container
+        ) {}
+  ModeInfoStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_mode_info_struct_container,
+            deallocate_mode_info_struct_container,
+            reallocate_mode_info_struct_container_data,
+            access_mode_info_struct_container
+        ) {}
+  ModeInfoStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PreTrackerStruct;
 
@@ -9192,12 +10356,28 @@ using PreTrackerStructArray1D = FTypeArray1D<
 using PreTrackerStructArray2D = FTypeArray2D<PreTrackerStruct>;
 using PreTrackerStructArray3D = FTypeArray3D<PreTrackerStruct>;
 
-using PreTrackerStructAlloc1D = FTypeAlloc1D<
-    PreTrackerStructArray1D,
-    allocate_pre_tracker_struct_container,
-    deallocate_pre_tracker_struct_container,
-    reallocate_pre_tracker_struct_container_data,
-    access_pre_tracker_struct_container>;
+struct PreTrackerStructAlloc1D : public FTypeAlloc1D<PreTrackerStructArray1D> {
+  using Base = FTypeAlloc1D<PreTrackerStructArray1D>;
+  using Base::Base;
+  PreTrackerStructAlloc1D()
+      : Base(
+            allocate_pre_tracker_struct_container,
+            deallocate_pre_tracker_struct_container,
+            reallocate_pre_tracker_struct_container_data,
+            access_pre_tracker_struct_container
+        ) {}
+  PreTrackerStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_pre_tracker_struct_container,
+            deallocate_pre_tracker_struct_container,
+            reallocate_pre_tracker_struct_container_data,
+            access_pre_tracker_struct_container
+        ) {}
+  PreTrackerStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class AnormalModeStruct;
 
@@ -9208,12 +10388,28 @@ using AnormalModeStructArray1D = FTypeArray1D<
 using AnormalModeStructArray2D = FTypeArray2D<AnormalModeStruct>;
 using AnormalModeStructArray3D = FTypeArray3D<AnormalModeStruct>;
 
-using AnormalModeStructAlloc1D = FTypeAlloc1D<
-    AnormalModeStructArray1D,
-    allocate_anormal_mode_struct_container,
-    deallocate_anormal_mode_struct_container,
-    reallocate_anormal_mode_struct_container_data,
-    access_anormal_mode_struct_container>;
+struct AnormalModeStructAlloc1D : public FTypeAlloc1D<AnormalModeStructArray1D> {
+  using Base = FTypeAlloc1D<AnormalModeStructArray1D>;
+  using Base::Base;
+  AnormalModeStructAlloc1D()
+      : Base(
+            allocate_anormal_mode_struct_container,
+            deallocate_anormal_mode_struct_container,
+            reallocate_anormal_mode_struct_container_data,
+            access_anormal_mode_struct_container
+        ) {}
+  AnormalModeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_anormal_mode_struct_container,
+            deallocate_anormal_mode_struct_container,
+            reallocate_anormal_mode_struct_container_data,
+            access_anormal_mode_struct_container
+        ) {}
+  AnormalModeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class LinacNormalModeStruct;
 
@@ -9224,12 +10420,28 @@ using LinacNormalModeStructArray1D = FTypeArray1D<
 using LinacNormalModeStructArray2D = FTypeArray2D<LinacNormalModeStruct>;
 using LinacNormalModeStructArray3D = FTypeArray3D<LinacNormalModeStruct>;
 
-using LinacNormalModeStructAlloc1D = FTypeAlloc1D<
-    LinacNormalModeStructArray1D,
-    allocate_linac_normal_mode_struct_container,
-    deallocate_linac_normal_mode_struct_container,
-    reallocate_linac_normal_mode_struct_container_data,
-    access_linac_normal_mode_struct_container>;
+struct LinacNormalModeStructAlloc1D : public FTypeAlloc1D<LinacNormalModeStructArray1D> {
+  using Base = FTypeAlloc1D<LinacNormalModeStructArray1D>;
+  using Base::Base;
+  LinacNormalModeStructAlloc1D()
+      : Base(
+            allocate_linac_normal_mode_struct_container,
+            deallocate_linac_normal_mode_struct_container,
+            reallocate_linac_normal_mode_struct_container_data,
+            access_linac_normal_mode_struct_container
+        ) {}
+  LinacNormalModeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_linac_normal_mode_struct_container,
+            deallocate_linac_normal_mode_struct_container,
+            reallocate_linac_normal_mode_struct_container_data,
+            access_linac_normal_mode_struct_container
+        ) {}
+  LinacNormalModeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class NormalModesStruct;
 
@@ -9240,12 +10452,28 @@ using NormalModesStructArray1D = FTypeArray1D<
 using NormalModesStructArray2D = FTypeArray2D<NormalModesStruct>;
 using NormalModesStructArray3D = FTypeArray3D<NormalModesStruct>;
 
-using NormalModesStructAlloc1D = FTypeAlloc1D<
-    NormalModesStructArray1D,
-    allocate_normal_modes_struct_container,
-    deallocate_normal_modes_struct_container,
-    reallocate_normal_modes_struct_container_data,
-    access_normal_modes_struct_container>;
+struct NormalModesStructAlloc1D : public FTypeAlloc1D<NormalModesStructArray1D> {
+  using Base = FTypeAlloc1D<NormalModesStructArray1D>;
+  using Base::Base;
+  NormalModesStructAlloc1D()
+      : Base(
+            allocate_normal_modes_struct_container,
+            deallocate_normal_modes_struct_container,
+            reallocate_normal_modes_struct_container_data,
+            access_normal_modes_struct_container
+        ) {}
+  NormalModesStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_normal_modes_struct_container,
+            deallocate_normal_modes_struct_container,
+            reallocate_normal_modes_struct_container_data,
+            access_normal_modes_struct_container
+        ) {}
+  NormalModesStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class EmFieldStruct;
 
@@ -9256,12 +10484,28 @@ using EmFieldStructArray1D = FTypeArray1D<
 using EmFieldStructArray2D = FTypeArray2D<EmFieldStruct>;
 using EmFieldStructArray3D = FTypeArray3D<EmFieldStruct>;
 
-using EmFieldStructAlloc1D = FTypeAlloc1D<
-    EmFieldStructArray1D,
-    allocate_em_field_struct_container,
-    deallocate_em_field_struct_container,
-    reallocate_em_field_struct_container_data,
-    access_em_field_struct_container>;
+struct EmFieldStructAlloc1D : public FTypeAlloc1D<EmFieldStructArray1D> {
+  using Base = FTypeAlloc1D<EmFieldStructArray1D>;
+  using Base::Base;
+  EmFieldStructAlloc1D()
+      : Base(
+            allocate_em_field_struct_container,
+            deallocate_em_field_struct_container,
+            reallocate_em_field_struct_container_data,
+            access_em_field_struct_container
+        ) {}
+  EmFieldStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_em_field_struct_container,
+            deallocate_em_field_struct_container,
+            reallocate_em_field_struct_container_data,
+            access_em_field_struct_container
+        ) {}
+  EmFieldStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class StrongBeamStruct;
 
@@ -9272,12 +10516,28 @@ using StrongBeamStructArray1D = FTypeArray1D<
 using StrongBeamStructArray2D = FTypeArray2D<StrongBeamStruct>;
 using StrongBeamStructArray3D = FTypeArray3D<StrongBeamStruct>;
 
-using StrongBeamStructAlloc1D = FTypeAlloc1D<
-    StrongBeamStructArray1D,
-    allocate_strong_beam_struct_container,
-    deallocate_strong_beam_struct_container,
-    reallocate_strong_beam_struct_container_data,
-    access_strong_beam_struct_container>;
+struct StrongBeamStructAlloc1D : public FTypeAlloc1D<StrongBeamStructArray1D> {
+  using Base = FTypeAlloc1D<StrongBeamStructArray1D>;
+  using Base::Base;
+  StrongBeamStructAlloc1D()
+      : Base(
+            allocate_strong_beam_struct_container,
+            deallocate_strong_beam_struct_container,
+            reallocate_strong_beam_struct_container_data,
+            access_strong_beam_struct_container
+        ) {}
+  StrongBeamStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_strong_beam_struct_container,
+            deallocate_strong_beam_struct_container,
+            reallocate_strong_beam_struct_container_data,
+            access_strong_beam_struct_container
+        ) {}
+  StrongBeamStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TrackPointStruct;
 
@@ -9288,12 +10548,28 @@ using TrackPointStructArray1D = FTypeArray1D<
 using TrackPointStructArray2D = FTypeArray2D<TrackPointStruct>;
 using TrackPointStructArray3D = FTypeArray3D<TrackPointStruct>;
 
-using TrackPointStructAlloc1D = FTypeAlloc1D<
-    TrackPointStructArray1D,
-    allocate_track_point_struct_container,
-    deallocate_track_point_struct_container,
-    reallocate_track_point_struct_container_data,
-    access_track_point_struct_container>;
+struct TrackPointStructAlloc1D : public FTypeAlloc1D<TrackPointStructArray1D> {
+  using Base = FTypeAlloc1D<TrackPointStructArray1D>;
+  using Base::Base;
+  TrackPointStructAlloc1D()
+      : Base(
+            allocate_track_point_struct_container,
+            deallocate_track_point_struct_container,
+            reallocate_track_point_struct_container_data,
+            access_track_point_struct_container
+        ) {}
+  TrackPointStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_track_point_struct_container,
+            deallocate_track_point_struct_container,
+            reallocate_track_point_struct_container_data,
+            access_track_point_struct_container
+        ) {}
+  TrackPointStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TrackStruct;
 
@@ -9302,12 +10578,28 @@ using TrackStructArray1D =
 using TrackStructArray2D = FTypeArray2D<TrackStruct>;
 using TrackStructArray3D = FTypeArray3D<TrackStruct>;
 
-using TrackStructAlloc1D = FTypeAlloc1D<
-    TrackStructArray1D,
-    allocate_track_struct_container,
-    deallocate_track_struct_container,
-    reallocate_track_struct_container_data,
-    access_track_struct_container>;
+struct TrackStructAlloc1D : public FTypeAlloc1D<TrackStructArray1D> {
+  using Base = FTypeAlloc1D<TrackStructArray1D>;
+  using Base::Base;
+  TrackStructAlloc1D()
+      : Base(
+            allocate_track_struct_container,
+            deallocate_track_struct_container,
+            reallocate_track_struct_container_data,
+            access_track_struct_container
+        ) {}
+  TrackStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_track_struct_container,
+            deallocate_track_struct_container,
+            reallocate_track_struct_container_data,
+            access_track_struct_container
+        ) {}
+  TrackStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SpaceChargeCommonStruct;
 
@@ -9318,12 +10610,28 @@ using SpaceChargeCommonStructArray1D = FTypeArray1D<
 using SpaceChargeCommonStructArray2D = FTypeArray2D<SpaceChargeCommonStruct>;
 using SpaceChargeCommonStructArray3D = FTypeArray3D<SpaceChargeCommonStruct>;
 
-using SpaceChargeCommonStructAlloc1D = FTypeAlloc1D<
-    SpaceChargeCommonStructArray1D,
-    allocate_space_charge_common_struct_container,
-    deallocate_space_charge_common_struct_container,
-    reallocate_space_charge_common_struct_container_data,
-    access_space_charge_common_struct_container>;
+struct SpaceChargeCommonStructAlloc1D : public FTypeAlloc1D<SpaceChargeCommonStructArray1D> {
+  using Base = FTypeAlloc1D<SpaceChargeCommonStructArray1D>;
+  using Base::Base;
+  SpaceChargeCommonStructAlloc1D()
+      : Base(
+            allocate_space_charge_common_struct_container,
+            deallocate_space_charge_common_struct_container,
+            reallocate_space_charge_common_struct_container_data,
+            access_space_charge_common_struct_container
+        ) {}
+  SpaceChargeCommonStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_space_charge_common_struct_container,
+            deallocate_space_charge_common_struct_container,
+            reallocate_space_charge_common_struct_container_data,
+            access_space_charge_common_struct_container
+        ) {}
+  SpaceChargeCommonStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BmadCommonStruct;
 
@@ -9334,12 +10642,28 @@ using BmadCommonStructArray1D = FTypeArray1D<
 using BmadCommonStructArray2D = FTypeArray2D<BmadCommonStruct>;
 using BmadCommonStructArray3D = FTypeArray3D<BmadCommonStruct>;
 
-using BmadCommonStructAlloc1D = FTypeAlloc1D<
-    BmadCommonStructArray1D,
-    allocate_bmad_common_struct_container,
-    deallocate_bmad_common_struct_container,
-    reallocate_bmad_common_struct_container_data,
-    access_bmad_common_struct_container>;
+struct BmadCommonStructAlloc1D : public FTypeAlloc1D<BmadCommonStructArray1D> {
+  using Base = FTypeAlloc1D<BmadCommonStructArray1D>;
+  using Base::Base;
+  BmadCommonStructAlloc1D()
+      : Base(
+            allocate_bmad_common_struct_container,
+            deallocate_bmad_common_struct_container,
+            reallocate_bmad_common_struct_container_data,
+            access_bmad_common_struct_container
+        ) {}
+  BmadCommonStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bmad_common_struct_container,
+            deallocate_bmad_common_struct_container,
+            reallocate_bmad_common_struct_container_data,
+            access_bmad_common_struct_container
+        ) {}
+  BmadCommonStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RadInt1Struct;
 
@@ -9350,12 +10674,28 @@ using RadInt1StructArray1D = FTypeArray1D<
 using RadInt1StructArray2D = FTypeArray2D<RadInt1Struct>;
 using RadInt1StructArray3D = FTypeArray3D<RadInt1Struct>;
 
-using RadInt1StructAlloc1D = FTypeAlloc1D<
-    RadInt1StructArray1D,
-    allocate_rad_int1_struct_container,
-    deallocate_rad_int1_struct_container,
-    reallocate_rad_int1_struct_container_data,
-    access_rad_int1_struct_container>;
+struct RadInt1StructAlloc1D : public FTypeAlloc1D<RadInt1StructArray1D> {
+  using Base = FTypeAlloc1D<RadInt1StructArray1D>;
+  using Base::Base;
+  RadInt1StructAlloc1D()
+      : Base(
+            allocate_rad_int1_struct_container,
+            deallocate_rad_int1_struct_container,
+            reallocate_rad_int1_struct_container_data,
+            access_rad_int1_struct_container
+        ) {}
+  RadInt1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_rad_int1_struct_container,
+            deallocate_rad_int1_struct_container,
+            reallocate_rad_int1_struct_container_data,
+            access_rad_int1_struct_container
+        ) {}
+  RadInt1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RadIntBranchStruct;
 
@@ -9366,12 +10706,28 @@ using RadIntBranchStructArray1D = FTypeArray1D<
 using RadIntBranchStructArray2D = FTypeArray2D<RadIntBranchStruct>;
 using RadIntBranchStructArray3D = FTypeArray3D<RadIntBranchStruct>;
 
-using RadIntBranchStructAlloc1D = FTypeAlloc1D<
-    RadIntBranchStructArray1D,
-    allocate_rad_int_branch_struct_container,
-    deallocate_rad_int_branch_struct_container,
-    reallocate_rad_int_branch_struct_container_data,
-    access_rad_int_branch_struct_container>;
+struct RadIntBranchStructAlloc1D : public FTypeAlloc1D<RadIntBranchStructArray1D> {
+  using Base = FTypeAlloc1D<RadIntBranchStructArray1D>;
+  using Base::Base;
+  RadIntBranchStructAlloc1D()
+      : Base(
+            allocate_rad_int_branch_struct_container,
+            deallocate_rad_int_branch_struct_container,
+            reallocate_rad_int_branch_struct_container_data,
+            access_rad_int_branch_struct_container
+        ) {}
+  RadIntBranchStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_rad_int_branch_struct_container,
+            deallocate_rad_int_branch_struct_container,
+            reallocate_rad_int_branch_struct_container_data,
+            access_rad_int_branch_struct_container
+        ) {}
+  RadIntBranchStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RadIntAllEleStruct;
 
@@ -9382,12 +10738,28 @@ using RadIntAllEleStructArray1D = FTypeArray1D<
 using RadIntAllEleStructArray2D = FTypeArray2D<RadIntAllEleStruct>;
 using RadIntAllEleStructArray3D = FTypeArray3D<RadIntAllEleStruct>;
 
-using RadIntAllEleStructAlloc1D = FTypeAlloc1D<
-    RadIntAllEleStructArray1D,
-    allocate_rad_int_all_ele_struct_container,
-    deallocate_rad_int_all_ele_struct_container,
-    reallocate_rad_int_all_ele_struct_container_data,
-    access_rad_int_all_ele_struct_container>;
+struct RadIntAllEleStructAlloc1D : public FTypeAlloc1D<RadIntAllEleStructArray1D> {
+  using Base = FTypeAlloc1D<RadIntAllEleStructArray1D>;
+  using Base::Base;
+  RadIntAllEleStructAlloc1D()
+      : Base(
+            allocate_rad_int_all_ele_struct_container,
+            deallocate_rad_int_all_ele_struct_container,
+            reallocate_rad_int_all_ele_struct_container_data,
+            access_rad_int_all_ele_struct_container
+        ) {}
+  RadIntAllEleStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_rad_int_all_ele_struct_container,
+            deallocate_rad_int_all_ele_struct_container,
+            reallocate_rad_int_all_ele_struct_container_data,
+            access_rad_int_all_ele_struct_container
+        ) {}
+  RadIntAllEleStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RfStairStepStruct;
 
@@ -9398,12 +10770,28 @@ using RfStairStepStructArray1D = FTypeArray1D<
 using RfStairStepStructArray2D = FTypeArray2D<RfStairStepStruct>;
 using RfStairStepStructArray3D = FTypeArray3D<RfStairStepStruct>;
 
-using RfStairStepStructAlloc1D = FTypeAlloc1D<
-    RfStairStepStructArray1D,
-    allocate_rf_stair_step_struct_container,
-    deallocate_rf_stair_step_struct_container,
-    reallocate_rf_stair_step_struct_container_data,
-    access_rf_stair_step_struct_container>;
+struct RfStairStepStructAlloc1D : public FTypeAlloc1D<RfStairStepStructArray1D> {
+  using Base = FTypeAlloc1D<RfStairStepStructArray1D>;
+  using Base::Base;
+  RfStairStepStructAlloc1D()
+      : Base(
+            allocate_rf_stair_step_struct_container,
+            deallocate_rf_stair_step_struct_container,
+            reallocate_rf_stair_step_struct_container_data,
+            access_rf_stair_step_struct_container
+        ) {}
+  RfStairStepStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_rf_stair_step_struct_container,
+            deallocate_rf_stair_step_struct_container,
+            reallocate_rf_stair_step_struct_container_data,
+            access_rf_stair_step_struct_container
+        ) {}
+  RfStairStepStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RfEleStruct;
 
@@ -9412,12 +10800,28 @@ using RfEleStructArray1D =
 using RfEleStructArray2D = FTypeArray2D<RfEleStruct>;
 using RfEleStructArray3D = FTypeArray3D<RfEleStruct>;
 
-using RfEleStructAlloc1D = FTypeAlloc1D<
-    RfEleStructArray1D,
-    allocate_rf_ele_struct_container,
-    deallocate_rf_ele_struct_container,
-    reallocate_rf_ele_struct_container_data,
-    access_rf_ele_struct_container>;
+struct RfEleStructAlloc1D : public FTypeAlloc1D<RfEleStructArray1D> {
+  using Base = FTypeAlloc1D<RfEleStructArray1D>;
+  using Base::Base;
+  RfEleStructAlloc1D()
+      : Base(
+            allocate_rf_ele_struct_container,
+            deallocate_rf_ele_struct_container,
+            reallocate_rf_ele_struct_container_data,
+            access_rf_ele_struct_container
+        ) {}
+  RfEleStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_rf_ele_struct_container,
+            deallocate_rf_ele_struct_container,
+            reallocate_rf_ele_struct_container_data,
+            access_rf_ele_struct_container
+        ) {}
+  RfEleStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class EleStruct;
 
@@ -9426,12 +10830,28 @@ using EleStructArray1D =
 using EleStructArray2D = FTypeArray2D<EleStruct>;
 using EleStructArray3D = FTypeArray3D<EleStruct>;
 
-using EleStructAlloc1D = FTypeAlloc1D<
-    EleStructArray1D,
-    allocate_ele_struct_container,
-    deallocate_ele_struct_container,
-    reallocate_ele_struct_container_data,
-    access_ele_struct_container>;
+struct EleStructAlloc1D : public FTypeAlloc1D<EleStructArray1D> {
+  using Base = FTypeAlloc1D<EleStructArray1D>;
+  using Base::Base;
+  EleStructAlloc1D()
+      : Base(
+            allocate_ele_struct_container,
+            deallocate_ele_struct_container,
+            reallocate_ele_struct_container_data,
+            access_ele_struct_container
+        ) {}
+  EleStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_ele_struct_container,
+            deallocate_ele_struct_container,
+            reallocate_ele_struct_container_data,
+            access_ele_struct_container
+        ) {}
+  EleStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ComplexTaylorTermStruct;
 
@@ -9442,12 +10862,28 @@ using ComplexTaylorTermStructArray1D = FTypeArray1D<
 using ComplexTaylorTermStructArray2D = FTypeArray2D<ComplexTaylorTermStruct>;
 using ComplexTaylorTermStructArray3D = FTypeArray3D<ComplexTaylorTermStruct>;
 
-using ComplexTaylorTermStructAlloc1D = FTypeAlloc1D<
-    ComplexTaylorTermStructArray1D,
-    allocate_complex_taylor_term_struct_container,
-    deallocate_complex_taylor_term_struct_container,
-    reallocate_complex_taylor_term_struct_container_data,
-    access_complex_taylor_term_struct_container>;
+struct ComplexTaylorTermStructAlloc1D : public FTypeAlloc1D<ComplexTaylorTermStructArray1D> {
+  using Base = FTypeAlloc1D<ComplexTaylorTermStructArray1D>;
+  using Base::Base;
+  ComplexTaylorTermStructAlloc1D()
+      : Base(
+            allocate_complex_taylor_term_struct_container,
+            deallocate_complex_taylor_term_struct_container,
+            reallocate_complex_taylor_term_struct_container_data,
+            access_complex_taylor_term_struct_container
+        ) {}
+  ComplexTaylorTermStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_complex_taylor_term_struct_container,
+            deallocate_complex_taylor_term_struct_container,
+            reallocate_complex_taylor_term_struct_container_data,
+            access_complex_taylor_term_struct_container
+        ) {}
+  ComplexTaylorTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ComplexTaylorStruct;
 
@@ -9458,12 +10894,28 @@ using ComplexTaylorStructArray1D = FTypeArray1D<
 using ComplexTaylorStructArray2D = FTypeArray2D<ComplexTaylorStruct>;
 using ComplexTaylorStructArray3D = FTypeArray3D<ComplexTaylorStruct>;
 
-using ComplexTaylorStructAlloc1D = FTypeAlloc1D<
-    ComplexTaylorStructArray1D,
-    allocate_complex_taylor_struct_container,
-    deallocate_complex_taylor_struct_container,
-    reallocate_complex_taylor_struct_container_data,
-    access_complex_taylor_struct_container>;
+struct ComplexTaylorStructAlloc1D : public FTypeAlloc1D<ComplexTaylorStructArray1D> {
+  using Base = FTypeAlloc1D<ComplexTaylorStructArray1D>;
+  using Base::Base;
+  ComplexTaylorStructAlloc1D()
+      : Base(
+            allocate_complex_taylor_struct_container,
+            deallocate_complex_taylor_struct_container,
+            reallocate_complex_taylor_struct_container_data,
+            access_complex_taylor_struct_container
+        ) {}
+  ComplexTaylorStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_complex_taylor_struct_container,
+            deallocate_complex_taylor_struct_container,
+            reallocate_complex_taylor_struct_container_data,
+            access_complex_taylor_struct_container
+        ) {}
+  ComplexTaylorStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BranchStruct;
 
@@ -9472,12 +10924,28 @@ using BranchStructArray1D =
 using BranchStructArray2D = FTypeArray2D<BranchStruct>;
 using BranchStructArray3D = FTypeArray3D<BranchStruct>;
 
-using BranchStructAlloc1D = FTypeAlloc1D<
-    BranchStructArray1D,
-    allocate_branch_struct_container,
-    deallocate_branch_struct_container,
-    reallocate_branch_struct_container_data,
-    access_branch_struct_container>;
+struct BranchStructAlloc1D : public FTypeAlloc1D<BranchStructArray1D> {
+  using Base = FTypeAlloc1D<BranchStructArray1D>;
+  using Base::Base;
+  BranchStructAlloc1D()
+      : Base(
+            allocate_branch_struct_container,
+            deallocate_branch_struct_container,
+            reallocate_branch_struct_container_data,
+            access_branch_struct_container
+        ) {}
+  BranchStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_branch_struct_container,
+            deallocate_branch_struct_container,
+            reallocate_branch_struct_container_data,
+            access_branch_struct_container
+        ) {}
+  BranchStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class LatStruct;
 
@@ -9486,12 +10954,28 @@ using LatStructArray1D =
 using LatStructArray2D = FTypeArray2D<LatStruct>;
 using LatStructArray3D = FTypeArray3D<LatStruct>;
 
-using LatStructAlloc1D = FTypeAlloc1D<
-    LatStructArray1D,
-    allocate_lat_struct_container,
-    deallocate_lat_struct_container,
-    reallocate_lat_struct_container_data,
-    access_lat_struct_container>;
+struct LatStructAlloc1D : public FTypeAlloc1D<LatStructArray1D> {
+  using Base = FTypeAlloc1D<LatStructArray1D>;
+  using Base::Base;
+  LatStructAlloc1D()
+      : Base(
+            allocate_lat_struct_container,
+            deallocate_lat_struct_container,
+            reallocate_lat_struct_container_data,
+            access_lat_struct_container
+        ) {}
+  LatStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_lat_struct_container,
+            deallocate_lat_struct_container,
+            reallocate_lat_struct_container_data,
+            access_lat_struct_container
+        ) {}
+  LatStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BunchStruct;
 
@@ -9500,12 +10984,28 @@ using BunchStructArray1D =
 using BunchStructArray2D = FTypeArray2D<BunchStruct>;
 using BunchStructArray3D = FTypeArray3D<BunchStruct>;
 
-using BunchStructAlloc1D = FTypeAlloc1D<
-    BunchStructArray1D,
-    allocate_bunch_struct_container,
-    deallocate_bunch_struct_container,
-    reallocate_bunch_struct_container_data,
-    access_bunch_struct_container>;
+struct BunchStructAlloc1D : public FTypeAlloc1D<BunchStructArray1D> {
+  using Base = FTypeAlloc1D<BunchStructArray1D>;
+  using Base::Base;
+  BunchStructAlloc1D()
+      : Base(
+            allocate_bunch_struct_container,
+            deallocate_bunch_struct_container,
+            reallocate_bunch_struct_container_data,
+            access_bunch_struct_container
+        ) {}
+  BunchStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bunch_struct_container,
+            deallocate_bunch_struct_container,
+            reallocate_bunch_struct_container_data,
+            access_bunch_struct_container
+        ) {}
+  BunchStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BunchParamsStruct;
 
@@ -9516,12 +11016,28 @@ using BunchParamsStructArray1D = FTypeArray1D<
 using BunchParamsStructArray2D = FTypeArray2D<BunchParamsStruct>;
 using BunchParamsStructArray3D = FTypeArray3D<BunchParamsStruct>;
 
-using BunchParamsStructAlloc1D = FTypeAlloc1D<
-    BunchParamsStructArray1D,
-    allocate_bunch_params_struct_container,
-    deallocate_bunch_params_struct_container,
-    reallocate_bunch_params_struct_container_data,
-    access_bunch_params_struct_container>;
+struct BunchParamsStructAlloc1D : public FTypeAlloc1D<BunchParamsStructArray1D> {
+  using Base = FTypeAlloc1D<BunchParamsStructArray1D>;
+  using Base::Base;
+  BunchParamsStructAlloc1D()
+      : Base(
+            allocate_bunch_params_struct_container,
+            deallocate_bunch_params_struct_container,
+            reallocate_bunch_params_struct_container_data,
+            access_bunch_params_struct_container
+        ) {}
+  BunchParamsStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bunch_params_struct_container,
+            deallocate_bunch_params_struct_container,
+            reallocate_bunch_params_struct_container_data,
+            access_bunch_params_struct_container
+        ) {}
+  BunchParamsStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BeamStruct;
 
@@ -9530,12 +11046,28 @@ using BeamStructArray1D =
 using BeamStructArray2D = FTypeArray2D<BeamStruct>;
 using BeamStructArray3D = FTypeArray3D<BeamStruct>;
 
-using BeamStructAlloc1D = FTypeAlloc1D<
-    BeamStructArray1D,
-    allocate_beam_struct_container,
-    deallocate_beam_struct_container,
-    reallocate_beam_struct_container_data,
-    access_beam_struct_container>;
+struct BeamStructAlloc1D : public FTypeAlloc1D<BeamStructArray1D> {
+  using Base = FTypeAlloc1D<BeamStructArray1D>;
+  using Base::Base;
+  BeamStructAlloc1D()
+      : Base(
+            allocate_beam_struct_container,
+            deallocate_beam_struct_container,
+            reallocate_beam_struct_container_data,
+            access_beam_struct_container
+        ) {}
+  BeamStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_beam_struct_container,
+            deallocate_beam_struct_container,
+            reallocate_beam_struct_container_data,
+            access_beam_struct_container
+        ) {}
+  BeamStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class AperturePointStruct;
 
@@ -9546,12 +11078,28 @@ using AperturePointStructArray1D = FTypeArray1D<
 using AperturePointStructArray2D = FTypeArray2D<AperturePointStruct>;
 using AperturePointStructArray3D = FTypeArray3D<AperturePointStruct>;
 
-using AperturePointStructAlloc1D = FTypeAlloc1D<
-    AperturePointStructArray1D,
-    allocate_aperture_point_struct_container,
-    deallocate_aperture_point_struct_container,
-    reallocate_aperture_point_struct_container_data,
-    access_aperture_point_struct_container>;
+struct AperturePointStructAlloc1D : public FTypeAlloc1D<AperturePointStructArray1D> {
+  using Base = FTypeAlloc1D<AperturePointStructArray1D>;
+  using Base::Base;
+  AperturePointStructAlloc1D()
+      : Base(
+            allocate_aperture_point_struct_container,
+            deallocate_aperture_point_struct_container,
+            reallocate_aperture_point_struct_container_data,
+            access_aperture_point_struct_container
+        ) {}
+  AperturePointStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_aperture_point_struct_container,
+            deallocate_aperture_point_struct_container,
+            reallocate_aperture_point_struct_container_data,
+            access_aperture_point_struct_container
+        ) {}
+  AperturePointStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ApertureParamStruct;
 
@@ -9562,12 +11110,28 @@ using ApertureParamStructArray1D = FTypeArray1D<
 using ApertureParamStructArray2D = FTypeArray2D<ApertureParamStruct>;
 using ApertureParamStructArray3D = FTypeArray3D<ApertureParamStruct>;
 
-using ApertureParamStructAlloc1D = FTypeAlloc1D<
-    ApertureParamStructArray1D,
-    allocate_aperture_param_struct_container,
-    deallocate_aperture_param_struct_container,
-    reallocate_aperture_param_struct_container_data,
-    access_aperture_param_struct_container>;
+struct ApertureParamStructAlloc1D : public FTypeAlloc1D<ApertureParamStructArray1D> {
+  using Base = FTypeAlloc1D<ApertureParamStructArray1D>;
+  using Base::Base;
+  ApertureParamStructAlloc1D()
+      : Base(
+            allocate_aperture_param_struct_container,
+            deallocate_aperture_param_struct_container,
+            reallocate_aperture_param_struct_container_data,
+            access_aperture_param_struct_container
+        ) {}
+  ApertureParamStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_aperture_param_struct_container,
+            deallocate_aperture_param_struct_container,
+            reallocate_aperture_param_struct_container_data,
+            access_aperture_param_struct_container
+        ) {}
+  ApertureParamStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ApertureScanStruct;
 
@@ -9578,12 +11142,28 @@ using ApertureScanStructArray1D = FTypeArray1D<
 using ApertureScanStructArray2D = FTypeArray2D<ApertureScanStruct>;
 using ApertureScanStructArray3D = FTypeArray3D<ApertureScanStruct>;
 
-using ApertureScanStructAlloc1D = FTypeAlloc1D<
-    ApertureScanStructArray1D,
-    allocate_aperture_scan_struct_container,
-    deallocate_aperture_scan_struct_container,
-    reallocate_aperture_scan_struct_container_data,
-    access_aperture_scan_struct_container>;
+struct ApertureScanStructAlloc1D : public FTypeAlloc1D<ApertureScanStructArray1D> {
+  using Base = FTypeAlloc1D<ApertureScanStructArray1D>;
+  using Base::Base;
+  ApertureScanStructAlloc1D()
+      : Base(
+            allocate_aperture_scan_struct_container,
+            deallocate_aperture_scan_struct_container,
+            reallocate_aperture_scan_struct_container_data,
+            access_aperture_scan_struct_container
+        ) {}
+  ApertureScanStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_aperture_scan_struct_container,
+            deallocate_aperture_scan_struct_container,
+            reallocate_aperture_scan_struct_container_data,
+            access_aperture_scan_struct_container
+        ) {}
+  ApertureScanStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ElePointerStruct;
 
@@ -9594,12 +11174,28 @@ using ElePointerStructArray1D = FTypeArray1D<
 using ElePointerStructArray2D = FTypeArray2D<ElePointerStruct>;
 using ElePointerStructArray3D = FTypeArray3D<ElePointerStruct>;
 
-using ElePointerStructAlloc1D = FTypeAlloc1D<
-    ElePointerStructArray1D,
-    allocate_ele_pointer_struct_container,
-    deallocate_ele_pointer_struct_container,
-    reallocate_ele_pointer_struct_container_data,
-    access_ele_pointer_struct_container>;
+struct ElePointerStructAlloc1D : public FTypeAlloc1D<ElePointerStructArray1D> {
+  using Base = FTypeAlloc1D<ElePointerStructArray1D>;
+  using Base::Base;
+  ElePointerStructAlloc1D()
+      : Base(
+            allocate_ele_pointer_struct_container,
+            deallocate_ele_pointer_struct_container,
+            reallocate_ele_pointer_struct_container_data,
+            access_ele_pointer_struct_container
+        ) {}
+  ElePointerStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_ele_pointer_struct_container,
+            deallocate_ele_pointer_struct_container,
+            reallocate_ele_pointer_struct_container_data,
+            access_ele_pointer_struct_container
+        ) {}
+  ElePointerStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ExpressionTreeStruct;
 
@@ -9610,12 +11206,28 @@ using ExpressionTreeStructArray1D = FTypeArray1D<
 using ExpressionTreeStructArray2D = FTypeArray2D<ExpressionTreeStruct>;
 using ExpressionTreeStructArray3D = FTypeArray3D<ExpressionTreeStruct>;
 
-using ExpressionTreeStructAlloc1D = FTypeAlloc1D<
-    ExpressionTreeStructArray1D,
-    allocate_expression_tree_struct_container,
-    deallocate_expression_tree_struct_container,
-    reallocate_expression_tree_struct_container_data,
-    access_expression_tree_struct_container>;
+struct ExpressionTreeStructAlloc1D : public FTypeAlloc1D<ExpressionTreeStructArray1D> {
+  using Base = FTypeAlloc1D<ExpressionTreeStructArray1D>;
+  using Base::Base;
+  ExpressionTreeStructAlloc1D()
+      : Base(
+            allocate_expression_tree_struct_container,
+            deallocate_expression_tree_struct_container,
+            reallocate_expression_tree_struct_container_data,
+            access_expression_tree_struct_container
+        ) {}
+  ExpressionTreeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_expression_tree_struct_container,
+            deallocate_expression_tree_struct_container,
+            reallocate_expression_tree_struct_container_data,
+            access_expression_tree_struct_container
+        ) {}
+  ExpressionTreeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class NametableStruct;
 
@@ -9626,12 +11238,28 @@ using NametableStructArray1D = FTypeArray1D<
 using NametableStructArray2D = FTypeArray2D<NametableStruct>;
 using NametableStructArray3D = FTypeArray3D<NametableStruct>;
 
-using NametableStructAlloc1D = FTypeAlloc1D<
-    NametableStructArray1D,
-    allocate_nametable_struct_container,
-    deallocate_nametable_struct_container,
-    reallocate_nametable_struct_container_data,
-    access_nametable_struct_container>;
+struct NametableStructAlloc1D : public FTypeAlloc1D<NametableStructArray1D> {
+  using Base = FTypeAlloc1D<NametableStructArray1D>;
+  using Base::Base;
+  NametableStructAlloc1D()
+      : Base(
+            allocate_nametable_struct_container,
+            deallocate_nametable_struct_container,
+            reallocate_nametable_struct_container_data,
+            access_nametable_struct_container
+        ) {}
+  NametableStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_nametable_struct_container,
+            deallocate_nametable_struct_container,
+            reallocate_nametable_struct_container_data,
+            access_nametable_struct_container
+        ) {}
+  NametableStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoSpinDnDpzStruct;
 
@@ -9642,12 +11270,28 @@ using TaoSpinDnDpzStructArray1D = FTypeArray1D<
 using TaoSpinDnDpzStructArray2D = FTypeArray2D<TaoSpinDnDpzStruct>;
 using TaoSpinDnDpzStructArray3D = FTypeArray3D<TaoSpinDnDpzStruct>;
 
-using TaoSpinDnDpzStructAlloc1D = FTypeAlloc1D<
-    TaoSpinDnDpzStructArray1D,
-    allocate_tao_spin_dn_dpz_struct_container,
-    deallocate_tao_spin_dn_dpz_struct_container,
-    reallocate_tao_spin_dn_dpz_struct_container_data,
-    access_tao_spin_dn_dpz_struct_container>;
+struct TaoSpinDnDpzStructAlloc1D : public FTypeAlloc1D<TaoSpinDnDpzStructArray1D> {
+  using Base = FTypeAlloc1D<TaoSpinDnDpzStructArray1D>;
+  using Base::Base;
+  TaoSpinDnDpzStructAlloc1D()
+      : Base(
+            allocate_tao_spin_dn_dpz_struct_container,
+            deallocate_tao_spin_dn_dpz_struct_container,
+            reallocate_tao_spin_dn_dpz_struct_container_data,
+            access_tao_spin_dn_dpz_struct_container
+        ) {}
+  TaoSpinDnDpzStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_spin_dn_dpz_struct_container,
+            deallocate_tao_spin_dn_dpz_struct_container,
+            reallocate_tao_spin_dn_dpz_struct_container_data,
+            access_tao_spin_dn_dpz_struct_container
+        ) {}
+  TaoSpinDnDpzStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class ResonanceHStruct;
 
@@ -9658,12 +11302,28 @@ using ResonanceHStructArray1D = FTypeArray1D<
 using ResonanceHStructArray2D = FTypeArray2D<ResonanceHStruct>;
 using ResonanceHStructArray3D = FTypeArray3D<ResonanceHStruct>;
 
-using ResonanceHStructAlloc1D = FTypeAlloc1D<
-    ResonanceHStructArray1D,
-    allocate_resonance_h_struct_container,
-    deallocate_resonance_h_struct_container,
-    reallocate_resonance_h_struct_container_data,
-    access_resonance_h_struct_container>;
+struct ResonanceHStructAlloc1D : public FTypeAlloc1D<ResonanceHStructArray1D> {
+  using Base = FTypeAlloc1D<ResonanceHStructArray1D>;
+  using Base::Base;
+  ResonanceHStructAlloc1D()
+      : Base(
+            allocate_resonance_h_struct_container,
+            deallocate_resonance_h_struct_container,
+            reallocate_resonance_h_struct_container_data,
+            access_resonance_h_struct_container
+        ) {}
+  ResonanceHStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_resonance_h_struct_container,
+            deallocate_resonance_h_struct_container,
+            reallocate_resonance_h_struct_container_data,
+            access_resonance_h_struct_container
+        ) {}
+  ResonanceHStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SpinOrbitMap1Struct;
 
@@ -9674,12 +11334,28 @@ using SpinOrbitMap1StructArray1D = FTypeArray1D<
 using SpinOrbitMap1StructArray2D = FTypeArray2D<SpinOrbitMap1Struct>;
 using SpinOrbitMap1StructArray3D = FTypeArray3D<SpinOrbitMap1Struct>;
 
-using SpinOrbitMap1StructAlloc1D = FTypeAlloc1D<
-    SpinOrbitMap1StructArray1D,
-    allocate_spin_orbit_map1_struct_container,
-    deallocate_spin_orbit_map1_struct_container,
-    reallocate_spin_orbit_map1_struct_container_data,
-    access_spin_orbit_map1_struct_container>;
+struct SpinOrbitMap1StructAlloc1D : public FTypeAlloc1D<SpinOrbitMap1StructArray1D> {
+  using Base = FTypeAlloc1D<SpinOrbitMap1StructArray1D>;
+  using Base::Base;
+  SpinOrbitMap1StructAlloc1D()
+      : Base(
+            allocate_spin_orbit_map1_struct_container,
+            deallocate_spin_orbit_map1_struct_container,
+            reallocate_spin_orbit_map1_struct_container_data,
+            access_spin_orbit_map1_struct_container
+        ) {}
+  SpinOrbitMap1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_spin_orbit_map1_struct_container,
+            deallocate_spin_orbit_map1_struct_container,
+            reallocate_spin_orbit_map1_struct_container_data,
+            access_spin_orbit_map1_struct_container
+        ) {}
+  SpinOrbitMap1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SpinAxisStruct;
 
@@ -9690,12 +11366,28 @@ using SpinAxisStructArray1D = FTypeArray1D<
 using SpinAxisStructArray2D = FTypeArray2D<SpinAxisStruct>;
 using SpinAxisStructArray3D = FTypeArray3D<SpinAxisStruct>;
 
-using SpinAxisStructAlloc1D = FTypeAlloc1D<
-    SpinAxisStructArray1D,
-    allocate_spin_axis_struct_container,
-    deallocate_spin_axis_struct_container,
-    reallocate_spin_axis_struct_container_data,
-    access_spin_axis_struct_container>;
+struct SpinAxisStructAlloc1D : public FTypeAlloc1D<SpinAxisStructArray1D> {
+  using Base = FTypeAlloc1D<SpinAxisStructArray1D>;
+  using Base::Base;
+  SpinAxisStructAlloc1D()
+      : Base(
+            allocate_spin_axis_struct_container,
+            deallocate_spin_axis_struct_container,
+            reallocate_spin_axis_struct_container_data,
+            access_spin_axis_struct_container
+        ) {}
+  SpinAxisStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_spin_axis_struct_container,
+            deallocate_spin_axis_struct_container,
+            reallocate_spin_axis_struct_container_data,
+            access_spin_axis_struct_container
+        ) {}
+  SpinAxisStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class PtcNormalFormStruct;
 
@@ -9706,12 +11398,28 @@ using PtcNormalFormStructArray1D = FTypeArray1D<
 using PtcNormalFormStructArray2D = FTypeArray2D<PtcNormalFormStruct>;
 using PtcNormalFormStructArray3D = FTypeArray3D<PtcNormalFormStruct>;
 
-using PtcNormalFormStructAlloc1D = FTypeAlloc1D<
-    PtcNormalFormStructArray1D,
-    allocate_ptc_normal_form_struct_container,
-    deallocate_ptc_normal_form_struct_container,
-    reallocate_ptc_normal_form_struct_container_data,
-    access_ptc_normal_form_struct_container>;
+struct PtcNormalFormStructAlloc1D : public FTypeAlloc1D<PtcNormalFormStructArray1D> {
+  using Base = FTypeAlloc1D<PtcNormalFormStructArray1D>;
+  using Base::Base;
+  PtcNormalFormStructAlloc1D()
+      : Base(
+            allocate_ptc_normal_form_struct_container,
+            deallocate_ptc_normal_form_struct_container,
+            reallocate_ptc_normal_form_struct_container_data,
+            access_ptc_normal_form_struct_container
+        ) {}
+  PtcNormalFormStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_ptc_normal_form_struct_container,
+            deallocate_ptc_normal_form_struct_container,
+            reallocate_ptc_normal_form_struct_container_data,
+            access_ptc_normal_form_struct_container
+        ) {}
+  PtcNormalFormStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BmadNormalFormStruct;
 
@@ -9722,12 +11430,28 @@ using BmadNormalFormStructArray1D = FTypeArray1D<
 using BmadNormalFormStructArray2D = FTypeArray2D<BmadNormalFormStruct>;
 using BmadNormalFormStructArray3D = FTypeArray3D<BmadNormalFormStruct>;
 
-using BmadNormalFormStructAlloc1D = FTypeAlloc1D<
-    BmadNormalFormStructArray1D,
-    allocate_bmad_normal_form_struct_container,
-    deallocate_bmad_normal_form_struct_container,
-    reallocate_bmad_normal_form_struct_container_data,
-    access_bmad_normal_form_struct_container>;
+struct BmadNormalFormStructAlloc1D : public FTypeAlloc1D<BmadNormalFormStructArray1D> {
+  using Base = FTypeAlloc1D<BmadNormalFormStructArray1D>;
+  using Base::Base;
+  BmadNormalFormStructAlloc1D()
+      : Base(
+            allocate_bmad_normal_form_struct_container,
+            deallocate_bmad_normal_form_struct_container,
+            reallocate_bmad_normal_form_struct_container_data,
+            access_bmad_normal_form_struct_container
+        ) {}
+  BmadNormalFormStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bmad_normal_form_struct_container,
+            deallocate_bmad_normal_form_struct_container,
+            reallocate_bmad_normal_form_struct_container_data,
+            access_bmad_normal_form_struct_container
+        ) {}
+  BmadNormalFormStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BunchTrackStruct;
 
@@ -9738,12 +11462,28 @@ using BunchTrackStructArray1D = FTypeArray1D<
 using BunchTrackStructArray2D = FTypeArray2D<BunchTrackStruct>;
 using BunchTrackStructArray3D = FTypeArray3D<BunchTrackStruct>;
 
-using BunchTrackStructAlloc1D = FTypeAlloc1D<
-    BunchTrackStructArray1D,
-    allocate_bunch_track_struct_container,
-    deallocate_bunch_track_struct_container,
-    reallocate_bunch_track_struct_container_data,
-    access_bunch_track_struct_container>;
+struct BunchTrackStructAlloc1D : public FTypeAlloc1D<BunchTrackStructArray1D> {
+  using Base = FTypeAlloc1D<BunchTrackStructArray1D>;
+  using Base::Base;
+  BunchTrackStructAlloc1D()
+      : Base(
+            allocate_bunch_track_struct_container,
+            deallocate_bunch_track_struct_container,
+            reallocate_bunch_track_struct_container_data,
+            access_bunch_track_struct_container
+        ) {}
+  BunchTrackStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bunch_track_struct_container,
+            deallocate_bunch_track_struct_container,
+            reallocate_bunch_track_struct_container_data,
+            access_bunch_track_struct_container
+        ) {}
+  BunchTrackStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class SummationRdtStruct;
 
@@ -9754,12 +11494,28 @@ using SummationRdtStructArray1D = FTypeArray1D<
 using SummationRdtStructArray2D = FTypeArray2D<SummationRdtStruct>;
 using SummationRdtStructArray3D = FTypeArray3D<SummationRdtStruct>;
 
-using SummationRdtStructAlloc1D = FTypeAlloc1D<
-    SummationRdtStructArray1D,
-    allocate_summation_rdt_struct_container,
-    deallocate_summation_rdt_struct_container,
-    reallocate_summation_rdt_struct_container_data,
-    access_summation_rdt_struct_container>;
+struct SummationRdtStructAlloc1D : public FTypeAlloc1D<SummationRdtStructArray1D> {
+  using Base = FTypeAlloc1D<SummationRdtStructArray1D>;
+  using Base::Base;
+  SummationRdtStructAlloc1D()
+      : Base(
+            allocate_summation_rdt_struct_container,
+            deallocate_summation_rdt_struct_container,
+            reallocate_summation_rdt_struct_container_data,
+            access_summation_rdt_struct_container
+        ) {}
+  SummationRdtStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_summation_rdt_struct_container,
+            deallocate_summation_rdt_struct_container,
+            reallocate_summation_rdt_struct_container_data,
+            access_summation_rdt_struct_container
+        ) {}
+  SummationRdtStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoEleShapeStruct;
 
@@ -9770,12 +11526,28 @@ using TaoEleShapeStructArray1D = FTypeArray1D<
 using TaoEleShapeStructArray2D = FTypeArray2D<TaoEleShapeStruct>;
 using TaoEleShapeStructArray3D = FTypeArray3D<TaoEleShapeStruct>;
 
-using TaoEleShapeStructAlloc1D = FTypeAlloc1D<
-    TaoEleShapeStructArray1D,
-    allocate_tao_ele_shape_struct_container,
-    deallocate_tao_ele_shape_struct_container,
-    reallocate_tao_ele_shape_struct_container_data,
-    access_tao_ele_shape_struct_container>;
+struct TaoEleShapeStructAlloc1D : public FTypeAlloc1D<TaoEleShapeStructArray1D> {
+  using Base = FTypeAlloc1D<TaoEleShapeStructArray1D>;
+  using Base::Base;
+  TaoEleShapeStructAlloc1D()
+      : Base(
+            allocate_tao_ele_shape_struct_container,
+            deallocate_tao_ele_shape_struct_container,
+            reallocate_tao_ele_shape_struct_container_data,
+            access_tao_ele_shape_struct_container
+        ) {}
+  TaoEleShapeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_ele_shape_struct_container,
+            deallocate_tao_ele_shape_struct_container,
+            reallocate_tao_ele_shape_struct_container_data,
+            access_tao_ele_shape_struct_container
+        ) {}
+  TaoEleShapeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoElePointerStruct;
 
@@ -9786,12 +11558,28 @@ using TaoElePointerStructArray1D = FTypeArray1D<
 using TaoElePointerStructArray2D = FTypeArray2D<TaoElePointerStruct>;
 using TaoElePointerStructArray3D = FTypeArray3D<TaoElePointerStruct>;
 
-using TaoElePointerStructAlloc1D = FTypeAlloc1D<
-    TaoElePointerStructArray1D,
-    allocate_tao_ele_pointer_struct_container,
-    deallocate_tao_ele_pointer_struct_container,
-    reallocate_tao_ele_pointer_struct_container_data,
-    access_tao_ele_pointer_struct_container>;
+struct TaoElePointerStructAlloc1D : public FTypeAlloc1D<TaoElePointerStructArray1D> {
+  using Base = FTypeAlloc1D<TaoElePointerStructArray1D>;
+  using Base::Base;
+  TaoElePointerStructAlloc1D()
+      : Base(
+            allocate_tao_ele_pointer_struct_container,
+            deallocate_tao_ele_pointer_struct_container,
+            reallocate_tao_ele_pointer_struct_container_data,
+            access_tao_ele_pointer_struct_container
+        ) {}
+  TaoElePointerStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_ele_pointer_struct_container,
+            deallocate_tao_ele_pointer_struct_container,
+            reallocate_tao_ele_pointer_struct_container_data,
+            access_tao_ele_pointer_struct_container
+        ) {}
+  TaoElePointerStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoCurveStruct;
 
@@ -9802,12 +11590,28 @@ using TaoCurveStructArray1D = FTypeArray1D<
 using TaoCurveStructArray2D = FTypeArray2D<TaoCurveStruct>;
 using TaoCurveStructArray3D = FTypeArray3D<TaoCurveStruct>;
 
-using TaoCurveStructAlloc1D = FTypeAlloc1D<
-    TaoCurveStructArray1D,
-    allocate_tao_curve_struct_container,
-    deallocate_tao_curve_struct_container,
-    reallocate_tao_curve_struct_container_data,
-    access_tao_curve_struct_container>;
+struct TaoCurveStructAlloc1D : public FTypeAlloc1D<TaoCurveStructArray1D> {
+  using Base = FTypeAlloc1D<TaoCurveStructArray1D>;
+  using Base::Base;
+  TaoCurveStructAlloc1D()
+      : Base(
+            allocate_tao_curve_struct_container,
+            deallocate_tao_curve_struct_container,
+            reallocate_tao_curve_struct_container_data,
+            access_tao_curve_struct_container
+        ) {}
+  TaoCurveStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_curve_struct_container,
+            deallocate_tao_curve_struct_container,
+            reallocate_tao_curve_struct_container_data,
+            access_tao_curve_struct_container
+        ) {}
+  TaoCurveStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoCurveColorStruct;
 
@@ -9818,12 +11622,28 @@ using TaoCurveColorStructArray1D = FTypeArray1D<
 using TaoCurveColorStructArray2D = FTypeArray2D<TaoCurveColorStruct>;
 using TaoCurveColorStructArray3D = FTypeArray3D<TaoCurveColorStruct>;
 
-using TaoCurveColorStructAlloc1D = FTypeAlloc1D<
-    TaoCurveColorStructArray1D,
-    allocate_tao_curve_color_struct_container,
-    deallocate_tao_curve_color_struct_container,
-    reallocate_tao_curve_color_struct_container_data,
-    access_tao_curve_color_struct_container>;
+struct TaoCurveColorStructAlloc1D : public FTypeAlloc1D<TaoCurveColorStructArray1D> {
+  using Base = FTypeAlloc1D<TaoCurveColorStructArray1D>;
+  using Base::Base;
+  TaoCurveColorStructAlloc1D()
+      : Base(
+            allocate_tao_curve_color_struct_container,
+            deallocate_tao_curve_color_struct_container,
+            reallocate_tao_curve_color_struct_container_data,
+            access_tao_curve_color_struct_container
+        ) {}
+  TaoCurveColorStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_curve_color_struct_container,
+            deallocate_tao_curve_color_struct_container,
+            reallocate_tao_curve_color_struct_container_data,
+            access_tao_curve_color_struct_container
+        ) {}
+  TaoCurveColorStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoCurveOrbitStruct;
 
@@ -9834,12 +11654,28 @@ using TaoCurveOrbitStructArray1D = FTypeArray1D<
 using TaoCurveOrbitStructArray2D = FTypeArray2D<TaoCurveOrbitStruct>;
 using TaoCurveOrbitStructArray3D = FTypeArray3D<TaoCurveOrbitStruct>;
 
-using TaoCurveOrbitStructAlloc1D = FTypeAlloc1D<
-    TaoCurveOrbitStructArray1D,
-    allocate_tao_curve_orbit_struct_container,
-    deallocate_tao_curve_orbit_struct_container,
-    reallocate_tao_curve_orbit_struct_container_data,
-    access_tao_curve_orbit_struct_container>;
+struct TaoCurveOrbitStructAlloc1D : public FTypeAlloc1D<TaoCurveOrbitStructArray1D> {
+  using Base = FTypeAlloc1D<TaoCurveOrbitStructArray1D>;
+  using Base::Base;
+  TaoCurveOrbitStructAlloc1D()
+      : Base(
+            allocate_tao_curve_orbit_struct_container,
+            deallocate_tao_curve_orbit_struct_container,
+            reallocate_tao_curve_orbit_struct_container_data,
+            access_tao_curve_orbit_struct_container
+        ) {}
+  TaoCurveOrbitStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_curve_orbit_struct_container,
+            deallocate_tao_curve_orbit_struct_container,
+            reallocate_tao_curve_orbit_struct_container_data,
+            access_tao_curve_orbit_struct_container
+        ) {}
+  TaoCurveOrbitStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoHistogramStruct;
 
@@ -9850,12 +11686,28 @@ using TaoHistogramStructArray1D = FTypeArray1D<
 using TaoHistogramStructArray2D = FTypeArray2D<TaoHistogramStruct>;
 using TaoHistogramStructArray3D = FTypeArray3D<TaoHistogramStruct>;
 
-using TaoHistogramStructAlloc1D = FTypeAlloc1D<
-    TaoHistogramStructArray1D,
-    allocate_tao_histogram_struct_container,
-    deallocate_tao_histogram_struct_container,
-    reallocate_tao_histogram_struct_container_data,
-    access_tao_histogram_struct_container>;
+struct TaoHistogramStructAlloc1D : public FTypeAlloc1D<TaoHistogramStructArray1D> {
+  using Base = FTypeAlloc1D<TaoHistogramStructArray1D>;
+  using Base::Base;
+  TaoHistogramStructAlloc1D()
+      : Base(
+            allocate_tao_histogram_struct_container,
+            deallocate_tao_histogram_struct_container,
+            reallocate_tao_histogram_struct_container_data,
+            access_tao_histogram_struct_container
+        ) {}
+  TaoHistogramStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_histogram_struct_container,
+            deallocate_tao_histogram_struct_container,
+            reallocate_tao_histogram_struct_container_data,
+            access_tao_histogram_struct_container
+        ) {}
+  TaoHistogramStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class LatEleOrder1Struct;
 
@@ -9866,12 +11718,28 @@ using LatEleOrder1StructArray1D = FTypeArray1D<
 using LatEleOrder1StructArray2D = FTypeArray2D<LatEleOrder1Struct>;
 using LatEleOrder1StructArray3D = FTypeArray3D<LatEleOrder1Struct>;
 
-using LatEleOrder1StructAlloc1D = FTypeAlloc1D<
-    LatEleOrder1StructArray1D,
-    allocate_lat_ele_order1_struct_container,
-    deallocate_lat_ele_order1_struct_container,
-    reallocate_lat_ele_order1_struct_container_data,
-    access_lat_ele_order1_struct_container>;
+struct LatEleOrder1StructAlloc1D : public FTypeAlloc1D<LatEleOrder1StructArray1D> {
+  using Base = FTypeAlloc1D<LatEleOrder1StructArray1D>;
+  using Base::Base;
+  LatEleOrder1StructAlloc1D()
+      : Base(
+            allocate_lat_ele_order1_struct_container,
+            deallocate_lat_ele_order1_struct_container,
+            reallocate_lat_ele_order1_struct_container_data,
+            access_lat_ele_order1_struct_container
+        ) {}
+  LatEleOrder1StructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_lat_ele_order1_struct_container,
+            deallocate_lat_ele_order1_struct_container,
+            reallocate_lat_ele_order1_struct_container_data,
+            access_lat_ele_order1_struct_container
+        ) {}
+  LatEleOrder1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class LatEleOrderArrayStruct;
 
@@ -9882,12 +11750,28 @@ using LatEleOrderArrayStructArray1D = FTypeArray1D<
 using LatEleOrderArrayStructArray2D = FTypeArray2D<LatEleOrderArrayStruct>;
 using LatEleOrderArrayStructArray3D = FTypeArray3D<LatEleOrderArrayStruct>;
 
-using LatEleOrderArrayStructAlloc1D = FTypeAlloc1D<
-    LatEleOrderArrayStructArray1D,
-    allocate_lat_ele_order_array_struct_container,
-    deallocate_lat_ele_order_array_struct_container,
-    reallocate_lat_ele_order_array_struct_container_data,
-    access_lat_ele_order_array_struct_container>;
+struct LatEleOrderArrayStructAlloc1D : public FTypeAlloc1D<LatEleOrderArrayStructArray1D> {
+  using Base = FTypeAlloc1D<LatEleOrderArrayStructArray1D>;
+  using Base::Base;
+  LatEleOrderArrayStructAlloc1D()
+      : Base(
+            allocate_lat_ele_order_array_struct_container,
+            deallocate_lat_ele_order_array_struct_container,
+            reallocate_lat_ele_order_array_struct_container_data,
+            access_lat_ele_order_array_struct_container
+        ) {}
+  LatEleOrderArrayStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_lat_ele_order_array_struct_container,
+            deallocate_lat_ele_order_array_struct_container,
+            reallocate_lat_ele_order_array_struct_container_data,
+            access_lat_ele_order_array_struct_container
+        ) {}
+  LatEleOrderArrayStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoLatSigmaStruct;
 
@@ -9898,12 +11782,28 @@ using TaoLatSigmaStructArray1D = FTypeArray1D<
 using TaoLatSigmaStructArray2D = FTypeArray2D<TaoLatSigmaStruct>;
 using TaoLatSigmaStructArray3D = FTypeArray3D<TaoLatSigmaStruct>;
 
-using TaoLatSigmaStructAlloc1D = FTypeAlloc1D<
-    TaoLatSigmaStructArray1D,
-    allocate_tao_lat_sigma_struct_container,
-    deallocate_tao_lat_sigma_struct_container,
-    reallocate_tao_lat_sigma_struct_container_data,
-    access_tao_lat_sigma_struct_container>;
+struct TaoLatSigmaStructAlloc1D : public FTypeAlloc1D<TaoLatSigmaStructArray1D> {
+  using Base = FTypeAlloc1D<TaoLatSigmaStructArray1D>;
+  using Base::Base;
+  TaoLatSigmaStructAlloc1D()
+      : Base(
+            allocate_tao_lat_sigma_struct_container,
+            deallocate_tao_lat_sigma_struct_container,
+            reallocate_tao_lat_sigma_struct_container_data,
+            access_tao_lat_sigma_struct_container
+        ) {}
+  TaoLatSigmaStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_lat_sigma_struct_container,
+            deallocate_tao_lat_sigma_struct_container,
+            reallocate_tao_lat_sigma_struct_container_data,
+            access_tao_lat_sigma_struct_container
+        ) {}
+  TaoLatSigmaStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoSpinEleStruct;
 
@@ -9914,12 +11814,28 @@ using TaoSpinEleStructArray1D = FTypeArray1D<
 using TaoSpinEleStructArray2D = FTypeArray2D<TaoSpinEleStruct>;
 using TaoSpinEleStructArray3D = FTypeArray3D<TaoSpinEleStruct>;
 
-using TaoSpinEleStructAlloc1D = FTypeAlloc1D<
-    TaoSpinEleStructArray1D,
-    allocate_tao_spin_ele_struct_container,
-    deallocate_tao_spin_ele_struct_container,
-    reallocate_tao_spin_ele_struct_container_data,
-    access_tao_spin_ele_struct_container>;
+struct TaoSpinEleStructAlloc1D : public FTypeAlloc1D<TaoSpinEleStructArray1D> {
+  using Base = FTypeAlloc1D<TaoSpinEleStructArray1D>;
+  using Base::Base;
+  TaoSpinEleStructAlloc1D()
+      : Base(
+            allocate_tao_spin_ele_struct_container,
+            deallocate_tao_spin_ele_struct_container,
+            reallocate_tao_spin_ele_struct_container_data,
+            access_tao_spin_ele_struct_container
+        ) {}
+  TaoSpinEleStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_spin_ele_struct_container,
+            deallocate_tao_spin_ele_struct_container,
+            reallocate_tao_spin_ele_struct_container_data,
+            access_tao_spin_ele_struct_container
+        ) {}
+  TaoSpinEleStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoPlotCacheStruct;
 
@@ -9930,12 +11846,28 @@ using TaoPlotCacheStructArray1D = FTypeArray1D<
 using TaoPlotCacheStructArray2D = FTypeArray2D<TaoPlotCacheStruct>;
 using TaoPlotCacheStructArray3D = FTypeArray3D<TaoPlotCacheStruct>;
 
-using TaoPlotCacheStructAlloc1D = FTypeAlloc1D<
-    TaoPlotCacheStructArray1D,
-    allocate_tao_plot_cache_struct_container,
-    deallocate_tao_plot_cache_struct_container,
-    reallocate_tao_plot_cache_struct_container_data,
-    access_tao_plot_cache_struct_container>;
+struct TaoPlotCacheStructAlloc1D : public FTypeAlloc1D<TaoPlotCacheStructArray1D> {
+  using Base = FTypeAlloc1D<TaoPlotCacheStructArray1D>;
+  using Base::Base;
+  TaoPlotCacheStructAlloc1D()
+      : Base(
+            allocate_tao_plot_cache_struct_container,
+            deallocate_tao_plot_cache_struct_container,
+            reallocate_tao_plot_cache_struct_container_data,
+            access_tao_plot_cache_struct_container
+        ) {}
+  TaoPlotCacheStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_plot_cache_struct_container,
+            deallocate_tao_plot_cache_struct_container,
+            reallocate_tao_plot_cache_struct_container_data,
+            access_tao_plot_cache_struct_container
+        ) {}
+  TaoPlotCacheStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoSpinPolarizationStruct;
 
@@ -9946,12 +11878,28 @@ using TaoSpinPolarizationStructArray1D = FTypeArray1D<
 using TaoSpinPolarizationStructArray2D = FTypeArray2D<TaoSpinPolarizationStruct>;
 using TaoSpinPolarizationStructArray3D = FTypeArray3D<TaoSpinPolarizationStruct>;
 
-using TaoSpinPolarizationStructAlloc1D = FTypeAlloc1D<
-    TaoSpinPolarizationStructArray1D,
-    allocate_tao_spin_polarization_struct_container,
-    deallocate_tao_spin_polarization_struct_container,
-    reallocate_tao_spin_polarization_struct_container_data,
-    access_tao_spin_polarization_struct_container>;
+struct TaoSpinPolarizationStructAlloc1D : public FTypeAlloc1D<TaoSpinPolarizationStructArray1D> {
+  using Base = FTypeAlloc1D<TaoSpinPolarizationStructArray1D>;
+  using Base::Base;
+  TaoSpinPolarizationStructAlloc1D()
+      : Base(
+            allocate_tao_spin_polarization_struct_container,
+            deallocate_tao_spin_polarization_struct_container,
+            reallocate_tao_spin_polarization_struct_container_data,
+            access_tao_spin_polarization_struct_container
+        ) {}
+  TaoSpinPolarizationStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_spin_polarization_struct_container,
+            deallocate_tao_spin_polarization_struct_container,
+            reallocate_tao_spin_polarization_struct_container_data,
+            access_tao_spin_polarization_struct_container
+        ) {}
+  TaoSpinPolarizationStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoLatticeBranchStruct;
 
@@ -9962,12 +11910,28 @@ using TaoLatticeBranchStructArray1D = FTypeArray1D<
 using TaoLatticeBranchStructArray2D = FTypeArray2D<TaoLatticeBranchStruct>;
 using TaoLatticeBranchStructArray3D = FTypeArray3D<TaoLatticeBranchStruct>;
 
-using TaoLatticeBranchStructAlloc1D = FTypeAlloc1D<
-    TaoLatticeBranchStructArray1D,
-    allocate_tao_lattice_branch_struct_container,
-    deallocate_tao_lattice_branch_struct_container,
-    reallocate_tao_lattice_branch_struct_container_data,
-    access_tao_lattice_branch_struct_container>;
+struct TaoLatticeBranchStructAlloc1D : public FTypeAlloc1D<TaoLatticeBranchStructArray1D> {
+  using Base = FTypeAlloc1D<TaoLatticeBranchStructArray1D>;
+  using Base::Base;
+  TaoLatticeBranchStructAlloc1D()
+      : Base(
+            allocate_tao_lattice_branch_struct_container,
+            deallocate_tao_lattice_branch_struct_container,
+            reallocate_tao_lattice_branch_struct_container_data,
+            access_tao_lattice_branch_struct_container
+        ) {}
+  TaoLatticeBranchStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_lattice_branch_struct_container,
+            deallocate_tao_lattice_branch_struct_container,
+            reallocate_tao_lattice_branch_struct_container_data,
+            access_tao_lattice_branch_struct_container
+        ) {}
+  TaoLatticeBranchStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoModelElementStruct;
 
@@ -9978,12 +11942,28 @@ using TaoModelElementStructArray1D = FTypeArray1D<
 using TaoModelElementStructArray2D = FTypeArray2D<TaoModelElementStruct>;
 using TaoModelElementStructArray3D = FTypeArray3D<TaoModelElementStruct>;
 
-using TaoModelElementStructAlloc1D = FTypeAlloc1D<
-    TaoModelElementStructArray1D,
-    allocate_tao_model_element_struct_container,
-    deallocate_tao_model_element_struct_container,
-    reallocate_tao_model_element_struct_container_data,
-    access_tao_model_element_struct_container>;
+struct TaoModelElementStructAlloc1D : public FTypeAlloc1D<TaoModelElementStructArray1D> {
+  using Base = FTypeAlloc1D<TaoModelElementStructArray1D>;
+  using Base::Base;
+  TaoModelElementStructAlloc1D()
+      : Base(
+            allocate_tao_model_element_struct_container,
+            deallocate_tao_model_element_struct_container,
+            reallocate_tao_model_element_struct_container_data,
+            access_tao_model_element_struct_container
+        ) {}
+  TaoModelElementStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_model_element_struct_container,
+            deallocate_tao_model_element_struct_container,
+            reallocate_tao_model_element_struct_container_data,
+            access_tao_model_element_struct_container
+        ) {}
+  TaoModelElementStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoBeamBranchStruct;
 
@@ -9994,12 +11974,28 @@ using TaoBeamBranchStructArray1D = FTypeArray1D<
 using TaoBeamBranchStructArray2D = FTypeArray2D<TaoBeamBranchStruct>;
 using TaoBeamBranchStructArray3D = FTypeArray3D<TaoBeamBranchStruct>;
 
-using TaoBeamBranchStructAlloc1D = FTypeAlloc1D<
-    TaoBeamBranchStructArray1D,
-    allocate_tao_beam_branch_struct_container,
-    deallocate_tao_beam_branch_struct_container,
-    reallocate_tao_beam_branch_struct_container_data,
-    access_tao_beam_branch_struct_container>;
+struct TaoBeamBranchStructAlloc1D : public FTypeAlloc1D<TaoBeamBranchStructArray1D> {
+  using Base = FTypeAlloc1D<TaoBeamBranchStructArray1D>;
+  using Base::Base;
+  TaoBeamBranchStructAlloc1D()
+      : Base(
+            allocate_tao_beam_branch_struct_container,
+            deallocate_tao_beam_branch_struct_container,
+            reallocate_tao_beam_branch_struct_container_data,
+            access_tao_beam_branch_struct_container
+        ) {}
+  TaoBeamBranchStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_beam_branch_struct_container,
+            deallocate_tao_beam_branch_struct_container,
+            reallocate_tao_beam_branch_struct_container_data,
+            access_tao_beam_branch_struct_container
+        ) {}
+  TaoBeamBranchStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoD1DataStruct;
 
@@ -10010,12 +12006,28 @@ using TaoD1DataStructArray1D = FTypeArray1D<
 using TaoD1DataStructArray2D = FTypeArray2D<TaoD1DataStruct>;
 using TaoD1DataStructArray3D = FTypeArray3D<TaoD1DataStruct>;
 
-using TaoD1DataStructAlloc1D = FTypeAlloc1D<
-    TaoD1DataStructArray1D,
-    allocate_tao_d1_data_struct_container,
-    deallocate_tao_d1_data_struct_container,
-    reallocate_tao_d1_data_struct_container_data,
-    access_tao_d1_data_struct_container>;
+struct TaoD1DataStructAlloc1D : public FTypeAlloc1D<TaoD1DataStructArray1D> {
+  using Base = FTypeAlloc1D<TaoD1DataStructArray1D>;
+  using Base::Base;
+  TaoD1DataStructAlloc1D()
+      : Base(
+            allocate_tao_d1_data_struct_container,
+            deallocate_tao_d1_data_struct_container,
+            reallocate_tao_d1_data_struct_container_data,
+            access_tao_d1_data_struct_container
+        ) {}
+  TaoD1DataStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_d1_data_struct_container,
+            deallocate_tao_d1_data_struct_container,
+            reallocate_tao_d1_data_struct_container_data,
+            access_tao_d1_data_struct_container
+        ) {}
+  TaoD1DataStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoD2DataStruct;
 
@@ -10026,12 +12038,28 @@ using TaoD2DataStructArray1D = FTypeArray1D<
 using TaoD2DataStructArray2D = FTypeArray2D<TaoD2DataStruct>;
 using TaoD2DataStructArray3D = FTypeArray3D<TaoD2DataStruct>;
 
-using TaoD2DataStructAlloc1D = FTypeAlloc1D<
-    TaoD2DataStructArray1D,
-    allocate_tao_d2_data_struct_container,
-    deallocate_tao_d2_data_struct_container,
-    reallocate_tao_d2_data_struct_container_data,
-    access_tao_d2_data_struct_container>;
+struct TaoD2DataStructAlloc1D : public FTypeAlloc1D<TaoD2DataStructArray1D> {
+  using Base = FTypeAlloc1D<TaoD2DataStructArray1D>;
+  using Base::Base;
+  TaoD2DataStructAlloc1D()
+      : Base(
+            allocate_tao_d2_data_struct_container,
+            deallocate_tao_d2_data_struct_container,
+            reallocate_tao_d2_data_struct_container_data,
+            access_tao_d2_data_struct_container
+        ) {}
+  TaoD2DataStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_d2_data_struct_container,
+            deallocate_tao_d2_data_struct_container,
+            reallocate_tao_d2_data_struct_container_data,
+            access_tao_d2_data_struct_container
+        ) {}
+  TaoD2DataStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoDataVarComponentStruct;
 
@@ -10042,12 +12070,28 @@ using TaoDataVarComponentStructArray1D = FTypeArray1D<
 using TaoDataVarComponentStructArray2D = FTypeArray2D<TaoDataVarComponentStruct>;
 using TaoDataVarComponentStructArray3D = FTypeArray3D<TaoDataVarComponentStruct>;
 
-using TaoDataVarComponentStructAlloc1D = FTypeAlloc1D<
-    TaoDataVarComponentStructArray1D,
-    allocate_tao_data_var_component_struct_container,
-    deallocate_tao_data_var_component_struct_container,
-    reallocate_tao_data_var_component_struct_container_data,
-    access_tao_data_var_component_struct_container>;
+struct TaoDataVarComponentStructAlloc1D : public FTypeAlloc1D<TaoDataVarComponentStructArray1D> {
+  using Base = FTypeAlloc1D<TaoDataVarComponentStructArray1D>;
+  using Base::Base;
+  TaoDataVarComponentStructAlloc1D()
+      : Base(
+            allocate_tao_data_var_component_struct_container,
+            deallocate_tao_data_var_component_struct_container,
+            reallocate_tao_data_var_component_struct_container_data,
+            access_tao_data_var_component_struct_container
+        ) {}
+  TaoDataVarComponentStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_data_var_component_struct_container,
+            deallocate_tao_data_var_component_struct_container,
+            reallocate_tao_data_var_component_struct_container_data,
+            access_tao_data_var_component_struct_container
+        ) {}
+  TaoDataVarComponentStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoGraphStruct;
 
@@ -10058,12 +12102,28 @@ using TaoGraphStructArray1D = FTypeArray1D<
 using TaoGraphStructArray2D = FTypeArray2D<TaoGraphStruct>;
 using TaoGraphStructArray3D = FTypeArray3D<TaoGraphStruct>;
 
-using TaoGraphStructAlloc1D = FTypeAlloc1D<
-    TaoGraphStructArray1D,
-    allocate_tao_graph_struct_container,
-    deallocate_tao_graph_struct_container,
-    reallocate_tao_graph_struct_container_data,
-    access_tao_graph_struct_container>;
+struct TaoGraphStructAlloc1D : public FTypeAlloc1D<TaoGraphStructArray1D> {
+  using Base = FTypeAlloc1D<TaoGraphStructArray1D>;
+  using Base::Base;
+  TaoGraphStructAlloc1D()
+      : Base(
+            allocate_tao_graph_struct_container,
+            deallocate_tao_graph_struct_container,
+            reallocate_tao_graph_struct_container_data,
+            access_tao_graph_struct_container
+        ) {}
+  TaoGraphStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_graph_struct_container,
+            deallocate_tao_graph_struct_container,
+            reallocate_tao_graph_struct_container_data,
+            access_tao_graph_struct_container
+        ) {}
+  TaoGraphStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoPlotStruct;
 
@@ -10074,12 +12134,28 @@ using TaoPlotStructArray1D = FTypeArray1D<
 using TaoPlotStructArray2D = FTypeArray2D<TaoPlotStruct>;
 using TaoPlotStructArray3D = FTypeArray3D<TaoPlotStruct>;
 
-using TaoPlotStructAlloc1D = FTypeAlloc1D<
-    TaoPlotStructArray1D,
-    allocate_tao_plot_struct_container,
-    deallocate_tao_plot_struct_container,
-    reallocate_tao_plot_struct_container_data,
-    access_tao_plot_struct_container>;
+struct TaoPlotStructAlloc1D : public FTypeAlloc1D<TaoPlotStructArray1D> {
+  using Base = FTypeAlloc1D<TaoPlotStructArray1D>;
+  using Base::Base;
+  TaoPlotStructAlloc1D()
+      : Base(
+            allocate_tao_plot_struct_container,
+            deallocate_tao_plot_struct_container,
+            reallocate_tao_plot_struct_container_data,
+            access_tao_plot_struct_container
+        ) {}
+  TaoPlotStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_plot_struct_container,
+            deallocate_tao_plot_struct_container,
+            reallocate_tao_plot_struct_container_data,
+            access_tao_plot_struct_container
+        ) {}
+  TaoPlotStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoPlotRegionStruct;
 
@@ -10090,12 +12166,28 @@ using TaoPlotRegionStructArray1D = FTypeArray1D<
 using TaoPlotRegionStructArray2D = FTypeArray2D<TaoPlotRegionStruct>;
 using TaoPlotRegionStructArray3D = FTypeArray3D<TaoPlotRegionStruct>;
 
-using TaoPlotRegionStructAlloc1D = FTypeAlloc1D<
-    TaoPlotRegionStructArray1D,
-    allocate_tao_plot_region_struct_container,
-    deallocate_tao_plot_region_struct_container,
-    reallocate_tao_plot_region_struct_container_data,
-    access_tao_plot_region_struct_container>;
+struct TaoPlotRegionStructAlloc1D : public FTypeAlloc1D<TaoPlotRegionStructArray1D> {
+  using Base = FTypeAlloc1D<TaoPlotRegionStructArray1D>;
+  using Base::Base;
+  TaoPlotRegionStructAlloc1D()
+      : Base(
+            allocate_tao_plot_region_struct_container,
+            deallocate_tao_plot_region_struct_container,
+            reallocate_tao_plot_region_struct_container_data,
+            access_tao_plot_region_struct_container
+        ) {}
+  TaoPlotRegionStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_plot_region_struct_container,
+            deallocate_tao_plot_region_struct_container,
+            reallocate_tao_plot_region_struct_container_data,
+            access_tao_plot_region_struct_container
+        ) {}
+  TaoPlotRegionStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoUniversePointerStruct;
 
@@ -10106,12 +12198,28 @@ using TaoUniversePointerStructArray1D = FTypeArray1D<
 using TaoUniversePointerStructArray2D = FTypeArray2D<TaoUniversePointerStruct>;
 using TaoUniversePointerStructArray3D = FTypeArray3D<TaoUniversePointerStruct>;
 
-using TaoUniversePointerStructAlloc1D = FTypeAlloc1D<
-    TaoUniversePointerStructArray1D,
-    allocate_tao_universe_pointer_struct_container,
-    deallocate_tao_universe_pointer_struct_container,
-    reallocate_tao_universe_pointer_struct_container_data,
-    access_tao_universe_pointer_struct_container>;
+struct TaoUniversePointerStructAlloc1D : public FTypeAlloc1D<TaoUniversePointerStructArray1D> {
+  using Base = FTypeAlloc1D<TaoUniversePointerStructArray1D>;
+  using Base::Base;
+  TaoUniversePointerStructAlloc1D()
+      : Base(
+            allocate_tao_universe_pointer_struct_container,
+            deallocate_tao_universe_pointer_struct_container,
+            reallocate_tao_universe_pointer_struct_container_data,
+            access_tao_universe_pointer_struct_container
+        ) {}
+  TaoUniversePointerStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_universe_pointer_struct_container,
+            deallocate_tao_universe_pointer_struct_container,
+            reallocate_tao_universe_pointer_struct_container_data,
+            access_tao_universe_pointer_struct_container
+        ) {}
+  TaoUniversePointerStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoSuperUniverseStruct;
 
@@ -10122,12 +12230,28 @@ using TaoSuperUniverseStructArray1D = FTypeArray1D<
 using TaoSuperUniverseStructArray2D = FTypeArray2D<TaoSuperUniverseStruct>;
 using TaoSuperUniverseStructArray3D = FTypeArray3D<TaoSuperUniverseStruct>;
 
-using TaoSuperUniverseStructAlloc1D = FTypeAlloc1D<
-    TaoSuperUniverseStructArray1D,
-    allocate_tao_super_universe_struct_container,
-    deallocate_tao_super_universe_struct_container,
-    reallocate_tao_super_universe_struct_container_data,
-    access_tao_super_universe_struct_container>;
+struct TaoSuperUniverseStructAlloc1D : public FTypeAlloc1D<TaoSuperUniverseStructArray1D> {
+  using Base = FTypeAlloc1D<TaoSuperUniverseStructArray1D>;
+  using Base::Base;
+  TaoSuperUniverseStructAlloc1D()
+      : Base(
+            allocate_tao_super_universe_struct_container,
+            deallocate_tao_super_universe_struct_container,
+            reallocate_tao_super_universe_struct_container_data,
+            access_tao_super_universe_struct_container
+        ) {}
+  TaoSuperUniverseStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_super_universe_struct_container,
+            deallocate_tao_super_universe_struct_container,
+            reallocate_tao_super_universe_struct_container_data,
+            access_tao_super_universe_struct_container
+        ) {}
+  TaoSuperUniverseStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoVarStruct;
 
@@ -10136,12 +12260,28 @@ using TaoVarStructArray1D =
 using TaoVarStructArray2D = FTypeArray2D<TaoVarStruct>;
 using TaoVarStructArray3D = FTypeArray3D<TaoVarStruct>;
 
-using TaoVarStructAlloc1D = FTypeAlloc1D<
-    TaoVarStructArray1D,
-    allocate_tao_var_struct_container,
-    deallocate_tao_var_struct_container,
-    reallocate_tao_var_struct_container_data,
-    access_tao_var_struct_container>;
+struct TaoVarStructAlloc1D : public FTypeAlloc1D<TaoVarStructArray1D> {
+  using Base = FTypeAlloc1D<TaoVarStructArray1D>;
+  using Base::Base;
+  TaoVarStructAlloc1D()
+      : Base(
+            allocate_tao_var_struct_container,
+            deallocate_tao_var_struct_container,
+            reallocate_tao_var_struct_container_data,
+            access_tao_var_struct_container
+        ) {}
+  TaoVarStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_var_struct_container,
+            deallocate_tao_var_struct_container,
+            reallocate_tao_var_struct_container_data,
+            access_tao_var_struct_container
+        ) {}
+  TaoVarStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoVarSlaveStruct;
 
@@ -10152,12 +12292,28 @@ using TaoVarSlaveStructArray1D = FTypeArray1D<
 using TaoVarSlaveStructArray2D = FTypeArray2D<TaoVarSlaveStruct>;
 using TaoVarSlaveStructArray3D = FTypeArray3D<TaoVarSlaveStruct>;
 
-using TaoVarSlaveStructAlloc1D = FTypeAlloc1D<
-    TaoVarSlaveStructArray1D,
-    allocate_tao_var_slave_struct_container,
-    deallocate_tao_var_slave_struct_container,
-    reallocate_tao_var_slave_struct_container_data,
-    access_tao_var_slave_struct_container>;
+struct TaoVarSlaveStructAlloc1D : public FTypeAlloc1D<TaoVarSlaveStructArray1D> {
+  using Base = FTypeAlloc1D<TaoVarSlaveStructArray1D>;
+  using Base::Base;
+  TaoVarSlaveStructAlloc1D()
+      : Base(
+            allocate_tao_var_slave_struct_container,
+            deallocate_tao_var_slave_struct_container,
+            reallocate_tao_var_slave_struct_container_data,
+            access_tao_var_slave_struct_container
+        ) {}
+  TaoVarSlaveStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_var_slave_struct_container,
+            deallocate_tao_var_slave_struct_container,
+            reallocate_tao_var_slave_struct_container_data,
+            access_tao_var_slave_struct_container
+        ) {}
+  TaoVarSlaveStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoLatticeStruct;
 
@@ -10168,12 +12324,28 @@ using TaoLatticeStructArray1D = FTypeArray1D<
 using TaoLatticeStructArray2D = FTypeArray2D<TaoLatticeStruct>;
 using TaoLatticeStructArray3D = FTypeArray3D<TaoLatticeStruct>;
 
-using TaoLatticeStructAlloc1D = FTypeAlloc1D<
-    TaoLatticeStructArray1D,
-    allocate_tao_lattice_struct_container,
-    deallocate_tao_lattice_struct_container,
-    reallocate_tao_lattice_struct_container_data,
-    access_tao_lattice_struct_container>;
+struct TaoLatticeStructAlloc1D : public FTypeAlloc1D<TaoLatticeStructArray1D> {
+  using Base = FTypeAlloc1D<TaoLatticeStructArray1D>;
+  using Base::Base;
+  TaoLatticeStructAlloc1D()
+      : Base(
+            allocate_tao_lattice_struct_container,
+            deallocate_tao_lattice_struct_container,
+            reallocate_tao_lattice_struct_container_data,
+            access_tao_lattice_struct_container
+        ) {}
+  TaoLatticeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_lattice_struct_container,
+            deallocate_tao_lattice_struct_container,
+            reallocate_tao_lattice_struct_container_data,
+            access_tao_lattice_struct_container
+        ) {}
+  TaoLatticeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoBeamUniStruct;
 
@@ -10184,12 +12356,28 @@ using TaoBeamUniStructArray1D = FTypeArray1D<
 using TaoBeamUniStructArray2D = FTypeArray2D<TaoBeamUniStruct>;
 using TaoBeamUniStructArray3D = FTypeArray3D<TaoBeamUniStruct>;
 
-using TaoBeamUniStructAlloc1D = FTypeAlloc1D<
-    TaoBeamUniStructArray1D,
-    allocate_tao_beam_uni_struct_container,
-    deallocate_tao_beam_uni_struct_container,
-    reallocate_tao_beam_uni_struct_container_data,
-    access_tao_beam_uni_struct_container>;
+struct TaoBeamUniStructAlloc1D : public FTypeAlloc1D<TaoBeamUniStructArray1D> {
+  using Base = FTypeAlloc1D<TaoBeamUniStructArray1D>;
+  using Base::Base;
+  TaoBeamUniStructAlloc1D()
+      : Base(
+            allocate_tao_beam_uni_struct_container,
+            deallocate_tao_beam_uni_struct_container,
+            reallocate_tao_beam_uni_struct_container_data,
+            access_tao_beam_uni_struct_container
+        ) {}
+  TaoBeamUniStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_beam_uni_struct_container,
+            deallocate_tao_beam_uni_struct_container,
+            reallocate_tao_beam_uni_struct_container_data,
+            access_tao_beam_uni_struct_container
+        ) {}
+  TaoBeamUniStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoDynamicApertureStruct;
 
@@ -10200,12 +12388,28 @@ using TaoDynamicApertureStructArray1D = FTypeArray1D<
 using TaoDynamicApertureStructArray2D = FTypeArray2D<TaoDynamicApertureStruct>;
 using TaoDynamicApertureStructArray3D = FTypeArray3D<TaoDynamicApertureStruct>;
 
-using TaoDynamicApertureStructAlloc1D = FTypeAlloc1D<
-    TaoDynamicApertureStructArray1D,
-    allocate_tao_dynamic_aperture_struct_container,
-    deallocate_tao_dynamic_aperture_struct_container,
-    reallocate_tao_dynamic_aperture_struct_container_data,
-    access_tao_dynamic_aperture_struct_container>;
+struct TaoDynamicApertureStructAlloc1D : public FTypeAlloc1D<TaoDynamicApertureStructArray1D> {
+  using Base = FTypeAlloc1D<TaoDynamicApertureStructArray1D>;
+  using Base::Base;
+  TaoDynamicApertureStructAlloc1D()
+      : Base(
+            allocate_tao_dynamic_aperture_struct_container,
+            deallocate_tao_dynamic_aperture_struct_container,
+            reallocate_tao_dynamic_aperture_struct_container_data,
+            access_tao_dynamic_aperture_struct_container
+        ) {}
+  TaoDynamicApertureStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_dynamic_aperture_struct_container,
+            deallocate_tao_dynamic_aperture_struct_container,
+            reallocate_tao_dynamic_aperture_struct_container_data,
+            access_tao_dynamic_aperture_struct_container
+        ) {}
+  TaoDynamicApertureStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoModelBranchStruct;
 
@@ -10216,12 +12420,28 @@ using TaoModelBranchStructArray1D = FTypeArray1D<
 using TaoModelBranchStructArray2D = FTypeArray2D<TaoModelBranchStruct>;
 using TaoModelBranchStructArray3D = FTypeArray3D<TaoModelBranchStruct>;
 
-using TaoModelBranchStructAlloc1D = FTypeAlloc1D<
-    TaoModelBranchStructArray1D,
-    allocate_tao_model_branch_struct_container,
-    deallocate_tao_model_branch_struct_container,
-    reallocate_tao_model_branch_struct_container_data,
-    access_tao_model_branch_struct_container>;
+struct TaoModelBranchStructAlloc1D : public FTypeAlloc1D<TaoModelBranchStructArray1D> {
+  using Base = FTypeAlloc1D<TaoModelBranchStructArray1D>;
+  using Base::Base;
+  TaoModelBranchStructAlloc1D()
+      : Base(
+            allocate_tao_model_branch_struct_container,
+            deallocate_tao_model_branch_struct_container,
+            reallocate_tao_model_branch_struct_container_data,
+            access_tao_model_branch_struct_container
+        ) {}
+  TaoModelBranchStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_model_branch_struct_container,
+            deallocate_tao_model_branch_struct_container,
+            reallocate_tao_model_branch_struct_container_data,
+            access_tao_model_branch_struct_container
+        ) {}
+  TaoModelBranchStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoSpinMapStruct;
 
@@ -10232,12 +12452,28 @@ using TaoSpinMapStructArray1D = FTypeArray1D<
 using TaoSpinMapStructArray2D = FTypeArray2D<TaoSpinMapStruct>;
 using TaoSpinMapStructArray3D = FTypeArray3D<TaoSpinMapStruct>;
 
-using TaoSpinMapStructAlloc1D = FTypeAlloc1D<
-    TaoSpinMapStructArray1D,
-    allocate_tao_spin_map_struct_container,
-    deallocate_tao_spin_map_struct_container,
-    reallocate_tao_spin_map_struct_container_data,
-    access_tao_spin_map_struct_container>;
+struct TaoSpinMapStructAlloc1D : public FTypeAlloc1D<TaoSpinMapStructArray1D> {
+  using Base = FTypeAlloc1D<TaoSpinMapStructArray1D>;
+  using Base::Base;
+  TaoSpinMapStructAlloc1D()
+      : Base(
+            allocate_tao_spin_map_struct_container,
+            deallocate_tao_spin_map_struct_container,
+            reallocate_tao_spin_map_struct_container_data,
+            access_tao_spin_map_struct_container
+        ) {}
+  TaoSpinMapStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_spin_map_struct_container,
+            deallocate_tao_spin_map_struct_container,
+            reallocate_tao_spin_map_struct_container_data,
+            access_tao_spin_map_struct_container
+        ) {}
+  TaoSpinMapStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoDataStruct;
 
@@ -10248,12 +12484,28 @@ using TaoDataStructArray1D = FTypeArray1D<
 using TaoDataStructArray2D = FTypeArray2D<TaoDataStruct>;
 using TaoDataStructArray3D = FTypeArray3D<TaoDataStruct>;
 
-using TaoDataStructAlloc1D = FTypeAlloc1D<
-    TaoDataStructArray1D,
-    allocate_tao_data_struct_container,
-    deallocate_tao_data_struct_container,
-    reallocate_tao_data_struct_container_data,
-    access_tao_data_struct_container>;
+struct TaoDataStructAlloc1D : public FTypeAlloc1D<TaoDataStructArray1D> {
+  using Base = FTypeAlloc1D<TaoDataStructArray1D>;
+  using Base::Base;
+  TaoDataStructAlloc1D()
+      : Base(
+            allocate_tao_data_struct_container,
+            deallocate_tao_data_struct_container,
+            reallocate_tao_data_struct_container_data,
+            access_tao_data_struct_container
+        ) {}
+  TaoDataStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_data_struct_container,
+            deallocate_tao_data_struct_container,
+            reallocate_tao_data_struct_container_data,
+            access_tao_data_struct_container
+        ) {}
+  TaoDataStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoPingScaleStruct;
 
@@ -10264,12 +12516,28 @@ using TaoPingScaleStructArray1D = FTypeArray1D<
 using TaoPingScaleStructArray2D = FTypeArray2D<TaoPingScaleStruct>;
 using TaoPingScaleStructArray3D = FTypeArray3D<TaoPingScaleStruct>;
 
-using TaoPingScaleStructAlloc1D = FTypeAlloc1D<
-    TaoPingScaleStructArray1D,
-    allocate_tao_ping_scale_struct_container,
-    deallocate_tao_ping_scale_struct_container,
-    reallocate_tao_ping_scale_struct_container_data,
-    access_tao_ping_scale_struct_container>;
+struct TaoPingScaleStructAlloc1D : public FTypeAlloc1D<TaoPingScaleStructArray1D> {
+  using Base = FTypeAlloc1D<TaoPingScaleStructArray1D>;
+  using Base::Base;
+  TaoPingScaleStructAlloc1D()
+      : Base(
+            allocate_tao_ping_scale_struct_container,
+            deallocate_tao_ping_scale_struct_container,
+            reallocate_tao_ping_scale_struct_container_data,
+            access_tao_ping_scale_struct_container
+        ) {}
+  TaoPingScaleStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_ping_scale_struct_container,
+            deallocate_tao_ping_scale_struct_container,
+            reallocate_tao_ping_scale_struct_container_data,
+            access_tao_ping_scale_struct_container
+        ) {}
+  TaoPingScaleStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoUniverseCalcStruct;
 
@@ -10280,12 +12548,28 @@ using TaoUniverseCalcStructArray1D = FTypeArray1D<
 using TaoUniverseCalcStructArray2D = FTypeArray2D<TaoUniverseCalcStruct>;
 using TaoUniverseCalcStructArray3D = FTypeArray3D<TaoUniverseCalcStruct>;
 
-using TaoUniverseCalcStructAlloc1D = FTypeAlloc1D<
-    TaoUniverseCalcStructArray1D,
-    allocate_tao_universe_calc_struct_container,
-    deallocate_tao_universe_calc_struct_container,
-    reallocate_tao_universe_calc_struct_container_data,
-    access_tao_universe_calc_struct_container>;
+struct TaoUniverseCalcStructAlloc1D : public FTypeAlloc1D<TaoUniverseCalcStructArray1D> {
+  using Base = FTypeAlloc1D<TaoUniverseCalcStructArray1D>;
+  using Base::Base;
+  TaoUniverseCalcStructAlloc1D()
+      : Base(
+            allocate_tao_universe_calc_struct_container,
+            deallocate_tao_universe_calc_struct_container,
+            reallocate_tao_universe_calc_struct_container_data,
+            access_tao_universe_calc_struct_container
+        ) {}
+  TaoUniverseCalcStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_universe_calc_struct_container,
+            deallocate_tao_universe_calc_struct_container,
+            reallocate_tao_universe_calc_struct_container_data,
+            access_tao_universe_calc_struct_container
+        ) {}
+  TaoUniverseCalcStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class LatEleOrderStruct;
 
@@ -10296,12 +12580,28 @@ using LatEleOrderStructArray1D = FTypeArray1D<
 using LatEleOrderStructArray2D = FTypeArray2D<LatEleOrderStruct>;
 using LatEleOrderStructArray3D = FTypeArray3D<LatEleOrderStruct>;
 
-using LatEleOrderStructAlloc1D = FTypeAlloc1D<
-    LatEleOrderStructArray1D,
-    allocate_lat_ele_order_struct_container,
-    deallocate_lat_ele_order_struct_container,
-    reallocate_lat_ele_order_struct_container_data,
-    access_lat_ele_order_struct_container>;
+struct LatEleOrderStructAlloc1D : public FTypeAlloc1D<LatEleOrderStructArray1D> {
+  using Base = FTypeAlloc1D<LatEleOrderStructArray1D>;
+  using Base::Base;
+  LatEleOrderStructAlloc1D()
+      : Base(
+            allocate_lat_ele_order_struct_container,
+            deallocate_lat_ele_order_struct_container,
+            reallocate_lat_ele_order_struct_container_data,
+            access_lat_ele_order_struct_container
+        ) {}
+  LatEleOrderStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_lat_ele_order_struct_container,
+            deallocate_lat_ele_order_struct_container,
+            reallocate_lat_ele_order_struct_container_data,
+            access_lat_ele_order_struct_container
+        ) {}
+  LatEleOrderStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoExpressionInfoStruct;
 
@@ -10312,12 +12612,28 @@ using TaoExpressionInfoStructArray1D = FTypeArray1D<
 using TaoExpressionInfoStructArray2D = FTypeArray2D<TaoExpressionInfoStruct>;
 using TaoExpressionInfoStructArray3D = FTypeArray3D<TaoExpressionInfoStruct>;
 
-using TaoExpressionInfoStructAlloc1D = FTypeAlloc1D<
-    TaoExpressionInfoStructArray1D,
-    allocate_tao_expression_info_struct_container,
-    deallocate_tao_expression_info_struct_container,
-    reallocate_tao_expression_info_struct_container_data,
-    access_tao_expression_info_struct_container>;
+struct TaoExpressionInfoStructAlloc1D : public FTypeAlloc1D<TaoExpressionInfoStructArray1D> {
+  using Base = FTypeAlloc1D<TaoExpressionInfoStructArray1D>;
+  using Base::Base;
+  TaoExpressionInfoStructAlloc1D()
+      : Base(
+            allocate_tao_expression_info_struct_container,
+            deallocate_tao_expression_info_struct_container,
+            reallocate_tao_expression_info_struct_container_data,
+            access_tao_expression_info_struct_container
+        ) {}
+  TaoExpressionInfoStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_expression_info_struct_container,
+            deallocate_tao_expression_info_struct_container,
+            reallocate_tao_expression_info_struct_container_data,
+            access_tao_expression_info_struct_container
+        ) {}
+  TaoExpressionInfoStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoEvalNodeStruct;
 
@@ -10328,12 +12644,28 @@ using TaoEvalNodeStructArray1D = FTypeArray1D<
 using TaoEvalNodeStructArray2D = FTypeArray2D<TaoEvalNodeStruct>;
 using TaoEvalNodeStructArray3D = FTypeArray3D<TaoEvalNodeStruct>;
 
-using TaoEvalNodeStructAlloc1D = FTypeAlloc1D<
-    TaoEvalNodeStructArray1D,
-    allocate_tao_eval_node_struct_container,
-    deallocate_tao_eval_node_struct_container,
-    reallocate_tao_eval_node_struct_container_data,
-    access_tao_eval_node_struct_container>;
+struct TaoEvalNodeStructAlloc1D : public FTypeAlloc1D<TaoEvalNodeStructArray1D> {
+  using Base = FTypeAlloc1D<TaoEvalNodeStructArray1D>;
+  using Base::Base;
+  TaoEvalNodeStructAlloc1D()
+      : Base(
+            allocate_tao_eval_node_struct_container,
+            deallocate_tao_eval_node_struct_container,
+            reallocate_tao_eval_node_struct_container_data,
+            access_tao_eval_node_struct_container
+        ) {}
+  TaoEvalNodeStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_eval_node_struct_container,
+            deallocate_tao_eval_node_struct_container,
+            reallocate_tao_eval_node_struct_container_data,
+            access_tao_eval_node_struct_container
+        ) {}
+  TaoEvalNodeStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoTitleStruct;
 
@@ -10344,12 +12676,28 @@ using TaoTitleStructArray1D = FTypeArray1D<
 using TaoTitleStructArray2D = FTypeArray2D<TaoTitleStruct>;
 using TaoTitleStructArray3D = FTypeArray3D<TaoTitleStruct>;
 
-using TaoTitleStructAlloc1D = FTypeAlloc1D<
-    TaoTitleStructArray1D,
-    allocate_tao_title_struct_container,
-    deallocate_tao_title_struct_container,
-    reallocate_tao_title_struct_container_data,
-    access_tao_title_struct_container>;
+struct TaoTitleStructAlloc1D : public FTypeAlloc1D<TaoTitleStructArray1D> {
+  using Base = FTypeAlloc1D<TaoTitleStructArray1D>;
+  using Base::Base;
+  TaoTitleStructAlloc1D()
+      : Base(
+            allocate_tao_title_struct_container,
+            deallocate_tao_title_struct_container,
+            reallocate_tao_title_struct_container_data,
+            access_tao_title_struct_container
+        ) {}
+  TaoTitleStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_title_struct_container,
+            deallocate_tao_title_struct_container,
+            reallocate_tao_title_struct_container_data,
+            access_tao_title_struct_container
+        ) {}
+  TaoTitleStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class QpRectStruct;
 
@@ -10358,12 +12706,28 @@ using QpRectStructArray1D =
 using QpRectStructArray2D = FTypeArray2D<QpRectStruct>;
 using QpRectStructArray3D = FTypeArray3D<QpRectStruct>;
 
-using QpRectStructAlloc1D = FTypeAlloc1D<
-    QpRectStructArray1D,
-    allocate_qp_rect_struct_container,
-    deallocate_qp_rect_struct_container,
-    reallocate_qp_rect_struct_container_data,
-    access_qp_rect_struct_container>;
+struct QpRectStructAlloc1D : public FTypeAlloc1D<QpRectStructArray1D> {
+  using Base = FTypeAlloc1D<QpRectStructArray1D>;
+  using Base::Base;
+  QpRectStructAlloc1D()
+      : Base(
+            allocate_qp_rect_struct_container,
+            deallocate_qp_rect_struct_container,
+            reallocate_qp_rect_struct_container_data,
+            access_qp_rect_struct_container
+        ) {}
+  QpRectStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_qp_rect_struct_container,
+            deallocate_qp_rect_struct_container,
+            reallocate_qp_rect_struct_container_data,
+            access_qp_rect_struct_container
+        ) {}
+  QpRectStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoDrawingStruct;
 
@@ -10374,12 +12738,28 @@ using TaoDrawingStructArray1D = FTypeArray1D<
 using TaoDrawingStructArray2D = FTypeArray2D<TaoDrawingStruct>;
 using TaoDrawingStructArray3D = FTypeArray3D<TaoDrawingStruct>;
 
-using TaoDrawingStructAlloc1D = FTypeAlloc1D<
-    TaoDrawingStructArray1D,
-    allocate_tao_drawing_struct_container,
-    deallocate_tao_drawing_struct_container,
-    reallocate_tao_drawing_struct_container_data,
-    access_tao_drawing_struct_container>;
+struct TaoDrawingStructAlloc1D : public FTypeAlloc1D<TaoDrawingStructArray1D> {
+  using Base = FTypeAlloc1D<TaoDrawingStructArray1D>;
+  using Base::Base;
+  TaoDrawingStructAlloc1D()
+      : Base(
+            allocate_tao_drawing_struct_container,
+            deallocate_tao_drawing_struct_container,
+            reallocate_tao_drawing_struct_container_data,
+            access_tao_drawing_struct_container
+        ) {}
+  TaoDrawingStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_drawing_struct_container,
+            deallocate_tao_drawing_struct_container,
+            reallocate_tao_drawing_struct_container_data,
+            access_tao_drawing_struct_container
+        ) {}
+  TaoDrawingStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoShapePatternStruct;
 
@@ -10390,12 +12770,28 @@ using TaoShapePatternStructArray1D = FTypeArray1D<
 using TaoShapePatternStructArray2D = FTypeArray2D<TaoShapePatternStruct>;
 using TaoShapePatternStructArray3D = FTypeArray3D<TaoShapePatternStruct>;
 
-using TaoShapePatternStructAlloc1D = FTypeAlloc1D<
-    TaoShapePatternStructArray1D,
-    allocate_tao_shape_pattern_struct_container,
-    deallocate_tao_shape_pattern_struct_container,
-    reallocate_tao_shape_pattern_struct_container_data,
-    access_tao_shape_pattern_struct_container>;
+struct TaoShapePatternStructAlloc1D : public FTypeAlloc1D<TaoShapePatternStructArray1D> {
+  using Base = FTypeAlloc1D<TaoShapePatternStructArray1D>;
+  using Base::Base;
+  TaoShapePatternStructAlloc1D()
+      : Base(
+            allocate_tao_shape_pattern_struct_container,
+            deallocate_tao_shape_pattern_struct_container,
+            reallocate_tao_shape_pattern_struct_container_data,
+            access_tao_shape_pattern_struct_container
+        ) {}
+  TaoShapePatternStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_shape_pattern_struct_container,
+            deallocate_tao_shape_pattern_struct_container,
+            reallocate_tao_shape_pattern_struct_container_data,
+            access_tao_shape_pattern_struct_container
+        ) {}
+  TaoShapePatternStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoShapePatternPointStruct;
 
@@ -10406,12 +12802,28 @@ using TaoShapePatternPointStructArray1D = FTypeArray1D<
 using TaoShapePatternPointStructArray2D = FTypeArray2D<TaoShapePatternPointStruct>;
 using TaoShapePatternPointStructArray3D = FTypeArray3D<TaoShapePatternPointStruct>;
 
-using TaoShapePatternPointStructAlloc1D = FTypeAlloc1D<
-    TaoShapePatternPointStructArray1D,
-    allocate_tao_shape_pattern_point_struct_container,
-    deallocate_tao_shape_pattern_point_struct_container,
-    reallocate_tao_shape_pattern_point_struct_container_data,
-    access_tao_shape_pattern_point_struct_container>;
+struct TaoShapePatternPointStructAlloc1D : public FTypeAlloc1D<TaoShapePatternPointStructArray1D> {
+  using Base = FTypeAlloc1D<TaoShapePatternPointStructArray1D>;
+  using Base::Base;
+  TaoShapePatternPointStructAlloc1D()
+      : Base(
+            allocate_tao_shape_pattern_point_struct_container,
+            deallocate_tao_shape_pattern_point_struct_container,
+            reallocate_tao_shape_pattern_point_struct_container_data,
+            access_tao_shape_pattern_point_struct_container
+        ) {}
+  TaoShapePatternPointStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_shape_pattern_point_struct_container,
+            deallocate_tao_shape_pattern_point_struct_container,
+            reallocate_tao_shape_pattern_point_struct_container_data,
+            access_tao_shape_pattern_point_struct_container
+        ) {}
+  TaoShapePatternPointStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class QpAxisStruct;
 
@@ -10420,12 +12832,28 @@ using QpAxisStructArray1D =
 using QpAxisStructArray2D = FTypeArray2D<QpAxisStruct>;
 using QpAxisStructArray3D = FTypeArray3D<QpAxisStruct>;
 
-using QpAxisStructAlloc1D = FTypeAlloc1D<
-    QpAxisStructArray1D,
-    allocate_qp_axis_struct_container,
-    deallocate_qp_axis_struct_container,
-    reallocate_qp_axis_struct_container_data,
-    access_qp_axis_struct_container>;
+struct QpAxisStructAlloc1D : public FTypeAlloc1D<QpAxisStructArray1D> {
+  using Base = FTypeAlloc1D<QpAxisStructArray1D>;
+  using Base::Base;
+  QpAxisStructAlloc1D()
+      : Base(
+            allocate_qp_axis_struct_container,
+            deallocate_qp_axis_struct_container,
+            reallocate_qp_axis_struct_container_data,
+            access_qp_axis_struct_container
+        ) {}
+  QpAxisStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_qp_axis_struct_container,
+            deallocate_qp_axis_struct_container,
+            reallocate_qp_axis_struct_container_data,
+            access_qp_axis_struct_container
+        ) {}
+  QpAxisStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class QpLegendStruct;
 
@@ -10436,12 +12864,28 @@ using QpLegendStructArray1D = FTypeArray1D<
 using QpLegendStructArray2D = FTypeArray2D<QpLegendStruct>;
 using QpLegendStructArray3D = FTypeArray3D<QpLegendStruct>;
 
-using QpLegendStructAlloc1D = FTypeAlloc1D<
-    QpLegendStructArray1D,
-    allocate_qp_legend_struct_container,
-    deallocate_qp_legend_struct_container,
-    reallocate_qp_legend_struct_container_data,
-    access_qp_legend_struct_container>;
+struct QpLegendStructAlloc1D : public FTypeAlloc1D<QpLegendStructArray1D> {
+  using Base = FTypeAlloc1D<QpLegendStructArray1D>;
+  using Base::Base;
+  QpLegendStructAlloc1D()
+      : Base(
+            allocate_qp_legend_struct_container,
+            deallocate_qp_legend_struct_container,
+            reallocate_qp_legend_struct_container_data,
+            access_qp_legend_struct_container
+        ) {}
+  QpLegendStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_qp_legend_struct_container,
+            deallocate_qp_legend_struct_container,
+            reallocate_qp_legend_struct_container_data,
+            access_qp_legend_struct_container
+        ) {}
+  QpLegendStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class QpPointStruct;
 
@@ -10452,12 +12896,28 @@ using QpPointStructArray1D = FTypeArray1D<
 using QpPointStructArray2D = FTypeArray2D<QpPointStruct>;
 using QpPointStructArray3D = FTypeArray3D<QpPointStruct>;
 
-using QpPointStructAlloc1D = FTypeAlloc1D<
-    QpPointStructArray1D,
-    allocate_qp_point_struct_container,
-    deallocate_qp_point_struct_container,
-    reallocate_qp_point_struct_container_data,
-    access_qp_point_struct_container>;
+struct QpPointStructAlloc1D : public FTypeAlloc1D<QpPointStructArray1D> {
+  using Base = FTypeAlloc1D<QpPointStructArray1D>;
+  using Base::Base;
+  QpPointStructAlloc1D()
+      : Base(
+            allocate_qp_point_struct_container,
+            deallocate_qp_point_struct_container,
+            reallocate_qp_point_struct_container_data,
+            access_qp_point_struct_container
+        ) {}
+  QpPointStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_qp_point_struct_container,
+            deallocate_qp_point_struct_container,
+            reallocate_qp_point_struct_container_data,
+            access_qp_point_struct_container
+        ) {}
+  QpPointStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class QpLineStruct;
 
@@ -10466,12 +12926,28 @@ using QpLineStructArray1D =
 using QpLineStructArray2D = FTypeArray2D<QpLineStruct>;
 using QpLineStructArray3D = FTypeArray3D<QpLineStruct>;
 
-using QpLineStructAlloc1D = FTypeAlloc1D<
-    QpLineStructArray1D,
-    allocate_qp_line_struct_container,
-    deallocate_qp_line_struct_container,
-    reallocate_qp_line_struct_container_data,
-    access_qp_line_struct_container>;
+struct QpLineStructAlloc1D : public FTypeAlloc1D<QpLineStructArray1D> {
+  using Base = FTypeAlloc1D<QpLineStructArray1D>;
+  using Base::Base;
+  QpLineStructAlloc1D()
+      : Base(
+            allocate_qp_line_struct_container,
+            deallocate_qp_line_struct_container,
+            reallocate_qp_line_struct_container_data,
+            access_qp_line_struct_container
+        ) {}
+  QpLineStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_qp_line_struct_container,
+            deallocate_qp_line_struct_container,
+            reallocate_qp_line_struct_container_data,
+            access_qp_line_struct_container
+        ) {}
+  QpLineStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class QpSymbolStruct;
 
@@ -10482,12 +12958,28 @@ using QpSymbolStructArray1D = FTypeArray1D<
 using QpSymbolStructArray2D = FTypeArray2D<QpSymbolStruct>;
 using QpSymbolStructArray3D = FTypeArray3D<QpSymbolStruct>;
 
-using QpSymbolStructAlloc1D = FTypeAlloc1D<
-    QpSymbolStructArray1D,
-    allocate_qp_symbol_struct_container,
-    deallocate_qp_symbol_struct_container,
-    reallocate_qp_symbol_struct_container_data,
-    access_qp_symbol_struct_container>;
+struct QpSymbolStructAlloc1D : public FTypeAlloc1D<QpSymbolStructArray1D> {
+  using Base = FTypeAlloc1D<QpSymbolStructArray1D>;
+  using Base::Base;
+  QpSymbolStructAlloc1D()
+      : Base(
+            allocate_qp_symbol_struct_container,
+            deallocate_qp_symbol_struct_container,
+            reallocate_qp_symbol_struct_container_data,
+            access_qp_symbol_struct_container
+        ) {}
+  QpSymbolStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_qp_symbol_struct_container,
+            deallocate_qp_symbol_struct_container,
+            reallocate_qp_symbol_struct_container_data,
+            access_qp_symbol_struct_container
+        ) {}
+  QpSymbolStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoFloorPlanStruct;
 
@@ -10498,12 +12990,28 @@ using TaoFloorPlanStructArray1D = FTypeArray1D<
 using TaoFloorPlanStructArray2D = FTypeArray2D<TaoFloorPlanStruct>;
 using TaoFloorPlanStructArray3D = FTypeArray3D<TaoFloorPlanStruct>;
 
-using TaoFloorPlanStructAlloc1D = FTypeAlloc1D<
-    TaoFloorPlanStructArray1D,
-    allocate_tao_floor_plan_struct_container,
-    deallocate_tao_floor_plan_struct_container,
-    reallocate_tao_floor_plan_struct_container_data,
-    access_tao_floor_plan_struct_container>;
+struct TaoFloorPlanStructAlloc1D : public FTypeAlloc1D<TaoFloorPlanStructArray1D> {
+  using Base = FTypeAlloc1D<TaoFloorPlanStructArray1D>;
+  using Base::Base;
+  TaoFloorPlanStructAlloc1D()
+      : Base(
+            allocate_tao_floor_plan_struct_container,
+            deallocate_tao_floor_plan_struct_container,
+            reallocate_tao_floor_plan_struct_container_data,
+            access_tao_floor_plan_struct_container
+        ) {}
+  TaoFloorPlanStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_floor_plan_struct_container,
+            deallocate_tao_floor_plan_struct_container,
+            reallocate_tao_floor_plan_struct_container_data,
+            access_tao_floor_plan_struct_container
+        ) {}
+  TaoFloorPlanStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoV1VarStruct;
 
@@ -10514,12 +13022,28 @@ using TaoV1VarStructArray1D = FTypeArray1D<
 using TaoV1VarStructArray2D = FTypeArray2D<TaoV1VarStruct>;
 using TaoV1VarStructArray3D = FTypeArray3D<TaoV1VarStruct>;
 
-using TaoV1VarStructAlloc1D = FTypeAlloc1D<
-    TaoV1VarStructArray1D,
-    allocate_tao_v1_var_struct_container,
-    deallocate_tao_v1_var_struct_container,
-    reallocate_tao_v1_var_struct_container_data,
-    access_tao_v1_var_struct_container>;
+struct TaoV1VarStructAlloc1D : public FTypeAlloc1D<TaoV1VarStructArray1D> {
+  using Base = FTypeAlloc1D<TaoV1VarStructArray1D>;
+  using Base::Base;
+  TaoV1VarStructAlloc1D()
+      : Base(
+            allocate_tao_v1_var_struct_container,
+            deallocate_tao_v1_var_struct_container,
+            reallocate_tao_v1_var_struct_container_data,
+            access_tao_v1_var_struct_container
+        ) {}
+  TaoV1VarStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_v1_var_struct_container,
+            deallocate_tao_v1_var_struct_container,
+            reallocate_tao_v1_var_struct_container_data,
+            access_tao_v1_var_struct_container
+        ) {}
+  TaoV1VarStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoGlobalStruct;
 
@@ -10530,12 +13054,28 @@ using TaoGlobalStructArray1D = FTypeArray1D<
 using TaoGlobalStructArray2D = FTypeArray2D<TaoGlobalStruct>;
 using TaoGlobalStructArray3D = FTypeArray3D<TaoGlobalStruct>;
 
-using TaoGlobalStructAlloc1D = FTypeAlloc1D<
-    TaoGlobalStructArray1D,
-    allocate_tao_global_struct_container,
-    deallocate_tao_global_struct_container,
-    reallocate_tao_global_struct_container_data,
-    access_tao_global_struct_container>;
+struct TaoGlobalStructAlloc1D : public FTypeAlloc1D<TaoGlobalStructArray1D> {
+  using Base = FTypeAlloc1D<TaoGlobalStructArray1D>;
+  using Base::Base;
+  TaoGlobalStructAlloc1D()
+      : Base(
+            allocate_tao_global_struct_container,
+            deallocate_tao_global_struct_container,
+            reallocate_tao_global_struct_container_data,
+            access_tao_global_struct_container
+        ) {}
+  TaoGlobalStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_global_struct_container,
+            deallocate_tao_global_struct_container,
+            reallocate_tao_global_struct_container_data,
+            access_tao_global_struct_container
+        ) {}
+  TaoGlobalStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoInitStruct;
 
@@ -10546,12 +13086,28 @@ using TaoInitStructArray1D = FTypeArray1D<
 using TaoInitStructArray2D = FTypeArray2D<TaoInitStruct>;
 using TaoInitStructArray3D = FTypeArray3D<TaoInitStruct>;
 
-using TaoInitStructAlloc1D = FTypeAlloc1D<
-    TaoInitStructArray1D,
-    allocate_tao_init_struct_container,
-    deallocate_tao_init_struct_container,
-    reallocate_tao_init_struct_container_data,
-    access_tao_init_struct_container>;
+struct TaoInitStructAlloc1D : public FTypeAlloc1D<TaoInitStructArray1D> {
+  using Base = FTypeAlloc1D<TaoInitStructArray1D>;
+  using Base::Base;
+  TaoInitStructAlloc1D()
+      : Base(
+            allocate_tao_init_struct_container,
+            deallocate_tao_init_struct_container,
+            reallocate_tao_init_struct_container_data,
+            access_tao_init_struct_container
+        ) {}
+  TaoInitStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_init_struct_container,
+            deallocate_tao_init_struct_container,
+            reallocate_tao_init_struct_container_data,
+            access_tao_init_struct_container
+        ) {}
+  TaoInitStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoCommonStruct;
 
@@ -10562,12 +13118,28 @@ using TaoCommonStructArray1D = FTypeArray1D<
 using TaoCommonStructArray2D = FTypeArray2D<TaoCommonStruct>;
 using TaoCommonStructArray3D = FTypeArray3D<TaoCommonStruct>;
 
-using TaoCommonStructAlloc1D = FTypeAlloc1D<
-    TaoCommonStructArray1D,
-    allocate_tao_common_struct_container,
-    deallocate_tao_common_struct_container,
-    reallocate_tao_common_struct_container_data,
-    access_tao_common_struct_container>;
+struct TaoCommonStructAlloc1D : public FTypeAlloc1D<TaoCommonStructArray1D> {
+  using Base = FTypeAlloc1D<TaoCommonStructArray1D>;
+  using Base::Base;
+  TaoCommonStructAlloc1D()
+      : Base(
+            allocate_tao_common_struct_container,
+            deallocate_tao_common_struct_container,
+            reallocate_tao_common_struct_container_data,
+            access_tao_common_struct_container
+        ) {}
+  TaoCommonStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_common_struct_container,
+            deallocate_tao_common_struct_container,
+            reallocate_tao_common_struct_container_data,
+            access_tao_common_struct_container
+        ) {}
+  TaoCommonStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoPlotPageStruct;
 
@@ -10578,12 +13150,28 @@ using TaoPlotPageStructArray1D = FTypeArray1D<
 using TaoPlotPageStructArray2D = FTypeArray2D<TaoPlotPageStruct>;
 using TaoPlotPageStructArray3D = FTypeArray3D<TaoPlotPageStruct>;
 
-using TaoPlotPageStructAlloc1D = FTypeAlloc1D<
-    TaoPlotPageStructArray1D,
-    allocate_tao_plot_page_struct_container,
-    deallocate_tao_plot_page_struct_container,
-    reallocate_tao_plot_page_struct_container_data,
-    access_tao_plot_page_struct_container>;
+struct TaoPlotPageStructAlloc1D : public FTypeAlloc1D<TaoPlotPageStructArray1D> {
+  using Base = FTypeAlloc1D<TaoPlotPageStructArray1D>;
+  using Base::Base;
+  TaoPlotPageStructAlloc1D()
+      : Base(
+            allocate_tao_plot_page_struct_container,
+            deallocate_tao_plot_page_struct_container,
+            reallocate_tao_plot_page_struct_container_data,
+            access_tao_plot_page_struct_container
+        ) {}
+  TaoPlotPageStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_plot_page_struct_container,
+            deallocate_tao_plot_page_struct_container,
+            reallocate_tao_plot_page_struct_container_data,
+            access_tao_plot_page_struct_container
+        ) {}
+  TaoPlotPageStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoBuildingWallStruct;
 
@@ -10594,12 +13182,28 @@ using TaoBuildingWallStructArray1D = FTypeArray1D<
 using TaoBuildingWallStructArray2D = FTypeArray2D<TaoBuildingWallStruct>;
 using TaoBuildingWallStructArray3D = FTypeArray3D<TaoBuildingWallStruct>;
 
-using TaoBuildingWallStructAlloc1D = FTypeAlloc1D<
-    TaoBuildingWallStructArray1D,
-    allocate_tao_building_wall_struct_container,
-    deallocate_tao_building_wall_struct_container,
-    reallocate_tao_building_wall_struct_container_data,
-    access_tao_building_wall_struct_container>;
+struct TaoBuildingWallStructAlloc1D : public FTypeAlloc1D<TaoBuildingWallStructArray1D> {
+  using Base = FTypeAlloc1D<TaoBuildingWallStructArray1D>;
+  using Base::Base;
+  TaoBuildingWallStructAlloc1D()
+      : Base(
+            allocate_tao_building_wall_struct_container,
+            deallocate_tao_building_wall_struct_container,
+            reallocate_tao_building_wall_struct_container_data,
+            access_tao_building_wall_struct_container
+        ) {}
+  TaoBuildingWallStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_building_wall_struct_container,
+            deallocate_tao_building_wall_struct_container,
+            reallocate_tao_building_wall_struct_container_data,
+            access_tao_building_wall_struct_container
+        ) {}
+  TaoBuildingWallStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoBuildingWallOrientationStruct;
 
@@ -10610,12 +13214,33 @@ using TaoBuildingWallOrientationStructArray1D = FTypeArray1D<
 using TaoBuildingWallOrientationStructArray2D = FTypeArray2D<TaoBuildingWallOrientationStruct>;
 using TaoBuildingWallOrientationStructArray3D = FTypeArray3D<TaoBuildingWallOrientationStruct>;
 
-using TaoBuildingWallOrientationStructAlloc1D = FTypeAlloc1D<
-    TaoBuildingWallOrientationStructArray1D,
-    allocate_tao_building_wall_orientation_struct_container,
-    deallocate_tao_building_wall_orientation_struct_container,
-    reallocate_tao_building_wall_orientation_struct_container_data,
-    access_tao_building_wall_orientation_struct_container>;
+struct TaoBuildingWallOrientationStructAlloc1D
+    : public FTypeAlloc1D<TaoBuildingWallOrientationStructArray1D> {
+  using Base = FTypeAlloc1D<TaoBuildingWallOrientationStructArray1D>;
+  using Base::Base;
+  TaoBuildingWallOrientationStructAlloc1D()
+      : Base(
+            allocate_tao_building_wall_orientation_struct_container,
+            deallocate_tao_building_wall_orientation_struct_container,
+            reallocate_tao_building_wall_orientation_struct_container_data,
+            access_tao_building_wall_orientation_struct_container
+        ) {}
+  TaoBuildingWallOrientationStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_building_wall_orientation_struct_container,
+            deallocate_tao_building_wall_orientation_struct_container,
+            reallocate_tao_building_wall_orientation_struct_container_data,
+            access_tao_building_wall_orientation_struct_container
+        ) {}
+  TaoBuildingWallOrientationStructAlloc1D(
+      void *handle,
+      ReallocFuncPtr realloc,
+      TypeAccessFuncPtr access
+  )
+      : Base(handle, realloc, access) {}
+};
 
 class TaoBuildingWallSectionStruct;
 
@@ -10626,12 +13251,33 @@ using TaoBuildingWallSectionStructArray1D = FTypeArray1D<
 using TaoBuildingWallSectionStructArray2D = FTypeArray2D<TaoBuildingWallSectionStruct>;
 using TaoBuildingWallSectionStructArray3D = FTypeArray3D<TaoBuildingWallSectionStruct>;
 
-using TaoBuildingWallSectionStructAlloc1D = FTypeAlloc1D<
-    TaoBuildingWallSectionStructArray1D,
-    allocate_tao_building_wall_section_struct_container,
-    deallocate_tao_building_wall_section_struct_container,
-    reallocate_tao_building_wall_section_struct_container_data,
-    access_tao_building_wall_section_struct_container>;
+struct TaoBuildingWallSectionStructAlloc1D
+    : public FTypeAlloc1D<TaoBuildingWallSectionStructArray1D> {
+  using Base = FTypeAlloc1D<TaoBuildingWallSectionStructArray1D>;
+  using Base::Base;
+  TaoBuildingWallSectionStructAlloc1D()
+      : Base(
+            allocate_tao_building_wall_section_struct_container,
+            deallocate_tao_building_wall_section_struct_container,
+            reallocate_tao_building_wall_section_struct_container_data,
+            access_tao_building_wall_section_struct_container
+        ) {}
+  TaoBuildingWallSectionStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_building_wall_section_struct_container,
+            deallocate_tao_building_wall_section_struct_container,
+            reallocate_tao_building_wall_section_struct_container_data,
+            access_tao_building_wall_section_struct_container
+        ) {}
+  TaoBuildingWallSectionStructAlloc1D(
+      void *handle,
+      ReallocFuncPtr realloc,
+      TypeAccessFuncPtr access
+  )
+      : Base(handle, realloc, access) {}
+};
 
 class TaoBuildingWallPointStruct;
 
@@ -10642,12 +13288,28 @@ using TaoBuildingWallPointStructArray1D = FTypeArray1D<
 using TaoBuildingWallPointStructArray2D = FTypeArray2D<TaoBuildingWallPointStruct>;
 using TaoBuildingWallPointStructArray3D = FTypeArray3D<TaoBuildingWallPointStruct>;
 
-using TaoBuildingWallPointStructAlloc1D = FTypeAlloc1D<
-    TaoBuildingWallPointStructArray1D,
-    allocate_tao_building_wall_point_struct_container,
-    deallocate_tao_building_wall_point_struct_container,
-    reallocate_tao_building_wall_point_struct_container_data,
-    access_tao_building_wall_point_struct_container>;
+struct TaoBuildingWallPointStructAlloc1D : public FTypeAlloc1D<TaoBuildingWallPointStructArray1D> {
+  using Base = FTypeAlloc1D<TaoBuildingWallPointStructArray1D>;
+  using Base::Base;
+  TaoBuildingWallPointStructAlloc1D()
+      : Base(
+            allocate_tao_building_wall_point_struct_container,
+            deallocate_tao_building_wall_point_struct_container,
+            reallocate_tao_building_wall_point_struct_container_data,
+            access_tao_building_wall_point_struct_container
+        ) {}
+  TaoBuildingWallPointStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_building_wall_point_struct_container,
+            deallocate_tao_building_wall_point_struct_container,
+            reallocate_tao_building_wall_point_struct_container_data,
+            access_tao_building_wall_point_struct_container
+        ) {}
+  TaoBuildingWallPointStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoWaveStruct;
 
@@ -10658,12 +13320,28 @@ using TaoWaveStructArray1D = FTypeArray1D<
 using TaoWaveStructArray2D = FTypeArray2D<TaoWaveStruct>;
 using TaoWaveStructArray3D = FTypeArray3D<TaoWaveStruct>;
 
-using TaoWaveStructAlloc1D = FTypeAlloc1D<
-    TaoWaveStructArray1D,
-    allocate_tao_wave_struct_container,
-    deallocate_tao_wave_struct_container,
-    reallocate_tao_wave_struct_container_data,
-    access_tao_wave_struct_container>;
+struct TaoWaveStructAlloc1D : public FTypeAlloc1D<TaoWaveStructArray1D> {
+  using Base = FTypeAlloc1D<TaoWaveStructArray1D>;
+  using Base::Base;
+  TaoWaveStructAlloc1D()
+      : Base(
+            allocate_tao_wave_struct_container,
+            deallocate_tao_wave_struct_container,
+            reallocate_tao_wave_struct_container_data,
+            access_tao_wave_struct_container
+        ) {}
+  TaoWaveStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_wave_struct_container,
+            deallocate_tao_wave_struct_container,
+            reallocate_tao_wave_struct_container_data,
+            access_tao_wave_struct_container
+        ) {}
+  TaoWaveStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoWaveKickPtStruct;
 
@@ -10674,12 +13352,28 @@ using TaoWaveKickPtStructArray1D = FTypeArray1D<
 using TaoWaveKickPtStructArray2D = FTypeArray2D<TaoWaveKickPtStruct>;
 using TaoWaveKickPtStructArray3D = FTypeArray3D<TaoWaveKickPtStruct>;
 
-using TaoWaveKickPtStructAlloc1D = FTypeAlloc1D<
-    TaoWaveKickPtStructArray1D,
-    allocate_tao_wave_kick_pt_struct_container,
-    deallocate_tao_wave_kick_pt_struct_container,
-    reallocate_tao_wave_kick_pt_struct_container_data,
-    access_tao_wave_kick_pt_struct_container>;
+struct TaoWaveKickPtStructAlloc1D : public FTypeAlloc1D<TaoWaveKickPtStructArray1D> {
+  using Base = FTypeAlloc1D<TaoWaveKickPtStructArray1D>;
+  using Base::Base;
+  TaoWaveKickPtStructAlloc1D()
+      : Base(
+            allocate_tao_wave_kick_pt_struct_container,
+            deallocate_tao_wave_kick_pt_struct_container,
+            reallocate_tao_wave_kick_pt_struct_container_data,
+            access_tao_wave_kick_pt_struct_container
+        ) {}
+  TaoWaveKickPtStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_wave_kick_pt_struct_container,
+            deallocate_tao_wave_kick_pt_struct_container,
+            reallocate_tao_wave_kick_pt_struct_container_data,
+            access_tao_wave_kick_pt_struct_container
+        ) {}
+  TaoWaveKickPtStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoCmdHistoryStruct;
 
@@ -10690,12 +13384,28 @@ using TaoCmdHistoryStructArray1D = FTypeArray1D<
 using TaoCmdHistoryStructArray2D = FTypeArray2D<TaoCmdHistoryStruct>;
 using TaoCmdHistoryStructArray3D = FTypeArray3D<TaoCmdHistoryStruct>;
 
-using TaoCmdHistoryStructAlloc1D = FTypeAlloc1D<
-    TaoCmdHistoryStructArray1D,
-    allocate_tao_cmd_history_struct_container,
-    deallocate_tao_cmd_history_struct_container,
-    reallocate_tao_cmd_history_struct_container_data,
-    access_tao_cmd_history_struct_container>;
+struct TaoCmdHistoryStructAlloc1D : public FTypeAlloc1D<TaoCmdHistoryStructArray1D> {
+  using Base = FTypeAlloc1D<TaoCmdHistoryStructArray1D>;
+  using Base::Base;
+  TaoCmdHistoryStructAlloc1D()
+      : Base(
+            allocate_tao_cmd_history_struct_container,
+            deallocate_tao_cmd_history_struct_container,
+            reallocate_tao_cmd_history_struct_container_data,
+            access_tao_cmd_history_struct_container
+        ) {}
+  TaoCmdHistoryStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_cmd_history_struct_container,
+            deallocate_tao_cmd_history_struct_container,
+            reallocate_tao_cmd_history_struct_container_data,
+            access_tao_cmd_history_struct_container
+        ) {}
+  TaoCmdHistoryStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TaoUniverseStruct;
 
@@ -10706,12 +13416,28 @@ using TaoUniverseStructArray1D = FTypeArray1D<
 using TaoUniverseStructArray2D = FTypeArray2D<TaoUniverseStruct>;
 using TaoUniverseStructArray3D = FTypeArray3D<TaoUniverseStruct>;
 
-using TaoUniverseStructAlloc1D = FTypeAlloc1D<
-    TaoUniverseStructArray1D,
-    allocate_tao_universe_struct_container,
-    deallocate_tao_universe_struct_container,
-    reallocate_tao_universe_struct_container_data,
-    access_tao_universe_struct_container>;
+struct TaoUniverseStructAlloc1D : public FTypeAlloc1D<TaoUniverseStructArray1D> {
+  using Base = FTypeAlloc1D<TaoUniverseStructArray1D>;
+  using Base::Base;
+  TaoUniverseStructAlloc1D()
+      : Base(
+            allocate_tao_universe_struct_container,
+            deallocate_tao_universe_struct_container,
+            reallocate_tao_universe_struct_container_data,
+            access_tao_universe_struct_container
+        ) {}
+  TaoUniverseStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_tao_universe_struct_container,
+            deallocate_tao_universe_struct_container,
+            reallocate_tao_universe_struct_container_data,
+            access_tao_universe_struct_container
+        ) {}
+  TaoUniverseStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class MadEnergyStruct;
 
@@ -10722,12 +13448,28 @@ using MadEnergyStructArray1D = FTypeArray1D<
 using MadEnergyStructArray2D = FTypeArray2D<MadEnergyStruct>;
 using MadEnergyStructArray3D = FTypeArray3D<MadEnergyStruct>;
 
-using MadEnergyStructAlloc1D = FTypeAlloc1D<
-    MadEnergyStructArray1D,
-    allocate_mad_energy_struct_container,
-    deallocate_mad_energy_struct_container,
-    reallocate_mad_energy_struct_container_data,
-    access_mad_energy_struct_container>;
+struct MadEnergyStructAlloc1D : public FTypeAlloc1D<MadEnergyStructArray1D> {
+  using Base = FTypeAlloc1D<MadEnergyStructArray1D>;
+  using Base::Base;
+  MadEnergyStructAlloc1D()
+      : Base(
+            allocate_mad_energy_struct_container,
+            deallocate_mad_energy_struct_container,
+            reallocate_mad_energy_struct_container_data,
+            access_mad_energy_struct_container
+        ) {}
+  MadEnergyStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_mad_energy_struct_container,
+            deallocate_mad_energy_struct_container,
+            reallocate_mad_energy_struct_container_data,
+            access_mad_energy_struct_container
+        ) {}
+  MadEnergyStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class MadMapStruct;
 
@@ -10736,12 +13478,28 @@ using MadMapStructArray1D =
 using MadMapStructArray2D = FTypeArray2D<MadMapStruct>;
 using MadMapStructArray3D = FTypeArray3D<MadMapStruct>;
 
-using MadMapStructAlloc1D = FTypeAlloc1D<
-    MadMapStructArray1D,
-    allocate_mad_map_struct_container,
-    deallocate_mad_map_struct_container,
-    reallocate_mad_map_struct_container_data,
-    access_mad_map_struct_container>;
+struct MadMapStructAlloc1D : public FTypeAlloc1D<MadMapStructArray1D> {
+  using Base = FTypeAlloc1D<MadMapStructArray1D>;
+  using Base::Base;
+  MadMapStructAlloc1D()
+      : Base(
+            allocate_mad_map_struct_container,
+            deallocate_mad_map_struct_container,
+            reallocate_mad_map_struct_container_data,
+            access_mad_map_struct_container
+        ) {}
+  MadMapStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_mad_map_struct_container,
+            deallocate_mad_map_struct_container,
+            reallocate_mad_map_struct_container_data,
+            access_mad_map_struct_container
+        ) {}
+  MadMapStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class RandomStateStruct;
 
@@ -10752,12 +13510,28 @@ using RandomStateStructArray1D = FTypeArray1D<
 using RandomStateStructArray2D = FTypeArray2D<RandomStateStruct>;
 using RandomStateStructArray3D = FTypeArray3D<RandomStateStruct>;
 
-using RandomStateStructAlloc1D = FTypeAlloc1D<
-    RandomStateStructArray1D,
-    allocate_random_state_struct_container,
-    deallocate_random_state_struct_container,
-    reallocate_random_state_struct_container_data,
-    access_random_state_struct_container>;
+struct RandomStateStructAlloc1D : public FTypeAlloc1D<RandomStateStructArray1D> {
+  using Base = FTypeAlloc1D<RandomStateStructArray1D>;
+  using Base::Base;
+  RandomStateStructAlloc1D()
+      : Base(
+            allocate_random_state_struct_container,
+            deallocate_random_state_struct_container,
+            reallocate_random_state_struct_container_data,
+            access_random_state_struct_container
+        ) {}
+  RandomStateStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_random_state_struct_container,
+            deallocate_random_state_struct_container,
+            reallocate_random_state_struct_container_data,
+            access_random_state_struct_container
+        ) {}
+  RandomStateStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BbuStageStruct;
 
@@ -10768,12 +13542,28 @@ using BbuStageStructArray1D = FTypeArray1D<
 using BbuStageStructArray2D = FTypeArray2D<BbuStageStruct>;
 using BbuStageStructArray3D = FTypeArray3D<BbuStageStruct>;
 
-using BbuStageStructAlloc1D = FTypeAlloc1D<
-    BbuStageStructArray1D,
-    allocate_bbu_stage_struct_container,
-    deallocate_bbu_stage_struct_container,
-    reallocate_bbu_stage_struct_container_data,
-    access_bbu_stage_struct_container>;
+struct BbuStageStructAlloc1D : public FTypeAlloc1D<BbuStageStructArray1D> {
+  using Base = FTypeAlloc1D<BbuStageStructArray1D>;
+  using Base::Base;
+  BbuStageStructAlloc1D()
+      : Base(
+            allocate_bbu_stage_struct_container,
+            deallocate_bbu_stage_struct_container,
+            reallocate_bbu_stage_struct_container_data,
+            access_bbu_stage_struct_container
+        ) {}
+  BbuStageStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bbu_stage_struct_container,
+            deallocate_bbu_stage_struct_container,
+            reallocate_bbu_stage_struct_container_data,
+            access_bbu_stage_struct_container
+        ) {}
+  BbuStageStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BbuBeamStruct;
 
@@ -10784,12 +13574,28 @@ using BbuBeamStructArray1D = FTypeArray1D<
 using BbuBeamStructArray2D = FTypeArray2D<BbuBeamStruct>;
 using BbuBeamStructArray3D = FTypeArray3D<BbuBeamStruct>;
 
-using BbuBeamStructAlloc1D = FTypeAlloc1D<
-    BbuBeamStructArray1D,
-    allocate_bbu_beam_struct_container,
-    deallocate_bbu_beam_struct_container,
-    reallocate_bbu_beam_struct_container_data,
-    access_bbu_beam_struct_container>;
+struct BbuBeamStructAlloc1D : public FTypeAlloc1D<BbuBeamStructArray1D> {
+  using Base = FTypeAlloc1D<BbuBeamStructArray1D>;
+  using Base::Base;
+  BbuBeamStructAlloc1D()
+      : Base(
+            allocate_bbu_beam_struct_container,
+            deallocate_bbu_beam_struct_container,
+            reallocate_bbu_beam_struct_container_data,
+            access_bbu_beam_struct_container
+        ) {}
+  BbuBeamStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bbu_beam_struct_container,
+            deallocate_bbu_beam_struct_container,
+            reallocate_bbu_beam_struct_container_data,
+            access_bbu_beam_struct_container
+        ) {}
+  BbuBeamStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class BbuParamStruct;
 
@@ -10800,12 +13606,28 @@ using BbuParamStructArray1D = FTypeArray1D<
 using BbuParamStructArray2D = FTypeArray2D<BbuParamStruct>;
 using BbuParamStructArray3D = FTypeArray3D<BbuParamStruct>;
 
-using BbuParamStructAlloc1D = FTypeAlloc1D<
-    BbuParamStructArray1D,
-    allocate_bbu_param_struct_container,
-    deallocate_bbu_param_struct_container,
-    reallocate_bbu_param_struct_container_data,
-    access_bbu_param_struct_container>;
+struct BbuParamStructAlloc1D : public FTypeAlloc1D<BbuParamStructArray1D> {
+  using Base = FTypeAlloc1D<BbuParamStructArray1D>;
+  using Base::Base;
+  BbuParamStructAlloc1D()
+      : Base(
+            allocate_bbu_param_struct_container,
+            deallocate_bbu_param_struct_container,
+            reallocate_bbu_param_struct_container_data,
+            access_bbu_param_struct_container
+        ) {}
+  BbuParamStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_bbu_param_struct_container,
+            deallocate_bbu_param_struct_container,
+            reallocate_bbu_param_struct_container_data,
+            access_bbu_param_struct_container
+        ) {}
+  BbuParamStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class Fibre;
 
@@ -10813,12 +13635,28 @@ using FibreArray1D = FTypeArray1D<Fibre, allocate_fortran_fibre, deallocate_fort
 using FibreArray2D = FTypeArray2D<Fibre>;
 using FibreArray3D = FTypeArray3D<Fibre>;
 
-using FibreAlloc1D = FTypeAlloc1D<
-    FibreArray1D,
-    allocate_fibre_container,
-    deallocate_fibre_container,
-    reallocate_fibre_container_data,
-    access_fibre_container>;
+struct FibreAlloc1D : public FTypeAlloc1D<FibreArray1D> {
+  using Base = FTypeAlloc1D<FibreArray1D>;
+  using Base::Base;
+  FibreAlloc1D()
+      : Base(
+            allocate_fibre_container,
+            deallocate_fibre_container,
+            reallocate_fibre_container_data,
+            access_fibre_container
+        ) {}
+  FibreAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_fibre_container,
+            deallocate_fibre_container,
+            reallocate_fibre_container_data,
+            access_fibre_container
+        ) {}
+  FibreAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class Layout;
 
@@ -10826,12 +13664,28 @@ using LayoutArray1D = FTypeArray1D<Layout, allocate_fortran_layout, deallocate_f
 using LayoutArray2D = FTypeArray2D<Layout>;
 using LayoutArray3D = FTypeArray3D<Layout>;
 
-using LayoutAlloc1D = FTypeAlloc1D<
-    LayoutArray1D,
-    allocate_layout_container,
-    deallocate_layout_container,
-    reallocate_layout_container_data,
-    access_layout_container>;
+struct LayoutAlloc1D : public FTypeAlloc1D<LayoutArray1D> {
+  using Base = FTypeAlloc1D<LayoutArray1D>;
+  using Base::Base;
+  LayoutAlloc1D()
+      : Base(
+            allocate_layout_container,
+            deallocate_layout_container,
+            reallocate_layout_container_data,
+            access_layout_container
+        ) {}
+  LayoutAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_layout_container,
+            deallocate_layout_container,
+            reallocate_layout_container_data,
+            access_layout_container
+        ) {}
+  LayoutAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class AllEncompassingStruct;
 
@@ -10842,12 +13696,28 @@ using AllEncompassingStructArray1D = FTypeArray1D<
 using AllEncompassingStructArray2D = FTypeArray2D<AllEncompassingStruct>;
 using AllEncompassingStructArray3D = FTypeArray3D<AllEncompassingStruct>;
 
-using AllEncompassingStructAlloc1D = FTypeAlloc1D<
-    AllEncompassingStructArray1D,
-    allocate_all_encompassing_struct_container,
-    deallocate_all_encompassing_struct_container,
-    reallocate_all_encompassing_struct_container_data,
-    access_all_encompassing_struct_container>;
+struct AllEncompassingStructAlloc1D : public FTypeAlloc1D<AllEncompassingStructArray1D> {
+  using Base = FTypeAlloc1D<AllEncompassingStructArray1D>;
+  using Base::Base;
+  AllEncompassingStructAlloc1D()
+      : Base(
+            allocate_all_encompassing_struct_container,
+            deallocate_all_encompassing_struct_container,
+            reallocate_all_encompassing_struct_container_data,
+            access_all_encompassing_struct_container
+        ) {}
+  AllEncompassingStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_all_encompassing_struct_container,
+            deallocate_all_encompassing_struct_container,
+            reallocate_all_encompassing_struct_container_data,
+            access_all_encompassing_struct_container
+        ) {}
+  AllEncompassingStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TestSubStruct;
 
@@ -10858,12 +13728,28 @@ using TestSubStructArray1D = FTypeArray1D<
 using TestSubStructArray2D = FTypeArray2D<TestSubStruct>;
 using TestSubStructArray3D = FTypeArray3D<TestSubStruct>;
 
-using TestSubStructAlloc1D = FTypeAlloc1D<
-    TestSubStructArray1D,
-    allocate_test_sub_struct_container,
-    deallocate_test_sub_struct_container,
-    reallocate_test_sub_struct_container_data,
-    access_test_sub_struct_container>;
+struct TestSubStructAlloc1D : public FTypeAlloc1D<TestSubStructArray1D> {
+  using Base = FTypeAlloc1D<TestSubStructArray1D>;
+  using Base::Base;
+  TestSubStructAlloc1D()
+      : Base(
+            allocate_test_sub_struct_container,
+            deallocate_test_sub_struct_container,
+            reallocate_test_sub_struct_container_data,
+            access_test_sub_struct_container
+        ) {}
+  TestSubStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_test_sub_struct_container,
+            deallocate_test_sub_struct_container,
+            reallocate_test_sub_struct_container_data,
+            access_test_sub_struct_container
+        ) {}
+  TestSubStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 class TestSubSubStruct;
 
@@ -10874,12 +13760,28 @@ using TestSubSubStructArray1D = FTypeArray1D<
 using TestSubSubStructArray2D = FTypeArray2D<TestSubSubStruct>;
 using TestSubSubStructArray3D = FTypeArray3D<TestSubSubStruct>;
 
-using TestSubSubStructAlloc1D = FTypeAlloc1D<
-    TestSubSubStructArray1D,
-    allocate_test_sub_sub_struct_container,
-    deallocate_test_sub_sub_struct_container,
-    reallocate_test_sub_sub_struct_container_data,
-    access_test_sub_sub_struct_container>;
+struct TestSubSubStructAlloc1D : public FTypeAlloc1D<TestSubSubStructArray1D> {
+  using Base = FTypeAlloc1D<TestSubSubStructArray1D>;
+  using Base::Base;
+  TestSubSubStructAlloc1D()
+      : Base(
+            allocate_test_sub_sub_struct_container,
+            deallocate_test_sub_sub_struct_container,
+            reallocate_test_sub_sub_struct_container_data,
+            access_test_sub_sub_struct_container
+        ) {}
+  TestSubSubStructAlloc1D(int lb, int n)
+      : Base(
+            lb,
+            n,
+            allocate_test_sub_sub_struct_container,
+            deallocate_test_sub_sub_struct_container,
+            reallocate_test_sub_sub_struct_container_data,
+            access_test_sub_sub_struct_container
+        ) {}
+  TestSubSubStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
 
 template <>
 struct FortranTraits<SplineStruct> {
@@ -11059,8 +13961,8 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  AcKickerTimeStructArray1D amp_vs_time() const; // 1D_ALLOC_type
-  AcKickerFreqStructArray1D frequency() const; // 1D_ALLOC_type
+  AcKickerTimeStructAlloc1D amp_vs_time() const; // 1D_ALLOC_type
+  AcKickerFreqStructAlloc1D frequency() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -11144,18 +14046,18 @@ public:
       set_bragg_angle(bragg_angle->get());
   }
 
-  FArray1D<double> angle() const; // 1D_ALLOC_real
+  RealAlloc1D angle() const; // 1D_ALLOC_real
   void set_angle(const std::vector<double> &v);
-  FArray1D<double> energy() const; // 1D_ALLOC_real
+  RealAlloc1D energy() const; // 1D_ALLOC_real
   void set_energy(const std::vector<double> &v);
-  Interval1CoefStructArray1D int1() const; // 1D_ALLOC_type
+  Interval1CoefStructAlloc1D int1() const; // 1D_ALLOC_type
   FArray2D<double> p_reflect() const; // 2D_ALLOC_real
   void set_p_reflect(const std::vector<std::vector<double>> &v);
   double max_energy() const; // 0D_NOT_real
   void set_max_energy(double value);
-  FArray1D<double> p_reflect_scratch() const; // 1D_ALLOC_real
+  RealAlloc1D p_reflect_scratch() const; // 1D_ALLOC_real
   void set_p_reflect_scratch(const std::vector<double> &v);
-  FArray1D<double> bragg_angle() const; // 1D_ALLOC_real
+  RealAlloc1D bragg_angle() const; // 1D_ALLOC_real
   void set_bragg_angle(const std::vector<double> &v);
 };
 
@@ -11208,7 +14110,7 @@ public:
   void set_description(const std::string &value);
   std::string reflectivity_file() const; // 0D_NOT_character
   void set_reflectivity_file(const std::string &value);
-  PhotonReflectTableStructArray1D table() const; // 1D_ALLOC_type
+  PhotonReflectTableStructAlloc1D table() const; // 1D_ALLOC_type
   double surface_roughness_rms() const; // 0D_NOT_real
   void set_surface_roughness_rms(double value);
   double roughness_correlation_len() const; // 0D_NOT_real
@@ -11361,7 +14263,7 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  CoordStructArray1D orbit() const; // 1D_ALLOC_type
+  CoordStructAlloc1D orbit() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -11525,13 +14427,13 @@ public:
       set_time_based(*time_based);
   }
 
-  FArray1D<double> w() const; // 1D_ALLOC_real
+  RealAlloc1D w() const; // 1D_ALLOC_real
   void set_w(const std::vector<double> &v);
-  FArray1D<std::complex<double>> fw() const; // 1D_ALLOC_complex
+  ComplexAlloc1D fw() const; // 1D_ALLOC_complex
   void set_fw(const std::vector<std::complex<double>> &v);
-  FArray1D<std::complex<double>> fbunch() const; // 1D_ALLOC_complex
+  ComplexAlloc1D fbunch() const; // 1D_ALLOC_complex
   void set_fbunch(const std::vector<std::complex<double>> &v);
-  FArray1D<std::complex<double>> w_out() const; // 1D_ALLOC_complex
+  ComplexAlloc1D w_out() const; // 1D_ALLOC_complex
   void set_w_out(const std::vector<std::complex<double>> &v);
   double dz() const; // 0D_NOT_real
   void set_dz(double value);
@@ -11667,8 +14569,8 @@ public:
   void set_file(const std::string &value);
   WakeSrZLongStruct z_long() const; // 0D_NOT_type
   void set_z_long(const WakeSrZLongStruct &src);
-  WakeSrModeStructArray1D long_wake() const; // 1D_ALLOC_type
-  WakeSrModeStructArray1D trans_wake() const; // 1D_ALLOC_type
+  WakeSrModeStructAlloc1D long_wake() const; // 1D_ALLOC_type
+  WakeSrModeStructAlloc1D trans_wake() const; // 1D_ALLOC_type
   double z_ref_long() const; // 0D_NOT_real
   void set_z_ref_long(double value);
   double z_ref_trans() const; // 0D_NOT_real
@@ -11812,7 +14714,7 @@ public:
 
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
-  WakeLrModeStructArray1D mode() const; // 1D_ALLOC_type
+  WakeLrModeStructAlloc1D mode() const; // 1D_ALLOC_type
   double t_ref() const; // 0D_NOT_real
   void set_t_ref(double value);
   double freq_spread() const; // 0D_NOT_real
@@ -12008,7 +14910,7 @@ public:
 
   double ref() const; // 0D_NOT_real
   void set_ref(double value);
-  EmTaylorTermStructArray1D term() const; // 1D_ALLOC_type
+  EmTaylorTermStructAlloc1D term() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -12116,7 +15018,7 @@ public:
   void set_file(const std::string &value);
   int n_link() const; // 0D_NOT_integer
   void set_n_link(int value);
-  CartesianMapTerm1StructArray1D term() const; // 1D_ALLOC_type
+  CartesianMapTerm1StructAlloc1D term() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -12244,7 +15146,7 @@ public:
   void set_file(const std::string &value);
   int n_link() const; // 0D_NOT_integer
   void set_n_link(int value);
-  CylindricalMapTerm1StructArray1D term() const; // 1D_ALLOC_type
+  CylindricalMapTerm1StructAlloc1D term() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -13121,7 +16023,7 @@ public:
 
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
-  GenGrad1StructArray1D gg() const; // 1D_ALLOC_type
+  GenGrad1StructAlloc1D gg() const; // 1D_ALLOC_type
   int ele_anchor_pt() const; // 0D_NOT_integer
   void set_ele_anchor_pt(int value);
   int field_type() const; // 0D_NOT_integer
@@ -13807,8 +16709,8 @@ public:
   void set_reflectivity_table_sigma(const PhotonReflectTableStruct &src);
   PhotonReflectTableStruct reflectivity_table_pi() const; // 0D_NOT_type
   void set_reflectivity_table_pi(const PhotonReflectTableStruct &src);
-  SplineStructArray1D init_energy_prob() const; // 1D_ALLOC_type
-  FArray1D<double> integrated_init_energy_prob() const; // 1D_ALLOC_real
+  SplineStructAlloc1D init_energy_prob() const; // 1D_ALLOC_type
+  RealAlloc1D integrated_init_energy_prob() const; // 1D_ALLOC_real
   void set_integrated_init_energy_prob(const std::vector<double> &v);
 };
 
@@ -13962,7 +16864,7 @@ public:
   void set_name(const std::string &value);
   std::string material() const; // 0D_NOT_character
   void set_material(const std::string &value);
-  Wall3dVertexStructArray1D v() const; // 1D_ALLOC_type
+  Wall3dVertexStructAlloc1D v() const; // 1D_ALLOC_type
   std::optional<PhotonReflectSurfaceStruct> surface() const; // 0D_PTR_type
   void set_surface(const PhotonReflectSurfaceStruct &src);
   int type() const; // 0D_NOT_integer
@@ -14065,7 +16967,7 @@ public:
   void set_superimpose(bool value);
   int ele_anchor_pt() const; // 0D_NOT_integer
   void set_ele_anchor_pt(int value);
-  Wall3dSectionStructArray1D section() const; // 1D_ALLOC_type
+  Wall3dSectionStructAlloc1D section() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -14150,9 +17052,9 @@ public:
 
   double value() const; // 0D_NOT_real
   void set_value(double value);
-  FArray1D<double> y_knot() const; // 1D_ALLOC_real
+  RealAlloc1D y_knot() const; // 1D_ALLOC_real
   void set_y_knot(const std::vector<double> &v);
-  ExpressionAtomStructArray1D stack() const; // 1D_ALLOC_type
+  ExpressionAtomStructAlloc1D stack() const; // 1D_ALLOC_type
   LatEleLocStruct slave() const; // 0D_NOT_type
   void set_slave(const LatEleLocStruct &src);
   LatEleLocStruct lord() const; // 0D_NOT_type
@@ -14236,9 +17138,9 @@ public:
       set_is_controller(*is_controller);
   }
 
-  FArray1D<double> y_knot() const; // 1D_ALLOC_real
+  RealAlloc1D y_knot() const; // 1D_ALLOC_real
   void set_y_knot(const std::vector<double> &v);
-  ExpressionAtomStructArray1D stack() const; // 1D_ALLOC_type
+  ExpressionAtomStructAlloc1D stack() const; // 1D_ALLOC_type
   std::string attribute() const; // 0D_NOT_character
   void set_attribute(const std::string &value);
   std::string slave_name() const; // 0D_NOT_character
@@ -14269,10 +17171,10 @@ public:
       set_x_knot(x_knot->get());
   }
 
-  ControlVar1StructArray1D var() const; // 1D_ALLOC_type
-  ControlRamp1StructArray1D ramp() const; // 1D_ALLOC_type
-  RamperLordStructArray1D ramper_lord() const; // 1D_ALLOC_type
-  FArray1D<double> x_knot() const; // 1D_ALLOC_real
+  ControlVar1StructAlloc1D var() const; // 1D_ALLOC_type
+  ControlRamp1StructAlloc1D ramp() const; // 1D_ALLOC_type
+  RamperLordStructAlloc1D ramper_lord() const; // 1D_ALLOC_type
+  RealAlloc1D x_knot() const; // 1D_ALLOC_real
   void set_x_knot(const std::vector<double> &v);
 };
 
@@ -15210,7 +18112,7 @@ public:
       set_n_ok(*n_ok);
   }
 
-  TrackPointStructArray1D pt() const; // 1D_ALLOC_type
+  TrackPointStructAlloc1D pt() const; // 1D_ALLOC_type
   double ds_save() const; // 0D_NOT_real
   void set_ds_save(double value);
   int n_pt() const; // 0D_NOT_integer
@@ -15695,7 +18597,7 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  RadInt1StructArray1D ele() const; // 1D_ALLOC_type
+  RadInt1StructAlloc1D ele() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -15714,7 +18616,7 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  RadIntBranchStructArray1D branch() const; // 1D_ALLOC_type
+  RadIntBranchStructAlloc1D branch() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -15807,7 +18709,7 @@ public:
       set_ds_step(*ds_step);
   }
 
-  RfStairStepStructArray1D steps() const; // 1D_ALLOC_type
+  RfStairStepStructAlloc1D steps() const; // 1D_ALLOC_type
   double ds_step() const; // 0D_NOT_real
   void set_ds_step(double value);
 };
@@ -16531,7 +19433,7 @@ public:
   std::string title() const; // 0D_NOT_character
   void set_title(const std::string &value);
   FCharArray1D print_str() const; // 1D_ALLOC_character
-  ExpressionAtomStructArray1D constant() const; // 1D_ALLOC_type
+  ExpressionAtomStructAlloc1D constant() const; // 1D_ALLOC_type
   std::optional<ModeInfoStruct> a() const; // 0D_PTR_type
   void set_a(const ModeInfoStruct &src);
   std::optional<ModeInfoStruct> b() const; // 0D_PTR_type
@@ -16545,15 +19447,15 @@ public:
   EleStruct ele_init() const; // 0D_NOT_type
   void set_ele_init(const EleStruct &src);
   EleStructArray1D ele() const; // 1D_PTR_type
-  BranchStructArray1D branch() const; // 1D_ALLOC_type
-  ControlStructArray1D control() const; // 1D_ALLOC_type
+  BranchStructAlloc1D branch() const; // 1D_ALLOC_type
+  ControlStructAlloc1D control() const; // 1D_ALLOC_type
   std::optional<CoordStruct> particle_start() const; // 0D_PTR_type
   void set_particle_start(const CoordStruct &src);
   BeamInitStruct beam_init() const; // 0D_NOT_type
   void set_beam_init(const BeamInitStruct &src);
   PreTrackerStruct pre_tracker() const; // 0D_NOT_type
   void set_pre_tracker(const PreTrackerStruct &src);
-  FArray1D<double> custom() const; // 1D_ALLOC_real
+  RealAlloc1D custom() const; // 1D_ALLOC_real
   void set_custom(const std::vector<double> &v);
   int version() const; // 0D_NOT_integer
   void set_version(int value);
@@ -16567,7 +19469,7 @@ public:
   void set_n_ic_max(int value);
   int input_taylor_order() const; // 0D_NOT_integer
   void set_input_taylor_order(int value);
-  FArray1D<int> ic() const; // 1D_ALLOC_integer
+  IntAlloc1D ic() const; // 1D_ALLOC_integer
   void set_ic(const std::vector<int> &v);
   int photon_type() const; // 0D_NOT_integer
   void set_photon_type(int value);
@@ -16639,8 +19541,8 @@ public:
       set_n_bad(*n_bad);
   }
 
-  CoordStructArray1D particle() const; // 1D_ALLOC_type
-  FArray1D<int> ix_z() const; // 1D_ALLOC_integer
+  CoordStructAlloc1D particle() const; // 1D_ALLOC_type
+  IntAlloc1D ix_z() const; // 1D_ALLOC_integer
   void set_ix_z(const std::vector<int> &v);
   double charge_tot() const; // 0D_NOT_real
   void set_charge_tot(double value);
@@ -16822,7 +19724,7 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  BunchStructArray1D bunch() const; // 1D_ALLOC_type
+  BunchStructAlloc1D bunch() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -16968,7 +19870,7 @@ public:
       set_pz_start(*pz_start);
   }
 
-  AperturePointStructArray1D point() const; // 1D_ALLOC_type
+  AperturePointStructAlloc1D point() const; // 1D_ALLOC_type
   CoordStruct ref_orb() const; // 0D_NOT_type
   void set_ref_orb(const CoordStruct &src);
   double pz_start() const; // 0D_NOT_real
@@ -17083,7 +19985,7 @@ public:
   }
 
   FCharArray1D name() const; // 1D_ALLOC_character
-  FArray1D<int> index() const; // 1D_ALLOC_integer
+  IntAlloc1D index() const; // 1D_ALLOC_integer
   void set_index(const std::vector<int> &v);
   int n_min() const; // 0D_NOT_integer
   void set_n_min(int value);
@@ -17306,7 +20208,7 @@ public:
   TaylorStructArray1D dhdj() const; // 1D_NOT_type
   ComplexTaylorStructArray1D F() const; // 1D_NOT_type
   ComplexTaylorStructArray1D L() const; // 1D_NOT_type
-  ResonanceHStructArray1D h() const; // 1D_ALLOC_type
+  ResonanceHStructAlloc1D h() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -17336,7 +20238,7 @@ public:
       set_n_pt(*n_pt);
   }
 
-  BunchParamsStructArray1D pt() const; // 1D_ALLOC_type
+  BunchParamsStructAlloc1D pt() const; // 1D_ALLOC_type
   double ds_save() const; // 0D_NOT_real
   void set_ds_save(double value);
   int n_pt() const; // 0D_NOT_integer
@@ -17547,7 +20449,7 @@ public:
   void set_ix_key(int value);
   std::string name_ele() const; // 0D_NOT_character
   void set_name_ele(const std::string &value);
-  TaoElePointerStructArray1D uni() const; // 1D_ALLOC_type
+  TaoElePointerStructAlloc1D uni() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -17572,7 +20474,7 @@ public:
       set_n_loc(*n_loc);
   }
 
-  ElePointerStructArray1D eles() const; // 1D_ALLOC_type
+  ElePointerStructAlloc1D eles() const; // 1D_ALLOC_type
   int n_loc() const; // 0D_NOT_integer
   void set_n_loc(int value);
 };
@@ -17741,25 +20643,25 @@ public:
   void set_hist(const TaoHistogramStruct &src);
   TaoCurveColorStruct z_color() const; // 0D_NOT_type
   void set_z_color(const TaoCurveColorStruct &src);
-  FArray1D<double> x_line() const; // 1D_ALLOC_real
+  RealAlloc1D x_line() const; // 1D_ALLOC_real
   void set_x_line(const std::vector<double> &v);
-  FArray1D<double> y_line() const; // 1D_ALLOC_real
+  RealAlloc1D y_line() const; // 1D_ALLOC_real
   void set_y_line(const std::vector<double> &v);
-  FArray1D<double> y2_line() const; // 1D_ALLOC_real
+  RealAlloc1D y2_line() const; // 1D_ALLOC_real
   void set_y2_line(const std::vector<double> &v);
-  FArray1D<int> ix_line() const; // 1D_ALLOC_integer
+  IntAlloc1D ix_line() const; // 1D_ALLOC_integer
   void set_ix_line(const std::vector<int> &v);
-  FArray1D<double> x_symb() const; // 1D_ALLOC_real
+  RealAlloc1D x_symb() const; // 1D_ALLOC_real
   void set_x_symb(const std::vector<double> &v);
-  FArray1D<double> y_symb() const; // 1D_ALLOC_real
+  RealAlloc1D y_symb() const; // 1D_ALLOC_real
   void set_y_symb(const std::vector<double> &v);
-  FArray1D<double> z_symb() const; // 1D_ALLOC_real
+  RealAlloc1D z_symb() const; // 1D_ALLOC_real
   void set_z_symb(const std::vector<double> &v);
-  FArray1D<double> err_symb() const; // 1D_ALLOC_real
+  RealAlloc1D err_symb() const; // 1D_ALLOC_real
   void set_err_symb(const std::vector<double> &v);
-  FArray1D<double> symb_size() const; // 1D_ALLOC_real
+  RealAlloc1D symb_size() const; // 1D_ALLOC_real
   void set_symb_size(const std::vector<double> &v);
-  FArray1D<int> ix_symb() const; // 1D_ALLOC_integer
+  IntAlloc1D ix_symb() const; // 1D_ALLOC_integer
   void set_ix_symb(const std::vector<int> &v);
   double y_axis_scale_factor() const; // 0D_NOT_real
   void set_y_axis_scale_factor(double value);
@@ -17992,7 +20894,7 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  LatEleOrder1StructArray1D ele() const; // 1D_ALLOC_type
+  LatEleOrder1StructAlloc1D ele() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -18209,7 +21111,7 @@ public:
   void set_valid(bool value);
   SpinOrbitMap1Struct q_1turn() const; // 0D_NOT_type
   void set_q_1turn(const SpinOrbitMap1Struct &src);
-  SpinOrbitMap1StructArray1D q_ele() const; // 1D_ALLOC_type
+  SpinOrbitMap1StructAlloc1D q_ele() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -18312,12 +21214,12 @@ public:
 
   std::optional<TaoLatticeStruct> tao_lat() const; // 0D_PTR_type
   void set_tao_lat(const TaoLatticeStruct &src);
-  TaoLatSigmaStructArray1D lat_sigma() const; // 1D_ALLOC_type
-  TaoSpinEleStructArray1D spin_ele() const; // 1D_ALLOC_type
-  BunchParamsStructArray1D bunch_params() const; // 1D_ALLOC_type
-  BunchTrackStructArray1D bunch_params_comb() const; // 1D_ALLOC_type
-  CoordStructArray1D orbit() const; // 1D_ALLOC_type
-  TaoPlotCacheStructArray1D plot_cache() const; // 1D_ALLOC_type
+  TaoLatSigmaStructAlloc1D lat_sigma() const; // 1D_ALLOC_type
+  TaoSpinEleStructAlloc1D spin_ele() const; // 1D_ALLOC_type
+  BunchParamsStructAlloc1D bunch_params() const; // 1D_ALLOC_type
+  BunchTrackStructAlloc1D bunch_params_comb() const; // 1D_ALLOC_type
+  CoordStructAlloc1D orbit() const; // 1D_ALLOC_type
+  TaoPlotCacheStructAlloc1D plot_cache() const; // 1D_ALLOC_type
   TaoSpinPolarizationStruct spin() const; // 0D_NOT_type
   void set_spin(const TaoSpinPolarizationStruct &src);
   SummationRdtStruct srdt() const; // 0D_NOT_type
@@ -18332,8 +21234,8 @@ public:
   void set_ptc_normal_form(const PtcNormalFormStruct &src);
   BmadNormalFormStruct bmad_normal_form() const; // 0D_NOT_type
   void set_bmad_normal_form(const BmadNormalFormStruct &src);
-  CoordStructArray1D high_E_orb() const; // 1D_ALLOC_type
-  CoordStructArray1D low_E_orb() const; // 1D_ALLOC_type
+  CoordStructAlloc1D high_E_orb() const; // 1D_ALLOC_type
+  CoordStructAlloc1D low_E_orb() const; // 1D_ALLOC_type
   TaylorStructArray1D taylor_save() const; // 1D_NOT_type
   double cache_x_min() const; // 0D_NOT_real
   void set_cache_x_min(double value);
@@ -18575,7 +21477,7 @@ public:
   std::string ref_date() const; // 0D_NOT_character
   void set_ref_date(const std::string &value);
   FCharArray1D descrip() const; // 1D_NOT_character
-  TaoD1DataStructArray1D d1() const; // 1D_ALLOC_type
+  TaoD1DataStructAlloc1D d1() const; // 1D_ALLOC_type
   int ix_universe() const; // 0D_NOT_integer
   void set_ix_universe(int value);
   int ix_d2_data() const; // 0D_NOT_integer
@@ -18751,7 +21653,7 @@ public:
   FCharArray1D text_legend_out() const; // 1D_NOT_character
   std::string why_invalid() const; // 0D_NOT_character
   void set_why_invalid(const std::string &value);
-  TaoCurveStructArray1D curve() const; // 1D_ALLOC_type
+  TaoCurveStructAlloc1D curve() const; // 1D_ALLOC_type
   std::optional<TaoPlotStruct> p() const; // 0D_PTR_type
   void set_p(const TaoPlotStruct &src);
   TaoFloorPlanStruct floor_plan() const; // 0D_NOT_type
@@ -18873,7 +21775,7 @@ public:
   void set_name(const std::string &value);
   std::string description() const; // 0D_NOT_character
   void set_description(const std::string &value);
-  TaoGraphStructArray1D graph() const; // 1D_ALLOC_type
+  TaoGraphStructAlloc1D graph() const; // 1D_ALLOC_type
   std::optional<TaoPlotRegionStruct> r() const; // 0D_PTR_type
   void set_r(const TaoPlotRegionStruct &src);
   int ix_plot() const; // 0D_NOT_integer
@@ -19044,10 +21946,10 @@ public:
   void set_com(const TaoCommonStruct &src);
   TaoPlotPageStruct plot_page() const; // 0D_NOT_type
   void set_plot_page(const TaoPlotPageStruct &src);
-  TaoV1VarStructArray1D v1_var() const; // 1D_ALLOC_type
-  TaoVarStructArray1D var() const; // 1D_ALLOC_type
-  TaoUniverseStructArray1D u() const; // 1D_ALLOC_type
-  FArray1D<int> key() const; // 1D_ALLOC_integer
+  TaoV1VarStructAlloc1D v1_var() const; // 1D_ALLOC_type
+  TaoVarStructAlloc1D var() const; // 1D_ALLOC_type
+  TaoUniverseStructAlloc1D u() const; // 1D_ALLOC_type
+  IntAlloc1D key() const; // 1D_ALLOC_integer
   void set_key(const std::vector<int> &v);
   TaoBuildingWallStruct building_wall() const; // 0D_NOT_type
   void set_building_wall(const TaoBuildingWallStruct &src);
@@ -19200,7 +22102,7 @@ public:
   void set_attrib_name(const std::string &value);
   std::string id() const; // 0D_NOT_character
   void set_id(const std::string &value);
-  TaoVarSlaveStructArray1D slave() const; // 1D_ALLOC_type
+  TaoVarSlaveStructAlloc1D slave() const; // 1D_ALLOC_type
   int ix_v1() const; // 0D_NOT_integer
   void set_ix_v1(int value);
   int ix_var() const; // 0D_NOT_integer
@@ -19370,7 +22272,7 @@ public:
   void set_rad_int_by_ele_ri(const RadIntAllEleStruct &src);
   RadIntAllEleStruct rad_int_by_ele_6d() const; // 0D_NOT_type
   void set_rad_int_by_ele_6d(const RadIntAllEleStruct &src);
-  TaoLatticeBranchStructArray1D tao_branch() const; // 1D_ALLOC_type
+  TaoLatticeBranchStructAlloc1D tao_branch() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -19463,8 +22365,8 @@ public:
 
   ApertureParamStruct param() const; // 0D_NOT_type
   void set_param(const ApertureParamStruct &src);
-  ApertureScanStructArray1D scan() const; // 1D_ALLOC_type
-  FArray1D<double> pz() const; // 1D_ALLOC_real
+  ApertureScanStructAlloc1D scan() const; // 1D_ALLOC_type
+  RealAlloc1D pz() const; // 1D_ALLOC_real
   void set_pz(const std::vector<double> &v);
   double ellipse_scale() const; // 0D_NOT_real
   void set_ellipse_scale(double value);
@@ -19496,7 +22398,7 @@ public:
       set_beam(beam->get());
   }
 
-  TaoModelElementStructArray1D ele() const; // 1D_ALLOC_type
+  TaoModelElementStructAlloc1D ele() const; // 1D_ALLOC_type
   TaoBeamBranchStruct beam() const; // 0D_NOT_type
   void set_beam(const TaoBeamBranchStruct &src);
 };
@@ -19981,7 +22883,7 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  LatEleOrderArrayStructArray1D branch() const; // 1D_ALLOC_type
+  LatEleOrderArrayStructAlloc1D branch() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -20065,9 +22967,9 @@ public:
   void set_name(const std::string &value);
   double scale() const; // 0D_NOT_real
   void set_scale(double value);
-  FArray1D<double> value() const; // 1D_ALLOC_real
+  RealAlloc1D value() const; // 1D_ALLOC_real
   void set_value(const std::vector<double> &v);
-  TaoExpressionInfoStructArray1D info() const; // 1D_ALLOC_type
+  TaoExpressionInfoStructAlloc1D info() const; // 1D_ALLOC_type
   TaoEvalNodeStructArray1D node() const; // 1D_PTR_type
 };
 
@@ -20188,7 +23090,7 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  TaoEleShapeStructArray1D ele_shape() const; // 1D_ALLOC_type
+  TaoEleShapeStructAlloc1D ele_shape() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -20224,7 +23126,7 @@ public:
   void set_name(const std::string &value);
   QpLineStruct line() const; // 0D_NOT_type
   void set_line(const QpLineStruct &src);
-  TaoShapePatternPointStructArray1D pt() const; // 1D_ALLOC_type
+  TaoShapePatternPointStructAlloc1D pt() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -21440,7 +24342,7 @@ public:
       set_saved_cmd_line(*saved_cmd_line);
   }
 
-  TaoPlotRegionStructArray1D plot_place_buffer() const; // 1D_ALLOC_type
+  TaoPlotRegionStructAlloc1D plot_place_buffer() const; // 1D_ALLOC_type
   FArray2D<double> covar() const; // 2D_ALLOC_real
   void set_covar(const std::vector<std::vector<double>> &v);
   FArray2D<double> alpha() const; // 2D_ALLOC_real
@@ -21619,9 +24521,9 @@ public:
   void set_floor_plan(const TaoDrawingStruct &src);
   TaoDrawingStruct lat_layout() const; // 0D_NOT_type
   void set_lat_layout(const TaoDrawingStruct &src);
-  TaoShapePatternStructArray1D pattern() const; // 1D_ALLOC_type
-  TaoPlotStructArray1D template_() const; // 1D_ALLOC_type
-  TaoPlotRegionStructArray1D region() const; // 1D_ALLOC_type
+  TaoShapePatternStructAlloc1D pattern() const; // 1D_ALLOC_type
+  TaoPlotStructAlloc1D template_() const; // 1D_ALLOC_type
+  TaoPlotRegionStructAlloc1D region() const; // 1D_ALLOC_type
   std::string plot_display_type() const; // 0D_NOT_character
   void set_plot_display_type(const std::string &value);
   FArray1D<double> size() const; // 1D_NOT_real
@@ -21686,7 +24588,7 @@ public:
 
   TaoBuildingWallOrientationStruct orientation() const; // 0D_NOT_type
   void set_orientation(const TaoBuildingWallOrientationStruct &src);
-  TaoBuildingWallSectionStructArray1D section() const; // 1D_ALLOC_type
+  TaoBuildingWallSectionStructAlloc1D section() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -21766,7 +24668,7 @@ public:
   void set_name(const std::string &value);
   std::string constraint() const; // 0D_NOT_character
   void set_constraint(const std::string &value);
-  TaoBuildingWallPointStructArray1D point() const; // 1D_ALLOC_type
+  TaoBuildingWallPointStructAlloc1D point() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -22037,11 +24939,11 @@ public:
   void set_n_b(int value);
   int i_curve_wrap_pt() const; // 0D_NOT_integer
   void set_i_curve_wrap_pt(int value);
-  FArray1D<int> ix_data() const; // 1D_ALLOC_integer
+  IntAlloc1D ix_data() const; // 1D_ALLOC_integer
   void set_ix_data(const std::vector<int> &v);
   int n_kick() const; // 0D_NOT_integer
   void set_n_kick(int value);
-  TaoWaveKickPtStructArray1D kick() const; // 1D_ALLOC_type
+  TaoWaveKickPtStructAlloc1D kick() const; // 1D_ALLOC_type
   TaoGraphStruct base_graph() const; // 0D_NOT_type
   void set_base_graph(const TaoGraphStruct &src);
   std::optional<TaoPlotRegionStruct> region() const; // 0D_PTR_type
@@ -22224,8 +25126,8 @@ public:
   TaoDynamicApertureStruct dynamic_aperture() const; // 0D_NOT_type
   void set_dynamic_aperture(const TaoDynamicApertureStruct &src);
   TaoModelBranchStructArray1D model_branch() const; // 1D_PTR_type
-  TaoD2DataStructArray1D d2_data() const; // 1D_ALLOC_type
-  TaoDataStructArray1D data() const; // 1D_ALLOC_type
+  TaoD2DataStructAlloc1D d2_data() const; // 1D_ALLOC_type
+  TaoDataStructAlloc1D data() const; // 1D_ALLOC_type
   TaoPingScaleStruct ping_scale() const; // 0D_NOT_type
   void set_ping_scale(const TaoPingScaleStruct &src);
   LatStruct scratch_lat() const; // 0D_NOT_type
@@ -22562,9 +25464,9 @@ public:
       set_rf_wavelength_max(*rf_wavelength_max);
   }
 
-  BunchStructArray1D bunch() const; // 1D_ALLOC_type
-  BbuStageStructArray1D stage() const; // 1D_ALLOC_type
-  FArray1D<int> ix_ele_bunch() const; // 1D_ALLOC_integer
+  BunchStructAlloc1D bunch() const; // 1D_ALLOC_type
+  BbuStageStructAlloc1D stage() const; // 1D_ALLOC_type
+  IntAlloc1D ix_ele_bunch() const; // 1D_ALLOC_integer
   void set_ix_ele_bunch(const std::vector<int> &v);
   int ix_bunch_head() const; // 0D_NOT_integer
   void set_ix_bunch_head(int value);
@@ -23209,7 +26111,7 @@ public:
   void set_real_rp_2d_ptr(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_rp_3d_ptr() const; // 3D_PTR_real
   void set_real_rp_3d_ptr(const std::vector<std::vector<std::vector<double>>> &v);
-  FArray1D<double> real_rp_1d_alloc() const; // 1D_ALLOC_real
+  RealAlloc1D real_rp_1d_alloc() const; // 1D_ALLOC_real
   void set_real_rp_1d_alloc(const std::vector<double> &v);
   FArray2D<double> real_rp_2d_alloc() const; // 2D_ALLOC_real
   void set_real_rp_2d_alloc(const std::vector<std::vector<double>> &v);
@@ -23231,7 +26133,7 @@ public:
   void set_real_dp_2d_ptr(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_dp_3d_ptr() const; // 3D_PTR_real
   void set_real_dp_3d_ptr(const std::vector<std::vector<std::vector<double>>> &v);
-  FArray1D<double> real_dp_1d_alloc() const; // 1D_ALLOC_real
+  RealAlloc1D real_dp_1d_alloc() const; // 1D_ALLOC_real
   void set_real_dp_1d_alloc(const std::vector<double> &v);
   FArray2D<double> real_dp_2d_alloc() const; // 2D_ALLOC_real
   void set_real_dp_2d_alloc(const std::vector<std::vector<double>> &v);
@@ -23251,7 +26153,7 @@ public:
   void set_complex_dp_2d_ptr(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d_ptr() const; // 3D_PTR_complex
   void set_complex_dp_3d_ptr(const std::vector<std::vector<std::vector<std::complex<double>>>> &v);
-  FArray1D<std::complex<double>> complex_dp_1d_alloc() const; // 1D_ALLOC_complex
+  ComplexAlloc1D complex_dp_1d_alloc() const; // 1D_ALLOC_complex
   void set_complex_dp_1d_alloc(const std::vector<std::complex<double>> &v);
   FArray2D<std::complex<double>> complex_dp_2d_alloc() const; // 2D_ALLOC_complex
   void set_complex_dp_2d_alloc(const std::vector<std::vector<std::complex<double>>> &v);
@@ -23274,7 +26176,7 @@ public:
   void set_int_2d_ptr(const std::vector<std::vector<int>> &v);
   FArray3D<int> int_3d_ptr() const; // 3D_PTR_integer
   void set_int_3d_ptr(const std::vector<std::vector<std::vector<int>>> &v);
-  FArray1D<int> int_1d_alloc() const; // 1D_ALLOC_integer
+  IntAlloc1D int_1d_alloc() const; // 1D_ALLOC_integer
   void set_int_1d_alloc(const std::vector<int> &v);
   FArray2D<int> int_2d_alloc() const; // 2D_ALLOC_integer
   void set_int_2d_alloc(const std::vector<std::vector<int>> &v);
@@ -23296,7 +26198,7 @@ public:
   void set_int8_2d_ptr(const std::vector<std::vector<int64_t>> &v);
   FArray3D<int64_t> int8_3d_ptr() const; // 3D_PTR_integer8
   void set_int8_3d_ptr(const std::vector<std::vector<std::vector<int64_t>>> &v);
-  FArray1D<int64_t> int8_1d_alloc() const; // 1D_ALLOC_integer8
+  Int8Alloc1D int8_1d_alloc() const; // 1D_ALLOC_integer8
   void set_int8_1d_alloc(const std::vector<int64_t> &v);
   FArray2D<int64_t> int8_2d_alloc() const; // 2D_ALLOC_integer8
   void set_int8_2d_alloc(const std::vector<std::vector<int64_t>> &v);
@@ -23322,7 +26224,7 @@ public:
   TestSubStructArray1D type_1d_ptr() const; // 1D_PTR_type
   TestSubStructArray2D type_2d_ptr() const; // 2D_PTR_type
   TestSubStructArray3D type_3d_ptr() const; // 3D_PTR_type
-  TestSubStructArray1D type_1d_alloc() const; // 1D_ALLOC_type
+  TestSubStructAlloc1D type_1d_alloc() const; // 1D_ALLOC_type
   TestSubStructArray2D type_2d_alloc() const; // 2D_ALLOC_type
   TestSubStructArray3D type_3d_alloc() const; // 3D_ALLOC_type
 };

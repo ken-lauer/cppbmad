@@ -31,7 +31,7 @@ Parameters
 lat : LatStruct
     Lat used
 
-ele_name : character, optional
+ele_name : str, optional
     Name of the new element.
 
 Returns

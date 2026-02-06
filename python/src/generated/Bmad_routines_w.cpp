@@ -171,6 +171,9 @@ ix_wall : int, optional
 
 Returns
 -------
+d_radius : float
+    r_particle - r_wall
+
 perp : 1D array of float (shape: 3), optional
     Perpendicular normal to the wall.
 
@@ -188,9 +191,6 @@ radius_wall : float, optional
 
 err_flag : bool, optional
     Set True if error. (EG noassociated .wall3d), false otherwise.
-
-d_radius : float
-    r_particle - r_wall
 )"""
   );
   m.def(
@@ -278,7 +278,7 @@ position : 1D array of float (shape: 6)
 
 Parameters
 ----------
-word : character
+word : str
 
 lat : LatStruct
 
@@ -302,7 +302,7 @@ Routine to write a beam file in ASCII format (version 4).
 
 Parameters
 ----------
-file_name : character
+file_name : str
     Name of file.
 
 beam : BeamStruct
@@ -434,7 +434,7 @@ err : bool, optional
 
 Parameters
 ----------
-base_filename : character
+base_filename : str
     Base filename. Files will be written as: base_filename.ex, .ey, .ez, .bx, .by, .bz If set to '', no files
     will be written
 
@@ -471,7 +471,7 @@ already have a '.h5' or '.hdf5' suffix.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     Name of file.
 
 beam : BeamStruct
@@ -501,7 +501,7 @@ alive_only : bool, optional
 
 Parameters
 ----------
-file_name : character
+file_name : str
     Name of file.
 
 beam : BeamStruct
@@ -527,7 +527,7 @@ Note: The file name should have a ".bin" suffix.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     File to create.
 
 ele : EleStruct
@@ -555,7 +555,7 @@ Note: The file name should have a ".bin" suffix.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     File to create.
 
 ele : EleStruct
@@ -583,7 +583,7 @@ Note: The file name should have a ".bin" suffix.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     File to create.
 
 ele : EleStruct
@@ -624,7 +624,7 @@ old_format : bool, optional
 
 Parameters
 ----------
-file_name : character
+file_name : str
 
 lat : LatStruct
 )"""
@@ -640,7 +640,7 @@ lat : LatStruct
 
 Parameters
 ----------
-bmad_file : character
+bmad_file : str
     Name of the output lattice file.
 
 lat : LatStruct
@@ -820,7 +820,7 @@ err : bool, optional
 
 Parameters
 ----------
-base_filename : character
+base_filename : str
     Base filename. Files will be written as: base_filename_E_ASCII.gpt, _H_ASCII.gpt If set to '', no files
     will be written
 
@@ -875,7 +875,7 @@ then only part of the line may be written and the part not written will be retur
 
 Parameters
 ----------
-line : character
+line : str
     String of text.
     This parameter is an input/output and is modified in-place.
     As an output, line: part of the string not written.
@@ -895,7 +895,7 @@ scibmad : bool, optional
 
 Returns
 -------
-line : character
+line : str
     String of text.
     This parameter is an input/output and is modified in-place.
     As an output, line: part of the string not written.
@@ -915,7 +915,7 @@ line : character
 
 Parameters
 ----------
-out_file_name : character
+out_file_name : str
     Name of the mad output lattice file.
 
 lat : LatStruct
@@ -963,10 +963,10 @@ err : bool, optional
 
 Parameters
 ----------
-out_type : character
+out_type : str
     Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', or 'OPAL-T', 'SCIBMAD'.
 
-out_file_name : character
+out_file_name : str
     Name of the mad output lattice file.
 
 lat : LatStruct
@@ -1014,10 +1014,10 @@ err : bool, optional
 
 Parameters
 ----------
-out_type : character
+out_type : str
     Either 'MAD-8', or 'MAD-X'
 
-out_file_name : character
+out_file_name : str
     Name of the mad output lattice file.
 
 lat : LatStruct
@@ -1062,7 +1062,7 @@ err : bool, optional
 
 Parameters
 ----------
-out_file_name : character
+out_file_name : str
 
 lat : LatStruct
 
@@ -1103,7 +1103,7 @@ lat : LatStruct
 
 Returns
 -------
-scibmad_file : character
+scibmad_file : str
     SciBmad lattice file name.
 
 err_flag : bool, optional
@@ -1121,7 +1121,7 @@ err_flag : bool, optional
 
 Parameters
 ----------
-line : character
+line : str
 
 iu : int
 
@@ -1240,13 +1240,13 @@ bunch : BunchStruct
 ele : EleStruct
     Element being tracked through.
 
-style : character, optional
+style : str, optional
     Style of output file: 'BMAD' (default), 'OPAL', 'ASTRA', 'GPT'
 
 branch : BranchStruct, optional
     Required for 'ASTRA' style
 
-format : character, optional
+format : str, optional
     format for numerical output. default: 'es15.7'
 
 Returns

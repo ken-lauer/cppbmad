@@ -75,7 +75,7 @@ quat : 1D array of float (shape: 0:3)
 
 Parameters
 ----------
-wording : character
+wording : str
 
 wlen : int
 )"""
@@ -95,19 +95,19 @@ wlen : int
 
 Parameters
 ----------
-in_str : character
+in_str : str
 
-delim_list : character
+delim_list : str
 
-word : character
+word : str
 
 ix_word : int
 
-delim : character
+delim : str
 
 delim_found : bool
 
-out_str : character
+out_str : str
 
 ignore_interior : bool, optional
 )"""

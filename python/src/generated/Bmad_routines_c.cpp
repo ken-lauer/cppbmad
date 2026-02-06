@@ -411,7 +411,7 @@ orbit : CoordStruct
     This parameter is an input/output and is modified in-place.
     As an output, orbit: Orbit in angular coordinates.
 
-coord_type : character, optional
+coord_type : str, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
 )"""
@@ -490,7 +490,7 @@ ele_key : int
 contrl : 1D array of ControlStruct
     control info. 1 element for each slave.
 
-name : character
+name : str
     Lord name. Used for error reporting.
 
 Returns
@@ -505,8 +505,8 @@ err : bool
       py::arg("branch"),
       py::arg("super_ele"),
       py::arg("err_flag"),
-      py::arg("ref_ele") = py::none(),
       py::arg("wrap"),
+      py::arg("ref_ele") = py::none(),
       R"""(Subroutine check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap)
 
 Subroutine to check if there is a problem superimposing an element when there is multipass.
@@ -598,7 +598,7 @@ Parameters
 branch : BranchStruct
     Lattice branch.
 
-mask : character, optional
+mask : str, optional
     If present, assign weight of zero for all quads that do not match. That is, no variation for matching
     quads.
 
@@ -917,7 +917,7 @@ Parameters
 ----------
 cmp : complex
 
-str_out : character
+str_out : str
 )"""
   );
   m.def(
@@ -993,6 +993,7 @@ Input (complex_taylor_coef2):
       "complex_taylor_coef",
       py::overload_cast<
           ComplexTaylorStruct &,
+          std::complex<double>,
           std::optional<int>,
           std::optional<int>,
           std::optional<int>,
@@ -1001,9 +1002,9 @@ Input (complex_taylor_coef2):
           std::optional<int>,
           std::optional<int>,
           std::optional<int>,
-          std::optional<int>,
-          std::complex<double>>(&Bmad::complex_taylor_coef),
+          std::optional<int>>(&Bmad::complex_taylor_coef),
       py::arg("complex_taylor"),
+      py::arg("coef"),
       py::arg("i1") = py::none(),
       py::arg("i2") = py::none(),
       py::arg("i3") = py::none(),
@@ -1013,7 +1014,6 @@ Input (complex_taylor_coef2):
       py::arg("i7") = py::none(),
       py::arg("i8") = py::none(),
       py::arg("i9") = py::none(),
-      py::arg("coef"),
       R"""(Function complex_taylor_coef (complex_taylor, exp)
 Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
 
@@ -1360,7 +1360,7 @@ bn : 1D array of float (shape: 0:n_pole_maxx)
 
 Parameters
 ----------
-in_type_str : character
+in_type_str : str
     type of the input coords.
 
 coord_in : CoordStruct
@@ -1371,7 +1371,7 @@ ele : EleStruct
 
 Returns
 -------
-out_type_str : character
+out_type_str : str
     type of the output coords.
 
 coord_out : CoordStruct
@@ -1693,7 +1693,7 @@ ele : EleStruct
 
 Returns
 -------
-delim : character
+delim : str
     Ending delimitor.
 
 delim_found : bool
@@ -1741,7 +1741,7 @@ coord_state : int
 
 Returns
 -------
-state_str : character
+state_str : str
     String representation.
 )"""
   );
@@ -1785,12 +1785,12 @@ calculate_angles : bool, optional
 
 Returns
 -------
-w_mat : 2D array of float (shape: 3,3), optional
-    W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
-
 local_position : FloorPositionStruct
     Local laboratory coordinates. .r(3)               [x, y, s] position with s = Position from entrance end
     of element.
+
+w_mat : 2D array of float (shape: 3,3), optional
+    W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
 )"""
   );
   py::class_<Bmad::CoordsBodyToRelExit, std::unique_ptr<Bmad::CoordsBodyToRelExit>>(
@@ -1832,11 +1832,11 @@ calculate_angles : bool, optional
 
 Returns
 -------
-w_mat : 2D array of float (shape: 3,3), optional
-    W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
-
 rel_exit : FloorPositionStruct
     Cartesian coordinates relative to exit of the element.
+
+w_mat : 2D array of float (shape: 3,3), optional
+    W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
 )"""
   );
   py::class_<Bmad::CoordsCurvilinearToFloor, std::unique_ptr<Bmad::CoordsCurvilinearToFloor>>(
@@ -1921,19 +1921,19 @@ ele0 : EleStruct
 
 Returns
 -------
-ele1 : EleStruct, optional
-    Element that local_coords is with respect to.
-
 status : int
     ok$             -> Local_coords found. patch_problem$  -> No solution due to a patch element. outside$
     -> Outside of lattice ends (for open lattices).
 
-w_mat : 2D array of float (shape: 3,3), optional
-    W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
-
 local_coords : FloorPositionStruct
     .r = [x, y, s] position in curvilinear coordinates with respect to ele1 with s relative to start the
     lattice branch.
+
+ele1 : EleStruct, optional
+    Element that local_coords is with respect to.
+
+w_mat : 2D array of float (shape: 3,3), optional
+    W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
 )"""
   );
   py::class_<
@@ -1985,11 +1985,11 @@ status : int
     longitudinal position: inside$: Inside the element. upstream_end$: At upstream end of element or beyound.
     downstream_end$: At downstream end of element or beyound.
 
-w_mat : 2D array of float (shape: 3,3), optional
-    W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
-
 local_position : FloorPositionStruct
     .r = [x, y, z] position in local curvilinear coordinates.
+
+w_mat : 2D array of float (shape: 3,3), optional
+    W matrix at s, to transform vectors. v_global = w_mat.v_local v_local = transpose(w_mat).v_global
 )"""
   );
   m.def(
@@ -2064,12 +2064,12 @@ calculate_angles : bool, optional
 
 Returns
 -------
-w_mat : 2D array of float (shape: 3,3), optional
-    W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
-
 body_position : FloorPositionStruct
     Element coordinates relative to exit of the element. .r(3)               [x, y, s] position with s =
     Position from entrance end of element.
+
+w_mat : 2D array of float (shape: 3,3), optional
+    W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
 )"""
   );
   py::class_<
@@ -2126,12 +2126,12 @@ relative_to : int, optional
 
 Returns
 -------
+global_position : FloorPositionStruct
+    Position in global coordinates.
+
 w_mat : 2D array of float (shape: 3,3), optional
     W matrix at z, to transform vectors. v_global     = w_mat . v_local/body v_local/body = transpose(w_mat) .
     v_global
-
-global_position : FloorPositionStruct
-    Position in global coordinates.
 )"""
   );
   m.def(
@@ -2298,10 +2298,10 @@ Parameters
 lat : LatStruct
     Lattice
 
-lord_name : character
+lord_name : str
     Name of the element with a field extending beyound it's bounds.
 
-slave_name : character
+slave_name : str
     Name of the element the lord's field overlaps.
 
 Returns
@@ -2512,7 +2512,7 @@ lat : LatStruct
 key : int
     Class key of elements to consider.
 
-suffix : character
+suffix : str
     Suffix string. Must have a single "?" character.
 )"""
   );

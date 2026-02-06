@@ -325,11 +325,11 @@ w_mat : 2D array of float (shape: 3,3)
 
 Parameters
 ----------
-query_str : character
+query_str : str
 
 upcase : bool
 
-return_str : character
+return_str : str
 
 ix : int
 
@@ -345,9 +345,9 @@ ios : int
 
 Parameters
 ----------
-str : character
+str : str
 
-q_str : character
+q_str : str
 )"""
   );
 }

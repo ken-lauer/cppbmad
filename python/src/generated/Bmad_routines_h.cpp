@@ -63,7 +63,7 @@ Parameters
 ----------
 ele : EleStruct
 
-attrib : character
+attrib : str
 
 has_it : bool
 )"""
@@ -120,7 +120,7 @@ has_attribs : bool
 
 Parameters
 ----------
-file_name : character
+file_name : str
 
 bunches : 1D array of BunchStruct
 
@@ -144,7 +144,7 @@ alive_only : bool, optional
 
 Parameters
 ----------
-file_name : character
+file_name : str
 
 ele : EleStruct
 

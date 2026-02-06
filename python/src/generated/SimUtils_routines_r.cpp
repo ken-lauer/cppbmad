@@ -39,11 +39,11 @@ With sobseq quasi-random numbers the maximum dimension is 6.
 
 Parameters
 ----------
-set : character, optional
+set : str, optional
     Set the random number engine. Possibilities are: 'pseudo' -> Uses ran from Numerical Recipies (F90).
     'quasi'  -> Uses sobseq from Numerical Recipes. ''       -> Do nothing.
 
-get : character, optional
+get : str, optional
     Get the current (before any set) random number engine.
 
 ran_state : RandomStateStruct, optional
@@ -94,7 +94,7 @@ used independent of what was set with this routine.
 
 Parameters
 ----------
-set : character, optional
+set : str, optional
     Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' ''       !
     Do nothing
 
@@ -106,7 +106,7 @@ ran_state : RandomStateStruct, optional
 
 Returns
 -------
-get : character, optional
+get : str, optional
     Get the current (before any set) gaussian converter.
 
 get_sigma_cut : float, optional
@@ -322,27 +322,27 @@ System Libraries that need to be linked to:
 
 Parameters
 ----------
-prompt : character
+prompt : str
     Prompt string to use.
 
 trim_prompt : bool, optional
     If present and True then trim the prompt string and add a single blank before printing the prompt string.
     Default is True.
 
-prompt_color : character, optional
+prompt_color : str, optional
     Color of the prompt. Possibilities are: 'BLACK', 'RED', 'GREEN', 'YELLOW', 'BLUE', 'MAGENTA', 'CYAN',
     'GRAY', 'DEFAULT'. The 'DEFAULT' setting (the default) does not set the prompt color.
 
 prompt_bold : bool, optional
     If present and True then the prompt will be printed in bold.
 
-history_file : character, optional
+history_file : str, optional
     If present, add line_out to a file whose name is given by history_file. History files are useful for
     saving the command history in between when a program is run multiple times.
 
 Returns
 -------
-line_out : character
+line_out : str
     Line typed by the user. Note: If cntl-D is pressed, line_out = achar(24).
 )"""
   );
@@ -357,7 +357,7 @@ Use this routine with the read_a_line routine.
 
 Parameters
 ----------
-history_file : character
+history_file : str
     Name of the history file. EG: '~/.my_history'
 
 Returns
@@ -377,7 +377,7 @@ Use this routine with the read_a_line routine.
 
 Parameters
 ----------
-history_file : character
+history_file : str
     Name of the history file. EG: '~/.my_history'
 
 Returns
@@ -391,8 +391,8 @@ status : int
       &SimUtils::real_num_fortran_format,
       py::arg("number"),
       py::arg("width"),
-      py::arg("n_blanks") = py::none(),
       py::arg("fmt_str"),
+      py::arg("n_blanks") = py::none(),
       R"""(Wrapper for Fortran routine real_num_fortran_format
 
 Parameters
@@ -401,9 +401,9 @@ number : float
 
 width : int
 
-n_blanks : int, optional
+fmt_str : str
 
-fmt_str : character
+n_blanks : int, optional
 )"""
   );
   m.def(
@@ -416,9 +416,9 @@ fmt_str : character
 
 Parameters
 ----------
-path_in : character
+path_in : str
 
-path_out : character
+path_out : str
 
 is_ok : bool
 )"""
@@ -427,20 +427,20 @@ is_ok : bool
       "real_str",
       &SimUtils::real_str,
       py::arg("r_num"),
+      py::arg("str"),
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
-      py::arg("str"),
       R"""(Wrapper for Fortran routine real_str
 
 Parameters
 ----------
 r_num : float
 
+str : str
+
 n_signif : int, optional
 
 n_decimal : int, optional
-
-str : character
 )"""
   );
   m.def(
@@ -448,9 +448,9 @@ str : character
       &SimUtils::real_to_string,
       py::arg("real_num"),
       py::arg("width"),
+      py::arg("str"),
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
-      py::arg("str"),
       R"""(Wrapper for Fortran routine real_to_string
 
 Parameters
@@ -459,11 +459,11 @@ real_num : float
 
 width : int
 
+str : str
+
 n_signif : int, optional
 
 n_decimal : int, optional
-
-str : character
 )"""
   );
   m.def(
@@ -613,11 +613,11 @@ good_val : 1D array of bool, optional
 
 Returns
 -------
-ave_val : float, optional
-    average value.
-
 rms_val : float
     RMS value. Set to real_garbage$ if there is a problem.
+
+ave_val : float, optional
+    average value.
 )"""
   );
   m.def(
@@ -743,7 +743,7 @@ d : float
 
 Parameters
 ----------
-command : character
+command : str
 
 time : float, optional
 

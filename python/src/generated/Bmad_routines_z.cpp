@@ -57,11 +57,11 @@ Returns
 err_flag : bool
     Set True if cannot compute z due to, say, point being outside of ellipseoid or grid bounds.
 
-dz_dxy : 1D array of float (shape: 2), optional
-    Surface slope at (x, y).
-
 z : float
     z coordinate.
+
+dz_dxy : 1D array of float (shape: 2), optional
+    Surface slope at (x, y).
 )"""
   );
   m.def(

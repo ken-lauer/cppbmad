@@ -247,7 +247,11 @@ extern "C" bool fortran_array_re_str(
     const char *parens_in /* 0D_NOT_character in */,
     const char *str_out /* 0D_NOT_character in */
 );
-void array_re_str(FArray1D<Real> &arr, std::optional<std::string> parens_in, std::string str_out);
+void array_re_str(
+    FArray1D<Real> &arr,
+    std::string str_out,
+    std::optional<std::string> parens_in = std::nullopt
+);
 extern "C" bool fortran_astra_max_field_reference(
     void *pt0 /* 0D_NOT_type inout */,
     void *ele /* 0D_NOT_type inout */,
@@ -946,8 +950,8 @@ void check_for_superimpose_problem(
     BranchStruct &branch,
     EleStruct &super_ele,
     bool err_flag,
-    optional_ref<EleStruct> ref_ele,
-    bool wrap
+    bool wrap,
+    optional_ref<EleStruct> ref_ele = std::nullopt
 );
 extern "C" void fortran_check_if_s_in_bounds(
     void *branch /* 0D_NOT_type in */,
@@ -1101,16 +1105,16 @@ extern "C" bool fortran_complex_taylor_coef2(
 );
 void complex_taylor_coef(
     ComplexTaylorStruct &complex_taylor,
-    std::optional<int> i1,
-    std::optional<int> i2,
-    std::optional<int> i3,
-    std::optional<int> i4,
-    std::optional<int> i5,
-    std::optional<int> i6,
-    std::optional<int> i7,
-    std::optional<int> i8,
-    std::optional<int> i9,
-    std::complex<double> coef
+    std::complex<double> coef,
+    std::optional<int> i1 = std::nullopt,
+    std::optional<int> i2 = std::nullopt,
+    std::optional<int> i3 = std::nullopt,
+    std::optional<int> i4 = std::nullopt,
+    std::optional<int> i5 = std::nullopt,
+    std::optional<int> i6 = std::nullopt,
+    std::optional<int> i7 = std::nullopt,
+    std::optional<int> i8 = std::nullopt,
+    std::optional<int> i9 = std::nullopt
 );
 
 // Skipped unusable routine complex_taylor_equal_c_taylor:
@@ -5496,11 +5500,11 @@ void parse_integer_list(
     bool exact_size,
     std::string delim,
     bool delim_found,
-    std::optional<std::string> open_delim,
-    std::optional<std::string> separator,
-    std::optional<std::string> close_delim,
-    std::optional<int> default_value,
-    bool is_ok
+    bool is_ok,
+    std::optional<std::string> open_delim = std::nullopt,
+    std::optional<std::string> separator = std::nullopt,
+    std::optional<std::string> close_delim = std::nullopt,
+    std::optional<int> default_value = std::nullopt
 );
 extern "C" bool fortran_parse_integer_list2(
     const char *err_str /* 0D_NOT_character in */,
@@ -5559,11 +5563,11 @@ Bmad::ParseRealList parse_real_list(
     std::string err_str,
     FArray1D<Real> &real_array,
     bool exact_size,
-    std::optional<std::string> open_delim,
-    std::optional<std::string> separator,
-    std::optional<std::string> close_delim,
-    std::optional<double> default_value,
-    bool is_ok
+    bool is_ok,
+    std::optional<std::string> open_delim = std::nullopt,
+    std::optional<std::string> separator = std::nullopt,
+    std::optional<std::string> close_delim = std::nullopt,
+    std::optional<double> default_value = std::nullopt
 );
 extern "C" bool fortran_parse_real_list2(
     void *lat /* 0D_NOT_type in */,
@@ -6110,10 +6114,10 @@ extern "C" bool fortran_pointer_to_next_ele(
 );
 void pointer_to_next_ele(
     EleStruct &this_ele,
-    std::optional<int> offset,
-    std::optional<bool> skip_beginning,
-    std::optional<bool> follow_fork,
-    EleStruct &next_ele
+    EleStruct &next_ele,
+    std::optional<int> offset = std::nullopt,
+    std::optional<bool> skip_beginning = std::nullopt,
+    std::optional<bool> follow_fork = std::nullopt
 );
 extern "C" bool fortran_pointer_to_slave(
     void *lord /* 0D_NOT_type in */,
@@ -6932,8 +6936,8 @@ FixedArray1D<Real, 10> rk_time_step1(
     CoordStruct &orb,
     double dt,
     CoordStruct &new_orb,
-    std::optional<FixedArray1D<Real, 10>> dr_dt,
     bool err_flag,
+    std::optional<FixedArray1D<Real, 10>> dr_dt = std::nullopt,
     std::optional<bool> print_err = std::nullopt,
     optional_ref<EmFieldStruct> extra_field = std::nullopt
 );
@@ -7628,8 +7632,8 @@ void spin_omega(
     EmFieldStruct &field,
     CoordStruct &orbit,
     int sign_z_vel,
-    std::optional<bool> phase_space_coords,
-    FixedArray1D<Real, 3> omega
+    FixedArray1D<Real, 3> omega,
+    std::optional<bool> phase_space_coords = std::nullopt
 );
 extern "C" void fortran_spin_quat_resonance_strengths(
     Bmad::array_descriptor_t &orb_evec /* 1D_NOT_complex in */,

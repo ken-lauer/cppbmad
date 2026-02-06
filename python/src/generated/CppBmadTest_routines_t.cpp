@@ -209,23 +209,23 @@ opt_status : 1D array of int (shape: 2)
 
 Parameters
 ----------
-val_in : character
+val_in : str
 
-val_inout : character
+val_inout : str
 
-val_in_opt : character, optional
+val_in_opt : str, optional
 
-val_inout_opt : character, optional
+val_inout_opt : str, optional
 
 Returns
 -------
-val_inout : character
+val_inout : str
 
-val_out : character
+val_out : str
 
 opt_status : 1D array of int (shape: 2)
 
-val_inout_opt : character, optional
+val_inout_opt : str, optional
 )"""
   );
   py::class_<CppBmadTest::TestComplexArray, std::unique_ptr<CppBmadTest::TestComplexArray>>(

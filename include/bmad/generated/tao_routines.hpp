@@ -596,8 +596,8 @@ struct TaoEvaluateElementParameters {
 Tao::TaoEvaluateElementParameters tao_evaluate_element_parameters(
     std::string param_name,
     bool print_err,
-    optional_ref<EleStruct> dflt_ele,
     std::string dflt_source,
+    optional_ref<EleStruct> dflt_ele = std::nullopt,
     std::optional<std::string> dflt_component = std::nullopt,
     std::optional<int> dflt_uni = std::nullopt,
     std::optional<int> eval_point = std::nullopt

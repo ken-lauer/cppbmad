@@ -497,7 +497,7 @@ orbit : CoordStruct
     This parameter is an input/output and is modified in-place.
     As an output, orbit: Orbit in canonical coordinates.
 
-coord_type : character, optional
+coord_type : str, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
 )"""
@@ -605,17 +605,17 @@ err_flag : bool
       "array_re_str",
       &Bmad::array_re_str,
       py::arg("arr"),
-      py::arg("parens_in") = py::none(),
       py::arg("str_out"),
+      py::arg("parens_in") = py::none(),
       R"""(Wrapper for Fortran routine array_re_str
 
 Parameters
 ----------
 arr : 1D array of float
 
-parens_in : character, optional
+str_out : str
 
-str_out : character
+parens_in : str, optional
 )"""
   );
   m.def(
@@ -733,7 +733,7 @@ Parameters
 ix_ele : int
     Index of element in element array.
 
-attrib_name : character
+attrib_name : str
     Name of the attribute. Assumed upper case.
 
 lat : LatStruct
@@ -752,15 +752,15 @@ dependent_attribs_free : bool, optional
 
 Returns
 -------
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
+
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-
-free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
 )"""
   );
   py::class_<Bmad::AttributeFree2, std::unique_ptr<Bmad::AttributeFree2>>(
@@ -817,7 +817,7 @@ Parameters
 ele : EleStruct
     Element containing the attribute
 
-attrib_name : character
+attrib_name : str
     Name of the attribute. Assumed upper case.
 
 err_print_flag : bool, optional
@@ -833,15 +833,15 @@ dependent_attribs_free : bool, optional
 
 Returns
 -------
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
+
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-
-free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
 )"""
   );
   py::class_<Bmad::AttributeFree3, std::unique_ptr<Bmad::AttributeFree3>>(
@@ -905,7 +905,7 @@ ix_ele : int
 ix_branch : int
     Branch index of element.
 
-attrib_name : character
+attrib_name : str
     Name of the attribute. Assumed upper case.
 
 lat : LatStruct
@@ -924,15 +924,15 @@ dependent_attribs_free : bool, optional
 
 Returns
 -------
+free : bool
+    Set True if attribtute not found or attriubte cannot be changed directly.
+
 why_not_free : int, optional
     Possibilities are: field_master_dependent$  -> Dependent due to setting of ele.field_master. dependent$
     -> Not field_master_dependent$ but value is dependent upon the value of other attributes. does_not_exist$
     -> Attribute name is unrecognized or does not exist for the type of element. overlay_slave$           ->
     Attribute is controlled by an overlay lord. super_slave$             -> Attribute is controlled by
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
-
-free : bool
-    Set True if attribtute not found or attriubte cannot be changed directly.
 )"""
   );
   py::class_<Bmad::AttributeIndex1, std::unique_ptr<Bmad::AttributeIndex1>>(
@@ -977,7 +977,7 @@ Parameters
 ele : EleStruct
     attribute_index will restrict the name search to valid attributes of the given element.
 
-name : character
+name : str
     Attribute name. Must be uppercase.
 
 can_abbreviate : bool, optional
@@ -988,11 +988,11 @@ print_error : bool, optional
 
 Returns
 -------
-full_name : character, optional
-    Non-abbreviated name.
-
 attrib_index : int
     Index of the attribute. If the attribute name is not appropriate then 0 will be returned. ix -> k1$
+
+full_name : str, optional
+    Non-abbreviated name.
 
 Notes
 -----
@@ -1045,7 +1045,7 @@ Parameters
 key : int
     Equivalent to ele.key.
 
-name : character
+name : str
     Attribute name. Must be uppercase.
 
 can_abbreviate : bool, optional
@@ -1056,11 +1056,11 @@ print_error : bool, optional
 
 Returns
 -------
-full_name : character, optional
-    Non-abbreviated name.
-
 attrib_index : int
     Index of the attribute. If the attribute name is not appropriate then 0 will be returned. ix -> k1$
+
+full_name : str, optional
+    Non-abbreviated name.
 
 Notes
 -----
@@ -1102,7 +1102,7 @@ show_private : bool, optional
 
 Returns
 -------
-attrib_name : character
+attrib_name : str
     Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
     private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
     invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
@@ -1139,7 +1139,7 @@ show_private : bool, optional
 
 Returns
 -------
-attrib_name : character
+attrib_name : str
     Name of attribute. First character is a "!" if there is a problem. Will always be upper case (even with
     private attributes). = "!BAD ELE KEY"           .key is invalid = "!BAD INDEX"             ix_att is
     invalid (out of range). = "!NULL" (null_name$)     ix_att does not correspond to an attribute or is
@@ -1170,7 +1170,7 @@ value of "n_slice" is stored as a real number in the ele_struct [in ele%value(n_
 
 Parameters
 ----------
-attrib_name : character
+attrib_name : str
     Name of the attribute. Must be upper case.
 
 ele : EleStruct, optional
@@ -1196,16 +1196,16 @@ Example: attrib_units('P0C') -> 'eV'
 
 Parameters
 ----------
-attrib_name : character
+attrib_name : str
     Name of the attribute. Must be upper case.
 
-unrecognized_units : character, optional
+unrecognized_units : str, optional
     String to use if the attribute name is unrecognized. Note: Non-real attributes (EG: 'TRACKING_METHOD') are
     not recognized. Default is ""
 
 Returns
 -------
-attrib_units : character
+attrib_units : str
     Units associated with the attribute.
 )"""
   );

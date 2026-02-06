@@ -41,7 +41,7 @@ species : int
 
 Returns
 -------
-pmd_name : character
+pmd_name : str
     Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
 )"""
   );
@@ -56,7 +56,7 @@ Parameters
 ----------
 n : int
 
-str : character
+str : str
 )"""
   );
   m.def(
@@ -102,9 +102,9 @@ Parameters
 ----------
 level : int
 
-routine_name : character
+routine_name : str
 
-line : character
+line : str
 
 i_num : int
 
@@ -156,31 +156,31 @@ Parameters
 ----------
 level : int
 
-routine_name : character
+routine_name : str
 
-line1 : character
+line1 : str
 
-line2 : character, optional
+line2 : str, optional
 
-line3 : character, optional
+line3 : str, optional
 
-line4 : character, optional
+line4 : str, optional
 
-line5 : character, optional
+line5 : str, optional
 
-line6 : character, optional
+line6 : str, optional
 
-line7 : character, optional
+line7 : str, optional
 
-line8 : character, optional
+line8 : str, optional
 
-line9 : character, optional
+line9 : str, optional
 
-line10 : character, optional
+line10 : str, optional
 
-line11 : character, optional
+line11 : str, optional
 
-line12 : character, optional
+line12 : str, optional
 
 r_array : 1D array of float, optional
 
@@ -206,9 +206,9 @@ Parameters
 ----------
 level : int
 
-routine_name : character
+routine_name : str
 
-line : character
+line : str
 
 l_num : bool
 
@@ -261,7 +261,7 @@ Parameters
 print_on : bool, optional
     If present, set the internal print_on flag to the value of this argument.
 
-capture_state : character, optional
+capture_state : str, optional
     If present, set the internal capture_state to the value of this argument. Possible values:
 
 capture_add_null : bool, optional
@@ -284,9 +284,9 @@ Parameters
 ----------
 level : int
 
-routine_name : character
+routine_name : str
 
-line : character
+line : str
 
 r_num : float
 

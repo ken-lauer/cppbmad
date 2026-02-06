@@ -259,7 +259,7 @@ For all other types of particles, the case does matter.
 
 Parameters
 ----------
-name : character
+name : str
     Name of the species.
 
 print_err : bool, optional
@@ -283,7 +283,7 @@ Note: If pmd_name corresponds to a subatomic particle, the charge argument is ig
 
 Parameters
 ----------
-pmd_name : character
+pmd_name : str
     OpenPMD species name.
 
 charge : int
@@ -310,7 +310,7 @@ species : int
 
 Returns
 -------
-name : character
+name : str
     Name of the species. Will return 'INVALID!' (= invalid_name) if index is not valid.
 )"""
   );
@@ -573,8 +573,8 @@ y : float
       "sqrt_one",
       &SimUtils::sqrt_one,
       py::arg("x"),
-      py::arg("nd") = py::none(),
       py::arg("ds1"),
+      py::arg("nd") = py::none(),
       R"""(Wrapper for Fortran routine sqrt_one
 
 Parameters
@@ -582,26 +582,26 @@ Parameters
 x : float
     Number
 
+ds1 : float
+
 nd : int, optional
     Derivative order. nd = 0 (default) -> compute Sqrt[1+x] - 1. NOTE: Currently only nd = 0 and nd = 1 are
     implemented.
-
-ds1 : float
 )"""
   );
   m.def(
       "str_count",
       &SimUtils::str_count,
       py::arg("str"),
-      py::arg("match"),
+      py::arg("match_"),
       py::arg("num"),
       R"""(Wrapper for Fortran routine str_count
 
 Parameters
 ----------
-str : character
+str : str
 
-match : character
+match : str
 
 num : int
 )"""
@@ -614,11 +614,11 @@ num : int
 
 Parameters
 ----------
-src : character
+src : str
 
 Returns
 -------
-dst : character
+dst : str
 )"""
   );
   m.def(
@@ -626,19 +626,19 @@ dst : character
       &SimUtils::str_first_in_set,
       py::arg("line"),
       py::arg("set"),
-      py::arg("ignore_clauses") = py::none(),
       py::arg("ix_match"),
+      py::arg("ignore_clauses") = py::none(),
       R"""(Wrapper for Fortran routine str_first_in_set
 
 Parameters
 ----------
-line : character
+line : str
 
-set : character
-
-ignore_clauses : bool, optional
+set : str
 
 ix_match : int
+
+ignore_clauses : bool, optional
 )"""
   );
   m.def(
@@ -651,9 +651,9 @@ ix_match : int
 
 Parameters
 ----------
-line : character
+line : str
 
-set : character
+set : str
 
 ix_match : int
 )"""
@@ -668,9 +668,9 @@ ix_match : int
 
 Parameters
 ----------
-line : character
+line : str
 
-set : character
+set : str
 
 ix_match : int
 )"""
@@ -685,9 +685,9 @@ ix_match : int
 
 Parameters
 ----------
-line : character
+line : str
 
-set : character
+set : str
 
 ix_match : int
 )"""
@@ -702,9 +702,9 @@ ix_match : int
 
 Parameters
 ----------
-str : character
+str : str
 
-pat : character
+pat : str
 
 a_match : bool
 )"""
@@ -721,11 +721,11 @@ a_match : bool
 
 Parameters
 ----------
-string : character
+string : str
 
-str_match : character, optional
+str_match : str, optional
 
-str_replace : character, optional
+str_replace : str, optional
 
 do_trim : bool, optional
 
@@ -740,11 +740,11 @@ ignore_escaped : bool, optional
 
 Parameters
 ----------
-src : character
+src : str
 
 Returns
 -------
-dst : character
+dst : str
 )"""
   );
   m.def(
@@ -753,19 +753,19 @@ dst : character
       py::arg("line"),
       py::arg("default_"),
       py::arg("err_flag"),
-      py::arg("err_print_flag") = py::none(),
       py::arg("value"),
+      py::arg("err_print_flag") = py::none(),
       R"""(Wrapper for Fortran routine string_to_int
 
 Parameters
 ----------
-line : character
+line : str
 
 err_flag : bool
 
-err_print_flag : bool, optional
-
 value : int
+
+err_print_flag : bool, optional
 )"""
   );
   m.def(
@@ -774,19 +774,19 @@ value : int
       py::arg("line"),
       py::arg("default_"),
       py::arg("err_flag"),
-      py::arg("err_print_flag") = py::none(),
       py::arg("value"),
+      py::arg("err_print_flag") = py::none(),
       R"""(Wrapper for Fortran routine string_to_real
 
 Parameters
 ----------
-line : character
+line : str
 
 err_flag : bool
 
-err_print_flag : bool, optional
-
 value : float
+
+err_print_flag : bool, optional
 )"""
   );
   m.def(
@@ -799,9 +799,9 @@ value : float
 
 Parameters
 ----------
-in_string : character
+in_string : str
 
-out_string : character
+out_string : str
 
 word_len : int
 )"""
@@ -819,15 +819,15 @@ word_len : int
 
 Parameters
 ----------
-in_str : character
+in_str : str
 
-delimitors : character
+delimitors : str
 
-out_str : character
+out_str : str
 
 ix_word : int
 
-delim : character
+delim : str
 
 ix_next : int
 )"""
@@ -1108,7 +1108,7 @@ arr : 1D array of int
 
 Parameters
 ----------
-line : character
+line : str
     Command to pass to the system shell.
 
 Returns

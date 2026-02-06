@@ -91,7 +91,7 @@ Parameters
 ----------
 nametable : NametableStruct
 
-name : character
+name : str
 
 ix_name : int
 )"""
@@ -101,19 +101,19 @@ ix_name : int
       &SimUtils::nametable_bracket_indexx,
       py::arg("nametable"),
       py::arg("name"),
-      py::arg("n_match") = py::none(),
       py::arg("ix_max"),
+      py::arg("n_match") = py::none(),
       R"""(Wrapper for Fortran routine nametable_bracket_indexx
 
 Parameters
 ----------
 nametable : NametableStruct
 
-name : character
-
-n_match : int, optional
+name : str
 
 ix_max : int
+
+n_match : int, optional
 )"""
   );
   m.def(
@@ -128,7 +128,7 @@ Parameters
 ----------
 nametable : NametableStruct
 
-name : character
+name : str
 
 ix_name : int
 )"""

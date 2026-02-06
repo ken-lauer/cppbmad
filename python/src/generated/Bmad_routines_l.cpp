@@ -98,7 +98,7 @@ err_flag : bool
 
 Parameters
 ----------
-loc_str : character
+loc_str : str
     Element names or indexes. May be lower case.
 
 lat : LatStruct
@@ -400,7 +400,7 @@ This subroutine is not intended for general use.
 
 Parameters
 ----------
-action : character
+action : str
     'continue', 'new_command', or 'init'
 
 ix_start : int

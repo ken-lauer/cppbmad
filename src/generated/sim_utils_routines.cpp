@@ -60,8 +60,8 @@ void SimUtils::apfft(
 }
 SimUtils::ApfftCorr SimUtils::apfft_corr(
     FArray1D<Real> &rdata_in,
-    std::optional<FixedArray1D<Real, 2>> bounds,
     std::string window,
+    std::optional<FixedArray1D<Real, 2>> bounds,
     std::optional<int> diag
 ) {
   // rdata_in: in NOT (CppWrapperGeneralArgumentArray) ([':'])
@@ -478,7 +478,7 @@ double SimUtils::dj_bessel(int m, double arg) {
   fortran_dj_bessel(/* int& */ m, /* double& */ arg, /* double& */ _dj_bes);
   return _dj_bes;
 }
-void SimUtils::djb_hash(std::string str, std::optional<int> old_hash, int hash) {
+void SimUtils::djb_hash(std::string str, int hash, std::optional<int> old_hash) {
   auto _str = str.c_str();
   int old_hash_lvalue;
   auto *_old_hash{&old_hash_lvalue};
@@ -823,7 +823,7 @@ void SimUtils::initfixedwindowls(int N, double dt, int order, int der, int id) {
   );
 }
 void SimUtils::initial_lmdif() { fortran_initial_lmdif(); }
-void SimUtils::int_str(int int_, std::optional<int> width, std::string str) {
+void SimUtils::int_str(int int_, std::string str, std::optional<int> width) {
   int width_lvalue;
   auto *_width{&width_lvalue};
   if (width.has_value()) {
@@ -837,9 +837,9 @@ void SimUtils::int_str(int int_, std::optional<int> width, std::string str) {
 void SimUtils::interpolated_fft(
     FArray1D<Complex> &cdata,
     bool calc_ok,
+    double this_fft,
     std::optional<int> opt_dump_spectrum,
-    std::optional<int> opt_dump_index,
-    double this_fft
+    std::optional<int> opt_dump_index
 ) {
   // cdata: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _cdata_desc;
@@ -871,9 +871,9 @@ void SimUtils::interpolated_fft(
 void SimUtils::interpolated_fft_gsl(
     FArray1D<Complex> &cdata,
     bool calc_ok,
+    double this_fft,
     std::optional<int> opt_dump_spectrum,
-    std::optional<int> opt_dump_index,
-    double this_fft
+    std::optional<int> opt_dump_index
 ) {
   // cdata: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _cdata_desc;
@@ -904,8 +904,8 @@ void SimUtils::interpolated_fft_gsl(
 }
 void SimUtils::is_alphabetic(
     std::string string,
-    std::optional<std::string> valid_chars,
-    bool is_alpha
+    bool is_alpha,
+    std::optional<std::string> valid_chars
 ) {
   auto _string = string.c_str();
   const char *_valid_chars = valid_chars.has_value() ? valid_chars->c_str() : nullptr;
@@ -964,10 +964,10 @@ bool SimUtils::is_increasing_sequence(FArray1D<Real> &array, std::optional<bool>
 }
 void SimUtils::is_integer(
     std::string string,
+    bool valid,
     std::optional<int> int_,
     std::optional<std::string> delims,
-    std::optional<int> ix_word,
-    bool valid
+    std::optional<int> ix_word
 ) {
   auto _string = string.c_str();
   int int__lvalue;
@@ -993,7 +993,7 @@ void SimUtils::is_integer(
       /* bool& */ valid
   );
 }
-void SimUtils::is_logical(std::string string, std::optional<bool> ignore, bool valid) {
+void SimUtils::is_logical(std::string string, bool valid, std::optional<bool> ignore) {
   auto _string = string.c_str();
   bool ignore_lvalue;
   auto *_ignore{&ignore_lvalue};
@@ -1006,9 +1006,9 @@ void SimUtils::is_logical(std::string string, std::optional<bool> ignore, bool v
 }
 void SimUtils::is_real(
     std::string string,
+    bool valid,
     std::optional<bool> ignore,
-    std::optional<double> real_num,
-    bool valid
+    std::optional<double> real_num
 ) {
   auto _string = string.c_str();
   bool ignore_lvalue;
@@ -1256,8 +1256,8 @@ void SimUtils::nametable_add(NametableStruct &nametable, std::string name, int i
 void SimUtils::nametable_bracket_indexx(
     NametableStruct &nametable,
     std::string name,
-    std::optional<int> n_match,
-    int ix_max
+    int ix_max,
+    std::optional<int> n_match
 ) {
   auto _name = name.c_str();
   int n_match_lvalue;
@@ -2236,8 +2236,8 @@ int SimUtils::readline_write_history(std::string history_file) {
 void SimUtils::real_num_fortran_format(
     double number,
     int width,
-    std::optional<int> n_blanks,
-    std::string fmt_str
+    std::string fmt_str,
+    std::optional<int> n_blanks
 ) {
   int n_blanks_lvalue;
   auto *_n_blanks{&n_blanks_lvalue};
@@ -2261,9 +2261,9 @@ void SimUtils::real_path(std::string path_in, std::string path_out, bool is_ok) 
 }
 void SimUtils::real_str(
     double r_num,
+    std::string str,
     std::optional<int> n_signif,
-    std::optional<int> n_decimal,
-    std::string str
+    std::optional<int> n_decimal
 ) {
   int n_signif_lvalue;
   auto *_n_signif{&n_signif_lvalue};
@@ -2290,9 +2290,9 @@ void SimUtils::real_str(
 void SimUtils::real_to_string(
     double real_num,
     int width,
+    std::string str,
     std::optional<int> n_signif,
-    std::optional<int> n_decimal,
-    std::string str
+    std::optional<int> n_decimal
 ) {
   int n_signif_lvalue;
   auto *_n_signif{&n_signif_lvalue};
@@ -2698,7 +2698,7 @@ double SimUtils::sqrt_alpha(double alpha, double x) {
   fortran_sqrt_alpha(/* double& */ alpha, /* double& */ x, /* double& */ _y);
   return _y;
 }
-void SimUtils::sqrt_one(double x, std::optional<int> nd, double ds1) {
+void SimUtils::sqrt_one(double x, double ds1, std::optional<int> nd) {
   int nd_lvalue;
   auto *_nd{&nd_lvalue};
   if (nd.has_value()) {
@@ -2722,8 +2722,8 @@ std::string SimUtils::str_downcase(std::string src) {
 void SimUtils::str_first_in_set(
     std::string line,
     std::string set,
-    std::optional<bool> ignore_clauses,
-    int ix_match
+    int ix_match,
+    std::optional<bool> ignore_clauses
 ) {
   auto _line = line.c_str();
   auto _set = set.c_str();
@@ -2807,8 +2807,8 @@ void SimUtils::string_to_int(
     std::string line,
     int default_,
     bool err_flag,
-    std::optional<bool> err_print_flag,
-    int value
+    int value,
+    std::optional<bool> err_print_flag
 ) {
   auto _line = line.c_str();
   bool err_print_flag_lvalue;
@@ -2830,8 +2830,8 @@ void SimUtils::string_to_real(
     std::string line,
     double default_,
     bool err_flag,
-    std::optional<bool> err_print_flag,
-    double value
+    double value,
+    std::optional<bool> err_print_flag
 ) {
   auto _line = line.c_str();
   bool err_print_flag_lvalue;
@@ -3075,7 +3075,7 @@ bool SimUtils::system_command(std::string line) {
   return _err_flag;
 }
 void SimUtils::test_xgelbd() { fortran_test_xgelbd(); }
-void SimUtils::to_str(double num, std::optional<int> max_signif, std::string string) {
+void SimUtils::to_str(double num, std::string string, std::optional<int> max_signif) {
   int max_signif_lvalue;
   auto *_max_signif{&max_signif_lvalue};
   if (max_signif.has_value()) {

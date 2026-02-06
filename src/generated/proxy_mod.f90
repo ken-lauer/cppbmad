@@ -796,14 +796,12 @@ contains
     end if
   end subroutine
 
-  subroutine access_real_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_real_container(container_ptr, d_ptr, bounds, is_allocated) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
 
     type(real_container_alloc), pointer :: ctr
@@ -817,17 +815,13 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
-      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
-      elem_size = 0
+      bounds = 0
     endif
   end subroutine
             
@@ -868,14 +862,12 @@ contains
     end if
   end subroutine
 
-  subroutine access_real16_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_real16_container(container_ptr, d_ptr, bounds, is_allocated) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
 
     type(real16_container_alloc), pointer :: ctr
@@ -889,17 +881,13 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
-      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
-      elem_size = 0
+      bounds = 0
     endif
   end subroutine
             
@@ -940,14 +928,12 @@ contains
     end if
   end subroutine
 
-  subroutine access_integer_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_integer_container(container_ptr, d_ptr, bounds, is_allocated) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
 
     type(integer_container_alloc), pointer :: ctr
@@ -961,17 +947,13 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
-      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
-      elem_size = 0
+      bounds = 0
     endif
   end subroutine
             
@@ -1012,14 +994,12 @@ contains
     end if
   end subroutine
 
-  subroutine access_integer8_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_integer8_container(container_ptr, d_ptr, bounds, is_allocated) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
 
     type(integer8_container_alloc), pointer :: ctr
@@ -1033,17 +1013,13 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
-      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
-      elem_size = 0
+      bounds = 0
     endif
   end subroutine
             
@@ -1084,14 +1060,12 @@ contains
     end if
   end subroutine
 
-  subroutine access_logical_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_logical_container(container_ptr, d_ptr, bounds, is_allocated) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
 
     type(logical_container_alloc), pointer :: ctr
@@ -1105,17 +1079,13 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
-      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
-      elem_size = 0
+      bounds = 0
     endif
   end subroutine
             
@@ -1156,14 +1126,12 @@ contains
     end if
   end subroutine
 
-  subroutine access_complex_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_complex_container(container_ptr, d_ptr, bounds, is_allocated) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
 
     type(complex_container_alloc), pointer :: ctr
@@ -1177,17 +1145,13 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
-      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
-      elem_size = 0
+      bounds = 0
     endif
   end subroutine
             
@@ -1278,15 +1242,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_spline_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_spline_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(spline_struct_container_alloc), pointer :: ctr
 
@@ -1299,16 +1262,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -1499,15 +1461,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_spin_polar_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_spin_polar_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(spin_polar_struct_container_alloc), pointer :: ctr
 
@@ -1520,16 +1481,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -1697,15 +1657,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_ac_kicker_time_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_ac_kicker_time_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(ac_kicker_time_struct_container_alloc), pointer :: ctr
 
@@ -1718,16 +1677,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -1878,15 +1836,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_ac_kicker_freq_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_ac_kicker_freq_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(ac_kicker_freq_struct_container_alloc), pointer :: ctr
 
@@ -1899,16 +1856,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -2057,15 +2013,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_ac_kicker_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_ac_kicker_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(ac_kicker_struct_container_alloc), pointer :: ctr
 
@@ -2078,16 +2033,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -2120,6 +2074,23 @@ contains
     endif
   end subroutine
 
+  subroutine ac_kicker_struct_reallocate_amp_vs_time(struct_obj_ptr, lbound_, n) &
+        bind(c, name='ac_kicker_struct_reallocate_amp_vs_time')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ac_kicker_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%amp_vs_time)) deallocate(struct_obj%amp_vs_time)
+    else
+      if (allocated(struct_obj%amp_vs_time)) deallocate(struct_obj%amp_vs_time)
+      allocate(struct_obj%amp_vs_time(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! ac_kicker_struct%frequency: 1D_ALLOC_type
 
   subroutine ac_kicker_struct_get_frequency_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -2145,6 +2116,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine ac_kicker_struct_reallocate_frequency(struct_obj_ptr, lbound_, n) &
+        bind(c, name='ac_kicker_struct_reallocate_frequency')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(ac_kicker_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%frequency)) deallocate(struct_obj%frequency)
+    else
+      if (allocated(struct_obj%frequency)) deallocate(struct_obj%frequency)
+      allocate(struct_obj%frequency(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -2235,15 +2223,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_interval1_coef_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_interval1_coef_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(interval1_coef_struct_container_alloc), pointer :: ctr
 
@@ -2256,16 +2243,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -2414,15 +2400,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_photon_reflect_table_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_photon_reflect_table_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(photon_reflect_table_struct_container_alloc), pointer :: ctr
 
@@ -2435,16 +2420,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -2472,6 +2456,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine photon_reflect_table_struct_reallocate_angle(struct_obj_ptr, lbound_, n) &
+        bind(c, name='photon_reflect_table_struct_reallocate_angle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_reflect_table_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%angle)) deallocate(struct_obj%angle)
+    else
+      if (allocated(struct_obj%angle)) deallocate(struct_obj%angle)
+      allocate(struct_obj%angle(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -2521,6 +2522,23 @@ contains
     endif
   end subroutine
 
+  subroutine photon_reflect_table_struct_reallocate_energy(struct_obj_ptr, lbound_, n) &
+        bind(c, name='photon_reflect_table_struct_reallocate_energy')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_reflect_table_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%energy)) deallocate(struct_obj%energy)
+    else
+      if (allocated(struct_obj%energy)) deallocate(struct_obj%energy)
+      allocate(struct_obj%energy(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine photon_reflect_table_struct_set_energy(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='photon_reflect_table_struct_set_energy')
@@ -2566,6 +2584,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine photon_reflect_table_struct_reallocate_int1(struct_obj_ptr, lbound_, n) &
+        bind(c, name='photon_reflect_table_struct_reallocate_int1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_reflect_table_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%int1)) deallocate(struct_obj%int1)
+    else
+      if (allocated(struct_obj%int1)) deallocate(struct_obj%int1)
+      allocate(struct_obj%int1(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -2667,6 +2702,23 @@ contains
     endif
   end subroutine
 
+  subroutine photon_reflect_table_struct_reallocate_p_reflect_scratch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='photon_reflect_table_struct_reallocate_p_reflect_scratch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_reflect_table_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%p_reflect_scratch)) deallocate(struct_obj%p_reflect_scratch)
+    else
+      if (allocated(struct_obj%p_reflect_scratch)) deallocate(struct_obj%p_reflect_scratch)
+      allocate(struct_obj%p_reflect_scratch(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine photon_reflect_table_struct_set_p_reflect_scratch(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='photon_reflect_table_struct_set_p_reflect_scratch')
@@ -2710,6 +2762,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine photon_reflect_table_struct_reallocate_bragg_angle(struct_obj_ptr, lbound_, n) &
+        bind(c, name='photon_reflect_table_struct_reallocate_bragg_angle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_reflect_table_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%bragg_angle)) deallocate(struct_obj%bragg_angle)
+    else
+      if (allocated(struct_obj%bragg_angle)) deallocate(struct_obj%bragg_angle)
+      allocate(struct_obj%bragg_angle(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -2820,15 +2889,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_photon_reflect_surface_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_photon_reflect_surface_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(photon_reflect_surface_struct_container_alloc), pointer :: ctr
 
@@ -2841,16 +2909,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -2964,6 +3031,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine photon_reflect_surface_struct_reallocate_table(struct_obj_ptr, lbound_, n) &
+        bind(c, name='photon_reflect_surface_struct_reallocate_table')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_reflect_surface_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%table)) deallocate(struct_obj%table)
+    else
+      if (allocated(struct_obj%table)) deallocate(struct_obj%table)
+      allocate(struct_obj%table(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -3111,15 +3195,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_coord_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_coord_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(coord_struct_container_alloc), pointer :: ctr
 
@@ -3132,16 +3215,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -3724,15 +3806,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_coord_array_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_coord_array_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(coord_array_struct_container_alloc), pointer :: ctr
 
@@ -3745,16 +3826,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -3784,6 +3864,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine coord_array_struct_reallocate_orbit(struct_obj_ptr, lbound_, n) &
+        bind(c, name='coord_array_struct_reallocate_orbit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(coord_array_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%orbit)) deallocate(struct_obj%orbit)
+    else
+      if (allocated(struct_obj%orbit)) deallocate(struct_obj%orbit)
+      allocate(struct_obj%orbit(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -3874,15 +3971,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bpm_phase_coupling_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bpm_phase_coupling_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bpm_phase_coupling_struct_container_alloc), pointer :: ctr
 
@@ -3895,16 +3991,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -4186,15 +4281,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_expression_atom_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_expression_atom_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(expression_atom_struct_container_alloc), pointer :: ctr
 
@@ -4207,16 +4301,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -4374,15 +4467,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wake_sr_z_long_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wake_sr_z_long_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wake_sr_z_long_struct_container_alloc), pointer :: ctr
 
@@ -4395,16 +4487,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -4432,6 +4523,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine wake_sr_z_long_struct_reallocate_w(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wake_sr_z_long_struct_reallocate_w')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_z_long_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%w)) deallocate(struct_obj%w)
+    else
+      if (allocated(struct_obj%w)) deallocate(struct_obj%w)
+      allocate(struct_obj%w(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -4481,6 +4589,23 @@ contains
     endif
   end subroutine
 
+  subroutine wake_sr_z_long_struct_reallocate_fw(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wake_sr_z_long_struct_reallocate_fw')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_z_long_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%fw)) deallocate(struct_obj%fw)
+    else
+      if (allocated(struct_obj%fw)) deallocate(struct_obj%fw)
+      allocate(struct_obj%fw(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine wake_sr_z_long_struct_set_fw(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='wake_sr_z_long_struct_set_fw')
@@ -4527,6 +4652,23 @@ contains
     endif
   end subroutine
 
+  subroutine wake_sr_z_long_struct_reallocate_fbunch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wake_sr_z_long_struct_reallocate_fbunch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_z_long_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%fbunch)) deallocate(struct_obj%fbunch)
+    else
+      if (allocated(struct_obj%fbunch)) deallocate(struct_obj%fbunch)
+      allocate(struct_obj%fbunch(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine wake_sr_z_long_struct_set_fbunch(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='wake_sr_z_long_struct_set_fbunch')
@@ -4570,6 +4712,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine wake_sr_z_long_struct_reallocate_w_out(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wake_sr_z_long_struct_reallocate_w_out')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_z_long_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%w_out)) deallocate(struct_obj%w_out)
+    else
+      if (allocated(struct_obj%w_out)) deallocate(struct_obj%w_out)
+      allocate(struct_obj%w_out(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -4775,15 +4934,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wake_sr_mode_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wake_sr_mode_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wake_sr_mode_struct_container_alloc), pointer :: ctr
 
@@ -4796,16 +4954,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -5087,15 +5244,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wake_sr_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wake_sr_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wake_sr_struct_container_alloc), pointer :: ctr
 
@@ -5108,16 +5264,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -5199,6 +5354,23 @@ contains
     endif
   end subroutine
 
+  subroutine wake_sr_struct_reallocate_long(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wake_sr_struct_reallocate_long')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%long)) deallocate(struct_obj%long)
+    else
+      if (allocated(struct_obj%long)) deallocate(struct_obj%long)
+      allocate(struct_obj%long(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! wake_sr_struct%trans: 1D_ALLOC_type
 
   subroutine wake_sr_struct_get_trans_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -5224,6 +5396,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine wake_sr_struct_reallocate_trans(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wake_sr_struct_reallocate_trans')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_sr_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%trans)) deallocate(struct_obj%trans)
+    else
+      if (allocated(struct_obj%trans)) deallocate(struct_obj%trans)
+      allocate(struct_obj%trans(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -5428,15 +5617,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wake_lr_mode_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wake_lr_mode_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wake_lr_mode_struct_container_alloc), pointer :: ctr
 
@@ -5449,16 +5637,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -5797,15 +5984,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wake_lr_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wake_lr_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wake_lr_struct_container_alloc), pointer :: ctr
 
@@ -5818,16 +6004,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -5885,6 +6070,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine wake_lr_struct_reallocate_mode(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wake_lr_struct_reallocate_mode')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wake_lr_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%mode)) deallocate(struct_obj%mode)
+    else
+      if (allocated(struct_obj%mode)) deallocate(struct_obj%mode)
+      allocate(struct_obj%mode(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -6070,15 +6272,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_lat_ele_loc_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_lat_ele_loc_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(lat_ele_loc_struct_container_alloc), pointer :: ctr
 
@@ -6091,16 +6292,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -6230,15 +6430,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wake_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wake_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wake_struct_container_alloc), pointer :: ctr
 
@@ -6251,16 +6450,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -6394,15 +6592,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_taylor_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_taylor_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(taylor_term_struct_container_alloc), pointer :: ctr
 
@@ -6415,16 +6612,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -6577,15 +6773,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_taylor_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_taylor_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(taylor_struct_container_alloc), pointer :: ctr
 
@@ -6598,16 +6793,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -6746,15 +6940,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_em_taylor_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_em_taylor_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(em_taylor_term_struct_container_alloc), pointer :: ctr
 
@@ -6767,16 +6960,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -6929,15 +7121,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_em_taylor_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_em_taylor_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(em_taylor_struct_container_alloc), pointer :: ctr
 
@@ -6950,16 +7141,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -7008,6 +7198,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine em_taylor_struct_reallocate_term(struct_obj_ptr, lbound_, n) &
+        bind(c, name='em_taylor_struct_reallocate_term')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(em_taylor_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
+    else
+      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
+      allocate(struct_obj%term(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -7098,15 +7305,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_cartesian_map_term1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_cartesian_map_term1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(cartesian_map_term1_struct_container_alloc), pointer :: ctr
 
@@ -7119,16 +7325,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -7391,15 +7596,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_cartesian_map_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_cartesian_map_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(cartesian_map_term_struct_container_alloc), pointer :: ctr
 
@@ -7412,16 +7616,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -7498,6 +7701,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine cartesian_map_term_struct_reallocate_term(struct_obj_ptr, lbound_, n) &
+        bind(c, name='cartesian_map_term_struct_reallocate_term')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(cartesian_map_term_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
+    else
+      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
+      allocate(struct_obj%term(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -7588,15 +7808,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_cartesian_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_cartesian_map_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(cartesian_map_struct_container_alloc), pointer :: ctr
 
@@ -7609,16 +7828,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -7855,15 +8073,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_cylindrical_map_term1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_cylindrical_map_term1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(cylindrical_map_term1_struct_container_alloc), pointer :: ctr
 
@@ -7876,16 +8093,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -8015,15 +8231,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_cylindrical_map_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_cylindrical_map_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(cylindrical_map_term_struct_container_alloc), pointer :: ctr
 
@@ -8036,16 +8251,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -8122,6 +8336,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine cylindrical_map_term_struct_reallocate_term(struct_obj_ptr, lbound_, n) &
+        bind(c, name='cylindrical_map_term_struct_reallocate_term')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(cylindrical_map_term_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
+    else
+      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
+      allocate(struct_obj%term(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -8212,15 +8443,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_cylindrical_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_cylindrical_map_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(cylindrical_map_struct_container_alloc), pointer :: ctr
 
@@ -8233,16 +8463,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -8555,15 +8784,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bicubic_cmplx_coef_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bicubic_cmplx_coef_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bicubic_cmplx_coef_struct_container_alloc), pointer :: ctr
 
@@ -8576,16 +8804,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -8768,15 +8995,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tricubic_cmplx_coef_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tricubic_cmplx_coef_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tricubic_cmplx_coef_struct_container_alloc), pointer :: ctr
 
@@ -8789,16 +9015,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -8985,15 +9210,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_grid_field_pt1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_grid_field_pt1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(grid_field_pt1_struct_container_alloc), pointer :: ctr
 
@@ -9006,16 +9230,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -9191,15 +9414,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_grid_field_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_grid_field_pt_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(grid_field_pt_struct_container_alloc), pointer :: ctr
 
@@ -9212,16 +9434,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -9399,15 +9620,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_grid_field_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_grid_field_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(grid_field_struct_container_alloc), pointer :: ctr
 
@@ -9420,16 +9640,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -9881,15 +10100,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_floor_position_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_floor_position_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(floor_position_struct_container_alloc), pointer :: ctr
 
@@ -9902,16 +10120,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -10151,15 +10368,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_high_energy_space_charge_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_high_energy_space_charge_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(high_energy_space_charge_struct_container_alloc), pointer :: ctr
 
@@ -10172,16 +10388,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -10427,15 +10642,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_xy_disp_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_xy_disp_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(xy_disp_struct_container_alloc), pointer :: ctr
 
@@ -10448,16 +10662,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -10663,15 +10876,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_twiss_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_twiss_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(twiss_struct_container_alloc), pointer :: ctr
 
@@ -10684,16 +10896,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -11089,15 +11300,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_mode3_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_mode3_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(mode3_struct_container_alloc), pointer :: ctr
 
@@ -11110,16 +11320,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -11365,15 +11574,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bookkeeping_state_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bookkeeping_state_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bookkeeping_state_struct_container_alloc), pointer :: ctr
 
@@ -11386,16 +11594,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -11658,15 +11865,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_rad_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_rad_map_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(rad_map_struct_container_alloc), pointer :: ctr
 
@@ -11679,16 +11885,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -12011,15 +12216,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_rad_map_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_rad_map_ele_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(rad_map_ele_struct_container_alloc), pointer :: ctr
 
@@ -12032,16 +12236,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -12194,15 +12397,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_gen_grad1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_gen_grad1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(gen_grad1_struct_container_alloc), pointer :: ctr
 
@@ -12215,16 +12417,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -12426,15 +12627,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_gen_grad_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_gen_grad_map_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(gen_grad_map_struct_container_alloc), pointer :: ctr
 
@@ -12447,16 +12647,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -12514,6 +12713,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine gen_grad_map_struct_reallocate_gg(struct_obj_ptr, lbound_, n) &
+        bind(c, name='gen_grad_map_struct_reallocate_gg')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(gen_grad_map_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%gg)) deallocate(struct_obj%gg)
+    else
+      if (allocated(struct_obj%gg)) deallocate(struct_obj%gg)
+      allocate(struct_obj%gg(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -12798,15 +13014,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_surface_segmented_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_surface_segmented_pt_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(surface_segmented_pt_struct_container_alloc), pointer :: ctr
 
@@ -12819,16 +13034,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -13015,15 +13229,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_surface_segmented_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_surface_segmented_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(surface_segmented_struct_container_alloc), pointer :: ctr
 
@@ -13036,16 +13249,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -13275,15 +13487,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_surface_h_misalign_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_surface_h_misalign_pt_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(surface_h_misalign_pt_struct_container_alloc), pointer :: ctr
 
@@ -13296,16 +13507,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -13511,15 +13721,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_surface_h_misalign_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_surface_h_misalign_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(surface_h_misalign_struct_container_alloc), pointer :: ctr
 
@@ -13532,16 +13741,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -13771,15 +13979,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_surface_displacement_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_surface_displacement_pt_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(surface_displacement_pt_struct_container_alloc), pointer :: ctr
 
@@ -13792,16 +13999,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -14007,15 +14213,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_surface_displacement_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_surface_displacement_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(surface_displacement_struct_container_alloc), pointer :: ctr
 
@@ -14028,16 +14233,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -14267,15 +14471,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_target_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_target_point_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(target_point_struct_container_alloc), pointer :: ctr
 
@@ -14288,16 +14491,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -14431,15 +14633,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_surface_curvature_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_surface_curvature_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(surface_curvature_struct_container_alloc), pointer :: ctr
 
@@ -14452,16 +14653,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -14682,15 +14882,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_photon_target_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_photon_target_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(photon_target_struct_container_alloc), pointer :: ctr
 
@@ -14703,16 +14902,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -14912,15 +15110,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_photon_material_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_photon_material_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(photon_material_struct_container_alloc), pointer :: ctr
 
@@ -14933,16 +15130,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -15232,15 +15428,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_pixel_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_pixel_pt_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(pixel_pt_struct_container_alloc), pointer :: ctr
 
@@ -15253,16 +15448,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -15636,15 +15830,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_pixel_detec_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_pixel_detec_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(pixel_detec_struct_container_alloc), pointer :: ctr
 
@@ -15657,16 +15850,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -15934,15 +16126,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_photon_element_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_photon_element_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(photon_element_struct_container_alloc), pointer :: ctr
 
@@ -15955,16 +16146,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -16205,6 +16395,23 @@ contains
     endif
   end subroutine
 
+  subroutine photon_element_struct_reallocate_init_energy_prob(struct_obj_ptr, lbound_, n) &
+        bind(c, name='photon_element_struct_reallocate_init_energy_prob')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_element_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%init_energy_prob)) deallocate(struct_obj%init_energy_prob)
+    else
+      if (allocated(struct_obj%init_energy_prob)) deallocate(struct_obj%init_energy_prob)
+      allocate(struct_obj%init_energy_prob(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! photon_element_struct%integrated_init_energy_prob: 1D_ALLOC_real
 
   subroutine photon_element_struct_get_integrated_init_energy_prob_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -16228,6 +16435,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine photon_element_struct_reallocate_integrated_init_energy_prob(struct_obj_ptr, lbound_, n) &
+        bind(c, name='photon_element_struct_reallocate_integrated_init_energy_prob')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(photon_element_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%integrated_init_energy_prob)) deallocate(struct_obj%integrated_init_energy_prob)
+    else
+      if (allocated(struct_obj%integrated_init_energy_prob)) deallocate(struct_obj%integrated_init_energy_prob)
+      allocate(struct_obj%integrated_init_energy_prob(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -16338,15 +16562,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wall3d_vertex_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wall3d_vertex_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wall3d_vertex_struct_container_alloc), pointer :: ctr
 
@@ -16359,16 +16582,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -16631,15 +16853,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wall3d_section_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wall3d_section_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wall3d_section_struct_container_alloc), pointer :: ctr
 
@@ -16652,16 +16873,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -16747,6 +16967,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine wall3d_section_struct_reallocate_v(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wall3d_section_struct_reallocate_v')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wall3d_section_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%v)) deallocate(struct_obj%v)
+    else
+      if (allocated(struct_obj%v)) deallocate(struct_obj%v)
+      allocate(struct_obj%v(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -17283,15 +17520,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_wall3d_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_wall3d_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(wall3d_struct_container_alloc), pointer :: ctr
 
@@ -17304,16 +17540,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -17544,6 +17779,23 @@ contains
     endif
   end subroutine
 
+  subroutine wall3d_struct_reallocate_section(struct_obj_ptr, lbound_, n) &
+        bind(c, name='wall3d_struct_reallocate_section')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(wall3d_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%section)) deallocate(struct_obj%section)
+    else
+      if (allocated(struct_obj%section)) deallocate(struct_obj%section)
+      allocate(struct_obj%section(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   !! ramper_lord_struct
 
     function allocate_fortran_ramper_lord_struct(n, element_size) result(ptr) bind(c)
@@ -17631,15 +17883,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_ramper_lord_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_ramper_lord_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(ramper_lord_struct_container_alloc), pointer :: ctr
 
@@ -17652,16 +17903,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -17816,15 +18066,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_control_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_control_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(control_struct_container_alloc), pointer :: ctr
 
@@ -17837,16 +18086,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -17896,6 +18144,23 @@ contains
     endif
   end subroutine
 
+  subroutine control_struct_reallocate_y_knot(struct_obj_ptr, lbound_, n) &
+        bind(c, name='control_struct_reallocate_y_knot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(control_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%y_knot)) deallocate(struct_obj%y_knot)
+    else
+      if (allocated(struct_obj%y_knot)) deallocate(struct_obj%y_knot)
+      allocate(struct_obj%y_knot(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine control_struct_set_y_knot(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='control_struct_set_y_knot')
@@ -17941,6 +18206,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine control_struct_reallocate_stack(struct_obj_ptr, lbound_, n) &
+        bind(c, name='control_struct_reallocate_stack')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(control_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%stack)) deallocate(struct_obj%stack)
+    else
+      if (allocated(struct_obj%stack)) deallocate(struct_obj%stack)
+      allocate(struct_obj%stack(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -18148,15 +18430,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_control_var1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_control_var1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(control_var1_struct_container_alloc), pointer :: ctr
 
@@ -18169,16 +18450,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -18336,15 +18616,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_control_ramp1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_control_ramp1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(control_ramp1_struct_container_alloc), pointer :: ctr
 
@@ -18357,16 +18636,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -18394,6 +18672,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine control_ramp1_struct_reallocate_y_knot(struct_obj_ptr, lbound_, n) &
+        bind(c, name='control_ramp1_struct_reallocate_y_knot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(control_ramp1_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%y_knot)) deallocate(struct_obj%y_knot)
+    else
+      if (allocated(struct_obj%y_knot)) deallocate(struct_obj%y_knot)
+      allocate(struct_obj%y_knot(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -18442,6 +18737,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine control_ramp1_struct_reallocate_stack(struct_obj_ptr, lbound_, n) &
+        bind(c, name='control_ramp1_struct_reallocate_stack')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(control_ramp1_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%stack)) deallocate(struct_obj%stack)
+    else
+      if (allocated(struct_obj%stack)) deallocate(struct_obj%stack)
+      allocate(struct_obj%stack(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -18607,15 +18919,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_controller_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_controller_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(controller_struct_container_alloc), pointer :: ctr
 
@@ -18628,16 +18939,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -18670,6 +18980,23 @@ contains
     endif
   end subroutine
 
+  subroutine controller_struct_reallocate_var(struct_obj_ptr, lbound_, n) &
+        bind(c, name='controller_struct_reallocate_var')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(controller_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%var)) deallocate(struct_obj%var)
+    else
+      if (allocated(struct_obj%var)) deallocate(struct_obj%var)
+      allocate(struct_obj%var(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! controller_struct%ramp: 1D_ALLOC_type
 
   subroutine controller_struct_get_ramp_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -18695,6 +19022,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine controller_struct_reallocate_ramp(struct_obj_ptr, lbound_, n) &
+        bind(c, name='controller_struct_reallocate_ramp')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(controller_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ramp)) deallocate(struct_obj%ramp)
+    else
+      if (allocated(struct_obj%ramp)) deallocate(struct_obj%ramp)
+      allocate(struct_obj%ramp(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -18726,6 +19070,23 @@ contains
     endif
   end subroutine
 
+  subroutine controller_struct_reallocate_ramper_lord(struct_obj_ptr, lbound_, n) &
+        bind(c, name='controller_struct_reallocate_ramper_lord')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(controller_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ramper_lord)) deallocate(struct_obj%ramper_lord)
+    else
+      if (allocated(struct_obj%ramper_lord)) deallocate(struct_obj%ramper_lord)
+      allocate(struct_obj%ramper_lord(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! controller_struct%x_knot: 1D_ALLOC_real
 
   subroutine controller_struct_get_x_knot_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -18749,6 +19110,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine controller_struct_reallocate_x_knot(struct_obj_ptr, lbound_, n) &
+        bind(c, name='controller_struct_reallocate_x_knot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(controller_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%x_knot)) deallocate(struct_obj%x_knot)
+    else
+      if (allocated(struct_obj%x_knot)) deallocate(struct_obj%x_knot)
+      allocate(struct_obj%x_knot(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -18859,15 +19237,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_ellipse_beam_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_ellipse_beam_init_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(ellipse_beam_init_struct_container_alloc), pointer :: ctr
 
@@ -18880,16 +19257,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -19038,15 +19414,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_kv_beam_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_kv_beam_init_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(kv_beam_init_struct_container_alloc), pointer :: ctr
 
@@ -19059,16 +19434,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -19240,15 +19614,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_grid_beam_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_grid_beam_init_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(grid_beam_init_struct_container_alloc), pointer :: ctr
 
@@ -19261,16 +19634,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -19476,15 +19848,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_beam_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_beam_init_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(beam_init_struct_container_alloc), pointer :: ctr
 
@@ -19497,16 +19868,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -20427,15 +20797,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_lat_param_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_lat_param_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(lat_param_struct_container_alloc), pointer :: ctr
 
@@ -20448,16 +20817,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -20936,15 +21304,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_mode_info_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_mode_info_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(mode_info_struct_container_alloc), pointer :: ctr
 
@@ -20957,16 +21324,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -21172,15 +21538,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_pre_tracker_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_pre_tracker_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(pre_tracker_struct_container_alloc), pointer :: ctr
 
@@ -21193,16 +21558,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -21379,15 +21743,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_anormal_mode_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_anormal_mode_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(anormal_mode_struct_container_alloc), pointer :: ctr
 
@@ -21400,16 +21763,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -21657,15 +22019,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_linac_normal_mode_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_linac_normal_mode_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(linac_normal_mode_struct_container_alloc), pointer :: ctr
 
@@ -21678,16 +22039,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -21912,15 +22272,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_normal_modes_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_normal_modes_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(normal_modes_struct_container_alloc), pointer :: ctr
 
@@ -21933,16 +22292,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -22312,15 +22670,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_em_field_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_em_field_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(em_field_struct_container_alloc), pointer :: ctr
 
@@ -22333,16 +22690,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -22696,15 +23052,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_strong_beam_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_strong_beam_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(strong_beam_struct_container_alloc), pointer :: ctr
 
@@ -22717,16 +23072,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -22951,15 +23305,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_track_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_track_point_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(track_point_struct_container_alloc), pointer :: ctr
 
@@ -22972,16 +23325,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -23265,15 +23617,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_track_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_track_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(track_struct_container_alloc), pointer :: ctr
 
@@ -23286,16 +23637,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -23325,6 +23675,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine track_struct_reallocate_pt(struct_obj_ptr, lbound_, n) &
+        bind(c, name='track_struct_reallocate_pt')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(track_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%pt)) deallocate(struct_obj%pt)
+    else
+      if (allocated(struct_obj%pt)) deallocate(struct_obj%pt)
+      allocate(struct_obj%pt(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -23491,15 +23858,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_space_charge_common_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_space_charge_common_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(space_charge_common_struct_container_alloc), pointer :: ctr
 
@@ -23512,16 +23878,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -23991,15 +24356,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bmad_common_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bmad_common_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bmad_common_struct_container_alloc), pointer :: ctr
 
@@ -24012,16 +24376,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -24934,15 +25297,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_rad_int1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_rad_int1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(rad_int1_struct_container_alloc), pointer :: ctr
 
@@ -24955,16 +25317,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -25398,15 +25759,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_rad_int_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_rad_int_branch_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(rad_int_branch_struct_container_alloc), pointer :: ctr
 
@@ -25419,16 +25779,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -25458,6 +25817,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine rad_int_branch_struct_reallocate_ele(struct_obj_ptr, lbound_, n) &
+        bind(c, name='rad_int_branch_struct_reallocate_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rad_int_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ele)) deallocate(struct_obj%ele)
+    else
+      if (allocated(struct_obj%ele)) deallocate(struct_obj%ele)
+      allocate(struct_obj%ele(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -25548,15 +25924,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_rad_int_all_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_rad_int_all_ele_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(rad_int_all_ele_struct_container_alloc), pointer :: ctr
 
@@ -25569,16 +25944,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -25608,6 +25982,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine rad_int_all_ele_struct_reallocate_branch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='rad_int_all_ele_struct_reallocate_branch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rad_int_all_ele_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%branch)) deallocate(struct_obj%branch)
+    else
+      if (allocated(struct_obj%branch)) deallocate(struct_obj%branch)
+      allocate(struct_obj%branch(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -25698,15 +26089,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_rf_stair_step_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_rf_stair_step_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(rf_stair_step_struct_container_alloc), pointer :: ctr
 
@@ -25719,16 +26109,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -25991,15 +26380,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_rf_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_rf_ele_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(rf_ele_struct_container_alloc), pointer :: ctr
 
@@ -26012,16 +26400,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -26051,6 +26438,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine rf_ele_struct_reallocate_steps(struct_obj_ptr, lbound_, n) &
+        bind(c, name='rf_ele_struct_reallocate_steps')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(rf_ele_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%steps)) deallocate(struct_obj%steps)
+    else
+      if (allocated(struct_obj%steps)) deallocate(struct_obj%steps)
+      allocate(struct_obj%steps(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -26160,15 +26564,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_ele_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(ele_struct_container_alloc), pointer :: ctr
 
@@ -26181,16 +26584,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -28628,15 +29030,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_complex_taylor_term_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_complex_taylor_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(complex_taylor_term_struct_container_alloc), pointer :: ctr
 
@@ -28649,16 +29050,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -28811,15 +29211,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_complex_taylor_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_complex_taylor_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(complex_taylor_struct_container_alloc), pointer :: ctr
 
@@ -28832,16 +29231,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -28980,15 +29378,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_branch_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(branch_struct_container_alloc), pointer :: ctr
 
@@ -29001,16 +29398,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -29451,15 +29847,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_lat_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_lat_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(lat_struct_container_alloc), pointer :: ctr
 
@@ -29472,16 +29867,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -29677,6 +30071,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine lat_struct_reallocate_constant(struct_obj_ptr, lbound_, n) &
+        bind(c, name='lat_struct_reallocate_constant')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%constant)) deallocate(struct_obj%constant)
+    else
+      if (allocated(struct_obj%constant)) deallocate(struct_obj%constant)
+      allocate(struct_obj%constant(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -29886,6 +30297,23 @@ contains
     endif
   end subroutine
 
+  subroutine lat_struct_reallocate_branch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='lat_struct_reallocate_branch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%branch)) deallocate(struct_obj%branch)
+    else
+      if (allocated(struct_obj%branch)) deallocate(struct_obj%branch)
+      allocate(struct_obj%branch(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! lat_struct%control: 1D_ALLOC_type
 
   subroutine lat_struct_get_control_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -29911,6 +30339,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine lat_struct_reallocate_control(struct_obj_ptr, lbound_, n) &
+        bind(c, name='lat_struct_reallocate_control')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%control)) deallocate(struct_obj%control)
+    else
+      if (allocated(struct_obj%control)) deallocate(struct_obj%control)
+      allocate(struct_obj%control(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -30006,6 +30451,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine lat_struct_reallocate_custom(struct_obj_ptr, lbound_, n) &
+        bind(c, name='lat_struct_reallocate_custom')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%custom)) deallocate(struct_obj%custom)
+    else
+      if (allocated(struct_obj%custom)) deallocate(struct_obj%custom)
+      allocate(struct_obj%custom(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -30178,6 +30640,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine lat_struct_reallocate_ic(struct_obj_ptr, lbound_, n) &
+        bind(c, name='lat_struct_reallocate_ic')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ic)) deallocate(struct_obj%ic)
+    else
+      if (allocated(struct_obj%ic)) deallocate(struct_obj%ic)
+      allocate(struct_obj%ic(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -30364,15 +30843,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bunch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bunch_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bunch_struct_container_alloc), pointer :: ctr
 
@@ -30385,16 +30863,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -30427,6 +30904,23 @@ contains
     endif
   end subroutine
 
+  subroutine bunch_struct_reallocate_particle(struct_obj_ptr, lbound_, n) &
+        bind(c, name='bunch_struct_reallocate_particle')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bunch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%particle)) deallocate(struct_obj%particle)
+    else
+      if (allocated(struct_obj%particle)) deallocate(struct_obj%particle)
+      allocate(struct_obj%particle(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! bunch_struct%ix_z: 1D_ALLOC_integer
 
   subroutine bunch_struct_get_ix_z_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -30450,6 +30944,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine bunch_struct_reallocate_ix_z(struct_obj_ptr, lbound_, n) &
+        bind(c, name='bunch_struct_reallocate_ix_z')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bunch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ix_z)) deallocate(struct_obj%ix_z)
+    else
+      if (allocated(struct_obj%ix_z)) deallocate(struct_obj%ix_z)
+      allocate(struct_obj%ix_z(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -30788,15 +31299,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bunch_params_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bunch_params_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bunch_params_struct_container_alloc), pointer :: ctr
 
@@ -30809,16 +31319,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -31437,15 +31946,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_beam_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_beam_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(beam_struct_container_alloc), pointer :: ctr
 
@@ -31458,16 +31966,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -31497,6 +32004,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine beam_struct_reallocate_bunch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='beam_struct_reallocate_bunch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(beam_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%bunch)) deallocate(struct_obj%bunch)
+    else
+      if (allocated(struct_obj%bunch)) deallocate(struct_obj%bunch)
+      allocate(struct_obj%bunch(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -31587,15 +32111,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_aperture_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_aperture_point_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(aperture_point_struct_container_alloc), pointer :: ctr
 
@@ -31608,16 +32131,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -31804,15 +32326,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_aperture_param_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_aperture_param_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(aperture_param_struct_container_alloc), pointer :: ctr
 
@@ -31825,16 +32346,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -32106,15 +32626,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_aperture_scan_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_aperture_scan_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(aperture_scan_struct_container_alloc), pointer :: ctr
 
@@ -32127,16 +32646,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -32166,6 +32684,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine aperture_scan_struct_reallocate_point(struct_obj_ptr, lbound_, n) &
+        bind(c, name='aperture_scan_struct_reallocate_point')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(aperture_scan_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%point)) deallocate(struct_obj%point)
+    else
+      if (allocated(struct_obj%point)) deallocate(struct_obj%point)
+      allocate(struct_obj%point(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -32296,15 +32831,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_ele_pointer_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_ele_pointer_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(ele_pointer_struct_container_alloc), pointer :: ctr
 
@@ -32317,16 +32851,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -32485,15 +33018,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_expression_tree_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_expression_tree_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(expression_tree_struct_container_alloc), pointer :: ctr
 
@@ -32506,16 +33038,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -32701,15 +33232,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_nametable_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_nametable_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(nametable_struct_container_alloc), pointer :: ctr
 
@@ -32722,16 +33252,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -32785,6 +33314,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine nametable_struct_reallocate_index(struct_obj_ptr, lbound_, n) &
+        bind(c, name='nametable_struct_reallocate_index')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(nametable_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%index)) deallocate(struct_obj%index)
+    else
+      if (allocated(struct_obj%index)) deallocate(struct_obj%index)
+      allocate(struct_obj%index(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -32933,15 +33479,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_spin_dn_dpz_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_spin_dn_dpz_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_spin_dn_dpz_struct_container_alloc), pointer :: ctr
 
@@ -32954,16 +33499,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -33195,15 +33739,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_resonance_h_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_resonance_h_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(resonance_h_struct_container_alloc), pointer :: ctr
 
@@ -33216,16 +33759,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -33364,15 +33906,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_spin_orbit_map1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_spin_orbit_map1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(spin_orbit_map1_struct_container_alloc), pointer :: ctr
 
@@ -33385,16 +33926,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -33626,15 +34166,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_spin_axis_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_spin_axis_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(spin_axis_struct_container_alloc), pointer :: ctr
 
@@ -33647,16 +34186,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -33874,15 +34412,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_ptc_normal_form_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_ptc_normal_form_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(ptc_normal_form_struct_container_alloc), pointer :: ctr
 
@@ -33895,16 +34432,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -34084,15 +34620,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bmad_normal_form_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bmad_normal_form_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bmad_normal_form_struct_container_alloc), pointer :: ctr
 
@@ -34105,16 +34640,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -34342,6 +34876,23 @@ contains
     endif
   end subroutine
 
+  subroutine bmad_normal_form_struct_reallocate_h(struct_obj_ptr, lbound_, n) &
+        bind(c, name='bmad_normal_form_struct_reallocate_h')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bmad_normal_form_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%h)) deallocate(struct_obj%h)
+    else
+      if (allocated(struct_obj%h)) deallocate(struct_obj%h)
+      allocate(struct_obj%h(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   !! bunch_track_struct
 
     function allocate_fortran_bunch_track_struct(n, element_size) result(ptr) bind(c)
@@ -34429,15 +34980,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bunch_track_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bunch_track_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bunch_track_struct_container_alloc), pointer :: ctr
 
@@ -34450,16 +35000,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -34489,6 +35038,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine bunch_track_struct_reallocate_pt(struct_obj_ptr, lbound_, n) &
+        bind(c, name='bunch_track_struct_reallocate_pt')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bunch_track_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%pt)) deallocate(struct_obj%pt)
+    else
+      if (allocated(struct_obj%pt)) deallocate(struct_obj%pt)
+      allocate(struct_obj%pt(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -34617,15 +35183,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_summation_rdt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_summation_rdt_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(summation_rdt_struct_container_alloc), pointer :: ctr
 
@@ -34638,16 +35203,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -35138,15 +35702,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_ele_shape_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_ele_shape_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_ele_shape_struct_container_alloc), pointer :: ctr
 
@@ -35159,16 +35722,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -35455,6 +36017,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_ele_shape_struct_reallocate_uni(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_ele_shape_struct_reallocate_uni')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_ele_shape_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%uni)) deallocate(struct_obj%uni)
+    else
+      if (allocated(struct_obj%uni)) deallocate(struct_obj%uni)
+      allocate(struct_obj%uni(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   !! tao_ele_pointer_struct
 
     function allocate_fortran_tao_ele_pointer_struct(n, element_size) result(ptr) bind(c)
@@ -35542,15 +36121,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_ele_pointer_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_ele_pointer_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_ele_pointer_struct_container_alloc), pointer :: ctr
 
@@ -35563,16 +36141,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -35602,6 +36179,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_ele_pointer_struct_reallocate_eles(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_ele_pointer_struct_reallocate_eles')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_ele_pointer_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%eles)) deallocate(struct_obj%eles)
+    else
+      if (allocated(struct_obj%eles)) deallocate(struct_obj%eles)
+      allocate(struct_obj%eles(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -35711,15 +36305,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_curve_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_curve_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_curve_struct_container_alloc), pointer :: ctr
 
@@ -35732,16 +36325,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -36134,6 +36726,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_curve_struct_reallocate_x_line(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_x_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%x_line)) deallocate(struct_obj%x_line)
+    else
+      if (allocated(struct_obj%x_line)) deallocate(struct_obj%x_line)
+      allocate(struct_obj%x_line(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine tao_curve_struct_set_x_line(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='tao_curve_struct_set_x_line')
@@ -36177,6 +36786,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_curve_struct_reallocate_y_line(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_y_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%y_line)) deallocate(struct_obj%y_line)
+    else
+      if (allocated(struct_obj%y_line)) deallocate(struct_obj%y_line)
+      allocate(struct_obj%y_line(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -36226,6 +36852,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_curve_struct_reallocate_y2_line(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_y2_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%y2_line)) deallocate(struct_obj%y2_line)
+    else
+      if (allocated(struct_obj%y2_line)) deallocate(struct_obj%y2_line)
+      allocate(struct_obj%y2_line(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine tao_curve_struct_set_y2_line(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='tao_curve_struct_set_y2_line')
@@ -36269,6 +36912,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_curve_struct_reallocate_ix_line(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_ix_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ix_line)) deallocate(struct_obj%ix_line)
+    else
+      if (allocated(struct_obj%ix_line)) deallocate(struct_obj%ix_line)
+      allocate(struct_obj%ix_line(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -36318,6 +36978,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_curve_struct_reallocate_x_symb(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_x_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%x_symb)) deallocate(struct_obj%x_symb)
+    else
+      if (allocated(struct_obj%x_symb)) deallocate(struct_obj%x_symb)
+      allocate(struct_obj%x_symb(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine tao_curve_struct_set_x_symb(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='tao_curve_struct_set_x_symb')
@@ -36361,6 +37038,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_curve_struct_reallocate_y_symb(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_y_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%y_symb)) deallocate(struct_obj%y_symb)
+    else
+      if (allocated(struct_obj%y_symb)) deallocate(struct_obj%y_symb)
+      allocate(struct_obj%y_symb(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -36410,6 +37104,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_curve_struct_reallocate_z_symb(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_z_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%z_symb)) deallocate(struct_obj%z_symb)
+    else
+      if (allocated(struct_obj%z_symb)) deallocate(struct_obj%z_symb)
+      allocate(struct_obj%z_symb(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine tao_curve_struct_set_z_symb(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='tao_curve_struct_set_z_symb')
@@ -36453,6 +37164,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_curve_struct_reallocate_err_symb(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_err_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%err_symb)) deallocate(struct_obj%err_symb)
+    else
+      if (allocated(struct_obj%err_symb)) deallocate(struct_obj%err_symb)
+      allocate(struct_obj%err_symb(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -36502,6 +37230,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_curve_struct_reallocate_symb_size(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_symb_size')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%symb_size)) deallocate(struct_obj%symb_size)
+    else
+      if (allocated(struct_obj%symb_size)) deallocate(struct_obj%symb_size)
+      allocate(struct_obj%symb_size(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine tao_curve_struct_set_symb_size(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='tao_curve_struct_set_symb_size')
@@ -36545,6 +37290,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_curve_struct_reallocate_ix_symb(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_curve_struct_reallocate_ix_symb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_curve_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ix_symb)) deallocate(struct_obj%ix_symb)
+    else
+      if (allocated(struct_obj%ix_symb)) deallocate(struct_obj%ix_symb)
+      allocate(struct_obj%ix_symb(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -36965,15 +37727,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_curve_color_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_curve_color_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_curve_color_struct_container_alloc), pointer :: ctr
 
@@ -36986,16 +37747,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -37191,15 +37951,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_curve_orbit_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_curve_orbit_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_curve_orbit_struct_container_alloc), pointer :: ctr
 
@@ -37212,16 +37971,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -37370,15 +38128,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_histogram_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_histogram_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_histogram_struct_container_alloc), pointer :: ctr
 
@@ -37391,16 +38148,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -37625,15 +38381,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_lat_ele_order1_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_lat_ele_order1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(lat_ele_order1_struct_container_alloc), pointer :: ctr
 
@@ -37646,16 +38401,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -37785,15 +38539,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_lat_ele_order_array_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_lat_ele_order_array_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(lat_ele_order_array_struct_container_alloc), pointer :: ctr
 
@@ -37806,16 +38559,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -37845,6 +38597,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine lat_ele_order_array_struct_reallocate_ele(struct_obj_ptr, lbound_, n) &
+        bind(c, name='lat_ele_order_array_struct_reallocate_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_ele_order_array_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ele)) deallocate(struct_obj%ele)
+    else
+      if (allocated(struct_obj%ele)) deallocate(struct_obj%ele)
+      allocate(struct_obj%ele(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -37935,15 +38704,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_lat_sigma_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_lat_sigma_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_lat_sigma_struct_container_alloc), pointer :: ctr
 
@@ -37956,16 +38724,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -38106,15 +38873,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_spin_ele_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_spin_ele_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_spin_ele_struct_container_alloc), pointer :: ctr
 
@@ -38127,16 +38893,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -38408,15 +39173,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_plot_cache_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_plot_cache_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_plot_cache_struct_container_alloc), pointer :: ctr
 
@@ -38429,16 +39193,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -38591,15 +39354,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_spin_polarization_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_spin_polarization_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_spin_polarization_struct_container_alloc), pointer :: ctr
 
@@ -38612,16 +39374,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -39033,6 +39794,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_spin_polarization_struct_reallocate_q_ele(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_spin_polarization_struct_reallocate_q_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_spin_polarization_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%q_ele)) deallocate(struct_obj%q_ele)
+    else
+      if (allocated(struct_obj%q_ele)) deallocate(struct_obj%q_ele)
+      allocate(struct_obj%q_ele(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   !! tao_lattice_branch_struct
 
     function allocate_fortran_tao_lattice_branch_struct(n, element_size) result(ptr) bind(c)
@@ -39120,15 +39898,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_lattice_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_lattice_branch_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_lattice_branch_struct_container_alloc), pointer :: ctr
 
@@ -39141,16 +39918,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -39210,6 +39986,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_lattice_branch_struct_reallocate_lat_sigma(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_branch_struct_reallocate_lat_sigma')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%lat_sigma)) deallocate(struct_obj%lat_sigma)
+    else
+      if (allocated(struct_obj%lat_sigma)) deallocate(struct_obj%lat_sigma)
+      allocate(struct_obj%lat_sigma(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_lattice_branch_struct%spin_ele: 1D_ALLOC_type
 
   subroutine tao_lattice_branch_struct_get_spin_ele_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -39235,6 +40028,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_lattice_branch_struct_reallocate_spin_ele(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_branch_struct_reallocate_spin_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%spin_ele)) deallocate(struct_obj%spin_ele)
+    else
+      if (allocated(struct_obj%spin_ele)) deallocate(struct_obj%spin_ele)
+      allocate(struct_obj%spin_ele(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -39266,6 +40076,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_lattice_branch_struct_reallocate_bunch_params(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_branch_struct_reallocate_bunch_params')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%bunch_params)) deallocate(struct_obj%bunch_params)
+    else
+      if (allocated(struct_obj%bunch_params)) deallocate(struct_obj%bunch_params)
+      allocate(struct_obj%bunch_params(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_lattice_branch_struct%bunch_params_comb: 1D_ALLOC_type
 
   subroutine tao_lattice_branch_struct_get_bunch_params_comb_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -39291,6 +40118,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_lattice_branch_struct_reallocate_bunch_params_comb(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_branch_struct_reallocate_bunch_params_comb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%bunch_params_comb)) deallocate(struct_obj%bunch_params_comb)
+    else
+      if (allocated(struct_obj%bunch_params_comb)) deallocate(struct_obj%bunch_params_comb)
+      allocate(struct_obj%bunch_params_comb(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -39322,6 +40166,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_lattice_branch_struct_reallocate_orbit(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_branch_struct_reallocate_orbit')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%orbit)) deallocate(struct_obj%orbit)
+    else
+      if (allocated(struct_obj%orbit)) deallocate(struct_obj%orbit)
+      allocate(struct_obj%orbit(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_lattice_branch_struct%plot_cache: 1D_ALLOC_type
 
   subroutine tao_lattice_branch_struct_get_plot_cache_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -39347,6 +40208,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_lattice_branch_struct_reallocate_plot_cache(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_branch_struct_reallocate_plot_cache')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%plot_cache)) deallocate(struct_obj%plot_cache)
+    else
+      if (allocated(struct_obj%plot_cache)) deallocate(struct_obj%plot_cache)
+      allocate(struct_obj%plot_cache(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -39525,6 +40403,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_lattice_branch_struct_reallocate_high_E_orb(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_branch_struct_reallocate_high_E_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%high_E_orb)) deallocate(struct_obj%high_E_orb)
+    else
+      if (allocated(struct_obj%high_E_orb)) deallocate(struct_obj%high_E_orb)
+      allocate(struct_obj%high_E_orb(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_lattice_branch_struct%low_E_orb: 1D_ALLOC_type
 
   subroutine tao_lattice_branch_struct_get_low_E_orb_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -39550,6 +40445,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_lattice_branch_struct_reallocate_low_E_orb(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_branch_struct_reallocate_low_E_orb')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%low_E_orb)) deallocate(struct_obj%low_E_orb)
+    else
+      if (allocated(struct_obj%low_E_orb)) deallocate(struct_obj%low_E_orb)
+      allocate(struct_obj%low_E_orb(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -39991,15 +40903,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_model_element_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_model_element_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_model_element_struct_container_alloc), pointer :: ctr
 
@@ -40012,16 +40923,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -40172,15 +41082,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_beam_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_beam_branch_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_beam_branch_struct_container_alloc), pointer :: ctr
 
@@ -40193,16 +41102,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -40489,15 +41397,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_d1_data_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_d1_data_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_d1_data_struct_container_alloc), pointer :: ctr
 
@@ -40510,16 +41417,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -40694,15 +41600,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_d2_data_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_d2_data_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_d2_data_struct_container_alloc), pointer :: ctr
 
@@ -40715,16 +41620,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -40923,6 +41827,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_d2_data_struct_reallocate_d1(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_d2_data_struct_reallocate_d1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_d2_data_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%d1)) deallocate(struct_obj%d1)
+    else
+      if (allocated(struct_obj%d1)) deallocate(struct_obj%d1)
+      allocate(struct_obj%d1(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_d2_data_struct%ix_universe: 0D_NOT_integer
 
   subroutine tao_d2_data_struct_get_ix_universe(struct_obj_ptr, value_out) bind(c, name='tao_d2_data_struct_get_ix_universe')
@@ -41105,15 +42026,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_data_var_component_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_data_var_component_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_data_var_component_struct_container_alloc), pointer :: ctr
 
@@ -41126,16 +42046,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -41274,15 +42193,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_graph_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_graph_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_graph_struct_container_alloc), pointer :: ctr
 
@@ -41295,16 +42213,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -41526,6 +42443,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_graph_struct_reallocate_curve(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_graph_struct_reallocate_curve')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_graph_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%curve)) deallocate(struct_obj%curve)
+    else
+      if (allocated(struct_obj%curve)) deallocate(struct_obj%curve)
+      allocate(struct_obj%curve(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -42161,15 +43095,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_plot_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_plot_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_plot_struct_container_alloc), pointer :: ctr
 
@@ -42182,16 +43115,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -42277,6 +43209,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_plot_struct_reallocate_graph(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_plot_struct_reallocate_graph')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_plot_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%graph)) deallocate(struct_obj%graph)
+    else
+      if (allocated(struct_obj%graph)) deallocate(struct_obj%graph)
+      allocate(struct_obj%graph(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -42621,15 +43570,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_plot_region_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_plot_region_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_plot_region_struct_container_alloc), pointer :: ctr
 
@@ -42642,16 +43590,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -42891,15 +43838,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_universe_pointer_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_universe_pointer_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_universe_pointer_struct_container_alloc), pointer :: ctr
 
@@ -42912,16 +43858,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -43040,15 +43985,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_super_universe_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_super_universe_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_super_universe_struct_container_alloc), pointer :: ctr
 
@@ -43061,16 +44005,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -43187,6 +44130,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_super_universe_struct_reallocate_v1_var(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_super_universe_struct_reallocate_v1_var')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_super_universe_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%v1_var)) deallocate(struct_obj%v1_var)
+    else
+      if (allocated(struct_obj%v1_var)) deallocate(struct_obj%v1_var)
+      allocate(struct_obj%v1_var(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_super_universe_struct%var: 1D_ALLOC_type
 
   subroutine tao_super_universe_struct_get_var_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -43212,6 +44172,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_super_universe_struct_reallocate_var(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_super_universe_struct_reallocate_var')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_super_universe_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%var)) deallocate(struct_obj%var)
+    else
+      if (allocated(struct_obj%var)) deallocate(struct_obj%var)
+      allocate(struct_obj%var(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -43243,6 +44220,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_super_universe_struct_reallocate_u(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_super_universe_struct_reallocate_u')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_super_universe_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%u)) deallocate(struct_obj%u)
+    else
+      if (allocated(struct_obj%u)) deallocate(struct_obj%u)
+      allocate(struct_obj%u(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_super_universe_struct%key: 1D_ALLOC_integer
 
   subroutine tao_super_universe_struct_get_key_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -43266,6 +44260,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_super_universe_struct_reallocate_key(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_super_universe_struct_reallocate_key')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_super_universe_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%key)) deallocate(struct_obj%key)
+    else
+      if (allocated(struct_obj%key)) deallocate(struct_obj%key)
+      allocate(struct_obj%key(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -43503,15 +44514,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_var_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_var_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_var_struct_container_alloc), pointer :: ctr
 
@@ -43524,16 +44534,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -43647,6 +44656,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_var_struct_reallocate_slave(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_var_struct_reallocate_slave')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_var_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%slave)) deallocate(struct_obj%slave)
+    else
+      if (allocated(struct_obj%slave)) deallocate(struct_obj%slave)
+      allocate(struct_obj%slave(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -44412,15 +45438,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_var_slave_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_var_slave_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_var_slave_struct_container_alloc), pointer :: ctr
 
@@ -44433,16 +45458,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -44641,15 +45665,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_lattice_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_lattice_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_lattice_struct_container_alloc), pointer :: ctr
 
@@ -44662,16 +45685,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -44837,6 +45859,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_lattice_struct_reallocate_tao_branch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_lattice_struct_reallocate_tao_branch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_lattice_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%tao_branch)) deallocate(struct_obj%tao_branch)
+    else
+      if (allocated(struct_obj%tao_branch)) deallocate(struct_obj%tao_branch)
+      allocate(struct_obj%tao_branch(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   !! tao_beam_uni_struct
 
     function allocate_fortran_tao_beam_uni_struct(n, element_size) result(ptr) bind(c)
@@ -44924,15 +45963,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_beam_uni_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_beam_uni_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_beam_uni_struct_container_alloc), pointer :: ctr
 
@@ -44945,16 +45983,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -45168,15 +46205,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_dynamic_aperture_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_dynamic_aperture_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_dynamic_aperture_struct_container_alloc), pointer :: ctr
 
@@ -45189,16 +46225,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -45252,6 +46287,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_dynamic_aperture_struct_reallocate_scan(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_dynamic_aperture_struct_reallocate_scan')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_dynamic_aperture_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%scan)) deallocate(struct_obj%scan)
+    else
+      if (allocated(struct_obj%scan)) deallocate(struct_obj%scan)
+      allocate(struct_obj%scan(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_dynamic_aperture_struct%pz: 1D_ALLOC_real
 
   subroutine tao_dynamic_aperture_struct_get_pz_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -45275,6 +46327,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_dynamic_aperture_struct_reallocate_pz(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_dynamic_aperture_struct_reallocate_pz')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_dynamic_aperture_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%pz)) deallocate(struct_obj%pz)
+    else
+      if (allocated(struct_obj%pz)) deallocate(struct_obj%pz)
+      allocate(struct_obj%pz(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -45442,15 +46511,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_model_branch_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_model_branch_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_model_branch_struct_container_alloc), pointer :: ctr
 
@@ -45463,16 +46531,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -45502,6 +46569,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_model_branch_struct_reallocate_ele(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_model_branch_struct_reallocate_ele')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_model_branch_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ele)) deallocate(struct_obj%ele)
+    else
+      if (allocated(struct_obj%ele)) deallocate(struct_obj%ele)
+      allocate(struct_obj%ele(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -45613,15 +46697,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_spin_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_spin_map_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_spin_map_struct_container_alloc), pointer :: ctr
 
@@ -45634,16 +46717,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -45963,15 +47045,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_data_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_data_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_data_struct_container_alloc), pointer :: ctr
 
@@ -45984,16 +47065,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -47073,15 +48153,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_ping_scale_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_ping_scale_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_ping_scale_struct_container_alloc), pointer :: ctr
 
@@ -47094,16 +48173,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -47271,15 +48349,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_universe_calc_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_universe_calc_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_universe_calc_struct_container_alloc), pointer :: ctr
 
@@ -47292,16 +48369,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -47640,15 +48716,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_lat_ele_order_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_lat_ele_order_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(lat_ele_order_struct_container_alloc), pointer :: ctr
 
@@ -47661,16 +48736,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -47700,6 +48774,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine lat_ele_order_struct_reallocate_branch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='lat_ele_order_struct_reallocate_branch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(lat_ele_order_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%branch)) deallocate(struct_obj%branch)
+    else
+      if (allocated(struct_obj%branch)) deallocate(struct_obj%branch)
+      allocate(struct_obj%branch(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -47790,15 +48881,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_expression_info_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_expression_info_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_expression_info_struct_container_alloc), pointer :: ctr
 
@@ -47811,16 +48901,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -47977,15 +49066,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_eval_node_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_eval_node_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_eval_node_struct_container_alloc), pointer :: ctr
 
@@ -47998,16 +49086,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -48104,6 +49191,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_eval_node_struct_reallocate_value(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_eval_node_struct_reallocate_value')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_eval_node_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%value)) deallocate(struct_obj%value)
+    else
+      if (allocated(struct_obj%value)) deallocate(struct_obj%value)
+      allocate(struct_obj%value(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine tao_eval_node_struct_set_value(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='tao_eval_node_struct_set_value')
@@ -48149,6 +49253,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_eval_node_struct_reallocate_info(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_eval_node_struct_reallocate_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_eval_node_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%info)) deallocate(struct_obj%info)
+    else
+      if (allocated(struct_obj%info)) deallocate(struct_obj%info)
+      allocate(struct_obj%info(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -48267,15 +49388,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_title_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_title_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_title_struct_container_alloc), pointer :: ctr
 
@@ -48288,16 +49408,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -48530,15 +49649,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_qp_rect_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_qp_rect_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(qp_rect_struct_container_alloc), pointer :: ctr
 
@@ -48551,16 +49669,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -48756,15 +49873,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_drawing_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_drawing_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_drawing_struct_container_alloc), pointer :: ctr
 
@@ -48777,16 +49893,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -48816,6 +49931,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_drawing_struct_reallocate_ele_shape(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_drawing_struct_reallocate_ele_shape')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_drawing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ele_shape)) deallocate(struct_obj%ele_shape)
+    else
+      if (allocated(struct_obj%ele_shape)) deallocate(struct_obj%ele_shape)
+      allocate(struct_obj%ele_shape(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -48906,15 +50038,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_shape_pattern_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_shape_pattern_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_shape_pattern_struct_container_alloc), pointer :: ctr
 
@@ -48927,16 +50058,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -49015,6 +50145,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_shape_pattern_struct_reallocate_pt(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_shape_pattern_struct_reallocate_pt')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_shape_pattern_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%pt)) deallocate(struct_obj%pt)
+    else
+      if (allocated(struct_obj%pt)) deallocate(struct_obj%pt)
+      allocate(struct_obj%pt(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -49105,15 +50252,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_shape_pattern_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_shape_pattern_point_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_shape_pattern_point_struct_container_alloc), pointer :: ctr
 
@@ -49126,16 +50272,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -49284,15 +50429,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_qp_axis_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_qp_axis_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(qp_axis_struct_container_alloc), pointer :: ctr
 
@@ -49305,16 +50449,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -49898,15 +51041,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_qp_legend_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_qp_legend_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(qp_legend_struct_container_alloc), pointer :: ctr
 
@@ -49919,16 +51061,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -50134,15 +51275,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_qp_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_qp_point_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(qp_point_struct_container_alloc), pointer :: ctr
 
@@ -50155,16 +51295,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -50322,15 +51461,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_qp_line_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_qp_line_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(qp_line_struct_container_alloc), pointer :: ctr
 
@@ -50343,16 +51481,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -50519,15 +51656,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_qp_symbol_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_qp_symbol_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(qp_symbol_struct_container_alloc), pointer :: ctr
 
@@ -50540,16 +51676,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -50763,15 +51898,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_floor_plan_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_floor_plan_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_floor_plan_struct_container_alloc), pointer :: ctr
 
@@ -50784,16 +51918,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -51149,15 +52282,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_v1_var_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_v1_var_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_v1_var_struct_container_alloc), pointer :: ctr
 
@@ -51170,16 +52302,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -51346,15 +52477,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_global_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_global_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_global_struct_container_alloc), pointer :: ctr
 
@@ -51367,16 +52497,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -52878,15 +54007,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_init_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_init_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_init_struct_container_alloc), pointer :: ctr
 
@@ -52899,16 +54027,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -54121,15 +55248,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_common_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_common_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_common_struct_container_alloc), pointer :: ctr
 
@@ -54142,16 +55268,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -54181,6 +55306,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_common_struct_reallocate_plot_place_buffer(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_common_struct_reallocate_plot_place_buffer')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_common_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%plot_place_buffer)) deallocate(struct_obj%plot_place_buffer)
+    else
+      if (allocated(struct_obj%plot_place_buffer)) deallocate(struct_obj%plot_place_buffer)
+      allocate(struct_obj%plot_place_buffer(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -55156,15 +56298,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_plot_page_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_plot_page_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_plot_page_struct_container_alloc), pointer :: ctr
 
@@ -55177,16 +56318,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -55324,6 +56464,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_plot_page_struct_reallocate_pattern(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_plot_page_struct_reallocate_pattern')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_plot_page_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%pattern)) deallocate(struct_obj%pattern)
+    else
+      if (allocated(struct_obj%pattern)) deallocate(struct_obj%pattern)
+      allocate(struct_obj%pattern(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_plot_page_struct%template: 1D_ALLOC_type
 
   subroutine tao_plot_page_struct_get_template_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -55352,6 +56509,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_plot_page_struct_reallocate_template(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_plot_page_struct_reallocate_template')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_plot_page_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%template)) deallocate(struct_obj%template)
+    else
+      if (allocated(struct_obj%template)) deallocate(struct_obj%template)
+      allocate(struct_obj%template(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_plot_page_struct%region: 1D_ALLOC_type
 
   subroutine tao_plot_page_struct_get_region_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -55377,6 +56551,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_plot_page_struct_reallocate_region(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_plot_page_struct_reallocate_region')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_plot_page_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%region)) deallocate(struct_obj%region)
+    else
+      if (allocated(struct_obj%region)) deallocate(struct_obj%region)
+      allocate(struct_obj%region(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -55822,15 +57013,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_building_wall_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_building_wall_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_building_wall_struct_container_alloc), pointer :: ctr
 
@@ -55843,16 +57033,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -55903,6 +57092,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_building_wall_struct_reallocate_section(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_building_wall_struct_reallocate_section')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_building_wall_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%section)) deallocate(struct_obj%section)
+    else
+      if (allocated(struct_obj%section)) deallocate(struct_obj%section)
+      allocate(struct_obj%section(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -55993,15 +57199,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_building_wall_orientation_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_building_wall_orientation_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_building_wall_orientation_struct_container_alloc), pointer :: ctr
 
@@ -56014,16 +57219,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -56172,15 +57376,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_building_wall_section_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_building_wall_section_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_building_wall_section_struct_container_alloc), pointer :: ctr
 
@@ -56193,16 +57396,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -56288,6 +57490,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_building_wall_section_struct_reallocate_point(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_building_wall_section_struct_reallocate_point')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_building_wall_section_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%point)) deallocate(struct_obj%point)
+    else
+      if (allocated(struct_obj%point)) deallocate(struct_obj%point)
+      allocate(struct_obj%point(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -56378,15 +57597,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_building_wall_point_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_building_wall_point_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_building_wall_point_struct_container_alloc), pointer :: ctr
 
@@ -56399,16 +57617,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -56595,15 +57812,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_wave_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_wave_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_wave_struct_container_alloc), pointer :: ctr
 
@@ -56616,16 +57832,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -57487,6 +58702,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_wave_struct_reallocate_ix_data(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_wave_struct_reallocate_ix_data')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ix_data)) deallocate(struct_obj%ix_data)
+    else
+      if (allocated(struct_obj%ix_data)) deallocate(struct_obj%ix_data)
+      allocate(struct_obj%ix_data(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine tao_wave_struct_set_ix_data(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='tao_wave_struct_set_ix_data')
@@ -57551,6 +58783,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_wave_struct_reallocate_kick(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_wave_struct_reallocate_kick')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_wave_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%kick)) deallocate(struct_obj%kick)
+    else
+      if (allocated(struct_obj%kick)) deallocate(struct_obj%kick)
+      allocate(struct_obj%kick(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -57716,15 +58965,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_wave_kick_pt_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_wave_kick_pt_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_wave_kick_pt_struct_container_alloc), pointer :: ctr
 
@@ -57737,16 +58985,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -57979,15 +59226,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_cmd_history_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_cmd_history_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_cmd_history_struct_container_alloc), pointer :: ctr
 
@@ -58000,16 +59246,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -58161,15 +59406,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_tao_universe_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_tao_universe_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(tao_universe_struct_container_alloc), pointer :: ctr
 
@@ -58182,16 +59426,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -58375,6 +59618,23 @@ contains
     endif
   end subroutine
 
+  subroutine tao_universe_struct_reallocate_d2_data(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_universe_struct_reallocate_d2_data')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_universe_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%d2_data)) deallocate(struct_obj%d2_data)
+    else
+      if (allocated(struct_obj%d2_data)) deallocate(struct_obj%d2_data)
+      allocate(struct_obj%d2_data(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! tao_universe_struct%data: 1D_ALLOC_type
 
   subroutine tao_universe_struct_get_data_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -58400,6 +59660,23 @@ contains
       bounds = 0_c_int
       el_size = 0
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine tao_universe_struct_reallocate_data(struct_obj_ptr, lbound_, n) &
+        bind(c, name='tao_universe_struct_reallocate_data')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(tao_universe_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%data)) deallocate(struct_obj%data)
+    else
+      if (allocated(struct_obj%data)) deallocate(struct_obj%data)
+      allocate(struct_obj%data(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -58762,15 +60039,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_mad_energy_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_mad_energy_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(mad_energy_struct_container_alloc), pointer :: ctr
 
@@ -58783,16 +60059,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -58998,15 +60273,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_mad_map_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_mad_map_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(mad_map_struct_container_alloc), pointer :: ctr
 
@@ -59019,16 +60293,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -59264,15 +60537,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_random_state_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_random_state_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(random_state_struct_container_alloc), pointer :: ctr
 
@@ -59285,16 +60557,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -59660,15 +60931,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bbu_stage_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bbu_stage_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bbu_stage_struct_container_alloc), pointer :: ctr
 
@@ -59681,16 +60951,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -60121,15 +61390,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bbu_beam_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bbu_beam_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bbu_beam_struct_container_alloc), pointer :: ctr
 
@@ -60142,16 +61410,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -60184,6 +61451,23 @@ contains
     endif
   end subroutine
 
+  subroutine bbu_beam_struct_reallocate_bunch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='bbu_beam_struct_reallocate_bunch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bbu_beam_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%bunch)) deallocate(struct_obj%bunch)
+    else
+      if (allocated(struct_obj%bunch)) deallocate(struct_obj%bunch)
+      allocate(struct_obj%bunch(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! bbu_beam_struct%stage: 1D_ALLOC_type
 
   subroutine bbu_beam_struct_get_stage_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
@@ -60212,6 +61496,23 @@ contains
     endif
   end subroutine
 
+  subroutine bbu_beam_struct_reallocate_stage(struct_obj_ptr, lbound_, n) &
+        bind(c, name='bbu_beam_struct_reallocate_stage')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bbu_beam_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%stage)) deallocate(struct_obj%stage)
+    else
+      if (allocated(struct_obj%stage)) deallocate(struct_obj%stage)
+      allocate(struct_obj%stage(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! bbu_beam_struct%ix_ele_bunch: 1D_ALLOC_integer
 
   subroutine bbu_beam_struct_get_ix_ele_bunch_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -60235,6 +61536,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine bbu_beam_struct_reallocate_ix_ele_bunch(struct_obj_ptr, lbound_, n) &
+        bind(c, name='bbu_beam_struct_reallocate_ix_ele_bunch')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(bbu_beam_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%ix_ele_bunch)) deallocate(struct_obj%ix_ele_bunch)
+    else
+      if (allocated(struct_obj%ix_ele_bunch)) deallocate(struct_obj%ix_ele_bunch)
+      allocate(struct_obj%ix_ele_bunch(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -60497,15 +61815,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_bbu_param_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_bbu_param_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(bbu_param_struct_container_alloc), pointer :: ctr
 
@@ -60518,16 +61835,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -61371,15 +62687,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_fibre_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_fibre_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(fibre_container_alloc), pointer :: ctr
 
@@ -61392,16 +62707,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -61853,15 +63167,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_layout_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_layout_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(layout_container_alloc), pointer :: ctr
 
@@ -61874,16 +63187,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -62381,15 +63693,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_all_encompassing_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_all_encompassing_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(all_encompassing_struct_container_alloc), pointer :: ctr
 
@@ -62402,16 +63713,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -62783,6 +64093,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine all_encompassing_struct_reallocate_real_rp_1d_alloc(struct_obj_ptr, lbound_, n) &
+        bind(c, name='all_encompassing_struct_reallocate_real_rp_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%real_rp_1d_alloc)) deallocate(struct_obj%real_rp_1d_alloc)
+    else
+      if (allocated(struct_obj%real_rp_1d_alloc)) deallocate(struct_obj%real_rp_1d_alloc)
+      allocate(struct_obj%real_rp_1d_alloc(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -63286,6 +64613,23 @@ contains
     endif
   end subroutine
 
+  subroutine all_encompassing_struct_reallocate_real_dp_1d_alloc(struct_obj_ptr, lbound_, n) &
+        bind(c, name='all_encompassing_struct_reallocate_real_dp_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%real_dp_1d_alloc)) deallocate(struct_obj%real_dp_1d_alloc)
+    else
+      if (allocated(struct_obj%real_dp_1d_alloc)) deallocate(struct_obj%real_dp_1d_alloc)
+      allocate(struct_obj%real_dp_1d_alloc(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine all_encompassing_struct_set_real_dp_1d_alloc(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='all_encompassing_struct_set_real_dp_1d_alloc')
@@ -63758,6 +65102,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine all_encompassing_struct_reallocate_complex_dp_1d_alloc(struct_obj_ptr, lbound_, n) &
+        bind(c, name='all_encompassing_struct_reallocate_complex_dp_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%complex_dp_1d_alloc)) deallocate(struct_obj%complex_dp_1d_alloc)
+    else
+      if (allocated(struct_obj%complex_dp_1d_alloc)) deallocate(struct_obj%complex_dp_1d_alloc)
+      allocate(struct_obj%complex_dp_1d_alloc(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -64261,6 +65622,23 @@ contains
     endif
   end subroutine
 
+  subroutine all_encompassing_struct_reallocate_int_1d_alloc(struct_obj_ptr, lbound_, n) &
+        bind(c, name='all_encompassing_struct_reallocate_int_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%int_1d_alloc)) deallocate(struct_obj%int_1d_alloc)
+    else
+      if (allocated(struct_obj%int_1d_alloc)) deallocate(struct_obj%int_1d_alloc)
+      allocate(struct_obj%int_1d_alloc(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
 
   subroutine all_encompassing_struct_set_int_1d_alloc(struct_obj_ptr, val_ptr, shape) &
       bind(c, name='all_encompassing_struct_set_int_1d_alloc')
@@ -64758,6 +66136,23 @@ contains
       data_ptr = c_null_ptr
       bounds = 0_c_int
       is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine all_encompassing_struct_reallocate_int8_1d_alloc(struct_obj_ptr, lbound_, n) &
+        bind(c, name='all_encompassing_struct_reallocate_int8_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%int8_1d_alloc)) deallocate(struct_obj%int8_1d_alloc)
+    else
+      if (allocated(struct_obj%int8_1d_alloc)) deallocate(struct_obj%int8_1d_alloc)
+      allocate(struct_obj%int8_1d_alloc(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
@@ -65359,6 +66754,23 @@ contains
     endif
   end subroutine
 
+  subroutine all_encompassing_struct_reallocate_type_1d_alloc(struct_obj_ptr, lbound_, n) &
+        bind(c, name='all_encompassing_struct_reallocate_type_1d_alloc')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%type_1d_alloc)) deallocate(struct_obj%type_1d_alloc)
+    else
+      if (allocated(struct_obj%type_1d_alloc)) deallocate(struct_obj%type_1d_alloc)
+      allocate(struct_obj%type_1d_alloc(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
   ! all_encompassing_struct%type_2d_alloc: 2D_ALLOC_type
 
   subroutine all_encompassing_struct_get_type_2d_alloc_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated, el_size) &
@@ -65520,15 +66932,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_test_sub_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_test_sub_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(test_sub_struct_container_alloc), pointer :: ctr
 
@@ -65541,16 +66952,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine
@@ -65663,15 +67073,14 @@ contains
     end if
   end subroutine
 
-  subroutine access_test_sub_sub_struct_container(container_ptr, d_ptr, js, sz, elem_size, is_allocated) bind(c)
+  subroutine access_test_sub_sub_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
     type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), intent(out) :: js         ! Start index (likely 0 or 1)
-    integer(c_int), intent(out) :: sz
-    integer(c_size_t), intent(out) :: elem_size
+    integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
 
     type(test_sub_sub_struct_container_alloc), pointer :: ctr
 
@@ -65684,16 +67093,15 @@ contains
 
     if (allocated(ctr%data)) then
       is_allocated = .true.
-      sz = size(ctr%data)
-      js = lbound(ctr%data, 1)
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
       ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(js)) / 8
-      d_ptr = c_loc(ctr%data(js))
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
     else
       is_allocated = .false.
       d_ptr = c_null_ptr
-      js = 0
-      sz = 0
+      bounds = 0
       elem_size = 0
     endif
   end subroutine

@@ -411,7 +411,7 @@ rel : float
 
 plc : int
 
-out : character
+out : str
 )"""
   );
   m.def(
@@ -510,7 +510,7 @@ Parameters
 ----------
 rel : float
 
-str_out : character
+str_out : str
 )"""
   );
   m.def(
@@ -524,7 +524,7 @@ Parameters
 ----------
 rel : float
 
-str_out : character
+str_out : str
 )"""
   );
   py::class_<Bmad::ReadBeamAscii, std::unique_ptr<Bmad::ReadBeamAscii>>(
@@ -562,7 +562,7 @@ Otherwise the file is assumed to be ASCII.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     Name of beam file.
 
 beam_init : BeamInitStruct
@@ -616,7 +616,7 @@ Otherwise the file is assumed to be ASCII.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     Name of beam file.
 
 beam_init : BeamInitStruct
@@ -665,7 +665,7 @@ Routine to read a binary cartesian_map structure.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     File to create.
 
 ele : EleStruct
@@ -708,7 +708,7 @@ Routine to read a binary cylindrical_map structure.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     File to create.
 
 ele : EleStruct
@@ -751,7 +751,7 @@ Routine to read a binary grid_field structure.
 
 Parameters
 ----------
-file_name : character
+file_name : str
     File to create.
 
 ele : EleStruct
@@ -776,7 +776,7 @@ Routine to read the reflection probability data for a given type of surface from
 
 Parameters
 ----------
-file_name : character
+file_name : str
     Name of the file.
 
 Returns
@@ -1332,8 +1332,8 @@ extra_field : EmFieldStruct, optional
       py::arg("orb"),
       py::arg("dt"),
       py::arg("new_orb"),
-      py::arg("dr_dt") = py::none(),
       py::arg("err_flag"),
+      py::arg("dr_dt") = py::none(),
       py::arg("print_err") = py::none(),
       py::arg("extra_field") = py::none(),
       R"""(Wrapper for Fortran routine rk_time_step1
@@ -1352,9 +1352,9 @@ dt : float
 
 new_orb : CoordStruct
 
-dr_dt : 1D array of float (shape: 10), optional
-
 err_flag : bool
+
+dr_dt : 1D array of float (shape: 10), optional
 
 print_err : bool, optional
 

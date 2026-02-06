@@ -772,8 +772,8 @@ Tao::TaoEvaluateDatumAtS Tao::tao_evaluate_datum_at_s(
 Tao::TaoEvaluateElementParameters Tao::tao_evaluate_element_parameters(
     std::string param_name,
     bool print_err,
-    optional_ref<EleStruct> dflt_ele,
     std::string dflt_source,
+    optional_ref<EleStruct> dflt_ele,
     std::optional<std::string> dflt_component,
     std::optional<int> dflt_uni,
     std::optional<int> eval_point
