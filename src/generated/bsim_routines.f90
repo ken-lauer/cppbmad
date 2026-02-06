@@ -344,8 +344,8 @@ subroutine fortran_rf_cav_names (lat) bind(c)
   call rf_cav_names(f_lat)
 
 end subroutine
-subroutine fortran_set_tune_3d (branch, target_tunes, everything_ok, mask, use_phase_trombone, &
-    z_tune_set, group_knobs, print_err) bind(c)
+subroutine fortran_set_tune_3d (branch, target_tunes, mask, use_phase_trombone, z_tune_set, &
+    group_knobs, print_err, everything_ok) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: branch_struct

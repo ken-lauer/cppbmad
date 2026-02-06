@@ -22,9 +22,18 @@ void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
       .def_property("ix_branch", &LatEleLocStruct::ix_branch, &LatEleLocStruct::set_ix_branch)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return LatEleLocStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return LatEleLocStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = LatEleLocStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const LatEleLocStruct &self) { return to_string(self); })
@@ -63,9 +72,18 @@ void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &c
       .def_property("ix_order", &LatEleOrder1Struct::ix_order, &LatEleOrder1Struct::set_ix_order)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return LatEleOrder1StructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return LatEleOrder1StructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = LatEleOrder1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const LatEleOrder1Struct &self) { return to_string(self); })
@@ -97,9 +115,18 @@ void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayS
       .def_property_readonly("ele", &LatEleOrderArrayStruct::ele)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return LatEleOrderArrayStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return LatEleOrderArrayStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = LatEleOrderArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const LatEleOrderArrayStruct &self) { return to_string(self); })
@@ -404,9 +431,18 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return LatStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return LatStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = LatStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const LatStruct &self) { return to_string(self); })

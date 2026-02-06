@@ -313,9 +313,18 @@ void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTab
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return PhotonReflectTableStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return PhotonReflectTableStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = PhotonReflectTableStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const PhotonReflectTableStruct &self) { return to_string(self); })

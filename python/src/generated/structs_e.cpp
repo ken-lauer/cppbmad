@@ -29,9 +29,18 @@ void init_ele_pointer_struct(py::module &m, py::class_<ElePointerStruct> &cls) {
       .def_property("id", &ElePointerStruct::id, &ElePointerStruct::set_id)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ElePointerStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ElePointerStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ElePointerStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ElePointerStruct &self) { return to_string(self); })
@@ -474,9 +483,18 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return EleStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return EleStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = EleStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const EleStruct &self) { return to_string(self); })
@@ -526,9 +544,18 @@ void init_ellipse_beam_init_struct(py::module &m, py::class_<EllipseBeamInitStru
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return EllipseBeamInitStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return EllipseBeamInitStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = EllipseBeamInitStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const EllipseBeamInitStruct &self) { return to_string(self); })
@@ -590,9 +617,18 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
       .def_property("A", &EmFieldStruct::A, &EmFieldStruct::set_A)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return EmFieldStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return EmFieldStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = EmFieldStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const EmFieldStruct &self) { return to_string(self); })
@@ -626,9 +662,18 @@ void init_em_taylor_struct(py::module &m, py::class_<EmTaylorStruct> &cls) {
       .def_property_readonly("term", &EmTaylorStruct::term)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return EmTaylorStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return EmTaylorStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = EmTaylorStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const EmTaylorStruct &self) { return to_string(self); })
@@ -666,9 +711,18 @@ void init_em_taylor_term_struct(py::module &m, py::class_<EmTaylorTermStruct> &c
       .def_property("expn", &EmTaylorTermStruct::expn, &EmTaylorTermStruct::set_expn)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return EmTaylorTermStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return EmTaylorTermStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = EmTaylorTermStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const EmTaylorTermStruct &self) { return to_string(self); })
@@ -710,9 +764,18 @@ void init_expression_atom_struct(py::module &m, py::class_<ExpressionAtomStruct>
       .def_property("value", &ExpressionAtomStruct::value, &ExpressionAtomStruct::set_value)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ExpressionAtomStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ExpressionAtomStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ExpressionAtomStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ExpressionAtomStruct &self) { return to_string(self); })
@@ -758,9 +821,18 @@ void init_expression_tree_struct(py::module &m, py::class_<ExpressionTreeStruct>
       .def_property_readonly("node", &ExpressionTreeStruct::node)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ExpressionTreeStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ExpressionTreeStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ExpressionTreeStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ExpressionTreeStruct &self) { return to_string(self); })

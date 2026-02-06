@@ -3648,7 +3648,7 @@ Bmad::EleToTaylor Bmad::ele_to_taylor(
   Bmad::array_descriptor_t _orbital_taylor_desc;
   _orbital_taylor_desc.rank = 1;
   // Output-only type array
-  auto orbital_taylor = TaylorStructArray1D::allocate(6, 1);
+  auto orbital_taylor = TaylorStructAlloc1D(6);
   _orbital_taylor_desc.data_ptr = orbital_taylor.get_fortran_ptr();
   _orbital_taylor_desc.dims[0] = orbital_taylor.size();
 
@@ -3657,7 +3657,7 @@ Bmad::EleToTaylor Bmad::ele_to_taylor(
   Bmad::array_descriptor_t _spin_taylor_desc;
   _spin_taylor_desc.rank = 1;
   // Output-only type array
-  auto spin_taylor = TaylorStructArray1D::allocate(4, 1);
+  auto spin_taylor = TaylorStructAlloc1D(4);
   _spin_taylor_desc.data_ptr = spin_taylor.get_fortran_ptr();
   _spin_taylor_desc.dims[0] = spin_taylor.size();
 
@@ -5526,7 +5526,7 @@ Bmad::gen_grad1_to_em_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, int iz)
   Bmad::array_descriptor_t _em_taylor_desc;
   _em_taylor_desc.rank = 1;
   // Output-only type array
-  auto em_taylor = EmTaylorStructArray1D::allocate(3, 1);
+  auto em_taylor = EmTaylorStructAlloc1D(3);
   _em_taylor_desc.data_ptr = em_taylor.get_fortran_ptr();
   _em_taylor_desc.dims[0] = em_taylor.size();
 
@@ -5545,7 +5545,7 @@ Bmad::gen_grad_at_s_to_em_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, dou
   Bmad::array_descriptor_t _em_taylor_desc;
   _em_taylor_desc.rank = 1;
   // Output-only type array
-  auto em_taylor = EmTaylorStructArray1D::allocate(3, 1);
+  auto em_taylor = EmTaylorStructAlloc1D(3);
   _em_taylor_desc.data_ptr = em_taylor.get_fortran_ptr();
   _em_taylor_desc.dims[0] = em_taylor.size();
 
@@ -7183,7 +7183,7 @@ TaylorStructArray1D Bmad::linear_to_spin_taylor(FixedArray2D<Real, 4, 7> q_map) 
   Bmad::array_descriptor_t _spin_taylor_desc;
   _spin_taylor_desc.rank = 1;
   // Output-only type array
-  auto spin_taylor = TaylorStructArray1D::allocate(4, 1);
+  auto spin_taylor = TaylorStructAlloc1D(4);
   _spin_taylor_desc.data_ptr = spin_taylor.get_fortran_ptr();
   _spin_taylor_desc.dims[0] = spin_taylor.size();
 
@@ -7978,7 +7978,7 @@ TaylorStructArray1D Bmad::map_to_angle_coords(TaylorStructArray1D t_canon) {
   Bmad::array_descriptor_t _t_angle_desc;
   _t_angle_desc.rank = 1;
   // Output-only type array
-  auto t_angle = TaylorStructArray1D::allocate(6, 1);
+  auto t_angle = TaylorStructAlloc1D(6);
   _t_angle_desc.data_ptr = t_angle.get_fortran_ptr();
   _t_angle_desc.dims[0] = t_angle.size();
 
@@ -8064,7 +8064,7 @@ Bmad::mat6_to_complex_taylor(FixedArray1D<Complex, 6> vec0, FixedArray2D<Complex
   Bmad::array_descriptor_t _complex_taylor_desc;
   _complex_taylor_desc.rank = 1;
   // Output-only type array
-  auto complex_taylor = ComplexTaylorStructArray1D::allocate(6, 1);
+  auto complex_taylor = ComplexTaylorStructAlloc1D(6);
   _complex_taylor_desc.data_ptr = complex_taylor.get_fortran_ptr();
   _complex_taylor_desc.dims[0] = complex_taylor.size();
 
@@ -8755,7 +8755,7 @@ Bmad::NormalFormTaylors Bmad::normal_form_taylors(TaylorStructArray1D one_turn_t
   Bmad::array_descriptor_t _dhdj_desc;
   _dhdj_desc.rank = 1;
   // Output-only type array
-  auto dhdj = TaylorStructArray1D::allocate(6, 1);
+  auto dhdj = TaylorStructAlloc1D(6);
   _dhdj_desc.data_ptr = dhdj.get_fortran_ptr();
   _dhdj_desc.dims[0] = dhdj.size();
 
@@ -8764,7 +8764,7 @@ Bmad::NormalFormTaylors Bmad::normal_form_taylors(TaylorStructArray1D one_turn_t
   Bmad::array_descriptor_t _A_desc;
   _A_desc.rank = 1;
   // Output-only type array
-  auto A = TaylorStructArray1D::allocate(6, 1);
+  auto A = TaylorStructAlloc1D(6);
   _A_desc.data_ptr = A.get_fortran_ptr();
   _A_desc.dims[0] = A.size();
 
@@ -8773,7 +8773,7 @@ Bmad::NormalFormTaylors Bmad::normal_form_taylors(TaylorStructArray1D one_turn_t
   Bmad::array_descriptor_t _A_inverse_desc;
   _A_inverse_desc.rank = 1;
   // Output-only type array
-  auto A_inverse = TaylorStructArray1D::allocate(6, 1);
+  auto A_inverse = TaylorStructAlloc1D(6);
   _A_inverse_desc.data_ptr = A_inverse.get_fortran_ptr();
   _A_inverse_desc.dims[0] = A_inverse.size();
 

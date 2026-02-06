@@ -189,7 +189,7 @@ subroutine fortran_apfft (rdata_in, bounds, window, phase, diag) bind(c)
   call apfft(f_rdata_in, f_bounds, f_window, f_phase, f_diag_ptr)
 
 end subroutine
-subroutine fortran_apfft_corr (rdata_in, window, phase, amp, freq, bounds, diag) bind(c)
+subroutine fortran_apfft_corr (rdata_in, bounds, window, phase, amp, freq, diag) bind(c)
 
   use array_desc_mod
   implicit none
@@ -311,7 +311,7 @@ subroutine fortran_apfft_ext (rdata, bounds, window, phase, amp, freq, diag) bin
   call apfft_ext(f_rdata, f_bounds, f_window, f_phase, f_amp, f_freq, f_diag_ptr)
 
 end subroutine
-subroutine fortran_asinc (x, y, nd) bind(c)
+subroutine fortran_asinc (x, nd, y) bind(c)
 
   use array_desc_mod
   implicit none
@@ -500,7 +500,7 @@ subroutine fortran_axis_angle_to_w_mat (axis, angle, w_mat) bind(c)
   ! out: f_w_mat 2D_NOT_real
   if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
 end subroutine
-subroutine fortran_bicubic_cmplx_eval (x_norm, y_norm, bi_coef, f_val, df_dx, df_dy) bind(c)
+subroutine fortran_bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy, f_val) bind(c)
 
   use array_desc_mod
   use cubic_interpolation_mod, only: bicubic_cmplx_coef_struct
@@ -645,7 +645,7 @@ subroutine fortran_bit_set (word, pos, set_to_1) bind(c)
   ! inout: f_word 0D_NOT_integer
   ! no output conversion for f_word
 end subroutine
-subroutine fortran_bracket_index_for_spline (x_knot, x, ix0, ok, strict, print_err) bind(c)
+subroutine fortran_bracket_index_for_spline (x_knot, x, ix0, strict, print_err, ok) bind(c)
 
   use array_desc_mod
   implicit none
@@ -817,7 +817,7 @@ subroutine fortran_change_file_number (file_name, change) bind(c)
   call change_file_number(f_file_name, f_change)
 
 end subroutine
-subroutine fortran_charge_of (species, charge, default_) bind(c)
+subroutine fortran_charge_of (species, default_, charge) bind(c)
 
   use array_desc_mod
   implicit none
@@ -866,7 +866,7 @@ subroutine fortran_charge_to_mass_of (species, charge_mass_ratio) bind(c)
   call c_f_pointer(charge_mass_ratio, f_charge_mass_ratio_ptr)
   f_charge_mass_ratio_ptr = f_charge_mass_ratio
 end subroutine
-subroutine fortran_coarse_frequency_estimate (data, frequency, error) bind(c)
+subroutine fortran_coarse_frequency_estimate (data, error, frequency) bind(c)
 
   use array_desc_mod
   implicit none
@@ -950,7 +950,7 @@ subroutine fortran_cos_one (angle, cos1) bind(c)
   call c_f_pointer(cos1, f_cos1_ptr)
   f_cos1_ptr = f_cos1
 end subroutine
-subroutine fortran_cosc (x, y, nd) bind(c)
+subroutine fortran_cosc (x, nd, y) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1195,7 +1195,7 @@ subroutine fortran_dj_bessel (m, arg, dj_bes) bind(c)
   call c_f_pointer(dj_bes, f_dj_bes_ptr)
   f_dj_bes_ptr = f_dj_bes
 end subroutine
-subroutine fortran_djb_hash (str, hash, old_hash) bind(c)
+subroutine fortran_djb_hash (str, old_hash, hash) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1401,10 +1401,12 @@ subroutine fortran_end_akima_spline_calc (spline, which_end) bind(c)
   ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: spline
   type(spline_struct), pointer :: f_spline(:)
+  type(spline_struct), pointer :: f_spline_ptr(:)
   ! ** End of parameters **
   !! type array (1D_NOT_type)
   if (c_associated(spline%data_ptr)) then
-    call c_f_pointer(spline%data_ptr, f_spline, [spline%dims(1)])
+    call c_f_pointer(spline%data_ptr, f_spline_ptr, [spline%dims(1)])
+    f_spline => f_spline_ptr
   else
     f_spline => null()
   endif
@@ -1879,7 +1881,7 @@ subroutine fortran_gelbd (phi, mc, elb, eld) bind(c)
   call c_f_pointer(eld, f_eld_ptr)
   f_eld_ptr = f_eld
 end subroutine
-subroutine fortran_gen_complete_elliptic (kc, p, c, s, value, err_tol) bind(c)
+subroutine fortran_gen_complete_elliptic (kc, p, c, s, err_tol, value) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2171,7 +2173,7 @@ subroutine fortran_initial_lmdif () bind(c)
   call initial_lmdif()
 
 end subroutine
-subroutine fortran_int_str (int_, str, width) bind(c)
+subroutine fortran_int_str (int_, width, str) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2200,8 +2202,8 @@ subroutine fortran_int_str (int_, str, width) bind(c)
   call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
-subroutine fortran_interpolated_fft (cdata, calc_ok, this_fft, opt_dump_spectrum, &
-    opt_dump_index) bind(c)
+subroutine fortran_interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index, &
+    this_fft) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2251,8 +2253,8 @@ subroutine fortran_interpolated_fft (cdata, calc_ok, this_fft, opt_dump_spectrum
   call c_f_pointer(this_fft, f_this_fft_ptr)
   f_this_fft_ptr = f_this_fft
 end subroutine
-subroutine fortran_interpolated_fft_gsl (cdata, calc_ok, this_fft, opt_dump_spectrum, &
-    opt_dump_index) bind(c)
+subroutine fortran_interpolated_fft_gsl (cdata, calc_ok, opt_dump_spectrum, opt_dump_index, &
+    this_fft) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2302,7 +2304,7 @@ subroutine fortran_interpolated_fft_gsl (cdata, calc_ok, this_fft, opt_dump_spec
   call c_f_pointer(this_fft, f_this_fft_ptr)
   f_this_fft_ptr = f_this_fft
 end subroutine
-subroutine fortran_is_alphabetic (string, is_alpha, valid_chars) bind(c)
+subroutine fortran_is_alphabetic (string, valid_chars, is_alpha) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2337,7 +2339,7 @@ subroutine fortran_is_alphabetic (string, is_alpha, valid_chars) bind(c)
   call c_f_pointer(is_alpha, f_is_alpha_ptr)
   f_is_alpha_ptr = f_is_alpha
 end subroutine
-subroutine fortran_is_decreasing_sequence (array, is_decreasing, strict) bind(c)
+subroutine fortran_is_decreasing_sequence (array, strict, is_decreasing) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2396,7 +2398,7 @@ subroutine fortran_is_false (param, this_false) bind(c)
   call c_f_pointer(this_false, f_this_false_ptr)
   f_this_false_ptr = f_this_false
 end subroutine
-subroutine fortran_is_increasing_sequence (array, is_increasing, strict) bind(c)
+subroutine fortran_is_increasing_sequence (array, strict, is_increasing) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2435,7 +2437,7 @@ subroutine fortran_is_increasing_sequence (array, is_increasing, strict) bind(c)
   call c_f_pointer(is_increasing, f_is_increasing_ptr)
   f_is_increasing_ptr = f_is_increasing
 end subroutine
-subroutine fortran_is_integer (string, valid, int_, delims, ix_word) bind(c)
+subroutine fortran_is_integer (string, int_, delims, ix_word, valid) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2488,7 +2490,7 @@ subroutine fortran_is_integer (string, valid, int_, delims, ix_word) bind(c)
   call c_f_pointer(valid, f_valid_ptr)
   f_valid_ptr = f_valid
 end subroutine
-subroutine fortran_is_logical (string, valid, ignore) bind(c)
+subroutine fortran_is_logical (string, ignore, valid) bind(c)
 
   use array_desc_mod
   implicit none
@@ -2524,7 +2526,7 @@ subroutine fortran_is_logical (string, valid, ignore) bind(c)
   call c_f_pointer(valid, f_valid_ptr)
   f_valid_ptr = f_valid
 end subroutine
-subroutine fortran_is_real (string, valid, ignore, real_num) bind(c)
+subroutine fortran_is_real (string, ignore, real_num, valid) bind(c)
 
   use array_desc_mod
   implicit none
@@ -3193,7 +3195,7 @@ subroutine fortran_nametable_add (nametable, name, ix_name) bind(c)
   call nametable_add(f_nametable, f_name, f_ix_name)
 
 end subroutine
-subroutine fortran_nametable_bracket_indexx (nametable, name, ix_max, n_match) bind(c)
+subroutine fortran_nametable_bracket_indexx (nametable, name, n_match, ix_max) bind(c)
 
   use array_desc_mod
   use sim_utils_struct, only: nametable_struct
@@ -3884,7 +3886,7 @@ subroutine fortran_pointer_to_ran_state (ran_state, ix_thread, ran_state_ptr) bi
   ! out: f_ran_state_ptr 0D_PTR_type
   ran_state_ptr = c_loc(f_ran_state_ptr)
 end subroutine
-subroutine fortran_poly_eval (poly, x, y, diff_coef) bind(c)
+subroutine fortran_poly_eval (poly, x, diff_coef, y) bind(c)
 
   use array_desc_mod
   implicit none
@@ -4123,7 +4125,7 @@ subroutine fortran_quat_inverse (q_in, q_out) bind(c)
     f_q_out_ptr = f_q_out(:)
   endif
 end subroutine
-subroutine fortran_quat_mul_complex (q1, q2, q_out, q3, q4, q5, q6, q7, q8, q9) bind(c)
+subroutine fortran_quat_mul_complex (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) bind(c)
 
   use array_desc_mod
   implicit none
@@ -4239,7 +4241,7 @@ subroutine fortran_quat_mul_complex (q1, q2, q_out, q3, q4, q5, q6, q7, q8, q9) 
     f_q_out_ptr = f_q_out(:)
   endif
 end subroutine
-subroutine fortran_quat_mul_real (q1, q2, q_out, q3, q4, q5, q6, q7, q8, q9) bind(c)
+subroutine fortran_quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9, q_out) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5042,7 +5044,7 @@ subroutine fortran_readline_write_history (history_file, status) bind(c)
   call c_f_pointer(status, f_status_ptr)
   f_status_ptr = f_status
 end subroutine
-subroutine fortran_real_num_fortran_format (number, width, fmt_str, n_blanks) bind(c)
+subroutine fortran_real_num_fortran_format (number, width, n_blanks, fmt_str) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5105,7 +5107,7 @@ subroutine fortran_real_path (path_in, path_out, is_ok) bind(c)
   call c_f_pointer(is_ok, f_is_ok_ptr)
   f_is_ok_ptr = f_is_ok
 end subroutine
-subroutine fortran_real_str (r_num, str, n_signif, n_decimal) bind(c)
+subroutine fortran_real_str (r_num, n_signif, n_decimal, str) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5143,7 +5145,7 @@ subroutine fortran_real_str (r_num, str, n_signif, n_decimal) bind(c)
   call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
   call to_c_str(f_str, f_str_ptr)
 end subroutine
-subroutine fortran_real_to_string (real_num, width, str, n_signif, n_decimal) bind(c)
+subroutine fortran_real_to_string (real_num, width, n_signif, n_decimal, str) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5330,7 +5332,7 @@ subroutine fortran_rgelbd (phi, mc, elb, eld) bind(c)
   call rgelbd(f_phi, f_mc, f_elb, f_eld)
 
 end subroutine
-subroutine fortran_rms_value (val_arr, rms_val, good_val, ave_val) bind(c)
+subroutine fortran_rms_value (val_arr, good_val, ave_val, rms_val) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5692,7 +5694,7 @@ subroutine fortran_set_species_charge (species_in, charge, species_charged) bind
   call c_f_pointer(species_charged, f_species_charged_ptr)
   f_species_charged_ptr = f_species_charged
 end subroutine
-subroutine fortran_sign_of_int (num, num_sign, zero_is_zero) bind(c)
+subroutine fortran_sign_of_int (num, zero_is_zero, num_sign) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5725,7 +5727,7 @@ subroutine fortran_sign_of_int (num, num_sign, zero_is_zero) bind(c)
   call c_f_pointer(num_sign, f_num_sign_ptr)
   f_num_sign_ptr = f_num_sign
 end subroutine
-subroutine fortran_sign_of_real (num, num_sign, zero_is_zero) bind(c)
+subroutine fortran_sign_of_real (num, zero_is_zero, num_sign) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5758,7 +5760,7 @@ subroutine fortran_sign_of_real (num, num_sign, zero_is_zero) bind(c)
   call c_f_pointer(num_sign, f_num_sign_ptr)
   f_num_sign_ptr = f_num_sign
 end subroutine
-subroutine fortran_sinc (x, y, nd) bind(c)
+subroutine fortran_sinc (x, nd, y) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5787,7 +5789,7 @@ subroutine fortran_sinc (x, y, nd) bind(c)
   call c_f_pointer(y, f_y_ptr)
   f_y_ptr = f_y
 end subroutine
-subroutine fortran_sincc (x, y, nd) bind(c)
+subroutine fortran_sincc (x, nd, y) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5816,7 +5818,7 @@ subroutine fortran_sincc (x, y, nd) bind(c)
   call c_f_pointer(y, f_y_ptr)
   f_y_ptr = f_y
 end subroutine
-subroutine fortran_sinhx_x (x, y, nd) bind(c)
+subroutine fortran_sinhx_x (x, nd, y) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5862,7 +5864,7 @@ subroutine fortran_skip_header (ix_unit, error_flag) bind(c)
   call skip_header(f_ix_unit, f_error_flag)
 
 end subroutine
-subroutine fortran_species_id (name, species, default_, print_err) bind(c)
+subroutine fortran_species_id (name, default_, print_err, species) bind(c)
 
   use array_desc_mod
   implicit none
@@ -5978,7 +5980,7 @@ subroutine fortran_species_of (mass, charge, species) bind(c)
   call c_f_pointer(species, f_species_ptr)
   f_species_ptr = f_species
 end subroutine
-subroutine fortran_spin_of (species, spin, non_subatomic_default) bind(c)
+subroutine fortran_spin_of (species, non_subatomic_default, spin) bind(c)
 
   use array_desc_mod
   implicit none
@@ -6007,7 +6009,7 @@ subroutine fortran_spin_of (species, spin, non_subatomic_default) bind(c)
   call c_f_pointer(spin, f_spin_ptr)
   f_spin_ptr = f_spin
 end subroutine
-subroutine fortran_spline1 (a_spline, x, y, n) bind(c)
+subroutine fortran_spline1 (a_spline, x, n, y) bind(c)
 
   use array_desc_mod
   use spline_mod, only: spline_struct
@@ -6054,10 +6056,12 @@ subroutine fortran_spline_akima (spline, ok) bind(c)
   ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: spline
   type(spline_struct), pointer :: f_spline(:)
+  type(spline_struct), pointer :: f_spline_ptr(:)
   ! ** End of parameters **
   !! type array (1D_NOT_type)
   if (c_associated(spline%data_ptr)) then
-    call c_f_pointer(spline%data_ptr, f_spline, [spline%dims(1)])
+    call c_f_pointer(spline%data_ptr, f_spline_ptr, [spline%dims(1)])
+    f_spline => f_spline_ptr
   else
     f_spline => null()
   endif
@@ -6137,6 +6141,7 @@ subroutine fortran_spline_evaluate (spline, x, ok, y, dy) bind(c)
   ! ** In parameters **
   type(array_descriptor_t), intent(in) :: spline
   type(spline_struct), pointer :: f_spline(:)
+  type(spline_struct), pointer :: f_spline_ptr(:)
   real(c_double) :: x  ! 0D_NOT_real
   real(rp) :: f_x
   ! ** Out parameters **
@@ -6152,7 +6157,8 @@ subroutine fortran_spline_evaluate (spline, x, ok, y, dy) bind(c)
   ! ** End of parameters **
   !! type array (1D_NOT_type)
   if (c_associated(spline%data_ptr)) then
-    call c_f_pointer(spline%data_ptr, f_spline, [spline%dims(1)])
+    call c_f_pointer(spline%data_ptr, f_spline_ptr, [spline%dims(1)])
+    f_spline => f_spline_ptr
   else
     f_spline => null()
   endif
@@ -6204,7 +6210,7 @@ subroutine fortran_sqrt_alpha (alpha, x, y) bind(c)
   call c_f_pointer(y, f_y_ptr)
   f_y_ptr = f_y
 end subroutine
-subroutine fortran_sqrt_one (x, ds1, nd) bind(c)
+subroutine fortran_sqrt_one (x, nd, ds1) bind(c)
 
   use array_desc_mod
   implicit none
@@ -6286,7 +6292,7 @@ subroutine fortran_str_downcase (dst, src) bind(c)
   call c_f_pointer(dst, f_dst_ptr, [len_trim(f_dst) + 1])
   call to_c_str(f_dst, f_dst_ptr)
 end subroutine
-subroutine fortran_str_first_in_set (line, set, ix_match, ignore_clauses) bind(c)
+subroutine fortran_str_first_in_set (line, set, ignore_clauses, ix_match) bind(c)
 
   use array_desc_mod
   implicit none
@@ -6540,7 +6546,7 @@ subroutine fortran_str_upcase (dst, src) bind(c)
   call c_f_pointer(dst, f_dst_ptr, [len_trim(f_dst) + 1])
   call to_c_str(f_dst, f_dst_ptr)
 end subroutine
-subroutine fortran_string_to_int (line, default_, err_flag, value, err_print_flag) bind(c)
+subroutine fortran_string_to_int (line, default_, err_flag, err_print_flag, value) bind(c)
 
   use array_desc_mod
   implicit none
@@ -6584,7 +6590,7 @@ subroutine fortran_string_to_int (line, default_, err_flag, value, err_print_fla
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
 end subroutine
-subroutine fortran_string_to_real (line, default_, err_flag, value, err_print_flag) bind(c)
+subroutine fortran_string_to_real (line, default_, err_flag, err_print_flag, value) bind(c)
 
   use array_desc_mod
   implicit none
@@ -7081,7 +7087,7 @@ subroutine fortran_test_xgelbd () bind(c)
   call test_xgelbd()
 
 end subroutine
-subroutine fortran_to_str (num, string, max_signif) bind(c)
+subroutine fortran_to_str (num, max_signif, string) bind(c)
 
   use array_desc_mod
   implicit none
@@ -7110,8 +7116,8 @@ subroutine fortran_to_str (num, string, max_signif) bind(c)
   call c_f_pointer(string, f_string_ptr, [len_trim(f_string) + 1])
   call to_c_str(f_string, f_string_ptr)
 end subroutine
-subroutine fortran_tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, f_val, df_dx, df_dy, &
-    df_dz) bind(c)
+subroutine fortran_tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx, df_dy, df_dz, &
+    f_val) bind(c)
 
   use array_desc_mod
   use cubic_interpolation_mod, only: tricubic_cmplx_coef_struct

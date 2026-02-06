@@ -452,9 +452,18 @@ void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
       .def_property("n_orb", &BbuStageStruct::n_orb, &BbuStageStruct::set_n_orb)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return BbuStageStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return BbuStageStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = BbuStageStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const BbuStageStruct &self) { return to_string(self); })
@@ -1412,9 +1421,18 @@ void init_branch_struct(py::module &m, py::class_<BranchStruct> &cls) {
       .def_property_readonly("wall3d", &BranchStruct::wall3d)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return BranchStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return BranchStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = BranchStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const BranchStruct &self) { return to_string(self); })
@@ -1576,9 +1594,18 @@ void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls)
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return BunchParamsStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return BunchParamsStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = BunchParamsStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const BunchParamsStruct &self) { return to_string(self); })
@@ -1676,9 +1703,18 @@ void init_bunch_struct(py::module &m, py::class_<BunchStruct> &cls) {
       .def_property("n_bad", &BunchStruct::n_bad, &BunchStruct::set_n_bad)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return BunchStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return BunchStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = BunchStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const BunchStruct &self) { return to_string(self); })
@@ -1718,9 +1754,18 @@ void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &cls) {
       .def_property("n_pt", &BunchTrackStruct::n_pt, &BunchTrackStruct::set_n_pt)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return BunchTrackStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return BunchTrackStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = BunchTrackStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const BunchTrackStruct &self) { return to_string(self); })

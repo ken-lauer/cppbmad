@@ -96,9 +96,18 @@ void init_rad_int1_struct(py::module &m, py::class_<RadInt1Struct> &cls) {
       .def_property("n_steps", &RadInt1Struct::n_steps, &RadInt1Struct::set_n_steps)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return RadInt1StructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return RadInt1StructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = RadInt1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const RadInt1Struct &self) { return to_string(self); })
@@ -157,9 +166,18 @@ void init_rad_int_branch_struct(py::module &m, py::class_<RadIntBranchStruct> &c
       .def_property_readonly("ele", &RadIntBranchStruct::ele)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return RadIntBranchStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return RadIntBranchStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = RadIntBranchStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const RadIntBranchStruct &self) { return to_string(self); })
@@ -291,9 +309,18 @@ void init_ramper_lord_struct(py::module &m, py::class_<RamperLordStruct> &cls) {
       .def_property("attrib_ptr", &RamperLordStruct::attrib_ptr, &RamperLordStruct::set_attrib_ptr)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return RamperLordStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return RamperLordStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = RamperLordStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const RamperLordStruct &self) { return to_string(self); })
@@ -331,9 +358,18 @@ void init_resonance_h_struct(py::module &m, py::class_<ResonanceHStruct> &cls) {
       .def_property("c_val", &ResonanceHStruct::c_val, &ResonanceHStruct::set_c_val)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ResonanceHStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ResonanceHStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ResonanceHStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ResonanceHStruct &self) { return to_string(self); })
@@ -436,9 +472,18 @@ void init_rf_stair_step_struct(py::module &m, py::class_<RfStairStepStruct> &cls
       .def_property("ix_step", &RfStairStepStruct::ix_step, &RfStairStepStruct::set_ix_step)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return RfStairStepStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return RfStairStepStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = RfStairStepStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const RfStairStepStruct &self) { return to_string(self); })

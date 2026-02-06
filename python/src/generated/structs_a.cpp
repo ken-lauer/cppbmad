@@ -25,9 +25,18 @@ void init_ac_kicker_freq_struct(py::module &m, py::class_<AcKickerFreqStruct> &c
       .def_property("phi", &AcKickerFreqStruct::phi, &AcKickerFreqStruct::set_phi)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return AcKickerFreqStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return AcKickerFreqStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = AcKickerFreqStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const AcKickerFreqStruct &self) { return to_string(self); })
@@ -97,9 +106,18 @@ void init_ac_kicker_time_struct(py::module &m, py::class_<AcKickerTimeStruct> &c
       .def_property("spline", &AcKickerTimeStruct::spline, &AcKickerTimeStruct::set_spline)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return AcKickerTimeStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return AcKickerTimeStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = AcKickerTimeStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const AcKickerTimeStruct &self) { return to_string(self); })
@@ -304,9 +322,18 @@ void init_aperture_point_struct(py::module &m, py::class_<AperturePointStruct> &
       .def_property("i_turn", &AperturePointStruct::i_turn, &AperturePointStruct::set_i_turn)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return AperturePointStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return AperturePointStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = AperturePointStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const AperturePointStruct &self) { return to_string(self); })
@@ -346,9 +373,18 @@ void init_aperture_scan_struct(py::module &m, py::class_<ApertureScanStruct> &cl
       .def_property("pz_start", &ApertureScanStruct::pz_start, &ApertureScanStruct::set_pz_start)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ApertureScanStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ApertureScanStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ApertureScanStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ApertureScanStruct &self) { return to_string(self); })

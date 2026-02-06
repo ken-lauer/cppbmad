@@ -7969,9 +7969,8 @@ struct RealAlloc1D : public FAlloc1D<double> {
             reallocate_real_container_data,
             access_real_container
         ) {}
-  RealAlloc1D(int lb, int n)
+  RealAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_real_container,
             deallocate_real_container,
@@ -7992,9 +7991,8 @@ struct Real16Alloc1D : public FAlloc1D<long double> {
             reallocate_real16_container_data,
             access_real16_container
         ) {}
-  Real16Alloc1D(int lb, int n)
+  Real16Alloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_real16_container,
             deallocate_real16_container,
@@ -8015,9 +8013,8 @@ struct IntAlloc1D : public FAlloc1D<int> {
             reallocate_integer_container_data,
             access_integer_container
         ) {}
-  IntAlloc1D(int lb, int n)
+  IntAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_integer_container,
             deallocate_integer_container,
@@ -8038,9 +8035,8 @@ struct Int8Alloc1D : public FAlloc1D<int64_t> {
             reallocate_integer8_container_data,
             access_integer8_container
         ) {}
-  Int8Alloc1D(int lb, int n)
+  Int8Alloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_integer8_container,
             deallocate_integer8_container,
@@ -8061,9 +8057,8 @@ struct BoolAlloc1D : public FAlloc1D<bool> {
             reallocate_logical_container_data,
             access_logical_container
         ) {}
-  BoolAlloc1D(int lb, int n)
+  BoolAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_logical_container,
             deallocate_logical_container,
@@ -8084,9 +8079,8 @@ struct ComplexAlloc1D : public FAlloc1D<std::complex<double>> {
             reallocate_complex_container_data,
             access_complex_container
         ) {}
-  ComplexAlloc1D(int lb, int n)
+  ComplexAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_complex_container,
             deallocate_complex_container,
@@ -8114,9 +8108,8 @@ struct SplineStructAlloc1D : public FTypeAlloc1D<SplineStructArray1D> {
             reallocate_spline_struct_container_data,
             access_spline_struct_container
         ) {}
-  SplineStructAlloc1D(int lb, int n)
+  SplineStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_spline_struct_container,
             deallocate_spline_struct_container,
@@ -8146,9 +8139,8 @@ struct SpinPolarStructAlloc1D : public FTypeAlloc1D<SpinPolarStructArray1D> {
             reallocate_spin_polar_struct_container_data,
             access_spin_polar_struct_container
         ) {}
-  SpinPolarStructAlloc1D(int lb, int n)
+  SpinPolarStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_spin_polar_struct_container,
             deallocate_spin_polar_struct_container,
@@ -8178,9 +8170,8 @@ struct AcKickerTimeStructAlloc1D : public FTypeAlloc1D<AcKickerTimeStructArray1D
             reallocate_ac_kicker_time_struct_container_data,
             access_ac_kicker_time_struct_container
         ) {}
-  AcKickerTimeStructAlloc1D(int lb, int n)
+  AcKickerTimeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_ac_kicker_time_struct_container,
             deallocate_ac_kicker_time_struct_container,
@@ -8210,9 +8201,8 @@ struct AcKickerFreqStructAlloc1D : public FTypeAlloc1D<AcKickerFreqStructArray1D
             reallocate_ac_kicker_freq_struct_container_data,
             access_ac_kicker_freq_struct_container
         ) {}
-  AcKickerFreqStructAlloc1D(int lb, int n)
+  AcKickerFreqStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_ac_kicker_freq_struct_container,
             deallocate_ac_kicker_freq_struct_container,
@@ -8242,9 +8232,8 @@ struct AcKickerStructAlloc1D : public FTypeAlloc1D<AcKickerStructArray1D> {
             reallocate_ac_kicker_struct_container_data,
             access_ac_kicker_struct_container
         ) {}
-  AcKickerStructAlloc1D(int lb, int n)
+  AcKickerStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_ac_kicker_struct_container,
             deallocate_ac_kicker_struct_container,
@@ -8274,9 +8263,8 @@ struct Interval1CoefStructAlloc1D : public FTypeAlloc1D<Interval1CoefStructArray
             reallocate_interval1_coef_struct_container_data,
             access_interval1_coef_struct_container
         ) {}
-  Interval1CoefStructAlloc1D(int lb, int n)
+  Interval1CoefStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_interval1_coef_struct_container,
             deallocate_interval1_coef_struct_container,
@@ -8306,9 +8294,8 @@ struct PhotonReflectTableStructAlloc1D : public FTypeAlloc1D<PhotonReflectTableS
             reallocate_photon_reflect_table_struct_container_data,
             access_photon_reflect_table_struct_container
         ) {}
-  PhotonReflectTableStructAlloc1D(int lb, int n)
+  PhotonReflectTableStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_photon_reflect_table_struct_container,
             deallocate_photon_reflect_table_struct_container,
@@ -8338,9 +8325,8 @@ struct PhotonReflectSurfaceStructAlloc1D : public FTypeAlloc1D<PhotonReflectSurf
             reallocate_photon_reflect_surface_struct_container_data,
             access_photon_reflect_surface_struct_container
         ) {}
-  PhotonReflectSurfaceStructAlloc1D(int lb, int n)
+  PhotonReflectSurfaceStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_photon_reflect_surface_struct_container,
             deallocate_photon_reflect_surface_struct_container,
@@ -8368,9 +8354,8 @@ struct CoordStructAlloc1D : public FTypeAlloc1D<CoordStructArray1D> {
             reallocate_coord_struct_container_data,
             access_coord_struct_container
         ) {}
-  CoordStructAlloc1D(int lb, int n)
+  CoordStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_coord_struct_container,
             deallocate_coord_struct_container,
@@ -8400,9 +8385,8 @@ struct CoordArrayStructAlloc1D : public FTypeAlloc1D<CoordArrayStructArray1D> {
             reallocate_coord_array_struct_container_data,
             access_coord_array_struct_container
         ) {}
-  CoordArrayStructAlloc1D(int lb, int n)
+  CoordArrayStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_coord_array_struct_container,
             deallocate_coord_array_struct_container,
@@ -8432,9 +8416,8 @@ struct BpmPhaseCouplingStructAlloc1D : public FTypeAlloc1D<BpmPhaseCouplingStruc
             reallocate_bpm_phase_coupling_struct_container_data,
             access_bpm_phase_coupling_struct_container
         ) {}
-  BpmPhaseCouplingStructAlloc1D(int lb, int n)
+  BpmPhaseCouplingStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bpm_phase_coupling_struct_container,
             deallocate_bpm_phase_coupling_struct_container,
@@ -8464,9 +8447,8 @@ struct ExpressionAtomStructAlloc1D : public FTypeAlloc1D<ExpressionAtomStructArr
             reallocate_expression_atom_struct_container_data,
             access_expression_atom_struct_container
         ) {}
-  ExpressionAtomStructAlloc1D(int lb, int n)
+  ExpressionAtomStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_expression_atom_struct_container,
             deallocate_expression_atom_struct_container,
@@ -8496,9 +8478,8 @@ struct WakeSrZLongStructAlloc1D : public FTypeAlloc1D<WakeSrZLongStructArray1D> 
             reallocate_wake_sr_z_long_struct_container_data,
             access_wake_sr_z_long_struct_container
         ) {}
-  WakeSrZLongStructAlloc1D(int lb, int n)
+  WakeSrZLongStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wake_sr_z_long_struct_container,
             deallocate_wake_sr_z_long_struct_container,
@@ -8528,9 +8509,8 @@ struct WakeSrModeStructAlloc1D : public FTypeAlloc1D<WakeSrModeStructArray1D> {
             reallocate_wake_sr_mode_struct_container_data,
             access_wake_sr_mode_struct_container
         ) {}
-  WakeSrModeStructAlloc1D(int lb, int n)
+  WakeSrModeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wake_sr_mode_struct_container,
             deallocate_wake_sr_mode_struct_container,
@@ -8558,9 +8538,8 @@ struct WakeSrStructAlloc1D : public FTypeAlloc1D<WakeSrStructArray1D> {
             reallocate_wake_sr_struct_container_data,
             access_wake_sr_struct_container
         ) {}
-  WakeSrStructAlloc1D(int lb, int n)
+  WakeSrStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wake_sr_struct_container,
             deallocate_wake_sr_struct_container,
@@ -8590,9 +8569,8 @@ struct WakeLrModeStructAlloc1D : public FTypeAlloc1D<WakeLrModeStructArray1D> {
             reallocate_wake_lr_mode_struct_container_data,
             access_wake_lr_mode_struct_container
         ) {}
-  WakeLrModeStructAlloc1D(int lb, int n)
+  WakeLrModeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wake_lr_mode_struct_container,
             deallocate_wake_lr_mode_struct_container,
@@ -8620,9 +8598,8 @@ struct WakeLrStructAlloc1D : public FTypeAlloc1D<WakeLrStructArray1D> {
             reallocate_wake_lr_struct_container_data,
             access_wake_lr_struct_container
         ) {}
-  WakeLrStructAlloc1D(int lb, int n)
+  WakeLrStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wake_lr_struct_container,
             deallocate_wake_lr_struct_container,
@@ -8652,9 +8629,8 @@ struct LatEleLocStructAlloc1D : public FTypeAlloc1D<LatEleLocStructArray1D> {
             reallocate_lat_ele_loc_struct_container_data,
             access_lat_ele_loc_struct_container
         ) {}
-  LatEleLocStructAlloc1D(int lb, int n)
+  LatEleLocStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_lat_ele_loc_struct_container,
             deallocate_lat_ele_loc_struct_container,
@@ -8682,9 +8658,8 @@ struct WakeStructAlloc1D : public FTypeAlloc1D<WakeStructArray1D> {
             reallocate_wake_struct_container_data,
             access_wake_struct_container
         ) {}
-  WakeStructAlloc1D(int lb, int n)
+  WakeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wake_struct_container,
             deallocate_wake_struct_container,
@@ -8714,9 +8689,8 @@ struct TaylorTermStructAlloc1D : public FTypeAlloc1D<TaylorTermStructArray1D> {
             reallocate_taylor_term_struct_container_data,
             access_taylor_term_struct_container
         ) {}
-  TaylorTermStructAlloc1D(int lb, int n)
+  TaylorTermStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_taylor_term_struct_container,
             deallocate_taylor_term_struct_container,
@@ -8744,9 +8718,8 @@ struct TaylorStructAlloc1D : public FTypeAlloc1D<TaylorStructArray1D> {
             reallocate_taylor_struct_container_data,
             access_taylor_struct_container
         ) {}
-  TaylorStructAlloc1D(int lb, int n)
+  TaylorStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_taylor_struct_container,
             deallocate_taylor_struct_container,
@@ -8776,9 +8749,8 @@ struct EmTaylorTermStructAlloc1D : public FTypeAlloc1D<EmTaylorTermStructArray1D
             reallocate_em_taylor_term_struct_container_data,
             access_em_taylor_term_struct_container
         ) {}
-  EmTaylorTermStructAlloc1D(int lb, int n)
+  EmTaylorTermStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_em_taylor_term_struct_container,
             deallocate_em_taylor_term_struct_container,
@@ -8808,9 +8780,8 @@ struct EmTaylorStructAlloc1D : public FTypeAlloc1D<EmTaylorStructArray1D> {
             reallocate_em_taylor_struct_container_data,
             access_em_taylor_struct_container
         ) {}
-  EmTaylorStructAlloc1D(int lb, int n)
+  EmTaylorStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_em_taylor_struct_container,
             deallocate_em_taylor_struct_container,
@@ -8840,9 +8811,8 @@ struct CartesianMapTerm1StructAlloc1D : public FTypeAlloc1D<CartesianMapTerm1Str
             reallocate_cartesian_map_term1_struct_container_data,
             access_cartesian_map_term1_struct_container
         ) {}
-  CartesianMapTerm1StructAlloc1D(int lb, int n)
+  CartesianMapTerm1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_cartesian_map_term1_struct_container,
             deallocate_cartesian_map_term1_struct_container,
@@ -8872,9 +8842,8 @@ struct CartesianMapTermStructAlloc1D : public FTypeAlloc1D<CartesianMapTermStruc
             reallocate_cartesian_map_term_struct_container_data,
             access_cartesian_map_term_struct_container
         ) {}
-  CartesianMapTermStructAlloc1D(int lb, int n)
+  CartesianMapTermStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_cartesian_map_term_struct_container,
             deallocate_cartesian_map_term_struct_container,
@@ -8904,9 +8873,8 @@ struct CartesianMapStructAlloc1D : public FTypeAlloc1D<CartesianMapStructArray1D
             reallocate_cartesian_map_struct_container_data,
             access_cartesian_map_struct_container
         ) {}
-  CartesianMapStructAlloc1D(int lb, int n)
+  CartesianMapStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_cartesian_map_struct_container,
             deallocate_cartesian_map_struct_container,
@@ -8936,9 +8904,8 @@ struct CylindricalMapTerm1StructAlloc1D : public FTypeAlloc1D<CylindricalMapTerm
             reallocate_cylindrical_map_term1_struct_container_data,
             access_cylindrical_map_term1_struct_container
         ) {}
-  CylindricalMapTerm1StructAlloc1D(int lb, int n)
+  CylindricalMapTerm1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_cylindrical_map_term1_struct_container,
             deallocate_cylindrical_map_term1_struct_container,
@@ -8968,9 +8935,8 @@ struct CylindricalMapTermStructAlloc1D : public FTypeAlloc1D<CylindricalMapTermS
             reallocate_cylindrical_map_term_struct_container_data,
             access_cylindrical_map_term_struct_container
         ) {}
-  CylindricalMapTermStructAlloc1D(int lb, int n)
+  CylindricalMapTermStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_cylindrical_map_term_struct_container,
             deallocate_cylindrical_map_term_struct_container,
@@ -9000,9 +8966,8 @@ struct CylindricalMapStructAlloc1D : public FTypeAlloc1D<CylindricalMapStructArr
             reallocate_cylindrical_map_struct_container_data,
             access_cylindrical_map_struct_container
         ) {}
-  CylindricalMapStructAlloc1D(int lb, int n)
+  CylindricalMapStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_cylindrical_map_struct_container,
             deallocate_cylindrical_map_struct_container,
@@ -9032,9 +8997,8 @@ struct BicubicCmplxCoefStructAlloc1D : public FTypeAlloc1D<BicubicCmplxCoefStruc
             reallocate_bicubic_cmplx_coef_struct_container_data,
             access_bicubic_cmplx_coef_struct_container
         ) {}
-  BicubicCmplxCoefStructAlloc1D(int lb, int n)
+  BicubicCmplxCoefStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bicubic_cmplx_coef_struct_container,
             deallocate_bicubic_cmplx_coef_struct_container,
@@ -9064,9 +9028,8 @@ struct TricubicCmplxCoefStructAlloc1D : public FTypeAlloc1D<TricubicCmplxCoefStr
             reallocate_tricubic_cmplx_coef_struct_container_data,
             access_tricubic_cmplx_coef_struct_container
         ) {}
-  TricubicCmplxCoefStructAlloc1D(int lb, int n)
+  TricubicCmplxCoefStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tricubic_cmplx_coef_struct_container,
             deallocate_tricubic_cmplx_coef_struct_container,
@@ -9096,9 +9059,8 @@ struct GridFieldPt1StructAlloc1D : public FTypeAlloc1D<GridFieldPt1StructArray1D
             reallocate_grid_field_pt1_struct_container_data,
             access_grid_field_pt1_struct_container
         ) {}
-  GridFieldPt1StructAlloc1D(int lb, int n)
+  GridFieldPt1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_grid_field_pt1_struct_container,
             deallocate_grid_field_pt1_struct_container,
@@ -9128,9 +9090,8 @@ struct GridFieldPtStructAlloc1D : public FTypeAlloc1D<GridFieldPtStructArray1D> 
             reallocate_grid_field_pt_struct_container_data,
             access_grid_field_pt_struct_container
         ) {}
-  GridFieldPtStructAlloc1D(int lb, int n)
+  GridFieldPtStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_grid_field_pt_struct_container,
             deallocate_grid_field_pt_struct_container,
@@ -9160,9 +9121,8 @@ struct GridFieldStructAlloc1D : public FTypeAlloc1D<GridFieldStructArray1D> {
             reallocate_grid_field_struct_container_data,
             access_grid_field_struct_container
         ) {}
-  GridFieldStructAlloc1D(int lb, int n)
+  GridFieldStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_grid_field_struct_container,
             deallocate_grid_field_struct_container,
@@ -9192,9 +9152,8 @@ struct FloorPositionStructAlloc1D : public FTypeAlloc1D<FloorPositionStructArray
             reallocate_floor_position_struct_container_data,
             access_floor_position_struct_container
         ) {}
-  FloorPositionStructAlloc1D(int lb, int n)
+  FloorPositionStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_floor_position_struct_container,
             deallocate_floor_position_struct_container,
@@ -9225,9 +9184,8 @@ struct HighEnergySpaceChargeStructAlloc1D
             reallocate_high_energy_space_charge_struct_container_data,
             access_high_energy_space_charge_struct_container
         ) {}
-  HighEnergySpaceChargeStructAlloc1D(int lb, int n)
+  HighEnergySpaceChargeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_high_energy_space_charge_struct_container,
             deallocate_high_energy_space_charge_struct_container,
@@ -9255,9 +9213,8 @@ struct XyDispStructAlloc1D : public FTypeAlloc1D<XyDispStructArray1D> {
             reallocate_xy_disp_struct_container_data,
             access_xy_disp_struct_container
         ) {}
-  XyDispStructAlloc1D(int lb, int n)
+  XyDispStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_xy_disp_struct_container,
             deallocate_xy_disp_struct_container,
@@ -9285,9 +9242,8 @@ struct TwissStructAlloc1D : public FTypeAlloc1D<TwissStructArray1D> {
             reallocate_twiss_struct_container_data,
             access_twiss_struct_container
         ) {}
-  TwissStructAlloc1D(int lb, int n)
+  TwissStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_twiss_struct_container,
             deallocate_twiss_struct_container,
@@ -9315,9 +9271,8 @@ struct Mode3StructAlloc1D : public FTypeAlloc1D<Mode3StructArray1D> {
             reallocate_mode3_struct_container_data,
             access_mode3_struct_container
         ) {}
-  Mode3StructAlloc1D(int lb, int n)
+  Mode3StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_mode3_struct_container,
             deallocate_mode3_struct_container,
@@ -9347,9 +9302,8 @@ struct BookkeepingStateStructAlloc1D : public FTypeAlloc1D<BookkeepingStateStruc
             reallocate_bookkeeping_state_struct_container_data,
             access_bookkeeping_state_struct_container
         ) {}
-  BookkeepingStateStructAlloc1D(int lb, int n)
+  BookkeepingStateStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bookkeeping_state_struct_container,
             deallocate_bookkeeping_state_struct_container,
@@ -9377,9 +9331,8 @@ struct RadMapStructAlloc1D : public FTypeAlloc1D<RadMapStructArray1D> {
             reallocate_rad_map_struct_container_data,
             access_rad_map_struct_container
         ) {}
-  RadMapStructAlloc1D(int lb, int n)
+  RadMapStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_rad_map_struct_container,
             deallocate_rad_map_struct_container,
@@ -9409,9 +9362,8 @@ struct RadMapEleStructAlloc1D : public FTypeAlloc1D<RadMapEleStructArray1D> {
             reallocate_rad_map_ele_struct_container_data,
             access_rad_map_ele_struct_container
         ) {}
-  RadMapEleStructAlloc1D(int lb, int n)
+  RadMapEleStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_rad_map_ele_struct_container,
             deallocate_rad_map_ele_struct_container,
@@ -9441,9 +9393,8 @@ struct GenGrad1StructAlloc1D : public FTypeAlloc1D<GenGrad1StructArray1D> {
             reallocate_gen_grad1_struct_container_data,
             access_gen_grad1_struct_container
         ) {}
-  GenGrad1StructAlloc1D(int lb, int n)
+  GenGrad1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_gen_grad1_struct_container,
             deallocate_gen_grad1_struct_container,
@@ -9473,9 +9424,8 @@ struct GenGradMapStructAlloc1D : public FTypeAlloc1D<GenGradMapStructArray1D> {
             reallocate_gen_grad_map_struct_container_data,
             access_gen_grad_map_struct_container
         ) {}
-  GenGradMapStructAlloc1D(int lb, int n)
+  GenGradMapStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_gen_grad_map_struct_container,
             deallocate_gen_grad_map_struct_container,
@@ -9505,9 +9455,8 @@ struct SurfaceSegmentedPtStructAlloc1D : public FTypeAlloc1D<SurfaceSegmentedPtS
             reallocate_surface_segmented_pt_struct_container_data,
             access_surface_segmented_pt_struct_container
         ) {}
-  SurfaceSegmentedPtStructAlloc1D(int lb, int n)
+  SurfaceSegmentedPtStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_surface_segmented_pt_struct_container,
             deallocate_surface_segmented_pt_struct_container,
@@ -9537,9 +9486,8 @@ struct SurfaceSegmentedStructAlloc1D : public FTypeAlloc1D<SurfaceSegmentedStruc
             reallocate_surface_segmented_struct_container_data,
             access_surface_segmented_struct_container
         ) {}
-  SurfaceSegmentedStructAlloc1D(int lb, int n)
+  SurfaceSegmentedStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_surface_segmented_struct_container,
             deallocate_surface_segmented_struct_container,
@@ -9569,9 +9517,8 @@ struct SurfaceHMisalignPtStructAlloc1D : public FTypeAlloc1D<SurfaceHMisalignPtS
             reallocate_surface_h_misalign_pt_struct_container_data,
             access_surface_h_misalign_pt_struct_container
         ) {}
-  SurfaceHMisalignPtStructAlloc1D(int lb, int n)
+  SurfaceHMisalignPtStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_surface_h_misalign_pt_struct_container,
             deallocate_surface_h_misalign_pt_struct_container,
@@ -9601,9 +9548,8 @@ struct SurfaceHMisalignStructAlloc1D : public FTypeAlloc1D<SurfaceHMisalignStruc
             reallocate_surface_h_misalign_struct_container_data,
             access_surface_h_misalign_struct_container
         ) {}
-  SurfaceHMisalignStructAlloc1D(int lb, int n)
+  SurfaceHMisalignStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_surface_h_misalign_struct_container,
             deallocate_surface_h_misalign_struct_container,
@@ -9634,9 +9580,8 @@ struct SurfaceDisplacementPtStructAlloc1D
             reallocate_surface_displacement_pt_struct_container_data,
             access_surface_displacement_pt_struct_container
         ) {}
-  SurfaceDisplacementPtStructAlloc1D(int lb, int n)
+  SurfaceDisplacementPtStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_surface_displacement_pt_struct_container,
             deallocate_surface_displacement_pt_struct_container,
@@ -9666,9 +9611,8 @@ struct SurfaceDisplacementStructAlloc1D : public FTypeAlloc1D<SurfaceDisplacemen
             reallocate_surface_displacement_struct_container_data,
             access_surface_displacement_struct_container
         ) {}
-  SurfaceDisplacementStructAlloc1D(int lb, int n)
+  SurfaceDisplacementStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_surface_displacement_struct_container,
             deallocate_surface_displacement_struct_container,
@@ -9698,9 +9642,8 @@ struct TargetPointStructAlloc1D : public FTypeAlloc1D<TargetPointStructArray1D> 
             reallocate_target_point_struct_container_data,
             access_target_point_struct_container
         ) {}
-  TargetPointStructAlloc1D(int lb, int n)
+  TargetPointStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_target_point_struct_container,
             deallocate_target_point_struct_container,
@@ -9730,9 +9673,8 @@ struct SurfaceCurvatureStructAlloc1D : public FTypeAlloc1D<SurfaceCurvatureStruc
             reallocate_surface_curvature_struct_container_data,
             access_surface_curvature_struct_container
         ) {}
-  SurfaceCurvatureStructAlloc1D(int lb, int n)
+  SurfaceCurvatureStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_surface_curvature_struct_container,
             deallocate_surface_curvature_struct_container,
@@ -9762,9 +9704,8 @@ struct PhotonTargetStructAlloc1D : public FTypeAlloc1D<PhotonTargetStructArray1D
             reallocate_photon_target_struct_container_data,
             access_photon_target_struct_container
         ) {}
-  PhotonTargetStructAlloc1D(int lb, int n)
+  PhotonTargetStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_photon_target_struct_container,
             deallocate_photon_target_struct_container,
@@ -9794,9 +9735,8 @@ struct PhotonMaterialStructAlloc1D : public FTypeAlloc1D<PhotonMaterialStructArr
             reallocate_photon_material_struct_container_data,
             access_photon_material_struct_container
         ) {}
-  PhotonMaterialStructAlloc1D(int lb, int n)
+  PhotonMaterialStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_photon_material_struct_container,
             deallocate_photon_material_struct_container,
@@ -9826,9 +9766,8 @@ struct PixelPtStructAlloc1D : public FTypeAlloc1D<PixelPtStructArray1D> {
             reallocate_pixel_pt_struct_container_data,
             access_pixel_pt_struct_container
         ) {}
-  PixelPtStructAlloc1D(int lb, int n)
+  PixelPtStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_pixel_pt_struct_container,
             deallocate_pixel_pt_struct_container,
@@ -9858,9 +9797,8 @@ struct PixelDetecStructAlloc1D : public FTypeAlloc1D<PixelDetecStructArray1D> {
             reallocate_pixel_detec_struct_container_data,
             access_pixel_detec_struct_container
         ) {}
-  PixelDetecStructAlloc1D(int lb, int n)
+  PixelDetecStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_pixel_detec_struct_container,
             deallocate_pixel_detec_struct_container,
@@ -9890,9 +9828,8 @@ struct PhotonElementStructAlloc1D : public FTypeAlloc1D<PhotonElementStructArray
             reallocate_photon_element_struct_container_data,
             access_photon_element_struct_container
         ) {}
-  PhotonElementStructAlloc1D(int lb, int n)
+  PhotonElementStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_photon_element_struct_container,
             deallocate_photon_element_struct_container,
@@ -9922,9 +9859,8 @@ struct Wall3dVertexStructAlloc1D : public FTypeAlloc1D<Wall3dVertexStructArray1D
             reallocate_wall3d_vertex_struct_container_data,
             access_wall3d_vertex_struct_container
         ) {}
-  Wall3dVertexStructAlloc1D(int lb, int n)
+  Wall3dVertexStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wall3d_vertex_struct_container,
             deallocate_wall3d_vertex_struct_container,
@@ -9954,9 +9890,8 @@ struct Wall3dSectionStructAlloc1D : public FTypeAlloc1D<Wall3dSectionStructArray
             reallocate_wall3d_section_struct_container_data,
             access_wall3d_section_struct_container
         ) {}
-  Wall3dSectionStructAlloc1D(int lb, int n)
+  Wall3dSectionStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wall3d_section_struct_container,
             deallocate_wall3d_section_struct_container,
@@ -9984,9 +9919,8 @@ struct Wall3dStructAlloc1D : public FTypeAlloc1D<Wall3dStructArray1D> {
             reallocate_wall3d_struct_container_data,
             access_wall3d_struct_container
         ) {}
-  Wall3dStructAlloc1D(int lb, int n)
+  Wall3dStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_wall3d_struct_container,
             deallocate_wall3d_struct_container,
@@ -10016,9 +9950,8 @@ struct RamperLordStructAlloc1D : public FTypeAlloc1D<RamperLordStructArray1D> {
             reallocate_ramper_lord_struct_container_data,
             access_ramper_lord_struct_container
         ) {}
-  RamperLordStructAlloc1D(int lb, int n)
+  RamperLordStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_ramper_lord_struct_container,
             deallocate_ramper_lord_struct_container,
@@ -10046,9 +9979,8 @@ struct ControlStructAlloc1D : public FTypeAlloc1D<ControlStructArray1D> {
             reallocate_control_struct_container_data,
             access_control_struct_container
         ) {}
-  ControlStructAlloc1D(int lb, int n)
+  ControlStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_control_struct_container,
             deallocate_control_struct_container,
@@ -10078,9 +10010,8 @@ struct ControlVar1StructAlloc1D : public FTypeAlloc1D<ControlVar1StructArray1D> 
             reallocate_control_var1_struct_container_data,
             access_control_var1_struct_container
         ) {}
-  ControlVar1StructAlloc1D(int lb, int n)
+  ControlVar1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_control_var1_struct_container,
             deallocate_control_var1_struct_container,
@@ -10110,9 +10041,8 @@ struct ControlRamp1StructAlloc1D : public FTypeAlloc1D<ControlRamp1StructArray1D
             reallocate_control_ramp1_struct_container_data,
             access_control_ramp1_struct_container
         ) {}
-  ControlRamp1StructAlloc1D(int lb, int n)
+  ControlRamp1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_control_ramp1_struct_container,
             deallocate_control_ramp1_struct_container,
@@ -10142,9 +10072,8 @@ struct ControllerStructAlloc1D : public FTypeAlloc1D<ControllerStructArray1D> {
             reallocate_controller_struct_container_data,
             access_controller_struct_container
         ) {}
-  ControllerStructAlloc1D(int lb, int n)
+  ControllerStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_controller_struct_container,
             deallocate_controller_struct_container,
@@ -10174,9 +10103,8 @@ struct EllipseBeamInitStructAlloc1D : public FTypeAlloc1D<EllipseBeamInitStructA
             reallocate_ellipse_beam_init_struct_container_data,
             access_ellipse_beam_init_struct_container
         ) {}
-  EllipseBeamInitStructAlloc1D(int lb, int n)
+  EllipseBeamInitStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_ellipse_beam_init_struct_container,
             deallocate_ellipse_beam_init_struct_container,
@@ -10206,9 +10134,8 @@ struct KvBeamInitStructAlloc1D : public FTypeAlloc1D<KvBeamInitStructArray1D> {
             reallocate_kv_beam_init_struct_container_data,
             access_kv_beam_init_struct_container
         ) {}
-  KvBeamInitStructAlloc1D(int lb, int n)
+  KvBeamInitStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_kv_beam_init_struct_container,
             deallocate_kv_beam_init_struct_container,
@@ -10238,9 +10165,8 @@ struct GridBeamInitStructAlloc1D : public FTypeAlloc1D<GridBeamInitStructArray1D
             reallocate_grid_beam_init_struct_container_data,
             access_grid_beam_init_struct_container
         ) {}
-  GridBeamInitStructAlloc1D(int lb, int n)
+  GridBeamInitStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_grid_beam_init_struct_container,
             deallocate_grid_beam_init_struct_container,
@@ -10270,9 +10196,8 @@ struct BeamInitStructAlloc1D : public FTypeAlloc1D<BeamInitStructArray1D> {
             reallocate_beam_init_struct_container_data,
             access_beam_init_struct_container
         ) {}
-  BeamInitStructAlloc1D(int lb, int n)
+  BeamInitStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_beam_init_struct_container,
             deallocate_beam_init_struct_container,
@@ -10302,9 +10227,8 @@ struct LatParamStructAlloc1D : public FTypeAlloc1D<LatParamStructArray1D> {
             reallocate_lat_param_struct_container_data,
             access_lat_param_struct_container
         ) {}
-  LatParamStructAlloc1D(int lb, int n)
+  LatParamStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_lat_param_struct_container,
             deallocate_lat_param_struct_container,
@@ -10334,9 +10258,8 @@ struct ModeInfoStructAlloc1D : public FTypeAlloc1D<ModeInfoStructArray1D> {
             reallocate_mode_info_struct_container_data,
             access_mode_info_struct_container
         ) {}
-  ModeInfoStructAlloc1D(int lb, int n)
+  ModeInfoStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_mode_info_struct_container,
             deallocate_mode_info_struct_container,
@@ -10366,9 +10289,8 @@ struct PreTrackerStructAlloc1D : public FTypeAlloc1D<PreTrackerStructArray1D> {
             reallocate_pre_tracker_struct_container_data,
             access_pre_tracker_struct_container
         ) {}
-  PreTrackerStructAlloc1D(int lb, int n)
+  PreTrackerStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_pre_tracker_struct_container,
             deallocate_pre_tracker_struct_container,
@@ -10398,9 +10320,8 @@ struct AnormalModeStructAlloc1D : public FTypeAlloc1D<AnormalModeStructArray1D> 
             reallocate_anormal_mode_struct_container_data,
             access_anormal_mode_struct_container
         ) {}
-  AnormalModeStructAlloc1D(int lb, int n)
+  AnormalModeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_anormal_mode_struct_container,
             deallocate_anormal_mode_struct_container,
@@ -10430,9 +10351,8 @@ struct LinacNormalModeStructAlloc1D : public FTypeAlloc1D<LinacNormalModeStructA
             reallocate_linac_normal_mode_struct_container_data,
             access_linac_normal_mode_struct_container
         ) {}
-  LinacNormalModeStructAlloc1D(int lb, int n)
+  LinacNormalModeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_linac_normal_mode_struct_container,
             deallocate_linac_normal_mode_struct_container,
@@ -10462,9 +10382,8 @@ struct NormalModesStructAlloc1D : public FTypeAlloc1D<NormalModesStructArray1D> 
             reallocate_normal_modes_struct_container_data,
             access_normal_modes_struct_container
         ) {}
-  NormalModesStructAlloc1D(int lb, int n)
+  NormalModesStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_normal_modes_struct_container,
             deallocate_normal_modes_struct_container,
@@ -10494,9 +10413,8 @@ struct EmFieldStructAlloc1D : public FTypeAlloc1D<EmFieldStructArray1D> {
             reallocate_em_field_struct_container_data,
             access_em_field_struct_container
         ) {}
-  EmFieldStructAlloc1D(int lb, int n)
+  EmFieldStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_em_field_struct_container,
             deallocate_em_field_struct_container,
@@ -10526,9 +10444,8 @@ struct StrongBeamStructAlloc1D : public FTypeAlloc1D<StrongBeamStructArray1D> {
             reallocate_strong_beam_struct_container_data,
             access_strong_beam_struct_container
         ) {}
-  StrongBeamStructAlloc1D(int lb, int n)
+  StrongBeamStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_strong_beam_struct_container,
             deallocate_strong_beam_struct_container,
@@ -10558,9 +10475,8 @@ struct TrackPointStructAlloc1D : public FTypeAlloc1D<TrackPointStructArray1D> {
             reallocate_track_point_struct_container_data,
             access_track_point_struct_container
         ) {}
-  TrackPointStructAlloc1D(int lb, int n)
+  TrackPointStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_track_point_struct_container,
             deallocate_track_point_struct_container,
@@ -10588,9 +10504,8 @@ struct TrackStructAlloc1D : public FTypeAlloc1D<TrackStructArray1D> {
             reallocate_track_struct_container_data,
             access_track_struct_container
         ) {}
-  TrackStructAlloc1D(int lb, int n)
+  TrackStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_track_struct_container,
             deallocate_track_struct_container,
@@ -10620,9 +10535,8 @@ struct SpaceChargeCommonStructAlloc1D : public FTypeAlloc1D<SpaceChargeCommonStr
             reallocate_space_charge_common_struct_container_data,
             access_space_charge_common_struct_container
         ) {}
-  SpaceChargeCommonStructAlloc1D(int lb, int n)
+  SpaceChargeCommonStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_space_charge_common_struct_container,
             deallocate_space_charge_common_struct_container,
@@ -10652,9 +10566,8 @@ struct BmadCommonStructAlloc1D : public FTypeAlloc1D<BmadCommonStructArray1D> {
             reallocate_bmad_common_struct_container_data,
             access_bmad_common_struct_container
         ) {}
-  BmadCommonStructAlloc1D(int lb, int n)
+  BmadCommonStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bmad_common_struct_container,
             deallocate_bmad_common_struct_container,
@@ -10684,9 +10597,8 @@ struct RadInt1StructAlloc1D : public FTypeAlloc1D<RadInt1StructArray1D> {
             reallocate_rad_int1_struct_container_data,
             access_rad_int1_struct_container
         ) {}
-  RadInt1StructAlloc1D(int lb, int n)
+  RadInt1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_rad_int1_struct_container,
             deallocate_rad_int1_struct_container,
@@ -10716,9 +10628,8 @@ struct RadIntBranchStructAlloc1D : public FTypeAlloc1D<RadIntBranchStructArray1D
             reallocate_rad_int_branch_struct_container_data,
             access_rad_int_branch_struct_container
         ) {}
-  RadIntBranchStructAlloc1D(int lb, int n)
+  RadIntBranchStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_rad_int_branch_struct_container,
             deallocate_rad_int_branch_struct_container,
@@ -10748,9 +10659,8 @@ struct RadIntAllEleStructAlloc1D : public FTypeAlloc1D<RadIntAllEleStructArray1D
             reallocate_rad_int_all_ele_struct_container_data,
             access_rad_int_all_ele_struct_container
         ) {}
-  RadIntAllEleStructAlloc1D(int lb, int n)
+  RadIntAllEleStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_rad_int_all_ele_struct_container,
             deallocate_rad_int_all_ele_struct_container,
@@ -10780,9 +10690,8 @@ struct RfStairStepStructAlloc1D : public FTypeAlloc1D<RfStairStepStructArray1D> 
             reallocate_rf_stair_step_struct_container_data,
             access_rf_stair_step_struct_container
         ) {}
-  RfStairStepStructAlloc1D(int lb, int n)
+  RfStairStepStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_rf_stair_step_struct_container,
             deallocate_rf_stair_step_struct_container,
@@ -10810,9 +10719,8 @@ struct RfEleStructAlloc1D : public FTypeAlloc1D<RfEleStructArray1D> {
             reallocate_rf_ele_struct_container_data,
             access_rf_ele_struct_container
         ) {}
-  RfEleStructAlloc1D(int lb, int n)
+  RfEleStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_rf_ele_struct_container,
             deallocate_rf_ele_struct_container,
@@ -10840,9 +10748,8 @@ struct EleStructAlloc1D : public FTypeAlloc1D<EleStructArray1D> {
             reallocate_ele_struct_container_data,
             access_ele_struct_container
         ) {}
-  EleStructAlloc1D(int lb, int n)
+  EleStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_ele_struct_container,
             deallocate_ele_struct_container,
@@ -10872,9 +10779,8 @@ struct ComplexTaylorTermStructAlloc1D : public FTypeAlloc1D<ComplexTaylorTermStr
             reallocate_complex_taylor_term_struct_container_data,
             access_complex_taylor_term_struct_container
         ) {}
-  ComplexTaylorTermStructAlloc1D(int lb, int n)
+  ComplexTaylorTermStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_complex_taylor_term_struct_container,
             deallocate_complex_taylor_term_struct_container,
@@ -10904,9 +10810,8 @@ struct ComplexTaylorStructAlloc1D : public FTypeAlloc1D<ComplexTaylorStructArray
             reallocate_complex_taylor_struct_container_data,
             access_complex_taylor_struct_container
         ) {}
-  ComplexTaylorStructAlloc1D(int lb, int n)
+  ComplexTaylorStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_complex_taylor_struct_container,
             deallocate_complex_taylor_struct_container,
@@ -10934,9 +10839,8 @@ struct BranchStructAlloc1D : public FTypeAlloc1D<BranchStructArray1D> {
             reallocate_branch_struct_container_data,
             access_branch_struct_container
         ) {}
-  BranchStructAlloc1D(int lb, int n)
+  BranchStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_branch_struct_container,
             deallocate_branch_struct_container,
@@ -10964,9 +10868,8 @@ struct LatStructAlloc1D : public FTypeAlloc1D<LatStructArray1D> {
             reallocate_lat_struct_container_data,
             access_lat_struct_container
         ) {}
-  LatStructAlloc1D(int lb, int n)
+  LatStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_lat_struct_container,
             deallocate_lat_struct_container,
@@ -10994,9 +10897,8 @@ struct BunchStructAlloc1D : public FTypeAlloc1D<BunchStructArray1D> {
             reallocate_bunch_struct_container_data,
             access_bunch_struct_container
         ) {}
-  BunchStructAlloc1D(int lb, int n)
+  BunchStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bunch_struct_container,
             deallocate_bunch_struct_container,
@@ -11026,9 +10928,8 @@ struct BunchParamsStructAlloc1D : public FTypeAlloc1D<BunchParamsStructArray1D> 
             reallocate_bunch_params_struct_container_data,
             access_bunch_params_struct_container
         ) {}
-  BunchParamsStructAlloc1D(int lb, int n)
+  BunchParamsStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bunch_params_struct_container,
             deallocate_bunch_params_struct_container,
@@ -11056,9 +10957,8 @@ struct BeamStructAlloc1D : public FTypeAlloc1D<BeamStructArray1D> {
             reallocate_beam_struct_container_data,
             access_beam_struct_container
         ) {}
-  BeamStructAlloc1D(int lb, int n)
+  BeamStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_beam_struct_container,
             deallocate_beam_struct_container,
@@ -11088,9 +10988,8 @@ struct AperturePointStructAlloc1D : public FTypeAlloc1D<AperturePointStructArray
             reallocate_aperture_point_struct_container_data,
             access_aperture_point_struct_container
         ) {}
-  AperturePointStructAlloc1D(int lb, int n)
+  AperturePointStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_aperture_point_struct_container,
             deallocate_aperture_point_struct_container,
@@ -11120,9 +11019,8 @@ struct ApertureParamStructAlloc1D : public FTypeAlloc1D<ApertureParamStructArray
             reallocate_aperture_param_struct_container_data,
             access_aperture_param_struct_container
         ) {}
-  ApertureParamStructAlloc1D(int lb, int n)
+  ApertureParamStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_aperture_param_struct_container,
             deallocate_aperture_param_struct_container,
@@ -11152,9 +11050,8 @@ struct ApertureScanStructAlloc1D : public FTypeAlloc1D<ApertureScanStructArray1D
             reallocate_aperture_scan_struct_container_data,
             access_aperture_scan_struct_container
         ) {}
-  ApertureScanStructAlloc1D(int lb, int n)
+  ApertureScanStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_aperture_scan_struct_container,
             deallocate_aperture_scan_struct_container,
@@ -11184,9 +11081,8 @@ struct ElePointerStructAlloc1D : public FTypeAlloc1D<ElePointerStructArray1D> {
             reallocate_ele_pointer_struct_container_data,
             access_ele_pointer_struct_container
         ) {}
-  ElePointerStructAlloc1D(int lb, int n)
+  ElePointerStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_ele_pointer_struct_container,
             deallocate_ele_pointer_struct_container,
@@ -11216,9 +11112,8 @@ struct ExpressionTreeStructAlloc1D : public FTypeAlloc1D<ExpressionTreeStructArr
             reallocate_expression_tree_struct_container_data,
             access_expression_tree_struct_container
         ) {}
-  ExpressionTreeStructAlloc1D(int lb, int n)
+  ExpressionTreeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_expression_tree_struct_container,
             deallocate_expression_tree_struct_container,
@@ -11248,9 +11143,8 @@ struct NametableStructAlloc1D : public FTypeAlloc1D<NametableStructArray1D> {
             reallocate_nametable_struct_container_data,
             access_nametable_struct_container
         ) {}
-  NametableStructAlloc1D(int lb, int n)
+  NametableStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_nametable_struct_container,
             deallocate_nametable_struct_container,
@@ -11280,9 +11174,8 @@ struct TaoSpinDnDpzStructAlloc1D : public FTypeAlloc1D<TaoSpinDnDpzStructArray1D
             reallocate_tao_spin_dn_dpz_struct_container_data,
             access_tao_spin_dn_dpz_struct_container
         ) {}
-  TaoSpinDnDpzStructAlloc1D(int lb, int n)
+  TaoSpinDnDpzStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_spin_dn_dpz_struct_container,
             deallocate_tao_spin_dn_dpz_struct_container,
@@ -11312,9 +11205,8 @@ struct ResonanceHStructAlloc1D : public FTypeAlloc1D<ResonanceHStructArray1D> {
             reallocate_resonance_h_struct_container_data,
             access_resonance_h_struct_container
         ) {}
-  ResonanceHStructAlloc1D(int lb, int n)
+  ResonanceHStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_resonance_h_struct_container,
             deallocate_resonance_h_struct_container,
@@ -11344,9 +11236,8 @@ struct SpinOrbitMap1StructAlloc1D : public FTypeAlloc1D<SpinOrbitMap1StructArray
             reallocate_spin_orbit_map1_struct_container_data,
             access_spin_orbit_map1_struct_container
         ) {}
-  SpinOrbitMap1StructAlloc1D(int lb, int n)
+  SpinOrbitMap1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_spin_orbit_map1_struct_container,
             deallocate_spin_orbit_map1_struct_container,
@@ -11376,9 +11267,8 @@ struct SpinAxisStructAlloc1D : public FTypeAlloc1D<SpinAxisStructArray1D> {
             reallocate_spin_axis_struct_container_data,
             access_spin_axis_struct_container
         ) {}
-  SpinAxisStructAlloc1D(int lb, int n)
+  SpinAxisStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_spin_axis_struct_container,
             deallocate_spin_axis_struct_container,
@@ -11408,9 +11298,8 @@ struct PtcNormalFormStructAlloc1D : public FTypeAlloc1D<PtcNormalFormStructArray
             reallocate_ptc_normal_form_struct_container_data,
             access_ptc_normal_form_struct_container
         ) {}
-  PtcNormalFormStructAlloc1D(int lb, int n)
+  PtcNormalFormStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_ptc_normal_form_struct_container,
             deallocate_ptc_normal_form_struct_container,
@@ -11440,9 +11329,8 @@ struct BmadNormalFormStructAlloc1D : public FTypeAlloc1D<BmadNormalFormStructArr
             reallocate_bmad_normal_form_struct_container_data,
             access_bmad_normal_form_struct_container
         ) {}
-  BmadNormalFormStructAlloc1D(int lb, int n)
+  BmadNormalFormStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bmad_normal_form_struct_container,
             deallocate_bmad_normal_form_struct_container,
@@ -11472,9 +11360,8 @@ struct BunchTrackStructAlloc1D : public FTypeAlloc1D<BunchTrackStructArray1D> {
             reallocate_bunch_track_struct_container_data,
             access_bunch_track_struct_container
         ) {}
-  BunchTrackStructAlloc1D(int lb, int n)
+  BunchTrackStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bunch_track_struct_container,
             deallocate_bunch_track_struct_container,
@@ -11504,9 +11391,8 @@ struct SummationRdtStructAlloc1D : public FTypeAlloc1D<SummationRdtStructArray1D
             reallocate_summation_rdt_struct_container_data,
             access_summation_rdt_struct_container
         ) {}
-  SummationRdtStructAlloc1D(int lb, int n)
+  SummationRdtStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_summation_rdt_struct_container,
             deallocate_summation_rdt_struct_container,
@@ -11536,9 +11422,8 @@ struct TaoEleShapeStructAlloc1D : public FTypeAlloc1D<TaoEleShapeStructArray1D> 
             reallocate_tao_ele_shape_struct_container_data,
             access_tao_ele_shape_struct_container
         ) {}
-  TaoEleShapeStructAlloc1D(int lb, int n)
+  TaoEleShapeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_ele_shape_struct_container,
             deallocate_tao_ele_shape_struct_container,
@@ -11568,9 +11453,8 @@ struct TaoElePointerStructAlloc1D : public FTypeAlloc1D<TaoElePointerStructArray
             reallocate_tao_ele_pointer_struct_container_data,
             access_tao_ele_pointer_struct_container
         ) {}
-  TaoElePointerStructAlloc1D(int lb, int n)
+  TaoElePointerStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_ele_pointer_struct_container,
             deallocate_tao_ele_pointer_struct_container,
@@ -11600,9 +11484,8 @@ struct TaoCurveStructAlloc1D : public FTypeAlloc1D<TaoCurveStructArray1D> {
             reallocate_tao_curve_struct_container_data,
             access_tao_curve_struct_container
         ) {}
-  TaoCurveStructAlloc1D(int lb, int n)
+  TaoCurveStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_curve_struct_container,
             deallocate_tao_curve_struct_container,
@@ -11632,9 +11515,8 @@ struct TaoCurveColorStructAlloc1D : public FTypeAlloc1D<TaoCurveColorStructArray
             reallocate_tao_curve_color_struct_container_data,
             access_tao_curve_color_struct_container
         ) {}
-  TaoCurveColorStructAlloc1D(int lb, int n)
+  TaoCurveColorStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_curve_color_struct_container,
             deallocate_tao_curve_color_struct_container,
@@ -11664,9 +11546,8 @@ struct TaoCurveOrbitStructAlloc1D : public FTypeAlloc1D<TaoCurveOrbitStructArray
             reallocate_tao_curve_orbit_struct_container_data,
             access_tao_curve_orbit_struct_container
         ) {}
-  TaoCurveOrbitStructAlloc1D(int lb, int n)
+  TaoCurveOrbitStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_curve_orbit_struct_container,
             deallocate_tao_curve_orbit_struct_container,
@@ -11696,9 +11577,8 @@ struct TaoHistogramStructAlloc1D : public FTypeAlloc1D<TaoHistogramStructArray1D
             reallocate_tao_histogram_struct_container_data,
             access_tao_histogram_struct_container
         ) {}
-  TaoHistogramStructAlloc1D(int lb, int n)
+  TaoHistogramStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_histogram_struct_container,
             deallocate_tao_histogram_struct_container,
@@ -11728,9 +11608,8 @@ struct LatEleOrder1StructAlloc1D : public FTypeAlloc1D<LatEleOrder1StructArray1D
             reallocate_lat_ele_order1_struct_container_data,
             access_lat_ele_order1_struct_container
         ) {}
-  LatEleOrder1StructAlloc1D(int lb, int n)
+  LatEleOrder1StructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_lat_ele_order1_struct_container,
             deallocate_lat_ele_order1_struct_container,
@@ -11760,9 +11639,8 @@ struct LatEleOrderArrayStructAlloc1D : public FTypeAlloc1D<LatEleOrderArrayStruc
             reallocate_lat_ele_order_array_struct_container_data,
             access_lat_ele_order_array_struct_container
         ) {}
-  LatEleOrderArrayStructAlloc1D(int lb, int n)
+  LatEleOrderArrayStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_lat_ele_order_array_struct_container,
             deallocate_lat_ele_order_array_struct_container,
@@ -11792,9 +11670,8 @@ struct TaoLatSigmaStructAlloc1D : public FTypeAlloc1D<TaoLatSigmaStructArray1D> 
             reallocate_tao_lat_sigma_struct_container_data,
             access_tao_lat_sigma_struct_container
         ) {}
-  TaoLatSigmaStructAlloc1D(int lb, int n)
+  TaoLatSigmaStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_lat_sigma_struct_container,
             deallocate_tao_lat_sigma_struct_container,
@@ -11824,9 +11701,8 @@ struct TaoSpinEleStructAlloc1D : public FTypeAlloc1D<TaoSpinEleStructArray1D> {
             reallocate_tao_spin_ele_struct_container_data,
             access_tao_spin_ele_struct_container
         ) {}
-  TaoSpinEleStructAlloc1D(int lb, int n)
+  TaoSpinEleStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_spin_ele_struct_container,
             deallocate_tao_spin_ele_struct_container,
@@ -11856,9 +11732,8 @@ struct TaoPlotCacheStructAlloc1D : public FTypeAlloc1D<TaoPlotCacheStructArray1D
             reallocate_tao_plot_cache_struct_container_data,
             access_tao_plot_cache_struct_container
         ) {}
-  TaoPlotCacheStructAlloc1D(int lb, int n)
+  TaoPlotCacheStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_plot_cache_struct_container,
             deallocate_tao_plot_cache_struct_container,
@@ -11888,9 +11763,8 @@ struct TaoSpinPolarizationStructAlloc1D : public FTypeAlloc1D<TaoSpinPolarizatio
             reallocate_tao_spin_polarization_struct_container_data,
             access_tao_spin_polarization_struct_container
         ) {}
-  TaoSpinPolarizationStructAlloc1D(int lb, int n)
+  TaoSpinPolarizationStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_spin_polarization_struct_container,
             deallocate_tao_spin_polarization_struct_container,
@@ -11920,9 +11794,8 @@ struct TaoLatticeBranchStructAlloc1D : public FTypeAlloc1D<TaoLatticeBranchStruc
             reallocate_tao_lattice_branch_struct_container_data,
             access_tao_lattice_branch_struct_container
         ) {}
-  TaoLatticeBranchStructAlloc1D(int lb, int n)
+  TaoLatticeBranchStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_lattice_branch_struct_container,
             deallocate_tao_lattice_branch_struct_container,
@@ -11952,9 +11825,8 @@ struct TaoModelElementStructAlloc1D : public FTypeAlloc1D<TaoModelElementStructA
             reallocate_tao_model_element_struct_container_data,
             access_tao_model_element_struct_container
         ) {}
-  TaoModelElementStructAlloc1D(int lb, int n)
+  TaoModelElementStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_model_element_struct_container,
             deallocate_tao_model_element_struct_container,
@@ -11984,9 +11856,8 @@ struct TaoBeamBranchStructAlloc1D : public FTypeAlloc1D<TaoBeamBranchStructArray
             reallocate_tao_beam_branch_struct_container_data,
             access_tao_beam_branch_struct_container
         ) {}
-  TaoBeamBranchStructAlloc1D(int lb, int n)
+  TaoBeamBranchStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_beam_branch_struct_container,
             deallocate_tao_beam_branch_struct_container,
@@ -12016,9 +11887,8 @@ struct TaoD1DataStructAlloc1D : public FTypeAlloc1D<TaoD1DataStructArray1D> {
             reallocate_tao_d1_data_struct_container_data,
             access_tao_d1_data_struct_container
         ) {}
-  TaoD1DataStructAlloc1D(int lb, int n)
+  TaoD1DataStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_d1_data_struct_container,
             deallocate_tao_d1_data_struct_container,
@@ -12048,9 +11918,8 @@ struct TaoD2DataStructAlloc1D : public FTypeAlloc1D<TaoD2DataStructArray1D> {
             reallocate_tao_d2_data_struct_container_data,
             access_tao_d2_data_struct_container
         ) {}
-  TaoD2DataStructAlloc1D(int lb, int n)
+  TaoD2DataStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_d2_data_struct_container,
             deallocate_tao_d2_data_struct_container,
@@ -12080,9 +11949,8 @@ struct TaoDataVarComponentStructAlloc1D : public FTypeAlloc1D<TaoDataVarComponen
             reallocate_tao_data_var_component_struct_container_data,
             access_tao_data_var_component_struct_container
         ) {}
-  TaoDataVarComponentStructAlloc1D(int lb, int n)
+  TaoDataVarComponentStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_data_var_component_struct_container,
             deallocate_tao_data_var_component_struct_container,
@@ -12112,9 +11980,8 @@ struct TaoGraphStructAlloc1D : public FTypeAlloc1D<TaoGraphStructArray1D> {
             reallocate_tao_graph_struct_container_data,
             access_tao_graph_struct_container
         ) {}
-  TaoGraphStructAlloc1D(int lb, int n)
+  TaoGraphStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_graph_struct_container,
             deallocate_tao_graph_struct_container,
@@ -12144,9 +12011,8 @@ struct TaoPlotStructAlloc1D : public FTypeAlloc1D<TaoPlotStructArray1D> {
             reallocate_tao_plot_struct_container_data,
             access_tao_plot_struct_container
         ) {}
-  TaoPlotStructAlloc1D(int lb, int n)
+  TaoPlotStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_plot_struct_container,
             deallocate_tao_plot_struct_container,
@@ -12176,9 +12042,8 @@ struct TaoPlotRegionStructAlloc1D : public FTypeAlloc1D<TaoPlotRegionStructArray
             reallocate_tao_plot_region_struct_container_data,
             access_tao_plot_region_struct_container
         ) {}
-  TaoPlotRegionStructAlloc1D(int lb, int n)
+  TaoPlotRegionStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_plot_region_struct_container,
             deallocate_tao_plot_region_struct_container,
@@ -12208,9 +12073,8 @@ struct TaoUniversePointerStructAlloc1D : public FTypeAlloc1D<TaoUniversePointerS
             reallocate_tao_universe_pointer_struct_container_data,
             access_tao_universe_pointer_struct_container
         ) {}
-  TaoUniversePointerStructAlloc1D(int lb, int n)
+  TaoUniversePointerStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_universe_pointer_struct_container,
             deallocate_tao_universe_pointer_struct_container,
@@ -12240,9 +12104,8 @@ struct TaoSuperUniverseStructAlloc1D : public FTypeAlloc1D<TaoSuperUniverseStruc
             reallocate_tao_super_universe_struct_container_data,
             access_tao_super_universe_struct_container
         ) {}
-  TaoSuperUniverseStructAlloc1D(int lb, int n)
+  TaoSuperUniverseStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_super_universe_struct_container,
             deallocate_tao_super_universe_struct_container,
@@ -12270,9 +12133,8 @@ struct TaoVarStructAlloc1D : public FTypeAlloc1D<TaoVarStructArray1D> {
             reallocate_tao_var_struct_container_data,
             access_tao_var_struct_container
         ) {}
-  TaoVarStructAlloc1D(int lb, int n)
+  TaoVarStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_var_struct_container,
             deallocate_tao_var_struct_container,
@@ -12302,9 +12164,8 @@ struct TaoVarSlaveStructAlloc1D : public FTypeAlloc1D<TaoVarSlaveStructArray1D> 
             reallocate_tao_var_slave_struct_container_data,
             access_tao_var_slave_struct_container
         ) {}
-  TaoVarSlaveStructAlloc1D(int lb, int n)
+  TaoVarSlaveStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_var_slave_struct_container,
             deallocate_tao_var_slave_struct_container,
@@ -12334,9 +12195,8 @@ struct TaoLatticeStructAlloc1D : public FTypeAlloc1D<TaoLatticeStructArray1D> {
             reallocate_tao_lattice_struct_container_data,
             access_tao_lattice_struct_container
         ) {}
-  TaoLatticeStructAlloc1D(int lb, int n)
+  TaoLatticeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_lattice_struct_container,
             deallocate_tao_lattice_struct_container,
@@ -12366,9 +12226,8 @@ struct TaoBeamUniStructAlloc1D : public FTypeAlloc1D<TaoBeamUniStructArray1D> {
             reallocate_tao_beam_uni_struct_container_data,
             access_tao_beam_uni_struct_container
         ) {}
-  TaoBeamUniStructAlloc1D(int lb, int n)
+  TaoBeamUniStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_beam_uni_struct_container,
             deallocate_tao_beam_uni_struct_container,
@@ -12398,9 +12257,8 @@ struct TaoDynamicApertureStructAlloc1D : public FTypeAlloc1D<TaoDynamicApertureS
             reallocate_tao_dynamic_aperture_struct_container_data,
             access_tao_dynamic_aperture_struct_container
         ) {}
-  TaoDynamicApertureStructAlloc1D(int lb, int n)
+  TaoDynamicApertureStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_dynamic_aperture_struct_container,
             deallocate_tao_dynamic_aperture_struct_container,
@@ -12430,9 +12288,8 @@ struct TaoModelBranchStructAlloc1D : public FTypeAlloc1D<TaoModelBranchStructArr
             reallocate_tao_model_branch_struct_container_data,
             access_tao_model_branch_struct_container
         ) {}
-  TaoModelBranchStructAlloc1D(int lb, int n)
+  TaoModelBranchStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_model_branch_struct_container,
             deallocate_tao_model_branch_struct_container,
@@ -12462,9 +12319,8 @@ struct TaoSpinMapStructAlloc1D : public FTypeAlloc1D<TaoSpinMapStructArray1D> {
             reallocate_tao_spin_map_struct_container_data,
             access_tao_spin_map_struct_container
         ) {}
-  TaoSpinMapStructAlloc1D(int lb, int n)
+  TaoSpinMapStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_spin_map_struct_container,
             deallocate_tao_spin_map_struct_container,
@@ -12494,9 +12350,8 @@ struct TaoDataStructAlloc1D : public FTypeAlloc1D<TaoDataStructArray1D> {
             reallocate_tao_data_struct_container_data,
             access_tao_data_struct_container
         ) {}
-  TaoDataStructAlloc1D(int lb, int n)
+  TaoDataStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_data_struct_container,
             deallocate_tao_data_struct_container,
@@ -12526,9 +12381,8 @@ struct TaoPingScaleStructAlloc1D : public FTypeAlloc1D<TaoPingScaleStructArray1D
             reallocate_tao_ping_scale_struct_container_data,
             access_tao_ping_scale_struct_container
         ) {}
-  TaoPingScaleStructAlloc1D(int lb, int n)
+  TaoPingScaleStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_ping_scale_struct_container,
             deallocate_tao_ping_scale_struct_container,
@@ -12558,9 +12412,8 @@ struct TaoUniverseCalcStructAlloc1D : public FTypeAlloc1D<TaoUniverseCalcStructA
             reallocate_tao_universe_calc_struct_container_data,
             access_tao_universe_calc_struct_container
         ) {}
-  TaoUniverseCalcStructAlloc1D(int lb, int n)
+  TaoUniverseCalcStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_universe_calc_struct_container,
             deallocate_tao_universe_calc_struct_container,
@@ -12590,9 +12443,8 @@ struct LatEleOrderStructAlloc1D : public FTypeAlloc1D<LatEleOrderStructArray1D> 
             reallocate_lat_ele_order_struct_container_data,
             access_lat_ele_order_struct_container
         ) {}
-  LatEleOrderStructAlloc1D(int lb, int n)
+  LatEleOrderStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_lat_ele_order_struct_container,
             deallocate_lat_ele_order_struct_container,
@@ -12622,9 +12474,8 @@ struct TaoExpressionInfoStructAlloc1D : public FTypeAlloc1D<TaoExpressionInfoStr
             reallocate_tao_expression_info_struct_container_data,
             access_tao_expression_info_struct_container
         ) {}
-  TaoExpressionInfoStructAlloc1D(int lb, int n)
+  TaoExpressionInfoStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_expression_info_struct_container,
             deallocate_tao_expression_info_struct_container,
@@ -12654,9 +12505,8 @@ struct TaoEvalNodeStructAlloc1D : public FTypeAlloc1D<TaoEvalNodeStructArray1D> 
             reallocate_tao_eval_node_struct_container_data,
             access_tao_eval_node_struct_container
         ) {}
-  TaoEvalNodeStructAlloc1D(int lb, int n)
+  TaoEvalNodeStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_eval_node_struct_container,
             deallocate_tao_eval_node_struct_container,
@@ -12686,9 +12536,8 @@ struct TaoTitleStructAlloc1D : public FTypeAlloc1D<TaoTitleStructArray1D> {
             reallocate_tao_title_struct_container_data,
             access_tao_title_struct_container
         ) {}
-  TaoTitleStructAlloc1D(int lb, int n)
+  TaoTitleStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_title_struct_container,
             deallocate_tao_title_struct_container,
@@ -12716,9 +12565,8 @@ struct QpRectStructAlloc1D : public FTypeAlloc1D<QpRectStructArray1D> {
             reallocate_qp_rect_struct_container_data,
             access_qp_rect_struct_container
         ) {}
-  QpRectStructAlloc1D(int lb, int n)
+  QpRectStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_qp_rect_struct_container,
             deallocate_qp_rect_struct_container,
@@ -12748,9 +12596,8 @@ struct TaoDrawingStructAlloc1D : public FTypeAlloc1D<TaoDrawingStructArray1D> {
             reallocate_tao_drawing_struct_container_data,
             access_tao_drawing_struct_container
         ) {}
-  TaoDrawingStructAlloc1D(int lb, int n)
+  TaoDrawingStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_drawing_struct_container,
             deallocate_tao_drawing_struct_container,
@@ -12780,9 +12627,8 @@ struct TaoShapePatternStructAlloc1D : public FTypeAlloc1D<TaoShapePatternStructA
             reallocate_tao_shape_pattern_struct_container_data,
             access_tao_shape_pattern_struct_container
         ) {}
-  TaoShapePatternStructAlloc1D(int lb, int n)
+  TaoShapePatternStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_shape_pattern_struct_container,
             deallocate_tao_shape_pattern_struct_container,
@@ -12812,9 +12658,8 @@ struct TaoShapePatternPointStructAlloc1D : public FTypeAlloc1D<TaoShapePatternPo
             reallocate_tao_shape_pattern_point_struct_container_data,
             access_tao_shape_pattern_point_struct_container
         ) {}
-  TaoShapePatternPointStructAlloc1D(int lb, int n)
+  TaoShapePatternPointStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_shape_pattern_point_struct_container,
             deallocate_tao_shape_pattern_point_struct_container,
@@ -12842,9 +12687,8 @@ struct QpAxisStructAlloc1D : public FTypeAlloc1D<QpAxisStructArray1D> {
             reallocate_qp_axis_struct_container_data,
             access_qp_axis_struct_container
         ) {}
-  QpAxisStructAlloc1D(int lb, int n)
+  QpAxisStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_qp_axis_struct_container,
             deallocate_qp_axis_struct_container,
@@ -12874,9 +12718,8 @@ struct QpLegendStructAlloc1D : public FTypeAlloc1D<QpLegendStructArray1D> {
             reallocate_qp_legend_struct_container_data,
             access_qp_legend_struct_container
         ) {}
-  QpLegendStructAlloc1D(int lb, int n)
+  QpLegendStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_qp_legend_struct_container,
             deallocate_qp_legend_struct_container,
@@ -12906,9 +12749,8 @@ struct QpPointStructAlloc1D : public FTypeAlloc1D<QpPointStructArray1D> {
             reallocate_qp_point_struct_container_data,
             access_qp_point_struct_container
         ) {}
-  QpPointStructAlloc1D(int lb, int n)
+  QpPointStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_qp_point_struct_container,
             deallocate_qp_point_struct_container,
@@ -12936,9 +12778,8 @@ struct QpLineStructAlloc1D : public FTypeAlloc1D<QpLineStructArray1D> {
             reallocate_qp_line_struct_container_data,
             access_qp_line_struct_container
         ) {}
-  QpLineStructAlloc1D(int lb, int n)
+  QpLineStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_qp_line_struct_container,
             deallocate_qp_line_struct_container,
@@ -12968,9 +12809,8 @@ struct QpSymbolStructAlloc1D : public FTypeAlloc1D<QpSymbolStructArray1D> {
             reallocate_qp_symbol_struct_container_data,
             access_qp_symbol_struct_container
         ) {}
-  QpSymbolStructAlloc1D(int lb, int n)
+  QpSymbolStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_qp_symbol_struct_container,
             deallocate_qp_symbol_struct_container,
@@ -13000,9 +12840,8 @@ struct TaoFloorPlanStructAlloc1D : public FTypeAlloc1D<TaoFloorPlanStructArray1D
             reallocate_tao_floor_plan_struct_container_data,
             access_tao_floor_plan_struct_container
         ) {}
-  TaoFloorPlanStructAlloc1D(int lb, int n)
+  TaoFloorPlanStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_floor_plan_struct_container,
             deallocate_tao_floor_plan_struct_container,
@@ -13032,9 +12871,8 @@ struct TaoV1VarStructAlloc1D : public FTypeAlloc1D<TaoV1VarStructArray1D> {
             reallocate_tao_v1_var_struct_container_data,
             access_tao_v1_var_struct_container
         ) {}
-  TaoV1VarStructAlloc1D(int lb, int n)
+  TaoV1VarStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_v1_var_struct_container,
             deallocate_tao_v1_var_struct_container,
@@ -13064,9 +12902,8 @@ struct TaoGlobalStructAlloc1D : public FTypeAlloc1D<TaoGlobalStructArray1D> {
             reallocate_tao_global_struct_container_data,
             access_tao_global_struct_container
         ) {}
-  TaoGlobalStructAlloc1D(int lb, int n)
+  TaoGlobalStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_global_struct_container,
             deallocate_tao_global_struct_container,
@@ -13096,9 +12933,8 @@ struct TaoInitStructAlloc1D : public FTypeAlloc1D<TaoInitStructArray1D> {
             reallocate_tao_init_struct_container_data,
             access_tao_init_struct_container
         ) {}
-  TaoInitStructAlloc1D(int lb, int n)
+  TaoInitStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_init_struct_container,
             deallocate_tao_init_struct_container,
@@ -13128,9 +12964,8 @@ struct TaoCommonStructAlloc1D : public FTypeAlloc1D<TaoCommonStructArray1D> {
             reallocate_tao_common_struct_container_data,
             access_tao_common_struct_container
         ) {}
-  TaoCommonStructAlloc1D(int lb, int n)
+  TaoCommonStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_common_struct_container,
             deallocate_tao_common_struct_container,
@@ -13160,9 +12995,8 @@ struct TaoPlotPageStructAlloc1D : public FTypeAlloc1D<TaoPlotPageStructArray1D> 
             reallocate_tao_plot_page_struct_container_data,
             access_tao_plot_page_struct_container
         ) {}
-  TaoPlotPageStructAlloc1D(int lb, int n)
+  TaoPlotPageStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_plot_page_struct_container,
             deallocate_tao_plot_page_struct_container,
@@ -13192,9 +13026,8 @@ struct TaoBuildingWallStructAlloc1D : public FTypeAlloc1D<TaoBuildingWallStructA
             reallocate_tao_building_wall_struct_container_data,
             access_tao_building_wall_struct_container
         ) {}
-  TaoBuildingWallStructAlloc1D(int lb, int n)
+  TaoBuildingWallStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_building_wall_struct_container,
             deallocate_tao_building_wall_struct_container,
@@ -13225,9 +13058,8 @@ struct TaoBuildingWallOrientationStructAlloc1D
             reallocate_tao_building_wall_orientation_struct_container_data,
             access_tao_building_wall_orientation_struct_container
         ) {}
-  TaoBuildingWallOrientationStructAlloc1D(int lb, int n)
+  TaoBuildingWallOrientationStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_building_wall_orientation_struct_container,
             deallocate_tao_building_wall_orientation_struct_container,
@@ -13262,9 +13094,8 @@ struct TaoBuildingWallSectionStructAlloc1D
             reallocate_tao_building_wall_section_struct_container_data,
             access_tao_building_wall_section_struct_container
         ) {}
-  TaoBuildingWallSectionStructAlloc1D(int lb, int n)
+  TaoBuildingWallSectionStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_building_wall_section_struct_container,
             deallocate_tao_building_wall_section_struct_container,
@@ -13298,9 +13129,8 @@ struct TaoBuildingWallPointStructAlloc1D : public FTypeAlloc1D<TaoBuildingWallPo
             reallocate_tao_building_wall_point_struct_container_data,
             access_tao_building_wall_point_struct_container
         ) {}
-  TaoBuildingWallPointStructAlloc1D(int lb, int n)
+  TaoBuildingWallPointStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_building_wall_point_struct_container,
             deallocate_tao_building_wall_point_struct_container,
@@ -13330,9 +13160,8 @@ struct TaoWaveStructAlloc1D : public FTypeAlloc1D<TaoWaveStructArray1D> {
             reallocate_tao_wave_struct_container_data,
             access_tao_wave_struct_container
         ) {}
-  TaoWaveStructAlloc1D(int lb, int n)
+  TaoWaveStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_wave_struct_container,
             deallocate_tao_wave_struct_container,
@@ -13362,9 +13191,8 @@ struct TaoWaveKickPtStructAlloc1D : public FTypeAlloc1D<TaoWaveKickPtStructArray
             reallocate_tao_wave_kick_pt_struct_container_data,
             access_tao_wave_kick_pt_struct_container
         ) {}
-  TaoWaveKickPtStructAlloc1D(int lb, int n)
+  TaoWaveKickPtStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_wave_kick_pt_struct_container,
             deallocate_tao_wave_kick_pt_struct_container,
@@ -13394,9 +13222,8 @@ struct TaoCmdHistoryStructAlloc1D : public FTypeAlloc1D<TaoCmdHistoryStructArray
             reallocate_tao_cmd_history_struct_container_data,
             access_tao_cmd_history_struct_container
         ) {}
-  TaoCmdHistoryStructAlloc1D(int lb, int n)
+  TaoCmdHistoryStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_cmd_history_struct_container,
             deallocate_tao_cmd_history_struct_container,
@@ -13426,9 +13253,8 @@ struct TaoUniverseStructAlloc1D : public FTypeAlloc1D<TaoUniverseStructArray1D> 
             reallocate_tao_universe_struct_container_data,
             access_tao_universe_struct_container
         ) {}
-  TaoUniverseStructAlloc1D(int lb, int n)
+  TaoUniverseStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_tao_universe_struct_container,
             deallocate_tao_universe_struct_container,
@@ -13458,9 +13284,8 @@ struct MadEnergyStructAlloc1D : public FTypeAlloc1D<MadEnergyStructArray1D> {
             reallocate_mad_energy_struct_container_data,
             access_mad_energy_struct_container
         ) {}
-  MadEnergyStructAlloc1D(int lb, int n)
+  MadEnergyStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_mad_energy_struct_container,
             deallocate_mad_energy_struct_container,
@@ -13488,9 +13313,8 @@ struct MadMapStructAlloc1D : public FTypeAlloc1D<MadMapStructArray1D> {
             reallocate_mad_map_struct_container_data,
             access_mad_map_struct_container
         ) {}
-  MadMapStructAlloc1D(int lb, int n)
+  MadMapStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_mad_map_struct_container,
             deallocate_mad_map_struct_container,
@@ -13520,9 +13344,8 @@ struct RandomStateStructAlloc1D : public FTypeAlloc1D<RandomStateStructArray1D> 
             reallocate_random_state_struct_container_data,
             access_random_state_struct_container
         ) {}
-  RandomStateStructAlloc1D(int lb, int n)
+  RandomStateStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_random_state_struct_container,
             deallocate_random_state_struct_container,
@@ -13552,9 +13375,8 @@ struct BbuStageStructAlloc1D : public FTypeAlloc1D<BbuStageStructArray1D> {
             reallocate_bbu_stage_struct_container_data,
             access_bbu_stage_struct_container
         ) {}
-  BbuStageStructAlloc1D(int lb, int n)
+  BbuStageStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bbu_stage_struct_container,
             deallocate_bbu_stage_struct_container,
@@ -13584,9 +13406,8 @@ struct BbuBeamStructAlloc1D : public FTypeAlloc1D<BbuBeamStructArray1D> {
             reallocate_bbu_beam_struct_container_data,
             access_bbu_beam_struct_container
         ) {}
-  BbuBeamStructAlloc1D(int lb, int n)
+  BbuBeamStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bbu_beam_struct_container,
             deallocate_bbu_beam_struct_container,
@@ -13616,9 +13437,8 @@ struct BbuParamStructAlloc1D : public FTypeAlloc1D<BbuParamStructArray1D> {
             reallocate_bbu_param_struct_container_data,
             access_bbu_param_struct_container
         ) {}
-  BbuParamStructAlloc1D(int lb, int n)
+  BbuParamStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_bbu_param_struct_container,
             deallocate_bbu_param_struct_container,
@@ -13645,9 +13465,8 @@ struct FibreAlloc1D : public FTypeAlloc1D<FibreArray1D> {
             reallocate_fibre_container_data,
             access_fibre_container
         ) {}
-  FibreAlloc1D(int lb, int n)
+  FibreAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_fibre_container,
             deallocate_fibre_container,
@@ -13674,9 +13493,8 @@ struct LayoutAlloc1D : public FTypeAlloc1D<LayoutArray1D> {
             reallocate_layout_container_data,
             access_layout_container
         ) {}
-  LayoutAlloc1D(int lb, int n)
+  LayoutAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_layout_container,
             deallocate_layout_container,
@@ -13706,9 +13524,8 @@ struct AllEncompassingStructAlloc1D : public FTypeAlloc1D<AllEncompassingStructA
             reallocate_all_encompassing_struct_container_data,
             access_all_encompassing_struct_container
         ) {}
-  AllEncompassingStructAlloc1D(int lb, int n)
+  AllEncompassingStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_all_encompassing_struct_container,
             deallocate_all_encompassing_struct_container,
@@ -13738,9 +13555,8 @@ struct TestSubStructAlloc1D : public FTypeAlloc1D<TestSubStructArray1D> {
             reallocate_test_sub_struct_container_data,
             access_test_sub_struct_container
         ) {}
-  TestSubStructAlloc1D(int lb, int n)
+  TestSubStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_test_sub_struct_container,
             deallocate_test_sub_struct_container,
@@ -13770,9 +13586,8 @@ struct TestSubSubStructAlloc1D : public FTypeAlloc1D<TestSubSubStructArray1D> {
             reallocate_test_sub_sub_struct_container_data,
             access_test_sub_sub_struct_container
         ) {}
-  TestSubSubStructAlloc1D(int lb, int n)
+  TestSubSubStructAlloc1D(int n)
       : Base(
-            lb,
             n,
             allocate_test_sub_sub_struct_container,
             deallocate_test_sub_sub_struct_container,

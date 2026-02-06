@@ -232,9 +232,18 @@ void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> 
       .def_property("spin_q", &SpinOrbitMap1Struct::spin_q, &SpinOrbitMap1Struct::set_spin_q)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return SpinOrbitMap1StructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return SpinOrbitMap1StructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = SpinOrbitMap1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const SpinOrbitMap1Struct &self) { return to_string(self); })
@@ -756,9 +765,18 @@ void init_spline_struct(py::module &m, py::class_<SplineStruct> &cls) {
       .def_property("coef", &SplineStruct::coef, &SplineStruct::set_coef)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return SplineStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return SplineStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = SplineStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const SplineStruct &self) { return to_string(self); })
@@ -874,9 +892,18 @@ void init_summation_rdt_struct(py::module &m, py::class_<SummationRdtStruct> &cl
       .def_property("h11110", &SummationRdtStruct::h11110, &SummationRdtStruct::set_h11110)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return SummationRdtStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return SummationRdtStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = SummationRdtStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const SummationRdtStruct &self) { return to_string(self); })

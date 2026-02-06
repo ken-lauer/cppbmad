@@ -68,9 +68,18 @@ void init_wake_lr_mode_struct(py::module &m, py::class_<WakeLrModeStruct> &cls) 
       .def_property("polarized", &WakeLrModeStruct::polarized, &WakeLrModeStruct::set_polarized)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return WakeLrModeStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return WakeLrModeStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = WakeLrModeStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const WakeLrModeStruct &self) { return to_string(self); })
@@ -206,9 +215,18 @@ void init_wake_sr_mode_struct(py::module &m, py::class_<WakeSrModeStruct> &cls) 
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return WakeSrModeStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return WakeSrModeStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = WakeSrModeStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const WakeSrModeStruct &self) { return to_string(self); })
@@ -517,9 +535,18 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
       .def_property("p2_coef", &Wall3dSectionStruct::p2_coef, &Wall3dSectionStruct::set_p2_coef)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return Wall3dSectionStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return Wall3dSectionStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = Wall3dSectionStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const Wall3dSectionStruct &self) { return to_string(self); })
@@ -598,9 +625,18 @@ void init_wall3d_struct(py::module &m, py::class_<Wall3dStruct> &cls) {
       .def_property_readonly("section", &Wall3dStruct::section)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return Wall3dStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return Wall3dStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = Wall3dStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const Wall3dStruct &self) { return to_string(self); })
@@ -669,9 +705,18 @@ void init_wall3d_vertex_struct(py::module &m, py::class_<Wall3dVertexStruct> &cl
       .def_property("type", &Wall3dVertexStruct::type, &Wall3dVertexStruct::set_type)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return Wall3dVertexStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return Wall3dVertexStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = Wall3dVertexStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const Wall3dVertexStruct &self) { return to_string(self); })

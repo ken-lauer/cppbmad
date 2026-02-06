@@ -35,8 +35,10 @@ subroutine fortran_test_bunch_struct_array (arr_in, arr_inout, arr_out, opt_stat
   ! ** In parameters **
   type(array_descriptor_t), intent(in) :: arr_in
   type(bunch_struct), pointer :: f_arr_in(:)
+  type(bunch_struct), pointer :: f_arr_in_ptr(:)
   type(array_descriptor_t), intent(in) :: arr_in_opt
   type(bunch_struct), pointer :: f_arr_in_opt(:)
+  type(bunch_struct), pointer :: f_arr_in_opt_ptr(:)
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: arr_out
   type(bunch_struct_container_alloc), pointer :: f_arr_out
@@ -46,18 +48,22 @@ subroutine fortran_test_bunch_struct_array (arr_in, arr_inout, arr_out, opt_stat
   ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: arr_inout
   type(bunch_struct), pointer :: f_arr_inout(:)
+  type(bunch_struct), pointer :: f_arr_inout_ptr(:)
   type(array_descriptor_t), intent(in) :: arr_inout_opt
   type(bunch_struct), pointer :: f_arr_inout_opt(:)
+  type(bunch_struct), pointer :: f_arr_inout_opt_ptr(:)
   ! ** End of parameters **
   !! type array (1D_NOT_type)
   if (c_associated(arr_in%data_ptr)) then
-    call c_f_pointer(arr_in%data_ptr, f_arr_in, [arr_in%dims(1)])
+    call c_f_pointer(arr_in%data_ptr, f_arr_in_ptr, [arr_in%dims(1)])
+    f_arr_in => f_arr_in_ptr
   else
     f_arr_in => null()
   endif
   !! type array (1D_NOT_type)
   if (c_associated(arr_inout%data_ptr)) then
-    call c_f_pointer(arr_inout%data_ptr, f_arr_inout, [arr_inout%dims(1)])
+    call c_f_pointer(arr_inout%data_ptr, f_arr_inout_ptr, [arr_inout%dims(1)])
+    f_arr_inout => f_arr_inout_ptr
   else
     f_arr_inout => null()
   endif
@@ -72,13 +78,15 @@ subroutine fortran_test_bunch_struct_array (arr_in, arr_inout, arr_out, opt_stat
   endif
   !! type array (1D_NOT_type)
   if (c_associated(arr_in_opt%data_ptr)) then
-    call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt, [arr_in_opt%dims(1)])
+    call c_f_pointer(arr_in_opt%data_ptr, f_arr_in_opt_ptr, [arr_in_opt%dims(1)])
+    f_arr_in_opt => f_arr_in_opt_ptr
   else
     f_arr_in_opt => null()
   endif
   !! type array (1D_NOT_type)
   if (c_associated(arr_inout_opt%data_ptr)) then
-    call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt, [arr_inout_opt%dims(1)])
+    call c_f_pointer(arr_inout_opt%data_ptr, f_arr_inout_opt_ptr, [arr_inout_opt%dims(1)])
+    f_arr_inout_opt => f_arr_inout_opt_ptr
   else
     f_arr_inout_opt => null()
   endif

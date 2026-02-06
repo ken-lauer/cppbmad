@@ -810,14 +810,12 @@ PYBIND11_MODULE(_pybmad, m) {
   init_Bmad_routines_g(m);
   init_Bmad_routines_h(m);
   init_Bmad_routines_i(m);
-  init_Bmad_routines_j(m);
   init_Bmad_routines_k(m);
   init_Bmad_routines_l(m);
   init_Bmad_routines_m(m);
   init_Bmad_routines_n(m);
   init_Bmad_routines_o(m);
   init_Bmad_routines_p(m);
-  init_Bmad_routines_q(m);
   init_Bmad_routines_r(m);
   init_Bmad_routines_s(m);
   init_Bmad_routines_t(m);
@@ -851,12 +849,8 @@ PYBIND11_MODULE(_pybmad, m) {
   init_SimUtils_routines_v(m);
   init_SimUtils_routines_w(m);
   init_SimUtils_routines_x(m);
-  init_Tao_routines_a(m);
-  init_Tao_routines_c(m);
   init_Tao_routines_i(m);
-  init_Tao_routines_j(m);
   init_Tao_routines_t(m);
-  init_Tao_routines_u(m);
   init_bsim_routines_b(m);
   init_bsim_routines_c(m);
   init_bsim_routines_h(m);
@@ -864,6 +858,5 @@ PYBIND11_MODULE(_pybmad, m) {
   init_bsim_routines_l(m);
   init_bsim_routines_r(m);
   init_bsim_routines_s(m);
-  init_bsim_routines_t(m);
   init_bsim_routines_w(m);
 }

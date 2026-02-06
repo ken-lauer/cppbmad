@@ -63733,7 +63733,8 @@ contains
     real(c_double), intent(out) :: value_out
     type(all_encompassing_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    value_out = struct_obj%real_rp_0d
+    ! value_out = struct_obj%real_rp_0d
+    value_out = real(struct_obj%real_rp_0d, kind=c_double)
   end subroutine
 
 

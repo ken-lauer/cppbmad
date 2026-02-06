@@ -58,9 +58,18 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
       .def_property("ptr", &CartesianMapStruct::ptr, &CartesianMapStruct::set_ptr)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return CartesianMapStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return CartesianMapStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = CartesianMapStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const CartesianMapStruct &self) { return to_string(self); })
@@ -132,9 +141,18 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
       .def_property("form", &CartesianMapTerm1Struct::form, &CartesianMapTerm1Struct::set_form)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return CartesianMapTerm1StructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return CartesianMapTerm1StructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = CartesianMapTerm1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const CartesianMapTerm1Struct &self) { return to_string(self); })
@@ -208,9 +226,18 @@ void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &
       .def_property_readonly("term", &ComplexTaylorStruct::term)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ComplexTaylorStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ComplexTaylorStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ComplexTaylorStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ComplexTaylorStruct &self) { return to_string(self); })
@@ -248,9 +275,18 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
       .def_property("expn", &ComplexTaylorTermStruct::expn, &ComplexTaylorTermStruct::set_expn)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ComplexTaylorTermStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ComplexTaylorTermStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ComplexTaylorTermStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ComplexTaylorTermStruct &self) { return to_string(self); })
@@ -312,9 +348,18 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ControlRamp1StructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ControlRamp1StructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ControlRamp1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ControlRamp1Struct &self) { return to_string(self); })
@@ -377,9 +422,18 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
       .def_property("ix_attrib", &ControlStruct::ix_attrib, &ControlStruct::set_ix_attrib)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ControlStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ControlStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ControlStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ControlStruct &self) { return to_string(self); })
@@ -420,9 +474,18 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
       .def_property("old_value", &ControlVar1Struct::old_value, &ControlVar1Struct::set_old_value)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return ControlVar1StructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return ControlVar1StructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ControlVar1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const ControlVar1Struct &self) { return to_string(self); })
@@ -487,9 +550,18 @@ void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
       .def_property_readonly("orbit", &CoordArrayStruct::orbit)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return CoordArrayStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return CoordArrayStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = CoordArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const CoordArrayStruct &self) { return to_string(self); })
@@ -614,9 +686,18 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
       .def_property("location", &CoordStruct::location, &CoordStruct::set_location)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return CoordStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return CoordStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = CoordStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const CoordStruct &self) { return to_string(self); })
@@ -717,9 +798,18 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
       .def_property("ptr", &CylindricalMapStruct::ptr, &CylindricalMapStruct::set_ptr)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return CylindricalMapStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return CylindricalMapStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = CylindricalMapStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const CylindricalMapStruct &self) { return to_string(self); })
@@ -767,9 +857,18 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return CylindricalMapTerm1StructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return CylindricalMapTerm1StructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = CylindricalMapTerm1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const CylindricalMapTerm1Struct &self) { return to_string(self); })

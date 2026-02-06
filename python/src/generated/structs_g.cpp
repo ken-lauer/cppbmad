@@ -33,9 +33,18 @@ void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
       .def_property("deriv", &GenGrad1Struct::deriv, &GenGrad1Struct::set_deriv)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return GenGrad1StructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return GenGrad1StructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = GenGrad1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const GenGrad1Struct &self) { return to_string(self); })
@@ -127,9 +136,18 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return GenGradMapStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return GenGradMapStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = GenGradMapStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const GenGradMapStruct &self) { return to_string(self); })
@@ -185,9 +203,18 @@ void init_grid_beam_init_struct(py::module &m, py::class_<GridBeamInitStruct> &c
       .def_property("px_max", &GridBeamInitStruct::px_max, &GridBeamInitStruct::set_px_max)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return GridBeamInitStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return GridBeamInitStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = GridBeamInitStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const GridBeamInitStruct &self) { return to_string(self); })
@@ -365,9 +392,18 @@ void init_grid_field_struct(py::module &m, py::class_<GridFieldStruct> &cls) {
       .def_property_readonly("tri_coef", &GridFieldStruct::tri_coef)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return GridFieldStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return GridFieldStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = GridFieldStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const GridFieldStruct &self) { return to_string(self); })

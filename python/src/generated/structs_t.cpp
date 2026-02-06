@@ -16,9 +16,18 @@ void init_target_point_struct(py::module &m, py::class_<TargetPointStruct> &cls)
       .def_property("r", &TargetPointStruct::r, &TargetPointStruct::set_r)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TargetPointStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TargetPointStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TargetPointStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TargetPointStruct &self) { return to_string(self); })
@@ -52,9 +61,18 @@ void init_taylor_struct(py::module &m, py::class_<TaylorStruct> &cls) {
       .def_property_readonly("term", &TaylorStruct::term)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaylorStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaylorStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaylorStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaylorStruct &self) { return to_string(self); })
@@ -92,9 +110,18 @@ void init_taylor_term_struct(py::module &m, py::class_<TaylorTermStruct> &cls) {
       .def_property("expn", &TaylorTermStruct::expn, &TaylorTermStruct::set_expn)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaylorTermStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaylorTermStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaylorTermStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaylorTermStruct &self) { return to_string(self); })
@@ -160,9 +187,18 @@ void init_track_point_struct(py::module &m, py::class_<TrackPointStruct> &cls) {
       .def_property("mat6", &TrackPointStruct::mat6, &TrackPointStruct::set_mat6)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TrackPointStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TrackPointStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TrackPointStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TrackPointStruct &self) { return to_string(self); })
@@ -617,9 +653,18 @@ void init_tao_building_wall_point_struct(
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoBuildingWallPointStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoBuildingWallPointStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoBuildingWallPointStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoBuildingWallPointStruct &self) { return to_string(self); })
@@ -673,9 +718,18 @@ void init_tao_building_wall_section_struct(
       .def_property_readonly("point", &TaoBuildingWallSectionStruct::point)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoBuildingWallSectionStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoBuildingWallSectionStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoBuildingWallSectionStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoBuildingWallSectionStruct &self) { return to_string(self); })
@@ -754,9 +808,18 @@ void init_tao_cmd_history_struct(py::module &m, py::class_<TaoCmdHistoryStruct> 
       .def_property("ix", &TaoCmdHistoryStruct::ix, &TaoCmdHistoryStruct::set_ix)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoCmdHistoryStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoCmdHistoryStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoCmdHistoryStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoCmdHistoryStruct &self) { return to_string(self); })
@@ -1387,9 +1450,18 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
       .def_property("valid", &TaoCurveStruct::valid, &TaoCurveStruct::set_valid)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoCurveStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoCurveStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoCurveStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoCurveStruct &self) { return to_string(self); })
@@ -1429,9 +1501,18 @@ void init_tao_d1_data_struct(py::module &m, py::class_<TaoD1DataStruct> &cls) {
       .def_property_readonly("d", &TaoD1DataStruct::d)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoD1DataStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoD1DataStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoD1DataStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoD1DataStruct &self) { return to_string(self); })
@@ -1519,9 +1600,18 @@ void init_tao_d2_data_struct(py::module &m, py::class_<TaoD2DataStruct> &cls) {
       .def_property("ref_read_in", &TaoD2DataStruct::ref_read_in, &TaoD2DataStruct::set_ref_read_in)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoD2DataStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoD2DataStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoD2DataStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoD2DataStruct &self) { return to_string(self); })
@@ -1764,9 +1854,18 @@ void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
       .def_property("d1", &TaoDataStruct::d1, &TaoDataStruct::set_d1)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoDataStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoDataStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoDataStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoDataStruct &self) { return to_string(self); })
@@ -1804,9 +1903,18 @@ void init_tao_data_var_component_struct(py::module &m, py::class_<TaoDataVarComp
       .def_property("sign", &TaoDataVarComponentStruct::sign, &TaoDataVarComponentStruct::set_sign)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoDataVarComponentStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoDataVarComponentStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoDataVarComponentStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoDataVarComponentStruct &self) { return to_string(self); })
@@ -1932,9 +2040,18 @@ void init_tao_ele_pointer_struct(py::module &m, py::class_<TaoElePointerStruct> 
       .def_property("n_loc", &TaoElePointerStruct::n_loc, &TaoElePointerStruct::set_n_loc)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoElePointerStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoElePointerStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoElePointerStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoElePointerStruct &self) { return to_string(self); })
@@ -2017,9 +2134,18 @@ void init_tao_ele_shape_struct(py::module &m, py::class_<TaoEleShapeStruct> &cls
       .def_property_readonly("uni", &TaoEleShapeStruct::uni)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoEleShapeStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoEleShapeStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoEleShapeStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoEleShapeStruct &self) { return to_string(self); })
@@ -2071,9 +2197,18 @@ void init_tao_eval_node_struct(py::module &m, py::class_<TaoEvalNodeStruct> &cls
       .def_property_readonly("node", &TaoEvalNodeStruct::node)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoEvalNodeStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoEvalNodeStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoEvalNodeStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoEvalNodeStruct &self) { return to_string(self); })
@@ -2114,9 +2249,18 @@ void init_tao_expression_info_struct(py::module &m, py::class_<TaoExpressionInfo
       .def_property("s", &TaoExpressionInfoStruct::s, &TaoExpressionInfoStruct::set_s)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoExpressionInfoStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoExpressionInfoStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoExpressionInfoStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoExpressionInfoStruct &self) { return to_string(self); })
@@ -2996,9 +3140,18 @@ void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
       .def_property("is_valid", &TaoGraphStruct::is_valid, &TaoGraphStruct::set_is_valid)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoGraphStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoGraphStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoGraphStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoGraphStruct &self) { return to_string(self); })
@@ -3421,9 +3574,18 @@ void init_tao_lat_sigma_struct(py::module &m, py::class_<TaoLatSigmaStruct> &cls
       .def_property("mat", &TaoLatSigmaStruct::mat, &TaoLatSigmaStruct::set_mat)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoLatSigmaStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoLatSigmaStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoLatSigmaStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoLatSigmaStruct &self) { return to_string(self); })
@@ -3667,9 +3829,18 @@ void init_tao_lattice_branch_struct(py::module &m, py::class_<TaoLatticeBranchSt
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoLatticeBranchStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoLatticeBranchStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoLatticeBranchStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoLatticeBranchStruct &self) { return to_string(self); })
@@ -3766,9 +3937,18 @@ void init_tao_model_branch_struct(py::module &m, py::class_<TaoModelBranchStruct
       .def_property("beam", &TaoModelBranchStruct::beam, &TaoModelBranchStruct::set_beam)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoModelBranchStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoModelBranchStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoModelBranchStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoModelBranchStruct &self) { return to_string(self); })
@@ -3821,9 +4001,18 @@ void init_tao_model_element_struct(py::module &m, py::class_<TaoModelElementStru
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoModelElementStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoModelElementStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoModelElementStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoModelElementStruct &self) { return to_string(self); })
@@ -3929,9 +4118,18 @@ void init_tao_plot_cache_struct(py::module &m, py::class_<TaoPlotCacheStruct> &c
       .def_property("err", &TaoPlotCacheStruct::err, &TaoPlotCacheStruct::set_err)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoPlotCacheStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoPlotCacheStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoPlotCacheStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoPlotCacheStruct &self) { return to_string(self); })
@@ -4190,9 +4388,18 @@ void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> 
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoPlotRegionStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoPlotRegionStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoPlotRegionStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoPlotRegionStruct &self) { return to_string(self); })
@@ -4299,9 +4506,18 @@ void init_tao_plot_struct(py::module &m, py::class_<TaoPlotStruct> &cls) {
       .def_property("default_plot", &TaoPlotStruct::default_plot, &TaoPlotStruct::set_default_plot)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoPlotStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoPlotStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoPlotStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoPlotStruct &self) { return to_string(self); })
@@ -4349,9 +4565,18 @@ void init_tao_shape_pattern_point_struct(
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoShapePatternPointStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoShapePatternPointStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoShapePatternPointStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoShapePatternPointStruct &self) { return to_string(self); })
@@ -4394,9 +4619,18 @@ void init_tao_shape_pattern_struct(py::module &m, py::class_<TaoShapePatternStru
       .def_property_readonly("pt", &TaoShapePatternStruct::pt)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoShapePatternStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoShapePatternStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoShapePatternStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoShapePatternStruct &self) { return to_string(self); })
@@ -4503,9 +4737,18 @@ void init_tao_spin_ele_struct(py::module &m, py::class_<TaoSpinEleStruct> &cls) 
       .def_property("valid", &TaoSpinEleStruct::valid, &TaoSpinEleStruct::set_valid)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoSpinEleStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoSpinEleStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoSpinEleStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoSpinEleStruct &self) { return to_string(self); })
@@ -5034,9 +5277,18 @@ void init_tao_universe_pointer_struct(py::module &m, py::class_<TaoUniversePoint
       .def_property("u", &TaoUniversePointerStruct::u, &TaoUniversePointerStruct::set_u)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoUniversePointerStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoUniversePointerStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoUniversePointerStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoUniversePointerStruct &self) { return to_string(self); })
@@ -5177,9 +5429,18 @@ void init_tao_universe_struct(py::module &m, py::class_<TaoUniverseStruct> &cls)
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoUniverseStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoUniverseStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoUniverseStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoUniverseStruct &self) { return to_string(self); })
@@ -5219,9 +5480,18 @@ void init_tao_v1_var_struct(py::module &m, py::class_<TaoV1VarStruct> &cls) {
       .def_property_readonly("v", &TaoV1VarStruct::v)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoV1VarStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoV1VarStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoV1VarStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoV1VarStruct &self) { return to_string(self); })
@@ -5281,9 +5551,18 @@ void init_tao_var_slave_struct(py::module &m, py::class_<TaoVarSlaveStruct> &cls
       )
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoVarSlaveStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoVarSlaveStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoVarSlaveStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoVarSlaveStruct &self) { return to_string(self); })
@@ -5470,9 +5749,18 @@ void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
       .def_property("v1", &TaoVarStruct::v1, &TaoVarStruct::set_v1)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoVarStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoVarStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoVarStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoVarStruct &self) { return to_string(self); })
@@ -5537,9 +5825,18 @@ void init_tao_wave_kick_pt_struct(py::module &m, py::class_<TaoWaveKickPtStruct>
       .def_property("ele", &TaoWaveKickPtStruct::ele, &TaoWaveKickPtStruct::set_ele)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TaoWaveKickPtStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TaoWaveKickPtStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoWaveKickPtStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TaoWaveKickPtStruct &self) { return to_string(self); })
@@ -5769,9 +6066,18 @@ void init_test_sub_struct(py::module &m, py::class_<TestSubStruct> &cls) {
       .def_property("sr", &TestSubStruct::sr, &TestSubStruct::set_sr)
       .def_static(
           "new_array1d",
-          [](int sz, int lbound) { return TestSubStructAlloc1D(lbound, sz); },
-          py::arg("sz"),
-          py::arg("lbound") = 1
+          [](int sz) { return TestSubStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TestSubStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
       )
 
       .def("__repr__", [](const TestSubStruct &self) { return to_string(self); })
