@@ -548,15 +548,26 @@ class FortranWrapperTypeArrayArgument(FortranWrapperTypeArgument):
         return [
             f"  {arg_ctype} :: {self.c_name}",
             f"  {arg_ftype} :: {self.f_name}(:)",
+            f"  {arg_ftype} :: {self.f_ptr_name}(:)",
         ]
 
     def get_input_conversion(self) -> list[str]:
         result = [f"  !! type array ({self.arg.full_type})"]
         dimensions = f"[{self.c_name}%dims(1)]"
+
+        ptr_conv = f"call c_f_pointer({self.c_name}%data_ptr, {self.f_ptr_name}, {dimensions})"
+
+        if self.arg.array and self.arg.array[0].startswith("0"):
+            assign = f"{self.f_name}(0:) => {self.f_ptr_name}"
+        else:
+            assign = f"{self.f_name} => {self.f_ptr_name}"
+
+        code = "\n".join((ptr_conv, assign))
+
         result.extend(
             self.if_then_else_block(
                 f"c_associated({self.c_name}%data_ptr)",
-                f"call c_f_pointer({self.c_name}%data_ptr, {self.f_name}, {dimensions})",
+                code,
                 f"{self.f_name} => null()",
             )
         )
