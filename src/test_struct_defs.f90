@@ -33,7 +33,7 @@ type all_encompassing_struct
   real(rp), allocatable :: real_rp_3d_alloc(:,:,:)
 
   ! Real(dp)
-  real(dp) real_dp_0d = 0.0
+  real(dp) :: real_dp_0d = 0.0
   real(dp) :: real_dp_1d(3) = 1.0
   real(dp) :: real_dp_2d(3, 4) = 2.0
   real(dp) :: real_dp_3d(3, 4, 5) = 3.0
@@ -48,7 +48,7 @@ type all_encompassing_struct
   real(dp), allocatable :: real_dp_3d_alloc(:,:,:)
 
   ! complex(dp)
-  complex(dp) complex_dp_0d
+  complex(dp) :: complex_dp_0d = 0.0
   complex(dp) :: complex_dp_1d(3)
   complex(dp) :: complex_dp_2d(3, 4)
   complex(dp) :: complex_dp_3d(3, 4, 5)
