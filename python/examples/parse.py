@@ -21,10 +21,3 @@ print("Branch 0 elements:", lat.branch[0].ele)
 
 for ele in lat.branch[0].ele:
     print(ele, ele.name, ele.lord, ele.n_lord)
-
-
-res = pybmad.ele_to_taylor(lat.ele[1])
-print(res.orbital_taylor)
-print(res.spin_taylor)
-# orb, spin = res
-# print(orb, spin)
