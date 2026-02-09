@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import logging
+import pathlib
 from dataclasses import dataclass
 from string import Template
-from typing import IO, TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any
 
+from .paths import CODEGEN_ROOT, CPPBMAD_ROOT, CPPBMAD_SRC
 from .types import STANDARD_TYPES, ArgumentType, FullType, PointerType, native_type_containers
 from .util import struct_to_proxy_class_name
 
@@ -1107,7 +1109,7 @@ def generate_accessor_code(
     }
 
 
-def create_fortran_proxy_code(fout: IO[str], structs: list[CodegenStructure]):
+def create_fortran_proxy_code(structs: list[CodegenStructure]) -> str:
     container_types = []
     # TODO: only generate containers if they're used
     for struct in structs:
@@ -1130,19 +1132,21 @@ def create_fortran_proxy_code(fout: IO[str], structs: list[CodegenStructure]):
             """.rstrip()
         )
 
-    imports = {}
+    imports_map = {}
     for struct in structs:
         module = struct.module
-        imports.setdefault(module, set())
-        imports[module].add(struct.f_name)
+        imports_map.setdefault(module, set())
+        imports_map[module].add(struct.f_name)
 
     import_lines = []
-    for module, imps in imports.items():
+    for module, imps in imports_map.items():
         import_lines.append(f"  use {module}, only: " + ", ".join(sorted(imps)))
 
-    imports = "\n".join(import_lines)
-    containers = "\n".join(container_types)
-    print(
+    imports_str = "\n".join(import_lines)
+    containers_str = "\n".join(container_types)
+
+    output = []
+    output.append(
         f"""\
 module bmad_struct_proxy_mod
   use bmad_struct
@@ -1150,18 +1154,17 @@ module bmad_struct_proxy_mod
   use test_struct_defs
   use, intrinsic :: iso_c_binding
 
-  {imports}
-  {containers}
+  {imports_str}
+  {containers_str}
 
 contains
-""",
-        file=fout,
+"""
     )
 
     for nt in native_type_containers:
         struct_name = nt.name.lower()
         container_name = nt.fortran_container_struct
-        print(
+        output.append(
             f"""
   function allocate_{struct_name}_container() result(ptr) bind(c)
     implicit none
@@ -1227,14 +1230,13 @@ contains
       bounds = 0
     endif
   end subroutine
-            """,
-            file=fout,
+            """
         )
 
     for struct in structs:
         struct_name = struct.f_name.lower()
-        print(f"  !! {struct_name}", file=fout)
-        print(
+        output.append(f"  !! {struct_name}")
+        output.append(
             f"""
     function allocate_fortran_{struct_name}(n, element_size) result(ptr) bind(c)
       implicit none
@@ -1353,8 +1355,7 @@ contains
       elem_size = 0
     endif
   end subroutine
-    """,
-            file=fout,
+    """
         )
 
         for arg in struct.arg:
@@ -1363,14 +1364,16 @@ contains
             try:
                 acc = generate_accessor_code(struct.f_name, arg, arg.full_type, arg.kind)
             except ValueError as ex:
-                print(f"  ! skipped {struct.f_name}%{arg.f_name}: {ex}", file=fout)
+                output.append(f"  ! skipped {struct.f_name}%{arg.f_name}: {ex}")
                 continue
 
-            print(f"  ! {struct.f_name}%{arg.f_name}: {arg.full_type}", file=fout)
-            print(acc["fortran_getter"], file=fout)
+            output.append(f"  ! {struct.f_name}%{arg.f_name}: {arg.full_type}")
+            output.append(acc["fortran_getter"])
             if acc["fortran_setter"]:
-                print(acc["fortran_setter"], file=fout)
-    print("end module", file=fout)
+                output.append(acc["fortran_setter"])
+
+    output.append("end module")
+    return "\n".join(output)
 
 
 def infer_cpp_type(arg) -> str | None:
@@ -1651,21 +1654,20 @@ struct {class_name}Alloc1D : public FTypeAlloc1D<{class_name}Array1D> {{
     return header, impl
 
 
-def create_cpp_proxy_header(
-    fout,
-    header_template_src: str,
-    cpp_template_src: str,
-    structs: list[CodegenStructure],
-):
-    header, _ = get_proxy_header_and_code(header_template_src, cpp_template_src, structs)
-    fout.write(header)
+def get_proxy_classes(structs: list[CodegenStructure]) -> dict[pathlib.Path, str]:
+    file_to_contents = {}
+    generated = CPPBMAD_SRC / "generated"
 
+    file_to_contents[generated / "proxy_mod.f90"] = create_fortran_proxy_code(structs)
 
-def create_cpp_proxy_impl(
-    fout,
-    header_template_src: str,
-    cpp_template_src: str,
-    structs: list[CodegenStructure],
-):
-    _, impl = get_proxy_header_and_code(header_template_src, cpp_template_src, structs)
-    fout.write(impl)
+    cpp_proxy_header_template = (CODEGEN_ROOT / "proxy.tpl.hpp").read_text()
+    cpp_proxy_cpp_template = (CODEGEN_ROOT / "proxy.tpl.cpp").read_text()
+
+    proxy_header, proxy_impl = get_proxy_header_and_code(
+        cpp_proxy_header_template,
+        cpp_proxy_cpp_template,
+        structs,
+    )
+    file_to_contents[CPPBMAD_ROOT / "include" / "bmad" / "generated" / "proxy.hpp"] = proxy_header
+    file_to_contents[generated / "proxy.cpp"] = proxy_impl
+    return file_to_contents

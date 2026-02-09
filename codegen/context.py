@@ -84,6 +84,7 @@ class ConfigContext:
     routines: list[FortranRoutine] = field(default_factory=list)
     routines_by_name: dict[str, FortranRoutine] = field(default_factory=dict)
     pybmad_files: dict[pathlib.Path, str] = field(default_factory=dict)
+    proxy_files: dict[pathlib.Path, str] = field(default_factory=dict)
     routine_files: dict[pathlib.Path, str] = field(default_factory=dict)
 
     @property

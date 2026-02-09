@@ -19,23 +19,23 @@ import logging
 import logging.handlers
 import pathlib
 
+from codegen.proxy import get_proxy_classes
+
 from .arg import Argument, CodegenStructure
 from .context import CodegenConfig, ConfigContext, config_context
 from .enums import get_enum_code, parse_all_enums
 from .paths import (
     CODEGEN_ROOT,
     CPPBMAD_INCLUDE,
-    CPPBMAD_ROOT,
     CPPBMAD_SRC,
     PYBMAD_INCLUDE,
     PYBMAD_SRC,
     REPO_ROOT,
 )
-from .proxy import create_cpp_proxy_header, create_cpp_proxy_impl, create_fortran_proxy_code
 from .py import generate_pybmad
 from .routines import generate_routines, load_routines
 from .structs import ParsedStructure, load_bmad_parser_structures
-from .util import write_contents_if_differs, write_if_differs
+from .util import write_contents_if_differs
 
 logger = logging.getLogger(__name__)
 
@@ -194,33 +194,6 @@ def get_structure_definitions(
     return structs
 
 
-def write_proxy_classes(structs: list[CodegenStructure]) -> None:
-    generated = CPPBMAD_ROOT / "src" / "generated"
-
-    # TODO: does not respect --no-write
-    write_if_differs(
-        create_fortran_proxy_code,
-        generated / "proxy_mod.f90",
-        structs,
-    )
-    cpp_proxy_header_template = (CODEGEN_ROOT / "proxy.tpl.hpp").read_text()
-    cpp_proxy_cpp_template = (CODEGEN_ROOT / "proxy.tpl.cpp").read_text()
-    write_if_differs(
-        create_cpp_proxy_header,
-        CPPBMAD_ROOT / "include" / "bmad" / "generated" / "proxy.hpp",
-        cpp_proxy_header_template,
-        cpp_proxy_cpp_template,
-        structs,
-    )
-    write_if_differs(
-        create_cpp_proxy_impl,
-        generated / "proxy.cpp",
-        cpp_proxy_header_template,
-        cpp_proxy_cpp_template,
-        structs,
-    )
-
-
 def load_context(
     config_file: pathlib.Path = CODEGEN_ROOT / "default.toml",
     pybmad: bool = True,
@@ -267,14 +240,13 @@ def generate(
     write: bool = True,
 ):
     ctx = load_context(config_file, pybmad)
-
-    # Print diagnostics
     logger.info(f"Number of structs in input list: {len(ctx.codegen_structs)}")
     logger.info(f"Number of structs found:         {len(ctx.parsed_structs)}")
 
     to_string_header = ctx.cpp_to_string_header
     to_string_code = ctx.cpp_to_string_code
     enum_code = get_enum_code(ctx.enums)
+    ctx.proxy_files = get_proxy_classes(ctx.codegen_structs)
 
     if not write:
         logger.info("File writing disabled.")
@@ -288,22 +260,20 @@ def generate(
             logger.warning(f"Removing stale file from previous generation: {fn}")
             fn.unlink()
 
-    write_contents_if_differs(REPO_ROOT / "coverage.html", ctx.report_html)
-    write_proxy_classes(ctx.codegen_structs)
-    write_contents_if_differs(CPPBMAD_INCLUDE / "bmad" / "generated" / "enums.hpp", enum_code)
-    write_contents_if_differs(
-        CPPBMAD_INCLUDE / "bmad" / "generated" / "to_string.hpp", contents=to_string_header
-    )
-    write_contents_if_differs(CPPBMAD_SRC / "generated" / "to_string.cpp", contents=to_string_code)
+    file_and_contents = [
+        (REPO_ROOT / "coverage.html", ctx.report_html),
+        (CPPBMAD_INCLUDE / "bmad" / "generated" / "enums.hpp", enum_code),
+        (CPPBMAD_INCLUDE / "bmad" / "generated" / "to_string.hpp", to_string_header),
+        (CPPBMAD_SRC / "generated" / "to_string.cpp", to_string_code),
+        *list(ctx.proxy_files.items()),
+        *list(ctx.routine_files.items()),
+    ]
 
-    for fn, contents in ctx.routine_files.items():
-        write_contents_if_differs(
-            target_path=fn,
-            contents=contents,
-        )
     if pybmad:
-        for fn, source in ctx.pybmad_files.items():
-            write_contents_if_differs(target_path=fn, contents=source)
+        file_and_contents.extend(list(ctx.pybmad_files.items()))
+
+    for fn, contents in file_and_contents:
+        write_contents_if_differs(target_path=fn, contents=contents)
 
     return ctx
 

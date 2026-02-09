@@ -414,6 +414,7 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
             continue
 
         comment = arg.comment.replace('"', "'") if arg.comment else ""
+        comment = comment.replace("\n", "\\n")
         docstring = f', "{comment}"' if comment else ""
 
         if tpl.fortran_setter:
