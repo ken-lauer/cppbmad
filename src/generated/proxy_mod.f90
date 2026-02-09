@@ -17956,15 +17956,18 @@ contains
 
   ! ramper_lord_struct%attrib_ptr: 0D_PTR_real
 
-  subroutine ramper_lord_struct_get_attrib_ptr(struct_obj_ptr, ptr_out) bind(c, name='ramper_lord_struct_get_attrib_ptr')
+  subroutine ramper_lord_struct_get_attrib_ptr(struct_obj_ptr, value_out, is_valid) bind(c, name='ramper_lord_struct_get_attrib_ptr')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(ramper_lord_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%attrib_ptr)) then
-      ptr_out = c_loc(struct_obj%attrib_ptr)
+      value_out = struct_obj%attrib_ptr ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -30512,15 +30515,18 @@ contains
 
   ! lat_struct%n_ele_track: 0D_PTR_integer
 
-  subroutine lat_struct_get_n_ele_track(struct_obj_ptr, ptr_out) bind(c, name='lat_struct_get_n_ele_track')
+  subroutine lat_struct_get_n_ele_track(struct_obj_ptr, value_out, is_valid) bind(c, name='lat_struct_get_n_ele_track')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(lat_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%n_ele_track)) then
-      ptr_out = c_loc(struct_obj%n_ele_track)
+      value_out = struct_obj%n_ele_track ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -30537,15 +30543,18 @@ contains
 
   ! lat_struct%n_ele_max: 0D_PTR_integer
 
-  subroutine lat_struct_get_n_ele_max(struct_obj_ptr, ptr_out) bind(c, name='lat_struct_get_n_ele_max')
+  subroutine lat_struct_get_n_ele_max(struct_obj_ptr, value_out, is_valid) bind(c, name='lat_struct_get_n_ele_max')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(lat_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%n_ele_max)) then
-      ptr_out = c_loc(struct_obj%n_ele_max)
+      value_out = struct_obj%n_ele_max ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -44773,15 +44782,18 @@ contains
 
   ! tao_var_struct%model_value: 0D_PTR_real
 
-  subroutine tao_var_struct_get_model_value(struct_obj_ptr, ptr_out) bind(c, name='tao_var_struct_get_model_value')
+  subroutine tao_var_struct_get_model_value(struct_obj_ptr, value_out, is_valid) bind(c, name='tao_var_struct_get_model_value')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(tao_var_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%model_value)) then
-      ptr_out = c_loc(struct_obj%model_value)
+      value_out = struct_obj%model_value ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -44798,15 +44810,18 @@ contains
 
   ! tao_var_struct%base_value: 0D_PTR_real
 
-  subroutine tao_var_struct_get_base_value(struct_obj_ptr, ptr_out) bind(c, name='tao_var_struct_get_base_value')
+  subroutine tao_var_struct_get_base_value(struct_obj_ptr, value_out, is_valid) bind(c, name='tao_var_struct_get_base_value')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(tao_var_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%base_value)) then
-      ptr_out = c_loc(struct_obj%base_value)
+      value_out = struct_obj%base_value ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -45530,15 +45545,18 @@ contains
 
   ! tao_var_slave_struct%model_value: 0D_PTR_real
 
-  subroutine tao_var_slave_struct_get_model_value(struct_obj_ptr, ptr_out) bind(c, name='tao_var_slave_struct_get_model_value')
+  subroutine tao_var_slave_struct_get_model_value(struct_obj_ptr, value_out, is_valid) bind(c, name='tao_var_slave_struct_get_model_value')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(tao_var_slave_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%model_value)) then
-      ptr_out = c_loc(struct_obj%model_value)
+      value_out = struct_obj%model_value ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -45555,15 +45573,18 @@ contains
 
   ! tao_var_slave_struct%base_value: 0D_PTR_real
 
-  subroutine tao_var_slave_struct_get_base_value(struct_obj_ptr, ptr_out) bind(c, name='tao_var_slave_struct_get_base_value')
+  subroutine tao_var_slave_struct_get_base_value(struct_obj_ptr, value_out, is_valid) bind(c, name='tao_var_slave_struct_get_base_value')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(tao_var_slave_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%base_value)) then
-      ptr_out = c_loc(struct_obj%base_value)
+      value_out = struct_obj%base_value ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -62722,15 +62743,18 @@ contains
     
   ! fibre%DIR: 0D_PTR_integer
 
-  subroutine fibre_get_DIR(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_DIR')
+  subroutine fibre_get_DIR(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_DIR')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%DIR)) then
-      ptr_out = c_loc(struct_obj%DIR)
+      value_out = struct_obj%DIR ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -62828,15 +62852,18 @@ contains
 
   ! fibre%pos: 0D_PTR_integer
 
-  subroutine fibre_get_pos(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_pos')
+  subroutine fibre_get_pos(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_pos')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%pos)) then
-      ptr_out = c_loc(struct_obj%pos)
+      value_out = struct_obj%pos ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -62853,15 +62880,18 @@ contains
 
   ! fibre%BETA0: 0D_PTR_real
 
-  subroutine fibre_get_BETA0(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_BETA0')
+  subroutine fibre_get_BETA0(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_BETA0')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%BETA0)) then
-      ptr_out = c_loc(struct_obj%BETA0)
+      value_out = struct_obj%BETA0 ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -62878,15 +62908,18 @@ contains
 
   ! fibre%GAMMA0I: 0D_PTR_real
 
-  subroutine fibre_get_GAMMA0I(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_GAMMA0I')
+  subroutine fibre_get_GAMMA0I(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_GAMMA0I')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%GAMMA0I)) then
-      ptr_out = c_loc(struct_obj%GAMMA0I)
+      value_out = struct_obj%GAMMA0I ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -62903,15 +62936,18 @@ contains
 
   ! fibre%GAMBET: 0D_PTR_real
 
-  subroutine fibre_get_GAMBET(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_GAMBET')
+  subroutine fibre_get_GAMBET(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_GAMBET')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%GAMBET)) then
-      ptr_out = c_loc(struct_obj%GAMBET)
+      value_out = struct_obj%GAMBET ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -62928,15 +62964,18 @@ contains
 
   ! fibre%MASS: 0D_PTR_real
 
-  subroutine fibre_get_MASS(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_MASS')
+  subroutine fibre_get_MASS(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_MASS')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%MASS)) then
-      ptr_out = c_loc(struct_obj%MASS)
+      value_out = struct_obj%MASS ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -62953,15 +62992,18 @@ contains
 
   ! fibre%CHARGE: 0D_PTR_real
 
-  subroutine fibre_get_CHARGE(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_CHARGE')
+  subroutine fibre_get_CHARGE(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_CHARGE')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%CHARGE)) then
-      ptr_out = c_loc(struct_obj%CHARGE)
+      value_out = struct_obj%CHARGE ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -62978,15 +63020,18 @@ contains
 
   ! fibre%AG: 0D_PTR_real
 
-  subroutine fibre_get_AG(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_AG')
+  subroutine fibre_get_AG(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_AG')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%AG)) then
-      ptr_out = c_loc(struct_obj%AG)
+      value_out = struct_obj%AG ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63057,15 +63102,18 @@ contains
 
   ! fibre%loc: 0D_PTR_integer
 
-  subroutine fibre_get_loc(struct_obj_ptr, ptr_out) bind(c, name='fibre_get_loc')
+  subroutine fibre_get_loc(struct_obj_ptr, value_out, is_valid) bind(c, name='fibre_get_loc')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(fibre), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%loc)) then
-      ptr_out = c_loc(struct_obj%loc)
+      value_out = struct_obj%loc ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63244,15 +63292,18 @@ contains
 
   ! layout%INDEX: 0D_PTR_integer
 
-  subroutine layout_get_INDEX(struct_obj_ptr, ptr_out) bind(c, name='layout_get_INDEX')
+  subroutine layout_get_INDEX(struct_obj_ptr, value_out, is_valid) bind(c, name='layout_get_INDEX')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(layout), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%INDEX)) then
-      ptr_out = c_loc(struct_obj%INDEX)
+      value_out = struct_obj%INDEX ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63269,15 +63320,18 @@ contains
 
   ! layout%HARMONIC_NUMBER: 0D_PTR_real
 
-  subroutine layout_get_HARMONIC_NUMBER(struct_obj_ptr, ptr_out) bind(c, name='layout_get_HARMONIC_NUMBER')
+  subroutine layout_get_HARMONIC_NUMBER(struct_obj_ptr, value_out, is_valid) bind(c, name='layout_get_HARMONIC_NUMBER')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(layout), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%HARMONIC_NUMBER)) then
-      ptr_out = c_loc(struct_obj%HARMONIC_NUMBER)
+      value_out = struct_obj%HARMONIC_NUMBER ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63294,15 +63348,18 @@ contains
 
   ! layout%CLOSED: 0D_PTR_logical
 
-  subroutine layout_get_CLOSED(struct_obj_ptr, ptr_out) bind(c, name='layout_get_CLOSED')
+  subroutine layout_get_CLOSED(struct_obj_ptr, value_out, is_valid) bind(c, name='layout_get_CLOSED')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    logical(c_bool), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(layout), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%CLOSED)) then
-      ptr_out = c_loc(struct_obj%CLOSED)
+      value_out = struct_obj%CLOSED ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63319,15 +63376,18 @@ contains
 
   ! layout%N: 0D_PTR_integer
 
-  subroutine layout_get_N(struct_obj_ptr, ptr_out) bind(c, name='layout_get_N')
+  subroutine layout_get_N(struct_obj_ptr, value_out, is_valid) bind(c, name='layout_get_N')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(layout), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%N)) then
-      ptr_out = c_loc(struct_obj%N)
+      value_out = struct_obj%N ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63344,15 +63404,18 @@ contains
 
   ! layout%NTHIN: 0D_PTR_integer
 
-  subroutine layout_get_NTHIN(struct_obj_ptr, ptr_out) bind(c, name='layout_get_NTHIN')
+  subroutine layout_get_NTHIN(struct_obj_ptr, value_out, is_valid) bind(c, name='layout_get_NTHIN')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(layout), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%NTHIN)) then
-      ptr_out = c_loc(struct_obj%NTHIN)
+      value_out = struct_obj%NTHIN ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63369,15 +63432,18 @@ contains
 
   ! layout%THIN: 0D_PTR_real
 
-  subroutine layout_get_THIN(struct_obj_ptr, ptr_out) bind(c, name='layout_get_THIN')
+  subroutine layout_get_THIN(struct_obj_ptr, value_out, is_valid) bind(c, name='layout_get_THIN')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(layout), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%THIN)) then
-      ptr_out = c_loc(struct_obj%THIN)
+      value_out = struct_obj%THIN ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63394,15 +63460,18 @@ contains
 
   ! layout%LASTPOS: 0D_PTR_integer
 
-  subroutine layout_get_LASTPOS(struct_obj_ptr, ptr_out) bind(c, name='layout_get_LASTPOS')
+  subroutine layout_get_LASTPOS(struct_obj_ptr, value_out, is_valid) bind(c, name='layout_get_LASTPOS')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(layout), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%LASTPOS)) then
-      ptr_out = c_loc(struct_obj%LASTPOS)
+      value_out = struct_obj%LASTPOS ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -63733,8 +63802,7 @@ contains
     real(c_double), intent(out) :: value_out
     type(all_encompassing_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
-    ! value_out = struct_obj%real_rp_0d
-    value_out = real(struct_obj%real_rp_0d, kind=c_double)
+    value_out = struct_obj%real_rp_0d
   end subroutine
 
 
@@ -63892,15 +63960,18 @@ contains
 
   ! all_encompassing_struct%real_rp_0d_ptr: 0D_PTR_real
 
-  subroutine all_encompassing_struct_get_real_rp_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_real_rp_0d_ptr')
+  subroutine all_encompassing_struct_get_real_rp_0d_ptr(struct_obj_ptr, value_out, is_valid) bind(c, name='all_encompassing_struct_get_real_rp_0d_ptr')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(all_encompassing_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%real_rp_0d_ptr)) then
-      ptr_out = c_loc(struct_obj%real_rp_0d_ptr)
+      value_out = struct_obj%real_rp_0d_ptr ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -64409,15 +64480,18 @@ contains
 
   ! all_encompassing_struct%real_dp_0d_ptr: 0D_PTR_real
 
-  subroutine all_encompassing_struct_get_real_dp_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_real_dp_0d_ptr')
+  subroutine all_encompassing_struct_get_real_dp_0d_ptr(struct_obj_ptr, value_out, is_valid) bind(c, name='all_encompassing_struct_get_real_dp_0d_ptr')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(all_encompassing_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%real_dp_0d_ptr)) then
-      ptr_out = c_loc(struct_obj%real_dp_0d_ptr)
+      value_out = struct_obj%real_dp_0d_ptr ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -64924,6 +64998,34 @@ contains
     endif
   end subroutine
 
+  ! all_encompassing_struct%complex_dp_0d_ptr: 0D_PTR_complex
+
+  subroutine all_encompassing_struct_get_complex_dp_0d_ptr(struct_obj_ptr, value_out, is_valid) bind(c, name='all_encompassing_struct_get_complex_dp_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    complex(c_double_complex), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%complex_dp_0d_ptr)) then
+      value_out = struct_obj%complex_dp_0d_ptr ! Implicit cast/copy
+      is_valid = .true.
+    else
+      is_valid = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_complex_dp_0d_ptr(struct_obj_ptr, value_in) bind(c, name='all_encompassing_struct_set_complex_dp_0d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    complex(c_double_complex), intent(in), value :: value_in
+    type(all_encompassing_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%complex_dp_0d_ptr)) then
+      struct_obj%complex_dp_0d_ptr = value_in
+    endif
+  end subroutine
+
   ! all_encompassing_struct%complex_dp_1d_ptr: 1D_PTR_complex
 
   subroutine all_encompassing_struct_get_complex_dp_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -65418,15 +65520,18 @@ contains
 
   ! all_encompassing_struct%int_0d_ptr: 0D_PTR_integer
 
-  subroutine all_encompassing_struct_get_int_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_int_0d_ptr')
+  subroutine all_encompassing_struct_get_int_0d_ptr(struct_obj_ptr, value_out, is_valid) bind(c, name='all_encompassing_struct_get_int_0d_ptr')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(all_encompassing_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%int_0d_ptr)) then
-      ptr_out = c_loc(struct_obj%int_0d_ptr)
+      value_out = struct_obj%int_0d_ptr ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -65935,15 +66040,18 @@ contains
 
   ! all_encompassing_struct%int8_0d_ptr: 0D_PTR_integer8
 
-  subroutine all_encompassing_struct_get_int8_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_int8_0d_ptr')
+  subroutine all_encompassing_struct_get_int8_0d_ptr(struct_obj_ptr, value_out, is_valid) bind(c, name='all_encompassing_struct_get_int8_0d_ptr')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    integer(c_int64_t), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(all_encompassing_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%int8_0d_ptr)) then
-      ptr_out = c_loc(struct_obj%int8_0d_ptr)
+      value_out = struct_obj%int8_0d_ptr ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -66452,15 +66560,18 @@ contains
 
   ! all_encompassing_struct%logical_0d_ptr: 0D_PTR_logical
 
-  subroutine all_encompassing_struct_get_logical_0d_ptr(struct_obj_ptr, ptr_out) bind(c, name='all_encompassing_struct_get_logical_0d_ptr')
+  subroutine all_encompassing_struct_get_logical_0d_ptr(struct_obj_ptr, value_out, is_valid) bind(c, name='all_encompassing_struct_get_logical_0d_ptr')
     type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: ptr_out
+    logical(c_bool), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
     type(all_encompassing_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
+
     if (associated(struct_obj%logical_0d_ptr)) then
-      ptr_out = c_loc(struct_obj%logical_0d_ptr)
+      value_out = struct_obj%logical_0d_ptr ! Implicit cast/copy
+      is_valid = .true.
     else
-      ptr_out = c_null_ptr
+      is_valid = .false.
     endif
   end subroutine
 
@@ -66472,6 +66583,52 @@ contains
     call c_f_pointer(struct_obj_ptr, struct_obj)
     if (associated(struct_obj%logical_0d_ptr)) then
       struct_obj%logical_0d_ptr = value_in
+    endif
+  end subroutine
+
+  ! all_encompassing_struct%logical_1d_ptr: 1D_PTR_logical
+
+  subroutine all_encompassing_struct_get_logical_1d_ptr_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_encompassing_struct_get_logical_1d_ptr_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_encompassing_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%logical_1d_ptr) .and. is_contiguous(struct_obj%logical_1d_ptr)) then
+      data_ptr = c_loc(struct_obj%logical_1d_ptr(lbound(struct_obj%logical_1d_ptr, 1)))
+      bounds(1) = int(lbound(struct_obj%logical_1d_ptr, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%logical_1d_ptr, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_encompassing_struct_set_logical_1d_ptr(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_encompassing_struct_set_logical_1d_ptr')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_encompassing_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%logical_1d_ptr)) then
+        if ((size(struct_obj%logical_1d_ptr, 1) == shape(1))) then
+           struct_obj%logical_1d_ptr = (val .ne. 0)
+        endif
+      endif
     endif
   end subroutine
 

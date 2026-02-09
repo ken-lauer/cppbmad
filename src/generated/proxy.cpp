@@ -2816,10 +2816,13 @@ int RamperLordStruct::ix_con() const {
   return value;
 }
 void RamperLordStruct::set_ix_con(int value) { ramper_lord_struct_set_ix_con(fortran_ptr_, value); }
-double *RamperLordStruct::attrib_ptr() const {
-  double *ptr;
-  ramper_lord_struct_get_attrib_ptr(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> RamperLordStruct::attrib_ptr() const {
+  double value;
+  bool is_valid;
+  ramper_lord_struct_get_attrib_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void RamperLordStruct::set_attrib_ptr(double value) {
   ramper_lord_struct_set_attrib_ptr(fortran_ptr_, value);
@@ -5564,16 +5567,22 @@ int LatStruct::version() const {
   return value;
 }
 void LatStruct::set_version(int value) { lat_struct_set_version(fortran_ptr_, value); }
-int *LatStruct::n_ele_track() const {
-  int *ptr;
-  lat_struct_get_n_ele_track(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> LatStruct::n_ele_track() const {
+  int value;
+  bool is_valid;
+  lat_struct_get_n_ele_track(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void LatStruct::set_n_ele_track(int value) { lat_struct_set_n_ele_track(fortran_ptr_, value); }
-int *LatStruct::n_ele_max() const {
-  int *ptr;
-  lat_struct_get_n_ele_max(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> LatStruct::n_ele_max() const {
+  int value;
+  bool is_valid;
+  lat_struct_get_n_ele_max(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void LatStruct::set_n_ele_max(int value) { lat_struct_set_n_ele_max(fortran_ptr_, value); }
 int LatStruct::n_control_max() const {
@@ -8369,18 +8378,24 @@ int TaoVarStruct::ix_key_table() const {
 void TaoVarStruct::set_ix_key_table(int value) {
   tao_var_struct_set_ix_key_table(fortran_ptr_, value);
 }
-double *TaoVarStruct::model_value() const {
-  double *ptr;
-  tao_var_struct_get_model_value(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> TaoVarStruct::model_value() const {
+  double value;
+  bool is_valid;
+  tao_var_struct_get_model_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void TaoVarStruct::set_model_value(double value) {
   tao_var_struct_set_model_value(fortran_ptr_, value);
 }
-double *TaoVarStruct::base_value() const {
-  double *ptr;
-  tao_var_struct_get_base_value(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> TaoVarStruct::base_value() const {
+  double value;
+  bool is_valid;
+  tao_var_struct_get_base_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void TaoVarStruct::set_base_value(double value) {
   tao_var_struct_set_base_value(fortran_ptr_, value);
@@ -8599,18 +8614,24 @@ int TaoVarSlaveStruct::ix_ele() const {
 void TaoVarSlaveStruct::set_ix_ele(int value) {
   tao_var_slave_struct_set_ix_ele(fortran_ptr_, value);
 }
-double *TaoVarSlaveStruct::model_value() const {
-  double *ptr;
-  tao_var_slave_struct_get_model_value(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> TaoVarSlaveStruct::model_value() const {
+  double value;
+  bool is_valid;
+  tao_var_slave_struct_get_model_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void TaoVarSlaveStruct::set_model_value(double value) {
   tao_var_slave_struct_set_model_value(fortran_ptr_, value);
 }
-double *TaoVarSlaveStruct::base_value() const {
-  double *ptr;
-  tao_var_slave_struct_get_base_value(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> TaoVarSlaveStruct::base_value() const {
+  double value;
+  bool is_valid;
+  tao_var_slave_struct_get_base_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void TaoVarSlaveStruct::set_base_value(double value) {
   tao_var_slave_struct_set_base_value(fortran_ptr_, value);
@@ -12730,10 +12751,13 @@ int BbuParamStruct::n_ramp_pattern() const {
 void BbuParamStruct::set_n_ramp_pattern(int value) {
   bbu_param_struct_set_n_ramp_pattern(fortran_ptr_, value);
 }
-int *Fibre::DIR() const {
-  int *ptr;
-  fibre_get_DIR(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> Fibre::DIR() const {
+  int value;
+  bool is_valid;
+  fibre_get_DIR(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_DIR(int value) { fibre_set_DIR(fortran_ptr_, value); }
 std::optional<Fibre> Fibre::PREVIOUS() const {
@@ -12764,46 +12788,67 @@ std::optional<Layout> Fibre::PARENT_LAYOUT() const {
 void Fibre::set_PARENT_LAYOUT(const Layout &src) {
   fibre_set_PARENT_LAYOUT(fortran_ptr_, src.get_fortran_ptr());
 }
-int *Fibre::pos() const {
-  int *ptr;
-  fibre_get_pos(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> Fibre::pos() const {
+  int value;
+  bool is_valid;
+  fibre_get_pos(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_pos(int value) { fibre_set_pos(fortran_ptr_, value); }
-double *Fibre::BETA0() const {
-  double *ptr;
-  fibre_get_BETA0(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> Fibre::BETA0() const {
+  double value;
+  bool is_valid;
+  fibre_get_BETA0(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_BETA0(double value) { fibre_set_BETA0(fortran_ptr_, value); }
-double *Fibre::GAMMA0I() const {
-  double *ptr;
-  fibre_get_GAMMA0I(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> Fibre::GAMMA0I() const {
+  double value;
+  bool is_valid;
+  fibre_get_GAMMA0I(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_GAMMA0I(double value) { fibre_set_GAMMA0I(fortran_ptr_, value); }
-double *Fibre::GAMBET() const {
-  double *ptr;
-  fibre_get_GAMBET(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> Fibre::GAMBET() const {
+  double value;
+  bool is_valid;
+  fibre_get_GAMBET(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_GAMBET(double value) { fibre_set_GAMBET(fortran_ptr_, value); }
-double *Fibre::MASS() const {
-  double *ptr;
-  fibre_get_MASS(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> Fibre::MASS() const {
+  double value;
+  bool is_valid;
+  fibre_get_MASS(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_MASS(double value) { fibre_set_MASS(fortran_ptr_, value); }
-double *Fibre::CHARGE() const {
-  double *ptr;
-  fibre_get_CHARGE(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> Fibre::CHARGE() const {
+  double value;
+  bool is_valid;
+  fibre_get_CHARGE(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_CHARGE(double value) { fibre_set_CHARGE(fortran_ptr_, value); }
-double *Fibre::AG() const {
-  double *ptr;
-  fibre_get_AG(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> Fibre::AG() const {
+  double value;
+  bool is_valid;
+  fibre_get_AG(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_AG(double value) { fibre_set_AG(fortran_ptr_, value); }
 std::optional<Fibre> Fibre::P() const {
@@ -12822,10 +12867,13 @@ std::optional<Fibre> Fibre::N() const {
   return Fibre(ptr);
 }
 void Fibre::set_N(const Fibre &src) { fibre_set_N(fortran_ptr_, src.get_fortran_ptr()); }
-int *Fibre::loc() const {
-  int *ptr;
-  fibre_get_loc(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> Fibre::loc() const {
+  int value;
+  bool is_valid;
+  fibre_get_loc(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Fibre::set_loc(int value) { fibre_set_loc(fortran_ptr_, value); }
 std::string Layout::NAME() const {
@@ -12834,46 +12882,67 @@ std::string Layout::NAME() const {
 void Layout::set_NAME(const std::string &value) {
   layout_set_NAME(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-int *Layout::INDEX() const {
-  int *ptr;
-  layout_get_INDEX(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> Layout::INDEX() const {
+  int value;
+  bool is_valid;
+  layout_get_INDEX(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Layout::set_INDEX(int value) { layout_set_INDEX(fortran_ptr_, value); }
-double *Layout::HARMONIC_NUMBER() const {
-  double *ptr;
-  layout_get_HARMONIC_NUMBER(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> Layout::HARMONIC_NUMBER() const {
+  double value;
+  bool is_valid;
+  layout_get_HARMONIC_NUMBER(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Layout::set_HARMONIC_NUMBER(double value) { layout_set_HARMONIC_NUMBER(fortran_ptr_, value); }
-bool *Layout::CLOSED() const {
-  bool *ptr;
-  layout_get_CLOSED(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<bool> Layout::CLOSED() const {
+  bool value;
+  bool is_valid;
+  layout_get_CLOSED(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Layout::set_CLOSED(bool value) { layout_set_CLOSED(fortran_ptr_, value); }
-int *Layout::N() const {
-  int *ptr;
-  layout_get_N(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> Layout::N() const {
+  int value;
+  bool is_valid;
+  layout_get_N(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Layout::set_N(int value) { layout_set_N(fortran_ptr_, value); }
-int *Layout::NTHIN() const {
-  int *ptr;
-  layout_get_NTHIN(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> Layout::NTHIN() const {
+  int value;
+  bool is_valid;
+  layout_get_NTHIN(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Layout::set_NTHIN(int value) { layout_set_NTHIN(fortran_ptr_, value); }
-double *Layout::THIN() const {
-  double *ptr;
-  layout_get_THIN(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> Layout::THIN() const {
+  double value;
+  bool is_valid;
+  layout_get_THIN(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Layout::set_THIN(double value) { layout_set_THIN(fortran_ptr_, value); }
-int *Layout::LASTPOS() const {
-  int *ptr;
-  layout_get_LASTPOS(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> Layout::LASTPOS() const {
+  int value;
+  bool is_valid;
+  layout_get_LASTPOS(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void Layout::set_LASTPOS(int value) { layout_set_LASTPOS(fortran_ptr_, value); }
 std::optional<Fibre> Layout::LAST() const {
@@ -12974,10 +13043,13 @@ FArray3D<double> AllEncompassingStruct::real_rp_3d() const {
 void AllEncompassingStruct::set_real_rp_3d(const std::vector<std::vector<std::vector<double>>> &v) {
   ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_3d, v);
 }
-double *AllEncompassingStruct::real_rp_0d_ptr() const {
-  double *ptr;
-  all_encompassing_struct_get_real_rp_0d_ptr(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> AllEncompassingStruct::real_rp_0d_ptr() const {
+  double value;
+  bool is_valid;
+  all_encompassing_struct_get_real_rp_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void AllEncompassingStruct::set_real_rp_0d_ptr(double value) {
   all_encompassing_struct_set_real_rp_0d_ptr(fortran_ptr_, value);
@@ -13079,10 +13151,13 @@ FArray3D<double> AllEncompassingStruct::real_dp_3d() const {
 void AllEncompassingStruct::set_real_dp_3d(const std::vector<std::vector<std::vector<double>>> &v) {
   ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_3d, v);
 }
-double *AllEncompassingStruct::real_dp_0d_ptr() const {
-  double *ptr;
-  all_encompassing_struct_get_real_dp_0d_ptr(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<double> AllEncompassingStruct::real_dp_0d_ptr() const {
+  double value;
+  bool is_valid;
+  all_encompassing_struct_get_real_dp_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void AllEncompassingStruct::set_real_dp_0d_ptr(double value) {
   all_encompassing_struct_set_real_dp_0d_ptr(fortran_ptr_, value);
@@ -13196,6 +13271,21 @@ void AllEncompassingStruct::set_complex_dp_3d(
       v
   );
 }
+std::optional<std::complex<double>> AllEncompassingStruct::complex_dp_0d_ptr() const {
+  std::complex<double> val;
+  bool is_valid;
+  all_encompassing_struct_get_complex_dp_0d_ptr(
+      fortran_ptr_,
+      reinterpret_cast<double _Complex *>(&val),
+      &is_valid
+  );
+  if (is_valid)
+    return val;
+  return std::nullopt;
+}
+void AllEncompassingStruct::set_complex_dp_0d_ptr(std::complex<double> value) {
+  all_encompassing_struct_set_complex_dp_0d_ptr(fortran_ptr_, value);
+}
 FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d_ptr() const {
   return ProxyHelpers::get_array_1d<std::complex<double>>(
       fortran_ptr_,
@@ -13304,10 +13394,13 @@ FArray3D<int> AllEncompassingStruct::int_3d() const {
 void AllEncompassingStruct::set_int_3d(const std::vector<std::vector<std::vector<int>>> &v) {
   ProxyHelpers::set_array_3d<int>(fortran_ptr_, all_encompassing_struct_set_int_3d, v);
 }
-int *AllEncompassingStruct::int_0d_ptr() const {
-  int *ptr;
-  all_encompassing_struct_get_int_0d_ptr(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int> AllEncompassingStruct::int_0d_ptr() const {
+  int value;
+  bool is_valid;
+  all_encompassing_struct_get_int_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void AllEncompassingStruct::set_int_0d_ptr(int value) {
   all_encompassing_struct_set_int_0d_ptr(fortran_ptr_, value);
@@ -13396,10 +13489,13 @@ FArray3D<int64_t> AllEncompassingStruct::int8_3d() const {
 void AllEncompassingStruct::set_int8_3d(const std::vector<std::vector<std::vector<int64_t>>> &v) {
   ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d, v);
 }
-int64_t *AllEncompassingStruct::int8_0d_ptr() const {
-  int64_t *ptr;
-  all_encompassing_struct_get_int8_0d_ptr(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<int64_t> AllEncompassingStruct::int8_0d_ptr() const {
+  int64_t value;
+  bool is_valid;
+  all_encompassing_struct_get_int8_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void AllEncompassingStruct::set_int8_0d_ptr(int64_t value) {
   all_encompassing_struct_set_int8_0d_ptr(fortran_ptr_, value);
@@ -13528,13 +13624,29 @@ void AllEncompassingStruct::set_logical_3d(const std::vector<std::vector<std::ve
   }
   all_encompassing_struct_set_logical_3d(fortran_ptr_, flat.data(), shape);
 }
-bool *AllEncompassingStruct::logical_0d_ptr() const {
-  bool *ptr;
-  all_encompassing_struct_get_logical_0d_ptr(fortran_ptr_, &ptr);
-  return ptr;
+std::optional<bool> AllEncompassingStruct::logical_0d_ptr() const {
+  bool value;
+  bool is_valid;
+  all_encompassing_struct_get_logical_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
 void AllEncompassingStruct::set_logical_0d_ptr(bool value) {
   all_encompassing_struct_set_logical_0d_ptr(fortran_ptr_, value);
+}
+FArray1D<bool> AllEncompassingStruct::logical_1d_ptr() const {
+  return ProxyHelpers::get_array_1d<bool>(
+      fortran_ptr_,
+      all_encompassing_struct_get_logical_1d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_logical_1d_ptr(const std::vector<bool> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  std::vector<int> bv(v.size());
+  for (size_t i = 0; i < v.size(); ++i)
+    bv[i] = v[i] ? 1 : 0;
+  all_encompassing_struct_set_logical_1d_ptr(fortran_ptr_, bv.data(), shape);
 }
 TestSubStruct AllEncompassingStruct::type_0d() const {
   void *ptr;

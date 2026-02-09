@@ -1161,8 +1161,8 @@ std::string to_string(const LatStruct &self) {
   return repr(
       self.get_fortran_ptr(),
       "LatStruct",
-      {std::pair{"use_name", self.use_name()},
-       std::pair{"#branch", to_string(self.branch().size())}}
+      {std::pair{"use_name", self.use_name()}, std::pair{"#branch", to_string(self.branch().size())}
+      }
   );
 }
 std::string to_string(const BunchStruct &self) {
@@ -2609,6 +2609,7 @@ std::string to_string(const AllEncompassingStruct &self) {
        std::pair{"complex_dp_1d", to_string(self.complex_dp_1d())},
        std::pair{"complex_dp_2d", to_string(self.complex_dp_2d())},
        std::pair{"complex_dp_3d", to_string(self.complex_dp_3d())},
+       std::pair{"complex_dp_0d_ptr", to_string(self.complex_dp_0d_ptr())},
        std::pair{"complex_dp_1d_ptr", to_string(self.complex_dp_1d_ptr())},
        std::pair{"complex_dp_2d_ptr", to_string(self.complex_dp_2d_ptr())},
        std::pair{"complex_dp_3d_ptr", to_string(self.complex_dp_3d_ptr())},
@@ -2642,6 +2643,7 @@ std::string to_string(const AllEncompassingStruct &self) {
        std::pair{"logical_2d", to_string(self.logical_2d())},
        std::pair{"logical_3d", to_string(self.logical_3d())},
        std::pair{"logical_0d_ptr", to_string(self.logical_0d_ptr())},
+       std::pair{"logical_1d_ptr", to_string(self.logical_1d_ptr())},
        std::pair{"type_0d", to_string(self.type_0d())},
        std::pair{"type_1d", "[...]"},
        std::pair{"type_2d", "[...]"},
@@ -4797,8 +4799,8 @@ std::string to_string(const Bmad::WriteLatticeInScibmad &self) {
   return repr(
       &self,
       "Bmad::WriteLatticeInScibmad",
-      {std::pair{"scibmad_file", self.scibmad_file},
-       std::pair{"err_flag", to_string(self.err_flag)}}
+      {std::pair{"scibmad_file", self.scibmad_file}, std::pair{"err_flag", to_string(self.err_flag)}
+      }
   );
 }
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self) {

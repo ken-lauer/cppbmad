@@ -1113,7 +1113,7 @@ void ramper_lord_struct_get_ix_ele(const void *struct_obj, int *value_out);
 void ramper_lord_struct_set_ix_ele(void *struct_obj, int value_in);
 void ramper_lord_struct_get_ix_con(const void *struct_obj, int *value_out);
 void ramper_lord_struct_set_ix_con(void *struct_obj, int value_in);
-void ramper_lord_struct_get_attrib_ptr(const void *struct_obj, double **ptr_out);
+void ramper_lord_struct_get_attrib_ptr(const void *struct_obj, double *value_out, bool *is_valid);
 void ramper_lord_struct_set_attrib_ptr(void *struct_obj, double value_in);
 void control_struct_get_value(const void *struct_obj, double *value_out);
 void control_struct_set_value(void *struct_obj, double value_in);
@@ -2153,9 +2153,9 @@ void lat_struct_reallocate_custom(void *s, int lb, size_t n);
 void lat_struct_set_custom(void *s, const void *d, const int *shape);
 void lat_struct_get_version(const void *struct_obj, int *value_out);
 void lat_struct_set_version(void *struct_obj, int value_in);
-void lat_struct_get_n_ele_track(const void *struct_obj, int **ptr_out);
+void lat_struct_get_n_ele_track(const void *struct_obj, int *value_out, bool *is_valid);
 void lat_struct_set_n_ele_track(void *struct_obj, int value_in);
-void lat_struct_get_n_ele_max(const void *struct_obj, int **ptr_out);
+void lat_struct_get_n_ele_max(const void *struct_obj, int *value_out, bool *is_valid);
 void lat_struct_set_n_ele_max(void *struct_obj, int value_in);
 void lat_struct_get_n_control_max(const void *struct_obj, int *value_out);
 void lat_struct_set_n_control_max(void *struct_obj, int value_in);
@@ -3273,9 +3273,9 @@ void tao_var_struct_get_ix_attrib(const void *struct_obj, int *value_out);
 void tao_var_struct_set_ix_attrib(void *struct_obj, int value_in);
 void tao_var_struct_get_ix_key_table(const void *struct_obj, int *value_out);
 void tao_var_struct_set_ix_key_table(void *struct_obj, int value_in);
-void tao_var_struct_get_model_value(const void *struct_obj, double **ptr_out);
+void tao_var_struct_get_model_value(const void *struct_obj, double *value_out, bool *is_valid);
 void tao_var_struct_set_model_value(void *struct_obj, double value_in);
-void tao_var_struct_get_base_value(const void *struct_obj, double **ptr_out);
+void tao_var_struct_get_base_value(const void *struct_obj, double *value_out, bool *is_valid);
 void tao_var_struct_set_base_value(void *struct_obj, double value_in);
 void tao_var_struct_get_design_value(const void *struct_obj, double *value_out);
 void tao_var_struct_set_design_value(void *struct_obj, double value_in);
@@ -3337,9 +3337,13 @@ void tao_var_slave_struct_get_ix_branch(const void *struct_obj, int *value_out);
 void tao_var_slave_struct_set_ix_branch(void *struct_obj, int value_in);
 void tao_var_slave_struct_get_ix_ele(const void *struct_obj, int *value_out);
 void tao_var_slave_struct_set_ix_ele(void *struct_obj, int value_in);
-void tao_var_slave_struct_get_model_value(const void *struct_obj, double **ptr_out);
+void tao_var_slave_struct_get_model_value(
+    const void *struct_obj,
+    double *value_out,
+    bool *is_valid
+);
 void tao_var_slave_struct_set_model_value(void *struct_obj, double value_in);
-void tao_var_slave_struct_get_base_value(const void *struct_obj, double **ptr_out);
+void tao_var_slave_struct_get_base_value(const void *struct_obj, double *value_out, bool *is_valid);
 void tao_var_slave_struct_set_base_value(void *struct_obj, double value_in);
 void tao_lattice_struct_get_name_info(const void *s, char **d, int *bounds, bool *a);
 void tao_lattice_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
@@ -4674,7 +4678,7 @@ void bbu_param_struct_get_ramp_n_start(const void *struct_obj, int *value_out);
 void bbu_param_struct_set_ramp_n_start(void *struct_obj, int value_in);
 void bbu_param_struct_get_n_ramp_pattern(const void *struct_obj, int *value_out);
 void bbu_param_struct_set_n_ramp_pattern(void *struct_obj, int value_in);
-void fibre_get_DIR(const void *struct_obj, int **ptr_out);
+void fibre_get_DIR(const void *struct_obj, int *value_out, bool *is_valid);
 void fibre_set_DIR(void *struct_obj, int value_in);
 void fibre_get_PREVIOUS(const void *struct_obj, void **ptr_out);
 void fibre_set_PREVIOUS(void *struct_obj, const void *src_ptr);
@@ -4682,43 +4686,43 @@ void fibre_get_NEXT(const void *struct_obj, void **ptr_out);
 void fibre_set_NEXT(void *struct_obj, const void *src_ptr);
 void fibre_get_PARENT_LAYOUT(const void *struct_obj, void **ptr_out);
 void fibre_set_PARENT_LAYOUT(void *struct_obj, const void *src_ptr);
-void fibre_get_pos(const void *struct_obj, int **ptr_out);
+void fibre_get_pos(const void *struct_obj, int *value_out, bool *is_valid);
 void fibre_set_pos(void *struct_obj, int value_in);
-void fibre_get_BETA0(const void *struct_obj, double **ptr_out);
+void fibre_get_BETA0(const void *struct_obj, double *value_out, bool *is_valid);
 void fibre_set_BETA0(void *struct_obj, double value_in);
-void fibre_get_GAMMA0I(const void *struct_obj, double **ptr_out);
+void fibre_get_GAMMA0I(const void *struct_obj, double *value_out, bool *is_valid);
 void fibre_set_GAMMA0I(void *struct_obj, double value_in);
-void fibre_get_GAMBET(const void *struct_obj, double **ptr_out);
+void fibre_get_GAMBET(const void *struct_obj, double *value_out, bool *is_valid);
 void fibre_set_GAMBET(void *struct_obj, double value_in);
-void fibre_get_MASS(const void *struct_obj, double **ptr_out);
+void fibre_get_MASS(const void *struct_obj, double *value_out, bool *is_valid);
 void fibre_set_MASS(void *struct_obj, double value_in);
-void fibre_get_CHARGE(const void *struct_obj, double **ptr_out);
+void fibre_get_CHARGE(const void *struct_obj, double *value_out, bool *is_valid);
 void fibre_set_CHARGE(void *struct_obj, double value_in);
-void fibre_get_AG(const void *struct_obj, double **ptr_out);
+void fibre_get_AG(const void *struct_obj, double *value_out, bool *is_valid);
 void fibre_set_AG(void *struct_obj, double value_in);
 void fibre_get_P(const void *struct_obj, void **ptr_out);
 void fibre_set_P(void *struct_obj, const void *src_ptr);
 void fibre_get_N(const void *struct_obj, void **ptr_out);
 void fibre_set_N(void *struct_obj, const void *src_ptr);
-void fibre_get_loc(const void *struct_obj, int **ptr_out);
+void fibre_get_loc(const void *struct_obj, int *value_out, bool *is_valid);
 void fibre_set_loc(void *struct_obj, int value_in);
 
 void layout_get_NAME_info(const void *s, char **d, int *len, bool *is_alloc);
 
 void layout_set_NAME(void *struct_obj, const char *str_ptr, int str_len);
-void layout_get_INDEX(const void *struct_obj, int **ptr_out);
+void layout_get_INDEX(const void *struct_obj, int *value_out, bool *is_valid);
 void layout_set_INDEX(void *struct_obj, int value_in);
-void layout_get_HARMONIC_NUMBER(const void *struct_obj, double **ptr_out);
+void layout_get_HARMONIC_NUMBER(const void *struct_obj, double *value_out, bool *is_valid);
 void layout_set_HARMONIC_NUMBER(void *struct_obj, double value_in);
-void layout_get_CLOSED(const void *struct_obj, bool **ptr_out);
+void layout_get_CLOSED(const void *struct_obj, bool *value_out, bool *is_valid);
 void layout_set_CLOSED(void *struct_obj, bool value_in);
-void layout_get_N(const void *struct_obj, int **ptr_out);
+void layout_get_N(const void *struct_obj, int *value_out, bool *is_valid);
 void layout_set_N(void *struct_obj, int value_in);
-void layout_get_NTHIN(const void *struct_obj, int **ptr_out);
+void layout_get_NTHIN(const void *struct_obj, int *value_out, bool *is_valid);
 void layout_set_NTHIN(void *struct_obj, int value_in);
-void layout_get_THIN(const void *struct_obj, double **ptr_out);
+void layout_get_THIN(const void *struct_obj, double *value_out, bool *is_valid);
 void layout_set_THIN(void *struct_obj, double value_in);
-void layout_get_LASTPOS(const void *struct_obj, int **ptr_out);
+void layout_get_LASTPOS(const void *struct_obj, int *value_out, bool *is_valid);
 void layout_set_LASTPOS(void *struct_obj, int value_in);
 void layout_get_LAST(const void *struct_obj, void **ptr_out);
 void layout_set_LAST(void *struct_obj, const void *src_ptr);
@@ -4759,7 +4763,11 @@ void all_encompassing_struct_get_real_rp_3d_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_real_rp_3d(void *s, const void *d, const int *shape);
-void all_encompassing_struct_get_real_rp_0d_ptr(const void *struct_obj, double **ptr_out);
+void all_encompassing_struct_get_real_rp_0d_ptr(
+    const void *struct_obj,
+    double *value_out,
+    bool *is_valid
+);
 void all_encompassing_struct_set_real_rp_0d_ptr(void *struct_obj, double value_in);
 void all_encompassing_struct_get_real_rp_1d_ptr_info(
     const void *s,
@@ -4835,7 +4843,11 @@ void all_encompassing_struct_get_real_dp_3d_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_real_dp_3d(void *s, const void *d, const int *shape);
-void all_encompassing_struct_get_real_dp_0d_ptr(const void *struct_obj, double **ptr_out);
+void all_encompassing_struct_get_real_dp_0d_ptr(
+    const void *struct_obj,
+    double *value_out,
+    bool *is_valid
+);
 void all_encompassing_struct_set_real_dp_0d_ptr(void *struct_obj, double value_in);
 void all_encompassing_struct_get_real_dp_1d_ptr_info(
     const void *s,
@@ -4914,6 +4926,12 @@ void all_encompassing_struct_get_complex_dp_3d_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_complex_dp_3d(void *s, const void *d, const int *shape);
+void all_encompassing_struct_get_complex_dp_0d_ptr(
+    const void *struct_obj,
+    double _Complex *val_out,
+    bool *is_valid
+);
+void all_encompassing_struct_set_complex_dp_0d_ptr(void *struct_obj, std::complex<double> value_in);
 void all_encompassing_struct_get_complex_dp_1d_ptr_info(
     const void *s,
     std::complex<double> **d,
@@ -4983,7 +5001,7 @@ void all_encompassing_struct_get_int_3d_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_int_3d(void *s, const void *d, const int *shape);
-void all_encompassing_struct_get_int_0d_ptr(const void *struct_obj, int **ptr_out);
+void all_encompassing_struct_get_int_0d_ptr(const void *struct_obj, int *value_out, bool *is_valid);
 void all_encompassing_struct_set_int_0d_ptr(void *struct_obj, int value_in);
 void all_encompassing_struct_get_int_1d_ptr_info(
     const void *s,
@@ -5059,7 +5077,11 @@ void all_encompassing_struct_get_int8_3d_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_int8_3d(void *s, const void *d, const int *shape);
-void all_encompassing_struct_get_int8_0d_ptr(const void *struct_obj, int64_t **ptr_out);
+void all_encompassing_struct_get_int8_0d_ptr(
+    const void *struct_obj,
+    int64_t *value_out,
+    bool *is_valid
+);
 void all_encompassing_struct_set_int8_0d_ptr(void *struct_obj, int64_t value_in);
 void all_encompassing_struct_get_int8_1d_ptr_info(
     const void *s,
@@ -5135,8 +5157,19 @@ void all_encompassing_struct_get_logical_3d_info(
     bool *is_alloc
 );
 void all_encompassing_struct_set_logical_3d(void *s, const void *d, const int *shape);
-void all_encompassing_struct_get_logical_0d_ptr(const void *struct_obj, bool **ptr_out);
+void all_encompassing_struct_get_logical_0d_ptr(
+    const void *struct_obj,
+    bool *value_out,
+    bool *is_valid
+);
 void all_encompassing_struct_set_logical_0d_ptr(void *struct_obj, bool value_in);
+void all_encompassing_struct_get_logical_1d_ptr_info(
+    const void *s,
+    bool **d,
+    int *bounds,
+    bool *is_alloc
+);
+void all_encompassing_struct_set_logical_1d_ptr(void *s, const void *d, const int *shape);
 void all_encompassing_struct_get_type_0d(const void *struct_obj, void **ptr_out);
 void all_encompassing_struct_set_type_0d(void *struct_obj, const void *src_ptr);
 
@@ -16819,7 +16852,7 @@ public:
   void set_ix_ele(int value);
   int ix_con() const; // 0D_NOT_integer
   void set_ix_con(int value);
-  double *attrib_ptr() const; // 0D_PTR_real
+  std::optional<double> attrib_ptr() const; // 0D_PTR_real
   void set_attrib_ptr(double value);
 };
 
@@ -19274,9 +19307,9 @@ public:
   void set_custom(const std::vector<double> &v);
   int version() const; // 0D_NOT_integer
   void set_version(int value);
-  int *n_ele_track() const; // 0D_PTR_integer
+  std::optional<int> n_ele_track() const; // 0D_PTR_integer
   void set_n_ele_track(int value);
-  int *n_ele_max() const; // 0D_PTR_integer
+  std::optional<int> n_ele_max() const; // 0D_PTR_integer
   void set_n_ele_max(int value);
   int n_control_max() const; // 0D_NOT_integer
   void set_n_control_max(int value);
@@ -21928,9 +21961,9 @@ public:
   void set_ix_attrib(int value);
   int ix_key_table() const; // 0D_NOT_integer
   void set_ix_key_table(int value);
-  double *model_value() const; // 0D_PTR_real
+  std::optional<double> model_value() const; // 0D_PTR_real
   void set_model_value(double value);
-  double *base_value() const; // 0D_PTR_real
+  std::optional<double> base_value() const; // 0D_PTR_real
   void set_base_value(double value);
   double design_value() const; // 0D_NOT_real
   void set_design_value(double value);
@@ -22030,9 +22063,9 @@ public:
   void set_ix_branch(int value);
   int ix_ele() const; // 0D_NOT_integer
   void set_ix_ele(int value);
-  double *model_value() const; // 0D_PTR_real
+  std::optional<double> model_value() const; // 0D_PTR_real
   void set_model_value(double value);
-  double *base_value() const; // 0D_PTR_real
+  std::optional<double> base_value() const; // 0D_PTR_real
   void set_base_value(double value);
 };
 
@@ -25567,7 +25600,7 @@ public:
       set_loc(*loc);
   }
 
-  int *DIR() const; // 0D_PTR_integer
+  std::optional<int> DIR() const; // 0D_PTR_integer
   void set_DIR(int value);
   std::optional<Fibre> PREVIOUS() const; // 0D_PTR_type
   void set_PREVIOUS(const Fibre &src);
@@ -25575,25 +25608,25 @@ public:
   void set_NEXT(const Fibre &src);
   std::optional<Layout> PARENT_LAYOUT() const; // 0D_PTR_type
   void set_PARENT_LAYOUT(const Layout &src);
-  int *pos() const; // 0D_PTR_integer
+  std::optional<int> pos() const; // 0D_PTR_integer
   void set_pos(int value);
-  double *BETA0() const; // 0D_PTR_real
+  std::optional<double> BETA0() const; // 0D_PTR_real
   void set_BETA0(double value);
-  double *GAMMA0I() const; // 0D_PTR_real
+  std::optional<double> GAMMA0I() const; // 0D_PTR_real
   void set_GAMMA0I(double value);
-  double *GAMBET() const; // 0D_PTR_real
+  std::optional<double> GAMBET() const; // 0D_PTR_real
   void set_GAMBET(double value);
-  double *MASS() const; // 0D_PTR_real
+  std::optional<double> MASS() const; // 0D_PTR_real
   void set_MASS(double value);
-  double *CHARGE() const; // 0D_PTR_real
+  std::optional<double> CHARGE() const; // 0D_PTR_real
   void set_CHARGE(double value);
-  double *AG() const; // 0D_PTR_real
+  std::optional<double> AG() const; // 0D_PTR_real
   void set_AG(double value);
   std::optional<Fibre> P() const; // 0D_PTR_type
   void set_P(const Fibre &src);
   std::optional<Fibre> N() const; // 0D_PTR_type
   void set_N(const Fibre &src);
-  int *loc() const; // 0D_PTR_integer
+  std::optional<int> loc() const; // 0D_PTR_integer
   void set_loc(int value);
 };
 
@@ -25665,19 +25698,19 @@ public:
 
   std::string NAME() const; // 0D_PTR_character
   void set_NAME(const std::string &value);
-  int *INDEX() const; // 0D_PTR_integer
+  std::optional<int> INDEX() const; // 0D_PTR_integer
   void set_INDEX(int value);
-  double *HARMONIC_NUMBER() const; // 0D_PTR_real
+  std::optional<double> HARMONIC_NUMBER() const; // 0D_PTR_real
   void set_HARMONIC_NUMBER(double value);
-  bool *CLOSED() const; // 0D_PTR_logical
+  std::optional<bool> CLOSED() const; // 0D_PTR_logical
   void set_CLOSED(bool value);
-  int *N() const; // 0D_PTR_integer
+  std::optional<int> N() const; // 0D_PTR_integer
   void set_N(int value);
-  int *NTHIN() const; // 0D_PTR_integer
+  std::optional<int> NTHIN() const; // 0D_PTR_integer
   void set_NTHIN(int value);
-  double *THIN() const; // 0D_PTR_real
+  std::optional<double> THIN() const; // 0D_PTR_real
   void set_THIN(double value);
-  int *LASTPOS() const; // 0D_PTR_integer
+  std::optional<int> LASTPOS() const; // 0D_PTR_integer
   void set_LASTPOS(int value);
   std::optional<Fibre> LAST() const; // 0D_PTR_type
   void set_LAST(const Fibre &src);
@@ -25744,6 +25777,7 @@ public:
           std::nullopt,
       optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>
           complex_dp_3d = std::nullopt,
+      std::optional<std::complex<double>> complex_dp_0d_ptr = std::nullopt,
       optional_ref<const std::vector<std::complex<double>>> complex_dp_1d_ptr = std::nullopt,
       optional_ref<const std::vector<std::vector<std::complex<double>>>> complex_dp_2d_ptr =
           std::nullopt,
@@ -25782,6 +25816,7 @@ public:
       optional_ref<const std::vector<std::vector<bool>>> logical_2d = std::nullopt,
       optional_ref<const std::vector<std::vector<std::vector<bool>>>> logical_3d = std::nullopt,
       std::optional<bool> logical_0d_ptr = std::nullopt,
+      optional_ref<const std::vector<bool>> logical_1d_ptr = std::nullopt,
       optional_ref<const TestSubStruct> type_0d = std::nullopt,
       optional_ref<const TestSubStruct> type_0d_ptr = std::nullopt
   )
@@ -25838,6 +25873,8 @@ public:
       set_complex_dp_2d(complex_dp_2d->get());
     if (complex_dp_3d)
       set_complex_dp_3d(complex_dp_3d->get());
+    if (complex_dp_0d_ptr)
+      set_complex_dp_0d_ptr(*complex_dp_0d_ptr);
     if (complex_dp_1d_ptr)
       set_complex_dp_1d_ptr(complex_dp_1d_ptr->get());
     if (complex_dp_2d_ptr)
@@ -25904,6 +25941,8 @@ public:
       set_logical_3d(logical_3d->get());
     if (logical_0d_ptr)
       set_logical_0d_ptr(*logical_0d_ptr);
+    if (logical_1d_ptr)
+      set_logical_1d_ptr(logical_1d_ptr->get());
     if (type_0d)
       set_type_0d(type_0d->get());
     if (type_0d_ptr)
@@ -25918,7 +25957,7 @@ public:
   void set_real_rp_2d(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_rp_3d() const; // 3D_NOT_real
   void set_real_rp_3d(const std::vector<std::vector<std::vector<double>>> &v);
-  double *real_rp_0d_ptr() const; // 0D_PTR_real
+  std::optional<double> real_rp_0d_ptr() const; // 0D_PTR_real
   void set_real_rp_0d_ptr(double value);
   FArray1D<double> real_rp_1d_ptr() const; // 1D_PTR_real
   void set_real_rp_1d_ptr(const std::vector<double> &v);
@@ -25940,7 +25979,7 @@ public:
   void set_real_dp_2d(const std::vector<std::vector<double>> &v);
   FArray3D<double> real_dp_3d() const; // 3D_NOT_real
   void set_real_dp_3d(const std::vector<std::vector<std::vector<double>>> &v);
-  double *real_dp_0d_ptr() const; // 0D_PTR_real
+  std::optional<double> real_dp_0d_ptr() const; // 0D_PTR_real
   void set_real_dp_0d_ptr(double value);
   FArray1D<double> real_dp_1d_ptr() const; // 1D_PTR_real
   void set_real_dp_1d_ptr(const std::vector<double> &v);
@@ -25962,6 +26001,8 @@ public:
   void set_complex_dp_2d(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d() const; // 3D_NOT_complex
   void set_complex_dp_3d(const std::vector<std::vector<std::vector<std::complex<double>>>> &v);
+  std::optional<std::complex<double>> complex_dp_0d_ptr() const; // 0D_PTR_complex
+  void set_complex_dp_0d_ptr(std::complex<double> value);
   FArray1D<std::complex<double>> complex_dp_1d_ptr() const; // 1D_PTR_complex
   void set_complex_dp_1d_ptr(const std::vector<std::complex<double>> &v);
   FArray2D<std::complex<double>> complex_dp_2d_ptr() const; // 2D_PTR_complex
@@ -25983,7 +26024,7 @@ public:
   void set_int_2d(const std::vector<std::vector<int>> &v);
   FArray3D<int> int_3d() const; // 3D_NOT_integer
   void set_int_3d(const std::vector<std::vector<std::vector<int>>> &v);
-  int *int_0d_ptr() const; // 0D_PTR_integer
+  std::optional<int> int_0d_ptr() const; // 0D_PTR_integer
   void set_int_0d_ptr(int value);
   FArray1D<int> int_1d_ptr() const; // 1D_PTR_integer
   void set_int_1d_ptr(const std::vector<int> &v);
@@ -26005,7 +26046,7 @@ public:
   void set_int8_2d(const std::vector<std::vector<int64_t>> &v);
   FArray3D<int64_t> int8_3d() const; // 3D_NOT_integer8
   void set_int8_3d(const std::vector<std::vector<std::vector<int64_t>>> &v);
-  int64_t *int8_0d_ptr() const; // 0D_PTR_integer8
+  std::optional<int64_t> int8_0d_ptr() const; // 0D_PTR_integer8
   void set_int8_0d_ptr(int64_t value);
   FArray1D<int64_t> int8_1d_ptr() const; // 1D_PTR_integer8
   void set_int8_1d_ptr(const std::vector<int64_t> &v);
@@ -26027,8 +26068,10 @@ public:
   void set_logical_2d(const std::vector<std::vector<bool>> &v);
   FArray3D<bool> logical_3d() const; // 3D_NOT_logical
   void set_logical_3d(const std::vector<std::vector<std::vector<bool>>> &v);
-  bool *logical_0d_ptr() const; // 0D_PTR_logical
+  std::optional<bool> logical_0d_ptr() const; // 0D_PTR_logical
   void set_logical_0d_ptr(bool value);
+  FArray1D<bool> logical_1d_ptr() const; // 1D_PTR_logical
+  void set_logical_1d_ptr(const std::vector<bool> &v);
   TestSubStruct type_0d() const; // 0D_NOT_type
   void set_type_0d(const TestSubStruct &src);
   TestSubStructArray1D type_1d() const; // 1D_NOT_type

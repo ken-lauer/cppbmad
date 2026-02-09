@@ -439,6 +439,7 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
              optional_ref<const std::vector<std::complex<double>>>,
              optional_ref<const std::vector<std::vector<std::complex<double>>>>,
              optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>,
+             std::optional<std::complex<double>>,
              optional_ref<const std::vector<std::complex<double>>>,
              optional_ref<const std::vector<std::vector<std::complex<double>>>>,
              optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>,
@@ -472,6 +473,7 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
              optional_ref<const std::vector<std::vector<bool>>>,
              optional_ref<const std::vector<std::vector<std::vector<bool>>>>,
              std::optional<bool>,
+             optional_ref<const std::vector<bool>>,
              optional_ref<const TestSubStruct>,
              optional_ref<const TestSubStruct>>(),
          py::arg("real_rp_0d") = py::none(),
@@ -500,6 +502,7 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
          py::arg("complex_dp_1d") = py::none(),
          py::arg("complex_dp_2d") = py::none(),
          py::arg("complex_dp_3d") = py::none(),
+         py::arg("complex_dp_0d_ptr") = py::none(),
          py::arg("complex_dp_1d_ptr") = py::none(),
          py::arg("complex_dp_2d_ptr") = py::none(),
          py::arg("complex_dp_3d_ptr") = py::none(),
@@ -533,6 +536,7 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
          py::arg("logical_2d") = py::none(),
          py::arg("logical_3d") = py::none(),
          py::arg("logical_0d_ptr") = py::none(),
+         py::arg("logical_1d_ptr") = py::none(),
          py::arg("type_0d") = py::none(),
          py::arg("type_0d_ptr") = py::none()
   )
@@ -686,12 +690,17 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           &AllEncompassingStruct::complex_dp_2d,
           &AllEncompassingStruct::set_complex_dp_2d
       )
-      // AllEncompassingStruct.complex_dp_3d (3D_NOT_complex - TODO complex(dp), pointer ::
-      // complex_dp_0d_ptr
+      // AllEncompassingStruct.complex_dp_3d (3D_NOT_complex -
       .def_property(
           "complex_dp_3d",
           &AllEncompassingStruct::complex_dp_3d,
           &AllEncompassingStruct::set_complex_dp_3d
+      )
+      // AllEncompassingStruct.complex_dp_0d_ptr (0D_PTR_complex -
+      .def_property(
+          "complex_dp_0d_ptr",
+          &AllEncompassingStruct::complex_dp_0d_ptr,
+          &AllEncompassingStruct::set_complex_dp_0d_ptr
       )
       // AllEncompassingStruct.complex_dp_1d_ptr (1D_PTR_complex -
       .def_property(
@@ -853,14 +862,20 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           &AllEncompassingStruct::logical_3d,
           &AllEncompassingStruct::set_logical_3d
       )
-      // AllEncompassingStruct.logical_0d_ptr (0D_PTR_logical - logical, pointer ::
-      // logical_1d_ptr(:) logical, pointer :: logical_2d_ptr(:,:) logical, pointer ::
-      // logical_3d_ptr(:,:,:) logical, allocatable :: logical_1d_alloc(:) logical, allocatable ::
-      // logical_2d_alloc(:,:) logical, allocatable :: logical_3d_alloc(:,:,:) type
+      // AllEncompassingStruct.logical_0d_ptr (0D_PTR_logical -
       .def_property(
           "logical_0d_ptr",
           &AllEncompassingStruct::logical_0d_ptr,
           &AllEncompassingStruct::set_logical_0d_ptr
+      )
+      // AllEncompassingStruct.logical_1d_ptr (1D_PTR_logical - logical, pointer ::
+      // logical_2d_ptr(:,:) logical, pointer :: logical_3d_ptr(:,:,:) logical, allocatable ::
+      // logical_1d_alloc(:) logical, allocatable :: logical_2d_alloc(:,:) logical, allocatable ::
+      // logical_3d_alloc(:,:,:) type
+      .def_property(
+          "logical_1d_ptr",
+          &AllEncompassingStruct::logical_1d_ptr,
+          &AllEncompassingStruct::set_logical_1d_ptr
       )
       // AllEncompassingStruct.type_0d (0D_NOT_type -
       .def_property("type_0d", &AllEncompassingStruct::type_0d, &AllEncompassingStruct::set_type_0d)
