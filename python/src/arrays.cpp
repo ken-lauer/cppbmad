@@ -62,11 +62,13 @@ void bind_standard_arrays(py::module &m) {
 
   bind_FArrayND<double, 2>(m, "RealArray2D");
   bind_FArrayND<int, 2>(m, "IntArray2D");
+  bind_FArrayND<int64_t, 2>(m, "Int8Array2D");
   bind_FArrayND<bool, 2>(m, "BoolArray2D");
   bind_FArrayND<std::complex<double>, 2>(m, "ComplexArray2D");
 
   bind_FArrayND<double, 3>(m, "RealArray3D");
   bind_FArrayND<int, 3>(m, "IntArray3D");
+  bind_FArrayND<int64_t, 3>(m, "Int8Array3D");
   bind_FArrayND<bool, 3>(m, "BoolArray3D");
   bind_FArrayND<std::complex<double>, 3>(m, "ComplexArray3D");
 
