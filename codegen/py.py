@@ -414,14 +414,15 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
             continue
 
         comment = arg.comment.replace('"', "'") if arg.comment else ""
-        code_lines.append(f"        // {struct.cpp_class}.{arg.c_name} ({arg.full_type} - {comment}")
+        docstring = f', "{comment}"' if comment else ""
+
         if tpl.fortran_setter:
             code_lines.append(
-                f'        .def_property("{arg.python_name}", &{struct.cpp_class}::{arg.c_name}, &{struct.cpp_class}::set_{arg.c_name})'
+                f'        .def_property("{arg.python_name}", &{struct.cpp_class}::{arg.c_name}, &{struct.cpp_class}::set_{arg.c_name}{docstring})'
             )
         else:
             code_lines.append(
-                f'        .def_property_readonly("{arg.python_name}", &{struct.cpp_class}::{arg.c_name})'
+                f'        .def_property_readonly("{arg.python_name}", &{struct.cpp_class}::{arg.c_name}{docstring})'
             )
 
     if 1 in used_array_dims:
