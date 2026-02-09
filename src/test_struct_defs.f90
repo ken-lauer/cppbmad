@@ -53,8 +53,7 @@ type all_encompassing_struct
   complex(dp) :: complex_dp_2d(3, 4) = cmplx(3.0, 2.0)
   complex(dp) :: complex_dp_3d(3, 4, 5) = cmplx(4.0, 2.0)
 
-  ! TODO
-  ! complex(dp), pointer :: complex_dp_0d_ptr
+  complex(dp), pointer :: complex_dp_0d_ptr => null()
   complex(dp), pointer :: complex_dp_1d_ptr(:) => null()
   complex(dp), pointer :: complex_dp_2d_ptr(:,:) => null()
   complex(dp), pointer :: complex_dp_3d_ptr(:,:,:) => null()
@@ -64,10 +63,10 @@ type all_encompassing_struct
   complex(dp), allocatable :: complex_dp_3d_alloc(:,:,:)
 
   ! Integer
-  integer int_0d
-  integer :: int_1d(3)
-  integer :: int_2d(3, 4)
-  integer :: int_3d(3, 4, 5)
+  integer :: int_0d = 0
+  integer :: int_1d(3) = 1
+  integer :: int_2d(3, 4) = 2
+  integer :: int_3d(3, 4, 5) = 3
 
   integer, pointer :: int_0d_ptr => null()
   integer, pointer :: int_1d_ptr(:) => null()
@@ -79,10 +78,10 @@ type all_encompassing_struct
   integer, allocatable :: int_3d_alloc(:,:,:)
 
   ! Integer8
-  integer(8) int8_0d
-  integer(8) :: int8_1d(3)
-  integer(8) :: int8_2d(3, 4)
-  integer(8) :: int8_3d(3, 4, 5)
+  integer(8) :: int8_0d = 0
+  integer(8) :: int8_1d(3) = 1
+  integer(8) :: int8_2d(3, 4) = 2
+  integer(8) :: int8_3d(3, 4, 5) = 3
 
   integer(8), pointer :: int8_0d_ptr => null()
   integer(8), pointer :: int8_1d_ptr(:) => null()
@@ -94,10 +93,10 @@ type all_encompassing_struct
   integer(8), allocatable :: int8_3d_alloc(:,:,:)
 
   ! logical
-  logical logical_0d
-  logical :: logical_1d(3)
-  logical :: logical_2d(3, 4)
-  logical :: logical_3d(3, 4, 5)
+  logical :: logical_0d = .true.
+  logical :: logical_1d(3) = .true.
+  logical :: logical_2d(3, 4) = .true.
+  logical :: logical_3d(3, 4, 5) = .true.
 
   logical, pointer :: logical_0d_ptr => null()
   logical, pointer :: logical_1d_ptr(:)

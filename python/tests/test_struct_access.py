@@ -31,7 +31,7 @@ REAL_ATTRIBUTES = [
     pytest.param("real_rp_3d_alloc", "list", id="real_rp_3d_alloc"),
     pytest.param("real_rp_3d_ptr", "list", id="real_rp_3d_ptr"),
     # Real double precision
-    pytest.param("real_dp_0d", "scalar", id="real_dp_0d", marks=pytest.mark.skip(reason="odd crash?")),
+    pytest.param("real_dp_0d", "scalar", id="real_dp_0d"),
     pytest.param("real_dp_0d_ptr", "scalar", id="real_dp_0d_ptr"),
     pytest.param("real_dp_1d", "list", id="real_dp_1d"),
     pytest.param("real_dp_1d_alloc", "alloc", id="real_dp_1d_alloc"),
@@ -67,16 +67,25 @@ def test_aes_real_attributes(aes: AllEncompassingStruct, attr_name, kind):
 # -----------------------------------------------------------------------------
 # 2. Complex Attributes
 # -----------------------------------------------------------------------------
+@pytest.mark.parametrize(
+    ("attr", "expected"),
+    [
+        pytest.param("complex_dp_0d", 1.0 + 2j),
+        pytest.param("complex_dp_1d", 2.0 + 2j),
+        pytest.param("complex_dp_2d", 3.0 + 2j),
+        pytest.param("complex_dp_3d", 4.0 + 2j),
+    ],
+)
+def test_aes_complex(aes: AllEncompassingStruct, attr: str, expected):
+    actual = getattr(aes, attr)
+    numpy.testing.assert_allclose(actual=actual, desired=expected)
+
+
 COMPLEX_ATTRIBUTES = [
-    pytest.param("complex_dp_0d", "scalar", id="complex_dp_0d"),
-    # TODO: complex_dp_0d_ptr
-    pytest.param("complex_dp_1d", "list", id="complex_dp_1d"),
     pytest.param("complex_dp_1d_alloc", "alloc", id="complex_dp_1d_alloc"),
     pytest.param("complex_dp_1d_ptr", "list", id="complex_dp_1d_ptr"),
-    pytest.param("complex_dp_2d", "list", id="complex_dp_2d"),
     pytest.param("complex_dp_2d_alloc", "list", id="complex_dp_2d_alloc"),
     pytest.param("complex_dp_2d_ptr", "list", id="complex_dp_2d_ptr"),
-    pytest.param("complex_dp_3d", "list", id="complex_dp_3d"),
     pytest.param("complex_dp_3d_alloc", "list", id="complex_dp_3d_alloc"),
     pytest.param("complex_dp_3d_ptr", "list", id="complex_dp_3d_ptr"),
 ]
@@ -97,6 +106,24 @@ def test_aes_complex_attributes(aes: AllEncompassingStruct, attr_name, kind):
 # -----------------------------------------------------------------------------
 # 3. Integer Attributes (int and int8)
 # -----------------------------------------------------------------------------
+@pytest.mark.parametrize(
+    ("attr", "expected"),
+    [
+        pytest.param("int_0d", 0.0),
+        pytest.param("int_1d", 1.0),
+        pytest.param("int_2d", 2.0),
+        pytest.param("int_3d", 3.0),
+        pytest.param("int8_0d", 0.0),
+        pytest.param("int8_1d", 1.0),
+        pytest.param("int8_2d", 2.0),
+        pytest.param("int8_3d", 3.0),
+    ],
+)
+def test_aes_int(aes: AllEncompassingStruct, attr: str, expected):
+    actual = getattr(aes, attr)
+    numpy.testing.assert_allclose(actual=actual, desired=expected)
+
+
 INT_ATTRIBUTES = [
     # Standard Int
     pytest.param("int_0d", "scalar", id="int_0d"),
@@ -112,16 +139,16 @@ INT_ATTRIBUTES = [
     pytest.param("int_3d_ptr", "list", id="int_3d_ptr"),
     # Int8
     pytest.param("int8_0d", "scalar", id="int8_0d"),
-    pytest.param("int8_0d_ptr", "scalar", id="int8_0d_ptr", marks=pytest.mark.skip(reason="crash")),
+    pytest.param("int8_0d_ptr", "scalar", id="int8_0d_ptr"),
     pytest.param("int8_1d", "list", id="int8_1d"),
     pytest.param("int8_1d_alloc", "alloc", id="int8_1d_alloc"),
     pytest.param("int8_1d_ptr", "list", id="int8_1d_ptr"),
-    pytest.param("int8_2d", "list", id="int8_2d", marks=pytest.mark.skip(reason="crash")),
-    pytest.param("int8_2d_alloc", "list", id="int8_2d_alloc", marks=pytest.mark.skip(reason="crash")),
-    pytest.param("int8_2d_ptr", "list", id="int8_2d_ptr", marks=pytest.mark.skip(reason="crash")),
-    pytest.param("int8_3d", "list", id="int8_3d", marks=pytest.mark.skip(reason="crash")),
-    pytest.param("int8_3d_alloc", "list", id="int8_3d_alloc", marks=pytest.mark.skip(reason="crash")),
-    pytest.param("int8_3d_ptr", "list", id="int8_3d_ptr", marks=pytest.mark.skip(reason="crash")),
+    pytest.param("int8_2d", "list", id="int8_2d"),
+    pytest.param("int8_2d_alloc", "list", id="int8_2d_alloc"),
+    pytest.param("int8_2d_ptr", "list", id="int8_2d_ptr"),
+    pytest.param("int8_3d", "list", id="int8_3d"),
+    pytest.param("int8_3d_alloc", "list", id="int8_3d_alloc"),
+    pytest.param("int8_3d_ptr", "list", id="int8_3d_ptr"),
 ]
 
 
@@ -144,10 +171,33 @@ def test_aes_int_attributes(aes: AllEncompassingStruct, attr_name, kind):
 # -----------------------------------------------------------------------------
 # 4. Logical (Boolean) Attributes
 # -----------------------------------------------------------------------------
+@pytest.mark.parametrize(
+    ("attr", "expected"),
+    [
+        pytest.param("logical_0d", True),
+        pytest.param("logical_1d", True),
+        pytest.param(
+            "logical_2d",
+            True,
+            marks=pytest.mark.xfail(reason="no 2d logical array support"),
+        ),
+        pytest.param(
+            "logical_3d",
+            True,
+            marks=pytest.mark.xfail(reason="no 3d logical array support"),
+        ),
+    ],
+)
+def test_aes_logical(aes: AllEncompassingStruct, attr: str, expected):
+    actual = getattr(aes, attr)
+    numpy.testing.assert_allclose(actual=actual, desired=expected)
+
+
 LOGICAL_ATTRIBUTES = [
     pytest.param("logical_0d", "scalar", id="logical_0d"),
-    # pytest.param("logical_0d_ptr", "scalar", id="logical_0d_ptr"),
+    pytest.param("logical_0d_ptr", "scalar", id="logical_0d_ptr"),
     pytest.param("logical_1d", "list", id="logical_1d"),
+    pytest.param("logical_1d_ptr", "list", id="logical_1d_ptr"),
     pytest.param("logical_2d", "list", id="logical_2d"),
     pytest.param("logical_3d", "list", id="logical_3d"),
 ]
@@ -170,7 +220,7 @@ def test_aes_logical_attributes(aes: AllEncompassingStruct, attr_name, kind):
 # -----------------------------------------------------------------------------
 TYPE_ATTRIBUTES = [
     pytest.param("type_0d", "scalar", id="type_0d"),
-    pytest.param("type_0d_ptr", "ptr", id="type_0d_ptr", marks=pytest.mark.skip("crash")),
+    pytest.param("type_0d_ptr", "ptr", id="type_0d_ptr"),
     pytest.param("type_1d", "list", id="type_1d"),
     pytest.param("type_1d_alloc", "alloc", id="type_1d_alloc"),
     pytest.param("type_1d_ptr", "ptr_list", id="type_1d_ptr"),
