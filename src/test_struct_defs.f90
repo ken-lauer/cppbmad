@@ -23,10 +23,10 @@ type all_encompassing_struct
   real(rp) :: real_rp_2d(3, 4) = 2.0
   real(rp) :: real_rp_3d(3, 4, 5) = 3.0
 
-  real(rp), pointer :: real_rp_0d_ptr
-  real(rp), pointer :: real_rp_1d_ptr(:)
-  real(rp), pointer :: real_rp_2d_ptr(:,:)
-  real(rp), pointer :: real_rp_3d_ptr(:,:,:)
+  real(rp), pointer :: real_rp_0d_ptr => null()
+  real(rp), pointer :: real_rp_1d_ptr(:) => null()
+  real(rp), pointer :: real_rp_2d_ptr(:,:) => null()
+  real(rp), pointer :: real_rp_3d_ptr(:,:,:) => null()
 
   real(rp), allocatable :: real_rp_1d_alloc(:)
   real(rp), allocatable :: real_rp_2d_alloc(:,:)
@@ -38,26 +38,26 @@ type all_encompassing_struct
   real(dp) :: real_dp_2d(3, 4) = 2.0
   real(dp) :: real_dp_3d(3, 4, 5) = 3.0
 
-  real(dp), pointer :: real_dp_0d_ptr
-  real(dp), pointer :: real_dp_1d_ptr(:)
-  real(dp), pointer :: real_dp_2d_ptr(:,:)
-  real(dp), pointer :: real_dp_3d_ptr(:,:,:)
+  real(dp), pointer :: real_dp_0d_ptr => null()
+  real(dp), pointer :: real_dp_1d_ptr(:) => null()
+  real(dp), pointer :: real_dp_2d_ptr(:,:) => null()
+  real(dp), pointer :: real_dp_3d_ptr(:,:,:) => null()
 
   real(dp), allocatable :: real_dp_1d_alloc(:)
   real(dp), allocatable :: real_dp_2d_alloc(:,:)
   real(dp), allocatable :: real_dp_3d_alloc(:,:,:)
 
   ! complex(dp)
-  complex(dp) :: complex_dp_0d = 0.0
-  complex(dp) :: complex_dp_1d(3)
-  complex(dp) :: complex_dp_2d(3, 4)
-  complex(dp) :: complex_dp_3d(3, 4, 5)
+  complex(dp) :: complex_dp_0d = cmplx(1.0, 2.0)
+  complex(dp) :: complex_dp_1d(3) = cmplx(2.0, 2.0)
+  complex(dp) :: complex_dp_2d(3, 4) = cmplx(3.0, 2.0)
+  complex(dp) :: complex_dp_3d(3, 4, 5) = cmplx(4.0, 2.0)
 
   ! TODO
   ! complex(dp), pointer :: complex_dp_0d_ptr
-  complex(dp), pointer :: complex_dp_1d_ptr(:)
-  complex(dp), pointer :: complex_dp_2d_ptr(:,:)
-  complex(dp), pointer :: complex_dp_3d_ptr(:,:,:)
+  complex(dp), pointer :: complex_dp_1d_ptr(:) => null()
+  complex(dp), pointer :: complex_dp_2d_ptr(:,:) => null()
+  complex(dp), pointer :: complex_dp_3d_ptr(:,:,:) => null()
 
   complex(dp), allocatable :: complex_dp_1d_alloc(:)
   complex(dp), allocatable :: complex_dp_2d_alloc(:,:)
@@ -69,10 +69,10 @@ type all_encompassing_struct
   integer :: int_2d(3, 4)
   integer :: int_3d(3, 4, 5)
 
-  integer, pointer :: int_0d_ptr
-  integer, pointer :: int_1d_ptr(:)
-  integer, pointer :: int_2d_ptr(:,:)
-  integer, pointer :: int_3d_ptr(:,:,:)
+  integer, pointer :: int_0d_ptr => null()
+  integer, pointer :: int_1d_ptr(:) => null()
+  integer, pointer :: int_2d_ptr(:,:) => null()
+  integer, pointer :: int_3d_ptr(:,:,:) => null()
 
   integer, allocatable :: int_1d_alloc(:)
   integer, allocatable :: int_2d_alloc(:,:)
@@ -84,10 +84,10 @@ type all_encompassing_struct
   integer(8) :: int8_2d(3, 4)
   integer(8) :: int8_3d(3, 4, 5)
 
-  integer(8), pointer :: int8_0d_ptr
-  integer(8), pointer :: int8_1d_ptr(:)
-  integer(8), pointer :: int8_2d_ptr(:,:)
-  integer(8), pointer :: int8_3d_ptr(:,:,:)
+  integer(8), pointer :: int8_0d_ptr => null()
+  integer(8), pointer :: int8_1d_ptr(:) => null()
+  integer(8), pointer :: int8_2d_ptr(:,:) => null()
+  integer(8), pointer :: int8_3d_ptr(:,:,:) => null()
 
   integer(8), allocatable :: int8_1d_alloc(:)
   integer(8), allocatable :: int8_2d_alloc(:,:)
@@ -99,8 +99,8 @@ type all_encompassing_struct
   logical :: logical_2d(3, 4)
   logical :: logical_3d(3, 4, 5)
 
-  logical, pointer :: logical_0d_ptr
-  ! logical, pointer :: logical_1d_ptr(:)
+  logical, pointer :: logical_0d_ptr => null()
+  logical, pointer :: logical_1d_ptr(:)
   ! logical, pointer :: logical_2d_ptr(:,:)
   ! logical, pointer :: logical_3d_ptr(:,:,:)
 
@@ -114,10 +114,10 @@ type all_encompassing_struct
   type(test_sub_struct) :: type_2d(3, 4)
   type(test_sub_struct) :: type_3d(3, 4, 5)
 
-  type(test_sub_struct), pointer :: type_0d_ptr
-  type(test_sub_struct), pointer :: type_1d_ptr(:)
-  type(test_sub_struct), pointer :: type_2d_ptr(:,:)
-  type(test_sub_struct), pointer :: type_3d_ptr(:,:,:)
+  type(test_sub_struct), pointer :: type_0d_ptr => null()
+  type(test_sub_struct), pointer :: type_1d_ptr(:) => null()
+  type(test_sub_struct), pointer :: type_2d_ptr(:,:) => null()
+  type(test_sub_struct), pointer :: type_3d_ptr(:,:,:) => null()
 
   type(test_sub_struct), allocatable :: type_1d_alloc(:)
   type(test_sub_struct), allocatable :: type_2d_alloc(:,:)
