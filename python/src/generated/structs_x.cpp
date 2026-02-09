@@ -26,17 +26,11 @@ void init_xy_disp_struct(py::module &m, py::class_<XyDispStruct> &cls) {
          py::arg("deta_dpz") = py::none(),
          py::arg("detap_dpz") = py::none()
   )
-      // XyDispStruct.eta (0D_NOT_real -
       .def_property("eta", &XyDispStruct::eta, &XyDispStruct::set_eta)
-      // XyDispStruct.etap (0D_NOT_real -
       .def_property("etap", &XyDispStruct::etap, &XyDispStruct::set_etap)
-      // XyDispStruct.deta_ds (0D_NOT_real -
       .def_property("deta_ds", &XyDispStruct::deta_ds, &XyDispStruct::set_deta_ds)
-      // XyDispStruct.sigma (0D_NOT_real -
       .def_property("sigma", &XyDispStruct::sigma, &XyDispStruct::set_sigma)
-      // XyDispStruct.deta_dpz (0D_NOT_real -
       .def_property("deta_dpz", &XyDispStruct::deta_dpz, &XyDispStruct::set_deta_dpz)
-      // XyDispStruct.detap_dpz (0D_NOT_real -
       .def_property("detap_dpz", &XyDispStruct::detap_dpz, &XyDispStruct::set_detap_dpz)
 
       .def("__repr__", [](const XyDispStruct &self) { return to_string(self); })

@@ -20,13 +20,15 @@ void init_ele_pointer_struct(py::module &m, py::class_<ElePointerStruct> &cls) {
          py::arg("loc") = py::none(),
          py::arg("id") = py::none()
   )
-      // ElePointerStruct.ele (0D_PTR_type -
       .def_property("ele", &ElePointerStruct::ele, &ElePointerStruct::set_ele)
-      // ElePointerStruct.loc (0D_NOT_type -
       .def_property("loc", &ElePointerStruct::loc, &ElePointerStruct::set_loc)
-      // ElePointerStruct.id (0D_NOT_integer - For general use. Not used by Bmad. In particular,
-      // used by Tao to designate universe ele is in.
-      .def_property("id", &ElePointerStruct::id, &ElePointerStruct::set_id)
+      .def_property(
+          "id",
+          &ElePointerStruct::id,
+          &ElePointerStruct::set_id,
+          "For general use. Not used by Bmad. In particular, used by Tao to designate universe ele "
+          "is in."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return ElePointerStructAlloc1D(sz); },
@@ -238,248 +240,417 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
          py::arg("select") = py::none(),
          py::arg("offset_moves_aperture") = py::none()
   )
-      // EleStruct.name (0D_NOT_character - name of element.
-      .def_property("name", &EleStruct::name, &EleStruct::set_name)
-      // EleStruct.type (0D_NOT_character - type name.
-      .def_property("type", &EleStruct::type, &EleStruct::set_type)
-      // EleStruct.alias (0D_NOT_character - Another name.
-      .def_property("alias", &EleStruct::alias, &EleStruct::set_alias)
-      // EleStruct.component_name (0D_NOT_character - Used by overlays, multipass patch, etc.
-      .def_property("component_name", &EleStruct::component_name, &EleStruct::set_component_name)
-      // EleStruct.descrip (0D_PTR_character - Description string.
-      .def_property("descrip", &EleStruct::descrip, &EleStruct::set_descrip)
-      // EleStruct.a (0D_NOT_type - Twiss parameters at end of element
-      .def_property("a", &EleStruct::a, &EleStruct::set_a)
-      // EleStruct.b (0D_NOT_type - Twiss parameters at end of element
-      .def_property("b", &EleStruct::b, &EleStruct::set_b)
-      // EleStruct.z (0D_NOT_type - Twiss parameters at end of element
-      .def_property("z", &EleStruct::z, &EleStruct::set_z)
-      // EleStruct.x (0D_NOT_type - Projected dispersions.
-      .def_property("x", &EleStruct::x, &EleStruct::set_x)
-      // EleStruct.y (0D_NOT_type - Projected dispersions.
-      .def_property("y", &EleStruct::y, &EleStruct::set_y)
-      // EleStruct.ac_kick (0D_PTR_type - ac_kicker element parameters.
-      .def_property("ac_kick", &EleStruct::ac_kick, &EleStruct::set_ac_kick)
-      // EleStruct.bookkeeping_state (0D_NOT_type - Attribute bookkeeping
+      .def_property("name", &EleStruct::name, &EleStruct::set_name, "name of element.")
+      .def_property("type", &EleStruct::type, &EleStruct::set_type, "type name.")
+      .def_property("alias", &EleStruct::alias, &EleStruct::set_alias, "Another name.")
+      .def_property(
+          "component_name",
+          &EleStruct::component_name,
+          &EleStruct::set_component_name,
+          "Used by overlays, multipass patch, etc."
+      )
+      .def_property("descrip", &EleStruct::descrip, &EleStruct::set_descrip, "Description string.")
+      .def_property("a", &EleStruct::a, &EleStruct::set_a, "Twiss parameters at end of element")
+      .def_property("b", &EleStruct::b, &EleStruct::set_b, "Twiss parameters at end of element")
+      .def_property("z", &EleStruct::z, &EleStruct::set_z, "Twiss parameters at end of element")
+      .def_property("x", &EleStruct::x, &EleStruct::set_x, "Projected dispersions.")
+      .def_property("y", &EleStruct::y, &EleStruct::set_y, "Projected dispersions.")
+      .def_property(
+          "ac_kick",
+          &EleStruct::ac_kick,
+          &EleStruct::set_ac_kick,
+          "ac_kicker element parameters."
+      )
       .def_property(
           "bookkeeping_state",
           &EleStruct::bookkeeping_state,
-          &EleStruct::set_bookkeeping_state
+          &EleStruct::set_bookkeeping_state,
+          "Attribute bookkeeping"
       )
-      // EleStruct.branch (0D_PTR_type - Pointer to branch containing element.
-      .def_property("branch", &EleStruct::branch, &EleStruct::set_branch)
-      // EleStruct.control (0D_PTR_type - group & overlay variables.
-      .def_property("control", &EleStruct::control, &EleStruct::set_control)
-      // EleStruct.rf (0D_PTR_type - RF parameters.
-      .def_property("rf", &EleStruct::rf, &EleStruct::set_rf)
-      // EleStruct.lord (0D_PTR_type - Pointer to a slice lord.
-      .def_property("lord", &EleStruct::lord, &EleStruct::set_lord)
-      // EleStruct.ptc_fibre (0D_PTR_type - PTC track corresponding to this ele.
-      .def_property("ptc_fibre", &EleStruct::ptc_fibre, &EleStruct::set_ptc_fibre)
-      // EleStruct.floor (0D_NOT_type -
+      .def_property(
+          "branch",
+          &EleStruct::branch,
+          &EleStruct::set_branch,
+          "Pointer to branch containing element."
+      )
+      .def_property(
+          "control",
+          &EleStruct::control,
+          &EleStruct::set_control,
+          "group & overlay variables."
+      )
+      .def_property("rf", &EleStruct::rf, &EleStruct::set_rf, "RF parameters.")
+      .def_property("lord", &EleStruct::lord, &EleStruct::set_lord, "Pointer to a slice lord.")
+      .def_property(
+          "ptc_fibre",
+          &EleStruct::ptc_fibre,
+          &EleStruct::set_ptc_fibre,
+          "PTC track corresponding to this ele."
+      )
       .def_property("floor", &EleStruct::floor, &EleStruct::set_floor)
-      // EleStruct.high_energy_space_charge (0D_PTR_type -
       .def_property(
           "high_energy_space_charge",
           &EleStruct::high_energy_space_charge,
           &EleStruct::set_high_energy_space_charge
       )
-      // EleStruct.mode3 (0D_PTR_type - 6D normal mode structure.
-      .def_property("mode3", &EleStruct::mode3, &EleStruct::set_mode3)
-      // EleStruct.photon (0D_PTR_type -
+      .def_property("mode3", &EleStruct::mode3, &EleStruct::set_mode3, "6D normal mode structure.")
       .def_property("photon", &EleStruct::photon, &EleStruct::set_photon)
-      // EleStruct.rad_map (0D_PTR_type - Radiation kick parameters Note: The reference orbits for
-      // spin and orbit Taylor maps are not necessarily the same. For example, Sprint spin Taylor
-      // maps can be with respect to the zero orbit independent of the orbital map.
-      .def_property("rad_map", &EleStruct::rad_map, &EleStruct::set_rad_map)
-      // EleStruct.taylor (1D_NOT_type - Phase space Taylor map.
-      .def_property_readonly("taylor", &EleStruct::taylor)
-      // EleStruct.spin_taylor_ref_orb_in (1D_NOT_real -
+      .def_property(
+          "rad_map",
+          &EleStruct::rad_map,
+          &EleStruct::set_rad_map,
+          "Radiation kick parameters Note: The reference orbits for spin and orbit Taylor maps are "
+          "not necessarily the same. For example, Sprint spin Taylor maps can be with respect to "
+          "the zero orbit independent of the orbital map."
+      )
+      .def_property_readonly("taylor", &EleStruct::taylor, "Phase space Taylor map.")
       .def_property(
           "spin_taylor_ref_orb_in",
           &EleStruct::spin_taylor_ref_orb_in,
           &EleStruct::set_spin_taylor_ref_orb_in
       )
-      // EleStruct.spin_taylor (1D_NOT_type - Quaternion Spin Taylor map.
-      .def_property_readonly("spin_taylor", &EleStruct::spin_taylor)
-      // EleStruct.wake (0D_PTR_type - Wakes
-      .def_property("wake", &EleStruct::wake, &EleStruct::set_wake)
-      // EleStruct.wall3d (1D_PTR_type - Chamber or capillary wall E/M field structs.
-      .def_property_readonly("wall3d", &EleStruct::wall3d)
-      // EleStruct.cartesian_map (1D_PTR_type - Used to define E/M fields
-      .def_property_readonly("cartesian_map", &EleStruct::cartesian_map)
-      // EleStruct.cylindrical_map (1D_PTR_type - Used to define E/M fields
-      .def_property_readonly("cylindrical_map", &EleStruct::cylindrical_map)
-      // EleStruct.gen_grad_map (1D_PTR_type - Used to define E/M fields.
-      .def_property_readonly("gen_grad_map", &EleStruct::gen_grad_map)
-      // EleStruct.grid_field (1D_PTR_type - Used to define E/M fields. The difference between
-      // map_ref_orb and time_ref_orb is that map_ref_orb is the reference orbit for the 1st order
-      // spin/orbit map which, in general, is non-zero while time_ref_orb follows the reference
-      // particle which is generally the zero orbit (non-zero, for example, in the second slice of a
-      // sliced wiggler).
-      .def_property_readonly("grid_field", &EleStruct::grid_field)
-      // EleStruct.map_ref_orb_in (0D_NOT_type - Entrance end transfer map ref orbit
-      .def_property("map_ref_orb_in", &EleStruct::map_ref_orb_in, &EleStruct::set_map_ref_orb_in)
-      // EleStruct.map_ref_orb_out (0D_NOT_type - Exit end transfer map ref orbit
-      .def_property("map_ref_orb_out", &EleStruct::map_ref_orb_out, &EleStruct::set_map_ref_orb_out)
-      // EleStruct.time_ref_orb_in (0D_NOT_type - Reference orbit at entrance end for ref_time calc.
-      .def_property("time_ref_orb_in", &EleStruct::time_ref_orb_in, &EleStruct::set_time_ref_orb_in)
-      // EleStruct.time_ref_orb_out (0D_NOT_type - Reference orbit at exit end for ref_time calc.
+      .def_property_readonly("spin_taylor", &EleStruct::spin_taylor, "Quaternion Spin Taylor map.")
+      .def_property("wake", &EleStruct::wake, &EleStruct::set_wake, "Wakes")
+      .def_property_readonly(
+          "wall3d",
+          &EleStruct::wall3d,
+          "Chamber or capillary wall E/M field structs."
+      )
+      .def_property_readonly(
+          "cartesian_map",
+          &EleStruct::cartesian_map,
+          "Used to define E/M fields"
+      )
+      .def_property_readonly(
+          "cylindrical_map",
+          &EleStruct::cylindrical_map,
+          "Used to define E/M fields"
+      )
+      .def_property_readonly("gen_grad_map", &EleStruct::gen_grad_map, "Used to define E/M fields.")
+      .def_property_readonly(
+          "grid_field",
+          &EleStruct::grid_field,
+          "Used to define E/M fields. The difference between map_ref_orb and time_ref_orb is that "
+          "map_ref_orb is the reference orbit for the 1st order spin/orbit map which, in general, "
+          "is non-zero while time_ref_orb follows the reference particle which is generally the "
+          "zero orbit (non-zero, for example, in the second slice of a sliced wiggler)."
+      )
+      .def_property(
+          "map_ref_orb_in",
+          &EleStruct::map_ref_orb_in,
+          &EleStruct::set_map_ref_orb_in,
+          "Entrance end transfer map ref orbit"
+      )
+      .def_property(
+          "map_ref_orb_out",
+          &EleStruct::map_ref_orb_out,
+          &EleStruct::set_map_ref_orb_out,
+          "Exit end transfer map ref orbit"
+      )
+      .def_property(
+          "time_ref_orb_in",
+          &EleStruct::time_ref_orb_in,
+          &EleStruct::set_time_ref_orb_in,
+          "Reference orbit at entrance end for ref_time calc."
+      )
       .def_property(
           "time_ref_orb_out",
           &EleStruct::time_ref_orb_out,
-          &EleStruct::set_time_ref_orb_out
+          &EleStruct::set_time_ref_orb_out,
+          "Reference orbit at exit end for ref_time calc."
       )
-      // EleStruct.value (1D_NOT_real - attribute values.
-      .def_property("value", &EleStruct::value, &EleStruct::set_value)
-      // EleStruct.old_value (1D_NOT_real - Used to see if %value(:) array has changed. Note: The
-      // reference orbit for spin/orbit matrices is %map_ref_orb_in/out
-      .def_property("old_value", &EleStruct::old_value, &EleStruct::set_old_value)
-      // EleStruct.spin_q (2D_NOT_real - 0th and 1st order Spin transport quaternion.
-      .def_property("spin_q", &EleStruct::spin_q, &EleStruct::set_spin_q)
-      // EleStruct.vec0 (1D_NOT_real - 0th order transport vector.
-      .def_property("vec0", &EleStruct::vec0, &EleStruct::set_vec0)
-      // EleStruct.mat6 (2D_NOT_real - 1st order transport matrix.
-      .def_property("mat6", &EleStruct::mat6, &EleStruct::set_mat6)
-      // EleStruct.c_mat (2D_NOT_real - 2x2 C coupling matrix
-      .def_property("c_mat", &EleStruct::c_mat, &EleStruct::set_c_mat)
-      // EleStruct.dc_mat_dpz (2D_NOT_real - d(c_mat)/dpz variation.
-      .def_property("dc_mat_dpz", &EleStruct::dc_mat_dpz, &EleStruct::set_dc_mat_dpz)
-      // EleStruct.gamma_c (0D_NOT_real - gamma associated with C matrix
-      .def_property("gamma_c", &EleStruct::gamma_c, &EleStruct::set_gamma_c)
-      // EleStruct.s_start (0D_NOT_real - longitudinal ref position at entrance_end
-      .def_property("s_start", &EleStruct::s_start, &EleStruct::set_s_start)
-      // EleStruct.s (0D_NOT_real - longitudinal ref position at the exit end.
-      .def_property("s", &EleStruct::s, &EleStruct::set_s)
-      // EleStruct.ref_time (0D_NOT_real - Time ref particle passes exit end.
-      .def_property("ref_time", &EleStruct::ref_time, &EleStruct::set_ref_time)
-      // EleStruct.a_pole (1D_PTR_real - knl for multipole elements.
-      .def_property("a_pole", &EleStruct::a_pole, &EleStruct::set_a_pole)
-      // EleStruct.b_pole (1D_PTR_real - tilt for multipole elements.
-      .def_property("b_pole", &EleStruct::b_pole, &EleStruct::set_b_pole)
-      // EleStruct.a_pole_elec (1D_PTR_real - Electrostatic multipoles. ksnl for multipole elements.
-      .def_property("a_pole_elec", &EleStruct::a_pole_elec, &EleStruct::set_a_pole_elec)
-      // EleStruct.b_pole_elec (1D_PTR_real - Electrostatic multipoles.
-      .def_property("b_pole_elec", &EleStruct::b_pole_elec, &EleStruct::set_b_pole_elec)
-      // EleStruct.custom (1D_PTR_real - Custom attributes.
-      .def_property("custom", &EleStruct::custom, &EleStruct::set_custom)
-      // EleStruct.r (3D_PTR_real - For general use. Not used by Bmad.
-      .def_property("r", &EleStruct::r, &EleStruct::set_r)
-      // EleStruct.key (0D_NOT_integer - Element class (quadrupole, etc.).
-      .def_property("key", &EleStruct::key, &EleStruct::set_key)
-      // EleStruct.sub_key (0D_NOT_integer - Records bend input type.
-      .def_property("sub_key", &EleStruct::sub_key, &EleStruct::set_sub_key)
-      // EleStruct.ix_ele (0D_NOT_integer - Index in branch ele(0:) array. Set to ix_slice_slave$ =
-      // -2 for slice_slave$ elements.
-      .def_property("ix_ele", &EleStruct::ix_ele, &EleStruct::set_ix_ele)
-      // EleStruct.ix_branch (0D_NOT_integer - Index in lat%branch(:) array. Note: lat%ele =>
-      // lat%branch(0).
-      .def_property("ix_branch", &EleStruct::ix_branch, &EleStruct::set_ix_branch)
-      // EleStruct.lord_status (0D_NOT_integer - Type of lord element this is. overlay_lord$, etc.
-      .def_property("lord_status", &EleStruct::lord_status, &EleStruct::set_lord_status)
-      // EleStruct.n_slave (0D_NOT_integer - Number of slaves (except field overlap slaves) of this
-      // element.
-      .def_property("n_slave", &EleStruct::n_slave, &EleStruct::set_n_slave)
-      // EleStruct.n_slave_field (0D_NOT_integer - Number of field slaves of this element.
-      .def_property("n_slave_field", &EleStruct::n_slave_field, &EleStruct::set_n_slave_field)
-      // EleStruct.ix1_slave (0D_NOT_integer - Pointer index to this element's slaves.
-      .def_property("ix1_slave", &EleStruct::ix1_slave, &EleStruct::set_ix1_slave)
-      // EleStruct.slave_status (0D_NOT_integer - Type of slave element this is. multipass_slave$,
-      // slice_slave$, etc.
-      .def_property("slave_status", &EleStruct::slave_status, &EleStruct::set_slave_status)
-      // EleStruct.n_lord (0D_NOT_integer - Number of lords (except field overlap and ramper lords).
-      .def_property("n_lord", &EleStruct::n_lord, &EleStruct::set_n_lord)
-      // EleStruct.n_lord_field (0D_NOT_integer - Number of field lords of this element.
-      .def_property("n_lord_field", &EleStruct::n_lord_field, &EleStruct::set_n_lord_field)
-      // EleStruct.n_lord_ramper (0D_NOT_integer - Number of ramper lords.
-      .def_property("n_lord_ramper", &EleStruct::n_lord_ramper, &EleStruct::set_n_lord_ramper)
-      // EleStruct.ic1_lord (0D_NOT_integer - Pointer index to this element's lords.
-      .def_property("ic1_lord", &EleStruct::ic1_lord, &EleStruct::set_ic1_lord)
-      // EleStruct.ix_pointer (0D_NOT_integer - For general use. Not used by Bmad.
-      .def_property("ix_pointer", &EleStruct::ix_pointer, &EleStruct::set_ix_pointer)
-      // EleStruct.ixx (0D_NOT_integer - Index for Bmad internal use.
-      .def_property("ixx", &EleStruct::ixx, &EleStruct::set_ixx)
-      // EleStruct.iyy (0D_NOT_integer - Index for Bmad internal use.
-      .def_property("iyy", &EleStruct::iyy, &EleStruct::set_iyy)
-      // EleStruct.izz (0D_NOT_integer - Index for Bmad internal use.
-      .def_property("izz", &EleStruct::izz, &EleStruct::set_izz)
-      // EleStruct.mat6_calc_method (0D_NOT_integer - taylor$, symp_lie_ptc$, etc.
+      .def_property("value", &EleStruct::value, &EleStruct::set_value, "attribute values.")
+      .def_property(
+          "old_value",
+          &EleStruct::old_value,
+          &EleStruct::set_old_value,
+          "Used to see if %value(:) array has changed. Note: The reference orbit for spin/orbit "
+          "matrices is %map_ref_orb_in/out"
+      )
+      .def_property(
+          "spin_q",
+          &EleStruct::spin_q,
+          &EleStruct::set_spin_q,
+          "0th and 1st order Spin transport quaternion."
+      )
+      .def_property("vec0", &EleStruct::vec0, &EleStruct::set_vec0, "0th order transport vector.")
+      .def_property("mat6", &EleStruct::mat6, &EleStruct::set_mat6, "1st order transport matrix.")
+      .def_property("c_mat", &EleStruct::c_mat, &EleStruct::set_c_mat, "2x2 C coupling matrix")
+      .def_property(
+          "dc_mat_dpz",
+          &EleStruct::dc_mat_dpz,
+          &EleStruct::set_dc_mat_dpz,
+          "d(c_mat)/dpz variation."
+      )
+      .def_property(
+          "gamma_c",
+          &EleStruct::gamma_c,
+          &EleStruct::set_gamma_c,
+          "gamma associated with C matrix"
+      )
+      .def_property(
+          "s_start",
+          &EleStruct::s_start,
+          &EleStruct::set_s_start,
+          "longitudinal ref position at entrance_end"
+      )
+      .def_property(
+          "s",
+          &EleStruct::s,
+          &EleStruct::set_s,
+          "longitudinal ref position at the exit end."
+      )
+      .def_property(
+          "ref_time",
+          &EleStruct::ref_time,
+          &EleStruct::set_ref_time,
+          "Time ref particle passes exit end."
+      )
+      .def_property(
+          "a_pole",
+          &EleStruct::a_pole,
+          &EleStruct::set_a_pole,
+          "knl for multipole elements."
+      )
+      .def_property(
+          "b_pole",
+          &EleStruct::b_pole,
+          &EleStruct::set_b_pole,
+          "tilt for multipole elements."
+      )
+      .def_property(
+          "a_pole_elec",
+          &EleStruct::a_pole_elec,
+          &EleStruct::set_a_pole_elec,
+          "Electrostatic multipoles. ksnl for multipole elements."
+      )
+      .def_property(
+          "b_pole_elec",
+          &EleStruct::b_pole_elec,
+          &EleStruct::set_b_pole_elec,
+          "Electrostatic multipoles."
+      )
+      .def_property("custom", &EleStruct::custom, &EleStruct::set_custom, "Custom attributes.")
+      .def_property("r", &EleStruct::r, &EleStruct::set_r, "For general use. Not used by Bmad.")
+      .def_property(
+          "key",
+          &EleStruct::key,
+          &EleStruct::set_key,
+          "Element class (quadrupole, etc.)."
+      )
+      .def_property(
+          "sub_key",
+          &EleStruct::sub_key,
+          &EleStruct::set_sub_key,
+          "Records bend input type."
+      )
+      .def_property(
+          "ix_ele",
+          &EleStruct::ix_ele,
+          &EleStruct::set_ix_ele,
+          "Index in branch ele(0:) array. Set to ix_slice_slave$ = -2 for slice_slave$ elements."
+      )
+      .def_property(
+          "ix_branch",
+          &EleStruct::ix_branch,
+          &EleStruct::set_ix_branch,
+          "Index in lat%branch(:) array. Note: lat%ele => lat%branch(0)."
+      )
+      .def_property(
+          "lord_status",
+          &EleStruct::lord_status,
+          &EleStruct::set_lord_status,
+          "Type of lord element this is. overlay_lord$, etc."
+      )
+      .def_property(
+          "n_slave",
+          &EleStruct::n_slave,
+          &EleStruct::set_n_slave,
+          "Number of slaves (except field overlap slaves) of this element."
+      )
+      .def_property(
+          "n_slave_field",
+          &EleStruct::n_slave_field,
+          &EleStruct::set_n_slave_field,
+          "Number of field slaves of this element."
+      )
+      .def_property(
+          "ix1_slave",
+          &EleStruct::ix1_slave,
+          &EleStruct::set_ix1_slave,
+          "Pointer index to this element's slaves."
+      )
+      .def_property(
+          "slave_status",
+          &EleStruct::slave_status,
+          &EleStruct::set_slave_status,
+          "Type of slave element this is. multipass_slave$, slice_slave$, etc."
+      )
+      .def_property(
+          "n_lord",
+          &EleStruct::n_lord,
+          &EleStruct::set_n_lord,
+          "Number of lords (except field overlap and ramper lords)."
+      )
+      .def_property(
+          "n_lord_field",
+          &EleStruct::n_lord_field,
+          &EleStruct::set_n_lord_field,
+          "Number of field lords of this element."
+      )
+      .def_property(
+          "n_lord_ramper",
+          &EleStruct::n_lord_ramper,
+          &EleStruct::set_n_lord_ramper,
+          "Number of ramper lords."
+      )
+      .def_property(
+          "ic1_lord",
+          &EleStruct::ic1_lord,
+          &EleStruct::set_ic1_lord,
+          "Pointer index to this element's lords."
+      )
+      .def_property(
+          "ix_pointer",
+          &EleStruct::ix_pointer,
+          &EleStruct::set_ix_pointer,
+          "For general use. Not used by Bmad."
+      )
+      .def_property("ixx", &EleStruct::ixx, &EleStruct::set_ixx, "Index for Bmad internal use.")
+      .def_property("iyy", &EleStruct::iyy, &EleStruct::set_iyy, "Index for Bmad internal use.")
+      .def_property("izz", &EleStruct::izz, &EleStruct::set_izz, "Index for Bmad internal use.")
       .def_property(
           "mat6_calc_method",
           &EleStruct::mat6_calc_method,
-          &EleStruct::set_mat6_calc_method
+          &EleStruct::set_mat6_calc_method,
+          "taylor$, symp_lie_ptc$, etc."
       )
-      // EleStruct.tracking_method (0D_NOT_integer - taylor$, linear$, etc.
-      .def_property("tracking_method", &EleStruct::tracking_method, &EleStruct::set_tracking_method)
-      // EleStruct.spin_tracking_method (0D_NOT_integer - symp_lie_ptc$, etc.
+      .def_property(
+          "tracking_method",
+          &EleStruct::tracking_method,
+          &EleStruct::set_tracking_method,
+          "taylor$, linear$, etc."
+      )
       .def_property(
           "spin_tracking_method",
           &EleStruct::spin_tracking_method,
-          &EleStruct::set_spin_tracking_method
+          &EleStruct::set_spin_tracking_method,
+          "symp_lie_ptc$, etc."
       )
-      // EleStruct.csr_method (0D_NOT_integer - or one_dim$ ('1_dim'), steady_state_3d$
-      .def_property("csr_method", &EleStruct::csr_method, &EleStruct::set_csr_method)
-      // EleStruct.space_charge_method (0D_NOT_integer - slice$, slice_longitudinal$,
-      // slice_transverse$, fft_3D$, cathode_fft_3d$
+      .def_property(
+          "csr_method",
+          &EleStruct::csr_method,
+          &EleStruct::set_csr_method,
+          "or one_dim$ ('1_dim'), steady_state_3d$"
+      )
       .def_property(
           "space_charge_method",
           &EleStruct::space_charge_method,
-          &EleStruct::set_space_charge_method
+          &EleStruct::set_space_charge_method,
+          "slice$, slice_longitudinal$, slice_transverse$, fft_3D$, cathode_fft_3d$"
       )
-      // EleStruct.ptc_integration_type (0D_NOT_integer - drift_kick$, matrix_kick$, or ripken_kick$
       .def_property(
           "ptc_integration_type",
           &EleStruct::ptc_integration_type,
-          &EleStruct::set_ptc_integration_type
+          &EleStruct::set_ptc_integration_type,
+          "drift_kick$, matrix_kick$, or ripken_kick$"
       )
-      // EleStruct.field_calc (0D_NOT_integer - no_field$, fieldmap$, refer_to_lords$, or custom$
-      .def_property("field_calc", &EleStruct::field_calc, &EleStruct::set_field_calc)
-      // EleStruct.aperture_at (0D_NOT_integer - Aperture location: entrance_end$, ...
-      .def_property("aperture_at", &EleStruct::aperture_at, &EleStruct::set_aperture_at)
-      // EleStruct.aperture_type (0D_NOT_integer - rectangular$, elliptical$, auto_aperture$, ...
-      .def_property("aperture_type", &EleStruct::aperture_type, &EleStruct::set_aperture_type)
-      // EleStruct.ref_species (0D_NOT_integer - Reference species
-      .def_property("ref_species", &EleStruct::ref_species, &EleStruct::set_ref_species)
-      // EleStruct.orientation (0D_NOT_integer - -1 -> Element is longitudinally reversed. +1 ->
-      // Normal.
-      .def_property("orientation", &EleStruct::orientation, &EleStruct::set_orientation)
-      // EleStruct.symplectify (0D_NOT_logical - Symplectify mat6 matrices.
-      .def_property("symplectify", &EleStruct::symplectify, &EleStruct::set_symplectify)
-      // EleStruct.mode_flip (0D_NOT_logical - Have the normal modes traded places?
-      .def_property("mode_flip", &EleStruct::mode_flip, &EleStruct::set_mode_flip)
-      // EleStruct.multipoles_on (0D_NOT_logical - For turning multipoles on/off
-      .def_property("multipoles_on", &EleStruct::multipoles_on, &EleStruct::set_multipoles_on)
-      // EleStruct.scale_multipoles (0D_NOT_logical - Are ab_multipoles within other elements (EG:
-      // quads, etc.) scaled by the strength of the element?
+      .def_property(
+          "field_calc",
+          &EleStruct::field_calc,
+          &EleStruct::set_field_calc,
+          "no_field$, fieldmap$, refer_to_lords$, or custom$"
+      )
+      .def_property(
+          "aperture_at",
+          &EleStruct::aperture_at,
+          &EleStruct::set_aperture_at,
+          "Aperture location: entrance_end$, ..."
+      )
+      .def_property(
+          "aperture_type",
+          &EleStruct::aperture_type,
+          &EleStruct::set_aperture_type,
+          "rectangular$, elliptical$, auto_aperture$, ..."
+      )
+      .def_property(
+          "ref_species",
+          &EleStruct::ref_species,
+          &EleStruct::set_ref_species,
+          "Reference species"
+      )
+      .def_property(
+          "orientation",
+          &EleStruct::orientation,
+          &EleStruct::set_orientation,
+          "-1 -> Element is longitudinally reversed. +1 -> Normal."
+      )
+      .def_property(
+          "symplectify",
+          &EleStruct::symplectify,
+          &EleStruct::set_symplectify,
+          "Symplectify mat6 matrices."
+      )
+      .def_property(
+          "mode_flip",
+          &EleStruct::mode_flip,
+          &EleStruct::set_mode_flip,
+          "Have the normal modes traded places?"
+      )
+      .def_property(
+          "multipoles_on",
+          &EleStruct::multipoles_on,
+          &EleStruct::set_multipoles_on,
+          "For turning multipoles on/off"
+      )
       .def_property(
           "scale_multipoles",
           &EleStruct::scale_multipoles,
-          &EleStruct::set_scale_multipoles
+          &EleStruct::set_scale_multipoles,
+          "Are ab_multipoles within other elements (EG: quads, etc.) scaled by the strength of the "
+          "element?"
       )
-      // EleStruct.taylor_map_includes_offsets (0D_NOT_logical - Taylor map calculated with element
-      // misalignments?
       .def_property(
           "taylor_map_includes_offsets",
           &EleStruct::taylor_map_includes_offsets,
-          &EleStruct::set_taylor_map_includes_offsets
+          &EleStruct::set_taylor_map_includes_offsets,
+          "Taylor map calculated with element misalignments?"
       )
-      // EleStruct.field_master (0D_NOT_logical - Calculate strength from the field value?
-      .def_property("field_master", &EleStruct::field_master, &EleStruct::set_field_master)
-      // EleStruct.is_on (0D_NOT_logical - For turning element on/off.
-      .def_property("is_on", &EleStruct::is_on, &EleStruct::set_is_on)
-      // EleStruct.logic (0D_NOT_logical - For general use. Not used by Bmad (except during lattice
-      // parsing).
-      .def_property("logic", &EleStruct::logic, &EleStruct::set_logic)
-      // EleStruct.bmad_logic (0D_NOT_logical - For Bmad internal use only.
-      .def_property("bmad_logic", &EleStruct::bmad_logic, &EleStruct::set_bmad_logic)
-      // EleStruct.select (0D_NOT_logical - For Bmad internal use only.
-      .def_property("select", &EleStruct::select, &EleStruct::set_select)
-      // EleStruct.offset_moves_aperture (0D_NOT_logical - element offsets affects aperture? ! final
-      // :: ele_finalizer
+      .def_property(
+          "field_master",
+          &EleStruct::field_master,
+          &EleStruct::set_field_master,
+          "Calculate strength from the field value?"
+      )
+      .def_property(
+          "is_on",
+          &EleStruct::is_on,
+          &EleStruct::set_is_on,
+          "For turning element on/off."
+      )
+      .def_property(
+          "logic",
+          &EleStruct::logic,
+          &EleStruct::set_logic,
+          "For general use. Not used by Bmad (except during lattice parsing)."
+      )
+      .def_property(
+          "bmad_logic",
+          &EleStruct::bmad_logic,
+          &EleStruct::set_bmad_logic,
+          "For Bmad internal use only."
+      )
+      .def_property(
+          "select",
+          &EleStruct::select,
+          &EleStruct::set_select,
+          "For Bmad internal use only."
+      )
       .def_property(
           "offset_moves_aperture",
           &EleStruct::offset_moves_aperture,
-          &EleStruct::set_offset_moves_aperture
+          &EleStruct::set_offset_moves_aperture,
+          "element offsets affects aperture? ! final :: ele_finalizer"
       )
       .def_static(
           "new_array1d",
@@ -524,23 +695,23 @@ void init_ellipse_beam_init_struct(py::module &m, py::class_<EllipseBeamInitStru
          py::arg("n_ellipse") = py::none(),
          py::arg("sigma_cutoff") = py::none()
   )
-      // EllipseBeamInitStruct.part_per_ellipse (0D_NOT_integer - number of particles per ellipse
       .def_property(
           "part_per_ellipse",
           &EllipseBeamInitStruct::part_per_ellipse,
-          &EllipseBeamInitStruct::set_part_per_ellipse
+          &EllipseBeamInitStruct::set_part_per_ellipse,
+          "number of particles per ellipse"
       )
-      // EllipseBeamInitStruct.n_ellipse (0D_NOT_integer - number of ellipses (>= 1)
       .def_property(
           "n_ellipse",
           &EllipseBeamInitStruct::n_ellipse,
-          &EllipseBeamInitStruct::set_n_ellipse
+          &EllipseBeamInitStruct::set_n_ellipse,
+          "number of ellipses (>= 1)"
       )
-      // EllipseBeamInitStruct.sigma_cutoff (0D_NOT_real - sigma cutoff of the representation
       .def_property(
           "sigma_cutoff",
           &EllipseBeamInitStruct::sigma_cutoff,
-          &EllipseBeamInitStruct::set_sigma_cutoff
+          &EllipseBeamInitStruct::set_sigma_cutoff,
+          "sigma cutoff of the representation"
       )
       .def_static(
           "new_array1d",
@@ -601,20 +772,23 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
          py::arg("phi_B") = py::none(),
          py::arg("A") = py::none()
   )
-      // EmFieldStruct.E (1D_NOT_real - electric field.
-      .def_property("E", &EmFieldStruct::E, &EmFieldStruct::set_E)
-      // EmFieldStruct.B (1D_NOT_real - magnetic field.
-      .def_property("B", &EmFieldStruct::B, &EmFieldStruct::set_B)
-      // EmFieldStruct.dE (2D_NOT_real - electric field gradient.
-      .def_property("dE", &EmFieldStruct::dE, &EmFieldStruct::set_dE)
-      // EmFieldStruct.dB (2D_NOT_real - magnetic field gradient.
-      .def_property("dB", &EmFieldStruct::dB, &EmFieldStruct::set_dB)
-      // EmFieldStruct.phi (0D_NOT_real - Electric scalar potential.
-      .def_property("phi", &EmFieldStruct::phi, &EmFieldStruct::set_phi)
-      // EmFieldStruct.phi_B (0D_NOT_real - Magnetic scalar potential.
-      .def_property("phi_B", &EmFieldStruct::phi_B, &EmFieldStruct::set_phi_B)
-      // EmFieldStruct.A (1D_NOT_real - Magnetic vector potential.
-      .def_property("A", &EmFieldStruct::A, &EmFieldStruct::set_A)
+      .def_property("E", &EmFieldStruct::E, &EmFieldStruct::set_E, "electric field.")
+      .def_property("B", &EmFieldStruct::B, &EmFieldStruct::set_B, "magnetic field.")
+      .def_property("dE", &EmFieldStruct::dE, &EmFieldStruct::set_dE, "electric field gradient.")
+      .def_property("dB", &EmFieldStruct::dB, &EmFieldStruct::set_dB, "magnetic field gradient.")
+      .def_property(
+          "phi",
+          &EmFieldStruct::phi,
+          &EmFieldStruct::set_phi,
+          "Electric scalar potential."
+      )
+      .def_property(
+          "phi_B",
+          &EmFieldStruct::phi_B,
+          &EmFieldStruct::set_phi_B,
+          "Magnetic scalar potential."
+      )
+      .def_property("A", &EmFieldStruct::A, &EmFieldStruct::set_A, "Magnetic vector potential.")
       .def_static(
           "new_array1d",
           [](int sz) { return EmFieldStructAlloc1D(sz); },
@@ -656,9 +830,7 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
 // em_taylor_struct
 void init_em_taylor_struct(py::module &m, py::class_<EmTaylorStruct> &cls) {
   cls.def(py::init<std::optional<double>>(), py::arg("ref") = py::none())
-      // EmTaylorStruct.ref (0D_NOT_real -
       .def_property("ref", &EmTaylorStruct::ref, &EmTaylorStruct::set_ref)
-      // EmTaylorStruct.term (1D_ALLOC_type -
       .def_property_readonly("term", &EmTaylorStruct::term)
       .def_static(
           "new_array1d",
@@ -705,9 +877,7 @@ void init_em_taylor_term_struct(py::module &m, py::class_<EmTaylorTermStruct> &c
          py::arg("coef") = py::none(),
          py::arg("expn") = py::none()
   )
-      // EmTaylorTermStruct.coef (0D_NOT_real -
       .def_property("coef", &EmTaylorTermStruct::coef, &EmTaylorTermStruct::set_coef)
-      // EmTaylorTermStruct.expn (1D_NOT_integer -
       .def_property("expn", &EmTaylorTermStruct::expn, &EmTaylorTermStruct::set_expn)
       .def_static(
           "new_array1d",
@@ -755,12 +925,13 @@ void init_expression_atom_struct(py::module &m, py::class_<ExpressionAtomStruct>
          py::arg("type") = py::none(),
          py::arg("value") = py::none()
   )
-      // ExpressionAtomStruct.name (0D_NOT_character -
       .def_property("name", &ExpressionAtomStruct::name, &ExpressionAtomStruct::set_name)
-      // ExpressionAtomStruct.type (0D_NOT_integer - plus$, minum$, sin$, cos$, etc. To convert to
-      // string use: expression_op_name
-      .def_property("type", &ExpressionAtomStruct::type, &ExpressionAtomStruct::set_type)
-      // ExpressionAtomStruct.value (0D_NOT_real -
+      .def_property(
+          "type",
+          &ExpressionAtomStruct::type,
+          &ExpressionAtomStruct::set_type,
+          "plus$, minum$, sin$, cos$, etc. To convert to string use: expression_op_name"
+      )
       .def_property("value", &ExpressionAtomStruct::value, &ExpressionAtomStruct::set_value)
       .def_static(
           "new_array1d",
@@ -810,15 +981,19 @@ void init_expression_tree_struct(py::module &m, py::class_<ExpressionTreeStruct>
          py::arg("type") = py::none(),
          py::arg("value") = py::none()
   )
-      // ExpressionTreeStruct.name (0D_NOT_character -
       .def_property("name", &ExpressionTreeStruct::name, &ExpressionTreeStruct::set_name)
-      // ExpressionTreeStruct.type (0D_NOT_integer - plus$, minum$, sin$, cos$, etc.
-      .def_property("type", &ExpressionTreeStruct::type, &ExpressionTreeStruct::set_type)
-      // ExpressionTreeStruct.value (0D_NOT_real -
+      .def_property(
+          "type",
+          &ExpressionTreeStruct::type,
+          &ExpressionTreeStruct::set_type,
+          "plus$, minum$, sin$, cos$, etc."
+      )
       .def_property("value", &ExpressionTreeStruct::value, &ExpressionTreeStruct::set_value)
-      // ExpressionTreeStruct.node (1D_PTR_type - Child nodes. Note: Pointer used here since Ifort
-      // does not support allocatable.
-      .def_property_readonly("node", &ExpressionTreeStruct::node)
+      .def_property_readonly(
+          "node",
+          &ExpressionTreeStruct::node,
+          "Child nodes. Note: Pointer used here since Ifort does not support allocatable."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return ExpressionTreeStructAlloc1D(sz); },

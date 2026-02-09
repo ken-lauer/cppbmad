@@ -26,17 +26,11 @@ void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
          py::arg("x") = py::none(),
          py::arg("y") = py::none()
   )
-      // Mode3Struct.v (2D_NOT_real -
       .def_property("v", &Mode3Struct::v, &Mode3Struct::set_v)
-      // Mode3Struct.a (0D_NOT_type -
       .def_property("a", &Mode3Struct::a, &Mode3Struct::set_a)
-      // Mode3Struct.b (0D_NOT_type -
       .def_property("b", &Mode3Struct::b, &Mode3Struct::set_b)
-      // Mode3Struct.c (0D_NOT_type -
       .def_property("c", &Mode3Struct::c, &Mode3Struct::set_c)
-      // Mode3Struct.x (0D_NOT_type -
       .def_property("x", &Mode3Struct::x, &Mode3Struct::set_x)
-      // Mode3Struct.y (0D_NOT_type -
       .def_property("y", &Mode3Struct::y, &Mode3Struct::set_y)
 
       .def("__repr__", [](const Mode3Struct &self) { return to_string(self); })
@@ -77,18 +71,32 @@ void init_mode_info_struct(py::module &m, py::class_<ModeInfoStruct> &cls) {
          py::arg("sigma") = py::none(),
          py::arg("sigmap") = py::none()
   )
-      // ModeInfoStruct.stable (0D_NOT_logical - Is the mode stable?
-      .def_property("stable", &ModeInfoStruct::stable, &ModeInfoStruct::set_stable)
-      // ModeInfoStruct.tune (0D_NOT_real - 'fractional' tune in radians
-      .def_property("tune", &ModeInfoStruct::tune, &ModeInfoStruct::set_tune)
-      // ModeInfoStruct.emit (0D_NOT_real - Emittance (unnormalized).
-      .def_property("emit", &ModeInfoStruct::emit, &ModeInfoStruct::set_emit)
-      // ModeInfoStruct.chrom (0D_NOT_real - Chromaticity.
-      .def_property("chrom", &ModeInfoStruct::chrom, &ModeInfoStruct::set_chrom)
-      // ModeInfoStruct.sigma (0D_NOT_real - Beam size.
-      .def_property("sigma", &ModeInfoStruct::sigma, &ModeInfoStruct::set_sigma)
-      // ModeInfoStruct.sigmap (0D_NOT_real - Beam divergence.
-      .def_property("sigmap", &ModeInfoStruct::sigmap, &ModeInfoStruct::set_sigmap)
+      .def_property(
+          "stable",
+          &ModeInfoStruct::stable,
+          &ModeInfoStruct::set_stable,
+          "Is the mode stable?"
+      )
+      .def_property(
+          "tune",
+          &ModeInfoStruct::tune,
+          &ModeInfoStruct::set_tune,
+          "'fractional' tune in radians"
+      )
+      .def_property(
+          "emit",
+          &ModeInfoStruct::emit,
+          &ModeInfoStruct::set_emit,
+          "Emittance (unnormalized)."
+      )
+      .def_property("chrom", &ModeInfoStruct::chrom, &ModeInfoStruct::set_chrom, "Chromaticity.")
+      .def_property("sigma", &ModeInfoStruct::sigma, &ModeInfoStruct::set_sigma, "Beam size.")
+      .def_property(
+          "sigmap",
+          &ModeInfoStruct::sigmap,
+          &ModeInfoStruct::set_sigmap,
+          "Beam divergence."
+      )
 
       .def("__repr__", [](const ModeInfoStruct &self) { return to_string(self); })
 
@@ -128,18 +136,32 @@ void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
          py::arg("p0c") = py::none(),
          py::arg("particle") = py::none()
   )
-      // MadEnergyStruct.total (0D_NOT_real -
       .def_property("total", &MadEnergyStruct::total, &MadEnergyStruct::set_total)
-      // MadEnergyStruct.beta (0D_NOT_real - normalized velocity: v/c
-      .def_property("beta", &MadEnergyStruct::beta, &MadEnergyStruct::set_beta)
-      // MadEnergyStruct.gamma (0D_NOT_real - relativistic factor: 1/sqrt(1-beta^2)
-      .def_property("gamma", &MadEnergyStruct::gamma, &MadEnergyStruct::set_gamma)
-      // MadEnergyStruct.kinetic (0D_NOT_real - kinetic energy
-      .def_property("kinetic", &MadEnergyStruct::kinetic, &MadEnergyStruct::set_kinetic)
-      // MadEnergyStruct.p0c (0D_NOT_real - particle momentum
-      .def_property("p0c", &MadEnergyStruct::p0c, &MadEnergyStruct::set_p0c)
-      // MadEnergyStruct.particle (0D_NOT_integer - particle species
-      .def_property("particle", &MadEnergyStruct::particle, &MadEnergyStruct::set_particle)
+      .def_property(
+          "beta",
+          &MadEnergyStruct::beta,
+          &MadEnergyStruct::set_beta,
+          "normalized velocity: v/c"
+      )
+      .def_property(
+          "gamma",
+          &MadEnergyStruct::gamma,
+          &MadEnergyStruct::set_gamma,
+          "relativistic factor: 1/sqrt(1-beta^2)"
+      )
+      .def_property(
+          "kinetic",
+          &MadEnergyStruct::kinetic,
+          &MadEnergyStruct::set_kinetic,
+          "kinetic energy"
+      )
+      .def_property("p0c", &MadEnergyStruct::p0c, &MadEnergyStruct::set_p0c, "particle momentum")
+      .def_property(
+          "particle",
+          &MadEnergyStruct::particle,
+          &MadEnergyStruct::set_particle,
+          "particle species"
+      )
 
       .def("__repr__", [](const MadEnergyStruct &self) { return to_string(self); })
 
@@ -173,12 +195,9 @@ void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
          py::arg("r") = py::none(),
          py::arg("t") = py::none()
   )
-      // MadMapStruct.k (1D_NOT_real - 0th order map.
-      .def_property("k", &MadMapStruct::k, &MadMapStruct::set_k)
-      // MadMapStruct.r (2D_NOT_real - 1st order map.
-      .def_property("r", &MadMapStruct::r, &MadMapStruct::set_r)
-      // MadMapStruct.t (3D_NOT_real - 2nd order map.
-      .def_property("t", &MadMapStruct::t, &MadMapStruct::set_t)
+      .def_property("k", &MadMapStruct::k, &MadMapStruct::set_k, "0th order map.")
+      .def_property("r", &MadMapStruct::r, &MadMapStruct::set_r, "1st order map.")
+      .def_property("t", &MadMapStruct::t, &MadMapStruct::set_t, "2nd order map.")
 
       .def("__repr__", [](const MadMapStruct &self) { return to_string(self); })
 

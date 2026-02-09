@@ -292,7 +292,9 @@ class AllEncompassingStruct:
         ...
     @property
     def complex_dp_3d_alloc(self) -> ComplexArray3D:
-        ...
+        """
+        Integer
+        """
     @complex_dp_3d_alloc.setter
     def complex_dp_3d_alloc(self, arg1: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[complex]]]) -> None:
         ...
@@ -358,7 +360,9 @@ class AllEncompassingStruct:
         ...
     @property
     def int8_3d_alloc(self) -> Int8Array3D:
-        ...
+        """
+        logical
+        """
     @int8_3d_alloc.setter
     def int8_3d_alloc(self, arg1: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]]]) -> None:
         ...
@@ -424,7 +428,9 @@ class AllEncompassingStruct:
         ...
     @property
     def int_3d_alloc(self) -> IntArray3D:
-        ...
+        """
+        Integer8
+        """
     @int_3d_alloc.setter
     def int_3d_alloc(self, arg1: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt]]]) -> None:
         ...
@@ -448,7 +454,9 @@ class AllEncompassingStruct:
         ...
     @property
     def logical_1d_ptr(self) -> BoolArray1D:
-        ...
+        """
+        logical, pointer :: logical_2d_ptr(:,:) logical, pointer :: logical_3d_ptr(:,:,:) logical, allocatable :: logical_1d_alloc(:) logical, allocatable :: logical_2d_alloc(:,:) logical, allocatable :: logical_3d_alloc(:,:,:) type
+        """
     @logical_1d_ptr.setter
     def logical_1d_ptr(self, arg1: collections.abc.Sequence[bool]) -> None:
         ...
@@ -520,7 +528,9 @@ class AllEncompassingStruct:
         ...
     @property
     def real_dp_3d_alloc(self) -> RealArray3D:
-        ...
+        """
+        complex(dp)
+        """
     @real_dp_3d_alloc.setter
     def real_dp_3d_alloc(self, arg1: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]]) -> None:
         ...
@@ -586,7 +596,9 @@ class AllEncompassingStruct:
         ...
     @property
     def real_rp_3d_alloc(self) -> RealArray3D:
-        ...
+        """
+        Real(dp)
+        """
     @real_rp_3d_alloc.setter
     def real_rp_3d_alloc(self, arg1: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]]) -> None:
         ...
@@ -643,43 +655,57 @@ class AnormalModeStruct:
         ...
     @property
     def alpha_damp(self) -> float:
-        ...
+        """
+        damping per turn
+        """
     @alpha_damp.setter
     def alpha_damp(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def chrom(self) -> float:
-        ...
+        """
+        Chromaticity
+        """
     @chrom.setter
     def chrom(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def emittance(self) -> float:
-        ...
+        """
+        Beam emittance (unnormalized). Includes vertical photon opening angle.
+        """
     @emittance.setter
     def emittance(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def emittance_no_vert(self) -> float:
-        ...
+        """
+        Unnormalized beam emittance without the vertical photon opening angle taken into account.
+        """
     @emittance_no_vert.setter
     def emittance_no_vert(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def j_damp(self) -> float:
-        ...
+        """
+        damping partition number
+        """
     @j_damp.setter
     def j_damp(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def synch_int(self) -> RealArray1D:
-        ...
+        """
+        Synchrotron integrals
+        """
     @synch_int.setter
     def synch_int(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def tune(self) -> float:
-        ...
+        """
+        'Fractional' tune in radians
+        """
     @tune.setter
     def tune(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -687,7 +713,6 @@ class ApertureParamStruct:
     """
     Fortran struct: aperture_param_struct
     """
-    start_ele: str
     def __copy__(self) -> ApertureParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ApertureParamStruct:
@@ -698,7 +723,9 @@ class ApertureParamStruct:
         ...
     @property
     def abs_accuracy(self) -> float:
-        ...
+        """
+        Absolute resolution of bracketed aperture (meters).
+        """
     @abs_accuracy.setter
     def abs_accuracy(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -722,25 +749,41 @@ class ApertureParamStruct:
         ...
     @property
     def n_turn(self) -> int:
-        ...
+        """
+        Number of turns a particle must survive.
+        """
     @n_turn.setter
     def n_turn(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def rel_accuracy(self) -> float:
-        ...
+        """
+        Relative resolution of bracketed aperture.
+        """
     @rel_accuracy.setter
     def rel_accuracy(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def x_init(self) -> float:
+    def start_ele(self) -> str:
+        """
+        Element to start tracking at.
+        """
+    @start_ele.setter
+    def start_ele(self, arg1: str) -> None:
         ...
+    @property
+    def x_init(self) -> float:
+        """
+        Initial x coordinate to start with for theta_xy = 0.
+        """
     @x_init.setter
     def x_init(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y_init(self) -> float:
-        ...
+        """
+        Initial y coordinate to start with for theta_xy = pi/2.
+        """
     @y_init.setter
     def y_init(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -764,31 +807,41 @@ class AperturePointStruct:
         ...
     @property
     def i_turn(self) -> int:
-        ...
+        """
+        turn particle lost at
+        """
     @i_turn.setter
     def i_turn(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        ele index particle lost at
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def plane(self) -> int:
-        ...
+        """
+        plane determining loss
+        """
     @plane.setter
     def plane(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def x(self) -> float:
-        ...
+        """
+        (x,y) aperture point with respect to the reference orbit.
+        """
     @x.setter
     def x(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y(self) -> float:
-        ...
+        """
+        (x,y) aperture point with respect to the reference orbit.
+        """
     @y.setter
     def y(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -842,7 +895,6 @@ class ApertureScanStruct:
     """
     Fortran struct: aperture_scan_struct
     """
-    ref_orb: CoordStruct
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -859,12 +911,24 @@ class ApertureScanStruct:
         ...
     @property
     def point(self) -> AperturePointStructAlloc1D:
-        ...
+        """
+        Set of aperture points at different angles.
+        """
     @property
     def pz_start(self) -> float:
-        ...
+        """
+        Starting pz.
+        """
     @pz_start.setter
     def pz_start(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def ref_orb(self) -> CoordStruct:
+        """
+        Ref orbit around which the scan is made.
+        """
+    @ref_orb.setter
+    def ref_orb(self, arg1: CoordStruct) -> None:
         ...
 class ApertureScanStructAlloc1D:
     @typing.overload
@@ -1027,7 +1091,9 @@ class BbuBeamStruct:
         ...
     @property
     def bunch(self) -> BunchStructAlloc1D:
-        ...
+        """
+        Bunches in the lattice
+        """
     @property
     def hom_voltage_max(self) -> float:
         ...
@@ -1036,19 +1102,25 @@ class BbuBeamStruct:
         ...
     @property
     def ix_bunch_end(self) -> int:
-        ...
+        """
+        Index of the end bunch(:). -1 -> no bunches.
+        """
     @ix_bunch_end.setter
     def ix_bunch_end(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_bunch_head(self) -> int:
-        ...
+        """
+        Index to head bunch(:)
+        """
     @ix_bunch_head.setter
     def ix_bunch_head(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele_bunch(self) -> IntAlloc1D:
-        ...
+        """
+        element where bunch is
+        """
     @ix_ele_bunch.setter
     def ix_ele_bunch(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
@@ -1060,7 +1132,9 @@ class BbuBeamStruct:
         ...
     @property
     def n_bunch_in_lat(self) -> int:
-        ...
+        """
+        Number of bunches transversing the lattice.
+        """
     @n_bunch_in_lat.setter
     def n_bunch_in_lat(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -1089,24 +1163,9 @@ class BbuParamStruct:
     """
     Fortran struct: bbu_param_struct
     """
-    bunch_by_bunch_info_file: str
-    drscan: bool
     ele_track_end: str
-    elname: str
-    hybridize: bool
-    keep_all_lcavities: bool
-    keep_overlays_and_groups: bool
-    lat2_filename: str
-    lat_filename: str
-    normalize_z_to_rf: bool
     ramp_on: bool
-    regression: bool
-    stable_orbit_anal: bool
     use_interpolated_threshold: bool
-    use_taylor_for_hybrids: bool
-    write_digested_hybrid_lat: bool
-    write_hom_info: bool
-    write_voltage_vs_time_dat: bool
     def __copy__(self) -> BbuParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BbuParamStruct:
@@ -1117,21 +1176,43 @@ class BbuParamStruct:
         ...
     @property
     def begdr(self) -> float:
-        ...
+        """
+        Beginning DR value for DRSCAN.
+        """
     @begdr.setter
     def begdr(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def bunch_freq(self) -> float:
+    def bunch_by_bunch_info_file(self) -> str:
+        """
+        For outputting bunch-by-bunch info.
+        """
+    @bunch_by_bunch_info_file.setter
+    def bunch_by_bunch_info_file(self, arg1: str) -> None:
         ...
+    @property
+    def bunch_freq(self) -> float:
+        """
+        Freq in Hz.
+        """
     @bunch_freq.setter
     def bunch_freq(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def current(self) -> float:
-        ...
+        """
+        Starting current (amps)
+        """
     @current.setter
     def current(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def drscan(self) -> bool:
+        """
+        If true, scan DR variable as in PRSTAB 7 (2004) Fig. 3.
+        """
+    @drscan.setter
+    def drscan(self, arg1: bool) -> None:
         ...
     @property
     def elindex(self) -> int:
@@ -1140,56 +1221,130 @@ class BbuParamStruct:
     def elindex(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def enddr(self) -> float:
+    def elname(self) -> str:
+        """
+        Element to step length for DRSCAN
+        """
+    @elname.setter
+    def elname(self, arg1: str) -> None:
         ...
+    @property
+    def enddr(self) -> float:
+        """
+        End DR value for DRSCAN.
+        """
     @enddr.setter
     def enddr(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def hom_order_cutoff(self) -> int:
-        ...
+        """
+        If positive -> ignore HOM's with order greater than this.
+        """
     @hom_order_cutoff.setter
     def hom_order_cutoff(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def init_particle_offset(self) -> float:
+    def hybridize(self) -> bool:
+        """
+        Combine non-hom elements to speed up simulation?
+        """
+    @hybridize.setter
+    def hybridize(self, arg1: bool) -> None:
         ...
+    @property
+    def init_particle_offset(self) -> float:
+        """
+        Initial particle offset for particles born in the first turn period.
+        """
     @init_particle_offset.setter
     def init_particle_offset(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ix_ele_track_end(self) -> int:
-        ...
+        """
+        Default: set to last element with a wake
+        """
     @ix_ele_track_end.setter
     def ix_ele_track_end(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def limit_factor(self) -> float:
+    def keep_all_lcavities(self) -> bool:
+        """
+        Keep when hybridizing?
+        """
+    @keep_all_lcavities.setter
+    def keep_all_lcavities(self, arg1: bool) -> None:
         ...
+    @property
+    def keep_overlays_and_groups(self) -> bool:
+        """
+        Keep when hybridizing?
+        """
+    @keep_overlays_and_groups.setter
+    def keep_overlays_and_groups(self, arg1: bool) -> None:
+        ...
+    @property
+    def lat2_filename(self) -> str:
+        """
+        Bmad lattice2 file name for secondary parser
+        """
+    @lat2_filename.setter
+    def lat2_filename(self, arg1: str) -> None:
+        ...
+    @property
+    def lat_filename(self) -> str:
+        """
+        Bmad lattice file name
+        """
+    @lat_filename.setter
+    def lat_filename(self, arg1: str) -> None:
+        ...
+    @property
+    def limit_factor(self) -> float:
+        """
+        Init_hom_amp * limit_factor = simulation unstable limit
+        """
     @limit_factor.setter
     def limit_factor(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def n_ramp_pattern(self) -> int:
-        ...
+        """
+        Number of valid ramp_pattern
+        """
     @n_ramp_pattern.setter
     def n_ramp_pattern(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def nrep(self) -> int:
+    def normalize_z_to_rf(self) -> bool:
+        """
+        make starting z = mod(z, rf_wavelength)? Ramp parameters
+        """
+    @normalize_z_to_rf.setter
+    def normalize_z_to_rf(self, arg1: bool) -> None:
         ...
+    @property
+    def nrep(self) -> int:
+        """
+        Number of times to repeat threshold calculation
+        """
     @nrep.setter
     def nrep(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def nstep(self) -> int:
-        ...
+        """
+        Number of steps for DRSCAN.
+        """
     @nstep.setter
     def nstep(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ramp_n_start(self) -> int:
-        ...
+        """
+        Index of start of ramp Internal parameters
+        """
     @ramp_n_start.setter
     def ramp_n_start(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -1207,21 +1362,75 @@ class BbuParamStruct:
         ...
     @property
     def ran_seed(self) -> int:
-        ...
+        """
+        If set to 0, the output results will vary from run to run.
+        """
     @ran_seed.setter
     def ran_seed(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def rel_tol(self) -> float:
+    def regression(self) -> bool:
+        """
+        Do regression test?
+        """
+    @regression.setter
+    def regression(self, arg1: bool) -> None:
         ...
+    @property
+    def rel_tol(self) -> float:
+        """
+        Final threshold current accuracy.
+        """
     @rel_tol.setter
     def rel_tol(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def simulation_turns_max(self) -> float:
-        ...
+        """
+        Sets the duration of the simulation.
+        """
     @simulation_turns_max.setter
     def simulation_turns_max(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def stable_orbit_anal(self) -> bool:
+        """
+        Write stable_orbit.out and hom_voltage.out?
+        """
+    @stable_orbit_anal.setter
+    def stable_orbit_anal(self, arg1: bool) -> None:
+        ...
+    @property
+    def use_taylor_for_hybrids(self) -> bool:
+        """
+        Use taylor map for hybrids when true. Otherwise tracking method is linear.
+        """
+    @use_taylor_for_hybrids.setter
+    def use_taylor_for_hybrids(self, arg1: bool) -> None:
+        ...
+    @property
+    def write_digested_hybrid_lat(self) -> bool:
+        """
+        For debugging purposes.
+        """
+    @write_digested_hybrid_lat.setter
+    def write_digested_hybrid_lat(self, arg1: bool) -> None:
+        ...
+    @property
+    def write_hom_info(self) -> bool:
+        """
+        Write HOM parameters to main output file?
+        """
+    @write_hom_info.setter
+    def write_hom_info(self, arg1: bool) -> None:
+        ...
+    @property
+    def write_voltage_vs_time_dat(self) -> bool:
+        """
+        For debugging purposes.
+        """
+    @write_voltage_vs_time_dat.setter
+    def write_voltage_vs_time_dat(self, arg1: bool) -> None:
         ...
 class BbuStageStruct:
     """
@@ -1255,13 +1464,17 @@ class BbuStageStruct:
         ...
     @property
     def ix_ele_lr_wake(self) -> int:
-        ...
+        """
+        Element index of element with the wake
+        """
     @ix_ele_lr_wake.setter
     def ix_ele_lr_wake(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele_stage_end(self) -> int:
-        ...
+        """
+        Element at end of stage.
+        """
     @ix_ele_stage_end.setter
     def ix_ele_stage_end(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -1279,13 +1492,17 @@ class BbuStageStruct:
         ...
     @property
     def ix_pass(self) -> int:
-        ...
+        """
+        Pass index when in multipass section
+        """
     @ix_pass.setter
     def ix_pass(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_stage_pass1(self) -> int:
-        ...
+        """
+        Index of corresponding stage on first pass
+        """
     @ix_stage_pass1.setter
     def ix_stage_pass1(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -1403,18 +1620,6 @@ class BeamInitStruct:
     """
     Fortran struct: beam_init_struct
     """
-    KV: KvBeamInitStruct
-    file_name: str
-    full_6D_coupling_calc: bool
-    position_file: str
-    random_engine: str
-    random_gauss_converter: str
-    renorm_center: bool
-    renorm_sigma: bool
-    species: str
-    use_particle_start: bool
-    use_t_coords: bool
-    use_z_as_t: bool
     def __copy__(self) -> BeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BeamInitStruct:
@@ -1424,133 +1629,275 @@ class BeamInitStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def a_emit(self) -> float:
+    def KV(self) -> KvBeamInitStruct:
+        """
+        KV beam distribution
+        """
+    @KV.setter
+    def KV(self, arg1: KvBeamInitStruct) -> None:
         ...
+    @property
+    def a_emit(self) -> float:
+        """
+        a-mode emittance
+        """
     @a_emit.setter
     def a_emit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def a_norm_emit(self) -> float:
-        ...
+        """
+        a-mode normalized emittance (emit * beta * gamma)
+        """
     @a_norm_emit.setter
     def a_norm_emit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def b_emit(self) -> float:
-        ...
+        """
+        b-mode emittance
+        """
     @b_emit.setter
     def b_emit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def b_norm_emit(self) -> float:
-        ...
+        """
+        b-mode normalized emittance (emit * beta * gamma)
+        """
     @b_norm_emit.setter
     def b_norm_emit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def bunch_charge(self) -> float:
-        ...
+        """
+        charge (Coul) in a bunch.
+        """
     @bunch_charge.setter
     def bunch_charge(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def center(self) -> RealArray1D:
-        ...
+        """
+        Bench phase space center offset relative to reference.
+        """
     @center.setter
     def center(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def center_jitter(self) -> RealArray1D:
-        ...
+        """
+        Bunch center rms jitter
+        """
     @center_jitter.setter
     def center_jitter(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def dPz_dz(self) -> float:
-        ...
+        """
+        Correlation of Pz with long position.
+        """
     @dPz_dz.setter
     def dPz_dz(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def distribution_type(self) -> FCharArray1D:
-        ...
+        """
+        distribution type (in x-px, y-py, and z-pz planes) 'ELLIPSE', 'KV', 'GRID', 'FILE', 'RAN_GAUSS' or '' = 'RAN_GAUSS'
+        """
     @property
     def dt_bunch(self) -> float:
-        ...
+        """
+        Time between bunches.
+        """
     @dt_bunch.setter
     def dt_bunch(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ellipse(self) -> EllipseBeamInitStructArray1D:
-        ...
+        """
+        Ellipse beam distribution
+        """
     @property
     def emit_jitter(self) -> RealArray1D:
-        ...
+        """
+        a and b bunch emittance rms jitter normalized to emittance
+        """
     @emit_jitter.setter
     def emit_jitter(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def grid(self) -> GridBeamInitStructArray1D:
+    def file_name(self) -> str:
+        """
+        OLD!! DO NOT USE!!
+        """
+    @file_name.setter
+    def file_name(self, arg1: str) -> None:
         ...
     @property
-    def ix_turn(self) -> int:
+    def full_6D_coupling_calc(self) -> bool:
+        """
+        Use V from 6x6 1-turn mat to match distribution? Else use 4x4 1-turn mat used.
+        """
+    @full_6D_coupling_calc.setter
+    def full_6D_coupling_calc(self, arg1: bool) -> None:
         ...
+    @property
+    def grid(self) -> GridBeamInitStructArray1D:
+        """
+        Grid beam distribution
+        """
+    @property
+    def ix_turn(self) -> int:
+        """
+        Turn index used to adjust particles time if needed.
+        """
     @ix_turn.setter
     def ix_turn(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_bunch(self) -> int:
-        ...
+        """
+        Number of bunches.
+        """
     @n_bunch.setter
     def n_bunch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_particle(self) -> int:
-        ...
+        """
+        Number of particles per bunch.
+        """
     @n_particle.setter
     def n_particle(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def random_sigma_cutoff(self) -> float:
+    def position_file(self) -> str:
+        """
+        File with particle positions.
+        """
+    @position_file.setter
+    def position_file(self, arg1: str) -> None:
         ...
+    @property
+    def random_engine(self) -> str:
+        """
+        Or 'quasi'. Random number engine to use.
+        """
+    @random_engine.setter
+    def random_engine(self, arg1: str) -> None:
+        ...
+    @property
+    def random_gauss_converter(self) -> str:
+        """
+        Or 'quick'. Uniform to gauss conversion method.
+        """
+    @random_gauss_converter.setter
+    def random_gauss_converter(self, arg1: str) -> None:
+        ...
+    @property
+    def random_sigma_cutoff(self) -> float:
+        """
+        Cut-off in sigmas.
+        """
     @random_sigma_cutoff.setter
     def random_sigma_cutoff(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def sig_pz(self) -> float:
+    def renorm_center(self) -> bool:
+        """
+        Renormalize centroid?
+        """
+    @renorm_center.setter
+    def renorm_center(self, arg1: bool) -> None:
         ...
+    @property
+    def renorm_sigma(self) -> bool:
+        """
+        Renormalize sigma?
+        """
+    @renorm_sigma.setter
+    def renorm_sigma(self, arg1: bool) -> None:
+        ...
+    @property
+    def sig_pz(self) -> float:
+        """
+        pz sigma
+        """
     @sig_pz.setter
     def sig_pz(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sig_pz_jitter(self) -> float:
-        ...
+        """
+        RMS pz spread jitter
+        """
     @sig_pz_jitter.setter
     def sig_pz_jitter(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sig_z(self) -> float:
-        ...
+        """
+        Z sigma in m.
+        """
     @sig_z.setter
     def sig_z(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sig_z_jitter(self) -> float:
-        ...
+        """
+        bunch length RMS jitter
+        """
     @sig_z_jitter.setter
     def sig_z_jitter(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def spin(self) -> RealArray1D:
+    def species(self) -> str:
+        """
+        'positron', etc. '' => use referece particle.
+        """
+    @species.setter
+    def species(self, arg1: str) -> None:
         ...
+    @property
+    def spin(self) -> RealArray1D:
+        """
+        Spin (x, y, z)
+        """
     @spin.setter
     def spin(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def t_offset(self) -> float:
-        ...
+        """
+        Time center offset
+        """
     @t_offset.setter
     def t_offset(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def use_particle_start(self) -> bool:
+        """
+        Use lat%particle_start instead of beam_init%center, %t_offset, and %spin?
+        """
+    @use_particle_start.setter
+    def use_particle_start(self, arg1: bool) -> None:
+        ...
+    @property
+    def use_t_coords(self) -> bool:
+        """
+        If true, the distributions will be taken as in t-coordinates
+        """
+    @use_t_coords.setter
+    def use_t_coords(self, arg1: bool) -> None:
+        ...
+    @property
+    def use_z_as_t(self) -> bool:
+        """
+        Only used if  use_t_coords = .true. If true,  z describes the t distribution If false, z describes the s distribution
+        """
+    @use_z_as_t.setter
+    def use_z_as_t(self, arg1: bool) -> None:
         ...
 class BeamStruct:
     """
@@ -1618,13 +1965,17 @@ class BicubicCmplxCoefStruct:
         ...
     @property
     def coef(self) -> ComplexArray2D:
-        ...
+        """
+        Coefs
+        """
     @coef.setter
     def coef(self, arg1: collections.abc.Sequence[collections.abc.Sequence[complex]]) -> None:
         ...
     @property
     def i_box(self) -> IntArray1D:
-        ...
+        """
+        index at lower box corner.
+        """
     @i_box.setter
     def i_box(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
@@ -1690,25 +2041,6 @@ class BmadCommonStruct:
     """
     Fortran struct: bmad_common_struct
     """
-    absolute_time_ref_shift: bool
-    absolute_time_tracking: bool
-    aperture_limit_on: bool
-    auto_bookkeeper: bool
-    conserve_taylor_maps: bool
-    convert_to_kinetic_momentum: bool
-    csr_and_space_charge_on: bool
-    debug: bool
-    high_energy_space_charge_on: bool
-    lr_wakes_on: bool
-    normalize_twiss: bool
-    radiation_damping_on: bool
-    radiation_fluctuations_on: bool
-    radiation_zero_average: bool
-    rf_phase_below_transition_ref: bool
-    spin_n0_direction_user_set: bool
-    spin_sokolov_ternov_flipping_on: bool
-    spin_tracking_on: bool
-    sr_wakes_on: bool
     def __copy__(self) -> BmadCommonStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BmadCommonStruct:
@@ -1719,139 +2051,337 @@ class BmadCommonStruct:
         ...
     @property
     def abs_tol_adaptive_tracking(self) -> float:
-        ...
+        """
+        Runge-Kutta tracking absolute tolerance.
+        """
     @abs_tol_adaptive_tracking.setter
     def abs_tol_adaptive_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def abs_tol_tracking(self) -> float:
-        ...
+        """
+        Closed orbit absolute tolerance.
+        """
     @abs_tol_tracking.setter
     def abs_tol_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def autoscale_amp_abs_tol(self) -> float:
+    def absolute_time_ref_shift(self) -> bool:
+        """
+        Apply reference time shift when using absolute time tracking?
+        """
+    @absolute_time_ref_shift.setter
+    def absolute_time_ref_shift(self, arg1: bool) -> None:
         ...
+    @property
+    def absolute_time_tracking(self) -> bool:
+        """
+        Absolute or relative time tracking?
+        """
+    @absolute_time_tracking.setter
+    def absolute_time_tracking(self, arg1: bool) -> None:
+        ...
+    @property
+    def aperture_limit_on(self) -> bool:
+        """
+        Use apertures in tracking?
+        """
+    @aperture_limit_on.setter
+    def aperture_limit_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def auto_bookkeeper(self) -> bool:
+        """
+        Deprecated and no longer used.
+        """
+    @auto_bookkeeper.setter
+    def auto_bookkeeper(self, arg1: bool) -> None:
+        ...
+    @property
+    def autoscale_amp_abs_tol(self) -> float:
+        """
+        Autoscale absolute amplitude tolerance (eV).
+        """
     @autoscale_amp_abs_tol.setter
     def autoscale_amp_abs_tol(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def autoscale_amp_rel_tol(self) -> float:
-        ...
+        """
+        Autoscale relative amplitude tolerance
+        """
     @autoscale_amp_rel_tol.setter
     def autoscale_amp_rel_tol(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def autoscale_phase_tol(self) -> float:
-        ...
+        """
+        Autoscale phase tolerance.
+        """
     @autoscale_phase_tol.setter
     def autoscale_phase_tol(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def d_orb(self) -> RealArray1D:
+    def conserve_taylor_maps(self) -> bool:
+        """
+        Enable bookkeeper to set ele%taylor_map_includes_offsets = F?
+        """
+    @conserve_taylor_maps.setter
+    def conserve_taylor_maps(self, arg1: bool) -> None:
         ...
+    @property
+    def convert_to_kinetic_momentum(self) -> bool:
+        """
+        Cancel kicks due to finite vector potential when doing symplectic tracking? Set to True to test symp_lie_bmad against runge_kutta.
+        """
+    @convert_to_kinetic_momentum.setter
+    def convert_to_kinetic_momentum(self, arg1: bool) -> None:
+        ...
+    @property
+    def csr_and_space_charge_on(self) -> bool:
+        """
+        Space charge switch.
+        """
+    @csr_and_space_charge_on.setter
+    def csr_and_space_charge_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def d_orb(self) -> RealArray1D:
+        """
+        Orbit deltas for the mat6 via tracking calc.
+        """
     @d_orb.setter
     def d_orb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def default_ds_step(self) -> float:
+    def debug(self) -> bool:
+        """
+        Used for code debugging.
+        """
+    @debug.setter
+    def debug(self, arg1: bool) -> None:
         ...
+    @property
+    def default_ds_step(self) -> float:
+        """
+        Default integration step for eles without an explicit step calc.
+        """
     @default_ds_step.setter
     def default_ds_step(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def default_integ_order(self) -> int:
-        ...
+        """
+        PTC integration order.
+        """
     @default_integ_order.setter
     def default_integ_order(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def electric_dipole_moment(self) -> float:
-        ...
+        """
+        Particle's EDM. Call set_ptc to transfer value to PTC.
+        """
     @electric_dipole_moment.setter
     def electric_dipole_moment(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def fatal_ds_adaptive_tracking(self) -> float:
-        ...
+        """
+        If actual step size is below this particle is lost.
+        """
     @fatal_ds_adaptive_tracking.setter
     def fatal_ds_adaptive_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def init_ds_adaptive_tracking(self) -> float:
+    def high_energy_space_charge_on(self) -> bool:
+        """
+        High energy space charge effect switch.
+        """
+    @high_energy_space_charge_on.setter
+    def high_energy_space_charge_on(self, arg1: bool) -> None:
         ...
+    @property
+    def init_ds_adaptive_tracking(self) -> float:
+        """
+        Initial step size
+        """
     @init_ds_adaptive_tracking.setter
     def init_ds_adaptive_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def max_aperture_limit(self) -> float:
+    def lr_wakes_on(self) -> bool:
+        """
+        Long range wakefields
+        """
+    @lr_wakes_on.setter
+    def lr_wakes_on(self, arg1: bool) -> None:
         ...
+    @property
+    def max_aperture_limit(self) -> float:
+        """
+        Max Aperture.
+        """
     @max_aperture_limit.setter
     def max_aperture_limit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def max_num_runge_kutta_step(self) -> int:
-        ...
+        """
+        Maximum number of RK steps before particle is considered lost.
+        """
     @max_num_runge_kutta_step.setter
     def max_num_runge_kutta_step(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def min_ds_adaptive_tracking(self) -> float:
-        ...
+        """
+        Min step size to take.
+        """
     @min_ds_adaptive_tracking.setter
     def min_ds_adaptive_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def rel_tol_adaptive_tracking(self) -> float:
+    def normalize_twiss(self) -> bool:
+        """
+        Normalize matrix when computing Twiss for off-energy ref?
+        """
+    @normalize_twiss.setter
+    def normalize_twiss(self, arg1: bool) -> None:
         ...
+    @property
+    def radiation_damping_on(self) -> bool:
+        """
+        Radiation damping toggle.
+        """
+    @radiation_damping_on.setter
+    def radiation_damping_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def radiation_fluctuations_on(self) -> bool:
+        """
+        Radiation fluctuations toggle.
+        """
+    @radiation_fluctuations_on.setter
+    def radiation_fluctuations_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def radiation_zero_average(self) -> bool:
+        """
+        Shift damping to be zero on the zero orbit to get rid of sawtooth?
+        """
+    @radiation_zero_average.setter
+    def radiation_zero_average(self, arg1: bool) -> None:
+        ...
+    @property
+    def rel_tol_adaptive_tracking(self) -> float:
+        """
+        Runge-Kutta tracking relative tolerance.
+        """
     @rel_tol_adaptive_tracking.setter
     def rel_tol_adaptive_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def rel_tol_tracking(self) -> float:
-        ...
+        """
+        Closed orbit relative tolerance.
+        """
     @rel_tol_tracking.setter
     def rel_tol_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def runge_kutta_order(self) -> int:
+    def rf_phase_below_transition_ref(self) -> bool:
+        """
+        Autoscale uses below transition stable point for RFCavities?
+        """
+    @rf_phase_below_transition_ref.setter
+    def rf_phase_below_transition_ref(self, arg1: bool) -> None:
         ...
+    @property
+    def runge_kutta_order(self) -> int:
+        """
+        Runge Kutta order.
+        """
     @runge_kutta_order.setter
     def runge_kutta_order(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def sad_amp_max(self) -> float:
-        ...
+        """
+        Used in sad_mult step length calc.
+        """
     @sad_amp_max.setter
     def sad_amp_max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sad_eps_scale(self) -> float:
-        ...
+        """
+        Used in sad_mult step length calc.
+        """
     @sad_eps_scale.setter
     def sad_eps_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sad_n_div_max(self) -> int:
-        ...
+        """
+        Used in sad_mult step length calc.
+        """
     @sad_n_div_max.setter
     def sad_n_div_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def significant_length(self) -> float:
-        ...
+        """
+        meter
+        """
     @significant_length.setter
     def significant_length(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def synch_rad_scale(self) -> float:
+    def spin_n0_direction_user_set(self) -> bool:
+        """
+        User sets direction of n0 for closed geometry branches?
+        """
+    @spin_n0_direction_user_set.setter
+    def spin_n0_direction_user_set(self, arg1: bool) -> None:
         ...
+    @property
+    def spin_sokolov_ternov_flipping_on(self) -> bool:
+        """
+        Spin flipping during synchrotron radiation emission?
+        """
+    @spin_sokolov_ternov_flipping_on.setter
+    def spin_sokolov_ternov_flipping_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def spin_tracking_on(self) -> bool:
+        """
+        spin tracking?
+        """
+    @spin_tracking_on.setter
+    def spin_tracking_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def sr_wakes_on(self) -> bool:
+        """
+        Short range wakefields?
+        """
+    @sr_wakes_on.setter
+    def sr_wakes_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def synch_rad_scale(self) -> float:
+        """
+        Synch radiation kick scale. 1 => normal, 0 => no kicks.
+        """
     @synch_rad_scale.setter
     def synch_rad_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def taylor_order(self) -> int:
-        ...
+        """
+        Taylor order to use. 0 -> default = ptc_private%taylor_order_saved.
+        """
     @taylor_order.setter
     def taylor_order(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -1869,25 +2399,39 @@ class BmadNormalFormStruct:
         ...
     @property
     def A(self) -> TaylorStructArray1D:
-        ...
+        """
+        Map from Floquet -> Lab coordinates
+        """
     @property
     def A_inv(self) -> TaylorStructArray1D:
-        ...
+        """
+        Map from Lab -> Floquet coordinates
+        """
     @property
     def F(self) -> ComplexTaylorStructArray1D:
-        ...
+        """
+        Vector field factorization in phasor basis:
+        """
     @property
     def L(self) -> ComplexTaylorStructArray1D:
-        ...
+        """
+        L component
+        """
     @property
     def M(self) -> TaylorStructArray1D:
-        ...
+        """
+        One-turn taylor map: M = A o N o A_inv, N = exp(:h:)
+        """
     @property
     def dhdj(self) -> TaylorStructArray1D:
-        ...
+        """
+        Nonlinear tune function operating on Floquet coordinates
+        """
     @property
     def ele_origin(self) -> EleStruct | None:
-        ...
+        """
+        Element at which the on-turn map was created.
+        """
     @ele_origin.setter
     def ele_origin(self, arg1: EleStruct) -> None:
         ...
@@ -1918,7 +2462,6 @@ class BookkeepingStateStruct:
     """
     Fortran struct: bookkeeping_state_struct
     """
-    has_misalign: bool
     def __copy__(self) -> BookkeepingStateStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BookkeepingStateStruct:
@@ -1929,49 +2472,73 @@ class BookkeepingStateStruct:
         ...
     @property
     def attributes(self) -> int:
-        ...
+        """
+        Element dependent attributes: super_ok$, ok$ or stale$
+        """
     @attributes.setter
     def attributes(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def control(self) -> int:
-        ...
+        """
+        Lord/slave bookkeeping status: super_ok$, ok$ or stale$
+        """
     @control.setter
     def control(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def floor_position(self) -> int:
-        ...
+        """
+        Global (floor) geometry: super_ok$, ok$ or stale$
+        """
     @floor_position.setter
     def floor_position(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def mat6(self) -> int:
+    def has_misalign(self) -> bool:
+        """
+        Used to avoid unnecessary calls to offset_particle.
+        """
+    @has_misalign.setter
+    def has_misalign(self, arg1: bool) -> None:
         ...
+    @property
+    def mat6(self) -> int:
+        """
+        Linear transfer map status: super_ok$, ok$ or stale$
+        """
     @mat6.setter
     def mat6(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ptc(self) -> int:
-        ...
+        """
+        Associated PTC fibre (or layout) status.
+        """
     @ptc.setter
     def ptc(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def rad_int(self) -> int:
-        ...
+        """
+        Radiation integrals cache status
+        """
     @rad_int.setter
     def rad_int(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ref_energy(self) -> int:
-        ...
+        """
+        Reference energy and ref time: super_ok$, ok$ or stale$
+        """
     @ref_energy.setter
     def ref_energy(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def s_position(self) -> int:
-        ...
+        """
+        Longitudinal position & element length: super_ok$, ok$ or stale$
+        """
     @s_position.setter
     def s_position(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -2091,61 +2658,81 @@ class BpmPhaseCouplingStruct:
         ...
     @property
     def Cbar11_b(self) -> float:
-        ...
+        """
+        Cbar11 as calculated from K_11b.
+        """
     @Cbar11_b.setter
     def Cbar11_b(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def Cbar12_a(self) -> float:
-        ...
+        """
+        Cbar12 as calculated from K_12a.
+        """
     @Cbar12_a.setter
     def Cbar12_a(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def Cbar12_b(self) -> float:
-        ...
+        """
+        Cbar12 as calculated from K_12b.
+        """
     @Cbar12_b.setter
     def Cbar12_b(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def Cbar22_a(self) -> float:
-        ...
+        """
+        Cbar22 as calculated from K_22a.
+        """
     @Cbar22_a.setter
     def Cbar22_a(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def K_11b(self) -> float:
-        ...
+        """
+        In-phase x/y for b-mode oscillations.
+        """
     @K_11b.setter
     def K_11b(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def K_12a(self) -> float:
-        ...
+        """
+        Out-of-phase y/x for a-mode oscillations.
+        """
     @K_12a.setter
     def K_12a(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def K_12b(self) -> float:
-        ...
+        """
+        Out-of-phase x/y for b-mode oscillations.
+        """
     @K_12b.setter
     def K_12b(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def K_22a(self) -> float:
-        ...
+        """
+        In-phase y/x for a-mode oscillations.
+        """
     @K_22a.setter
     def K_22a(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def phi_a(self) -> float:
-        ...
+        """
+        a-mode betatron phase.
+        """
     @phi_a.setter
     def phi_a(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def phi_b(self) -> float:
-        ...
+        """
+        b-mode betatron phase.
+        """
     @phi_b.setter
     def phi_b(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -2167,12 +2754,8 @@ class BranchStruct:
     """
     Fortran struct: branch_struct
     """
-    a: ModeInfoStruct
-    b: ModeInfoStruct
-    name: str
     param: LatParamStruct
     particle_start: CoordStruct
-    z: ModeInfoStruct
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -2188,35 +2771,61 @@ class BranchStruct:
     def __repr__(self) -> str:
         ...
     @property
+    def a(self) -> ModeInfoStruct:
+        """
+        Note: Tunes are the fractional part.
+        """
+    @a.setter
+    def a(self, arg1: ModeInfoStruct) -> None:
+        ...
+    @property
+    def b(self) -> ModeInfoStruct:
+        """
+        Note: Tunes are the fractional part.
+        """
+    @b.setter
+    def b(self, arg1: ModeInfoStruct) -> None:
+        ...
+    @property
     def ele(self) -> EleStructArray1D:
         ...
     @property
     def ix_branch(self) -> int:
-        ...
+        """
+        Index of this branch. 0 => Main branch
+        """
     @ix_branch.setter
     def ix_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_fixer(self) -> int:
-        ...
+        """
+        Index of active fixer or beginning_ele element.
+        """
     @ix_fixer.setter
     def ix_fixer(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_from_branch(self) -> int:
-        ...
+        """
+        -1 => No creating fork element to this branch.
+        """
     @ix_from_branch.setter
     def ix_from_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_from_ele(self) -> int:
-        ...
+        """
+        Index of creating fork element which forks to this branch.
+        """
     @ix_from_ele.setter
     def ix_from_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_to_ele(self) -> int:
-        ...
+        """
+        Index of element in this branch that creating fork element forks to.
+        """
     @ix_to_ele.setter
     def ix_to_ele(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -2239,7 +2848,23 @@ class BranchStruct:
     def n_ele_track(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
+    def name(self) -> str:
+        """
+        Name of line that defines the branch.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
+        ...
+    @property
     def wall3d(self) -> Wall3DStructArray1D:
+        ...
+    @property
+    def z(self) -> ModeInfoStruct:
+        """
+        Note: Tunes are the fractional part.
+        """
+    @z.setter
+    def z(self, arg1: ModeInfoStruct) -> None:
         ...
 class BranchStructAlloc1D:
     @typing.overload
@@ -2291,14 +2916,6 @@ class BunchParamsStruct:
     """
     Fortran struct: bunch_params_struct
     """
-    a: TwissStruct
-    b: TwissStruct
-    c: TwissStruct
-    centroid: CoordStruct
-    twiss_valid: bool
-    x: TwissStruct
-    y: TwissStruct
-    z: TwissStruct
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -2314,94 +2931,188 @@ class BunchParamsStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def charge_live(self) -> float:
+    def a(self) -> TwissStruct:
+        """
+        Normal mode twiss parameters
+        """
+    @a.setter
+    def a(self, arg1: TwissStruct) -> None:
         ...
+    @property
+    def b(self) -> TwissStruct:
+        """
+        Normal mode twiss parameters
+        """
+    @b.setter
+    def b(self, arg1: TwissStruct) -> None:
+        ...
+    @property
+    def c(self) -> TwissStruct:
+        """
+        Normal mode twiss parameters
+        """
+    @c.setter
+    def c(self, arg1: TwissStruct) -> None:
+        ...
+    @property
+    def centroid(self) -> CoordStruct:
+        """
+        Lab frame
+        """
+    @centroid.setter
+    def centroid(self, arg1: CoordStruct) -> None:
+        ...
+    @property
+    def charge_live(self) -> float:
+        """
+        Charge of all non-lost particle
+        """
     @charge_live.setter
     def charge_live(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def charge_tot(self) -> float:
-        ...
+        """
+        Charge of all particles.
+        """
     @charge_tot.setter
     def charge_tot(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        Lattice element where params evaluated at.
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def location(self) -> int:
-        ...
+        """
+        Location in element: upstream_end$, inside$, or downstream_end$
+        """
     @location.setter
     def location(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_bad_steps(self) -> int:
-        ...
+        """
+        Number of bad steps (set when tracking with space charge)
+        """
     @n_bad_steps.setter
     def n_bad_steps(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_good_steps(self) -> int:
-        ...
+        """
+        Number of good steps (set when tracking with space charge)
+        """
     @n_good_steps.setter
     def n_good_steps(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_particle_live(self) -> int:
-        ...
+        """
+        Number of non-lost particles
+        """
     @n_particle_live.setter
     def n_particle_live(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_particle_lost_in_ele(self) -> int:
-        ...
+        """
+        Number lost in element (not calculated by Bmad)
+        """
     @n_particle_lost_in_ele.setter
     def n_particle_lost_in_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_particle_tot(self) -> int:
-        ...
+        """
+        Total number of particles
+        """
     @n_particle_tot.setter
     def n_particle_tot(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def rel_max(self) -> RealArray1D:
-        ...
+        """
+        Max orbit relative to centroid. 7 -> time.
+        """
     @rel_max.setter
     def rel_max(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def rel_min(self) -> RealArray1D:
-        ...
+        """
+        Min orbit relative to_centroid. 7 -> time.
+        """
     @rel_min.setter
     def rel_min(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def s(self) -> float:
-        ...
+        """
+        Longitudinal position.
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sigma(self) -> RealArray2D:
-        ...
+        """
+        beam size matrix
+        """
     @sigma.setter
     def sigma(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def sigma_t(self) -> float:
-        ...
+        """
+        RMS of time spread.
+        """
     @sigma_t.setter
     def sigma_t(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def t(self) -> float:
-        ...
+        """
+        Time.
+        """
     @t.setter
     def t(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def twiss_valid(self) -> bool:
+        """
+        Is the data here valid? Note: IF there is no energy variation (RF off) twiss_valid may be true but in this case the z-twiss will not be valid.
+        """
+    @twiss_valid.setter
+    def twiss_valid(self, arg1: bool) -> None:
+        ...
+    @property
+    def x(self) -> TwissStruct:
+        """
+        Projected Twiss parameters
+        """
+    @x.setter
+    def x(self, arg1: TwissStruct) -> None:
+        ...
+    @property
+    def y(self) -> TwissStruct:
+        """
+        Projected Twiss parameters
+        """
+    @y.setter
+    def y(self, arg1: TwissStruct) -> None:
+        ...
+    @property
+    def z(self) -> TwissStruct:
+        """
+        Projected Twiss parameters
+        """
+    @z.setter
+    def z(self, arg1: TwissStruct) -> None:
         ...
 class BunchParamsStructAlloc1D:
     @typing.overload
@@ -2453,7 +3164,6 @@ class BunchStruct:
     """
     Fortran struct: bunch_struct
     """
-    drift_between_t_and_s: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -2470,49 +3180,73 @@ class BunchStruct:
         ...
     @property
     def charge_live(self) -> float:
-        ...
+        """
+        Charge of live particles (Coul).
+        """
     @charge_live.setter
     def charge_live(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def charge_tot(self) -> float:
-        ...
+        """
+        Total charge in a bunch (Coul).
+        """
     @charge_tot.setter
     def charge_tot(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def ix_bunch(self) -> int:
+    def drift_between_t_and_s(self) -> bool:
+        """
+        Drift (ignore any fields) instead of tracking to speed up the calculation? This can only be done under certain circumstances.
+        """
+    @drift_between_t_and_s.setter
+    def drift_between_t_and_s(self, arg1: bool) -> None:
         ...
+    @property
+    def ix_bunch(self) -> int:
+        """
+        Bunch index. Head bunch = 1, etc.
+        """
     @ix_bunch.setter
     def ix_bunch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        Nominal element bunch is at. But, EG, dead particles can be someplace else.
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_turn(self) -> int:
-        ...
+        """
+        Turn index for long term tracking. ix_turn = 0 before end of first turn, etc.
+        """
     @ix_turn.setter
     def ix_turn(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_z(self) -> IntAlloc1D:
-        ...
+        """
+        bunch%ix_z(1) is index of head particle, etc.
+        """
     @ix_z.setter
     def ix_z(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
     def n_bad(self) -> int:
-        ...
+        """
+        Number of rejected steps when using adaptive step size control.
+        """
     @n_bad.setter
     def n_bad(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_good(self) -> int:
-        ...
+        """
+        Number of accepted steps when using adaptive step size control.
+        """
     @n_good.setter
     def n_good(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -2527,19 +3261,25 @@ class BunchStruct:
         ...
     @property
     def t0(self) -> float:
-        ...
+        """
+        Used by track1_bunch_space_charge for tracking so particles have constant t.
+        """
     @t0.setter
     def t0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def t_center(self) -> float:
-        ...
+        """
+        Center of bunch at creation time relative to head bunch.
+        """
     @t_center.setter
     def t_center(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def z_center(self) -> float:
-        ...
+        """
+        Longitudinal center of bunch at creation time. Note: Generally, z_center of bunch #1 is 0 and z_center of the other bunches is negative.
+        """
     @z_center.setter
     def z_center(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -2609,19 +3349,25 @@ class BunchTrackStruct:
         ...
     @property
     def ds_save(self) -> float:
-        ...
+        """
+        Min distance between points.
+        """
     @ds_save.setter
     def ds_save(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def n_pt(self) -> int:
-        ...
+        """
+        Track upper bound
+        """
     @n_pt.setter
     def n_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def pt(self) -> BunchParamsStructAlloc1D:
-        ...
+        """
+        Array indexed from 0
+        """
 class BunchTrackStructAlloc1D:
     @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> BunchTrackStruct:
@@ -2739,25 +3485,33 @@ class CartesianMapStruct:
         ...
     @property
     def ele_anchor_pt(self) -> int:
-        ...
+        """
+        anchor_beginning$, anchor_center$, or anchor_end$
+        """
     @ele_anchor_pt.setter
     def ele_anchor_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def field_scale(self) -> float:
-        ...
+        """
+        Factor to scale the fields by
+        """
     @field_scale.setter
     def field_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def field_type(self) -> int:
-        ...
+        """
+        or electric$
+        """
     @field_type.setter
     def field_type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def master_parameter(self) -> int:
-        ...
+        """
+        Master parameter in ele%value(:) array to use for scaling the field.
+        """
     @master_parameter.setter
     def master_parameter(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -2769,7 +3523,9 @@ class CartesianMapStruct:
         ...
     @property
     def r0(self) -> RealArray1D:
-        ...
+        """
+        Field origin offset.
+        """
     @r0.setter
     def r0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -2845,13 +3601,17 @@ class CartesianMapTerm1Struct:
         ...
     @property
     def family(self) -> int:
-        ...
+        """
+        family_x$, etc.
+        """
     @family.setter
     def family(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def form(self) -> int:
-        ...
+        """
+        hyper_y$, etc.
+        """
     @form.setter
     def form(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -2941,7 +3701,6 @@ class CartesianMapTermStruct:
     """
     Fortran struct: cartesian_map_term_struct
     """
-    file: str
     def __copy__(self) -> CartesianMapTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CartesianMapTermStruct:
@@ -2951,8 +3710,18 @@ class CartesianMapTermStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def n_link(self) -> int:
+    def file(self) -> str:
+        """
+        Input file name. Used also as ID for instances.
+        """
+    @file.setter
+    def file(self, arg1: str) -> None:
         ...
+    @property
+    def n_link(self) -> int:
+        """
+        For memory management of %term
+        """
     @n_link.setter
     def n_link(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -3345,9 +4114,6 @@ class ControlRamp1Struct:
     """
     Fortran struct: control_ramp1_struct
     """
-    attribute: str
-    is_controller: bool
-    slave_name: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -3363,8 +4129,34 @@ class ControlRamp1Struct:
     def __repr__(self) -> str:
         ...
     @property
-    def stack(self) -> ExpressionAtomStructAlloc1D:
+    def attribute(self) -> str:
+        """
+        Name of attribute controlled. Set to 'FIELD_OVERLAPS' for field overlaps.
+        """
+    @attribute.setter
+    def attribute(self, arg1: str) -> None:
         ...
+    @property
+    def is_controller(self) -> bool:
+        """
+        Is the slave a controller? If so bookkeeping is different.
+        """
+    @is_controller.setter
+    def is_controller(self, arg1: bool) -> None:
+        ...
+    @property
+    def slave_name(self) -> str:
+        """
+        Name of slave.
+        """
+    @slave_name.setter
+    def slave_name(self, arg1: str) -> None:
+        ...
+    @property
+    def stack(self) -> ExpressionAtomStructAlloc1D:
+        """
+        Evaluation stack
+        """
     @property
     def y_knot(self) -> RealAlloc1D:
         ...
@@ -3421,10 +4213,8 @@ class ControlStruct:
     """
     Fortran struct: control_struct
     """
-    attribute: str
     lord: LatEleLocStruct
     slave: LatEleLocStruct
-    slave_name: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -3440,17 +4230,39 @@ class ControlStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ix_attrib(self) -> int:
+    def attribute(self) -> str:
+        """
+        Name of attribute controlled. Set to 'FIELD_OVERLAPS' for field overlaps. Set to 'INPUT' or 'OUTPUT' for feedback slaves.
+        """
+    @attribute.setter
+    def attribute(self, arg1: str) -> None:
         ...
+    @property
+    def ix_attrib(self) -> int:
+        """
+        Index of attribute controlled. See note above!
+        """
     @ix_attrib.setter
     def ix_attrib(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def stack(self) -> ExpressionAtomStructAlloc1D:
+    def slave_name(self) -> str:
+        """
+        Name of slave.
+        """
+    @slave_name.setter
+    def slave_name(self, arg1: str) -> None:
         ...
     @property
+    def stack(self) -> ExpressionAtomStructAlloc1D:
+        """
+        Evaluation stack
+        """
+    @property
     def value(self) -> float:
-        ...
+        """
+        Used by group, and overlay elements.
+        """
     @value.setter
     def value(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -3597,10 +4409,14 @@ class ControllerStruct:
         ...
     @property
     def ramp(self) -> ControlRamp1StructAlloc1D:
-        ...
+        """
+        For ramper lord elements
+        """
     @property
     def ramper_lord(self) -> RamperLordStructAlloc1D:
-        ...
+        """
+        Ramper lord info for this slave
+        """
     @property
     def var(self) -> ControlVar1StructAlloc1D:
         ...
@@ -3789,127 +4605,169 @@ class CoordStruct:
         ...
     @property
     def E_potential(self) -> float:
-        ...
+        """
+        Potential energy.
+        """
     @E_potential.setter
     def E_potential(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def beta(self) -> float:
-        ...
+        """
+        Velocity / c_light.
+        """
     @beta.setter
     def beta(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def charge(self) -> float:
-        ...
+        """
+        Macroparticle weight (which is different from particle species charge). For some space charge calcs the weight is in Coulombs.
+        """
     @charge.setter
     def charge(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def direction(self) -> int:
-        ...
+        """
+        +1 or -1. Sign of longitudinal direction of motion (ds/dt). This is independent of the element orientation.
+        """
     @direction.setter
     def direction(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def dt_ref(self) -> float:
-        ...
+        """
+        Used in: * time tracking for computing z. * by coherent photons = path_length/c_light.
+        """
     @dt_ref.setter
     def dt_ref(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def field(self) -> RealArray1D:
-        ...
+        """
+        Photon E-field intensity (x,y).
+        """
     @field.setter
     def field(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def ix_branch(self) -> int:
-        ...
+        """
+        Index of the lattice branch the particle is in.
+        """
     @ix_branch.setter
     def ix_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        Index of the lattice element the particle is in. May be -1 if element is not associated with a lattice.
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_turn(self) -> int:
-        ...
+        """
+        Turn index for multiturn tracking.
+        """
     @ix_turn.setter
     def ix_turn(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_user(self) -> int:
-        ...
+        """
+        For general use, not used by Bmad.
+        """
     @ix_user.setter
     def ix_user(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def location(self) -> int:
-        ...
+        """
+        upstream_end$, inside$, or downstream_end$
+        """
     @location.setter
     def location(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def p0c(self) -> float:
-        ...
+        """
+        For non-photons: Reference momentum. For photons: Photon momentum (not reference).
+        """
     @p0c.setter
     def p0c(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def phase(self) -> RealArray1D:
-        ...
+        """
+        Photon E-field phase (x,y). For charged particles, phase(1) is RF phase.
+        """
     @phase.setter
     def phase(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def r(self) -> float:
-        ...
+        """
+        For general use. Not used by Bmad.
+        """
     @r.setter
     def r(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def s(self) -> float:
-        ...
+        """
+        Longitudinal position
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def species(self) -> int:
-        ...
+        """
+        positron$, proton$, etc.
+        """
     @species.setter
     def species(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def spin(self) -> RealArray1D:
-        ...
+        """
+        Spin.
+        """
     @spin.setter
     def spin(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def state(self) -> int:
-        ...
+        """
+        alive$, lost$, lost_neg_x_aperture$, lost_pz$, etc.
+        """
     @state.setter
     def state(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def t(self) -> float:
-        ...
+        """
+        Absolute time (not relative to reference). Note: Quad precision!
+        """
     @t.setter
     def t(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def time_dir(self) -> int:
-        ...
+        """
+        +1 or -1. Time direction. -1 => Traveling backwards in time.
+        """
     @time_dir.setter
     def time_dir(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def vec(self) -> RealArray1D:
-        ...
+        """
+        (x, px, y, py, z, pz). Generally phase space for charged particles. See Bmad manual.
+        """
     @vec.setter
     def vec(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -4114,43 +4972,57 @@ class CylindricalMapStruct:
         ...
     @property
     def dz(self) -> float:
-        ...
+        """
+        Distance between sampled field points.
+        """
     @dz.setter
     def dz(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ele_anchor_pt(self) -> int:
-        ...
+        """
+        anchor_beginning$, anchor_center$, or anchor_end$
+        """
     @ele_anchor_pt.setter
     def ele_anchor_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def field_scale(self) -> float:
-        ...
+        """
+        Factor to scale the fields by
+        """
     @field_scale.setter
     def field_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def harmonic(self) -> int:
-        ...
+        """
+        Harmonic of fundamental
+        """
     @harmonic.setter
     def harmonic(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def m(self) -> int:
-        ...
+        """
+        Azimuthal Mode: varies as cos(m*phi - theta0_azimuth)
+        """
     @m.setter
     def m(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def master_parameter(self) -> int:
-        ...
+        """
+        Master parameter in ele%value(:) array to use for scaling the field.
+        """
     @master_parameter.setter
     def master_parameter(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def phi0_fieldmap(self) -> float:
-        ...
+        """
+        Mode oscillates as: twopi * (f * t + phi0_fieldmap)
+        """
     @phi0_fieldmap.setter
     def phi0_fieldmap(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -4162,13 +5034,17 @@ class CylindricalMapStruct:
         ...
     @property
     def r0(self) -> RealArray1D:
-        ...
+        """
+        Field origin offset.
+        """
     @r0.setter
     def r0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def theta0_azimuth(self) -> float:
-        ...
+        """
+        Azimuthal ((x, y) plane) orientation of mode.
+        """
     @theta0_azimuth.setter
     def theta0_azimuth(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -4288,7 +5164,6 @@ class CylindricalMapTermStruct:
     """
     Fortran struct: cylindrical_map_term_struct
     """
-    file: str
     def __copy__(self) -> CylindricalMapTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CylindricalMapTermStruct:
@@ -4298,8 +5173,18 @@ class CylindricalMapTermStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def n_link(self) -> int:
+    def file(self) -> str:
+        """
+        Input file name. Used also as ID for instances.
+        """
+    @file.setter
+    def file(self, arg1: str) -> None:
         ...
+    @property
+    def n_link(self) -> int:
+        """
+        For memory management of this structure
+        """
     @n_link.setter
     def n_link(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -4409,7 +5294,9 @@ class ElePointerStruct:
         ...
     @property
     def id(self) -> int:
-        ...
+        """
+        For general use. Not used by Bmad. In particular, used by Tao to designate universe ele is in.
+        """
     @id.setter
     def id(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -4463,33 +5350,7 @@ class EleStruct:
     """
     Fortran struct: ele_struct
     """
-    a: TwissStruct
-    alias: str
-    b: TwissStruct
-    bmad_logic: bool
-    bookkeeping_state: BookkeepingStateStruct
-    component_name: str
-    descrip: str
-    field_master: bool
     floor: FloorPositionStruct
-    is_on: bool
-    logic: bool
-    map_ref_orb_in: CoordStruct
-    map_ref_orb_out: CoordStruct
-    mode_flip: bool
-    multipoles_on: bool
-    name: str
-    offset_moves_aperture: bool
-    scale_multipoles: bool
-    select: bool
-    symplectify: bool
-    taylor_map_includes_offsets: bool
-    time_ref_orb_in: CoordStruct
-    time_ref_orb_out: CoordStruct
-    type: str
-    x: XyDispStruct
-    y: XyDispStruct
-    z: TwissStruct
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -4505,107 +5366,209 @@ class EleStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def a_pole(self) -> RealArray1D:
+    def a(self) -> TwissStruct:
+        """
+        Twiss parameters at end of element
+        """
+    @a.setter
+    def a(self, arg1: TwissStruct) -> None:
         ...
+    @property
+    def a_pole(self) -> RealArray1D:
+        """
+        knl for multipole elements.
+        """
     @a_pole.setter
     def a_pole(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def a_pole_elec(self) -> RealArray1D:
-        ...
+        """
+        Electrostatic multipoles. ksnl for multipole elements.
+        """
     @a_pole_elec.setter
     def a_pole_elec(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def ac_kick(self) -> AcKickerStruct | None:
-        ...
+        """
+        ac_kicker element parameters.
+        """
     @ac_kick.setter
     def ac_kick(self, arg1: AcKickerStruct) -> None:
         ...
     @property
-    def aperture_at(self) -> int:
+    def alias(self) -> str:
+        """
+        Another name.
+        """
+    @alias.setter
+    def alias(self, arg1: str) -> None:
         ...
+    @property
+    def aperture_at(self) -> int:
+        """
+        Aperture location: entrance_end$, ...
+        """
     @aperture_at.setter
     def aperture_at(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def aperture_type(self) -> int:
-        ...
+        """
+        rectangular$, elliptical$, auto_aperture$, ...
+        """
     @aperture_type.setter
     def aperture_type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def b_pole(self) -> RealArray1D:
+    def b(self) -> TwissStruct:
+        """
+        Twiss parameters at end of element
+        """
+    @b.setter
+    def b(self, arg1: TwissStruct) -> None:
         ...
+    @property
+    def b_pole(self) -> RealArray1D:
+        """
+        tilt for multipole elements.
+        """
     @b_pole.setter
     def b_pole(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def b_pole_elec(self) -> RealArray1D:
-        ...
+        """
+        Electrostatic multipoles.
+        """
     @b_pole_elec.setter
     def b_pole_elec(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def branch(self) -> BranchStruct | None:
+    def bmad_logic(self) -> bool:
+        """
+        For Bmad internal use only.
+        """
+    @bmad_logic.setter
+    def bmad_logic(self, arg1: bool) -> None:
         ...
+    @property
+    def bookkeeping_state(self) -> BookkeepingStateStruct:
+        """
+        Attribute bookkeeping
+        """
+    @bookkeeping_state.setter
+    def bookkeeping_state(self, arg1: BookkeepingStateStruct) -> None:
+        ...
+    @property
+    def branch(self) -> BranchStruct | None:
+        """
+        Pointer to branch containing element.
+        """
     @branch.setter
     def branch(self, arg1: BranchStruct) -> None:
         ...
     @property
     def c_mat(self) -> RealArray2D:
-        ...
+        """
+        2x2 C coupling matrix
+        """
     @c_mat.setter
     def c_mat(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def cartesian_map(self) -> CartesianMapStructArray1D:
+        """
+        Used to define E/M fields
+        """
+    @property
+    def component_name(self) -> str:
+        """
+        Used by overlays, multipass patch, etc.
+        """
+    @component_name.setter
+    def component_name(self, arg1: str) -> None:
         ...
     @property
     def control(self) -> ControllerStruct | None:
-        ...
+        """
+        group & overlay variables.
+        """
     @control.setter
     def control(self, arg1: ControllerStruct) -> None:
         ...
     @property
     def csr_method(self) -> int:
-        ...
+        """
+        or one_dim$ ('1_dim'), steady_state_3d$
+        """
     @csr_method.setter
     def csr_method(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def custom(self) -> RealArray1D:
-        ...
+        """
+        Custom attributes.
+        """
     @custom.setter
     def custom(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def cylindrical_map(self) -> CylindricalMapStructArray1D:
-        ...
+        """
+        Used to define E/M fields
+        """
     @property
     def dc_mat_dpz(self) -> RealArray2D:
-        ...
+        """
+        d(c_mat)/dpz variation.
+        """
     @dc_mat_dpz.setter
     def dc_mat_dpz(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
-    def field_calc(self) -> int:
+    def descrip(self) -> str:
+        """
+        Description string.
+        """
+    @descrip.setter
+    def descrip(self, arg1: str) -> None:
         ...
+    @property
+    def field_calc(self) -> int:
+        """
+        no_field$, fieldmap$, refer_to_lords$, or custom$
+        """
     @field_calc.setter
     def field_calc(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def gamma_c(self) -> float:
+    def field_master(self) -> bool:
+        """
+        Calculate strength from the field value?
+        """
+    @field_master.setter
+    def field_master(self, arg1: bool) -> None:
         ...
+    @property
+    def gamma_c(self) -> float:
+        """
+        gamma associated with C matrix
+        """
     @gamma_c.setter
     def gamma_c(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def gen_grad_map(self) -> GenGradMapStructArray1D:
-        ...
+        """
+        Used to define E/M fields.
+        """
     @property
     def grid_field(self) -> GridFieldStructArray1D:
-        ...
+        """
+        Used to define E/M fields. The difference between map_ref_orb and time_ref_orb is that map_ref_orb is the reference orbit for the 1st order spin/orbit map which, in general, is non-zero while time_ref_orb follows the reference particle which is generally the zero orbit (non-zero, for example, in the second slice of a sliced wiggler).
+        """
     @property
     def high_energy_space_charge(self) -> HighEnergySpaceChargeStruct | None:
         ...
@@ -4614,127 +5577,233 @@ class EleStruct:
         ...
     @property
     def ic1_lord(self) -> int:
-        ...
+        """
+        Pointer index to this element's lords.
+        """
     @ic1_lord.setter
     def ic1_lord(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def ix1_slave(self) -> int:
+    def is_on(self) -> bool:
+        """
+        For turning element on/off.
+        """
+    @is_on.setter
+    def is_on(self, arg1: bool) -> None:
         ...
+    @property
+    def ix1_slave(self) -> int:
+        """
+        Pointer index to this element's slaves.
+        """
     @ix1_slave.setter
     def ix1_slave(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_branch(self) -> int:
-        ...
+        """
+        Index in lat%branch(:) array. Note: lat%ele => lat%branch(0).
+        """
     @ix_branch.setter
     def ix_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        Index in branch ele(0:) array. Set to ix_slice_slave$ = -2 for slice_slave$ elements.
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_pointer(self) -> int:
-        ...
+        """
+        For general use. Not used by Bmad.
+        """
     @ix_pointer.setter
     def ix_pointer(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ixx(self) -> int:
-        ...
+        """
+        Index for Bmad internal use.
+        """
     @ixx.setter
     def ixx(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def iyy(self) -> int:
-        ...
+        """
+        Index for Bmad internal use.
+        """
     @iyy.setter
     def iyy(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def izz(self) -> int:
-        ...
+        """
+        Index for Bmad internal use.
+        """
     @izz.setter
     def izz(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def key(self) -> int:
-        ...
+        """
+        Element class (quadrupole, etc.).
+        """
     @key.setter
     def key(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def lord(self) -> EleStruct | None:
+    def logic(self) -> bool:
+        """
+        For general use. Not used by Bmad (except during lattice parsing).
+        """
+    @logic.setter
+    def logic(self, arg1: bool) -> None:
         ...
+    @property
+    def lord(self) -> EleStruct | None:
+        """
+        Pointer to a slice lord.
+        """
     @lord.setter
     def lord(self, arg1: EleStruct) -> None:
         ...
     @property
     def lord_status(self) -> int:
-        ...
+        """
+        Type of lord element this is. overlay_lord$, etc.
+        """
     @lord_status.setter
     def lord_status(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def mat6(self) -> RealArray2D:
+    def map_ref_orb_in(self) -> CoordStruct:
+        """
+        Entrance end transfer map ref orbit
+        """
+    @map_ref_orb_in.setter
+    def map_ref_orb_in(self, arg1: CoordStruct) -> None:
         ...
+    @property
+    def map_ref_orb_out(self) -> CoordStruct:
+        """
+        Exit end transfer map ref orbit
+        """
+    @map_ref_orb_out.setter
+    def map_ref_orb_out(self, arg1: CoordStruct) -> None:
+        ...
+    @property
+    def mat6(self) -> RealArray2D:
+        """
+        1st order transport matrix.
+        """
     @mat6.setter
     def mat6(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def mat6_calc_method(self) -> int:
-        ...
+        """
+        taylor$, symp_lie_ptc$, etc.
+        """
     @mat6_calc_method.setter
     def mat6_calc_method(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def mode3(self) -> Mode3Struct | None:
-        ...
+        """
+        6D normal mode structure.
+        """
     @mode3.setter
     def mode3(self, arg1: Mode3Struct) -> None:
         ...
     @property
-    def n_lord(self) -> int:
+    def mode_flip(self) -> bool:
+        """
+        Have the normal modes traded places?
+        """
+    @mode_flip.setter
+    def mode_flip(self, arg1: bool) -> None:
         ...
+    @property
+    def multipoles_on(self) -> bool:
+        """
+        For turning multipoles on/off
+        """
+    @multipoles_on.setter
+    def multipoles_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def n_lord(self) -> int:
+        """
+        Number of lords (except field overlap and ramper lords).
+        """
     @n_lord.setter
     def n_lord(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_lord_field(self) -> int:
-        ...
+        """
+        Number of field lords of this element.
+        """
     @n_lord_field.setter
     def n_lord_field(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_lord_ramper(self) -> int:
-        ...
+        """
+        Number of ramper lords.
+        """
     @n_lord_ramper.setter
     def n_lord_ramper(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_slave(self) -> int:
-        ...
+        """
+        Number of slaves (except field overlap slaves) of this element.
+        """
     @n_slave.setter
     def n_slave(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_slave_field(self) -> int:
-        ...
+        """
+        Number of field slaves of this element.
+        """
     @n_slave_field.setter
     def n_slave_field(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def old_value(self) -> RealArray1D:
+    def name(self) -> str:
+        """
+        name of element.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
         ...
+    @property
+    def offset_moves_aperture(self) -> bool:
+        """
+        element offsets affects aperture? ! final :: ele_finalizer
+        """
+    @offset_moves_aperture.setter
+    def offset_moves_aperture(self, arg1: bool) -> None:
+        ...
+    @property
+    def old_value(self) -> RealArray1D:
+        """
+        Used to see if %value(:) array has changed. Note: The reference orbit for spin/orbit matrices is %map_ref_orb_in/out
+        """
     @old_value.setter
     def old_value(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def orientation(self) -> int:
-        ...
+        """
+        -1 -> Element is longitudinally reversed. +1 -> Normal.
+        """
     @orientation.setter
     def orientation(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -4746,79 +5815,121 @@ class EleStruct:
         ...
     @property
     def ptc_fibre(self) -> Fibre | None:
-        ...
+        """
+        PTC track corresponding to this ele.
+        """
     @ptc_fibre.setter
     def ptc_fibre(self, arg1: Fibre) -> None:
         ...
     @property
     def ptc_integration_type(self) -> int:
-        ...
+        """
+        drift_kick$, matrix_kick$, or ripken_kick$
+        """
     @ptc_integration_type.setter
     def ptc_integration_type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def r(self) -> RealArray3D:
-        ...
+        """
+        For general use. Not used by Bmad.
+        """
     @r.setter
     def r(self, arg1: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]]) -> None:
         ...
     @property
     def rad_map(self) -> RadMapEleStruct | None:
-        ...
+        """
+        Radiation kick parameters Note: The reference orbits for spin and orbit Taylor maps are not necessarily the same. For example, Sprint spin Taylor maps can be with respect to the zero orbit independent of the orbital map.
+        """
     @rad_map.setter
     def rad_map(self, arg1: RadMapEleStruct) -> None:
         ...
     @property
     def ref_species(self) -> int:
-        ...
+        """
+        Reference species
+        """
     @ref_species.setter
     def ref_species(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ref_time(self) -> float:
-        ...
+        """
+        Time ref particle passes exit end.
+        """
     @ref_time.setter
     def ref_time(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def rf(self) -> RfEleStruct | None:
-        ...
+        """
+        RF parameters.
+        """
     @rf.setter
     def rf(self, arg1: RfEleStruct) -> None:
         ...
     @property
     def s(self) -> float:
-        ...
+        """
+        longitudinal ref position at the exit end.
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def s_start(self) -> float:
-        ...
+        """
+        longitudinal ref position at entrance_end
+        """
     @s_start.setter
     def s_start(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def slave_status(self) -> int:
+    def scale_multipoles(self) -> bool:
+        """
+        Are ab_multipoles within other elements (EG: quads, etc.) scaled by the strength of the element?
+        """
+    @scale_multipoles.setter
+    def scale_multipoles(self, arg1: bool) -> None:
         ...
+    @property
+    def select(self) -> bool:
+        """
+        For Bmad internal use only.
+        """
+    @select.setter
+    def select(self, arg1: bool) -> None:
+        ...
+    @property
+    def slave_status(self) -> int:
+        """
+        Type of slave element this is. multipass_slave$, slice_slave$, etc.
+        """
     @slave_status.setter
     def slave_status(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def space_charge_method(self) -> int:
-        ...
+        """
+        slice$, slice_longitudinal$, slice_transverse$, fft_3D$, cathode_fft_3d$
+        """
     @space_charge_method.setter
     def space_charge_method(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def spin_q(self) -> RealArray2D:
-        ...
+        """
+        0th and 1st order Spin transport quaternion.
+        """
     @spin_q.setter
     def spin_q(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def spin_taylor(self) -> TaylorStructArray1D:
-        ...
+        """
+        Quaternion Spin Taylor map.
+        """
     @property
     def spin_taylor_ref_orb_in(self) -> RealArray1D:
         ...
@@ -4827,45 +5938,125 @@ class EleStruct:
         ...
     @property
     def spin_tracking_method(self) -> int:
-        ...
+        """
+        symp_lie_ptc$, etc.
+        """
     @spin_tracking_method.setter
     def spin_tracking_method(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def sub_key(self) -> int:
-        ...
+        """
+        Records bend input type.
+        """
     @sub_key.setter
     def sub_key(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
+    def symplectify(self) -> bool:
+        """
+        Symplectify mat6 matrices.
+        """
+    @symplectify.setter
+    def symplectify(self, arg1: bool) -> None:
+        ...
+    @property
     def taylor(self) -> TaylorStructArray1D:
+        """
+        Phase space Taylor map.
+        """
+    @property
+    def taylor_map_includes_offsets(self) -> bool:
+        """
+        Taylor map calculated with element misalignments?
+        """
+    @taylor_map_includes_offsets.setter
+    def taylor_map_includes_offsets(self, arg1: bool) -> None:
+        ...
+    @property
+    def time_ref_orb_in(self) -> CoordStruct:
+        """
+        Reference orbit at entrance end for ref_time calc.
+        """
+    @time_ref_orb_in.setter
+    def time_ref_orb_in(self, arg1: CoordStruct) -> None:
+        ...
+    @property
+    def time_ref_orb_out(self) -> CoordStruct:
+        """
+        Reference orbit at exit end for ref_time calc.
+        """
+    @time_ref_orb_out.setter
+    def time_ref_orb_out(self, arg1: CoordStruct) -> None:
         ...
     @property
     def tracking_method(self) -> int:
-        ...
+        """
+        taylor$, linear$, etc.
+        """
     @tracking_method.setter
     def tracking_method(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def value(self) -> RealArray1D:
+    def type(self) -> str:
+        """
+        type name.
+        """
+    @type.setter
+    def type(self, arg1: str) -> None:
         ...
+    @property
+    def value(self) -> RealArray1D:
+        """
+        attribute values.
+        """
     @value.setter
     def value(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def vec0(self) -> RealArray1D:
-        ...
+        """
+        0th order transport vector.
+        """
     @vec0.setter
     def vec0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def wake(self) -> WakeStruct | None:
-        ...
+        """
+        Wakes
+        """
     @wake.setter
     def wake(self, arg1: WakeStruct) -> None:
         ...
     @property
     def wall3d(self) -> Wall3DStructArray1D:
+        """
+        Chamber or capillary wall E/M field structs.
+        """
+    @property
+    def x(self) -> XyDispStruct:
+        """
+        Projected dispersions.
+        """
+    @x.setter
+    def x(self, arg1: XyDispStruct) -> None:
+        ...
+    @property
+    def y(self) -> XyDispStruct:
+        """
+        Projected dispersions.
+        """
+    @y.setter
+    def y(self, arg1: XyDispStruct) -> None:
+        ...
+    @property
+    def z(self) -> TwissStruct:
+        """
+        Twiss parameters at end of element
+        """
+    @z.setter
+    def z(self, arg1: TwissStruct) -> None:
         ...
 class EleStructAlloc1D:
     @typing.overload
@@ -5035,19 +6226,25 @@ class EllipseBeamInitStruct:
         ...
     @property
     def n_ellipse(self) -> int:
-        ...
+        """
+        number of ellipses (>= 1)
+        """
     @n_ellipse.setter
     def n_ellipse(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def part_per_ellipse(self) -> int:
-        ...
+        """
+        number of particles per ellipse
+        """
     @part_per_ellipse.setter
     def part_per_ellipse(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def sigma_cutoff(self) -> float:
-        ...
+        """
+        sigma cutoff of the representation
+        """
     @sigma_cutoff.setter
     def sigma_cutoff(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -5145,43 +6342,57 @@ class EmFieldStruct:
         ...
     @property
     def A(self) -> RealArray1D:
-        ...
+        """
+        Magnetic vector potential.
+        """
     @A.setter
     def A(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def B(self) -> RealArray1D:
-        ...
+        """
+        magnetic field.
+        """
     @B.setter
     def B(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def E(self) -> RealArray1D:
-        ...
+        """
+        electric field.
+        """
     @E.setter
     def E(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def dB(self) -> RealArray2D:
-        ...
+        """
+        magnetic field gradient.
+        """
     @dB.setter
     def dB(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def dE(self) -> RealArray2D:
-        ...
+        """
+        electric field gradient.
+        """
     @dE.setter
     def dE(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def phi(self) -> float:
-        ...
+        """
+        Electric scalar potential.
+        """
     @phi.setter
     def phi(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def phi_B(self) -> float:
-        ...
+        """
+        Magnetic scalar potential.
+        """
     @phi_B.setter
     def phi_B(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -5491,7 +6702,9 @@ class ExpressionAtomStruct:
         ...
     @property
     def type(self) -> int:
-        ...
+        """
+        plus$, minum$, sin$, cos$, etc. To convert to string use: expression_op_name
+        """
     @type.setter
     def type(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -5619,10 +6832,14 @@ class ExpressionTreeStruct:
         ...
     @property
     def node(self) -> ...:
-        ...
+        """
+        Child nodes. Note: Pointer used here since Ifort does not support allocatable.
+        """
     @property
     def type(self) -> int:
-        ...
+        """
+        plus$, minum$, sin$, cos$, etc.
+        """
     @type.setter
     def type(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -5726,13 +6943,17 @@ class Fibre:
         ...
     @property
     def AG(self) -> float | None:
-        ...
+        """
+        spin g-2 TO TIE LAYOUTS
+        """
     @AG.setter
     def AG(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def BETA0(self) -> float | None:
-        ...
+        """
+        ,P0C
+        """
     @BETA0.setter
     def BETA0(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -5750,19 +6971,25 @@ class Fibre:
         ...
     @property
     def GAMBET(self) -> float | None:
-        ...
+        """
+        ,P0C
+        """
     @GAMBET.setter
     def GAMBET(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def GAMMA0I(self) -> float | None:
-        ...
+        """
+        ,P0C
+        """
     @GAMMA0I.setter
     def GAMMA0I(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def MASS(self) -> float | None:
-        ...
+        """
+        ,P0C
+        """
     @MASS.setter
     def MASS(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -5774,13 +7001,17 @@ class Fibre:
         ...
     @property
     def NEXT(self) -> Fibre | None:
-        ...
+        """
+        POINTING TO PARENT LAYOUT AND PARENT FIBRE DATA
+        """
     @NEXT.setter
     def NEXT(self, arg1: Fibre) -> None:
         ...
     @property
     def P(self) -> Fibre | None:
-        ...
+        """
+        tying them in the so-called database universe M_u
+        """
     @P.setter
     def P(self, arg1: Fibre) -> None:
         ...
@@ -5804,7 +7035,9 @@ class Fibre:
         ...
     @property
     def pos(self) -> int | None:
-        ...
+        """
+        POSITION IN LAYOUT NEW STUFF....
+        """
     @pos.setter
     def pos(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -5878,31 +7111,41 @@ class FloorPositionStruct:
         ...
     @property
     def phi(self) -> float:
-        ...
+        """
+        angular orientation consistent with W matrix
+        """
     @phi.setter
     def phi(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def psi(self) -> float:
-        ...
+        """
+        angular orientation consistent with W matrix
+        """
     @psi.setter
     def psi(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def r(self) -> RealArray1D:
-        ...
+        """
+        (x, y, z) offset from origin
+        """
     @r.setter
     def r(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def theta(self) -> float:
-        ...
+        """
+        angular orientation consistent with W matrix
+        """
     @theta.setter
     def theta(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def w(self) -> RealArray2D:
-        ...
+        """
+        W matrix. Columns are unit vectors of the frame axes.
+        """
     @w.setter
     def w(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
@@ -6005,25 +7248,33 @@ class GenGrad1Struct:
         ...
     @property
     def deriv(self) -> RealArray2D:
-        ...
+        """
+        Range: (iz0:iz1, 0:2*n_deriv_max+1)
+        """
     @deriv.setter
     def deriv(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def m(self) -> int:
-        ...
+        """
+        Azimuthal index
+        """
     @m.setter
     def m(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_deriv_max(self) -> int:
-        ...
+        """
+        Max GG derivative The derivative matrix is extended to include the interpolating spline polynomial.
+        """
     @n_deriv_max.setter
     def n_deriv_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def sincos(self) -> int:
-        ...
+        """
+        sin$ or cos$
+        """
     @sincos.setter
     def sincos(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -6078,7 +7329,6 @@ class GenGradMapStruct:
     Fortran struct: gen_grad_map_struct
     """
     curved_ref_frame: bool
-    file: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -6095,52 +7345,76 @@ class GenGradMapStruct:
         ...
     @property
     def dz(self) -> float:
-        ...
+        """
+        Point spacing.
+        """
     @dz.setter
     def dz(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ele_anchor_pt(self) -> int:
-        ...
+        """
+        anchor_beginning$, anchor_center$, or anchor_end$
+        """
     @ele_anchor_pt.setter
     def ele_anchor_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def field_scale(self) -> float:
-        ...
+        """
+        Factor to scale the fields by
+        """
     @field_scale.setter
     def field_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def field_type(self) -> int:
-        ...
+        """
+        or electric$
+        """
     @field_type.setter
     def field_type(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def file(self) -> str:
+        """
+        Input file name. Used also as ID for instances.
+        """
+    @file.setter
+    def file(self, arg1: str) -> None:
         ...
     @property
     def gg(self) -> GenGrad1StructAlloc1D:
         ...
     @property
     def iz0(self) -> int:
-        ...
+        """
+        gg%deriv(iz0:iz1, :) lower bound.
+        """
     @iz0.setter
     def iz0(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def iz1(self) -> int:
-        ...
+        """
+        gg%deriv(iz0:iz1, :) upper bound.
+        """
     @iz1.setter
     def iz1(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def master_parameter(self) -> int:
-        ...
+        """
+        Master parameter in ele%value(:) array to use for scaling the field.
+        """
     @master_parameter.setter
     def master_parameter(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def r0(self) -> RealArray1D:
-        ...
+        """
+        field origin relative to ele_anchor_pt.
+        """
     @r0.setter
     def r0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -6272,37 +7546,49 @@ class GridBeamInitStruct:
         ...
     @property
     def n_px(self) -> int:
-        ...
+        """
+        Number of rows.
+        """
     @n_px.setter
     def n_px(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_x(self) -> int:
-        ...
+        """
+        Number of columns.
+        """
     @n_x.setter
     def n_x(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def px_max(self) -> float:
-        ...
+        """
+        Upper px limit.
+        """
     @px_max.setter
     def px_max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def px_min(self) -> float:
-        ...
+        """
+        Lower px limit.
+        """
     @px_min.setter
     def px_min(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x_max(self) -> float:
-        ...
+        """
+        Upper x limit.
+        """
     @x_max.setter
     def x_max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x_min(self) -> float:
-        ...
+        """
+        Lower x limit.
+        """
     @x_min.setter
     def x_min(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -6399,7 +7685,6 @@ class GridFieldPtStruct:
     """
     Fortran struct: grid_field_pt_struct
     """
-    file: str
     def __copy__(self) -> GridFieldPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridFieldPtStruct:
@@ -6409,8 +7694,18 @@ class GridFieldPtStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def n_link(self) -> int:
+    def file(self) -> str:
+        """
+        Input file name. Used also as ID for instances.
+        """
+    @file.setter
+    def file(self, arg1: str) -> None:
         ...
+    @property
+    def n_link(self) -> int:
+        """
+        For memory management of this structure
+        """
     @n_link.setter
     def n_link(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -6438,58 +7733,78 @@ class GridFieldStruct:
         ...
     @property
     def bi_coef(self) -> BicubicCmplxCoefStructArray3D:
-        ...
+        """
+        Save computed coefs for faster tracking
+        """
     @property
     def dr(self) -> RealArray1D:
-        ...
+        """
+        Grid spacing.
+        """
     @dr.setter
     def dr(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def ele_anchor_pt(self) -> int:
-        ...
+        """
+        anchor_beginning$, anchor_center$, or anchor_end$
+        """
     @ele_anchor_pt.setter
     def ele_anchor_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def field_scale(self) -> float:
-        ...
+        """
+        Factor to scale the fields by
+        """
     @field_scale.setter
     def field_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def field_type(self) -> int:
-        ...
+        """
+        or magnetic$ or electric$
+        """
     @field_type.setter
     def field_type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def geometry(self) -> int:
-        ...
+        """
+        Type of grid: xyz$, or rotationally_symmetric_rz$
+        """
     @geometry.setter
     def geometry(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def harmonic(self) -> int:
-        ...
+        """
+        Harmonic of fundamental for AC fields.
+        """
     @harmonic.setter
     def harmonic(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def interpolation_order(self) -> int:
-        ...
+        """
+        Possibilities are 1 or 3.
+        """
     @interpolation_order.setter
     def interpolation_order(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def master_parameter(self) -> int:
-        ...
+        """
+        Master parameter in ele%value(:) array to use for scaling the field.
+        """
     @master_parameter.setter
     def master_parameter(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def phi0_fieldmap(self) -> float:
-        ...
+        """
+        Mode oscillates as: twopi * (f * t + phi0_fieldmap)
+        """
     @phi0_fieldmap.setter
     def phi0_fieldmap(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -6501,13 +7816,17 @@ class GridFieldStruct:
         ...
     @property
     def r0(self) -> RealArray1D:
-        ...
+        """
+        Field origin relative to ele_anchor_pt.
+        """
     @r0.setter
     def r0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def tri_coef(self) -> TricubicCmplxCoefStructArray3D:
-        ...
+        """
+        Save computed coefs for faster tracking
+        """
 class GridFieldStructAlloc1D:
     @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> GridFieldStruct:
@@ -6558,7 +7877,6 @@ class HighEnergySpaceChargeStruct:
     """
     Fortran struct: high_energy_space_charge_struct
     """
-    closed_orb: CoordStruct
     def __copy__(self) -> HighEnergySpaceChargeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> HighEnergySpaceChargeStruct:
@@ -6566,6 +7884,14 @@ class HighEnergySpaceChargeStruct:
     def __init__(self, closed_orb: CoordStruct | None = None, kick_const: typing.SupportsFloat | None = None, sig_x: typing.SupportsFloat | None = None, sig_y: typing.SupportsFloat | None = None, phi: typing.SupportsFloat | None = None, sin_phi: typing.SupportsFloat | None = None, cos_phi: typing.SupportsFloat | None = None, sig_z: typing.SupportsFloat | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def closed_orb(self) -> CoordStruct:
+        """
+        beam orbit
+        """
+    @closed_orb.setter
+    def closed_orb(self, arg1: CoordStruct) -> None:
         ...
     @property
     def cos_phi(self) -> float:
@@ -6581,7 +7907,9 @@ class HighEnergySpaceChargeStruct:
         ...
     @property
     def phi(self) -> float:
-        ...
+        """
+        Rotation angle to go from lab frame to rotated frame.
+        """
     @phi.setter
     def phi(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -7012,19 +8340,25 @@ class KvBeamInitStruct:
         ...
     @property
     def A(self) -> float:
-        ...
+        """
+        A = I1/e
+        """
     @A.setter
     def A(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def n_I2(self) -> int:
-        ...
+        """
+        number of I2
+        """
     @n_I2.setter
     def n_I2(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def part_per_phi(self) -> IntArray1D:
-        ...
+        """
+        number of particles per angle variable.
+        """
     @part_per_phi.setter
     def part_per_phi(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
@@ -7138,13 +8472,17 @@ class LatEleOrder1Struct:
         ...
     @property
     def ix_branch(self) -> int:
-        ...
+        """
+        Branch index
+        """
     @ix_branch.setter
     def ix_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_order(self) -> int:
-        ...
+        """
+        Order index. -1 -> Unique in lattice, 0 -> unique in branch.
+        """
     @ix_order.setter
     def ix_order(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -7280,10 +8618,6 @@ class LatParamStruct:
     """
     Fortran struct: lat_param_struct
     """
-    beam_init: BeamInitStruct
-    bookkeeping_state: BookkeepingStateStruct
-    live_branch: bool
-    stable: bool
     def __copy__(self) -> LatParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatParamStruct:
@@ -7293,80 +8627,138 @@ class LatParamStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def default_tracking_species(self) -> int:
+    def beam_init(self) -> BeamInitStruct:
+        """
+        For beam initialization.
+        """
+    @beam_init.setter
+    def beam_init(self, arg1: BeamInitStruct) -> None:
         ...
+    @property
+    def bookkeeping_state(self) -> BookkeepingStateStruct:
+        """
+        Overall status for the branch.
+        """
+    @bookkeeping_state.setter
+    def bookkeeping_state(self, arg1: BookkeepingStateStruct) -> None:
+        ...
+    @property
+    def default_tracking_species(self) -> int:
+        """
+        Default particle type to use in tracking.
+        """
     @default_tracking_species.setter
     def default_tracking_species(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def g1_integral(self) -> float:
-        ...
+        """
+        Approximate |g| (bending strength) integral of branch.
+        """
     @g1_integral.setter
     def g1_integral(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def g2_integral(self) -> float:
-        ...
+        """
+        Approximate g^2 integral of branch.
+        """
     @g2_integral.setter
     def g2_integral(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def g3_integral(self) -> float:
-        ...
+        """
+        Approximate g^2 integral of branch.
+        """
     @g3_integral.setter
     def g3_integral(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def geometry(self) -> int:
-        ...
+        """
+        open$ or closed$
+        """
     @geometry.setter
     def geometry(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ixx(self) -> int:
-        ...
+        """
+        Integer for general use
+        """
     @ixx.setter
     def ixx(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def n_part(self) -> float:
+    def live_branch(self) -> bool:
+        """
+        Should tracking be done on the branch?
+        """
+    @live_branch.setter
+    def live_branch(self, arg1: bool) -> None:
         ...
+    @property
+    def n_part(self) -> float:
+        """
+        Particles/bunch (for BeamBeam elements).
+        """
     @n_part.setter
     def n_part(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def particle(self) -> int:
-        ...
+        """
+        Reference particle: positron$, electron$, etc. Call lattice_bookkeeper if this is changed.
+        """
     @particle.setter
     def particle(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def spin_tune(self) -> float:
-        ...
+        """
+        Closed orbit spin tune.
+        """
     @spin_tune.setter
     def spin_tune(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def t1_no_RF(self) -> RealArray2D:
+    def stable(self) -> bool:
+        """
+        is closed lat stable?
+        """
+    @stable.setter
+    def stable(self, arg1: bool) -> None:
         ...
+    @property
+    def t1_no_RF(self) -> RealArray2D:
+        """
+        Full 1-turn matrix with RF off.
+        """
     @t1_no_RF.setter
     def t1_no_RF(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def t1_with_RF(self) -> RealArray2D:
-        ...
+        """
+        Full 1-turn matrix with RF on.
+        """
     @t1_with_RF.setter
     def t1_with_RF(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def total_length(self) -> float:
-        ...
+        """
+        total_length of branch. Warning: branch may not start at s = 0.
+        """
     @total_length.setter
     def total_length(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def unstable_factor(self) -> float:
-        ...
+        """
+        If positive: Growth rate/turn if unstable in closed branches or |orbit-aperture|/aperture if particle hits wall. Zero otherwise.
+        """
     @unstable_factor.setter
     def unstable_factor(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -7374,16 +8766,6 @@ class LatStruct:
     """
     Fortran struct: lat_struct
     """
-    beam_init: BeamInitStruct
-    ele_init: EleStruct
-    input_file_name: str
-    lattice: str
-    lord_state: BookkeepingStateStruct
-    machine: str
-    parser_make_xfer_mats: bool
-    pre_tracker: PreTrackerStruct
-    title: str
-    use_name: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -7400,97 +8782,197 @@ class LatStruct:
         ...
     @property
     def a(self) -> ModeInfoStruct | None:
-        ...
+        """
+        Tunes (fractional part), etc.
+        """
     @a.setter
     def a(self, arg1: ModeInfoStruct) -> None:
         ...
     @property
     def b(self) -> ModeInfoStruct | None:
-        ...
+        """
+        Tunes (fractional part), etc.
+        """
     @b.setter
     def b(self, arg1: ModeInfoStruct) -> None:
         ...
     @property
-    def branch(self) -> BranchStructAlloc1D:
+    def beam_init(self) -> BeamInitStruct:
+        """
+        Beam initialization.
+        """
+    @beam_init.setter
+    def beam_init(self, arg1: BeamInitStruct) -> None:
         ...
+    @property
+    def branch(self) -> BranchStructAlloc1D:
+        """
+        Branch(0:) array
+        """
     @property
     def constant(self) -> ExpressionAtomStructAlloc1D:
-        ...
+        """
+        Constants defined in the lattice
+        """
     @property
     def control(self) -> ControlStructAlloc1D:
-        ...
+        """
+        Control list
+        """
     @property
     def creation_hash(self) -> int:
-        ...
+        """
+        Set by bmad_parser. creation_hash will vary if any of the lattice files are modified.
+        """
     @creation_hash.setter
     def creation_hash(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def custom(self) -> RealAlloc1D:
-        ...
+        """
+        Custom attributes.
+        """
     @custom.setter
     def custom(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def ele(self) -> EleStructArray1D:
+        """
+        Array of elements [=> branch(0)].
+        """
+    @property
+    def ele_init(self) -> EleStruct:
+        """
+        For use by any program
+        """
+    @ele_init.setter
+    def ele_init(self, arg1: EleStruct) -> None:
         ...
     @property
     def ic(self) -> IntAlloc1D:
-        ...
+        """
+        Index to %control(:) from slaves.
+        """
     @ic.setter
     def ic(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
-    def input_taylor_order(self) -> int:
+    def input_file_name(self) -> str:
+        """
+        Name of the lattice input file
+        """
+    @input_file_name.setter
+    def input_file_name(self, arg1: str) -> None:
         ...
+    @property
+    def input_taylor_order(self) -> int:
+        """
+        As set in the input file
+        """
     @input_taylor_order.setter
     def input_taylor_order(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def n_control_max(self) -> int:
+    def lattice(self) -> str:
+        """
+        Lattice
+        """
+    @lattice.setter
+    def lattice(self, arg1: str) -> None:
         ...
+    @property
+    def lord_state(self) -> BookkeepingStateStruct:
+        """
+        lord bookkeeping status.
+        """
+    @lord_state.setter
+    def lord_state(self, arg1: BookkeepingStateStruct) -> None:
+        ...
+    @property
+    def machine(self) -> str:
+        """
+        Name of the machine the lattice is for ('LHC', etc).
+        """
+    @machine.setter
+    def machine(self, arg1: str) -> None:
+        ...
+    @property
+    def n_control_max(self) -> int:
+        """
+        Last index used in control_array
+        """
     @n_control_max.setter
     def n_control_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_ele_max(self) -> int | None:
-        ...
+        """
+        Index of last valid element in %ele(:) array
+        """
     @n_ele_max.setter
     def n_ele_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_ele_track(self) -> int | None:
-        ...
+        """
+        Number of lat elements to track through.
+        """
     @n_ele_track.setter
     def n_ele_track(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_ic_max(self) -> int:
-        ...
+        """
+        Last index used in ic_array
+        """
     @n_ic_max.setter
     def n_ic_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def param(self) -> LatParamStruct | None:
-        ...
+        """
+        Parameters
+        """
     @param.setter
     def param(self, arg1: LatParamStruct) -> None:
         ...
     @property
-    def particle_start(self) -> CoordStruct | None:
+    def parser_make_xfer_mats(self) -> bool:
+        """
+        Is Bmad parser to make element transfer matrices?
+        """
+    @parser_make_xfer_mats.setter
+    def parser_make_xfer_mats(self, arg1: bool) -> None:
         ...
+    @property
+    def particle_start(self) -> CoordStruct | None:
+        """
+        Starting particle_coords.
+        """
     @particle_start.setter
     def particle_start(self, arg1: CoordStruct) -> None:
         ...
     @property
     def photon_type(self) -> int:
-        ...
+        """
+        Or coherent$. For X-ray simulations.
+        """
     @photon_type.setter
     def photon_type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def print_str(self) -> FCharArray1D:
+    def pre_tracker(self) -> PreTrackerStruct:
+        """
+        For OPAL/IMPACT-T
+        """
+    @pre_tracker.setter
+    def pre_tracker(self, arg1: PreTrackerStruct) -> None:
         ...
+    @property
+    def print_str(self) -> FCharArray1D:
+        """
+        Saved print statements.
+        """
     @property
     def ramper_slave_bookkeeping(self) -> int:
         ...
@@ -7498,14 +8980,34 @@ class LatStruct:
     def ramper_slave_bookkeeping(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def version(self) -> int:
+    def title(self) -> str:
+        """
+        General title
+        """
+    @title.setter
+    def title(self, arg1: str) -> None:
         ...
+    @property
+    def use_name(self) -> str:
+        """
+        Name of lat given by USE statement
+        """
+    @use_name.setter
+    def use_name(self, arg1: str) -> None:
+        ...
+    @property
+    def version(self) -> int:
+        """
+        Version number
+        """
     @version.setter
     def version(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def z(self) -> ModeInfoStruct | None:
-        ...
+        """
+        Tunes (fractional part), etc.
+        """
     @z.setter
     def z(self, arg1: ModeInfoStruct) -> None:
         ...
@@ -7559,7 +9061,6 @@ class Layout:
     """
     Fortran struct: layout
     """
-    NAME: str
     def __copy__(self) -> Layout:
         ...
     def __deepcopy__(self, arg0: dict) -> Layout:
@@ -7582,7 +9083,9 @@ class Layout:
         ...
     @property
     def END_GROUND(self) -> Fibre | None:
-        ...
+        """
+        STORE THE GROUNDED VALUE OF END DURING CIRCULAR SCANNING
+        """
     @END_GROUND.setter
     def END_GROUND(self, arg1: Fibre) -> None:
         ...
@@ -7594,27 +9097,43 @@ class Layout:
         ...
     @property
     def INDEX(self) -> int | None:
-        ...
+        """
+        IDENTIFICATION, CHARGE SIGN
+        """
     @INDEX.setter
     def INDEX(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def LAST(self) -> Fibre | None:
-        ...
+        """
+        LAST VISITED
+        """
     @LAST.setter
     def LAST(self, arg1: Fibre) -> None:
         ...
     @property
     def LASTPOS(self) -> int | None:
-        ...
+        """
+        POSITION OF LAST VISITED
+        """
     @LASTPOS.setter
     def LASTPOS(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def N(self) -> int | None:
-        ...
+        """
+        TOTAL ELEMENT IN THE CHAIN
+        """
     @N.setter
     def N(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def NAME(self) -> str:
+        """
+        IDENTIFICATION
+        """
+    @NAME.setter
+    def NAME(self, arg1: str) -> None:
         ...
     @property
     def NEXT(self) -> Layout | None:
@@ -7624,7 +9143,9 @@ class Layout:
         ...
     @property
     def NTHIN(self) -> int | None:
-        ...
+        """
+        NUMBER IF THIN LENSES IN COLLECTION  (FOR SPEED ESTIMATES)
+        """
     @NTHIN.setter
     def NTHIN(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -7642,13 +9163,17 @@ class Layout:
         ...
     @property
     def START_GROUND(self) -> Fibre | None:
-        ...
+        """
+        STORE THE GROUNDED VALUE OF START DURING CIRCULAR SCANNING
+        """
     @START_GROUND.setter
     def START_GROUND(self, arg1: Fibre) -> None:
         ...
     @property
     def THIN(self) -> float | None:
-        ...
+        """
+        PARAMETER USED FOR AUTOMATIC CUTTING INTO THIN LENS POINTERS OF LINK LAYOUT
+        """
     @THIN.setter
     def THIN(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -7666,43 +9191,57 @@ class LinacNormalModeStruct:
         ...
     @property
     def a_emittance_end(self) -> float:
-        ...
+        """
+        a mode emittance at end of linac
+        """
     @a_emittance_end.setter
     def a_emittance_end(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def b_emittance_end(self) -> float:
-        ...
+        """
+        b mode emittance at end of linac
+        """
     @b_emittance_end.setter
     def b_emittance_end(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def i2_E4(self) -> float:
-        ...
+        """
+        Integral: g^2 * gamma^4
+        """
     @i2_E4.setter
     def i2_E4(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def i3_E7(self) -> float:
-        ...
+        """
+        Integral: g^3 * gamma^7
+        """
     @i3_E7.setter
     def i3_E7(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def i5a_E6(self) -> float:
-        ...
+        """
+        Integral: (g^3 * H_a) * gamma^6
+        """
     @i5a_E6.setter
     def i5a_E6(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def i5b_E6(self) -> float:
-        ...
+        """
+        Integral: (g^3 * H_b) * gamma^6
+        """
     @i5b_E6.setter
     def i5b_E6(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sig_E1(self) -> float:
-        ...
+        """
+        Energy spread after 1 pass (eV)
+        """
     @sig_E1.setter
     def sig_E1(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -7748,31 +9287,41 @@ class MadEnergyStruct:
         ...
     @property
     def beta(self) -> float:
-        ...
+        """
+        normalized velocity: v/c
+        """
     @beta.setter
     def beta(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def gamma(self) -> float:
-        ...
+        """
+        relativistic factor: 1/sqrt(1-beta^2)
+        """
     @gamma.setter
     def gamma(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def kinetic(self) -> float:
-        ...
+        """
+        kinetic energy
+        """
     @kinetic.setter
     def kinetic(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def p0c(self) -> float:
-        ...
+        """
+        particle momentum
+        """
     @p0c.setter
     def p0c(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def particle(self) -> int:
-        ...
+        """
+        particle species
+        """
     @particle.setter
     def particle(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -7796,19 +9345,25 @@ class MadMapStruct:
         ...
     @property
     def k(self) -> RealArray1D:
-        ...
+        """
+        0th order map.
+        """
     @k.setter
     def k(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def r(self) -> RealArray2D:
-        ...
+        """
+        1st order map.
+        """
     @r.setter
     def r(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def t(self) -> RealArray3D:
-        ...
+        """
+        2nd order map.
+        """
     @t.setter
     def t(self, arg1: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]]) -> None:
         ...
@@ -8089,7 +9644,6 @@ class ModeInfoStruct:
     """
     Fortran struct: mode_info_struct
     """
-    stable: bool
     def __copy__(self) -> ModeInfoStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ModeInfoStruct:
@@ -8100,31 +9654,49 @@ class ModeInfoStruct:
         ...
     @property
     def chrom(self) -> float:
-        ...
+        """
+        Chromaticity.
+        """
     @chrom.setter
     def chrom(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def emit(self) -> float:
-        ...
+        """
+        Emittance (unnormalized).
+        """
     @emit.setter
     def emit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sigma(self) -> float:
-        ...
+        """
+        Beam size.
+        """
     @sigma.setter
     def sigma(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sigmap(self) -> float:
-        ...
+        """
+        Beam divergence.
+        """
     @sigmap.setter
     def sigmap(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def tune(self) -> float:
+    def stable(self) -> bool:
+        """
+        Is the mode stable?
+        """
+    @stable.setter
+    def stable(self, arg1: bool) -> None:
         ...
+    @property
+    def tune(self) -> float:
+        """
+        'fractional' tune in radians
+        """
     @tune.setter
     def tune(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -8233,25 +9805,33 @@ class NametableStruct:
         ...
     @property
     def index(self) -> IntAlloc1D:
-        ...
+        """
+        Sorted index for names(:) array. names(an_index(i)) is in alphabetical order.
+        """
     @index.setter
     def index(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
     def n_max(self) -> int:
-        ...
+        """
+        Use only names(n_min:n_max) part of array.
+        """
     @n_max.setter
     def n_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_min(self) -> int:
-        ...
+        """
+        Set to 0 for use in a lattice.
+        """
     @n_min.setter
     def n_min(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def name(self) -> FCharArray1D:
-        ...
+        """
+        Array of names.
+        """
 class NormalFormTaylors:
     """
     normal_form_taylors return type
@@ -8304,13 +9884,17 @@ class NormalModesStruct:
         ...
     @property
     def dpz_damp(self) -> float:
-        ...
+        """
+        Change in pz without RF
+        """
     @dpz_damp.setter
     def dpz_damp(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def e_loss(self) -> float:
-        ...
+        """
+        Energy loss / turn (eV)
+        """
     @e_loss.setter
     def e_loss(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -8322,37 +9906,49 @@ class NormalModesStruct:
         ...
     @property
     def pz_aperture(self) -> float:
-        ...
+        """
+        pz aperture limit. Used with Touschek calculations.
+        """
     @pz_aperture.setter
     def pz_aperture(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def pz_average(self) -> float:
-        ...
+        """
+        Average over branch due to damping.
+        """
     @pz_average.setter
     def pz_average(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def rf_voltage(self) -> float:
-        ...
+        """
+        Total rfcavity voltage (eV)
+        """
     @rf_voltage.setter
     def rf_voltage(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sigE_E(self) -> float:
-        ...
+        """
+        SigmaE/E
+        """
     @sigE_E.setter
     def sigE_E(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sig_z(self) -> float:
-        ...
+        """
+        Sigma_Z
+        """
     @sig_z.setter
     def sig_z(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def synch_int(self) -> RealArray1D:
-        ...
+        """
+        Synchrotron integrals I0, I1, I2, and I3
+        """
     @synch_int.setter
     def synch_int(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -8598,7 +10194,6 @@ class PhotonElementStruct:
     material: PhotonMaterialStruct
     pixel: PixelDetecStruct
     reflectivity_table_pi: PhotonReflectTableStruct
-    reflectivity_table_sigma: PhotonReflectTableStruct
     segmented: SurfaceSegmentedStruct
     target: PhotonTargetStruct
     def __copy__(self) -> PhotonElementStruct:
@@ -8611,12 +10206,22 @@ class PhotonElementStruct:
         ...
     @property
     def init_energy_prob(self) -> SplineStructAlloc1D:
-        ...
+        """
+        Initial energy probability density
+        """
     @property
     def integrated_init_energy_prob(self) -> RealAlloc1D:
         ...
     @integrated_init_energy_prob.setter
     def integrated_init_energy_prob(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
+        ...
+    @property
+    def reflectivity_table_sigma(self) -> PhotonReflectTableStruct:
+        """
+        If polarization is ignored use sigma table.
+        """
+    @reflectivity_table_sigma.setter
+    def reflectivity_table_sigma(self, arg1: PhotonReflectTableStruct) -> None:
         ...
     @property
     def reflectivity_table_type(self) -> int:
@@ -8628,12 +10233,7 @@ class PhotonMaterialStruct:
     """
     Fortran struct: photon_material_struct
     """
-    f0_m1: complex
-    f0_m2: complex
     f_0: complex
-    f_h: complex
-    f_hbar: complex
-    f_hkl: complex
     def __copy__(self) -> PhotonMaterialStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonMaterialStruct:
@@ -8643,14 +10243,58 @@ class PhotonMaterialStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def h_norm(self) -> RealArray1D:
+    def f0_m1(self) -> complex:
+        """
+        For multilayer_mirror only.
+        """
+    @f0_m1.setter
+    def f0_m1(self, arg1: complex) -> None:
         ...
+    @property
+    def f0_m2(self) -> complex:
+        """
+        For multilayer_mirror only.
+        """
+    @f0_m2.setter
+    def f0_m2(self, arg1: complex) -> None:
+        ...
+    @property
+    def f_h(self) -> complex:
+        """
+        Structure factor for H direction.
+        """
+    @f_h.setter
+    def f_h(self, arg1: complex) -> None:
+        ...
+    @property
+    def f_hbar(self) -> complex:
+        """
+        Structure factor for -H direction.
+        """
+    @f_hbar.setter
+    def f_hbar(self, arg1: complex) -> None:
+        ...
+    @property
+    def f_hkl(self) -> complex:
+        """
+        = sqrt(f_h * f_hbar)
+        """
+    @f_hkl.setter
+    def f_hkl(self, arg1: complex) -> None:
+        ...
+    @property
+    def h_norm(self) -> RealArray1D:
+        """
+        Normalized H vector for crystals.
+        """
     @h_norm.setter
     def h_norm(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def l_ref(self) -> RealArray1D:
-        ...
+        """
+        Crystal reference orbit displacement vector in element coords.
+        """
     @l_ref.setter
     def l_ref(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -8658,7 +10302,6 @@ class PhotonReflectSurfaceStruct:
     """
     Fortran struct: photon_reflect_surface_struct
     """
-    description: str
     name: str
     reflectivity_file: str
     def __copy__(self) -> PhotonReflectSurfaceStruct:
@@ -8670,6 +10313,14 @@ class PhotonReflectSurfaceStruct:
     def __repr__(self) -> str:
         ...
     @property
+    def description(self) -> str:
+        """
+        Descriptive name
+        """
+    @description.setter
+    def description(self, arg1: str) -> None:
+        ...
+    @property
     def ix_surface(self) -> int:
         ...
     @ix_surface.setter
@@ -8677,13 +10328,17 @@ class PhotonReflectSurfaceStruct:
         ...
     @property
     def roughness_correlation_len(self) -> float:
-        ...
+        """
+        T in Dugan's notation
+        """
     @roughness_correlation_len.setter
     def roughness_correlation_len(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def surface_roughness_rms(self) -> float:
-        ...
+        """
+        sigma in Dugan's notation
+        """
     @surface_roughness_rms.setter
     def surface_roughness_rms(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -8710,19 +10365,25 @@ class PhotonReflectTableStruct:
         ...
     @property
     def angle(self) -> RealAlloc1D:
-        ...
+        """
+        Vector of angle values for %p_reflect
+        """
     @angle.setter
     def angle(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def bragg_angle(self) -> RealAlloc1D:
-        ...
+        """
+        Bragg angle at energy values.
+        """
     @bragg_angle.setter
     def bragg_angle(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def energy(self) -> RealAlloc1D:
-        ...
+        """
+        Vector of energy values for %p_reflect
+        """
     @energy.setter
     def energy(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -8731,19 +10392,25 @@ class PhotonReflectTableStruct:
         ...
     @property
     def max_energy(self) -> float:
-        ...
+        """
+        maximum energy for this table
+        """
     @max_energy.setter
     def max_energy(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def p_reflect(self) -> RealArray2D:
-        ...
+        """
+        (angle, ev) probability. Log used for smooth surface reflection
+        """
     @p_reflect.setter
     def p_reflect(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def p_reflect_scratch(self) -> RealAlloc1D:
-        ...
+        """
+        Scratch space
+        """
     @p_reflect_scratch.setter
     def p_reflect_scratch(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -8846,7 +10513,9 @@ class PhotonTargetStruct:
         ...
     @property
     def type(self) -> int:
-        ...
+        """
+        or rectangular$
+        """
     @type.setter
     def type(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -8870,25 +10539,33 @@ class PixelDetecStruct:
         ...
     @property
     def n_hit_detec(self) -> int:
-        ...
+        """
+        How many photons hit the detector.
+        """
     @n_hit_detec.setter
     def n_hit_detec(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_hit_pixel(self) -> int:
-        ...
+        """
+        How many photons hit the pixel grid of the detector.
+        """
     @n_hit_pixel.setter
     def n_hit_pixel(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_track_tot(self) -> int:
-        ...
+        """
+        How many photons were launched from source element.
+        """
     @n_track_tot.setter
     def n_track_tot(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def pt(self) -> PixelPtStructArray2D:
-        ...
+        """
+        Grid of pixels
+        """
     @property
     def r0(self) -> RealArray1D:
         ...
@@ -8911,13 +10588,17 @@ class PixelPtStruct:
         ...
     @property
     def init_orbit(self) -> RealArray1D:
-        ...
+        """
+        Initial orbit at start of lattice statistics.
+        """
     @init_orbit.setter
     def init_orbit(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def init_orbit_rms(self) -> RealArray1D:
-        ...
+        """
+        Initial orbit at start of lattice RMS statistics.
+        """
     @init_orbit_rms.setter
     def init_orbit_rms(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -8947,13 +10628,17 @@ class PixelPtStruct:
         ...
     @property
     def orbit(self) -> RealArray1D:
-        ...
+        """
+        x, Vx/c, y, Vy/c, dummy, E - E_ref.
+        """
     @orbit.setter
     def orbit(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def orbit_rms(self) -> RealArray1D:
-        ...
+        """
+        RMS statistics.
+        """
     @orbit_rms.setter
     def orbit_rms(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -9214,7 +10899,9 @@ class PreTrackerStruct:
         ...
     @property
     def who(self) -> int:
-        ...
+        """
+        Can be opal$, or impactt$
+        """
     @who.setter
     def who(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -9278,13 +10965,17 @@ class PtcNormalFormStruct:
         ...
     @property
     def ele_origin(self) -> EleStruct | None:
-        ...
+        """
+        Element at which the on-turn map was created.
+        """
     @ele_origin.setter
     def ele_origin(self, arg1: EleStruct) -> None:
         ...
     @property
     def orb0(self) -> RealArray1D:
-        ...
+        """
+        Closed orbit at element.
+        """
     @orb0.setter
     def orb0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -9320,12 +11011,9 @@ class QpAxisStruct:
     """
     Fortran struct: qp_axis_struct
     """
-    bounds: str
     draw_label: bool
     draw_numbers: bool
     label: str
-    label_color: str
-    type: str
     def __copy__(self) -> QpAxisStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpAxisStruct:
@@ -9335,120 +11023,177 @@ class QpAxisStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def dtick(self) -> float:
+    def bounds(self) -> str:
+        """
+        Or 'ZERO_AT_END' or 'ZERO_SYMMETRIC'
+        """
+    @bounds.setter
+    def bounds(self, arg1: str) -> None:
         ...
+    @property
+    def dtick(self) -> float:
+        """
+        Distance between ticks. In data units. Ticks will be drawn between %min and %max.
+        """
     @dtick.setter
     def dtick(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def eval_max(self) -> float:
-        ...
+        """
+        For general use. Not set by quick_plot.
+        """
     @eval_max.setter
     def eval_max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def eval_min(self) -> float:
-        ...
+        """
+        For general use. Not set by quick_plot.
+        """
     @eval_min.setter
     def eval_min(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def label_offset(self) -> float:
+    def label_color(self) -> str:
+        """
+        Color of the label.
+        """
+    @label_color.setter
+    def label_color(self, arg1: str) -> None:
         ...
+    @property
+    def label_offset(self) -> float:
+        """
+        Offset from numbers in inches.
+        """
     @label_offset.setter
     def label_offset(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def major_div(self) -> int:
-        ...
+        """
+        Actual numbrer of major divisions
+        """
     @major_div.setter
     def major_div(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def major_div_nominal(self) -> int:
-        ...
+        """
+        Nominal value.
+        """
     @major_div_nominal.setter
     def major_div_nominal(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def major_tick_len(self) -> float:
-        ...
+        """
+        In inches.
+        """
     @major_tick_len.setter
     def major_tick_len(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def max(self) -> float:
-        ...
+        """
+        Axis min/max in data units.
+        """
     @max.setter
     def max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def min(self) -> float:
-        ...
+        """
+        Axis min/max in data units.
+        """
     @min.setter
     def min(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def minor_div(self) -> int:
-        ...
+        """
+        0 = auto choose.
+        """
     @minor_div.setter
     def minor_div(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def minor_div_max(self) -> int:
-        ...
+        """
+        Max number for auto choose.
+        """
     @minor_div_max.setter
     def minor_div_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def minor_tick_len(self) -> float:
-        ...
+        """
+        In inches.
+        """
     @minor_tick_len.setter
     def minor_tick_len(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def number_offset(self) -> float:
-        ...
+        """
+        Offset from axis line in inches.
+        """
     @number_offset.setter
     def number_offset(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def number_side(self) -> int:
-        ...
+        """
+        +1 = Draw to the side inside the graph, -1 = outside.
+        """
     @number_side.setter
     def number_side(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def places(self) -> int:
-        ...
+        """
+        Number of places after the decimal point to print.
+        """
     @places.setter
     def places(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def tick_max(self) -> float:
-        ...
+        """
+        Max tick location along axis in data units.
+        """
     @tick_max.setter
     def tick_max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def tick_min(self) -> float:
-        ...
+        """
+        Min tick location along axis in data units.
+        """
     @tick_min.setter
     def tick_min(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def tick_side(self) -> int:
-        ...
+        """
+        +1 = Draw on the side inside the graph, 0 = both (longer tick), -1 = outside.
+        """
     @tick_side.setter
     def tick_side(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def type(self) -> str:
+        """
+        Or 'LOG', or 'CUSTOM'
+        """
+    @type.setter
+    def type(self, arg1: str) -> None:
         ...
 class QpLegendStruct:
     """
     Fortran struct: qp_legend_struct
     """
-    draw_line: bool
-    draw_symbol: bool
-    draw_text: bool
     def __copy__(self) -> QpLegendStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpLegendStruct:
@@ -9458,20 +11203,50 @@ class QpLegendStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def line_length(self) -> float:
+    def draw_line(self) -> bool:
+        """
+        Draw lines?
+        """
+    @draw_line.setter
+    def draw_line(self, arg1: bool) -> None:
         ...
+    @property
+    def draw_symbol(self) -> bool:
+        """
+        Draw symbols?
+        """
+    @draw_symbol.setter
+    def draw_symbol(self, arg1: bool) -> None:
+        ...
+    @property
+    def draw_text(self) -> bool:
+        """
+        Draw text?
+        """
+    @draw_text.setter
+    def draw_text(self, arg1: bool) -> None:
+        ...
+    @property
+    def line_length(self) -> float:
+        """
+        Length of the line in points.
+        """
     @line_length.setter
     def line_length(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def row_spacing(self) -> float:
-        ...
+        """
+        Spacing between rows.
+        """
     @row_spacing.setter
     def row_spacing(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def text_offset(self) -> float:
-        ...
+        """
+        Horizontal offset in points between the line and the text.
+        """
     @text_offset.setter
     def text_offset(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -9574,7 +11349,9 @@ class QpSymbolStruct:
         ...
     @property
     def height(self) -> float:
-        ...
+        """
+        in points (same as text height)
+        """
     @height.setter
     def height(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -9756,25 +11533,33 @@ class RadInt1Struct:
         ...
     @property
     def lin_norm_emit_a(self) -> float:
-        ...
+        """
+        Running sum
+        """
     @lin_norm_emit_a.setter
     def lin_norm_emit_a(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def lin_norm_emit_b(self) -> float:
-        ...
+        """
+        Running sum
+        """
     @lin_norm_emit_b.setter
     def lin_norm_emit_b(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def lin_sig_E(self) -> float:
-        ...
+        """
+        Running sum
+        """
     @lin_sig_E.setter
     def lin_sig_E(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def n_steps(self) -> float:
-        ...
+        """
+        number of qromb steps needed
+        """
     @n_steps.setter
     def n_steps(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -9838,7 +11623,9 @@ class RadIntAllEleStruct:
         ...
     @property
     def branch(self) -> RadIntBranchStructAlloc1D:
-        ...
+        """
+        Array is indexed from 0
+        """
 class RadIntBranchStruct:
     """
     Fortran struct: rad_int_branch_struct
@@ -9859,7 +11646,9 @@ class RadIntBranchStruct:
         ...
     @property
     def ele(self) -> RadInt1StructAlloc1D:
-        ...
+        """
+        Array is indexed from 0
+        """
 class RadIntBranchStructAlloc1D:
     @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> RadIntBranchStruct:
@@ -9910,8 +11699,6 @@ class RadMapEleStruct:
     """
     Fortran struct: rad_map_ele_struct
     """
-    rm0: RadMapStruct
-    rm1: RadMapStruct
     stale: bool
     def __copy__(self) -> RadMapEleStruct:
         ...
@@ -9920,6 +11707,22 @@ class RadMapEleStruct:
     def __init__(self, rm0: RadMapStruct | None = None, rm1: RadMapStruct | None = None, stale: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def rm0(self) -> RadMapStruct:
+        """
+        Upstream half and downstream half matrices for an element.
+        """
+    @rm0.setter
+    def rm0(self, arg1: RadMapStruct) -> None:
+        ...
+    @property
+    def rm1(self) -> RadMapStruct:
+        """
+        Upstream half and downstream half matrices for an element.
+        """
+    @rm1.setter
+    def rm1(self, arg1: RadMapStruct) -> None:
         ...
 class RadMapStruct:
     """
@@ -9935,31 +11738,41 @@ class RadMapStruct:
         ...
     @property
     def damp_dmat(self) -> RealArray2D:
-        ...
+        """
+        damp_correction = xfer_mat_with_damping - xfer_mat_without_damping.
+        """
     @damp_dmat.setter
     def damp_dmat(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def ref_orb(self) -> RealArray1D:
-        ...
+        """
+        Reference point around which damp_mat is calculated.
+        """
     @ref_orb.setter
     def ref_orb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def stoc_mat(self) -> RealArray2D:
-        ...
+        """
+        Stochastic variance or 'kick' (Cholesky decomposed) matrix.
+        """
     @stoc_mat.setter
     def stoc_mat(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def xfer_damp_mat(self) -> RealArray2D:
-        ...
+        """
+        1st order matrix: xfer_no_damp_mat + xfer_damp_correction.
+        """
     @xfer_damp_mat.setter
     def xfer_damp_mat(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def xfer_damp_vec(self) -> RealArray1D:
-        ...
+        """
+        Transfer map with damping 0th order vector.
+        """
     @xfer_damp_vec.setter
     def xfer_damp_vec(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -10000,19 +11813,25 @@ class RamperLordStruct:
         ...
     @property
     def attrib_ptr(self) -> float | None:
-        ...
+        """
+        Pointer to attribute in this element.
+        """
     @attrib_ptr.setter
     def attrib_ptr(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ix_con(self) -> int:
-        ...
+        """
+        Index in lord%control%ramp(:) array
+        """
     @ix_con.setter
     def ix_con(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        Lord index
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -10111,7 +11930,9 @@ class RandomStateStruct:
         ...
     @property
     def engine(self) -> int:
-        ...
+        """
+        Params
+        """
     @engine.setter
     def engine(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -10123,7 +11944,9 @@ class RandomStateStruct:
         ...
     @property
     def gauss_sigma_cut(self) -> float:
-        ...
+        """
+        Only used if positive.
+        """
     @gauss_sigma_cut.setter
     def gauss_sigma_cut(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -10418,8 +12241,6 @@ class ResonanceHStruct:
     """
     Fortran struct: resonance_h_struct
     """
-    c_val: complex
-    id: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -10433,6 +12254,22 @@ class ResonanceHStruct:
     def __init__(self, id: str | None = None, c_val: complex | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def c_val(self) -> complex:
+        """
+        Resonance value
+        """
+    @c_val.setter
+    def c_val(self, arg1: complex) -> None:
+        ...
+    @property
+    def id(self) -> str:
+        """
+        6 digit ID. EG: '003100'
+        """
+    @id.setter
+    def id(self, arg1: str) -> None:
         ...
 class ResonanceHStructAlloc1D:
     @typing.overload
@@ -10494,13 +12331,17 @@ class RfEleStruct:
         ...
     @property
     def ds_step(self) -> float:
-        ...
+        """
+        length of a stair step.
+        """
     @ds_step.setter
     def ds_step(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def steps(self) -> RfStairStepStructAlloc1D:
-        ...
+        """
+        Energy stair step array indexed from zero.
+        """
 class RfStairStepStruct:
     """
     Fortran struct: rf_stair_step_struct
@@ -10521,55 +12362,73 @@ class RfStairStepStruct:
         ...
     @property
     def E_tot0(self) -> float:
-        ...
+        """
+        Reference energy in the drift region (before the kick point).
+        """
     @E_tot0.setter
     def E_tot0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def E_tot1(self) -> float:
-        ...
+        """
+        Reference energy after the kick point.
+        """
     @E_tot1.setter
     def E_tot1(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ix_step(self) -> int:
-        ...
+        """
+        Step index in ele%rf%steps(:) array
+        """
     @ix_step.setter
     def ix_step(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def p0c(self) -> float:
-        ...
+        """
+        Reference momentum in the drift region (before the kick point).
+        """
     @p0c.setter
     def p0c(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def p1c(self) -> float:
-        ...
+        """
+        Reference momentum after the kick point.
+        """
     @p1c.setter
     def p1c(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def s(self) -> float:
-        ...
+        """
+        S-position at the kick point relative to the beginning of the element.
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def s0(self) -> float:
-        ...
+        """
+        S-position at beginning of drift region relative to the beginning of the element.
+        """
     @s0.setter
     def s0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def scale(self) -> float:
-        ...
+        """
+        Scale for multipole kick at the kick point. Sum over all steps will be 1.
+        """
     @scale.setter
     def scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def time(self) -> float:
-        ...
+        """
+        Reference particle time at the kick point with respect to beginning of element.
+        """
     @time.setter
     def time(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -10736,7 +12595,6 @@ class SpaceChargeCommonStruct:
     Fortran struct: space_charge_common_struct
     """
     debug: bool
-    diagnostic_output_file: str
     lsc_kick_transverse_dependence: bool
     def __copy__(self) -> SpaceChargeCommonStruct:
         ...
@@ -10748,85 +12606,121 @@ class SpaceChargeCommonStruct:
         ...
     @property
     def abs_tol_tracking(self) -> float:
-        ...
+        """
+        Absolute tolerance for tracking.
+        """
     @abs_tol_tracking.setter
     def abs_tol_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def beam_chamber_height(self) -> float:
-        ...
+        """
+        Used in shielding calculation.
+        """
     @beam_chamber_height.setter
     def beam_chamber_height(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def cathode_strength_cutoff(self) -> float:
-        ...
+        """
+        Cutoff for the cathode field calc.
+        """
     @cathode_strength_cutoff.setter
     def cathode_strength_cutoff(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def csr3d_mesh_size(self) -> IntArray1D:
-        ...
+        """
+        Gird size for CSR.
+        """
     @csr3d_mesh_size.setter
     def csr3d_mesh_size(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
-    def ds_track_step(self) -> float:
+    def diagnostic_output_file(self) -> str:
+        """
+        If non-blank write a diagnostic (EG wake) file
+        """
+    @diagnostic_output_file.setter
+    def diagnostic_output_file(self, arg1: str) -> None:
         ...
+    @property
+    def ds_track_step(self) -> float:
+        """
+        CSR tracking step size
+        """
     @ds_track_step.setter
     def ds_track_step(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def dt_track_step(self) -> float:
-        ...
+        """
+        Time Runge kutta initial step.
+        """
     @dt_track_step.setter
     def dt_track_step(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def lsc_sigma_cutoff(self) -> float:
-        ...
+        """
+        Cutoff for the 1-dim longitudinal SC calc. If a bin sigma is < cutoff * sigma_ave then ignore.
+        """
     @lsc_sigma_cutoff.setter
     def lsc_sigma_cutoff(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def n_bin(self) -> int:
-        ...
+        """
+        Number of bins used
+        """
     @n_bin.setter
     def n_bin(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_shield_images(self) -> int:
-        ...
+        """
+        Chamber wall shielding. 0 = no shielding.
+        """
     @n_shield_images.setter
     def n_shield_images(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def particle_bin_span(self) -> int:
-        ...
+        """
+        Longitudinal particle length / dz_bin
+        """
     @particle_bin_span.setter
     def particle_bin_span(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def particle_sigma_cutoff(self) -> float:
-        ...
+        """
+        3D SC calc cutoff for particles with (x,y,z) position far from the center. Negative or zero means ignore.
+        """
     @particle_sigma_cutoff.setter
     def particle_sigma_cutoff(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def rel_tol_tracking(self) -> float:
-        ...
+        """
+        Relative tolerance for tracking.
+        """
     @rel_tol_tracking.setter
     def rel_tol_tracking(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def sc_min_in_bin(self) -> int:
-        ...
+        """
+        Minimum number of particles in a bin for sigmas to be valid.
+        """
     @sc_min_in_bin.setter
     def sc_min_in_bin(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def space_charge_mesh_size(self) -> IntArray1D:
-        ...
+        """
+        Gird size for fft_3d space charge calc.
+        """
     @space_charge_mesh_size.setter
     def space_charge_mesh_size(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
@@ -10844,19 +12738,25 @@ class SpinAxisStruct:
         ...
     @property
     def l(self) -> RealArray1D:
-        ...
+        """
+        Transverse axis.
+        """
     @l.setter
     def l(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def m(self) -> RealArray1D:
-        ...
+        """
+        Transverse axis.
+        """
     @m.setter
     def m(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def n0(self) -> RealArray1D:
-        ...
+        """
+        Invariant spin axis on closed orbit.
+        """
     @n0.setter
     def n0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -10945,19 +12845,25 @@ class SpinOrbitMap1Struct:
         ...
     @property
     def orb_mat(self) -> RealArray2D:
-        ...
+        """
+        Orbital matrix
+        """
     @orb_mat.setter
     def orb_mat(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def spin_q(self) -> RealArray2D:
-        ...
+        """
+        0th and 1st order quaternion spin map
+        """
     @spin_q.setter
     def spin_q(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def vec0(self) -> RealArray1D:
-        ...
+        """
+        Orbital 0th order map: r_out = mat6 * r_in + vec0
+        """
     @vec0.setter
     def vec0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -11021,7 +12927,9 @@ class SpinPolarStruct:
         ...
     @property
     def phi(self) -> float:
-        ...
+        """
+        Spherical coords: Angle in (x,y) plane.
+        """
     @phi.setter
     def phi(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -11033,13 +12941,17 @@ class SpinPolarStruct:
         ...
     @property
     def theta(self) -> float:
-        ...
+        """
+        Spherical coords: Angle from z-axis.
+        """
     @theta.setter
     def theta(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def xi(self) -> float:
-        ...
+        """
+        Spinor phase angle (See Bmad manual).
+        """
     @xi.setter
     def xi(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -11111,25 +13023,33 @@ class SplineStruct:
         ...
     @property
     def coef(self) -> RealArray1D:
-        ...
+        """
+        coefficients for cubic spline
+        """
     @coef.setter
     def coef(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def x0(self) -> float:
-        ...
+        """
+        Point at start of spline
+        """
     @x0.setter
     def x0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x1(self) -> float:
-        ...
+        """
+        Point at end of spline
+        """
     @x1.setter
     def x1(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y0(self) -> float:
-        ...
+        """
+        Point at start of spline
+        """
     @y0.setter
     def y0(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -11227,43 +13147,57 @@ class StrongBeamStruct:
         ...
     @property
     def dx(self) -> float:
-        ...
+        """
+        Particle - beam slice distance.
+        """
     @dx.setter
     def dx(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def dy(self) -> float:
-        ...
+        """
+        Particle - beam slice distance.
+        """
     @dy.setter
     def dy(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ix_slice(self) -> int:
-        ...
+        """
+        0 -> at element center and not at slice.
+        """
     @ix_slice.setter
     def ix_slice(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def x_center(self) -> float:
-        ...
+        """
+        Strong beam slice center.
+        """
     @x_center.setter
     def x_center(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x_sigma(self) -> float:
-        ...
+        """
+        Strong beam slice sigma.
+        """
     @x_sigma.setter
     def x_sigma(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y_center(self) -> float:
-        ...
+        """
+        Strong beam slice center.
+        """
     @y_center.setter
     def y_center(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y_sigma(self) -> float:
-        ...
+        """
+        Strong beam slice sigma.
+        """
     @y_sigma.setter
     def y_sigma(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -11279,7 +13213,6 @@ class SummationRdtStruct:
     h10002: complex
     h10020: complex
     h10110: complex
-    h10200: complex
     h11001: complex
     h11110: complex
     h11200: complex
@@ -11305,6 +13238,14 @@ class SummationRdtStruct:
     def __init__(self, h11001: complex | None = None, h00111: complex | None = None, h20001: complex | None = None, h00201: complex | None = None, h10002: complex | None = None, h21000: complex | None = None, h30000: complex | None = None, h10110: complex | None = None, h10020: complex | None = None, h10200: complex | None = None, h31000: complex | None = None, h40000: complex | None = None, h20110: complex | None = None, h11200: complex | None = None, h20020: complex | None = None, h20200: complex | None = None, h00310: complex | None = None, h00400: complex | None = None, h22000: complex | None = None, h00220: complex | None = None, h11110: complex | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def h10200(self) -> complex:
+        """
+        2nd order in K2 moments
+        """
+    @h10200.setter
+    def h10200(self, arg1: complex) -> None:
         ...
 class SummationRdtStructAlloc1D:
     @typing.overload
@@ -11387,7 +13328,6 @@ class SurfaceCurvatureStruct:
     """
     Fortran struct: surface_curvature_struct
     """
-    has_curvature: bool
     def __copy__(self) -> SurfaceCurvatureStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceCurvatureStruct:
@@ -11398,9 +13338,19 @@ class SurfaceCurvatureStruct:
         ...
     @property
     def elliptical(self) -> RealArray1D:
-        ...
+        """
+        Total curvature = elliptical + spherical
+        """
     @elliptical.setter
     def elliptical(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
+        ...
+    @property
+    def has_curvature(self) -> bool:
+        """
+        Dependent var. Will be set by Bmad
+        """
+    @has_curvature.setter
+    def has_curvature(self, arg1: bool) -> None:
         ...
     @property
     def spherical(self) -> float:
@@ -11446,13 +13396,17 @@ class SurfaceDisplacementPtStruct:
         ...
     @property
     def x0(self) -> float:
-        ...
+        """
+        Position at center
+        """
     @x0.setter
     def x0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y0(self) -> float:
-        ...
+        """
+        Position at center
+        """
     @y0.setter
     def y0(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -11540,37 +13494,49 @@ class SurfaceHMisalignPtStruct:
         ...
     @property
     def rot_t(self) -> float:
-        ...
+        """
+        rot_t = x-rotation for Bragg and z-rotation for Laue.
+        """
     @rot_t.setter
     def rot_t(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def rot_t_rms(self) -> float:
-        ...
+        """
+        rot_t = x-rotation for Bragg and z-rotation for Laue.
+        """
     @rot_t_rms.setter
     def rot_t_rms(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def rot_y(self) -> float:
-        ...
+        """
+        rot_t = x-rotation for Bragg and z-rotation for Laue.
+        """
     @rot_y.setter
     def rot_y(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def rot_y_rms(self) -> float:
-        ...
+        """
+        rot_t = x-rotation for Bragg and z-rotation for Laue.
+        """
     @rot_y_rms.setter
     def rot_y_rms(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x0(self) -> float:
-        ...
+        """
+        Position at center
+        """
     @x0.setter
     def x0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y0(self) -> float:
-        ...
+        """
+        Position at center
+        """
     @y0.setter
     def y0(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -11635,31 +13601,41 @@ class SurfaceSegmentedPtStruct:
         ...
     @property
     def dz_dx(self) -> float:
-        ...
+        """
+        Slope at center
+        """
     @dz_dx.setter
     def dz_dx(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def dz_dy(self) -> float:
-        ...
+        """
+        Slope at center
+        """
     @dz_dy.setter
     def dz_dy(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x0(self) -> float:
-        ...
+        """
+        Position at center
+        """
     @x0.setter
     def x0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y0(self) -> float:
-        ...
+        """
+        Position at center
+        """
     @y0.setter
     def y0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def z0(self) -> float:
-        ...
+        """
+        Position at center
+        """
     @z0.setter
     def z0(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -11734,12 +13710,7 @@ class TaoBeamBranchStruct:
     """
     Fortran struct: tao_beam_branch_struct
     """
-    beam_at_start: BeamStruct
-    beam_init: BeamInitStruct
-    beam_init_used: BeamInitStruct
-    init_starting_distribution: bool
     track_end: str
-    track_start: str
     def __copy__(self) -> TaoBeamBranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBeamBranchStruct:
@@ -11749,22 +13720,68 @@ class TaoBeamBranchStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ix_branch(self) -> int:
+    def beam_at_start(self) -> BeamStruct:
+        """
+        Initial beam
+        """
+    @beam_at_start.setter
+    def beam_at_start(self, arg1: BeamStruct) -> None:
         ...
+    @property
+    def beam_init(self) -> BeamInitStruct:
+        """
+        User set beam distrubution at track start.
+        """
+    @beam_init.setter
+    def beam_init(self, arg1: BeamInitStruct) -> None:
+        ...
+    @property
+    def beam_init_used(self) -> BeamInitStruct:
+        """
+        beam distribution with emit values set.
+        """
+    @beam_init_used.setter
+    def beam_init_used(self, arg1: BeamInitStruct) -> None:
+        ...
+    @property
+    def init_starting_distribution(self) -> bool:
+        """
+        Init beam
+        """
+    @init_starting_distribution.setter
+    def init_starting_distribution(self, arg1: bool) -> None:
+        ...
+    @property
+    def ix_branch(self) -> int:
+        """
+        Branch tracked. If track_start or track_end is a lord, ix_track_start/end index will be a index of slave.
+        """
     @ix_branch.setter
     def ix_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_track_end(self) -> int:
-        ...
+        """
+        Element track end index
+        """
     @ix_track_end.setter
     def ix_track_end(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_track_start(self) -> int:
-        ...
+        """
+        Element track start index.
+        """
     @ix_track_start.setter
     def ix_track_start(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def track_start(self) -> str:
+        """
+        Tracking start element.
+        """
+    @track_start.setter
+    def track_start(self, arg1: str) -> None:
         ...
 class TaoBeamUniStruct:
     """
@@ -11774,7 +13791,6 @@ class TaoBeamUniStruct:
     dump_at: str
     dump_file: str
     saved_at: str
-    track_beam_in_universe: bool
     def __copy__(self) -> TaoBeamUniStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBeamUniStruct:
@@ -11782,6 +13798,14 @@ class TaoBeamUniStruct:
     def __init__(self, saved_at: str | None = None, dump_file: str | None = None, dump_at: str | None = None, track_beam_in_universe: bool | None = None, always_reinit: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def track_beam_in_universe(self) -> bool:
+        """
+        Beam tracking enabled in this universe?
+        """
+    @track_beam_in_universe.setter
+    def track_beam_in_universe(self, arg1: bool) -> None:
         ...
 class TaoBuildingWallOrientationStruct:
     """
@@ -11833,31 +13857,41 @@ class TaoBuildingWallPointStruct:
         ...
     @property
     def radius(self) -> float:
-        ...
+        """
+        Arc radius. +r -> CW rotation, same as bends.
+        """
     @radius.setter
     def radius(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x(self) -> float:
-        ...
+        """
+        Global floor position
+        """
     @x.setter
     def x(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x_center(self) -> float:
-        ...
+        """
+        Arc center.
+        """
     @x_center.setter
     def x_center(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def z(self) -> float:
-        ...
+        """
+        Global floor position
+        """
     @z.setter
     def z(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def z_center(self) -> float:
-        ...
+        """
+        Arc center.
+        """
     @z_center.setter
     def z_center(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -11911,7 +13945,6 @@ class TaoBuildingWallSectionStruct:
     """
     Fortran struct: tao_building_wall_section_struct
     """
-    constraint: str
     name: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
@@ -11926,6 +13959,14 @@ class TaoBuildingWallSectionStruct:
     def __init__(self, name: str | None = None, constraint: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def constraint(self) -> str:
+        """
+        'left_side' or 'right_side' constraint.
+        """
+    @constraint.setter
+    def constraint(self, arg1: str) -> None:
         ...
     @property
     def point(self) -> ...:
@@ -11996,7 +14037,6 @@ class TaoCmdHistoryStruct:
     """
     Fortran struct: tao_cmd_history_struct
     """
-    cmd: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -12012,8 +14052,18 @@ class TaoCmdHistoryStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ix(self) -> int:
+    def cmd(self) -> str:
+        """
+        The command
+        """
+    @cmd.setter
+    def cmd(self, arg1: str) -> None:
         ...
+    @property
+    def ix(self) -> int:
+        """
+        Command index (1st command has ix = 1, etc.) Note: Commands from command files will be assigned an index.
+        """
     @ix.setter
     def ix(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -12067,31 +14117,13 @@ class TaoCommonStruct:
     """
     Fortran struct: tao_common_struct
     """
-    add_measurement_noise: bool
     all_merit_weights_positive: bool
-    cmd: str
     cmd_file_paused: bool
-    cmd_from_cmd_file: bool
     combine_consecutive_elements_of_like_name: bool
-    command_arg_has_been_executed: bool
-    force_chrom_calc: bool
-    force_rad_int_calc: bool
     have_datums_using_expressions: bool
-    have_tracked_beam: bool
-    init_beam: bool
-    init_plot_needed: bool
-    init_read_lat_info: bool
-    init_var: bool
-    lattice_calc_done: bool
-    multi_turn_orbit_is_plotted: bool
     optimizer_running: bool
-    print_to_terminal: bool
-    rad_int_6d_calc_on: bool
-    rad_int_ri_calc_on: bool
-    saved_cmd_line: str
     single_mode: bool
     single_mode_buffer: str
-    use_cmd_here: bool
     use_saved_beam_in_tracking: bool
     def __copy__(self) -> TaoCommonStruct:
         ...
@@ -12102,16 +14134,50 @@ class TaoCommonStruct:
     def __repr__(self) -> str:
         ...
     @property
+    def add_measurement_noise(self) -> bool:
+        """
+        Turn off to take data derivatives.
+        """
+    @add_measurement_noise.setter
+    def add_measurement_noise(self, arg1: bool) -> None:
+        ...
+    @property
     def alpha(self) -> RealArray2D:
         ...
     @alpha.setter
     def alpha(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
-    def cmd_file_level(self) -> int:
+    def cmd(self) -> str:
+        """
+        Used for the cmd history
+        """
+    @cmd.setter
+    def cmd(self, arg1: str) -> None:
         ...
+    @property
+    def cmd_file_level(self) -> int:
+        """
+        For nested command files. 0 -> no command file.
+        """
     @cmd_file_level.setter
     def cmd_file_level(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def cmd_from_cmd_file(self) -> bool:
+        """
+        was command from a command file?
+        """
+    @cmd_from_cmd_file.setter
+    def cmd_from_cmd_file(self, arg1: bool) -> None:
+        ...
+    @property
+    def command_arg_has_been_executed(self) -> bool:
+        """
+        Has the -command command line argument been executed?
+        """
+    @command_arg_has_been_executed.setter
+    def command_arg_has_been_executed(self, arg1: bool) -> None:
         ...
     @property
     def covar(self) -> RealArray2D:
@@ -12121,39 +14187,123 @@ class TaoCommonStruct:
         ...
     @property
     def dummy_target(self) -> float:
-        ...
+        """
+        Dummy varaible
+        """
     @dummy_target.setter
     def dummy_target(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def is_err_message_printed(self) -> BoolArray1D:
+    def force_chrom_calc(self) -> bool:
+        """
+        Used by a routine to force a single chromaticity calculation.
+        """
+    @force_chrom_calc.setter
+    def force_chrom_calc(self, arg1: bool) -> None:
         ...
+    @property
+    def force_rad_int_calc(self) -> bool:
+        """
+        Used by a routine to force a single radiation integrals calculation
+        """
+    @force_rad_int_calc.setter
+    def force_rad_int_calc(self, arg1: bool) -> None:
+        ...
+    @property
+    def have_tracked_beam(self) -> bool:
+        """
+        Used to catch error when beam plotting without having tracked a beam.
+        """
+    @have_tracked_beam.setter
+    def have_tracked_beam(self, arg1: bool) -> None:
+        ...
+    @property
+    def init_beam(self) -> bool:
+        """
+        Used by custom programs to control Tao init
+        """
+    @init_beam.setter
+    def init_beam(self, arg1: bool) -> None:
+        ...
+    @property
+    def init_plot_needed(self) -> bool:
+        """
+        reinitialize plotting?
+        """
+    @init_plot_needed.setter
+    def init_plot_needed(self, arg1: bool) -> None:
+        ...
+    @property
+    def init_read_lat_info(self) -> bool:
+        """
+        Used by custom programs to control Tao init
+        """
+    @init_read_lat_info.setter
+    def init_read_lat_info(self, arg1: bool) -> None:
+        ...
+    @property
+    def init_var(self) -> bool:
+        """
+        Used by custom programs to control Tao init
+        """
+    @init_var.setter
+    def init_var(self, arg1: bool) -> None:
+        ...
+    @property
+    def is_err_message_printed(self) -> BoolArray1D:
+        """
+        Used by tao_set_invalid
+        """
     @is_err_message_printed.setter
     def is_err_message_printed(self, arg1: collections.abc.Sequence[bool]) -> None:
         ...
     @property
     def ix_beam_track_active_element(self) -> int:
-        ...
+        """
+        Element being tracked through `tao_beam_track`.
+        """
     @ix_beam_track_active_element.setter
     def ix_beam_track_active_element(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_history(self) -> int:
-        ...
+        """
+        Index to latest command in the history circular buffer.
+        """
     @ix_history.setter
     def ix_history(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_key_bank(self) -> int:
-        ...
+        """
+        For single mode.
+        """
     @ix_key_bank.setter
     def ix_key_bank(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def lev_loop(self) -> int:
+    def lattice_calc_done(self) -> bool:
+        """
+        Used by GUI for deciding when to refresh.
+        """
+    @lattice_calc_done.setter
+    def lattice_calc_done(self, arg1: bool) -> None:
         ...
+    @property
+    def lev_loop(self) -> int:
+        """
+        in do loop nest level
+        """
     @lev_loop.setter
     def lev_loop(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def multi_turn_orbit_is_plotted(self) -> bool:
+        """
+        Is a multi_turn_orbit being plotted?
+        """
+    @multi_turn_orbit_is_plotted.setter
+    def multi_turn_orbit_is_plotted(self, arg1: bool) -> None:
         ...
     @property
     def n_alias(self) -> int:
@@ -12163,13 +14313,17 @@ class TaoCommonStruct:
         ...
     @property
     def n_err_messages_printed(self) -> int:
-        ...
+        """
+        Used by tao_set_invalid to limit number of messages.
+        """
     @n_err_messages_printed.setter
     def n_err_messages_printed(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_history(self) -> int:
-        ...
+        """
+        Number of commands issued from beginning of starting Tao.
+        """
     @n_history.setter
     def n_history(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -12181,17 +14335,58 @@ class TaoCommonStruct:
         ...
     @property
     def plot_place_buffer(self) -> TaoPlotRegionStructAlloc1D:
+        """
+        Used when %external_plotting is on.
+        """
+    @property
+    def print_to_terminal(self) -> bool:
+        """
+        Print command prompt to the terminal? For use with GUIs.
+        """
+    @print_to_terminal.setter
+    def print_to_terminal(self, arg1: bool) -> None:
+        ...
+    @property
+    def rad_int_6d_calc_on(self) -> bool:
+        """
+        6D Radiation integrals calculation on/off.
+        """
+    @rad_int_6d_calc_on.setter
+    def rad_int_6d_calc_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def rad_int_ri_calc_on(self) -> bool:
+        """
+        'Classical' radiation integrals calculation on/off.
+        """
+    @rad_int_ri_calc_on.setter
+    def rad_int_ri_calc_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def saved_cmd_line(self) -> str:
+        """
+        Saved part of command line when there are mulitple commands on a line
+        """
+    @saved_cmd_line.setter
+    def saved_cmd_line(self, arg1: str) -> None:
+        ...
+    @property
+    def use_cmd_here(self) -> bool:
+        """
+        Used for commands recalled from the cmd history stack
+        """
+    @use_cmd_here.setter
+    def use_cmd_here(self, arg1: bool) -> None:
         ...
     @property
     def valid_plot_who(self) -> FCharArray1D:
-        ...
+        """
+        model, base, ref etc...
+        """
 class TaoCurveColorStruct:
     """
     Fortran struct: tao_curve_color_struct
     """
-    autoscale: bool
-    data_type: str
-    is_on: bool
     def __copy__(self) -> TaoCurveColorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCurveColorStruct:
@@ -12201,14 +14396,42 @@ class TaoCurveColorStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def max(self) -> float:
+    def autoscale(self) -> bool:
+        """
+        Set %min, %max automatically to the limits of %data_type
+        """
+    @autoscale.setter
+    def autoscale(self, arg1: bool) -> None:
         ...
+    @property
+    def data_type(self) -> str:
+        """
+        Datum type to use for z-axis.
+        """
+    @data_type.setter
+    def data_type(self, arg1: str) -> None:
+        ...
+    @property
+    def is_on(self) -> bool:
+        """
+        On/Off
+        """
+    @is_on.setter
+    def is_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def max(self) -> float:
+        """
+        Min and max values for mapping z-axis to color.
+        """
     @max.setter
     def max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def min(self) -> float:
-        ...
+        """
+        Min and max values for mapping z-axis to color.
+        """
     @min.setter
     def min(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -12226,19 +14449,25 @@ class TaoCurveOrbitStruct:
         ...
     @property
     def t(self) -> float:
-        ...
+        """
+        Time
+        """
     @t.setter
     def t(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x(self) -> float:
-        ...
+        """
+        Transverse offset
+        """
     @x.setter
     def x(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y(self) -> float:
-        ...
+        """
+        Transverse offset
+        """
     @y.setter
     def y(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -12260,27 +14489,7 @@ class TaoCurveStruct:
     """
     Fortran struct: tao_curve_struct
     """
-    component: str
-    data_index: str
-    data_source: str
-    data_type: str
-    data_type_x: str
-    draw_error_bars: bool
-    draw_line: bool
-    draw_symbol_index: bool
-    draw_symbols: bool
-    ele_ref_name: str
     hist: TaoHistogramStruct
-    legend_text: str
-    line: QpLineStruct
-    message_text: str
-    name: str
-    orbit: TaoCurveOrbitStruct
-    smooth_line_calc: bool
-    symbol: QpSymbolStruct
-    use_y2: bool
-    valid: bool
-    why_invalid: str
     z_color: TaoCurveColorStruct
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
@@ -12297,14 +14506,98 @@ class TaoCurveStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def err_symb(self) -> RealAlloc1D:
+    def component(self) -> str:
+        """
+        Who to plot. Eg: 'meas - design'
+        """
+    @component.setter
+    def component(self, arg1: str) -> None:
         ...
+    @property
+    def data_index(self) -> str:
+        """
+        Used for calculating %ix_symb(:).
+        """
+    @data_index.setter
+    def data_index(self, arg1: str) -> None:
+        ...
+    @property
+    def data_source(self) -> str:
+        """
+        'lat', 'beam', 'data' (deprecated: 'dat'), 'var', 'multi_turn_orbit'
+        """
+    @data_source.setter
+    def data_source(self, arg1: str) -> None:
+        ...
+    @property
+    def data_type(self) -> str:
+        """
+        'orbit.x', etc.
+        """
+    @data_type.setter
+    def data_type(self, arg1: str) -> None:
+        ...
+    @property
+    def data_type_x(self) -> str:
+        """
+        Used for data slices and phase space plots.
+        """
+    @data_type_x.setter
+    def data_type_x(self, arg1: str) -> None:
+        ...
+    @property
+    def draw_error_bars(self) -> bool:
+        """
+        Draw error bars based upon data%error_rms if drawing data? !! logical :: draw_rms = .false.          ! Show mean and RMS values with legend?
+        """
+    @draw_error_bars.setter
+    def draw_error_bars(self, arg1: bool) -> None:
+        ...
+    @property
+    def draw_line(self) -> bool:
+        """
+        Draw a line through the data points?
+        """
+    @draw_line.setter
+    def draw_line(self, arg1: bool) -> None:
+        ...
+    @property
+    def draw_symbol_index(self) -> bool:
+        """
+        Draw the symbol index number curve%ix_symb?
+        """
+    @draw_symbol_index.setter
+    def draw_symbol_index(self, arg1: bool) -> None:
+        ...
+    @property
+    def draw_symbols(self) -> bool:
+        """
+        Draw a symbol at the data points?
+        """
+    @draw_symbols.setter
+    def draw_symbols(self, arg1: bool) -> None:
+        ...
+    @property
+    def ele_ref_name(self) -> str:
+        """
+        Reference element.
+        """
+    @ele_ref_name.setter
+    def ele_ref_name(self, arg1: str) -> None:
+        ...
+    @property
+    def err_symb(self) -> RealAlloc1D:
+        """
+        Error bars
+        """
     @err_symb.setter
     def err_symb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def g(self) -> TaoGraphStruct | None:
-        ...
+        """
+        pointer to parent graph
+        """
     @g.setter
     def g(self, arg1: TaoGraphStruct) -> None:
         ...
@@ -12316,67 +14609,169 @@ class TaoCurveStruct:
         ...
     @property
     def ix_bunch(self) -> int:
-        ...
+        """
+        Bunch to plot.
+        """
     @ix_bunch.setter
     def ix_bunch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_line(self) -> IntAlloc1D:
-        ...
+        """
+        Used by wave and aperture curves.
+        """
     @ix_line.setter
     def ix_line(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
     def ix_symb(self) -> IntAlloc1D:
-        ...
+        """
+        Corresponding index in d1_data%d(:) array.
+        """
     @ix_symb.setter
     def ix_symb(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     @property
     def ix_universe(self) -> int:
-        ...
+        """
+        Universe where data is. -1 => use s%global%default_universe
+        """
     @ix_universe.setter
     def ix_universe(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def n_turn(self) -> int:
+    def legend_text(self) -> str:
+        """
+        String to draw in a curve legend.
+        """
+    @legend_text.setter
+    def legend_text(self, arg1: str) -> None:
         ...
+    @property
+    def line(self) -> QpLineStruct:
+        """
+        Line attributes
+        """
+    @line.setter
+    def line(self, arg1: QpLineStruct) -> None:
+        ...
+    @property
+    def message_text(self) -> str:
+        """
+        Informational message to draw with graph.
+        """
+    @message_text.setter
+    def message_text(self, arg1: str) -> None:
+        ...
+    @property
+    def n_turn(self) -> int:
+        """
+        Used for multi_turn_orbit plotting
+        """
     @n_turn.setter
     def n_turn(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def symb_size(self) -> RealAlloc1D:
+    def name(self) -> str:
+        """
+        Name identifying the curve.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
         ...
+    @property
+    def orbit(self) -> TaoCurveOrbitStruct:
+        """
+        Used for E/B field plotting.
+        """
+    @orbit.setter
+    def orbit(self, arg1: TaoCurveOrbitStruct) -> None:
+        ...
+    @property
+    def smooth_line_calc(self) -> bool:
+        """
+        Calculate data between element edge points?
+        """
+    @smooth_line_calc.setter
+    def smooth_line_calc(self, arg1: bool) -> None:
+        ...
+    @property
+    def symb_size(self) -> RealAlloc1D:
+        """
+        Symbol size. Used with symbol_size_scale.
+        """
     @symb_size.setter
     def symb_size(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def symbol_every(self) -> int:
+    def symbol(self) -> QpSymbolStruct:
+        """
+        Symbol attributes
+        """
+    @symbol.setter
+    def symbol(self, arg1: QpSymbolStruct) -> None:
         ...
+    @property
+    def symbol_every(self) -> int:
+        """
+        Symbol every how many points.
+        """
     @symbol_every.setter
     def symbol_every(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def x_line(self) -> RealAlloc1D:
+    def use_y2(self) -> bool:
+        """
+        Use y2 axis?
+        """
+    @use_y2.setter
+    def use_y2(self, arg1: bool) -> None:
         ...
+    @property
+    def valid(self) -> bool:
+        """
+        valid data?
+        """
+    @valid.setter
+    def valid(self, arg1: bool) -> None:
+        ...
+    @property
+    def why_invalid(self) -> str:
+        """
+        Informative string to print.
+        """
+    @why_invalid.setter
+    def why_invalid(self, arg1: str) -> None:
+        ...
+    @property
+    def x_line(self) -> RealAlloc1D:
+        """
+        Coords for drawing a curve
+        """
     @x_line.setter
     def x_line(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def x_symb(self) -> RealAlloc1D:
-        ...
+        """
+        Coords for drawing the symbols
+        """
     @x_symb.setter
     def x_symb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def y2_line(self) -> RealAlloc1D:
-        ...
+        """
+        Second array needed for beam chamber curve.
+        """
     @y2_line.setter
     def y2_line(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def y_axis_scale_factor(self) -> float:
-        ...
+        """
+        y-axis conversion from internal to plotting units.
+        """
     @y_axis_scale_factor.setter
     def y_axis_scale_factor(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -12394,7 +14789,9 @@ class TaoCurveStruct:
         ...
     @property
     def z_symb(self) -> RealAlloc1D:
-        ...
+        """
+        Symbol color
+        """
     @z_symb.setter
     def z_symb(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -12448,7 +14845,6 @@ class TaoD1DataStruct:
     """
     Fortran struct: tao_d1_data_struct
     """
-    name: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -12465,12 +14861,24 @@ class TaoD1DataStruct:
         ...
     @property
     def d(self) -> ...:
-        ...
+        """
+        Pointer to the appropriate section in u%data
+        """
     @property
     def d2(self) -> TaoD2DataStruct | None:
-        ...
+        """
+        ptr to parent d2_data
+        """
     @d2.setter
     def d2(self, arg1: TaoD2DataStruct) -> None:
+        ...
+    @property
+    def name(self) -> str:
+        """
+        Eg: 'x', etc.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
         ...
 class TaoD1DataStructAlloc1D:
     @typing.overload
@@ -12522,13 +14930,6 @@ class TaoD2DataStruct:
     """
     Fortran struct: tao_d2_data_struct
     """
-    data_date: str
-    data_file_name: str
-    data_read_in: bool
-    name: str
-    ref_date: str
-    ref_file_name: str
-    ref_read_in: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -12545,27 +14946,93 @@ class TaoD2DataStruct:
         ...
     @property
     def d1(self) -> TaoD1DataStructAlloc1D:
+        """
+        Points to children
+        """
+    @property
+    def data_date(self) -> str:
+        """
+        Data measurement date.
+        """
+    @data_date.setter
+    def data_date(self, arg1: str) -> None:
+        ...
+    @property
+    def data_file_name(self) -> str:
+        """
+        Data file name .
+        """
+    @data_file_name.setter
+    def data_file_name(self, arg1: str) -> None:
+        ...
+    @property
+    def data_read_in(self) -> bool:
+        """
+        A data set has been read in?
+        """
+    @data_read_in.setter
+    def data_read_in(self, arg1: bool) -> None:
         ...
     @property
     def descrip(self) -> FCharArray1D:
-        ...
+        """
+        Array for descriptive information.
+        """
     @property
     def ix_d2_data(self) -> int:
-        ...
+        """
+        Index in u%d2_data(:) array.
+        """
     @ix_d2_data.setter
     def ix_d2_data(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ref(self) -> int:
-        ...
+        """
+        Index of the reference data set.
+        """
     @ix_ref.setter
     def ix_ref(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_universe(self) -> int:
-        ...
+        """
+        Index of universe this is in.
+        """
     @ix_universe.setter
     def ix_universe(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def name(self) -> str:
+        """
+        Name to be used with commands.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
+        ...
+    @property
+    def ref_date(self) -> str:
+        """
+        Reference data measurement date.
+        """
+    @ref_date.setter
+    def ref_date(self, arg1: str) -> None:
+        ...
+    @property
+    def ref_file_name(self) -> str:
+        """
+        Reference file name.
+        """
+    @ref_file_name.setter
+    def ref_file_name(self, arg1: str) -> None:
+        ...
+    @property
+    def ref_read_in(self) -> bool:
+        """
+        A reference data set has been read in?
+        """
+    @ref_read_in.setter
+    def ref_read_in(self, arg1: bool) -> None:
         ...
 class TaoD2DataStructAlloc1D:
     @typing.overload
@@ -12617,27 +15084,7 @@ class TaoDataStruct:
     """
     Fortran struct: tao_data_struct
     """
-    data_source: str
-    data_type: str
-    ele_name: str
-    ele_ref_name: str
-    ele_start_name: str
-    err_message_printed: bool
-    exists: bool
-    good_base: bool
-    good_design: bool
-    good_meas: bool
-    good_model: bool
-    good_opt: bool
-    good_plot: bool
-    good_ref: bool
-    good_user: bool
-    id: str
-    merit_type: str
     spin_map: TaoSpinMapStruct
-    useit_opt: bool
-    useit_plot: bool
-    why_invalid: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -12654,159 +15101,371 @@ class TaoDataStruct:
         ...
     @property
     def base_value(self) -> float:
-        ...
+        """
+        The value as calculated from the base model.
+        """
     @base_value.setter
     def base_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def d1(self) -> TaoD1DataStruct | None:
-        ...
+        """
+        Pointer to the parent d1_data_struct
+        """
     @d1.setter
     def d1(self, arg1: TaoD1DataStruct) -> None:
         ...
     @property
-    def delta_merit(self) -> float:
+    def data_source(self) -> str:
+        """
+        'lat', 'beam', 'data' or 'var'. Last two used for expressions.
+        """
+    @data_source.setter
+    def data_source(self, arg1: str) -> None:
         ...
+    @property
+    def data_type(self) -> str:
+        """
+        Type of data: 'orbit.x', etc.
+        """
+    @data_type.setter
+    def data_type(self, arg1: str) -> None:
+        ...
+    @property
+    def delta_merit(self) -> float:
+        """
+        Diff used to calculate the merit function term.
+        """
     @delta_merit.setter
     def delta_merit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def design_value(self) -> float:
-        ...
+        """
+        What the datum value is in the design lattice.
+        """
     @design_value.setter
     def design_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def error_rms(self) -> float:
+    def ele_name(self) -> str:
+        """
+        Name of the lattice element where datum is evaluated.
+        """
+    @ele_name.setter
+    def ele_name(self, arg1: str) -> None:
         ...
+    @property
+    def ele_ref_name(self) -> str:
+        """
+        Name of reference lattice element
+        """
+    @ele_ref_name.setter
+    def ele_ref_name(self, arg1: str) -> None:
+        ...
+    @property
+    def ele_start_name(self) -> str:
+        """
+        Name of starting lattice element when there is a range
+        """
+    @ele_start_name.setter
+    def ele_start_name(self, arg1: str) -> None:
+        ...
+    @property
+    def err_message_printed(self) -> bool:
+        """
+        Used to prevent zillions of error messages being generated
+        """
+    @err_message_printed.setter
+    def err_message_printed(self, arg1: bool) -> None:
+        ...
+    @property
+    def error_rms(self) -> float:
+        """
+        Measurement error RMS. Used in plotting.
+        """
     @error_rms.setter
     def error_rms(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def eval_point(self) -> int:
-        ...
+        """
+        or anchor_center$, anchor_beginning$. Where to evaluate data relative to the element.
+        """
     @eval_point.setter
     def eval_point(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def invalid_value(self) -> float:
+    def exists(self) -> bool:
+        """
+        See above
+        """
+    @exists.setter
+    def exists(self, arg1: bool) -> None:
         ...
+    @property
+    def good_base(self) -> bool:
+        """
+        See above
+        """
+    @good_base.setter
+    def good_base(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_design(self) -> bool:
+        """
+        See above
+        """
+    @good_design.setter
+    def good_design(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_meas(self) -> bool:
+        """
+        See above
+        """
+    @good_meas.setter
+    def good_meas(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_model(self) -> bool:
+        """
+        See above
+        """
+    @good_model.setter
+    def good_model(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_opt(self) -> bool:
+        """
+        See above
+        """
+    @good_opt.setter
+    def good_opt(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_plot(self) -> bool:
+        """
+        See above
+        """
+    @good_plot.setter
+    def good_plot(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_ref(self) -> bool:
+        """
+        See above
+        """
+    @good_ref.setter
+    def good_ref(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_user(self) -> bool:
+        """
+        See above
+        """
+    @good_user.setter
+    def good_user(self, arg1: bool) -> None:
+        ...
+    @property
+    def id(self) -> str:
+        """
+        Used by Tao extension code. Not used by Tao directly.
+        """
+    @id.setter
+    def id(self, arg1: str) -> None:
+        ...
+    @property
+    def invalid_value(self) -> float:
+        """
+        Value used in merit calc if good_model = F (or possibly good_design & good_base).
+        """
     @invalid_value.setter
     def invalid_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ix_branch(self) -> int:
-        ...
+        """
+        Index of the associated lattice branch.
+        """
     @ix_branch.setter
     def ix_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_bunch(self) -> int:
-        ...
+        """
+        Bunch number to get the data from.
+        """
     @ix_bunch.setter
     def ix_bunch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_d1(self) -> int:
-        ...
+        """
+        Index number in u%d2_data(i)%d1_data(j)%d(:) array.
+        """
     @ix_d1.setter
     def ix_d1(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_dModel(self) -> int:
-        ...
+        """
+        Row number in the dModel_dVar derivative matrix.
+        """
     @ix_dModel.setter
     def ix_dModel(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_data(self) -> int:
-        ...
+        """
+        Index of this datum in the u%data(:) array of data_structs.
+        """
     @ix_data.setter
     def ix_data(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        Index of the lattice element corresponding to ele_name
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele_merit(self) -> int:
-        ...
+        """
+        Index of lattice elment where merit is evaluated.
+        """
     @ix_ele_merit.setter
     def ix_ele_merit(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele_ref(self) -> int:
-        ...
+        """
+        Index of lattice elment when there is a reference.
+        """
     @ix_ele_ref.setter
     def ix_ele_ref(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele_start(self) -> int:
-        ...
+        """
+        Index of lattice elment when there is a range
+        """
     @ix_ele_start.setter
     def ix_ele_start(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_uni(self) -> int:
-        ...
+        """
+        Universe index of datum.
+        """
     @ix_uni.setter
     def ix_uni(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def meas_value(self) -> float:
-        ...
+        """
+        Measured datum value.
+        """
     @meas_value.setter
     def meas_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def merit(self) -> float:
-        ...
+        """
+        Merit function term value: weight * delta_merit^2
+        """
     @merit.setter
     def merit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def model_value(self) -> float:
+    def merit_type(self) -> str:
+        """
+        Type of constraint: 'target', 'max', 'min', etc.
+        """
+    @merit_type.setter
+    def merit_type(self, arg1: str) -> None:
         ...
+    @property
+    def model_value(self) -> float:
+        """
+        Datum value as calculated from the model.
+        """
     @model_value.setter
     def model_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def old_value(self) -> float:
-        ...
+        """
+        The model_value at some previous time.
+        """
     @old_value.setter
     def old_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ref_s_offset(self) -> float:
-        ...
+        """
+        Offset of the reference point. In development.
+        """
     @ref_s_offset.setter
     def ref_s_offset(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ref_value(self) -> float:
-        ...
+        """
+        Measured datum value from the reference data set.
+        """
     @ref_value.setter
     def ref_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def s(self) -> float:
-        ...
+        """
+        longitudinal position of ele.
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def s_offset(self) -> float:
-        ...
+        """
+        Offset of the evaluation point.
+        """
     @s_offset.setter
     def s_offset(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def weight(self) -> float:
+    def useit_opt(self) -> bool:
+        """
+        See above
+        """
+    @useit_opt.setter
+    def useit_opt(self, arg1: bool) -> None:
         ...
+    @property
+    def useit_plot(self) -> bool:
+        """
+        See above
+        """
+    @useit_plot.setter
+    def useit_plot(self, arg1: bool) -> None:
+        ...
+    @property
+    def weight(self) -> float:
+        """
+        Weight for the merit function term.
+        """
     @weight.setter
     def weight(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def why_invalid(self) -> str:
+        """
+        Informational string if there is a problem.
+        """
+    @why_invalid.setter
+    def why_invalid(self, arg1: str) -> None:
         ...
 class TaoDataStructAlloc1D:
     @typing.overload
@@ -12858,7 +15517,6 @@ class TaoDataVarComponentStruct:
     """
     Fortran struct: tao_data_var_component_struct
     """
-    name: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -12874,8 +15532,18 @@ class TaoDataVarComponentStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def sign(self) -> float:
+    def name(self) -> str:
+        """
+        Eg: 'meas', 'ref', 'model', etc.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
         ...
+    @property
+    def sign(self) -> float:
+        """
+        +1 or -1
+        """
     @sign.setter
     def sign(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -13018,7 +15686,9 @@ class TaoDynamicApertureStruct:
         ...
     @property
     def scan(self) -> ApertureScanStructAlloc1D:
-        ...
+        """
+        One scan for each pz.
+        """
 class TaoEleGeometryWithMisalignments:
     """
     tao_ele_geometry_with_misalignments return type
@@ -13136,13 +15806,6 @@ class TaoEleShapeStruct:
     """
     Fortran struct: tao_ele_shape_struct
     """
-    color: str
-    draw: bool
-    ele_id: str
-    label: str
-    multi: bool
-    name_ele: str
-    shape: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -13158,26 +15821,90 @@ class TaoEleShapeStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def ix_key(self) -> int:
+    def color(self) -> str:
+        """
+        Color of shape
+        """
+    @color.setter
+    def color(self, arg1: str) -> None:
         ...
+    @property
+    def draw(self) -> bool:
+        """
+        Draw the shape?
+        """
+    @draw.setter
+    def draw(self, arg1: bool) -> None:
+        ...
+    @property
+    def ele_id(self) -> str:
+        """
+        element 'key::name' to match to.
+        """
+    @ele_id.setter
+    def ele_id(self, arg1: str) -> None:
+        ...
+    @property
+    def ix_key(self) -> int:
+        """
+        Extracted from ele_id. 0 => all classes (quadrupole, etc.)
+        """
     @ix_key.setter
     def ix_key(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def line_width(self) -> int:
+    def label(self) -> str:
+        """
+        Can be: 'name', 's', 'none'
+        """
+    @label.setter
+    def label(self, arg1: str) -> None:
         ...
+    @property
+    def line_width(self) -> int:
+        """
+        Width of lines used to draw the shape.
+        """
     @line_width.setter
     def line_width(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def offset(self) -> float:
+    def multi(self) -> bool:
+        """
+        Can be part of a multi-shape.
+        """
+    @multi.setter
+    def multi(self, arg1: bool) -> None:
         ...
+    @property
+    def name_ele(self) -> str:
+        """
+        Name of element.
+        """
+    @name_ele.setter
+    def name_ele(self, arg1: str) -> None:
+        ...
+    @property
+    def offset(self) -> float:
+        """
+        Vertical offset.
+        """
     @offset.setter
     def offset(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def size(self) -> float:
+    def shape(self) -> str:
+        """
+        Shape to draw
+        """
+    @shape.setter
+    def shape(self, arg1: str) -> None:
         ...
+    @property
+    def size(self) -> float:
+        """
+        plot vertical height
+        """
     @size.setter
     def size(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -13271,10 +15998,14 @@ class TaoEvalNodeStruct:
         ...
     @property
     def node(self) -> ...:
-        ...
+        """
+        Child nodes for tree construction.
+        """
     @property
     def scale(self) -> float:
-        ...
+        """
+        Scale factor for ping data
+        """
     @scale.setter
     def scale(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -13493,7 +16224,6 @@ class TaoExpressionInfoStruct:
     """
     Fortran struct: tao_expression_info_struct
     """
-    good: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -13510,13 +16240,25 @@ class TaoExpressionInfoStruct:
         ...
     @property
     def ele(self) -> EleStruct | None:
-        ...
+        """
+        Associated ele if it exists
+        """
     @ele.setter
     def ele(self, arg1: EleStruct) -> None:
         ...
     @property
-    def s(self) -> float:
+    def good(self) -> bool:
+        """
+        Expression is valid.
+        """
+    @good.setter
+    def good(self, arg1: bool) -> None:
         ...
+    @property
+    def s(self) -> float:
+        """
+        Longitudinal position of expression.
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -13584,15 +16326,8 @@ class TaoFloorPlanStruct:
     """
     Fortran struct: tao_floor_plan_struct
     """
-    correct_distortion: bool
-    draw_building_wall: bool
-    draw_only_first_pass: bool
-    flip_label_side: bool
     orbit_color: str
-    orbit_lattice: str
     orbit_pattern: str
-    size_is_absolute: bool
-    view: str
     def __copy__(self) -> TaoFloorPlanStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoFloorPlanStruct:
@@ -13602,8 +16337,50 @@ class TaoFloorPlanStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def orbit_scale(self) -> float:
+    def correct_distortion(self) -> bool:
+        """
+        T -> Shrink one axis so x-scale = y-scale.
+        """
+    @correct_distortion.setter
+    def correct_distortion(self, arg1: bool) -> None:
         ...
+    @property
+    def draw_building_wall(self) -> bool:
+        """
+        Draw the building wall?
+        """
+    @draw_building_wall.setter
+    def draw_building_wall(self, arg1: bool) -> None:
+        ...
+    @property
+    def draw_only_first_pass(self) -> bool:
+        """
+        Draw only first pass with multipass elements?
+        """
+    @draw_only_first_pass.setter
+    def draw_only_first_pass(self, arg1: bool) -> None:
+        ...
+    @property
+    def flip_label_side(self) -> bool:
+        """
+        Draw element label on other side of element?
+        """
+    @flip_label_side.setter
+    def flip_label_side(self, arg1: bool) -> None:
+        ...
+    @property
+    def orbit_lattice(self) -> str:
+        """
+        Or 'design' or 'base'
+        """
+    @orbit_lattice.setter
+    def orbit_lattice(self, arg1: str) -> None:
+        ...
+    @property
+    def orbit_scale(self) -> float:
+        """
+        Scale factor for drawing orbits. 0 -> Do not draw.
+        """
     @orbit_scale.setter
     def orbit_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -13615,9 +16392,27 @@ class TaoFloorPlanStruct:
         ...
     @property
     def rotation(self) -> float:
-        ...
+        """
+        Rotation of floor plan plot: 1.0 -> 360^deg
+        """
     @rotation.setter
     def rotation(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def size_is_absolute(self) -> bool:
+        """
+        Are shape sizes in meters or window pixels?
+        """
+    @size_is_absolute.setter
+    def size_is_absolute(self, arg1: bool) -> None:
+        ...
+    @property
+    def view(self) -> str:
+        """
+        or 'xz'.
+        """
+    @view.setter
+    def view(self, arg1: str) -> None:
         ...
 class TaoFloorToScreen:
     """
@@ -13686,50 +16481,11 @@ class TaoGlobalStruct:
     """
     Fortran struct: tao_global_struct
     """
-    beam_timer_on: bool
-    blank_line_between_commands: bool
-    box_plots: bool
-    cmd_file_abort_on_error: bool
-    concatenate_maps: bool
-    debug_on: bool
-    derivative_recalc: bool
-    derivative_uses_design: bool
-    disable_smooth_line_calc: bool
-    draw_curve_off_scale_warn: bool
-    expression_tree_on: bool
-    external_plotting: bool
     history_file: str
-    label_keys: bool
-    label_lattice_elements: bool
-    lat_sigma_calc_uses_emit_from: str
-    lattice_calc_on: bool
-    only_limit_opt_vars: bool
-    opt_match_auto_recalc: bool
-    opt_with_base: bool
-    opt_with_ref: bool
-    opti_write_var_file: bool
-    optimizer: str
-    optimizer_allow_user_abort: bool
-    optimizer_var_limit_warn: bool
-    plot_on: bool
     print_command: str
-    prompt_color: str
     prompt_string: str
-    quiet: str
-    rad_int_user_calc_on: bool
-    random_engine: str
-    random_gauss_converter: str
-    rf_on: bool
-    single_step: bool
-    srdt_use_cache: bool
-    stop_on_error: bool
     svd_retreat_on_merit_increase: bool
-    symbol_import: bool
-    track_type: str
-    var_limits_on: bool
     var_out_file: str
-    verbose_on: bool
-    wait_for_CR_in_single_mode: bool
     def __copy__(self) -> TaoGlobalStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoGlobalStruct:
@@ -13740,67 +16496,217 @@ class TaoGlobalStruct:
         ...
     @property
     def beam_dead_cutoff(self) -> float:
-        ...
+        """
+        Percentage of dead particles at which beam tracking is stopped.
+        """
     @beam_dead_cutoff.setter
     def beam_dead_cutoff(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def bunch_to_plot(self) -> int:
+    def beam_timer_on(self) -> bool:
+        """
+        For timing the beam tracking calculation.
+        """
+    @beam_timer_on.setter
+    def beam_timer_on(self, arg1: bool) -> None:
         ...
+    @property
+    def blank_line_between_commands(self) -> bool:
+        """
+        Add a blank line between command output?
+        """
+    @blank_line_between_commands.setter
+    def blank_line_between_commands(self, arg1: bool) -> None:
+        ...
+    @property
+    def box_plots(self) -> bool:
+        """
+        For debugging plot layout issues.
+        """
+    @box_plots.setter
+    def box_plots(self, arg1: bool) -> None:
+        ...
+    @property
+    def bunch_to_plot(self) -> int:
+        """
+        Which bunch to plot
+        """
     @bunch_to_plot.setter
     def bunch_to_plot(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def datum_err_messages_max(self) -> int:
+    def cmd_file_abort_on_error(self) -> bool:
+        """
+        Abort open command files if there is an error?
+        """
+    @cmd_file_abort_on_error.setter
+    def cmd_file_abort_on_error(self, arg1: bool) -> None:
         ...
+    @property
+    def concatenate_maps(self) -> bool:
+        """
+        False => tracking using DA.
+        """
+    @concatenate_maps.setter
+    def concatenate_maps(self, arg1: bool) -> None:
+        ...
+    @property
+    def datum_err_messages_max(self) -> int:
+        """
+        Maximum number of error messages per call to lattice_calc.
+        """
     @datum_err_messages_max.setter
     def datum_err_messages_max(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def de_lm_step_ratio(self) -> float:
-        ...
+        """
+        Scaling for step sizes between DE and LM optimizers.
+        """
     @de_lm_step_ratio.setter
     def de_lm_step_ratio(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def de_var_to_population_factor(self) -> float:
-        ...
+        """
+        DE population = max(n_var*factor, 20)
+        """
     @de_var_to_population_factor.setter
     def de_var_to_population_factor(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def default_branch(self) -> int:
+    def debug_on(self) -> bool:
+        """
+        For debugging.
+        """
+    @debug_on.setter
+    def debug_on(self, arg1: bool) -> None:
         ...
+    @property
+    def default_branch(self) -> int:
+        """
+        Default lattice branch to work with.
+        """
     @default_branch.setter
     def default_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def default_universe(self) -> int:
-        ...
+        """
+        Default universe to work with.
+        """
     @default_universe.setter
     def default_universe(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def delta_e_chrom(self) -> float:
-        ...
+        """
+        Delta E used from chrom calc.
+        """
     @delta_e_chrom.setter
     def delta_e_chrom(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def dmerit_stop_value(self) -> float:
+    def derivative_recalc(self) -> bool:
+        """
+        Recalc before each optimizer run?
+        """
+    @derivative_recalc.setter
+    def derivative_recalc(self, arg1: bool) -> None:
         ...
+    @property
+    def derivative_uses_design(self) -> bool:
+        """
+        Derivative calc uses design lattice instead of model?
+        """
+    @derivative_uses_design.setter
+    def derivative_uses_design(self, arg1: bool) -> None:
+        ...
+    @property
+    def disable_smooth_line_calc(self) -> bool:
+        """
+        Global disable of the smooth line calculation.
+        """
+    @disable_smooth_line_calc.setter
+    def disable_smooth_line_calc(self, arg1: bool) -> None:
+        ...
+    @property
+    def dmerit_stop_value(self) -> float:
+        """
+        Fractional Merit change below which an optimizer will stop.
+        """
     @dmerit_stop_value.setter
     def dmerit_stop_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def lm_opt_deriv_reinit(self) -> float:
+    def draw_curve_off_scale_warn(self) -> bool:
+        """
+        Display warning on graphs?
+        """
+    @draw_curve_off_scale_warn.setter
+    def draw_curve_off_scale_warn(self, arg1: bool) -> None:
         ...
+    @property
+    def expression_tree_on(self) -> bool:
+        """
+        Use an expression tree instead of a stack?
+        """
+    @expression_tree_on.setter
+    def expression_tree_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def external_plotting(self) -> bool:
+        """
+        Used with matplotlib and gui.
+        """
+    @external_plotting.setter
+    def external_plotting(self, arg1: bool) -> None:
+        ...
+    @property
+    def label_keys(self) -> bool:
+        """
+        For lat_layout plots
+        """
+    @label_keys.setter
+    def label_keys(self, arg1: bool) -> None:
+        ...
+    @property
+    def label_lattice_elements(self) -> bool:
+        """
+        For lat_layout plots
+        """
+    @label_lattice_elements.setter
+    def label_lattice_elements(self, arg1: bool) -> None:
+        ...
+    @property
+    def lat_sigma_calc_uses_emit_from(self) -> str:
+        """
+        Lattice derived sigma matrix uses emit values from where? Other possibilities: 'beam', 'beam_init'.
+        """
+    @lat_sigma_calc_uses_emit_from.setter
+    def lat_sigma_calc_uses_emit_from(self, arg1: str) -> None:
+        ...
+    @property
+    def lattice_calc_on(self) -> bool:
+        """
+        Turn on/off beam and single particle calculations.
+        """
+    @lattice_calc_on.setter
+    def lattice_calc_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def lm_opt_deriv_reinit(self) -> float:
+        """
+        Reinit derivative matrix cutoff
+        """
     @lm_opt_deriv_reinit.setter
     def lm_opt_deriv_reinit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def lmdif_eps(self) -> float:
-        ...
+        """
+        Tollerance for lmdif optimizer.
+        """
     @lmdif_eps.setter
     def lmdif_eps(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -13812,81 +16718,291 @@ class TaoGlobalStruct:
         ...
     @property
     def max_plot_time(self) -> float:
-        ...
+        """
+        If plotting time (seconds) exceeds this than a message is generated.
+        """
     @max_plot_time.setter
     def max_plot_time(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def merit_stop_value(self) -> float:
-        ...
+        """
+        Merit value below which an optimizer will stop.
+        """
     @merit_stop_value.setter
     def merit_stop_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def n_opti_cycles(self) -> int:
-        ...
+        """
+        Number of optimization cycles
+        """
     @n_opti_cycles.setter
     def n_opti_cycles(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_opti_loops(self) -> int:
-        ...
+        """
+        Number of optimization loops
+        """
     @n_opti_loops.setter
     def n_opti_loops(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_threads(self) -> int:
-        ...
+        """
+        Number of OpenMP threads for parallel calculations.
+        """
     @n_threads.setter
     def n_threads(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_top10_merit(self) -> int:
-        ...
+        """
+        Number of top merit constraints to print.
+        """
     @n_top10_merit.setter
     def n_top10_merit(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def phase_units(self) -> int:
+    def only_limit_opt_vars(self) -> bool:
+        """
+        Only apply limits to variables used in optimization.
+        """
+    @only_limit_opt_vars.setter
+    def only_limit_opt_vars(self, arg1: bool) -> None:
         ...
+    @property
+    def opt_match_auto_recalc(self) -> bool:
+        """
+        Set recalc = True for match elements before each cycle?
+        """
+    @opt_match_auto_recalc.setter
+    def opt_match_auto_recalc(self, arg1: bool) -> None:
+        ...
+    @property
+    def opt_with_base(self) -> bool:
+        """
+        Use base data in optimization?
+        """
+    @opt_with_base.setter
+    def opt_with_base(self, arg1: bool) -> None:
+        ...
+    @property
+    def opt_with_ref(self) -> bool:
+        """
+        Use reference data in optimization?
+        """
+    @opt_with_ref.setter
+    def opt_with_ref(self, arg1: bool) -> None:
+        ...
+    @property
+    def opti_write_var_file(self) -> bool:
+        """
+        'run' command writes var_out_file
+        """
+    @opti_write_var_file.setter
+    def opti_write_var_file(self, arg1: bool) -> None:
+        ...
+    @property
+    def optimizer(self) -> str:
+        """
+        optimizer to use.
+        """
+    @optimizer.setter
+    def optimizer(self, arg1: str) -> None:
+        ...
+    @property
+    def optimizer_allow_user_abort(self) -> bool:
+        """
+        See Tao manual for more details.
+        """
+    @optimizer_allow_user_abort.setter
+    def optimizer_allow_user_abort(self, arg1: bool) -> None:
+        ...
+    @property
+    def optimizer_var_limit_warn(self) -> bool:
+        """
+        Warn when vars reach a limit with optimization.
+        """
+    @optimizer_var_limit_warn.setter
+    def optimizer_var_limit_warn(self, arg1: bool) -> None:
+        ...
+    @property
+    def phase_units(self) -> int:
+        """
+        Phase units on output.
+        """
     @phase_units.setter
     def phase_units(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def random_seed(self) -> int:
+    def plot_on(self) -> bool:
+        """
+        Do plotting?
+        """
+    @plot_on.setter
+    def plot_on(self, arg1: bool) -> None:
         ...
+    @property
+    def prompt_color(self) -> str:
+        """
+        See read_a_line routine for possible settings.
+        """
+    @prompt_color.setter
+    def prompt_color(self, arg1: str) -> None:
+        ...
+    @property
+    def quiet(self) -> str:
+        """
+        Print I/O when running a command file?
+        """
+    @quiet.setter
+    def quiet(self, arg1: str) -> None:
+        ...
+    @property
+    def rad_int_user_calc_on(self) -> bool:
+        """
+        User set radiation integrals calculation on/off.
+        """
+    @rad_int_user_calc_on.setter
+    def rad_int_user_calc_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def random_engine(self) -> str:
+        """
+        Non-beam random number engine
+        """
+    @random_engine.setter
+    def random_engine(self, arg1: str) -> None:
+        ...
+    @property
+    def random_gauss_converter(self) -> str:
+        """
+        Non-beam
+        """
+    @random_gauss_converter.setter
+    def random_gauss_converter(self, arg1: str) -> None:
+        ...
+    @property
+    def random_seed(self) -> int:
+        """
+        Use system clock by default
+        """
     @random_seed.setter
     def random_seed(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def random_sigma_cutoff(self) -> float:
-        ...
+        """
+        Cut-off in sigmas.
+        """
     @random_sigma_cutoff.setter
     def random_sigma_cutoff(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def srdt_gen_n_slices(self) -> int:
+    def rf_on(self) -> bool:
+        """
+        RFcavities on or off? Does not affect lcavities.
+        """
+    @rf_on.setter
+    def rf_on(self, arg1: bool) -> None:
         ...
+    @property
+    def single_step(self) -> bool:
+        """
+        For debugging and demonstrations: Single step through a command file?
+        """
+    @single_step.setter
+    def single_step(self, arg1: bool) -> None:
+        ...
+    @property
+    def srdt_gen_n_slices(self) -> int:
+        """
+        Number times to slice elements for summation RDT calculation
+        """
     @srdt_gen_n_slices.setter
     def srdt_gen_n_slices(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def srdt_sxt_n_slices(self) -> int:
-        ...
+        """
+        Number times to slice sextupoles for summation RDT calculation
+        """
     @srdt_sxt_n_slices.setter
     def srdt_sxt_n_slices(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def svd_cutoff(self) -> float:
+    def srdt_use_cache(self) -> bool:
+        """
+        Create cache for SRDT calculations.  Can use lots of memory if srdt_*_n_slices large.
+        """
+    @srdt_use_cache.setter
+    def srdt_use_cache(self, arg1: bool) -> None:
         ...
+    @property
+    def stop_on_error(self) -> bool:
+        """
+        For debugging: False prevents tao from exiting on an error.
+        """
+    @stop_on_error.setter
+    def stop_on_error(self, arg1: bool) -> None:
+        ...
+    @property
+    def svd_cutoff(self) -> float:
+        """
+        SVD singular value cutoff.
+        """
     @svd_cutoff.setter
     def svd_cutoff(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def unstable_penalty(self) -> float:
+    def symbol_import(self) -> bool:
+        """
+        Import symbols from lattice file(s)? Internal stuff
+        """
+    @symbol_import.setter
+    def symbol_import(self, arg1: bool) -> None:
         ...
+    @property
+    def track_type(self) -> str:
+        """
+        or 'beam'
+        """
+    @track_type.setter
+    def track_type(self, arg1: str) -> None:
+        ...
+    @property
+    def unstable_penalty(self) -> float:
+        """
+        Used in unstable_ring datum merit calculation.
+        """
     @unstable_penalty.setter
     def unstable_penalty(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def var_limits_on(self) -> bool:
+        """
+        Respect the variable limits?
+        """
+    @var_limits_on.setter
+    def var_limits_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def verbose_on(self) -> bool:
+        """
+        For verbose output. Used with debugging.
+        """
+    @verbose_on.setter
+    def verbose_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def wait_for_CR_in_single_mode(self) -> bool:
+        """
+        For use with a python GUI.
+        """
+    @wait_for_CR_in_single_mode.setter
+    def wait_for_CR_in_single_mode(self, arg1: bool) -> None:
         ...
 class TaoGraphSMinMaxCalc:
     """
@@ -13906,31 +17022,14 @@ class TaoGraphStruct:
     """
     Fortran struct: tao_graph_struct
     """
-    allow_wrap_around: bool
-    clip: bool
     curve_legend: QpLegendStruct
     curve_legend_origin: QpPointStruct
-    draw_axes: bool
-    draw_curve_legend: bool
-    draw_grid: bool
     draw_only_good_user_data_or_vars: bool
     draw_title: bool
     floor_plan: TaoFloorPlanStruct
-    is_valid: bool
-    limited: bool
-    margin: QpRectStruct
-    name: str
-    scale_margin: QpRectStruct
     text_legend_origin: QpPointStruct
     title: str
     title_suffix: str
-    type: str
-    why_invalid: str
-    x: QpAxisStruct
-    x2: QpAxisStruct
-    y: QpAxisStruct
-    y2: QpAxisStruct
-    y2_mirrors_y: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -13946,49 +17045,201 @@ class TaoGraphStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def box(self) -> IntArray1D:
+    def allow_wrap_around(self) -> bool:
+        """
+        'Wrap' curves to extend past lattice boundaries?
+        """
+    @allow_wrap_around.setter
+    def allow_wrap_around(self, arg1: bool) -> None:
         ...
+    @property
+    def box(self) -> IntArray1D:
+        """
+        Defines which box the plot is put in.
+        """
     @box.setter
     def box(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
+        ...
+    @property
+    def clip(self) -> bool:
+        """
+        Clip plot at graph boundary.
+        """
+    @clip.setter
+    def clip(self, arg1: bool) -> None:
         ...
     @property
     def curve(self) -> TaoCurveStructAlloc1D:
         ...
     @property
-    def ix_branch(self) -> int:
+    def draw_axes(self) -> bool:
+        """
+        Draw axes, labels, etc?
+        """
+    @draw_axes.setter
+    def draw_axes(self, arg1: bool) -> None:
         ...
+    @property
+    def draw_curve_legend(self) -> bool:
+        """
+        Legend for displaying curve info.
+        """
+    @draw_curve_legend.setter
+    def draw_curve_legend(self, arg1: bool) -> None:
+        ...
+    @property
+    def draw_grid(self) -> bool:
+        """
+        Draw a grid?
+        """
+    @draw_grid.setter
+    def draw_grid(self, arg1: bool) -> None:
+        ...
+    @property
+    def is_valid(self) -> bool:
+        """
+        EG: Bad x_axis_type.
+        """
+    @is_valid.setter
+    def is_valid(self, arg1: bool) -> None:
+        ...
+    @property
+    def ix_branch(self) -> int:
+        """
+        Branch in lattice. Used when there are no associated curves.
+        """
     @ix_branch.setter
     def ix_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_universe(self) -> int:
-        ...
+        """
+        Used for lat_layout plots.
+        """
     @ix_universe.setter
     def ix_universe(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def p(self) -> TaoPlotStruct | None:
+    def limited(self) -> bool:
+        """
+        True if at least one data point past graph bounds.
+        """
+    @limited.setter
+    def limited(self, arg1: bool) -> None:
         ...
+    @property
+    def margin(self) -> QpRectStruct:
+        """
+        Margin around the graph.
+        """
+    @margin.setter
+    def margin(self, arg1: QpRectStruct) -> None:
+        ...
+    @property
+    def name(self) -> str:
+        """
+        Name identifying the graph
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
+        ...
+    @property
+    def p(self) -> TaoPlotStruct | None:
+        """
+        pointer to parent plot
+        """
     @p.setter
     def p(self, arg1: TaoPlotStruct) -> None:
         ...
     @property
-    def symbol_size_scale(self) -> float:
+    def scale_margin(self) -> QpRectStruct:
+        """
+        Margin for scaling
+        """
+    @scale_margin.setter
+    def scale_margin(self, arg1: QpRectStruct) -> None:
         ...
+    @property
+    def symbol_size_scale(self) -> float:
+        """
+        Symbol size scale factor for phase_space plots.
+        """
     @symbol_size_scale.setter
     def symbol_size_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def text_legend(self) -> FCharArray1D:
-        ...
+        """
+        Array for holding descriptive info.
+        """
     @property
     def text_legend_out(self) -> FCharArray1D:
+        """
+        Array for holding descriptive info.
+        """
+    @property
+    def type(self) -> str:
+        """
+        'data', 'lat_layout', 'phase_space', 'histogram', 'dynamic_aperture'
+        """
+    @type.setter
+    def type(self, arg1: str) -> None:
+        ...
+    @property
+    def why_invalid(self) -> str:
+        """
+        Informative string to print.
+        """
+    @why_invalid.setter
+    def why_invalid(self, arg1: str) -> None:
+        ...
+    @property
+    def x(self) -> QpAxisStruct:
+        """
+        X-axis parameters.
+        """
+    @x.setter
+    def x(self, arg1: QpAxisStruct) -> None:
+        ...
+    @property
+    def x2(self) -> QpAxisStruct:
+        """
+        X2-axis attributes (Not currently used).
+        """
+    @x2.setter
+    def x2(self, arg1: QpAxisStruct) -> None:
         ...
     @property
     def x_axis_scale_factor(self) -> float:
-        ...
+        """
+        x-axis conversion from internal to plotting units.
+        """
     @x_axis_scale_factor.setter
     def x_axis_scale_factor(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def y(self) -> QpAxisStruct:
+        """
+        Y-axis attributes.
+        """
+    @y.setter
+    def y(self, arg1: QpAxisStruct) -> None:
+        ...
+    @property
+    def y2(self) -> QpAxisStruct:
+        """
+        Y2-axis attributes.
+        """
+    @y2.setter
+    def y2(self, arg1: QpAxisStruct) -> None:
+        ...
+    @property
+    def y2_mirrors_y(self) -> bool:
+        """
+        Y2-axis same as Y-axis?
+        """
+    @y2_mirrors_y.setter
+    def y2_mirrors_y(self, arg1: bool) -> None:
         ...
 class TaoGraphStructAlloc1D:
     @typing.overload
@@ -14058,13 +17309,17 @@ class TaoHistogramStruct:
         ...
     @property
     def maximum(self) -> float:
-        ...
+        """
+        Computed by Tao. Not User settable.
+        """
     @maximum.setter
     def maximum(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def minimum(self) -> float:
-        ...
+        """
+        Computed by Tao. Not User settable.
+        """
     @minimum.setter
     def minimum(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -14098,47 +17353,8 @@ class TaoInitStruct:
     """
     Fortran struct: tao_init_struct
     """
-    beam_file_arg: str
-    beam_init_position_file_arg: str
-    building_wall_file_arg: str
-    command_arg: str
-    data_file_arg: str
-    debug_arg: str
-    debug_switch: bool
-    disable_smooth_line_calc_arg: str
-    external_plotting_switch: bool
-    geometry_arg: str
-    hook_beam_file: str
-    hook_building_wall_file: str
-    hook_data_file: str
     hook_init_file: str
-    hook_init_file_arg: str
-    hook_lat_file: str
-    hook_plot_file: str
-    hook_startup_file: str
-    hook_var_file: str
-    init_file_arg: str
-    init_file_arg_path: str
-    init_name: str
-    lattice_file_arg: str
-    log_startup_arg: str
-    no_rad_int_arg: str
-    no_stopping_arg: str
-    noinit_arg: str
-    noplot_arg: str
-    nostartup_arg: str
-    parse_cmd_args: bool
-    plot_file_arg: str
-    prompt_color_arg: str
-    quiet_arg: str
-    reverse_arg: str
-    rf_on_arg: str
-    slice_lattice_arg: str
-    start_branch_at_arg: str
-    startup_file_arg: str
-    symbol_import_arg: str
     unique_name_suffix: str
-    var_file_arg: str
     def __copy__(self) -> TaoInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoInitStruct:
@@ -14146,6 +17362,318 @@ class TaoInitStruct:
     def __init__(self, parse_cmd_args: bool | None = None, debug_switch: bool | None = None, external_plotting_switch: bool | None = None, init_name: str | None = None, hook_init_file: str | None = None, hook_lat_file: str | None = None, hook_beam_file: str | None = None, hook_data_file: str | None = None, hook_plot_file: str | None = None, hook_startup_file: str | None = None, hook_var_file: str | None = None, hook_building_wall_file: str | None = None, init_file_arg_path: str | None = None, lattice_file_arg: str | None = None, hook_init_file_arg: str | None = None, init_file_arg: str | None = None, beam_file_arg: str | None = None, beam_init_position_file_arg: str | None = None, command_arg: str | None = None, data_file_arg: str | None = None, plot_file_arg: str | None = None, startup_file_arg: str | None = None, var_file_arg: str | None = None, building_wall_file_arg: str | None = None, geometry_arg: str | None = None, slice_lattice_arg: str | None = None, start_branch_at_arg: str | None = None, log_startup_arg: str | None = None, no_stopping_arg: str | None = None, noplot_arg: str | None = None, no_rad_int_arg: str | None = None, reverse_arg: str | None = None, debug_arg: str | None = None, disable_smooth_line_calc_arg: str | None = None, rf_on_arg: str | None = None, prompt_color_arg: str | None = None, quiet_arg: str | None = None, noinit_arg: str | None = None, nostartup_arg: str | None = None, symbol_import_arg: str | None = None, unique_name_suffix: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def beam_file_arg(self) -> str:
+        """
+        -beam_file           command line argument.
+        """
+    @beam_file_arg.setter
+    def beam_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def beam_init_position_file_arg(self) -> str:
+        """
+        -beam_init_position_file command line argument.
+        """
+    @beam_init_position_file_arg.setter
+    def beam_init_position_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def building_wall_file_arg(self) -> str:
+        """
+        -building_wall_file  command line argument.
+        """
+    @building_wall_file_arg.setter
+    def building_wall_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def command_arg(self) -> str:
+        """
+        -command             command line argument.
+        """
+    @command_arg.setter
+    def command_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def data_file_arg(self) -> str:
+        """
+        -data_file           command line argument.
+        """
+    @data_file_arg.setter
+    def data_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def debug_arg(self) -> str:
+        """
+        -debug               command line argument
+        """
+    @debug_arg.setter
+    def debug_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def debug_switch(self) -> bool:
+        """
+        Is the '-debug' switch present?
+        """
+    @debug_switch.setter
+    def debug_switch(self, arg1: bool) -> None:
+        ...
+    @property
+    def disable_smooth_line_calc_arg(self) -> str:
+        """
+        -disable_smooth_line_calc
+        """
+    @disable_smooth_line_calc_arg.setter
+    def disable_smooth_line_calc_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def external_plotting_switch(self) -> bool:
+        """
+        Is '-external_plotting' switch present?
+        """
+    @external_plotting_switch.setter
+    def external_plotting_switch(self, arg1: bool) -> None:
+        ...
+    @property
+    def geometry_arg(self) -> str:
+        """
+        -geometry            command line argument.
+        """
+    @geometry_arg.setter
+    def geometry_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def hook_beam_file(self) -> str:
+        """
+        To be set by tao_hook_parse_command_args
+        """
+    @hook_beam_file.setter
+    def hook_beam_file(self, arg1: str) -> None:
+        ...
+    @property
+    def hook_building_wall_file(self) -> str:
+        """
+        To be set by tao_hook_parse_command_args
+        """
+    @hook_building_wall_file.setter
+    def hook_building_wall_file(self, arg1: str) -> None:
+        ...
+    @property
+    def hook_data_file(self) -> str:
+        """
+        To be set by tao_hook_parse_command_args
+        """
+    @hook_data_file.setter
+    def hook_data_file(self, arg1: str) -> None:
+        ...
+    @property
+    def hook_init_file_arg(self) -> str:
+        """
+        -hook_init_file      command line argument
+        """
+    @hook_init_file_arg.setter
+    def hook_init_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def hook_lat_file(self) -> str:
+        """
+        To be set by tao_hook_parse_command_args
+        """
+    @hook_lat_file.setter
+    def hook_lat_file(self, arg1: str) -> None:
+        ...
+    @property
+    def hook_plot_file(self) -> str:
+        """
+        To be set by tao_hook_parse_command_args
+        """
+    @hook_plot_file.setter
+    def hook_plot_file(self, arg1: str) -> None:
+        ...
+    @property
+    def hook_startup_file(self) -> str:
+        """
+        To be set by tao_hook_parse_command_args
+        """
+    @hook_startup_file.setter
+    def hook_startup_file(self, arg1: str) -> None:
+        ...
+    @property
+    def hook_var_file(self) -> str:
+        """
+        To be set by tao_hook_parse_command_args
+        """
+    @hook_var_file.setter
+    def hook_var_file(self, arg1: str) -> None:
+        ...
+    @property
+    def init_file_arg(self) -> str:
+        """
+        -init_file           command line argument.
+        """
+    @init_file_arg.setter
+    def init_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def init_file_arg_path(self) -> str:
+        """
+        Path part of init_tao_file
+        """
+    @init_file_arg_path.setter
+    def init_file_arg_path(self, arg1: str) -> None:
+        ...
+    @property
+    def init_name(self) -> str:
+        """
+        label for initialization
+        """
+    @init_name.setter
+    def init_name(self, arg1: str) -> None:
+        ...
+    @property
+    def lattice_file_arg(self) -> str:
+        """
+        -lattice_file        command line argument.
+        """
+    @lattice_file_arg.setter
+    def lattice_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def log_startup_arg(self) -> str:
+        """
+        -log_startup         command line argument
+        """
+    @log_startup_arg.setter
+    def log_startup_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def no_rad_int_arg(self) -> str:
+        """
+        -no_rad_int          command line argument
+        """
+    @no_rad_int_arg.setter
+    def no_rad_int_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def no_stopping_arg(self) -> str:
+        """
+        -no_stopping         command line argument
+        """
+    @no_stopping_arg.setter
+    def no_stopping_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def noinit_arg(self) -> str:
+        """
+        -noinit              command line argument
+        """
+    @noinit_arg.setter
+    def noinit_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def noplot_arg(self) -> str:
+        """
+        -noplot              command line argument
+        """
+    @noplot_arg.setter
+    def noplot_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def nostartup_arg(self) -> str:
+        """
+        -nostartup           command line argument
+        """
+    @nostartup_arg.setter
+    def nostartup_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def parse_cmd_args(self) -> bool:
+        """
+        Used by custom programs to control Tao init
+        """
+    @parse_cmd_args.setter
+    def parse_cmd_args(self, arg1: bool) -> None:
+        ...
+    @property
+    def plot_file_arg(self) -> str:
+        """
+        -plot_file           command line argument.
+        """
+    @plot_file_arg.setter
+    def plot_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def prompt_color_arg(self) -> str:
+        """
+        -prompt_color        command line argument
+        """
+    @prompt_color_arg.setter
+    def prompt_color_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def quiet_arg(self) -> str:
+        """
+        -quiet               command line argument
+        """
+    @quiet_arg.setter
+    def quiet_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def reverse_arg(self) -> str:
+        """
+        -reverse             command line argument
+        """
+    @reverse_arg.setter
+    def reverse_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def rf_on_arg(self) -> str:
+        """
+        -rf_on               command line argument
+        """
+    @rf_on_arg.setter
+    def rf_on_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def slice_lattice_arg(self) -> str:
+        """
+        -slice_lattice       command line argument.
+        """
+    @slice_lattice_arg.setter
+    def slice_lattice_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def start_branch_at_arg(self) -> str:
+        """
+        -start_branch_at     command line argument.
+        """
+    @start_branch_at_arg.setter
+    def start_branch_at_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def startup_file_arg(self) -> str:
+        """
+        -startup_file        command line argument.
+        """
+    @startup_file_arg.setter
+    def startup_file_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def symbol_import_arg(self) -> str:
+        """
+        -symbol_import       command line argument
+        """
+    @symbol_import_arg.setter
+    def symbol_import_arg(self, arg1: str) -> None:
+        ...
+    @property
+    def var_file_arg(self) -> str:
+        """
+        -var_file            command line argument.
+        """
+    @var_file_arg.setter
+    def var_file_arg(self, arg1: str) -> None:
         ...
 class TaoInjectBeam:
     """
@@ -14249,22 +17777,14 @@ class TaoLatticeBranchStruct:
     """
     Fortran struct: tao_lattice_branch_struct
     """
-    bmad_normal_form: BmadNormalFormStruct
     chrom_calc_ok: bool
     emit_6d_calc_ok: bool
     has_open_match_element: bool
-    mode_flip_here: bool
-    modes_6d: NormalModesStruct
-    modes_ri: NormalModesStruct
-    orb0: CoordStruct
-    plot_cache_valid: bool
-    ptc_normal_form: PtcNormalFormStruct
     rad_int_calc_ok: bool
     sigma_track_ok: bool
     spin: TaoSpinPolarizationStruct
     spin_map_valid: bool
     srdt: SummationRdtStruct
-    twiss_valid: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -14280,11 +17800,23 @@ class TaoLatticeBranchStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def bunch_params(self) -> BunchParamsStructAlloc1D:
+    def bmad_normal_form(self) -> BmadNormalFormStruct:
+        """
+        Collection of normal form structures defined in Bmad
+        """
+    @bmad_normal_form.setter
+    def bmad_normal_form(self, arg1: BmadNormalFormStruct) -> None:
         ...
     @property
+    def bunch_params(self) -> BunchParamsStructAlloc1D:
+        """
+        Per element
+        """
+    @property
     def bunch_params_comb(self) -> BunchTrackStructAlloc1D:
-        ...
+        """
+        A comb for each bunch in beam.
+        """
     @property
     def cache_n_pts(self) -> int:
         ...
@@ -14305,7 +17837,9 @@ class TaoLatticeBranchStruct:
         ...
     @property
     def comb_ds_save(self) -> float:
-        ...
+        """
+        Master parameter for %bunch_params_comb(:)%ds_save
+        """
     @comb_ds_save.setter
     def comb_ds_save(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -14320,7 +17854,9 @@ class TaoLatticeBranchStruct:
         ...
     @property
     def ix_rad_int_cache(self) -> int:
-        ...
+        """
+        Radiation integrals cache index.
+        """
     @ix_rad_int_cache.setter
     def ix_rad_int_cache(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -14332,33 +17868,99 @@ class TaoLatticeBranchStruct:
         ...
     @property
     def lat_sigma(self) -> TaoLatSigmaStructAlloc1D:
-        ...
+        """
+        Sigma matrix derived from lattice (not beam).
+        """
     @property
     def low_E_orb(self) -> CoordStructAlloc1D:
+        ...
+    @property
+    def mode_flip_here(self) -> bool:
+        """
+        Twiss parameter mode flip seen?
+        """
+    @mode_flip_here.setter
+    def mode_flip_here(self, arg1: bool) -> None:
+        ...
+    @property
+    def modes_6d(self) -> NormalModesStruct:
+        """
+        6D radiation matrices.
+        """
+    @modes_6d.setter
+    def modes_6d(self, arg1: NormalModesStruct) -> None:
+        ...
+    @property
+    def modes_ri(self) -> NormalModesStruct:
+        """
+        Synchrotron integrals stuff
+        """
+    @modes_ri.setter
+    def modes_ri(self, arg1: NormalModesStruct) -> None:
+        ...
+    @property
+    def orb0(self) -> CoordStruct:
+        """
+        For saving beginning orbit
+        """
+    @orb0.setter
+    def orb0(self, arg1: CoordStruct) -> None:
         ...
     @property
     def orbit(self) -> CoordStructAlloc1D:
         ...
     @property
     def plot_cache(self) -> TaoPlotCacheStructAlloc1D:
+        """
+        Plotting data cache
+        """
+    @property
+    def plot_cache_valid(self) -> bool:
+        """
+        Valid plotting data cache?
+        """
+    @plot_cache_valid.setter
+    def plot_cache_valid(self, arg1: bool) -> None:
+        ...
+    @property
+    def ptc_normal_form(self) -> PtcNormalFormStruct:
+        """
+        Collection of normal form structures defined in PTC
+        """
+    @ptc_normal_form.setter
+    def ptc_normal_form(self, arg1: PtcNormalFormStruct) -> None:
         ...
     @property
     def spin_ele(self) -> TaoSpinEleStructAlloc1D:
-        ...
+        """
+        Spin stuff
+        """
     @property
     def tao_lat(self) -> TaoLatticeStruct | None:
-        ...
+        """
+        Parent tao_lat
+        """
     @tao_lat.setter
     def tao_lat(self, arg1: TaoLatticeStruct) -> None:
         ...
     @property
     def taylor_save(self) -> TaylorStructArray1D:
-        ...
+        """
+        Save to reduce computation time.
+        """
     @property
     def track_state(self) -> int:
         ...
     @track_state.setter
     def track_state(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def twiss_valid(self) -> bool:
+        """
+        Invalid EG with unstable 1-turn matrix with a closed branch. With open branch: twiss_valid = T even if some Twiss (and orbit) is invalid.
+        """
+    @twiss_valid.setter
+    def twiss_valid(self, arg1: bool) -> None:
         ...
 class TaoLatticeBranchStructAlloc1D:
     @typing.overload
@@ -14424,10 +18026,6 @@ class TaoLatticeStruct:
     """
     Fortran struct: tao_lattice_struct
     """
-    high_E_lat: LatStruct
-    lat: LatStruct
-    low_E_lat: LatStruct
-    name: str
     rad_int_by_ele_6d: RadIntAllEleStruct
     rad_int_by_ele_ri: RadIntAllEleStruct
     def __copy__(self) -> TaoLatticeStruct:
@@ -14437,6 +18035,38 @@ class TaoLatticeStruct:
     def __init__(self, name: str | None = None, lat: LatStruct | None = None, high_E_lat: LatStruct | None = None, low_E_lat: LatStruct | None = None, rad_int_by_ele_ri: RadIntAllEleStruct | None = None, rad_int_by_ele_6d: RadIntAllEleStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def high_E_lat(self) -> LatStruct:
+        """
+        For chrom calc.
+        """
+    @high_E_lat.setter
+    def high_E_lat(self, arg1: LatStruct) -> None:
+        ...
+    @property
+    def lat(self) -> LatStruct:
+        """
+        lattice structures
+        """
+    @lat.setter
+    def lat(self, arg1: LatStruct) -> None:
+        ...
+    @property
+    def low_E_lat(self) -> LatStruct:
+        """
+        For chrom calc.
+        """
+    @low_E_lat.setter
+    def low_E_lat(self, arg1: LatStruct) -> None:
+        ...
+    @property
+    def name(self) -> str:
+        """
+        'model', 'base', or 'design'.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
         ...
     @property
     def tao_branch(self) -> TaoLatticeBranchStructAlloc1D:
@@ -14504,7 +18134,9 @@ class TaoModelBranchStruct:
         ...
     @property
     def ele(self) -> TaoModelElementStructAlloc1D:
-        ...
+        """
+        Per element information
+        """
 class TaoModelBranchStructAlloc1D:
     @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> TaoModelBranchStruct:
@@ -14555,9 +18187,6 @@ class TaoModelElementStruct:
     """
     Fortran struct: tao_model_element_struct
     """
-    beam: BeamStruct
-    save_beam_internally: bool
-    save_beam_to_file: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -14571,6 +18200,30 @@ class TaoModelElementStruct:
     def __init__(self, beam: BeamStruct | None = None, save_beam_internally: bool | None = None, save_beam_to_file: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def beam(self) -> BeamStruct:
+        """
+        Beam distribution at element.
+        """
+    @beam.setter
+    def beam(self, arg1: BeamStruct) -> None:
+        ...
+    @property
+    def save_beam_internally(self) -> bool:
+        """
+        Save beam here? Beam also saved at fork elements and at track ends.
+        """
+    @save_beam_internally.setter
+    def save_beam_internally(self, arg1: bool) -> None:
+        ...
+    @property
+    def save_beam_to_file(self) -> bool:
+        """
+        Save beam to a file? Beam also saved at fork elements and at track ends.
+        """
+    @save_beam_to_file.setter
+    def save_beam_to_file(self, arg1: bool) -> None:
         ...
 class TaoModelElementStructAlloc1D:
     @typing.overload
@@ -14772,7 +18425,6 @@ class TaoPlotCacheStruct:
     """
     Fortran struct: tao_plot_cache_struct
     """
-    ele_to_s: EleStruct
     err: bool
     orbit: CoordStruct
     @staticmethod
@@ -14788,6 +18440,14 @@ class TaoPlotCacheStruct:
     def __init__(self, ele_to_s: EleStruct | None = None, orbit: CoordStruct | None = None, err: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def ele_to_s(self) -> EleStruct:
+        """
+        Integrated element from branch beginning. Will be marked as a hybrid element.
+        """
+    @ele_to_s.setter
+    def ele_to_s(self, arg1: EleStruct) -> None:
         ...
 class TaoPlotCacheStructAlloc1D:
     @typing.overload
@@ -14839,14 +18499,8 @@ class TaoPlotPageStruct:
     """
     Fortran struct: tao_plot_page_struct
     """
-    border: QpRectStruct
-    delete_overlapping_plots: bool
-    draw_graph_title_suffix: bool
     floor_plan: TaoDrawingStruct
     lat_layout: TaoDrawingStruct
-    plot_display_type: str
-    subtitle: TaoTitleStruct
-    title: TaoTitleStruct
     def __copy__(self) -> TaoPlotPageStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotPageStruct:
@@ -14857,15 +18511,43 @@ class TaoPlotPageStruct:
         ...
     @property
     def axis_label_text_scale(self) -> float:
-        ...
+        """
+        Relative to text_height
+        """
     @axis_label_text_scale.setter
     def axis_label_text_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def axis_number_text_scale(self) -> float:
-        ...
+        """
+        Relative to text_height
+        """
     @axis_number_text_scale.setter
     def axis_number_text_scale(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def border(self) -> QpRectStruct:
+        """
+        Border around plots edge of page.
+        """
+    @border.setter
+    def border(self, arg1: QpRectStruct) -> None:
+        ...
+    @property
+    def delete_overlapping_plots(self) -> bool:
+        """
+        Delete overlapping plots when a plot is placed?
+        """
+    @delete_overlapping_plots.setter
+    def delete_overlapping_plots(self, arg1: bool) -> None:
+        ...
+    @property
+    def draw_graph_title_suffix(self) -> bool:
+        """
+        Draw the graph title suffix?
+        """
+    @draw_graph_title_suffix.setter
+    def draw_graph_title_suffix(self, arg1: bool) -> None:
         ...
     @property
     def floor_plan_shape_scale(self) -> float:
@@ -14875,25 +18557,33 @@ class TaoPlotPageStruct:
         ...
     @property
     def floor_plan_text_scale(self) -> float:
-        ...
+        """
+        Scale used = floor_plan_text_scale * legend_text_scale
+        """
     @floor_plan_text_scale.setter
     def floor_plan_text_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def graph_title_text_scale(self) -> float:
-        ...
+        """
+        Relative to text_height
+        """
     @graph_title_text_scale.setter
     def graph_title_text_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def id_window(self) -> int:
-        ...
+        """
+        X window id number.
+        """
     @id_window.setter
     def id_window(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def key_table_text_scale(self) -> float:
-        ...
+        """
+        Relative to text_height
+        """
     @key_table_text_scale.setter
     def key_table_text_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -14905,25 +18595,33 @@ class TaoPlotPageStruct:
         ...
     @property
     def lat_layout_text_scale(self) -> float:
-        ...
+        """
+        Scale used = lat_layout_text_scale * legend_text_scale
+        """
     @lat_layout_text_scale.setter
     def lat_layout_text_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def legend_text_scale(self) -> float:
-        ...
+        """
+        Relative to text_height. For legends, plot_page, and lat_layout
+        """
     @legend_text_scale.setter
     def legend_text_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def main_title_text_scale(self) -> float:
-        ...
+        """
+        Relative to text_height
+        """
     @main_title_text_scale.setter
     def main_title_text_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def n_curve_pts(self) -> int:
-        ...
+        """
+        Default number of points for plotting a smooth curve.
+        """
     @n_curve_pts.setter
     def n_curve_pts(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -14931,32 +18629,57 @@ class TaoPlotPageStruct:
     def pattern(self) -> TaoShapePatternStructAlloc1D:
         ...
     @property
+    def plot_display_type(self) -> str:
+        """
+        'X' or 'TK'
+        """
+    @plot_display_type.setter
+    def plot_display_type(self, arg1: str) -> None:
+        ...
+    @property
     def region(self) -> TaoPlotRegionStructAlloc1D:
         ...
     @property
     def size(self) -> RealArray1D:
-        ...
+        """
+        width and height of plot window in pixels.
+        """
     @size.setter
     def size(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def template_(self) -> TaoPlotStructAlloc1D:
+    def subtitle(self) -> TaoTitleStruct:
+        """
+        Subtitle below title at top of page.
+        """
+    @subtitle.setter
+    def subtitle(self, arg1: TaoTitleStruct) -> None:
         ...
     @property
+    def template_(self) -> TaoPlotStructAlloc1D:
+        """
+        Templates for the plots.
+        """
+    @property
     def text_height(self) -> float:
-        ...
+        """
+        In points. Scales the height of all text
+        """
     @text_height.setter
     def text_height(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def title(self) -> TaoTitleStruct:
+        """
+        Title  at top of page.
+        """
+    @title.setter
+    def title(self, arg1: TaoTitleStruct) -> None:
         ...
 class TaoPlotRegionStruct:
     """
     Fortran struct: tao_plot_region_struct
     """
-    list_with_show_plot_command: bool
-    name: str
-    plot: TaoPlotStruct
-    setup_done: bool
-    visible: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -14972,10 +18695,52 @@ class TaoPlotRegionStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def location(self) -> RealArray1D:
+    def list_with_show_plot_command(self) -> bool:
+        """
+        False used for default plots to shorten the output of 'show plot'
+        """
+    @list_with_show_plot_command.setter
+    def list_with_show_plot_command(self, arg1: bool) -> None:
         ...
+    @property
+    def location(self) -> RealArray1D:
+        """
+        [x1, x2, y1, y2] location on page.
+        """
     @location.setter
     def location(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
+        ...
+    @property
+    def name(self) -> str:
+        """
+        Region name. Eg: 'r13', etc.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
+        ...
+    @property
+    def plot(self) -> TaoPlotStruct:
+        """
+        Plot associated with this region
+        """
+    @plot.setter
+    def plot(self, arg1: TaoPlotStruct) -> None:
+        ...
+    @property
+    def setup_done(self) -> bool:
+        """
+        Used for plot bookkeeping.
+        """
+    @setup_done.setter
+    def setup_done(self, arg1: bool) -> None:
+        ...
+    @property
+    def visible(self) -> bool:
+        """
+        To draw or not to draw.
+        """
+    @visible.setter
+    def visible(self, arg1: bool) -> None:
         ...
 class TaoPlotRegionStructAlloc1D:
     @typing.overload
@@ -15027,17 +18792,6 @@ class TaoPlotStruct:
     """
     Fortran struct: tao_plot_struct
     """
-    autoscale_gang_x: bool
-    autoscale_gang_y: bool
-    autoscale_x: bool
-    autoscale_y: bool
-    default_plot: bool
-    description: str
-    list_with_show_plot_command: bool
-    name: str
-    phantom: bool
-    type: str
-    x_axis_type: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -15053,25 +18807,121 @@ class TaoPlotStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def graph(self) -> TaoGraphStructAlloc1D:
+    def autoscale_gang_x(self) -> bool:
+        """
+        scale cmd scales graphs together?
+        """
+    @autoscale_gang_x.setter
+    def autoscale_gang_x(self, arg1: bool) -> None:
         ...
     @property
-    def ix_plot(self) -> int:
+    def autoscale_gang_y(self) -> bool:
+        """
+        scale cmd scales graphs together?
+        """
+    @autoscale_gang_y.setter
+    def autoscale_gang_y(self, arg1: bool) -> None:
         ...
+    @property
+    def autoscale_x(self) -> bool:
+        """
+        Horizontal autoscale.
+        """
+    @autoscale_x.setter
+    def autoscale_x(self, arg1: bool) -> None:
+        ...
+    @property
+    def autoscale_y(self) -> bool:
+        """
+        Vertical autoscale.
+        """
+    @autoscale_y.setter
+    def autoscale_y(self, arg1: bool) -> None:
+        ...
+    @property
+    def default_plot(self) -> bool:
+        """
+        One of Tao's default plots?
+        """
+    @default_plot.setter
+    def default_plot(self, arg1: bool) -> None:
+        ...
+    @property
+    def description(self) -> str:
+        """
+        Descriptive string.
+        """
+    @description.setter
+    def description(self, arg1: str) -> None:
+        ...
+    @property
+    def graph(self) -> TaoGraphStructAlloc1D:
+        """
+        individual graphs of a plot
+        """
+    @property
+    def ix_plot(self) -> int:
+        """
+        Index in s%plot_page%template(:) or %region(:) arrays.
+        """
     @ix_plot.setter
     def ix_plot(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def n_curve_pts(self) -> int:
+    def list_with_show_plot_command(self) -> bool:
+        """
+        False used for default plots to shorten the output of 'show plot'
+        """
+    @list_with_show_plot_command.setter
+    def list_with_show_plot_command(self, arg1: bool) -> None:
         ...
+    @property
+    def n_curve_pts(self) -> int:
+        """
+        Overrides s%plot_page%n_curve_pts.
+        """
     @n_curve_pts.setter
     def n_curve_pts(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def r(self) -> TaoPlotRegionStruct | None:
+    def name(self) -> str:
+        """
+        Identifying name. Rule: If name is blank, plot is not valid.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
         ...
+    @property
+    def phantom(self) -> bool:
+        """
+        Used by tao_plot_init to add info lines to 'show plot -templates'
+        """
+    @phantom.setter
+    def phantom(self, arg1: bool) -> None:
+        ...
+    @property
+    def r(self) -> TaoPlotRegionStruct | None:
+        """
+        pointer to parent.
+        """
     @r.setter
     def r(self, arg1: TaoPlotRegionStruct) -> None:
+        ...
+    @property
+    def type(self) -> str:
+        """
+        or 'wave'
+        """
+    @type.setter
+    def type(self, arg1: str) -> None:
+        ...
+    @property
+    def x_axis_type(self) -> str:
+        """
+        'index', 'ele_index', 's', 'none', 'floor', 'phase_space', etc.
+        """
+    @x_axis_type.setter
+    def x_axis_type(self, arg1: str) -> None:
         ...
 class TaoPlotStructAlloc1D:
     @typing.overload
@@ -15385,7 +19235,6 @@ class TaoShapePatternStruct:
     """
     Fortran struct: tao_shape_pattern_struct
     """
-    line: QpLineStruct
     name: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
@@ -15400,6 +19249,14 @@ class TaoShapePatternStruct:
     def __init__(self, name: str | None = None, line: QpLineStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def line(self) -> QpLineStruct:
+        """
+        Line color and pattern set by shape using this pattern.
+        """
+    @line.setter
+    def line(self, arg1: QpLineStruct) -> None:
         ...
     @property
     def pt(self) -> ...:
@@ -15464,19 +19321,25 @@ class TaoSpinDnDpzStruct:
         ...
     @property
     def partial(self) -> RealArray2D:
-        ...
+        """
+        partial(i:) is spin n0 derivative wrt pz for i^th oscillation mode (1 => a-mode, etc.)
+        """
     @partial.setter
     def partial(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def partial2(self) -> RealArray2D:
-        ...
+        """
+        partial(i:) is spin n0 derivative wrt pz with i^th oscillation mode missing (1 => a-mode, etc.)
+        """
     @partial2.setter
     def partial2(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def vec(self) -> RealArray1D:
-        ...
+        """
+        n0 derivative wrt pz.
+        """
     @vec.setter
     def vec(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -15508,13 +19371,17 @@ class TaoSpinEleStruct:
         ...
     @property
     def orb_eigen_vec(self) -> RealArray2D:
-        ...
+        """
+        (j,:) is j^th vector
+        """
     @orb_eigen_vec.setter
     def orb_eigen_vec(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def spin_eigen_vec(self) -> RealArray2D:
-        ...
+        """
+        (j,:) is j^th vector
+        """
     @spin_eigen_vec.setter
     def spin_eigen_vec(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
@@ -15568,9 +19435,6 @@ class TaoSpinMapStruct:
     """
     Fortran struct: tao_spin_map_struct
     """
-    axis0: SpinAxisStruct
-    axis1: SpinAxisStruct
-    axis_input: SpinAxisStruct
     map1: SpinOrbitMap1Struct
     valid: bool
     def __copy__(self) -> TaoSpinMapStruct:
@@ -15580,6 +19444,30 @@ class TaoSpinMapStruct:
     def __init__(self, valid: bool | None = None, map1: SpinOrbitMap1Struct | None = None, axis_input: SpinAxisStruct | None = None, axis0: SpinAxisStruct | None = None, axis1: SpinAxisStruct | None = None, ix_ele: typing.SupportsInt | None = None, ix_ref: typing.SupportsInt | None = None, ix_uni: typing.SupportsInt | None = None, ix_branch: typing.SupportsInt | None = None, mat8: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
+        ...
+    @property
+    def axis0(self) -> SpinAxisStruct:
+        """
+        Initial axes.
+        """
+    @axis0.setter
+    def axis0(self, arg1: SpinAxisStruct) -> None:
+        ...
+    @property
+    def axis1(self) -> SpinAxisStruct:
+        """
+        Final axes.
+        """
+    @axis1.setter
+    def axis1(self, arg1: SpinAxisStruct) -> None:
+        ...
+    @property
+    def axis_input(self) -> SpinAxisStruct:
+        """
+        Input axes.
+        """
+    @axis_input.setter
+    def axis_input(self, arg1: SpinAxisStruct) -> None:
         ...
     @property
     def ix_branch(self) -> int:
@@ -15615,7 +19503,6 @@ class TaoSpinPolarizationStruct:
     """
     Fortran struct: tao_spin_polarization_struct
     """
-    q_1turn: SpinOrbitMap1Struct
     valid: bool
     def __copy__(self) -> TaoSpinPolarizationStruct:
         ...
@@ -15627,79 +19514,113 @@ class TaoSpinPolarizationStruct:
         ...
     @property
     def depol_rate(self) -> float:
-        ...
+        """
+        Depolarization rate (1/sec).
+        """
     @depol_rate.setter
     def depol_rate(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def depol_rate_partial(self) -> RealArray1D:
-        ...
+        """
+        Depolarization rate (1/sec) using only single mode to calc dn_dpz.
+        """
     @depol_rate_partial.setter
     def depol_rate_partial(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def depol_rate_partial2(self) -> RealArray1D:
-        ...
+        """
+        Depolarization rate (1/sec) using only two modes to calc dn_dpz.
+        """
     @depol_rate_partial2.setter
     def depol_rate_partial2(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def integral_1ns(self) -> float:
-        ...
+        """
+        Integral of g^3 (1 - 2(n * s_hat)/9)
+        """
     @integral_1ns.setter
     def integral_1ns(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def integral_bdn(self) -> float:
-        ...
+        """
+        Integral of g^3 * b_hat * dn/ddelta
+        """
     @integral_bdn.setter
     def integral_bdn(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def integral_bn(self) -> float:
-        ...
+        """
+        Integral of g^3 * b_hat * n_0
+        """
     @integral_bn.setter
     def integral_bn(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def integral_dn2(self) -> float:
-        ...
+        """
+        Integral of g^3 * 11 (dn/ddelta)^2 / 9
+        """
     @integral_dn2.setter
     def integral_dn2(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def pol_limit_dk(self) -> float:
-        ...
+        """
+        Equalibrium Polarization calculated via the Derbenev-Kondratenko-Mane formula.
+        """
     @pol_limit_dk.setter
     def pol_limit_dk(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def pol_limit_dk_partial(self) -> RealArray1D:
-        ...
+        """
+        Limit using only single mode to calc dn_dpz
+        """
     @pol_limit_dk_partial.setter
     def pol_limit_dk_partial(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def pol_limit_dk_partial2(self) -> RealArray1D:
-        ...
+        """
+        Limit using only single mode to calc dn_dpz
+        """
     @pol_limit_dk_partial2.setter
     def pol_limit_dk_partial2(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def pol_limit_st(self) -> float:
-        ...
+        """
+        Polarization calculated using Sokolov-Ternov formula.
+        """
     @pol_limit_st.setter
     def pol_limit_st(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def pol_rate_bks(self) -> float:
-        ...
+        """
+        BKS Polarization rate (1/sec).
+        """
     @pol_rate_bks.setter
     def pol_rate_bks(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def q_ele(self) -> SpinOrbitMap1StructAlloc1D:
+    def q_1turn(self) -> SpinOrbitMap1Struct:
+        """
+        Save results from spin_concat_linear_maps in tao_spin_polarization.
+        """
+    @q_1turn.setter
+    def q_1turn(self, arg1: SpinOrbitMap1Struct) -> None:
         ...
+    @property
+    def q_ele(self) -> SpinOrbitMap1StructAlloc1D:
+        """
+        Save results from spin_concat_linear_maps in tao_spin_polarization.
+        """
     @property
     def tune(self) -> float:
         ...
@@ -15739,11 +19660,6 @@ class TaoSuperUniverseStruct:
     Fortran struct: tao_super_universe_struct
     """
     building_wall: TaoBuildingWallStruct
-    com: TaoCommonStruct
-    global_: TaoGlobalStruct
-    init: TaoInitStruct
-    initialized: bool
-    plot_page: TaoPlotPageStruct
     wave: TaoWaveStruct
     def __copy__(self) -> TaoSuperUniverseStruct:
         ...
@@ -15754,7 +19670,41 @@ class TaoSuperUniverseStruct:
     def __repr__(self) -> str:
         ...
     @property
+    def com(self) -> TaoCommonStruct:
+        """
+        Non-initialization common parameters
+        """
+    @com.setter
+    def com(self, arg1: TaoCommonStruct) -> None:
+        ...
+    @property
+    def global_(self) -> TaoGlobalStruct:
+        """
+        User accessible global variables.
+        """
+    @global_.setter
+    def global_(self, arg1: TaoGlobalStruct) -> None:
+        ...
+    @property
     def history(self) -> ...:
+        """
+        command history
+        """
+    @property
+    def init(self) -> TaoInitStruct:
+        """
+        Initialization parameters
+        """
+    @init.setter
+    def init(self, arg1: TaoInitStruct) -> None:
+        ...
+    @property
+    def initialized(self) -> bool:
+        """
+        Does tao_init() need to be called?
+        """
+    @initialized.setter
+    def initialized(self, arg1: bool) -> None:
         ...
     @property
     def key(self) -> IntAlloc1D:
@@ -15775,22 +19725,32 @@ class TaoSuperUniverseStruct:
     def n_var_used(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def u(self) -> ...:
+    def plot_page(self) -> TaoPlotPageStruct:
+        """
+        Defines the plot window.
+        """
+    @plot_page.setter
+    def plot_page(self, arg1: TaoPlotPageStruct) -> None:
         ...
+    @property
+    def u(self) -> ...:
+        """
+        array of universes.
+        """
     @property
     def v1_var(self) -> ...:
-        ...
+        """
+        The variable types
+        """
     @property
     def var(self) -> ...:
-        ...
+        """
+        array of all variables.
+        """
 class TaoTitleStruct:
     """
     Fortran struct: tao_title_struct
     """
-    draw_it: bool
-    justify: str
-    string: str
-    units: str
     def __copy__(self) -> TaoTitleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoTitleStruct:
@@ -15800,14 +19760,50 @@ class TaoTitleStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def x(self) -> float:
+    def draw_it(self) -> bool:
+        """
+        draw the title?
+        """
+    @draw_it.setter
+    def draw_it(self, arg1: bool) -> None:
         ...
+    @property
+    def justify(self) -> str:
+        """
+        Left, Center, or Right justification.
+        """
+    @justify.setter
+    def justify(self, arg1: str) -> None:
+        ...
+    @property
+    def string(self) -> str:
+        """
+        title character string.
+        """
+    @string.setter
+    def string(self, arg1: str) -> None:
+        ...
+    @property
+    def units(self) -> str:
+        """
+        %BOX, POINTS, etc...
+        """
+    @units.setter
+    def units(self, arg1: str) -> None:
+        ...
+    @property
+    def x(self) -> float:
+        """
+        x, y rwt lower left corner
+        """
     @x.setter
     def x(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y(self) -> float:
-        ...
+        """
+        x, y rwt lower left corner
+        """
     @y.setter
     def y(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -15857,18 +19853,6 @@ class TaoUniverseCalcStruct:
     """
     Fortran struct: tao_universe_calc_struct
     """
-    chrom_for_data: bool
-    chrom_for_plotting: bool
-    dynamic_aperture: bool
-    lat_sigma_for_data: bool
-    lat_sigma_for_plotting: bool
-    lattice: bool
-    one_turn_map: bool
-    rad_int_for_data: bool
-    rad_int_for_plotting: bool
-    spin_matrices: bool
-    track: bool
-    twiss: bool
     def __copy__(self) -> TaoUniverseCalcStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoUniverseCalcStruct:
@@ -15878,10 +19862,108 @@ class TaoUniverseCalcStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def srdt_for_data(self) -> int:
+    def chrom_for_data(self) -> bool:
+        """
+        Does the chromaticity need to be computed for
+        """
+    @chrom_for_data.setter
+    def chrom_for_data(self, arg1: bool) -> None:
         ...
+    @property
+    def chrom_for_plotting(self) -> bool:
+        """
+        data or plotting?
+        """
+    @chrom_for_plotting.setter
+    def chrom_for_plotting(self, arg1: bool) -> None:
+        ...
+    @property
+    def dynamic_aperture(self) -> bool:
+        """
+        Do the dynamic_aperture calc?
+        """
+    @dynamic_aperture.setter
+    def dynamic_aperture(self, arg1: bool) -> None:
+        ...
+    @property
+    def lat_sigma_for_data(self) -> bool:
+        """
+        Do the beam sigmas need to be computed for
+        """
+    @lat_sigma_for_data.setter
+    def lat_sigma_for_data(self, arg1: bool) -> None:
+        ...
+    @property
+    def lat_sigma_for_plotting(self) -> bool:
+        """
+        data or plotting?
+        """
+    @lat_sigma_for_plotting.setter
+    def lat_sigma_for_plotting(self, arg1: bool) -> None:
+        ...
+    @property
+    def lattice(self) -> bool:
+        """
+        Used to indicate which lattices need tracking done.
+        """
+    @lattice.setter
+    def lattice(self, arg1: bool) -> None:
+        ...
+    @property
+    def one_turn_map(self) -> bool:
+        """
+        Compute the one turn map?
+        """
+    @one_turn_map.setter
+    def one_turn_map(self, arg1: bool) -> None:
+        ...
+    @property
+    def rad_int_for_data(self) -> bool:
+        """
+        Do the radiation integrals need to be computed for
+        """
+    @rad_int_for_data.setter
+    def rad_int_for_data(self, arg1: bool) -> None:
+        ...
+    @property
+    def rad_int_for_plotting(self) -> bool:
+        """
+        data or plotting?
+        """
+    @rad_int_for_plotting.setter
+    def rad_int_for_plotting(self, arg1: bool) -> None:
+        ...
+    @property
+    def spin_matrices(self) -> bool:
+        """
+        Calculate G and D spin matrices?
+        """
+    @spin_matrices.setter
+    def spin_matrices(self, arg1: bool) -> None:
+        ...
+    @property
+    def srdt_for_data(self) -> int:
+        """
+        0 = false, 1 = 1st order, 2 = 1st & 2nd order
+        """
     @srdt_for_data.setter
     def srdt_for_data(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def track(self) -> bool:
+        """
+        tracking needs to be done?
+        """
+    @track.setter
+    def track(self, arg1: bool) -> None:
+        ...
+    @property
+    def twiss(self) -> bool:
+        """
+        calc linear transfer matrix?
+        """
+    @twiss.setter
+    def twiss(self, arg1: bool) -> None:
         ...
 class TaoUniversePointerStruct:
     """
@@ -15958,14 +20040,8 @@ class TaoUniverseStruct:
     Fortran struct: tao_universe_struct
     """
     beam: TaoBeamUniStruct
-    calc: TaoUniverseCalcStruct
-    design_same_as_previous: bool
     dynamic_aperture: TaoDynamicApertureStruct
-    ele_order: LatEleOrderStruct
-    is_on: bool
-    picked_uni: bool
     ping_scale: TaoPingScaleStruct
-    scratch_lat: LatStruct
     spin_map: TaoSpinMapStruct
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
@@ -15988,17 +20064,31 @@ class TaoUniverseStruct:
     def base(self, arg1: TaoLatticeStruct) -> None:
         ...
     @property
-    def d2_data(self) -> TaoD2DataStructAlloc1D:
+    def calc(self) -> TaoUniverseCalcStruct:
+        """
+        What needs to be calculated?
+        """
+    @calc.setter
+    def calc(self, arg1: TaoUniverseCalcStruct) -> None:
         ...
     @property
+    def d2_data(self) -> TaoD2DataStructAlloc1D:
+        """
+        The data types
+        """
+    @property
     def dModel_dVar(self) -> RealArray2D:
-        ...
+        """
+        Derivative matrix.
+        """
     @dModel_dVar.setter
     def dModel_dVar(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
     def data(self) -> TaoDataStructAlloc1D:
-        ...
+        """
+        Array of all data.
+        """
     @property
     def design(self) -> TaoLatticeStruct | None:
         ...
@@ -16006,8 +20096,34 @@ class TaoUniverseStruct:
     def design(self, arg1: TaoLatticeStruct) -> None:
         ...
     @property
-    def ix_uni(self) -> int:
+    def design_same_as_previous(self) -> bool:
+        """
+        Design lat same as the previous uni?
+        """
+    @design_same_as_previous.setter
+    def design_same_as_previous(self, arg1: bool) -> None:
         ...
+    @property
+    def ele_order(self) -> LatEleOrderStruct:
+        """
+        Order of elements with same name.
+        """
+    @ele_order.setter
+    def ele_order(self, arg1: LatEleOrderStruct) -> None:
+        ...
+    @property
+    def is_on(self) -> bool:
+        """
+        universe turned on
+        """
+    @is_on.setter
+    def is_on(self, arg1: bool) -> None:
+        ...
+    @property
+    def ix_uni(self) -> int:
+        """
+        Universe index.
+        """
     @ix_uni.setter
     def ix_uni(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -16019,18 +20135,40 @@ class TaoUniverseStruct:
         ...
     @property
     def model_branch(self) -> TaoModelBranchStructArray1D:
-        ...
+        """
+        model specific information
+        """
     @property
     def n_d2_data_used(self) -> int:
-        ...
+        """
+        Number of used %d2_data(:) components.
+        """
     @n_d2_data_used.setter
     def n_d2_data_used(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_data_used(self) -> int:
-        ...
+        """
+        Number of used %data(:) components.
+        """
     @n_data_used.setter
     def n_data_used(self, arg1: typing.SupportsInt) -> None:
+        ...
+    @property
+    def picked_uni(self) -> bool:
+        """
+        Scratch logical.
+        """
+    @picked_uni.setter
+    def picked_uni(self, arg1: bool) -> None:
+        ...
+    @property
+    def scratch_lat(self) -> LatStruct:
+        """
+        Scratch area.
+        """
+    @scratch_lat.setter
+    def scratch_lat(self, arg1: LatStruct) -> None:
         ...
 class TaoUniverseStructAlloc1D:
     @typing.overload
@@ -16082,7 +20220,6 @@ class TaoV1VarStruct:
     """
     Fortran struct: tao_v1_var_struct
     """
-    name: str
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -16099,13 +20236,25 @@ class TaoV1VarStruct:
         ...
     @property
     def ix_v1_var(self) -> int:
-        ...
+        """
+        Index to s%v1_var(:) array
+        """
     @ix_v1_var.setter
     def ix_v1_var(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def v(self) -> TaoVarStructArray1D:
+    def name(self) -> str:
+        """
+        V1 variable name. Eg: 'quad_k1'.
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
         ...
+    @property
+    def v(self) -> TaoVarStructArray1D:
+        """
+        Pointer to the appropriate section in s%var.
+        """
 class TaoV1VarStructAlloc1D:
     @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> TaoV1VarStruct:
@@ -16172,7 +20321,9 @@ class TaoVarSlaveStruct:
         ...
     @property
     def base_value(self) -> float | None:
-        ...
+        """
+        Pointer to the variable in the base lat.
+        """
     @base_value.setter
     def base_value(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -16184,19 +20335,25 @@ class TaoVarSlaveStruct:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        Index of element in the u%lattice%ele(:) array.
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_uni(self) -> int:
-        ...
+        """
+        universe index.
+        """
     @ix_uni.setter
     def ix_uni(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def model_value(self) -> float | None:
-        ...
+        """
+        Pointer to the variable in the model lat.
+        """
     @model_value.setter
     def model_value(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -16250,18 +20407,6 @@ class TaoVarStruct:
     """
     Fortran struct: tao_var_struct
     """
-    attrib_name: str
-    ele_name: str
-    exists: bool
-    good_opt: bool
-    good_plot: bool
-    good_user: bool
-    good_var: bool
-    id: str
-    key_bound: bool
-    merit_type: str
-    useit_opt: bool
-    useit_plot: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -16277,134 +20422,258 @@ class TaoVarStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def base_value(self) -> float | None:
+    def attrib_name(self) -> str:
+        """
+        Name of the attribute to vary.
+        """
+    @attrib_name.setter
+    def attrib_name(self, arg1: str) -> None:
         ...
+    @property
+    def base_value(self) -> float | None:
+        """
+        Base value.
+        """
     @base_value.setter
     def base_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def correction_value(self) -> float:
-        ...
+        """
+        Value determined by a fit to correct the lattice.
+        """
     @correction_value.setter
     def correction_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def dMerit_dVar(self) -> float:
-        ...
+        """
+        Merit derivative.
+        """
     @dMerit_dVar.setter
     def dMerit_dVar(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def delta_merit(self) -> float:
-        ...
+        """
+        Diff used to calculate the merit function term.
+        """
     @delta_merit.setter
     def delta_merit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def design_value(self) -> float:
-        ...
+        """
+        Design value from the design lattice.
+        """
     @design_value.setter
     def design_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def extend_val(self) -> float:
+    def ele_name(self) -> str:
+        """
+        Associated lattice element name.
+        """
+    @ele_name.setter
+    def ele_name(self, arg1: str) -> None:
         ...
+    @property
+    def exists(self) -> bool:
+        """
+        See above
+        """
+    @exists.setter
+    def exists(self, arg1: bool) -> None:
+        ...
+    @property
+    def extend_val(self) -> float:
+        """
+        For extension code. Not used by Tao.
+        """
     @extend_val.setter
     def extend_val(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def high_lim(self) -> float:
+    def good_opt(self) -> bool:
+        """
+        See above
+        """
+    @good_opt.setter
+    def good_opt(self, arg1: bool) -> None:
         ...
+    @property
+    def good_plot(self) -> bool:
+        """
+        See above
+        """
+    @good_plot.setter
+    def good_plot(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_user(self) -> bool:
+        """
+        See above
+        """
+    @good_user.setter
+    def good_user(self, arg1: bool) -> None:
+        ...
+    @property
+    def good_var(self) -> bool:
+        """
+        See above
+        """
+    @good_var.setter
+    def good_var(self, arg1: bool) -> None:
+        ...
+    @property
+    def high_lim(self) -> float:
+        """
+        High limit for the model_value.
+        """
     @high_lim.setter
     def high_lim(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def ix_attrib(self) -> int:
+    def id(self) -> str:
+        """
+        Used by Tao extension code. Not used by Tao directly.
+        """
+    @id.setter
+    def id(self, arg1: str) -> None:
         ...
+    @property
+    def ix_attrib(self) -> int:
+        """
+        Index in ele%value(:) array if appropriate.
+        """
     @ix_attrib.setter
     def ix_attrib(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_dvar(self) -> int:
-        ...
+        """
+        Column in the dData_dVar derivative matrix.
+        """
     @ix_dvar.setter
     def ix_dvar(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_key_table(self) -> int:
-        ...
+        """
+        Has a key binding?
+        """
     @ix_key_table.setter
     def ix_key_table(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_v1(self) -> int:
-        ...
+        """
+        Index of this var in the s%v1_var(i)%v(:) array.
+        """
     @ix_v1.setter
     def ix_v1(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_var(self) -> int:
-        ...
+        """
+        Index number of this var in the s%var(:) array.
+        """
     @ix_var.setter
     def ix_var(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def key_delta(self) -> float:
+    def key_bound(self) -> bool:
+        """
+        Variable bound to keyboard key?
+        """
+    @key_bound.setter
+    def key_bound(self, arg1: bool) -> None:
         ...
+    @property
+    def key_delta(self) -> float:
+        """
+        Change in value when a key is pressed.
+        """
     @key_delta.setter
     def key_delta(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def key_val0(self) -> float:
-        ...
+        """
+        Key base value
+        """
     @key_val0.setter
     def key_val0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def low_lim(self) -> float:
-        ...
+        """
+        Low limit for the model_value.
+        """
     @low_lim.setter
     def low_lim(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def meas_value(self) -> float:
-        ...
+        """
+        The value when the data measurement was taken.
+        """
     @meas_value.setter
     def meas_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def merit(self) -> float:
-        ...
+        """
+        merit_term = weight * delta^2.
+        """
     @merit.setter
     def merit(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def model_value(self) -> float | None:
+    def merit_type(self) -> str:
+        """
+        'target' or 'limit'
+        """
+    @merit_type.setter
+    def merit_type(self, arg1: str) -> None:
         ...
+    @property
+    def model_value(self) -> float | None:
+        """
+        Model value.
+        """
     @model_value.setter
     def model_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def old_value(self) -> float:
-        ...
+        """
+        Scratch space used by Tao.
+        """
     @old_value.setter
     def old_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ref_value(self) -> float:
-        ...
+        """
+        Value when the reference measurement was taken.
+        """
     @ref_value.setter
     def ref_value(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def s(self) -> float:
-        ...
+        """
+        longitudinal position of ele.
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def scratch_value(self) -> float:
-        ...
+        """
+        Scratch space used by Tao.
+        """
     @scratch_value.setter
     def scratch_value(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -16413,19 +20682,41 @@ class TaoVarStruct:
         ...
     @property
     def step(self) -> float:
-        ...
+        """
+        Sets what is a small step for varying this var.
+        """
     @step.setter
     def step(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def v1(self) -> TaoV1VarStruct | None:
+    def useit_opt(self) -> bool:
+        """
+        See above
+        """
+    @useit_opt.setter
+    def useit_opt(self, arg1: bool) -> None:
         ...
+    @property
+    def useit_plot(self) -> bool:
+        """
+        See above
+        """
+    @useit_plot.setter
+    def useit_plot(self, arg1: bool) -> None:
+        ...
+    @property
+    def v1(self) -> TaoV1VarStruct | None:
+        """
+        Pointer to the parent.
+        """
     @v1.setter
     def v1(self, arg1: TaoV1VarStruct) -> None:
         ...
     @property
     def weight(self) -> float:
-        ...
+        """
+        Weight for the merit function term.
+        """
     @weight.setter
     def weight(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -16501,13 +20792,17 @@ class TaoWaveKickPtStruct:
         ...
     @property
     def ele(self) -> EleStruct | None:
-        ...
+        """
+        lattice element at position of kick.
+        """
     @ele.setter
     def ele(self, arg1: EleStruct) -> None:
         ...
     @property
     def ix_dat_before_kick(self) -> int:
-        ...
+        """
+        Index of datum in data array just before the kick.
+        """
     @ix_dat_before_kick.setter
     def ix_dat_before_kick(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -16531,7 +20826,9 @@ class TaoWaveKickPtStruct:
         ...
     @property
     def s(self) -> float:
-        ...
+        """
+        s-position of kick
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -16585,7 +20882,6 @@ class TaoWaveStruct:
     """
     Fortran struct: tao_wave_struct
     """
-    base_graph: TaoGraphStruct
     data_type: str
     def __copy__(self) -> TaoWaveStruct:
         ...
@@ -16626,6 +20922,14 @@ class TaoWaveStruct:
     def amp_ba_s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
+    def base_graph(self) -> TaoGraphStruct:
+        """
+        Graph before curves extended to 1.5 periods.
+        """
+    @base_graph.setter
+    def base_graph(self, arg1: TaoGraphStruct) -> None:
+        ...
+    @property
     def chi_a(self) -> float:
         ...
     @chi_a.setter
@@ -16663,7 +20967,9 @@ class TaoWaveStruct:
         ...
     @property
     def d1_dat(self) -> TaoD1DataStruct | None:
-        ...
+        """
+        D1 data for analysis
+        """
     @d1_dat.setter
     def d1_dat(self, arg1: TaoD1DataStruct) -> None:
         ...
@@ -16693,7 +20999,9 @@ class TaoWaveStruct:
         ...
     @property
     def i_curve_wrap_pt(self) -> int:
-        ...
+        """
+        Index of last point before wrap in curve array.
+        """
     @i_curve_wrap_pt.setter
     def i_curve_wrap_pt(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -16723,7 +21031,9 @@ class TaoWaveStruct:
         ...
     @property
     def ix_data(self) -> IntAlloc1D:
-        ...
+        """
+        Translates from plot point to datum index
+        """
     @ix_data.setter
     def ix_data(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
@@ -16744,7 +21054,9 @@ class TaoWaveStruct:
         ...
     @property
     def n_func(self) -> int:
-        ...
+        """
+        Number of functions used in the fit.
+        """
     @n_func.setter
     def n_func(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -16756,7 +21068,9 @@ class TaoWaveStruct:
         ...
     @property
     def region(self) -> TaoPlotRegionStruct | None:
-        ...
+        """
+        Where the wave plot is
+        """
     @region.setter
     def region(self, arg1: TaoPlotRegionStruct) -> None:
         ...
@@ -16872,7 +21186,9 @@ class TargetPointStruct:
         ...
     @property
     def r(self) -> RealArray1D:
-        ...
+        """
+        (x, y, z)
+        """
     @r.setter
     def r(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -17467,13 +21783,17 @@ class TestSubSubStruct:
         ...
     @property
     def freq_spread(self) -> float:
-        ...
+        """
+        Random frequency spread of long range modes.
+        """
     @freq_spread.setter
     def freq_spread(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def t_ref(self) -> float:
-        ...
+        """
+        time reference value for computing the wake amplitude. This is used to prevent value overflow with long trains.
+        """
     @t_ref.setter
     def t_ref(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -17698,9 +22018,6 @@ class TrackPointStruct:
     """
     Fortran struct: track_point_struct
     """
-    field: EmFieldStruct
-    orb: CoordStruct
-    strong_beam: StrongBeamStruct
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -17716,26 +22033,58 @@ class TrackPointStruct:
     def __repr__(self) -> str:
         ...
     @property
-    def mat6(self) -> RealArray2D:
+    def field(self) -> EmFieldStruct:
+        """
+        E&M fields in lab coordinates.
+        """
+    @field.setter
+    def field(self, arg1: EmFieldStruct) -> None:
         ...
+    @property
+    def mat6(self) -> RealArray2D:
+        """
+        1st order part of xfer map (transfer matrix).
+        """
     @mat6.setter
     def mat6(self, arg1: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat]]) -> None:
         ...
     @property
-    def s_body(self) -> float:
+    def orb(self) -> CoordStruct:
+        """
+        Particle position in lab coords.
+        """
+    @orb.setter
+    def orb(self, arg1: CoordStruct) -> None:
         ...
+    @property
+    def s_body(self) -> float:
+        """
+        Longitudinal body coord with respect to the entrance end.
+        """
     @s_body.setter
     def s_body(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def s_lab(self) -> float:
-        ...
+        """
+        Longitudinal lab coord with respect to the upstream end.
+        """
     @s_lab.setter
     def s_lab(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def vec0(self) -> RealArray1D:
+    def strong_beam(self) -> StrongBeamStruct:
+        """
+        Strong beam info for beambeam element.
+        """
+    @strong_beam.setter
+    def strong_beam(self, arg1: StrongBeamStruct) -> None:
         ...
+    @property
+    def vec0(self) -> RealArray1D:
+        """
+        0th order part of xfer map from the beginning.
+        """
     @vec0.setter
     def vec0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -17799,31 +22148,41 @@ class TrackStruct:
         ...
     @property
     def ds_save(self) -> float:
-        ...
+        """
+        Min distance between points. Not positive => Save at all points.
+        """
     @ds_save.setter
     def ds_save(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def n_bad(self) -> int:
-        ...
+        """
+        Number of 'bad' steps where the step length was shortened.
+        """
     @n_bad.setter
     def n_bad(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_ok(self) -> int:
-        ...
+        """
+        Number of 'good' steps where the step length was not shortened.
+        """
     @n_ok.setter
     def n_ok(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_pt(self) -> int:
-        ...
+        """
+        Track upper bound for %pt(0:) array. n_bad and n_ok are used by adaptive trackers to record the number of times the step length had to be shortened.
+        """
     @n_pt.setter
     def n_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def pt(self) -> TrackPointStructAlloc1D:
-        ...
+        """
+        Array of track points indexed from 0.
+        """
 class TrackUntilDead:
     """
     track_until_dead return type
@@ -17880,13 +22239,17 @@ class TricubicCmplxCoefStruct:
         ...
     @property
     def coef(self) -> ComplexArray3D:
-        ...
+        """
+        Coefs
+        """
     @coef.setter
     def coef(self, arg1: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[complex]]]) -> None:
         ...
     @property
     def i_box(self) -> IntArray1D:
-        ...
+        """
+        index at lower box corner.
+        """
     @i_box.setter
     def i_box(self, arg1: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
@@ -18145,7 +22508,6 @@ class WakeLrModeStruct:
     """
     Fortran struct: wake_lr_mode_struct
     """
-    polarized: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -18162,75 +22524,107 @@ class WakeLrModeStruct:
         ...
     @property
     def Q(self) -> float:
-        ...
+        """
+        Used for backwards compatability.
+        """
     @Q.setter
     def Q(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def R_over_Q(self) -> float:
-        ...
+        """
+        Strength in V/C/m^(2*m_mode).
+        """
     @R_over_Q.setter
     def R_over_Q(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def a_cos(self) -> float:
-        ...
+        """
+        skew cos-like component of the wake.
+        """
     @a_cos.setter
     def a_cos(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def a_sin(self) -> float:
-        ...
+        """
+        skew sin-like component of the wake.
+        """
     @a_sin.setter
     def a_sin(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def angle(self) -> float:
-        ...
+        """
+        polarization angle (radians/2pi).
+        """
     @angle.setter
     def angle(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def b_cos(self) -> float:
-        ...
+        """
+        non-skew cos-like component of the wake.
+        """
     @b_cos.setter
     def b_cos(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def b_sin(self) -> float:
-        ...
+        """
+        non-skew sin-like component of the wake.
+        """
     @b_sin.setter
     def b_sin(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def damp(self) -> float:
-        ...
+        """
+        Damping factor = omega / 2 * Q = pi * freq / Q
+        """
     @damp.setter
     def damp(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def freq(self) -> float:
-        ...
+        """
+        Actual Frequency in Hz.
+        """
     @freq.setter
     def freq(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def freq_in(self) -> float:
-        ...
+        """
+        Input frequency in Hz.
+        """
     @freq_in.setter
     def freq_in(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def m(self) -> int:
-        ...
+        """
+        Mode order (1 = dipole, 2 = quad, etc.)
+        """
     @m.setter
     def m(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def phi(self) -> float:
-        ...
+        """
+        Phase in radians/2pi.
+        """
     @phi.setter
     def phi(self, arg1: typing.SupportsFloat) -> None:
+        ...
+    @property
+    def polarized(self) -> bool:
+        """
+        Polaraized mode?
+        """
+    @polarized.setter
+    def polarized(self, arg1: bool) -> None:
         ...
 class WakeLrModeStructAlloc1D:
     @typing.overload
@@ -18283,7 +22677,6 @@ class WakeLrStruct:
     Fortran struct: wake_lr_struct
     """
     file: str
-    self_wake_on: bool
     def __copy__(self) -> WakeLrStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeLrStruct:
@@ -18294,13 +22687,17 @@ class WakeLrStruct:
         ...
     @property
     def amp_scale(self) -> float:
-        ...
+        """
+        Wake amplitude scale factor.
+        """
     @amp_scale.setter
     def amp_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def freq_spread(self) -> float:
-        ...
+        """
+        Random frequency spread of long range modes.
+        """
     @freq_spread.setter
     def freq_spread(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -18308,14 +22705,26 @@ class WakeLrStruct:
     def mode(self) -> WakeLrModeStructAlloc1D:
         ...
     @property
-    def t_ref(self) -> float:
+    def self_wake_on(self) -> bool:
+        """
+        Long range self-wake used in tracking?
+        """
+    @self_wake_on.setter
+    def self_wake_on(self, arg1: bool) -> None:
         ...
+    @property
+    def t_ref(self) -> float:
+        """
+        time reference value for computing the wake amplitude. This is used to prevent value overflow with long trains.
+        """
     @t_ref.setter
     def t_ref(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def time_scale(self) -> float:
-        ...
+        """
+        time scale factor.
+        """
     @time_scale.setter
     def time_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -18339,61 +22748,81 @@ class WakeSrModeStruct:
         ...
     @property
     def a_cos(self) -> float:
-        ...
+        """
+        skew (y) cos-like component of the wake
+        """
     @a_cos.setter
     def a_cos(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def a_sin(self) -> float:
-        ...
+        """
+        skew (y) sin-like component of the wake
+        """
     @a_sin.setter
     def a_sin(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def amp(self) -> float:
-        ...
+        """
+        Amplitude
+        """
     @amp.setter
     def amp(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def b_cos(self) -> float:
-        ...
+        """
+        non-skew (x) cos-like component of the wake
+        """
     @b_cos.setter
     def b_cos(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def b_sin(self) -> float:
-        ...
+        """
+        non-skew (x) sin-like component of the wake
+        """
     @b_sin.setter
     def b_sin(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def damp(self) -> float:
-        ...
+        """
+        Dampling factor.
+        """
     @damp.setter
     def damp(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def k(self) -> float:
-        ...
+        """
+        k factor
+        """
     @k.setter
     def k(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def phi(self) -> float:
-        ...
+        """
+        Phase in radians/2pi
+        """
     @phi.setter
     def phi(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def polarization(self) -> int:
-        ...
+        """
+        Transverse: none$, x_axis$, y_axis$. Not used for longitudinal.
+        """
     @polarization.setter
     def polarization(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def position_dependence(self) -> int:
-        ...
+        """
+        Transverse: leading$, trailing$, none$ Longitudinal: x_leading$, ..., y_trailing$, none$
+        """
     @position_dependence.setter
     def position_dependence(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -18448,7 +22877,6 @@ class WakeSrStruct:
     Fortran struct: wake_sr_struct
     """
     file: str
-    scale_with_length: bool
     z_long: WakeSrZLongStruct
     def __copy__(self) -> WakeSrStruct:
         ...
@@ -18460,7 +22888,9 @@ class WakeSrStruct:
         ...
     @property
     def amp_scale(self) -> float:
-        ...
+        """
+        Wake amplitude scale factor.
+        """
     @amp_scale.setter
     def amp_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -18468,29 +22898,45 @@ class WakeSrStruct:
     def long_wake(self) -> WakeSrModeStructAlloc1D:
         ...
     @property
+    def scale_with_length(self) -> bool:
+        """
+        Scale wake with element length?
+        """
+    @scale_with_length.setter
+    def scale_with_length(self, arg1: bool) -> None:
+        ...
+    @property
     def trans_wake(self) -> WakeSrModeStructAlloc1D:
         ...
     @property
     def z_max(self) -> float:
-        ...
+        """
+        Max allowable z value. 0-> ignore
+        """
     @z_max.setter
     def z_max(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def z_ref_long(self) -> float:
-        ...
+        """
+        z reference value for computing the wake amplitude.
+        """
     @z_ref_long.setter
     def z_ref_long(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def z_ref_trans(self) -> float:
-        ...
+        """
+        This is used to prevent value overflow with long bunches.
+        """
     @z_ref_trans.setter
     def z_ref_trans(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def z_scale(self) -> float:
-        ...
+        """
+        z-distance scale factor.
+        """
     @z_scale.setter
     def z_scale(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -18498,7 +22944,6 @@ class WakeSrZLongStruct:
     """
     Fortran struct: wake_sr_z_long_struct
     """
-    time_based: bool
     def __copy__(self) -> WakeSrZLongStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeSrZLongStruct:
@@ -18509,49 +22954,73 @@ class WakeSrZLongStruct:
         ...
     @property
     def dz(self) -> float:
-        ...
+        """
+        Distance between points. If zero there is no wake.
+        """
     @dz.setter
     def dz(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def fbunch(self) -> ComplexAlloc1D:
-        ...
+        """
+        Scratch space.
+        """
     @fbunch.setter
     def fbunch(self, arg1: collections.abc.Sequence[complex]) -> None:
         ...
     @property
     def fw(self) -> ComplexAlloc1D:
-        ...
+        """
+        Fourier transform of w.
+        """
     @fw.setter
     def fw(self, arg1: collections.abc.Sequence[complex]) -> None:
         ...
     @property
     def position_dependence(self) -> int:
-        ...
+        """
+        Transverse: leading$, trailing$, none$ Longitudinal: x_leading$, ..., y_trailing$, none$
+        """
     @position_dependence.setter
     def position_dependence(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def smoothing_sigma(self) -> float:
-        ...
+        """
+        0 => No smoothing.
+        """
     @smoothing_sigma.setter
     def smoothing_sigma(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
-    def w(self) -> RealAlloc1D:
+    def time_based(self) -> bool:
+        """
+        Was input time based?
+        """
+    @time_based.setter
+    def time_based(self, arg1: bool) -> None:
         ...
+    @property
+    def w(self) -> RealAlloc1D:
+        """
+        Input single particle Wake. Indexed from 1.
+        """
     @w.setter
     def w(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def w_out(self) -> ComplexAlloc1D:
-        ...
+        """
+        Scratch space.
+        """
     @w_out.setter
     def w_out(self, arg1: collections.abc.Sequence[complex]) -> None:
         ...
     @property
     def z0(self) -> float:
-        ...
+        """
+        Wake extent is [-z0, z0].
+        """
     @z0.setter
     def z0(self, arg1: typing.SupportsFloat) -> None:
         ...
@@ -18559,8 +23028,6 @@ class WakeStruct:
     """
     Fortran struct: wake_struct
     """
-    lr: WakeLrStruct
-    sr: WakeSrStruct
     def __copy__(self) -> WakeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeStruct:
@@ -18569,13 +23036,26 @@ class WakeStruct:
         ...
     def __repr__(self) -> str:
         ...
+    @property
+    def lr(self) -> WakeLrStruct:
+        """
+        Long-range wake
+        """
+    @lr.setter
+    def lr(self, arg1: WakeLrStruct) -> None:
+        ...
+    @property
+    def sr(self) -> WakeSrStruct:
+        """
+        Short-range wake
+        """
+    @sr.setter
+    def sr(self, arg1: WakeSrStruct) -> None:
+        ...
 class Wall3DSectionStruct:
     """
     Fortran struct: wall3d_section_struct
     """
-    material: str
-    name: str
-    patch_in_region: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -18592,100 +23072,158 @@ class Wall3DSectionStruct:
         ...
     @property
     def dr_ds(self) -> float:
-        ...
+        """
+        derivative of wall radius
+        """
     @dr_ds.setter
     def dr_ds(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def dx0_ds(self) -> float:
-        ...
+        """
+        Center of wall derivative
+        """
     @dx0_ds.setter
     def dx0_ds(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def dy0_ds(self) -> float:
-        ...
+        """
+        Center of wall derivative
+        """
     @dy0_ds.setter
     def dy0_ds(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def ix_branch(self) -> int:
-        ...
+        """
+        Index of branch lattice element is in.
+        """
     @ix_branch.setter
     def ix_branch(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_ele(self) -> int:
-        ...
+        """
+        index of lattice element containing section
+        """
     @ix_ele.setter
     def ix_ele(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def n_vertex_input(self) -> int:
+    def material(self) -> str:
+        """
+        Material.
+        """
+    @material.setter
+    def material(self, arg1: str) -> None:
         ...
+    @property
+    def n_vertex_input(self) -> int:
+        """
+        Number of vertices specified by the user.
+        """
     @n_vertex_input.setter
     def n_vertex_input(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
-    def p1_coef(self) -> RealArray1D:
+    def name(self) -> str:
+        """
+        Identifying name
+        """
+    @name.setter
+    def name(self, arg1: str) -> None:
         ...
+    @property
+    def p1_coef(self) -> RealArray1D:
+        """
+        Spline coefs for p0 function
+        """
     @p1_coef.setter
     def p1_coef(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def p2_coef(self) -> RealArray1D:
-        ...
+        """
+        Spline coefs for p1 function
+        """
     @p2_coef.setter
     def p2_coef(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
-    def r0(self) -> RealArray1D:
+    def patch_in_region(self) -> bool:
+        """
+        Patch element exists between this section and previous one?
+        """
+    @patch_in_region.setter
+    def patch_in_region(self, arg1: bool) -> None:
         ...
+    @property
+    def r0(self) -> RealArray1D:
+        """
+        Center of section Section-to-section spline interpolation of the center of the section
+        """
     @r0.setter
     def r0(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def s(self) -> float:
-        ...
+        """
+        Longitudinal position
+        """
     @s.setter
     def s(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def surface(self) -> PhotonReflectSurfaceStruct | None:
-        ...
+        """
+        Surface reflectivity tables.
+        """
     @surface.setter
     def surface(self, arg1: PhotonReflectSurfaceStruct) -> None:
         ...
     @property
     def thickness(self) -> float:
-        ...
+        """
+        Material thickness.
+        """
     @thickness.setter
     def thickness(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def type(self) -> int:
-        ...
+        """
+        normal$, clear$, opaque$, wall_start$, wall_end$
+        """
     @type.setter
     def type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def v(self) -> Wall3DVertexStructAlloc1D:
-        ...
+        """
+        Array of vertices. Always stored relative.
+        """
     @property
     def vertices_state(self) -> int:
-        ...
+        """
+        absolute$, or shifted_to_relative$. If set to absolute$ on input, will be changed to shifted_to_relative$ by section initalizer.
+        """
     @vertices_state.setter
     def vertices_state(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def x0_coef(self) -> RealArray1D:
-        ...
+        """
+        Spline coefs for x-center
+        """
     @x0_coef.setter
     def x0_coef(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
     @property
     def y0_coef(self) -> RealArray1D:
-        ...
+        """
+        Spline coefs for y-center Section-to_section spline interpolation of the wall.
+        """
     @y0_coef.setter
     def y0_coef(self, arg1: collections.abc.Sequence[typing.SupportsFloat]) -> None:
         ...
@@ -18742,7 +23280,6 @@ class Wall3DStruct:
     clear_material: str
     name: str
     opaque_material: str
-    superimpose: bool
     @staticmethod
     def new_array1d(sz: typing.SupportsInt = 0) -> ...:
         ...
@@ -18759,34 +23296,54 @@ class Wall3DStruct:
         ...
     @property
     def ele_anchor_pt(self) -> int:
-        ...
+        """
+        anchor_beginning$, anchor_center$, or anchor_end$
+        """
     @ele_anchor_pt.setter
     def ele_anchor_pt(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def ix_wall3d(self) -> int:
-        ...
+        """
+        Index in branch%wall3d(:) array.
+        """
     @ix_wall3d.setter
     def ix_wall3d(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def n_link(self) -> int:
-        ...
+        """
+        For memory management of ele%wall3d
+        """
     @n_link.setter
     def n_link(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def section(self) -> Wall3DSectionStructAlloc1D:
+        """
+        Indexed from 1.
+        """
+    @property
+    def superimpose(self) -> bool:
+        """
+        Can overlap another wall
+        """
+    @superimpose.setter
+    def superimpose(self, arg1: bool) -> None:
         ...
     @property
     def thickness(self) -> float:
-        ...
+        """
+        For diffraction_plate elements
+        """
     @thickness.setter
     def thickness(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def type(self) -> int:
-        ...
+        """
+        or mask_plate$
+        """
     @type.setter
     def type(self, arg1: typing.SupportsInt) -> None:
         ...
@@ -18856,55 +23413,73 @@ class Wall3DVertexStruct:
         ...
     @property
     def angle(self) -> float:
-        ...
+        """
+        Angle of (x, y) point.
+        """
     @angle.setter
     def angle(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def radius_x(self) -> float:
-        ...
+        """
+        Radius of arc or ellipse x-axis half width. 0 => Straight line.
+        """
     @radius_x.setter
     def radius_x(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def radius_y(self) -> float:
-        ...
+        """
+        Ellipse y-axis half height.
+        """
     @radius_y.setter
     def radius_y(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def tilt(self) -> float:
-        ...
+        """
+        Tilt of ellipse
+        """
     @tilt.setter
     def tilt(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def type(self) -> int:
-        ...
+        """
+        No longer used.
+        """
     @type.setter
     def type(self, arg1: typing.SupportsInt) -> None:
         ...
     @property
     def x(self) -> float:
-        ...
+        """
+        Coordinates of the vertex.
+        """
     @x.setter
     def x(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def x0(self) -> float:
-        ...
+        """
+        Center of ellipse
+        """
     @x0.setter
     def x0(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y(self) -> float:
-        ...
+        """
+        Coordinates of the vertex.
+        """
     @y.setter
     def y(self, arg1: typing.SupportsFloat) -> None:
         ...
     @property
     def y0(self) -> float:
-        ...
+        """
+        Center of ellipse
+        """
     @y0.setter
     def y0(self, arg1: typing.SupportsFloat) -> None:
         ...

@@ -24,16 +24,36 @@ void init_floor_position_struct(py::module &m, py::class_<FloorPositionStruct> &
          py::arg("phi") = py::none(),
          py::arg("psi") = py::none()
   )
-      // FloorPositionStruct.r (1D_NOT_real - (x, y, z) offset from origin
-      .def_property("r", &FloorPositionStruct::r, &FloorPositionStruct::set_r)
-      // FloorPositionStruct.w (2D_NOT_real - W matrix. Columns are unit vectors of the frame axes.
-      .def_property("w", &FloorPositionStruct::w, &FloorPositionStruct::set_w)
-      // FloorPositionStruct.theta (0D_NOT_real - angular orientation consistent with W matrix
-      .def_property("theta", &FloorPositionStruct::theta, &FloorPositionStruct::set_theta)
-      // FloorPositionStruct.phi (0D_NOT_real - angular orientation consistent with W matrix
-      .def_property("phi", &FloorPositionStruct::phi, &FloorPositionStruct::set_phi)
-      // FloorPositionStruct.psi (0D_NOT_real - angular orientation consistent with W matrix
-      .def_property("psi", &FloorPositionStruct::psi, &FloorPositionStruct::set_psi)
+      .def_property(
+          "r",
+          &FloorPositionStruct::r,
+          &FloorPositionStruct::set_r,
+          "(x, y, z) offset from origin"
+      )
+      .def_property(
+          "w",
+          &FloorPositionStruct::w,
+          &FloorPositionStruct::set_w,
+          "W matrix. Columns are unit vectors of the frame axes."
+      )
+      .def_property(
+          "theta",
+          &FloorPositionStruct::theta,
+          &FloorPositionStruct::set_theta,
+          "angular orientation consistent with W matrix"
+      )
+      .def_property(
+          "phi",
+          &FloorPositionStruct::phi,
+          &FloorPositionStruct::set_phi,
+          "angular orientation consistent with W matrix"
+      )
+      .def_property(
+          "psi",
+          &FloorPositionStruct::psi,
+          &FloorPositionStruct::set_psi,
+          "angular orientation consistent with W matrix"
+      )
 
       .def("__repr__", [](const FloorPositionStruct &self) { return to_string(self); })
 
@@ -89,33 +109,29 @@ void init_fibre(py::module &m, py::class_<Fibre> &cls) {
          py::arg("N") = py::none(),
          py::arg("loc") = py::none()
   )
-      // Fibre.DIR (0D_PTR_integer -
       .def_property("DIR", &Fibre::DIR, &Fibre::set_DIR)
-      // Fibre.PREVIOUS (0D_PTR_type -
       .def_property("PREVIOUS", &Fibre::PREVIOUS, &Fibre::set_PREVIOUS)
-      // Fibre.NEXT (0D_PTR_type - POINTING TO PARENT LAYOUT AND PARENT FIBRE DATA
-      .def_property("NEXT", &Fibre::NEXT, &Fibre::set_NEXT)
-      // Fibre.PARENT_LAYOUT (0D_PTR_type -
+      .def_property(
+          "NEXT",
+          &Fibre::NEXT,
+          &Fibre::set_NEXT,
+          "POINTING TO PARENT LAYOUT AND PARENT FIBRE DATA"
+      )
       .def_property("PARENT_LAYOUT", &Fibre::PARENT_LAYOUT, &Fibre::set_PARENT_LAYOUT)
-      // Fibre.pos (0D_PTR_integer - POSITION IN LAYOUT NEW STUFF....
-      .def_property("pos", &Fibre::pos, &Fibre::set_pos)
-      // Fibre.BETA0 (0D_PTR_real - ,P0C
-      .def_property("BETA0", &Fibre::BETA0, &Fibre::set_BETA0)
-      // Fibre.GAMMA0I (0D_PTR_real - ,P0C
-      .def_property("GAMMA0I", &Fibre::GAMMA0I, &Fibre::set_GAMMA0I)
-      // Fibre.GAMBET (0D_PTR_real - ,P0C
-      .def_property("GAMBET", &Fibre::GAMBET, &Fibre::set_GAMBET)
-      // Fibre.MASS (0D_PTR_real - ,P0C
-      .def_property("MASS", &Fibre::MASS, &Fibre::set_MASS)
-      // Fibre.CHARGE (0D_PTR_real -
+      .def_property("pos", &Fibre::pos, &Fibre::set_pos, "POSITION IN LAYOUT NEW STUFF....")
+      .def_property("BETA0", &Fibre::BETA0, &Fibre::set_BETA0, ",P0C")
+      .def_property("GAMMA0I", &Fibre::GAMMA0I, &Fibre::set_GAMMA0I, ",P0C")
+      .def_property("GAMBET", &Fibre::GAMBET, &Fibre::set_GAMBET, ",P0C")
+      .def_property("MASS", &Fibre::MASS, &Fibre::set_MASS, ",P0C")
       .def_property("CHARGE", &Fibre::CHARGE, &Fibre::set_CHARGE)
-      // Fibre.AG (0D_PTR_real - spin g-2 TO TIE LAYOUTS
-      .def_property("AG", &Fibre::AG, &Fibre::set_AG)
-      // Fibre.P (0D_PTR_type - tying them in the so-called database universe M_u
-      .def_property("P", &Fibre::P, &Fibre::set_P)
-      // Fibre.N (0D_PTR_type -
+      .def_property("AG", &Fibre::AG, &Fibre::set_AG, "spin g-2 TO TIE LAYOUTS")
+      .def_property(
+          "P",
+          &Fibre::P,
+          &Fibre::set_P,
+          "tying them in the so-called database universe M_u"
+      )
       .def_property("N", &Fibre::N, &Fibre::set_N)
-      // Fibre.loc (0D_PTR_integer -
       .def_property("loc", &Fibre::loc, &Fibre::set_loc)
 
       .def("__repr__", [](const Fibre &self) { return to_string(self); })

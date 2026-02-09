@@ -50,50 +50,44 @@ void init_rad_int1_struct(py::module &m, py::class_<RadInt1Struct> &cls) {
          py::arg("lin_sig_E") = py::none(),
          py::arg("n_steps") = py::none()
   )
-      // RadInt1Struct.i0 (0D_NOT_real -
       .def_property("i0", &RadInt1Struct::i0, &RadInt1Struct::set_i0)
-      // RadInt1Struct.i1 (0D_NOT_real -
       .def_property("i1", &RadInt1Struct::i1, &RadInt1Struct::set_i1)
-      // RadInt1Struct.i2 (0D_NOT_real -
       .def_property("i2", &RadInt1Struct::i2, &RadInt1Struct::set_i2)
-      // RadInt1Struct.i3 (0D_NOT_real -
       .def_property("i3", &RadInt1Struct::i3, &RadInt1Struct::set_i3)
-      // RadInt1Struct.i4a (0D_NOT_real -
       .def_property("i4a", &RadInt1Struct::i4a, &RadInt1Struct::set_i4a)
-      // RadInt1Struct.i4b (0D_NOT_real -
       .def_property("i4b", &RadInt1Struct::i4b, &RadInt1Struct::set_i4b)
-      // RadInt1Struct.i4z (0D_NOT_real -
       .def_property("i4z", &RadInt1Struct::i4z, &RadInt1Struct::set_i4z)
-      // RadInt1Struct.i5a (0D_NOT_real -
       .def_property("i5a", &RadInt1Struct::i5a, &RadInt1Struct::set_i5a)
-      // RadInt1Struct.i5b (0D_NOT_real -
       .def_property("i5b", &RadInt1Struct::i5b, &RadInt1Struct::set_i5b)
-      // RadInt1Struct.i6b (0D_NOT_real -
       .def_property("i6b", &RadInt1Struct::i6b, &RadInt1Struct::set_i6b)
-      // RadInt1Struct.lin_i2_E4 (0D_NOT_real -
       .def_property("lin_i2_E4", &RadInt1Struct::lin_i2_E4, &RadInt1Struct::set_lin_i2_E4)
-      // RadInt1Struct.lin_i3_E7 (0D_NOT_real -
       .def_property("lin_i3_E7", &RadInt1Struct::lin_i3_E7, &RadInt1Struct::set_lin_i3_E7)
-      // RadInt1Struct.lin_i5a_E6 (0D_NOT_real -
       .def_property("lin_i5a_E6", &RadInt1Struct::lin_i5a_E6, &RadInt1Struct::set_lin_i5a_E6)
-      // RadInt1Struct.lin_i5b_E6 (0D_NOT_real -
       .def_property("lin_i5b_E6", &RadInt1Struct::lin_i5b_E6, &RadInt1Struct::set_lin_i5b_E6)
-      // RadInt1Struct.lin_norm_emit_a (0D_NOT_real - Running sum
       .def_property(
           "lin_norm_emit_a",
           &RadInt1Struct::lin_norm_emit_a,
-          &RadInt1Struct::set_lin_norm_emit_a
+          &RadInt1Struct::set_lin_norm_emit_a,
+          "Running sum"
       )
-      // RadInt1Struct.lin_norm_emit_b (0D_NOT_real - Running sum
       .def_property(
           "lin_norm_emit_b",
           &RadInt1Struct::lin_norm_emit_b,
-          &RadInt1Struct::set_lin_norm_emit_b
+          &RadInt1Struct::set_lin_norm_emit_b,
+          "Running sum"
       )
-      // RadInt1Struct.lin_sig_E (0D_NOT_real - Running sum
-      .def_property("lin_sig_E", &RadInt1Struct::lin_sig_E, &RadInt1Struct::set_lin_sig_E)
-      // RadInt1Struct.n_steps (0D_NOT_real - number of qromb steps needed
-      .def_property("n_steps", &RadInt1Struct::n_steps, &RadInt1Struct::set_n_steps)
+      .def_property(
+          "lin_sig_E",
+          &RadInt1Struct::lin_sig_E,
+          &RadInt1Struct::set_lin_sig_E,
+          "Running sum"
+      )
+      .def_property(
+          "n_steps",
+          &RadInt1Struct::n_steps,
+          &RadInt1Struct::set_n_steps,
+          "number of qromb steps needed"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return RadInt1StructAlloc1D(sz); },
@@ -135,8 +129,7 @@ void init_rad_int1_struct(py::module &m, py::class_<RadInt1Struct> &cls) {
 // rad_int_all_ele_struct
 void init_rad_int_all_ele_struct(py::module &m, py::class_<RadIntAllEleStruct> &cls) {
   cls.def(py::init<>())
-      // RadIntAllEleStruct.branch (1D_ALLOC_type - Array is indexed from 0
-      .def_property_readonly("branch", &RadIntAllEleStruct::branch)
+      .def_property_readonly("branch", &RadIntAllEleStruct::branch, "Array is indexed from 0")
 
       .def("__repr__", [](const RadIntAllEleStruct &self) { return to_string(self); })
 
@@ -162,8 +155,7 @@ void init_rad_int_all_ele_struct(py::module &m, py::class_<RadIntAllEleStruct> &
 // rad_int_branch_struct
 void init_rad_int_branch_struct(py::module &m, py::class_<RadIntBranchStruct> &cls) {
   cls.def(py::init<>())
-      // RadIntBranchStruct.ele (1D_ALLOC_type - Array is indexed from 0
-      .def_property_readonly("ele", &RadIntBranchStruct::ele)
+      .def_property_readonly("ele", &RadIntBranchStruct::ele, "Array is indexed from 0")
       .def_static(
           "new_array1d",
           [](int sz) { return RadIntBranchStructAlloc1D(sz); },
@@ -213,13 +205,18 @@ void init_rad_map_ele_struct(py::module &m, py::class_<RadMapEleStruct> &cls) {
          py::arg("rm1") = py::none(),
          py::arg("stale") = py::none()
   )
-      // RadMapEleStruct.rm0 (0D_NOT_type - Upstream half and downstream half matrices for an
-      // element.
-      .def_property("rm0", &RadMapEleStruct::rm0, &RadMapEleStruct::set_rm0)
-      // RadMapEleStruct.rm1 (0D_NOT_type - Upstream half and downstream half matrices for an
-      // element.
-      .def_property("rm1", &RadMapEleStruct::rm1, &RadMapEleStruct::set_rm1)
-      // RadMapEleStruct.stale (0D_NOT_logical -
+      .def_property(
+          "rm0",
+          &RadMapEleStruct::rm0,
+          &RadMapEleStruct::set_rm0,
+          "Upstream half and downstream half matrices for an element."
+      )
+      .def_property(
+          "rm1",
+          &RadMapEleStruct::rm1,
+          &RadMapEleStruct::set_rm1,
+          "Upstream half and downstream half matrices for an element."
+      )
       .def_property("stale", &RadMapEleStruct::stale, &RadMapEleStruct::set_stale)
 
       .def("__repr__", [](const RadMapEleStruct &self) { return to_string(self); })
@@ -258,19 +255,36 @@ void init_rad_map_struct(py::module &m, py::class_<RadMapStruct> &cls) {
          py::arg("xfer_damp_mat") = py::none(),
          py::arg("stoc_mat") = py::none()
   )
-      // RadMapStruct.ref_orb (1D_NOT_real - Reference point around which damp_mat is calculated.
-      .def_property("ref_orb", &RadMapStruct::ref_orb, &RadMapStruct::set_ref_orb)
-      // RadMapStruct.damp_dmat (2D_NOT_real - damp_correction = xfer_mat_with_damping -
-      // xfer_mat_without_damping.
-      .def_property("damp_dmat", &RadMapStruct::damp_dmat, &RadMapStruct::set_damp_dmat)
-      // RadMapStruct.xfer_damp_vec (1D_NOT_real - Transfer map with damping 0th order vector.
-      .def_property("xfer_damp_vec", &RadMapStruct::xfer_damp_vec, &RadMapStruct::set_xfer_damp_vec)
-      // RadMapStruct.xfer_damp_mat (2D_NOT_real - 1st order matrix: xfer_no_damp_mat +
-      // xfer_damp_correction.
-      .def_property("xfer_damp_mat", &RadMapStruct::xfer_damp_mat, &RadMapStruct::set_xfer_damp_mat)
-      // RadMapStruct.stoc_mat (2D_NOT_real - Stochastic variance or 'kick' (Cholesky decomposed)
-      // matrix.
-      .def_property("stoc_mat", &RadMapStruct::stoc_mat, &RadMapStruct::set_stoc_mat)
+      .def_property(
+          "ref_orb",
+          &RadMapStruct::ref_orb,
+          &RadMapStruct::set_ref_orb,
+          "Reference point around which damp_mat is calculated."
+      )
+      .def_property(
+          "damp_dmat",
+          &RadMapStruct::damp_dmat,
+          &RadMapStruct::set_damp_dmat,
+          "damp_correction = xfer_mat_with_damping - xfer_mat_without_damping."
+      )
+      .def_property(
+          "xfer_damp_vec",
+          &RadMapStruct::xfer_damp_vec,
+          &RadMapStruct::set_xfer_damp_vec,
+          "Transfer map with damping 0th order vector."
+      )
+      .def_property(
+          "xfer_damp_mat",
+          &RadMapStruct::xfer_damp_mat,
+          &RadMapStruct::set_xfer_damp_mat,
+          "1st order matrix: xfer_no_damp_mat + xfer_damp_correction."
+      )
+      .def_property(
+          "stoc_mat",
+          &RadMapStruct::stoc_mat,
+          &RadMapStruct::set_stoc_mat,
+          "Stochastic variance or 'kick' (Cholesky decomposed) matrix."
+      )
 
       .def("__repr__", [](const RadMapStruct &self) { return to_string(self); })
 
@@ -301,12 +315,24 @@ void init_ramper_lord_struct(py::module &m, py::class_<RamperLordStruct> &cls) {
          py::arg("ix_con") = py::none(),
          py::arg("attrib_ptr") = py::none()
   )
-      // RamperLordStruct.ix_ele (0D_NOT_integer - Lord index
-      .def_property("ix_ele", &RamperLordStruct::ix_ele, &RamperLordStruct::set_ix_ele)
-      // RamperLordStruct.ix_con (0D_NOT_integer - Index in lord%control%ramp(:) array
-      .def_property("ix_con", &RamperLordStruct::ix_con, &RamperLordStruct::set_ix_con)
-      // RamperLordStruct.attrib_ptr (0D_PTR_real - Pointer to attribute in this element.
-      .def_property("attrib_ptr", &RamperLordStruct::attrib_ptr, &RamperLordStruct::set_attrib_ptr)
+      .def_property(
+          "ix_ele",
+          &RamperLordStruct::ix_ele,
+          &RamperLordStruct::set_ix_ele,
+          "Lord index"
+      )
+      .def_property(
+          "ix_con",
+          &RamperLordStruct::ix_con,
+          &RamperLordStruct::set_ix_con,
+          "Index in lord%control%ramp(:) array"
+      )
+      .def_property(
+          "attrib_ptr",
+          &RamperLordStruct::attrib_ptr,
+          &RamperLordStruct::set_attrib_ptr,
+          "Pointer to attribute in this element."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return RamperLordStructAlloc1D(sz); },
@@ -352,10 +378,18 @@ void init_resonance_h_struct(py::module &m, py::class_<ResonanceHStruct> &cls) {
          py::arg("id") = py::none(),
          py::arg("c_val") = py::none()
   )
-      // ResonanceHStruct.id (0D_NOT_character - 6 digit ID. EG: '003100'
-      .def_property("id", &ResonanceHStruct::id, &ResonanceHStruct::set_id)
-      // ResonanceHStruct.c_val (0D_NOT_complex - Resonance value
-      .def_property("c_val", &ResonanceHStruct::c_val, &ResonanceHStruct::set_c_val)
+      .def_property(
+          "id",
+          &ResonanceHStruct::id,
+          &ResonanceHStruct::set_id,
+          "6 digit ID. EG: '003100'"
+      )
+      .def_property(
+          "c_val",
+          &ResonanceHStruct::c_val,
+          &ResonanceHStruct::set_c_val,
+          "Resonance value"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return ResonanceHStructAlloc1D(sz); },
@@ -397,10 +431,17 @@ void init_resonance_h_struct(py::module &m, py::class_<ResonanceHStruct> &cls) {
 // rf_ele_struct
 void init_rf_ele_struct(py::module &m, py::class_<RfEleStruct> &cls) {
   cls.def(py::init<std::optional<double>>(), py::arg("ds_step") = py::none())
-      // RfEleStruct.steps (1D_ALLOC_type - Energy stair step array indexed from zero.
-      .def_property_readonly("steps", &RfEleStruct::steps)
-      // RfEleStruct.ds_step (0D_NOT_real - length of a stair step.
-      .def_property("ds_step", &RfEleStruct::ds_step, &RfEleStruct::set_ds_step)
+      .def_property_readonly(
+          "steps",
+          &RfEleStruct::steps,
+          "Energy stair step array indexed from zero."
+      )
+      .def_property(
+          "ds_step",
+          &RfEleStruct::ds_step,
+          &RfEleStruct::set_ds_step,
+          "length of a stair step."
+      )
 
       .def("__repr__", [](const RfEleStruct &self) { return to_string(self); })
 
@@ -446,30 +487,60 @@ void init_rf_stair_step_struct(py::module &m, py::class_<RfStairStepStruct> &cls
          py::arg("s") = py::none(),
          py::arg("ix_step") = py::none()
   )
-      // RfStairStepStruct.E_tot0 (0D_NOT_real - Reference energy in the drift region (before the
-      // kick point).
-      .def_property("E_tot0", &RfStairStepStruct::E_tot0, &RfStairStepStruct::set_E_tot0)
-      // RfStairStepStruct.E_tot1 (0D_NOT_real - Reference energy after the kick point.
-      .def_property("E_tot1", &RfStairStepStruct::E_tot1, &RfStairStepStruct::set_E_tot1)
-      // RfStairStepStruct.p0c (0D_NOT_real - Reference momentum in the drift region (before the
-      // kick point).
-      .def_property("p0c", &RfStairStepStruct::p0c, &RfStairStepStruct::set_p0c)
-      // RfStairStepStruct.p1c (0D_NOT_real - Reference momentum after the kick point.
-      .def_property("p1c", &RfStairStepStruct::p1c, &RfStairStepStruct::set_p1c)
-      // RfStairStepStruct.scale (0D_NOT_real - Scale for multipole kick at the kick point. Sum over
-      // all steps will be 1.
-      .def_property("scale", &RfStairStepStruct::scale, &RfStairStepStruct::set_scale)
-      // RfStairStepStruct.time (0D_NOT_real - Reference particle time at the kick point with
-      // respect to beginning of element.
-      .def_property("time", &RfStairStepStruct::time, &RfStairStepStruct::set_time)
-      // RfStairStepStruct.s0 (0D_NOT_real - S-position at beginning of drift region relative to the
-      // beginning of the element.
-      .def_property("s0", &RfStairStepStruct::s0, &RfStairStepStruct::set_s0)
-      // RfStairStepStruct.s (0D_NOT_real - S-position at the kick point relative to the beginning
-      // of the element.
-      .def_property("s", &RfStairStepStruct::s, &RfStairStepStruct::set_s)
-      // RfStairStepStruct.ix_step (0D_NOT_integer - Step index in ele%rf%steps(:) array
-      .def_property("ix_step", &RfStairStepStruct::ix_step, &RfStairStepStruct::set_ix_step)
+      .def_property(
+          "E_tot0",
+          &RfStairStepStruct::E_tot0,
+          &RfStairStepStruct::set_E_tot0,
+          "Reference energy in the drift region (before the kick point)."
+      )
+      .def_property(
+          "E_tot1",
+          &RfStairStepStruct::E_tot1,
+          &RfStairStepStruct::set_E_tot1,
+          "Reference energy after the kick point."
+      )
+      .def_property(
+          "p0c",
+          &RfStairStepStruct::p0c,
+          &RfStairStepStruct::set_p0c,
+          "Reference momentum in the drift region (before the kick point)."
+      )
+      .def_property(
+          "p1c",
+          &RfStairStepStruct::p1c,
+          &RfStairStepStruct::set_p1c,
+          "Reference momentum after the kick point."
+      )
+      .def_property(
+          "scale",
+          &RfStairStepStruct::scale,
+          &RfStairStepStruct::set_scale,
+          "Scale for multipole kick at the kick point. Sum over all steps will be 1."
+      )
+      .def_property(
+          "time",
+          &RfStairStepStruct::time,
+          &RfStairStepStruct::set_time,
+          "Reference particle time at the kick point with respect to beginning of element."
+      )
+      .def_property(
+          "s0",
+          &RfStairStepStruct::s0,
+          &RfStairStepStruct::set_s0,
+          "S-position at beginning of drift region relative to the beginning of the element."
+      )
+      .def_property(
+          "s",
+          &RfStairStepStruct::s,
+          &RfStairStepStruct::set_s,
+          "S-position at the kick point relative to the beginning of the element."
+      )
+      .def_property(
+          "ix_step",
+          &RfStairStepStruct::ix_step,
+          &RfStairStepStruct::set_ix_step,
+          "Step index in ele%rf%steps(:) array"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return RfStairStepStructAlloc1D(sz); },
@@ -537,41 +608,30 @@ void init_random_state_struct(py::module &m, py::class_<RandomStateStruct> &cls)
          py::arg("ix_sobseq") = py::none(),
          py::arg("x_sobseq") = py::none()
   )
-      // RandomStateStruct.ix (0D_NOT_integer8 -
       .def_property("ix", &RandomStateStruct::ix, &RandomStateStruct::set_ix)
-      // RandomStateStruct.iy (0D_NOT_integer8 -
       .def_property("iy", &RandomStateStruct::iy, &RandomStateStruct::set_iy)
-      // RandomStateStruct.number_stored (0D_NOT_logical -
       .def_property(
           "number_stored",
           &RandomStateStruct::number_stored,
           &RandomStateStruct::set_number_stored
       )
-      // RandomStateStruct.h_saved (0D_NOT_real -
       .def_property("h_saved", &RandomStateStruct::h_saved, &RandomStateStruct::set_h_saved)
-      // RandomStateStruct.engine (0D_NOT_integer - Params
-      .def_property("engine", &RandomStateStruct::engine, &RandomStateStruct::set_engine)
-      // RandomStateStruct.seed (0D_NOT_integer -
+      .def_property("engine", &RandomStateStruct::engine, &RandomStateStruct::set_engine, "Params")
       .def_property("seed", &RandomStateStruct::seed, &RandomStateStruct::set_seed)
-      // RandomStateStruct.am (0D_NOT_real -
       .def_property("am", &RandomStateStruct::am, &RandomStateStruct::set_am)
-      // RandomStateStruct.gauss_converter (0D_NOT_integer -
       .def_property(
           "gauss_converter",
           &RandomStateStruct::gauss_converter,
           &RandomStateStruct::set_gauss_converter
       )
-      // RandomStateStruct.gauss_sigma_cut (0D_NOT_real - Only used if positive.
       .def_property(
           "gauss_sigma_cut",
           &RandomStateStruct::gauss_sigma_cut,
-          &RandomStateStruct::set_gauss_sigma_cut
+          &RandomStateStruct::set_gauss_sigma_cut,
+          "Only used if positive."
       )
-      // RandomStateStruct.in_sobseq (0D_NOT_integer8 -
       .def_property("in_sobseq", &RandomStateStruct::in_sobseq, &RandomStateStruct::set_in_sobseq)
-      // RandomStateStruct.ix_sobseq (1D_NOT_integer8 -
       .def_property("ix_sobseq", &RandomStateStruct::ix_sobseq, &RandomStateStruct::set_ix_sobseq)
-      // RandomStateStruct.x_sobseq (1D_NOT_real -
       .def_property("x_sobseq", &RandomStateStruct::x_sobseq, &RandomStateStruct::set_x_sobseq)
 
       .def("__repr__", [](const RandomStateStruct &self) { return to_string(self); })

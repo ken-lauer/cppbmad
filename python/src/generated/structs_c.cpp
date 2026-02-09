@@ -26,35 +26,36 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
          py::arg("field_type") = py::none(),
          py::arg("ptr") = py::none()
   )
-      // CartesianMapStruct.field_scale (0D_NOT_real - Factor to scale the fields by
       .def_property(
           "field_scale",
           &CartesianMapStruct::field_scale,
-          &CartesianMapStruct::set_field_scale
+          &CartesianMapStruct::set_field_scale,
+          "Factor to scale the fields by"
       )
-      // CartesianMapStruct.r0 (1D_NOT_real - Field origin offset.
-      .def_property("r0", &CartesianMapStruct::r0, &CartesianMapStruct::set_r0)
-      // CartesianMapStruct.master_parameter (0D_NOT_integer - Master parameter in ele%value(:)
-      // array to use for scaling the field.
+      .def_property(
+          "r0",
+          &CartesianMapStruct::r0,
+          &CartesianMapStruct::set_r0,
+          "Field origin offset."
+      )
       .def_property(
           "master_parameter",
           &CartesianMapStruct::master_parameter,
-          &CartesianMapStruct::set_master_parameter
+          &CartesianMapStruct::set_master_parameter,
+          "Master parameter in ele%value(:) array to use for scaling the field."
       )
-      // CartesianMapStruct.ele_anchor_pt (0D_NOT_integer - anchor_beginning$, anchor_center$, or
-      // anchor_end$
       .def_property(
           "ele_anchor_pt",
           &CartesianMapStruct::ele_anchor_pt,
-          &CartesianMapStruct::set_ele_anchor_pt
+          &CartesianMapStruct::set_ele_anchor_pt,
+          "anchor_beginning$, anchor_center$, or anchor_end$"
       )
-      // CartesianMapStruct.field_type (0D_NOT_integer - or electric$
       .def_property(
           "field_type",
           &CartesianMapStruct::field_type,
-          &CartesianMapStruct::set_field_type
+          &CartesianMapStruct::set_field_type,
+          "or electric$"
       )
-      // CartesianMapStruct.ptr (0D_PTR_type -
       .def_property("ptr", &CartesianMapStruct::ptr, &CartesianMapStruct::set_ptr)
       .def_static(
           "new_array1d",
@@ -117,28 +118,25 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
          py::arg("family") = py::none(),
          py::arg("form") = py::none()
   )
-      // CartesianMapTerm1Struct.coef (0D_NOT_real -
       .def_property("coef", &CartesianMapTerm1Struct::coef, &CartesianMapTerm1Struct::set_coef)
-      // CartesianMapTerm1Struct.kx (0D_NOT_real -
       .def_property("kx", &CartesianMapTerm1Struct::kx, &CartesianMapTerm1Struct::set_kx)
-      // CartesianMapTerm1Struct.ky (0D_NOT_real -
       .def_property("ky", &CartesianMapTerm1Struct::ky, &CartesianMapTerm1Struct::set_ky)
-      // CartesianMapTerm1Struct.kz (0D_NOT_real -
       .def_property("kz", &CartesianMapTerm1Struct::kz, &CartesianMapTerm1Struct::set_kz)
-      // CartesianMapTerm1Struct.x0 (0D_NOT_real -
       .def_property("x0", &CartesianMapTerm1Struct::x0, &CartesianMapTerm1Struct::set_x0)
-      // CartesianMapTerm1Struct.y0 (0D_NOT_real -
       .def_property("y0", &CartesianMapTerm1Struct::y0, &CartesianMapTerm1Struct::set_y0)
-      // CartesianMapTerm1Struct.phi_z (0D_NOT_real -
       .def_property("phi_z", &CartesianMapTerm1Struct::phi_z, &CartesianMapTerm1Struct::set_phi_z)
-      // CartesianMapTerm1Struct.family (0D_NOT_integer - family_x$, etc.
       .def_property(
           "family",
           &CartesianMapTerm1Struct::family,
-          &CartesianMapTerm1Struct::set_family
+          &CartesianMapTerm1Struct::set_family,
+          "family_x$, etc."
       )
-      // CartesianMapTerm1Struct.form (0D_NOT_integer - hyper_y$, etc.
-      .def_property("form", &CartesianMapTerm1Struct::form, &CartesianMapTerm1Struct::set_form)
+      .def_property(
+          "form",
+          &CartesianMapTerm1Struct::form,
+          &CartesianMapTerm1Struct::set_form,
+          "hyper_y$, etc."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return CartesianMapTerm1StructAlloc1D(sz); },
@@ -186,12 +184,18 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
          py::arg("file") = py::none(),
          py::arg("n_link") = py::none()
   )
-      // CartesianMapTermStruct.file (0D_NOT_character - Input file name. Used also as ID for
-      // instances.
-      .def_property("file", &CartesianMapTermStruct::file, &CartesianMapTermStruct::set_file)
-      // CartesianMapTermStruct.n_link (0D_NOT_integer - For memory management of %term
-      .def_property("n_link", &CartesianMapTermStruct::n_link, &CartesianMapTermStruct::set_n_link)
-      // CartesianMapTermStruct.term (1D_ALLOC_type -
+      .def_property(
+          "file",
+          &CartesianMapTermStruct::file,
+          &CartesianMapTermStruct::set_file,
+          "Input file name. Used also as ID for instances."
+      )
+      .def_property(
+          "n_link",
+          &CartesianMapTermStruct::n_link,
+          &CartesianMapTermStruct::set_n_link,
+          "For memory management of %term"
+      )
       .def_property_readonly("term", &CartesianMapTermStruct::term)
 
       .def("__repr__", [](const CartesianMapTermStruct &self) { return to_string(self); })
@@ -220,9 +224,7 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
 // complex_taylor_struct
 void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &cls) {
   cls.def(py::init<std::optional<std::complex<double>>>(), py::arg("ref") = py::none())
-      // ComplexTaylorStruct.ref (0D_NOT_complex -
       .def_property("ref", &ComplexTaylorStruct::ref, &ComplexTaylorStruct::set_ref)
-      // ComplexTaylorStruct.term (1D_PTR_type -
       .def_property_readonly("term", &ComplexTaylorStruct::term)
       .def_static(
           "new_array1d",
@@ -269,9 +271,7 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
          py::arg("coef") = py::none(),
          py::arg("expn") = py::none()
   )
-      // ComplexTaylorTermStruct.coef (0D_NOT_complex -
       .def_property("coef", &ComplexTaylorTermStruct::coef, &ComplexTaylorTermStruct::set_coef)
-      // ComplexTaylorTermStruct.expn (1D_NOT_integer -
       .def_property("expn", &ComplexTaylorTermStruct::expn, &ComplexTaylorTermStruct::set_expn)
       .def_static(
           "new_array1d",
@@ -326,25 +326,25 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
          py::arg("slave_name") = py::none(),
          py::arg("is_controller") = py::none()
   )
-      // ControlRamp1Struct.y_knot (1D_ALLOC_real -
       .def_property("y_knot", &ControlRamp1Struct::y_knot, &ControlRamp1Struct::set_y_knot)
-      // ControlRamp1Struct.stack (1D_ALLOC_type - Evaluation stack
-      .def_property_readonly("stack", &ControlRamp1Struct::stack)
-      // ControlRamp1Struct.attribute (0D_NOT_character - Name of attribute controlled. Set to
-      // 'FIELD_OVERLAPS' for field overlaps.
-      .def_property("attribute", &ControlRamp1Struct::attribute, &ControlRamp1Struct::set_attribute)
-      // ControlRamp1Struct.slave_name (0D_NOT_character - Name of slave.
+      .def_property_readonly("stack", &ControlRamp1Struct::stack, "Evaluation stack")
+      .def_property(
+          "attribute",
+          &ControlRamp1Struct::attribute,
+          &ControlRamp1Struct::set_attribute,
+          "Name of attribute controlled. Set to 'FIELD_OVERLAPS' for field overlaps."
+      )
       .def_property(
           "slave_name",
           &ControlRamp1Struct::slave_name,
-          &ControlRamp1Struct::set_slave_name
+          &ControlRamp1Struct::set_slave_name,
+          "Name of slave."
       )
-      // ControlRamp1Struct.is_controller (0D_NOT_logical - Is the slave a controller? If so
-      // bookkeeping is different.
       .def_property(
           "is_controller",
           &ControlRamp1Struct::is_controller,
-          &ControlRamp1Struct::set_is_controller
+          &ControlRamp1Struct::set_is_controller,
+          "Is the slave a controller? If so bookkeeping is different."
       )
       .def_static(
           "new_array1d",
@@ -403,23 +403,35 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
          py::arg("attribute") = py::none(),
          py::arg("ix_attrib") = py::none()
   )
-      // ControlStruct.value (0D_NOT_real - Used by group, and overlay elements.
-      .def_property("value", &ControlStruct::value, &ControlStruct::set_value)
-      // ControlStruct.y_knot (1D_ALLOC_real -
+      .def_property(
+          "value",
+          &ControlStruct::value,
+          &ControlStruct::set_value,
+          "Used by group, and overlay elements."
+      )
       .def_property("y_knot", &ControlStruct::y_knot, &ControlStruct::set_y_knot)
-      // ControlStruct.stack (1D_ALLOC_type - Evaluation stack
-      .def_property_readonly("stack", &ControlStruct::stack)
-      // ControlStruct.slave (0D_NOT_type -
+      .def_property_readonly("stack", &ControlStruct::stack, "Evaluation stack")
       .def_property("slave", &ControlStruct::slave, &ControlStruct::set_slave)
-      // ControlStruct.lord (0D_NOT_type -
       .def_property("lord", &ControlStruct::lord, &ControlStruct::set_lord)
-      // ControlStruct.slave_name (0D_NOT_character - Name of slave.
-      .def_property("slave_name", &ControlStruct::slave_name, &ControlStruct::set_slave_name)
-      // ControlStruct.attribute (0D_NOT_character - Name of attribute controlled. Set to
-      // 'FIELD_OVERLAPS' for field overlaps. Set to 'INPUT' or 'OUTPUT' for feedback slaves.
-      .def_property("attribute", &ControlStruct::attribute, &ControlStruct::set_attribute)
-      // ControlStruct.ix_attrib (0D_NOT_integer - Index of attribute controlled. See note above!
-      .def_property("ix_attrib", &ControlStruct::ix_attrib, &ControlStruct::set_ix_attrib)
+      .def_property(
+          "slave_name",
+          &ControlStruct::slave_name,
+          &ControlStruct::set_slave_name,
+          "Name of slave."
+      )
+      .def_property(
+          "attribute",
+          &ControlStruct::attribute,
+          &ControlStruct::set_attribute,
+          "Name of attribute controlled. Set to 'FIELD_OVERLAPS' for field overlaps. Set to "
+          "'INPUT' or 'OUTPUT' for feedback slaves."
+      )
+      .def_property(
+          "ix_attrib",
+          &ControlStruct::ix_attrib,
+          &ControlStruct::set_ix_attrib,
+          "Index of attribute controlled. See note above!"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return ControlStructAlloc1D(sz); },
@@ -466,11 +478,8 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
          py::arg("value") = py::none(),
          py::arg("old_value") = py::none()
   )
-      // ControlVar1Struct.name (0D_NOT_character -
       .def_property("name", &ControlVar1Struct::name, &ControlVar1Struct::set_name)
-      // ControlVar1Struct.value (0D_NOT_real -
       .def_property("value", &ControlVar1Struct::value, &ControlVar1Struct::set_value)
-      // ControlVar1Struct.old_value (0D_NOT_real -
       .def_property("old_value", &ControlVar1Struct::old_value, &ControlVar1Struct::set_old_value)
       .def_static(
           "new_array1d",
@@ -513,13 +522,13 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
 // controller_struct
 void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
   cls.def(py::init<optional_ref<const std::vector<double>>>(), py::arg("x_knot") = py::none())
-      // ControllerStruct.var (1D_ALLOC_type -
       .def_property_readonly("var", &ControllerStruct::var)
-      // ControllerStruct.ramp (1D_ALLOC_type - For ramper lord elements
-      .def_property_readonly("ramp", &ControllerStruct::ramp)
-      // ControllerStruct.ramper_lord (1D_ALLOC_type - Ramper lord info for this slave
-      .def_property_readonly("ramper_lord", &ControllerStruct::ramper_lord)
-      // ControllerStruct.x_knot (1D_ALLOC_real -
+      .def_property_readonly("ramp", &ControllerStruct::ramp, "For ramper lord elements")
+      .def_property_readonly(
+          "ramper_lord",
+          &ControllerStruct::ramper_lord,
+          "Ramper lord info for this slave"
+      )
       .def_property("x_knot", &ControllerStruct::x_knot, &ControllerStruct::set_x_knot)
 
       .def("__repr__", [](const ControllerStruct &self) { return to_string(self); })
@@ -546,7 +555,6 @@ void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
 // coord_array_struct
 void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
   cls.def(py::init<>())
-      // CoordArrayStruct.orbit (1D_ALLOC_type -
       .def_property_readonly("orbit", &CoordArrayStruct::orbit)
       .def_static(
           "new_array1d",
@@ -633,57 +641,115 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
          py::arg("species") = py::none(),
          py::arg("location") = py::none()
   )
-      // CoordStruct.vec (1D_NOT_real - (x, px, y, py, z, pz). Generally phase space for charged
-      // particles. See Bmad manual.
-      .def_property("vec", &CoordStruct::vec, &CoordStruct::set_vec)
-      // CoordStruct.s (0D_NOT_real - Longitudinal position
-      .def_property("s", &CoordStruct::s, &CoordStruct::set_s)
-      // CoordStruct.t (0D_NOT_real16 - Absolute time (not relative to reference). Note: Quad
-      // precision!
-      .def_property("t", &CoordStruct::t, &CoordStruct::set_t)
-      // CoordStruct.spin (1D_NOT_real - Spin.
-      .def_property("spin", &CoordStruct::spin, &CoordStruct::set_spin)
-      // CoordStruct.field (1D_NOT_real - Photon E-field intensity (x,y).
-      .def_property("field", &CoordStruct::field, &CoordStruct::set_field)
-      // CoordStruct.phase (1D_NOT_real - Photon E-field phase (x,y). For charged particles,
-      // phase(1) is RF phase.
-      .def_property("phase", &CoordStruct::phase, &CoordStruct::set_phase)
-      // CoordStruct.charge (0D_NOT_real - Macroparticle weight (which is different from particle
-      // species charge). For some space charge calcs the weight is in Coulombs.
-      .def_property("charge", &CoordStruct::charge, &CoordStruct::set_charge)
-      // CoordStruct.dt_ref (0D_NOT_real - Used in: * time tracking for computing z. * by coherent
-      // photons = path_length/c_light.
-      .def_property("dt_ref", &CoordStruct::dt_ref, &CoordStruct::set_dt_ref)
-      // CoordStruct.r (0D_NOT_real - For general use. Not used by Bmad.
-      .def_property("r", &CoordStruct::r, &CoordStruct::set_r)
-      // CoordStruct.p0c (0D_NOT_real - For non-photons: Reference momentum. For photons: Photon
-      // momentum (not reference).
-      .def_property("p0c", &CoordStruct::p0c, &CoordStruct::set_p0c)
-      // CoordStruct.E_potential (0D_NOT_real - Potential energy.
-      .def_property("E_potential", &CoordStruct::E_potential, &CoordStruct::set_E_potential)
-      // CoordStruct.beta (0D_NOT_real - Velocity / c_light.
-      .def_property("beta", &CoordStruct::beta, &CoordStruct::set_beta)
-      // CoordStruct.ix_ele (0D_NOT_integer - Index of the lattice element the particle is in. May
-      // be -1 if element is not associated with a lattice.
-      .def_property("ix_ele", &CoordStruct::ix_ele, &CoordStruct::set_ix_ele)
-      // CoordStruct.ix_branch (0D_NOT_integer - Index of the lattice branch the particle is in.
-      .def_property("ix_branch", &CoordStruct::ix_branch, &CoordStruct::set_ix_branch)
-      // CoordStruct.ix_turn (0D_NOT_integer - Turn index for multiturn tracking.
-      .def_property("ix_turn", &CoordStruct::ix_turn, &CoordStruct::set_ix_turn)
-      // CoordStruct.ix_user (0D_NOT_integer - For general use, not used by Bmad.
-      .def_property("ix_user", &CoordStruct::ix_user, &CoordStruct::set_ix_user)
-      // CoordStruct.state (0D_NOT_integer - alive$, lost$, lost_neg_x_aperture$, lost_pz$, etc.
-      .def_property("state", &CoordStruct::state, &CoordStruct::set_state)
-      // CoordStruct.direction (0D_NOT_integer - +1 or -1. Sign of longitudinal direction of motion
-      // (ds/dt). This is independent of the element orientation.
-      .def_property("direction", &CoordStruct::direction, &CoordStruct::set_direction)
-      // CoordStruct.time_dir (0D_NOT_integer - +1 or -1. Time direction. -1 => Traveling backwards
-      // in time.
-      .def_property("time_dir", &CoordStruct::time_dir, &CoordStruct::set_time_dir)
-      // CoordStruct.species (0D_NOT_integer - positron$, proton$, etc.
-      .def_property("species", &CoordStruct::species, &CoordStruct::set_species)
-      // CoordStruct.location (0D_NOT_integer - upstream_end$, inside$, or downstream_end$
-      .def_property("location", &CoordStruct::location, &CoordStruct::set_location)
+      .def_property(
+          "vec",
+          &CoordStruct::vec,
+          &CoordStruct::set_vec,
+          "(x, px, y, py, z, pz). Generally phase space for charged particles. See Bmad manual."
+      )
+      .def_property("s", &CoordStruct::s, &CoordStruct::set_s, "Longitudinal position")
+      .def_property(
+          "t",
+          &CoordStruct::t,
+          &CoordStruct::set_t,
+          "Absolute time (not relative to reference). Note: Quad precision!"
+      )
+      .def_property("spin", &CoordStruct::spin, &CoordStruct::set_spin, "Spin.")
+      .def_property(
+          "field",
+          &CoordStruct::field,
+          &CoordStruct::set_field,
+          "Photon E-field intensity (x,y)."
+      )
+      .def_property(
+          "phase",
+          &CoordStruct::phase,
+          &CoordStruct::set_phase,
+          "Photon E-field phase (x,y). For charged particles, phase(1) is RF phase."
+      )
+      .def_property(
+          "charge",
+          &CoordStruct::charge,
+          &CoordStruct::set_charge,
+          "Macroparticle weight (which is different from particle species charge). For some space "
+          "charge calcs the weight is in Coulombs."
+      )
+      .def_property(
+          "dt_ref",
+          &CoordStruct::dt_ref,
+          &CoordStruct::set_dt_ref,
+          "Used in: * time tracking for computing z. * by coherent photons = path_length/c_light."
+      )
+      .def_property("r", &CoordStruct::r, &CoordStruct::set_r, "For general use. Not used by Bmad.")
+      .def_property(
+          "p0c",
+          &CoordStruct::p0c,
+          &CoordStruct::set_p0c,
+          "For non-photons: Reference momentum. For photons: Photon momentum (not reference)."
+      )
+      .def_property(
+          "E_potential",
+          &CoordStruct::E_potential,
+          &CoordStruct::set_E_potential,
+          "Potential energy."
+      )
+      .def_property("beta", &CoordStruct::beta, &CoordStruct::set_beta, "Velocity / c_light.")
+      .def_property(
+          "ix_ele",
+          &CoordStruct::ix_ele,
+          &CoordStruct::set_ix_ele,
+          "Index of the lattice element the particle is in. May be -1 if element is not associated "
+          "with a lattice."
+      )
+      .def_property(
+          "ix_branch",
+          &CoordStruct::ix_branch,
+          &CoordStruct::set_ix_branch,
+          "Index of the lattice branch the particle is in."
+      )
+      .def_property(
+          "ix_turn",
+          &CoordStruct::ix_turn,
+          &CoordStruct::set_ix_turn,
+          "Turn index for multiturn tracking."
+      )
+      .def_property(
+          "ix_user",
+          &CoordStruct::ix_user,
+          &CoordStruct::set_ix_user,
+          "For general use, not used by Bmad."
+      )
+      .def_property(
+          "state",
+          &CoordStruct::state,
+          &CoordStruct::set_state,
+          "alive$, lost$, lost_neg_x_aperture$, lost_pz$, etc."
+      )
+      .def_property(
+          "direction",
+          &CoordStruct::direction,
+          &CoordStruct::set_direction,
+          "+1 or -1. Sign of longitudinal direction of motion (ds/dt). This is independent of the "
+          "element orientation."
+      )
+      .def_property(
+          "time_dir",
+          &CoordStruct::time_dir,
+          &CoordStruct::set_time_dir,
+          "+1 or -1. Time direction. -1 => Traveling backwards in time."
+      )
+      .def_property(
+          "species",
+          &CoordStruct::species,
+          &CoordStruct::set_species,
+          "positron$, proton$, etc."
+      )
+      .def_property(
+          "location",
+          &CoordStruct::location,
+          &CoordStruct::set_location,
+          "upstream_end$, inside$, or downstream_end$"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return CoordStructAlloc1D(sz); },
@@ -747,54 +813,60 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
          py::arg("r0") = py::none(),
          py::arg("ptr") = py::none()
   )
-      // CylindricalMapStruct.m (0D_NOT_integer - Azimuthal Mode: varies as cos(m*phi -
-      // theta0_azimuth)
-      .def_property("m", &CylindricalMapStruct::m, &CylindricalMapStruct::set_m)
-      // CylindricalMapStruct.harmonic (0D_NOT_integer - Harmonic of fundamental
+      .def_property(
+          "m",
+          &CylindricalMapStruct::m,
+          &CylindricalMapStruct::set_m,
+          "Azimuthal Mode: varies as cos(m*phi - theta0_azimuth)"
+      )
       .def_property(
           "harmonic",
           &CylindricalMapStruct::harmonic,
-          &CylindricalMapStruct::set_harmonic
+          &CylindricalMapStruct::set_harmonic,
+          "Harmonic of fundamental"
       )
-      // CylindricalMapStruct.phi0_fieldmap (0D_NOT_real - Mode oscillates as: twopi * (f * t +
-      // phi0_fieldmap)
       .def_property(
           "phi0_fieldmap",
           &CylindricalMapStruct::phi0_fieldmap,
-          &CylindricalMapStruct::set_phi0_fieldmap
+          &CylindricalMapStruct::set_phi0_fieldmap,
+          "Mode oscillates as: twopi * (f * t + phi0_fieldmap)"
       )
-      // CylindricalMapStruct.theta0_azimuth (0D_NOT_real - Azimuthal ((x, y) plane) orientation of
-      // mode.
       .def_property(
           "theta0_azimuth",
           &CylindricalMapStruct::theta0_azimuth,
-          &CylindricalMapStruct::set_theta0_azimuth
+          &CylindricalMapStruct::set_theta0_azimuth,
+          "Azimuthal ((x, y) plane) orientation of mode."
       )
-      // CylindricalMapStruct.field_scale (0D_NOT_real - Factor to scale the fields by
       .def_property(
           "field_scale",
           &CylindricalMapStruct::field_scale,
-          &CylindricalMapStruct::set_field_scale
+          &CylindricalMapStruct::set_field_scale,
+          "Factor to scale the fields by"
       )
-      // CylindricalMapStruct.master_parameter (0D_NOT_integer - Master parameter in ele%value(:)
-      // array to use for scaling the field.
       .def_property(
           "master_parameter",
           &CylindricalMapStruct::master_parameter,
-          &CylindricalMapStruct::set_master_parameter
+          &CylindricalMapStruct::set_master_parameter,
+          "Master parameter in ele%value(:) array to use for scaling the field."
       )
-      // CylindricalMapStruct.ele_anchor_pt (0D_NOT_integer - anchor_beginning$, anchor_center$, or
-      // anchor_end$
       .def_property(
           "ele_anchor_pt",
           &CylindricalMapStruct::ele_anchor_pt,
-          &CylindricalMapStruct::set_ele_anchor_pt
+          &CylindricalMapStruct::set_ele_anchor_pt,
+          "anchor_beginning$, anchor_center$, or anchor_end$"
       )
-      // CylindricalMapStruct.dz (0D_NOT_real - Distance between sampled field points.
-      .def_property("dz", &CylindricalMapStruct::dz, &CylindricalMapStruct::set_dz)
-      // CylindricalMapStruct.r0 (1D_NOT_real - Field origin offset.
-      .def_property("r0", &CylindricalMapStruct::r0, &CylindricalMapStruct::set_r0)
-      // CylindricalMapStruct.ptr (0D_PTR_type -
+      .def_property(
+          "dz",
+          &CylindricalMapStruct::dz,
+          &CylindricalMapStruct::set_dz,
+          "Distance between sampled field points."
+      )
+      .def_property(
+          "r0",
+          &CylindricalMapStruct::r0,
+          &CylindricalMapStruct::set_r0,
+          "Field origin offset."
+      )
       .def_property("ptr", &CylindricalMapStruct::ptr, &CylindricalMapStruct::set_ptr)
       .def_static(
           "new_array1d",
@@ -843,13 +915,11 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
          py::arg("e_coef") = py::none(),
          py::arg("b_coef") = py::none()
   )
-      // CylindricalMapTerm1Struct.e_coef (0D_NOT_complex -
       .def_property(
           "e_coef",
           &CylindricalMapTerm1Struct::e_coef,
           &CylindricalMapTerm1Struct::set_e_coef
       )
-      // CylindricalMapTerm1Struct.b_coef (0D_NOT_complex -
       .def_property(
           "b_coef",
           &CylindricalMapTerm1Struct::b_coef,
@@ -902,16 +972,18 @@ void init_cylindrical_map_term_struct(py::module &m, py::class_<CylindricalMapTe
          py::arg("file") = py::none(),
          py::arg("n_link") = py::none()
   )
-      // CylindricalMapTermStruct.file (0D_NOT_character - Input file name. Used also as ID for
-      // instances.
-      .def_property("file", &CylindricalMapTermStruct::file, &CylindricalMapTermStruct::set_file)
-      // CylindricalMapTermStruct.n_link (0D_NOT_integer - For memory management of this structure
+      .def_property(
+          "file",
+          &CylindricalMapTermStruct::file,
+          &CylindricalMapTermStruct::set_file,
+          "Input file name. Used also as ID for instances."
+      )
       .def_property(
           "n_link",
           &CylindricalMapTermStruct::n_link,
-          &CylindricalMapTermStruct::set_n_link
+          &CylindricalMapTermStruct::set_n_link,
+          "For memory management of this structure"
       )
-      // CylindricalMapTermStruct.term (1D_ALLOC_type -
       .def_property_readonly("term", &CylindricalMapTermStruct::term)
 
       .def("__repr__", [](const CylindricalMapTermStruct &self) { return to_string(self); })

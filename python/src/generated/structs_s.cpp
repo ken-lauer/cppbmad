@@ -48,107 +48,103 @@ void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommon
          py::arg("debug") = py::none(),
          py::arg("diagnostic_output_file") = py::none()
   )
-      // SpaceChargeCommonStruct.ds_track_step (0D_NOT_real - CSR tracking step size
       .def_property(
           "ds_track_step",
           &SpaceChargeCommonStruct::ds_track_step,
-          &SpaceChargeCommonStruct::set_ds_track_step
+          &SpaceChargeCommonStruct::set_ds_track_step,
+          "CSR tracking step size"
       )
-      // SpaceChargeCommonStruct.dt_track_step (0D_NOT_real - Time Runge kutta initial step.
       .def_property(
           "dt_track_step",
           &SpaceChargeCommonStruct::dt_track_step,
-          &SpaceChargeCommonStruct::set_dt_track_step
+          &SpaceChargeCommonStruct::set_dt_track_step,
+          "Time Runge kutta initial step."
       )
-      // SpaceChargeCommonStruct.cathode_strength_cutoff (0D_NOT_real - Cutoff for the cathode field
-      // calc.
       .def_property(
           "cathode_strength_cutoff",
           &SpaceChargeCommonStruct::cathode_strength_cutoff,
-          &SpaceChargeCommonStruct::set_cathode_strength_cutoff
+          &SpaceChargeCommonStruct::set_cathode_strength_cutoff,
+          "Cutoff for the cathode field calc."
       )
-      // SpaceChargeCommonStruct.rel_tol_tracking (0D_NOT_real - Relative tolerance for tracking.
       .def_property(
           "rel_tol_tracking",
           &SpaceChargeCommonStruct::rel_tol_tracking,
-          &SpaceChargeCommonStruct::set_rel_tol_tracking
+          &SpaceChargeCommonStruct::set_rel_tol_tracking,
+          "Relative tolerance for tracking."
       )
-      // SpaceChargeCommonStruct.abs_tol_tracking (0D_NOT_real - Absolute tolerance for tracking.
       .def_property(
           "abs_tol_tracking",
           &SpaceChargeCommonStruct::abs_tol_tracking,
-          &SpaceChargeCommonStruct::set_abs_tol_tracking
+          &SpaceChargeCommonStruct::set_abs_tol_tracking,
+          "Absolute tolerance for tracking."
       )
-      // SpaceChargeCommonStruct.beam_chamber_height (0D_NOT_real - Used in shielding calculation.
       .def_property(
           "beam_chamber_height",
           &SpaceChargeCommonStruct::beam_chamber_height,
-          &SpaceChargeCommonStruct::set_beam_chamber_height
+          &SpaceChargeCommonStruct::set_beam_chamber_height,
+          "Used in shielding calculation."
       )
-      // SpaceChargeCommonStruct.lsc_sigma_cutoff (0D_NOT_real - Cutoff for the 1-dim longitudinal
-      // SC calc. If a bin sigma is < cutoff * sigma_ave then ignore.
       .def_property(
           "lsc_sigma_cutoff",
           &SpaceChargeCommonStruct::lsc_sigma_cutoff,
-          &SpaceChargeCommonStruct::set_lsc_sigma_cutoff
+          &SpaceChargeCommonStruct::set_lsc_sigma_cutoff,
+          "Cutoff for the 1-dim longitudinal SC calc. If a bin sigma is < cutoff * sigma_ave then "
+          "ignore."
       )
-      // SpaceChargeCommonStruct.particle_sigma_cutoff (0D_NOT_real - 3D SC calc cutoff for
-      // particles with (x,y,z) position far from the center. Negative or zero means ignore.
       .def_property(
           "particle_sigma_cutoff",
           &SpaceChargeCommonStruct::particle_sigma_cutoff,
-          &SpaceChargeCommonStruct::set_particle_sigma_cutoff
+          &SpaceChargeCommonStruct::set_particle_sigma_cutoff,
+          "3D SC calc cutoff for particles with (x,y,z) position far from the center. Negative or "
+          "zero means ignore."
       )
-      // SpaceChargeCommonStruct.space_charge_mesh_size (1D_NOT_integer - Gird size for fft_3d space
-      // charge calc.
       .def_property(
           "space_charge_mesh_size",
           &SpaceChargeCommonStruct::space_charge_mesh_size,
-          &SpaceChargeCommonStruct::set_space_charge_mesh_size
+          &SpaceChargeCommonStruct::set_space_charge_mesh_size,
+          "Gird size for fft_3d space charge calc."
       )
-      // SpaceChargeCommonStruct.csr3d_mesh_size (1D_NOT_integer - Gird size for CSR.
       .def_property(
           "csr3d_mesh_size",
           &SpaceChargeCommonStruct::csr3d_mesh_size,
-          &SpaceChargeCommonStruct::set_csr3d_mesh_size
+          &SpaceChargeCommonStruct::set_csr3d_mesh_size,
+          "Gird size for CSR."
       )
-      // SpaceChargeCommonStruct.n_bin (0D_NOT_integer - Number of bins used
-      .def_property("n_bin", &SpaceChargeCommonStruct::n_bin, &SpaceChargeCommonStruct::set_n_bin)
-      // SpaceChargeCommonStruct.particle_bin_span (0D_NOT_integer - Longitudinal particle length /
-      // dz_bin
+      .def_property(
+          "n_bin",
+          &SpaceChargeCommonStruct::n_bin,
+          &SpaceChargeCommonStruct::set_n_bin,
+          "Number of bins used"
+      )
       .def_property(
           "particle_bin_span",
           &SpaceChargeCommonStruct::particle_bin_span,
-          &SpaceChargeCommonStruct::set_particle_bin_span
+          &SpaceChargeCommonStruct::set_particle_bin_span,
+          "Longitudinal particle length / dz_bin"
       )
-      // SpaceChargeCommonStruct.n_shield_images (0D_NOT_integer - Chamber wall shielding. 0 = no
-      // shielding.
       .def_property(
           "n_shield_images",
           &SpaceChargeCommonStruct::n_shield_images,
-          &SpaceChargeCommonStruct::set_n_shield_images
+          &SpaceChargeCommonStruct::set_n_shield_images,
+          "Chamber wall shielding. 0 = no shielding."
       )
-      // SpaceChargeCommonStruct.sc_min_in_bin (0D_NOT_integer - Minimum number of particles in a
-      // bin for sigmas to be valid.
       .def_property(
           "sc_min_in_bin",
           &SpaceChargeCommonStruct::sc_min_in_bin,
-          &SpaceChargeCommonStruct::set_sc_min_in_bin
+          &SpaceChargeCommonStruct::set_sc_min_in_bin,
+          "Minimum number of particles in a bin for sigmas to be valid."
       )
-      // SpaceChargeCommonStruct.lsc_kick_transverse_dependence (0D_NOT_logical -
       .def_property(
           "lsc_kick_transverse_dependence",
           &SpaceChargeCommonStruct::lsc_kick_transverse_dependence,
           &SpaceChargeCommonStruct::set_lsc_kick_transverse_dependence
       )
-      // SpaceChargeCommonStruct.debug (0D_NOT_logical -
       .def_property("debug", &SpaceChargeCommonStruct::debug, &SpaceChargeCommonStruct::set_debug)
-      // SpaceChargeCommonStruct.diagnostic_output_file (0D_NOT_character - If non-blank write a
-      // diagnostic (EG wake) file
       .def_property(
           "diagnostic_output_file",
           &SpaceChargeCommonStruct::diagnostic_output_file,
-          &SpaceChargeCommonStruct::set_diagnostic_output_file
+          &SpaceChargeCommonStruct::set_diagnostic_output_file,
+          "If non-blank write a diagnostic (EG wake) file"
       )
 
       .def("__repr__", [](const SpaceChargeCommonStruct &self) { return to_string(self); })
@@ -185,12 +181,14 @@ void init_spin_axis_struct(py::module &m, py::class_<SpinAxisStruct> &cls) {
          py::arg("n0") = py::none(),
          py::arg("m") = py::none()
   )
-      // SpinAxisStruct.l (1D_NOT_real - Transverse axis.
-      .def_property("l", &SpinAxisStruct::l, &SpinAxisStruct::set_l)
-      // SpinAxisStruct.n0 (1D_NOT_real - Invariant spin axis on closed orbit.
-      .def_property("n0", &SpinAxisStruct::n0, &SpinAxisStruct::set_n0)
-      // SpinAxisStruct.m (1D_NOT_real - Transverse axis.
-      .def_property("m", &SpinAxisStruct::m, &SpinAxisStruct::set_m)
+      .def_property("l", &SpinAxisStruct::l, &SpinAxisStruct::set_l, "Transverse axis.")
+      .def_property(
+          "n0",
+          &SpinAxisStruct::n0,
+          &SpinAxisStruct::set_n0,
+          "Invariant spin axis on closed orbit."
+      )
+      .def_property("m", &SpinAxisStruct::m, &SpinAxisStruct::set_m, "Transverse axis.")
 
       .def("__repr__", [](const SpinAxisStruct &self) { return to_string(self); })
 
@@ -224,12 +222,24 @@ void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> 
          py::arg("vec0") = py::none(),
          py::arg("spin_q") = py::none()
   )
-      // SpinOrbitMap1Struct.orb_mat (2D_NOT_real - Orbital matrix
-      .def_property("orb_mat", &SpinOrbitMap1Struct::orb_mat, &SpinOrbitMap1Struct::set_orb_mat)
-      // SpinOrbitMap1Struct.vec0 (1D_NOT_real - Orbital 0th order map: r_out = mat6 * r_in + vec0
-      .def_property("vec0", &SpinOrbitMap1Struct::vec0, &SpinOrbitMap1Struct::set_vec0)
-      // SpinOrbitMap1Struct.spin_q (2D_NOT_real - 0th and 1st order quaternion spin map
-      .def_property("spin_q", &SpinOrbitMap1Struct::spin_q, &SpinOrbitMap1Struct::set_spin_q)
+      .def_property(
+          "orb_mat",
+          &SpinOrbitMap1Struct::orb_mat,
+          &SpinOrbitMap1Struct::set_orb_mat,
+          "Orbital matrix"
+      )
+      .def_property(
+          "vec0",
+          &SpinOrbitMap1Struct::vec0,
+          &SpinOrbitMap1Struct::set_vec0,
+          "Orbital 0th order map: r_out = mat6 * r_in + vec0"
+      )
+      .def_property(
+          "spin_q",
+          &SpinOrbitMap1Struct::spin_q,
+          &SpinOrbitMap1Struct::set_spin_q,
+          "0th and 1st order quaternion spin map"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return SpinOrbitMap1StructAlloc1D(sz); },
@@ -281,18 +291,29 @@ void init_spin_polar_struct(py::module &m, py::class_<SpinPolarStruct> &cls) {
          py::arg("phi") = py::none(),
          py::arg("xi") = py::none()
   )
-      // SpinPolarStruct.polarization (0D_NOT_real -
       .def_property(
           "polarization",
           &SpinPolarStruct::polarization,
           &SpinPolarStruct::set_polarization
       )
-      // SpinPolarStruct.theta (0D_NOT_real - Spherical coords: Angle from z-axis.
-      .def_property("theta", &SpinPolarStruct::theta, &SpinPolarStruct::set_theta)
-      // SpinPolarStruct.phi (0D_NOT_real - Spherical coords: Angle in (x,y) plane.
-      .def_property("phi", &SpinPolarStruct::phi, &SpinPolarStruct::set_phi)
-      // SpinPolarStruct.xi (0D_NOT_real - Spinor phase angle (See Bmad manual).
-      .def_property("xi", &SpinPolarStruct::xi, &SpinPolarStruct::set_xi)
+      .def_property(
+          "theta",
+          &SpinPolarStruct::theta,
+          &SpinPolarStruct::set_theta,
+          "Spherical coords: Angle from z-axis."
+      )
+      .def_property(
+          "phi",
+          &SpinPolarStruct::phi,
+          &SpinPolarStruct::set_phi,
+          "Spherical coords: Angle in (x,y) plane."
+      )
+      .def_property(
+          "xi",
+          &SpinPolarStruct::xi,
+          &SpinPolarStruct::set_xi,
+          "Spinor phase angle (See Bmad manual)."
+      )
 
       .def("__repr__", [](const SpinPolarStruct &self) { return to_string(self); })
 
@@ -334,20 +355,48 @@ void init_strong_beam_struct(py::module &m, py::class_<StrongBeamStruct> &cls) {
          py::arg("dx") = py::none(),
          py::arg("dy") = py::none()
   )
-      // StrongBeamStruct.ix_slice (0D_NOT_integer - 0 -> at element center and not at slice.
-      .def_property("ix_slice", &StrongBeamStruct::ix_slice, &StrongBeamStruct::set_ix_slice)
-      // StrongBeamStruct.x_center (0D_NOT_real - Strong beam slice center.
-      .def_property("x_center", &StrongBeamStruct::x_center, &StrongBeamStruct::set_x_center)
-      // StrongBeamStruct.y_center (0D_NOT_real - Strong beam slice center.
-      .def_property("y_center", &StrongBeamStruct::y_center, &StrongBeamStruct::set_y_center)
-      // StrongBeamStruct.x_sigma (0D_NOT_real - Strong beam slice sigma.
-      .def_property("x_sigma", &StrongBeamStruct::x_sigma, &StrongBeamStruct::set_x_sigma)
-      // StrongBeamStruct.y_sigma (0D_NOT_real - Strong beam slice sigma.
-      .def_property("y_sigma", &StrongBeamStruct::y_sigma, &StrongBeamStruct::set_y_sigma)
-      // StrongBeamStruct.dx (0D_NOT_real - Particle - beam slice distance.
-      .def_property("dx", &StrongBeamStruct::dx, &StrongBeamStruct::set_dx)
-      // StrongBeamStruct.dy (0D_NOT_real - Particle - beam slice distance.
-      .def_property("dy", &StrongBeamStruct::dy, &StrongBeamStruct::set_dy)
+      .def_property(
+          "ix_slice",
+          &StrongBeamStruct::ix_slice,
+          &StrongBeamStruct::set_ix_slice,
+          "0 -> at element center and not at slice."
+      )
+      .def_property(
+          "x_center",
+          &StrongBeamStruct::x_center,
+          &StrongBeamStruct::set_x_center,
+          "Strong beam slice center."
+      )
+      .def_property(
+          "y_center",
+          &StrongBeamStruct::y_center,
+          &StrongBeamStruct::set_y_center,
+          "Strong beam slice center."
+      )
+      .def_property(
+          "x_sigma",
+          &StrongBeamStruct::x_sigma,
+          &StrongBeamStruct::set_x_sigma,
+          "Strong beam slice sigma."
+      )
+      .def_property(
+          "y_sigma",
+          &StrongBeamStruct::y_sigma,
+          &StrongBeamStruct::set_y_sigma,
+          "Strong beam slice sigma."
+      )
+      .def_property(
+          "dx",
+          &StrongBeamStruct::dx,
+          &StrongBeamStruct::set_dx,
+          "Particle - beam slice distance."
+      )
+      .def_property(
+          "dy",
+          &StrongBeamStruct::dy,
+          &StrongBeamStruct::set_dy,
+          "Particle - beam slice distance."
+      )
 
       .def("__repr__", [](const StrongBeamStruct &self) { return to_string(self); })
 
@@ -383,25 +432,23 @@ void init_surface_curvature_struct(py::module &m, py::class_<SurfaceCurvatureStr
          py::arg("elliptical") = py::none(),
          py::arg("has_curvature") = py::none()
   )
-      // SurfaceCurvatureStruct.xy (2D_NOT_real -
       .def_property("xy", &SurfaceCurvatureStruct::xy, &SurfaceCurvatureStruct::set_xy)
-      // SurfaceCurvatureStruct.spherical (0D_NOT_real -
       .def_property(
           "spherical",
           &SurfaceCurvatureStruct::spherical,
           &SurfaceCurvatureStruct::set_spherical
       )
-      // SurfaceCurvatureStruct.elliptical (1D_NOT_real - Total curvature = elliptical + spherical
       .def_property(
           "elliptical",
           &SurfaceCurvatureStruct::elliptical,
-          &SurfaceCurvatureStruct::set_elliptical
+          &SurfaceCurvatureStruct::set_elliptical,
+          "Total curvature = elliptical + spherical"
       )
-      // SurfaceCurvatureStruct.has_curvature (0D_NOT_logical - Dependent var. Will be set by Bmad
       .def_property(
           "has_curvature",
           &SurfaceCurvatureStruct::has_curvature,
-          &SurfaceCurvatureStruct::set_has_curvature
+          &SurfaceCurvatureStruct::set_has_curvature,
+          "Dependent var. Will be set by Bmad"
       )
 
       .def("__repr__", [](const SurfaceCurvatureStruct &self) { return to_string(self); })
@@ -447,25 +494,29 @@ void init_surface_displacement_pt_struct(
          py::arg("dz_dy") = py::none(),
          py::arg("d2z_dxdy") = py::none()
   )
-      // SurfaceDisplacementPtStruct.x0 (0D_NOT_real - Position at center
-      .def_property("x0", &SurfaceDisplacementPtStruct::x0, &SurfaceDisplacementPtStruct::set_x0)
-      // SurfaceDisplacementPtStruct.y0 (0D_NOT_real - Position at center
-      .def_property("y0", &SurfaceDisplacementPtStruct::y0, &SurfaceDisplacementPtStruct::set_y0)
-      // SurfaceDisplacementPtStruct.z0 (0D_NOT_real -
+      .def_property(
+          "x0",
+          &SurfaceDisplacementPtStruct::x0,
+          &SurfaceDisplacementPtStruct::set_x0,
+          "Position at center"
+      )
+      .def_property(
+          "y0",
+          &SurfaceDisplacementPtStruct::y0,
+          &SurfaceDisplacementPtStruct::set_y0,
+          "Position at center"
+      )
       .def_property("z0", &SurfaceDisplacementPtStruct::z0, &SurfaceDisplacementPtStruct::set_z0)
-      // SurfaceDisplacementPtStruct.dz_dx (0D_NOT_real -
       .def_property(
           "dz_dx",
           &SurfaceDisplacementPtStruct::dz_dx,
           &SurfaceDisplacementPtStruct::set_dz_dx
       )
-      // SurfaceDisplacementPtStruct.dz_dy (0D_NOT_real -
       .def_property(
           "dz_dy",
           &SurfaceDisplacementPtStruct::dz_dy,
           &SurfaceDisplacementPtStruct::set_dz_dy
       )
-      // SurfaceDisplacementPtStruct.d2z_dxdy (0D_NOT_real -
       .def_property(
           "d2z_dxdy",
           &SurfaceDisplacementPtStruct::d2z_dxdy,
@@ -506,17 +557,13 @@ void init_surface_displacement_struct(py::module &m, py::class_<SurfaceDisplacem
          py::arg("dr") = py::none(),
          py::arg("r0") = py::none()
   )
-      // SurfaceDisplacementStruct.active (0D_NOT_logical -
       .def_property(
           "active",
           &SurfaceDisplacementStruct::active,
           &SurfaceDisplacementStruct::set_active
       )
-      // SurfaceDisplacementStruct.dr (1D_NOT_real -
       .def_property("dr", &SurfaceDisplacementStruct::dr, &SurfaceDisplacementStruct::set_dr)
-      // SurfaceDisplacementStruct.r0 (1D_NOT_real -
       .def_property("r0", &SurfaceDisplacementStruct::r0, &SurfaceDisplacementStruct::set_r0)
-      // SurfaceDisplacementStruct.pt (2D_ALLOC_type -
       .def_property_readonly("pt", &SurfaceDisplacementStruct::pt)
 
       .def("__repr__", [](const SurfaceDisplacementStruct &self) { return to_string(self); })
@@ -559,29 +606,41 @@ void init_surface_h_misalign_pt_struct(py::module &m, py::class_<SurfaceHMisalig
          py::arg("rot_y_rms") = py::none(),
          py::arg("rot_t_rms") = py::none()
   )
-      // SurfaceHMisalignPtStruct.x0 (0D_NOT_real - Position at center
-      .def_property("x0", &SurfaceHMisalignPtStruct::x0, &SurfaceHMisalignPtStruct::set_x0)
-      // SurfaceHMisalignPtStruct.y0 (0D_NOT_real - Position at center
-      .def_property("y0", &SurfaceHMisalignPtStruct::y0, &SurfaceHMisalignPtStruct::set_y0)
-      // SurfaceHMisalignPtStruct.rot_y (0D_NOT_real - rot_t = x-rotation for Bragg and z-rotation
-      // for Laue.
-      .def_property("rot_y", &SurfaceHMisalignPtStruct::rot_y, &SurfaceHMisalignPtStruct::set_rot_y)
-      // SurfaceHMisalignPtStruct.rot_t (0D_NOT_real - rot_t = x-rotation for Bragg and z-rotation
-      // for Laue.
-      .def_property("rot_t", &SurfaceHMisalignPtStruct::rot_t, &SurfaceHMisalignPtStruct::set_rot_t)
-      // SurfaceHMisalignPtStruct.rot_y_rms (0D_NOT_real - rot_t = x-rotation for Bragg and
-      // z-rotation for Laue.
+      .def_property(
+          "x0",
+          &SurfaceHMisalignPtStruct::x0,
+          &SurfaceHMisalignPtStruct::set_x0,
+          "Position at center"
+      )
+      .def_property(
+          "y0",
+          &SurfaceHMisalignPtStruct::y0,
+          &SurfaceHMisalignPtStruct::set_y0,
+          "Position at center"
+      )
+      .def_property(
+          "rot_y",
+          &SurfaceHMisalignPtStruct::rot_y,
+          &SurfaceHMisalignPtStruct::set_rot_y,
+          "rot_t = x-rotation for Bragg and z-rotation for Laue."
+      )
+      .def_property(
+          "rot_t",
+          &SurfaceHMisalignPtStruct::rot_t,
+          &SurfaceHMisalignPtStruct::set_rot_t,
+          "rot_t = x-rotation for Bragg and z-rotation for Laue."
+      )
       .def_property(
           "rot_y_rms",
           &SurfaceHMisalignPtStruct::rot_y_rms,
-          &SurfaceHMisalignPtStruct::set_rot_y_rms
+          &SurfaceHMisalignPtStruct::set_rot_y_rms,
+          "rot_t = x-rotation for Bragg and z-rotation for Laue."
       )
-      // SurfaceHMisalignPtStruct.rot_t_rms (0D_NOT_real - rot_t = x-rotation for Bragg and
-      // z-rotation for Laue.
       .def_property(
           "rot_t_rms",
           &SurfaceHMisalignPtStruct::rot_t_rms,
-          &SurfaceHMisalignPtStruct::set_rot_t_rms
+          &SurfaceHMisalignPtStruct::set_rot_t_rms,
+          "rot_t = x-rotation for Bragg and z-rotation for Laue."
       )
 
       .def("__repr__", [](const SurfaceHMisalignPtStruct &self) { return to_string(self); })
@@ -618,13 +677,9 @@ void init_surface_h_misalign_struct(py::module &m, py::class_<SurfaceHMisalignSt
          py::arg("dr") = py::none(),
          py::arg("r0") = py::none()
   )
-      // SurfaceHMisalignStruct.active (0D_NOT_logical -
       .def_property("active", &SurfaceHMisalignStruct::active, &SurfaceHMisalignStruct::set_active)
-      // SurfaceHMisalignStruct.dr (1D_NOT_real -
       .def_property("dr", &SurfaceHMisalignStruct::dr, &SurfaceHMisalignStruct::set_dr)
-      // SurfaceHMisalignStruct.r0 (1D_NOT_real -
       .def_property("r0", &SurfaceHMisalignStruct::r0, &SurfaceHMisalignStruct::set_r0)
-      // SurfaceHMisalignStruct.pt (2D_ALLOC_type -
       .def_property_readonly("pt", &SurfaceHMisalignStruct::pt)
 
       .def("__repr__", [](const SurfaceHMisalignStruct &self) { return to_string(self); })
@@ -665,16 +720,36 @@ void init_surface_segmented_pt_struct(py::module &m, py::class_<SurfaceSegmented
          py::arg("dz_dx") = py::none(),
          py::arg("dz_dy") = py::none()
   )
-      // SurfaceSegmentedPtStruct.x0 (0D_NOT_real - Position at center
-      .def_property("x0", &SurfaceSegmentedPtStruct::x0, &SurfaceSegmentedPtStruct::set_x0)
-      // SurfaceSegmentedPtStruct.y0 (0D_NOT_real - Position at center
-      .def_property("y0", &SurfaceSegmentedPtStruct::y0, &SurfaceSegmentedPtStruct::set_y0)
-      // SurfaceSegmentedPtStruct.z0 (0D_NOT_real - Position at center
-      .def_property("z0", &SurfaceSegmentedPtStruct::z0, &SurfaceSegmentedPtStruct::set_z0)
-      // SurfaceSegmentedPtStruct.dz_dx (0D_NOT_real - Slope at center
-      .def_property("dz_dx", &SurfaceSegmentedPtStruct::dz_dx, &SurfaceSegmentedPtStruct::set_dz_dx)
-      // SurfaceSegmentedPtStruct.dz_dy (0D_NOT_real - Slope at center
-      .def_property("dz_dy", &SurfaceSegmentedPtStruct::dz_dy, &SurfaceSegmentedPtStruct::set_dz_dy)
+      .def_property(
+          "x0",
+          &SurfaceSegmentedPtStruct::x0,
+          &SurfaceSegmentedPtStruct::set_x0,
+          "Position at center"
+      )
+      .def_property(
+          "y0",
+          &SurfaceSegmentedPtStruct::y0,
+          &SurfaceSegmentedPtStruct::set_y0,
+          "Position at center"
+      )
+      .def_property(
+          "z0",
+          &SurfaceSegmentedPtStruct::z0,
+          &SurfaceSegmentedPtStruct::set_z0,
+          "Position at center"
+      )
+      .def_property(
+          "dz_dx",
+          &SurfaceSegmentedPtStruct::dz_dx,
+          &SurfaceSegmentedPtStruct::set_dz_dx,
+          "Slope at center"
+      )
+      .def_property(
+          "dz_dy",
+          &SurfaceSegmentedPtStruct::dz_dy,
+          &SurfaceSegmentedPtStruct::set_dz_dy,
+          "Slope at center"
+      )
 
       .def("__repr__", [](const SurfaceSegmentedPtStruct &self) { return to_string(self); })
 
@@ -710,13 +785,9 @@ void init_surface_segmented_struct(py::module &m, py::class_<SurfaceSegmentedStr
          py::arg("dr") = py::none(),
          py::arg("r0") = py::none()
   )
-      // SurfaceSegmentedStruct.active (0D_NOT_logical -
       .def_property("active", &SurfaceSegmentedStruct::active, &SurfaceSegmentedStruct::set_active)
-      // SurfaceSegmentedStruct.dr (1D_NOT_real -
       .def_property("dr", &SurfaceSegmentedStruct::dr, &SurfaceSegmentedStruct::set_dr)
-      // SurfaceSegmentedStruct.r0 (1D_NOT_real -
       .def_property("r0", &SurfaceSegmentedStruct::r0, &SurfaceSegmentedStruct::set_r0)
-      // SurfaceSegmentedStruct.pt (2D_ALLOC_type -
       .def_property_readonly("pt", &SurfaceSegmentedStruct::pt)
 
       .def("__repr__", [](const SurfaceSegmentedStruct &self) { return to_string(self); })
@@ -755,14 +826,15 @@ void init_spline_struct(py::module &m, py::class_<SplineStruct> &cls) {
          py::arg("x1") = py::none(),
          py::arg("coef") = py::none()
   )
-      // SplineStruct.x0 (0D_NOT_real - Point at start of spline
-      .def_property("x0", &SplineStruct::x0, &SplineStruct::set_x0)
-      // SplineStruct.y0 (0D_NOT_real - Point at start of spline
-      .def_property("y0", &SplineStruct::y0, &SplineStruct::set_y0)
-      // SplineStruct.x1 (0D_NOT_real - Point at end of spline
-      .def_property("x1", &SplineStruct::x1, &SplineStruct::set_x1)
-      // SplineStruct.coef (1D_NOT_real - coefficients for cubic spline
-      .def_property("coef", &SplineStruct::coef, &SplineStruct::set_coef)
+      .def_property("x0", &SplineStruct::x0, &SplineStruct::set_x0, "Point at start of spline")
+      .def_property("y0", &SplineStruct::y0, &SplineStruct::set_y0, "Point at start of spline")
+      .def_property("x1", &SplineStruct::x1, &SplineStruct::set_x1, "Point at end of spline")
+      .def_property(
+          "coef",
+          &SplineStruct::coef,
+          &SplineStruct::set_coef,
+          "coefficients for cubic spline"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return SplineStructAlloc1D(sz); },
@@ -848,47 +920,31 @@ void init_summation_rdt_struct(py::module &m, py::class_<SummationRdtStruct> &cl
          py::arg("h00220") = py::none(),
          py::arg("h11110") = py::none()
   )
-      // SummationRdtStruct.h11001 (0D_NOT_complex -
       .def_property("h11001", &SummationRdtStruct::h11001, &SummationRdtStruct::set_h11001)
-      // SummationRdtStruct.h00111 (0D_NOT_complex -
       .def_property("h00111", &SummationRdtStruct::h00111, &SummationRdtStruct::set_h00111)
-      // SummationRdtStruct.h20001 (0D_NOT_complex -
       .def_property("h20001", &SummationRdtStruct::h20001, &SummationRdtStruct::set_h20001)
-      // SummationRdtStruct.h00201 (0D_NOT_complex -
       .def_property("h00201", &SummationRdtStruct::h00201, &SummationRdtStruct::set_h00201)
-      // SummationRdtStruct.h10002 (0D_NOT_complex -
       .def_property("h10002", &SummationRdtStruct::h10002, &SummationRdtStruct::set_h10002)
-      // SummationRdtStruct.h21000 (0D_NOT_complex -
       .def_property("h21000", &SummationRdtStruct::h21000, &SummationRdtStruct::set_h21000)
-      // SummationRdtStruct.h30000 (0D_NOT_complex -
       .def_property("h30000", &SummationRdtStruct::h30000, &SummationRdtStruct::set_h30000)
-      // SummationRdtStruct.h10110 (0D_NOT_complex -
       .def_property("h10110", &SummationRdtStruct::h10110, &SummationRdtStruct::set_h10110)
-      // SummationRdtStruct.h10020 (0D_NOT_complex -
       .def_property("h10020", &SummationRdtStruct::h10020, &SummationRdtStruct::set_h10020)
-      // SummationRdtStruct.h10200 (0D_NOT_complex - 2nd order in K2 moments
-      .def_property("h10200", &SummationRdtStruct::h10200, &SummationRdtStruct::set_h10200)
-      // SummationRdtStruct.h31000 (0D_NOT_complex -
+      .def_property(
+          "h10200",
+          &SummationRdtStruct::h10200,
+          &SummationRdtStruct::set_h10200,
+          "2nd order in K2 moments"
+      )
       .def_property("h31000", &SummationRdtStruct::h31000, &SummationRdtStruct::set_h31000)
-      // SummationRdtStruct.h40000 (0D_NOT_complex -
       .def_property("h40000", &SummationRdtStruct::h40000, &SummationRdtStruct::set_h40000)
-      // SummationRdtStruct.h20110 (0D_NOT_complex -
       .def_property("h20110", &SummationRdtStruct::h20110, &SummationRdtStruct::set_h20110)
-      // SummationRdtStruct.h11200 (0D_NOT_complex -
       .def_property("h11200", &SummationRdtStruct::h11200, &SummationRdtStruct::set_h11200)
-      // SummationRdtStruct.h20020 (0D_NOT_complex -
       .def_property("h20020", &SummationRdtStruct::h20020, &SummationRdtStruct::set_h20020)
-      // SummationRdtStruct.h20200 (0D_NOT_complex -
       .def_property("h20200", &SummationRdtStruct::h20200, &SummationRdtStruct::set_h20200)
-      // SummationRdtStruct.h00310 (0D_NOT_complex -
       .def_property("h00310", &SummationRdtStruct::h00310, &SummationRdtStruct::set_h00310)
-      // SummationRdtStruct.h00400 (0D_NOT_complex -
       .def_property("h00400", &SummationRdtStruct::h00400, &SummationRdtStruct::set_h00400)
-      // SummationRdtStruct.h22000 (0D_NOT_complex -
       .def_property("h22000", &SummationRdtStruct::h22000, &SummationRdtStruct::set_h22000)
-      // SummationRdtStruct.h00220 (0D_NOT_complex -
       .def_property("h00220", &SummationRdtStruct::h00220, &SummationRdtStruct::set_h00220)
-      // SummationRdtStruct.h11110 (0D_NOT_complex -
       .def_property("h11110", &SummationRdtStruct::h11110, &SummationRdtStruct::set_h11110)
       .def_static(
           "new_array1d",

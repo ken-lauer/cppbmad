@@ -40,32 +40,84 @@ void init_wake_lr_mode_struct(py::module &m, py::class_<WakeLrModeStruct> &cls) 
          py::arg("m") = py::none(),
          py::arg("polarized") = py::none()
   )
-      // WakeLrModeStruct.freq (0D_NOT_real - Actual Frequency in Hz.
-      .def_property("freq", &WakeLrModeStruct::freq, &WakeLrModeStruct::set_freq)
-      // WakeLrModeStruct.freq_in (0D_NOT_real - Input frequency in Hz.
-      .def_property("freq_in", &WakeLrModeStruct::freq_in, &WakeLrModeStruct::set_freq_in)
-      // WakeLrModeStruct.R_over_Q (0D_NOT_real - Strength in V/C/m^(2*m_mode).
-      .def_property("R_over_Q", &WakeLrModeStruct::R_over_Q, &WakeLrModeStruct::set_R_over_Q)
-      // WakeLrModeStruct.Q (0D_NOT_real - Used for backwards compatability.
-      .def_property("Q", &WakeLrModeStruct::Q, &WakeLrModeStruct::set_Q)
-      // WakeLrModeStruct.damp (0D_NOT_real - Damping factor = omega / 2 * Q = pi * freq / Q
-      .def_property("damp", &WakeLrModeStruct::damp, &WakeLrModeStruct::set_damp)
-      // WakeLrModeStruct.phi (0D_NOT_real - Phase in radians/2pi.
-      .def_property("phi", &WakeLrModeStruct::phi, &WakeLrModeStruct::set_phi)
-      // WakeLrModeStruct.angle (0D_NOT_real - polarization angle (radians/2pi).
-      .def_property("angle", &WakeLrModeStruct::angle, &WakeLrModeStruct::set_angle)
-      // WakeLrModeStruct.b_sin (0D_NOT_real - non-skew sin-like component of the wake.
-      .def_property("b_sin", &WakeLrModeStruct::b_sin, &WakeLrModeStruct::set_b_sin)
-      // WakeLrModeStruct.b_cos (0D_NOT_real - non-skew cos-like component of the wake.
-      .def_property("b_cos", &WakeLrModeStruct::b_cos, &WakeLrModeStruct::set_b_cos)
-      // WakeLrModeStruct.a_sin (0D_NOT_real - skew sin-like component of the wake.
-      .def_property("a_sin", &WakeLrModeStruct::a_sin, &WakeLrModeStruct::set_a_sin)
-      // WakeLrModeStruct.a_cos (0D_NOT_real - skew cos-like component of the wake.
-      .def_property("a_cos", &WakeLrModeStruct::a_cos, &WakeLrModeStruct::set_a_cos)
-      // WakeLrModeStruct.m (0D_NOT_integer - Mode order (1 = dipole, 2 = quad, etc.)
-      .def_property("m", &WakeLrModeStruct::m, &WakeLrModeStruct::set_m)
-      // WakeLrModeStruct.polarized (0D_NOT_logical - Polaraized mode?
-      .def_property("polarized", &WakeLrModeStruct::polarized, &WakeLrModeStruct::set_polarized)
+      .def_property(
+          "freq",
+          &WakeLrModeStruct::freq,
+          &WakeLrModeStruct::set_freq,
+          "Actual Frequency in Hz."
+      )
+      .def_property(
+          "freq_in",
+          &WakeLrModeStruct::freq_in,
+          &WakeLrModeStruct::set_freq_in,
+          "Input frequency in Hz."
+      )
+      .def_property(
+          "R_over_Q",
+          &WakeLrModeStruct::R_over_Q,
+          &WakeLrModeStruct::set_R_over_Q,
+          "Strength in V/C/m^(2*m_mode)."
+      )
+      .def_property(
+          "Q",
+          &WakeLrModeStruct::Q,
+          &WakeLrModeStruct::set_Q,
+          "Used for backwards compatability."
+      )
+      .def_property(
+          "damp",
+          &WakeLrModeStruct::damp,
+          &WakeLrModeStruct::set_damp,
+          "Damping factor = omega / 2 * Q = pi * freq / Q"
+      )
+      .def_property(
+          "phi",
+          &WakeLrModeStruct::phi,
+          &WakeLrModeStruct::set_phi,
+          "Phase in radians/2pi."
+      )
+      .def_property(
+          "angle",
+          &WakeLrModeStruct::angle,
+          &WakeLrModeStruct::set_angle,
+          "polarization angle (radians/2pi)."
+      )
+      .def_property(
+          "b_sin",
+          &WakeLrModeStruct::b_sin,
+          &WakeLrModeStruct::set_b_sin,
+          "non-skew sin-like component of the wake."
+      )
+      .def_property(
+          "b_cos",
+          &WakeLrModeStruct::b_cos,
+          &WakeLrModeStruct::set_b_cos,
+          "non-skew cos-like component of the wake."
+      )
+      .def_property(
+          "a_sin",
+          &WakeLrModeStruct::a_sin,
+          &WakeLrModeStruct::set_a_sin,
+          "skew sin-like component of the wake."
+      )
+      .def_property(
+          "a_cos",
+          &WakeLrModeStruct::a_cos,
+          &WakeLrModeStruct::set_a_cos,
+          "skew cos-like component of the wake."
+      )
+      .def_property(
+          "m",
+          &WakeLrModeStruct::m,
+          &WakeLrModeStruct::set_m,
+          "Mode order (1 = dipole, 2 = quad, etc.)"
+      )
+      .def_property(
+          "polarized",
+          &WakeLrModeStruct::polarized,
+          &WakeLrModeStruct::set_polarized,
+          "Polaraized mode?"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return WakeLrModeStructAlloc1D(sz); },
@@ -121,21 +173,39 @@ void init_wake_lr_struct(py::module &m, py::class_<WakeLrStruct> &cls) {
          py::arg("time_scale") = py::none(),
          py::arg("self_wake_on") = py::none()
   )
-      // WakeLrStruct.file (0D_NOT_character -
       .def_property("file", &WakeLrStruct::file, &WakeLrStruct::set_file)
-      // WakeLrStruct.mode (1D_ALLOC_type -
       .def_property_readonly("mode", &WakeLrStruct::mode)
-      // WakeLrStruct.t_ref (0D_NOT_real - time reference value for computing the wake amplitude.
-      // This is used to prevent value overflow with long trains.
-      .def_property("t_ref", &WakeLrStruct::t_ref, &WakeLrStruct::set_t_ref)
-      // WakeLrStruct.freq_spread (0D_NOT_real - Random frequency spread of long range modes.
-      .def_property("freq_spread", &WakeLrStruct::freq_spread, &WakeLrStruct::set_freq_spread)
-      // WakeLrStruct.amp_scale (0D_NOT_real - Wake amplitude scale factor.
-      .def_property("amp_scale", &WakeLrStruct::amp_scale, &WakeLrStruct::set_amp_scale)
-      // WakeLrStruct.time_scale (0D_NOT_real - time scale factor.
-      .def_property("time_scale", &WakeLrStruct::time_scale, &WakeLrStruct::set_time_scale)
-      // WakeLrStruct.self_wake_on (0D_NOT_logical - Long range self-wake used in tracking?
-      .def_property("self_wake_on", &WakeLrStruct::self_wake_on, &WakeLrStruct::set_self_wake_on)
+      .def_property(
+          "t_ref",
+          &WakeLrStruct::t_ref,
+          &WakeLrStruct::set_t_ref,
+          "time reference value for computing the wake amplitude. This is used to prevent value "
+          "overflow with long trains."
+      )
+      .def_property(
+          "freq_spread",
+          &WakeLrStruct::freq_spread,
+          &WakeLrStruct::set_freq_spread,
+          "Random frequency spread of long range modes."
+      )
+      .def_property(
+          "amp_scale",
+          &WakeLrStruct::amp_scale,
+          &WakeLrStruct::set_amp_scale,
+          "Wake amplitude scale factor."
+      )
+      .def_property(
+          "time_scale",
+          &WakeLrStruct::time_scale,
+          &WakeLrStruct::set_time_scale,
+          "time scale factor."
+      )
+      .def_property(
+          "self_wake_on",
+          &WakeLrStruct::self_wake_on,
+          &WakeLrStruct::set_self_wake_on,
+          "Long range self-wake used in tracking?"
+      )
 
       .def("__repr__", [](const WakeLrStruct &self) { return to_string(self); })
 
@@ -183,35 +253,55 @@ void init_wake_sr_mode_struct(py::module &m, py::class_<WakeSrModeStruct> &cls) 
          py::arg("polarization") = py::none(),
          py::arg("position_dependence") = py::none()
   )
-      // WakeSrModeStruct.amp (0D_NOT_real - Amplitude
-      .def_property("amp", &WakeSrModeStruct::amp, &WakeSrModeStruct::set_amp)
-      // WakeSrModeStruct.damp (0D_NOT_real - Dampling factor.
-      .def_property("damp", &WakeSrModeStruct::damp, &WakeSrModeStruct::set_damp)
-      // WakeSrModeStruct.k (0D_NOT_real - k factor
-      .def_property("k", &WakeSrModeStruct::k, &WakeSrModeStruct::set_k)
-      // WakeSrModeStruct.phi (0D_NOT_real - Phase in radians/2pi
-      .def_property("phi", &WakeSrModeStruct::phi, &WakeSrModeStruct::set_phi)
-      // WakeSrModeStruct.b_sin (0D_NOT_real - non-skew (x) sin-like component of the wake
-      .def_property("b_sin", &WakeSrModeStruct::b_sin, &WakeSrModeStruct::set_b_sin)
-      // WakeSrModeStruct.b_cos (0D_NOT_real - non-skew (x) cos-like component of the wake
-      .def_property("b_cos", &WakeSrModeStruct::b_cos, &WakeSrModeStruct::set_b_cos)
-      // WakeSrModeStruct.a_sin (0D_NOT_real - skew (y) sin-like component of the wake
-      .def_property("a_sin", &WakeSrModeStruct::a_sin, &WakeSrModeStruct::set_a_sin)
-      // WakeSrModeStruct.a_cos (0D_NOT_real - skew (y) cos-like component of the wake
-      .def_property("a_cos", &WakeSrModeStruct::a_cos, &WakeSrModeStruct::set_a_cos)
-      // WakeSrModeStruct.polarization (0D_NOT_integer - Transverse: none$, x_axis$, y_axis$. Not
-      // used for longitudinal.
+      .def_property("amp", &WakeSrModeStruct::amp, &WakeSrModeStruct::set_amp, "Amplitude")
+      .def_property(
+          "damp",
+          &WakeSrModeStruct::damp,
+          &WakeSrModeStruct::set_damp,
+          "Dampling factor."
+      )
+      .def_property("k", &WakeSrModeStruct::k, &WakeSrModeStruct::set_k, "k factor")
+      .def_property(
+          "phi",
+          &WakeSrModeStruct::phi,
+          &WakeSrModeStruct::set_phi,
+          "Phase in radians/2pi"
+      )
+      .def_property(
+          "b_sin",
+          &WakeSrModeStruct::b_sin,
+          &WakeSrModeStruct::set_b_sin,
+          "non-skew (x) sin-like component of the wake"
+      )
+      .def_property(
+          "b_cos",
+          &WakeSrModeStruct::b_cos,
+          &WakeSrModeStruct::set_b_cos,
+          "non-skew (x) cos-like component of the wake"
+      )
+      .def_property(
+          "a_sin",
+          &WakeSrModeStruct::a_sin,
+          &WakeSrModeStruct::set_a_sin,
+          "skew (y) sin-like component of the wake"
+      )
+      .def_property(
+          "a_cos",
+          &WakeSrModeStruct::a_cos,
+          &WakeSrModeStruct::set_a_cos,
+          "skew (y) cos-like component of the wake"
+      )
       .def_property(
           "polarization",
           &WakeSrModeStruct::polarization,
-          &WakeSrModeStruct::set_polarization
+          &WakeSrModeStruct::set_polarization,
+          "Transverse: none$, x_axis$, y_axis$. Not used for longitudinal."
       )
-      // WakeSrModeStruct.position_dependence (0D_NOT_integer - Transverse: leading$, trailing$,
-      // none$ Longitudinal: x_leading$, ..., y_trailing$, none$
       .def_property(
           "position_dependence",
           &WakeSrModeStruct::position_dependence,
-          &WakeSrModeStruct::set_position_dependence
+          &WakeSrModeStruct::set_position_dependence,
+          "Transverse: leading$, trailing$, none$ Longitudinal: x_leading$, ..., y_trailing$, none$"
       )
       .def_static(
           "new_array1d",
@@ -272,30 +362,45 @@ void init_wake_sr_struct(py::module &m, py::class_<WakeSrStruct> &cls) {
          py::arg("z_scale") = py::none(),
          py::arg("scale_with_length") = py::none()
   )
-      // WakeSrStruct.file (0D_NOT_character -
       .def_property("file", &WakeSrStruct::file, &WakeSrStruct::set_file)
-      // WakeSrStruct.z_long (0D_NOT_type -
       .def_property("z_long", &WakeSrStruct::z_long, &WakeSrStruct::set_z_long)
-      // WakeSrStruct.long_wake (1D_ALLOC_type -
       .def_property_readonly("long_wake", &WakeSrStruct::long_wake)
-      // WakeSrStruct.trans_wake (1D_ALLOC_type -
       .def_property_readonly("trans_wake", &WakeSrStruct::trans_wake)
-      // WakeSrStruct.z_ref_long (0D_NOT_real - z reference value for computing the wake amplitude.
-      .def_property("z_ref_long", &WakeSrStruct::z_ref_long, &WakeSrStruct::set_z_ref_long)
-      // WakeSrStruct.z_ref_trans (0D_NOT_real - This is used to prevent value overflow with long
-      // bunches.
-      .def_property("z_ref_trans", &WakeSrStruct::z_ref_trans, &WakeSrStruct::set_z_ref_trans)
-      // WakeSrStruct.z_max (0D_NOT_real - Max allowable z value. 0-> ignore
-      .def_property("z_max", &WakeSrStruct::z_max, &WakeSrStruct::set_z_max)
-      // WakeSrStruct.amp_scale (0D_NOT_real - Wake amplitude scale factor.
-      .def_property("amp_scale", &WakeSrStruct::amp_scale, &WakeSrStruct::set_amp_scale)
-      // WakeSrStruct.z_scale (0D_NOT_real - z-distance scale factor.
-      .def_property("z_scale", &WakeSrStruct::z_scale, &WakeSrStruct::set_z_scale)
-      // WakeSrStruct.scale_with_length (0D_NOT_logical - Scale wake with element length?
+      .def_property(
+          "z_ref_long",
+          &WakeSrStruct::z_ref_long,
+          &WakeSrStruct::set_z_ref_long,
+          "z reference value for computing the wake amplitude."
+      )
+      .def_property(
+          "z_ref_trans",
+          &WakeSrStruct::z_ref_trans,
+          &WakeSrStruct::set_z_ref_trans,
+          "This is used to prevent value overflow with long bunches."
+      )
+      .def_property(
+          "z_max",
+          &WakeSrStruct::z_max,
+          &WakeSrStruct::set_z_max,
+          "Max allowable z value. 0-> ignore"
+      )
+      .def_property(
+          "amp_scale",
+          &WakeSrStruct::amp_scale,
+          &WakeSrStruct::set_amp_scale,
+          "Wake amplitude scale factor."
+      )
+      .def_property(
+          "z_scale",
+          &WakeSrStruct::z_scale,
+          &WakeSrStruct::set_z_scale,
+          "z-distance scale factor."
+      )
       .def_property(
           "scale_with_length",
           &WakeSrStruct::scale_with_length,
-          &WakeSrStruct::set_scale_with_length
+          &WakeSrStruct::set_scale_with_length,
+          "Scale wake with element length?"
       )
 
       .def("__repr__", [](const WakeSrStruct &self) { return to_string(self); })
@@ -342,36 +447,59 @@ void init_wake_sr_z_long_struct(py::module &m, py::class_<WakeSrZLongStruct> &cl
          py::arg("position_dependence") = py::none(),
          py::arg("time_based") = py::none()
   )
-      // WakeSrZLongStruct.w (1D_ALLOC_real - Input single particle Wake. Indexed from 1.
-      .def_property("w", &WakeSrZLongStruct::w, &WakeSrZLongStruct::set_w)
-      // WakeSrZLongStruct.fw (1D_ALLOC_complex - Fourier transform of w.
-      .def_property("fw", &WakeSrZLongStruct::fw, &WakeSrZLongStruct::set_fw)
-      // WakeSrZLongStruct.fbunch (1D_ALLOC_complex - Scratch space.
-      .def_property("fbunch", &WakeSrZLongStruct::fbunch, &WakeSrZLongStruct::set_fbunch)
-      // WakeSrZLongStruct.w_out (1D_ALLOC_complex - Scratch space.
-      .def_property("w_out", &WakeSrZLongStruct::w_out, &WakeSrZLongStruct::set_w_out)
-      // WakeSrZLongStruct.dz (0D_NOT_real - Distance between points. If zero there is no wake.
-      .def_property("dz", &WakeSrZLongStruct::dz, &WakeSrZLongStruct::set_dz)
-      // WakeSrZLongStruct.z0 (0D_NOT_real - Wake extent is [-z0, z0].
-      .def_property("z0", &WakeSrZLongStruct::z0, &WakeSrZLongStruct::set_z0)
-      // WakeSrZLongStruct.smoothing_sigma (0D_NOT_real - 0 => No smoothing.
+      .def_property(
+          "w",
+          &WakeSrZLongStruct::w,
+          &WakeSrZLongStruct::set_w,
+          "Input single particle Wake. Indexed from 1."
+      )
+      .def_property(
+          "fw",
+          &WakeSrZLongStruct::fw,
+          &WakeSrZLongStruct::set_fw,
+          "Fourier transform of w."
+      )
+      .def_property(
+          "fbunch",
+          &WakeSrZLongStruct::fbunch,
+          &WakeSrZLongStruct::set_fbunch,
+          "Scratch space."
+      )
+      .def_property(
+          "w_out",
+          &WakeSrZLongStruct::w_out,
+          &WakeSrZLongStruct::set_w_out,
+          "Scratch space."
+      )
+      .def_property(
+          "dz",
+          &WakeSrZLongStruct::dz,
+          &WakeSrZLongStruct::set_dz,
+          "Distance between points. If zero there is no wake."
+      )
+      .def_property(
+          "z0",
+          &WakeSrZLongStruct::z0,
+          &WakeSrZLongStruct::set_z0,
+          "Wake extent is [-z0, z0]."
+      )
       .def_property(
           "smoothing_sigma",
           &WakeSrZLongStruct::smoothing_sigma,
-          &WakeSrZLongStruct::set_smoothing_sigma
+          &WakeSrZLongStruct::set_smoothing_sigma,
+          "0 => No smoothing."
       )
-      // WakeSrZLongStruct.position_dependence (0D_NOT_integer - Transverse: leading$, trailing$,
-      // none$ Longitudinal: x_leading$, ..., y_trailing$, none$
       .def_property(
           "position_dependence",
           &WakeSrZLongStruct::position_dependence,
-          &WakeSrZLongStruct::set_position_dependence
+          &WakeSrZLongStruct::set_position_dependence,
+          "Transverse: leading$, trailing$, none$ Longitudinal: x_leading$, ..., y_trailing$, none$"
       )
-      // WakeSrZLongStruct.time_based (0D_NOT_logical - Was input time based?
       .def_property(
           "time_based",
           &WakeSrZLongStruct::time_based,
-          &WakeSrZLongStruct::set_time_based
+          &WakeSrZLongStruct::set_time_based,
+          "Was input time based?"
       )
 
       .def("__repr__", [](const WakeSrZLongStruct &self) { return to_string(self); })
@@ -402,10 +530,8 @@ void init_wake_struct(py::module &m, py::class_<WakeStruct> &cls) {
          py::arg("sr") = py::none(),
          py::arg("lr") = py::none()
   )
-      // WakeStruct.sr (0D_NOT_type - Short-range wake
-      .def_property("sr", &WakeStruct::sr, &WakeStruct::set_sr)
-      // WakeStruct.lr (0D_NOT_type - Long-range wake
-      .def_property("lr", &WakeStruct::lr, &WakeStruct::set_lr)
+      .def_property("sr", &WakeStruct::sr, &WakeStruct::set_sr, "Short-range wake")
+      .def_property("lr", &WakeStruct::lr, &WakeStruct::set_lr, "Long-range wake")
 
       .def("__repr__", [](const WakeStruct &self) { return to_string(self); })
 
@@ -468,71 +594,126 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
          py::arg("p1_coef") = py::none(),
          py::arg("p2_coef") = py::none()
   )
-      // Wall3dSectionStruct.name (0D_NOT_character - Identifying name
-      .def_property("name", &Wall3dSectionStruct::name, &Wall3dSectionStruct::set_name)
-      // Wall3dSectionStruct.material (0D_NOT_character - Material.
-      .def_property("material", &Wall3dSectionStruct::material, &Wall3dSectionStruct::set_material)
-      // Wall3dSectionStruct.v (1D_ALLOC_type - Array of vertices. Always stored relative.
-      .def_property_readonly("v", &Wall3dSectionStruct::v)
-      // Wall3dSectionStruct.surface (0D_PTR_type - Surface reflectivity tables.
-      .def_property("surface", &Wall3dSectionStruct::surface, &Wall3dSectionStruct::set_surface)
-      // Wall3dSectionStruct.type (0D_NOT_integer - normal$, clear$, opaque$, wall_start$, wall_end$
-      .def_property("type", &Wall3dSectionStruct::type, &Wall3dSectionStruct::set_type)
-      // Wall3dSectionStruct.n_vertex_input (0D_NOT_integer - Number of vertices specified by the
-      // user.
+      .def_property(
+          "name",
+          &Wall3dSectionStruct::name,
+          &Wall3dSectionStruct::set_name,
+          "Identifying name"
+      )
+      .def_property(
+          "material",
+          &Wall3dSectionStruct::material,
+          &Wall3dSectionStruct::set_material,
+          "Material."
+      )
+      .def_property_readonly(
+          "v",
+          &Wall3dSectionStruct::v,
+          "Array of vertices. Always stored relative."
+      )
+      .def_property(
+          "surface",
+          &Wall3dSectionStruct::surface,
+          &Wall3dSectionStruct::set_surface,
+          "Surface reflectivity tables."
+      )
+      .def_property(
+          "type",
+          &Wall3dSectionStruct::type,
+          &Wall3dSectionStruct::set_type,
+          "normal$, clear$, opaque$, wall_start$, wall_end$"
+      )
       .def_property(
           "n_vertex_input",
           &Wall3dSectionStruct::n_vertex_input,
-          &Wall3dSectionStruct::set_n_vertex_input
+          &Wall3dSectionStruct::set_n_vertex_input,
+          "Number of vertices specified by the user."
       )
-      // Wall3dSectionStruct.ix_ele (0D_NOT_integer - index of lattice element containing section
-      .def_property("ix_ele", &Wall3dSectionStruct::ix_ele, &Wall3dSectionStruct::set_ix_ele)
-      // Wall3dSectionStruct.ix_branch (0D_NOT_integer - Index of branch lattice element is in.
+      .def_property(
+          "ix_ele",
+          &Wall3dSectionStruct::ix_ele,
+          &Wall3dSectionStruct::set_ix_ele,
+          "index of lattice element containing section"
+      )
       .def_property(
           "ix_branch",
           &Wall3dSectionStruct::ix_branch,
-          &Wall3dSectionStruct::set_ix_branch
+          &Wall3dSectionStruct::set_ix_branch,
+          "Index of branch lattice element is in."
       )
-      // Wall3dSectionStruct.vertices_state (0D_NOT_integer - absolute$, or shifted_to_relative$. If
-      // set to absolute$ on input, will be changed to shifted_to_relative$ by section initalizer.
       .def_property(
           "vertices_state",
           &Wall3dSectionStruct::vertices_state,
-          &Wall3dSectionStruct::set_vertices_state
+          &Wall3dSectionStruct::set_vertices_state,
+          "absolute$, or shifted_to_relative$. If set to absolute$ on input, will be changed to "
+          "shifted_to_relative$ by section initalizer."
       )
-      // Wall3dSectionStruct.patch_in_region (0D_NOT_logical - Patch element exists between this
-      // section and previous one?
       .def_property(
           "patch_in_region",
           &Wall3dSectionStruct::patch_in_region,
-          &Wall3dSectionStruct::set_patch_in_region
+          &Wall3dSectionStruct::set_patch_in_region,
+          "Patch element exists between this section and previous one?"
       )
-      // Wall3dSectionStruct.thickness (0D_NOT_real - Material thickness.
       .def_property(
           "thickness",
           &Wall3dSectionStruct::thickness,
-          &Wall3dSectionStruct::set_thickness
+          &Wall3dSectionStruct::set_thickness,
+          "Material thickness."
       )
-      // Wall3dSectionStruct.s (0D_NOT_real - Longitudinal position
-      .def_property("s", &Wall3dSectionStruct::s, &Wall3dSectionStruct::set_s)
-      // Wall3dSectionStruct.r0 (1D_NOT_real - Center of section Section-to-section spline
-      // interpolation of the center of the section
-      .def_property("r0", &Wall3dSectionStruct::r0, &Wall3dSectionStruct::set_r0)
-      // Wall3dSectionStruct.dx0_ds (0D_NOT_real - Center of wall derivative
-      .def_property("dx0_ds", &Wall3dSectionStruct::dx0_ds, &Wall3dSectionStruct::set_dx0_ds)
-      // Wall3dSectionStruct.dy0_ds (0D_NOT_real - Center of wall derivative
-      .def_property("dy0_ds", &Wall3dSectionStruct::dy0_ds, &Wall3dSectionStruct::set_dy0_ds)
-      // Wall3dSectionStruct.x0_coef (1D_NOT_real - Spline coefs for x-center
-      .def_property("x0_coef", &Wall3dSectionStruct::x0_coef, &Wall3dSectionStruct::set_x0_coef)
-      // Wall3dSectionStruct.y0_coef (1D_NOT_real - Spline coefs for y-center Section-to_section
-      // spline interpolation of the wall.
-      .def_property("y0_coef", &Wall3dSectionStruct::y0_coef, &Wall3dSectionStruct::set_y0_coef)
-      // Wall3dSectionStruct.dr_ds (0D_NOT_real - derivative of wall radius
-      .def_property("dr_ds", &Wall3dSectionStruct::dr_ds, &Wall3dSectionStruct::set_dr_ds)
-      // Wall3dSectionStruct.p1_coef (1D_NOT_real - Spline coefs for p0 function
-      .def_property("p1_coef", &Wall3dSectionStruct::p1_coef, &Wall3dSectionStruct::set_p1_coef)
-      // Wall3dSectionStruct.p2_coef (1D_NOT_real - Spline coefs for p1 function
-      .def_property("p2_coef", &Wall3dSectionStruct::p2_coef, &Wall3dSectionStruct::set_p2_coef)
+      .def_property(
+          "s",
+          &Wall3dSectionStruct::s,
+          &Wall3dSectionStruct::set_s,
+          "Longitudinal position"
+      )
+      .def_property(
+          "r0",
+          &Wall3dSectionStruct::r0,
+          &Wall3dSectionStruct::set_r0,
+          "Center of section Section-to-section spline interpolation of the center of the section"
+      )
+      .def_property(
+          "dx0_ds",
+          &Wall3dSectionStruct::dx0_ds,
+          &Wall3dSectionStruct::set_dx0_ds,
+          "Center of wall derivative"
+      )
+      .def_property(
+          "dy0_ds",
+          &Wall3dSectionStruct::dy0_ds,
+          &Wall3dSectionStruct::set_dy0_ds,
+          "Center of wall derivative"
+      )
+      .def_property(
+          "x0_coef",
+          &Wall3dSectionStruct::x0_coef,
+          &Wall3dSectionStruct::set_x0_coef,
+          "Spline coefs for x-center"
+      )
+      .def_property(
+          "y0_coef",
+          &Wall3dSectionStruct::y0_coef,
+          &Wall3dSectionStruct::set_y0_coef,
+          "Spline coefs for y-center Section-to_section spline interpolation of the wall."
+      )
+      .def_property(
+          "dr_ds",
+          &Wall3dSectionStruct::dr_ds,
+          &Wall3dSectionStruct::set_dr_ds,
+          "derivative of wall radius"
+      )
+      .def_property(
+          "p1_coef",
+          &Wall3dSectionStruct::p1_coef,
+          &Wall3dSectionStruct::set_p1_coef,
+          "Spline coefs for p0 function"
+      )
+      .def_property(
+          "p2_coef",
+          &Wall3dSectionStruct::p2_coef,
+          &Wall3dSectionStruct::set_p2_coef,
+          "Spline coefs for p1 function"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return Wall3dSectionStructAlloc1D(sz); },
@@ -594,35 +775,49 @@ void init_wall3d_struct(py::module &m, py::class_<Wall3dStruct> &cls) {
          py::arg("superimpose") = py::none(),
          py::arg("ele_anchor_pt") = py::none()
   )
-      // Wall3dStruct.name (0D_NOT_character -
       .def_property("name", &Wall3dStruct::name, &Wall3dStruct::set_name)
-      // Wall3dStruct.type (0D_NOT_integer - or mask_plate$
-      .def_property("type", &Wall3dStruct::type, &Wall3dStruct::set_type)
-      // Wall3dStruct.ix_wall3d (0D_NOT_integer - Index in branch%wall3d(:) array.
-      .def_property("ix_wall3d", &Wall3dStruct::ix_wall3d, &Wall3dStruct::set_ix_wall3d)
-      // Wall3dStruct.n_link (0D_NOT_integer - For memory management of ele%wall3d
-      .def_property("n_link", &Wall3dStruct::n_link, &Wall3dStruct::set_n_link)
-      // Wall3dStruct.thickness (0D_NOT_real - For diffraction_plate elements
-      .def_property("thickness", &Wall3dStruct::thickness, &Wall3dStruct::set_thickness)
-      // Wall3dStruct.clear_material (0D_NOT_character -
+      .def_property("type", &Wall3dStruct::type, &Wall3dStruct::set_type, "or mask_plate$")
+      .def_property(
+          "ix_wall3d",
+          &Wall3dStruct::ix_wall3d,
+          &Wall3dStruct::set_ix_wall3d,
+          "Index in branch%wall3d(:) array."
+      )
+      .def_property(
+          "n_link",
+          &Wall3dStruct::n_link,
+          &Wall3dStruct::set_n_link,
+          "For memory management of ele%wall3d"
+      )
+      .def_property(
+          "thickness",
+          &Wall3dStruct::thickness,
+          &Wall3dStruct::set_thickness,
+          "For diffraction_plate elements"
+      )
       .def_property(
           "clear_material",
           &Wall3dStruct::clear_material,
           &Wall3dStruct::set_clear_material
       )
-      // Wall3dStruct.opaque_material (0D_NOT_character -
       .def_property(
           "opaque_material",
           &Wall3dStruct::opaque_material,
           &Wall3dStruct::set_opaque_material
       )
-      // Wall3dStruct.superimpose (0D_NOT_logical - Can overlap another wall
-      .def_property("superimpose", &Wall3dStruct::superimpose, &Wall3dStruct::set_superimpose)
-      // Wall3dStruct.ele_anchor_pt (0D_NOT_integer - anchor_beginning$, anchor_center$, or
-      // anchor_end$
-      .def_property("ele_anchor_pt", &Wall3dStruct::ele_anchor_pt, &Wall3dStruct::set_ele_anchor_pt)
-      // Wall3dStruct.section (1D_ALLOC_type - Indexed from 1.
-      .def_property_readonly("section", &Wall3dStruct::section)
+      .def_property(
+          "superimpose",
+          &Wall3dStruct::superimpose,
+          &Wall3dStruct::set_superimpose,
+          "Can overlap another wall"
+      )
+      .def_property(
+          "ele_anchor_pt",
+          &Wall3dStruct::ele_anchor_pt,
+          &Wall3dStruct::set_ele_anchor_pt,
+          "anchor_beginning$, anchor_center$, or anchor_end$"
+      )
+      .def_property_readonly("section", &Wall3dStruct::section, "Indexed from 1.")
       .def_static(
           "new_array1d",
           [](int sz) { return Wall3dStructAlloc1D(sz); },
@@ -684,25 +879,50 @@ void init_wall3d_vertex_struct(py::module &m, py::class_<Wall3dVertexStruct> &cl
          py::arg("y0") = py::none(),
          py::arg("type") = py::none()
   )
-      // Wall3dVertexStruct.x (0D_NOT_real - Coordinates of the vertex.
-      .def_property("x", &Wall3dVertexStruct::x, &Wall3dVertexStruct::set_x)
-      // Wall3dVertexStruct.y (0D_NOT_real - Coordinates of the vertex.
-      .def_property("y", &Wall3dVertexStruct::y, &Wall3dVertexStruct::set_y)
-      // Wall3dVertexStruct.radius_x (0D_NOT_real - Radius of arc or ellipse x-axis half width. 0 =>
-      // Straight line.
-      .def_property("radius_x", &Wall3dVertexStruct::radius_x, &Wall3dVertexStruct::set_radius_x)
-      // Wall3dVertexStruct.radius_y (0D_NOT_real - Ellipse y-axis half height.
-      .def_property("radius_y", &Wall3dVertexStruct::radius_y, &Wall3dVertexStruct::set_radius_y)
-      // Wall3dVertexStruct.tilt (0D_NOT_real - Tilt of ellipse
-      .def_property("tilt", &Wall3dVertexStruct::tilt, &Wall3dVertexStruct::set_tilt)
-      // Wall3dVertexStruct.angle (0D_NOT_real - Angle of (x, y) point.
-      .def_property("angle", &Wall3dVertexStruct::angle, &Wall3dVertexStruct::set_angle)
-      // Wall3dVertexStruct.x0 (0D_NOT_real - Center of ellipse
-      .def_property("x0", &Wall3dVertexStruct::x0, &Wall3dVertexStruct::set_x0)
-      // Wall3dVertexStruct.y0 (0D_NOT_real - Center of ellipse
-      .def_property("y0", &Wall3dVertexStruct::y0, &Wall3dVertexStruct::set_y0)
-      // Wall3dVertexStruct.type (0D_NOT_integer - No longer used.
-      .def_property("type", &Wall3dVertexStruct::type, &Wall3dVertexStruct::set_type)
+      .def_property(
+          "x",
+          &Wall3dVertexStruct::x,
+          &Wall3dVertexStruct::set_x,
+          "Coordinates of the vertex."
+      )
+      .def_property(
+          "y",
+          &Wall3dVertexStruct::y,
+          &Wall3dVertexStruct::set_y,
+          "Coordinates of the vertex."
+      )
+      .def_property(
+          "radius_x",
+          &Wall3dVertexStruct::radius_x,
+          &Wall3dVertexStruct::set_radius_x,
+          "Radius of arc or ellipse x-axis half width. 0 => Straight line."
+      )
+      .def_property(
+          "radius_y",
+          &Wall3dVertexStruct::radius_y,
+          &Wall3dVertexStruct::set_radius_y,
+          "Ellipse y-axis half height."
+      )
+      .def_property(
+          "tilt",
+          &Wall3dVertexStruct::tilt,
+          &Wall3dVertexStruct::set_tilt,
+          "Tilt of ellipse"
+      )
+      .def_property(
+          "angle",
+          &Wall3dVertexStruct::angle,
+          &Wall3dVertexStruct::set_angle,
+          "Angle of (x, y) point."
+      )
+      .def_property("x0", &Wall3dVertexStruct::x0, &Wall3dVertexStruct::set_x0, "Center of ellipse")
+      .def_property("y0", &Wall3dVertexStruct::y0, &Wall3dVertexStruct::set_y0, "Center of ellipse")
+      .def_property(
+          "type",
+          &Wall3dVertexStruct::type,
+          &Wall3dVertexStruct::set_type,
+          "No longer used."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return Wall3dVertexStructAlloc1D(sz); },

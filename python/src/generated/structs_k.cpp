@@ -18,16 +18,14 @@ void init_kv_beam_init_struct(py::module &m, py::class_<KvBeamInitStruct> &cls) 
          py::arg("n_I2") = py::none(),
          py::arg("A") = py::none()
   )
-      // KvBeamInitStruct.part_per_phi (1D_NOT_integer - number of particles per angle variable.
       .def_property(
           "part_per_phi",
           &KvBeamInitStruct::part_per_phi,
-          &KvBeamInitStruct::set_part_per_phi
+          &KvBeamInitStruct::set_part_per_phi,
+          "number of particles per angle variable."
       )
-      // KvBeamInitStruct.n_I2 (0D_NOT_integer - number of I2
-      .def_property("n_I2", &KvBeamInitStruct::n_I2, &KvBeamInitStruct::set_n_I2)
-      // KvBeamInitStruct.A (0D_NOT_real - A = I1/e
-      .def_property("A", &KvBeamInitStruct::A, &KvBeamInitStruct::set_A)
+      .def_property("n_I2", &KvBeamInitStruct::n_I2, &KvBeamInitStruct::set_n_I2, "number of I2")
+      .def_property("A", &KvBeamInitStruct::A, &KvBeamInitStruct::set_A, "A = I1/e")
 
       .def("__repr__", [](const KvBeamInitStruct &self) { return to_string(self); })
 
