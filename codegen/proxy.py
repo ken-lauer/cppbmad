@@ -272,6 +272,25 @@ FORTRAN_SCALAR_GETTER = """
   end subroutine
 """
 
+# Gets a value from a pointer safely (returns value + validity boolean)
+# Used for Optional Returns in C++
+FORTRAN_SCALAR_PTR_GETTER_OPTIONAL = """
+  subroutine STRUCTNAME_get_FATTRNAME(struct_obj_ptr, value_out, is_valid) bind(c, name='STRUCTNAME_get_FATTRNAME')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    FORTRANTYPE, intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
+    type(STRUCTNAME), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%FATTRNAME)) then
+      value_out = struct_obj%FATTRNAME ! Implicit cast/copy
+      is_valid = .true.
+    else
+      is_valid = .false.
+    endif
+  end subroutine
+"""
+
 FORTRAN_POINTER_GETTER = """
   subroutine STRUCTNAME_get_FATTRNAME(struct_obj_ptr, ptr_out) bind(c, name='STRUCTNAME_get_FATTRNAME')
     type(c_ptr), intent(in), value :: struct_obj_ptr
@@ -296,6 +315,19 @@ CPP_SCALAR_ACCESSOR = """
         CTYPE value;
         STRUCTNAME_get_FATTRNAME(fortran_ptr_, &value);
         return value;
+    }
+"""
+
+CPP_SCALAR_PTR_OPTIONAL_DECL = (
+    "    void STRUCTNAME_get_FATTRNAME(const void* struct_obj, CTYPE* value_out, bool* is_valid);"
+)
+CPP_SCALAR_PTR_OPTIONAL_ACCESSOR = """
+    std::optional<CTYPE> CATTRNAME() const {
+        CTYPE value;
+        bool is_valid;
+        STRUCTNAME_get_FATTRNAME(fortran_ptr_, &value, &is_valid);
+        if (is_valid) return value;
+        return std::nullopt;
     }
 """
 
@@ -521,12 +553,12 @@ def make_scalar(fortran_type: str, cpp_type: str) -> TemplateEntry:
     )
 
 
-def make_scalar_pointer(fortran_type: str, cpp_type: str) -> TemplateEntry:
+def make_scalar_pointer_optional(fortran_type: str, cpp_type: str) -> TemplateEntry:
     return TemplateEntry(
-        fortran_getter=FORTRAN_POINTER_GETTER,
+        fortran_getter=subst(FORTRAN_SCALAR_PTR_GETTER_OPTIONAL, fortrantype=fortran_type),
         fortran_setter=subst(FORTRAN_POINTER_SETTER, fortrantype=fortran_type),
-        cpp_get_decl=subst(CPP_POINTER_DECL, ctype=cpp_type),
-        cpp_get_accessors=[subst(CPP_POINTER_ACCESSOR, ctype=cpp_type)],
+        cpp_get_decl=subst(CPP_SCALAR_PTR_OPTIONAL_DECL, ctype=cpp_type),
+        cpp_get_accessors=[subst(CPP_SCALAR_PTR_OPTIONAL_ACCESSOR, ctype=cpp_type)],
         cpp_set_decl=subst(CPP_POINTER_SET_DECL, ctype=cpp_type),
         cpp_set_accessors=[subst(CPP_POINTER_SET_ACCESSOR, ctype=cpp_type)],
     )
@@ -603,7 +635,7 @@ _simple_types: list[ArgumentType] = ["real", "real16", "integer", "integer8", "l
 for tname in _simple_types:
     info = STANDARD_TYPES[tname]
     templates[FullType(tname, 0, "NOT")] = make_scalar(info.fortran_type, info.c_type)
-    templates[FullType(tname, 0, "PTR")] = make_scalar_pointer(info.fortran_type, info.c_type)
+    templates[FullType(tname, 0, "PTR")] = make_scalar_pointer_optional(info.fortran_type, info.c_type)
 
 # Complex Scalar (custom accessors needed)
 info = STANDARD_TYPES["complex"]
@@ -632,15 +664,17 @@ templates[FullType("complex", 0, "NOT")] = TemplateEntry(
 
 # Complex Pointer scalar
 templates[FullType("complex", 0, "PTR")] = TemplateEntry(
-    fortran_getter=FORTRAN_POINTER_GETTER,
+    fortran_getter=subst(FORTRAN_SCALAR_PTR_GETTER_OPTIONAL, fortrantype=info.fortran_type),
     fortran_setter=subst(FORTRAN_POINTER_SETTER, fortrantype=info.fortran_type),
-    cpp_get_decl="    void STRUCTNAME_get_FATTRNAME(const void* struct_obj, double _Complex** ptr_out);",
+    cpp_get_decl="    void STRUCTNAME_get_FATTRNAME(const void* struct_obj, double _Complex* val_out, bool* is_valid);",
     cpp_get_accessors=[
         """
-    std::complex<double>* CATTRNAME() const {
-        std::complex<double>* ptr;
-        STRUCTNAME_get_FATTRNAME(fortran_ptr_, &ptr);
-        return reinterpret_cast<std::complex<double>*>(ptr);
+    std::optional<std::complex<double>> CATTRNAME() const {
+        std::complex<double> val;
+        bool is_valid;
+        STRUCTNAME_get_FATTRNAME(fortran_ptr_, reinterpret_cast<double _Complex*>(&val), &is_valid);
+        if(is_valid) return val;
+        return std::nullopt;
     }
 """
     ],
@@ -1014,7 +1048,7 @@ templates[FullType("character", 1, "ALLOC")] = make_char_array_1d("ALLOC")
 
 
 # ---------------------------------------------------------------------------
-# Remaining Code Generation Functions (Unchanged)
+# Remaining Code Generation Functions
 # ---------------------------------------------------------------------------
 def split_signature(cpp_template: str, class_name: str) -> tuple[str, str]:
     clean_template = cpp_template.strip()
