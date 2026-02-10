@@ -509,8 +509,11 @@ void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<BbuStageStructArray1D>(m, "BbuStageStructArray1D");
-  bind_FTypeAlloc1D<BbuStageStructAlloc1D>(m, "BbuStageStructAlloc1D");
+  bind_1d_type_array_pair<BbuStageStructArray1D, BbuStageStructAlloc1D>(
+      m,
+      "BbuStageStructArray1D",
+      "BbuStageStructAlloc1D"
+  );
   // 2D BbuStageStruct arrays are not used in structs/routines
   // 3D BbuStageStruct arrays are not used in structs/routines
 }
@@ -1570,8 +1573,11 @@ void init_branch_struct(py::module &m, py::class_<BranchStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<BranchStructArray1D>(m, "BranchStructArray1D");
-  bind_FTypeAlloc1D<BranchStructAlloc1D>(m, "BranchStructAlloc1D");
+  bind_1d_type_array_pair<BranchStructArray1D, BranchStructAlloc1D>(
+      m,
+      "BranchStructArray1D",
+      "BranchStructAlloc1D"
+  );
   // 2D BranchStruct arrays are not used in structs/routines
   // 3D BranchStruct arrays are not used in structs/routines
 }
@@ -1788,8 +1794,11 @@ void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls)
 
       ;
 
-  bind_FTypeArrayND<BunchParamsStructArray1D>(m, "BunchParamsStructArray1D");
-  bind_FTypeAlloc1D<BunchParamsStructAlloc1D>(m, "BunchParamsStructAlloc1D");
+  bind_1d_type_array_pair<BunchParamsStructArray1D, BunchParamsStructAlloc1D>(
+      m,
+      "BunchParamsStructArray1D",
+      "BunchParamsStructAlloc1D"
+  );
   // 2D BunchParamsStruct arrays are not used in structs/routines
   // 3D BunchParamsStruct arrays are not used in structs/routines
 }
@@ -1933,8 +1942,11 @@ void init_bunch_struct(py::module &m, py::class_<BunchStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<BunchStructArray1D>(m, "BunchStructArray1D");
-  bind_FTypeAlloc1D<BunchStructAlloc1D>(m, "BunchStructAlloc1D");
+  bind_1d_type_array_pair<BunchStructArray1D, BunchStructAlloc1D>(
+      m,
+      "BunchStructArray1D",
+      "BunchStructAlloc1D"
+  );
   // 2D BunchStruct arrays are not used in structs/routines
   // 3D BunchStruct arrays are not used in structs/routines
 }
@@ -1991,8 +2003,11 @@ void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<BunchTrackStructArray1D>(m, "BunchTrackStructArray1D");
-  bind_FTypeAlloc1D<BunchTrackStructAlloc1D>(m, "BunchTrackStructAlloc1D");
+  bind_1d_type_array_pair<BunchTrackStructArray1D, BunchTrackStructAlloc1D>(
+      m,
+      "BunchTrackStructArray1D",
+      "BunchTrackStructAlloc1D"
+  );
   // 2D BunchTrackStruct arrays are not used in structs/routines
   // 3D BunchTrackStruct arrays are not used in structs/routines
 }

@@ -119,8 +119,11 @@ void init_rad_int1_struct(py::module &m, py::class_<RadInt1Struct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<RadInt1StructArray1D>(m, "RadInt1StructArray1D");
-  bind_FTypeAlloc1D<RadInt1StructAlloc1D>(m, "RadInt1StructAlloc1D");
+  bind_1d_type_array_pair<RadInt1StructArray1D, RadInt1StructAlloc1D>(
+      m,
+      "RadInt1StructArray1D",
+      "RadInt1StructAlloc1D"
+  );
   // 2D RadInt1Struct arrays are not used in structs/routines
   // 3D RadInt1Struct arrays are not used in structs/routines
 }
@@ -187,8 +190,11 @@ void init_rad_int_branch_struct(py::module &m, py::class_<RadIntBranchStruct> &c
 
       ;
 
-  bind_FTypeArrayND<RadIntBranchStructArray1D>(m, "RadIntBranchStructArray1D");
-  bind_FTypeAlloc1D<RadIntBranchStructAlloc1D>(m, "RadIntBranchStructAlloc1D");
+  bind_1d_type_array_pair<RadIntBranchStructArray1D, RadIntBranchStructAlloc1D>(
+      m,
+      "RadIntBranchStructArray1D",
+      "RadIntBranchStructAlloc1D"
+  );
   // 2D RadIntBranchStruct arrays are not used in structs/routines
   // 3D RadIntBranchStruct arrays are not used in structs/routines
 }
@@ -364,8 +370,11 @@ void init_ramper_lord_struct(py::module &m, py::class_<RamperLordStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<RamperLordStructArray1D>(m, "RamperLordStructArray1D");
-  bind_FTypeAlloc1D<RamperLordStructAlloc1D>(m, "RamperLordStructAlloc1D");
+  bind_1d_type_array_pair<RamperLordStructArray1D, RamperLordStructAlloc1D>(
+      m,
+      "RamperLordStructArray1D",
+      "RamperLordStructAlloc1D"
+  );
   // 2D RamperLordStruct arrays are not used in structs/routines
   // 3D RamperLordStruct arrays are not used in structs/routines
 }
@@ -421,8 +430,11 @@ void init_resonance_h_struct(py::module &m, py::class_<ResonanceHStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<ResonanceHStructArray1D>(m, "ResonanceHStructArray1D");
-  bind_FTypeAlloc1D<ResonanceHStructAlloc1D>(m, "ResonanceHStructAlloc1D");
+  bind_1d_type_array_pair<ResonanceHStructArray1D, ResonanceHStructAlloc1D>(
+      m,
+      "ResonanceHStructArray1D",
+      "ResonanceHStructAlloc1D"
+  );
   // 2D ResonanceHStruct arrays are not used in structs/routines
   // 3D ResonanceHStruct arrays are not used in structs/routines
 }
@@ -572,8 +584,11 @@ void init_rf_stair_step_struct(py::module &m, py::class_<RfStairStepStruct> &cls
 
       ;
 
-  bind_FTypeArrayND<RfStairStepStructArray1D>(m, "RfStairStepStructArray1D");
-  bind_FTypeAlloc1D<RfStairStepStructAlloc1D>(m, "RfStairStepStructAlloc1D");
+  bind_1d_type_array_pair<RfStairStepStructArray1D, RfStairStepStructAlloc1D>(
+      m,
+      "RfStairStepStructArray1D",
+      "RfStairStepStructAlloc1D"
+  );
   // 2D RfStairStepStruct arrays are not used in structs/routines
   // 3D RfStairStepStruct arrays are not used in structs/routines
 }

@@ -360,8 +360,11 @@ void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTab
 
       ;
 
-  bind_FTypeArrayND<PhotonReflectTableStructArray1D>(m, "PhotonReflectTableStructArray1D");
-  bind_FTypeAlloc1D<PhotonReflectTableStructAlloc1D>(m, "PhotonReflectTableStructAlloc1D");
+  bind_1d_type_array_pair<PhotonReflectTableStructArray1D, PhotonReflectTableStructAlloc1D>(
+      m,
+      "PhotonReflectTableStructArray1D",
+      "PhotonReflectTableStructAlloc1D"
+  );
   // 2D PhotonReflectTableStruct arrays are not used in structs/routines
   // 3D PhotonReflectTableStruct arrays are not used in structs/routines
 }

@@ -149,8 +149,11 @@ void init_wake_lr_mode_struct(py::module &m, py::class_<WakeLrModeStruct> &cls) 
 
       ;
 
-  bind_FTypeArrayND<WakeLrModeStructArray1D>(m, "WakeLrModeStructArray1D");
-  bind_FTypeAlloc1D<WakeLrModeStructAlloc1D>(m, "WakeLrModeStructAlloc1D");
+  bind_1d_type_array_pair<WakeLrModeStructArray1D, WakeLrModeStructAlloc1D>(
+      m,
+      "WakeLrModeStructArray1D",
+      "WakeLrModeStructAlloc1D"
+  );
   // 2D WakeLrModeStruct arrays are not used in structs/routines
   // 3D WakeLrModeStruct arrays are not used in structs/routines
 }
@@ -334,8 +337,11 @@ void init_wake_sr_mode_struct(py::module &m, py::class_<WakeSrModeStruct> &cls) 
 
       ;
 
-  bind_FTypeArrayND<WakeSrModeStructArray1D>(m, "WakeSrModeStructArray1D");
-  bind_FTypeAlloc1D<WakeSrModeStructAlloc1D>(m, "WakeSrModeStructAlloc1D");
+  bind_1d_type_array_pair<WakeSrModeStructArray1D, WakeSrModeStructAlloc1D>(
+      m,
+      "WakeSrModeStructArray1D",
+      "WakeSrModeStructAlloc1D"
+  );
   // 2D WakeSrModeStruct arrays are not used in structs/routines
   // 3D WakeSrModeStruct arrays are not used in structs/routines
 }
@@ -745,8 +751,11 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
 
       ;
 
-  bind_FTypeArrayND<Wall3dSectionStructArray1D>(m, "Wall3DSectionStructArray1D");
-  bind_FTypeAlloc1D<Wall3dSectionStructAlloc1D>(m, "Wall3DSectionStructAlloc1D");
+  bind_1d_type_array_pair<Wall3dSectionStructArray1D, Wall3dSectionStructAlloc1D>(
+      m,
+      "Wall3DSectionStructArray1D",
+      "Wall3DSectionStructAlloc1D"
+  );
   // 2D Wall3dSectionStruct arrays are not used in structs/routines
   // 3D Wall3dSectionStruct arrays are not used in structs/routines
 }
@@ -849,8 +858,11 @@ void init_wall3d_struct(py::module &m, py::class_<Wall3dStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<Wall3dStructArray1D>(m, "Wall3DStructArray1D");
-  bind_FTypeAlloc1D<Wall3dStructAlloc1D>(m, "Wall3DStructAlloc1D");
+  bind_1d_type_array_pair<Wall3dStructArray1D, Wall3dStructAlloc1D>(
+      m,
+      "Wall3DStructArray1D",
+      "Wall3DStructAlloc1D"
+  );
   // 2D Wall3dStruct arrays are not used in structs/routines
   // 3D Wall3dStruct arrays are not used in structs/routines
 }
@@ -954,8 +966,11 @@ void init_wall3d_vertex_struct(py::module &m, py::class_<Wall3dVertexStruct> &cl
 
       ;
 
-  bind_FTypeArrayND<Wall3dVertexStructArray1D>(m, "Wall3DVertexStructArray1D");
-  bind_FTypeAlloc1D<Wall3dVertexStructAlloc1D>(m, "Wall3DVertexStructAlloc1D");
+  bind_1d_type_array_pair<Wall3dVertexStructArray1D, Wall3dVertexStructAlloc1D>(
+      m,
+      "Wall3DVertexStructArray1D",
+      "Wall3DVertexStructAlloc1D"
+  );
   // 2D Wall3dVertexStruct arrays are not used in structs/routines
   // 3D Wall3dVertexStruct arrays are not used in structs/routines
 }

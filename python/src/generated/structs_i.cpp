@@ -51,8 +51,11 @@ void init_interval1_coef_struct(py::module &m, py::class_<Interval1CoefStruct> &
 
       ;
 
-  bind_FTypeArrayND<Interval1CoefStructArray1D>(m, "Interval1CoefStructArray1D");
-  bind_FTypeAlloc1D<Interval1CoefStructAlloc1D>(m, "Interval1CoefStructAlloc1D");
+  bind_1d_type_array_pair<Interval1CoefStructArray1D, Interval1CoefStructAlloc1D>(
+      m,
+      "Interval1CoefStructArray1D",
+      "Interval1CoefStructAlloc1D"
+  );
   // 2D Interval1CoefStruct arrays are not used in structs/routines
   // 3D Interval1CoefStruct arrays are not used in structs/routines
 }

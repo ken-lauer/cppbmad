@@ -271,8 +271,11 @@ void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> 
 
       ;
 
-  bind_FTypeArrayND<SpinOrbitMap1StructArray1D>(m, "SpinOrbitMap1StructArray1D");
-  bind_FTypeAlloc1D<SpinOrbitMap1StructAlloc1D>(m, "SpinOrbitMap1StructAlloc1D");
+  bind_1d_type_array_pair<SpinOrbitMap1StructArray1D, SpinOrbitMap1StructAlloc1D>(
+      m,
+      "SpinOrbitMap1StructArray1D",
+      "SpinOrbitMap1StructAlloc1D"
+  );
   // 2D SpinOrbitMap1Struct arrays are not used in structs/routines
   // 3D SpinOrbitMap1Struct arrays are not used in structs/routines
 }
@@ -866,8 +869,11 @@ void init_spline_struct(py::module &m, py::class_<SplineStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<SplineStructArray1D>(m, "SplineStructArray1D");
-  bind_FTypeAlloc1D<SplineStructAlloc1D>(m, "SplineStructAlloc1D");
+  bind_1d_type_array_pair<SplineStructArray1D, SplineStructAlloc1D>(
+      m,
+      "SplineStructArray1D",
+      "SplineStructAlloc1D"
+  );
   // 2D SplineStruct arrays are not used in structs/routines
   // 3D SplineStruct arrays are not used in structs/routines
 }
@@ -977,8 +983,11 @@ void init_summation_rdt_struct(py::module &m, py::class_<SummationRdtStruct> &cl
 
       ;
 
-  bind_FTypeArrayND<SummationRdtStructArray1D>(m, "SummationRdtStructArray1D");
-  bind_FTypeAlloc1D<SummationRdtStructAlloc1D>(m, "SummationRdtStructAlloc1D");
+  bind_1d_type_array_pair<SummationRdtStructArray1D, SummationRdtStructAlloc1D>(
+      m,
+      "SummationRdtStructArray1D",
+      "SummationRdtStructAlloc1D"
+  );
   // 2D SummationRdtStruct arrays are not used in structs/routines
   // 3D SummationRdtStruct arrays are not used in structs/routines
 }

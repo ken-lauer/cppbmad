@@ -60,8 +60,11 @@ void init_ele_pointer_struct(py::module &m, py::class_<ElePointerStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<ElePointerStructArray1D>(m, "ElePointerStructArray1D");
-  bind_FTypeAlloc1D<ElePointerStructAlloc1D>(m, "ElePointerStructAlloc1D");
+  bind_1d_type_array_pair<ElePointerStructArray1D, ElePointerStructAlloc1D>(
+      m,
+      "ElePointerStructArray1D",
+      "ElePointerStructAlloc1D"
+  );
   // 2D ElePointerStruct arrays are not used in structs/routines
   // 3D ElePointerStruct arrays are not used in structs/routines
 }
@@ -680,8 +683,11 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<EleStructArray1D>(m, "EleStructArray1D");
-  bind_FTypeAlloc1D<EleStructAlloc1D>(m, "EleStructAlloc1D");
+  bind_1d_type_array_pair<EleStructArray1D, EleStructAlloc1D>(
+      m,
+      "EleStructArray1D",
+      "EleStructAlloc1D"
+  );
   // 2D EleStruct arrays are not used in structs/routines
   // 3D EleStruct arrays are not used in structs/routines
 }
@@ -746,8 +752,11 @@ void init_ellipse_beam_init_struct(py::module &m, py::class_<EllipseBeamInitStru
 
       ;
 
-  bind_FTypeArrayND<EllipseBeamInitStructArray1D>(m, "EllipseBeamInitStructArray1D");
-  bind_FTypeAlloc1D<EllipseBeamInitStructAlloc1D>(m, "EllipseBeamInitStructAlloc1D");
+  bind_1d_type_array_pair<EllipseBeamInitStructArray1D, EllipseBeamInitStructAlloc1D>(
+      m,
+      "EllipseBeamInitStructArray1D",
+      "EllipseBeamInitStructAlloc1D"
+  );
   // 2D EllipseBeamInitStruct arrays are not used in structs/routines
   // 3D EllipseBeamInitStruct arrays are not used in structs/routines
 }
@@ -820,8 +829,11 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<EmFieldStructArray1D>(m, "EmFieldStructArray1D");
-  bind_FTypeAlloc1D<EmFieldStructAlloc1D>(m, "EmFieldStructAlloc1D");
+  bind_1d_type_array_pair<EmFieldStructArray1D, EmFieldStructAlloc1D>(
+      m,
+      "EmFieldStructArray1D",
+      "EmFieldStructAlloc1D"
+  );
   // 2D EmFieldStruct arrays are not used in structs/routines
   // 3D EmFieldStruct arrays are not used in structs/routines
 }
@@ -863,8 +875,11 @@ void init_em_taylor_struct(py::module &m, py::class_<EmTaylorStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<EmTaylorStructArray1D>(m, "EmTaylorStructArray1D");
-  bind_FTypeAlloc1D<EmTaylorStructAlloc1D>(m, "EmTaylorStructAlloc1D");
+  bind_1d_type_array_pair<EmTaylorStructArray1D, EmTaylorStructAlloc1D>(
+      m,
+      "EmTaylorStructArray1D",
+      "EmTaylorStructAlloc1D"
+  );
   // 2D EmTaylorStruct arrays are not used in structs/routines
   // 3D EmTaylorStruct arrays are not used in structs/routines
 }
@@ -910,8 +925,11 @@ void init_em_taylor_term_struct(py::module &m, py::class_<EmTaylorTermStruct> &c
 
       ;
 
-  bind_FTypeArrayND<EmTaylorTermStructArray1D>(m, "EmTaylorTermStructArray1D");
-  bind_FTypeAlloc1D<EmTaylorTermStructAlloc1D>(m, "EmTaylorTermStructAlloc1D");
+  bind_1d_type_array_pair<EmTaylorTermStructArray1D, EmTaylorTermStructAlloc1D>(
+      m,
+      "EmTaylorTermStructArray1D",
+      "EmTaylorTermStructAlloc1D"
+  );
   // 2D EmTaylorTermStruct arrays are not used in structs/routines
   // 3D EmTaylorTermStruct arrays are not used in structs/routines
 }
@@ -966,8 +984,11 @@ void init_expression_atom_struct(py::module &m, py::class_<ExpressionAtomStruct>
 
       ;
 
-  bind_FTypeArrayND<ExpressionAtomStructArray1D>(m, "ExpressionAtomStructArray1D");
-  bind_FTypeAlloc1D<ExpressionAtomStructAlloc1D>(m, "ExpressionAtomStructAlloc1D");
+  bind_1d_type_array_pair<ExpressionAtomStructArray1D, ExpressionAtomStructAlloc1D>(
+      m,
+      "ExpressionAtomStructArray1D",
+      "ExpressionAtomStructAlloc1D"
+  );
   // 2D ExpressionAtomStruct arrays are not used in structs/routines
   // 3D ExpressionAtomStruct arrays are not used in structs/routines
 }
@@ -1027,8 +1048,11 @@ void init_expression_tree_struct(py::module &m, py::class_<ExpressionTreeStruct>
 
       ;
 
-  bind_FTypeArrayND<ExpressionTreeStructArray1D>(m, "ExpressionTreeStructArray1D");
-  bind_FTypeAlloc1D<ExpressionTreeStructAlloc1D>(m, "ExpressionTreeStructAlloc1D");
+  bind_1d_type_array_pair<ExpressionTreeStructArray1D, ExpressionTreeStructAlloc1D>(
+      m,
+      "ExpressionTreeStructArray1D",
+      "ExpressionTreeStructAlloc1D"
+  );
   // 2D ExpressionTreeStruct arrays are not used in structs/routines
   // 3D ExpressionTreeStruct arrays are not used in structs/routines
 }

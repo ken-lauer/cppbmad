@@ -88,8 +88,11 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
 
       ;
 
-  bind_FTypeArrayND<CartesianMapStructArray1D>(m, "CartesianMapStructArray1D");
-  bind_FTypeAlloc1D<CartesianMapStructAlloc1D>(m, "CartesianMapStructAlloc1D");
+  bind_1d_type_array_pair<CartesianMapStructArray1D, CartesianMapStructAlloc1D>(
+      m,
+      "CartesianMapStructArray1D",
+      "CartesianMapStructAlloc1D"
+  );
   // 2D CartesianMapStruct arrays are not used in structs/routines
   // 3D CartesianMapStruct arrays are not used in structs/routines
 }
@@ -170,8 +173,11 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
 
       ;
 
-  bind_FTypeArrayND<CartesianMapTerm1StructArray1D>(m, "CartesianMapTerm1StructArray1D");
-  bind_FTypeAlloc1D<CartesianMapTerm1StructAlloc1D>(m, "CartesianMapTerm1StructAlloc1D");
+  bind_1d_type_array_pair<CartesianMapTerm1StructArray1D, CartesianMapTerm1StructAlloc1D>(
+      m,
+      "CartesianMapTerm1StructArray1D",
+      "CartesianMapTerm1StructAlloc1D"
+  );
   // 2D CartesianMapTerm1Struct arrays are not used in structs/routines
   // 3D CartesianMapTerm1Struct arrays are not used in structs/routines
 }
@@ -257,8 +263,11 @@ void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &
 
       ;
 
-  bind_FTypeArrayND<ComplexTaylorStructArray1D>(m, "ComplexTaylorStructArray1D");
-  bind_FTypeAlloc1D<ComplexTaylorStructAlloc1D>(m, "ComplexTaylorStructAlloc1D");
+  bind_1d_type_array_pair<ComplexTaylorStructArray1D, ComplexTaylorStructAlloc1D>(
+      m,
+      "ComplexTaylorStructArray1D",
+      "ComplexTaylorStructAlloc1D"
+  );
   // 2D ComplexTaylorStruct arrays are not used in structs/routines
   // 3D ComplexTaylorStruct arrays are not used in structs/routines
 }
@@ -306,8 +315,11 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
 
       ;
 
-  bind_FTypeArrayND<ComplexTaylorTermStructArray1D>(m, "ComplexTaylorTermStructArray1D");
-  bind_FTypeAlloc1D<ComplexTaylorTermStructAlloc1D>(m, "ComplexTaylorTermStructAlloc1D");
+  bind_1d_type_array_pair<ComplexTaylorTermStructArray1D, ComplexTaylorTermStructAlloc1D>(
+      m,
+      "ComplexTaylorTermStructArray1D",
+      "ComplexTaylorTermStructAlloc1D"
+  );
   // 2D ComplexTaylorTermStruct arrays are not used in structs/routines
   // 3D ComplexTaylorTermStruct arrays are not used in structs/routines
 }
@@ -377,8 +389,11 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
 
       ;
 
-  bind_FTypeArrayND<ControlRamp1StructArray1D>(m, "ControlRamp1StructArray1D");
-  bind_FTypeAlloc1D<ControlRamp1StructAlloc1D>(m, "ControlRamp1StructAlloc1D");
+  bind_1d_type_array_pair<ControlRamp1StructArray1D, ControlRamp1StructAlloc1D>(
+      m,
+      "ControlRamp1StructArray1D",
+      "ControlRamp1StructAlloc1D"
+  );
   // 2D ControlRamp1Struct arrays are not used in structs/routines
   // 3D ControlRamp1Struct arrays are not used in structs/routines
 }
@@ -463,8 +478,11 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<ControlStructArray1D>(m, "ControlStructArray1D");
-  bind_FTypeAlloc1D<ControlStructAlloc1D>(m, "ControlStructAlloc1D");
+  bind_1d_type_array_pair<ControlStructArray1D, ControlStructAlloc1D>(
+      m,
+      "ControlStructArray1D",
+      "ControlStructAlloc1D"
+  );
   // 2D ControlStruct arrays are not used in structs/routines
   // 3D ControlStruct arrays are not used in structs/routines
 }
@@ -512,8 +530,11 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
 
       ;
 
-  bind_FTypeArrayND<ControlVar1StructArray1D>(m, "ControlVar1StructArray1D");
-  bind_FTypeAlloc1D<ControlVar1StructAlloc1D>(m, "ControlVar1StructAlloc1D");
+  bind_1d_type_array_pair<ControlVar1StructArray1D, ControlVar1StructAlloc1D>(
+      m,
+      "ControlVar1StructArray1D",
+      "ControlVar1StructAlloc1D"
+  );
   // 2D ControlVar1Struct arrays are not used in structs/routines
   // 3D ControlVar1Struct arrays are not used in structs/routines
 }
@@ -587,8 +608,11 @@ void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<CoordArrayStructArray1D>(m, "CoordArrayStructArray1D");
-  bind_FTypeAlloc1D<CoordArrayStructAlloc1D>(m, "CoordArrayStructAlloc1D");
+  bind_1d_type_array_pair<CoordArrayStructArray1D, CoordArrayStructAlloc1D>(
+      m,
+      "CoordArrayStructArray1D",
+      "CoordArrayStructAlloc1D"
+  );
   // 2D CoordArrayStruct arrays are not used in structs/routines
   // 3D CoordArrayStruct arrays are not used in structs/routines
 }
@@ -781,8 +805,11 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<CoordStructArray1D>(m, "CoordStructArray1D");
-  bind_FTypeAlloc1D<CoordStructAlloc1D>(m, "CoordStructAlloc1D");
+  bind_1d_type_array_pair<CoordStructArray1D, CoordStructAlloc1D>(
+      m,
+      "CoordStructArray1D",
+      "CoordStructAlloc1D"
+  );
   // 2D CoordStruct arrays are not used in structs/routines
   // 3D CoordStruct arrays are not used in structs/routines
 }
@@ -901,8 +928,11 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
 
       ;
 
-  bind_FTypeArrayND<CylindricalMapStructArray1D>(m, "CylindricalMapStructArray1D");
-  bind_FTypeAlloc1D<CylindricalMapStructAlloc1D>(m, "CylindricalMapStructAlloc1D");
+  bind_1d_type_array_pair<CylindricalMapStructArray1D, CylindricalMapStructAlloc1D>(
+      m,
+      "CylindricalMapStructArray1D",
+      "CylindricalMapStructAlloc1D"
+  );
   // 2D CylindricalMapStruct arrays are not used in structs/routines
   // 3D CylindricalMapStruct arrays are not used in structs/routines
 }
@@ -958,8 +988,11 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
 
       ;
 
-  bind_FTypeArrayND<CylindricalMapTerm1StructArray1D>(m, "CylindricalMapTerm1StructArray1D");
-  bind_FTypeAlloc1D<CylindricalMapTerm1StructAlloc1D>(m, "CylindricalMapTerm1StructAlloc1D");
+  bind_1d_type_array_pair<CylindricalMapTerm1StructArray1D, CylindricalMapTerm1StructAlloc1D>(
+      m,
+      "CylindricalMapTerm1StructArray1D",
+      "CylindricalMapTerm1StructAlloc1D"
+  );
   // 2D CylindricalMapTerm1Struct arrays are not used in structs/routines
   // 3D CylindricalMapTerm1Struct arrays are not used in structs/routines
 }

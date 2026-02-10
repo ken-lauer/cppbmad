@@ -68,8 +68,11 @@ void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<GenGrad1StructArray1D>(m, "GenGrad1StructArray1D");
-  bind_FTypeAlloc1D<GenGrad1StructAlloc1D>(m, "GenGrad1StructAlloc1D");
+  bind_1d_type_array_pair<GenGrad1StructArray1D, GenGrad1StructAlloc1D>(
+      m,
+      "GenGrad1StructArray1D",
+      "GenGrad1StructAlloc1D"
+  );
   // 2D GenGrad1Struct arrays are not used in structs/routines
   // 3D GenGrad1Struct arrays are not used in structs/routines
 }
@@ -186,8 +189,11 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
 
       ;
 
-  bind_FTypeArrayND<GenGradMapStructArray1D>(m, "GenGradMapStructArray1D");
-  bind_FTypeAlloc1D<GenGradMapStructAlloc1D>(m, "GenGradMapStructAlloc1D");
+  bind_1d_type_array_pair<GenGradMapStructArray1D, GenGradMapStructAlloc1D>(
+      m,
+      "GenGradMapStructArray1D",
+      "GenGradMapStructAlloc1D"
+  );
   // 2D GenGradMapStruct arrays are not used in structs/routines
   // 3D GenGradMapStruct arrays are not used in structs/routines
 }
@@ -277,8 +283,11 @@ void init_grid_beam_init_struct(py::module &m, py::class_<GridBeamInitStruct> &c
 
       ;
 
-  bind_FTypeArrayND<GridBeamInitStructArray1D>(m, "GridBeamInitStructArray1D");
-  bind_FTypeAlloc1D<GridBeamInitStructAlloc1D>(m, "GridBeamInitStructAlloc1D");
+  bind_1d_type_array_pair<GridBeamInitStructArray1D, GridBeamInitStructAlloc1D>(
+      m,
+      "GridBeamInitStructArray1D",
+      "GridBeamInitStructAlloc1D"
+  );
   // 2D GridBeamInitStruct arrays are not used in structs/routines
   // 3D GridBeamInitStruct arrays are not used in structs/routines
 }
@@ -490,8 +499,11 @@ void init_grid_field_struct(py::module &m, py::class_<GridFieldStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<GridFieldStructArray1D>(m, "GridFieldStructArray1D");
-  bind_FTypeAlloc1D<GridFieldStructAlloc1D>(m, "GridFieldStructAlloc1D");
+  bind_1d_type_array_pair<GridFieldStructArray1D, GridFieldStructAlloc1D>(
+      m,
+      "GridFieldStructArray1D",
+      "GridFieldStructAlloc1D"
+  );
   // 2D GridFieldStruct arrays are not used in structs/routines
   // 3D GridFieldStruct arrays are not used in structs/routines
 }

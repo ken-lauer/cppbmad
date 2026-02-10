@@ -49,8 +49,11 @@ void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<LatEleLocStructArray1D>(m, "LatEleLocStructArray1D");
-  bind_FTypeAlloc1D<LatEleLocStructAlloc1D>(m, "LatEleLocStructAlloc1D");
+  bind_1d_type_array_pair<LatEleLocStructArray1D, LatEleLocStructAlloc1D>(
+      m,
+      "LatEleLocStructArray1D",
+      "LatEleLocStructAlloc1D"
+  );
   // 2D LatEleLocStruct arrays are not used in structs/routines
   // 3D LatEleLocStruct arrays are not used in structs/routines
 }
@@ -106,8 +109,11 @@ void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &c
 
       ;
 
-  bind_FTypeArrayND<LatEleOrder1StructArray1D>(m, "LatEleOrder1StructArray1D");
-  bind_FTypeAlloc1D<LatEleOrder1StructAlloc1D>(m, "LatEleOrder1StructAlloc1D");
+  bind_1d_type_array_pair<LatEleOrder1StructArray1D, LatEleOrder1StructAlloc1D>(
+      m,
+      "LatEleOrder1StructArray1D",
+      "LatEleOrder1StructAlloc1D"
+  );
   // 2D LatEleOrder1Struct arrays are not used in structs/routines
   // 3D LatEleOrder1Struct arrays are not used in structs/routines
 }
@@ -150,8 +156,11 @@ void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayS
 
       ;
 
-  bind_FTypeArrayND<LatEleOrderArrayStructArray1D>(m, "LatEleOrderArrayStructArray1D");
-  bind_FTypeAlloc1D<LatEleOrderArrayStructAlloc1D>(m, "LatEleOrderArrayStructAlloc1D");
+  bind_1d_type_array_pair<LatEleOrderArrayStructArray1D, LatEleOrderArrayStructAlloc1D>(
+      m,
+      "LatEleOrderArrayStructArray1D",
+      "LatEleOrderArrayStructAlloc1D"
+  );
   // 2D LatEleOrderArrayStruct arrays are not used in structs/routines
   // 3D LatEleOrderArrayStruct arrays are not used in structs/routines
 }
@@ -548,8 +557,11 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<LatStructArray1D>(m, "LatStructArray1D");
-  bind_FTypeAlloc1D<LatStructAlloc1D>(m, "LatStructAlloc1D");
+  bind_1d_type_array_pair<LatStructArray1D, LatStructAlloc1D>(
+      m,
+      "LatStructArray1D",
+      "LatStructAlloc1D"
+  );
   // 2D LatStruct arrays are not used in structs/routines
   // 3D LatStruct arrays are not used in structs/routines
 }

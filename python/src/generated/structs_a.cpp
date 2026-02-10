@@ -51,8 +51,11 @@ void init_ac_kicker_freq_struct(py::module &m, py::class_<AcKickerFreqStruct> &c
 
       ;
 
-  bind_FTypeArrayND<AcKickerFreqStructArray1D>(m, "AcKickerFreqStructArray1D");
-  bind_FTypeAlloc1D<AcKickerFreqStructAlloc1D>(m, "AcKickerFreqStructAlloc1D");
+  bind_1d_type_array_pair<AcKickerFreqStructArray1D, AcKickerFreqStructAlloc1D>(
+      m,
+      "AcKickerFreqStructArray1D",
+      "AcKickerFreqStructAlloc1D"
+  );
   // 2D AcKickerFreqStruct arrays are not used in structs/routines
   // 3D AcKickerFreqStruct arrays are not used in structs/routines
 }
@@ -127,8 +130,11 @@ void init_ac_kicker_time_struct(py::module &m, py::class_<AcKickerTimeStruct> &c
 
       ;
 
-  bind_FTypeArrayND<AcKickerTimeStructArray1D>(m, "AcKickerTimeStructArray1D");
-  bind_FTypeAlloc1D<AcKickerTimeStructAlloc1D>(m, "AcKickerTimeStructAlloc1D");
+  bind_1d_type_array_pair<AcKickerTimeStructArray1D, AcKickerTimeStructAlloc1D>(
+      m,
+      "AcKickerTimeStructArray1D",
+      "AcKickerTimeStructAlloc1D"
+  );
   // 2D AcKickerTimeStruct arrays are not used in structs/routines
   // 3D AcKickerTimeStruct arrays are not used in structs/routines
 }
@@ -386,8 +392,11 @@ void init_aperture_point_struct(py::module &m, py::class_<AperturePointStruct> &
 
       ;
 
-  bind_FTypeArrayND<AperturePointStructArray1D>(m, "AperturePointStructArray1D");
-  bind_FTypeAlloc1D<AperturePointStructAlloc1D>(m, "AperturePointStructAlloc1D");
+  bind_1d_type_array_pair<AperturePointStructArray1D, AperturePointStructAlloc1D>(
+      m,
+      "AperturePointStructArray1D",
+      "AperturePointStructAlloc1D"
+  );
   // 2D AperturePointStruct arrays are not used in structs/routines
   // 3D AperturePointStruct arrays are not used in structs/routines
 }
@@ -448,8 +457,11 @@ void init_aperture_scan_struct(py::module &m, py::class_<ApertureScanStruct> &cl
 
       ;
 
-  bind_FTypeArrayND<ApertureScanStructArray1D>(m, "ApertureScanStructArray1D");
-  bind_FTypeAlloc1D<ApertureScanStructAlloc1D>(m, "ApertureScanStructAlloc1D");
+  bind_1d_type_array_pair<ApertureScanStructArray1D, ApertureScanStructAlloc1D>(
+      m,
+      "ApertureScanStructArray1D",
+      "ApertureScanStructAlloc1D"
+  );
   // 2D ApertureScanStruct arrays are not used in structs/routines
   // 3D ApertureScanStruct arrays are not used in structs/routines
 }

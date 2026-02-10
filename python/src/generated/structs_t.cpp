@@ -44,8 +44,11 @@ void init_target_point_struct(py::module &m, py::class_<TargetPointStruct> &cls)
 
       ;
 
-  bind_FTypeArrayND<TargetPointStructArray1D>(m, "TargetPointStructArray1D");
-  bind_FTypeAlloc1D<TargetPointStructAlloc1D>(m, "TargetPointStructAlloc1D");
+  bind_1d_type_array_pair<TargetPointStructArray1D, TargetPointStructAlloc1D>(
+      m,
+      "TargetPointStructArray1D",
+      "TargetPointStructAlloc1D"
+  );
   // 2D TargetPointStruct arrays are not used in structs/routines
   // 3D TargetPointStruct arrays are not used in structs/routines
 }
@@ -87,8 +90,11 @@ void init_taylor_struct(py::module &m, py::class_<TaylorStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaylorStructArray1D>(m, "TaylorStructArray1D");
-  bind_FTypeAlloc1D<TaylorStructAlloc1D>(m, "TaylorStructAlloc1D");
+  bind_1d_type_array_pair<TaylorStructArray1D, TaylorStructAlloc1D>(
+      m,
+      "TaylorStructArray1D",
+      "TaylorStructAlloc1D"
+  );
   // 2D TaylorStruct arrays are not used in structs/routines
   // 3D TaylorStruct arrays are not used in structs/routines
 }
@@ -134,8 +140,11 @@ void init_taylor_term_struct(py::module &m, py::class_<TaylorTermStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaylorTermStructArray1D>(m, "TaylorTermStructArray1D");
-  bind_FTypeAlloc1D<TaylorTermStructAlloc1D>(m, "TaylorTermStructAlloc1D");
+  bind_1d_type_array_pair<TaylorTermStructArray1D, TaylorTermStructAlloc1D>(
+      m,
+      "TaylorTermStructArray1D",
+      "TaylorTermStructAlloc1D"
+  );
   // 2D TaylorTermStruct arrays are not used in structs/routines
   // 3D TaylorTermStruct arrays are not used in structs/routines
 }
@@ -233,8 +242,11 @@ void init_track_point_struct(py::module &m, py::class_<TrackPointStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TrackPointStructArray1D>(m, "TrackPointStructArray1D");
-  bind_FTypeAlloc1D<TrackPointStructAlloc1D>(m, "TrackPointStructAlloc1D");
+  bind_1d_type_array_pair<TrackPointStructArray1D, TrackPointStructAlloc1D>(
+      m,
+      "TrackPointStructArray1D",
+      "TrackPointStructAlloc1D"
+  );
   // 2D TrackPointStruct arrays are not used in structs/routines
   // 3D TrackPointStruct arrays are not used in structs/routines
 }
@@ -702,8 +714,11 @@ void init_tao_building_wall_point_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoBuildingWallPointStructArray1D>(m, "TaoBuildingWallPointStructArray1D");
-  bind_FTypeAlloc1D<TaoBuildingWallPointStructAlloc1D>(m, "TaoBuildingWallPointStructAlloc1D");
+  bind_1d_type_array_pair<TaoBuildingWallPointStructArray1D, TaoBuildingWallPointStructAlloc1D>(
+      m,
+      "TaoBuildingWallPointStructArray1D",
+      "TaoBuildingWallPointStructAlloc1D"
+  );
   // 2D TaoBuildingWallPointStruct arrays are not used in structs/routines
   // 3D TaoBuildingWallPointStruct arrays are not used in structs/routines
 }
@@ -764,8 +779,11 @@ void init_tao_building_wall_section_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoBuildingWallSectionStructArray1D>(m, "TaoBuildingWallSectionStructArray1D");
-  bind_FTypeAlloc1D<TaoBuildingWallSectionStructAlloc1D>(m, "TaoBuildingWallSectionStructAlloc1D");
+  bind_1d_type_array_pair<TaoBuildingWallSectionStructArray1D, TaoBuildingWallSectionStructAlloc1D>(
+      m,
+      "TaoBuildingWallSectionStructArray1D",
+      "TaoBuildingWallSectionStructAlloc1D"
+  );
   // 2D TaoBuildingWallSectionStruct arrays are not used in structs/routines
   // 3D TaoBuildingWallSectionStruct arrays are not used in structs/routines
 }
@@ -853,8 +871,11 @@ void init_tao_cmd_history_struct(py::module &m, py::class_<TaoCmdHistoryStruct> 
 
       ;
 
-  bind_FTypeArrayND<TaoCmdHistoryStructArray1D>(m, "TaoCmdHistoryStructArray1D");
-  bind_FTypeAlloc1D<TaoCmdHistoryStructAlloc1D>(m, "TaoCmdHistoryStructAlloc1D");
+  bind_1d_type_array_pair<TaoCmdHistoryStructArray1D, TaoCmdHistoryStructAlloc1D>(
+      m,
+      "TaoCmdHistoryStructArray1D",
+      "TaoCmdHistoryStructAlloc1D"
+  );
   // 2D TaoCmdHistoryStruct arrays are not used in structs/routines
   // 3D TaoCmdHistoryStruct arrays are not used in structs/routines
 }
@@ -1571,8 +1592,11 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoCurveStructArray1D>(m, "TaoCurveStructArray1D");
-  bind_FTypeAlloc1D<TaoCurveStructAlloc1D>(m, "TaoCurveStructAlloc1D");
+  bind_1d_type_array_pair<TaoCurveStructArray1D, TaoCurveStructAlloc1D>(
+      m,
+      "TaoCurveStructArray1D",
+      "TaoCurveStructAlloc1D"
+  );
   // 2D TaoCurveStruct arrays are not used in structs/routines
   // 3D TaoCurveStruct arrays are not used in structs/routines
 }
@@ -1623,8 +1647,11 @@ void init_tao_d1_data_struct(py::module &m, py::class_<TaoD1DataStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoD1DataStructArray1D>(m, "TaoD1DataStructArray1D");
-  bind_FTypeAlloc1D<TaoD1DataStructAlloc1D>(m, "TaoD1DataStructAlloc1D");
+  bind_1d_type_array_pair<TaoD1DataStructArray1D, TaoD1DataStructAlloc1D>(
+      m,
+      "TaoD1DataStructArray1D",
+      "TaoD1DataStructAlloc1D"
+  );
   // 2D TaoD1DataStruct arrays are not used in structs/routines
   // 3D TaoD1DataStruct arrays are not used in structs/routines
 }
@@ -1752,8 +1779,11 @@ void init_tao_d2_data_struct(py::module &m, py::class_<TaoD2DataStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoD2DataStructArray1D>(m, "TaoD2DataStructArray1D");
-  bind_FTypeAlloc1D<TaoD2DataStructAlloc1D>(m, "TaoD2DataStructAlloc1D");
+  bind_1d_type_array_pair<TaoD2DataStructArray1D, TaoD2DataStructAlloc1D>(
+      m,
+      "TaoD2DataStructArray1D",
+      "TaoD2DataStructAlloc1D"
+  );
   // 2D TaoD2DataStruct arrays are not used in structs/routines
   // 3D TaoD2DataStruct arrays are not used in structs/routines
 }
@@ -2146,8 +2176,11 @@ void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoDataStructArray1D>(m, "TaoDataStructArray1D");
-  bind_FTypeAlloc1D<TaoDataStructAlloc1D>(m, "TaoDataStructAlloc1D");
+  bind_1d_type_array_pair<TaoDataStructArray1D, TaoDataStructAlloc1D>(
+      m,
+      "TaoDataStructArray1D",
+      "TaoDataStructAlloc1D"
+  );
   // 2D TaoDataStruct arrays are not used in structs/routines
   // 3D TaoDataStruct arrays are not used in structs/routines
 }
@@ -2205,8 +2238,11 @@ void init_tao_data_var_component_struct(py::module &m, py::class_<TaoDataVarComp
 
       ;
 
-  bind_FTypeArrayND<TaoDataVarComponentStructArray1D>(m, "TaoDataVarComponentStructArray1D");
-  bind_FTypeAlloc1D<TaoDataVarComponentStructAlloc1D>(m, "TaoDataVarComponentStructAlloc1D");
+  bind_1d_type_array_pair<TaoDataVarComponentStructArray1D, TaoDataVarComponentStructAlloc1D>(
+      m,
+      "TaoDataVarComponentStructArray1D",
+      "TaoDataVarComponentStructAlloc1D"
+  );
   // 2D TaoDataVarComponentStruct arrays are not used in structs/routines
   // 3D TaoDataVarComponentStruct arrays are not used in structs/routines
 }
@@ -2331,8 +2367,11 @@ void init_tao_ele_pointer_struct(py::module &m, py::class_<TaoElePointerStruct> 
 
       ;
 
-  bind_FTypeArrayND<TaoElePointerStructArray1D>(m, "TaoElePointerStructArray1D");
-  bind_FTypeAlloc1D<TaoElePointerStructAlloc1D>(m, "TaoElePointerStructAlloc1D");
+  bind_1d_type_array_pair<TaoElePointerStructArray1D, TaoElePointerStructAlloc1D>(
+      m,
+      "TaoElePointerStructArray1D",
+      "TaoElePointerStructAlloc1D"
+  );
   // 2D TaoElePointerStruct arrays are not used in structs/routines
   // 3D TaoElePointerStruct arrays are not used in structs/routines
 }
@@ -2463,8 +2502,11 @@ void init_tao_ele_shape_struct(py::module &m, py::class_<TaoEleShapeStruct> &cls
 
       ;
 
-  bind_FTypeArrayND<TaoEleShapeStructArray1D>(m, "TaoEleShapeStructArray1D");
-  bind_FTypeAlloc1D<TaoEleShapeStructAlloc1D>(m, "TaoEleShapeStructAlloc1D");
+  bind_1d_type_array_pair<TaoEleShapeStructArray1D, TaoEleShapeStructAlloc1D>(
+      m,
+      "TaoEleShapeStructArray1D",
+      "TaoEleShapeStructAlloc1D"
+  );
   // 2D TaoEleShapeStruct arrays are not used in structs/routines
   // 3D TaoEleShapeStruct arrays are not used in structs/routines
 }
@@ -2525,8 +2567,11 @@ void init_tao_eval_node_struct(py::module &m, py::class_<TaoEvalNodeStruct> &cls
 
       ;
 
-  bind_FTypeArrayND<TaoEvalNodeStructArray1D>(m, "TaoEvalNodeStructArray1D");
-  bind_FTypeAlloc1D<TaoEvalNodeStructAlloc1D>(m, "TaoEvalNodeStructAlloc1D");
+  bind_1d_type_array_pair<TaoEvalNodeStructArray1D, TaoEvalNodeStructAlloc1D>(
+      m,
+      "TaoEvalNodeStructArray1D",
+      "TaoEvalNodeStructAlloc1D"
+  );
   // 2D TaoEvalNodeStruct arrays are not used in structs/routines
   // 3D TaoEvalNodeStruct arrays are not used in structs/routines
 }
@@ -2591,8 +2636,11 @@ void init_tao_expression_info_struct(py::module &m, py::class_<TaoExpressionInfo
 
       ;
 
-  bind_FTypeArrayND<TaoExpressionInfoStructArray1D>(m, "TaoExpressionInfoStructArray1D");
-  bind_FTypeAlloc1D<TaoExpressionInfoStructAlloc1D>(m, "TaoExpressionInfoStructAlloc1D");
+  bind_1d_type_array_pair<TaoExpressionInfoStructArray1D, TaoExpressionInfoStructAlloc1D>(
+      m,
+      "TaoExpressionInfoStructArray1D",
+      "TaoExpressionInfoStructAlloc1D"
+  );
   // 2D TaoExpressionInfoStruct arrays are not used in structs/routines
   // 3D TaoExpressionInfoStruct arrays are not used in structs/routines
 }
@@ -3542,8 +3590,11 @@ void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoGraphStructArray1D>(m, "TaoGraphStructArray1D");
-  bind_FTypeAlloc1D<TaoGraphStructAlloc1D>(m, "TaoGraphStructAlloc1D");
+  bind_1d_type_array_pair<TaoGraphStructArray1D, TaoGraphStructAlloc1D>(
+      m,
+      "TaoGraphStructArray1D",
+      "TaoGraphStructAlloc1D"
+  );
   // 2D TaoGraphStruct arrays are not used in structs/routines
   // 3D TaoGraphStruct arrays are not used in structs/routines
 }
@@ -4003,8 +4054,11 @@ void init_tao_lat_sigma_struct(py::module &m, py::class_<TaoLatSigmaStruct> &cls
 
       ;
 
-  bind_FTypeArrayND<TaoLatSigmaStructArray1D>(m, "TaoLatSigmaStructArray1D");
-  bind_FTypeAlloc1D<TaoLatSigmaStructAlloc1D>(m, "TaoLatSigmaStructAlloc1D");
+  bind_1d_type_array_pair<TaoLatSigmaStructArray1D, TaoLatSigmaStructAlloc1D>(
+      m,
+      "TaoLatSigmaStructArray1D",
+      "TaoLatSigmaStructAlloc1D"
+  );
   // 2D TaoLatSigmaStruct arrays are not used in structs/routines
   // 3D TaoLatSigmaStruct arrays are not used in structs/routines
 }
@@ -4252,8 +4306,11 @@ void init_tao_lattice_branch_struct(py::module &m, py::class_<TaoLatticeBranchSt
 
       ;
 
-  bind_FTypeArrayND<TaoLatticeBranchStructArray1D>(m, "TaoLatticeBranchStructArray1D");
-  bind_FTypeAlloc1D<TaoLatticeBranchStructAlloc1D>(m, "TaoLatticeBranchStructAlloc1D");
+  bind_1d_type_array_pair<TaoLatticeBranchStructArray1D, TaoLatticeBranchStructAlloc1D>(
+      m,
+      "TaoLatticeBranchStructArray1D",
+      "TaoLatticeBranchStructAlloc1D"
+  );
   // 2D TaoLatticeBranchStruct arrays are not used in structs/routines
   // 3D TaoLatticeBranchStruct arrays are not used in structs/routines
 }
@@ -4366,8 +4423,11 @@ void init_tao_model_branch_struct(py::module &m, py::class_<TaoModelBranchStruct
 
       ;
 
-  bind_FTypeArrayND<TaoModelBranchStructArray1D>(m, "TaoModelBranchStructArray1D");
-  bind_FTypeAlloc1D<TaoModelBranchStructAlloc1D>(m, "TaoModelBranchStructAlloc1D");
+  bind_1d_type_array_pair<TaoModelBranchStructArray1D, TaoModelBranchStructAlloc1D>(
+      m,
+      "TaoModelBranchStructArray1D",
+      "TaoModelBranchStructAlloc1D"
+  );
   // 2D TaoModelBranchStruct arrays are not used in structs/routines
   // 3D TaoModelBranchStruct arrays are not used in structs/routines
 }
@@ -4432,8 +4492,11 @@ void init_tao_model_element_struct(py::module &m, py::class_<TaoModelElementStru
 
       ;
 
-  bind_FTypeArrayND<TaoModelElementStructArray1D>(m, "TaoModelElementStructArray1D");
-  bind_FTypeAlloc1D<TaoModelElementStructAlloc1D>(m, "TaoModelElementStructAlloc1D");
+  bind_1d_type_array_pair<TaoModelElementStructArray1D, TaoModelElementStructAlloc1D>(
+      m,
+      "TaoModelElementStructArray1D",
+      "TaoModelElementStructAlloc1D"
+  );
   // 2D TaoModelElementStruct arrays are not used in structs/routines
   // 3D TaoModelElementStruct arrays are not used in structs/routines
 }
@@ -4544,8 +4607,11 @@ void init_tao_plot_cache_struct(py::module &m, py::class_<TaoPlotCacheStruct> &c
 
       ;
 
-  bind_FTypeArrayND<TaoPlotCacheStructArray1D>(m, "TaoPlotCacheStructArray1D");
-  bind_FTypeAlloc1D<TaoPlotCacheStructAlloc1D>(m, "TaoPlotCacheStructAlloc1D");
+  bind_1d_type_array_pair<TaoPlotCacheStructArray1D, TaoPlotCacheStructAlloc1D>(
+      m,
+      "TaoPlotCacheStructArray1D",
+      "TaoPlotCacheStructAlloc1D"
+  );
   // 2D TaoPlotCacheStruct arrays are not used in structs/routines
   // 3D TaoPlotCacheStruct arrays are not used in structs/routines
 }
@@ -4837,8 +4903,11 @@ void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> 
 
       ;
 
-  bind_FTypeArrayND<TaoPlotRegionStructArray1D>(m, "TaoPlotRegionStructArray1D");
-  bind_FTypeAlloc1D<TaoPlotRegionStructAlloc1D>(m, "TaoPlotRegionStructAlloc1D");
+  bind_1d_type_array_pair<TaoPlotRegionStructArray1D, TaoPlotRegionStructAlloc1D>(
+      m,
+      "TaoPlotRegionStructArray1D",
+      "TaoPlotRegionStructAlloc1D"
+  );
   // 2D TaoPlotRegionStruct arrays are not used in structs/routines
   // 3D TaoPlotRegionStruct arrays are not used in structs/routines
 }
@@ -4983,8 +5052,11 @@ void init_tao_plot_struct(py::module &m, py::class_<TaoPlotStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoPlotStructArray1D>(m, "TaoPlotStructArray1D");
-  bind_FTypeAlloc1D<TaoPlotStructAlloc1D>(m, "TaoPlotStructAlloc1D");
+  bind_1d_type_array_pair<TaoPlotStructArray1D, TaoPlotStructAlloc1D>(
+      m,
+      "TaoPlotStructArray1D",
+      "TaoPlotStructAlloc1D"
+  );
   // 2D TaoPlotStruct arrays are not used in structs/routines
   // 3D TaoPlotStruct arrays are not used in structs/routines
 }
@@ -5041,8 +5113,11 @@ void init_tao_shape_pattern_point_struct(
 
       ;
 
-  bind_FTypeArrayND<TaoShapePatternPointStructArray1D>(m, "TaoShapePatternPointStructArray1D");
-  bind_FTypeAlloc1D<TaoShapePatternPointStructAlloc1D>(m, "TaoShapePatternPointStructAlloc1D");
+  bind_1d_type_array_pair<TaoShapePatternPointStructArray1D, TaoShapePatternPointStructAlloc1D>(
+      m,
+      "TaoShapePatternPointStructArray1D",
+      "TaoShapePatternPointStructAlloc1D"
+  );
   // 2D TaoShapePatternPointStruct arrays are not used in structs/routines
   // 3D TaoShapePatternPointStruct arrays are not used in structs/routines
 }
@@ -5096,8 +5171,11 @@ void init_tao_shape_pattern_struct(py::module &m, py::class_<TaoShapePatternStru
 
       ;
 
-  bind_FTypeArrayND<TaoShapePatternStructArray1D>(m, "TaoShapePatternStructArray1D");
-  bind_FTypeAlloc1D<TaoShapePatternStructAlloc1D>(m, "TaoShapePatternStructAlloc1D");
+  bind_1d_type_array_pair<TaoShapePatternStructArray1D, TaoShapePatternStructAlloc1D>(
+      m,
+      "TaoShapePatternStructArray1D",
+      "TaoShapePatternStructAlloc1D"
+  );
   // 2D TaoShapePatternStruct arrays are not used in structs/routines
   // 3D TaoShapePatternStruct arrays are not used in structs/routines
 }
@@ -5220,8 +5298,11 @@ void init_tao_spin_ele_struct(py::module &m, py::class_<TaoSpinEleStruct> &cls) 
 
       ;
 
-  bind_FTypeArrayND<TaoSpinEleStructArray1D>(m, "TaoSpinEleStructArray1D");
-  bind_FTypeAlloc1D<TaoSpinEleStructAlloc1D>(m, "TaoSpinEleStructAlloc1D");
+  bind_1d_type_array_pair<TaoSpinEleStructArray1D, TaoSpinEleStructAlloc1D>(
+      m,
+      "TaoSpinEleStructArray1D",
+      "TaoSpinEleStructAlloc1D"
+  );
   // 2D TaoSpinEleStruct arrays are not used in structs/routines
   // 3D TaoSpinEleStruct arrays are not used in structs/routines
 }
@@ -5777,8 +5858,11 @@ void init_tao_universe_pointer_struct(py::module &m, py::class_<TaoUniversePoint
 
       ;
 
-  bind_FTypeArrayND<TaoUniversePointerStructArray1D>(m, "TaoUniversePointerStructArray1D");
-  bind_FTypeAlloc1D<TaoUniversePointerStructAlloc1D>(m, "TaoUniversePointerStructAlloc1D");
+  bind_1d_type_array_pair<TaoUniversePointerStructArray1D, TaoUniversePointerStructAlloc1D>(
+      m,
+      "TaoUniversePointerStructArray1D",
+      "TaoUniversePointerStructAlloc1D"
+  );
   // 2D TaoUniversePointerStruct arrays are not used in structs/routines
   // 3D TaoUniversePointerStruct arrays are not used in structs/routines
 }
@@ -5936,8 +6020,11 @@ void init_tao_universe_struct(py::module &m, py::class_<TaoUniverseStruct> &cls)
 
       ;
 
-  bind_FTypeArrayND<TaoUniverseStructArray1D>(m, "TaoUniverseStructArray1D");
-  bind_FTypeAlloc1D<TaoUniverseStructAlloc1D>(m, "TaoUniverseStructAlloc1D");
+  bind_1d_type_array_pair<TaoUniverseStructArray1D, TaoUniverseStructAlloc1D>(
+      m,
+      "TaoUniverseStructArray1D",
+      "TaoUniverseStructAlloc1D"
+  );
   // 2D TaoUniverseStruct arrays are not used in structs/routines
   // 3D TaoUniverseStruct arrays are not used in structs/routines
 }
@@ -5998,8 +6085,11 @@ void init_tao_v1_var_struct(py::module &m, py::class_<TaoV1VarStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoV1VarStructArray1D>(m, "TaoV1VarStructArray1D");
-  bind_FTypeAlloc1D<TaoV1VarStructAlloc1D>(m, "TaoV1VarStructAlloc1D");
+  bind_1d_type_array_pair<TaoV1VarStructArray1D, TaoV1VarStructAlloc1D>(
+      m,
+      "TaoV1VarStructArray1D",
+      "TaoV1VarStructAlloc1D"
+  );
   // 2D TaoV1VarStruct arrays are not used in structs/routines
   // 3D TaoV1VarStruct arrays are not used in structs/routines
 }
@@ -6076,8 +6166,11 @@ void init_tao_var_slave_struct(py::module &m, py::class_<TaoVarSlaveStruct> &cls
 
       ;
 
-  bind_FTypeArrayND<TaoVarSlaveStructArray1D>(m, "TaoVarSlaveStructArray1D");
-  bind_FTypeAlloc1D<TaoVarSlaveStructAlloc1D>(m, "TaoVarSlaveStructAlloc1D");
+  bind_1d_type_array_pair<TaoVarSlaveStructArray1D, TaoVarSlaveStructAlloc1D>(
+      m,
+      "TaoVarSlaveStructArray1D",
+      "TaoVarSlaveStructAlloc1D"
+  );
   // 2D TaoVarSlaveStruct arrays are not used in structs/routines
   // 3D TaoVarSlaveStruct arrays are not used in structs/routines
 }
@@ -6391,8 +6484,11 @@ void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TaoVarStructArray1D>(m, "TaoVarStructArray1D");
-  bind_FTypeAlloc1D<TaoVarStructAlloc1D>(m, "TaoVarStructAlloc1D");
+  bind_1d_type_array_pair<TaoVarStructArray1D, TaoVarStructAlloc1D>(
+      m,
+      "TaoVarStructArray1D",
+      "TaoVarStructAlloc1D"
+  );
   // 2D TaoVarStruct arrays are not used in structs/routines
   // 3D TaoVarStruct arrays are not used in structs/routines
 }
@@ -6465,8 +6561,11 @@ void init_tao_wave_kick_pt_struct(py::module &m, py::class_<TaoWaveKickPtStruct>
 
       ;
 
-  bind_FTypeArrayND<TaoWaveKickPtStructArray1D>(m, "TaoWaveKickPtStructArray1D");
-  bind_FTypeAlloc1D<TaoWaveKickPtStructAlloc1D>(m, "TaoWaveKickPtStructAlloc1D");
+  bind_1d_type_array_pair<TaoWaveKickPtStructArray1D, TaoWaveKickPtStructAlloc1D>(
+      m,
+      "TaoWaveKickPtStructArray1D",
+      "TaoWaveKickPtStructAlloc1D"
+  );
   // 2D TaoWaveKickPtStruct arrays are not used in structs/routines
   // 3D TaoWaveKickPtStruct arrays are not used in structs/routines
 }
@@ -6688,8 +6787,11 @@ void init_test_sub_struct(py::module &m, py::class_<TestSubStruct> &cls) {
 
       ;
 
-  bind_FTypeArrayND<TestSubStructArray1D>(m, "TestSubStructArray1D");
-  bind_FTypeAlloc1D<TestSubStructAlloc1D>(m, "TestSubStructAlloc1D");
+  bind_1d_type_array_pair<TestSubStructArray1D, TestSubStructAlloc1D>(
+      m,
+      "TestSubStructArray1D",
+      "TestSubStructAlloc1D"
+  );
   bind_FTypeArrayND<TestSubStructArray2D>(m, "TestSubStructArray2D");
   bind_FTypeArrayND<TestSubStructArray3D>(m, "TestSubStructArray3D");
 }
