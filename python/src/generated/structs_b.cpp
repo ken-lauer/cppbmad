@@ -13,7 +13,7 @@ namespace py = pybind11;
 void init_bbu_beam_struct(py::module &m, py::class_<BbuBeamStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<int>>,
+             std::optional<std::vector<int>>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -138,7 +138,7 @@ void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<int>,
              std::optional<int>>(),
          py::arg("lat_filename") = py::none(),
@@ -414,10 +414,10 @@ void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
              std::optional<int>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<int>>(),
          py::arg("ix_ele_lr_wake") = py::none(),
          py::arg("ix_ele_stage_end") = py::none(),
@@ -521,10 +521,10 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
   cls.def(
          py::init<
              std::optional<std::string>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              optional_ref<const KvBeamInitStruct>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<int>,
@@ -538,7 +538,7 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -816,7 +816,7 @@ void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
   cls.def(
          py::init<
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -1588,9 +1588,9 @@ void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls)
              optional_ref<const TwissStruct>,
              optional_ref<const TwissStruct>,
              optional_ref<const TwissStruct>,
-             optional_ref<const std::vector<std::vector<double>>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -1799,7 +1799,7 @@ void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls)
 void init_bunch_struct(py::module &m, py::class_<BunchStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<int>>,
+             std::optional<std::vector<int>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -2002,8 +2002,8 @@ void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &cls) {
 void init_bicubic_cmplx_coef_struct(py::module &m, py::class_<BicubicCmplxCoefStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<std::vector<std::complex<double>>>>,
-             optional_ref<const std::vector<int>>>(),
+             std::optional<std::vector<std::vector<std::complex<double>>>>,
+             std::optional<std::vector<int>>>(),
          py::arg("coef") = py::none(),
          py::arg("i_box") = py::none()
   )

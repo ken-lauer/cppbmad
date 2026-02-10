@@ -21,8 +21,8 @@ void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommon
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<int>>,
-             optional_ref<const std::vector<int>>,
+             std::optional<std::vector<int>>,
+             std::optional<std::vector<int>>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -174,9 +174,9 @@ void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommon
 void init_spin_axis_struct(py::module &m, py::class_<SpinAxisStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>>(),
          py::arg("l") = py::none(),
          py::arg("n0") = py::none(),
          py::arg("m") = py::none()
@@ -215,9 +215,9 @@ void init_spin_axis_struct(py::module &m, py::class_<SpinAxisStruct> &cls) {
 void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<std::vector<double>>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>>(),
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>>(),
          py::arg("orb_mat") = py::none(),
          py::arg("vec0") = py::none(),
          py::arg("spin_q") = py::none()
@@ -423,9 +423,9 @@ void init_strong_beam_struct(py::module &m, py::class_<StrongBeamStruct> &cls) {
 void init_surface_curvature_struct(py::module &m, py::class_<SurfaceCurvatureStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<bool>>(),
          py::arg("xy") = py::none(),
          py::arg("spherical") = py::none(),
@@ -551,8 +551,8 @@ void init_surface_displacement_struct(py::module &m, py::class_<SurfaceDisplacem
   cls.def(
          py::init<
              std::optional<bool>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>>(),
          py::arg("active") = py::none(),
          py::arg("dr") = py::none(),
          py::arg("r0") = py::none()
@@ -671,8 +671,8 @@ void init_surface_h_misalign_struct(py::module &m, py::class_<SurfaceHMisalignSt
   cls.def(
          py::init<
              std::optional<bool>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>>(),
          py::arg("active") = py::none(),
          py::arg("dr") = py::none(),
          py::arg("r0") = py::none()
@@ -779,8 +779,8 @@ void init_surface_segmented_struct(py::module &m, py::class_<SurfaceSegmentedStr
   cls.def(
          py::init<
              std::optional<bool>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>>(),
          py::arg("active") = py::none(),
          py::arg("dr") = py::none(),
          py::arg("r0") = py::none()
@@ -820,7 +820,7 @@ void init_spline_struct(py::module &m, py::class_<SplineStruct> &cls) {
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>>(),
          py::arg("x0") = py::none(),
          py::arg("y0") = py::none(),
          py::arg("x1") = py::none(),

@@ -2837,6 +2837,8 @@ from ._enums import PRINT_PAGE_LONG_LEN
 from ._enums import PRINT_PAGE_SHORT_LEN
 from ._enums import FILLED_ARROW_HEAD
 from ._enums import OUTLINE_ARROW_HEAD
+from ._enums import EleAttribute
+from ._enums import EleKey
 
 __all__ = [
     # Globals
@@ -5673,5 +5675,7 @@ __all__ = [
     "PRINT_PAGE_SHORT_LEN",
     "FILLED_ARROW_HEAD",
     "OUTLINE_ARROW_HEAD",
+    "EleAttribute",
+    "EleKey",
 ]
     

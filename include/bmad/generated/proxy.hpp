@@ -13651,7 +13651,7 @@ public:
       std::optional<double> x0 = std::nullopt,
       std::optional<double> y0 = std::nullopt,
       std::optional<double> x1 = std::nullopt,
-      optional_ref<const std::vector<double>> coef = std::nullopt
+      std::optional<std::vector<double>> coef = std::nullopt
   )
       : FortranProxy() {
     if (x0)
@@ -13661,7 +13661,7 @@ public:
     if (x1)
       set_x1(*x1);
     if (coef)
-      set_coef(coef->get());
+      set_coef(*coef);
   }
 
   double x0() const; // 0D_NOT_real
@@ -13872,26 +13872,26 @@ public:
   using FortranProxy::operator=;
 
   explicit PhotonReflectTableStruct(
-      optional_ref<const std::vector<double>> angle = std::nullopt,
-      optional_ref<const std::vector<double>> energy = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> p_reflect = std::nullopt,
+      std::optional<std::vector<double>> angle = std::nullopt,
+      std::optional<std::vector<double>> energy = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> p_reflect = std::nullopt,
       std::optional<double> max_energy = std::nullopt,
-      optional_ref<const std::vector<double>> p_reflect_scratch = std::nullopt,
-      optional_ref<const std::vector<double>> bragg_angle = std::nullopt
+      std::optional<std::vector<double>> p_reflect_scratch = std::nullopt,
+      std::optional<std::vector<double>> bragg_angle = std::nullopt
   )
       : FortranProxy() {
     if (angle)
-      set_angle(angle->get());
+      set_angle(*angle);
     if (energy)
-      set_energy(energy->get());
+      set_energy(*energy);
     if (p_reflect)
-      set_p_reflect(p_reflect->get());
+      set_p_reflect(*p_reflect);
     if (max_energy)
       set_max_energy(*max_energy);
     if (p_reflect_scratch)
-      set_p_reflect_scratch(p_reflect_scratch->get());
+      set_p_reflect_scratch(*p_reflect_scratch);
     if (bragg_angle)
-      set_bragg_angle(bragg_angle->get());
+      set_bragg_angle(*bragg_angle);
   }
 
   RealAlloc1D angle() const; // 1D_ALLOC_real
@@ -13984,12 +13984,12 @@ public:
   using FortranProxy::operator=;
 
   explicit CoordStruct(
-      optional_ref<const std::vector<double>> vec = std::nullopt,
+      std::optional<std::vector<double>> vec = std::nullopt,
       std::optional<double> s = std::nullopt,
       std::optional<long double> t = std::nullopt,
-      optional_ref<const std::vector<double>> spin = std::nullopt,
-      optional_ref<const std::vector<double>> field = std::nullopt,
-      optional_ref<const std::vector<double>> phase = std::nullopt,
+      std::optional<std::vector<double>> spin = std::nullopt,
+      std::optional<std::vector<double>> field = std::nullopt,
+      std::optional<std::vector<double>> phase = std::nullopt,
       std::optional<double> charge = std::nullopt,
       std::optional<double> dt_ref = std::nullopt,
       std::optional<double> r = std::nullopt,
@@ -14008,17 +14008,17 @@ public:
   )
       : FortranProxy() {
     if (vec)
-      set_vec(vec->get());
+      set_vec(*vec);
     if (s)
       set_s(*s);
     if (t)
       set_t(*t);
     if (spin)
-      set_spin(spin->get());
+      set_spin(*spin);
     if (field)
-      set_field(field->get());
+      set_field(*field);
     if (phase)
-      set_phase(phase->get());
+      set_phase(*phase);
     if (charge)
       set_charge(*charge);
     if (dt_ref)
@@ -14244,10 +14244,10 @@ public:
   using FortranProxy::operator=;
 
   explicit WakeSrZLongStruct(
-      optional_ref<const std::vector<double>> w = std::nullopt,
-      optional_ref<const std::vector<std::complex<double>>> fw = std::nullopt,
-      optional_ref<const std::vector<std::complex<double>>> fbunch = std::nullopt,
-      optional_ref<const std::vector<std::complex<double>>> w_out = std::nullopt,
+      std::optional<std::vector<double>> w = std::nullopt,
+      std::optional<std::vector<std::complex<double>>> fw = std::nullopt,
+      std::optional<std::vector<std::complex<double>>> fbunch = std::nullopt,
+      std::optional<std::vector<std::complex<double>>> w_out = std::nullopt,
       std::optional<double> dz = std::nullopt,
       std::optional<double> z0 = std::nullopt,
       std::optional<double> smoothing_sigma = std::nullopt,
@@ -14256,13 +14256,13 @@ public:
   )
       : FortranProxy() {
     if (w)
-      set_w(w->get());
+      set_w(*w);
     if (fw)
-      set_fw(fw->get());
+      set_fw(*fw);
     if (fbunch)
-      set_fbunch(fbunch->get());
+      set_fbunch(*fbunch);
     if (w_out)
-      set_w_out(w_out->get());
+      set_w_out(*w_out);
     if (dz)
       set_dz(*dz);
     if (z0)
@@ -14659,13 +14659,13 @@ public:
 
   explicit TaylorTermStruct(
       std::optional<double> coef = std::nullopt,
-      optional_ref<const std::vector<int>> expn = std::nullopt
+      std::optional<std::vector<int>> expn = std::nullopt
   )
       : FortranProxy() {
     if (coef)
       set_coef(*coef);
     if (expn)
-      set_expn(expn->get());
+      set_expn(*expn);
   }
 
   double coef() const; // 0D_NOT_real
@@ -14719,13 +14719,13 @@ public:
 
   explicit EmTaylorTermStruct(
       std::optional<double> coef = std::nullopt,
-      optional_ref<const std::vector<int>> expn = std::nullopt
+      std::optional<std::vector<int>> expn = std::nullopt
   )
       : FortranProxy() {
     if (coef)
       set_coef(*coef);
     if (expn)
-      set_expn(expn->get());
+      set_expn(*expn);
   }
 
   double coef() const; // 0D_NOT_real
@@ -14887,7 +14887,7 @@ public:
 
   explicit CartesianMapStruct(
       std::optional<double> field_scale = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt,
       std::optional<int> master_parameter = std::nullopt,
       std::optional<int> ele_anchor_pt = std::nullopt,
       std::optional<int> field_type = std::nullopt,
@@ -14897,7 +14897,7 @@ public:
     if (field_scale)
       set_field_scale(*field_scale);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
     if (master_parameter)
       set_master_parameter(*master_parameter);
     if (ele_anchor_pt)
@@ -15022,7 +15022,7 @@ public:
       std::optional<int> master_parameter = std::nullopt,
       std::optional<int> ele_anchor_pt = std::nullopt,
       std::optional<double> dz = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt,
       optional_ref<const CylindricalMapTermStruct> ptr = std::nullopt
   )
       : FortranProxy() {
@@ -15043,7 +15043,7 @@ public:
     if (dz)
       set_dz(*dz);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
     if (ptr)
       set_ptr(ptr->get());
   }
@@ -15089,14 +15089,14 @@ public:
   using FortranProxy::operator=;
 
   explicit BicubicCmplxCoefStruct(
-      optional_ref<const std::vector<std::vector<std::complex<double>>>> coef = std::nullopt,
-      optional_ref<const std::vector<int>> i_box = std::nullopt
+      std::optional<std::vector<std::vector<std::complex<double>>>> coef = std::nullopt,
+      std::optional<std::vector<int>> i_box = std::nullopt
   )
       : FortranProxy() {
     if (coef)
-      set_coef(coef->get());
+      set_coef(*coef);
     if (i_box)
-      set_i_box(i_box->get());
+      set_i_box(*i_box);
   }
 
   FArray2D<std::complex<double>> coef() const; // 2D_NOT_complex
@@ -15126,15 +15126,15 @@ public:
   using FortranProxy::operator=;
 
   explicit TricubicCmplxCoefStruct(
-      optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>> coef =
+      std::optional<std::vector<std::vector<std::vector<std::complex<double>>>>> coef =
           std::nullopt,
-      optional_ref<const std::vector<int>> i_box = std::nullopt
+      std::optional<std::vector<int>> i_box = std::nullopt
   )
       : FortranProxy() {
     if (coef)
-      set_coef(coef->get());
+      set_coef(*coef);
     if (i_box)
-      set_i_box(i_box->get());
+      set_i_box(*i_box);
   }
 
   FArray3D<std::complex<double>> coef() const; // 3D_NOT_complex
@@ -15160,14 +15160,14 @@ public:
   using FortranProxy::operator=;
 
   explicit GridFieldPt1Struct(
-      optional_ref<const std::vector<std::complex<double>>> E = std::nullopt,
-      optional_ref<const std::vector<std::complex<double>>> B = std::nullopt
+      std::optional<std::vector<std::complex<double>>> E = std::nullopt,
+      std::optional<std::vector<std::complex<double>>> B = std::nullopt
   )
       : FortranProxy() {
     if (E)
-      set_E(E->get());
+      set_E(*E);
     if (B)
-      set_B(B->get());
+      set_B(*B);
   }
 
   FArray1D<std::complex<double>> E() const; // 1D_NOT_complex
@@ -15235,8 +15235,8 @@ public:
       std::optional<int> master_parameter = std::nullopt,
       std::optional<int> ele_anchor_pt = std::nullopt,
       std::optional<int> interpolation_order = std::nullopt,
-      optional_ref<const std::vector<double>> dr = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<std::vector<double>> dr = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt,
       std::optional<bool> curved_ref_frame = std::nullopt,
       optional_ref<const GridFieldPtStruct> ptr = std::nullopt
   )
@@ -15258,9 +15258,9 @@ public:
     if (interpolation_order)
       set_interpolation_order(*interpolation_order);
     if (dr)
-      set_dr(dr->get());
+      set_dr(*dr);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
     if (curved_ref_frame)
       set_curved_ref_frame(*curved_ref_frame);
     if (ptr)
@@ -15312,17 +15312,17 @@ public:
   using FortranProxy::operator=;
 
   explicit FloorPositionStruct(
-      optional_ref<const std::vector<double>> r = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> w = std::nullopt,
+      std::optional<std::vector<double>> r = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> w = std::nullopt,
       std::optional<double> theta = std::nullopt,
       std::optional<double> phi = std::nullopt,
       std::optional<double> psi = std::nullopt
   )
       : FortranProxy() {
     if (r)
-      set_r(r->get());
+      set_r(*r);
     if (w)
-      set_w(w->get());
+      set_w(*w);
     if (theta)
       set_theta(*theta);
     if (phi)
@@ -15583,7 +15583,7 @@ public:
   using FortranProxy::operator=;
 
   explicit Mode3Struct(
-      optional_ref<const std::vector<std::vector<double>>> v = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> v = std::nullopt,
       optional_ref<const TwissStruct> a = std::nullopt,
       optional_ref<const TwissStruct> b = std::nullopt,
       optional_ref<const TwissStruct> c = std::nullopt,
@@ -15592,7 +15592,7 @@ public:
   )
       : FortranProxy() {
     if (v)
-      set_v(v->get());
+      set_v(*v);
     if (a)
       set_a(a->get());
     if (b)
@@ -15706,23 +15706,23 @@ public:
   using FortranProxy::operator=;
 
   explicit RadMapStruct(
-      optional_ref<const std::vector<double>> ref_orb = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> damp_dmat = std::nullopt,
-      optional_ref<const std::vector<double>> xfer_damp_vec = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> xfer_damp_mat = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> stoc_mat = std::nullopt
+      std::optional<std::vector<double>> ref_orb = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> damp_dmat = std::nullopt,
+      std::optional<std::vector<double>> xfer_damp_vec = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> xfer_damp_mat = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> stoc_mat = std::nullopt
   )
       : FortranProxy() {
     if (ref_orb)
-      set_ref_orb(ref_orb->get());
+      set_ref_orb(*ref_orb);
     if (damp_dmat)
-      set_damp_dmat(damp_dmat->get());
+      set_damp_dmat(*damp_dmat);
     if (xfer_damp_vec)
-      set_xfer_damp_vec(xfer_damp_vec->get());
+      set_xfer_damp_vec(*xfer_damp_vec);
     if (xfer_damp_mat)
-      set_xfer_damp_mat(xfer_damp_mat->get());
+      set_xfer_damp_mat(*xfer_damp_mat);
     if (stoc_mat)
-      set_stoc_mat(stoc_mat->get());
+      set_stoc_mat(*stoc_mat);
   }
 
   FArray1D<double> ref_orb() const; // 1D_NOT_real
@@ -15795,7 +15795,7 @@ public:
       std::optional<int> m = std::nullopt,
       std::optional<int> sincos = std::nullopt,
       std::optional<int> n_deriv_max = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> deriv = std::nullopt
+      std::optional<std::vector<std::vector<double>>> deriv = std::nullopt
   )
       : FortranProxy() {
     if (m)
@@ -15805,7 +15805,7 @@ public:
     if (n_deriv_max)
       set_n_deriv_max(*n_deriv_max);
     if (deriv)
-      set_deriv(deriv->get());
+      set_deriv(*deriv);
   }
 
   int m() const; // 0D_NOT_integer
@@ -15841,7 +15841,7 @@ public:
       std::optional<int> iz0 = std::nullopt,
       std::optional<int> iz1 = std::nullopt,
       std::optional<double> dz = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt,
       std::optional<double> field_scale = std::nullopt,
       std::optional<int> master_parameter = std::nullopt,
       std::optional<bool> curved_ref_frame = std::nullopt
@@ -15860,7 +15860,7 @@ public:
     if (dz)
       set_dz(*dz);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
     if (field_scale)
       set_field_scale(*field_scale);
     if (master_parameter)
@@ -15964,16 +15964,16 @@ public:
 
   explicit SurfaceSegmentedStruct(
       std::optional<bool> active = std::nullopt,
-      optional_ref<const std::vector<double>> dr = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt
+      std::optional<std::vector<double>> dr = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt
   )
       : FortranProxy() {
     if (active)
       set_active(*active);
     if (dr)
-      set_dr(dr->get());
+      set_dr(*dr);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
   }
 
   bool active() const; // 0D_NOT_logical
@@ -16062,16 +16062,16 @@ public:
 
   explicit SurfaceHMisalignStruct(
       std::optional<bool> active = std::nullopt,
-      optional_ref<const std::vector<double>> dr = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt
+      std::optional<std::vector<double>> dr = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt
   )
       : FortranProxy() {
     if (active)
       set_active(*active);
     if (dr)
-      set_dr(dr->get());
+      set_dr(*dr);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
   }
 
   bool active() const; // 0D_NOT_logical
@@ -16162,16 +16162,16 @@ public:
 
   explicit SurfaceDisplacementStruct(
       std::optional<bool> active = std::nullopt,
-      optional_ref<const std::vector<double>> dr = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt
+      std::optional<std::vector<double>> dr = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt
   )
       : FortranProxy() {
     if (active)
       set_active(*active);
     if (dr)
-      set_dr(dr->get());
+      set_dr(*dr);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
   }
 
   bool active() const; // 0D_NOT_logical
@@ -16199,10 +16199,10 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit TargetPointStruct(optional_ref<const std::vector<double>> r = std::nullopt)
+  explicit TargetPointStruct(std::optional<std::vector<double>> r = std::nullopt)
       : FortranProxy() {
     if (r)
-      set_r(r->get());
+      set_r(*r);
   }
 
   FArray1D<double> r() const; // 1D_NOT_real
@@ -16228,18 +16228,18 @@ public:
   using FortranProxy::operator=;
 
   explicit SurfaceCurvatureStruct(
-      optional_ref<const std::vector<std::vector<double>>> xy = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> xy = std::nullopt,
       std::optional<double> spherical = std::nullopt,
-      optional_ref<const std::vector<double>> elliptical = std::nullopt,
+      std::optional<std::vector<double>> elliptical = std::nullopt,
       std::optional<bool> has_curvature = std::nullopt
   )
       : FortranProxy() {
     if (xy)
-      set_xy(xy->get());
+      set_xy(*xy);
     if (spherical)
       set_spherical(*spherical);
     if (elliptical)
-      set_elliptical(elliptical->get());
+      set_elliptical(*elliptical);
     if (has_curvature)
       set_has_curvature(*has_curvature);
   }
@@ -16321,8 +16321,8 @@ public:
       std::optional<std::complex<double>> f_h = std::nullopt,
       std::optional<std::complex<double>> f_hbar = std::nullopt,
       std::optional<std::complex<double>> f_hkl = std::nullopt,
-      optional_ref<const std::vector<double>> h_norm = std::nullopt,
-      optional_ref<const std::vector<double>> l_ref = std::nullopt
+      std::optional<std::vector<double>> h_norm = std::nullopt,
+      std::optional<std::vector<double>> l_ref = std::nullopt
   )
       : FortranProxy() {
     if (f0_m1)
@@ -16338,9 +16338,9 @@ public:
     if (f_hkl)
       set_f_hkl(*f_hkl);
     if (h_norm)
-      set_h_norm(h_norm->get());
+      set_h_norm(*h_norm);
     if (l_ref)
-      set_l_ref(l_ref->get());
+      set_l_ref(*l_ref);
   }
 
   std::complex<double> f0_m1() const; // 0D_NOT_complex
@@ -16384,10 +16384,10 @@ public:
       std::optional<double> intensity_x = std::nullopt,
       std::optional<double> intensity_y = std::nullopt,
       std::optional<double> intensity = std::nullopt,
-      optional_ref<const std::vector<double>> orbit = std::nullopt,
-      optional_ref<const std::vector<double>> orbit_rms = std::nullopt,
-      optional_ref<const std::vector<double>> init_orbit = std::nullopt,
-      optional_ref<const std::vector<double>> init_orbit_rms = std::nullopt
+      std::optional<std::vector<double>> orbit = std::nullopt,
+      std::optional<std::vector<double>> orbit_rms = std::nullopt,
+      std::optional<std::vector<double>> init_orbit = std::nullopt,
+      std::optional<std::vector<double>> init_orbit_rms = std::nullopt
   )
       : FortranProxy() {
     if (n_photon)
@@ -16403,13 +16403,13 @@ public:
     if (intensity)
       set_intensity(*intensity);
     if (orbit)
-      set_orbit(orbit->get());
+      set_orbit(*orbit);
     if (orbit_rms)
-      set_orbit_rms(orbit_rms->get());
+      set_orbit_rms(*orbit_rms);
     if (init_orbit)
-      set_init_orbit(init_orbit->get());
+      set_init_orbit(*init_orbit);
     if (init_orbit_rms)
-      set_init_orbit_rms(init_orbit_rms->get());
+      set_init_orbit_rms(*init_orbit_rms);
   }
 
   int64_t n_photon() const; // 0D_NOT_integer8
@@ -16451,17 +16451,17 @@ public:
   using FortranProxy::operator=;
 
   explicit PixelDetecStruct(
-      optional_ref<const std::vector<double>> dr = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<std::vector<double>> dr = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt,
       std::optional<int64_t> n_track_tot = std::nullopt,
       std::optional<int64_t> n_hit_detec = std::nullopt,
       std::optional<int64_t> n_hit_pixel = std::nullopt
   )
       : FortranProxy() {
     if (dr)
-      set_dr(dr->get());
+      set_dr(*dr);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
     if (n_track_tot)
       set_n_track_tot(*n_track_tot);
     if (n_hit_detec)
@@ -16510,7 +16510,7 @@ public:
       std::optional<int> reflectivity_table_type = std::nullopt,
       optional_ref<const PhotonReflectTableStruct> reflectivity_table_sigma = std::nullopt,
       optional_ref<const PhotonReflectTableStruct> reflectivity_table_pi = std::nullopt,
-      optional_ref<const std::vector<double>> integrated_init_energy_prob = std::nullopt
+      std::optional<std::vector<double>> integrated_init_energy_prob = std::nullopt
   )
       : FortranProxy() {
     if (curvature)
@@ -16534,7 +16534,7 @@ public:
     if (reflectivity_table_pi)
       set_reflectivity_table_pi(reflectivity_table_pi->get());
     if (integrated_init_energy_prob)
-      set_integrated_init_energy_prob(integrated_init_energy_prob->get());
+      set_integrated_init_energy_prob(*integrated_init_energy_prob);
   }
 
   SurfaceCurvatureStruct curvature() const; // 0D_NOT_type
@@ -16658,14 +16658,14 @@ public:
       std::optional<bool> patch_in_region = std::nullopt,
       std::optional<double> thickness = std::nullopt,
       std::optional<double> s = std::nullopt,
-      optional_ref<const std::vector<double>> r0 = std::nullopt,
+      std::optional<std::vector<double>> r0 = std::nullopt,
       std::optional<double> dx0_ds = std::nullopt,
       std::optional<double> dy0_ds = std::nullopt,
-      optional_ref<const std::vector<double>> x0_coef = std::nullopt,
-      optional_ref<const std::vector<double>> y0_coef = std::nullopt,
+      std::optional<std::vector<double>> x0_coef = std::nullopt,
+      std::optional<std::vector<double>> y0_coef = std::nullopt,
       std::optional<double> dr_ds = std::nullopt,
-      optional_ref<const std::vector<double>> p1_coef = std::nullopt,
-      optional_ref<const std::vector<double>> p2_coef = std::nullopt
+      std::optional<std::vector<double>> p1_coef = std::nullopt,
+      std::optional<std::vector<double>> p2_coef = std::nullopt
   )
       : FortranProxy() {
     if (name)
@@ -16691,21 +16691,21 @@ public:
     if (s)
       set_s(*s);
     if (r0)
-      set_r0(r0->get());
+      set_r0(*r0);
     if (dx0_ds)
       set_dx0_ds(*dx0_ds);
     if (dy0_ds)
       set_dy0_ds(*dy0_ds);
     if (x0_coef)
-      set_x0_coef(x0_coef->get());
+      set_x0_coef(*x0_coef);
     if (y0_coef)
-      set_y0_coef(y0_coef->get());
+      set_y0_coef(*y0_coef);
     if (dr_ds)
       set_dr_ds(*dr_ds);
     if (p1_coef)
-      set_p1_coef(p1_coef->get());
+      set_p1_coef(*p1_coef);
     if (p2_coef)
-      set_p2_coef(p2_coef->get());
+      set_p2_coef(*p2_coef);
   }
 
   std::string name() const; // 0D_NOT_character
@@ -16874,7 +16874,7 @@ public:
 
   explicit ControlStruct(
       std::optional<double> value = std::nullopt,
-      optional_ref<const std::vector<double>> y_knot = std::nullopt,
+      std::optional<std::vector<double>> y_knot = std::nullopt,
       optional_ref<const LatEleLocStruct> slave = std::nullopt,
       optional_ref<const LatEleLocStruct> lord = std::nullopt,
       std::optional<std::string> slave_name = std::nullopt,
@@ -16885,7 +16885,7 @@ public:
     if (value)
       set_value(*value);
     if (y_knot)
-      set_y_knot(y_knot->get());
+      set_y_knot(*y_knot);
     if (slave)
       set_slave(slave->get());
     if (lord)
@@ -16970,14 +16970,14 @@ public:
   using FortranProxy::operator=;
 
   explicit ControlRamp1Struct(
-      optional_ref<const std::vector<double>> y_knot = std::nullopt,
+      std::optional<std::vector<double>> y_knot = std::nullopt,
       std::optional<std::string> attribute = std::nullopt,
       std::optional<std::string> slave_name = std::nullopt,
       std::optional<bool> is_controller = std::nullopt
   )
       : FortranProxy() {
     if (y_knot)
-      set_y_knot(y_knot->get());
+      set_y_knot(*y_knot);
     if (attribute)
       set_attribute(*attribute);
     if (slave_name)
@@ -17013,10 +17013,10 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit ControllerStruct(optional_ref<const std::vector<double>> x_knot = std::nullopt)
+  explicit ControllerStruct(std::optional<std::vector<double>> x_knot = std::nullopt)
       : FortranProxy() {
     if (x_knot)
-      set_x_knot(x_knot->get());
+      set_x_knot(*x_knot);
   }
 
   ControlVar1StructAlloc1D var() const; // 1D_ALLOC_type
@@ -17083,13 +17083,13 @@ public:
   using FortranProxy::operator=;
 
   explicit KvBeamInitStruct(
-      optional_ref<const std::vector<int>> part_per_phi = std::nullopt,
+      std::optional<std::vector<int>> part_per_phi = std::nullopt,
       std::optional<int> n_I2 = std::nullopt,
       std::optional<double> A = std::nullopt
   )
       : FortranProxy() {
     if (part_per_phi)
-      set_part_per_phi(part_per_phi->get());
+      set_part_per_phi(*part_per_phi);
     if (n_I2)
       set_n_I2(*n_I2);
     if (A)
@@ -17175,10 +17175,10 @@ public:
 
   explicit BeamInitStruct(
       std::optional<std::string> position_file = std::nullopt,
-      optional_ref<const std::vector<double>> spin = std::nullopt,
+      std::optional<std::vector<double>> spin = std::nullopt,
       optional_ref<const KvBeamInitStruct> KV = std::nullopt,
-      optional_ref<const std::vector<double>> center_jitter = std::nullopt,
-      optional_ref<const std::vector<double>> emit_jitter = std::nullopt,
+      std::optional<std::vector<double>> center_jitter = std::nullopt,
+      std::optional<std::vector<double>> emit_jitter = std::nullopt,
       std::optional<double> sig_z_jitter = std::nullopt,
       std::optional<double> sig_pz_jitter = std::nullopt,
       std::optional<int> n_particle = std::nullopt,
@@ -17192,7 +17192,7 @@ public:
       std::optional<double> a_emit = std::nullopt,
       std::optional<double> b_emit = std::nullopt,
       std::optional<double> dPz_dz = std::nullopt,
-      optional_ref<const std::vector<double>> center = std::nullopt,
+      std::optional<std::vector<double>> center = std::nullopt,
       std::optional<double> t_offset = std::nullopt,
       std::optional<double> dt_bunch = std::nullopt,
       std::optional<double> sig_z = std::nullopt,
@@ -17211,13 +17211,13 @@ public:
     if (position_file)
       set_position_file(*position_file);
     if (spin)
-      set_spin(spin->get());
+      set_spin(*spin);
     if (KV)
       set_KV(KV->get());
     if (center_jitter)
-      set_center_jitter(center_jitter->get());
+      set_center_jitter(*center_jitter);
     if (emit_jitter)
-      set_emit_jitter(emit_jitter->get());
+      set_emit_jitter(*emit_jitter);
     if (sig_z_jitter)
       set_sig_z_jitter(*sig_z_jitter);
     if (sig_pz_jitter)
@@ -17245,7 +17245,7 @@ public:
     if (dPz_dz)
       set_dPz_dz(*dPz_dz);
     if (center)
-      set_center(center->get());
+      set_center(*center);
     if (t_offset)
       set_t_offset(*t_offset);
     if (dt_bunch)
@@ -17363,8 +17363,8 @@ public:
       std::optional<double> n_part = std::nullopt,
       std::optional<double> total_length = std::nullopt,
       std::optional<double> unstable_factor = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> t1_with_RF = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> t1_no_RF = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> t1_with_RF = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> t1_no_RF = std::nullopt,
       std::optional<double> spin_tune = std::nullopt,
       std::optional<int> particle = std::nullopt,
       std::optional<int> default_tracking_species = std::nullopt,
@@ -17386,9 +17386,9 @@ public:
     if (unstable_factor)
       set_unstable_factor(*unstable_factor);
     if (t1_with_RF)
-      set_t1_with_RF(t1_with_RF->get());
+      set_t1_with_RF(*t1_with_RF);
     if (t1_no_RF)
-      set_t1_no_RF(t1_no_RF->get());
+      set_t1_no_RF(*t1_no_RF);
     if (spin_tune)
       set_spin_tune(*spin_tune);
     if (particle)
@@ -17566,7 +17566,7 @@ public:
   explicit AnormalModeStruct(
       std::optional<double> emittance = std::nullopt,
       std::optional<double> emittance_no_vert = std::nullopt,
-      optional_ref<const std::vector<double>> synch_int = std::nullopt,
+      std::optional<std::vector<double>> synch_int = std::nullopt,
       std::optional<double> j_damp = std::nullopt,
       std::optional<double> alpha_damp = std::nullopt,
       std::optional<double> chrom = std::nullopt,
@@ -17578,7 +17578,7 @@ public:
     if (emittance_no_vert)
       set_emittance_no_vert(*emittance_no_vert);
     if (synch_int)
-      set_synch_int(synch_int->get());
+      set_synch_int(*synch_int);
     if (j_damp)
       set_j_damp(*j_damp);
     if (alpha_damp)
@@ -17682,7 +17682,7 @@ public:
   using FortranProxy::operator=;
 
   explicit NormalModesStruct(
-      optional_ref<const std::vector<double>> synch_int = std::nullopt,
+      std::optional<std::vector<double>> synch_int = std::nullopt,
       std::optional<double> sigE_E = std::nullopt,
       std::optional<double> sig_z = std::nullopt,
       std::optional<double> e_loss = std::nullopt,
@@ -17698,7 +17698,7 @@ public:
   )
       : FortranProxy() {
     if (synch_int)
-      set_synch_int(synch_int->get());
+      set_synch_int(*synch_int);
     if (sigE_E)
       set_sigE_E(*sigE_E);
     if (sig_z)
@@ -17770,29 +17770,29 @@ public:
   using FortranProxy::operator=;
 
   explicit EmFieldStruct(
-      optional_ref<const std::vector<double>> E = std::nullopt,
-      optional_ref<const std::vector<double>> B = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> dE = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> dB = std::nullopt,
+      std::optional<std::vector<double>> E = std::nullopt,
+      std::optional<std::vector<double>> B = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> dE = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> dB = std::nullopt,
       std::optional<double> phi = std::nullopt,
       std::optional<double> phi_B = std::nullopt,
-      optional_ref<const std::vector<double>> A = std::nullopt
+      std::optional<std::vector<double>> A = std::nullopt
   )
       : FortranProxy() {
     if (E)
-      set_E(E->get());
+      set_E(*E);
     if (B)
-      set_B(B->get());
+      set_B(*B);
     if (dE)
-      set_dE(dE->get());
+      set_dE(*dE);
     if (dB)
-      set_dB(dB->get());
+      set_dB(*dB);
     if (phi)
       set_phi(*phi);
     if (phi_B)
       set_phi_B(*phi_B);
     if (A)
-      set_A(A->get());
+      set_A(*A);
   }
 
   FArray1D<double> E() const; // 1D_NOT_real
@@ -17891,8 +17891,8 @@ public:
       optional_ref<const CoordStruct> orb = std::nullopt,
       optional_ref<const EmFieldStruct> field = std::nullopt,
       optional_ref<const StrongBeamStruct> strong_beam = std::nullopt,
-      optional_ref<const std::vector<double>> vec0 = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> mat6 = std::nullopt
+      std::optional<std::vector<double>> vec0 = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> mat6 = std::nullopt
   )
       : FortranProxy() {
     if (s_lab)
@@ -17906,9 +17906,9 @@ public:
     if (strong_beam)
       set_strong_beam(strong_beam->get());
     if (vec0)
-      set_vec0(vec0->get());
+      set_vec0(*vec0);
     if (mat6)
-      set_mat6(mat6->get());
+      set_mat6(*mat6);
   }
 
   double s_lab() const; // 0D_NOT_real
@@ -18000,8 +18000,8 @@ public:
       std::optional<double> beam_chamber_height = std::nullopt,
       std::optional<double> lsc_sigma_cutoff = std::nullopt,
       std::optional<double> particle_sigma_cutoff = std::nullopt,
-      optional_ref<const std::vector<int>> space_charge_mesh_size = std::nullopt,
-      optional_ref<const std::vector<int>> csr3d_mesh_size = std::nullopt,
+      std::optional<std::vector<int>> space_charge_mesh_size = std::nullopt,
+      std::optional<std::vector<int>> csr3d_mesh_size = std::nullopt,
       std::optional<int> n_bin = std::nullopt,
       std::optional<int> particle_bin_span = std::nullopt,
       std::optional<int> n_shield_images = std::nullopt,
@@ -18028,9 +18028,9 @@ public:
     if (particle_sigma_cutoff)
       set_particle_sigma_cutoff(*particle_sigma_cutoff);
     if (space_charge_mesh_size)
-      set_space_charge_mesh_size(space_charge_mesh_size->get());
+      set_space_charge_mesh_size(*space_charge_mesh_size);
     if (csr3d_mesh_size)
-      set_csr3d_mesh_size(csr3d_mesh_size->get());
+      set_csr3d_mesh_size(*csr3d_mesh_size);
     if (n_bin)
       set_n_bin(*n_bin);
     if (particle_bin_span)
@@ -18101,7 +18101,7 @@ public:
 
   explicit BmadCommonStruct(
       std::optional<double> max_aperture_limit = std::nullopt,
-      optional_ref<const std::vector<double>> d_orb = std::nullopt,
+      std::optional<std::vector<double>> d_orb = std::nullopt,
       std::optional<double> default_ds_step = std::nullopt,
       std::optional<double> significant_length = std::nullopt,
       std::optional<double> rel_tol_tracking = std::nullopt,
@@ -18147,7 +18147,7 @@ public:
     if (max_aperture_limit)
       set_max_aperture_limit(*max_aperture_limit);
     if (d_orb)
-      set_d_orb(d_orb->get());
+      set_d_orb(*d_orb);
     if (default_ds_step)
       set_default_ds_step(*default_ds_step);
     if (significant_length)
@@ -18601,29 +18601,29 @@ public:
       optional_ref<const Mode3Struct> mode3 = std::nullopt,
       optional_ref<const PhotonElementStruct> photon = std::nullopt,
       optional_ref<const RadMapEleStruct> rad_map = std::nullopt,
-      optional_ref<const std::vector<double>> spin_taylor_ref_orb_in = std::nullopt,
+      std::optional<std::vector<double>> spin_taylor_ref_orb_in = std::nullopt,
       optional_ref<const WakeStruct> wake = std::nullopt,
       optional_ref<const CoordStruct> map_ref_orb_in = std::nullopt,
       optional_ref<const CoordStruct> map_ref_orb_out = std::nullopt,
       optional_ref<const CoordStruct> time_ref_orb_in = std::nullopt,
       optional_ref<const CoordStruct> time_ref_orb_out = std::nullopt,
-      optional_ref<const std::vector<double>> value = std::nullopt,
-      optional_ref<const std::vector<double>> old_value = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> spin_q = std::nullopt,
-      optional_ref<const std::vector<double>> vec0 = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> mat6 = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> c_mat = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> dc_mat_dpz = std::nullopt,
+      std::optional<std::vector<double>> value = std::nullopt,
+      std::optional<std::vector<double>> old_value = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> spin_q = std::nullopt,
+      std::optional<std::vector<double>> vec0 = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> mat6 = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> c_mat = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> dc_mat_dpz = std::nullopt,
       std::optional<double> gamma_c = std::nullopt,
       std::optional<double> s_start = std::nullopt,
       std::optional<double> s = std::nullopt,
       std::optional<double> ref_time = std::nullopt,
-      optional_ref<const std::vector<double>> a_pole = std::nullopt,
-      optional_ref<const std::vector<double>> b_pole = std::nullopt,
-      optional_ref<const std::vector<double>> a_pole_elec = std::nullopt,
-      optional_ref<const std::vector<double>> b_pole_elec = std::nullopt,
-      optional_ref<const std::vector<double>> custom = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<double>>>> r = std::nullopt,
+      std::optional<std::vector<double>> a_pole = std::nullopt,
+      std::optional<std::vector<double>> b_pole = std::nullopt,
+      std::optional<std::vector<double>> a_pole_elec = std::nullopt,
+      std::optional<std::vector<double>> b_pole_elec = std::nullopt,
+      std::optional<std::vector<double>> custom = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<double>>>> r = std::nullopt,
       std::optional<int> key = std::nullopt,
       std::optional<int> sub_key = std::nullopt,
       std::optional<int> ix_ele = std::nullopt,
@@ -18710,7 +18710,7 @@ public:
     if (rad_map)
       set_rad_map(rad_map->get());
     if (spin_taylor_ref_orb_in)
-      set_spin_taylor_ref_orb_in(spin_taylor_ref_orb_in->get());
+      set_spin_taylor_ref_orb_in(*spin_taylor_ref_orb_in);
     if (wake)
       set_wake(wake->get());
     if (map_ref_orb_in)
@@ -18722,19 +18722,19 @@ public:
     if (time_ref_orb_out)
       set_time_ref_orb_out(time_ref_orb_out->get());
     if (value)
-      set_value(value->get());
+      set_value(*value);
     if (old_value)
-      set_old_value(old_value->get());
+      set_old_value(*old_value);
     if (spin_q)
-      set_spin_q(spin_q->get());
+      set_spin_q(*spin_q);
     if (vec0)
-      set_vec0(vec0->get());
+      set_vec0(*vec0);
     if (mat6)
-      set_mat6(mat6->get());
+      set_mat6(*mat6);
     if (c_mat)
-      set_c_mat(c_mat->get());
+      set_c_mat(*c_mat);
     if (dc_mat_dpz)
-      set_dc_mat_dpz(dc_mat_dpz->get());
+      set_dc_mat_dpz(*dc_mat_dpz);
     if (gamma_c)
       set_gamma_c(*gamma_c);
     if (s_start)
@@ -18744,17 +18744,17 @@ public:
     if (ref_time)
       set_ref_time(*ref_time);
     if (a_pole)
-      set_a_pole(a_pole->get());
+      set_a_pole(*a_pole);
     if (b_pole)
-      set_b_pole(b_pole->get());
+      set_b_pole(*b_pole);
     if (a_pole_elec)
-      set_a_pole_elec(a_pole_elec->get());
+      set_a_pole_elec(*a_pole_elec);
     if (b_pole_elec)
-      set_b_pole_elec(b_pole_elec->get());
+      set_b_pole_elec(*b_pole_elec);
     if (custom)
-      set_custom(custom->get());
+      set_custom(*custom);
     if (r)
-      set_r(r->get());
+      set_r(*r);
     if (key)
       set_key(*key);
     if (sub_key)
@@ -19034,13 +19034,13 @@ public:
 
   explicit ComplexTaylorTermStruct(
       std::optional<std::complex<double>> coef = std::nullopt,
-      optional_ref<const std::vector<int>> expn = std::nullopt
+      std::optional<std::vector<int>> expn = std::nullopt
   )
       : FortranProxy() {
     if (coef)
       set_coef(*coef);
     if (expn)
-      set_expn(expn->get());
+      set_expn(*expn);
   }
 
   std::complex<double> coef() const; // 0D_NOT_complex
@@ -19202,14 +19202,14 @@ public:
       optional_ref<const CoordStruct> particle_start = std::nullopt,
       optional_ref<const BeamInitStruct> beam_init = std::nullopt,
       optional_ref<const PreTrackerStruct> pre_tracker = std::nullopt,
-      optional_ref<const std::vector<double>> custom = std::nullopt,
+      std::optional<std::vector<double>> custom = std::nullopt,
       std::optional<int> version = std::nullopt,
       std::optional<int> n_ele_track = std::nullopt,
       std::optional<int> n_ele_max = std::nullopt,
       std::optional<int> n_control_max = std::nullopt,
       std::optional<int> n_ic_max = std::nullopt,
       std::optional<int> input_taylor_order = std::nullopt,
-      optional_ref<const std::vector<int>> ic = std::nullopt,
+      std::optional<std::vector<int>> ic = std::nullopt,
       std::optional<int> photon_type = std::nullopt,
       std::optional<int> creation_hash = std::nullopt,
       std::optional<int> ramper_slave_bookkeeping = std::nullopt,
@@ -19245,7 +19245,7 @@ public:
     if (pre_tracker)
       set_pre_tracker(pre_tracker->get());
     if (custom)
-      set_custom(custom->get());
+      set_custom(*custom);
     if (version)
       set_version(*version);
     if (n_ele_track)
@@ -19259,7 +19259,7 @@ public:
     if (input_taylor_order)
       set_input_taylor_order(*input_taylor_order);
     if (ic)
-      set_ic(ic->get());
+      set_ic(*ic);
     if (photon_type)
       set_photon_type(*photon_type);
     if (creation_hash)
@@ -19346,7 +19346,7 @@ public:
   using FortranProxy::operator=;
 
   explicit BunchStruct(
-      optional_ref<const std::vector<int>> ix_z = std::nullopt,
+      std::optional<std::vector<int>> ix_z = std::nullopt,
       std::optional<double> charge_tot = std::nullopt,
       std::optional<double> charge_live = std::nullopt,
       std::optional<double> z_center = std::nullopt,
@@ -19362,7 +19362,7 @@ public:
   )
       : FortranProxy() {
     if (ix_z)
-      set_ix_z(ix_z->get());
+      set_ix_z(*ix_z);
     if (charge_tot)
       set_charge_tot(*charge_tot);
     if (charge_live)
@@ -19442,9 +19442,9 @@ public:
       optional_ref<const TwissStruct> a = std::nullopt,
       optional_ref<const TwissStruct> b = std::nullopt,
       optional_ref<const TwissStruct> c = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> sigma = std::nullopt,
-      optional_ref<const std::vector<double>> rel_max = std::nullopt,
-      optional_ref<const std::vector<double>> rel_min = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> sigma = std::nullopt,
+      std::optional<std::vector<double>> rel_max = std::nullopt,
+      std::optional<std::vector<double>> rel_min = std::nullopt,
       std::optional<double> s = std::nullopt,
       std::optional<double> t = std::nullopt,
       std::optional<double> sigma_t = std::nullopt,
@@ -19475,11 +19475,11 @@ public:
     if (c)
       set_c(c->get());
     if (sigma)
-      set_sigma(sigma->get());
+      set_sigma(*sigma);
     if (rel_max)
-      set_rel_max(rel_max->get());
+      set_rel_max(*rel_max);
     if (rel_min)
-      set_rel_min(rel_min->get());
+      set_rel_min(*rel_min);
     if (s)
       set_s(*s);
     if (t)
@@ -19819,13 +19819,13 @@ public:
   using FortranProxy::operator=;
 
   explicit NametableStruct(
-      optional_ref<const std::vector<int>> index = std::nullopt,
+      std::optional<std::vector<int>> index = std::nullopt,
       std::optional<int> n_min = std::nullopt,
       std::optional<int> n_max = std::nullopt
   )
       : FortranProxy() {
     if (index)
-      set_index(index->get());
+      set_index(*index);
     if (n_min)
       set_n_min(*n_min);
     if (n_max)
@@ -19858,17 +19858,17 @@ public:
   using FortranProxy::operator=;
 
   explicit TaoSpinDnDpzStruct(
-      optional_ref<const std::vector<double>> vec = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> partial = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> partial2 = std::nullopt
+      std::optional<std::vector<double>> vec = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> partial = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> partial2 = std::nullopt
   )
       : FortranProxy() {
     if (vec)
-      set_vec(vec->get());
+      set_vec(*vec);
     if (partial)
-      set_partial(partial->get());
+      set_partial(*partial);
     if (partial2)
-      set_partial2(partial2->get());
+      set_partial2(*partial2);
   }
 
   FArray1D<double> vec() const; // 1D_NOT_real
@@ -19929,17 +19929,17 @@ public:
   using FortranProxy::operator=;
 
   explicit SpinOrbitMap1Struct(
-      optional_ref<const std::vector<std::vector<double>>> orb_mat = std::nullopt,
-      optional_ref<const std::vector<double>> vec0 = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> spin_q = std::nullopt
+      std::optional<std::vector<std::vector<double>>> orb_mat = std::nullopt,
+      std::optional<std::vector<double>> vec0 = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> spin_q = std::nullopt
   )
       : FortranProxy() {
     if (orb_mat)
-      set_orb_mat(orb_mat->get());
+      set_orb_mat(*orb_mat);
     if (vec0)
-      set_vec0(vec0->get());
+      set_vec0(*vec0);
     if (spin_q)
-      set_spin_q(spin_q->get());
+      set_spin_q(*spin_q);
   }
 
   FArray2D<double> orb_mat() const; // 2D_NOT_real
@@ -19967,17 +19967,17 @@ public:
   using FortranProxy::operator=;
 
   explicit SpinAxisStruct(
-      optional_ref<const std::vector<double>> l = std::nullopt,
-      optional_ref<const std::vector<double>> n0 = std::nullopt,
-      optional_ref<const std::vector<double>> m = std::nullopt
+      std::optional<std::vector<double>> l = std::nullopt,
+      std::optional<std::vector<double>> n0 = std::nullopt,
+      std::optional<std::vector<double>> m = std::nullopt
   )
       : FortranProxy() {
     if (l)
-      set_l(l->get());
+      set_l(*l);
     if (n0)
-      set_n0(n0->get());
+      set_n0(*n0);
     if (m)
-      set_m(m->get());
+      set_m(*m);
   }
 
   FArray1D<double> l() const; // 1D_NOT_real
@@ -20006,14 +20006,14 @@ public:
 
   explicit PtcNormalFormStruct(
       optional_ref<const EleStruct> ele_origin = std::nullopt,
-      optional_ref<const std::vector<double>> orb0 = std::nullopt,
+      std::optional<std::vector<double>> orb0 = std::nullopt,
       std::optional<bool> valid_map = std::nullopt
   )
       : FortranProxy() {
     if (ele_origin)
       set_ele_origin(ele_origin->get());
     if (orb0)
-      set_orb0(orb0->get());
+      set_orb0(*orb0);
     if (valid_map)
       set_valid_map(*valid_map);
   }
@@ -20357,16 +20357,16 @@ public:
       optional_ref<const TaoGraphStruct> g = std::nullopt,
       optional_ref<const TaoHistogramStruct> hist = std::nullopt,
       optional_ref<const TaoCurveColorStruct> z_color = std::nullopt,
-      optional_ref<const std::vector<double>> x_line = std::nullopt,
-      optional_ref<const std::vector<double>> y_line = std::nullopt,
-      optional_ref<const std::vector<double>> y2_line = std::nullopt,
-      optional_ref<const std::vector<int>> ix_line = std::nullopt,
-      optional_ref<const std::vector<double>> x_symb = std::nullopt,
-      optional_ref<const std::vector<double>> y_symb = std::nullopt,
-      optional_ref<const std::vector<double>> z_symb = std::nullopt,
-      optional_ref<const std::vector<double>> err_symb = std::nullopt,
-      optional_ref<const std::vector<double>> symb_size = std::nullopt,
-      optional_ref<const std::vector<int>> ix_symb = std::nullopt,
+      std::optional<std::vector<double>> x_line = std::nullopt,
+      std::optional<std::vector<double>> y_line = std::nullopt,
+      std::optional<std::vector<double>> y2_line = std::nullopt,
+      std::optional<std::vector<int>> ix_line = std::nullopt,
+      std::optional<std::vector<double>> x_symb = std::nullopt,
+      std::optional<std::vector<double>> y_symb = std::nullopt,
+      std::optional<std::vector<double>> z_symb = std::nullopt,
+      std::optional<std::vector<double>> err_symb = std::nullopt,
+      std::optional<std::vector<double>> symb_size = std::nullopt,
+      std::optional<std::vector<int>> ix_symb = std::nullopt,
       std::optional<double> y_axis_scale_factor = std::nullopt,
       optional_ref<const QpLineStruct> line = std::nullopt,
       optional_ref<const QpSymbolStruct> symbol = std::nullopt,
@@ -20412,25 +20412,25 @@ public:
     if (z_color)
       set_z_color(z_color->get());
     if (x_line)
-      set_x_line(x_line->get());
+      set_x_line(*x_line);
     if (y_line)
-      set_y_line(y_line->get());
+      set_y_line(*y_line);
     if (y2_line)
-      set_y2_line(y2_line->get());
+      set_y2_line(*y2_line);
     if (ix_line)
-      set_ix_line(ix_line->get());
+      set_ix_line(*ix_line);
     if (x_symb)
-      set_x_symb(x_symb->get());
+      set_x_symb(*x_symb);
     if (y_symb)
-      set_y_symb(y_symb->get());
+      set_y_symb(*y_symb);
     if (z_symb)
-      set_z_symb(z_symb->get());
+      set_z_symb(*z_symb);
     if (err_symb)
-      set_err_symb(err_symb->get());
+      set_err_symb(*err_symb);
     if (symb_size)
-      set_symb_size(symb_size->get());
+      set_symb_size(*symb_size);
     if (ix_symb)
-      set_ix_symb(ix_symb->get());
+      set_ix_symb(*ix_symb);
     if (y_axis_scale_factor)
       set_y_axis_scale_factor(*y_axis_scale_factor);
     if (line)
@@ -20761,12 +20761,10 @@ public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit TaoLatSigmaStruct(
-      optional_ref<const std::vector<std::vector<double>>> mat = std::nullopt
-  )
+  explicit TaoLatSigmaStruct(std::optional<std::vector<std::vector<double>>> mat = std::nullopt)
       : FortranProxy() {
     if (mat)
-      set_mat(mat->get());
+      set_mat(*mat);
   }
 
   FArray2D<double> mat() const; // 2D_NOT_real
@@ -20791,20 +20789,20 @@ public:
 
   explicit TaoSpinEleStruct(
       optional_ref<const TaoSpinDnDpzStruct> dn_dpz = std::nullopt,
-      optional_ref<const std::vector<double>> orb_eigen_val = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> orb_eigen_vec = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> spin_eigen_vec = std::nullopt,
+      std::optional<std::vector<double>> orb_eigen_val = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> orb_eigen_vec = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> spin_eigen_vec = std::nullopt,
       std::optional<bool> valid = std::nullopt
   )
       : FortranProxy() {
     if (dn_dpz)
       set_dn_dpz(dn_dpz->get());
     if (orb_eigen_val)
-      set_orb_eigen_val(orb_eigen_val->get());
+      set_orb_eigen_val(*orb_eigen_val);
     if (orb_eigen_vec)
-      set_orb_eigen_vec(orb_eigen_vec->get());
+      set_orb_eigen_vec(*orb_eigen_vec);
     if (spin_eigen_vec)
-      set_spin_eigen_vec(spin_eigen_vec->get());
+      set_spin_eigen_vec(*spin_eigen_vec);
     if (valid)
       set_valid(*valid);
   }
@@ -20883,12 +20881,12 @@ public:
       std::optional<double> tune = std::nullopt,
       std::optional<double> pol_limit_st = std::nullopt,
       std::optional<double> pol_limit_dk = std::nullopt,
-      optional_ref<const std::vector<double>> pol_limit_dk_partial = std::nullopt,
-      optional_ref<const std::vector<double>> pol_limit_dk_partial2 = std::nullopt,
+      std::optional<std::vector<double>> pol_limit_dk_partial = std::nullopt,
+      std::optional<std::vector<double>> pol_limit_dk_partial2 = std::nullopt,
       std::optional<double> pol_rate_bks = std::nullopt,
       std::optional<double> depol_rate = std::nullopt,
-      optional_ref<const std::vector<double>> depol_rate_partial = std::nullopt,
-      optional_ref<const std::vector<double>> depol_rate_partial2 = std::nullopt,
+      std::optional<std::vector<double>> depol_rate_partial = std::nullopt,
+      std::optional<std::vector<double>> depol_rate_partial2 = std::nullopt,
       std::optional<double> integral_bn = std::nullopt,
       std::optional<double> integral_bdn = std::nullopt,
       std::optional<double> integral_1ns = std::nullopt,
@@ -20904,17 +20902,17 @@ public:
     if (pol_limit_dk)
       set_pol_limit_dk(*pol_limit_dk);
     if (pol_limit_dk_partial)
-      set_pol_limit_dk_partial(pol_limit_dk_partial->get());
+      set_pol_limit_dk_partial(*pol_limit_dk_partial);
     if (pol_limit_dk_partial2)
-      set_pol_limit_dk_partial2(pol_limit_dk_partial2->get());
+      set_pol_limit_dk_partial2(*pol_limit_dk_partial2);
     if (pol_rate_bks)
       set_pol_rate_bks(*pol_rate_bks);
     if (depol_rate)
       set_depol_rate(*depol_rate);
     if (depol_rate_partial)
-      set_depol_rate_partial(depol_rate_partial->get());
+      set_depol_rate_partial(*depol_rate_partial);
     if (depol_rate_partial2)
-      set_depol_rate_partial2(depol_rate_partial2->get());
+      set_depol_rate_partial2(*depol_rate_partial2);
     if (integral_bn)
       set_integral_bn(*integral_bn);
     if (integral_bdn)
@@ -21410,7 +21408,7 @@ public:
       optional_ref<const QpRectStruct> scale_margin = std::nullopt,
       std::optional<double> x_axis_scale_factor = std::nullopt,
       std::optional<double> symbol_size_scale = std::nullopt,
-      optional_ref<const std::vector<int>> box = std::nullopt,
+      std::optional<std::vector<int>> box = std::nullopt,
       std::optional<int> ix_branch = std::nullopt,
       std::optional<int> ix_universe = std::nullopt,
       std::optional<bool> clip = std::nullopt,
@@ -21462,7 +21460,7 @@ public:
     if (symbol_size_scale)
       set_symbol_size_scale(*symbol_size_scale);
     if (box)
-      set_box(box->get());
+      set_box(*box);
     if (ix_branch)
       set_ix_branch(*ix_branch);
     if (ix_universe)
@@ -21669,7 +21667,7 @@ public:
   explicit TaoPlotRegionStruct(
       std::optional<std::string> name = std::nullopt,
       optional_ref<const TaoPlotStruct> plot = std::nullopt,
-      optional_ref<const std::vector<double>> location = std::nullopt,
+      std::optional<std::vector<double>> location = std::nullopt,
       std::optional<bool> visible = std::nullopt,
       std::optional<bool> list_with_show_plot_command = std::nullopt,
       std::optional<bool> setup_done = std::nullopt
@@ -21680,7 +21678,7 @@ public:
     if (plot)
       set_plot(plot->get());
     if (location)
-      set_location(location->get());
+      set_location(*location);
     if (visible)
       set_visible(*visible);
     if (list_with_show_plot_command)
@@ -21756,7 +21754,7 @@ public:
       optional_ref<const TaoInitStruct> init = std::nullopt,
       optional_ref<const TaoCommonStruct> com = std::nullopt,
       optional_ref<const TaoPlotPageStruct> plot_page = std::nullopt,
-      optional_ref<const std::vector<int>> key = std::nullopt,
+      std::optional<std::vector<int>> key = std::nullopt,
       optional_ref<const TaoBuildingWallStruct> building_wall = std::nullopt,
       optional_ref<const TaoWaveStruct> wave = std::nullopt,
       std::optional<int> n_var_used = std::nullopt,
@@ -21773,7 +21771,7 @@ public:
     if (plot_page)
       set_plot_page(plot_page->get());
     if (key)
-      set_key(key->get());
+      set_key(*key);
     if (building_wall)
       set_building_wall(building_wall->get());
     if (wave)
@@ -22193,7 +22191,7 @@ public:
 
   explicit TaoDynamicApertureStruct(
       optional_ref<const ApertureParamStruct> param = std::nullopt,
-      optional_ref<const std::vector<double>> pz = std::nullopt,
+      std::optional<std::vector<double>> pz = std::nullopt,
       std::optional<double> ellipse_scale = std::nullopt,
       std::optional<double> a_emit = std::nullopt,
       std::optional<double> b_emit = std::nullopt
@@ -22202,7 +22200,7 @@ public:
     if (param)
       set_param(param->get());
     if (pz)
-      set_pz(pz->get());
+      set_pz(*pz);
     if (ellipse_scale)
       set_ellipse_scale(*ellipse_scale);
     if (a_emit)
@@ -22277,7 +22275,7 @@ public:
       std::optional<int> ix_ref = std::nullopt,
       std::optional<int> ix_uni = std::nullopt,
       std::optional<int> ix_branch = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> mat8 = std::nullopt
+      std::optional<std::vector<std::vector<double>>> mat8 = std::nullopt
   )
       : FortranProxy() {
     if (valid)
@@ -22299,7 +22297,7 @@ public:
     if (ix_branch)
       set_ix_branch(*ix_branch);
     if (mat8)
-      set_mat8(mat8->get());
+      set_mat8(*mat8);
   }
 
   bool valid() const; // 0D_NOT_logical
@@ -22796,7 +22794,7 @@ public:
       std::optional<int> type = std::nullopt,
       std::optional<std::string> name = std::nullopt,
       std::optional<double> scale = std::nullopt,
-      optional_ref<const std::vector<double>> value = std::nullopt
+      std::optional<std::vector<double>> value = std::nullopt
   )
       : FortranProxy() {
     if (type)
@@ -22806,7 +22804,7 @@ public:
     if (scale)
       set_scale(*scale);
     if (value)
-      set_value(value->get());
+      set_value(*value);
   }
 
   int type() const; // 0D_NOT_integer
@@ -24069,8 +24067,8 @@ public:
   using FortranProxy::operator=;
 
   explicit TaoCommonStruct(
-      optional_ref<const std::vector<std::vector<double>>> covar = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> alpha = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> covar = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> alpha = std::nullopt,
       std::optional<double> dummy_target = std::nullopt,
       std::optional<int> n_alias = std::nullopt,
       std::optional<int> cmd_file_level = std::nullopt,
@@ -24097,7 +24095,7 @@ public:
       std::optional<bool> print_to_terminal = std::nullopt,
       std::optional<bool> lattice_calc_done = std::nullopt,
       std::optional<bool> add_measurement_noise = std::nullopt,
-      optional_ref<const std::vector<bool>> is_err_message_printed = std::nullopt,
+      std::optional<std::vector<bool>> is_err_message_printed = std::nullopt,
       std::optional<bool> command_arg_has_been_executed = std::nullopt,
       std::optional<bool> all_merit_weights_positive = std::nullopt,
       std::optional<bool> multi_turn_orbit_is_plotted = std::nullopt,
@@ -24111,9 +24109,9 @@ public:
   )
       : FortranProxy() {
     if (covar)
-      set_covar(covar->get());
+      set_covar(*covar);
     if (alpha)
-      set_alpha(alpha->get());
+      set_alpha(*alpha);
     if (dummy_target)
       set_dummy_target(*dummy_target);
     if (n_alias)
@@ -24167,7 +24165,7 @@ public:
     if (add_measurement_noise)
       set_add_measurement_noise(*add_measurement_noise);
     if (is_err_message_printed)
-      set_is_err_message_printed(is_err_message_printed->get());
+      set_is_err_message_printed(*is_err_message_printed);
     if (command_arg_has_been_executed)
       set_command_arg_has_been_executed(*command_arg_has_been_executed);
     if (all_merit_weights_positive)
@@ -24295,7 +24293,7 @@ public:
       optional_ref<const TaoDrawingStruct> floor_plan = std::nullopt,
       optional_ref<const TaoDrawingStruct> lat_layout = std::nullopt,
       std::optional<std::string> plot_display_type = std::nullopt,
-      optional_ref<const std::vector<double>> size = std::nullopt,
+      std::optional<std::vector<double>> size = std::nullopt,
       std::optional<double> text_height = std::nullopt,
       std::optional<double> main_title_text_scale = std::nullopt,
       std::optional<double> graph_title_text_scale = std::nullopt,
@@ -24326,7 +24324,7 @@ public:
     if (plot_display_type)
       set_plot_display_type(*plot_display_type);
     if (size)
-      set_size(size->get());
+      set_size(*size);
     if (text_height)
       set_text_height(*text_height);
     if (main_title_text_scale)
@@ -24606,12 +24604,12 @@ public:
       std::optional<double> chi_a = std::nullopt,
       std::optional<double> chi_c = std::nullopt,
       std::optional<double> chi_ba = std::nullopt,
-      optional_ref<const std::vector<double>> amp_a = std::nullopt,
-      optional_ref<const std::vector<double>> amp_b = std::nullopt,
-      optional_ref<const std::vector<double>> amp_ba = std::nullopt,
-      optional_ref<const std::vector<double>> coef_a = std::nullopt,
-      optional_ref<const std::vector<double>> coef_b = std::nullopt,
-      optional_ref<const std::vector<double>> coef_ba = std::nullopt,
+      std::optional<std::vector<double>> amp_a = std::nullopt,
+      std::optional<std::vector<double>> amp_b = std::nullopt,
+      std::optional<std::vector<double>> amp_ba = std::nullopt,
+      std::optional<std::vector<double>> coef_a = std::nullopt,
+      std::optional<std::vector<double>> coef_b = std::nullopt,
+      std::optional<std::vector<double>> coef_ba = std::nullopt,
       std::optional<int> n_func = std::nullopt,
       std::optional<int> ix_a1 = std::nullopt,
       std::optional<int> ix_a2 = std::nullopt,
@@ -24624,7 +24622,7 @@ public:
       std::optional<int> n_a = std::nullopt,
       std::optional<int> n_b = std::nullopt,
       std::optional<int> i_curve_wrap_pt = std::nullopt,
-      optional_ref<const std::vector<int>> ix_data = std::nullopt,
+      std::optional<std::vector<int>> ix_data = std::nullopt,
       std::optional<int> n_kick = std::nullopt,
       optional_ref<const TaoGraphStruct> base_graph = std::nullopt,
       optional_ref<const TaoPlotRegionStruct> region = std::nullopt,
@@ -24668,17 +24666,17 @@ public:
     if (chi_ba)
       set_chi_ba(*chi_ba);
     if (amp_a)
-      set_amp_a(amp_a->get());
+      set_amp_a(*amp_a);
     if (amp_b)
-      set_amp_b(amp_b->get());
+      set_amp_b(*amp_b);
     if (amp_ba)
-      set_amp_ba(amp_ba->get());
+      set_amp_ba(*amp_ba);
     if (coef_a)
-      set_coef_a(coef_a->get());
+      set_coef_a(*coef_a);
     if (coef_b)
-      set_coef_b(coef_b->get());
+      set_coef_b(*coef_b);
     if (coef_ba)
-      set_coef_ba(coef_ba->get());
+      set_coef_ba(*coef_ba);
     if (n_func)
       set_n_func(*n_func);
     if (ix_a1)
@@ -24704,7 +24702,7 @@ public:
     if (i_curve_wrap_pt)
       set_i_curve_wrap_pt(*i_curve_wrap_pt);
     if (ix_data)
-      set_ix_data(ix_data->get());
+      set_ix_data(*ix_data);
     if (n_kick)
       set_n_kick(*n_kick);
     if (base_graph)
@@ -24918,7 +24916,7 @@ public:
       optional_ref<const TaoUniverseCalcStruct> calc = std::nullopt,
       optional_ref<const LatEleOrderStruct> ele_order = std::nullopt,
       optional_ref<const TaoSpinMapStruct> spin_map = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> dModel_dVar = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> dModel_dVar = std::nullopt,
       std::optional<int> ix_uni = std::nullopt,
       std::optional<int> n_d2_data_used = std::nullopt,
       std::optional<int> n_data_used = std::nullopt,
@@ -24948,7 +24946,7 @@ public:
     if (spin_map)
       set_spin_map(spin_map->get());
     if (dModel_dVar)
-      set_dModel_dVar(dModel_dVar->get());
+      set_dModel_dVar(*dModel_dVar);
     if (ix_uni)
       set_ix_uni(*ix_uni);
     if (n_d2_data_used)
@@ -25072,17 +25070,17 @@ public:
   using FortranProxy::operator=;
 
   explicit MadMapStruct(
-      optional_ref<const std::vector<double>> k = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> r = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<double>>>> t = std::nullopt
+      std::optional<std::vector<double>> k = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> r = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<double>>>> t = std::nullopt
   )
       : FortranProxy() {
     if (k)
-      set_k(k->get());
+      set_k(*k);
     if (r)
-      set_r(r->get());
+      set_r(*r);
     if (t)
-      set_t(t->get());
+      set_t(*t);
   }
 
   FArray1D<double> k() const; // 1D_NOT_real
@@ -25120,8 +25118,8 @@ public:
       std::optional<int> gauss_converter = std::nullopt,
       std::optional<double> gauss_sigma_cut = std::nullopt,
       std::optional<int64_t> in_sobseq = std::nullopt,
-      optional_ref<const std::vector<int64_t>> ix_sobseq = std::nullopt,
-      optional_ref<const std::vector<double>> x_sobseq = std::nullopt
+      std::optional<std::vector<int64_t>> ix_sobseq = std::nullopt,
+      std::optional<std::vector<double>> x_sobseq = std::nullopt
   )
       : FortranProxy() {
     if (ix)
@@ -25145,9 +25143,9 @@ public:
     if (in_sobseq)
       set_in_sobseq(*in_sobseq);
     if (ix_sobseq)
-      set_ix_sobseq(ix_sobseq->get());
+      set_ix_sobseq(*ix_sobseq);
     if (x_sobseq)
-      set_x_sobseq(x_sobseq->get());
+      set_x_sobseq(*x_sobseq);
   }
 
   int64_t ix() const; // 0D_NOT_integer8
@@ -25201,10 +25199,10 @@ public:
       std::optional<int> ix_hom_max = std::nullopt,
       std::optional<double> hom_voltage_max = std::nullopt,
       std::optional<double> time_at_wake_ele = std::nullopt,
-      optional_ref<const std::vector<double>> ave_orb = std::nullopt,
-      optional_ref<const std::vector<double>> rms_orb = std::nullopt,
-      optional_ref<const std::vector<double>> min_orb = std::nullopt,
-      optional_ref<const std::vector<double>> max_orb = std::nullopt,
+      std::optional<std::vector<double>> ave_orb = std::nullopt,
+      std::optional<std::vector<double>> rms_orb = std::nullopt,
+      std::optional<std::vector<double>> min_orb = std::nullopt,
+      std::optional<std::vector<double>> max_orb = std::nullopt,
       std::optional<int> n_orb = std::nullopt
   )
       : FortranProxy() {
@@ -25225,13 +25223,13 @@ public:
     if (time_at_wake_ele)
       set_time_at_wake_ele(*time_at_wake_ele);
     if (ave_orb)
-      set_ave_orb(ave_orb->get());
+      set_ave_orb(*ave_orb);
     if (rms_orb)
-      set_rms_orb(rms_orb->get());
+      set_rms_orb(*rms_orb);
     if (min_orb)
-      set_min_orb(min_orb->get());
+      set_min_orb(*min_orb);
     if (max_orb)
-      set_max_orb(max_orb->get());
+      set_max_orb(*max_orb);
     if (n_orb)
       set_n_orb(*n_orb);
   }
@@ -25281,7 +25279,7 @@ public:
   using FortranProxy::operator=;
 
   explicit BbuBeamStruct(
-      optional_ref<const std::vector<int>> ix_ele_bunch = std::nullopt,
+      std::optional<std::vector<int>> ix_ele_bunch = std::nullopt,
       std::optional<int> ix_bunch_head = std::nullopt,
       std::optional<int> ix_bunch_end = std::nullopt,
       std::optional<int> n_bunch_in_lat = std::nullopt,
@@ -25293,7 +25291,7 @@ public:
   )
       : FortranProxy() {
     if (ix_ele_bunch)
-      set_ix_ele_bunch(ix_ele_bunch->get());
+      set_ix_ele_bunch(*ix_ele_bunch);
     if (ix_bunch_head)
       set_ix_bunch_head(*ix_bunch_head);
     if (ix_bunch_end)
@@ -25384,7 +25382,7 @@ public:
       std::optional<bool> regression = std::nullopt,
       std::optional<bool> normalize_z_to_rf = std::nullopt,
       std::optional<bool> ramp_on = std::nullopt,
-      optional_ref<const std::vector<double>> ramp_pattern = std::nullopt,
+      std::optional<std::vector<double>> ramp_pattern = std::nullopt,
       std::optional<int> ramp_n_start = std::nullopt,
       std::optional<int> n_ramp_pattern = std::nullopt
   )
@@ -25456,7 +25454,7 @@ public:
     if (ramp_on)
       set_ramp_on(*ramp_on);
     if (ramp_pattern)
-      set_ramp_pattern(ramp_pattern->get());
+      set_ramp_pattern(*ramp_pattern);
     if (ramp_n_start)
       set_ramp_n_start(*ramp_n_start);
     if (n_ramp_pattern)
@@ -25746,77 +25744,71 @@ public:
 
   explicit AllEncompassingStruct(
       std::optional<double> real_rp_0d = std::nullopt,
-      optional_ref<const std::vector<double>> real_rp_1d = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> real_rp_2d = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_rp_3d = std::nullopt,
+      std::optional<std::vector<double>> real_rp_1d = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> real_rp_2d = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<double>>>> real_rp_3d = std::nullopt,
       std::optional<double> real_rp_0d_ptr = std::nullopt,
-      optional_ref<const std::vector<double>> real_rp_1d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> real_rp_2d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_rp_3d_ptr =
-          std::nullopt,
-      optional_ref<const std::vector<double>> real_rp_1d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> real_rp_2d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_rp_3d_alloc =
-          std::nullopt,
+      std::optional<std::vector<double>> real_rp_1d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> real_rp_2d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<double>>>> real_rp_3d_ptr = std::nullopt,
+      std::optional<std::vector<double>> real_rp_1d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> real_rp_2d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<double>>>> real_rp_3d_alloc = std::nullopt,
       std::optional<double> real_dp_0d = std::nullopt,
-      optional_ref<const std::vector<double>> real_dp_1d = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> real_dp_2d = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_dp_3d = std::nullopt,
+      std::optional<std::vector<double>> real_dp_1d = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> real_dp_2d = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<double>>>> real_dp_3d = std::nullopt,
       std::optional<double> real_dp_0d_ptr = std::nullopt,
-      optional_ref<const std::vector<double>> real_dp_1d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> real_dp_2d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_dp_3d_ptr =
-          std::nullopt,
-      optional_ref<const std::vector<double>> real_dp_1d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<double>>> real_dp_2d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<double>>>> real_dp_3d_alloc =
-          std::nullopt,
+      std::optional<std::vector<double>> real_dp_1d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> real_dp_2d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<double>>>> real_dp_3d_ptr = std::nullopt,
+      std::optional<std::vector<double>> real_dp_1d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<double>>> real_dp_2d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<double>>>> real_dp_3d_alloc = std::nullopt,
       std::optional<std::complex<double>> complex_dp_0d = std::nullopt,
-      optional_ref<const std::vector<std::complex<double>>> complex_dp_1d = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::complex<double>>>> complex_dp_2d =
+      std::optional<std::vector<std::complex<double>>> complex_dp_1d = std::nullopt,
+      std::optional<std::vector<std::vector<std::complex<double>>>> complex_dp_2d = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<std::complex<double>>>>> complex_dp_3d =
           std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>
-          complex_dp_3d = std::nullopt,
       std::optional<std::complex<double>> complex_dp_0d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::complex<double>>> complex_dp_1d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::complex<double>>>> complex_dp_2d_ptr =
+      std::optional<std::vector<std::complex<double>>> complex_dp_1d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<std::complex<double>>>> complex_dp_2d_ptr =
           std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>
-          complex_dp_3d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::complex<double>>> complex_dp_1d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::complex<double>>>> complex_dp_2d_alloc =
+      std::optional<std::vector<std::vector<std::vector<std::complex<double>>>>> complex_dp_3d_ptr =
           std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>
+      std::optional<std::vector<std::complex<double>>> complex_dp_1d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<std::complex<double>>>> complex_dp_2d_alloc =
+          std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<std::complex<double>>>>>
           complex_dp_3d_alloc = std::nullopt,
       std::optional<int> int_0d = std::nullopt,
-      optional_ref<const std::vector<int>> int_1d = std::nullopt,
-      optional_ref<const std::vector<std::vector<int>>> int_2d = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<int>>>> int_3d = std::nullopt,
+      std::optional<std::vector<int>> int_1d = std::nullopt,
+      std::optional<std::vector<std::vector<int>>> int_2d = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<int>>>> int_3d = std::nullopt,
       std::optional<int> int_0d_ptr = std::nullopt,
-      optional_ref<const std::vector<int>> int_1d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<int>>> int_2d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<int>>>> int_3d_ptr = std::nullopt,
-      optional_ref<const std::vector<int>> int_1d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<int>>> int_2d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<int>>>> int_3d_alloc = std::nullopt,
+      std::optional<std::vector<int>> int_1d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<int>>> int_2d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<int>>>> int_3d_ptr = std::nullopt,
+      std::optional<std::vector<int>> int_1d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<int>>> int_2d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<int>>>> int_3d_alloc = std::nullopt,
       std::optional<int64_t> int8_0d = std::nullopt,
-      optional_ref<const std::vector<int64_t>> int8_1d = std::nullopt,
-      optional_ref<const std::vector<std::vector<int64_t>>> int8_2d = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<int64_t>>>> int8_3d = std::nullopt,
+      std::optional<std::vector<int64_t>> int8_1d = std::nullopt,
+      std::optional<std::vector<std::vector<int64_t>>> int8_2d = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<int64_t>>>> int8_3d = std::nullopt,
       std::optional<int64_t> int8_0d_ptr = std::nullopt,
-      optional_ref<const std::vector<int64_t>> int8_1d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<int64_t>>> int8_2d_ptr = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<int64_t>>>> int8_3d_ptr = std::nullopt,
-      optional_ref<const std::vector<int64_t>> int8_1d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<int64_t>>> int8_2d_alloc = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<int64_t>>>> int8_3d_alloc =
-          std::nullopt,
+      std::optional<std::vector<int64_t>> int8_1d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<int64_t>>> int8_2d_ptr = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<int64_t>>>> int8_3d_ptr = std::nullopt,
+      std::optional<std::vector<int64_t>> int8_1d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<int64_t>>> int8_2d_alloc = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<int64_t>>>> int8_3d_alloc = std::nullopt,
       std::optional<bool> logical_0d = std::nullopt,
-      optional_ref<const std::vector<bool>> logical_1d = std::nullopt,
-      optional_ref<const std::vector<std::vector<bool>>> logical_2d = std::nullopt,
-      optional_ref<const std::vector<std::vector<std::vector<bool>>>> logical_3d = std::nullopt,
+      std::optional<std::vector<bool>> logical_1d = std::nullopt,
+      std::optional<std::vector<std::vector<bool>>> logical_2d = std::nullopt,
+      std::optional<std::vector<std::vector<std::vector<bool>>>> logical_3d = std::nullopt,
       std::optional<bool> logical_0d_ptr = std::nullopt,
-      optional_ref<const std::vector<bool>> logical_1d_ptr = std::nullopt,
+      std::optional<std::vector<bool>> logical_1d_ptr = std::nullopt,
       optional_ref<const TestSubStruct> type_0d = std::nullopt,
       optional_ref<const TestSubStruct> type_0d_ptr = std::nullopt
   )
@@ -25824,125 +25816,125 @@ public:
     if (real_rp_0d)
       set_real_rp_0d(*real_rp_0d);
     if (real_rp_1d)
-      set_real_rp_1d(real_rp_1d->get());
+      set_real_rp_1d(*real_rp_1d);
     if (real_rp_2d)
-      set_real_rp_2d(real_rp_2d->get());
+      set_real_rp_2d(*real_rp_2d);
     if (real_rp_3d)
-      set_real_rp_3d(real_rp_3d->get());
+      set_real_rp_3d(*real_rp_3d);
     if (real_rp_0d_ptr)
       set_real_rp_0d_ptr(*real_rp_0d_ptr);
     if (real_rp_1d_ptr)
-      set_real_rp_1d_ptr(real_rp_1d_ptr->get());
+      set_real_rp_1d_ptr(*real_rp_1d_ptr);
     if (real_rp_2d_ptr)
-      set_real_rp_2d_ptr(real_rp_2d_ptr->get());
+      set_real_rp_2d_ptr(*real_rp_2d_ptr);
     if (real_rp_3d_ptr)
-      set_real_rp_3d_ptr(real_rp_3d_ptr->get());
+      set_real_rp_3d_ptr(*real_rp_3d_ptr);
     if (real_rp_1d_alloc)
-      set_real_rp_1d_alloc(real_rp_1d_alloc->get());
+      set_real_rp_1d_alloc(*real_rp_1d_alloc);
     if (real_rp_2d_alloc)
-      set_real_rp_2d_alloc(real_rp_2d_alloc->get());
+      set_real_rp_2d_alloc(*real_rp_2d_alloc);
     if (real_rp_3d_alloc)
-      set_real_rp_3d_alloc(real_rp_3d_alloc->get());
+      set_real_rp_3d_alloc(*real_rp_3d_alloc);
     if (real_dp_0d)
       set_real_dp_0d(*real_dp_0d);
     if (real_dp_1d)
-      set_real_dp_1d(real_dp_1d->get());
+      set_real_dp_1d(*real_dp_1d);
     if (real_dp_2d)
-      set_real_dp_2d(real_dp_2d->get());
+      set_real_dp_2d(*real_dp_2d);
     if (real_dp_3d)
-      set_real_dp_3d(real_dp_3d->get());
+      set_real_dp_3d(*real_dp_3d);
     if (real_dp_0d_ptr)
       set_real_dp_0d_ptr(*real_dp_0d_ptr);
     if (real_dp_1d_ptr)
-      set_real_dp_1d_ptr(real_dp_1d_ptr->get());
+      set_real_dp_1d_ptr(*real_dp_1d_ptr);
     if (real_dp_2d_ptr)
-      set_real_dp_2d_ptr(real_dp_2d_ptr->get());
+      set_real_dp_2d_ptr(*real_dp_2d_ptr);
     if (real_dp_3d_ptr)
-      set_real_dp_3d_ptr(real_dp_3d_ptr->get());
+      set_real_dp_3d_ptr(*real_dp_3d_ptr);
     if (real_dp_1d_alloc)
-      set_real_dp_1d_alloc(real_dp_1d_alloc->get());
+      set_real_dp_1d_alloc(*real_dp_1d_alloc);
     if (real_dp_2d_alloc)
-      set_real_dp_2d_alloc(real_dp_2d_alloc->get());
+      set_real_dp_2d_alloc(*real_dp_2d_alloc);
     if (real_dp_3d_alloc)
-      set_real_dp_3d_alloc(real_dp_3d_alloc->get());
+      set_real_dp_3d_alloc(*real_dp_3d_alloc);
     if (complex_dp_0d)
       set_complex_dp_0d(*complex_dp_0d);
     if (complex_dp_1d)
-      set_complex_dp_1d(complex_dp_1d->get());
+      set_complex_dp_1d(*complex_dp_1d);
     if (complex_dp_2d)
-      set_complex_dp_2d(complex_dp_2d->get());
+      set_complex_dp_2d(*complex_dp_2d);
     if (complex_dp_3d)
-      set_complex_dp_3d(complex_dp_3d->get());
+      set_complex_dp_3d(*complex_dp_3d);
     if (complex_dp_0d_ptr)
       set_complex_dp_0d_ptr(*complex_dp_0d_ptr);
     if (complex_dp_1d_ptr)
-      set_complex_dp_1d_ptr(complex_dp_1d_ptr->get());
+      set_complex_dp_1d_ptr(*complex_dp_1d_ptr);
     if (complex_dp_2d_ptr)
-      set_complex_dp_2d_ptr(complex_dp_2d_ptr->get());
+      set_complex_dp_2d_ptr(*complex_dp_2d_ptr);
     if (complex_dp_3d_ptr)
-      set_complex_dp_3d_ptr(complex_dp_3d_ptr->get());
+      set_complex_dp_3d_ptr(*complex_dp_3d_ptr);
     if (complex_dp_1d_alloc)
-      set_complex_dp_1d_alloc(complex_dp_1d_alloc->get());
+      set_complex_dp_1d_alloc(*complex_dp_1d_alloc);
     if (complex_dp_2d_alloc)
-      set_complex_dp_2d_alloc(complex_dp_2d_alloc->get());
+      set_complex_dp_2d_alloc(*complex_dp_2d_alloc);
     if (complex_dp_3d_alloc)
-      set_complex_dp_3d_alloc(complex_dp_3d_alloc->get());
+      set_complex_dp_3d_alloc(*complex_dp_3d_alloc);
     if (int_0d)
       set_int_0d(*int_0d);
     if (int_1d)
-      set_int_1d(int_1d->get());
+      set_int_1d(*int_1d);
     if (int_2d)
-      set_int_2d(int_2d->get());
+      set_int_2d(*int_2d);
     if (int_3d)
-      set_int_3d(int_3d->get());
+      set_int_3d(*int_3d);
     if (int_0d_ptr)
       set_int_0d_ptr(*int_0d_ptr);
     if (int_1d_ptr)
-      set_int_1d_ptr(int_1d_ptr->get());
+      set_int_1d_ptr(*int_1d_ptr);
     if (int_2d_ptr)
-      set_int_2d_ptr(int_2d_ptr->get());
+      set_int_2d_ptr(*int_2d_ptr);
     if (int_3d_ptr)
-      set_int_3d_ptr(int_3d_ptr->get());
+      set_int_3d_ptr(*int_3d_ptr);
     if (int_1d_alloc)
-      set_int_1d_alloc(int_1d_alloc->get());
+      set_int_1d_alloc(*int_1d_alloc);
     if (int_2d_alloc)
-      set_int_2d_alloc(int_2d_alloc->get());
+      set_int_2d_alloc(*int_2d_alloc);
     if (int_3d_alloc)
-      set_int_3d_alloc(int_3d_alloc->get());
+      set_int_3d_alloc(*int_3d_alloc);
     if (int8_0d)
       set_int8_0d(*int8_0d);
     if (int8_1d)
-      set_int8_1d(int8_1d->get());
+      set_int8_1d(*int8_1d);
     if (int8_2d)
-      set_int8_2d(int8_2d->get());
+      set_int8_2d(*int8_2d);
     if (int8_3d)
-      set_int8_3d(int8_3d->get());
+      set_int8_3d(*int8_3d);
     if (int8_0d_ptr)
       set_int8_0d_ptr(*int8_0d_ptr);
     if (int8_1d_ptr)
-      set_int8_1d_ptr(int8_1d_ptr->get());
+      set_int8_1d_ptr(*int8_1d_ptr);
     if (int8_2d_ptr)
-      set_int8_2d_ptr(int8_2d_ptr->get());
+      set_int8_2d_ptr(*int8_2d_ptr);
     if (int8_3d_ptr)
-      set_int8_3d_ptr(int8_3d_ptr->get());
+      set_int8_3d_ptr(*int8_3d_ptr);
     if (int8_1d_alloc)
-      set_int8_1d_alloc(int8_1d_alloc->get());
+      set_int8_1d_alloc(*int8_1d_alloc);
     if (int8_2d_alloc)
-      set_int8_2d_alloc(int8_2d_alloc->get());
+      set_int8_2d_alloc(*int8_2d_alloc);
     if (int8_3d_alloc)
-      set_int8_3d_alloc(int8_3d_alloc->get());
+      set_int8_3d_alloc(*int8_3d_alloc);
     if (logical_0d)
       set_logical_0d(*logical_0d);
     if (logical_1d)
-      set_logical_1d(logical_1d->get());
+      set_logical_1d(*logical_1d);
     if (logical_2d)
-      set_logical_2d(logical_2d->get());
+      set_logical_2d(*logical_2d);
     if (logical_3d)
-      set_logical_3d(logical_3d->get());
+      set_logical_3d(*logical_3d);
     if (logical_0d_ptr)
       set_logical_0d_ptr(*logical_0d_ptr);
     if (logical_1d_ptr)
-      set_logical_1d_ptr(logical_1d_ptr->get());
+      set_logical_1d_ptr(*logical_1d_ptr);
     if (type_0d)
       set_type_0d(type_0d->get());
     if (type_0d_ptr)

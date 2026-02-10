@@ -13,7 +13,7 @@ namespace py = pybind11;
 void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>,
              optional_ref<const TwissStruct>,
              optional_ref<const TwissStruct>,
              optional_ref<const TwissStruct>,
@@ -188,9 +188,9 @@ void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
 void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>,
-             optional_ref<const std::vector<std::vector<std::vector<double>>>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<std::vector<double>>>>>(),
          py::arg("k") = py::none(),
          py::arg("r") = py::none(),
          py::arg("t") = py::none()

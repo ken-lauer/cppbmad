@@ -11,7 +11,7 @@ namespace py = pybind11;
 // =============================================================================
 // target_point_struct
 void init_target_point_struct(py::module &m, py::class_<TargetPointStruct> &cls) {
-  cls.def(py::init<optional_ref<const std::vector<double>>>(), py::arg("r") = py::none())
+  cls.def(py::init<std::optional<std::vector<double>>>(), py::arg("r") = py::none())
       .def_property("r", &TargetPointStruct::r, &TargetPointStruct::set_r, "(x, y, z)")
       .def_static(
           "new_array1d",
@@ -97,7 +97,7 @@ void init_taylor_struct(py::module &m, py::class_<TaylorStruct> &cls) {
 // taylor_term_struct
 void init_taylor_term_struct(py::module &m, py::class_<TaylorTermStruct> &cls) {
   cls.def(
-         py::init<std::optional<double>, optional_ref<const std::vector<int>>>(),
+         py::init<std::optional<double>, std::optional<std::vector<int>>>(),
          py::arg("coef") = py::none(),
          py::arg("expn") = py::none()
   )
@@ -150,8 +150,8 @@ void init_track_point_struct(py::module &m, py::class_<TrackPointStruct> &cls) {
              optional_ref<const CoordStruct>,
              optional_ref<const EmFieldStruct>,
              optional_ref<const StrongBeamStruct>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>>(),
          py::arg("s_lab") = py::none(),
          py::arg("s_body") = py::none(),
          py::arg("orb") = py::none(),
@@ -380,8 +380,8 @@ void init_twiss_struct(py::module &m, py::class_<TwissStruct> &cls) {
 void init_tricubic_cmplx_coef_struct(py::module &m, py::class_<TricubicCmplxCoefStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<std::vector<std::vector<std::complex<double>>>>>,
-             optional_ref<const std::vector<int>>>(),
+             std::optional<std::vector<std::vector<std::vector<std::complex<double>>>>>,
+             std::optional<std::vector<int>>>(),
          py::arg("coef") = py::none(),
          py::arg("i_box") = py::none()
   )
@@ -864,8 +864,8 @@ void init_tao_cmd_history_struct(py::module &m, py::class_<TaoCmdHistoryStruct> 
 void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<std::vector<double>>>,
-             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>,
              std::optional<double>,
              std::optional<int>,
              std::optional<int>,
@@ -892,7 +892,7 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
-             optional_ref<const std::vector<bool>>,
+             std::optional<std::vector<bool>>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
@@ -1289,16 +1289,16 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
              optional_ref<const TaoGraphStruct>,
              optional_ref<const TaoHistogramStruct>,
              optional_ref<const TaoCurveColorStruct>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<int>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<int>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<int>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<int>>,
              std::optional<double>,
              optional_ref<const QpLineStruct>,
              optional_ref<const QpSymbolStruct>,
@@ -2243,7 +2243,7 @@ void init_tao_dynamic_aperture_struct(py::module &m, py::class_<TaoDynamicApertu
   cls.def(
          py::init<
              optional_ref<const ApertureParamStruct>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>>(),
@@ -2477,7 +2477,7 @@ void init_tao_eval_node_struct(py::module &m, py::class_<TaoEvalNodeStruct> &cls
              std::optional<int>,
              std::optional<std::string>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>>(),
          py::arg("type") = py::none(),
          py::arg("name") = py::none(),
          py::arg("scale") = py::none(),
@@ -3309,7 +3309,7 @@ void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
              optional_ref<const QpRectStruct>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<int>>,
+             std::optional<std::vector<int>>,
              std::optional<int>,
              std::optional<int>,
              std::optional<bool>,
@@ -3970,10 +3970,7 @@ void init_tao_init_struct(py::module &m, py::class_<TaoInitStruct> &cls) {
 // =============================================================================
 // tao_lat_sigma_struct
 void init_tao_lat_sigma_struct(py::module &m, py::class_<TaoLatSigmaStruct> &cls) {
-  cls.def(
-         py::init<optional_ref<const std::vector<std::vector<double>>>>(),
-         py::arg("mat") = py::none()
-  )
+  cls.def(py::init<std::optional<std::vector<std::vector<double>>>>(), py::arg("mat") = py::none())
       .def_property("mat", &TaoLatSigmaStruct::mat, &TaoLatSigmaStruct::set_mat)
       .def_static(
           "new_array1d",
@@ -4564,7 +4561,7 @@ void init_tao_plot_page_struct(py::module &m, py::class_<TaoPlotPageStruct> &cls
              optional_ref<const TaoDrawingStruct>,
              optional_ref<const TaoDrawingStruct>,
              std::optional<std::string>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -4762,7 +4759,7 @@ void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> 
          py::init<
              std::optional<std::string>,
              optional_ref<const TaoPlotStruct>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>>(),
@@ -5110,9 +5107,9 @@ void init_tao_shape_pattern_struct(py::module &m, py::class_<TaoShapePatternStru
 void init_tao_spin_dn_dpz_struct(py::module &m, py::class_<TaoSpinDnDpzStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>,
-             optional_ref<const std::vector<std::vector<double>>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>>(),
          py::arg("vec") = py::none(),
          py::arg("partial") = py::none(),
          py::arg("partial2") = py::none()
@@ -5163,9 +5160,9 @@ void init_tao_spin_ele_struct(py::module &m, py::class_<TaoSpinEleStruct> &cls) 
   cls.def(
          py::init<
              optional_ref<const TaoSpinDnDpzStruct>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>,
-             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>,
              std::optional<bool>>(),
          py::arg("dn_dpz") = py::none(),
          py::arg("orb_eigen_val") = py::none(),
@@ -5243,7 +5240,7 @@ void init_tao_spin_map_struct(py::module &m, py::class_<TaoSpinMapStruct> &cls) 
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
-             optional_ref<const std::vector<std::vector<double>>>>(),
+             std::optional<std::vector<std::vector<double>>>>(),
          py::arg("valid") = py::none(),
          py::arg("map1") = py::none(),
          py::arg("axis_input") = py::none(),
@@ -5304,12 +5301,12 @@ void init_tao_spin_polarization_struct(py::module &m, py::class_<TaoSpinPolariza
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -5453,7 +5450,7 @@ void init_tao_super_universe_struct(py::module &m, py::class_<TaoSuperUniverseSt
              optional_ref<const TaoInitStruct>,
              optional_ref<const TaoCommonStruct>,
              optional_ref<const TaoPlotPageStruct>,
-             optional_ref<const std::vector<int>>,
+             std::optional<std::vector<int>>,
              optional_ref<const TaoBuildingWallStruct>,
              optional_ref<const TaoWaveStruct>,
              std::optional<int>,
@@ -5801,7 +5798,7 @@ void init_tao_universe_struct(py::module &m, py::class_<TaoUniverseStruct> &cls)
              optional_ref<const TaoUniverseCalcStruct>,
              optional_ref<const LatEleOrderStruct>,
              optional_ref<const TaoSpinMapStruct>,
-             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -6497,12 +6494,12 @@ void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -6515,7 +6512,7 @@ void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
-             optional_ref<const std::vector<int>>,
+             std::optional<std::vector<int>>,
              std::optional<int>,
              optional_ref<const TaoGraphStruct>,
              optional_ref<const TaoPlotRegionStruct>,

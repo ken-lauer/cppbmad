@@ -244,11 +244,11 @@ void init_rad_map_ele_struct(py::module &m, py::class_<RadMapEleStruct> &cls) {
 void init_rad_map_struct(py::module &m, py::class_<RadMapStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>,
-             optional_ref<const std::vector<std::vector<double>>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>>(),
          py::arg("ref_orb") = py::none(),
          py::arg("damp_dmat") = py::none(),
          py::arg("xfer_damp_vec") = py::none(),
@@ -593,8 +593,8 @@ void init_random_state_struct(py::module &m, py::class_<RandomStateStruct> &cls)
              std::optional<int>,
              std::optional<double>,
              std::optional<int64_t>,
-             optional_ref<const std::vector<int64_t>>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<int64_t>>,
+             std::optional<std::vector<double>>>(),
          py::arg("ix") = py::none(),
          py::arg("iy") = py::none(),
          py::arg("number_stored") = py::none(),

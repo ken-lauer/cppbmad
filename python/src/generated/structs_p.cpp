@@ -23,7 +23,7 @@ void init_photon_element_struct(py::module &m, py::class_<PhotonElementStruct> &
              std::optional<int>,
              optional_ref<const PhotonReflectTableStruct>,
              optional_ref<const PhotonReflectTableStruct>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>>(),
          py::arg("curvature") = py::none(),
          py::arg("target") = py::none(),
          py::arg("material") = py::none(),
@@ -117,8 +117,8 @@ void init_photon_material_struct(py::module &m, py::class_<PhotonMaterialStruct>
              std::optional<std::complex<double>>,
              std::optional<std::complex<double>>,
              std::optional<std::complex<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>>(),
          py::arg("f0_m1") = py::none(),
          py::arg("f0_m2") = py::none(),
          py::arg("f_0") = py::none(),
@@ -277,12 +277,12 @@ void init_photon_reflect_surface_struct(
 void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTableStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>>(),
          py::arg("angle") = py::none(),
          py::arg("energy") = py::none(),
          py::arg("p_reflect") = py::none(),
@@ -416,8 +416,8 @@ void init_photon_target_struct(py::module &m, py::class_<PhotonTargetStruct> &cl
 void init_pixel_detec_struct(py::module &m, py::class_<PixelDetecStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<int64_t>,
              std::optional<int64_t>,
              std::optional<int64_t>>(),
@@ -480,10 +480,10 @@ void init_pixel_pt_struct(py::module &m, py::class_<PixelPtStruct> &cls) {
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>>(),
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>>(),
          py::arg("n_photon") = py::none(),
          py::arg("E_x") = py::none(),
          py::arg("E_y") = py::none(),
@@ -600,7 +600,7 @@ void init_ptc_normal_form_struct(py::module &m, py::class_<PtcNormalFormStruct> 
   cls.def(
          py::init<
              optional_ref<const EleStruct>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<bool>>(),
          py::arg("ele_origin") = py::none(),
          py::arg("orb0") = py::none(),

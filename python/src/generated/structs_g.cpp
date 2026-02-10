@@ -16,7 +16,7 @@ void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
-             optional_ref<const std::vector<std::vector<double>>>>(),
+             std::optional<std::vector<std::vector<double>>>>(),
          py::arg("m") = py::none(),
          py::arg("sincos") = py::none(),
          py::arg("n_deriv_max") = py::none(),
@@ -85,7 +85,7 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
              std::optional<int>,
              std::optional<int>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<int>,
              std::optional<bool>>(),
@@ -288,8 +288,8 @@ void init_grid_beam_init_struct(py::module &m, py::class_<GridBeamInitStruct> &c
 void init_grid_field_pt1_struct(py::module &m, py::class_<GridFieldPt1Struct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<std::complex<double>>>,
-             optional_ref<const std::vector<std::complex<double>>>>(),
+             std::optional<std::vector<std::complex<double>>>,
+             std::optional<std::vector<std::complex<double>>>>(),
          py::arg("E") = py::none(),
          py::arg("B") = py::none()
   )
@@ -371,8 +371,8 @@ void init_grid_field_struct(py::module &m, py::class_<GridFieldStruct> &cls) {
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<bool>,
              optional_ref<const GridFieldPtStruct>>(),
          py::arg("geometry") = py::none(),

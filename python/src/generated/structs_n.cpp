@@ -13,7 +13,7 @@ namespace py = pybind11;
 void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -117,7 +117,7 @@ void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls)
 // nametable_struct
 void init_nametable_struct(py::module &m, py::class_<NametableStruct> &cls) {
   cls.def(
-         py::init<optional_ref<const std::vector<int>>, std::optional<int>, std::optional<int>>(),
+         py::init<std::optional<std::vector<int>>, std::optional<int>, std::optional<int>>(),
          py::arg("index") = py::none(),
          py::arg("n_min") = py::none(),
          py::arg("n_max") = py::none()

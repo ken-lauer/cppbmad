@@ -13,8 +13,8 @@ namespace py = pybind11;
 void init_floor_position_struct(py::module &m, py::class_<FloorPositionStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<std::vector<double>>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>>(),

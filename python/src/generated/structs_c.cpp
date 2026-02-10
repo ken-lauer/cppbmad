@@ -14,7 +14,7 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
   cls.def(
          py::init<
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
@@ -267,7 +267,7 @@ void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &
 // complex_taylor_term_struct
 void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTermStruct> &cls) {
   cls.def(
-         py::init<std::optional<std::complex<double>>, optional_ref<const std::vector<int>>>(),
+         py::init<std::optional<std::complex<double>>, std::optional<std::vector<int>>>(),
          py::arg("coef") = py::none(),
          py::arg("expn") = py::none()
   )
@@ -317,7 +317,7 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
 void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<std::string>,
              std::optional<std::string>,
              std::optional<bool>>(),
@@ -389,7 +389,7 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
   cls.def(
          py::init<
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              optional_ref<const LatEleLocStruct>,
              optional_ref<const LatEleLocStruct>,
              std::optional<std::string>,
@@ -521,7 +521,7 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
 // =============================================================================
 // controller_struct
 void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
-  cls.def(py::init<optional_ref<const std::vector<double>>>(), py::arg("x_knot") = py::none())
+  cls.def(py::init<std::optional<std::vector<double>>>(), py::arg("x_knot") = py::none())
       .def_property_readonly("var", &ControllerStruct::var)
       .def_property_readonly("ramp", &ControllerStruct::ramp, "For ramper lord elements")
       .def_property_readonly(
@@ -598,12 +598,12 @@ void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
 void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
   cls.def(
          py::init<
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<long double>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -800,7 +800,7 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
              std::optional<int>,
              std::optional<int>,
              std::optional<double>,
-             optional_ref<const std::vector<double>>,
+             std::optional<std::vector<double>>,
              optional_ref<const CylindricalMapTermStruct>>(),
          py::arg("m") = py::none(),
          py::arg("harmonic") = py::none(),
