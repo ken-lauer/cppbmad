@@ -14,14 +14,10 @@ WALL_ROOT = TESTS_ROOT / "data" / "wall_generator"
 
 
 @pytest.fixture
-def lattice() -> pybmad.LatStruct:
+def branch() -> pybmad.BranchStruct:
     res = pybmad.bmad_parser(str(WALL_ROOT / "lat.bmad"))
     assert not res.err_flag
-    return res.lat
-
-
-@pytest.fixture
-def branch(lattice: pybmad.LatStruct) -> pybmad.BranchStruct:
+    lattice = res.lat
     branch = lattice.branch[0]
     assert branch.wall3d
     return branch

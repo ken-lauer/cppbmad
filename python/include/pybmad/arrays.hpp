@@ -392,8 +392,9 @@ void bind_1d_type_array_pair(
 
     py::list list;
     for (size_t i = 0; i < slice_length; ++i) {
-      auto item = view.at(start);
-      py::object py_item = py::cast(item, py::return_value_policy::reference_internal, self_py);
+      py::object py_item = py::cast(view.at(start), py::return_value_policy::move);
+      // tie the item back to AllocClass's lifetime
+      py::detail::keep_alive_impl(py_item, self_py);
       list.append(py_item);
       start += step;
     }

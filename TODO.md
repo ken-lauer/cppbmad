@@ -1,2 +1,4 @@
 - [ ] intent="inout" strings
 - [ ] intent="out" strings arbitrarily set to 4k chars (!)
+- [ ] pybind11: `py::keep_alive<0, 1>()` usage needs a second look and could be simplified, possibly.
+  - Regression tests: `python/tests/test_keepalive.py`

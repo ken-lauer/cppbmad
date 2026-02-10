@@ -418,17 +418,17 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
         docstring = f', "{comment}"' if comment else ""
 
         getter = f"&{struct.cpp_class}::{arg.c_name}"
-        keepalive = ", py::keep_alive<0, 1>()" if arg.needs_python_keepalive else ""
+
+        if arg.needs_python_keepalive:
+            getter_fn = f"py::cpp_function({getter}, py::keep_alive<0, 1>())"
+        else:
+            getter_fn = getter
 
         if tpl.fortran_setter:
             setter = f"&{struct.cpp_class}::set_{arg.c_name}"
-            code_lines.append(
-                f'        .def_property("{arg.python_name}", {getter}, {setter}{keepalive}{docstring})'
-            )
+            code_lines.append(f'        .def_property("{arg.python_name}", {getter_fn}, {setter}{docstring})')
         else:
-            code_lines.append(
-                f'        .def_property_readonly("{arg.python_name}", {getter}{keepalive}{docstring})'
-            )
+            code_lines.append(f'        .def_property_readonly("{arg.python_name}", {getter_fn}{docstring})')
 
     if 1 in used_array_dims:
         container_cls = f"{struct.cpp_class}Alloc1D"

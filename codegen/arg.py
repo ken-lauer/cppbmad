@@ -84,7 +84,7 @@ class Argument:
 
     @property
     def needs_python_keepalive(self) -> bool:
-        return bool(len(self.array) or self.pointer_type in ("PTR", "ALLOC") or self.full_type.type == "type")
+        return bool(len(self.array) or self.full_type.type == "type")
 
     @property
     def is_pointer(self) -> bool:
