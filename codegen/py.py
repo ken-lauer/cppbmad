@@ -759,6 +759,9 @@ def generate_init_dot_py(
         for enum in per_file_enums.values():
             add_name(enum.name, "_enums")
 
+    add_name("EleAttribute", "_enums")
+    add_name("EleKey", "_enums")
+
     nl = "\n"
     return f"""
 from __future__ import annotations

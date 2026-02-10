@@ -1422,9 +1422,7 @@ def _generate_proxy_constructor_arg(
     if not cpp_type:
         return None, None
 
-    use_ref = (arg.full_type.dim > 0) or (arg.full_type.type in {"type"})
-
-    if use_ref:
+    if arg.full_type.type in {"type"}:
         ctor_arg = f"optional_ref<const {cpp_type}>"
         ctor_body = f"    if ({arg.c_name}) {setter_name}({arg.c_name}->get());"
     else:
