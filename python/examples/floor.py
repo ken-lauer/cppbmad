@@ -565,7 +565,7 @@ def draw_this_floor_plan(
 
             while True:
                 shape_info = pybmad.tao_ele_shape_info(
-                    uni.ix_uni, ele, s.plot_page.floor_plan.ele_shape, ix_shape_min
+                    uni.ix_uni, ele, s.plot_page.floor_plan.ele_shape.view(), ix_shape_min
                 )
 
                 e_shape = None
