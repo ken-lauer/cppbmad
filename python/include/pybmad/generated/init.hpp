@@ -13,6 +13,5 @@
 
 namespace py = pybind11;
 using namespace pybind11::literals;
-using pybind11::return_value_policy;
 
 namespace Pybmad {} // namespace Pybmad

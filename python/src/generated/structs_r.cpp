@@ -134,8 +134,7 @@ void init_rad_int_all_ele_struct(py::module &m, py::class_<RadIntAllEleStruct> &
   cls.def(py::init<>())
       .def_property_readonly(
           "branch",
-          &RadIntAllEleStruct::branch,
-          py::keep_alive<0, 1>(),
+          py::cpp_function(&RadIntAllEleStruct::branch, py::keep_alive<0, 1>()),
           "Array is indexed from 0"
       )
 
@@ -165,8 +164,7 @@ void init_rad_int_branch_struct(py::module &m, py::class_<RadIntBranchStruct> &c
   cls.def(py::init<>())
       .def_property_readonly(
           "ele",
-          &RadIntBranchStruct::ele,
-          py::keep_alive<0, 1>(),
+          py::cpp_function(&RadIntBranchStruct::ele, py::keep_alive<0, 1>()),
           "Array is indexed from 0"
       )
       .def_static(
@@ -223,16 +221,14 @@ void init_rad_map_ele_struct(py::module &m, py::class_<RadMapEleStruct> &cls) {
   )
       .def_property(
           "rm0",
-          &RadMapEleStruct::rm0,
+          py::cpp_function(&RadMapEleStruct::rm0, py::keep_alive<0, 1>()),
           &RadMapEleStruct::set_rm0,
-          py::keep_alive<0, 1>(),
           "Upstream half and downstream half matrices for an element."
       )
       .def_property(
           "rm1",
-          &RadMapEleStruct::rm1,
+          py::cpp_function(&RadMapEleStruct::rm1, py::keep_alive<0, 1>()),
           &RadMapEleStruct::set_rm1,
-          py::keep_alive<0, 1>(),
           "Upstream half and downstream half matrices for an element."
       )
       .def_property("stale", &RadMapEleStruct::stale, &RadMapEleStruct::set_stale)
@@ -275,37 +271,32 @@ void init_rad_map_struct(py::module &m, py::class_<RadMapStruct> &cls) {
   )
       .def_property(
           "ref_orb",
-          &RadMapStruct::ref_orb,
+          py::cpp_function(&RadMapStruct::ref_orb, py::keep_alive<0, 1>()),
           &RadMapStruct::set_ref_orb,
-          py::keep_alive<0, 1>(),
           "Reference point around which damp_mat is calculated."
       )
       .def_property(
           "damp_dmat",
-          &RadMapStruct::damp_dmat,
+          py::cpp_function(&RadMapStruct::damp_dmat, py::keep_alive<0, 1>()),
           &RadMapStruct::set_damp_dmat,
-          py::keep_alive<0, 1>(),
           "damp_correction = xfer_mat_with_damping - xfer_mat_without_damping."
       )
       .def_property(
           "xfer_damp_vec",
-          &RadMapStruct::xfer_damp_vec,
+          py::cpp_function(&RadMapStruct::xfer_damp_vec, py::keep_alive<0, 1>()),
           &RadMapStruct::set_xfer_damp_vec,
-          py::keep_alive<0, 1>(),
           "Transfer map with damping 0th order vector."
       )
       .def_property(
           "xfer_damp_mat",
-          &RadMapStruct::xfer_damp_mat,
+          py::cpp_function(&RadMapStruct::xfer_damp_mat, py::keep_alive<0, 1>()),
           &RadMapStruct::set_xfer_damp_mat,
-          py::keep_alive<0, 1>(),
           "1st order matrix: xfer_no_damp_mat + xfer_damp_correction."
       )
       .def_property(
           "stoc_mat",
-          &RadMapStruct::stoc_mat,
+          py::cpp_function(&RadMapStruct::stoc_mat, py::keep_alive<0, 1>()),
           &RadMapStruct::set_stoc_mat,
-          py::keep_alive<0, 1>(),
           "Stochastic variance or 'kick' (Cholesky decomposed) matrix."
       )
 
@@ -354,7 +345,6 @@ void init_ramper_lord_struct(py::module &m, py::class_<RamperLordStruct> &cls) {
           "attrib_ptr",
           &RamperLordStruct::attrib_ptr,
           &RamperLordStruct::set_attrib_ptr,
-          py::keep_alive<0, 1>(),
           "Pointer to attribute in this element."
       )
       .def_static(
@@ -463,8 +453,7 @@ void init_rf_ele_struct(py::module &m, py::class_<RfEleStruct> &cls) {
   cls.def(py::init<std::optional<double>>(), py::arg("ds_step") = py::none())
       .def_property_readonly(
           "steps",
-          &RfEleStruct::steps,
-          py::keep_alive<0, 1>(),
+          py::cpp_function(&RfEleStruct::steps, py::keep_alive<0, 1>()),
           "Energy stair step array indexed from zero."
       )
       .def_property(
@@ -667,15 +656,13 @@ void init_random_state_struct(py::module &m, py::class_<RandomStateStruct> &cls)
       .def_property("in_sobseq", &RandomStateStruct::in_sobseq, &RandomStateStruct::set_in_sobseq)
       .def_property(
           "ix_sobseq",
-          &RandomStateStruct::ix_sobseq,
-          &RandomStateStruct::set_ix_sobseq,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&RandomStateStruct::ix_sobseq, py::keep_alive<0, 1>()),
+          &RandomStateStruct::set_ix_sobseq
       )
       .def_property(
           "x_sobseq",
-          &RandomStateStruct::x_sobseq,
-          &RandomStateStruct::set_x_sobseq,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&RandomStateStruct::x_sobseq, py::keep_alive<0, 1>()),
+          &RandomStateStruct::set_x_sobseq
       )
 
       .def("__repr__", [](const RandomStateStruct &self) { return to_string(self); })

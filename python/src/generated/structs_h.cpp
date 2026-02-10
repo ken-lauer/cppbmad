@@ -35,9 +35,8 @@ void init_high_energy_space_charge_struct(
   )
       .def_property(
           "closed_orb",
-          &HighEnergySpaceChargeStruct::closed_orb,
+          py::cpp_function(&HighEnergySpaceChargeStruct::closed_orb, py::keep_alive<0, 1>()),
           &HighEnergySpaceChargeStruct::set_closed_orb,
-          py::keep_alive<0, 1>(),
           "beam orbit"
       )
       .def_property(

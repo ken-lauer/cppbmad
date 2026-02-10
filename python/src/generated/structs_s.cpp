@@ -100,16 +100,17 @@ void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommon
       )
       .def_property(
           "space_charge_mesh_size",
-          &SpaceChargeCommonStruct::space_charge_mesh_size,
+          py::cpp_function(
+              &SpaceChargeCommonStruct::space_charge_mesh_size,
+              py::keep_alive<0, 1>()
+          ),
           &SpaceChargeCommonStruct::set_space_charge_mesh_size,
-          py::keep_alive<0, 1>(),
           "Gird size for fft_3d space charge calc."
       )
       .def_property(
           "csr3d_mesh_size",
-          &SpaceChargeCommonStruct::csr3d_mesh_size,
+          py::cpp_function(&SpaceChargeCommonStruct::csr3d_mesh_size, py::keep_alive<0, 1>()),
           &SpaceChargeCommonStruct::set_csr3d_mesh_size,
-          py::keep_alive<0, 1>(),
           "Gird size for CSR."
       )
       .def_property(
@@ -185,23 +186,20 @@ void init_spin_axis_struct(py::module &m, py::class_<SpinAxisStruct> &cls) {
   )
       .def_property(
           "l",
-          &SpinAxisStruct::l,
+          py::cpp_function(&SpinAxisStruct::l, py::keep_alive<0, 1>()),
           &SpinAxisStruct::set_l,
-          py::keep_alive<0, 1>(),
           "Transverse axis."
       )
       .def_property(
           "n0",
-          &SpinAxisStruct::n0,
+          py::cpp_function(&SpinAxisStruct::n0, py::keep_alive<0, 1>()),
           &SpinAxisStruct::set_n0,
-          py::keep_alive<0, 1>(),
           "Invariant spin axis on closed orbit."
       )
       .def_property(
           "m",
-          &SpinAxisStruct::m,
+          py::cpp_function(&SpinAxisStruct::m, py::keep_alive<0, 1>()),
           &SpinAxisStruct::set_m,
-          py::keep_alive<0, 1>(),
           "Transverse axis."
       )
 
@@ -239,23 +237,20 @@ void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> 
   )
       .def_property(
           "orb_mat",
-          &SpinOrbitMap1Struct::orb_mat,
+          py::cpp_function(&SpinOrbitMap1Struct::orb_mat, py::keep_alive<0, 1>()),
           &SpinOrbitMap1Struct::set_orb_mat,
-          py::keep_alive<0, 1>(),
           "Orbital matrix"
       )
       .def_property(
           "vec0",
-          &SpinOrbitMap1Struct::vec0,
+          py::cpp_function(&SpinOrbitMap1Struct::vec0, py::keep_alive<0, 1>()),
           &SpinOrbitMap1Struct::set_vec0,
-          py::keep_alive<0, 1>(),
           "Orbital 0th order map: r_out = mat6 * r_in + vec0"
       )
       .def_property(
           "spin_q",
-          &SpinOrbitMap1Struct::spin_q,
+          py::cpp_function(&SpinOrbitMap1Struct::spin_q, py::keep_alive<0, 1>()),
           &SpinOrbitMap1Struct::set_spin_q,
-          py::keep_alive<0, 1>(),
           "0th and 1st order quaternion spin map"
       )
       .def_static(
@@ -455,9 +450,8 @@ void init_surface_curvature_struct(py::module &m, py::class_<SurfaceCurvatureStr
   )
       .def_property(
           "xy",
-          &SurfaceCurvatureStruct::xy,
-          &SurfaceCurvatureStruct::set_xy,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&SurfaceCurvatureStruct::xy, py::keep_alive<0, 1>()),
+          &SurfaceCurvatureStruct::set_xy
       )
       .def_property(
           "spherical",
@@ -466,9 +460,8 @@ void init_surface_curvature_struct(py::module &m, py::class_<SurfaceCurvatureStr
       )
       .def_property(
           "elliptical",
-          &SurfaceCurvatureStruct::elliptical,
+          py::cpp_function(&SurfaceCurvatureStruct::elliptical, py::keep_alive<0, 1>()),
           &SurfaceCurvatureStruct::set_elliptical,
-          py::keep_alive<0, 1>(),
           "Total curvature = elliptical + spherical"
       )
       .def_property(
@@ -591,17 +584,18 @@ void init_surface_displacement_struct(py::module &m, py::class_<SurfaceDisplacem
       )
       .def_property(
           "dr",
-          &SurfaceDisplacementStruct::dr,
-          &SurfaceDisplacementStruct::set_dr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&SurfaceDisplacementStruct::dr, py::keep_alive<0, 1>()),
+          &SurfaceDisplacementStruct::set_dr
       )
       .def_property(
           "r0",
-          &SurfaceDisplacementStruct::r0,
-          &SurfaceDisplacementStruct::set_r0,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&SurfaceDisplacementStruct::r0, py::keep_alive<0, 1>()),
+          &SurfaceDisplacementStruct::set_r0
       )
-      .def_property_readonly("pt", &SurfaceDisplacementStruct::pt, py::keep_alive<0, 1>())
+      .def_property_readonly(
+          "pt",
+          py::cpp_function(&SurfaceDisplacementStruct::pt, py::keep_alive<0, 1>())
+      )
 
       .def("__repr__", [](const SurfaceDisplacementStruct &self) { return to_string(self); })
 
@@ -717,17 +711,18 @@ void init_surface_h_misalign_struct(py::module &m, py::class_<SurfaceHMisalignSt
       .def_property("active", &SurfaceHMisalignStruct::active, &SurfaceHMisalignStruct::set_active)
       .def_property(
           "dr",
-          &SurfaceHMisalignStruct::dr,
-          &SurfaceHMisalignStruct::set_dr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&SurfaceHMisalignStruct::dr, py::keep_alive<0, 1>()),
+          &SurfaceHMisalignStruct::set_dr
       )
       .def_property(
           "r0",
-          &SurfaceHMisalignStruct::r0,
-          &SurfaceHMisalignStruct::set_r0,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&SurfaceHMisalignStruct::r0, py::keep_alive<0, 1>()),
+          &SurfaceHMisalignStruct::set_r0
       )
-      .def_property_readonly("pt", &SurfaceHMisalignStruct::pt, py::keep_alive<0, 1>())
+      .def_property_readonly(
+          "pt",
+          py::cpp_function(&SurfaceHMisalignStruct::pt, py::keep_alive<0, 1>())
+      )
 
       .def("__repr__", [](const SurfaceHMisalignStruct &self) { return to_string(self); })
 
@@ -835,17 +830,18 @@ void init_surface_segmented_struct(py::module &m, py::class_<SurfaceSegmentedStr
       .def_property("active", &SurfaceSegmentedStruct::active, &SurfaceSegmentedStruct::set_active)
       .def_property(
           "dr",
-          &SurfaceSegmentedStruct::dr,
-          &SurfaceSegmentedStruct::set_dr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&SurfaceSegmentedStruct::dr, py::keep_alive<0, 1>()),
+          &SurfaceSegmentedStruct::set_dr
       )
       .def_property(
           "r0",
-          &SurfaceSegmentedStruct::r0,
-          &SurfaceSegmentedStruct::set_r0,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&SurfaceSegmentedStruct::r0, py::keep_alive<0, 1>()),
+          &SurfaceSegmentedStruct::set_r0
       )
-      .def_property_readonly("pt", &SurfaceSegmentedStruct::pt, py::keep_alive<0, 1>())
+      .def_property_readonly(
+          "pt",
+          py::cpp_function(&SurfaceSegmentedStruct::pt, py::keep_alive<0, 1>())
+      )
 
       .def("__repr__", [](const SurfaceSegmentedStruct &self) { return to_string(self); })
 
@@ -888,9 +884,8 @@ void init_spline_struct(py::module &m, py::class_<SplineStruct> &cls) {
       .def_property("x1", &SplineStruct::x1, &SplineStruct::set_x1, "Point at end of spline")
       .def_property(
           "coef",
-          &SplineStruct::coef,
+          py::cpp_function(&SplineStruct::coef, py::keep_alive<0, 1>()),
           &SplineStruct::set_coef,
-          py::keep_alive<0, 1>(),
           "coefficients for cubic spline"
       )
       .def_static(

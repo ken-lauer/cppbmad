@@ -42,9 +42,8 @@ void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls)
   )
       .def_property(
           "synch_int",
-          &NormalModesStruct::synch_int,
+          py::cpp_function(&NormalModesStruct::synch_int, py::keep_alive<0, 1>()),
           &NormalModesStruct::set_synch_int,
-          py::keep_alive<0, 1>(),
           "Synchrotron integrals I0, I1, I2, and I3"
       )
       .def_property(
@@ -89,14 +88,25 @@ void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls)
           &NormalModesStruct::set_dpz_damp,
           "Change in pz without RF"
       )
-      .def_property("a", &NormalModesStruct::a, &NormalModesStruct::set_a, py::keep_alive<0, 1>())
-      .def_property("b", &NormalModesStruct::b, &NormalModesStruct::set_b, py::keep_alive<0, 1>())
-      .def_property("z", &NormalModesStruct::z, &NormalModesStruct::set_z, py::keep_alive<0, 1>())
+      .def_property(
+          "a",
+          py::cpp_function(&NormalModesStruct::a, py::keep_alive<0, 1>()),
+          &NormalModesStruct::set_a
+      )
+      .def_property(
+          "b",
+          py::cpp_function(&NormalModesStruct::b, py::keep_alive<0, 1>()),
+          &NormalModesStruct::set_b
+      )
+      .def_property(
+          "z",
+          py::cpp_function(&NormalModesStruct::z, py::keep_alive<0, 1>()),
+          &NormalModesStruct::set_z
+      )
       .def_property(
           "lin",
-          &NormalModesStruct::lin,
-          &NormalModesStruct::set_lin,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&NormalModesStruct::lin, py::keep_alive<0, 1>()),
+          &NormalModesStruct::set_lin
       )
 
       .def("__repr__", [](const NormalModesStruct &self) { return to_string(self); })
@@ -130,15 +140,13 @@ void init_nametable_struct(py::module &m, py::class_<NametableStruct> &cls) {
   )
       .def_property_readonly(
           "name",
-          &NametableStruct::name,
-          py::keep_alive<0, 1>(),
+          py::cpp_function(&NametableStruct::name, py::keep_alive<0, 1>()),
           "Array of names."
       )
       .def_property(
           "index",
-          &NametableStruct::index,
+          py::cpp_function(&NametableStruct::index, py::keep_alive<0, 1>()),
           &NametableStruct::set_index,
-          py::keep_alive<0, 1>(),
           "Sorted index for names(:) array. names(an_index(i)) is in alphabetical order."
       )
       .def_property(

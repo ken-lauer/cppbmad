@@ -33,9 +33,8 @@ void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
       )
       .def_property(
           "deriv",
-          &GenGrad1Struct::deriv,
+          py::cpp_function(&GenGrad1Struct::deriv, py::keep_alive<0, 1>()),
           &GenGrad1Struct::set_deriv,
-          py::keep_alive<0, 1>(),
           "Range: (iz0:iz1, 0:2*n_deriv_max+1)"
       )
       .def_static(
@@ -110,7 +109,7 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
           &GenGradMapStruct::set_file,
           "Input file name. Used also as ID for instances."
       )
-      .def_property_readonly("gg", &GenGradMapStruct::gg, py::keep_alive<0, 1>())
+      .def_property_readonly("gg", py::cpp_function(&GenGradMapStruct::gg, py::keep_alive<0, 1>()))
       .def_property(
           "ele_anchor_pt",
           &GenGradMapStruct::ele_anchor_pt,
@@ -138,9 +137,8 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
       .def_property("dz", &GenGradMapStruct::dz, &GenGradMapStruct::set_dz, "Point spacing.")
       .def_property(
           "r0",
-          &GenGradMapStruct::r0,
+          py::cpp_function(&GenGradMapStruct::r0, py::keep_alive<0, 1>()),
           &GenGradMapStruct::set_r0,
-          py::keep_alive<0, 1>(),
           "field origin relative to ele_anchor_pt."
       )
       .def_property(
@@ -304,8 +302,16 @@ void init_grid_field_pt1_struct(py::module &m, py::class_<GridFieldPt1Struct> &c
          py::arg("E") = py::none(),
          py::arg("B") = py::none()
   )
-      .def_property("E", &GridFieldPt1Struct::E, &GridFieldPt1Struct::set_E, py::keep_alive<0, 1>())
-      .def_property("B", &GridFieldPt1Struct::B, &GridFieldPt1Struct::set_B, py::keep_alive<0, 1>())
+      .def_property(
+          "E",
+          py::cpp_function(&GridFieldPt1Struct::E, py::keep_alive<0, 1>()),
+          &GridFieldPt1Struct::set_E
+      )
+      .def_property(
+          "B",
+          py::cpp_function(&GridFieldPt1Struct::B, py::keep_alive<0, 1>()),
+          &GridFieldPt1Struct::set_B
+      )
 
       .def("__repr__", [](const GridFieldPt1Struct &self) { return to_string(self); })
 
@@ -347,7 +353,7 @@ void init_grid_field_pt_struct(py::module &m, py::class_<GridFieldPtStruct> &cls
           &GridFieldPtStruct::set_n_link,
           "For memory management of this structure"
       )
-      .def_property_readonly("pt", &GridFieldPtStruct::pt, py::keep_alive<0, 1>())
+      .def_property_readonly("pt", py::cpp_function(&GridFieldPtStruct::pt, py::keep_alive<0, 1>()))
 
       .def("__repr__", [](const GridFieldPtStruct &self) { return to_string(self); })
 
@@ -449,16 +455,14 @@ void init_grid_field_struct(py::module &m, py::class_<GridFieldStruct> &cls) {
       )
       .def_property(
           "dr",
-          &GridFieldStruct::dr,
+          py::cpp_function(&GridFieldStruct::dr, py::keep_alive<0, 1>()),
           &GridFieldStruct::set_dr,
-          py::keep_alive<0, 1>(),
           "Grid spacing."
       )
       .def_property(
           "r0",
-          &GridFieldStruct::r0,
+          py::cpp_function(&GridFieldStruct::r0, py::keep_alive<0, 1>()),
           &GridFieldStruct::set_r0,
-          py::keep_alive<0, 1>(),
           "Field origin relative to ele_anchor_pt."
       )
       .def_property(
@@ -466,17 +470,19 @@ void init_grid_field_struct(py::module &m, py::class_<GridFieldStruct> &cls) {
           &GridFieldStruct::curved_ref_frame,
           &GridFieldStruct::set_curved_ref_frame
       )
-      .def_property("ptr", &GridFieldStruct::ptr, &GridFieldStruct::set_ptr, py::keep_alive<0, 1>())
+      .def_property(
+          "ptr",
+          py::cpp_function(&GridFieldStruct::ptr, py::keep_alive<0, 1>()),
+          &GridFieldStruct::set_ptr
+      )
       .def_property_readonly(
           "bi_coef",
-          &GridFieldStruct::bi_coef,
-          py::keep_alive<0, 1>(),
+          py::cpp_function(&GridFieldStruct::bi_coef, py::keep_alive<0, 1>()),
           "Save computed coefs for faster tracking"
       )
       .def_property_readonly(
           "tri_coef",
-          &GridFieldStruct::tri_coef,
-          py::keep_alive<0, 1>(),
+          py::cpp_function(&GridFieldStruct::tri_coef, py::keep_alive<0, 1>()),
           "Save computed coefs for faster tracking"
       )
       .def_static(

@@ -64,8 +64,14 @@ void init_ac_kicker_freq_struct(py::module &m, py::class_<AcKickerFreqStruct> &c
 // ac_kicker_struct
 void init_ac_kicker_struct(py::module &m, py::class_<AcKickerStruct> &cls) {
   cls.def(py::init<>())
-      .def_property_readonly("amp_vs_time", &AcKickerStruct::amp_vs_time, py::keep_alive<0, 1>())
-      .def_property_readonly("frequency", &AcKickerStruct::frequency, py::keep_alive<0, 1>())
+      .def_property_readonly(
+          "amp_vs_time",
+          py::cpp_function(&AcKickerStruct::amp_vs_time, py::keep_alive<0, 1>())
+      )
+      .def_property_readonly(
+          "frequency",
+          py::cpp_function(&AcKickerStruct::frequency, py::keep_alive<0, 1>())
+      )
 
       .def("__repr__", [](const AcKickerStruct &self) { return to_string(self); })
 
@@ -100,9 +106,8 @@ void init_ac_kicker_time_struct(py::module &m, py::class_<AcKickerTimeStruct> &c
       .def_property("time", &AcKickerTimeStruct::time, &AcKickerTimeStruct::set_time)
       .def_property(
           "spline",
-          &AcKickerTimeStruct::spline,
-          &AcKickerTimeStruct::set_spline,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AcKickerTimeStruct::spline, py::keep_alive<0, 1>()),
+          &AcKickerTimeStruct::set_spline
       )
       .def_static(
           "new_array1d",
@@ -179,9 +184,8 @@ void init_anormal_mode_struct(py::module &m, py::class_<AnormalModeStruct> &cls)
       )
       .def_property(
           "synch_int",
-          &AnormalModeStruct::synch_int,
+          py::cpp_function(&AnormalModeStruct::synch_int, py::keep_alive<0, 1>()),
           &AnormalModeStruct::set_synch_int,
-          py::keep_alive<0, 1>(),
           "Synchrotron integrals"
       )
       .def_property(
@@ -417,15 +421,13 @@ void init_aperture_scan_struct(py::module &m, py::class_<ApertureScanStruct> &cl
   )
       .def_property_readonly(
           "point",
-          &ApertureScanStruct::point,
-          py::keep_alive<0, 1>(),
+          py::cpp_function(&ApertureScanStruct::point, py::keep_alive<0, 1>()),
           "Set of aperture points at different angles."
       )
       .def_property(
           "ref_orb",
-          &ApertureScanStruct::ref_orb,
+          py::cpp_function(&ApertureScanStruct::ref_orb, py::keep_alive<0, 1>()),
           &ApertureScanStruct::set_ref_orb,
-          py::keep_alive<0, 1>(),
           "Ref orbit around which the scan is made."
       )
       .def_property(
@@ -613,63 +615,53 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
       )
       .def_property(
           "real_rp_1d",
-          &AllEncompassingStruct::real_rp_1d,
-          &AllEncompassingStruct::set_real_rp_1d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_rp_1d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_rp_1d
       )
       .def_property(
           "real_rp_2d",
-          &AllEncompassingStruct::real_rp_2d,
-          &AllEncompassingStruct::set_real_rp_2d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_rp_2d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_rp_2d
       )
       .def_property(
           "real_rp_3d",
-          &AllEncompassingStruct::real_rp_3d,
-          &AllEncompassingStruct::set_real_rp_3d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_rp_3d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_rp_3d
       )
       .def_property(
           "real_rp_0d_ptr",
           &AllEncompassingStruct::real_rp_0d_ptr,
-          &AllEncompassingStruct::set_real_rp_0d_ptr,
-          py::keep_alive<0, 1>()
+          &AllEncompassingStruct::set_real_rp_0d_ptr
       )
       .def_property(
           "real_rp_1d_ptr",
-          &AllEncompassingStruct::real_rp_1d_ptr,
-          &AllEncompassingStruct::set_real_rp_1d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_rp_1d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_rp_1d_ptr
       )
       .def_property(
           "real_rp_2d_ptr",
-          &AllEncompassingStruct::real_rp_2d_ptr,
-          &AllEncompassingStruct::set_real_rp_2d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_rp_2d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_rp_2d_ptr
       )
       .def_property(
           "real_rp_3d_ptr",
-          &AllEncompassingStruct::real_rp_3d_ptr,
-          &AllEncompassingStruct::set_real_rp_3d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_rp_3d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_rp_3d_ptr
       )
       .def_property(
           "real_rp_1d_alloc",
-          &AllEncompassingStruct::real_rp_1d_alloc,
-          &AllEncompassingStruct::set_real_rp_1d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_rp_1d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_rp_1d_alloc
       )
       .def_property(
           "real_rp_2d_alloc",
-          &AllEncompassingStruct::real_rp_2d_alloc,
-          &AllEncompassingStruct::set_real_rp_2d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_rp_2d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_rp_2d_alloc
       )
       .def_property(
           "real_rp_3d_alloc",
-          &AllEncompassingStruct::real_rp_3d_alloc,
+          py::cpp_function(&AllEncompassingStruct::real_rp_3d_alloc, py::keep_alive<0, 1>()),
           &AllEncompassingStruct::set_real_rp_3d_alloc,
-          py::keep_alive<0, 1>(),
           "Real(dp)"
       )
       .def_property(
@@ -679,63 +671,53 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
       )
       .def_property(
           "real_dp_1d",
-          &AllEncompassingStruct::real_dp_1d,
-          &AllEncompassingStruct::set_real_dp_1d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_dp_1d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_dp_1d
       )
       .def_property(
           "real_dp_2d",
-          &AllEncompassingStruct::real_dp_2d,
-          &AllEncompassingStruct::set_real_dp_2d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_dp_2d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_dp_2d
       )
       .def_property(
           "real_dp_3d",
-          &AllEncompassingStruct::real_dp_3d,
-          &AllEncompassingStruct::set_real_dp_3d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_dp_3d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_dp_3d
       )
       .def_property(
           "real_dp_0d_ptr",
           &AllEncompassingStruct::real_dp_0d_ptr,
-          &AllEncompassingStruct::set_real_dp_0d_ptr,
-          py::keep_alive<0, 1>()
+          &AllEncompassingStruct::set_real_dp_0d_ptr
       )
       .def_property(
           "real_dp_1d_ptr",
-          &AllEncompassingStruct::real_dp_1d_ptr,
-          &AllEncompassingStruct::set_real_dp_1d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_dp_1d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_dp_1d_ptr
       )
       .def_property(
           "real_dp_2d_ptr",
-          &AllEncompassingStruct::real_dp_2d_ptr,
-          &AllEncompassingStruct::set_real_dp_2d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_dp_2d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_dp_2d_ptr
       )
       .def_property(
           "real_dp_3d_ptr",
-          &AllEncompassingStruct::real_dp_3d_ptr,
-          &AllEncompassingStruct::set_real_dp_3d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_dp_3d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_dp_3d_ptr
       )
       .def_property(
           "real_dp_1d_alloc",
-          &AllEncompassingStruct::real_dp_1d_alloc,
-          &AllEncompassingStruct::set_real_dp_1d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_dp_1d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_dp_1d_alloc
       )
       .def_property(
           "real_dp_2d_alloc",
-          &AllEncompassingStruct::real_dp_2d_alloc,
-          &AllEncompassingStruct::set_real_dp_2d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::real_dp_2d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_real_dp_2d_alloc
       )
       .def_property(
           "real_dp_3d_alloc",
-          &AllEncompassingStruct::real_dp_3d_alloc,
+          py::cpp_function(&AllEncompassingStruct::real_dp_3d_alloc, py::keep_alive<0, 1>()),
           &AllEncompassingStruct::set_real_dp_3d_alloc,
-          py::keep_alive<0, 1>(),
           "complex(dp)"
       )
       .def_property(
@@ -745,187 +727,157 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
       )
       .def_property(
           "complex_dp_1d",
-          &AllEncompassingStruct::complex_dp_1d,
-          &AllEncompassingStruct::set_complex_dp_1d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::complex_dp_1d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_complex_dp_1d
       )
       .def_property(
           "complex_dp_2d",
-          &AllEncompassingStruct::complex_dp_2d,
-          &AllEncompassingStruct::set_complex_dp_2d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::complex_dp_2d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_complex_dp_2d
       )
       .def_property(
           "complex_dp_3d",
-          &AllEncompassingStruct::complex_dp_3d,
-          &AllEncompassingStruct::set_complex_dp_3d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::complex_dp_3d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_complex_dp_3d
       )
       .def_property(
           "complex_dp_0d_ptr",
           &AllEncompassingStruct::complex_dp_0d_ptr,
-          &AllEncompassingStruct::set_complex_dp_0d_ptr,
-          py::keep_alive<0, 1>()
+          &AllEncompassingStruct::set_complex_dp_0d_ptr
       )
       .def_property(
           "complex_dp_1d_ptr",
-          &AllEncompassingStruct::complex_dp_1d_ptr,
-          &AllEncompassingStruct::set_complex_dp_1d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::complex_dp_1d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_complex_dp_1d_ptr
       )
       .def_property(
           "complex_dp_2d_ptr",
-          &AllEncompassingStruct::complex_dp_2d_ptr,
-          &AllEncompassingStruct::set_complex_dp_2d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::complex_dp_2d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_complex_dp_2d_ptr
       )
       .def_property(
           "complex_dp_3d_ptr",
-          &AllEncompassingStruct::complex_dp_3d_ptr,
-          &AllEncompassingStruct::set_complex_dp_3d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::complex_dp_3d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_complex_dp_3d_ptr
       )
       .def_property(
           "complex_dp_1d_alloc",
-          &AllEncompassingStruct::complex_dp_1d_alloc,
-          &AllEncompassingStruct::set_complex_dp_1d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::complex_dp_1d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_complex_dp_1d_alloc
       )
       .def_property(
           "complex_dp_2d_alloc",
-          &AllEncompassingStruct::complex_dp_2d_alloc,
-          &AllEncompassingStruct::set_complex_dp_2d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::complex_dp_2d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_complex_dp_2d_alloc
       )
       .def_property(
           "complex_dp_3d_alloc",
-          &AllEncompassingStruct::complex_dp_3d_alloc,
+          py::cpp_function(&AllEncompassingStruct::complex_dp_3d_alloc, py::keep_alive<0, 1>()),
           &AllEncompassingStruct::set_complex_dp_3d_alloc,
-          py::keep_alive<0, 1>(),
           "Integer"
       )
       .def_property("int_0d", &AllEncompassingStruct::int_0d, &AllEncompassingStruct::set_int_0d)
       .def_property(
           "int_1d",
-          &AllEncompassingStruct::int_1d,
-          &AllEncompassingStruct::set_int_1d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int_1d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int_1d
       )
       .def_property(
           "int_2d",
-          &AllEncompassingStruct::int_2d,
-          &AllEncompassingStruct::set_int_2d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int_2d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int_2d
       )
       .def_property(
           "int_3d",
-          &AllEncompassingStruct::int_3d,
-          &AllEncompassingStruct::set_int_3d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int_3d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int_3d
       )
       .def_property(
           "int_0d_ptr",
           &AllEncompassingStruct::int_0d_ptr,
-          &AllEncompassingStruct::set_int_0d_ptr,
-          py::keep_alive<0, 1>()
+          &AllEncompassingStruct::set_int_0d_ptr
       )
       .def_property(
           "int_1d_ptr",
-          &AllEncompassingStruct::int_1d_ptr,
-          &AllEncompassingStruct::set_int_1d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int_1d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int_1d_ptr
       )
       .def_property(
           "int_2d_ptr",
-          &AllEncompassingStruct::int_2d_ptr,
-          &AllEncompassingStruct::set_int_2d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int_2d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int_2d_ptr
       )
       .def_property(
           "int_3d_ptr",
-          &AllEncompassingStruct::int_3d_ptr,
-          &AllEncompassingStruct::set_int_3d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int_3d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int_3d_ptr
       )
       .def_property(
           "int_1d_alloc",
-          &AllEncompassingStruct::int_1d_alloc,
-          &AllEncompassingStruct::set_int_1d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int_1d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int_1d_alloc
       )
       .def_property(
           "int_2d_alloc",
-          &AllEncompassingStruct::int_2d_alloc,
-          &AllEncompassingStruct::set_int_2d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int_2d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int_2d_alloc
       )
       .def_property(
           "int_3d_alloc",
-          &AllEncompassingStruct::int_3d_alloc,
+          py::cpp_function(&AllEncompassingStruct::int_3d_alloc, py::keep_alive<0, 1>()),
           &AllEncompassingStruct::set_int_3d_alloc,
-          py::keep_alive<0, 1>(),
           "Integer8"
       )
       .def_property("int8_0d", &AllEncompassingStruct::int8_0d, &AllEncompassingStruct::set_int8_0d)
       .def_property(
           "int8_1d",
-          &AllEncompassingStruct::int8_1d,
-          &AllEncompassingStruct::set_int8_1d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int8_1d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int8_1d
       )
       .def_property(
           "int8_2d",
-          &AllEncompassingStruct::int8_2d,
-          &AllEncompassingStruct::set_int8_2d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int8_2d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int8_2d
       )
       .def_property(
           "int8_3d",
-          &AllEncompassingStruct::int8_3d,
-          &AllEncompassingStruct::set_int8_3d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int8_3d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int8_3d
       )
       .def_property(
           "int8_0d_ptr",
           &AllEncompassingStruct::int8_0d_ptr,
-          &AllEncompassingStruct::set_int8_0d_ptr,
-          py::keep_alive<0, 1>()
+          &AllEncompassingStruct::set_int8_0d_ptr
       )
       .def_property(
           "int8_1d_ptr",
-          &AllEncompassingStruct::int8_1d_ptr,
-          &AllEncompassingStruct::set_int8_1d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int8_1d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int8_1d_ptr
       )
       .def_property(
           "int8_2d_ptr",
-          &AllEncompassingStruct::int8_2d_ptr,
-          &AllEncompassingStruct::set_int8_2d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int8_2d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int8_2d_ptr
       )
       .def_property(
           "int8_3d_ptr",
-          &AllEncompassingStruct::int8_3d_ptr,
-          &AllEncompassingStruct::set_int8_3d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int8_3d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int8_3d_ptr
       )
       .def_property(
           "int8_1d_alloc",
-          &AllEncompassingStruct::int8_1d_alloc,
-          &AllEncompassingStruct::set_int8_1d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int8_1d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int8_1d_alloc
       )
       .def_property(
           "int8_2d_alloc",
-          &AllEncompassingStruct::int8_2d_alloc,
-          &AllEncompassingStruct::set_int8_2d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::int8_2d_alloc, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_int8_2d_alloc
       )
       .def_property(
           "int8_3d_alloc",
-          &AllEncompassingStruct::int8_3d_alloc,
+          py::cpp_function(&AllEncompassingStruct::int8_3d_alloc, py::keep_alive<0, 1>()),
           &AllEncompassingStruct::set_int8_3d_alloc,
-          py::keep_alive<0, 1>(),
           "logical"
       )
       .def_property(
@@ -935,81 +887,77 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
       )
       .def_property(
           "logical_1d",
-          &AllEncompassingStruct::logical_1d,
-          &AllEncompassingStruct::set_logical_1d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::logical_1d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_logical_1d
       )
       .def_property(
           "logical_2d",
-          &AllEncompassingStruct::logical_2d,
-          &AllEncompassingStruct::set_logical_2d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::logical_2d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_logical_2d
       )
       .def_property(
           "logical_3d",
-          &AllEncompassingStruct::logical_3d,
-          &AllEncompassingStruct::set_logical_3d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::logical_3d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_logical_3d
       )
       .def_property(
           "logical_0d_ptr",
           &AllEncompassingStruct::logical_0d_ptr,
-          &AllEncompassingStruct::set_logical_0d_ptr,
-          py::keep_alive<0, 1>()
+          &AllEncompassingStruct::set_logical_0d_ptr
       )
       .def_property(
           "logical_1d_ptr",
-          &AllEncompassingStruct::logical_1d_ptr,
+          py::cpp_function(&AllEncompassingStruct::logical_1d_ptr, py::keep_alive<0, 1>()),
           &AllEncompassingStruct::set_logical_1d_ptr,
-          py::keep_alive<0, 1>(),
           "logical, pointer :: logical_2d_ptr(:,:) logical, pointer :: logical_3d_ptr(:,:,:) "
           "logical, allocatable :: logical_1d_alloc(:) logical, allocatable :: "
           "logical_2d_alloc(:,:) logical, allocatable :: logical_3d_alloc(:,:,:) type"
       )
       .def_property(
           "type_0d",
-          &AllEncompassingStruct::type_0d,
-          &AllEncompassingStruct::set_type_0d,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::type_0d, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_type_0d
       )
-      .def_property_readonly("type_1d", &AllEncompassingStruct::type_1d, py::keep_alive<0, 1>())
-      .def_property_readonly("type_2d", &AllEncompassingStruct::type_2d, py::keep_alive<0, 1>())
-      .def_property_readonly("type_3d", &AllEncompassingStruct::type_3d, py::keep_alive<0, 1>())
+      .def_property_readonly(
+          "type_1d",
+          py::cpp_function(&AllEncompassingStruct::type_1d, py::keep_alive<0, 1>())
+      )
+      .def_property_readonly(
+          "type_2d",
+          py::cpp_function(&AllEncompassingStruct::type_2d, py::keep_alive<0, 1>())
+      )
+      .def_property_readonly(
+          "type_3d",
+          py::cpp_function(&AllEncompassingStruct::type_3d, py::keep_alive<0, 1>())
+      )
       .def_property(
           "type_0d_ptr",
-          &AllEncompassingStruct::type_0d_ptr,
-          &AllEncompassingStruct::set_type_0d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::type_0d_ptr, py::keep_alive<0, 1>()),
+          &AllEncompassingStruct::set_type_0d_ptr
       )
       .def_property_readonly(
           "type_1d_ptr",
-          &AllEncompassingStruct::type_1d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::type_1d_ptr, py::keep_alive<0, 1>())
       )
       .def_property_readonly(
           "type_2d_ptr",
-          &AllEncompassingStruct::type_2d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::type_2d_ptr, py::keep_alive<0, 1>())
       )
       .def_property_readonly(
           "type_3d_ptr",
-          &AllEncompassingStruct::type_3d_ptr,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::type_3d_ptr, py::keep_alive<0, 1>())
       )
       .def_property_readonly(
           "type_1d_alloc",
-          &AllEncompassingStruct::type_1d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::type_1d_alloc, py::keep_alive<0, 1>())
       )
       .def_property_readonly(
           "type_2d_alloc",
-          &AllEncompassingStruct::type_2d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::type_2d_alloc, py::keep_alive<0, 1>())
       )
       .def_property_readonly(
           "type_3d_alloc",
-          &AllEncompassingStruct::type_3d_alloc,
-          py::keep_alive<0, 1>()
+          py::cpp_function(&AllEncompassingStruct::type_3d_alloc, py::keep_alive<0, 1>())
       )
 
       .def("__repr__", [](const AllEncompassingStruct &self) { return to_string(self); })
