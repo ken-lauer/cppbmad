@@ -417,13 +417,17 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
         comment = comment.replace("\n", "\\n")
         docstring = f', "{comment}"' if comment else ""
 
+        getter = f"&{struct.cpp_class}::{arg.c_name}"
+        keepalive = ", py::keep_alive<0, 1>()" if arg.needs_python_keepalive else ""
+
         if tpl.fortran_setter:
+            setter = f"&{struct.cpp_class}::set_{arg.c_name}"
             code_lines.append(
-                f'        .def_property("{arg.python_name}", &{struct.cpp_class}::{arg.c_name}, &{struct.cpp_class}::set_{arg.c_name}{docstring})'
+                f'        .def_property("{arg.python_name}", {getter}, {setter}{keepalive}{docstring})'
             )
         else:
             code_lines.append(
-                f'        .def_property_readonly("{arg.python_name}", &{struct.cpp_class}::{arg.c_name}{docstring})'
+                f'        .def_property_readonly("{arg.python_name}", {getter}{keepalive}{docstring})'
             )
 
     if 1 in used_array_dims:

@@ -92,7 +92,7 @@ void bind_1D_array_pair(
           .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
           .def("clear", &AllocClass::clear)
           .def("__len__", &AllocClass::size)
-          .def("view", [](AllocClass &self) { return self.view(); });
+          .def("view", [](AllocClass &self) { return self.view(); }, py::keep_alive<0, 1>());
 
   if constexpr (!is_bool) {
     alloc_cls.def(
@@ -225,18 +225,25 @@ void bind_FTypeArrayND(py::module &m, const std::string &name) {
             if (i < 0 || i >= static_cast<int>(self.total_size()))
               throw py::index_error();
             return self.at(i);
-          }
+          },
+          py::keep_alive<0, 1>()
       )
       .def(
           "__getitem__",
-          [](ArrayType &self, py::slice slice) {
+          [](py::object self_py, py::slice slice) {
+            auto &self = self_py.cast<ArrayType &>();
             size_t start, stop, step, slice_length;
             if (!slice.compute(self.total_size(), &start, &stop, &step, &slice_length))
               throw py::error_already_set();
 
             py::list list;
             for (size_t i = 0; i < slice_length; ++i) {
-              list.append(self.at(start));
+              auto item = self.at(start);
+
+              py::object py_item =
+                  py::cast(item, py::return_value_policy::reference_internal, self_py);
+
+              list.append(py_item);
               start += step;
             }
             return list;
@@ -294,7 +301,8 @@ void bind_1d_type_array_pair(
             if (i < 0 || i >= static_cast<int>(self.total_size()))
               throw py::index_error();
             return self.at(i);
-          }
+          },
+          py::keep_alive<0, 1>()
       )
       .def("__setitem__", [](ArrayType &self, int i, ProxyType &other) {
         if (i < 0)
@@ -309,18 +317,22 @@ void bind_1d_type_array_pair(
       });
 
   // View: Slice Access
-  view_cls.def("__getitem__", [](ArrayType &self, py::slice slice) {
-    size_t start, stop, step, slice_length;
-    if (!slice.compute(self.total_size(), &start, &stop, &step, &slice_length))
-      throw py::error_already_set();
+  view_cls.def(
+      "__getitem__",
+      [](ArrayType &self, py::slice slice) {
+        size_t start, stop, step, slice_length;
+        if (!slice.compute(self.total_size(), &start, &stop, &step, &slice_length))
+          throw py::error_already_set();
 
-    py::list list;
-    for (size_t i = 0; i < slice_length; ++i) {
-      list.append(self.at(start));
-      start += step;
-    }
-    return list;
-  });
+        py::list list;
+        for (size_t i = 0; i < slice_length; ++i) {
+          list.append(self.at(start));
+          start += step;
+        }
+        return list;
+      },
+      py::keep_alive<0, 1>()
+  );
 
   // View: Iteration
   view_cls.def(
@@ -330,7 +342,7 @@ void bind_1d_type_array_pair(
   );
 
   // View: Export to standard vector
-  view_cls.def("to_list", &ArrayType::to_vector);
+  view_cls.def("to_list", &ArrayType::to_vector, py::keep_alive<0, 1>());
 
   // --------------------------------------------------------
   // 2. Definition of Allocator Class (FTypeAlloc1D)
@@ -343,7 +355,7 @@ void bind_1d_type_array_pair(
       .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
       .def("clear", &AllocClass::clear)
       .def("__len__", &AllocClass::size)
-      .def("view", [](AllocClass &self) { return self.view(); });
+      .def("view", [](AllocClass &self) { return self.view(); }, py::keep_alive<0, 1>());
 
   // Allocator: Single Item Access (Delegates to View logic)
   alloc_cls
@@ -354,7 +366,8 @@ void bind_1d_type_array_pair(
               i += self.size();
             // .view() refreshes pointers if underlying realloc happened
             return self.view().at(i);
-          }
+          },
+          py::keep_alive<0, 1>()
       )
       .def("__setitem__", [](AllocClass &self, int i, ProxyType &other) {
         auto &v = self.view();
@@ -369,7 +382,9 @@ void bind_1d_type_array_pair(
       });
 
   // Allocator: Slice Access
-  alloc_cls.def("__getitem__", [](AllocClass &self, py::slice slice) {
+  alloc_cls.def("__getitem__", [](py::object self_py, py::slice slice) {
+    auto &self = self_py.cast<AllocClass &>();
+
     auto &view = self.view();
     size_t start, stop, step, slice_length;
     if (!slice.compute(view.total_size(), &start, &stop, &step, &slice_length))
@@ -377,7 +392,9 @@ void bind_1d_type_array_pair(
 
     py::list list;
     for (size_t i = 0; i < slice_length; ++i) {
-      list.append(view.at(start));
+      auto item = view.at(start);
+      py::object py_item = py::cast(item, py::return_value_policy::reference_internal, self_py);
+      list.append(py_item);
       start += step;
     }
     return list;
