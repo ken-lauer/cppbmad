@@ -65,19 +65,23 @@ def get_wall(branch: BranchStruct, *, n_angles: int = 2):
             if ele.key == pb.SBEND:
                 theta = theta - ele.value[pb.EleAttribute.REF_TILT_TOT]
 
-            r_wall, _dr_dtheta, _ix_vertex = pb.calc_wall_radius(section.v, math.cos(theta), math.sin(theta))
+            r_wall, _dr_dtheta, _ix_vertex = pb.calc_wall_radius(
+                section.v.view(), math.cos(theta), math.sin(theta)
+            )
 
-            dummy_orb = pb.CoordStruct(ix_ele=ele.ix_ele)
-            # WARNING: NORMAL IS NOT COMPUTED!!!
-            # x, px, y, py, z, pz
-            dummy_orb.vec = [
-                r_wall * math.cos(theta),
-                0.0,
-                r_wall * math.sin(theta),
-                0.0,
-                s_rel,
-                0.0,
-            ]
+            dummy_orb = pb.CoordStruct(
+                ix_ele=ele.ix_ele,
+                # WARNING: NORMAL IS NOT COMPUTED!!!
+                # x, px, y, py, z, pz
+                vec=[
+                    r_wall * math.cos(theta),
+                    0.0,
+                    r_wall * math.sin(theta),
+                    0.0,
+                    s_rel,
+                    0.0,
+                ],
+            )
 
             orb_out = pb.particle_in_global_frame(
                 dummy_orb,
@@ -101,10 +105,10 @@ def get_wall_contour(
     point.s = 0.0
     # Initial dummy vector setup from Fortran: vec(6) = 1.0 (index 5)
     # x, px, y, py, z, pz
-    X, _PX, Y, _PY, Z, _PZ = range(6)
+    X, _PX, Y, _PY, Z, PZ = range(6)
     point_vec = RealAlloc1D()
-    point_vec.resize(0, 6)
-    point_vec[5] = 1.0
+    point_vec.resize_bounds(0, 5)
+    point_vec[PZ] = 1.0
     last_ele_s = branch.ele[branch.n_ele_track].s
 
     while True:
@@ -128,28 +132,25 @@ def get_wall_contour(
             # Calculate d_radius
             w_res = pb.wall3d_d_radius(point_vec.view(), ele, 1)
             d_radius = w_res.d_radius
-            perp = w_res.perp
+            norm_x, norm_y, norm_z = w_res.perp
 
             r_wall = r0 - d_radius
 
-            # Indices in global frame: [x, normal_x, y, normal_y, z, normal_z]
-            dummy_orb_vec = [
-                # x
-                r_wall * math.cos(theta),
-                # normal_x
-                perp[0],
-                # y
-                r_wall * math.sin(theta),
-                # normal_y
-                perp[1],
-                # z
-                point_vec[4],  # The longitudinal pos
-                # normal_z
-                perp[2],
-            ]
-
-            dummy_orb = pb.CoordStruct(ix_ele=ele.ix_ele)
-            dummy_orb.vec = dummy_orb_vec
+            dummy_orb = pb.CoordStruct(
+                ix_ele=ele.ix_ele,
+                # Indices in global frame: [x, normal_x, y, normal_y, z, normal_z]
+                vec=[
+                    # x
+                    r_wall * math.cos(theta),
+                    norm_x,
+                    # y
+                    r_wall * math.sin(theta),
+                    norm_y,
+                    # z
+                    point_vec[Z],  # The longitudinal pos
+                    norm_z,
+                ],
+            )
 
             orb_out = pb.particle_in_global_frame(
                 dummy_orb, branch, in_time_coordinates=True, in_body_frame=False
