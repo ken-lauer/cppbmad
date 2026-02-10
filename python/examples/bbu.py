@@ -77,7 +77,7 @@ def hybridize(
 
 def main():
     bbu_param = pb.BbuParamStruct(
-        lat_filename="bbu_test/oneturn_lat.bmad",
+        lat_filename="$ACC_ROOT_DIR/regression_tests/bbu_test/oneturn_lat.bmad",
         keep_overlays_and_groups=False,
         simulation_turns_max=500,
         elname="T1",

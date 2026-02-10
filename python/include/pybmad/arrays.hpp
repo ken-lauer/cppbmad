@@ -208,7 +208,7 @@ void bind_FArrayND(py::module_ &m, const std::string &name) {
           .def_property_readonly("total_size", &Class::total_size);
 }
 // =============================================================================
-// Derived Type (Proxy) Views (FTypeArrayND<ProxyType, N...>)
+// Derived Type (Proxy) Alloc + View (FTypeArrayND<ProxyType, N...>)
 // =============================================================================
 
 template <typename ArrayType>
@@ -266,69 +266,176 @@ void bind_FTypeArrayND(py::module &m, const std::string &name) {
       .def("__str__", [](const ArrayType &self) { return Bmad::to_string(self); });
 }
 
-// =============================================================================
-// Derived Type (Proxy) Allocators (FTypeAlloc1D<ViewType...>)
-// =============================================================================
+template <typename ArrayType, typename AllocClass>
+void bind_1d_type_array_pair(
+    py::module &m,
+    const std::string &view_name,
+    const std::string &alloc_name
+) {
+  using ProxyType = typename ArrayType::value_type;
 
-template <typename AllocClass>
-void bind_FTypeAlloc1D(py::module &m, const std::string &name) {
-  py::class_<AllocClass>(m, name.c_str())
-      .def(py::init<>())
+  // --------------------------------------------------------
+  // 1. Definition of View Class (FTypeArrayND)
+  // --------------------------------------------------------
+  py::class_<ArrayType> view_cls(m, view_name.c_str());
+
+  view_cls.def(py::init<>())
+      .def("__len__", [](const ArrayType &a) { return a.total_size(); })
+      .def("is_valid", &ArrayType::is_valid)
+      .def("__str__", [](const ArrayType &self) { return Bmad::to_string(self); });
+
+  // View: Single Item Access
+  view_cls
+      .def(
+          "__getitem__",
+          [](ArrayType &self, int i) {
+            if (i < 0)
+              i += static_cast<int>(self.total_size());
+            if (i < 0 || i >= static_cast<int>(self.total_size()))
+              throw py::index_error();
+            return self.at(i);
+          }
+      )
+      .def("__setitem__", [](ArrayType &self, int i, ProxyType &other) {
+        if (i < 0)
+          i += static_cast<int>(self.total_size());
+        if (i < 0 || i >= static_cast<int>(self.total_size()))
+          throw py::index_error();
+
+        // Deep copy via FortranTraits
+        // The Proxy assignment operator usually only copies the pointer wrapper,
+        // not the underlying data contents.
+        FortranTraits<ProxyType>::copy(other.get_fortran_ptr(), self.at(i).get_fortran_ptr());
+      });
+
+  // View: Slice Access
+  view_cls.def("__getitem__", [](ArrayType &self, py::slice slice) {
+    size_t start, stop, step, slice_length;
+    if (!slice.compute(self.total_size(), &start, &stop, &step, &slice_length))
+      throw py::error_already_set();
+
+    py::list list;
+    for (size_t i = 0; i < slice_length; ++i) {
+      list.append(self.at(start));
+      start += step;
+    }
+    return list;
+  });
+
+  // View: Iteration
+  view_cls.def(
+      "__iter__",
+      [](ArrayType &self) { return py::make_iterator(self.begin(), self.end()); },
+      py::keep_alive<0, 1>()
+  );
+
+  // View: Export to standard vector
+  view_cls.def("to_list", &ArrayType::to_vector);
+
+  // --------------------------------------------------------
+  // 2. Definition of Allocator Class (FTypeAlloc1D)
+  // --------------------------------------------------------
+  py::class_<AllocClass> alloc_cls(m, alloc_name.c_str());
+
+  alloc_cls.def(py::init<>())
       .def(py::init<int>(), py::arg("n"))
       .def("resize", &AllocClass::resize, py::arg("n"))
       .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
       .def("clear", &AllocClass::clear)
       .def("__len__", &AllocClass::size)
+      .def("view", [](AllocClass &self) { return self.view(); });
 
+  // Allocator: Single Item Access (Delegates to View logic)
+  alloc_cls
       .def(
           "__getitem__",
           [](AllocClass &self, int i) {
             if (i < 0)
               i += self.size();
-            // .view() refreshes valid pointers, .at() does bounds check
+            // .view() refreshes pointers if underlying realloc happened
             return self.view().at(i);
           }
       )
-      .def(
-          "__getitem__",
-          [](AllocClass &self, py::slice slice) {
-            size_t start, stop, step, slice_length;
-            auto &view = self.view();
-            if (!slice.compute(view.total_size(), &start, &stop, &step, &slice_length))
-              throw py::error_already_set();
+      .def("__setitem__", [](AllocClass &self, int i, ProxyType &other) {
+        auto &v = self.view();
+        int size = static_cast<int>(v.total_size());
 
-            py::list list;
-            for (size_t i = 0; i < slice_length; ++i) {
-              list.append(view.at(start));
-              start += step;
-            }
-            return list;
-          }
-      )
-      .def(
-          "__setitem__",
-          [](AllocClass &self, int i, typename AllocClass::view_type::value_type &other) {
-            if (i < 0)
-              i += static_cast<int>(self.size());
+        if (i < 0)
+          i += size;
+        if (i < 0 || i >= size)
+          throw py::index_error();
 
-            // .view() refreshes valid pointers, .at() does bounds check
-            FortranTraits<typename AllocClass::view_type::value_type>::copy(
-                other.get_fortran_ptr(),
-                self.view().at(i).get_fortran_ptr()
-            );
-          }
-      )
-      .def(
-          "__iter__",
-          [](AllocClass &self) {
-            return py::make_iterator(self.view().begin(), self.view().end());
-          },
-          py::keep_alive<0, 1>()
-      )
+        FortranTraits<ProxyType>::copy(other.get_fortran_ptr(), v.at(i).get_fortran_ptr());
+      });
 
-      .def("view", [](AllocClass &self) { return self.view(); });
+  // Allocator: Slice Access
+  alloc_cls.def("__getitem__", [](AllocClass &self, py::slice slice) {
+    auto &view = self.view();
+    size_t start, stop, step, slice_length;
+    if (!slice.compute(view.total_size(), &start, &stop, &step, &slice_length))
+      throw py::error_already_set();
 
-  py::implicitly_convertible<AllocClass, typename AllocClass::view_type>();
+    py::list list;
+    for (size_t i = 0; i < slice_length; ++i) {
+      list.append(view.at(start));
+      start += step;
+    }
+    return list;
+  });
+
+  // Allocator: Iteration
+  alloc_cls.def(
+      "__iter__",
+      [](AllocClass &self) { return py::make_iterator(self.view().begin(), self.view().end()); },
+      py::keep_alive<0, 1>()
+  );
+
+  // --------------------------------------------------------
+  // 3. Implicit Conversions & Interop
+  // --------------------------------------------------------
+
+  // A. View constructed from Allocator (View <--- Alloc)
+  // Allows functions returning AllocClass references to be caught by py::view_class bindings
+  view_cls.def(py::init([](AllocClass &a) { return a.view(); }), py::keep_alive<1, 2>());
+  py::implicitly_convertible<AllocClass, ArrayType>();
+
+  // B. Allocator constructed from View (Alloc <--- View) (Deep Copy)
+  alloc_cls.def(py::init([](const ArrayType &v) {
+    if (!v.is_valid())
+      throw std::runtime_error("Cannot copy from invalid view");
+
+    AllocClass a;
+    a.resize(static_cast<int>(v.total_size()));
+
+    auto &target_view = a.view();
+
+    for (size_t i = 0; i < v.total_size(); i++) {
+      // Explicit Deep Copy for derived types
+      FortranTraits<ProxyType>::copy(
+          v.at(i).get_fortran_ptr(),
+          target_view.at(i).get_fortran_ptr()
+      );
+    }
+    return a;
+  }));
+  py::implicitly_convertible<ArrayType, AllocClass>();
+
+  // C. Allocator constructed from std::vector/List (Alloc <--- List) (Deep Copy)
+  // Allows passing a Python list of proxies to a function expecting AllocClass
+  alloc_cls.def(py::init([](const std::vector<ProxyType> &vec) {
+    AllocClass a;
+    a.resize(static_cast<int>(vec.size()));
+
+    auto &target_view = a.view();
+
+    for (size_t i = 0; i < vec.size(); i++) {
+      // vec[i] is a Proxy wrapper pointing to source data,
+      // target_view[i] is wrapper pointing to alloc's new memory.
+      FortranTraits<ProxyType>::copy(vec[i].get_fortran_ptr(), target_view.at(i).get_fortran_ptr());
+    }
+    return a;
+  }));
+  py::implicitly_convertible<std::vector<ProxyType>, AllocClass>();
 }
 
 // =============================================================================

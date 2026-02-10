@@ -468,13 +468,16 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
 
     for n in SUPPORTED_ARRAY_DIMS:
         if n in used_array_dims:
-            code_lines.append(
-                f'    bind_FTypeArrayND<{struct.cpp_class}Array{n}D>(m, "{struct.python_class_name}Array{n}D");'
-            )
+            t_array = f"{struct.cpp_class}Array{n}D"
+            t_alloc = f"{struct.cpp_class}Alloc{n}D"
+            t_python_array = f"{struct.python_class_name}Array{n}D"
+            t_python_alloc = f"{struct.python_class_name}Alloc{n}D"
             if n == 1:
                 code_lines.append(
-                    f'    bind_FTypeAlloc1D<{struct.cpp_class}Alloc1D>(m, "{struct.python_class_name}Alloc1D");'
+                    f'    bind_1d_type_array_pair<{t_array}, {t_alloc}>(m, "{t_python_array}", "{t_python_alloc}");'
                 )
+            else:
+                code_lines.append(f'    bind_FTypeArrayND<{t_array}>(m, "{t_python_array}");')
         else:
             code_lines.append(f"    // {n}D {struct.cpp_class} arrays are not used in structs/routines")
 
