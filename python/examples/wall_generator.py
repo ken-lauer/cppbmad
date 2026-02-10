@@ -99,8 +99,6 @@ def get_wall_contour(
     ds: float = 0.0,
     r0=1e-3,
 ):
-    point_s = 0.0
-
     point = pb.CoordStruct()
     point.s = 0.0
     # Initial dummy vector setup from Fortran: vec(6) = 1.0 (index 5)
@@ -111,10 +109,9 @@ def get_wall_contour(
     point_vec[PZ] = 1.0
     last_ele_s = branch.ele[branch.n_ele_track].s
 
-    while True:
-        if point_s > last_ele_s:
-            break
+    point_s = 0.0
 
+    while point_s <= last_ele_s:
         ix_ele = pb.element_at_s(branch, point_s, True).ix_ele
 
         ele = branch.ele[ix_ele]
