@@ -49,16 +49,21 @@ void bind_FCharArray1D(py::module &m) {
       .def("__str__", [](const FCharArray1D &t) { return Bmad::to_string(t); });
 }
 void bind_standard_arrays(py::module &m) {
-  bind_FArray1D<double>(m, "RealArray1D");
+  bind_FArray1D<double, RealAlloc1D>(m, "RealArray1D");
+
 #ifdef __FLOAT128__
-  bind_FArray1D<__float128>(m, "Real16Array1D");
+  bind_FArray1D<__float128, Real16Alloc1D>(m, "Real16Array1D");
 #else
-  bind_FArray1D<long double>(m, "Real16Array1D");
+  bind_FArray1D<long double, Real16Alloc1D>(m, "Real16Array1D");
 #endif
-  bind_FArray1D<int>(m, "IntArray1D");
-  bind_FArray1D<int64_t>(m, "Int8Array1D");
-  bind_FArray1D<bool>(m, "BoolArray1D");
-  bind_FArray1D<std::complex<double>>(m, "ComplexArray1D");
+
+  bind_FArray1D<int, IntAlloc1D>(m, "IntArray1D");
+  bind_FArray1D<int64_t, Int8Alloc1D>(m, "Int8Array1D");
+
+  // Note: Bool array specialized logic is now handled internally
+  bind_FArray1D<bool, BoolAlloc1D>(m, "BoolArray1D");
+
+  bind_FArray1D<std::complex<double>, ComplexAlloc1D>(m, "ComplexArray1D");
 
   bind_FArrayND<double, 2>(m, "RealArray2D");
   bind_FArrayND<int, 2>(m, "IntArray2D");

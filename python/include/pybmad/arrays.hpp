@@ -21,85 +21,72 @@ inline int normalize_index(int i, int size);
 // Primitive Array Views (FArray1D<T>)
 // =============================================================================
 // Binds generic FArray1D types (int, double, complex, etc.)
-template <typename T>
+// Special handling for bool via constexpr.
+template <typename T, typename Allocator = void>
 void bind_FArray1D(py::module &m, const std::string &name) {
   using Class = FArray1D<T>;
+  constexpr bool is_bool = std::is_same_v<T, bool>;
 
-  py::class_<Class>(m, name.c_str(), py::buffer_protocol())
-      .def(py::init<>())
-      // Buffer protocol allows zero-copy numpy access!
-      .def_buffer([](Class &a) -> py::buffer_info {
-        if (!a.is_valid()) {
-          throw std::runtime_error("Attempted to access invalid/unallocated Fortran array");
-        }
-        return py::buffer_info(
-            a.data(), /* Pointer to buffer */
-            sizeof(T), /* Size of one scalar */
-            py::format_descriptor<T>::format(), /* Python struct-style format descriptor */
-            1, /* Number of dimensions */
-            {(size_t)a.size()}, /* Buffer dimensions */
-            {sizeof(T)} /* Strides (in bytes) */
-        );
-      })
+  // 1. Create the class definition
+  // Use buffer protocol for standard types, but standard only for bools
+  auto cls = [&]() {
+    if constexpr (is_bool) {
+      return py::class_<Class>(m, name.c_str());
+    } else {
+      return py::class_<Class>(m, name.c_str(), py::buffer_protocol());
+    }
+  }();
+
+  cls.def(py::init<>())
       .def("__len__", &Class::size)
-      .def(
-          "__getitem__",
-          [](Class &self, int i) -> T {
-            if (i < 0)
-              i += self.size();
-            return self.at(i);
-          }
-      )
-      .def(
-          "__setitem__",
-          [](Class &self, int i, T val) {
-            if (i < 0)
-              i += self.size();
-            self.at(i) = val;
-          }
-      )
+      .def("is_valid", &Class::is_valid)
       .def("__str__", [](const Class &self) { return Bmad::to_string(self); })
       .def("__repr__", [](const Class &self) { return Bmad::to_string(self); })
-      .def("is_valid", &Class::is_valid)
-      .def("to_list", &Class::to_flat_vector)
       .def_property_readonly("lower_bound", &Class::lower_bound)
       .def_property_readonly("upper_bound", &Class::upper_bound);
-}
 
-// =============================================================================
-// Specialization: bind_FArray1D<bool>
-// =============================================================================
+  // 2. Buffer Protocol (Non-Bool only)
+  if constexpr (!is_bool) {
+    cls.def_buffer([](Class &a) -> py::buffer_info {
+      if (!a.is_valid()) {
+        throw std::runtime_error("Attempted to access invalid/unallocated Fortran array");
+      }
+      return py::buffer_info(
+          a.data(),
+          sizeof(T),
+          py::format_descriptor<T>::format(),
+          1,
+          {(size_t)a.size()},
+          {sizeof(T)}
+      );
+    });
+    cls.def("to_list", &Class::to_flat_vector);
+  } else {
+    cls.def("to_list", &Class::to_vector);
+  }
 
-template <>
-inline void bind_FArray1D<bool>(py::module &m, const std::string &name) {
-  using Class = FArray1D<bool>;
+  cls.def(
+         "__getitem__",
+         [](Class &self, int i) -> T {
+           if (i < 0)
+             i += self.size();
+           return self.at(i);
+         }
+  ).def("__setitem__", [](Class &self, int i, T val) {
+    if (i < 0)
+      i += self.size();
+    self.at(i) = val; // Works for both reference and Proxy
+  });
 
-  // Note: py::buffer_protocol() is not supported here.
-  py::class_<Class>(m, name.c_str())
-      .def(py::init<>())
-      .def("__len__", &Class::size)
-      .def(
-          "__getitem__",
-          [](Class &self, int i) -> bool {
-            if (i < 0)
-              i += self.size();
-            return self.at(i);
-          }
-      )
-      .def(
-          "__setitem__",
-          [](Class &self, int i, bool val) {
-            if (i < 0)
-              i += self.size();
-            self.at(i) = val;
-          }
-      )
-      .def("__str__", [](const Class &self) { return Bmad::to_string(self); })
-      .def("__repr__", [](const Class &self) { return Bmad::to_string(self); })
-      .def("is_valid", &Class::is_valid)
-      .def("to_list", &Class::to_vector)
-      .def_property_readonly("lower_bound", &Class::lower_bound)
-      .def_property_readonly("upper_bound", &Class::upper_bound);
+  // 4. Implicit Conversion from Allocator
+  if constexpr (!std::is_void_v<Allocator>) {
+    // Define a constructor that takes the Allocator and Views it.
+    // keep_alive<1, 2>: The new View (1) ensures Allocator (2) stays alive.
+    cls.def(py::init([](Allocator &a) { return a.view(); }), py::keep_alive<1, 2>());
+
+    // Register the implicit conversion handling in pybind11
+    py::implicitly_convertible<Allocator, Class>();
+  }
 }
 
 // =============================================================================
@@ -225,7 +212,6 @@ void bind_FAlloc1D(py::module &m, const std::string &name) {
           py::keep_alive<0, 1>()
       )
       .def("view", [](AllocClass &self) { return self.view(); });
-  py::implicitly_convertible<AllocClass, typename AllocClass::view_type>();
 }
 
 // BoolAlloc1D specialization; avoid wrapping ReferenceProxy

@@ -65,9 +65,7 @@ def get_wall(branch: BranchStruct, *, n_angles: int = 2):
             if ele.key == pb.SBEND:
                 theta = theta - ele.value[pb.EleAttribute.REF_TILT_TOT]
 
-            r_wall, _dr_dtheta, _ix_vertex = pb.calc_wall_radius(
-                section.v.view(), math.cos(theta), math.sin(theta)
-            )
+            r_wall, _dr_dtheta, _ix_vertex = pb.calc_wall_radius(section.v, math.cos(theta), math.sin(theta))
 
             dummy_orb = pb.CoordStruct(
                 ix_ele=ele.ix_ele,
@@ -127,7 +125,7 @@ def get_wall_contour(
             point_vec[Y] = r0 * math.sin(theta)
 
             # Calculate d_radius
-            w_res = pb.wall3d_d_radius(point_vec.view(), ele, 1)
+            w_res = pb.wall3d_d_radius(point_vec, ele, 1)
             d_radius = w_res.d_radius
             norm_x, norm_y, norm_z = w_res.perp
 
