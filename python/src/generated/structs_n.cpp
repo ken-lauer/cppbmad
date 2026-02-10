@@ -44,6 +44,7 @@ void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls)
           "synch_int",
           &NormalModesStruct::synch_int,
           &NormalModesStruct::set_synch_int,
+          py::keep_alive<0, 1>(),
           "Synchrotron integrals I0, I1, I2, and I3"
       )
       .def_property(
@@ -88,10 +89,15 @@ void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls)
           &NormalModesStruct::set_dpz_damp,
           "Change in pz without RF"
       )
-      .def_property("a", &NormalModesStruct::a, &NormalModesStruct::set_a)
-      .def_property("b", &NormalModesStruct::b, &NormalModesStruct::set_b)
-      .def_property("z", &NormalModesStruct::z, &NormalModesStruct::set_z)
-      .def_property("lin", &NormalModesStruct::lin, &NormalModesStruct::set_lin)
+      .def_property("a", &NormalModesStruct::a, &NormalModesStruct::set_a, py::keep_alive<0, 1>())
+      .def_property("b", &NormalModesStruct::b, &NormalModesStruct::set_b, py::keep_alive<0, 1>())
+      .def_property("z", &NormalModesStruct::z, &NormalModesStruct::set_z, py::keep_alive<0, 1>())
+      .def_property(
+          "lin",
+          &NormalModesStruct::lin,
+          &NormalModesStruct::set_lin,
+          py::keep_alive<0, 1>()
+      )
 
       .def("__repr__", [](const NormalModesStruct &self) { return to_string(self); })
 
@@ -122,11 +128,17 @@ void init_nametable_struct(py::module &m, py::class_<NametableStruct> &cls) {
          py::arg("n_min") = py::none(),
          py::arg("n_max") = py::none()
   )
-      .def_property_readonly("name", &NametableStruct::name, "Array of names.")
+      .def_property_readonly(
+          "name",
+          &NametableStruct::name,
+          py::keep_alive<0, 1>(),
+          "Array of names."
+      )
       .def_property(
           "index",
           &NametableStruct::index,
           &NametableStruct::set_index,
+          py::keep_alive<0, 1>(),
           "Sorted index for names(:) array. names(an_index(i)) is in alphabetical order."
       )
       .def_property(

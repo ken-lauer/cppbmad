@@ -39,26 +39,45 @@ void init_photon_element_struct(py::module &m, py::class_<PhotonElementStruct> &
       .def_property(
           "curvature",
           &PhotonElementStruct::curvature,
-          &PhotonElementStruct::set_curvature
+          &PhotonElementStruct::set_curvature,
+          py::keep_alive<0, 1>()
       )
-      .def_property("target", &PhotonElementStruct::target, &PhotonElementStruct::set_target)
-      .def_property("material", &PhotonElementStruct::material, &PhotonElementStruct::set_material)
+      .def_property(
+          "target",
+          &PhotonElementStruct::target,
+          &PhotonElementStruct::set_target,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "material",
+          &PhotonElementStruct::material,
+          &PhotonElementStruct::set_material,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "segmented",
           &PhotonElementStruct::segmented,
-          &PhotonElementStruct::set_segmented
+          &PhotonElementStruct::set_segmented,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "h_misalign",
           &PhotonElementStruct::h_misalign,
-          &PhotonElementStruct::set_h_misalign
+          &PhotonElementStruct::set_h_misalign,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "displacement",
           &PhotonElementStruct::displacement,
-          &PhotonElementStruct::set_displacement
+          &PhotonElementStruct::set_displacement,
+          py::keep_alive<0, 1>()
       )
-      .def_property("pixel", &PhotonElementStruct::pixel, &PhotonElementStruct::set_pixel)
+      .def_property(
+          "pixel",
+          &PhotonElementStruct::pixel,
+          &PhotonElementStruct::set_pixel,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "reflectivity_table_type",
           &PhotonElementStruct::reflectivity_table_type,
@@ -68,22 +87,26 @@ void init_photon_element_struct(py::module &m, py::class_<PhotonElementStruct> &
           "reflectivity_table_sigma",
           &PhotonElementStruct::reflectivity_table_sigma,
           &PhotonElementStruct::set_reflectivity_table_sigma,
+          py::keep_alive<0, 1>(),
           "If polarization is ignored use sigma table."
       )
       .def_property(
           "reflectivity_table_pi",
           &PhotonElementStruct::reflectivity_table_pi,
-          &PhotonElementStruct::set_reflectivity_table_pi
+          &PhotonElementStruct::set_reflectivity_table_pi,
+          py::keep_alive<0, 1>()
       )
       .def_property_readonly(
           "init_energy_prob",
           &PhotonElementStruct::init_energy_prob,
+          py::keep_alive<0, 1>(),
           "Initial energy probability density"
       )
       .def_property(
           "integrated_init_energy_prob",
           &PhotonElementStruct::integrated_init_energy_prob,
-          &PhotonElementStruct::set_integrated_init_energy_prob
+          &PhotonElementStruct::set_integrated_init_energy_prob,
+          py::keep_alive<0, 1>()
       )
 
       .def("__repr__", [](const PhotonElementStruct &self) { return to_string(self); })
@@ -163,12 +186,14 @@ void init_photon_material_struct(py::module &m, py::class_<PhotonMaterialStruct>
           "h_norm",
           &PhotonMaterialStruct::h_norm,
           &PhotonMaterialStruct::set_h_norm,
+          py::keep_alive<0, 1>(),
           "Normalized H vector for crystals."
       )
       .def_property(
           "l_ref",
           &PhotonMaterialStruct::l_ref,
           &PhotonMaterialStruct::set_l_ref,
+          py::keep_alive<0, 1>(),
           "Crystal reference orbit displacement vector in element coords."
       )
 
@@ -231,7 +256,7 @@ void init_photon_reflect_surface_struct(
           &PhotonReflectSurfaceStruct::reflectivity_file,
           &PhotonReflectSurfaceStruct::set_reflectivity_file
       )
-      .def_property_readonly("table", &PhotonReflectSurfaceStruct::table)
+      .def_property_readonly("table", &PhotonReflectSurfaceStruct::table, py::keep_alive<0, 1>())
       .def_property(
           "surface_roughness_rms",
           &PhotonReflectSurfaceStruct::surface_roughness_rms,
@@ -294,19 +319,22 @@ void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTab
           "angle",
           &PhotonReflectTableStruct::angle,
           &PhotonReflectTableStruct::set_angle,
+          py::keep_alive<0, 1>(),
           "Vector of angle values for %p_reflect"
       )
       .def_property(
           "energy",
           &PhotonReflectTableStruct::energy,
           &PhotonReflectTableStruct::set_energy,
+          py::keep_alive<0, 1>(),
           "Vector of energy values for %p_reflect"
       )
-      .def_property_readonly("int1", &PhotonReflectTableStruct::int1)
+      .def_property_readonly("int1", &PhotonReflectTableStruct::int1, py::keep_alive<0, 1>())
       .def_property(
           "p_reflect",
           &PhotonReflectTableStruct::p_reflect,
           &PhotonReflectTableStruct::set_p_reflect,
+          py::keep_alive<0, 1>(),
           "(angle, ev) probability. Log used for smooth surface reflection"
       )
       .def_property(
@@ -319,12 +347,14 @@ void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTab
           "p_reflect_scratch",
           &PhotonReflectTableStruct::p_reflect_scratch,
           &PhotonReflectTableStruct::set_p_reflect_scratch,
+          py::keep_alive<0, 1>(),
           "Scratch space"
       )
       .def_property(
           "bragg_angle",
           &PhotonReflectTableStruct::bragg_angle,
           &PhotonReflectTableStruct::set_bragg_angle,
+          py::keep_alive<0, 1>(),
           "Bragg angle at energy values."
       )
       .def_static(
@@ -390,9 +420,19 @@ void init_photon_target_struct(py::module &m, py::class_<PhotonTargetStruct> &cl
           "or rectangular$"
       )
       .def_property("n_corner", &PhotonTargetStruct::n_corner, &PhotonTargetStruct::set_n_corner)
-      .def_property("ele_loc", &PhotonTargetStruct::ele_loc, &PhotonTargetStruct::set_ele_loc)
-      .def_property_readonly("corner", &PhotonTargetStruct::corner)
-      .def_property("center", &PhotonTargetStruct::center, &PhotonTargetStruct::set_center)
+      .def_property(
+          "ele_loc",
+          &PhotonTargetStruct::ele_loc,
+          &PhotonTargetStruct::set_ele_loc,
+          py::keep_alive<0, 1>()
+      )
+      .def_property_readonly("corner", &PhotonTargetStruct::corner, py::keep_alive<0, 1>())
+      .def_property(
+          "center",
+          &PhotonTargetStruct::center,
+          &PhotonTargetStruct::set_center,
+          py::keep_alive<0, 1>()
+      )
 
       .def("__repr__", [](const PhotonTargetStruct &self) { return to_string(self); })
 
@@ -430,8 +470,8 @@ void init_pixel_detec_struct(py::module &m, py::class_<PixelDetecStruct> &cls) {
          py::arg("n_hit_detec") = py::none(),
          py::arg("n_hit_pixel") = py::none()
   )
-      .def_property("dr", &PixelDetecStruct::dr, &PixelDetecStruct::set_dr)
-      .def_property("r0", &PixelDetecStruct::r0, &PixelDetecStruct::set_r0)
+      .def_property("dr", &PixelDetecStruct::dr, &PixelDetecStruct::set_dr, py::keep_alive<0, 1>())
+      .def_property("r0", &PixelDetecStruct::r0, &PixelDetecStruct::set_r0, py::keep_alive<0, 1>())
       .def_property(
           "n_track_tot",
           &PixelDetecStruct::n_track_tot,
@@ -450,7 +490,7 @@ void init_pixel_detec_struct(py::module &m, py::class_<PixelDetecStruct> &cls) {
           &PixelDetecStruct::set_n_hit_pixel,
           "How many photons hit the pixel grid of the detector."
       )
-      .def_property_readonly("pt", &PixelDetecStruct::pt, "Grid of pixels")
+      .def_property_readonly("pt", &PixelDetecStruct::pt, py::keep_alive<0, 1>(), "Grid of pixels")
 
       .def("__repr__", [](const PixelDetecStruct &self) { return to_string(self); })
 
@@ -508,24 +548,28 @@ void init_pixel_pt_struct(py::module &m, py::class_<PixelPtStruct> &cls) {
           "orbit",
           &PixelPtStruct::orbit,
           &PixelPtStruct::set_orbit,
+          py::keep_alive<0, 1>(),
           "x, Vx/c, y, Vy/c, dummy, E - E_ref."
       )
       .def_property(
           "orbit_rms",
           &PixelPtStruct::orbit_rms,
           &PixelPtStruct::set_orbit_rms,
+          py::keep_alive<0, 1>(),
           "RMS statistics."
       )
       .def_property(
           "init_orbit",
           &PixelPtStruct::init_orbit,
           &PixelPtStruct::set_init_orbit,
+          py::keep_alive<0, 1>(),
           "Initial orbit at start of lattice statistics."
       )
       .def_property(
           "init_orbit_rms",
           &PixelPtStruct::init_orbit_rms,
           &PixelPtStruct::set_init_orbit_rms,
+          py::keep_alive<0, 1>(),
           "Initial orbit at start of lattice RMS statistics."
       )
 
@@ -613,12 +657,14 @@ void init_ptc_normal_form_struct(py::module &m, py::class_<PtcNormalFormStruct> 
           "ele_origin",
           &PtcNormalFormStruct::ele_origin,
           &PtcNormalFormStruct::set_ele_origin,
+          py::keep_alive<0, 1>(),
           "Element at which the on-turn map was created."
       )
       .def_property(
           "orb0",
           &PtcNormalFormStruct::orb0,
           &PtcNormalFormStruct::set_orb0,
+          py::keep_alive<0, 1>(),
           "Closed orbit at element."
       )
       .def_property(

@@ -26,12 +26,12 @@ void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
          py::arg("x") = py::none(),
          py::arg("y") = py::none()
   )
-      .def_property("v", &Mode3Struct::v, &Mode3Struct::set_v)
-      .def_property("a", &Mode3Struct::a, &Mode3Struct::set_a)
-      .def_property("b", &Mode3Struct::b, &Mode3Struct::set_b)
-      .def_property("c", &Mode3Struct::c, &Mode3Struct::set_c)
-      .def_property("x", &Mode3Struct::x, &Mode3Struct::set_x)
-      .def_property("y", &Mode3Struct::y, &Mode3Struct::set_y)
+      .def_property("v", &Mode3Struct::v, &Mode3Struct::set_v, py::keep_alive<0, 1>())
+      .def_property("a", &Mode3Struct::a, &Mode3Struct::set_a, py::keep_alive<0, 1>())
+      .def_property("b", &Mode3Struct::b, &Mode3Struct::set_b, py::keep_alive<0, 1>())
+      .def_property("c", &Mode3Struct::c, &Mode3Struct::set_c, py::keep_alive<0, 1>())
+      .def_property("x", &Mode3Struct::x, &Mode3Struct::set_x, py::keep_alive<0, 1>())
+      .def_property("y", &Mode3Struct::y, &Mode3Struct::set_y, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const Mode3Struct &self) { return to_string(self); })
 
@@ -195,9 +195,27 @@ void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
          py::arg("r") = py::none(),
          py::arg("t") = py::none()
   )
-      .def_property("k", &MadMapStruct::k, &MadMapStruct::set_k, "0th order map.")
-      .def_property("r", &MadMapStruct::r, &MadMapStruct::set_r, "1st order map.")
-      .def_property("t", &MadMapStruct::t, &MadMapStruct::set_t, "2nd order map.")
+      .def_property(
+          "k",
+          &MadMapStruct::k,
+          &MadMapStruct::set_k,
+          py::keep_alive<0, 1>(),
+          "0th order map."
+      )
+      .def_property(
+          "r",
+          &MadMapStruct::r,
+          &MadMapStruct::set_r,
+          py::keep_alive<0, 1>(),
+          "1st order map."
+      )
+      .def_property(
+          "t",
+          &MadMapStruct::t,
+          &MadMapStruct::set_t,
+          py::keep_alive<0, 1>(),
+          "2nd order map."
+      )
 
       .def("__repr__", [](const MadMapStruct &self) { return to_string(self); })
 

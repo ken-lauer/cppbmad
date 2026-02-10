@@ -21,6 +21,7 @@ void init_kv_beam_init_struct(py::module &m, py::class_<KvBeamInitStruct> &cls) 
           "part_per_phi",
           &KvBeamInitStruct::part_per_phi,
           &KvBeamInitStruct::set_part_per_phi,
+          py::keep_alive<0, 1>(),
           "number of particles per angle variable."
       )
       .def_property("n_I2", &KvBeamInitStruct::n_I2, &KvBeamInitStruct::set_n_I2, "number of I2")

@@ -12,7 +12,13 @@ namespace py = pybind11;
 // target_point_struct
 void init_target_point_struct(py::module &m, py::class_<TargetPointStruct> &cls) {
   cls.def(py::init<std::optional<std::vector<double>>>(), py::arg("r") = py::none())
-      .def_property("r", &TargetPointStruct::r, &TargetPointStruct::set_r, "(x, y, z)")
+      .def_property(
+          "r",
+          &TargetPointStruct::r,
+          &TargetPointStruct::set_r,
+          py::keep_alive<0, 1>(),
+          "(x, y, z)"
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return TargetPointStructAlloc1D(sz); },
@@ -58,7 +64,7 @@ void init_target_point_struct(py::module &m, py::class_<TargetPointStruct> &cls)
 void init_taylor_struct(py::module &m, py::class_<TaylorStruct> &cls) {
   cls.def(py::init<std::optional<double>>(), py::arg("ref") = py::none())
       .def_property("ref", &TaylorStruct::ref, &TaylorStruct::set_ref)
-      .def_property_readonly("term", &TaylorStruct::term)
+      .def_property_readonly("term", &TaylorStruct::term, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return TaylorStructAlloc1D(sz); },
@@ -108,7 +114,12 @@ void init_taylor_term_struct(py::module &m, py::class_<TaylorTermStruct> &cls) {
          py::arg("expn") = py::none()
   )
       .def_property("coef", &TaylorTermStruct::coef, &TaylorTermStruct::set_coef)
-      .def_property("expn", &TaylorTermStruct::expn, &TaylorTermStruct::set_expn)
+      .def_property(
+          "expn",
+          &TaylorTermStruct::expn,
+          &TaylorTermStruct::set_expn,
+          py::keep_alive<0, 1>()
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return TaylorTermStructAlloc1D(sz); },
@@ -185,30 +196,35 @@ void init_track_point_struct(py::module &m, py::class_<TrackPointStruct> &cls) {
           "orb",
           &TrackPointStruct::orb,
           &TrackPointStruct::set_orb,
+          py::keep_alive<0, 1>(),
           "Particle position in lab coords."
       )
       .def_property(
           "field",
           &TrackPointStruct::field,
           &TrackPointStruct::set_field,
+          py::keep_alive<0, 1>(),
           "E&M fields in lab coordinates."
       )
       .def_property(
           "strong_beam",
           &TrackPointStruct::strong_beam,
           &TrackPointStruct::set_strong_beam,
+          py::keep_alive<0, 1>(),
           "Strong beam info for beambeam element."
       )
       .def_property(
           "vec0",
           &TrackPointStruct::vec0,
           &TrackPointStruct::set_vec0,
+          py::keep_alive<0, 1>(),
           "0th order part of xfer map from the beginning."
       )
       .def_property(
           "mat6",
           &TrackPointStruct::mat6,
           &TrackPointStruct::set_mat6,
+          py::keep_alive<0, 1>(),
           "1st order part of xfer map (transfer matrix)."
       )
       .def_static(
@@ -265,7 +281,12 @@ void init_track_struct(py::module &m, py::class_<TrackStruct> &cls) {
          py::arg("n_bad") = py::none(),
          py::arg("n_ok") = py::none()
   )
-      .def_property_readonly("pt", &TrackStruct::pt, "Array of track points indexed from 0.")
+      .def_property_readonly(
+          "pt",
+          &TrackStruct::pt,
+          py::keep_alive<0, 1>(),
+          "Array of track points indexed from 0."
+      )
       .def_property(
           "ds_save",
           &TrackStruct::ds_save,
@@ -401,12 +422,14 @@ void init_tricubic_cmplx_coef_struct(py::module &m, py::class_<TricubicCmplxCoef
           "coef",
           &TricubicCmplxCoefStruct::coef,
           &TricubicCmplxCoefStruct::set_coef,
+          py::keep_alive<0, 1>(),
           "Coefs"
       )
       .def_property(
           "i_box",
           &TricubicCmplxCoefStruct::i_box,
           &TricubicCmplxCoefStruct::set_i_box,
+          py::keep_alive<0, 1>(),
           "index at lower box corner."
       )
 
@@ -460,18 +483,21 @@ void init_tao_beam_branch_struct(py::module &m, py::class_<TaoBeamBranchStruct> 
           "beam_at_start",
           &TaoBeamBranchStruct::beam_at_start,
           &TaoBeamBranchStruct::set_beam_at_start,
+          py::keep_alive<0, 1>(),
           "Initial beam"
       )
       .def_property(
           "beam_init",
           &TaoBeamBranchStruct::beam_init,
           &TaoBeamBranchStruct::set_beam_init,
+          py::keep_alive<0, 1>(),
           "User set beam distrubution at track start."
       )
       .def_property(
           "beam_init_used",
           &TaoBeamBranchStruct::beam_init_used,
           &TaoBeamBranchStruct::set_beam_init_used,
+          py::keep_alive<0, 1>(),
           "beam distribution with emit values set."
       )
       .def_property(
@@ -745,7 +771,7 @@ void init_tao_building_wall_section_struct(
           &TaoBuildingWallSectionStruct::set_constraint,
           "'left_side' or 'right_side' constraint."
       )
-      .def_property_readonly("point", &TaoBuildingWallSectionStruct::point)
+      .def_property_readonly("point", &TaoBuildingWallSectionStruct::point, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return TaoBuildingWallSectionStructAlloc1D(sz); },
@@ -798,9 +824,10 @@ void init_tao_building_wall_struct(py::module &m, py::class_<TaoBuildingWallStru
       .def_property(
           "orientation",
           &TaoBuildingWallStruct::orientation,
-          &TaoBuildingWallStruct::set_orientation
+          &TaoBuildingWallStruct::set_orientation,
+          py::keep_alive<0, 1>()
       )
-      .def_property_readonly("section", &TaoBuildingWallStruct::section)
+      .def_property_readonly("section", &TaoBuildingWallStruct::section, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const TaoBuildingWallStruct &self) { return to_string(self); })
 
@@ -832,7 +859,13 @@ void init_tao_cmd_history_struct(py::module &m, py::class_<TaoCmdHistoryStruct> 
          py::arg("cmd") = py::none(),
          py::arg("ix") = py::none()
   )
-      .def_property("cmd", &TaoCmdHistoryStruct::cmd, &TaoCmdHistoryStruct::set_cmd, "The command")
+      .def_property(
+          "cmd",
+          &TaoCmdHistoryStruct::cmd,
+          &TaoCmdHistoryStruct::set_cmd,
+          py::keep_alive<0, 1>(),
+          "The command"
+      )
       .def_property(
           "ix",
           &TaoCmdHistoryStruct::ix,
@@ -967,10 +1000,21 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
       .def_property_readonly(
           "plot_place_buffer",
           &TaoCommonStruct::plot_place_buffer,
+          py::keep_alive<0, 1>(),
           "Used when %external_plotting is on."
       )
-      .def_property("covar", &TaoCommonStruct::covar, &TaoCommonStruct::set_covar)
-      .def_property("alpha", &TaoCommonStruct::alpha, &TaoCommonStruct::set_alpha)
+      .def_property(
+          "covar",
+          &TaoCommonStruct::covar,
+          &TaoCommonStruct::set_covar,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "alpha",
+          &TaoCommonStruct::alpha,
+          &TaoCommonStruct::set_alpha,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "dummy_target",
           &TaoCommonStruct::dummy_target,
@@ -1111,6 +1155,7 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
           "is_err_message_printed",
           &TaoCommonStruct::is_err_message_printed,
           &TaoCommonStruct::set_is_err_message_printed,
+          py::keep_alive<0, 1>(),
           "Used by tao_set_invalid"
       )
       .def_property(
@@ -1157,6 +1202,7 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
       .def_property_readonly(
           "valid_plot_who",
           &TaoCommonStruct::valid_plot_who,
+          py::keep_alive<0, 1>(),
           "model, base, ref etc..."
       )
       .def_property(
@@ -1404,6 +1450,7 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
           "data_type",
           &TaoCurveStruct::data_type,
           &TaoCurveStruct::set_data_type,
+          py::keep_alive<0, 1>(),
           "'orbit.x', etc."
       )
       .def_property(
@@ -1436,52 +1483,91 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
           &TaoCurveStruct::set_why_invalid,
           "Informative string to print."
       )
-      .def_property("g", &TaoCurveStruct::g, &TaoCurveStruct::set_g, "pointer to parent graph")
-      .def_property("hist", &TaoCurveStruct::hist, &TaoCurveStruct::set_hist)
-      .def_property("z_color", &TaoCurveStruct::z_color, &TaoCurveStruct::set_z_color)
+      .def_property(
+          "g",
+          &TaoCurveStruct::g,
+          &TaoCurveStruct::set_g,
+          py::keep_alive<0, 1>(),
+          "pointer to parent graph"
+      )
+      .def_property(
+          "hist",
+          &TaoCurveStruct::hist,
+          &TaoCurveStruct::set_hist,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "z_color",
+          &TaoCurveStruct::z_color,
+          &TaoCurveStruct::set_z_color,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "x_line",
           &TaoCurveStruct::x_line,
           &TaoCurveStruct::set_x_line,
+          py::keep_alive<0, 1>(),
           "Coords for drawing a curve"
       )
-      .def_property("y_line", &TaoCurveStruct::y_line, &TaoCurveStruct::set_y_line)
+      .def_property(
+          "y_line",
+          &TaoCurveStruct::y_line,
+          &TaoCurveStruct::set_y_line,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "y2_line",
           &TaoCurveStruct::y2_line,
           &TaoCurveStruct::set_y2_line,
+          py::keep_alive<0, 1>(),
           "Second array needed for beam chamber curve."
       )
       .def_property(
           "ix_line",
           &TaoCurveStruct::ix_line,
           &TaoCurveStruct::set_ix_line,
+          py::keep_alive<0, 1>(),
           "Used by wave and aperture curves."
       )
       .def_property(
           "x_symb",
           &TaoCurveStruct::x_symb,
           &TaoCurveStruct::set_x_symb,
+          py::keep_alive<0, 1>(),
           "Coords for drawing the symbols"
       )
-      .def_property("y_symb", &TaoCurveStruct::y_symb, &TaoCurveStruct::set_y_symb)
-      .def_property("z_symb", &TaoCurveStruct::z_symb, &TaoCurveStruct::set_z_symb, "Symbol color")
+      .def_property(
+          "y_symb",
+          &TaoCurveStruct::y_symb,
+          &TaoCurveStruct::set_y_symb,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "z_symb",
+          &TaoCurveStruct::z_symb,
+          &TaoCurveStruct::set_z_symb,
+          py::keep_alive<0, 1>(),
+          "Symbol color"
+      )
       .def_property(
           "err_symb",
           &TaoCurveStruct::err_symb,
           &TaoCurveStruct::set_err_symb,
+          py::keep_alive<0, 1>(),
           "Error bars"
       )
       .def_property(
           "symb_size",
           &TaoCurveStruct::symb_size,
           &TaoCurveStruct::set_symb_size,
+          py::keep_alive<0, 1>(),
           "Symbol size. Used with symbol_size_scale."
       )
       .def_property(
           "ix_symb",
           &TaoCurveStruct::ix_symb,
           &TaoCurveStruct::set_ix_symb,
+          py::keep_alive<0, 1>(),
           "Corresponding index in d1_data%d(:) array."
       )
       .def_property(
@@ -1490,17 +1576,25 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
           &TaoCurveStruct::set_y_axis_scale_factor,
           "y-axis conversion from internal to plotting units."
       )
-      .def_property("line", &TaoCurveStruct::line, &TaoCurveStruct::set_line, "Line attributes")
+      .def_property(
+          "line",
+          &TaoCurveStruct::line,
+          &TaoCurveStruct::set_line,
+          py::keep_alive<0, 1>(),
+          "Line attributes"
+      )
       .def_property(
           "symbol",
           &TaoCurveStruct::symbol,
           &TaoCurveStruct::set_symbol,
+          py::keep_alive<0, 1>(),
           "Symbol attributes"
       )
       .def_property(
           "orbit",
           &TaoCurveStruct::orbit,
           &TaoCurveStruct::set_orbit,
+          py::keep_alive<0, 1>(),
           "Used for E/B field plotting."
       )
       .def_property(
@@ -1610,10 +1704,17 @@ void init_tao_d1_data_struct(py::module &m, py::class_<TaoD1DataStruct> &cls) {
          py::arg("d2") = py::none()
   )
       .def_property("name", &TaoD1DataStruct::name, &TaoD1DataStruct::set_name, "Eg: 'x', etc.")
-      .def_property("d2", &TaoD1DataStruct::d2, &TaoD1DataStruct::set_d2, "ptr to parent d2_data")
+      .def_property(
+          "d2",
+          &TaoD1DataStruct::d2,
+          &TaoD1DataStruct::set_d2,
+          py::keep_alive<0, 1>(),
+          "ptr to parent d2_data"
+      )
       .def_property_readonly(
           "d",
           &TaoD1DataStruct::d,
+          py::keep_alive<0, 1>(),
           "Pointer to the appropriate section in u%data"
       )
       .def_static(
@@ -1715,9 +1816,15 @@ void init_tao_d2_data_struct(py::module &m, py::class_<TaoD2DataStruct> &cls) {
       .def_property_readonly(
           "descrip",
           &TaoD2DataStruct::descrip,
+          py::keep_alive<0, 1>(),
           "Array for descriptive information."
       )
-      .def_property_readonly("d1", &TaoD2DataStruct::d1, "Points to children")
+      .def_property_readonly(
+          "d1",
+          &TaoD2DataStruct::d1,
+          py::keep_alive<0, 1>(),
+          "Points to children"
+      )
       .def_property(
           "ix_universe",
           &TaoD2DataStruct::ix_universe,
@@ -1910,6 +2017,7 @@ void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
           "data_type",
           &TaoDataStruct::data_type,
           &TaoDataStruct::set_data_type,
+          py::keep_alive<0, 1>(),
           "Type of data: 'orbit.x', etc."
       )
       .def_property(
@@ -2138,11 +2246,17 @@ void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
           &TaoDataStruct::set_useit_opt,
           "See above"
       )
-      .def_property("spin_map", &TaoDataStruct::spin_map, &TaoDataStruct::set_spin_map)
+      .def_property(
+          "spin_map",
+          &TaoDataStruct::spin_map,
+          &TaoDataStruct::set_spin_map,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "d1",
           &TaoDataStruct::d1,
           &TaoDataStruct::set_d1,
+          py::keep_alive<0, 1>(),
           "Pointer to the parent d1_data_struct"
       )
       .def_static(
@@ -2251,7 +2365,7 @@ void init_tao_data_var_component_struct(py::module &m, py::class_<TaoDataVarComp
 // tao_drawing_struct
 void init_tao_drawing_struct(py::module &m, py::class_<TaoDrawingStruct> &cls) {
   cls.def(py::init<>())
-      .def_property_readonly("ele_shape", &TaoDrawingStruct::ele_shape)
+      .def_property_readonly("ele_shape", &TaoDrawingStruct::ele_shape, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const TaoDrawingStruct &self) { return to_string(self); })
 
@@ -2289,9 +2403,24 @@ void init_tao_dynamic_aperture_struct(py::module &m, py::class_<TaoDynamicApertu
          py::arg("a_emit") = py::none(),
          py::arg("b_emit") = py::none()
   )
-      .def_property("param", &TaoDynamicApertureStruct::param, &TaoDynamicApertureStruct::set_param)
-      .def_property_readonly("scan", &TaoDynamicApertureStruct::scan, "One scan for each pz.")
-      .def_property("pz", &TaoDynamicApertureStruct::pz, &TaoDynamicApertureStruct::set_pz)
+      .def_property(
+          "param",
+          &TaoDynamicApertureStruct::param,
+          &TaoDynamicApertureStruct::set_param,
+          py::keep_alive<0, 1>()
+      )
+      .def_property_readonly(
+          "scan",
+          &TaoDynamicApertureStruct::scan,
+          py::keep_alive<0, 1>(),
+          "One scan for each pz."
+      )
+      .def_property(
+          "pz",
+          &TaoDynamicApertureStruct::pz,
+          &TaoDynamicApertureStruct::set_pz,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "ellipse_scale",
           &TaoDynamicApertureStruct::ellipse_scale,
@@ -2334,7 +2463,7 @@ void init_tao_dynamic_aperture_struct(py::module &m, py::class_<TaoDynamicApertu
 // tao_ele_pointer_struct
 void init_tao_ele_pointer_struct(py::module &m, py::class_<TaoElePointerStruct> &cls) {
   cls.def(py::init<std::optional<int>>(), py::arg("n_loc") = py::none())
-      .def_property_readonly("eles", &TaoElePointerStruct::eles)
+      .def_property_readonly("eles", &TaoElePointerStruct::eles, py::keep_alive<0, 1>())
       .def_property("n_loc", &TaoElePointerStruct::n_loc, &TaoElePointerStruct::set_n_loc)
       .def_static(
           "new_array1d",
@@ -2470,7 +2599,7 @@ void init_tao_ele_shape_struct(py::module &m, py::class_<TaoEleShapeStruct> &cls
           &TaoEleShapeStruct::set_name_ele,
           "Name of element."
       )
-      .def_property_readonly("uni", &TaoEleShapeStruct::uni)
+      .def_property_readonly("uni", &TaoEleShapeStruct::uni, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return TaoEleShapeStructAlloc1D(sz); },
@@ -2533,9 +2662,19 @@ void init_tao_eval_node_struct(py::module &m, py::class_<TaoEvalNodeStruct> &cls
           &TaoEvalNodeStruct::set_scale,
           "Scale factor for ping data"
       )
-      .def_property("value", &TaoEvalNodeStruct::value, &TaoEvalNodeStruct::set_value)
-      .def_property_readonly("info", &TaoEvalNodeStruct::info)
-      .def_property_readonly("node", &TaoEvalNodeStruct::node, "Child nodes for tree construction.")
+      .def_property(
+          "value",
+          &TaoEvalNodeStruct::value,
+          &TaoEvalNodeStruct::set_value,
+          py::keep_alive<0, 1>()
+      )
+      .def_property_readonly("info", &TaoEvalNodeStruct::info, py::keep_alive<0, 1>())
+      .def_property_readonly(
+          "node",
+          &TaoEvalNodeStruct::node,
+          py::keep_alive<0, 1>(),
+          "Child nodes for tree construction."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return TaoEvalNodeStructAlloc1D(sz); },
@@ -2595,6 +2734,7 @@ void init_tao_expression_info_struct(py::module &m, py::class_<TaoExpressionInfo
           "ele",
           &TaoExpressionInfoStruct::ele,
           &TaoExpressionInfoStruct::set_ele,
+          py::keep_alive<0, 1>(),
           "Associated ele if it exists"
       )
       .def_property(
@@ -3423,11 +3563,13 @@ void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
       .def_property_readonly(
           "text_legend",
           &TaoGraphStruct::text_legend,
+          py::keep_alive<0, 1>(),
           "Array for holding descriptive info."
       )
       .def_property_readonly(
           "text_legend_out",
           &TaoGraphStruct::text_legend_out,
+          py::keep_alive<0, 1>(),
           "Array for holding descriptive info."
       )
       .def_property(
@@ -3436,43 +3578,78 @@ void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
           &TaoGraphStruct::set_why_invalid,
           "Informative string to print."
       )
-      .def_property_readonly("curve", &TaoGraphStruct::curve)
-      .def_property("p", &TaoGraphStruct::p, &TaoGraphStruct::set_p, "pointer to parent plot")
-      .def_property("floor_plan", &TaoGraphStruct::floor_plan, &TaoGraphStruct::set_floor_plan)
+      .def_property_readonly("curve", &TaoGraphStruct::curve, py::keep_alive<0, 1>())
+      .def_property(
+          "p",
+          &TaoGraphStruct::p,
+          &TaoGraphStruct::set_p,
+          py::keep_alive<0, 1>(),
+          "pointer to parent plot"
+      )
+      .def_property(
+          "floor_plan",
+          &TaoGraphStruct::floor_plan,
+          &TaoGraphStruct::set_floor_plan,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "text_legend_origin",
           &TaoGraphStruct::text_legend_origin,
-          &TaoGraphStruct::set_text_legend_origin
+          &TaoGraphStruct::set_text_legend_origin,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "curve_legend_origin",
           &TaoGraphStruct::curve_legend_origin,
-          &TaoGraphStruct::set_curve_legend_origin
+          &TaoGraphStruct::set_curve_legend_origin,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "curve_legend",
           &TaoGraphStruct::curve_legend,
-          &TaoGraphStruct::set_curve_legend
+          &TaoGraphStruct::set_curve_legend,
+          py::keep_alive<0, 1>()
       )
-      .def_property("x", &TaoGraphStruct::x, &TaoGraphStruct::set_x, "X-axis parameters.")
-      .def_property("y", &TaoGraphStruct::y, &TaoGraphStruct::set_y, "Y-axis attributes.")
+      .def_property(
+          "x",
+          &TaoGraphStruct::x,
+          &TaoGraphStruct::set_x,
+          py::keep_alive<0, 1>(),
+          "X-axis parameters."
+      )
+      .def_property(
+          "y",
+          &TaoGraphStruct::y,
+          &TaoGraphStruct::set_y,
+          py::keep_alive<0, 1>(),
+          "Y-axis attributes."
+      )
       .def_property(
           "x2",
           &TaoGraphStruct::x2,
           &TaoGraphStruct::set_x2,
+          py::keep_alive<0, 1>(),
           "X2-axis attributes (Not currently used)."
       )
-      .def_property("y2", &TaoGraphStruct::y2, &TaoGraphStruct::set_y2, "Y2-axis attributes.")
+      .def_property(
+          "y2",
+          &TaoGraphStruct::y2,
+          &TaoGraphStruct::set_y2,
+          py::keep_alive<0, 1>(),
+          "Y2-axis attributes."
+      )
       .def_property(
           "margin",
           &TaoGraphStruct::margin,
           &TaoGraphStruct::set_margin,
+          py::keep_alive<0, 1>(),
           "Margin around the graph."
       )
       .def_property(
           "scale_margin",
           &TaoGraphStruct::scale_margin,
           &TaoGraphStruct::set_scale_margin,
+          py::keep_alive<0, 1>(),
           "Margin for scaling"
       )
       .def_property(
@@ -3491,6 +3668,7 @@ void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
           "box",
           &TaoGraphStruct::box,
           &TaoGraphStruct::set_box,
+          py::keep_alive<0, 1>(),
           "Defines which box the plot is put in."
       )
       .def_property(
@@ -4022,7 +4200,12 @@ void init_tao_init_struct(py::module &m, py::class_<TaoInitStruct> &cls) {
 // tao_lat_sigma_struct
 void init_tao_lat_sigma_struct(py::module &m, py::class_<TaoLatSigmaStruct> &cls) {
   cls.def(py::init<std::optional<std::vector<std::vector<double>>>>(), py::arg("mat") = py::none())
-      .def_property("mat", &TaoLatSigmaStruct::mat, &TaoLatSigmaStruct::set_mat)
+      .def_property(
+          "mat",
+          &TaoLatSigmaStruct::mat,
+          &TaoLatSigmaStruct::set_mat,
+          py::keep_alive<0, 1>()
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return TaoLatSigmaStructAlloc1D(sz); },
@@ -4123,63 +4306,101 @@ void init_tao_lattice_branch_struct(py::module &m, py::class_<TaoLatticeBranchSt
           "tao_lat",
           &TaoLatticeBranchStruct::tao_lat,
           &TaoLatticeBranchStruct::set_tao_lat,
+          py::keep_alive<0, 1>(),
           "Parent tao_lat"
       )
       .def_property_readonly(
           "lat_sigma",
           &TaoLatticeBranchStruct::lat_sigma,
+          py::keep_alive<0, 1>(),
           "Sigma matrix derived from lattice (not beam)."
       )
-      .def_property_readonly("spin_ele", &TaoLatticeBranchStruct::spin_ele, "Spin stuff")
-      .def_property_readonly("bunch_params", &TaoLatticeBranchStruct::bunch_params, "Per element")
+      .def_property_readonly(
+          "spin_ele",
+          &TaoLatticeBranchStruct::spin_ele,
+          py::keep_alive<0, 1>(),
+          "Spin stuff"
+      )
+      .def_property_readonly(
+          "bunch_params",
+          &TaoLatticeBranchStruct::bunch_params,
+          py::keep_alive<0, 1>(),
+          "Per element"
+      )
       .def_property_readonly(
           "bunch_params_comb",
           &TaoLatticeBranchStruct::bunch_params_comb,
+          py::keep_alive<0, 1>(),
           "A comb for each bunch in beam."
       )
-      .def_property_readonly("orbit", &TaoLatticeBranchStruct::orbit)
+      .def_property_readonly("orbit", &TaoLatticeBranchStruct::orbit, py::keep_alive<0, 1>())
       .def_property_readonly(
           "plot_cache",
           &TaoLatticeBranchStruct::plot_cache,
+          py::keep_alive<0, 1>(),
           "Plotting data cache"
       )
-      .def_property("spin", &TaoLatticeBranchStruct::spin, &TaoLatticeBranchStruct::set_spin)
-      .def_property("srdt", &TaoLatticeBranchStruct::srdt, &TaoLatticeBranchStruct::set_srdt)
+      .def_property(
+          "spin",
+          &TaoLatticeBranchStruct::spin,
+          &TaoLatticeBranchStruct::set_spin,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "srdt",
+          &TaoLatticeBranchStruct::srdt,
+          &TaoLatticeBranchStruct::set_srdt,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "orb0",
           &TaoLatticeBranchStruct::orb0,
           &TaoLatticeBranchStruct::set_orb0,
+          py::keep_alive<0, 1>(),
           "For saving beginning orbit"
       )
       .def_property(
           "modes_ri",
           &TaoLatticeBranchStruct::modes_ri,
           &TaoLatticeBranchStruct::set_modes_ri,
+          py::keep_alive<0, 1>(),
           "Synchrotron integrals stuff"
       )
       .def_property(
           "modes_6d",
           &TaoLatticeBranchStruct::modes_6d,
           &TaoLatticeBranchStruct::set_modes_6d,
+          py::keep_alive<0, 1>(),
           "6D radiation matrices."
       )
       .def_property(
           "ptc_normal_form",
           &TaoLatticeBranchStruct::ptc_normal_form,
           &TaoLatticeBranchStruct::set_ptc_normal_form,
+          py::keep_alive<0, 1>(),
           "Collection of normal form structures defined in PTC"
       )
       .def_property(
           "bmad_normal_form",
           &TaoLatticeBranchStruct::bmad_normal_form,
           &TaoLatticeBranchStruct::set_bmad_normal_form,
+          py::keep_alive<0, 1>(),
           "Collection of normal form structures defined in Bmad"
       )
-      .def_property_readonly("high_E_orb", &TaoLatticeBranchStruct::high_E_orb)
-      .def_property_readonly("low_E_orb", &TaoLatticeBranchStruct::low_E_orb)
+      .def_property_readonly(
+          "high_E_orb",
+          &TaoLatticeBranchStruct::high_E_orb,
+          py::keep_alive<0, 1>()
+      )
+      .def_property_readonly(
+          "low_E_orb",
+          &TaoLatticeBranchStruct::low_E_orb,
+          py::keep_alive<0, 1>()
+      )
       .def_property_readonly(
           "taylor_save",
           &TaoLatticeBranchStruct::taylor_save,
+          py::keep_alive<0, 1>(),
           "Save to reduce computation time."
       )
       .def_property(
@@ -4339,30 +4560,40 @@ void init_tao_lattice_struct(py::module &m, py::class_<TaoLatticeStruct> &cls) {
           &TaoLatticeStruct::set_name,
           "'model', 'base', or 'design'."
       )
-      .def_property("lat", &TaoLatticeStruct::lat, &TaoLatticeStruct::set_lat, "lattice structures")
+      .def_property(
+          "lat",
+          &TaoLatticeStruct::lat,
+          &TaoLatticeStruct::set_lat,
+          py::keep_alive<0, 1>(),
+          "lattice structures"
+      )
       .def_property(
           "high_E_lat",
           &TaoLatticeStruct::high_E_lat,
           &TaoLatticeStruct::set_high_E_lat,
+          py::keep_alive<0, 1>(),
           "For chrom calc."
       )
       .def_property(
           "low_E_lat",
           &TaoLatticeStruct::low_E_lat,
           &TaoLatticeStruct::set_low_E_lat,
+          py::keep_alive<0, 1>(),
           "For chrom calc."
       )
       .def_property(
           "rad_int_by_ele_ri",
           &TaoLatticeStruct::rad_int_by_ele_ri,
-          &TaoLatticeStruct::set_rad_int_by_ele_ri
+          &TaoLatticeStruct::set_rad_int_by_ele_ri,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "rad_int_by_ele_6d",
           &TaoLatticeStruct::rad_int_by_ele_6d,
-          &TaoLatticeStruct::set_rad_int_by_ele_6d
+          &TaoLatticeStruct::set_rad_int_by_ele_6d,
+          py::keep_alive<0, 1>()
       )
-      .def_property_readonly("tao_branch", &TaoLatticeStruct::tao_branch)
+      .def_property_readonly("tao_branch", &TaoLatticeStruct::tao_branch, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const TaoLatticeStruct &self) { return to_string(self); })
 
@@ -4388,8 +4619,18 @@ void init_tao_lattice_struct(py::module &m, py::class_<TaoLatticeStruct> &cls) {
 // tao_model_branch_struct
 void init_tao_model_branch_struct(py::module &m, py::class_<TaoModelBranchStruct> &cls) {
   cls.def(py::init<optional_ref<const TaoBeamBranchStruct>>(), py::arg("beam") = py::none())
-      .def_property_readonly("ele", &TaoModelBranchStruct::ele, "Per element information")
-      .def_property("beam", &TaoModelBranchStruct::beam, &TaoModelBranchStruct::set_beam)
+      .def_property_readonly(
+          "ele",
+          &TaoModelBranchStruct::ele,
+          py::keep_alive<0, 1>(),
+          "Per element information"
+      )
+      .def_property(
+          "beam",
+          &TaoModelBranchStruct::beam,
+          &TaoModelBranchStruct::set_beam,
+          py::keep_alive<0, 1>()
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return TaoModelBranchStructAlloc1D(sz); },
@@ -4445,6 +4686,7 @@ void init_tao_model_element_struct(py::module &m, py::class_<TaoModelElementStru
           "beam",
           &TaoModelElementStruct::beam,
           &TaoModelElementStruct::set_beam,
+          py::keep_alive<0, 1>(),
           "Beam distribution at element."
       )
       .def_property(
@@ -4572,9 +4814,15 @@ void init_tao_plot_cache_struct(py::module &m, py::class_<TaoPlotCacheStruct> &c
           "ele_to_s",
           &TaoPlotCacheStruct::ele_to_s,
           &TaoPlotCacheStruct::set_ele_to_s,
+          py::keep_alive<0, 1>(),
           "Integrated element from branch beginning. Will be marked as a hybrid element."
       )
-      .def_property("orbit", &TaoPlotCacheStruct::orbit, &TaoPlotCacheStruct::set_orbit)
+      .def_property(
+          "orbit",
+          &TaoPlotCacheStruct::orbit,
+          &TaoPlotCacheStruct::set_orbit,
+          py::keep_alive<0, 1>()
+      )
       .def_property("err", &TaoPlotCacheStruct::err, &TaoPlotCacheStruct::set_err)
       .def_static(
           "new_array1d",
@@ -4670,33 +4918,43 @@ void init_tao_plot_page_struct(py::module &m, py::class_<TaoPlotPageStruct> &cls
           "title",
           &TaoPlotPageStruct::title,
           &TaoPlotPageStruct::set_title,
+          py::keep_alive<0, 1>(),
           "Title  at top of page."
       )
       .def_property(
           "subtitle",
           &TaoPlotPageStruct::subtitle,
           &TaoPlotPageStruct::set_subtitle,
+          py::keep_alive<0, 1>(),
           "Subtitle below title at top of page."
       )
       .def_property(
           "border",
           &TaoPlotPageStruct::border,
           &TaoPlotPageStruct::set_border,
+          py::keep_alive<0, 1>(),
           "Border around plots edge of page."
       )
       .def_property(
           "floor_plan",
           &TaoPlotPageStruct::floor_plan,
-          &TaoPlotPageStruct::set_floor_plan
+          &TaoPlotPageStruct::set_floor_plan,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "lat_layout",
           &TaoPlotPageStruct::lat_layout,
-          &TaoPlotPageStruct::set_lat_layout
+          &TaoPlotPageStruct::set_lat_layout,
+          py::keep_alive<0, 1>()
       )
-      .def_property_readonly("pattern", &TaoPlotPageStruct::pattern)
-      .def_property_readonly("template_", &TaoPlotPageStruct::template_, "Templates for the plots.")
-      .def_property_readonly("region", &TaoPlotPageStruct::region)
+      .def_property_readonly("pattern", &TaoPlotPageStruct::pattern, py::keep_alive<0, 1>())
+      .def_property_readonly(
+          "template_",
+          &TaoPlotPageStruct::template_,
+          py::keep_alive<0, 1>(),
+          "Templates for the plots."
+      )
+      .def_property_readonly("region", &TaoPlotPageStruct::region, py::keep_alive<0, 1>())
       .def_property(
           "plot_display_type",
           &TaoPlotPageStruct::plot_display_type,
@@ -4707,6 +4965,7 @@ void init_tao_plot_page_struct(py::module &m, py::class_<TaoPlotPageStruct> &cls
           "size",
           &TaoPlotPageStruct::size,
           &TaoPlotPageStruct::set_size,
+          py::keep_alive<0, 1>(),
           "width and height of plot window in pixels."
       )
       .def_property(
@@ -4846,12 +5105,14 @@ void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> 
           "plot",
           &TaoPlotRegionStruct::plot,
           &TaoPlotRegionStruct::set_plot,
+          py::keep_alive<0, 1>(),
           "Plot associated with this region"
       )
       .def_property(
           "location",
           &TaoPlotRegionStruct::location,
           &TaoPlotRegionStruct::set_location,
+          py::keep_alive<0, 1>(),
           "[x1, x2, y1, y2] location on page."
       )
       .def_property(
@@ -4958,8 +5219,19 @@ void init_tao_plot_struct(py::module &m, py::class_<TaoPlotStruct> &cls) {
           &TaoPlotStruct::set_description,
           "Descriptive string."
       )
-      .def_property_readonly("graph", &TaoPlotStruct::graph, "individual graphs of a plot")
-      .def_property("r", &TaoPlotStruct::r, &TaoPlotStruct::set_r, "pointer to parent.")
+      .def_property_readonly(
+          "graph",
+          &TaoPlotStruct::graph,
+          py::keep_alive<0, 1>(),
+          "individual graphs of a plot"
+      )
+      .def_property(
+          "r",
+          &TaoPlotStruct::r,
+          &TaoPlotStruct::set_r,
+          py::keep_alive<0, 1>(),
+          "pointer to parent."
+      )
       .def_property(
           "ix_plot",
           &TaoPlotStruct::ix_plot,
@@ -5135,9 +5407,10 @@ void init_tao_shape_pattern_struct(py::module &m, py::class_<TaoShapePatternStru
           "line",
           &TaoShapePatternStruct::line,
           &TaoShapePatternStruct::set_line,
+          py::keep_alive<0, 1>(),
           "Line color and pattern set by shape using this pattern."
       )
-      .def_property_readonly("pt", &TaoShapePatternStruct::pt)
+      .def_property_readonly("pt", &TaoShapePatternStruct::pt, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return TaoShapePatternStructAlloc1D(sz); },
@@ -5196,18 +5469,21 @@ void init_tao_spin_dn_dpz_struct(py::module &m, py::class_<TaoSpinDnDpzStruct> &
           "vec",
           &TaoSpinDnDpzStruct::vec,
           &TaoSpinDnDpzStruct::set_vec,
+          py::keep_alive<0, 1>(),
           "n0 derivative wrt pz."
       )
       .def_property(
           "partial",
           &TaoSpinDnDpzStruct::partial,
           &TaoSpinDnDpzStruct::set_partial,
+          py::keep_alive<0, 1>(),
           "partial(i:) is spin n0 derivative wrt pz for i^th oscillation mode (1 => a-mode, etc.)"
       )
       .def_property(
           "partial2",
           &TaoSpinDnDpzStruct::partial2,
           &TaoSpinDnDpzStruct::set_partial2,
+          py::keep_alive<0, 1>(),
           "partial(i:) is spin n0 derivative wrt pz with i^th oscillation mode missing (1 => "
           "a-mode, etc.)"
       )
@@ -5248,22 +5524,30 @@ void init_tao_spin_ele_struct(py::module &m, py::class_<TaoSpinEleStruct> &cls) 
          py::arg("spin_eigen_vec") = py::none(),
          py::arg("valid") = py::none()
   )
-      .def_property("dn_dpz", &TaoSpinEleStruct::dn_dpz, &TaoSpinEleStruct::set_dn_dpz)
+      .def_property(
+          "dn_dpz",
+          &TaoSpinEleStruct::dn_dpz,
+          &TaoSpinEleStruct::set_dn_dpz,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "orb_eigen_val",
           &TaoSpinEleStruct::orb_eigen_val,
-          &TaoSpinEleStruct::set_orb_eigen_val
+          &TaoSpinEleStruct::set_orb_eigen_val,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "orb_eigen_vec",
           &TaoSpinEleStruct::orb_eigen_vec,
           &TaoSpinEleStruct::set_orb_eigen_vec,
+          py::keep_alive<0, 1>(),
           "(j,:) is j^th vector"
       )
       .def_property(
           "spin_eigen_vec",
           &TaoSpinEleStruct::spin_eigen_vec,
           &TaoSpinEleStruct::set_spin_eigen_vec,
+          py::keep_alive<0, 1>(),
           "(j,:) is j^th vector"
       )
       .def_property("valid", &TaoSpinEleStruct::valid, &TaoSpinEleStruct::set_valid)
@@ -5334,25 +5618,43 @@ void init_tao_spin_map_struct(py::module &m, py::class_<TaoSpinMapStruct> &cls) 
          py::arg("mat8") = py::none()
   )
       .def_property("valid", &TaoSpinMapStruct::valid, &TaoSpinMapStruct::set_valid)
-      .def_property("map1", &TaoSpinMapStruct::map1, &TaoSpinMapStruct::set_map1)
+      .def_property(
+          "map1",
+          &TaoSpinMapStruct::map1,
+          &TaoSpinMapStruct::set_map1,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "axis_input",
           &TaoSpinMapStruct::axis_input,
           &TaoSpinMapStruct::set_axis_input,
+          py::keep_alive<0, 1>(),
           "Input axes."
       )
       .def_property(
           "axis0",
           &TaoSpinMapStruct::axis0,
           &TaoSpinMapStruct::set_axis0,
+          py::keep_alive<0, 1>(),
           "Initial axes."
       )
-      .def_property("axis1", &TaoSpinMapStruct::axis1, &TaoSpinMapStruct::set_axis1, "Final axes.")
+      .def_property(
+          "axis1",
+          &TaoSpinMapStruct::axis1,
+          &TaoSpinMapStruct::set_axis1,
+          py::keep_alive<0, 1>(),
+          "Final axes."
+      )
       .def_property("ix_ele", &TaoSpinMapStruct::ix_ele, &TaoSpinMapStruct::set_ix_ele)
       .def_property("ix_ref", &TaoSpinMapStruct::ix_ref, &TaoSpinMapStruct::set_ix_ref)
       .def_property("ix_uni", &TaoSpinMapStruct::ix_uni, &TaoSpinMapStruct::set_ix_uni)
       .def_property("ix_branch", &TaoSpinMapStruct::ix_branch, &TaoSpinMapStruct::set_ix_branch)
-      .def_property("mat8", &TaoSpinMapStruct::mat8, &TaoSpinMapStruct::set_mat8)
+      .def_property(
+          "mat8",
+          &TaoSpinMapStruct::mat8,
+          &TaoSpinMapStruct::set_mat8,
+          py::keep_alive<0, 1>()
+      )
 
       .def("__repr__", [](const TaoSpinMapStruct &self) { return to_string(self); })
 
@@ -5427,12 +5729,14 @@ void init_tao_spin_polarization_struct(py::module &m, py::class_<TaoSpinPolariza
           "pol_limit_dk_partial",
           &TaoSpinPolarizationStruct::pol_limit_dk_partial,
           &TaoSpinPolarizationStruct::set_pol_limit_dk_partial,
+          py::keep_alive<0, 1>(),
           "Limit using only single mode to calc dn_dpz"
       )
       .def_property(
           "pol_limit_dk_partial2",
           &TaoSpinPolarizationStruct::pol_limit_dk_partial2,
           &TaoSpinPolarizationStruct::set_pol_limit_dk_partial2,
+          py::keep_alive<0, 1>(),
           "Limit using only single mode to calc dn_dpz"
       )
       .def_property(
@@ -5451,12 +5755,14 @@ void init_tao_spin_polarization_struct(py::module &m, py::class_<TaoSpinPolariza
           "depol_rate_partial",
           &TaoSpinPolarizationStruct::depol_rate_partial,
           &TaoSpinPolarizationStruct::set_depol_rate_partial,
+          py::keep_alive<0, 1>(),
           "Depolarization rate (1/sec) using only single mode to calc dn_dpz."
       )
       .def_property(
           "depol_rate_partial2",
           &TaoSpinPolarizationStruct::depol_rate_partial2,
           &TaoSpinPolarizationStruct::set_depol_rate_partial2,
+          py::keep_alive<0, 1>(),
           "Depolarization rate (1/sec) using only two modes to calc dn_dpz."
       )
       .def_property(
@@ -5492,11 +5798,13 @@ void init_tao_spin_polarization_struct(py::module &m, py::class_<TaoSpinPolariza
           "q_1turn",
           &TaoSpinPolarizationStruct::q_1turn,
           &TaoSpinPolarizationStruct::set_q_1turn,
+          py::keep_alive<0, 1>(),
           "Save results from spin_concat_linear_maps in tao_spin_polarization."
       )
       .def_property_readonly(
           "q_ele",
           &TaoSpinPolarizationStruct::q_ele,
+          py::keep_alive<0, 1>(),
           "Save results from spin_concat_linear_maps in tao_spin_polarization."
       )
 
@@ -5552,36 +5860,66 @@ void init_tao_super_universe_struct(py::module &m, py::class_<TaoSuperUniverseSt
           "global_",
           &TaoSuperUniverseStruct::global,
           &TaoSuperUniverseStruct::set_global,
+          py::keep_alive<0, 1>(),
           "User accessible global variables."
       )
       .def_property(
           "init",
           &TaoSuperUniverseStruct::init,
           &TaoSuperUniverseStruct::set_init,
+          py::keep_alive<0, 1>(),
           "Initialization parameters"
       )
       .def_property(
           "com",
           &TaoSuperUniverseStruct::com,
           &TaoSuperUniverseStruct::set_com,
+          py::keep_alive<0, 1>(),
           "Non-initialization common parameters"
       )
       .def_property(
           "plot_page",
           &TaoSuperUniverseStruct::plot_page,
           &TaoSuperUniverseStruct::set_plot_page,
+          py::keep_alive<0, 1>(),
           "Defines the plot window."
       )
-      .def_property_readonly("v1_var", &TaoSuperUniverseStruct::v1_var, "The variable types")
-      .def_property_readonly("var", &TaoSuperUniverseStruct::var, "array of all variables.")
-      .def_property_readonly("u", &TaoSuperUniverseStruct::u, "array of universes.")
-      .def_property("key", &TaoSuperUniverseStruct::key, &TaoSuperUniverseStruct::set_key)
+      .def_property_readonly(
+          "v1_var",
+          &TaoSuperUniverseStruct::v1_var,
+          py::keep_alive<0, 1>(),
+          "The variable types"
+      )
+      .def_property_readonly(
+          "var",
+          &TaoSuperUniverseStruct::var,
+          py::keep_alive<0, 1>(),
+          "array of all variables."
+      )
+      .def_property_readonly(
+          "u",
+          &TaoSuperUniverseStruct::u,
+          py::keep_alive<0, 1>(),
+          "array of universes."
+      )
+      .def_property(
+          "key",
+          &TaoSuperUniverseStruct::key,
+          &TaoSuperUniverseStruct::set_key,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "building_wall",
           &TaoSuperUniverseStruct::building_wall,
-          &TaoSuperUniverseStruct::set_building_wall
+          &TaoSuperUniverseStruct::set_building_wall,
+          py::keep_alive<0, 1>()
       )
-      .def_property("wave", &TaoSuperUniverseStruct::wave, &TaoSuperUniverseStruct::set_wave)
+      .def_property(
+          "wave",
+          &TaoSuperUniverseStruct::wave,
+          &TaoSuperUniverseStruct::set_wave,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "n_var_used",
           &TaoSuperUniverseStruct::n_var_used,
@@ -5592,7 +5930,12 @@ void init_tao_super_universe_struct(py::module &m, py::class_<TaoSuperUniverseSt
           &TaoSuperUniverseStruct::n_v1_var_used,
           &TaoSuperUniverseStruct::set_n_v1_var_used
       )
-      .def_property_readonly("history", &TaoSuperUniverseStruct::history, "command history")
+      .def_property_readonly(
+          "history",
+          &TaoSuperUniverseStruct::history,
+          py::keep_alive<0, 1>(),
+          "command history"
+      )
       .def_property(
           "initialized",
           &TaoSuperUniverseStruct::initialized,
@@ -5824,7 +6167,12 @@ void init_tao_universe_calc_struct(py::module &m, py::class_<TaoUniverseCalcStru
 // tao_universe_pointer_struct
 void init_tao_universe_pointer_struct(py::module &m, py::class_<TaoUniversePointerStruct> &cls) {
   cls.def(py::init<optional_ref<const TaoUniverseStruct>>(), py::arg("u") = py::none())
-      .def_property("u", &TaoUniversePointerStruct::u, &TaoUniversePointerStruct::set_u)
+      .def_property(
+          "u",
+          &TaoUniversePointerStruct::u,
+          &TaoUniversePointerStruct::set_u,
+          py::keep_alive<0, 1>()
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return TaoUniversePointerStructAlloc1D(sz); },
@@ -5907,50 +6255,92 @@ void init_tao_universe_struct(py::module &m, py::class_<TaoUniverseStruct> &cls)
          py::arg("design_same_as_previous") = py::none(),
          py::arg("picked_uni") = py::none()
   )
-      .def_property("model", &TaoUniverseStruct::model, &TaoUniverseStruct::set_model)
-      .def_property("design", &TaoUniverseStruct::design, &TaoUniverseStruct::set_design)
-      .def_property("base", &TaoUniverseStruct::base, &TaoUniverseStruct::set_base)
-      .def_property("beam", &TaoUniverseStruct::beam, &TaoUniverseStruct::set_beam)
+      .def_property(
+          "model",
+          &TaoUniverseStruct::model,
+          &TaoUniverseStruct::set_model,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "design",
+          &TaoUniverseStruct::design,
+          &TaoUniverseStruct::set_design,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "base",
+          &TaoUniverseStruct::base,
+          &TaoUniverseStruct::set_base,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "beam",
+          &TaoUniverseStruct::beam,
+          &TaoUniverseStruct::set_beam,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "dynamic_aperture",
           &TaoUniverseStruct::dynamic_aperture,
-          &TaoUniverseStruct::set_dynamic_aperture
+          &TaoUniverseStruct::set_dynamic_aperture,
+          py::keep_alive<0, 1>()
       )
       .def_property_readonly(
           "model_branch",
           &TaoUniverseStruct::model_branch,
+          py::keep_alive<0, 1>(),
           "model specific information"
       )
-      .def_property_readonly("d2_data", &TaoUniverseStruct::d2_data, "The data types")
-      .def_property_readonly("data", &TaoUniverseStruct::data, "Array of all data.")
+      .def_property_readonly(
+          "d2_data",
+          &TaoUniverseStruct::d2_data,
+          py::keep_alive<0, 1>(),
+          "The data types"
+      )
+      .def_property_readonly(
+          "data",
+          &TaoUniverseStruct::data,
+          py::keep_alive<0, 1>(),
+          "Array of all data."
+      )
       .def_property(
           "ping_scale",
           &TaoUniverseStruct::ping_scale,
-          &TaoUniverseStruct::set_ping_scale
+          &TaoUniverseStruct::set_ping_scale,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "scratch_lat",
           &TaoUniverseStruct::scratch_lat,
           &TaoUniverseStruct::set_scratch_lat,
+          py::keep_alive<0, 1>(),
           "Scratch area."
       )
       .def_property(
           "calc",
           &TaoUniverseStruct::calc,
           &TaoUniverseStruct::set_calc,
+          py::keep_alive<0, 1>(),
           "What needs to be calculated?"
       )
       .def_property(
           "ele_order",
           &TaoUniverseStruct::ele_order,
           &TaoUniverseStruct::set_ele_order,
+          py::keep_alive<0, 1>(),
           "Order of elements with same name."
       )
-      .def_property("spin_map", &TaoUniverseStruct::spin_map, &TaoUniverseStruct::set_spin_map)
+      .def_property(
+          "spin_map",
+          &TaoUniverseStruct::spin_map,
+          &TaoUniverseStruct::set_spin_map,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "dModel_dVar",
           &TaoUniverseStruct::dModel_dVar,
           &TaoUniverseStruct::set_dModel_dVar,
+          py::keep_alive<0, 1>(),
           "Derivative matrix."
       )
       .def_property(
@@ -6052,6 +6442,7 @@ void init_tao_v1_var_struct(py::module &m, py::class_<TaoV1VarStruct> &cls) {
       .def_property_readonly(
           "v",
           &TaoV1VarStruct::v,
+          py::keep_alive<0, 1>(),
           "Pointer to the appropriate section in s%var."
       )
       .def_static(
@@ -6127,12 +6518,14 @@ void init_tao_var_slave_struct(py::module &m, py::class_<TaoVarSlaveStruct> &cls
           "model_value",
           &TaoVarSlaveStruct::model_value,
           &TaoVarSlaveStruct::set_model_value,
+          py::keep_alive<0, 1>(),
           "Pointer to the variable in the model lat."
       )
       .def_property(
           "base_value",
           &TaoVarSlaveStruct::base_value,
           &TaoVarSlaveStruct::set_base_value,
+          py::keep_alive<0, 1>(),
           "Pointer to the variable in the base lat."
       )
       .def_static(
@@ -6273,7 +6666,7 @@ void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
           &TaoVarStruct::set_id,
           "Used by Tao extension code. Not used by Tao directly."
       )
-      .def_property_readonly("slave", &TaoVarStruct::slave)
+      .def_property_readonly("slave", &TaoVarStruct::slave, py::keep_alive<0, 1>())
       .def_property(
           "ix_v1",
           &TaoVarStruct::ix_v1,
@@ -6308,12 +6701,14 @@ void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
           "model_value",
           &TaoVarStruct::model_value,
           &TaoVarStruct::set_model_value,
+          py::keep_alive<0, 1>(),
           "Model value."
       )
       .def_property(
           "base_value",
           &TaoVarStruct::base_value,
           &TaoVarStruct::set_base_value,
+          py::keep_alive<0, 1>(),
           "Base value."
       )
       .def_property(
@@ -6452,7 +6847,13 @@ void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
           &TaoVarStruct::set_key_bound,
           "Variable bound to keyboard key?"
       )
-      .def_property("v1", &TaoVarStruct::v1, &TaoVarStruct::set_v1, "Pointer to the parent.")
+      .def_property(
+          "v1",
+          &TaoVarStruct::v1,
+          &TaoVarStruct::set_v1,
+          py::keep_alive<0, 1>(),
+          "Pointer to the parent."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return TaoVarStructAlloc1D(sz); },
@@ -6528,6 +6929,7 @@ void init_tao_wave_kick_pt_struct(py::module &m, py::class_<TaoWaveKickPtStruct>
           "ele",
           &TaoWaveKickPtStruct::ele,
           &TaoWaveKickPtStruct::set_ele,
+          py::keep_alive<0, 1>(),
           "lattice element at position of kick."
       )
       .def_static(
@@ -6676,12 +7078,42 @@ void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
       .def_property("chi_a", &TaoWaveStruct::chi_a, &TaoWaveStruct::set_chi_a)
       .def_property("chi_c", &TaoWaveStruct::chi_c, &TaoWaveStruct::set_chi_c)
       .def_property("chi_ba", &TaoWaveStruct::chi_ba, &TaoWaveStruct::set_chi_ba)
-      .def_property("amp_a", &TaoWaveStruct::amp_a, &TaoWaveStruct::set_amp_a)
-      .def_property("amp_b", &TaoWaveStruct::amp_b, &TaoWaveStruct::set_amp_b)
-      .def_property("amp_ba", &TaoWaveStruct::amp_ba, &TaoWaveStruct::set_amp_ba)
-      .def_property("coef_a", &TaoWaveStruct::coef_a, &TaoWaveStruct::set_coef_a)
-      .def_property("coef_b", &TaoWaveStruct::coef_b, &TaoWaveStruct::set_coef_b)
-      .def_property("coef_ba", &TaoWaveStruct::coef_ba, &TaoWaveStruct::set_coef_ba)
+      .def_property(
+          "amp_a",
+          &TaoWaveStruct::amp_a,
+          &TaoWaveStruct::set_amp_a,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "amp_b",
+          &TaoWaveStruct::amp_b,
+          &TaoWaveStruct::set_amp_b,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "amp_ba",
+          &TaoWaveStruct::amp_ba,
+          &TaoWaveStruct::set_amp_ba,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "coef_a",
+          &TaoWaveStruct::coef_a,
+          &TaoWaveStruct::set_coef_a,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "coef_b",
+          &TaoWaveStruct::coef_b,
+          &TaoWaveStruct::set_coef_b,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "coef_ba",
+          &TaoWaveStruct::coef_ba,
+          &TaoWaveStruct::set_coef_ba,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "n_func",
           &TaoWaveStruct::n_func,
@@ -6708,26 +7140,30 @@ void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
           "ix_data",
           &TaoWaveStruct::ix_data,
           &TaoWaveStruct::set_ix_data,
+          py::keep_alive<0, 1>(),
           "Translates from plot point to datum index"
       )
       .def_property("n_kick", &TaoWaveStruct::n_kick, &TaoWaveStruct::set_n_kick)
-      .def_property_readonly("kick", &TaoWaveStruct::kick)
+      .def_property_readonly("kick", &TaoWaveStruct::kick, py::keep_alive<0, 1>())
       .def_property(
           "base_graph",
           &TaoWaveStruct::base_graph,
           &TaoWaveStruct::set_base_graph,
+          py::keep_alive<0, 1>(),
           "Graph before curves extended to 1.5 periods."
       )
       .def_property(
           "region",
           &TaoWaveStruct::region,
           &TaoWaveStruct::set_region,
+          py::keep_alive<0, 1>(),
           "Where the wave plot is"
       )
       .def_property(
           "d1_dat",
           &TaoWaveStruct::d1_dat,
           &TaoWaveStruct::set_d1_dat,
+          py::keep_alive<0, 1>(),
           "D1 data for analysis"
       )
 
@@ -6755,7 +7191,7 @@ void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
 // test_sub_struct
 void init_test_sub_struct(py::module &m, py::class_<TestSubStruct> &cls) {
   cls.def(py::init<optional_ref<const TestSubSubStruct>>(), py::arg("sr") = py::none())
-      .def_property("sr", &TestSubStruct::sr, &TestSubStruct::set_sr)
+      .def_property("sr", &TestSubStruct::sr, &TestSubStruct::set_sr, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return TestSubStructAlloc1D(sz); },

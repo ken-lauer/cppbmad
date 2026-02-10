@@ -20,8 +20,18 @@ void init_ele_pointer_struct(py::module &m, py::class_<ElePointerStruct> &cls) {
          py::arg("loc") = py::none(),
          py::arg("id") = py::none()
   )
-      .def_property("ele", &ElePointerStruct::ele, &ElePointerStruct::set_ele)
-      .def_property("loc", &ElePointerStruct::loc, &ElePointerStruct::set_loc)
+      .def_property(
+          "ele",
+          &ElePointerStruct::ele,
+          &ElePointerStruct::set_ele,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "loc",
+          &ElePointerStruct::loc,
+          &ElePointerStruct::set_loc,
+          py::keep_alive<0, 1>()
+      )
       .def_property(
           "id",
           &ElePointerStruct::id,
@@ -252,87 +262,168 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
           &EleStruct::set_component_name,
           "Used by overlays, multipass patch, etc."
       )
-      .def_property("descrip", &EleStruct::descrip, &EleStruct::set_descrip, "Description string.")
-      .def_property("a", &EleStruct::a, &EleStruct::set_a, "Twiss parameters at end of element")
-      .def_property("b", &EleStruct::b, &EleStruct::set_b, "Twiss parameters at end of element")
-      .def_property("z", &EleStruct::z, &EleStruct::set_z, "Twiss parameters at end of element")
-      .def_property("x", &EleStruct::x, &EleStruct::set_x, "Projected dispersions.")
-      .def_property("y", &EleStruct::y, &EleStruct::set_y, "Projected dispersions.")
+      .def_property(
+          "descrip",
+          &EleStruct::descrip,
+          &EleStruct::set_descrip,
+          py::keep_alive<0, 1>(),
+          "Description string."
+      )
+      .def_property(
+          "a",
+          &EleStruct::a,
+          &EleStruct::set_a,
+          py::keep_alive<0, 1>(),
+          "Twiss parameters at end of element"
+      )
+      .def_property(
+          "b",
+          &EleStruct::b,
+          &EleStruct::set_b,
+          py::keep_alive<0, 1>(),
+          "Twiss parameters at end of element"
+      )
+      .def_property(
+          "z",
+          &EleStruct::z,
+          &EleStruct::set_z,
+          py::keep_alive<0, 1>(),
+          "Twiss parameters at end of element"
+      )
+      .def_property(
+          "x",
+          &EleStruct::x,
+          &EleStruct::set_x,
+          py::keep_alive<0, 1>(),
+          "Projected dispersions."
+      )
+      .def_property(
+          "y",
+          &EleStruct::y,
+          &EleStruct::set_y,
+          py::keep_alive<0, 1>(),
+          "Projected dispersions."
+      )
       .def_property(
           "ac_kick",
           &EleStruct::ac_kick,
           &EleStruct::set_ac_kick,
+          py::keep_alive<0, 1>(),
           "ac_kicker element parameters."
       )
       .def_property(
           "bookkeeping_state",
           &EleStruct::bookkeeping_state,
           &EleStruct::set_bookkeeping_state,
+          py::keep_alive<0, 1>(),
           "Attribute bookkeeping"
       )
       .def_property(
           "branch",
           &EleStruct::branch,
           &EleStruct::set_branch,
+          py::keep_alive<0, 1>(),
           "Pointer to branch containing element."
       )
       .def_property(
           "control",
           &EleStruct::control,
           &EleStruct::set_control,
+          py::keep_alive<0, 1>(),
           "group & overlay variables."
       )
-      .def_property("rf", &EleStruct::rf, &EleStruct::set_rf, "RF parameters.")
-      .def_property("lord", &EleStruct::lord, &EleStruct::set_lord, "Pointer to a slice lord.")
+      .def_property(
+          "rf",
+          &EleStruct::rf,
+          &EleStruct::set_rf,
+          py::keep_alive<0, 1>(),
+          "RF parameters."
+      )
+      .def_property(
+          "lord",
+          &EleStruct::lord,
+          &EleStruct::set_lord,
+          py::keep_alive<0, 1>(),
+          "Pointer to a slice lord."
+      )
       .def_property(
           "ptc_fibre",
           &EleStruct::ptc_fibre,
           &EleStruct::set_ptc_fibre,
+          py::keep_alive<0, 1>(),
           "PTC track corresponding to this ele."
       )
-      .def_property("floor", &EleStruct::floor, &EleStruct::set_floor)
+      .def_property("floor", &EleStruct::floor, &EleStruct::set_floor, py::keep_alive<0, 1>())
       .def_property(
           "high_energy_space_charge",
           &EleStruct::high_energy_space_charge,
-          &EleStruct::set_high_energy_space_charge
+          &EleStruct::set_high_energy_space_charge,
+          py::keep_alive<0, 1>()
       )
-      .def_property("mode3", &EleStruct::mode3, &EleStruct::set_mode3, "6D normal mode structure.")
-      .def_property("photon", &EleStruct::photon, &EleStruct::set_photon)
+      .def_property(
+          "mode3",
+          &EleStruct::mode3,
+          &EleStruct::set_mode3,
+          py::keep_alive<0, 1>(),
+          "6D normal mode structure."
+      )
+      .def_property("photon", &EleStruct::photon, &EleStruct::set_photon, py::keep_alive<0, 1>())
       .def_property(
           "rad_map",
           &EleStruct::rad_map,
           &EleStruct::set_rad_map,
+          py::keep_alive<0, 1>(),
           "Radiation kick parameters Note: The reference orbits for spin and orbit Taylor maps are "
           "not necessarily the same. For example, Sprint spin Taylor maps can be with respect to "
           "the zero orbit independent of the orbital map."
       )
-      .def_property_readonly("taylor", &EleStruct::taylor, "Phase space Taylor map.")
+      .def_property_readonly(
+          "taylor",
+          &EleStruct::taylor,
+          py::keep_alive<0, 1>(),
+          "Phase space Taylor map."
+      )
       .def_property(
           "spin_taylor_ref_orb_in",
           &EleStruct::spin_taylor_ref_orb_in,
-          &EleStruct::set_spin_taylor_ref_orb_in
+          &EleStruct::set_spin_taylor_ref_orb_in,
+          py::keep_alive<0, 1>()
       )
-      .def_property_readonly("spin_taylor", &EleStruct::spin_taylor, "Quaternion Spin Taylor map.")
-      .def_property("wake", &EleStruct::wake, &EleStruct::set_wake, "Wakes")
+      .def_property_readonly(
+          "spin_taylor",
+          &EleStruct::spin_taylor,
+          py::keep_alive<0, 1>(),
+          "Quaternion Spin Taylor map."
+      )
+      .def_property("wake", &EleStruct::wake, &EleStruct::set_wake, py::keep_alive<0, 1>(), "Wakes")
       .def_property_readonly(
           "wall3d",
           &EleStruct::wall3d,
+          py::keep_alive<0, 1>(),
           "Chamber or capillary wall E/M field structs."
       )
       .def_property_readonly(
           "cartesian_map",
           &EleStruct::cartesian_map,
+          py::keep_alive<0, 1>(),
           "Used to define E/M fields"
       )
       .def_property_readonly(
           "cylindrical_map",
           &EleStruct::cylindrical_map,
+          py::keep_alive<0, 1>(),
           "Used to define E/M fields"
       )
-      .def_property_readonly("gen_grad_map", &EleStruct::gen_grad_map, "Used to define E/M fields.")
+      .def_property_readonly(
+          "gen_grad_map",
+          &EleStruct::gen_grad_map,
+          py::keep_alive<0, 1>(),
+          "Used to define E/M fields."
+      )
       .def_property_readonly(
           "grid_field",
           &EleStruct::grid_field,
+          py::keep_alive<0, 1>(),
           "Used to define E/M fields. The difference between map_ref_orb and time_ref_orb is that "
           "map_ref_orb is the reference orbit for the 1st order spin/orbit map which, in general, "
           "is non-zero while time_ref_orb follows the reference particle which is generally the "
@@ -342,31 +433,42 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
           "map_ref_orb_in",
           &EleStruct::map_ref_orb_in,
           &EleStruct::set_map_ref_orb_in,
+          py::keep_alive<0, 1>(),
           "Entrance end transfer map ref orbit"
       )
       .def_property(
           "map_ref_orb_out",
           &EleStruct::map_ref_orb_out,
           &EleStruct::set_map_ref_orb_out,
+          py::keep_alive<0, 1>(),
           "Exit end transfer map ref orbit"
       )
       .def_property(
           "time_ref_orb_in",
           &EleStruct::time_ref_orb_in,
           &EleStruct::set_time_ref_orb_in,
+          py::keep_alive<0, 1>(),
           "Reference orbit at entrance end for ref_time calc."
       )
       .def_property(
           "time_ref_orb_out",
           &EleStruct::time_ref_orb_out,
           &EleStruct::set_time_ref_orb_out,
+          py::keep_alive<0, 1>(),
           "Reference orbit at exit end for ref_time calc."
       )
-      .def_property("value", &EleStruct::value, &EleStruct::set_value, "attribute values.")
+      .def_property(
+          "value",
+          &EleStruct::value,
+          &EleStruct::set_value,
+          py::keep_alive<0, 1>(),
+          "attribute values."
+      )
       .def_property(
           "old_value",
           &EleStruct::old_value,
           &EleStruct::set_old_value,
+          py::keep_alive<0, 1>(),
           "Used to see if %value(:) array has changed. Note: The reference orbit for spin/orbit "
           "matrices is %map_ref_orb_in/out"
       )
@@ -374,15 +476,35 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
           "spin_q",
           &EleStruct::spin_q,
           &EleStruct::set_spin_q,
+          py::keep_alive<0, 1>(),
           "0th and 1st order Spin transport quaternion."
       )
-      .def_property("vec0", &EleStruct::vec0, &EleStruct::set_vec0, "0th order transport vector.")
-      .def_property("mat6", &EleStruct::mat6, &EleStruct::set_mat6, "1st order transport matrix.")
-      .def_property("c_mat", &EleStruct::c_mat, &EleStruct::set_c_mat, "2x2 C coupling matrix")
+      .def_property(
+          "vec0",
+          &EleStruct::vec0,
+          &EleStruct::set_vec0,
+          py::keep_alive<0, 1>(),
+          "0th order transport vector."
+      )
+      .def_property(
+          "mat6",
+          &EleStruct::mat6,
+          &EleStruct::set_mat6,
+          py::keep_alive<0, 1>(),
+          "1st order transport matrix."
+      )
+      .def_property(
+          "c_mat",
+          &EleStruct::c_mat,
+          &EleStruct::set_c_mat,
+          py::keep_alive<0, 1>(),
+          "2x2 C coupling matrix"
+      )
       .def_property(
           "dc_mat_dpz",
           &EleStruct::dc_mat_dpz,
           &EleStruct::set_dc_mat_dpz,
+          py::keep_alive<0, 1>(),
           "d(c_mat)/dpz variation."
       )
       .def_property(
@@ -413,28 +535,44 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
           "a_pole",
           &EleStruct::a_pole,
           &EleStruct::set_a_pole,
+          py::keep_alive<0, 1>(),
           "knl for multipole elements."
       )
       .def_property(
           "b_pole",
           &EleStruct::b_pole,
           &EleStruct::set_b_pole,
+          py::keep_alive<0, 1>(),
           "tilt for multipole elements."
       )
       .def_property(
           "a_pole_elec",
           &EleStruct::a_pole_elec,
           &EleStruct::set_a_pole_elec,
+          py::keep_alive<0, 1>(),
           "Electrostatic multipoles. ksnl for multipole elements."
       )
       .def_property(
           "b_pole_elec",
           &EleStruct::b_pole_elec,
           &EleStruct::set_b_pole_elec,
+          py::keep_alive<0, 1>(),
           "Electrostatic multipoles."
       )
-      .def_property("custom", &EleStruct::custom, &EleStruct::set_custom, "Custom attributes.")
-      .def_property("r", &EleStruct::r, &EleStruct::set_r, "For general use. Not used by Bmad.")
+      .def_property(
+          "custom",
+          &EleStruct::custom,
+          &EleStruct::set_custom,
+          py::keep_alive<0, 1>(),
+          "Custom attributes."
+      )
+      .def_property(
+          "r",
+          &EleStruct::r,
+          &EleStruct::set_r,
+          py::keep_alive<0, 1>(),
+          "For general use. Not used by Bmad."
+      )
       .def_property(
           "key",
           &EleStruct::key,
@@ -781,10 +919,34 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
          py::arg("phi_B") = py::none(),
          py::arg("A") = py::none()
   )
-      .def_property("E", &EmFieldStruct::E, &EmFieldStruct::set_E, "electric field.")
-      .def_property("B", &EmFieldStruct::B, &EmFieldStruct::set_B, "magnetic field.")
-      .def_property("dE", &EmFieldStruct::dE, &EmFieldStruct::set_dE, "electric field gradient.")
-      .def_property("dB", &EmFieldStruct::dB, &EmFieldStruct::set_dB, "magnetic field gradient.")
+      .def_property(
+          "E",
+          &EmFieldStruct::E,
+          &EmFieldStruct::set_E,
+          py::keep_alive<0, 1>(),
+          "electric field."
+      )
+      .def_property(
+          "B",
+          &EmFieldStruct::B,
+          &EmFieldStruct::set_B,
+          py::keep_alive<0, 1>(),
+          "magnetic field."
+      )
+      .def_property(
+          "dE",
+          &EmFieldStruct::dE,
+          &EmFieldStruct::set_dE,
+          py::keep_alive<0, 1>(),
+          "electric field gradient."
+      )
+      .def_property(
+          "dB",
+          &EmFieldStruct::dB,
+          &EmFieldStruct::set_dB,
+          py::keep_alive<0, 1>(),
+          "magnetic field gradient."
+      )
       .def_property(
           "phi",
           &EmFieldStruct::phi,
@@ -797,7 +959,13 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
           &EmFieldStruct::set_phi_B,
           "Magnetic scalar potential."
       )
-      .def_property("A", &EmFieldStruct::A, &EmFieldStruct::set_A, "Magnetic vector potential.")
+      .def_property(
+          "A",
+          &EmFieldStruct::A,
+          &EmFieldStruct::set_A,
+          py::keep_alive<0, 1>(),
+          "Magnetic vector potential."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return EmFieldStructAlloc1D(sz); },
@@ -843,7 +1011,7 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
 void init_em_taylor_struct(py::module &m, py::class_<EmTaylorStruct> &cls) {
   cls.def(py::init<std::optional<double>>(), py::arg("ref") = py::none())
       .def_property("ref", &EmTaylorStruct::ref, &EmTaylorStruct::set_ref)
-      .def_property_readonly("term", &EmTaylorStruct::term)
+      .def_property_readonly("term", &EmTaylorStruct::term, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return EmTaylorStructAlloc1D(sz); },
@@ -893,7 +1061,12 @@ void init_em_taylor_term_struct(py::module &m, py::class_<EmTaylorTermStruct> &c
          py::arg("expn") = py::none()
   )
       .def_property("coef", &EmTaylorTermStruct::coef, &EmTaylorTermStruct::set_coef)
-      .def_property("expn", &EmTaylorTermStruct::expn, &EmTaylorTermStruct::set_expn)
+      .def_property(
+          "expn",
+          &EmTaylorTermStruct::expn,
+          &EmTaylorTermStruct::set_expn,
+          py::keep_alive<0, 1>()
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return EmTaylorTermStructAlloc1D(sz); },
@@ -1013,6 +1186,7 @@ void init_expression_tree_struct(py::module &m, py::class_<ExpressionTreeStruct>
       .def_property_readonly(
           "node",
           &ExpressionTreeStruct::node,
+          py::keep_alive<0, 1>(),
           "Child nodes. Note: Pointer used here since Ifort does not support allocatable."
       )
       .def_static(

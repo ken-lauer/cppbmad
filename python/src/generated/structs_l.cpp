@@ -122,7 +122,7 @@ void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &c
 // lat_ele_order_array_struct
 void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayStruct> &cls) {
   cls.def(py::init<>())
-      .def_property_readonly("ele", &LatEleOrderArrayStruct::ele)
+      .def_property_readonly("ele", &LatEleOrderArrayStruct::ele, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return LatEleOrderArrayStructAlloc1D(sz); },
@@ -169,7 +169,7 @@ void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayS
 // lat_ele_order_struct
 void init_lat_ele_order_struct(py::module &m, py::class_<LatEleOrderStruct> &cls) {
   cls.def(py::init<>())
-      .def_property_readonly("branch", &LatEleOrderStruct::branch)
+      .def_property_readonly("branch", &LatEleOrderStruct::branch, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const LatEleOrderStruct &self) { return to_string(self); })
 
@@ -254,12 +254,14 @@ void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
           "t1_with_RF",
           &LatParamStruct::t1_with_RF,
           &LatParamStruct::set_t1_with_RF,
+          py::keep_alive<0, 1>(),
           "Full 1-turn matrix with RF on."
       )
       .def_property(
           "t1_no_RF",
           &LatParamStruct::t1_no_RF,
           &LatParamStruct::set_t1_no_RF,
+          py::keep_alive<0, 1>(),
           "Full 1-turn matrix with RF off."
       )
       .def_property(
@@ -327,12 +329,14 @@ void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
           "bookkeeping_state",
           &LatParamStruct::bookkeeping_state,
           &LatParamStruct::set_bookkeeping_state,
+          py::keep_alive<0, 1>(),
           "Overall status for the branch."
       )
       .def_property(
           "beam_init",
           &LatParamStruct::beam_init,
           &LatParamStruct::set_beam_init,
+          py::keep_alive<0, 1>(),
           "For beam initialization."
       )
 
@@ -434,57 +438,114 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
           "Name of the lattice input file"
       )
       .def_property("title", &LatStruct::title, &LatStruct::set_title, "General title")
-      .def_property_readonly("print_str", &LatStruct::print_str, "Saved print statements.")
-      .def_property_readonly("constant", &LatStruct::constant, "Constants defined in the lattice")
-      .def_property("a", &LatStruct::a, &LatStruct::set_a, "Tunes (fractional part), etc.")
-      .def_property("b", &LatStruct::b, &LatStruct::set_b, "Tunes (fractional part), etc.")
-      .def_property("z", &LatStruct::z, &LatStruct::set_z, "Tunes (fractional part), etc.")
-      .def_property("param", &LatStruct::param, &LatStruct::set_param, "Parameters")
+      .def_property_readonly(
+          "print_str",
+          &LatStruct::print_str,
+          py::keep_alive<0, 1>(),
+          "Saved print statements."
+      )
+      .def_property_readonly(
+          "constant",
+          &LatStruct::constant,
+          py::keep_alive<0, 1>(),
+          "Constants defined in the lattice"
+      )
+      .def_property(
+          "a",
+          &LatStruct::a,
+          &LatStruct::set_a,
+          py::keep_alive<0, 1>(),
+          "Tunes (fractional part), etc."
+      )
+      .def_property(
+          "b",
+          &LatStruct::b,
+          &LatStruct::set_b,
+          py::keep_alive<0, 1>(),
+          "Tunes (fractional part), etc."
+      )
+      .def_property(
+          "z",
+          &LatStruct::z,
+          &LatStruct::set_z,
+          py::keep_alive<0, 1>(),
+          "Tunes (fractional part), etc."
+      )
+      .def_property(
+          "param",
+          &LatStruct::param,
+          &LatStruct::set_param,
+          py::keep_alive<0, 1>(),
+          "Parameters"
+      )
       .def_property(
           "lord_state",
           &LatStruct::lord_state,
           &LatStruct::set_lord_state,
+          py::keep_alive<0, 1>(),
           "lord bookkeeping status."
       )
       .def_property(
           "ele_init",
           &LatStruct::ele_init,
           &LatStruct::set_ele_init,
+          py::keep_alive<0, 1>(),
           "For use by any program"
       )
-      .def_property_readonly("ele", &LatStruct::ele, "Array of elements [=> branch(0)].")
-      .def_property_readonly("branch", &LatStruct::branch, "Branch(0:) array")
-      .def_property_readonly("control", &LatStruct::control, "Control list")
+      .def_property_readonly(
+          "ele",
+          &LatStruct::ele,
+          py::keep_alive<0, 1>(),
+          "Array of elements [=> branch(0)]."
+      )
+      .def_property_readonly(
+          "branch",
+          &LatStruct::branch,
+          py::keep_alive<0, 1>(),
+          "Branch(0:) array"
+      )
+      .def_property_readonly("control", &LatStruct::control, py::keep_alive<0, 1>(), "Control list")
       .def_property(
           "particle_start",
           &LatStruct::particle_start,
           &LatStruct::set_particle_start,
+          py::keep_alive<0, 1>(),
           "Starting particle_coords."
       )
       .def_property(
           "beam_init",
           &LatStruct::beam_init,
           &LatStruct::set_beam_init,
+          py::keep_alive<0, 1>(),
           "Beam initialization."
       )
       .def_property(
           "pre_tracker",
           &LatStruct::pre_tracker,
           &LatStruct::set_pre_tracker,
+          py::keep_alive<0, 1>(),
           "For OPAL/IMPACT-T"
       )
-      .def_property("custom", &LatStruct::custom, &LatStruct::set_custom, "Custom attributes.")
+      .def_property(
+          "custom",
+          &LatStruct::custom,
+          &LatStruct::set_custom,
+          py::keep_alive<0, 1>(),
+          "Custom attributes."
+      )
       .def_property("version", &LatStruct::version, &LatStruct::set_version, "Version number")
       .def_property(
           "n_ele_track",
           &LatStruct::n_ele_track,
           &LatStruct::set_n_ele_track,
+          py::keep_alive<0, 1>(),
           "Number of lat elements to track through."
       )
       .def_property(
           "n_ele_max",
           &LatStruct::n_ele_max,
           &LatStruct::set_n_ele_max,
+          py::keep_alive<0, 1>(),
           "Index of last valid element in %ele(:) array"
       )
       .def_property(
@@ -505,7 +566,13 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
           &LatStruct::set_input_taylor_order,
           "As set in the input file"
       )
-      .def_property("ic", &LatStruct::ic, &LatStruct::set_ic, "Index to %control(:) from slaves.")
+      .def_property(
+          "ic",
+          &LatStruct::ic,
+          &LatStruct::set_ic,
+          py::keep_alive<0, 1>(),
+          "Index to %control(:) from slaves."
+      )
       .def_property(
           "photon_type",
           &LatStruct::photon_type,
@@ -687,41 +754,80 @@ void init_layout(py::module &m, py::class_<Layout> &cls) {
          py::arg("NEXT") = py::none(),
          py::arg("PREVIOUS") = py::none()
   )
-      .def_property("NAME", &Layout::NAME, &Layout::set_NAME, "IDENTIFICATION")
-      .def_property("INDEX", &Layout::INDEX, &Layout::set_INDEX, "IDENTIFICATION, CHARGE SIGN")
-      .def_property("HARMONIC_NUMBER", &Layout::HARMONIC_NUMBER, &Layout::set_HARMONIC_NUMBER)
-      .def_property("CLOSED", &Layout::CLOSED, &Layout::set_CLOSED)
-      .def_property("N", &Layout::N, &Layout::set_N, "TOTAL ELEMENT IN THE CHAIN")
+      .def_property(
+          "NAME",
+          &Layout::NAME,
+          &Layout::set_NAME,
+          py::keep_alive<0, 1>(),
+          "IDENTIFICATION"
+      )
+      .def_property(
+          "INDEX",
+          &Layout::INDEX,
+          &Layout::set_INDEX,
+          py::keep_alive<0, 1>(),
+          "IDENTIFICATION, CHARGE SIGN"
+      )
+      .def_property(
+          "HARMONIC_NUMBER",
+          &Layout::HARMONIC_NUMBER,
+          &Layout::set_HARMONIC_NUMBER,
+          py::keep_alive<0, 1>()
+      )
+      .def_property("CLOSED", &Layout::CLOSED, &Layout::set_CLOSED, py::keep_alive<0, 1>())
+      .def_property(
+          "N",
+          &Layout::N,
+          &Layout::set_N,
+          py::keep_alive<0, 1>(),
+          "TOTAL ELEMENT IN THE CHAIN"
+      )
       .def_property(
           "NTHIN",
           &Layout::NTHIN,
           &Layout::set_NTHIN,
+          py::keep_alive<0, 1>(),
           "NUMBER IF THIN LENSES IN COLLECTION  (FOR SPEED ESTIMATES)"
       )
       .def_property(
           "THIN",
           &Layout::THIN,
           &Layout::set_THIN,
+          py::keep_alive<0, 1>(),
           "PARAMETER USED FOR AUTOMATIC CUTTING INTO THIN LENS POINTERS OF LINK LAYOUT"
       )
-      .def_property("LASTPOS", &Layout::LASTPOS, &Layout::set_LASTPOS, "POSITION OF LAST VISITED")
-      .def_property("LAST", &Layout::LAST, &Layout::set_LAST, "LAST VISITED")
-      .def_property("END", &Layout::END, &Layout::set_END)
-      .def_property("START", &Layout::START, &Layout::set_START)
+      .def_property(
+          "LASTPOS",
+          &Layout::LASTPOS,
+          &Layout::set_LASTPOS,
+          py::keep_alive<0, 1>(),
+          "POSITION OF LAST VISITED"
+      )
+      .def_property(
+          "LAST",
+          &Layout::LAST,
+          &Layout::set_LAST,
+          py::keep_alive<0, 1>(),
+          "LAST VISITED"
+      )
+      .def_property("END", &Layout::END, &Layout::set_END, py::keep_alive<0, 1>())
+      .def_property("START", &Layout::START, &Layout::set_START, py::keep_alive<0, 1>())
       .def_property(
           "START_GROUND",
           &Layout::START_GROUND,
           &Layout::set_START_GROUND,
+          py::keep_alive<0, 1>(),
           "STORE THE GROUNDED VALUE OF START DURING CIRCULAR SCANNING"
       )
       .def_property(
           "END_GROUND",
           &Layout::END_GROUND,
           &Layout::set_END_GROUND,
+          py::keep_alive<0, 1>(),
           "STORE THE GROUNDED VALUE OF END DURING CIRCULAR SCANNING"
       )
-      .def_property("NEXT", &Layout::NEXT, &Layout::set_NEXT)
-      .def_property("PREVIOUS", &Layout::PREVIOUS, &Layout::set_PREVIOUS)
+      .def_property("NEXT", &Layout::NEXT, &Layout::set_NEXT, py::keep_alive<0, 1>())
+      .def_property("PREVIOUS", &Layout::PREVIOUS, &Layout::set_PREVIOUS, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const Layout &self) { return to_string(self); })
 

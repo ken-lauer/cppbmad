@@ -32,12 +32,18 @@ void init_bbu_beam_struct(py::module &m, py::class_<BbuBeamStruct> &cls) {
          py::arg("one_turn_time") = py::none(),
          py::arg("rf_wavelength_max") = py::none()
   )
-      .def_property_readonly("bunch", &BbuBeamStruct::bunch, "Bunches in the lattice")
-      .def_property_readonly("stage", &BbuBeamStruct::stage)
+      .def_property_readonly(
+          "bunch",
+          &BbuBeamStruct::bunch,
+          py::keep_alive<0, 1>(),
+          "Bunches in the lattice"
+      )
+      .def_property_readonly("stage", &BbuBeamStruct::stage, py::keep_alive<0, 1>())
       .def_property(
           "ix_ele_bunch",
           &BbuBeamStruct::ix_ele_bunch,
           &BbuBeamStruct::set_ix_ele_bunch,
+          py::keep_alive<0, 1>(),
           "element where bunch is"
       )
       .def_property(
@@ -366,7 +372,8 @@ void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
       .def_property(
           "ramp_pattern",
           &BbuParamStruct::ramp_pattern,
-          &BbuParamStruct::set_ramp_pattern
+          &BbuParamStruct::set_ramp_pattern,
+          py::keep_alive<0, 1>()
       )
       .def_property(
           "ramp_n_start",
@@ -473,10 +480,30 @@ void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
           &BbuStageStruct::time_at_wake_ele,
           &BbuStageStruct::set_time_at_wake_ele
       )
-      .def_property("ave_orb", &BbuStageStruct::ave_orb, &BbuStageStruct::set_ave_orb)
-      .def_property("rms_orb", &BbuStageStruct::rms_orb, &BbuStageStruct::set_rms_orb)
-      .def_property("min_orb", &BbuStageStruct::min_orb, &BbuStageStruct::set_min_orb)
-      .def_property("max_orb", &BbuStageStruct::max_orb, &BbuStageStruct::set_max_orb)
+      .def_property(
+          "ave_orb",
+          &BbuStageStruct::ave_orb,
+          &BbuStageStruct::set_ave_orb,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "rms_orb",
+          &BbuStageStruct::rms_orb,
+          &BbuStageStruct::set_rms_orb,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "min_orb",
+          &BbuStageStruct::min_orb,
+          &BbuStageStruct::set_min_orb,
+          py::keep_alive<0, 1>()
+      )
+      .def_property(
+          "max_orb",
+          &BbuStageStruct::max_orb,
+          &BbuStageStruct::set_max_orb,
+          py::keep_alive<0, 1>()
+      )
       .def_property("n_orb", &BbuStageStruct::n_orb, &BbuStageStruct::set_n_orb)
       .def_static(
           "new_array1d",
@@ -597,23 +624,48 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
       .def_property_readonly(
           "distribution_type",
           &BeamInitStruct::distribution_type,
+          py::keep_alive<0, 1>(),
           "distribution type (in x-px, y-py, and z-pz planes) 'ELLIPSE', 'KV', 'GRID', 'FILE', "
           "'RAN_GAUSS' or '' = 'RAN_GAUSS'"
       )
-      .def_property("spin", &BeamInitStruct::spin, &BeamInitStruct::set_spin, "Spin (x, y, z)")
-      .def_property_readonly("ellipse", &BeamInitStruct::ellipse, "Ellipse beam distribution")
-      .def_property("KV", &BeamInitStruct::KV, &BeamInitStruct::set_KV, "KV beam distribution")
-      .def_property_readonly("grid", &BeamInitStruct::grid, "Grid beam distribution")
+      .def_property(
+          "spin",
+          &BeamInitStruct::spin,
+          &BeamInitStruct::set_spin,
+          py::keep_alive<0, 1>(),
+          "Spin (x, y, z)"
+      )
+      .def_property_readonly(
+          "ellipse",
+          &BeamInitStruct::ellipse,
+          py::keep_alive<0, 1>(),
+          "Ellipse beam distribution"
+      )
+      .def_property(
+          "KV",
+          &BeamInitStruct::KV,
+          &BeamInitStruct::set_KV,
+          py::keep_alive<0, 1>(),
+          "KV beam distribution"
+      )
+      .def_property_readonly(
+          "grid",
+          &BeamInitStruct::grid,
+          py::keep_alive<0, 1>(),
+          "Grid beam distribution"
+      )
       .def_property(
           "center_jitter",
           &BeamInitStruct::center_jitter,
           &BeamInitStruct::set_center_jitter,
+          py::keep_alive<0, 1>(),
           "Bunch center rms jitter"
       )
       .def_property(
           "emit_jitter",
           &BeamInitStruct::emit_jitter,
           &BeamInitStruct::set_emit_jitter,
+          py::keep_alive<0, 1>(),
           "a and b bunch emittance rms jitter normalized to emittance"
       )
       .def_property(
@@ -698,6 +750,7 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
           "center",
           &BeamInitStruct::center,
           &BeamInitStruct::set_center,
+          py::keep_alive<0, 1>(),
           "Bench phase space center offset relative to reference."
       )
       .def_property(
@@ -794,7 +847,7 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
 // beam_struct
 void init_beam_struct(py::module &m, py::class_<BeamStruct> &cls) {
   cls.def(py::init<>())
-      .def_property_readonly("bunch", &BeamStruct::bunch)
+      .def_property_readonly("bunch", &BeamStruct::bunch, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const BeamStruct &self) { return to_string(self); })
 
@@ -913,6 +966,7 @@ void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
           "d_orb",
           &BmadCommonStruct::d_orb,
           &BmadCommonStruct::set_d_orb,
+          py::keep_alive<0, 1>(),
           "Orbit deltas for the mat6 via tracking calc."
       )
       .def_property(
@@ -1185,31 +1239,41 @@ void init_bmad_normal_form_struct(py::module &m, py::class_<BmadNormalFormStruct
           "ele_origin",
           &BmadNormalFormStruct::ele_origin,
           &BmadNormalFormStruct::set_ele_origin,
+          py::keep_alive<0, 1>(),
           "Element at which the on-turn map was created."
       )
       .def_property_readonly(
           "M",
           &BmadNormalFormStruct::M,
+          py::keep_alive<0, 1>(),
           "One-turn taylor map: M = A o N o A_inv, N = exp(:h:)"
       )
-      .def_property_readonly("A", &BmadNormalFormStruct::A, "Map from Floquet -> Lab coordinates")
+      .def_property_readonly(
+          "A",
+          &BmadNormalFormStruct::A,
+          py::keep_alive<0, 1>(),
+          "Map from Floquet -> Lab coordinates"
+      )
       .def_property_readonly(
           "A_inv",
           &BmadNormalFormStruct::A_inv,
+          py::keep_alive<0, 1>(),
           "Map from Lab -> Floquet coordinates"
       )
       .def_property_readonly(
           "dhdj",
           &BmadNormalFormStruct::dhdj,
+          py::keep_alive<0, 1>(),
           "Nonlinear tune function operating on Floquet coordinates"
       )
       .def_property_readonly(
           "F",
           &BmadNormalFormStruct::F,
+          py::keep_alive<0, 1>(),
           "Vector field factorization in phasor basis:"
       )
-      .def_property_readonly("L", &BmadNormalFormStruct::L, "L component")
-      .def_property_readonly("h", &BmadNormalFormStruct::h)
+      .def_property_readonly("L", &BmadNormalFormStruct::L, py::keep_alive<0, 1>(), "L component")
+      .def_property_readonly("h", &BmadNormalFormStruct::h, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const BmadNormalFormStruct &self) { return to_string(self); })
 
@@ -1515,33 +1579,37 @@ void init_branch_struct(py::module &m, py::class_<BranchStruct> &cls) {
       )
       .def_property("n_ele_track", &BranchStruct::n_ele_track, &BranchStruct::set_n_ele_track)
       .def_property("n_ele_max", &BranchStruct::n_ele_max, &BranchStruct::set_n_ele_max)
-      .def_property("lat", &BranchStruct::lat, &BranchStruct::set_lat)
+      .def_property("lat", &BranchStruct::lat, &BranchStruct::set_lat, py::keep_alive<0, 1>())
       .def_property(
           "a",
           &BranchStruct::a,
           &BranchStruct::set_a,
+          py::keep_alive<0, 1>(),
           "Note: Tunes are the fractional part."
       )
       .def_property(
           "b",
           &BranchStruct::b,
           &BranchStruct::set_b,
+          py::keep_alive<0, 1>(),
           "Note: Tunes are the fractional part."
       )
       .def_property(
           "z",
           &BranchStruct::z,
           &BranchStruct::set_z,
+          py::keep_alive<0, 1>(),
           "Note: Tunes are the fractional part."
       )
-      .def_property_readonly("ele", &BranchStruct::ele)
-      .def_property("param", &BranchStruct::param, &BranchStruct::set_param)
+      .def_property_readonly("ele", &BranchStruct::ele, py::keep_alive<0, 1>())
+      .def_property("param", &BranchStruct::param, &BranchStruct::set_param, py::keep_alive<0, 1>())
       .def_property(
           "particle_start",
           &BranchStruct::particle_start,
-          &BranchStruct::set_particle_start
+          &BranchStruct::set_particle_start,
+          py::keep_alive<0, 1>()
       )
-      .def_property_readonly("wall3d", &BranchStruct::wall3d)
+      .def_property_readonly("wall3d", &BranchStruct::wall3d, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return BranchStructAlloc1D(sz); },
@@ -1638,60 +1706,70 @@ void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls)
           "centroid",
           &BunchParamsStruct::centroid,
           &BunchParamsStruct::set_centroid,
+          py::keep_alive<0, 1>(),
           "Lab frame"
       )
       .def_property(
           "x",
           &BunchParamsStruct::x,
           &BunchParamsStruct::set_x,
+          py::keep_alive<0, 1>(),
           "Projected Twiss parameters"
       )
       .def_property(
           "y",
           &BunchParamsStruct::y,
           &BunchParamsStruct::set_y,
+          py::keep_alive<0, 1>(),
           "Projected Twiss parameters"
       )
       .def_property(
           "z",
           &BunchParamsStruct::z,
           &BunchParamsStruct::set_z,
+          py::keep_alive<0, 1>(),
           "Projected Twiss parameters"
       )
       .def_property(
           "a",
           &BunchParamsStruct::a,
           &BunchParamsStruct::set_a,
+          py::keep_alive<0, 1>(),
           "Normal mode twiss parameters"
       )
       .def_property(
           "b",
           &BunchParamsStruct::b,
           &BunchParamsStruct::set_b,
+          py::keep_alive<0, 1>(),
           "Normal mode twiss parameters"
       )
       .def_property(
           "c",
           &BunchParamsStruct::c,
           &BunchParamsStruct::set_c,
+          py::keep_alive<0, 1>(),
           "Normal mode twiss parameters"
       )
       .def_property(
           "sigma",
           &BunchParamsStruct::sigma,
           &BunchParamsStruct::set_sigma,
+          py::keep_alive<0, 1>(),
           "beam size matrix"
       )
       .def_property(
           "rel_max",
           &BunchParamsStruct::rel_max,
           &BunchParamsStruct::set_rel_max,
+          py::keep_alive<0, 1>(),
           "Max orbit relative to centroid. 7 -> time."
       )
       .def_property(
           "rel_min",
           &BunchParamsStruct::rel_min,
           &BunchParamsStruct::set_rel_min,
+          py::keep_alive<0, 1>(),
           "Min orbit relative to_centroid. 7 -> time."
       )
       .def_property("s", &BunchParamsStruct::s, &BunchParamsStruct::set_s, "Longitudinal position.")
@@ -1835,11 +1913,12 @@ void init_bunch_struct(py::module &m, py::class_<BunchStruct> &cls) {
          py::arg("n_good") = py::none(),
          py::arg("n_bad") = py::none()
   )
-      .def_property_readonly("particle", &BunchStruct::particle)
+      .def_property_readonly("particle", &BunchStruct::particle, py::keep_alive<0, 1>())
       .def_property(
           "ix_z",
           &BunchStruct::ix_z,
           &BunchStruct::set_ix_z,
+          py::keep_alive<0, 1>(),
           "bunch%ix_z(1) is index of head particle, etc."
       )
       .def_property(
@@ -1959,7 +2038,12 @@ void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &cls) {
          py::arg("ds_save") = py::none(),
          py::arg("n_pt") = py::none()
   )
-      .def_property_readonly("pt", &BunchTrackStruct::pt, "Array indexed from 0")
+      .def_property_readonly(
+          "pt",
+          &BunchTrackStruct::pt,
+          py::keep_alive<0, 1>(),
+          "Array indexed from 0"
+      )
       .def_property(
           "ds_save",
           &BunchTrackStruct::ds_save,
@@ -2026,12 +2110,14 @@ void init_bicubic_cmplx_coef_struct(py::module &m, py::class_<BicubicCmplxCoefSt
           "coef",
           &BicubicCmplxCoefStruct::coef,
           &BicubicCmplxCoefStruct::set_coef,
+          py::keep_alive<0, 1>(),
           "Coefs"
       )
       .def_property(
           "i_box",
           &BicubicCmplxCoefStruct::i_box,
           &BicubicCmplxCoefStruct::set_i_box,
+          py::keep_alive<0, 1>(),
           "index at lower box corner."
       )
 

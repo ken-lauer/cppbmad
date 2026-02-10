@@ -36,6 +36,7 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
           "r0",
           &CartesianMapStruct::r0,
           &CartesianMapStruct::set_r0,
+          py::keep_alive<0, 1>(),
           "Field origin offset."
       )
       .def_property(
@@ -56,7 +57,12 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
           &CartesianMapStruct::set_field_type,
           "or electric$"
       )
-      .def_property("ptr", &CartesianMapStruct::ptr, &CartesianMapStruct::set_ptr)
+      .def_property(
+          "ptr",
+          &CartesianMapStruct::ptr,
+          &CartesianMapStruct::set_ptr,
+          py::keep_alive<0, 1>()
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return CartesianMapStructAlloc1D(sz); },
@@ -202,7 +208,7 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
           &CartesianMapTermStruct::set_n_link,
           "For memory management of %term"
       )
-      .def_property_readonly("term", &CartesianMapTermStruct::term)
+      .def_property_readonly("term", &CartesianMapTermStruct::term, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const CartesianMapTermStruct &self) { return to_string(self); })
 
@@ -231,7 +237,7 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
 void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &cls) {
   cls.def(py::init<std::optional<std::complex<double>>>(), py::arg("ref") = py::none())
       .def_property("ref", &ComplexTaylorStruct::ref, &ComplexTaylorStruct::set_ref)
-      .def_property_readonly("term", &ComplexTaylorStruct::term)
+      .def_property_readonly("term", &ComplexTaylorStruct::term, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return ComplexTaylorStructAlloc1D(sz); },
@@ -281,7 +287,12 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
          py::arg("expn") = py::none()
   )
       .def_property("coef", &ComplexTaylorTermStruct::coef, &ComplexTaylorTermStruct::set_coef)
-      .def_property("expn", &ComplexTaylorTermStruct::expn, &ComplexTaylorTermStruct::set_expn)
+      .def_property(
+          "expn",
+          &ComplexTaylorTermStruct::expn,
+          &ComplexTaylorTermStruct::set_expn,
+          py::keep_alive<0, 1>()
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return ComplexTaylorTermStructAlloc1D(sz); },
@@ -338,8 +349,18 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
          py::arg("slave_name") = py::none(),
          py::arg("is_controller") = py::none()
   )
-      .def_property("y_knot", &ControlRamp1Struct::y_knot, &ControlRamp1Struct::set_y_knot)
-      .def_property_readonly("stack", &ControlRamp1Struct::stack, "Evaluation stack")
+      .def_property(
+          "y_knot",
+          &ControlRamp1Struct::y_knot,
+          &ControlRamp1Struct::set_y_knot,
+          py::keep_alive<0, 1>()
+      )
+      .def_property_readonly(
+          "stack",
+          &ControlRamp1Struct::stack,
+          py::keep_alive<0, 1>(),
+          "Evaluation stack"
+      )
       .def_property(
           "attribute",
           &ControlRamp1Struct::attribute,
@@ -424,10 +445,25 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
           &ControlStruct::set_value,
           "Used by group, and overlay elements."
       )
-      .def_property("y_knot", &ControlStruct::y_knot, &ControlStruct::set_y_knot)
-      .def_property_readonly("stack", &ControlStruct::stack, "Evaluation stack")
-      .def_property("slave", &ControlStruct::slave, &ControlStruct::set_slave)
-      .def_property("lord", &ControlStruct::lord, &ControlStruct::set_lord)
+      .def_property(
+          "y_knot",
+          &ControlStruct::y_knot,
+          &ControlStruct::set_y_knot,
+          py::keep_alive<0, 1>()
+      )
+      .def_property_readonly(
+          "stack",
+          &ControlStruct::stack,
+          py::keep_alive<0, 1>(),
+          "Evaluation stack"
+      )
+      .def_property(
+          "slave",
+          &ControlStruct::slave,
+          &ControlStruct::set_slave,
+          py::keep_alive<0, 1>()
+      )
+      .def_property("lord", &ControlStruct::lord, &ControlStruct::set_lord, py::keep_alive<0, 1>())
       .def_property(
           "slave_name",
           &ControlStruct::slave_name,
@@ -543,14 +579,25 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
 // controller_struct
 void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
   cls.def(py::init<std::optional<std::vector<double>>>(), py::arg("x_knot") = py::none())
-      .def_property_readonly("var", &ControllerStruct::var)
-      .def_property_readonly("ramp", &ControllerStruct::ramp, "For ramper lord elements")
+      .def_property_readonly("var", &ControllerStruct::var, py::keep_alive<0, 1>())
+      .def_property_readonly(
+          "ramp",
+          &ControllerStruct::ramp,
+          py::keep_alive<0, 1>(),
+          "For ramper lord elements"
+      )
       .def_property_readonly(
           "ramper_lord",
           &ControllerStruct::ramper_lord,
+          py::keep_alive<0, 1>(),
           "Ramper lord info for this slave"
       )
-      .def_property("x_knot", &ControllerStruct::x_knot, &ControllerStruct::set_x_knot)
+      .def_property(
+          "x_knot",
+          &ControllerStruct::x_knot,
+          &ControllerStruct::set_x_knot,
+          py::keep_alive<0, 1>()
+      )
 
       .def("__repr__", [](const ControllerStruct &self) { return to_string(self); })
 
@@ -576,7 +623,7 @@ void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
 // coord_array_struct
 void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
   cls.def(py::init<>())
-      .def_property_readonly("orbit", &CoordArrayStruct::orbit)
+      .def_property_readonly("orbit", &CoordArrayStruct::orbit, py::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return CoordArrayStructAlloc1D(sz); },
@@ -669,6 +716,7 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
           "vec",
           &CoordStruct::vec,
           &CoordStruct::set_vec,
+          py::keep_alive<0, 1>(),
           "(x, px, y, py, z, pz). Generally phase space for charged particles. See Bmad manual."
       )
       .def_property("s", &CoordStruct::s, &CoordStruct::set_s, "Longitudinal position")
@@ -678,17 +726,25 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
           &CoordStruct::set_t,
           "Absolute time (not relative to reference). Note: Quad precision!"
       )
-      .def_property("spin", &CoordStruct::spin, &CoordStruct::set_spin, "Spin.")
+      .def_property(
+          "spin",
+          &CoordStruct::spin,
+          &CoordStruct::set_spin,
+          py::keep_alive<0, 1>(),
+          "Spin."
+      )
       .def_property(
           "field",
           &CoordStruct::field,
           &CoordStruct::set_field,
+          py::keep_alive<0, 1>(),
           "Photon E-field intensity (x,y)."
       )
       .def_property(
           "phase",
           &CoordStruct::phase,
           &CoordStruct::set_phase,
+          py::keep_alive<0, 1>(),
           "Photon E-field phase (x,y). For charged particles, phase(1) is RF phase."
       )
       .def_property(
@@ -892,9 +948,15 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
           "r0",
           &CylindricalMapStruct::r0,
           &CylindricalMapStruct::set_r0,
+          py::keep_alive<0, 1>(),
           "Field origin offset."
       )
-      .def_property("ptr", &CylindricalMapStruct::ptr, &CylindricalMapStruct::set_ptr)
+      .def_property(
+          "ptr",
+          &CylindricalMapStruct::ptr,
+          &CylindricalMapStruct::set_ptr,
+          py::keep_alive<0, 1>()
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return CylindricalMapStructAlloc1D(sz); },
@@ -1017,7 +1079,7 @@ void init_cylindrical_map_term_struct(py::module &m, py::class_<CylindricalMapTe
           &CylindricalMapTermStruct::set_n_link,
           "For memory management of this structure"
       )
-      .def_property_readonly("term", &CylindricalMapTermStruct::term)
+      .def_property_readonly("term", &CylindricalMapTermStruct::term, py::keep_alive<0, 1>())
 
       .def("__repr__", [](const CylindricalMapTermStruct &self) { return to_string(self); })
 

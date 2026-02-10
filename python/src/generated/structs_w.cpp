@@ -177,7 +177,7 @@ void init_wake_lr_struct(py::module &m, py::class_<WakeLrStruct> &cls) {
          py::arg("self_wake_on") = py::none()
   )
       .def_property("file", &WakeLrStruct::file, &WakeLrStruct::set_file)
-      .def_property_readonly("mode", &WakeLrStruct::mode)
+      .def_property_readonly("mode", &WakeLrStruct::mode, py::keep_alive<0, 1>())
       .def_property(
           "t_ref",
           &WakeLrStruct::t_ref,
@@ -369,9 +369,14 @@ void init_wake_sr_struct(py::module &m, py::class_<WakeSrStruct> &cls) {
          py::arg("scale_with_length") = py::none()
   )
       .def_property("file", &WakeSrStruct::file, &WakeSrStruct::set_file)
-      .def_property("z_long", &WakeSrStruct::z_long, &WakeSrStruct::set_z_long)
-      .def_property_readonly("long_wake", &WakeSrStruct::long_wake)
-      .def_property_readonly("trans_wake", &WakeSrStruct::trans_wake)
+      .def_property(
+          "z_long",
+          &WakeSrStruct::z_long,
+          &WakeSrStruct::set_z_long,
+          py::keep_alive<0, 1>()
+      )
+      .def_property_readonly("long_wake", &WakeSrStruct::long_wake, py::keep_alive<0, 1>())
+      .def_property_readonly("trans_wake", &WakeSrStruct::trans_wake, py::keep_alive<0, 1>())
       .def_property(
           "z_ref_long",
           &WakeSrStruct::z_ref_long,
@@ -457,24 +462,28 @@ void init_wake_sr_z_long_struct(py::module &m, py::class_<WakeSrZLongStruct> &cl
           "w",
           &WakeSrZLongStruct::w,
           &WakeSrZLongStruct::set_w,
+          py::keep_alive<0, 1>(),
           "Input single particle Wake. Indexed from 1."
       )
       .def_property(
           "fw",
           &WakeSrZLongStruct::fw,
           &WakeSrZLongStruct::set_fw,
+          py::keep_alive<0, 1>(),
           "Fourier transform of w."
       )
       .def_property(
           "fbunch",
           &WakeSrZLongStruct::fbunch,
           &WakeSrZLongStruct::set_fbunch,
+          py::keep_alive<0, 1>(),
           "Scratch space."
       )
       .def_property(
           "w_out",
           &WakeSrZLongStruct::w_out,
           &WakeSrZLongStruct::set_w_out,
+          py::keep_alive<0, 1>(),
           "Scratch space."
       )
       .def_property(
@@ -536,8 +545,20 @@ void init_wake_struct(py::module &m, py::class_<WakeStruct> &cls) {
          py::arg("sr") = py::none(),
          py::arg("lr") = py::none()
   )
-      .def_property("sr", &WakeStruct::sr, &WakeStruct::set_sr, "Short-range wake")
-      .def_property("lr", &WakeStruct::lr, &WakeStruct::set_lr, "Long-range wake")
+      .def_property(
+          "sr",
+          &WakeStruct::sr,
+          &WakeStruct::set_sr,
+          py::keep_alive<0, 1>(),
+          "Short-range wake"
+      )
+      .def_property(
+          "lr",
+          &WakeStruct::lr,
+          &WakeStruct::set_lr,
+          py::keep_alive<0, 1>(),
+          "Long-range wake"
+      )
 
       .def("__repr__", [](const WakeStruct &self) { return to_string(self); })
 
@@ -615,12 +636,14 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
       .def_property_readonly(
           "v",
           &Wall3dSectionStruct::v,
+          py::keep_alive<0, 1>(),
           "Array of vertices. Always stored relative."
       )
       .def_property(
           "surface",
           &Wall3dSectionStruct::surface,
           &Wall3dSectionStruct::set_surface,
+          py::keep_alive<0, 1>(),
           "Surface reflectivity tables."
       )
       .def_property(
@@ -676,6 +699,7 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
           "r0",
           &Wall3dSectionStruct::r0,
           &Wall3dSectionStruct::set_r0,
+          py::keep_alive<0, 1>(),
           "Center of section Section-to-section spline interpolation of the center of the section"
       )
       .def_property(
@@ -694,12 +718,14 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
           "x0_coef",
           &Wall3dSectionStruct::x0_coef,
           &Wall3dSectionStruct::set_x0_coef,
+          py::keep_alive<0, 1>(),
           "Spline coefs for x-center"
       )
       .def_property(
           "y0_coef",
           &Wall3dSectionStruct::y0_coef,
           &Wall3dSectionStruct::set_y0_coef,
+          py::keep_alive<0, 1>(),
           "Spline coefs for y-center Section-to_section spline interpolation of the wall."
       )
       .def_property(
@@ -712,12 +738,14 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
           "p1_coef",
           &Wall3dSectionStruct::p1_coef,
           &Wall3dSectionStruct::set_p1_coef,
+          py::keep_alive<0, 1>(),
           "Spline coefs for p0 function"
       )
       .def_property(
           "p2_coef",
           &Wall3dSectionStruct::p2_coef,
           &Wall3dSectionStruct::set_p2_coef,
+          py::keep_alive<0, 1>(),
           "Spline coefs for p1 function"
       )
       .def_static(
@@ -826,7 +854,12 @@ void init_wall3d_struct(py::module &m, py::class_<Wall3dStruct> &cls) {
           &Wall3dStruct::set_ele_anchor_pt,
           "anchor_beginning$, anchor_center$, or anchor_end$"
       )
-      .def_property_readonly("section", &Wall3dStruct::section, "Indexed from 1.")
+      .def_property_readonly(
+          "section",
+          &Wall3dStruct::section,
+          py::keep_alive<0, 1>(),
+          "Indexed from 1."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return Wall3dStructAlloc1D(sz); },
