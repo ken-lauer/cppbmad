@@ -49,21 +49,21 @@ void bind_FCharArray1D(py::module &m) {
       .def("__str__", [](const FCharArray1D &t) { return Bmad::to_string(t); });
 }
 void bind_standard_arrays(py::module &m) {
-  bind_FArray1D<double, RealAlloc1D>(m, "RealArray1D");
+  // 1. Primitive Arrays (View + Allocator + Vector Interop)
+  //    This generates: RealArray1D, RealAlloc1D, and all permutations of conversion
+  //    between them and python lists (std::vector).
+  bind_1D_array_pair<double, RealAlloc1D>(m, "RealArray1D", "RealAlloc1D");
 
 #ifdef __FLOAT128__
-  bind_FArray1D<__float128, Real16Alloc1D>(m, "Real16Array1D");
+  bind_1D_array_pair<__float128, Real16Alloc1D>(m, "Real16Array1D", "Real16Alloc1D");
 #else
-  bind_FArray1D<long double, Real16Alloc1D>(m, "Real16Array1D");
+  bind_1D_array_pair<long double, Real16Alloc1D>(m, "Real16Array1D", "Real16Alloc1D");
 #endif
 
-  bind_FArray1D<int, IntAlloc1D>(m, "IntArray1D");
-  bind_FArray1D<int64_t, Int8Alloc1D>(m, "Int8Array1D");
-
-  // Note: Bool array specialized logic is now handled internally
-  bind_FArray1D<bool, BoolAlloc1D>(m, "BoolArray1D");
-
-  bind_FArray1D<std::complex<double>, ComplexAlloc1D>(m, "ComplexArray1D");
+  bind_1D_array_pair<int, IntAlloc1D>(m, "IntArray1D", "IntAlloc1D");
+  bind_1D_array_pair<int64_t, Int8Alloc1D>(m, "Int8Array1D", "Int8Alloc1D");
+  bind_1D_array_pair<bool, BoolAlloc1D>(m, "BoolArray1D", "BoolAlloc1D");
+  bind_1D_array_pair<std::complex<double>, ComplexAlloc1D>(m, "ComplexArray1D", "ComplexAlloc1D");
 
   bind_FArrayND<double, 2>(m, "RealArray2D");
   bind_FArrayND<int, 2>(m, "IntArray2D");
@@ -76,14 +76,6 @@ void bind_standard_arrays(py::module &m) {
   bind_FArrayND<int64_t, 3>(m, "Int8Array3D");
   bind_FArrayND<bool, 3>(m, "BoolArray3D");
   bind_FArrayND<std::complex<double>, 3>(m, "ComplexArray3D");
-
-  bind_FAlloc1D<RealAlloc1D>(m, "RealAlloc1D");
-  bind_FAlloc1D<IntAlloc1D>(m, "IntAlloc1D");
-  bind_FAlloc1D<Int8Alloc1D>(m, "Int8Alloc1D");
-  //!! this is the type, duh
-  bind_FAlloc1D<BoolAlloc1D>(m, "BoolAlloc1D");
-  bind_FAlloc1D<ComplexAlloc1D>(m, "ComplexAlloc1D");
-  bind_FAlloc1D<Real16Alloc1D>(m, "Real16Alloc1D");
 
   // 3. String Arrays
   bind_FCharArray1D(m);

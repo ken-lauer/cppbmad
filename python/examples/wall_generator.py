@@ -14,7 +14,7 @@ import sys
 from typing import IO
 
 import pybmad as pb
-from pybmad import BranchStruct, CoordStruct, RealAlloc1D
+from pybmad import BranchStruct, CoordStruct
 
 
 def write_header(fp: IO[str]) -> None:
@@ -102,8 +102,8 @@ def get_wall_contour(
     # Initial dummy vector setup from Fortran: vec(6) = 1.0 (index 5)
     # x, px, y, py, z, pz
     X, _PX, Y, _PY, Z, PZ = range(6)
-    point_vec = RealAlloc1D()
-    point_vec.resize_bounds(0, 5)
+    point_vec = [0.0] * 6
+    # point_vec.resize_bounds(0, 5)
     point_vec[PZ] = 1.0
     last_ele_s = branch.ele[branch.n_ele_track].s
 

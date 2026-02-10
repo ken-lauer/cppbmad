@@ -3,6 +3,7 @@
 #include <pybind11/complex.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
 
 #include <string>
 
@@ -18,39 +19,56 @@ namespace Pybmad {
 inline int normalize_index(int i, int size);
 
 // =============================================================================
-// Primitive Array Views (FArray1D<T>)
+// Unified Binder: View (FArray1D) + Allocator (FAlloc1D) + std::vector
 // =============================================================================
-// Binds generic FArray1D types (int, double, complex, etc.)
-// Special handling for bool via constexpr.
-template <typename T, typename Allocator = void>
-void bind_FArray1D(py::module &m, const std::string &name) {
-  using Class = FArray1D<T>;
+
+template <typename T, typename AllocClass>
+void bind_1D_array_pair(
+    py::module &m,
+    const std::string &view_name,
+    const std::string &alloc_name
+) {
+  using ViewClass = FArray1D<T>;
   constexpr bool is_bool = std::is_same_v<T, bool>;
 
-  // 1. Create the class definition
-  // Use buffer protocol for standard types, but standard only for bools
-  auto cls = [&]() {
+  auto view_cls = [&]() {
     if constexpr (is_bool) {
-      return py::class_<Class>(m, name.c_str());
+      return py::class_<ViewClass>(m, view_name.c_str());
     } else {
-      return py::class_<Class>(m, name.c_str(), py::buffer_protocol());
+      return py::class_<ViewClass>(m, view_name.c_str(), py::buffer_protocol());
     }
   }();
 
-  cls.def(py::init<>())
-      .def("__len__", &Class::size)
-      .def("is_valid", &Class::is_valid)
-      .def("__str__", [](const Class &self) { return Bmad::to_string(self); })
-      .def("__repr__", [](const Class &self) { return Bmad::to_string(self); })
-      .def_property_readonly("lower_bound", &Class::lower_bound)
-      .def_property_readonly("upper_bound", &Class::upper_bound);
+  view_cls.def(py::init<>())
+      .def("__len__", &ViewClass::size)
+      .def("is_valid", &ViewClass::is_valid)
+      .def("__str__", [](const ViewClass &self) { return Bmad::to_string(self); })
+      .def("__repr__", [](const ViewClass &self) { return Bmad::to_string(self); })
+      .def_property_readonly("lower_bound", &ViewClass::lower_bound)
+      .def_property_readonly("upper_bound", &ViewClass::upper_bound);
 
-  // 2. Buffer Protocol (Non-Bool only)
+  // View Get/Set Items
+  view_cls
+      .def(
+          "__getitem__",
+          [](ViewClass &self, int i) -> T {
+            if (i < 0)
+              i += self.size();
+            return self.at(i);
+          }
+      )
+      .def("__setitem__", [](ViewClass &self, int i, T val) {
+        if (i < 0)
+          i += self.size();
+        self.at(i) = val;
+      });
+
+  view_cls.def("to_list", &ViewClass::to_vector);
+
   if constexpr (!is_bool) {
-    cls.def_buffer([](Class &a) -> py::buffer_info {
-      if (!a.is_valid()) {
-        throw std::runtime_error("Attempted to access invalid/unallocated Fortran array");
-      }
+    view_cls.def_buffer([](ViewClass &a) -> py::buffer_info {
+      if (!a.is_valid())
+        throw std::runtime_error("Invalid Fortran array access");
       return py::buffer_info(
           a.data(),
           sizeof(T),
@@ -60,33 +78,89 @@ void bind_FArray1D(py::module &m, const std::string &name) {
           {sizeof(T)}
       );
     });
-    cls.def("to_list", &Class::to_flat_vector);
+  }
+
+  // --------------------------------------------------------
+  // 2. Definition of Allocator Class (RealAlloc1D, etc.)
+  // --------------------------------------------------------
+  auto alloc_cls =
+      py::class_<AllocClass>(m, alloc_name.c_str())
+          .def(py::init<>())
+          .def(py::init<int>(), py::arg("n"))
+          .def("resize", &AllocClass::resize, py::arg("n"))
+          // resize_bounds missing in some subtypes? If universal, keep it.
+          .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
+          .def("clear", &AllocClass::clear)
+          .def("__len__", &AllocClass::size)
+          .def("view", [](AllocClass &self) { return self.view(); });
+
+  if constexpr (!is_bool) {
+    alloc_cls.def(
+        "__iter__",
+        [](AllocClass &self) { return py::make_iterator(self.begin(), self.end()); },
+        py::keep_alive<0, 1>()
+    );
   } else {
-    cls.def("to_list", &Class::to_vector);
+    alloc_cls.def("__iter__", [](AllocClass &self) {
+      py::list result;
+      auto &view = self.view();
+      for (int i = 0; i < view.size(); ++i) {
+        result.append(static_cast<bool>(view.at(i)));
+      }
+      return result.attr("__iter__")();
+    });
   }
 
-  cls.def(
-         "__getitem__",
-         [](Class &self, int i) -> T {
-           if (i < 0)
-             i += self.size();
-           return self.at(i);
-         }
-  ).def("__setitem__", [](Class &self, int i, T val) {
-    if (i < 0)
-      i += self.size();
-    self.at(i) = val; // Works for both reference and Proxy
-  });
+  // Allocator Proxy Get/Set (Passes through to View)
+  // We use T for return type to force evaluation of Proxy->Value
+  alloc_cls
+      .def(
+          "__getitem__",
+          [](AllocClass &self, int i) -> T {
+            if (i < 0)
+              i += self.size();
+            return self.view().at(i);
+          }
+      )
+      .def("__setitem__", [](AllocClass &self, int i, T val) {
+        if (i < 0)
+          i += self.size();
+        self.view().at(i) = val;
+      });
 
-  // 4. Implicit Conversion from Allocator
-  if constexpr (!std::is_void_v<Allocator>) {
-    // Define a constructor that takes the Allocator and Views it.
-    // keep_alive<1, 2>: The new View (1) ensures Allocator (2) stays alive.
-    cls.def(py::init([](Allocator &a) { return a.view(); }), py::keep_alive<1, 2>());
+  // --------------------------------------------------------
+  // 3. Implicit Conversations & Interop
+  // --------------------------------------------------------
 
-    // Register the implicit conversion handling in pybind11
-    py::implicitly_convertible<Allocator, Class>();
-  }
+  // A. View constructed from Allocator (View <--- Alloc)
+  //    Essential for functions returning Alloc to Python as Views,
+  //    or implicit conversion in args.
+  view_cls.def(py::init([](AllocClass &a) { return a.view(); }), py::keep_alive<1, 2>());
+  py::implicitly_convertible<AllocClass, ViewClass>();
+
+  // B. Allocator constructed from View (Alloc <--- View) (Deep Copy)
+  alloc_cls.def(py::init([](const ViewClass &v) {
+    if (!v.is_valid())
+      throw std::runtime_error("Cannot copy from invalid view");
+    AllocClass a;
+    a.resize(v.size());
+    for (int i = 0; i < v.size(); i++)
+      a[i] = v[i];
+    return a;
+  }));
+  py::implicitly_convertible<ViewClass, AllocClass>();
+
+  // C. Allocator constructed from std::vector/List (Alloc <--- List) (Deep Copy)
+  //    This logic merges the std::vector equivalent into the Allocator system.
+  alloc_cls.def(py::init([](const std::vector<T> &vec) {
+    AllocClass a;
+    a.resize(vec.size());
+    auto &v = a.view();
+    for (size_t i = 0; i < vec.size(); i++)
+      v[i] = vec[i];
+    return a;
+  }));
+  py::implicitly_convertible<std::vector<T>, AllocClass>();
 }
 
 // =============================================================================
@@ -132,156 +206,6 @@ void bind_FArrayND(py::module_ &m, const std::string &name) {
           .def("__repr__", [](const Class &self) { return Bmad::to_string(self); })
           .def("to_list", &Class::to_flat_vector)
           .def_property_readonly("total_size", &Class::total_size);
-
-  if constexpr (Rank == 1) {
-    // 1D Indexing: arr[i]
-    cls.def("__getitem__", [](Class &self, int i) -> T {
-      return self.at(normalize_index(i, self.size(1)));
-    });
-    cls.def("__setitem__", [](Class &self, int i, T val) {
-      self.at(normalize_index(i, self.size(1))) = val;
-    });
-  } else if constexpr (Rank == 2) {
-    // 2D Indexing: arr[i, j] -> Python passes a tuple
-    cls.def("__getitem__", [](Class &self, py::tuple idx) -> T {
-      if (idx.size() != 2)
-        throw py::index_error("Index tuple size mismatch");
-      int i = normalize_index(idx[0].cast<int>(), self.size(1));
-      int j = normalize_index(idx[1].cast<int>(), self.size(2));
-      return self.at(i, j);
-    });
-    cls.def("__setitem__", [](Class &self, py::tuple idx, T val) {
-      if (idx.size() != 2)
-        throw py::index_error("Index tuple size mismatch");
-      int i = normalize_index(idx[0].cast<int>(), self.size(1));
-      int j = normalize_index(idx[1].cast<int>(), self.size(2));
-      self.at(i, j) = val;
-    });
-  } else if constexpr (Rank == 3) {
-    // 3D Indexing: arr[i, j, k]
-    cls.def("__getitem__", [](Class &self, py::tuple idx) -> T {
-      if (idx.size() != 3)
-        throw py::index_error("Index tuple size mismatch");
-      int i = normalize_index(idx[0].cast<int>(), self.size(1));
-      int j = normalize_index(idx[1].cast<int>(), self.size(2));
-      int k = normalize_index(idx[2].cast<int>(), self.size(3));
-      return self.at(i, j, k);
-    });
-    cls.def("__setitem__", [](Class &self, py::tuple idx, T val) {
-      if (idx.size() != 3)
-        throw py::index_error("Index tuple size mismatch");
-      int i = normalize_index(idx[0].cast<int>(), self.size(1));
-      int j = normalize_index(idx[1].cast<int>(), self.size(2));
-      int k = normalize_index(idx[2].cast<int>(), self.size(3));
-      self.at(i, j, k) = val;
-    });
-  }
-}
-// =============================================================================
-// Primitive Allocator Containers (FAlloc1D<T, ...>)
-// =============================================================================
-// Helper to bind the wrapper containers (RealAlloc1D, etc.)
-template <typename AllocClass>
-void bind_FAlloc1D(py::module &m, const std::string &name) {
-  py::class_<AllocClass>(m, name.c_str())
-      .def(py::init<>())
-      .def(py::init<int>(), py::arg("n"))
-      .def("resize", &AllocClass::resize, py::arg("n"))
-      .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
-      .def("clear", &AllocClass::clear)
-      .def("__len__", &AllocClass::size)
-      .def(
-          "__getitem__",
-          [](AllocClass &self, int i) -> auto {
-            if (i < 0)
-              i += self.size();
-            return self.view().at(i);
-          }
-      )
-      .def(
-          "__setitem__",
-          [](AllocClass &self, int i, typename AllocClass::view_type::value_type val) {
-            if (i < 0)
-              i += self.size();
-            self.view().at(i) = val;
-          }
-      )
-      .def(
-          "__iter__",
-          [](AllocClass &self) { return py::make_iterator(self.begin(), self.end()); },
-          py::keep_alive<0, 1>()
-      )
-      .def("view", [](AllocClass &self) { return self.view(); });
-}
-
-// BoolAlloc1D specialization; avoid wrapping ReferenceProxy
-// Specialization must match the typedef in bmad/fortran_arrays.hpp
-// using BoolAlloc1D = FAlloc1D<bool, ...>;
-// We cannot verify the exact full type easily, so we use a templated helper if possible
-// or just rely on the fact that if we use the EXACT typedef, it works.
-
-template <>
-inline void bind_FAlloc1D<BoolAlloc1D>(py::module &m, const std::string &name) {
-  using AllocClass = BoolAlloc1D;
-
-  py::class_<AllocClass>(m, name.c_str())
-      .def(py::init<>())
-      .def(py::init<int>(), py::arg("n"))
-      .def("resize", &AllocClass::resize, py::arg("n"))
-      .def("resize_bounds", &AllocClass::resize_bounds, py::arg("lbound"), py::arg("ubound"))
-      .def("clear", &AllocClass::clear)
-      .def("__len__", &AllocClass::size)
-      .def("view", [](AllocClass &self) { return self.view(); })
-
-      .def(
-          "__getitem__",
-          [](AllocClass &self, int i) -> bool {
-            if (i < 0)
-              i += self.size();
-            // .view() is FArray1D<bool>, .at(i) returns ReferenceProxy
-            return static_cast<bool>(self.view().at(i));
-          }
-      )
-      .def(
-          "__setitem__",
-          [](AllocClass &self, int i, bool val) {
-            if (i < 0)
-              i += self.size();
-            self.view().at(i) = val;
-          }
-      )
-      .def(
-          "__iter__",
-          [](AllocClass &self) {
-            // Safe iterator wrapper
-            struct BoolAllocIterator {
-              int index;
-              AllocClass *container;
-
-              using iterator_category = std::forward_iterator_tag;
-              using value_type = bool;
-              using difference_type = std::ptrdiff_t;
-              using pointer = void;
-              using reference = bool;
-
-              bool operator==(const BoolAllocIterator &other) const {
-                return index == other.index && container == other.container;
-              }
-              bool operator!=(const BoolAllocIterator &other) const { return !(*this == other); }
-              BoolAllocIterator &operator++() {
-                ++index;
-                return *this;
-              }
-              bool operator*() const { return static_cast<bool>(container->view().at(index)); }
-            };
-
-            return py::make_iterator(
-                BoolAllocIterator{0, &self},
-                BoolAllocIterator{self.size(), &self}
-            );
-          },
-          py::keep_alive<0, 1>()
-      );
 }
 // =============================================================================
 // Derived Type (Proxy) Views (FTypeArrayND<ProxyType, N...>)

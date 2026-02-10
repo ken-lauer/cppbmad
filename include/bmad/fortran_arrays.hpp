@@ -519,12 +519,13 @@ public:
   iterator end() { return iterator(valid_ ? data_ + size_ : nullptr); }
 
   std::vector<bool> to_vector() const {
-    if (!valid_)
+    if (!valid_ || size_ <= 0)
       return {};
-    std::vector<bool> vec;
-    vec.reserve(size_);
-    for (int i = 0; i < size_; ++i)
-      vec.push_back((data_[i] != 0));
+
+    std::vector<bool> vec(size_);
+    for (int i = 0; i < size_; i++) {
+      vec[i] = (data_[i] != 0);
+    }
     return vec;
   }
 
