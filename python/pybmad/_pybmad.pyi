@@ -2551,7 +2551,13 @@ class BoolAlloc1D:
     @typing.overload
     def __init__(self, n: typing.SupportsInt) -> None:
         ...
-    def __iter__(self) -> collections.abc.Iterator[bool]:
+    @typing.overload
+    def __init__(self, arg0: BoolArray1D) -> None:
+        ...
+    @typing.overload
+    def __init__(self, arg0: collections.abc.Sequence[bool]) -> None:
+        ...
+    def __iter__(self) -> typing.Any:
         ...
     def __len__(self) -> int:
         ...
@@ -2572,7 +2578,7 @@ class BoolArray1D:
     def __init__(self) -> None:
         ...
     @typing.overload
-    def __init__(self, arg0: ...) -> None:
+    def __init__(self, arg0: BoolAlloc1D) -> None:
         ...
     def __len__(self) -> int:
         ...
@@ -2597,8 +2603,6 @@ class BoolArray2D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> bool:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -2608,8 +2612,6 @@ class BoolArray2D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: bool) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -2625,8 +2627,6 @@ class BoolArray3D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> bool:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -2636,8 +2636,6 @@ class BoolArray3D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: bool) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -3846,6 +3844,12 @@ class ComplexAlloc1D:
     @typing.overload
     def __init__(self, n: typing.SupportsInt) -> None:
         ...
+    @typing.overload
+    def __init__(self, arg0: ComplexArray1D) -> None:
+        ...
+    @typing.overload
+    def __init__(self, arg0: collections.abc.Sequence[complex]) -> None:
+        ...
     def __iter__(self) -> collections.abc.Iterator[complex]:
         ...
     def __len__(self) -> int:
@@ -3871,7 +3875,7 @@ class ComplexArray1D:
     def __init__(self) -> None:
         ...
     @typing.overload
-    def __init__(self, arg0: ...) -> None:
+    def __init__(self, arg0: ComplexAlloc1D) -> None:
         ...
     def __len__(self) -> int:
         ...
@@ -3900,8 +3904,6 @@ class ComplexArray2D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> complex:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -3911,8 +3913,6 @@ class ComplexArray2D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: complex) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -3928,8 +3928,6 @@ class ComplexArray3D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> complex:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -3939,8 +3937,6 @@ class ComplexArray3D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: complex) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -8013,6 +8009,12 @@ class Int8Alloc1D:
     @typing.overload
     def __init__(self, n: typing.SupportsInt) -> None:
         ...
+    @typing.overload
+    def __init__(self, arg0: Int8Array1D) -> None:
+        ...
+    @typing.overload
+    def __init__(self, arg0: collections.abc.Sequence[typing.SupportsInt]) -> None:
+        ...
     def __iter__(self) -> collections.abc.Iterator[int]:
         ...
     def __len__(self) -> int:
@@ -8038,7 +8040,7 @@ class Int8Array1D:
     def __init__(self) -> None:
         ...
     @typing.overload
-    def __init__(self, arg0: ...) -> None:
+    def __init__(self, arg0: Int8Alloc1D) -> None:
         ...
     def __len__(self) -> int:
         ...
@@ -8067,8 +8069,6 @@ class Int8Array2D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> int:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -8078,8 +8078,6 @@ class Int8Array2D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: typing.SupportsInt) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -8095,8 +8093,6 @@ class Int8Array3D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> int:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -8106,8 +8102,6 @@ class Int8Array3D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: typing.SupportsInt) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -8126,6 +8120,12 @@ class IntAlloc1D:
         ...
     @typing.overload
     def __init__(self, n: typing.SupportsInt) -> None:
+        ...
+    @typing.overload
+    def __init__(self, arg0: IntArray1D) -> None:
+        ...
+    @typing.overload
+    def __init__(self, arg0: collections.abc.Sequence[typing.SupportsInt]) -> None:
         ...
     def __iter__(self) -> collections.abc.Iterator[int]:
         ...
@@ -8152,7 +8152,7 @@ class IntArray1D:
     def __init__(self) -> None:
         ...
     @typing.overload
-    def __init__(self, arg0: ...) -> None:
+    def __init__(self, arg0: IntAlloc1D) -> None:
         ...
     def __len__(self) -> int:
         ...
@@ -8181,8 +8181,6 @@ class IntArray2D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> int:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -8192,8 +8190,6 @@ class IntArray2D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: typing.SupportsInt) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -8209,8 +8205,6 @@ class IntArray3D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> int:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -8220,8 +8214,6 @@ class IntArray3D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: typing.SupportsInt) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -12087,6 +12079,12 @@ class Real16Alloc1D:
     @typing.overload
     def __init__(self, n: typing.SupportsInt) -> None:
         ...
+    @typing.overload
+    def __init__(self, arg0: Real16Array1D) -> None:
+        ...
+    @typing.overload
+    def __init__(self, arg0: collections.abc.Sequence[typing.SupportsFloat]) -> None:
+        ...
     def __iter__(self) -> collections.abc.Iterator[float]:
         ...
     def __len__(self) -> int:
@@ -12112,7 +12110,7 @@ class Real16Array1D:
     def __init__(self) -> None:
         ...
     @typing.overload
-    def __init__(self, arg0: ...) -> None:
+    def __init__(self, arg0: Real16Alloc1D) -> None:
         ...
     def __len__(self) -> int:
         ...
@@ -12145,6 +12143,12 @@ class RealAlloc1D:
     @typing.overload
     def __init__(self, n: typing.SupportsInt) -> None:
         ...
+    @typing.overload
+    def __init__(self, arg0: RealArray1D) -> None:
+        ...
+    @typing.overload
+    def __init__(self, arg0: collections.abc.Sequence[typing.SupportsFloat]) -> None:
+        ...
     def __iter__(self) -> collections.abc.Iterator[float]:
         ...
     def __len__(self) -> int:
@@ -12170,7 +12174,7 @@ class RealArray1D:
     def __init__(self) -> None:
         ...
     @typing.overload
-    def __init__(self, arg0: ...) -> None:
+    def __init__(self, arg0: RealAlloc1D) -> None:
         ...
     def __len__(self) -> int:
         ...
@@ -12199,8 +12203,6 @@ class RealArray2D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> float:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -12210,8 +12212,6 @@ class RealArray2D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: typing.SupportsFloat) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -12227,8 +12227,6 @@ class RealArray3D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
-    def __getitem__(self, arg0: tuple) -> float:
-        ...
     def __init__(self) -> None:
         ...
     def __len__(self) -> int:
@@ -12238,8 +12236,6 @@ class RealArray3D:
         Release the buffer object that exposes the underlying memory of the object.
         """
     def __repr__(self) -> str:
-        ...
-    def __setitem__(self, arg0: tuple, arg1: typing.SupportsFloat) -> None:
         ...
     def __str__(self) -> str:
         ...
