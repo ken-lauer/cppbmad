@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import pathlib
+import sys
+
+import pydantic
 
 from .paths import CPPBMAD_ROOT, DEFAULT_STRUCT_CONFIG_FILE
 from .struct_parser import Structure as ParsedStructure
@@ -17,7 +20,9 @@ from .struct_parser.parser import (
 from .struct_parser.util import FileLine, join_ampersand_lines, split_comment
 
 
-def load_bmad_parser_structures(config_file: pathlib.Path = DEFAULT_STRUCT_CONFIG_FILE):
+def load_bmad_parser_structures(
+    config_file: pathlib.Path = DEFAULT_STRUCT_CONFIG_FILE,
+) -> list[ParsedStructure]:
     parser_conf = ParserConfig.from_file(config_file)
     # structs = _load_bmad_parser_structures(config_file, output_subpath=output_subpath)
     structs = parse_all_structures(parser_conf)
@@ -41,6 +46,16 @@ def load_bmad_parser_structures(config_file: pathlib.Path = DEFAULT_STRUCT_CONFI
     return structs
 
 
+def dump_structs(config_file: pathlib.Path = DEFAULT_STRUCT_CONFIG_FILE):
+    def by_name(st: ParsedStructure) -> str:
+        return st.name
+
+    structs = sorted(load_bmad_parser_structures(config_file), key=by_name)
+    structs_by_name = {struct.name: struct for struct in structs}
+    adapter = pydantic.TypeAdapter(dict[str, ParsedStructure])
+    return structs_by_name, adapter.dump_json(structs_by_name)
+
+
 __all__ = [
     "FileLine",
     "ParsedStructure",
@@ -52,3 +67,9 @@ __all__ = [
     "parse_declaration",
     "split_comment",
 ]
+
+if __name__ == "__main__":
+    by_name, by_name_json = dump_structs(
+        pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_STRUCT_CONFIG_FILE
+    )
+    sys.stdout.buffer.write(by_name_json)
