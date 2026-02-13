@@ -43,7 +43,7 @@ target_compile_definitions(${PYBIND_LIBNAME} PRIVATE VERSION_INFO=${PROJECT_VERS
 
 # When using scikit-build-core, we install into the python package directory
 # relative to site-packages.
-# logic: We want _pybmad.so (.pyd) to sit inside the `pybmad` folder alongside __init__.py.
+# logic: We want _pybmad.so (.dylib) to sit inside the `pybmad` folder alongside __init__.py.
 install(TARGETS ${PYBIND_LIBNAME} DESTINATION pybmad)
 # # Check if generated files exist using a marker file, or force run
 # find_file(CODEGEN_MARKER "proxy.cpp" PATHS src/generated NO_DEFAULT_PATH)

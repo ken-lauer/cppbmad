@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Polygon
 from pytao import Tao
 
-import pybmad
+import pybmad as pb
 from pybmad import (
     GIRDER,
     GROUP,
@@ -30,6 +30,7 @@ from pybmad import (
 )
 
 TAO_INIT = os.environ.get("TAO_INIT", "$ACC_ROOT_DIR/bmad-doc/tao_examples/optics_matching/tao.init")
+ACC_DPI_RESOLUTION = int(os.environ.get("ACC_DPI_RESOLUTION", "72"))
 
 tao_color_to_mpl: dict[str, str | None] = {
     "not_set": None,
@@ -89,14 +90,16 @@ def floor_to_screen(graph, r_floor):
     else:
         f = r_floor
 
-    scr = pybmad.tao_floor_to_screen_coords(graph, f)
-    return list(scr.r)[:2]
+    scr = pb.tao_floor_to_screen_coords(graph, f)
+    x, y = list(scr.r)[:2]
+    return (x, y)
 
 
 def tao_draw_floor_plan_orbit(graph: TaoGraphStruct, tao_lat, ax: matplotlib.axes.Axes):
     """
     Draw the particle orbit.
     """
+    return
     lat = tao_lat.lat
 
     for branch in lat.branch:
@@ -113,7 +116,7 @@ def tao_draw_floor_plan_orbit(graph: TaoGraphStruct, tao_lat, ax: matplotlib.axe
             if ele.slave_status == MULTIPASS_SLAVE and graph.floor_plan.draw_only_first_pass:
                 # Logic for multipass visibility similar to elements
                 # If we only draw first pass
-                ix_pass = pybmad.multipass_chain(ele).ix_pass
+                ix_pass = pb.multipass_chain(ele).ix_pass
                 if ix_pass > 1:
                     continue
 
@@ -128,7 +131,7 @@ def tao_draw_floor_plan_orbit(graph: TaoGraphStruct, tao_lat, ax: matplotlib.axe
             # Start point
             if idx == 0:
                 # Element 0
-                f_glob = pybmad.coords_local_curvilinear_to_floor(f0, ele, True).global_position
+                f_glob = pb.coords_local_curvilinear_to_floor(f0, ele, True).global_position
                 xs, ys = floor_to_screen(graph, f_glob)
                 x_path.append(xs)
                 y_path.append(ys)
@@ -137,12 +140,11 @@ def tao_draw_floor_plan_orbit(graph: TaoGraphStruct, tao_lat, ax: matplotlib.axe
                 s_pos = j * ds
                 f_local = FloorPositionStruct()
                 f_local.r = [0.0, 0.0, s_pos]
-                f_glob = pybmad.coords_local_curvilinear_to_floor(f_local, ele, True).global_position
+                f_glob = pb.coords_local_curvilinear_to_floor(f_local, ele, True).global_position
                 xs, ys = floor_to_screen(graph, f_glob)
                 x_path.append(xs)
                 y_path.append(ys)
 
-        # Plot
         ax.plot(x_path, y_path, color="blue", linestyle="--", linewidth=0.5, alpha=0.5, label="Orbit")
 
 
@@ -154,6 +156,8 @@ def tao_draw_ele_for_floor_plan(
     offset1: float,
     offset2: float,
     ax: matplotlib.axes.Axes,
+    *,
+    draw_labels: bool = False,
 ):
     """
     Draw a single element for the floor plan.
@@ -161,7 +165,7 @@ def tao_draw_ele_for_floor_plan(
     """
 
     # Check element ends
-    ele1, _ele2 = pybmad.find_element_ends(ele)
+    ele1, _ele2 = pb.find_element_ends(ele)
     if not ele1:
         return
 
@@ -183,8 +187,8 @@ def tao_draw_ele_for_floor_plan(
     f1.r = [0.0, 0.0, l_val]
 
     # Transform to global floor coords
-    floor1 = pybmad.coords_local_curvilinear_to_floor(f0, ele, True).global_position
-    floor2 = pybmad.coords_local_curvilinear_to_floor(f1, ele, True).global_position
+    floor1 = pb.coords_local_curvilinear_to_floor(f0, ele, True).global_position
+    floor2 = pb.coords_local_curvilinear_to_floor(f1, ele, True).global_position
 
     if is_data_or_var:
         # Data/Var often drawn at a single point
@@ -204,9 +208,9 @@ def tao_draw_ele_for_floor_plan(
     x_bend_curr_plus = []  # +offset1
     y_bend_curr_plus = []
 
-    plot_page = pybmad.get_super_universe().plot_page
-    python_scale = 10.0
-    scale = plot_page.floor_plan_shape_scale / python_scale
+    plot_page = pb.get_super_universe().plot_page
+
+    scale = plot_page.floor_plan_shape_scale / ACC_DPI_RESOLUTION
 
     if is_bend and ele_shape and ele_shape.draw:
         # Calculate intermediate points
@@ -223,7 +227,7 @@ def tao_draw_ele_for_floor_plan(
             f_local = FloorPositionStruct()
             f_local.r = [0.0, 0.0, s_pos]  # x, y, s
 
-            f_global = pybmad.coords_local_curvilinear_to_floor(f_local, ele, True).global_position
+            f_global = pb.coords_local_curvilinear_to_floor(f_local, ele, True).global_position
             xs, ys = floor_to_screen(graph, f_global)
             x_bend_cen.append(xs)
             y_bend_cen.append(ys)
@@ -231,7 +235,7 @@ def tao_draw_ele_for_floor_plan(
             # +offset1 (Left usually)
             f_loc_p = FloorPositionStruct()
             f_loc_p.r = [off1_s, 0.0, s_pos]
-            f_glob_p = pybmad.coords_local_curvilinear_to_floor(f_loc_p, ele, True).global_position
+            f_glob_p = pb.coords_local_curvilinear_to_floor(f_loc_p, ele, True).global_position
             xp, yp = floor_to_screen(graph, f_glob_p)
             x_bend_curr_plus.append(xp)
             y_bend_curr_plus.append(yp)
@@ -239,7 +243,7 @@ def tao_draw_ele_for_floor_plan(
             # -offset2 (Right usually)
             f_loc_m = FloorPositionStruct()
             f_loc_m.r = [-off2_s, 0.0, s_pos]
-            f_glob_m = pybmad.coords_local_curvilinear_to_floor(f_loc_m, ele, True).global_position
+            f_glob_m = pb.coords_local_curvilinear_to_floor(f_loc_m, ele, True).global_position
             xm, ym = floor_to_screen(graph, f_glob_m)
             x_bend_curr_minus.append(xm)
             y_bend_curr_minus.append(ym)
@@ -397,8 +401,7 @@ def tao_draw_ele_for_floor_plan(
         # Fallback to line
         draw_line([end1_scr_x, end2_scr_x], [end1_scr_y, end2_scr_y])
 
-    # Label
-    if label_name:
+    if label_name and draw_labels:
         # Center position
         x_mid = (end1_scr_x + end2_scr_x) / 2
         y_mid = (end1_scr_y + end2_scr_y) / 2
@@ -436,13 +439,13 @@ def tao_draw_building_wall(graph: TaoGraphStruct, ax: matplotlib.axes.Axes):
     Port of tao_draw_building_wall from tao_plot_mod.f90
     """
 
-    s = pybmad.get_super_universe()
+    s = pb.get_super_universe()
     if not graph.floor_plan.draw_building_wall or not s.building_wall.section:
         return
 
     for sec in s.building_wall.section:
         # Wall shape
-        wall_shape = pybmad.tao_pointer_to_building_wall_shape(sec.name)
+        wall_shape = pb.tao_pointer_to_building_wall_shape(sec.name)
         if not wall_shape:
             continue
 
@@ -459,8 +462,8 @@ def tao_draw_building_wall(graph: TaoGraphStruct, ax: matplotlib.axes.Axes):
             pt1_raw = sec.point[i]
 
             # Orient points (handle Global vs Local)
-            w_pt0 = pybmad.tao_oreint_building_wall_pt(pt0_raw)
-            w_pt1 = pybmad.tao_oreint_building_wall_pt(pt1_raw)
+            w_pt0 = pb.tao_oreint_building_wall_pt(pt0_raw)
+            w_pt1 = pb.tao_oreint_building_wall_pt(pt1_raw)
 
             f0 = FloorPositionStruct()
             f0.r = [w_pt0.x, 0.0, w_pt0.z]
@@ -519,10 +522,10 @@ def tao_draw_building_wall(graph: TaoGraphStruct, ax: matplotlib.axes.Axes):
                 ax.plot(x_arc, y_arc, color=color, linewidth=lw)
 
 
-def get_ele_slaves(ele: pybmad.EleStruct) -> list[pybmad.EleStruct]:
+def get_ele_slaves(ele: pb.EleStruct) -> list[pb.EleStruct]:
     res = []
     for j in range(1, ele.n_slave + 1):
-        slave_ptr = pybmad.pointer_to_slave(ele, j)
+        slave_ptr = pb.pointer_to_slave(ele, j)
         slave = slave_ptr.slave_ptr
         if slave is not None:
             res.append(slave)
@@ -530,7 +533,7 @@ def get_ele_slaves(ele: pybmad.EleStruct) -> list[pybmad.EleStruct]:
 
 
 def draw_this_floor_plan(
-    uni: pybmad.TaoUniverseStruct,
+    uni: pb.TaoUniverseStruct,
     plot: TaoPlotStruct,  # noqa: ARG001
     graph: TaoGraphStruct,
     ax: matplotlib.axes.Axes,
@@ -538,7 +541,7 @@ def draw_this_floor_plan(
     """
     Draw floor plan for a specific universe
     """
-    s = pybmad.get_super_universe()
+    s = pb.get_super_universe()
     orbit_lat = graph.floor_plan.orbit_lattice
 
     if orbit_lat == "model":
@@ -564,7 +567,7 @@ def draw_this_floor_plan(
             ix_shape_min = 1
 
             while True:
-                shape_info = pybmad.tao_ele_shape_info(
+                shape_info = pb.tao_ele_shape_info(
                     uni.ix_uni, ele, s.plot_page.floor_plan.ele_shape.view(), ix_shape_min
                 )
 
@@ -584,7 +587,7 @@ def draw_this_floor_plan(
                     break
 
                 if graph.floor_plan.draw_only_first_pass and ele.slave_status == MULTIPASS_SLAVE:
-                    ix_pass = pybmad.multipass_chain(ele).ix_pass
+                    ix_pass = pb.multipass_chain(ele).ix_pass
                     if ix_pass > 1:
                         break
 
@@ -593,9 +596,7 @@ def draw_this_floor_plan(
                         if graph.floor_plan.draw_only_first_pass and j > 0:
                             break
 
-                        s_info2 = pybmad.tao_ele_shape_info(
-                            uni.ix_uni, slave, s.plot_page.floor_plan.ele_shape
-                        )
+                        s_info2 = pb.tao_ele_shape_info(uni.ix_uni, slave, s.plot_page.floor_plan.ele_shape)
                         if s_info2 and s_info2.e_shape:
                             continue  # Slave handles it
 
@@ -618,9 +619,9 @@ def tao_draw_floor_plan():
     Iterates over regions and graphs, finding 'floor_plan' type graphs.
     """
 
-    s = pybmad.get_super_universe()
+    s = pb.get_super_universe()
 
-    regions = []
+    regions: list[pb.TaoPlotRegionStruct] = []
     for r in s.plot_page.region:
         if r.visible and r.plot and r.plot.name:  # Basic check
             regions.append(r)
@@ -648,7 +649,7 @@ def tao_draw_floor_plan():
                 # Python 0-based, Fortran 1-based universe array idx
                 universes = list(s.u)
             else:
-                universes = [s.u[pybmad.tao_universe_index(ix_univ) - 1]]
+                universes = [s.u[pb.tao_universe_index(ix_univ) - 1]]
 
             for uni in universes:
                 draw_this_floor_plan(uni, plot, graph, ax)
@@ -664,12 +665,11 @@ def main():
     print(tao)
     plt.ion()
     tao.plot("floor_plan")
-    plt.xlim(0, 5.0)
+    # plt.xlim(0, 5.0)
     # plt.ylim(-1, 0.5)
-    print("Initialized Tao.")
 
     tao_draw_floor_plan()
-    plt.xlim(0, 5.0)
+    # plt.xlim(0, 5.0)
     # plt.ylim(-1, 0.5)
     plt.ioff()
     plt.show()
