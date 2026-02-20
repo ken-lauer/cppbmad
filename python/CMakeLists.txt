@@ -61,14 +61,14 @@ install(TARGETS ${PYBIND_LIBNAME} DESTINATION pybmad)
 # endif()
 
 # Update RPATH so _pybmad.so finds libcppbmad.dylib/so in the same folder
-if (APPLE)
+if(APPLE)
   set_target_properties(${PYBIND_LIBNAME} PROPERTIES
-        INSTALL_RPATH "@loader_path"
-    )
+    INSTALL_RPATH "@loader_path"
+  )
 else()
   set_target_properties(${PYBIND_LIBNAME} PROPERTIES
-        INSTALL_RPATH "$ORIGIN"
-    )
+    INSTALL_RPATH "$ORIGIN"
+  )
 endif()
 
 # Only run this if we have the pybind11-stubgen tool available
@@ -99,7 +99,13 @@ if(STUBGEN)
     COMMENT "Generating and processing Python Stubs for ${PYBIND_LIBNAME}"
     VERBATIM
 )
-  install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/pybmad/"
-          DESTINATION pybmad
-          FILES_MATCHING PATTERN "*.pyi")
 endif()
+
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/pybmad/"
+        DESTINATION pybmad
+        FILES_MATCHING
+        PATTERN "*.py"
+        PATTERN "*.pyi"
+        REGEX "__pycache__" EXCLUDE
+        PATTERN "*.pyc" EXCLUDE
+)
