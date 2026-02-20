@@ -33454,8 +33454,6 @@ subroutine fortran_transfer_fixer_params (fixer, to_stored, orbit, who, is_ok) b
   type(ele_struct), pointer :: f_fixer
   logical(c_bool) :: to_stored  ! 0D_NOT_logical
   logical :: f_to_stored
-  type(c_ptr), value :: orbit  ! 0D_NOT_type
-  type(coord_struct), pointer :: f_orbit
   type(c_ptr), intent(in), value :: who
   character(len=4096), target :: f_who
   character(kind=c_char), pointer :: f_who_ptr(:)
@@ -33464,13 +33462,16 @@ subroutine fortran_transfer_fixer_params (fixer, to_stored, orbit, who, is_ok) b
   type(c_ptr), intent(in), value :: is_ok  ! 0D_NOT_logical
   logical :: f_is_ok
   logical(c_bool), pointer :: f_is_ok_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: orbit  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_orbit
   ! ** End of parameters **
   ! in: f_fixer 0D_NOT_type
   if (.not. c_associated(fixer)) return
   call c_f_pointer(fixer, f_fixer)
   ! in: f_to_stored 0D_NOT_logical
   f_to_stored = to_stored
-  ! in: f_orbit 0D_NOT_type
+  ! inout: f_orbit 0D_NOT_type
   if (c_associated(orbit))   call c_f_pointer(orbit, f_orbit)
   ! in: f_who 0D_NOT_character
   if (c_associated(who)) then

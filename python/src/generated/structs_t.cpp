@@ -4302,7 +4302,8 @@ void init_tao_lattice_branch_struct(py::module &m, py::class_<TaoLatticeBranchSt
           "orb0",
           py::cpp_function(&TaoLatticeBranchStruct::orb0, py::keep_alive<0, 1>()),
           &TaoLatticeBranchStruct::set_orb0,
-          "For saving beginning orbit"
+          "For saving beginning orbit in closed geometry branches. orb0 can then be used as an "
+          "initial guess when closed_orbit is called again."
       )
       .def_property(
           "modes_ri",

@@ -3329,7 +3329,9 @@ to_stored : bool
     If False, set real Twiss from stored. If True, set stored Twiss from real.
 
 orbit : CoordStruct, optional
-    Used for 'phase_space' transfers.
+    Used for 'phase_space' transfers. Used for input if to_stored = True.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Used for 'phase_space' transfers. Used for output if to_stored = False.
 
 who : str, optional
     Who to set. Possibilities are: Groups: 'all', ' ' (default and same as 'all') Note: This excludes all

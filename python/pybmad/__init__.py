@@ -2160,6 +2160,7 @@ from ._enums import TAYLOR_ORDER
 from ._enums import R_SOLENOID
 from ._enums import FINAL_CHARGE
 from ._enums import K0L_STATUS
+from ._enums import WARN_COUNT
 from ._enums import K1
 from ._enums import KX
 from ._enums import HARMON
@@ -4998,6 +4999,7 @@ __all__ = [
     "R_SOLENOID",
     "FINAL_CHARGE",
     "K0L_STATUS",
+    "WARN_COUNT",
     "K1",
     "KX",
     "HARMON",

@@ -8971,7 +8971,7 @@ EleStruct transfer_fieldmap(EleStruct &ele_in, int who);
 extern "C" bool fortran_transfer_fixer_params(
     void *fixer /* 0D_NOT_type in */,
     bool &to_stored /* 0D_NOT_logical in */,
-    void *orbit /* 0D_NOT_type in */,
+    void *orbit /* 0D_NOT_type inout */,
     const char *who /* 0D_NOT_character in */,
     bool &is_ok /* 0D_NOT_logical out */
 );
