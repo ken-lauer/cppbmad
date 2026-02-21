@@ -408,3 +408,7 @@ def test_type_array_getitem():
     assert len(ele_arr) == 3
     assert len(ele_arr[:2]) == 2
     assert [ele.name for ele in ele_arr[-1:]] == ["2"]
+
+
+if __name__ == "__main__":
+    sys.exit(pytest.main(["-v", *sys.argv[1:], __file__]))
