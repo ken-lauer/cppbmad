@@ -57,10 +57,38 @@ void bind_1D_array_pair(
             return self.at(i);
           }
       )
-      .def("__setitem__", [](ViewClass &self, int i, T val) {
-        if (i < 0)
-          i += self.size();
-        self.at(i) = val;
+      .def(
+          "__getitem__",
+          [](ViewClass &self, pybind11::slice slice) {
+            size_t start, stop, step, slicelength;
+            if (!slice.compute(self.size(), &start, &stop, &step, &slicelength))
+              throw pybind11::error_already_set();
+            pybind11::list ret(slicelength);
+            for (size_t i = 0; i < slicelength; ++i) {
+              ret[i] = pybind11::cast(self.at(start + i * step));
+            }
+            return ret;
+          }
+      )
+      .def(
+          "__setitem__",
+          [](ViewClass &self, int i, T val) {
+            if (i < 0)
+              i += self.size();
+            self.at(i) = val;
+          }
+      )
+      .def("__setitem__", [](ViewClass &self, pybind11::slice slice, pybind11::sequence val) {
+        size_t start, stop, step, slicelength;
+        if (!slice.compute(self.size(), &start, &stop, &step, &slicelength))
+          throw pybind11::error_already_set();
+        if (val.size() != slicelength)
+          throw pybind11::value_error(
+              "Left and right hand size of slice assignment have different sizes"
+          );
+        for (size_t i = 0; i < slicelength; ++i) {
+          self.at(start + i * step) = val[i].cast<T>();
+        }
       });
 
   view_cls.def("to_list", &ViewClass::to_vector);
@@ -122,10 +150,38 @@ void bind_1D_array_pair(
             return self.view().at(i);
           }
       )
-      .def("__setitem__", [](AllocClass &self, int i, T val) {
-        if (i < 0)
-          i += self.size();
-        self.view().at(i) = val;
+      .def(
+          "__getitem__",
+          [](AllocClass &self, pybind11::slice slice) {
+            size_t start, stop, step, slicelength;
+            if (!slice.compute(self.size(), &start, &stop, &step, &slicelength))
+              throw pybind11::error_already_set();
+            pybind11::list ret(slicelength);
+            for (size_t i = 0; i < slicelength; ++i) {
+              ret[i] = pybind11::cast(self.view().at(start + i * step));
+            }
+            return ret;
+          }
+      )
+      .def(
+          "__setitem__",
+          [](AllocClass &self, int i, T val) {
+            if (i < 0)
+              i += self.size();
+            self.view().at(i) = val;
+          }
+      )
+      .def("__setitem__", [](AllocClass &self, pybind11::slice slice, pybind11::sequence val) {
+        size_t start, stop, step, slicelength;
+        if (!slice.compute(self.size(), &start, &stop, &step, &slicelength))
+          throw pybind11::error_already_set();
+        if (val.size() != slicelength)
+          throw pybind11::value_error(
+              "Left and right hand size of slice assignment have different sizes"
+          );
+        for (size_t i = 0; i < slicelength; ++i) {
+          self.view().at(start + i * step) = val[i].cast<T>();
+        }
       });
 
   // --------------------------------------------------------
