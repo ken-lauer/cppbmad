@@ -334,6 +334,7 @@ def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[Fortran
                 lines.append(f'py::arg("{arg.python_name}"),')
 
     doc = routine.docstring.to_numpy_docstring(args)
+    lines.append("py::call_guard<py::gil_scoped_release>(),")
     lines.append(rf'R"""({doc})"""')
     lines.append(");")
 

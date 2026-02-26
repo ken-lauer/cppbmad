@@ -20,7 +20,7 @@ using namespace pybind11::literals;
 
 // ${pybind11_routine_wrappers}
 
-PYBIND11_MODULE(_pybmad, m) {
+PYBIND11_MODULE(_pybmad, m, py::mod_gil_not_used()) {
   // Generated definitions:
   // ${pybind11_definitions}
 }
