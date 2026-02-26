@@ -14,6 +14,7 @@ void init_SimUtils_routines_p(py::module &m) {
       py::arg("descrip"),
       py::arg("width"),
       py::arg("digits"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine parse_fortran_format
 
 Parameters
@@ -36,6 +37,7 @@ digits : int
       &SimUtils::pointer_to_ran_state,
       py::arg("ran_state") = py::none(),
       py::arg("ix_thread") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_ran_state(ran_state, ix_thread) result (ran_state_ptr)
 
 Routine to point to the appropriate state structure for generating random numbers
@@ -60,6 +62,7 @@ ran_state_ptr : RandomStateStruct, optional
       py::arg("poly"),
       py::arg("x"),
       py::arg("diff_coef") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine poly_eval
 
 Parameters
@@ -84,6 +87,7 @@ y : float
       &SimUtils::probability_funct,
       py::arg("x"),
       py::arg("prob"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine probability_funct
 
 Parameters
@@ -100,6 +104,7 @@ prob : float
       py::arg("a"),
       py::arg("b"),
       py::arg("func_retval__"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine projdd
 
 Parameters

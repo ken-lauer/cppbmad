@@ -79,6 +79,7 @@ void init_Bmad_routines_t(py::module &m) {
       &Bmad::t6_to_b123,
       py::arg("t6"),
       py::arg("abz_tunes"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine t6_to_B123(N, abz_tunes, B1, B2, B3, err_flag)
 
 This decomposes the one-turn matrix according to Equation 56 from
@@ -116,6 +117,7 @@ err_flag : bool
       py::arg("ref_lat") = py::none(),
       py::arg("except_") = py::none(),
       py::arg("err_flag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine taper_mag_strengths
 
 Parameters
@@ -167,6 +169,7 @@ err_flag : bool, optional
       py::arg("phi_min"),
       py::arg("phi_max"),
       py::arg("initial") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine target_min_max_calc (r_corner1, r_corner2, y_min, y_max, phi_min, phi_max, initial)
 
 Routine to calculate the min/max values for (y, phi).
@@ -231,6 +234,7 @@ phi_max : float
       "target_rot_mats",
       &Bmad::target_rot_mats,
       py::arg("r_center"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine target_rot_mats (r_center, w_to_target, w_to_ele)
 
 Routine to calculate the rotation matrices between ele coords and "target" coords.
@@ -255,6 +259,7 @@ w_to_ele : 2D array of float (shape: 3,3)
       &Bmad::taylor_equal_taylor,
       py::arg("taylor1"),
       py::arg("taylor2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine taylor_equal_taylor
 
 Parameters
@@ -269,6 +274,7 @@ taylor2 : TaylorStruct
       &Bmad::taylor_inverse,
       py::arg("taylor_in"),
       py::arg("taylor_inv"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine taylor_inverse (taylor_in, taylor_inv, err)
 
 Subroutine to invert a taylor map. Since the inverse map is truncated, it is not exact.
@@ -295,6 +301,7 @@ err : bool, optional
       py::arg("param"),
       py::arg("ref_in") = py::none(),
       py::arg("spin_taylor") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, spin_taylor)
 
 Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
@@ -336,6 +343,7 @@ err_flag : bool
       &Bmad::taylor_to_mad_map,
       py::arg("taylor"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine taylor_to_mad_map (taylor, energy, map)
 
 Subroutine to convert a Taylor map to a mad order 2 map.
@@ -360,6 +368,7 @@ map : MadMapStruct
       &Bmad::taylors_equal_taylors,
       py::arg("taylor1"),
       py::arg("taylor2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine taylors_equal_taylors
 
 Parameters
@@ -376,6 +385,7 @@ taylor2 : 1D array of TaylorStruct
       py::arg("coord"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tilt_coords
 
 Parameters
@@ -403,6 +413,7 @@ make_matrix : bool, optional
       py::arg("tilt_val"),
       py::arg("coord"),
       py::arg("w_mat") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tilt_coords_photon
 
 Parameters
@@ -426,6 +437,7 @@ w_mat : 2D array of float (shape: 3,3), optional
       &Bmad::tilt_mat6,
       py::arg("mat6"),
       py::arg("tilt"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tilt_mat6
 
 Parameters
@@ -463,6 +475,7 @@ tilt : float
       py::arg("ele"),
       py::arg("axis"),
       py::arg("add_noise"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine to_eta_reading (eta, ele, axis, add_noise, reading, err)
 
 Compute the measured dispersion reading given the true dispersion and the
@@ -532,6 +545,7 @@ err : bool
       py::arg("ele_anchor_pt"),
       py::arg("r0"),
       py::arg("curved_ref_frame"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0, curved_ref_frame,
                                                               x, y, z, cos_ang, sin_ang, err_flag)
 
@@ -602,6 +616,7 @@ err_flag : bool
       py::arg("ele"),
       py::arg("axis"),
       py::arg("add_noise"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine to_orbit_reading (orb, ele, axis, add_noise, reading, err)
 
 Calculate the measured reading on a bpm given the actual orbit and the
@@ -655,6 +670,7 @@ err : bool
       &Bmad::to_phase_and_coupling_reading,
       py::arg("ele"),
       py::arg("add_noise"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine to_phase_and_coupling_reading (ele, add_noise, reading, err)
 
 Find the measured coupling values given the actual ones
@@ -684,6 +700,7 @@ err : bool
       &Bmad::to_photon_angle_coords,
       py::arg("orb_in"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function to_photon_angle_coords (orb_in, ele) result (orb_out)
 
 Routine to convert from standard photon coords to "angle" coords defined as:
@@ -708,6 +725,7 @@ orb_out : CoordStruct
       &Bmad::to_surface_coords,
       py::arg("lab_orbit"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine to_surface_coords
 
 Parameters
@@ -729,6 +747,7 @@ surface_orbit : CoordStruct
       &Bmad::touschek_lifetime,
       py::arg("mode"),
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine touschek_lifetime(mode, Tl, lat)
 
 Calculates the touschek lifetime for a lattice by calling touschek_rate1
@@ -772,6 +791,7 @@ Tl : float
       py::arg("lat"),
       py::arg("ix") = py::none(),
       py::arg("s") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine touschek_rate1(mode, rate, lat, ix, s)
 
 Calculates the touschek rate at the location specified by s or ix
@@ -838,6 +858,7 @@ rate : float
       py::arg("lat"),
       py::arg("ix") = py::none(),
       py::arg("s") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine touschek_rate1_zap
 
 Parameters
@@ -876,6 +897,7 @@ s : float, optional
       py::arg("ignore_radiation") = py::none(),
       py::arg("make_map1") = py::none(),
       py::arg("init_to_edge") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1
 
 Parameters
@@ -923,6 +945,7 @@ err_flag : bool, optional
       py::arg("ele"),
       py::arg("centroid") = py::none(),
       py::arg("direction") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_beam (beam, ele, err, centroid, direction)
 
 Subroutine to track a beam of particles through an element.
@@ -975,6 +998,7 @@ err : bool
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_bmad
 
 Parameters
@@ -1013,6 +1037,7 @@ track : TrackStruct, optional
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_bmad_photon
 
 Parameters
@@ -1041,6 +1066,7 @@ err_flag : bool, optional
       py::arg("centroid") = py::none(),
       py::arg("direction") = py::none(),
       py::arg("bunch_track") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_bunch (bunch, ele, err, centroid, direction, bunch_track)
 
 Subroutine to track a bunch of particles through an element.
@@ -1082,6 +1108,7 @@ err : bool
       py::arg("s_start") = py::none(),
       py::arg("s_end") = py::none(),
       py::arg("bunch_track") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
 
 Routine to track a bunch of particles through an element with csr radiation effects.
@@ -1126,6 +1153,7 @@ err : bool
       py::arg("s_start") = py::none(),
       py::arg("s_end") = py::none(),
       py::arg("bunch_track") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_bunch_csr3d (bunch, ele, centroid, err, bunch_track)
 
 EXPERIMENTAL. NOT CURRENTLY OPERATIONAL!
@@ -1176,6 +1204,7 @@ https://github.com/ChristopherMayes/OpenCSR
       py::arg("ele"),
       py::arg("direction") = py::none(),
       py::arg("bunch_track") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_bunch_hom (bunch, ele, direction, bunch_track)
 
 Subroutine to track a bunch of particles through an element including wakefields.
@@ -1206,6 +1235,7 @@ bunch_track : BunchTrackStruct, optional
       py::arg("ele"),
       py::arg("track_to_same_s") = py::none(),
       py::arg("bunch_track") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_bunch_space_charge
 
 Parameters
@@ -1238,6 +1268,7 @@ err : bool
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_crystal (ele, param, orbit)
 
 Routine to track diffraction from a crystal.
@@ -1262,6 +1293,7 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_diffraction_plate_or_mask (ele, param, orbit)
 
 Routine to track through diffraction plate and mask elements.
@@ -1286,6 +1318,7 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_high_energy_space_charge (ele, param, orbit)
 
 Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
@@ -1312,6 +1345,7 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_lens (ele, param, orbit)
 
 Routine to track through a lens.
@@ -1336,6 +1370,7 @@ orbit : CoordStruct
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_linear
 
 Parameters
@@ -1356,6 +1391,7 @@ param : LatParamStruct
       &Bmad::track1_lr_wake,
       py::arg("bunch"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_lr_wake (bunch, ele)
 
 Subroutine to put in the long-range wakes for particle tracking.
@@ -1379,6 +1415,7 @@ ele : EleStruct
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_mad (orbit, ele, param)
 
 Subroutine to track through an element using a 2nd order transfer map.
@@ -1404,6 +1441,7 @@ param : LatParamStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_mirror (ele, param, orbit)
 
 Routine to track reflection from a mirror.
@@ -1428,6 +1466,7 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_mosaic_crystal (ele, param, orbit)
 
 Routine to track diffraction from a crystal.
@@ -1452,6 +1491,7 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_multilayer_mirror (ele, param, orbit)
 
 Routine to track reflection from a multilayer_mirror.
@@ -1477,6 +1517,7 @@ orbit : CoordStruct
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("edge"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_radiation (orbit, ele, edge)
 
 Subroutine to apply a kick to a particle to account for radiation dampling and/or fluctuations.
@@ -1510,6 +1551,7 @@ edge : int
       py::arg("ele2"),
       py::arg("rad_damp") = py::none(),
       py::arg("rad_fluct") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_radiation_center (orbit, ele1, ele2, rad_damp, rad_fluct)
 
 Used for elements that have been split in half: This routine applies a kick to a particle
@@ -1562,6 +1604,7 @@ rad_fluct : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_runge_kutta
 
 Parameters
@@ -1600,6 +1643,7 @@ track : TrackStruct, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_sample (ele, param, orbit)
 
 Routine to track reflection from a sample element.
@@ -1626,6 +1670,7 @@ orbit : CoordStruct
       py::arg("param"),
       py::arg("end_orb"),
       py::arg("make_quaternion") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_spin
 
 Parameters
@@ -1653,6 +1698,7 @@ make_quaternion : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("end_orb"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_spin_integration
 
 Parameters
@@ -1676,6 +1722,7 @@ end_orb : CoordStruct
       py::arg("start_orb"),
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_spin_taylor
 
 Parameters
@@ -1699,6 +1746,7 @@ end_orb : CoordStruct
       &Bmad::track1_sr_wake,
       py::arg("bunch"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track1_sr_wake (bunch, ele)
 
 Subroutine to apply the short range wake fields to a bunch.
@@ -1720,6 +1768,7 @@ ele : EleStruct
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_symp_lie_ptc
 
 Parameters
@@ -1747,6 +1796,7 @@ track : TrackStruct, optional
       py::arg("ele"),
       py::arg("taylor") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_taylor
 
 Parameters
@@ -1799,6 +1849,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("param"),
       py::arg("t_end") = py::none(),
       py::arg("dt_step") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track1_time_runge_kutta
 
 Parameters
@@ -1866,6 +1917,7 @@ dt_step : float, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_beambeam
 
 Parameters
@@ -1902,6 +1954,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_bend
 
 Parameters
@@ -1932,6 +1985,7 @@ make_matrix : bool, optional
       py::arg("orb"),
       py::arg("ele"),
       py::arg("length"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track_a_bend_photon (orb, ele, length)
 
 Routine to track a photon through a dipole bend.
@@ -1957,6 +2011,7 @@ length : float
       &Bmad::track_a_capillary,
       py::arg("orb"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track_a_capillary (orb, ele)
 
 Routine to track through a capillary.
@@ -1979,6 +2034,7 @@ ele : EleStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_converter
 
 Parameters
@@ -2010,6 +2066,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_crab_cavity
 
 Parameters
@@ -2058,6 +2115,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("ele_orientation") = py::none(),
       py::arg("include_ref_motion") = py::none(),
       py::arg("time") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_drift
 
 Parameters
@@ -2105,6 +2163,7 @@ time : float, optional
       py::arg("orb"),
       py::arg("length"),
       py::arg("phase_relative_to_ref"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_drift_photon
 
 Parameters
@@ -2128,6 +2187,7 @@ phase_relative_to_ref : bool
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_foil
 
 Parameters
@@ -2160,6 +2220,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_gkicker
 
 Parameters
@@ -2192,6 +2253,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_lcavity
 
 Parameters
@@ -2224,6 +2286,7 @@ make_matrix : bool, optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_lcavity_old
 
 Parameters
@@ -2255,6 +2318,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_mask
 
 Parameters
@@ -2287,6 +2351,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("param"),
       py::arg("err_flag") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_match
 
 Parameters
@@ -2341,6 +2406,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("drift_to_exit") = py::none(),
       py::arg("track_spin") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_patch
 
 Parameters
@@ -2384,6 +2450,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("orbit"),
       py::arg("drift_to_exit") = py::none(),
       py::arg("use_z_pos") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track_a_patch_photon (ele, orbit, drift_to_exit, use_z_pos)
 
 Routine to track through a patch element with a photon.
@@ -2417,6 +2484,7 @@ use_z_pos : bool, optional
       py::arg("param"),
       py::arg("err_flag") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_pickup
 
 Parameters
@@ -2450,6 +2518,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_quadrupole
 
 Parameters
@@ -2481,6 +2550,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_rfcavity
 
 Parameters
@@ -2513,6 +2583,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_sad_mult
 
 Parameters
@@ -2544,6 +2615,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_sol_quad
 
 Parameters
@@ -2576,6 +2648,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("param"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_thick_multipole
 
 Parameters
@@ -2607,6 +2680,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_wiggler
 
 Parameters
@@ -2654,6 +2728,7 @@ mat6 : 2D array of float (shape: 6,6), optional
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_a_zero_length_element
 
 Parameters
@@ -2705,6 +2780,7 @@ track : TrackStruct, optional
       py::arg("orbit"),
       py::arg("ix_branch") = py::none(),
       py::arg("init_lost") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_all
 
 Parameters
@@ -2746,6 +2822,7 @@ orbit0 : 1D array of CoordStruct, optional
       py::arg("centroid") = py::none(),
       py::arg("direction") = py::none(),
       py::arg("bunch_tracks") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks)
 
 Subroutine to track a beam of particles from the end of
@@ -2797,6 +2874,7 @@ err : bool
       py::arg("centroid") = py::none(),
       py::arg("direction") = py::none(),
       py::arg("bunch_track") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track_bunch (lat, bunch, ele1, ele2, err, centroid, direction, bunch_track)
 
 Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
@@ -2849,6 +2927,7 @@ err : bool
       py::arg("s_end"),
       py::arg("dt_step") = py::none(),
       py::arg("extra_field") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_bunch_time
 
 Parameters
@@ -2882,6 +2961,7 @@ extra_field : 1D array of EmFieldStruct, optional
       py::arg("bunch"),
       py::arg("s"),
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track_bunch_to_s (bunch, s, branch)
 
 Drift a bunch of particles to the same s coordinate
@@ -2907,6 +2987,7 @@ branch : BranchStruct
       py::arg("bunch"),
       py::arg("t_target"),
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track_bunch_to_t (bunch, t_target, branch)
 
 Drift a bunch of particles to the same t coordinate
@@ -2932,6 +3013,7 @@ branch : BranchStruct
       py::arg("start_orb"),
       py::arg("complex_taylor"),
       py::arg("end_orb"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine track_complex_taylor (start_orb, complex_taylor, end_orb)
 
 Subroutine to track using a complex_taylor map.
@@ -2977,6 +3059,7 @@ end_orb : 1D array of complex
       py::arg("orbit_start"),
       py::arg("ix_branch") = py::none(),
       py::arg("ix_ele_end") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_from_s_to_s
 
 Parameters
@@ -3021,6 +3104,7 @@ track_state : int, optional
       py::arg("ix_end"),
       py::arg("direction"),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_many
 
 Parameters
@@ -3057,6 +3141,7 @@ track_state : int, optional
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine track_to_surface
 
 Parameters
@@ -3100,6 +3185,7 @@ w_surface : 2D array of float (shape: 3,3)
       &Bmad::track_until_dead,
       py::arg("start_orb"),
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine track_until_dead (start_orb, lat, end_orb, track)
 
 Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
@@ -3147,6 +3233,7 @@ track : TrackStruct, optional
       py::arg("ele"),
       py::arg("tollerance"),
       py::arg("ref_edge"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tracking_rad_map_setup
 
 Parameters
@@ -3173,6 +3260,7 @@ err_flag : bool
       "transfer_ac_kick",
       &Bmad::transfer_ac_kick,
       py::arg("ac_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_ac_kick
 
 Parameters
@@ -3190,6 +3278,7 @@ ac_out : AcKickerStruct, optional
       "transfer_branch",
       &Bmad::transfer_branch,
       py::arg("branch1"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_branch
 
 Parameters
@@ -3205,6 +3294,7 @@ branch2 : BranchStruct
       "transfer_branch_parameters",
       &Bmad::transfer_branch_parameters,
       py::arg("branch_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_branch_parameters
 
 Parameters
@@ -3223,6 +3313,7 @@ branch_out : BranchStruct
       &Bmad::transfer_branches,
       py::arg("branch1"),
       py::arg("branch2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_branches
 
 Parameters
@@ -3237,6 +3328,7 @@ branch2 : 1D array of BranchStruct
       &Bmad::transfer_ele,
       py::arg("ele1"),
       py::arg("nullify_pointers") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_ele
 
 Parameters
@@ -3258,6 +3350,7 @@ ele2 : EleStruct
       &Bmad::transfer_ele_taylor,
       py::arg("ele_in"),
       py::arg("taylor_order") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_ele_taylor
 
 Parameters
@@ -3279,6 +3372,7 @@ ele_out : EleStruct
       &Bmad::transfer_eles,
       py::arg("ele1"),
       py::arg("ele2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_eles
 
 Parameters
@@ -3293,6 +3387,7 @@ ele2 : 1D array of EleStruct
       &Bmad::transfer_fieldmap,
       py::arg("ele_in"),
       py::arg("who"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_fieldmap
 
 Parameters
@@ -3316,6 +3411,7 @@ ele_out : EleStruct
       py::arg("to_stored"),
       py::arg("orbit") = py::none(),
       py::arg("who") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function transfer_fixer_params(fixer, to_stored, orbit, who) result (is_ok)
 
 Set parameters of fixer.
@@ -3349,6 +3445,7 @@ is_ok : bool
       "transfer_lat",
       &Bmad::transfer_lat,
       py::arg("lat1"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_lat
 
 Parameters
@@ -3364,6 +3461,7 @@ lat2 : LatStruct
       "transfer_lat_parameters",
       &Bmad::transfer_lat_parameters,
       py::arg("lat_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_lat_parameters
 
 Parameters
@@ -3390,6 +3488,7 @@ lat_out : LatStruct
       py::arg("unit_start") = py::none(),
       py::arg("concat_if_possible") = py::none(),
       py::arg("spin_map") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_map_calc
 
 Parameters
@@ -3467,6 +3566,7 @@ err_flag : bool
       py::arg("unit_start") = py::none(),
       py::arg("concat_if_possible") = py::none(),
       py::arg("spin_map") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref_orb_out, ix_branch,
                                          one_turn, unit_start, err_flag, concat_if_possible, spin_map)
 
@@ -3534,6 +3634,7 @@ err_flag : bool, optional
       &Bmad::transfer_mat2_from_twiss,
       py::arg("twiss1"),
       py::arg("twiss2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_mat2_from_twiss
 
 Parameters
@@ -3557,6 +3658,7 @@ mat : 2D array of float (shape: 2,2)
       py::arg("ele2"),
       py::arg("orb1"),
       py::arg("orb2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_mat_from_twiss
 
 Parameters
@@ -3589,6 +3691,7 @@ m : 2D array of float (shape: 6,6)
       py::arg("ix2") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("one_turn") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_matrix_calc
 
 Parameters
@@ -3620,6 +3723,7 @@ one_turn : bool, optional
       &Bmad::transfer_twiss,
       py::arg("ele_in"),
       py::arg("reverse") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_twiss
 
 Parameters
@@ -3640,6 +3744,7 @@ ele_out : EleStruct
       "transfer_wake",
       &Bmad::transfer_wake,
       py::arg("wake_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine transfer_wake
 
 Parameters
@@ -3659,6 +3764,7 @@ wake_out : WakeStruct, optional
       py::arg("complex_taylor_in"),
       py::arg("order"),
       py::arg("complex_taylor_out"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine truncate_complex_taylor_to_order (complex_taylor_in, order, complex_taylor_out)
 
 Subroutine to throw out all terms in a complex_taylor map that are above a certain order.
@@ -3699,6 +3805,7 @@ complex_taylor_out : 1D array of ComplexTaylorStruct
       py::arg("mat2"),
       py::arg("ele_key"),
       py::arg("length"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss1_propagate
 
 Parameters
@@ -3730,6 +3837,7 @@ err : bool
       py::arg("lat"),
       py::arg("err_flag"),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss3_at_start (lat, error, ix_branch, tune3)
 
 Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
@@ -3755,6 +3863,7 @@ tune3 : 1D array of float (shape: 3), optional
       "twiss3_from_twiss2",
       &Bmad::twiss3_from_twiss2,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss3_from_twiss2 (ele)
 
 Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
@@ -3775,6 +3884,7 @@ ele : EleStruct
       py::arg("ele1"),
       py::arg("ele2"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss3_propagate1 (ele1, ele2, err_flag)
 
 Subroutine to propagate the twiss parameters using all three normal modes.
@@ -3786,6 +3896,7 @@ Subroutine from original mode3_mod.
       &Bmad::twiss3_propagate_all,
       py::arg("lat"),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss3_propagate_all (lat, ix_branch)
 
 Subroutine to propagate the twiss parameters using all three normal modes.
@@ -3811,6 +3922,7 @@ ix_branch : int, optional
       py::arg("orb_array"),
       py::arg("print_err") = py::none(),
       py::arg("calc_chrom") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss_and_track
 
 This routine is an overloaded name for:
@@ -3878,6 +3990,7 @@ status : int, optional
       py::arg("ix_branch") = py::none(),
       py::arg("use_last") = py::none(),
       py::arg("compute_floor_coords") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, use_last, compute_floor_coords)
 
 Subroutine to return the twiss parameters and particle orbit at a
@@ -3952,6 +4065,7 @@ err : bool, optional
       py::arg("print_err") = py::none(),
       py::arg("calc_chrom") = py::none(),
       py::arg("orb_start") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss_and_track
 
 This routine is an overloaded name for:
@@ -4046,6 +4160,7 @@ status : int, optional
       py::arg("ele_start") = py::none(),
       py::arg("compute_floor_coords") = py::none(),
       py::arg("compute_twiss") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss_and_track_from_s_to_s
 
 Parameters
@@ -4113,6 +4228,7 @@ err : bool, optional
       py::arg("compute_floor_coords") = py::none(),
       py::arg("compute_twiss") = py::none(),
       py::arg("reuse_ele_end") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss_and_track_intra_ele
 
 Parameters
@@ -4193,6 +4309,7 @@ err : bool, optional
       "twiss_at_element",
       &Bmad::twiss_at_element,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss_at_element
 
 Parameters
@@ -4218,6 +4335,7 @@ average : EleStruct, optional
       py::arg("lat"),
       py::arg("ix_branch") = py::none(),
       py::arg("type_out") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss_at_start
 
 Parameters
@@ -4262,6 +4380,7 @@ status : int, optional
       py::arg("lat"),
       py::arg("ref_orb0"),
       py::arg("d_orb") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss_from_tracking
 
 Parameters
@@ -4293,6 +4412,7 @@ err_flag : bool
       py::arg("ele1"),
       py::arg("ele2"),
       py::arg("forward") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss_propagate1
 
 Parameters
@@ -4323,6 +4443,7 @@ err_flag : bool, optional
       py::arg("ix_branch") = py::none(),
       py::arg("ie_start") = py::none(),
       py::arg("ie_end") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss_propagate_all
 
 Parameters
@@ -4353,6 +4474,7 @@ err_flag : bool, optional
       &Bmad::twiss_to_1_turn_mat,
       py::arg("twiss"),
       py::arg("phi"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine twiss_to_1_turn_mat
 
 Parameters
@@ -4373,6 +4495,7 @@ mat2 : 2D array of float (shape: 2,2)
       "type_coord",
       &Bmad::type_coord,
       py::arg("coord"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine type_coord
 
 Parameters
@@ -4386,6 +4509,7 @@ coord : CoordStruct
       &Bmad::type_expression_tree,
       py::arg("tree"),
       py::arg("indent") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine type_expression_tree (tree, indent)
 
 Routine to print an expression tree in tree form.
@@ -4404,6 +4528,7 @@ indent : int, optional
       "type_ptc_layout",
       &Bmad::type_ptc_layout,
       py::arg("lay"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine type_ptc_layout (lay)
 
 Subroutine to print the global information in a layout

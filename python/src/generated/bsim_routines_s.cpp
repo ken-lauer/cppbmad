@@ -15,6 +15,7 @@ void init_bsim_routines_s(py::module &m) {
       py::arg("z_tune_set") = py::none(),
       py::arg("group_knobs") = py::none(),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_tune_3d
 
 Parameters

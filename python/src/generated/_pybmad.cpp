@@ -21,7 +21,7 @@ using namespace pybind11::literals;
 #include "pybmad/generated/routines.hpp"
 #include "pybmad/generated/structs.hpp"
 
-PYBIND11_MODULE(_pybmad, m) {
+PYBIND11_MODULE(_pybmad, m, py::mod_gil_not_used()) {
   // Generated definitions:
   m.doc() = "pybmad";
 

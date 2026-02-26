@@ -36,6 +36,7 @@ void init_Bmad_routines_l(py::module &m) {
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lafun
 
 Parameters
@@ -53,6 +54,7 @@ res : float
       "lat_compute_ref_energy_and_time",
       &Bmad::lat_compute_ref_energy_and_time,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lat_compute_ref_energy_and_time
 
 Parameters
@@ -94,6 +96,7 @@ err_flag : bool
       py::arg("ix_dflt_branch") = py::none(),
       py::arg("order_by_index") = py::none(),
       py::arg("append_eles") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lat_ele_locator
 
 Parameters
@@ -147,6 +150,7 @@ err : bool, optional
       &Bmad::lat_equal_lat,
       py::arg("lat_out"),
       py::arg("lat_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lat_equal_lat
 
 Parameters
@@ -160,6 +164,7 @@ lat_in : LatStruct
       "lat_geometry",
       &Bmad::lat_geometry,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lat_geometry
 
 Parameters
@@ -175,6 +180,7 @@ lat : LatStruct
       py::arg("ix_ele") = py::none(),
       py::arg("ref_orb") = py::none(),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lat_make_mat6
 
 Parameters
@@ -203,6 +209,7 @@ err_flag : bool, optional
       "lat_sanity_check",
       &Bmad::lat_sanity_check,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lat_sanity_check
 
 Parameters
@@ -220,6 +227,7 @@ err_flag : bool
       "lat_to_ptc_layout",
       &Bmad::lat_to_ptc_layout,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lat_to_ptc_layout
 
 Parameters
@@ -233,6 +241,7 @@ lat : LatStruct
       &Bmad::lat_vec_equal_lat_vec,
       py::arg("lat1"),
       py::arg("lat2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lat_vec_equal_lat_vec
 
 Parameters
@@ -246,6 +255,7 @@ lat2 : 1D array of LatStruct
       "lattice_bookkeeper",
       &Bmad::lattice_bookkeeper,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lattice_bookkeeper
 
 Parameters
@@ -265,6 +275,7 @@ err_flag : bool, optional
       "lcavity_rf_step_setup",
       &Bmad::lcavity_rf_step_setup,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lcavity_rf_step_setup
 
 Parameters
@@ -284,6 +295,7 @@ ele : EleStruct
       py::arg("orb"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine linear_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
 
 Subroutine to track through the edge field of an sbend.
@@ -335,6 +347,7 @@ make_matrix : bool, optional
       "linear_coef",
       &Bmad::linear_coef,
       py::arg("stack"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function linear_coef (stack, err_flag) result (coef)
 
 Routine to return the linear coefficient of a linear expression.
@@ -357,6 +370,7 @@ coef : float
       "linear_to_spin_taylor",
       &Bmad::linear_to_spin_taylor,
       py::arg("q_map"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine linear_to_spin_taylor
 
 Parameters
@@ -392,6 +406,7 @@ spin_taylor : 1D array of TaylorStruct (shape: 0:3)
       &Bmad::load_parse_line,
       py::arg("action"),
       py::arg("ix_start"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine load_parse_line (action, ix_start, end_of_file, err_flag)
 
 Subroutine to load characters from the input file.
@@ -421,6 +436,7 @@ err_flag : bool, optional
       py::arg("slave"),
       py::arg("slave_edge"),
       py::arg("lord"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lord_edge_aligned
 
 Parameters
@@ -449,6 +465,7 @@ is_aligned : bool
       py::arg("ds"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine low_energy_z_correction
 
 Parameters

@@ -8,6 +8,7 @@ void init_SimUtils_routines_a(py::module &m) {
   m.def(
       "allocate_thread_states",
       &SimUtils::allocate_thread_states,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine allocate_thread_states()
 
 Routine to allocate random number state structures when openMP is used.
@@ -17,6 +18,7 @@ Routine to allocate random number state structures when openMP is used.
       "anomalous_moment_of",
       &SimUtils::anomalous_moment_of,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function anomalous_moment_of (species) result (moment)
 
 Routine to return the anomolous moment for subatomic species type. Otherwise returns 0.
@@ -36,6 +38,7 @@ moment : float
       "antiparticle",
       &SimUtils::antiparticle,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function antiparticle (species) result (anti_species)
 
 Routine to return the antiparticle ID given the particle ID.
@@ -60,6 +63,7 @@ anti_species : int
       py::arg("window"),
       py::arg("phase"),
       py::arg("diag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine apfft(rdata_in, bounds, window, phase, diag)
 
 Implements the All Phase FFT method for obtaining accurate phase from signal data.
@@ -94,6 +98,7 @@ The signal data is truncated to an odd length, and the phase is relative to the 
       py::arg("window"),
       py::arg("bounds") = py::none(),
       py::arg("diag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine apfft_corr(rdata_in, bounds, window, phase, amp, freq, diag)
 
 For real signal rdata_in, computes phase, frequency, and amplitude
@@ -138,6 +143,7 @@ freq : float
       py::arg("amp"),
       py::arg("freq"),
       py::arg("diag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine apfft_ext(rdata,bounds, window, phase, amp, freq, diag)
 
 Implements the All Phase FFT method for obtaining accurate phase from signal data.
@@ -151,6 +157,7 @@ by the corrected apfft subroutine in this module.
       &SimUtils::asinc,
       py::arg("x"),
       py::arg("nd") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine asinc
 
 Parameters
@@ -173,6 +180,7 @@ y : float
       py::arg("int_arr"),
       py::arg("err_str"),
       py::arg("ival"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine assert_equal
 
 Parameters
@@ -188,6 +196,7 @@ ival : int
       "atomic_number",
       &SimUtils::atomic_number,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function atomic_number(species) result (atomic_num)
 
 Routine to return the atomic number Z if species argument corresponds to an atomic particle  or is a proton.
@@ -212,6 +221,7 @@ atomic_num : int
       py::arg("is_anti"),
       py::arg("atomic_num"),
       py::arg("n_nuc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function atomic_species_id(charge, is_anti, atomic_num, n_nuc) result (species_id)
 
 Routine to return the species ID for an atom
@@ -241,6 +251,7 @@ species_id : int
       &SimUtils::axis_angle_to_quat,
       py::arg("axis"),
       py::arg("angle"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function axis_angle_to_quat (axis, angle) result (quat)
 
 Routine to convert from axis + angle representation to a quaternion.
@@ -264,6 +275,7 @@ quat : 1D array of float (shape: 0:3)
       &SimUtils::axis_angle_to_w_mat,
       py::arg("axis"),
       py::arg("angle"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine axis_angle_to_w_mat (axis, angle, w_mat)
 
 Routine to construct the 3D rotation matrix w_mat given an axis of rotation

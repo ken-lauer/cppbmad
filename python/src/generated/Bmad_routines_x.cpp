@@ -12,6 +12,7 @@ void init_Bmad_routines_x(py::module &m) {
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine xlafun
 
 Parameters
@@ -29,6 +30,7 @@ res : float
       "xraylib_nist_compound",
       &Bmad::xraylib_nist_compound,
       py::arg("name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function xraylib_nist_compound (name) result (indx)
 
 Routine to return the xraylib index for a given NIST compound.

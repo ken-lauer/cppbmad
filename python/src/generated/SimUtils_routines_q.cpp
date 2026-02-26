@@ -9,6 +9,7 @@ void init_SimUtils_routines_q(py::module &m) {
       "quadratic_roots",
       &SimUtils::quadratic_roots,
       py::arg("coefs"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine quadratic_roots
 
 Parameters
@@ -26,6 +27,7 @@ root : 1D array of complex (shape: 2)
       "quat_conj",
       py::overload_cast<FixedArray1D<Complex, 4>>(&SimUtils::quat_conj),
       py::arg("q_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_conj (q_in) result (q_out)
 
 Overloaded name to create the conjugate of a quaternian.
@@ -48,6 +50,7 @@ q_out : 1D array of complex (shape: 0:3)
       "quat_conj",
       py::overload_cast<FixedArray1D<Real, 4>>(&SimUtils::quat_conj),
       py::arg("q_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_conj (q_in) result (q_out)
 
 Overloaded name to create the conjugate of a quaternian.
@@ -70,6 +73,7 @@ q_out : 1D array of float (shape: 0:3)
       "quat_inverse",
       &SimUtils::quat_inverse,
       py::arg("q_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_inverse (q_in) result (q_out)
 
 Routine to create the inverse of a quaternian.
@@ -106,6 +110,7 @@ q_out : 1D array of float (shape: 0:3)
       py::arg("q7") = py::none(),
       py::arg("q8") = py::none(),
       py::arg("q9") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
 
 Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
@@ -155,6 +160,7 @@ q_out : 1D array of complex (shape: 0:3)
       py::arg("q7") = py::none(),
       py::arg("q8") = py::none(),
       py::arg("q9") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
 
 Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
@@ -188,6 +194,7 @@ q_out : 1D array of float (shape: 0:3)
       py::overload_cast<FixedArray1D<Complex, 4>, FixedArray1D<Complex, 3>>(&SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_rotate (quat, vec_in) result (vec_out)
 
 Overloaded name to rotate a vector using a quaternion..
@@ -214,6 +221,7 @@ vec_out : 1D array of complex (shape: 3)
       py::overload_cast<FixedArray1D<Real, 4>, FixedArray1D<Real, 3>>(&SimUtils::quat_rotate),
       py::arg("quat"),
       py::arg("vec_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_rotate (quat, vec_in) result (vec_out)
 
 Overloaded name to rotate a vector using a quaternion..
@@ -256,6 +264,7 @@ vec_out : 1D array of float (shape: 3)
       "quat_to_axis_angle",
       &SimUtils::quat_to_axis_angle,
       py::arg("quat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine quat_to_axis_angle (quat, axis, angle)
 
 Routine to convert from quaternion to axis + angle representation.
@@ -279,6 +288,7 @@ angle : float
       "quat_to_omega",
       &SimUtils::quat_to_omega,
       py::arg("quat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_to_omega (quat) result (omega)
 
 Routine to convert rotation from quaternion representation to omega (axis + angle).
@@ -298,6 +308,7 @@ omega : 1D array of float (shape: 3)
       "quat_to_w_mat",
       &SimUtils::quat_to_w_mat,
       py::arg("quat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function quat_to_w_mat (quat) result (w_mat)
 
 Routine to construct the 3D rotation matrix w_mat given a rotation quaternion
@@ -321,6 +332,7 @@ w_mat : 2D array of float (shape: 3,3)
       py::arg("return_str"),
       py::arg("ix"),
       py::arg("ios"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine query_string
 
 Parameters
@@ -341,6 +353,7 @@ ios : int
       &SimUtils::quote,
       py::arg("str"),
       py::arg("q_str"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine quote
 
 Parameters

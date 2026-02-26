@@ -36,6 +36,7 @@ void init_Bmad_routines_a(py::module &m) {
       py::arg("coord"),
       py::arg("pole_type") = py::none(),
       py::arg("scale") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ab_multipole_kick (a, b, n, ref_species, ele_orientation, coord, kx, ky, dk, pole_type, scale)
 
 Subroutine to put in the kick due to an ab_multipole.
@@ -92,6 +93,7 @@ dk : 2D array of float (shape: 2,2), optional
       py::arg("scale") = py::none(),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_type, scale, mat6, make_matrix)
 
 Routine to put in the kick due to ab_multipole components in an element.
@@ -140,6 +142,7 @@ make_matrix : bool, optional
       &Bmad::absolute_photon_position,
       py::arg("e_orb"),
       py::arg("photon_orb"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine absolute_photon_position (e_orb, photon_orb)
 
 Routine to calculate the photon phase space coordinates given:
@@ -163,6 +166,7 @@ photon_orb : CoordStruct
       "absolute_time_tracking",
       &Bmad::absolute_time_tracking,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine absolute_time_tracking
 
 Parameters
@@ -182,6 +186,7 @@ is_abs_time : bool
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("true_time") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ac_kicker_amp
 
 Parameters
@@ -225,6 +230,7 @@ ac_amp : float
       py::arg("ring"),
       py::arg("ix"),
       py::arg("J"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine action_to_xyz(ring, ix, J, X, err_flag)
 
 Given the normal mode invariants and phases J of a particle, returns the canonical coordinates.
@@ -265,6 +271,7 @@ err_flag : bool
       py::arg("n_add_slave_field") = py::none(),
       py::arg("n_add_lord_field") = py::none(),
       py::arg("add_at_end") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine add_lattice_control_structs
 
 Parameters
@@ -317,6 +324,7 @@ add_at_end : bool, optional
       py::arg("ix_insert") = py::none(),
       py::arg("mangle_slave_names") = py::none(),
       py::arg("wrap") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine add_superimpose (lat, super_ele_in, ix_branch, err_flag, super_ele_out,
                save_null_drift, create_jumbo_slave, ix_insert, mangle_slave_names, wrap)
 
@@ -385,6 +393,7 @@ super_ele_out : EleStruct, optional
       py::arg("lat"),
       py::arg("m_slaves"),
       py::arg("lord_in") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine add_this_multipass
 
 Parameters
@@ -403,6 +412,7 @@ lord_in : EleStruct, optional
       py::arg("i_out"),
       py::arg("coef"),
       py::arg("expn"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine add_this_taylor_term (ele, i_out, coef, expn)
 
 Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
@@ -416,6 +426,7 @@ This subroutine is not intended for general use.
       py::arg("ix1_lord"),
       py::arg("ix2_lord"),
       py::arg("first_time") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine adjust_super_slave_names (lat, ix1_lord, ix2_lord, first_time)
 
 Routine to adjust the names of the slaves.
@@ -427,6 +438,7 @@ This routine is used by add_superimpose and is not meant for general use.
       &Bmad::allocate_branch_array,
       py::arg("lat"),
       py::arg("upper_bound"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine allocate_branch_array
 
 Parameters
@@ -444,6 +456,7 @@ upper_bound : int
       py::arg("upper_bound") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("do_ramper_slave_setup") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine allocate_lat_ele_array
 
 Parameters
@@ -467,6 +480,7 @@ do_ramper_slave_setup : bool, optional
       &Bmad::angle_between_polars,
       py::arg("polar1"),
       py::arg("polar2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine angle_between_polars
 
 Parameters
@@ -488,6 +502,7 @@ angle : float
       &Bmad::angle_to_canonical_coords,
       py::arg("orbit"),
       py::arg("coord_type") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine angle_to_canonical_coords
 
 Parameters
@@ -506,6 +521,7 @@ coord_type : str, optional
       "aperture_bookkeeper",
       &Bmad::aperture_bookkeeper,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine aperture_bookkeeper (ele)
 
 Routine to calculate aperture limits when ele%attribute_type is set to auto_aperture$
@@ -522,6 +538,7 @@ ele : EleStruct
       "apply_all_rampers",
       &Bmad::apply_all_rampers,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine apply_all_rampers
 
 Parameters
@@ -545,6 +562,7 @@ err_flag : bool
       py::arg("ddE_dr"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine apply_energy_kick
 
 Parameters
@@ -573,6 +591,7 @@ make_matrix : bool, optional
       "apply_patch_to_ptc_fibre",
       &Bmad::apply_patch_to_ptc_fibre,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine apply_patch_to_ptc_fibre (ele)
 
 Routine to take the patch parameters from a Bmad patch element and
@@ -588,6 +607,7 @@ ele : EleStruct
       "apply_rampers_to_slave",
       &Bmad::apply_rampers_to_slave,
       py::arg("slave"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine apply_rampers_to_slave
 
 Parameters
@@ -607,6 +627,7 @@ err_flag : bool
       py::arg("arr"),
       py::arg("str_out"),
       py::arg("parens_in") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine array_re_str
 
 Parameters
@@ -624,6 +645,7 @@ parens_in : str, optional
       py::arg("pt0"),
       py::arg("ele"),
       py::arg("field_value"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine astra_max_field_reference
 
 Parameters
@@ -640,6 +662,7 @@ field_value : float
       &Bmad::at_this_ele_end,
       py::arg("now_at"),
       py::arg("where_at"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine at_this_ele_end
 
 Parameters
@@ -662,6 +685,7 @@ is_at_this_end : bool
       &Bmad::attribute_bookkeeper,
       py::arg("ele"),
       py::arg("force_bookkeeping") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine attribute_bookkeeper
 
 Parameters
@@ -709,6 +733,7 @@ force_bookkeeping : bool, optional
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_free
 
 Overloaded function for:
@@ -793,6 +818,7 @@ why_not_free : int, optional
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_free
 
 Overloaded function for:
@@ -878,6 +904,7 @@ why_not_free : int, optional
       py::arg("err_print_flag") = py::none(),
       py::arg("except_overlay") = py::none(),
       py::arg("dependent_attribs_free") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_free
 
 Overloaded function for:
@@ -961,6 +988,7 @@ why_not_free : int, optional
       py::arg("name"),
       py::arg("can_abbreviate") = py::none(),
       py::arg("print_error") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_index (...) result (attrib_index)
 
 Function to return the index of a attribute for a given BMAD element type
@@ -1029,6 +1057,7 @@ attribute_name
       py::arg("name"),
       py::arg("can_abbreviate") = py::none(),
       py::arg("print_error") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_index (...) result (attrib_index)
 
 Function to return the index of a attribute for a given BMAD element type
@@ -1077,6 +1106,7 @@ attribute_name
       py::arg("key"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_name (...) result (attrib_name)
 
 Function to return the name of an attribute for a particular type of
@@ -1115,6 +1145,7 @@ attrib_name : str
       py::arg("ele"),
       py::arg("ix_att"),
       py::arg("show_private") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_name (...) result (attrib_name)
 
 Function to return the name of an attribute for a particular type of
@@ -1151,6 +1182,7 @@ attrib_name : str
       &Bmad::attribute_type,
       py::arg("attrib_name"),
       py::arg("ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_type (attrib_name, ele) result (attrib_type)
 
 Routine to return the logical type of an attribute.
@@ -1189,6 +1221,7 @@ attrib_type : int
       &Bmad::attribute_units,
       py::arg("attrib_name"),
       py::arg("unrecognized_units") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function attribute_units (attrib_name, unrecognized_units) result (attrib_units)
 
 Routine to return the units associated with an attribute.
@@ -1217,6 +1250,7 @@ attrib_units : str
       py::arg("scale_phase") = py::none(),
       py::arg("scale_amp") = py::none(),
       py::arg("call_bookkeeper") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine autoscale_phase_and_amp
 
 Parameters
@@ -1250,6 +1284,7 @@ err_flag : bool
       py::arg("frac1"),
       py::arg("twiss1"),
       py::arg("twiss2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine average_twiss
 
 Parameters

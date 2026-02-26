@@ -10,6 +10,7 @@ void init_Bmad_routines_v(py::module &m) {
       &Bmad::valid_field_calc,
       py::arg("ele"),
       py::arg("field_calc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine valid_field_calc
 
 Parameters
@@ -31,6 +32,7 @@ is_valid : bool
       &Bmad::valid_fringe_type,
       py::arg("ele"),
       py::arg("fringe_type"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine valid_fringe_type
 
 Parameters
@@ -53,6 +55,7 @@ is_valid : bool
       py::arg("ele"),
       py::arg("species"),
       py::arg("mat6_calc_method"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine valid_mat6_calc_method
 
 Parameters
@@ -77,6 +80,7 @@ is_valid : bool
       &Bmad::valid_spin_tracking_method,
       py::arg("ele"),
       py::arg("spin_tracking_method"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine valid_spin_tracking_method
 
 Parameters
@@ -99,6 +103,7 @@ is_valid : bool
       py::arg("ele"),
       py::arg("species"),
       py::arg("tracking_method"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine valid_tracking_method
 
 Parameters
@@ -142,6 +147,7 @@ is_valid : bool
       py::arg("attrib_name"),
       py::arg("err_print_flag") = py::none(),
       py::arg("err_value") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine value_of_attribute
 
 Parameters
@@ -176,6 +182,7 @@ err_flag : bool, optional
       py::arg("typ"),
       py::arg("ignore_if_zero") = py::none(),
       py::arg("use_comma") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine value_to_line
 
 Parameters
@@ -198,6 +205,7 @@ use_comma : bool, optional
       &Bmad::vec_to_polar,
       py::arg("vec"),
       py::arg("phase") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine vec_to_polar
 
 Parameters
@@ -218,6 +226,7 @@ polar : SpinPolarStruct
       &Bmad::vec_to_spinor,
       py::arg("vec"),
       py::arg("phase") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine vec_to_spinor
 
 Parameters
@@ -241,6 +250,7 @@ spinor : 1D array of complex (shape: 2)
       py::arg("ix_name"),
       py::arg("pure_name") = py::none(),
       py::arg("include_wild") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function verify_valid_name (name, ix_name, pure_name, include_wild) result (is_valid)
 
 Routine to check if a name is well formed. Examples:

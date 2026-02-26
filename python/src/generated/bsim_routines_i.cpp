@@ -9,6 +9,7 @@ void init_bsim_routines_i(py::module &m) {
       "insert_phase_trombone",
       &bsim::insert_phase_trombone,
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine insert_phase_trombone
 
 Parameters

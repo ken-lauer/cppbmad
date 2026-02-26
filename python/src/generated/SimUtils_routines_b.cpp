@@ -42,6 +42,7 @@ void init_SimUtils_routines_b(py::module &m) {
       py::arg("x_norm"),
       py::arg("y_norm"),
       py::arg("bi_coef"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy) result (f_val)
 
 Routine to evaluate a bicubic interpolating complex function.
@@ -80,6 +81,7 @@ df_dy : complex, optional
       py::arg("x"),
       py::arg("bin1_x_min"),
       py::arg("bin_delta"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bin_index(x, bin1_x_min, bin_delta) result (ix_bin)
 
 Helper function to locate the appropriate histogram bin index.
@@ -122,6 +124,7 @@ ix_bin : int
       py::arg("bin1_x_min"),
       py::arg("bin_delta"),
       py::arg("x_center"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bin_x_center (ix_bin, bin1_x_min, bin_delta) result(x_center)
 
 Helper function to locate the center of a histogram bin.
@@ -159,6 +162,7 @@ ix_bin : int
       py::arg("word"),
       py::arg("pos"),
       py::arg("set_to_1"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine bit_set (word, pos, set_to_1)
 
 Routine to set a bit in a word.
@@ -208,6 +212,7 @@ word : int
       py::arg("x"),
       py::arg("strict") = py::none(),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bracket_index_for_spline (x_knot, x, ix0, strict, print_err) result (ok)
 
 Routine to find which interval to use for evaluating a spline.

@@ -9,6 +9,7 @@ void init_SimUtils_routines_r(py::module &m) {
       "ran_default_state",
       &SimUtils::ran_default_state,
       py::arg("set_state") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_default_state (set_state, get_state)
 
 Routine to set or get the state of the default random number generator.
@@ -31,6 +32,7 @@ get_state : RandomStateStruct, optional
       py::arg("set") = py::none(),
       py::arg("get") = py::none(),
       py::arg("ran_state") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_engine (set, get, ran_state)
 
 Routine to set what random number generator algorithm is used.
@@ -73,6 +75,7 @@ ran_state : RandomStateStruct, optional
       py::arg("set") = py::none(),
       py::arg("set_sigma_cut") = py::none(),
       py::arg("ran_state") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, ran_state)
 
 Routine to set what conversion routine is used for converting
@@ -119,6 +122,7 @@ get_sigma_cut : float, optional
       py::arg("ran_state") = py::none(),
       py::arg("sigma_cut") = py::none(),
       py::arg("index_quasi") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_gauss (harvest, ran_state, sigma_cut)
 
 Routine to return a gaussian distributed random number with unit sigma.
@@ -153,6 +157,7 @@ harvest : float
       py::arg("harvest"),
       py::arg("ran_state") = py::none(),
       py::arg("sigma_cut") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_gauss (harvest, ran_state, sigma_cut)
 
 Routine to return a gaussian distributed random number with unit sigma.
@@ -182,6 +187,7 @@ sigma_cut : float, optional
   m.def(
       "ran_seed_get",
       &SimUtils::ran_seed_get,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_seed_get (seed)
 
 Routine to return the seed used for the random number generator.
@@ -200,6 +206,7 @@ seed : int
       &SimUtils::ran_seed_put,
       py::arg("seed"),
       py::arg("mpi_offset") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_seed_put (seed, mpi_offset)
 
 Routine to seed a random number generator.
@@ -227,6 +234,7 @@ mpi_offset : int, optional
       ),
       py::arg("ran_state") = py::none(),
       py::arg("index_quasi") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_uniform (harvest, ran_state)
 
 Routine to return a random number uniformly distributed in the
@@ -258,6 +266,7 @@ harvest : float
       py::overload_cast<FArray1D<Real> &, optional_ref<RandomStateStruct>>(&SimUtils::ran_uniform),
       py::arg("harvest"),
       py::arg("ran_state") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ran_uniform (harvest, ran_state)
 
 Routine to return a random number uniformly distributed in the
@@ -288,6 +297,7 @@ ran_state : RandomStateStruct, optional
       py::arg("mc"),
       py::arg("elb"),
       py::arg("eld"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rcelbd
 
 Parameters
@@ -307,6 +317,7 @@ eld : float
       py::arg("prompt_color") = py::none(),
       py::arg("prompt_bold") = py::none(),
       py::arg("history_file") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine read_a_line (prompt, line_out, trim_prompt, prompt_color, prompt_bold, history_file)
 
 Subroutine to read a line of input from the terminal.
@@ -350,6 +361,7 @@ line_out : str
       "readline_read_history",
       &SimUtils::readline_read_history,
       py::arg("history_file"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine readline_read_history (history_file, status)
 
 Routine to add the contents of a file to the readline history list.
@@ -370,6 +382,7 @@ status : int
       "readline_write_history",
       &SimUtils::readline_write_history,
       py::arg("history_file"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine readline_write_history (history_file, status)
 
 Routine to write the contents of the readline history list to a file.
@@ -393,6 +406,7 @@ status : int
       py::arg("width"),
       py::arg("fmt_str"),
       py::arg("n_blanks") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine real_num_fortran_format
 
 Parameters
@@ -412,6 +426,7 @@ n_blanks : int, optional
       py::arg("path_in"),
       py::arg("path_out"),
       py::arg("is_ok"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine real_path
 
 Parameters
@@ -430,6 +445,7 @@ is_ok : bool
       py::arg("str"),
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine real_str
 
 Parameters
@@ -451,6 +467,7 @@ n_decimal : int, optional
       py::arg("str"),
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine real_to_string
 
 Parameters
@@ -473,6 +490,7 @@ n_decimal : int, optional
       py::arg("n"),
       py::arg("n_min") = py::none(),
       py::arg("exact") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine reallocate_spline (spline, n, n_min, exact)
 
 Subroutine to allocate an allocatable spline_struct array.
@@ -504,6 +522,7 @@ exact : bool, optional
       py::arg("mc"),
       py::arg("b"),
       py::arg("d"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine relbd
 
 Parameters
@@ -526,6 +545,7 @@ d : float
       py::arg("mc"),
       py::arg("b"),
       py::arg("dx"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine relcbd
 
 Parameters
@@ -546,6 +566,7 @@ dx : float
       py::arg("mc"),
       py::arg("b"),
       py::arg("d"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine relsbd
 
 Parameters
@@ -566,6 +587,7 @@ d : float
       py::arg("mc"),
       py::arg("elb"),
       py::arg("eld"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rgelbd
 
 Parameters
@@ -601,6 +623,7 @@ eld : float
       &SimUtils::rms_value,
       py::arg("val_arr"),
       py::arg("good_val") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rms_value
 
 Parameters
@@ -625,6 +648,7 @@ ave_val : float, optional
       &SimUtils::rot_2d,
       py::arg("vec_in"),
       py::arg("angle"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rot_2d
 
 Parameters
@@ -647,6 +671,7 @@ vec_out : 1D array of float (shape: 2)
       py::arg("vec"),
       py::arg("axis"),
       py::arg("angle"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine rotate_vec (vec, axis, angle)
 
 Basic routine to rotate vector components around the x, y, or z axis.
@@ -671,6 +696,7 @@ angle : float
       py::arg("vec_in"),
       py::arg("axis"),
       py::arg("angle"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function rotate_vec_given_axis_angle (vec_in, axis, angle) result (vec_out)
 
 Routine to rotate a vector.
@@ -696,6 +722,7 @@ vec_out : 1D array of float (shape: 3)
       "rp8",
       &SimUtils::rp8,
       py::arg("int_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function rp8(int_in) result (re_out)
 
 Routine to convert from integer to real of type rp.
@@ -720,6 +747,7 @@ re_out : float
       py::arg("m"),
       py::arg("b"),
       py::arg("d"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rserbd
 
 Parameters
@@ -739,6 +767,7 @@ d : float
       py::arg("command"),
       py::arg("time") = py::none(),
       py::arg("time0") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine run_timer
 
 Parameters

@@ -26,6 +26,7 @@ void init_SimUtils_routines_w(py::module &m) {
       "w_mat_to_axis_angle",
       &SimUtils::w_mat_to_axis_angle,
       py::arg("w_mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine w_mat_to_axis_angle (w_mat, axis, angle)
 
 Routine to find the rotation axis and rotation angle corresponding to a given
@@ -51,6 +52,7 @@ angle : float
       "w_mat_to_quat",
       &SimUtils::w_mat_to_quat,
       py::arg("w_mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function w_mat_to_quat (w_mat) result (quat)
 
 Routine to find the quaternion corresponding to a given 3D rotation matrix.
@@ -71,6 +73,7 @@ quat : 1D array of float (shape: 0:3)
       &SimUtils::word_len,
       py::arg("wording"),
       py::arg("wlen"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine word_len
 
 Parameters
@@ -91,6 +94,7 @@ wlen : int
       py::arg("delim_found"),
       py::arg("out_str"),
       py::arg("ignore_interior") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine word_read
 
 Parameters

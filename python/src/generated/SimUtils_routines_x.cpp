@@ -9,6 +9,7 @@ void init_SimUtils_routines_x(py::module &m) {
       "x0_radiation_length",
       &SimUtils::x0_radiation_length,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function x0_radiation_length(species) result (x0)
 
 Routine to return the X0 raidation length for atomes.

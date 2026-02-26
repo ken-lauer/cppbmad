@@ -10,6 +10,7 @@ void init_SimUtils_routines_m(py::module &m) {
       &SimUtils::make_legal_comment,
       py::arg("comment_in"),
       py::arg("comment_out"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_legal_comment
 
 Parameters
@@ -23,6 +24,7 @@ comment_out : str
       "mass_of",
       &SimUtils::mass_of,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function mass_of (species) result (mass)
 
 Routine to return the mass, in units of eV/c^2, of a particle.
@@ -49,6 +51,7 @@ mass : float
       py::arg("str"),
       py::arg("pat"),
       py::arg("is_match"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine match_reg
 
 Parameters
@@ -66,6 +69,7 @@ is_match : bool
       py::arg("string"),
       py::arg("template_"),
       py::arg("is_match"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine match_wild
 
 Parameters
@@ -81,6 +85,7 @@ is_match : bool
       py::arg("seed"),
       py::arg("cdata"),
       py::arg("func_retval__"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(function maximize_projection
 
 Optimizer that uses Numerical Recipes brent to find a local maximum,
@@ -91,6 +96,7 @@ which is the frequency that maximizes the projection.
       "milli_sleep",
       &SimUtils::milli_sleep,
       py::arg("milli_sec"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine milli_sleep
 
 Parameters
@@ -103,6 +109,7 @@ milli_sec : int
       &SimUtils::modulo2_dp,
       py::arg("x"),
       py::arg("amp"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function modulo2 (x, amp) result (mod2)
 
 Function to return
@@ -129,6 +136,7 @@ mod2 : float
       &SimUtils::modulo2_int,
       py::arg("x"),
       py::arg("amp"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function modulo2 (x, amp) result (mod2)
 
 Function to return
@@ -155,6 +163,7 @@ mod2 : int
       &SimUtils::modulo2_qp,
       py::arg("x"),
       py::arg("amp"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function modulo2 (x, amp) result (mod2)
 
 Function to return
@@ -181,6 +190,7 @@ mod2 : float
       &SimUtils::modulo2_sp,
       py::arg("x"),
       py::arg("amp"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function modulo2 (x, amp) result (mod2)
 
 Function to return

@@ -9,6 +9,7 @@ void init_bsim_routines_r(py::module &m) {
       "rf_cav_names",
       &bsim::rf_cav_names,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rf_cav_names
 
 Parameters

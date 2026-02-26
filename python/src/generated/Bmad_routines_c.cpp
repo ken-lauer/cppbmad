@@ -32,6 +32,7 @@ void init_Bmad_routines_c(py::module &m) {
       "c_to_cbar",
       &Bmad::c_to_cbar,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine c_to_cbar
 
 Parameters
@@ -72,6 +73,7 @@ cbar_mat : 2D array of float (shape: 2,2)
       py::arg("print_err") = py::none(),
       py::arg("is_time_coords") = py::none(),
       py::arg("ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine calc_bunch_params (bunch, bunch_params, error, print_err, n_mat, is_time_coords, ele)
 
 Finds all bunch parameters defined in bunch_params_struct, both normal-mode
@@ -121,6 +123,7 @@ n_mat : 2D array of float (shape: 6,6), optional
       py::arg("print_err") = py::none(),
       py::arg("is_time_coords") = py::none(),
       py::arg("ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine calc_bunch_params_slice (bunch, bunch_params, plane, slice_center, slice_spread, err, print_err, is_time_coords, ele)
 
 Finds bunch parameters for a slice of the beam.
@@ -164,6 +167,7 @@ err : bool
       py::arg("print_err") = py::none(),
       py::arg("is_time_coords") = py::none(),
       py::arg("ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds, err, print_err, is_time_coords, ele)
 
 Finds bunch parameters for a slice of the beam.
@@ -203,6 +207,7 @@ err : bool
       py::arg("charge"),
       py::arg("is_time_coords") = py::none(),
       py::arg("ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, ele)
 
 Routine to find the sigma matrix elements of a particle distribution.
@@ -251,6 +256,7 @@ bunch_params : BunchParamsStruct
       &Bmad::calc_emittances_and_twiss_from_sigma_matrix,
       py::arg("sigma_mat"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine calc_emittances_and_twiss_from_sigma_matrix(sigma_mat, bunch_params, error, print_err, n_mat)
 
 Routine to calc emittances and Twiss function from a beam sigma matrix.
@@ -281,6 +287,7 @@ n_mat : 2D array of float (shape: 6,6), optional
       "calc_spin_params",
       &Bmad::calc_spin_params,
       py::arg("bunch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine calc_spin_params (bunch, bunch_params)
 
 Rotine to calculate spin averages
@@ -302,6 +309,7 @@ bunch_params : BunchParamsStruct
       py::arg("lord1"),
       py::arg("lord2"),
       py::arg("create_jumbo_slave") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine calc_super_slave_key
 
 Parameters
@@ -347,6 +355,7 @@ slave : EleStruct
       py::arg("v"),
       py::arg("cos_ang"),
       py::arg("sin_ang"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine calc_wall_radius (v, cos_ang, sin_ang, r_wall, dr_dtheta, ix_vertex)
 
 Routine to calculate the wall radius at a given angle for a given cross-section
@@ -383,6 +392,7 @@ ix_vertex : int, optional
       "calc_z_tune",
       &Bmad::calc_z_tune,
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine calc_z_tune
 
 Parameters
@@ -402,6 +412,7 @@ branch : BranchStruct
       &Bmad::canonical_to_angle_coords,
       py::arg("orbit"),
       py::arg("coord_type") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine canonical_to_angle_coords
 
 Parameters
@@ -422,6 +433,7 @@ coord_type : str, optional
       py::arg("cbar_mat"),
       py::arg("a"),
       py::arg("b"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine cbar_to_c
 
 Parameters
@@ -450,6 +462,7 @@ c_mat : 2D array of float (shape: 2,2)
       py::arg("param"),
       py::arg("old_orb") = py::none(),
       py::arg("check_momentum") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine check_aperture_limit
 
 Parameters
@@ -480,6 +493,7 @@ check_momentum : bool, optional
       py::arg("ele_key"),
       py::arg("contrl"),
       py::arg("name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine check_controller_controls
 
 Parameters
@@ -507,6 +521,7 @@ err : bool
       py::arg("err_flag"),
       py::arg("wrap"),
       py::arg("ref_ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap)
 
 Subroutine to check if there is a problem superimposing an element when there is multipass.
@@ -544,6 +559,7 @@ This subroutine is not intended for general use.
       py::arg("branch"),
       py::arg("s"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine check_if_s_in_bounds
 
 Parameters
@@ -591,6 +607,7 @@ translated_s : float, optional
       &Bmad::choose_quads_for_set_tune,
       py::arg("branch"),
       py::arg("mask") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine choose_quads_for_set_tune
 
 Parameters
@@ -653,6 +670,7 @@ err_flag : bool, optional
       py::arg("pz") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("orb0") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine chrom_calc
 
 Parameters
@@ -727,6 +745,7 @@ high_E_orb : 1D array of CoordStruct, optional
       py::arg("target_x"),
       py::arg("target_y"),
       py::arg("err_tol"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine chrom_tune
 
 Parameters
@@ -768,6 +787,7 @@ err_flag : bool
       "classical_radius",
       &Bmad::classical_radius,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine classical_radius
 
 Parameters
@@ -784,6 +804,7 @@ radius : float
   m.def(
       "clear_lat_1turn_mats",
       &Bmad::clear_lat_1turn_mats,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine clear_lat_1turn_mats
 
 Returns
@@ -796,6 +817,7 @@ lat : LatStruct
       "clear_taylor_maps_from_elements",
       &Bmad::clear_taylor_maps_from_elements,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine clear_taylor_maps_from_elements
 
 Parameters
@@ -815,6 +837,7 @@ lat : LatStruct
       py::arg("direction") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine closed_orbit_calc
 
 Parameters
@@ -876,6 +899,7 @@ err_flag : bool, optional
       py::arg("eps_rel") = py::none(),
       py::arg("eps_abs") = py::none(),
       py::arg("init_guess") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine closed_orbit_from_tracking
 
 Parameters
@@ -911,6 +935,7 @@ err_flag : bool, optional
       &Bmad::cmplx_re_str,
       py::arg("cmp"),
       py::arg("str_out"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine cmplx_re_str
 
 Parameters
@@ -924,6 +949,7 @@ str_out : str
       "combine_consecutive_elements",
       &Bmad::combine_consecutive_elements,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine combine_consecutive_elements
 
 Parameters
@@ -943,6 +969,7 @@ error : bool
       "complex_taylor_clean",
       &Bmad::complex_taylor_clean,
       py::arg("complex_taylor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine complex_taylor_clean
 
 Parameters
@@ -958,6 +985,7 @@ complex_taylor : ComplexTaylorStruct
       py::arg("complex_taylor"),
       py::arg("exp"),
       py::arg("coef"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function complex_taylor_coef (complex_taylor, exp)
 Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
 
@@ -1014,6 +1042,7 @@ Input (complex_taylor_coef2):
       py::arg("i7") = py::none(),
       py::arg("i8") = py::none(),
       py::arg("i9") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function complex_taylor_coef (complex_taylor, exp)
 Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
 
@@ -1050,6 +1079,7 @@ Input (complex_taylor_coef2):
       &Bmad::complex_taylor_equal_complex_taylor,
       py::arg("complex_taylor1"),
       py::arg("complex_taylor2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine complex_taylor_equal_complex_taylor
 
 Parameters
@@ -1063,6 +1093,7 @@ complex_taylor2 : ComplexTaylorStruct
       "complex_taylor_exponent_index",
       &Bmad::complex_taylor_exponent_index,
       py::arg("expn"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function complex_taylor_exponent_index(expn) result(index)
 
 Function to associate a unique number with a complex_taylor exponent.
@@ -1086,6 +1117,7 @@ index : int
       "complex_taylor_make_unit",
       &Bmad::complex_taylor_make_unit,
       py::arg("complex_taylor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine complex_taylor_make_unit (complex_taylor)
 
 Subroutine to make the unit complex_taylor map:
@@ -1115,6 +1147,7 @@ Subroutine to make the unit complex_taylor map:
       py::arg("a_complex_taylor"),
       py::arg("r_in"),
       py::arg("r_out") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r_out)
 
 Subroutine to calculate, from a complex_taylor map and about some trajectory:
@@ -1145,6 +1178,7 @@ mat6 : 2D array of complex (shape: 6,6)
       &Bmad::complex_taylors_equal_complex_taylors,
       py::arg("complex_taylor1"),
       py::arg("complex_taylor2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine complex_taylors_equal_complex_taylors
 
 Parameters
@@ -1158,6 +1192,7 @@ complex_taylor2 : 1D array of ComplexTaylorStruct
       "compute_slave_coupler",
       &Bmad::compute_slave_coupler,
       py::arg("slave"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine compute_slave_coupler (slave)
 
 This routine is not meant for general use.
@@ -1169,6 +1204,7 @@ This routine is not meant for general use.
       py::arg("orb_taylor"),
       py::arg("ele"),
       py::arg("spin_taylor") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor)
 
 Routine to concatinate an orbital taylor map and, optionally if present and
@@ -1208,6 +1244,7 @@ err_flag : bool
       py::arg("taylor1"),
       py::arg("taylor2"),
       py::arg("taylor3"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine concat_taylor (taylor1, taylor2, taylor3)
 
 Subroutine to concatinate two taylor maps:
@@ -1252,6 +1289,7 @@ taylor3 : 1D array of TaylorStruct
       py::arg("vec_1"),
       py::arg("mat_0"),
       py::arg("vec_0"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec_out)
 
 Routine to concatinate two linear maps:
@@ -1287,6 +1325,7 @@ vec_out : 1D array of float (shape: 6)
       py::arg("lat"),
       py::arg("ele") = py::none(),
       py::arg("err_flag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine control_bookkeeper
 
 Parameters
@@ -1309,6 +1348,7 @@ err_flag : bool, optional
       py::arg("out_type"),
       py::arg("an"),
       py::arg("bn"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine convert_bend_exact_multipole
 
 Parameters
@@ -1356,6 +1396,7 @@ bn : 1D array of float (shape: 0:n_pole_maxx)
       py::arg("in_type_str"),
       py::arg("coord_in"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine convert_coords
 
 Parameters
@@ -1392,6 +1433,7 @@ err_flag : bool, optional
       py::arg("forward_transform"),
       py::arg("calc_dfield") = py::none(),
       py::arg("calc_potential") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine convert_field_ele_to_lab (ele, s_here, forward_transform, field, calc_dfield, calc_potential)
 
 Convert fields: ele to lab coords
@@ -1428,6 +1470,7 @@ field : EmFieldStruct
       py::arg("g"),
       py::arg("xout"),
       py::arg("sout"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine convert_local_cartesian_to_local_curvilinear
 
 Parameters
@@ -1451,6 +1494,7 @@ sout : float
       py::arg("g"),
       py::arg("xout"),
       py::arg("zout"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine convert_local_curvilinear_to_local_cartesian
 
 Parameters
@@ -1472,6 +1516,7 @@ zout : float
       py::arg("particle"),
       py::arg("s_body"),
       py::arg("orientation"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine convert_particle_coordinates_s_to_t
 
 Parameters
@@ -1492,6 +1537,7 @@ orientation : int
       py::arg("particle"),
       py::arg("ele"),
       py::arg("use_downstream_p0c") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine convert_particle_coordinates_t_to_s
 
 Parameters
@@ -1549,6 +1595,7 @@ s_body : float, optional
       &Bmad::convert_pc_to,
       py::arg("pc"),
       py::arg("particle"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine convert_pc_to
 
 Parameters
@@ -1621,6 +1668,7 @@ err_flag : bool, optional
       py::arg("E_tot"),
       py::arg("particle"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine convert_total_energy_to
 
 Parameters
@@ -1682,6 +1730,7 @@ err_flag : bool, optional
       "converter_distribution_parser",
       &Bmad::converter_distribution_parser,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine converter_distribution_parser
 
 Parameters
@@ -1707,6 +1756,7 @@ err_flag : bool
       "coord_equal_coord",
       &Bmad::coord_equal_coord,
       py::arg("coord2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""( Subroutine coord_equal_coord (coord1, coord2)
 
  Subroutine that is used to set one coord equal to another.
@@ -1730,6 +1780,7 @@ coord1 : CoordStruct
       &Bmad::coord_state_name,
       py::arg("coord_state"),
       py::arg("one_word") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function coord_state_name (coord_state) result (state_str)
 
 Routine to return the string representation of a coord%state state.
@@ -1768,6 +1819,7 @@ state_str : str
       py::arg("body_position"),
       py::arg("ele"),
       py::arg("calculate_angles") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_body_to_local
 
 Parameters
@@ -1816,6 +1868,7 @@ w_mat : 2D array of float (shape: 3,3), optional
       py::arg("body_position"),
       py::arg("ele"),
       py::arg("calculate_angles") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_body_to_rel_exit
 
 Parameters
@@ -1861,6 +1914,7 @@ w_mat : 2D array of float (shape: 3,3), optional
       &Bmad::coords_curvilinear_to_floor,
       py::arg("xys"),
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_curvilinear_to_floor
 
 Parameters
@@ -1909,6 +1963,7 @@ global : FloorPositionStruct
       &Bmad::coords_floor_to_curvilinear,
       py::arg("floor_coords"),
       py::arg("ele0"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_floor_to_curvilinear
 
 Parameters
@@ -1964,6 +2019,7 @@ w_mat : 2D array of float (shape: 3,3), optional
       py::arg("global_position"),
       py::arg("ele"),
       py::arg("relative_to") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_floor_to_local_curvilinear
 
 Parameters
@@ -1999,6 +2055,7 @@ w_mat : 2D array of float (shape: 3,3), optional
       py::arg("global_position"),
       py::arg("calculate_angles") = py::none(),
       py::arg("is_delta_position") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_floor_to_relative
 
 Parameters
@@ -2048,6 +2105,7 @@ local_position : FloorPositionStruct
       py::arg("local_position"),
       py::arg("ele"),
       py::arg("calculate_angles") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_local_curvilinear_to_body
 
 Parameters
@@ -2099,6 +2157,7 @@ w_mat : 2D array of float (shape: 3,3), optional
       py::arg("in_body_frame") = py::none(),
       py::arg("calculate_angles") = py::none(),
       py::arg("relative_to") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_local_curvilinear_to_floor
 
 Parameters
@@ -2142,6 +2201,7 @@ w_mat : 2D array of float (shape: 3,3), optional
       py::arg("theta") = py::none(),
       py::arg("phi") = py::none(),
       py::arg("psi") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_relative_to_floor
 
 Parameters
@@ -2178,6 +2238,7 @@ floor1 : FloorPositionStruct
       py::arg("w"),
       py::arg("gam"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coulombfun
 
 Parameters
@@ -2198,6 +2259,7 @@ res : float
       &Bmad::create_concatenated_wall3d,
       py::arg("lat"),
       py::arg("err"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine create_concatenated_wall3d (lat)
 
 Routine to concatinate lat%branch(i)ele(:)%wall3d%section(:) arrays into
@@ -2244,6 +2306,7 @@ lat : LatStruct
       py::arg("include_downstream_end"),
       py::arg("old_slice") = py::none(),
       py::arg("orb_in") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_element_slice
 
 Parameters
@@ -2291,6 +2354,7 @@ err_flag : bool
       py::arg("lat"),
       py::arg("lord_name"),
       py::arg("slave_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_field_overlap
 
 Parameters
@@ -2318,6 +2382,7 @@ err_flag : bool
       py::arg("contrl"),
       py::arg("girder_info"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_girder
 
 Parameters
@@ -2346,6 +2411,7 @@ err_flag : bool
       py::arg("lord"),
       py::arg("contrl"),
       py::arg("err"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_group
 
 Parameters
@@ -2366,6 +2432,7 @@ err : bool
       "create_lat_ele_nametable",
       &Bmad::create_lat_ele_nametable,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_lat_ele_nametable
 
 Parameters
@@ -2385,6 +2452,7 @@ nametable : NametableStruct
       py::arg("lord"),
       py::arg("contrl"),
       py::arg("err"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_overlay
 
 Parameters
@@ -2423,6 +2491,7 @@ err : bool
       &Bmad::create_planar_wiggler_model,
       py::arg("wiggler_in"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine create_planar_wiggler_model (wiggler_in, lat, err_flag, print_err)
 
 Routine to create series of bend and drift elements to serve as a replacement
@@ -2462,6 +2531,7 @@ err_flag : bool, optional
       py::arg("lord"),
       py::arg("contrl"),
       py::arg("err"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_ramper
 
 Parameters
@@ -2483,6 +2553,7 @@ err : bool
       &Bmad::create_sol_quad_model,
       py::arg("sol_quad"),
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine create_sol_quad_model (sol_quad, lat)
 
 Routine to create series of solenoid and quadrupole elements to serve as a replacement
@@ -2500,6 +2571,7 @@ Not yet implemented!
       py::arg("lat"),
       py::arg("key"),
       py::arg("suffix"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_unique_ele_names
 
 Parameters
@@ -2520,6 +2592,7 @@ suffix : str
       "create_wiggler_cartesian_map",
       &Bmad::create_wiggler_cartesian_map,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine create_wiggler_cartesian_map
 
 Parameters
@@ -2537,6 +2610,7 @@ cart_map : CartesianMapStruct
       "crystal_attribute_bookkeeper",
       &Bmad::crystal_attribute_bookkeeper,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine crystal_attribute_bookkeeper
 
 Parameters
@@ -2551,6 +2625,7 @@ ele : EleStruct
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("h_vec"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine crystal_h_misalign (ele, orbit, h_vec)
 
 Routine reorient the crystal H vector due to local imperfections in the crystal lattice.
@@ -2573,6 +2648,7 @@ h_vec : 1D array of float (shape: 3)
       "crystal_type_to_crystal_params",
       &Bmad::crystal_type_to_crystal_params,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine crystal_type_to_crystal_params (ele, err_flag)
 
 Routine to set the crystal parameters based upon the crystal type.
@@ -2599,6 +2675,7 @@ err_flag : bool
       "custom_attribute_ubound_index",
       &Bmad::custom_attribute_ubound_index,
       py::arg("ele_class"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function custom_attribute_ubound_index(ele_class) result (ix_ubound)
 
 Routine to return, for a given element class, the upper bound index for the ele%custom(:)

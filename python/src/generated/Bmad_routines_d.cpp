@@ -15,6 +15,7 @@ void init_Bmad_routines_d(py::module &m) {
       py::arg("delta"),
       py::arg("species"),
       py::arg("mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine damping_matrix_d
 
 Parameters
@@ -41,6 +42,7 @@ mat : 2D array of float (shape: 6,6)
       py::arg("nullify_only") = py::none(),
       py::arg("nullify_branch") = py::none(),
       py::arg("dealloc_poles") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine deallocate_ele_pointers
 
 Parameters
@@ -64,6 +66,7 @@ dealloc_poles : bool, optional
       "deallocate_expression_tree",
       &Bmad::deallocate_expression_tree,
       py::arg("tree"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine deallocate_expression_tree(tree)
 
 Routine to deallocate an expression tree.
@@ -80,6 +83,7 @@ tree : ExpressionTreeStruct
       "deallocate_lat_pointers",
       &Bmad::deallocate_lat_pointers,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine deallocate_lat_pointers
 
 Parameters
@@ -94,6 +98,7 @@ lat : LatStruct
       "default_tracking_species",
       &Bmad::default_tracking_species,
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine default_tracking_species
 
 Parameters
@@ -112,6 +117,7 @@ species : int
       &Bmad::detector_pixel_pt,
       py::arg("orbit"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function detector_pixel_pt (orbit, ele) result (ix_pix)
 
 Routine to return the pixel a particle is hitting.
@@ -135,6 +141,7 @@ ix_pix : 1D array of int (shape: 2)
       &Bmad::diffraction_plate_or_mask_hit_spot,
       py::arg("ele"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine diffraction_plate_or_mask_hit_spot
 
 Parameters
@@ -158,6 +165,7 @@ ix_section : int
       py::arg("g_tot"),
       py::arg("species"),
       py::arg("mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine diffusion_matrix_b
 
 Parameters
@@ -194,6 +202,7 @@ mat : 2D array of float (shape: 6,6)
       py::arg("orbit"),
       py::arg("particle_at"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine distance_to_aperture
 
 Parameters
@@ -220,6 +229,7 @@ dist : float
       "do_mode_flip",
       &Bmad::do_mode_flip,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine do_mode_flip
 
 Parameters
@@ -242,6 +252,7 @@ err_flag : bool, optional
       py::arg("mass"),
       py::arg("dE"),
       py::arg("dpc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine dpc_given_de
 
 Parameters
@@ -259,6 +270,7 @@ dpc : float
       "drift_and_pipe_track_methods_adjustment",
       &Bmad::drift_and_pipe_track_methods_adjustment,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine drift_and_pipe_track_methods_adjustment(lat)
 
 Drift and pipe elements can be used in both photon and non-photon lines.
@@ -280,6 +292,7 @@ lat : LatStruct
       "drift_multipass_name_correction",
       &Bmad::drift_multipass_name_correction,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine drift_multipass_name_correction
 
 Parameters
@@ -294,6 +307,7 @@ lat : LatStruct
       py::arg("beta0"),
       py::arg("delta_s") = py::none(),
       py::arg("delta_t") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine drift_orbit_time(orbit, beta0, delta_s, delta_t)
 
 Simple routine to drift a particle orbit in time-based coordinates by a distance delta_s
@@ -322,6 +336,7 @@ delta_t : float, optional
       py::arg("p"),
       py::arg("s"),
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine drift_particle_to_s (p, s, branch)
 
 Drift a particle to a given s-coordinate
@@ -346,6 +361,7 @@ branch : BranchStruct
       py::arg("p"),
       py::arg("t"),
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine drift_particle_to_t (p, t, branch)
 
 Drift a particle to a given t-coordinate
@@ -371,6 +387,7 @@ branch : BranchStruct
       py::arg("s_chord1"),
       py::arg("spline"),
       py::arg("dtheta_ref") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function dspline_len (s_chord0, s_chord1, spline, dtheta_ref) result (dlen)
 
 Routine to calculate the difference in length between the spline curve length and a referece line.
@@ -405,6 +422,7 @@ dlen : float
       py::arg("theta_xy"),
       py::arg("ap_param"),
       py::arg("check_xy_init") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine dynamic_aperture_point (branch, ele0, orb0, theta_xy, ap_param, ap_point, check_xy_init)
 
 Subroutine to determine one dynamic aperture point by tracking.
@@ -443,6 +461,7 @@ ap_point : AperturePointStruct
       py::arg("pz_start"),
       py::arg("lat"),
       py::arg("print_timing") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine dynamic_aperture_scan(aperture_scan, aperture_param, pz_start, lat, print_timing)
 
 Routine to do a set of dynamic aperture scans.

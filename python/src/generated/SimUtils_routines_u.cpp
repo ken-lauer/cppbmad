@@ -9,6 +9,7 @@ void init_SimUtils_routines_u(py::module &m) {
       "upcase_string",
       &SimUtils::upcase_string,
       py::arg("string"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine upcase_string
 
 Parameters

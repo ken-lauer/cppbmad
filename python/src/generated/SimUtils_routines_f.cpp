@@ -9,6 +9,7 @@ void init_SimUtils_routines_f(py::module &m) {
       "factorial",
       &SimUtils::factorial,
       py::arg("n"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine factorial
 
 Parameters
@@ -28,6 +29,7 @@ fact : float
       py::arg("z"),
       py::arg("w"),
       py::arg("dw"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine faddeeva_function
 
 Parameters
@@ -44,6 +46,7 @@ dw : 2D array of float (shape: 2,2)
       &SimUtils::fft_1d,
       py::arg("arr"),
       py::arg("isign"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(no longer exists
 subroutine fff_sub(line, error)
   implicit none
@@ -69,6 +72,7 @@ isign : int
       py::arg("out_file"),
       py::arg("directory"),
       py::arg("add_switch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine file_directorizer
 
 Parameters
@@ -88,6 +92,7 @@ add_switch : bool
       py::arg("string"),
       py::arg("dflt_file_name"),
       py::arg("file_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine file_get
 
 Parameters
@@ -107,6 +112,7 @@ file_name : str
       py::arg("file_name"),
       py::arg("file_unit"),
       py::arg("readonly"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine file_get_open
 
 Parameters
@@ -129,6 +135,7 @@ readonly : bool
       py::arg("out_file_name"),
       py::arg("suffix"),
       py::arg("add_switch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine file_suffixer
 
 Parameters
@@ -148,6 +155,7 @@ add_switch : bool
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine find_location_int
 
 Parameters
@@ -165,6 +173,7 @@ ix_match : int
       py::arg("arr"),
       py::arg("value"),
       py::arg("ix_match"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine find_location_logic
 
 Parameters
@@ -181,6 +190,7 @@ ix_match : int
       py::overload_cast<FArray1D<Real> &, double>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine find_location_real
 
 Parameters
@@ -201,6 +211,7 @@ ix_match : int
       "fine_frequency_estimate",
       &SimUtils::fine_frequency_estimate,
       py::arg("data"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function fine_frequency_estimate(data) result(frequency)
 
 Uses Laskar's method to accurately find the most dominant frequency
@@ -223,6 +234,7 @@ frequency : float
       py::arg("ynew"),
       py::arg("id"),
       py::arg("z"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function fixedWindowLS
 
 Main function of the windowLS modult.  Each call to this function adds a data point to the fit
@@ -266,6 +278,7 @@ Parameters
       &SimUtils::fourier_amplitude,
       py::arg("data"),
       py::arg("frequency"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine fourier_amplitude(data, frequency, cos_amp, sin_amp, dcos_amp, dsin_amp)
 
 Computes cos_amp = (1/N) * sum_n=0^{N-1} data(n-1) cos(twopi*frequency*n)

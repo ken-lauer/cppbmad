@@ -8,6 +8,7 @@ void init_SimUtils_routines_t(py::module &m) {
   m.def(
       "test_xgelbd",
       &SimUtils::test_xgelbd,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_xgelbd
 )"""
   );
@@ -17,6 +18,7 @@ void init_SimUtils_routines_t(py::module &m) {
       py::arg("num"),
       py::arg("string"),
       py::arg("max_signif") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(no longer exists
 subroutine test_tune_tracker_lock (tracker_locked)
   implicit none
@@ -54,6 +56,7 @@ end subroutine
       py::arg("y_norm"),
       py::arg("z_norm"),
       py::arg("tri_coef"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx, df_dy, df_dz) result (f_val)
 
 Routine to evaluate a tricubic interpolating complex function.
@@ -96,6 +99,7 @@ df_dz : complex, optional
       "type_this_file",
       &SimUtils::type_this_file,
       py::arg("filename"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine type_this_file
 
 Parameters

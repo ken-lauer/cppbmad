@@ -24,6 +24,7 @@ void init_SimUtils_routines_e(py::module &m) {
       py::arg("phi"),
       py::arg("phic"),
       py::arg("mc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine elbd
 
 Parameters
@@ -59,6 +60,7 @@ d : float
       &SimUtils::elcbd,
       py::arg("c0"),
       py::arg("mc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine elcbd
 
 Parameters
@@ -96,6 +98,7 @@ dx : float
       &SimUtils::ellipinc,
       py::arg("phi"),
       py::arg("m"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine ellipinc(phi, m, ellipkinc, ellipeinc)
 
 Calculates the first and second incomplete elliptic integrals,
@@ -123,6 +126,7 @@ This package needs a function for the third kind to use the new 2018 transformat
       &SimUtils::elsbd,
       py::arg("s0"),
       py::arg("mc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine elsbd
 
 Parameters
@@ -143,6 +147,7 @@ d : float
       &SimUtils::end_akima_spline_calc,
       py::arg("spline"),
       py::arg("which_end"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine end_akima_spline_calc (spline, which_end)
 
 Routine to calculate the slopes at the ends of a spline array
@@ -162,6 +167,7 @@ which_end : int
       "err_exit",
       &SimUtils::err_exit,
       py::arg("err_str") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine err_exit
 
 Parameters

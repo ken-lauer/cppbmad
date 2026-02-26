@@ -15,6 +15,7 @@ void init_Tao_routines_i(py::module &m) {
       py::arg("branch"),
       py::arg("vec"),
       py::arg("datum"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine integrate_max
 
 Parameters
@@ -44,6 +45,7 @@ datum : TaoDataStruct
       py::arg("branch"),
       py::arg("vec"),
       py::arg("datum"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine integrate_min
 
 Parameters

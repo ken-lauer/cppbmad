@@ -15,6 +15,7 @@ void init_SimUtils_routines_l(py::module &m) {
       py::arg("b"),
       py::arg("sig_a"),
       py::arg("sig_b"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine linear_fit
 
 Parameters
@@ -40,6 +41,7 @@ sig_b : float
       py::arg("x"),
       py::arg("y"),
       py::arg("z"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine linear_fit_2d
 
 Parameters
@@ -64,6 +66,7 @@ coef : 1D array of float (shape: 3)
       &SimUtils::logic_str,
       py::arg("logic"),
       py::arg("str"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine logic_str
 
 Parameters
@@ -77,6 +80,7 @@ str : str
       "lunget",
       &SimUtils::lunget,
       py::arg("func_retval__"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lunget
 
 Parameters

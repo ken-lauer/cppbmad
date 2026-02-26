@@ -11,6 +11,7 @@ void init_Bmad_routines_g(py::module &m) {
       py::arg("b"),
       py::arg("e"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function g_bend_from_em_field (B, E, orbit) result (g_bend)
 
 Routine to calculate the bending strength (1/bending_radius) for a given particle for a given field.
@@ -58,6 +59,7 @@ g_bend : 1D array of float (shape: 3)
       py::arg("s_rel"),
       py::arg("orbit"),
       py::arg("local_ref_frame"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine g_bending_strength_from_em_field
 
 Parameters
@@ -91,6 +93,7 @@ dg : 2D array of float (shape: 3,3), optional
       "g_integrals_calc",
       &Bmad::g_integrals_calc,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine g_integrals_calc
 
 Parameters
@@ -103,6 +106,7 @@ lat : LatStruct
       "gamma_ref",
       &Bmad::gamma_ref,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gamma_ref
 
 Parameters
@@ -122,6 +126,7 @@ gamma : float
       py::arg("ele"),
       py::arg("gen_grad"),
       py::arg("iz"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gen_grad1_to_em_taylor
 
 Parameters
@@ -147,6 +152,7 @@ em_taylor : 1D array of EmTaylorStruct (shape: 3)
       py::arg("ele"),
       py::arg("gen_grad"),
       py::arg("s_pos"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gen_grad_at_s_to_em_taylor
 
 Parameters
@@ -174,6 +180,7 @@ em_taylor : 1D array of EmTaylorStruct (shape: 3)
       py::arg("rho"),
       py::arg("theta"),
       py::arg("field"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gen_grad_field
 
 Parameters
@@ -194,6 +201,7 @@ field : 1D array of float (shape: 3)
       &Bmad::get_bl_from_fwhm,
       py::arg("bound"),
       py::arg("args"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine get_bl_from_fwhm(bound,args,sigma)
 
 Calculate bunch length as fwhm * c_light / TwoRtTwoLnTwo.
@@ -219,6 +227,7 @@ sigma : float
       py::arg("delim"),
       py::arg("call_file"),
       py::arg("err"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine get_called_file
 
 Parameters
@@ -252,6 +261,7 @@ err : bool
       &Bmad::get_emit_from_sigma_mat,
       py::arg("sigma_mat"),
       py::arg("Nmat") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine get_emit_from_sigma_mat(sigma_mat, normal, Nmat, err_flag)
 
 Given a beam envelop sigma matrix sigma_mat, this returns the 3 normal mode
@@ -318,6 +328,7 @@ err_flag : bool
       py::arg("delim_list"),
       py::arg("upper_case_word") = py::none(),
       py::arg("call_check") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine get_next_word (word, ix_word, delim_list, delim, delim_found, upper_case_word, call_check, err_flag)
 
 Subroutine to get the next word from the input stream.
@@ -374,6 +385,7 @@ err_flag : bool, optional
       "get_slave_list",
       &Bmad::get_slave_list,
       py::arg("lord"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine get_slave_list
 
 Parameters
@@ -397,6 +409,7 @@ n_slave : int
       py::arg("dimensions"),
       py::arg("field_scale"),
       py::arg("ref_time"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gpt_field_grid_scaling
 
 Parameters
@@ -416,6 +429,7 @@ ref_time : float
       py::arg("pt0"),
       py::arg("ele"),
       py::arg("field_value"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gpt_max_field_reference
 
 Parameters
@@ -449,6 +463,7 @@ field_value : float
       &Bmad::gpt_to_particle_bunch,
       py::arg("gpt_file"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine gpt_to_particle_bunch (gpt_file, ele, bunch, err_flag)
 
 Routine to initialize a bunch of particles from a GPT screen file.
@@ -475,6 +490,7 @@ err_flag : bool
       &Bmad::gradient_shift_sr_wake,
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gradient_shift_sr_wake
 
 Parameters
@@ -503,6 +519,7 @@ grad_shift : float
       py::arg("x3") = py::none(),
       py::arg("allow_s_out_of_bounds") = py::none(),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine grid_field_interpolate (ele, orbit, grid, field, err_flag, x1, x2, x3, &
                                                              allow_s_out_of_bounds, print_err)
 

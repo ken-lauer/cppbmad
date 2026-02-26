@@ -32,6 +32,7 @@ void init_Bmad_routines_z(py::module &m) {
       py::arg("x"),
       py::arg("y"),
       py::arg("extend_grid") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function z_at_surface (ele, x, y, err_flag, extend_grid, dz_dxy) result (z)
 
 Routine return the height (z) of the surface for a particular (x,y) position.
@@ -68,6 +69,7 @@ dz_dxy : 1D array of float (shape: 2), optional
       "zero_ele_kicks",
       &Bmad::zero_ele_kicks,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine zero_ele_kicks
 
 Parameters
@@ -82,6 +84,7 @@ ele : EleStruct
       "zero_ele_offsets",
       &Bmad::zero_ele_offsets,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine zero_ele_offsets
 
 Parameters
@@ -96,6 +99,7 @@ ele : EleStruct
       "zero_lr_wakes_in_lat",
       &Bmad::zero_lr_wakes_in_lat,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine zero_lr_wakes_in_lat (lat)
 
 Routine to zero the long range wake amplitudes for the elements that have
@@ -114,6 +118,7 @@ lat : LatStruct
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine zlafun
 
 Parameters

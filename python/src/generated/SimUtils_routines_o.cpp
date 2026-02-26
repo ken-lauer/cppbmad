@@ -9,6 +9,7 @@ void init_SimUtils_routines_o(py::module &m) {
       "omega_to_quat",
       &SimUtils::omega_to_quat,
       py::arg("omega"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function omega_to_quat (omega) result (quat)
 
 Routine to convert from omega + angle representation to a quaternion.
@@ -28,6 +29,7 @@ quat : 1D array of float (shape: 0:3)
       "openpmd_species_name",
       &SimUtils::openpmd_species_name,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function openpmd_species_name (species) result(pmd_name)
 
 Routine to return the openPMD name of a particle species given the Bmad species ID.
@@ -50,6 +52,7 @@ pmd_name : str
       &SimUtils::ordinal_str,
       py::arg("n"),
       py::arg("str"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ordinal_str
 
 Parameters
@@ -64,6 +67,7 @@ str : str
       &SimUtils::out_io_buffer_get_line,
       py::arg("ix_line"),
       py::arg("line"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function out_io_buffer_get_line(ix_line) result (line)
 
 Routine to return the nuber of lines in the internal buffer.
@@ -74,6 +78,7 @@ See the output_direct documentation for more details.
       "out_io_buffer_num_lines",
       &SimUtils::out_io_buffer_num_lines,
       py::arg("n_lines"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function out_io_buffer_num_lines() result (n_lines)
 
 Routine to return the nuber of lines in the internal buffer.
@@ -83,6 +88,7 @@ See the output_direct documentation for more details.
   m.def(
       "out_io_buffer_reset",
       &SimUtils::out_io_buffer_reset,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine out_io_buffer_reset ()
 
 Routine to initialize the buffer used for capturing output.
@@ -96,6 +102,7 @@ Routine to initialize the buffer used for capturing output.
       py::arg("line"),
       py::arg("i_num"),
       py::arg("insert_tag_line") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine out_io_int
 
 Parameters
@@ -150,6 +157,7 @@ insert_tag_line : bool, optional
       py::arg("i_array") = py::none(),
       py::arg("l_array") = py::none(),
       py::arg("insert_tag_line") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine out_io_line12
 
 Parameters
@@ -200,6 +208,7 @@ insert_tag_line : bool, optional
       py::arg("line"),
       py::arg("l_num"),
       py::arg("insert_tag_line") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine out_io_logical
 
 Parameters
@@ -221,6 +230,7 @@ insert_tag_line : bool, optional
       py::arg("print_on") = py::none(),
       py::arg("capture_state") = py::none(),
       py::arg("capture_add_null") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine out_io_print_and_capture_setup (print_on, capture_state, capture_add_null)
 
 Set whether a message from a call to out_io is sent to the terminal for printing and/or captured for program use.
@@ -278,6 +288,7 @@ capture_add_null : bool, optional
       py::arg("line"),
       py::arg("r_num"),
       py::arg("insert_tag_line") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine out_io_real
 
 Parameters

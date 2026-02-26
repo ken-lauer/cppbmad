@@ -8,6 +8,7 @@ void init_Bmad_routines_n(py::module &m) {
   m.def(
       "n_attrib_string_max_len",
       &Bmad::n_attrib_string_max_len,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function n_attrib_string_max_len () result (max_len)
 
 Routine to return the the maximum number of characters in any attribute
@@ -24,6 +25,7 @@ max_len : int
       &Bmad::new_control,
       py::arg("lat"),
       py::arg("ele_name") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine new_control
 
 Parameters
@@ -44,6 +46,7 @@ ix_ele : int
       "nint_chk",
       &Bmad::nint_chk,
       py::arg("re_val"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function nint_chk (re_val) result (int_val)
 
 Returns the nearest integer to re_val.
@@ -71,6 +74,7 @@ int_val : int
       py::arg("A") = py::none(),
       py::arg("A_inverse") = py::none(),
       py::arg("order") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine normal_form_complex_taylors
 
 Parameters
@@ -115,6 +119,7 @@ order : int, optional
       &Bmad::normal_form_taylors,
       py::arg("one_turn_taylor"),
       py::arg("rf_on"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine normal_form_taylors(one_turn_taylor, rf_on, dhdj, A, A_inverse)
 
 Do a normal form decomposition on a one-turn taylor map M:
@@ -177,6 +182,7 @@ A_inverse : 1D array of TaylorStruct (shape: 6), optional
       py::arg("t6"),
       py::arg("above_transition") = py::none(),
       py::arg("abz_tunes") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine normal_mode3_calc (mat, tune, B, HV, above_transition)
 
 Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
@@ -211,6 +217,7 @@ HV : 2D array of float (shape: 6,6)
       &Bmad::normal_mode_dispersion,
       py::arg("ele"),
       py::arg("reverse") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine normal_mode_dispersion
 
 Parameters
@@ -228,6 +235,7 @@ reverse : bool, optional
       "normalize_evecs",
       &Bmad::normalize_evecs,
       py::arg("evec"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine normalize_evecs(evec, err_flag)
 
 Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i evec_i
@@ -249,6 +257,7 @@ err_flag : bool
       "num_field_eles",
       &Bmad::num_field_eles,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine num_field_eles
 
 Parameters
@@ -267,6 +276,7 @@ n_field_ele : int
       &Bmad::num_lords,
       py::arg("slave"),
       py::arg("lord_type"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine num_lords
 
 Parameters

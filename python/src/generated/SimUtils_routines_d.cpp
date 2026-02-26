@@ -11,6 +11,7 @@ void init_SimUtils_routines_d(py::module &m) {
       py::arg("string"),
       py::arg("numeric_month") = py::none(),
       py::arg("include_zone") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine date_and_time_stamp
 
 Parameters
@@ -26,6 +27,7 @@ include_zone : bool, optional
       "destfixedwindowls",
       &SimUtils::destfixedwindowls,
       py::arg("id"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine destfixedwindowls
 
 Parameters
@@ -37,6 +39,7 @@ id : int
       "detab",
       &SimUtils::detab,
       py::arg("str"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine detab
 
 Parameters
@@ -52,6 +55,7 @@ str : str
       py::arg("y_size"),
       py::arg("x_res"),
       py::arg("y_res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine display_size_and_resolution
 
 Parameters
@@ -72,6 +76,7 @@ y_res : float
       &SimUtils::dj_bessel,
       py::arg("m"),
       py::arg("arg"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine dj_bessel
 
 Parameters
@@ -93,6 +98,7 @@ dj_bes : float
       py::arg("str"),
       py::arg("hash"),
       py::arg("old_hash") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine djb_hash
 
 Parameters
@@ -109,6 +115,7 @@ old_hash : int, optional
       &SimUtils::djb_str_hash,
       py::arg("in_str"),
       py::arg("hash_str"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine djb_str_hash
 
 Parameters
@@ -122,6 +129,7 @@ hash_str : str
       "downcase_string",
       &SimUtils::downcase_string,
       py::arg("string"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine downcase_string
 
 Parameters

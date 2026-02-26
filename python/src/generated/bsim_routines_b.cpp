@@ -12,6 +12,7 @@ void init_bsim_routines_b(py::module &m) {
       py::arg("bbu_beam"),
       py::arg("bbu_param"),
       py::arg("beam_init"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbu_add_a_bunch
 
 Parameters
@@ -32,6 +33,7 @@ beam_init : BeamInitStruct
       py::arg("bbu_beam"),
       py::arg("n_period"),
       py::arg("ix_stage_last_tracked"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbu_hom_voltage_calc
 
 Parameters
@@ -49,6 +51,7 @@ ix_stage_last_tracked : int
       "bbu_remove_head_bunch",
       &bsim::bbu_remove_head_bunch,
       py::arg("bbu_beam"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbu_remove_head_bunch
 
 Parameters
@@ -63,6 +66,7 @@ bbu_beam : BbuBeamStruct
       py::arg("dt_bunch"),
       py::arg("bbu_param"),
       py::arg("bbu_beam"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbu_setup
 
 Parameters
@@ -84,6 +88,7 @@ bbu_beam : BbuBeamStruct
       py::arg("bbu_param"),
       py::arg("lost"),
       py::arg("ix_stage_tracked"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbu_track_a_stage
 
 Parameters
@@ -129,6 +134,7 @@ ix_stage_tracked : int
       py::arg("bbu_beam"),
       py::arg("bbu_param"),
       py::arg("beam_init"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbu_track_all
 
 Parameters

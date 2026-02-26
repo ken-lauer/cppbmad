@@ -12,6 +12,7 @@ void init_SimUtils_routines_c(py::module &m) {
       py::arg("num_in"),
       py::arg("num_out"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine calc_file_number
 
 Parameters
@@ -42,6 +43,7 @@ err_flag : bool
       "celbd",
       &SimUtils::celbd,
       py::arg("mc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine celbd
 
 Parameters
@@ -59,6 +61,7 @@ eld : float
       "cesr_getarg",
       &SimUtils::cesr_getarg,
       py::arg("i_arg"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine cesr_getarg (i_arg, arg)
 
 Platform independent function to return the i'th command line argument.
@@ -86,6 +89,7 @@ arg : str
       "cesr_iargc",
       &SimUtils::cesr_iargc,
       py::arg("func_retval__"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function cesr_iargc ()
 
 Note: Use the Fortran intrinsic command_argument_count instead
@@ -99,6 +103,7 @@ Use this with cesr_getarg.
       &SimUtils::change_file_number,
       py::arg("file_name"),
       py::arg("change"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine change_file_number
 
 Parameters
@@ -113,6 +118,7 @@ change : int
       &SimUtils::charge_of,
       py::arg("species"),
       py::arg("default_") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function charge_of (species, default) result (charge)
 
 Routine to return the charge, in units of e+, of a particle.
@@ -132,6 +138,7 @@ charge : int
       "charge_to_mass_of",
       &SimUtils::charge_to_mass_of,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function charge_to_mass_of (species) result (charge_mass_ratio)
 
 Routine to return the charge (in units of e+) to mass (in units of eV) ratio of a particle.
@@ -152,6 +159,7 @@ charge_mass_ratio : float
       &SimUtils::coarse_frequency_estimate,
       py::arg("data"),
       py::arg("error") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function coarse_frequency_estimate(data, error) result(frequency)
 
 Simple function to take periodic data and estimate
@@ -175,6 +183,7 @@ frequency : float
       py::arg("wi"),
       py::arg("zr"),
       py::arg("zi"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine complex_error_function
 
 Parameters
@@ -192,6 +201,7 @@ zi : float
       "cos_one",
       &SimUtils::cos_one,
       py::arg("angle"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine cos_one
 
 Parameters
@@ -210,6 +220,7 @@ cos1 : float
       &SimUtils::cosc,
       py::arg("x"),
       py::arg("nd") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine cosc
 
 Parameters
@@ -233,6 +244,7 @@ y : float
       py::arg("r1"),
       py::arg("slope0"),
       py::arg("slope1"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function create_a_spline (r0, r1, slope0, slope1) result (spline)
 
 Routine to create a single spline given end point positions and slopes.
@@ -267,6 +279,7 @@ spline : SplineStruct
       &SimUtils::cross_product,
       py::arg("a"),
       py::arg("b"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine cross_product
 
 Parameters

@@ -2603,7 +2603,11 @@ class BookkeepingStateStruct:
     def s_position(self, arg1: typing.SupportsInt) -> None:
         ...
 class BoolAlloc1D:
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> bool:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -2621,7 +2625,11 @@ class BoolAlloc1D:
         ...
     def __len__(self) -> int:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: bool) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def clear(self) -> None:
         ...
@@ -2632,7 +2640,11 @@ class BoolAlloc1D:
     def view(self) -> BoolArray1D:
         ...
 class BoolArray1D:
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> bool:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -2644,7 +2656,11 @@ class BoolArray1D:
         ...
     def __repr__(self) -> str:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: bool) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -3968,7 +3984,11 @@ class ClosedOrbitFromTracking:
     def err_flag(self) -> bool:
         ...
 class ComplexAlloc1D:
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> complex:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -3986,7 +4006,11 @@ class ComplexAlloc1D:
         ...
     def __len__(self) -> int:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: complex) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def clear(self) -> None:
         ...
@@ -4001,7 +4025,11 @@ class ComplexArray1D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> complex:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -4017,7 +4045,11 @@ class ComplexArray1D:
         """
     def __repr__(self) -> str:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: complex) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -8385,7 +8417,11 @@ class InitPhotonIntegProb:
     def integ_prob(self) -> float:
         ...
 class Int8Alloc1D:
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> int:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -8403,7 +8439,11 @@ class Int8Alloc1D:
         ...
     def __len__(self) -> int:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: typing.SupportsInt) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def clear(self) -> None:
         ...
@@ -8418,7 +8458,11 @@ class Int8Array1D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> int:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -8434,7 +8478,11 @@ class Int8Array1D:
         """
     def __repr__(self) -> str:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: typing.SupportsInt) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -8497,7 +8545,11 @@ class Int8Array3D:
     def total_size(self) -> int:
         ...
 class IntAlloc1D:
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> int:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -8515,7 +8567,11 @@ class IntAlloc1D:
         ...
     def __len__(self) -> int:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: typing.SupportsInt) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def clear(self) -> None:
         ...
@@ -8530,7 +8586,11 @@ class IntArray1D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> int:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -8546,7 +8606,11 @@ class IntArray1D:
         """
     def __repr__(self) -> str:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: typing.SupportsInt) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -12563,7 +12627,11 @@ class ReadBinaryGridField:
     def g_field(self) -> GridFieldStruct:
         ...
 class Real16Alloc1D:
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> float:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -12581,7 +12649,11 @@ class Real16Alloc1D:
         ...
     def __len__(self) -> int:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: typing.SupportsFloat) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def clear(self) -> None:
         ...
@@ -12596,7 +12668,11 @@ class Real16Array1D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> float:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -12612,7 +12688,11 @@ class Real16Array1D:
         """
     def __repr__(self) -> str:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: typing.SupportsFloat) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def __str__(self) -> str:
         ...
@@ -12627,7 +12707,11 @@ class Real16Array1D:
     def upper_bound(self) -> int:
         ...
 class RealAlloc1D:
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> float:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -12645,7 +12729,11 @@ class RealAlloc1D:
         ...
     def __len__(self) -> int:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: typing.SupportsFloat) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def clear(self) -> None:
         ...
@@ -12660,7 +12748,11 @@ class RealArray1D:
         """
         Return a buffer object that exposes the underlying memory of the object.
         """
+    @typing.overload
     def __getitem__(self, arg0: typing.SupportsInt) -> float:
+        ...
+    @typing.overload
+    def __getitem__(self, arg0: slice) -> list:
         ...
     @typing.overload
     def __init__(self) -> None:
@@ -12676,7 +12768,11 @@ class RealArray1D:
         """
     def __repr__(self) -> str:
         ...
+    @typing.overload
     def __setitem__(self, arg0: typing.SupportsInt, arg1: typing.SupportsFloat) -> None:
+        ...
+    @typing.overload
+    def __setitem__(self, arg0: slice, arg1: collections.abc.Sequence) -> None:
         ...
     def __str__(self) -> str:
         ...

@@ -10,6 +10,7 @@ void init_SimUtils_routines_i(py::module &m) {
       &SimUtils::i_bessel,
       py::arg("m"),
       py::arg("arg"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine i_bessel
 
 Parameters
@@ -31,6 +32,7 @@ i_bes : float
       &SimUtils::i_bessel_extended,
       py::arg("m"),
       py::arg("arg"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine i_bessel_extended
 
 Parameters
@@ -54,6 +56,7 @@ i_bes : complex
       py::arg("digits"),
       py::arg("number"),
       py::arg("cnumber"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine increment_file_number
 
 Parameters
@@ -73,6 +76,7 @@ cnumber : str
       py::arg("string1"),
       py::arg("string2"),
       py::arg("indx"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine index_nocase
 
 Parameters
@@ -92,6 +96,7 @@ indx : int
       py::arg("order"),
       py::arg("der"),
       py::arg("id"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function initFixedWindowLS
 
 Initializes an instance of the fixed window least squares module.
@@ -116,6 +121,7 @@ der : int
   m.def(
       "initial_lmdif",
       &SimUtils::initial_lmdif,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine initial_lmdif
 )"""
   );
@@ -125,6 +131,7 @@ der : int
       py::arg("int_"),
       py::arg("str"),
       py::arg("width") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine int_str
 
 Parameters
@@ -142,6 +149,7 @@ width : int, optional
       py::arg("this_fft"),
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
 
 Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
@@ -157,6 +165,7 @@ available.
       py::arg("this_fft"),
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(function interpolated_fft_gsl
 
 Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
@@ -170,6 +179,7 @@ available.
       py::arg("string"),
       py::arg("is_alpha"),
       py::arg("valid_chars") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(no longer exists
 function inverse_prob (val) result (prob)
   import
@@ -184,6 +194,7 @@ end function
       &SimUtils::is_decreasing_sequence,
       py::arg("array"),
       py::arg("strict") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine is_decreasing_sequence
 
 Parameters
@@ -204,6 +215,7 @@ is_decreasing : bool
       "is_false",
       &SimUtils::is_false,
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function is_false (param) result (this_false)
 
 Routine to translate from a real number to a boolian True or False.
@@ -231,6 +243,7 @@ this_false : bool
       &SimUtils::is_increasing_sequence,
       py::arg("array"),
       py::arg("strict") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine is_increasing_sequence
 
 Parameters
@@ -255,6 +268,7 @@ is_increasing : bool
       py::arg("int_") = py::none(),
       py::arg("delims") = py::none(),
       py::arg("ix_word") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine is_integer
 
 Parameters
@@ -274,6 +288,7 @@ ix_word : int, optional
       py::arg("string"),
       py::arg("valid"),
       py::arg("ignore") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine is_logical
 
 Parameters
@@ -292,6 +307,7 @@ ignore : bool, optional
       py::arg("valid"),
       py::arg("ignore") = py::none(),
       py::arg("real_num") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine is_real
 
 Parameters
@@ -309,6 +325,7 @@ real_num : float, optional
       "is_subatomic_species",
       &SimUtils::is_subatomic_species,
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function is_subatomic_species(species) result (is_subatomic)
 
 Routine to return True if species argument corresponds to a subatomic particle.
@@ -328,6 +345,7 @@ is_subatomic : bool
       "is_true",
       &SimUtils::is_true,
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function is_true (param) result (this_true)
 
 Routine to translate from a real number to a boolian True or False.

@@ -9,6 +9,7 @@ void init_Bmad_routines_u(py::module &m) {
       "update_ele_from_fibre",
       &Bmad::update_ele_from_fibre,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine update_ele_from_fibre (ele)
 
 Routine to update a bmad lattice element when the associated PTC fibre has been modified.
@@ -26,6 +27,7 @@ ele : EleStruct
       "update_fibre_from_ele",
       &Bmad::update_fibre_from_ele,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine update_fibre_from_ele
 
 Parameters
@@ -45,6 +47,7 @@ survey_needed : bool
       &Bmad::update_floor_angles,
       py::arg("floor"),
       py::arg("floor0") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine update_floor_angles
 
 Parameters

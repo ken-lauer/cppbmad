@@ -44,6 +44,7 @@ void init_Bmad_routines_s(py::module &m) {
       &Bmad::s_body_calc,
       py::arg("orbit"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine s_body_calc
 
 Parameters
@@ -64,6 +65,7 @@ s_body : float
       "s_calc",
       &Bmad::s_calc,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine s_calc
 
 Parameters
@@ -80,6 +82,7 @@ lat : LatStruct
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine sad_mult_hard_bend_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
 Routine to track through the hard edge bend fringe field for a bend or sad_mult element.
@@ -124,6 +127,7 @@ make_matrix : bool, optional
       py::arg("orb"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine sad_soft_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
 
 Subroutine to track through the ("linear") bend soft edge field of an sbend or sad_mult.
@@ -160,6 +164,7 @@ make_matrix : bool, optional
       py::arg("bunch_tracks") = py::none(),
       py::arg("s_body") = py::none(),
       py::arg("is_time_coords") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine save_a_beam_step
 
 Parameters
@@ -191,6 +196,7 @@ is_time_coords : bool, optional
       py::arg("bunch_track") = py::none(),
       py::arg("s_body") = py::none(),
       py::arg("is_time_coords") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine save_a_bunch_step
 
 Parameters
@@ -228,6 +234,7 @@ is_time_coords : bool, optional
       py::arg("make_matrix") = py::none(),
       py::arg("rf_time") = py::none(),
       py::arg("strong_beam") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine save_a_step
 
 Parameters
@@ -281,6 +288,7 @@ strong_beam : StrongBeamStruct, optional
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine sbend_body_with_k1_map
 
 Parameters
@@ -343,6 +351,7 @@ make_matrix : bool, optional
       py::arg("t_now"),
       py::arg("dt_step"),
       py::arg("sc_field"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine sc_adaptive_step(bunch, ele, include_image, t_now, dt_step, dt_next)
 
 Routine to track a bunch of particles with space charge for one step using
@@ -411,6 +420,7 @@ dt_next : float
       py::arg("include_image"),
       py::arg("t_end"),
       py::arg("sc_field"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine sc_step(bunch, ele, include_image, t_end, n_emit)
 
 Subroutine to track a bunch through a given time step with space charge
@@ -452,6 +462,7 @@ n_emit : int, optional
       &Bmad::set_active_fixer,
       py::arg("fixer"),
       py::arg("turn_on") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_active_fixer(fixer, turn_on, orbit)
 
 Set the acvitive fixer element.
@@ -482,6 +493,7 @@ orbit : CoordStruct, optional
       &Bmad::set_custom_attribute_name,
       py::arg("custom_name"),
       py::arg("custom_index") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_custom_attribute_name (custom_name, err_flag, custom_index)
 
 Routine to add custom element attributes to the element attribute name table.
@@ -526,6 +538,7 @@ err_flag : bool
       py::arg("set_string"),
       py::arg("err_print_flag") = py::none(),
       py::arg("set_lords") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ele_attribute
 
 Parameters
@@ -559,6 +572,7 @@ err_id : int, optional
       &Bmad::set_ele_defaults,
       py::arg("ele"),
       py::arg("do_allocate") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ele_defaults
 
 Parameters
@@ -577,6 +591,7 @@ do_allocate : bool, optional
       &Bmad::set_ele_name,
       py::arg("ele"),
       py::arg("name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ele_name
 
 Parameters
@@ -597,6 +612,7 @@ name : str
       py::arg("attrib_name"),
       py::arg("value"),
       py::arg("err_print_flag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ele_real_attribute
 
 Parameters
@@ -644,6 +660,7 @@ err_flag : bool
   m.def(
       "set_ele_status_stale",
       &Bmad::set_ele_status_stale,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ele_status_stale
 
 Returns
@@ -667,6 +684,7 @@ set_slaves : bool, optional
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("set_dependent") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
 Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
@@ -707,6 +725,7 @@ set_dependent : bool, optional
       py::overload_cast<LatStruct &, std::optional<bool>>(&Bmad::set_flags_for_changed_attribute),
       py::arg("lat"),
       py::arg("set_dependent") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
 Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
@@ -752,6 +771,7 @@ set_dependent : bool, optional
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("set_dependent") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
 Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
@@ -795,6 +815,7 @@ set_dependent : bool, optional
       py::arg("ele"),
       py::arg("attrib") = py::none(),
       py::arg("set_dependent") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
 Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
@@ -850,6 +871,7 @@ set_dependent : bool, optional
       py::arg("fringe_at"),
       py::arg("ele_end"),
       py::arg("on_or_off"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_fringe_on_off
 
 Parameters
@@ -880,6 +902,7 @@ fringe_at : float
       py::arg("stat_group"),
       py::arg("control_bookkeeping") = py::none(),
       py::arg("flag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_lords_status_stale
 
 Parameters
@@ -909,6 +932,7 @@ flag : int, optional
       py::arg("saved_values") = py::none(),
       py::arg("attribute") = py::none(),
       py::arg("set_val") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_on_off
 
 Parameters
@@ -951,6 +975,7 @@ set_val : int, optional
       py::arg("n1"),
       py::arg("n2"),
       py::arg("ix_noset") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_orbit_to_zero
 
 Parameters
@@ -978,6 +1003,7 @@ ix_noset : int, optional
       py::arg("n_step") = py::none(),
       py::arg("no_cavity") = py::none(),
       py::arg("force_init") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ptc
 
 Parameters
@@ -1010,6 +1036,7 @@ force_init : bool, optional
       &Bmad::set_ptc_base_state,
       py::arg("component"),
       py::arg("set_val"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ptc_base_state
 
 Parameters
@@ -1030,6 +1057,7 @@ old_val : bool, optional
   m.def(
       "set_ptc_com_pointers",
       &Bmad::set_ptc_com_pointers,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_ptc_com_pointers ()
 
 Routine to set ptc_com pointers to PTC global variables.
@@ -1055,6 +1083,7 @@ Routine to set ptc_com pointers to PTC global variables.
       py::arg("channel"),
       py::arg("set"),
       py::arg("old_val"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_ptc_quiet (channel, set, old_val)
 
 Routine to set the lielib_print(:) array or c_verbose logical to suppress informational messages
@@ -1087,6 +1116,7 @@ old_val : int
       "set_ptc_verbose",
       &Bmad::set_ptc_verbose,
       py::arg("on"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ptc_verbose
 
 Parameters
@@ -1100,6 +1130,7 @@ on : bool
       py::arg("lat"),
       py::arg("mode0"),
       py::arg("inductance"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_pwd_ele(lat,mode0,inductance)
 
 Simulates the effect of potential well distortion by adjusting lat%ele(ix_pwd)%taylor(6)%term(2)%coef for an
@@ -1123,6 +1154,7 @@ inductance : float
       "set_status_flags",
       &Bmad::set_status_flags,
       py::arg("stat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_status_flags
 
 Parameters
@@ -1145,6 +1177,7 @@ bookkeeping_state : BookkeepingStateStruct
       py::arg("branch"),
       py::arg("orb"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_tune
 
 Parameters
@@ -1191,6 +1224,7 @@ ok : bool
       py::arg("match_deta_ds"),
       py::arg("err_flag"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_twiss
 
 Parameters
@@ -1220,6 +1254,7 @@ print_err : bool, optional
       py::arg("branch"),
       py::arg("z_tune"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_z_tune
 
 Parameters
@@ -1243,6 +1278,7 @@ ok : bool, optional
       "settable_dep_var_bookkeeping",
       &Bmad::settable_dep_var_bookkeeping,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine settable_dep_var_bookkeeping (ele)
 
 Subroutine to initialize dependent variables in an element.
@@ -1260,6 +1296,7 @@ This subroutine is not intended for general use.
       py::arg("mode"),
       py::arg("beam_init") = py::none(),
       py::arg("closed_orb") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine setup_high_energy_space_charge_calc (calc_on, branch, n_part, mode, beam_init, closed_orb)
 
 Routine to initialize constants needed by the ultra relativistic space charge
@@ -1298,6 +1335,7 @@ closed_orb : 1D array of CoordStruct, optional
       &Bmad::sigma_mat_ptc_to_bmad,
       py::arg("sigma_mat_ptc"),
       py::arg("beta0"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine sigma_mat_ptc_to_bmad (sigma_mat_ptc, beta0, sigma_mat_bmad)
 
 Routine to convert a PTC sigma matrix to a Bmad sigma matrix.
@@ -1329,6 +1367,7 @@ sigma_mat_bmad : 2D array of float (shape: 6,6)
       py::arg("value2"),
       py::arg("abs_tol") = py::none(),
       py::arg("rel_tol") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine significant_difference
 
 Parameters
@@ -1356,6 +1395,7 @@ is_different : bool
       &Bmad::skip_ele_blender,
       py::arg("ele"),
       py::arg("skip"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine skip_ele_blender
 
 Parameters
@@ -1371,6 +1411,7 @@ skip : bool
       py::arg("lat"),
       py::arg("ele_list"),
       py::arg("do_bookkeeping") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine slice_lattice
 
 Parameters
@@ -1403,6 +1444,7 @@ error : bool
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine soft_quadrupole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
 Routine to add the SAD "linear" soft edge (for finite f1 or f2).
@@ -1445,6 +1487,7 @@ make_matrix : bool, optional
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine sol_quad_mat6_calc
 
 Parameters
@@ -1481,6 +1524,7 @@ make_matrix : bool, optional
       py::arg("t1"),
       py::arg("p0"),
       py::arg("args"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine solve_psi_adaptive(t0,t1,p0,args,p1)
 
 Solve dpsi/dt for psi(t1) using adaptive steps and method:
@@ -1517,6 +1561,7 @@ p1 : float
       py::arg("args"),
       py::arg("t"),
       py::arg("p"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine solve_psi_fixed_steps(t0,t1,p0,args,t,p)
 
 Solve dpsi/dt for psi(t1) using fixed steps and method:
@@ -1551,6 +1596,7 @@ p : 1D array of float
       "sort_complex_taylor_terms",
       &Bmad::sort_complex_taylor_terms,
       py::arg("complex_taylor_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine sort_complex_taylor_terms (complex_taylor_in, complex_taylor_sorted)
 
 Subroutine to sort the complex_taylor terms from "lowest" to "highest" of
@@ -1596,6 +1642,7 @@ complex_taylor_sorted : ComplexTaylorStruct
       &Bmad::spin_dn_dpz_from_mat8,
       py::arg("mat_1turn"),
       py::arg("dn_dpz_partial") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_dn_dpz_from_mat8
 
 Parameters
@@ -1641,6 +1688,7 @@ dn_dpz : 1D array of float (shape: 3)
       py::arg("dn_dpz_partial"),
       py::arg("dn_dpz_partial2"),
       py::arg("n0") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_dn_dpz_from_qmap
 
 Parameters
@@ -1675,6 +1723,7 @@ dn_dpz : 1D array of float (shape: 3)
       "spin_map1_normalize",
       &Bmad::spin_map1_normalize,
       py::arg("spin1"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_map1_normalize
 
 Parameters
@@ -1707,6 +1756,7 @@ spin1 : 2D array of float (shape: 0:3,0:6)
       &Bmad::spin_mat8_resonance_strengths,
       py::arg("orb_evec"),
       py::arg("mat8"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_mat8_resonance_strengths
 
 Parameters
@@ -1757,6 +1807,7 @@ xi_diff : float
       &Bmad::spin_mat_to_eigen,
       py::arg("orb_mat"),
       py::arg("spin_map"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_mat_to_eigen
 
 Parameters
@@ -1793,6 +1844,7 @@ error : bool
       py::arg("sign_z_vel"),
       py::arg("omega"),
       py::arg("phase_space_coords") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_omega
 
 Parameters
@@ -1830,6 +1882,7 @@ phase_space_coords : bool, optional
       &Bmad::spin_quat_resonance_strengths,
       py::arg("orb_evec"),
       py::arg("spin_q"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_quat_resonance_strengths
 
 Parameters
@@ -1856,6 +1909,7 @@ xi_diff : float
       py::arg("normalize"),
       py::arg("dref_orb"),
       py::arg("is_on"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_taylor_to_linear
 
 Parameters
@@ -1882,6 +1936,7 @@ spin_map1 : 2D array of float (shape: 0:3,0:6)
       "spinor_to_polar",
       &Bmad::spinor_to_polar,
       py::arg("spinor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spinor_to_polar
 
 Parameters
@@ -1899,6 +1954,7 @@ polar : SpinPolarStruct
       "spinor_to_vec",
       &Bmad::spinor_to_vec,
       py::arg("spinor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spinor_to_vec
 
 Parameters
@@ -1919,6 +1975,7 @@ vec : 1D array of float (shape: 3)
       py::arg("end_orb"),
       py::arg("spline_x"),
       py::arg("spline_y"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spline_fit_orbit
 
 Parameters
@@ -1967,6 +2024,7 @@ spline_y : 1D array of float (shape: 0:3)
       py::arg("save_null_drift") = py::none(),
       py::arg("choose_max") = py::none(),
       py::arg("ix_insert") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine split_lat
 
 Parameters
@@ -2023,6 +2081,7 @@ err_flag : bool, optional
       &Bmad::sprint_spin_taylor_map,
       py::arg("ele"),
       py::arg("start_orbit") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine sprint_spin_taylor_map
 
 Parameters
@@ -2041,6 +2100,7 @@ start_orbit : 1D array of float (shape: 6), optional
       &Bmad::sr_longitudinal_wake_particle,
       py::arg("ele"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine sr_longitudinal_wake_particle (ele, orbit)
 
 Routine to apply the short-range wake longitudinal component kick to a particle and then add
@@ -2062,6 +2122,7 @@ orbit : CoordStruct
       &Bmad::sr_transverse_wake_particle,
       py::arg("ele"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine sr_transverse_wake_particle (ele, orbit)
 
 Subroutine to apply the short-range wake transverse component of the kick to a particle and then add
@@ -2084,6 +2145,7 @@ orbit : CoordStruct
       py::arg("ele"),
       py::arg("bunch"),
       py::arg("z_ave"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine sr_z_long_wake (ele, bunch, z_ave)
 
 Subroutine to apply the short-range z-wake kick to a particle.
@@ -2108,6 +2170,7 @@ z_ave : float
       py::arg("n_slices_gen_opt") = py::none(),
       py::arg("n_slices_sxt_opt") = py::none(),
       py::arg("per_ele_out") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine srdt_calc(lat, srdt_sums, order, n_slices_gen_opt, n_slices_sxt_opt)
 
 Calculate summation RDT terms up to order=1 or order=2 while slicing sextupoles
@@ -2149,6 +2212,7 @@ srdt_sums : SummationRdtStruct
       py::arg("chrom_set_x_opt") = py::none(),
       py::arg("chrom_set_y_opt") = py::none(),
       py::arg("weight_in") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine srdt_lsq_solution(lat, var_indexes, ls_soln, n_slices_gen_opt, n_slices_sxt_opt,
                                                     chrom_set_x_opt, chrom_set_y_opt, weight_in)
 
@@ -2199,6 +2263,7 @@ ls_soln : 1D array of float
       py::arg("lat"),
       py::arg("ele_start"),
       py::arg("move_end_marker"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine start_branch_at
 
 Parameters
@@ -2226,6 +2291,7 @@ error : bool
       &Bmad::stream_ele_end,
       py::arg("physical_end"),
       py::arg("ele_orientation"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine stream_ele_end
 
 Parameters
@@ -2248,6 +2314,7 @@ stream_end : int
       &Bmad::string_attrib,
       py::arg("attrib_name"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine string_attrib (attrib_name, ele, attrib_value)
 
 Routine to return the value of a string attribute of a lattice element.
@@ -2295,6 +2362,7 @@ attrib_value : str
       &Bmad::strong_beam_sigma_calc,
       py::arg("ele"),
       py::arg("s_pos"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine strong_beam_sigma_calc
 
 Parameters
@@ -2321,6 +2389,7 @@ dsigma_ds : 1D array of float (shape: 2)
       "strong_beam_strength",
       &Bmad::strong_beam_strength,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine strong_beam_strength
 
 Parameters
@@ -2361,6 +2430,7 @@ strength : float
       py::arg("x"),
       py::arg("y"),
       py::arg("extend_grid") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine surface_grid_displacement (ele, x, y, err_flag, z, dz_dxy, extend_grid)
 
 Routine to add in the z displacement defined by the grid
@@ -2400,6 +2470,7 @@ dz_dxy : 1D array of float (shape: 2), optional
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       py::arg("offset_ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine symp_lie_bmad
 
 Parameters

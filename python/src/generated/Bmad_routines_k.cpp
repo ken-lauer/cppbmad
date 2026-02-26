@@ -10,6 +10,7 @@ void init_Bmad_routines_k(py::module &m) {
       &Bmad::key_name_to_key_index,
       py::arg("key_str"),
       py::arg("abbrev_allowed") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine key_name_to_key_index
 
 Parameters
@@ -52,6 +53,7 @@ key_index : int
       py::arg("s_body"),
       py::arg("orbit"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine kick_vector_calc (ele, param, s_rel, orbit, dr_ds, field, err, print_err)
 
 Subroutine to calculate the dr/ds "kick vector" where
@@ -120,6 +122,7 @@ err : bool
       "kill_complex_taylor",
       &Bmad::kill_complex_taylor,
       py::arg("complex_taylor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine kill_complex_taylor (complex_taylor)
 
 Subroutine to deallocate a Bmad complex_taylor map.
@@ -136,6 +139,7 @@ complex_taylor : 1D array of ComplexTaylorStruct
       "kill_ptc_layouts",
       &Bmad::kill_ptc_layouts,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine kill_ptc_layouts
 
 Parameters
@@ -148,6 +152,7 @@ lat : LatStruct
       "kill_taylor",
       &Bmad::kill_taylor,
       py::arg("bmad_taylor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine kill_taylor
 
 Parameters
@@ -162,6 +167,7 @@ bmad_taylor : 1D array of TaylorStruct
       "kind_name",
       &Bmad::kind_name,
       py::arg("this_kind"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function kind_name (this_kind) result (kind_str)
 
 function to return the name of a PTC kind.
@@ -201,6 +207,7 @@ kind_str : str
       py::arg("y_knot"),
       py::arg("x_pt"),
       py::arg("interpolation"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine knot_interpolate
 
 Parameters
@@ -232,6 +239,7 @@ y_pt : float
       py::arg("x_knot"),
       py::arg("y_knot"),
       py::arg("str"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine knots_to_string
 
 Parameters

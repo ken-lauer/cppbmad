@@ -23,6 +23,7 @@ void init_SimUtils_routines_g(py::module &m) {
       &SimUtils::gelbd,
       py::arg("phi"),
       py::arg("mc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gelbd
 
 Parameters
@@ -46,6 +47,7 @@ eld : float
       py::arg("c"),
       py::arg("s"),
       py::arg("err_tol") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gen_complete_elliptic
 
 Parameters
@@ -78,6 +80,7 @@ value : float
       py::arg("cnum_in"),
       py::arg("num_out"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine get_file_number
 
 Parameters
@@ -96,6 +99,7 @@ err_flag : bool
       &SimUtils::get_file_time_stamp,
       py::arg("file"),
       py::arg("time_stamp"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(no longer exists
 subroutine get_next_number (filein, cnum, digits)
   implicit none
@@ -110,6 +114,7 @@ end subroutine
       &SimUtils::get_tty_char,
       py::arg("wait"),
       py::arg("flush"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine get_tty_char (this_char, wait, flush)
 
 Subroutine for getting a single character from the terminal.

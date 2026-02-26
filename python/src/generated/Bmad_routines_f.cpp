@@ -23,6 +23,7 @@ void init_Bmad_routines_f(py::module &m) {
       py::arg("b"),
       py::arg("n"),
       py::arg("isn"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine fft1
 
 Parameters
@@ -64,6 +65,7 @@ ierr : int
       py::arg("branch"),
       py::arg("ix_ele"),
       py::arg("from_mad") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine fibre_to_ele
 
 Parameters
@@ -100,6 +102,7 @@ err_flag : bool
       &Bmad::field_attribute_free,
       py::arg("ele"),
       py::arg("attrib_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function field_attribute_free (ele, attrib_name) result (free)
 
 Routine to check if a field attribute is free to vary.
@@ -128,6 +131,7 @@ free : bool
       &Bmad::finalize_reflectivity_table,
       py::arg("table"),
       py::arg("in_degrees"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine finalize_reflectivity_table (table, in_degrees)
 
 Routine to finalize the construction of the reflectivity tables for a surface.
@@ -165,6 +169,7 @@ in_degrees : bool
       &Bmad::find_element_ends,
       py::arg("ele"),
       py::arg("ix_multipass") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine find_element_ends
 
 Parameters
@@ -192,6 +197,7 @@ ele2 : EleStruct, optional
       &Bmad::find_fwhm,
       py::arg("bound"),
       py::arg("args"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine find_fwhm(bound,args,fwhm)
 
 Finds the full width at half max of psi(t).  fwhm * c_light / TwoRtTwoLnTwo is taken as the bunch length.
@@ -241,6 +247,7 @@ fwhm : float
       py::arg("ele"),
       py::arg("fm_type"),
       py::arg("ignore_slaves") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine find_matching_fieldmap
 
 Parameters
@@ -273,6 +280,7 @@ match_ele : EleStruct, optional
       py::arg("bound"),
       py::arg("p0"),
       py::arg("args"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine find_normalization(bound,p0,args,pnrml)
 
 Finds value for boundary condition psi(0) that results in integral
@@ -319,6 +327,7 @@ pnrml : float
       py::arg("theta"),
       py::arg("phi"),
       py::arg("psi"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine floor_angles_to_w_mat
 
 Parameters
@@ -366,6 +375,7 @@ w_mat_inv : 2D array of float (shape: 3,3), optional
       &Bmad::floor_w_mat_to_angles,
       py::arg("w_mat"),
       py::arg("floor0") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine floor_w_mat_to_angles
 
 Parameters
@@ -394,6 +404,7 @@ psi : float
       &Bmad::form_complex_taylor,
       py::arg("re_taylor"),
       py::arg("im_taylor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine form_complex_taylor (re_taylor, im_taylor, complex_taylor)
 
 Subroutine to form a complex taylor from two taylor series representing
@@ -435,6 +446,7 @@ complex_taylor : ComplexTaylorStruct
       &Bmad::form_digested_bmad_file_name,
       py::arg("lat_file"),
       py::arg("use_line") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine form_digested_bmad_file_name (lat_file, digested_file, full_lat_file, use_line)
 
 Subroutine to form the standard name of the Bmad digested file.
@@ -467,6 +479,7 @@ full_lat_file : str, optional
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("particle_at"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine fringe_here
 
 Parameters

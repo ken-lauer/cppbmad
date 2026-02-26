@@ -14,6 +14,7 @@ void init_Bmad_routines_p(py::module &m) {
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parse_cartesian_map (ct_map, ele, lat, delim, delim_found, err_flag)
 
 Subroutine to parse a "cartesian_map = {}" construct
@@ -39,6 +40,7 @@ This must read in:
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine parse_cylindrical_map
 
 Parameters
@@ -65,6 +67,7 @@ err_flag : bool
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parse_gen_grad_map (gg_map, ele, lat, delim, delim_found, err_flag)
 
 Subroutine to parse a "gen_grad_map = {}" construct
@@ -79,6 +82,7 @@ Subroutine to parse a "gen_grad_map = {}" construct
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine parse_grid_field
 
 Parameters
@@ -110,6 +114,7 @@ err_flag : bool
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
                                       separator, close_delim, default_value) result (is_ok)
 
@@ -155,6 +160,7 @@ See parse_integer_list2 for more details
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function parse_integer_list2 (err_str, lat, int_array, num_found, delim, delim_found, num_expected,
                                        open_delim, separator, close_delim, default_value) result (is_ok)
 
@@ -222,6 +228,7 @@ is_ok : bool
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
       py::arg("default_value") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, open_delim,
                                separator, close_delim, default_value, num_found) result (is_ok)
 
@@ -296,6 +303,7 @@ num_found : int, optional
       py::arg("close_brace") = py::none(),
       py::arg("default_value") = py::none(),
       py::arg("single_value") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function parse_real_list2 (lat, err_str, real_array, num_found, delim, delim_found, num_expected,
                            open_delim, separator, close_delim, default_value, single_value) result (is_ok)
 
@@ -341,6 +349,7 @@ is_ok : bool
       py::arg("word"),
       py::arg("lat"),
       py::arg("redef_is_error"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine parser_add_constant
 
 Parameters
@@ -361,6 +370,7 @@ redef_is_error : bool
       py::arg("delim_found"),
       py::arg("call_found"),
       py::arg("err_flag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_call_check(word, ix_word, delim, delim_found, call_found, err_flag))
 
 Routine to check if there is a "call::XXX" construct in the input stream.
@@ -389,6 +399,7 @@ Routine to check if there is a "call::XXX" construct in the input stream.
       py::arg("cmplx_vec"),
       py::arg("ele"),
       py::arg("err_str"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function parser_fast_complex_read (cmplx_vec, ele, delim, err_str)  result (is_ok)
 
 Routine to read an array of complex numbers.
@@ -425,6 +436,7 @@ is_ok : bool
       py::arg("delim_wanted"),
       py::arg("err_str"),
       py::arg("is_ok"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
 )"""
   );
@@ -456,6 +468,7 @@ is_ok : bool
       py::arg("end_delims"),
       py::arg("err_str"),
       py::arg("exact_size") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function parser_fast_real_read (real_vec, ele, end_delims, delim, err_str, exact_size, n_real)  result (is_ok)
 
 Routine to read an array of real numbers.
@@ -504,6 +517,7 @@ n_real : int, optional
       py::arg("err") = py::none(),
       py::arg("open_file") = py::none(),
       py::arg("abort_on_open_error") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_file_stack (how, file_name_in, finished, err, open_file, abort_on_open_error)
 
 Subroutine to keep track of the files that are opened for reading.
@@ -522,6 +536,7 @@ This subroutine is not intended for general use.
       py::arg("err"),
       py::arg("str1") = py::none(),
       py::arg("str2") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine parser_get_integer
 
 Parameters
@@ -552,6 +567,7 @@ str2 : str, optional
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine parser_get_logical
 
 Parameters
@@ -573,6 +589,7 @@ err : bool
       "parser_identify_fork_to_element",
       &Bmad::parser_identify_fork_to_element,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_identify_fork_to_element (lat)
 
 Routine to identify the elements the forks in a lattice are branching to.
@@ -585,6 +602,7 @@ This subroutine is not intended for general use.
       "parser_init_custom_elements",
       &Bmad::parser_init_custom_elements,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_init_custom_elements (lat)
 )"""
   );
@@ -593,6 +611,7 @@ This subroutine is not intended for general use.
       &Bmad::parser_print_line,
       py::arg("lat"),
       py::arg("end_of_file"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_print_line(end_of_file)
 
 This routine is called when a print statement is found in the lattice file.
@@ -605,6 +624,7 @@ This routine is called when a print statement is found in the lattice file.
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_read_lr_wake (ele, delim, delim_found, err_flag)
 
 Subroutine to read in a long-range wake field from an external file.
@@ -623,6 +643,7 @@ ele : EleStruct
       &Bmad::parser_read_old_format_lr_wake,
       py::arg("ele"),
       py::arg("lr_file_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_read_old_format_lr_wake (ele, lr_file_name)
 
 Subroutine to read in a long-range wake field from an external file.
@@ -644,6 +665,7 @@ lr_file_name : str
       &Bmad::parser_read_old_format_sr_wake,
       py::arg("ele"),
       py::arg("sr_file_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_read_old_format_sr_wake (ele, sr_file_name)
 
 Subroutine to read in a short-range wake field from an external file.
@@ -667,6 +689,7 @@ sr_file_name : str
       py::arg("delim"),
       py::arg("delim_found"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_read_sr_wake (ele, delim, delim_found, err_flag)
 
 Subroutine to read in a short-range wake field.
@@ -686,6 +709,7 @@ ele : EleStruct
       py::arg("con_in"),
       py::arg("lord"),
       py::arg("ix_var"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine parser_transfer_control_struct (con_in, con_out, lord, ix_var)
 
 Routine to transfer the information from an input control_struct (which stores
@@ -718,6 +742,7 @@ con_out : ControlStruct
       py::arg("in_time_coordinates") = py::none(),
       py::arg("in_body_frame") = py::none(),
       py::arg("w_mat_out") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function particle_in_global_frame (orb, in_time_coordinates, in_body_frame, w_mat_out) result (particle)
 
 Returns the particle in global time coordinates given is coordinates orb in lattice lat.
@@ -746,6 +771,7 @@ particle : CoordStruct
       "particle_is_moving_backwards",
       &Bmad::particle_is_moving_backwards,
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine particle_is_moving_backwards
 
 Parameters
@@ -764,6 +790,7 @@ is_moving_backwards : bool
       &Bmad::particle_is_moving_forward,
       py::arg("orbit"),
       py::arg("dir") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine particle_is_moving_forward
 
 Parameters
@@ -790,6 +817,7 @@ is_moving_forward : bool
       py::arg("time_coords") = py::none(),
       py::arg("rf_freq") = py::none(),
       py::arg("abs_time") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine particle_rf_time
 
 Parameters
@@ -830,6 +858,7 @@ time : float
       &Bmad::patch_flips_propagation_direction,
       py::arg("x_pitch"),
       py::arg("y_pitch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine patch_flips_propagation_direction
 
 Parameters
@@ -851,6 +880,7 @@ is_flip : bool
       &Bmad::patch_length,
       py::arg("patch"),
       py::arg("ref_coords") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine patch_length
 
 Parameters
@@ -894,6 +924,7 @@ length : float
       &Bmad::photon_absorption_and_phase_shift,
       py::arg("material"),
       py::arg("Energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine photon_absorption_and_phase_shift (material, Energy, absorption, phase_shift, err_flag)
 
 Routine to calcualte the absorption and phase shift values for a photon with a given
@@ -945,6 +976,7 @@ err_flag : bool
       py::arg("orbit"),
       py::arg("ele"),
       py::arg("pixel_pt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt, iy_pt, pixel_pt)
 
 Routine to add photon statistics to the appropriate pixel of a "detector" grid.
@@ -1003,6 +1035,7 @@ iy_pt : int, optional
       py::arg("graze_angle_in"),
       py::arg("energy"),
       py::arg("surface"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine photon_reflection (graze_angle_in, energy, surface, graze_angle_out, phi_out)
 
 Routine to reflect a photon from a surface including both diffuse and specular reflections.
@@ -1030,6 +1063,7 @@ phi_out : float
   m.def(
       "photon_reflection_std_surface_init",
       &Bmad::photon_reflection_std_surface_init,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine photon_reflection_std_surface_init (surface)
 
 Routine to initialize the standard proton reflection probability tables.
@@ -1066,6 +1100,7 @@ surface : PhotonReflectSurfaceStruct
       py::arg("angle"),
       py::arg("energy"),
       py::arg("surface"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine photon_reflectivity (angle, energy, surface, p_reflect, rel_p_specular)
 
 Routine to evaluate the photon reflectivity.
@@ -1104,6 +1139,7 @@ rel_p_specular : float
       py::arg("y_lim"),
       py::arg("z_lim"),
       py::arg("source_ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine photon_target_corner_calc (aperture_ele, x_lim, y_lim, z_lim, source_ele, corner)
 
 Routine to calculate the corner coords in the source_ele ref frame.
@@ -1132,6 +1168,7 @@ corner : TargetPointStruct
       "photon_target_setup",
       &Bmad::photon_target_setup,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine photon_target_setup (ele)
 
 Routine to calculate and store the parmeters needed for photon targeting.
@@ -1152,6 +1189,7 @@ ele : EleStruct
       "photon_type",
       &Bmad::photon_type,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function photon_type (ele) result (e_type)
 
 Routine to return the type of photon to be tracked: coherent$ or incoherent$.
@@ -1174,6 +1212,7 @@ e_type : int
       py::arg("orbit"),
       py::arg("ele_orientation"),
       py::arg("return_stream_end") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine physical_ele_end
 
 Parameters
@@ -1206,6 +1245,7 @@ physical_end : int
       py::arg("direction"),
       py::arg("max_target_area"),
       py::arg("w_to_surface") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine point_photon_emission (ele, param, orbit, direction, max_target_area, w_to_surface)
 
 Routine to emit a photon from a point that may be on a surface.
@@ -1239,6 +1279,7 @@ w_to_surface : 2D array of float (shape: 3,3), optional
       "pointer_to_branch",
       py::overload_cast<EleStruct &>(&Bmad::pointer_to_branch),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_branch
 
 Routine to return a pointer to the lattice branch associated with a given name
@@ -1277,6 +1318,7 @@ branch_ptr : BranchStruct, optional
       py::arg("lat"),
       py::arg("parameter_is_branch0") = py::none(),
       py::arg("blank_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_branch
 
 Routine to return a pointer to the lattice branch associated with a given name
@@ -1321,6 +1363,7 @@ branch_ptr : BranchStruct, optional
       py::arg("lat"),
       py::arg("ix_ele"),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_ele (...)
 
 Routine to return a pointer to an element.
@@ -1364,6 +1407,7 @@ ele_ptr : EleStruct, optional
       py::overload_cast<LatStruct &, LatEleLocStruct &>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_loc"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_ele (...)
 
 Routine to return a pointer to an element.
@@ -1404,6 +1448,7 @@ ele_ptr : EleStruct, optional
       py::overload_cast<LatStruct &, std::string>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("ele_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_ele (...)
 
 Routine to return a pointer to an element.
@@ -1444,6 +1489,7 @@ ele_ptr : EleStruct, optional
       py::overload_cast<LatStruct &, EleStruct &>(&Bmad::pointer_to_ele),
       py::arg("lat"),
       py::arg("foreign_ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_ele (...)
 
 Routine to return a pointer to an element.
@@ -1509,6 +1555,7 @@ ele_ptr : EleStruct, optional
       py::arg("s"),
       py::arg("choose_max"),
       py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_element_at_s (branch, s, choose_max, err_flag, s_eff, position) result (ele)
 
 Function to return a pointer to the element at position s.
@@ -1567,6 +1614,7 @@ ele : EleStruct, optional
       "pointer_to_fibre",
       &Bmad::pointer_to_fibre,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_fibre
 
 Parameters
@@ -1602,6 +1650,7 @@ assoc_fibre : Fibre, optional
       &Bmad::pointer_to_field_ele,
       py::arg("ele"),
       py::arg("ix_field_ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_field_ele
 
 Parameters
@@ -1642,6 +1691,7 @@ field_ele : EleStruct, optional
       "pointer_to_girder",
       &Bmad::pointer_to_girder,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_girder
 
 Parameters
@@ -1691,6 +1741,7 @@ girder : EleStruct, optional
       py::arg("slave"),
       py::arg("ix_lord"),
       py::arg("lord_type") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_lord
 
 Parameters
@@ -1748,6 +1799,7 @@ lord_ptr : EleStruct, optional
       "pointer_to_multipass_lord",
       &Bmad::pointer_to_multipass_lord,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_multipass_lord
 
 Parameters
@@ -1777,6 +1829,7 @@ multi_lord : EleStruct, optional
       py::arg("offset") = py::none(),
       py::arg("skip_beginning") = py::none(),
       py::arg("follow_fork") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_next_ele
 
 Parameters
@@ -1829,6 +1882,7 @@ follow_fork : bool, optional
       py::arg("lord"),
       py::arg("ix_slave"),
       py::arg("lord_type") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord_back, ix_control, ix_ic) result (slave_ptr)
 
 Function to point to a slave of a lord.
@@ -1908,6 +1962,7 @@ slave_ptr : EleStruct, optional
       &Bmad::pointer_to_super_lord,
       py::arg("slave"),
       py::arg("lord_type") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_super_lord
 
 Parameters
@@ -1974,6 +2029,7 @@ lord_ptr : EleStruct, optional
       py::arg("x"),
       py::arg("y"),
       py::arg("extend_grid") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
 
 Routine to point to the grid point struct associated with point (x,y).
@@ -2052,6 +2108,7 @@ pt : SurfaceDisplacementPtStruct, optional
       py::arg("x"),
       py::arg("y"),
       py::arg("extend_grid") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
 
 Routine to point to the grid point struct associated with point (x,y).
@@ -2117,6 +2174,7 @@ pt : SurfaceSegmentedPtStruct, optional
       "pointer_to_wake_ele",
       &Bmad::pointer_to_wake_ele,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_wake_ele
 
 Parameters
@@ -2158,6 +2216,7 @@ wake_ele : EleStruct, optional
       &Bmad::pointer_to_wall3d,
       py::arg("ele"),
       py::arg("ix_wall") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall) result (wall3d)
 
 Function to return a pointer to a wall3d structure associated
@@ -2189,6 +2248,7 @@ wall3d : Wall3dStruct, optional
       "polar_to_spinor",
       &Bmad::polar_to_spinor,
       py::arg("polar"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine polar_to_spinor
 
 Parameters
@@ -2206,6 +2266,7 @@ spinor : 1D array of complex (shape: 2)
       "polar_to_vec",
       &Bmad::polar_to_vec,
       py::arg("polar"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine polar_to_vec
 
 Parameters
@@ -2245,6 +2306,7 @@ vec : 1D array of float (shape: 3)
       py::arg("ring"),
       py::arg("ix"),
       py::arg("mode"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine project_emit_to_xyz(ring, ix, mode, sigma_x, sigma_y, sigma_z)
 
 Obtains the projected x, y, and z beamsizes by building the sigma matrix
@@ -2289,6 +2351,7 @@ sigma_z : float
       py::arg("t"),
       py::arg("p"),
       py::arg("args"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine psi_prime_sca(t, p, dpdt, args)
 
 This wraps the array-valued psi_prime function as a scalar.
@@ -2316,6 +2379,7 @@ dpdt : float
       "ptc_bookkeeper",
       &Bmad::ptc_bookkeeper,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ptc_bookkeeper
 
 Parameters
@@ -2336,6 +2400,7 @@ lat : LatStruct
       py::arg("use_2nd_order") = py::none(),
       py::arg("crossover") = py::none(),
       py::arg("crossover_wiggler") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max,
                                 even_steps, r_typical, dx_tol_bend, use_2nd_order)
 
@@ -2396,6 +2461,7 @@ crossover_wiggler : 1D array of int (shape: 2), optional
       "ptc_check_for_lost_particle",
       &Bmad::ptc_check_for_lost_particle,
       py::arg("do_reset"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_check_for_lost_particle (state, ptc_fibre, do_reset)
 
 Routine to check if a particle has been lost when tracking with PTC.
@@ -2419,6 +2485,7 @@ ptc_fibre : Fibre, optional
       &Bmad::ptc_closed_orbit_calc,
       py::arg("branch"),
       py::arg("radiation_damping_on") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_closed_orbit_calc (branch, closed_orbit, radiation_damping_on)
 
 Routine to calculate the closed orbit of a lattice branch using PTC.
@@ -2462,6 +2529,7 @@ closed_orbit : 1D array of CoordStruct
       &Bmad::ptc_emit_calc,
       py::arg("ele"),
       py::arg("sigma_mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_emit_calc (ele, norm_mode, sigma_mat, closed_orb)
 
 Routine to calculate emittances, etc.
@@ -2493,6 +2561,7 @@ closed_orb : CoordStruct
       py::arg("even") = py::none(),
       py::arg("crossover") = py::none(),
       py::arg("crossover_wiggler") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_layouts_resplit (dKL_max, l_max, l_max_drift_only, bend_dorb, sex_dx,
                                                           even, crossover, crossover_wiggler)
 
@@ -2543,6 +2612,7 @@ crossover_wiggler : 1D array of int (shape: 2), optional
       &Bmad::ptc_one_turn_mat_and_closed_orbit_calc,
       py::arg("branch"),
       py::arg("pz") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_one_turn_mat_and_closed_orbit_calc (branch, pz)
 
 Routine to compute the transfer matrices for the individual elements and closed orbit
@@ -2565,6 +2635,7 @@ pz : float, optional
       "ptc_ran_seed_put",
       &Bmad::ptc_ran_seed_put,
       py::arg("iseed"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ptc_ran_seed_put
 
 Parameters
@@ -2577,6 +2648,7 @@ iseed : int
       "ptc_set_rf_state_for_c_normal",
       &Bmad::ptc_set_rf_state_for_c_normal,
       py::arg("nocavity"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ptc_set_rf_state_for_c_normal
 
 Parameters
@@ -2588,6 +2660,7 @@ nocavity : bool
   m.def(
       "ptc_set_taylor_order_if_needed",
       &Bmad::ptc_set_taylor_order_if_needed,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_set_taylor_order_if_needed()
 
 Routine to see if the taylor_order for PTC needs to be set/changed.
@@ -2616,6 +2689,7 @@ For example, for a change in bmad_com%taylor_order.
       &Bmad::ptc_spin_calc,
       py::arg("ele"),
       py::arg("sigma_mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_spin_calc (ele, norm_mode, sigma_mat, closed_orb)
 
 Routine to equilibrium polarizations, etc.
@@ -2656,6 +2730,7 @@ closed_orb : CoordStruct
       &Bmad::ptc_track_all,
       py::arg("branch"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine ptc_track_all (branch, orbit, track_state, err_flag)
 
 Routine to track from the start to the end of a lattice branch.
@@ -2690,6 +2765,7 @@ err_flag : bool, optional
       py::arg("ix2") = py::none(),
       py::arg("one_turn") = py::none(),
       py::arg("unit_start") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ptc_transfer_map_with_spin
 
 Parameters
@@ -2736,6 +2812,7 @@ err_flag : bool
       py::arg("t6"),
       py::arg("inductance"),
       py::arg("sig_z"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function pwd_mat(t6, inductance, sig_z) result (t6_pwd)
 
 Calculates potential well distortion as RF defocusing.  Calculates t6_pwd=t6.Mpwd,

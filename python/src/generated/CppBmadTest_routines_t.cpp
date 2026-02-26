@@ -111,6 +111,7 @@ void init_CppBmadTest_routines_t(py::module &m) {
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_bunch_struct_array
 
 Parameters
@@ -156,6 +157,7 @@ opt_status : 1D array of int (shape: 2)
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_bunch_struct_scalar
 
 Parameters
@@ -205,6 +207,7 @@ opt_status : 1D array of int (shape: 2)
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_character_scalar
 
 Parameters
@@ -252,6 +255,7 @@ val_inout_opt : str, optional
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_complex_array
 
 Parameters
@@ -301,6 +305,7 @@ opt_status : 1D array of int (shape: 2)
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_complex_scalar
 
 Parameters
@@ -348,6 +353,7 @@ val_inout_opt : complex, optional
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_integer8_array
 
 Parameters
@@ -397,6 +403,7 @@ opt_status : 1D array of int (shape: 2)
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_integer8_scalar
 
 Parameters
@@ -444,6 +451,7 @@ val_inout_opt : int, optional
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_integer_array
 
 Parameters
@@ -493,6 +501,7 @@ opt_status : 1D array of int (shape: 2)
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_integer_scalar
 
 Parameters
@@ -540,6 +549,7 @@ val_inout_opt : int, optional
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_logical_array
 
 Parameters
@@ -589,6 +599,7 @@ opt_status : 1D array of int (shape: 2)
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_logical_scalar
 
 Parameters
@@ -636,6 +647,7 @@ val_inout_opt : bool, optional
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_real16_array
 
 Parameters
@@ -685,6 +697,7 @@ opt_status : 1D array of int (shape: 2)
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_real16_scalar
 
 Parameters
@@ -732,6 +745,7 @@ val_inout_opt : float, optional
       py::arg("arr_inout"),
       py::arg("arr_in_opt") = py::none(),
       py::arg("arr_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_real_array
 
 Parameters
@@ -781,6 +795,7 @@ opt_status : 1D array of int (shape: 2)
       py::arg("val_inout"),
       py::arg("val_in_opt") = py::none(),
       py::arg("val_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine test_real_scalar
 
 Parameters

@@ -51,6 +51,7 @@ void init_Bmad_routines_r(py::module &m) {
       py::arg("g2_tol"),
       py::arg("g3_tol"),
       py::arg("ele0") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine rad1_damp_and_stoc_mats (ele, include_opening_angle, orb_in, orb_out, rad_map, g2_tol, g3_tol, err_flag, ele0, rad_int1)
 
 Routine to calculate the damping and stochastic matrices for a given lattice element.
@@ -124,6 +125,7 @@ rad_int1 : RadInt1Struct, optional
       py::arg("ele2"),
       py::arg("include_opening_angle"),
       py::arg("closed_orbit") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rmap, mode, xfer_nodamp_mat, err_flag, closed_orbit, rad_int_branch)
 
 Routine to calculate the damping and stochastic variance matrices from exit end of ele1
@@ -195,6 +197,7 @@ rad_int_branch : RadIntBranchStruct, optional
       py::arg("g_tol"),
       py::arg("g2_tol"),
       py::arg("g3_tol"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, int_g3, g_tol, g2_tol, g3_tol)
 
 Routine to calculate bending strength integrals (g(s) = 1/trajectory_bending_radius(s)) in
@@ -260,6 +263,7 @@ int_g3 : float
       py::arg("orbit"),
       py::arg("ix_cache") = py::none(),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine radiation_integrals
 
 Parameters
@@ -297,6 +301,7 @@ rad_int_by_ele : RadIntAllEleStruct, optional
       &Bmad::radiation_map_setup,
       py::arg("ele"),
       py::arg("ref_orbit_in") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine radiation_map_setup (ele, err_flag, ref_orbit_in)
 
 Routine to calculate the radiation kick for a lattice element.
@@ -319,6 +324,7 @@ err_flag : bool
       &Bmad::ramper_slave_setup,
       py::arg("lat"),
       py::arg("force_setup") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ramper_slave_setup
 
 Parameters
@@ -355,6 +361,7 @@ force_setup : bool, optional
       &Bmad::ramper_value,
       py::arg("ramper"),
       py::arg("r1"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ramper_value
 
 Parameters
@@ -378,6 +385,7 @@ value : float
       "randomize_lr_wake_frequencies",
       &Bmad::randomize_lr_wake_frequencies,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine randomize_lr_wake_frequencies (ele, set_done)
 
 Routine to randomize the frequencies of the lr wake HOMs according to:
@@ -403,6 +411,7 @@ set_done : bool, optional
       py::arg("rel"),
       py::arg("plc"),
       py::arg("out"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rchomp
 
 Parameters
@@ -421,6 +430,7 @@ out : str
       py::arg("n"),
       py::arg("save_old") = py::none(),
       py::arg("exact") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine re_allocate_eles
 
 Parameters
@@ -447,6 +457,7 @@ exact : bool, optional
       py::arg("section"),
       py::arg("n"),
       py::arg("exact") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine re_allocate_wall3d_section_array
 
 Parameters
@@ -464,6 +475,7 @@ exact : bool, optional
       py::arg("v"),
       py::arg("n"),
       py::arg("exact") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine re_allocate_wall3d_vertex_array
 
 Parameters
@@ -481,6 +493,7 @@ exact : bool, optional
       py::arg("tree"),
       py::arg("n"),
       py::arg("exact") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine re_associate_node_array(tree, n, exact)
 
 Routine to resize the tree%node(:) array.
@@ -504,6 +517,7 @@ exact : bool, optional
       py::overload_cast<long double, std::string>(&Bmad::re_str),
       py::arg("rel"),
       py::arg("str_out"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine re_str_qp
 
 Parameters
@@ -518,6 +532,7 @@ str_out : str
       py::overload_cast<double, std::string>(&Bmad::re_str),
       py::arg("rel"),
       py::arg("str_out"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine re_str_rp
 
 Parameters
@@ -549,6 +564,7 @@ str_out : str
       &Bmad::read_beam_ascii,
       py::arg("file_name"),
       py::arg("beam_init"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine read_beam_ascii (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
 
 Subroutine to read in a beam definition file.
@@ -602,6 +618,7 @@ err_flag : bool
       py::arg("ele") = py::none(),
       py::arg("print_mom_shift_warning") = py::none(),
       py::arg("conserve_momentum") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine read_beam_file (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
 
 Subroutine to read in a beam definition file.
@@ -659,6 +676,7 @@ err_flag : bool
       &Bmad::read_binary_cartesian_map,
       py::arg("file_name"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine read_binary_cartesian_map (file_name, ele, cart_map, err_flag)
 
 Routine to read a binary cartesian_map structure.
@@ -702,6 +720,7 @@ err_flag : bool
       &Bmad::read_binary_cylindrical_map,
       py::arg("file_name"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine read_binary_cylindrical_map (file_name, ele, cl_map, err_flag)
 
 Routine to read a binary cylindrical_map structure.
@@ -745,6 +764,7 @@ err_flag : bool
       &Bmad::read_binary_grid_field,
       py::arg("file_name"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine read_binary_grid_field (file_name, ele, g_field, err_flag)
 
 Routine to read a binary grid_field structure.
@@ -770,6 +790,7 @@ err_flag : bool
       "read_surface_reflection_file",
       &Bmad::read_surface_reflection_file,
       py::arg("file_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine read_surface_reflection_file (file_name, surface)
 
 Routine to read the reflection probability data for a given type of surface from a file.
@@ -792,6 +813,7 @@ surface : PhotonReflectSurfaceStruct
       py::arg("n_bunch"),
       py::arg("n_particle") = py::none(),
       py::arg("extend") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine reallocate_beam
 
 Parameters
@@ -814,6 +836,7 @@ extend : bool, optional
   m.def(
       "reallocate_bp_com_const",
       &Bmad::reallocate_bp_com_const,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine reallocate_bp_com_const
 )"""
   );
@@ -822,6 +845,7 @@ extend : bool, optional
       &Bmad::reallocate_bunch,
       py::arg("n_particle"),
       py::arg("save") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine reallocate_bunch
 
 Parameters
@@ -843,6 +867,7 @@ bunch : BunchStruct
       &Bmad::reallocate_control,
       py::arg("lat"),
       py::arg("n"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine reallocate_control
 
 Parameters
@@ -859,6 +884,7 @@ n : int
       py::overload_cast<CoordArrayStructAlloc1D, LatStruct &>(&Bmad::reallocate_coord),
       py::arg("coord_array"),
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine reallocate_coord (...)
 
 Routine to allocate or reallocate at allocatable coord_struct array.
@@ -887,6 +913,7 @@ lat : LatStruct
       py::arg("coord"),
       py::arg("lat"),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine reallocate_coord (...)
 
 Routine to allocate or reallocate at allocatable coord_struct array.
@@ -921,6 +948,7 @@ ix_branch : int, optional
       py::overload_cast<CoordStructAlloc1D, int>(&Bmad::reallocate_coord),
       py::arg("coord"),
       py::arg("n_coord"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine reallocate_coord (...)
 
 Routine to allocate or reallocate at allocatable coord_struct array.
@@ -953,6 +981,7 @@ n_coord : int
       py::arg("stack"),
       py::arg("n"),
       py::arg("exact") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine reallocate_expression_stack
 
 Parameters
@@ -974,6 +1003,7 @@ exact : bool, optional
       &Bmad::rel_tracking_charge_to_mass,
       py::arg("orbit"),
       py::arg("ref_species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rel_tracking_charge_to_mass
 
 Parameters
@@ -996,6 +1026,7 @@ rel_charge : float
       py::arg("ele1"),
       py::arg("ele2"),
       py::arg("func_retval__"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine relative_mode_flip
 
 Parameters
@@ -1025,6 +1056,7 @@ ele2 : EleStruct
       "release_rad_int_cache",
       &python_release_rad_int_cache,
       py::arg("ix_cache"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine release_rad_int_cache (ix_cache)
 
 Subroutine to release the memory associated with caching wiggler values.
@@ -1052,6 +1084,7 @@ ix_cache : int
       py::arg("taylor_out"),
       py::arg("c0"),
       py::arg("remove_higher_order_terms"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine remove_constant_taylor (taylor_in, taylor_out, c0, remove_higher_order_terms)
 
 Subroutine to remove the constant part of a taylor map.
@@ -1081,6 +1114,7 @@ remove_higher_order_terms : bool
       "remove_dead_from_bunch",
       &Bmad::remove_dead_from_bunch,
       py::arg("bunch_in"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine remove_dead_from_bunch
 
 Parameters
@@ -1100,6 +1134,7 @@ bunch_out : BunchStruct
       &Bmad::remove_eles_from_lat,
       py::arg("lat"),
       py::arg("check_sanity") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine remove_eles_from_lat
 
 Parameters
@@ -1118,6 +1153,7 @@ check_sanity : bool, optional
       &Bmad::remove_lord_slave_link,
       py::arg("lord"),
       py::arg("slave"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine remove_lord_slave_link
 
 Parameters
@@ -1138,6 +1174,7 @@ slave : EleStruct
       &Bmad::reverse_lat,
       py::arg("lat_in"),
       py::arg("track_antiparticle") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine reverse_lat
 
 Parameters
@@ -1164,6 +1201,7 @@ lat_rev : LatStruct
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(No longer in the codebase
 function rf_clock_setup (branch, n_rf_included, n_rf_excluded) result (ok)
   import
@@ -1207,6 +1245,7 @@ make_matrix : bool, optional
       py::arg("branch"),
       py::arg("ix_ele1") = py::none(),
       py::arg("ix_ele2") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rf_is_on
 
 Parameters
@@ -1231,6 +1270,7 @@ is_on : bool
       &Bmad::rf_ref_time_offset,
       py::arg("ele"),
       py::arg("ds") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rf_ref_time_offset
 
 Parameters
@@ -1260,6 +1300,7 @@ time : float
       py::arg("i"),
       py::arg("j"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rfun
 
 Parameters
@@ -1298,6 +1339,7 @@ res : float
       py::arg("dt_next"),
       py::arg("err_flag"),
       py::arg("extra_field") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rk_adaptive_time_step
 
 Parameters
@@ -1336,6 +1378,7 @@ extra_field : EmFieldStruct, optional
       py::arg("dr_dt") = py::none(),
       py::arg("print_err") = py::none(),
       py::arg("extra_field") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rk_time_step1
 
 Parameters
@@ -1371,6 +1414,7 @@ r_err : 1D array of float (shape: 10)
       py::arg("vec"),
       py::arg("angle"),
       py::arg("rvec"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rotate3
 
 Parameters
@@ -1390,6 +1434,7 @@ rvec : 1D array of float (shape: 3)
       py::arg("w_inv"),
       py::arg("calc_dfield") = py::none(),
       py::arg("calc_potential") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine rotate_em_field (field, w_mat, w_inv, calc_dfield, calc_potential)
 
 Routine to transform the fields using the given rotation matrices.
@@ -1417,6 +1462,7 @@ calc_potential : bool, optional
       &Bmad::rotate_field_zx,
       py::arg("field"),
       py::arg("theta"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rotate_field_zx
 
 Parameters
@@ -1433,6 +1479,7 @@ theta : float
       py::arg("orbit"),
       py::arg("set"),
       py::arg("rot_mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rotate_for_curved_surface
 
 Parameters
@@ -1458,6 +1505,7 @@ rot_mat : 2D array of float (shape: 3,3)
       &Bmad::rotate_spin,
       py::arg("rot_vec"),
       py::arg("spin"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rotate_spin
 
 Parameters
@@ -1483,6 +1531,7 @@ qrot : 1D array of float (shape: 0:3), optional
       py::arg("field"),
       py::arg("ele"),
       py::arg("ds"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rotate_spin_a_step
 
 Parameters
@@ -1510,6 +1559,7 @@ ds : float
       py::arg("BL") = py::none(),
       py::arg("EL") = py::none(),
       py::arg("qrot") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rotate_spin_given_field
 
 Parameters

@@ -24,6 +24,7 @@ void init_Bmad_routines_b(py::module &m) {
       py::arg("x"),
       py::arg("y"),
       py::arg("sigma"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbi_kick
 
 Parameters
@@ -53,6 +54,7 @@ dnk : 2D array of float (shape: 2,2)
       py::arg("ele"),
       py::arg("n_slice"),
       py::arg("z_slice"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbi_slice_calc
 
 Parameters
@@ -76,6 +78,7 @@ z_slice : 1D array of float
       py::arg("energy"),
       py::arg("n_part"),
       py::arg("species"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine beam_envelope_ibs(sigma_mat, ibs_mat, tail_cut, tau, energy, n_part, species)
 
 This is a sigma matrix based IBS calculation.
@@ -117,6 +120,7 @@ ibs_mat : 2D array of float (shape: 6,6)
       &Bmad::beam_equal_beam,
       py::arg("beam1"),
       py::arg("beam2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine beam_equal_beam
 
 Parameters
@@ -150,6 +154,7 @@ beam2 : BeamStruct
       py::arg("ele"),
       py::arg("species"),
       py::arg("modes") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine beam_init_setup
 
 Parameters
@@ -204,6 +209,7 @@ err_flag : bool, optional
       "beam_tilts",
       &Bmad::beam_tilts,
       py::arg("S"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine beam_tilts(S, angle_xy, angle_xz, angle_yz, angle_xpz, angle_ypz)
 
 Given a 6x6 matrix of second-order moments, this routine returns
@@ -249,6 +255,7 @@ angle_ypz : float
       "beambeam_fibre_setup",
       &Bmad::beambeam_fibre_setup,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine beambeam_fibre_setup(ele, ptc_fibre)
 
 Routine to setup a fibre to handle the beambeam interaction.
@@ -274,6 +281,7 @@ ptc_fibre : Fibre
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       py::arg("track_spin") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix, track_spin)
 
 Subroutine to track through the edge field of an sbend.
@@ -316,6 +324,7 @@ track_spin : bool, optional
       py::arg("local_ref_frame"),
       py::arg("calc_dfield") = py::none(),
       py::arg("calc_potential") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bend_exact_multipole_field
 
 Parameters
@@ -348,6 +357,7 @@ field : EmFieldStruct
       "bend_length_has_been_set",
       &Bmad::bend_length_has_been_set,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bend_length_has_been_set
 
 Parameters
@@ -365,6 +375,7 @@ is_set : bool
       "bend_photon_e_rel_init",
       &Bmad::bend_photon_e_rel_init,
       py::arg("r_in") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bend_photon_e_rel_init (r_in) result (E_rel)
 
 Routine to convert a random number in the interval [0,1] to a photon energy.
@@ -402,6 +413,7 @@ E_rel : float
       py::arg("E_photon"),
       py::arg("g_bend"),
       py::arg("gamma"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bend_photon_energy_integ_prob (E_photon, g_bend, gamma) result (integ_prob)
 
 Routine to find the integrated probability corresponding to emitting a photon
@@ -428,6 +440,7 @@ integ_prob : float
       "bend_photon_energy_normalized_probability",
       &Bmad::bend_photon_energy_normalized_probability,
       py::arg("E_rel"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bend_photon_energy_normalized_probability (E_rel) result (prob)
 
 Routine to return the normalized probability that a photon will be emitted in a bend with energy
@@ -458,6 +471,7 @@ prob : float
       py::arg("vert_angle_max") = py::none(),
       py::arg("vert_angle_symmetric") = py::none(),
       py::arg("emit_probability") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine bend_photon_init (g_bend_x, g_bend_y, gamma, orbit, E_min, E_max, E_integ_prob,
                                         vert_angle_min, vert_angle_max, vert_angle_symmetric, emit_probability)
 
@@ -534,6 +548,7 @@ orbit : CoordStruct
       py::arg("g_bend_y"),
       py::arg("E_rel"),
       py::arg("gamma_phi"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine bend_photon_polarization_init (g_bend_x, g_bend_y, E_rel, gamma_phi, orbit)
 
 Routine to set a photon's polarization.
@@ -567,6 +582,7 @@ orbit : CoordStruct
       py::arg("gamma"),
       py::arg("r_in") = py::none(),
       py::arg("invert") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bend_photon_vert_angle_init (E_rel, gamma, r_in, invert) result (phi)
 
 Routine to convert an integrated probability to a vertical angle for emitting a photon from a bend.
@@ -619,6 +635,7 @@ phi : float
       py::arg("g"),
       py::arg("delta_s"),
       py::arg("ref_tilt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bend_shift
 
 Parameters
@@ -650,6 +667,7 @@ w_mat : 2D array of float (shape: 3,3), optional
       py::arg("vert_angle"),
       py::arg("E_rel"),
       py::arg("gamma"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function bend_vert_angle_integ_prob (vert_angle, E_rel, gamma) result (integ_prob)
 
 Routine to find the integrated probability corresponding to emitting a photon
@@ -688,6 +706,7 @@ integ_prob : float
       py::arg("circ"),
       py::arg("R"),
       py::arg("L"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine bl_via_vlassov(current,alpha,Energy,sigma_p,Vrf,omega,U0,circ,R,L,sigma_z)
 
 This is a frontend for get_bl_from_fwhm from longitudinal_profile_mod.
@@ -761,6 +780,7 @@ sigma_z : float
       py::arg("lat_file"),
       py::arg("make_mats6") = py::none(),
       py::arg("use_line") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bmad_parser
 
 Parameters
@@ -802,6 +822,7 @@ parse_lat : LatStruct, optional
       py::arg("make_mats6") = py::none(),
       py::arg("err_flag") = py::none(),
       py::arg("parse_lat") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bmad_parser2
 
 Parameters
@@ -833,6 +854,7 @@ parse_lat : LatStruct, optional
       &Bmad::bmad_patch_parameters_to_ptc,
       py::arg("ang"),
       py::arg("exi"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bmad_patch_parameters_to_ptc
 
 Parameters
@@ -845,6 +867,7 @@ exi : 2D array of float (shape: 3,3)
   m.def(
       "bp_set_ran_status",
       &Bmad::bp_set_ran_status,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bp_set_ran_status
 )"""
   );
@@ -853,6 +876,7 @@ exi : 2D array of float (shape: 3,3)
       &Bmad::branch_equal_branch,
       py::arg("branch1"),
       py::arg("branch2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine branch_equal_branch
 
 Parameters
@@ -866,6 +890,7 @@ branch2 : BranchStruct
       "branch_name",
       &Bmad::branch_name,
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine branch_name
 
 Parameters
@@ -883,6 +908,7 @@ name : str
       "branch_to_ptc_m_u",
       &Bmad::branch_to_ptc_m_u,
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine branch_to_ptc_m_u (branch)
 
 Subroutine to create a PTC layout from a Bmad lattice branch.
@@ -914,6 +940,7 @@ branch : BranchStruct
       &Bmad::bunch_equal_bunch,
       py::arg("bunch1"),
       py::arg("bunch2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bunch_equal_bunch
 
 Parameters

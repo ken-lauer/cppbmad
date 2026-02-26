@@ -12,6 +12,7 @@ void init_Bmad_routines_y(py::module &m) {
       py::arg("y"),
       py::arg("z"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ylafun
 
 Parameters

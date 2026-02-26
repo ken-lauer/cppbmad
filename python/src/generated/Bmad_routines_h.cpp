@@ -14,6 +14,7 @@ void init_Bmad_routines_h(py::module &m) {
       py::arg("orbit"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine hard_multipole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
 
 Routine to track through the hard edge field of a multipole.
@@ -57,6 +58,7 @@ make_matrix : bool, optional
       py::arg("ele"),
       py::arg("attrib"),
       py::arg("has_it"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine has_attribute
 
 Parameters
@@ -72,6 +74,7 @@ has_it : bool
       "has_curvature",
       &Bmad::has_curvature,
       py::arg("phot_ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function has_curvature (phot_ele) result (curved)
 
 Routine to determine if a surface is potentially curved or is flat.
@@ -91,6 +94,7 @@ curved : bool
       "has_orientation_attributes",
       &Bmad::has_orientation_attributes,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function has_orientation_attributes (ele) result (has_attribs)
 
 Routine to determine whether an element has orientation attributes like x_offset, etc.
@@ -116,6 +120,7 @@ has_attribs : bool
       py::arg("error"),
       py::arg("lat") = py::none(),
       py::arg("alive_only") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine hdf5_write_beam
 
 Parameters
@@ -140,6 +145,7 @@ alive_only : bool, optional
       py::arg("ele"),
       py::arg("g_field"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine hdf5_write_grid_field
 
 Parameters
@@ -162,6 +168,7 @@ err_flag : bool
       py::arg("orb"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine hwang_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
 
 Subroutine to track through the edge field of an sbend using a 2nd order map.

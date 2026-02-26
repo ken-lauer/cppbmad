@@ -10,6 +10,7 @@ void init_SimUtils_routines_n(py::module &m) {
       &SimUtils::n_bins_automatic,
       py::arg("n_data"),
       py::arg("n"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function to automatically select the number of bins
 )"""
   );
@@ -18,6 +19,7 @@ void init_SimUtils_routines_n(py::module &m) {
       &SimUtils::n_choose_k,
       py::arg("n"),
       py::arg("k"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine n_choose_k
 
 Parameters
@@ -41,6 +43,7 @@ nck : float
       py::arg("deriv1"),
       py::arg("x1"),
       py::arg("n_spline"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine n_spline_create
 
 Parameters
@@ -66,6 +69,7 @@ n_spline : 1D array of float
       py::arg("amps"),
       py::arg("opt_dump_spectra") = py::none(),
       py::arg("opt_zero_first") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine naff(cdata,freqs,amps,opt_dump_spectra,opt_zero_first)
 
 This subroutine implements the NAFF algorithm for calculating the spectra
@@ -85,6 +89,7 @@ decomposition loop until all elements of freqs and amps are populated.
       py::arg("nametable"),
       py::arg("name"),
       py::arg("ix_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine nametable_add
 
 Parameters
@@ -103,6 +108,7 @@ ix_name : int
       py::arg("name"),
       py::arg("ix_max"),
       py::arg("n_match") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine nametable_bracket_indexx
 
 Parameters
@@ -122,6 +128,7 @@ n_match : int, optional
       py::arg("nametable"),
       py::arg("name"),
       py::arg("ix_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine nametable_change1
 
 Parameters
@@ -139,6 +146,7 @@ ix_name : int
       py::arg("nametable"),
       py::arg("n_min") = py::none(),
       py::arg("n_max") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine nametable_init
 
 Parameters
@@ -155,6 +163,7 @@ n_max : int, optional
       &SimUtils::nametable_remove,
       py::arg("nametable"),
       py::arg("ix_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine nametable_remove
 
 Parameters

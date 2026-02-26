@@ -28,6 +28,7 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("n_part"),
       py::arg("species"),
       py::arg("ibs_mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ibs_matrix_c
 
 Parameters
@@ -58,6 +59,7 @@ ibs_mat : 2D array of float (shape: 6,6)
       py::arg("dy"),
       py::arg("dz"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine igfcoulombfun
 
 Parameters
@@ -90,6 +92,7 @@ res : float
       py::arg("dy"),
       py::arg("dz"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine igfexfun
 
 Parameters
@@ -122,6 +125,7 @@ res : float
       py::arg("dy"),
       py::arg("dz"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine igfeyfun
 
 Parameters
@@ -154,6 +158,7 @@ res : float
       py::arg("dy"),
       py::arg("dz"),
       py::arg("res"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine igfezfun
 
 Parameters
@@ -198,6 +203,7 @@ res : float
       py::arg("name"),
       py::arg("attrib_state") = py::none(),
       py::arg("override") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine init_attribute_name1 (is_ok, ix_key, ix_attrib, name, attrib_state, override)
 
 Routine to initialize a single name in the element attribute name table.
@@ -237,6 +243,7 @@ is_ok : bool
   m.def(
       "init_attribute_name_array",
       &Bmad::init_attribute_name_array,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_attribute_name_array ()
 
 Private routine to initialize the attribute name array used by routines
@@ -272,6 +279,7 @@ in attribute_mod. Not meant for general use.
       py::arg("modes") = py::none(),
       py::arg("print_p0c_shift_warning") = py::none(),
       py::arg("conserve_momentum") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_beam_distribution (ele, param, beam_init, beam, err_flag, modes, beam_init_set,
                                                                     print_p0c_shift_warning, conserve_momentum)
 
@@ -323,6 +331,7 @@ beam_init_set : BeamInitStruct, optional
   m.def(
       "init_bmad",
       &Bmad::init_bmad,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_bmad
 )"""
   );
@@ -330,6 +339,7 @@ beam_init_set : BeamInitStruct, optional
       "init_bmad_parser_common",
       &Bmad::init_bmad_parser_common,
       py::arg("lat") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_bmad_parser_common
 
 Parameters
@@ -367,6 +377,7 @@ lat : LatStruct, optional
       py::arg("modes") = py::none(),
       py::arg("print_p0c_shift_warning") = py::none(),
       py::arg("conserve_momentum") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_bunch_distribution (ele, param, beam_init, ix_bunch, bunch, err_flag, modes, beam_init_used,
                                                                          print_p0c_shift_warning, conserve_momentum)
 
@@ -439,6 +450,7 @@ beam_init_used : BeamInitStruct, optional
       py::arg("complex_taylor"),
       py::arg("n_term"),
       py::arg("save") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_complex_taylor_series (complex_taylor, n_term, save)
 
 Subroutine to initialize a Bmad complex_taylor series (6 of these series make
@@ -486,6 +498,7 @@ save : bool, optional
       py::arg("spin") = py::none(),
       py::arg("s_pos") = py::none(),
       py::arg("random_on") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_coord (...)
 
 Routine to initialize a coord_struct.
@@ -578,6 +591,7 @@ random_on : bool, optional
       py::arg("spin") = py::none(),
       py::arg("s_pos") = py::none(),
       py::arg("random_on") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_coord (...)
 
 Routine to initialize a coord_struct.
@@ -668,6 +682,7 @@ orb_out : CoordStruct
       py::arg("t_offset") = py::none(),
       py::arg("shift_vec6") = py::none(),
       py::arg("spin") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_coord (...)
 
 Routine to initialize a coord_struct.
@@ -728,6 +743,7 @@ spin : 1D array of float (shape: 3), optional
       "init_custom",
       &Bmad::init_custom,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_custom
 
 Parameters
@@ -742,6 +758,7 @@ lat : LatStruct
       py::arg("sub_key") = py::none(),
       py::arg("ix_ele") = py::none(),
       py::arg("branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_ele
 
 Parameters
@@ -770,6 +787,7 @@ ele : EleStruct
       py::arg("em_taylor"),
       py::arg("n_term"),
       py::arg("save_old") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_em_taylor_series (em_taylor, n_term, save_old)
 
 Subroutine to initialize a Bmad Em_taylor series (6 of these series make
@@ -795,6 +813,7 @@ save_old : bool, optional
       &Bmad::init_lat,
       py::arg("n") = py::none(),
       py::arg("init_beginning_ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_lat
 
 Parameters
@@ -815,6 +834,7 @@ lat : LatStruct
       "init_multipole_cache",
       &Bmad::init_multipole_cache,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_multipole_cache
 
 Parameters
@@ -831,6 +851,7 @@ ele : EleStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("random_on") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_photon_from_a_photon_init_ele
 
 Parameters
@@ -878,6 +899,7 @@ orbit : CoordStruct
       py::arg("vert_angle_max") = py::none(),
       py::arg("vert_angle_symmetric") = py::none(),
       py::arg("energy_integ_prob") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function init_photon_integ_prob(gamma, g, E_min, E_max, vert_angle_min,
              vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
 
@@ -927,6 +949,7 @@ E_photon : float, optional
       &Bmad::init_spin_distribution,
       py::arg("beam_init"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_spin_distribution (beam_init, bunch, ele)
 
 Initializes a spin distribution according to beam_init%spin.
@@ -948,6 +971,7 @@ bunch : BunchStruct
       py::arg("phot"),
       py::arg("ix"),
       py::arg("iy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine init_surface_segment (phot, ix, iy)
 
 Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
@@ -970,6 +994,7 @@ iy : int
       py::arg("bmad_taylor"),
       py::arg("n_term"),
       py::arg("save_old") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_taylor_series
 
 Parameters
@@ -995,6 +1020,7 @@ save_old : bool, optional
       py::arg("n_sr_z"),
       py::arg("n_lr_mode"),
       py::arg("always_allocate") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_wake
 
 Parameters
@@ -1028,6 +1054,7 @@ wake : WakeStruct, optional
       py::arg("ix_ele"),
       py::arg("ix_branch") = py::none(),
       py::arg("orbit") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine insert_element
 
 Parameters
@@ -1058,6 +1085,7 @@ orbit : 1D array of CoordStruct, optional
       py::arg("t"),
       py::arg("args"),
       py::arg("func_retval__"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function integrand_base(t)
 
 This vectorized private function is the integrand in equation 31 of Piwinski's paper.
@@ -1081,6 +1109,7 @@ t : float
       py::arg("bound"),
       py::arg("p0"),
       py::arg("args"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine integrate_psi(bound,p0,args,result)
 
 Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
@@ -1112,6 +1141,7 @@ result : float
       py::arg("Theta"),
       py::arg("Iota"),
       py::arg("mode"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine integrated_mats(eles,coos,Lambda,Theta,Iota,mode)
 )"""
   );
@@ -1125,6 +1155,7 @@ result : float
       py::arg("start"),
       py::arg("orb_max"),
       py::arg("tol"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine integration_timer_ele
 
 Parameters
@@ -1149,6 +1180,7 @@ tol : float
       py::arg("orbit"),
       py::arg("orbit_max"),
       py::arg("tol_dp"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine integration_timer_fibre
 
 Parameters
@@ -1171,6 +1203,7 @@ tol_dp : float
       py::arg("a_twiss"),
       py::arg("b_twiss"),
       py::arg("sig_ee"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ion_kick
 
 Parameters
@@ -1204,6 +1237,7 @@ kick : 1D array of float (shape: 3)
       &Bmad::is_attribute,
       py::arg("ix_attrib"),
       py::arg("which"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function is_attribute (ix_attrib, which) result (is_attrib)
 
 Routine to determine if an attribute index corresponds to a control variable for overlys/groups.

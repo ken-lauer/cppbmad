@@ -23,6 +23,7 @@ void init_Bmad_routines_w(py::module &m) {
       py::arg("angle"),
       py::arg("ref_tilt"),
       py::arg("r_vec") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine w_mat_for_bend_angle
 
 Parameters
@@ -49,6 +50,7 @@ w_mat : 2D array of float (shape: 3,3)
       &Bmad::w_mat_for_tilt,
       py::arg("tilt"),
       py::arg("return_inverse") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine w_mat_for_tilt
 
 Parameters
@@ -70,6 +72,7 @@ w_mat : 2D array of float (shape: 3,3)
       &Bmad::w_mat_for_x_pitch,
       py::arg("x_pitch"),
       py::arg("return_inverse") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine w_mat_for_x_pitch
 
 Parameters
@@ -91,6 +94,7 @@ w_mat : 2D array of float (shape: 3,3)
       &Bmad::w_mat_for_y_pitch,
       py::arg("y_pitch"),
       py::arg("return_inverse") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine w_mat_for_y_pitch
 
 Parameters
@@ -145,6 +149,7 @@ w_mat : 2D array of float (shape: 3,3)
       py::arg("position"),
       py::arg("ele"),
       py::arg("ix_wall") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function wall3d_d_radius (position, ele, ix_wall, perp, ix_section,
                                      no_wall_here, origin, radius_wall, err_flag) result (d_radius)
 
@@ -197,6 +202,7 @@ err_flag : bool, optional
       "wall3d_initializer",
       &Bmad::wall3d_initializer,
       py::arg("wall3d"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine wall3d_initializer (wall3d, err)
 
 Routine to initialize a wall3d_struct
@@ -221,6 +227,7 @@ err : bool
       "wall3d_section_initializer",
       &Bmad::wall3d_section_initializer,
       py::arg("section"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine wall3d_section_initializer (section, err)
 
 Routine to initialize a wall3d_section_struct:
@@ -245,6 +252,7 @@ err : bool
       &Bmad::wall3d_to_position,
       py::arg("orbit"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function wall3d_to_position (orbit, ele) result (position)
 
 Routine to return the suitable postion to be used in calling wall3d_d_radius
@@ -274,6 +282,7 @@ position : 1D array of float (shape: 6)
       py::arg("value"),
       py::arg("err_flag"),
       py::arg("ele") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine word_to_value
 
 Parameters
@@ -296,6 +305,7 @@ ele : EleStruct, optional
       py::arg("beam"),
       py::arg("new_file") = py::none(),
       py::arg("alive_only") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_ascii_beam_file (file_name, beam, new_file, alive_only)
 
 Routine to write a beam file in ASCII format (version 4).
@@ -325,6 +335,7 @@ alive_only : bool, optional
       py::arg("d2"),
       py::arg("d3"),
       py::arg("d4"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_astra_bend
 
 Parameters
@@ -367,6 +378,7 @@ d4 : 1D array of float (shape: 2)
       py::arg("astra_file_unit"),
       py::arg("ele"),
       py::arg("dz") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_astra_field_grid_file (astra_file_unit, ele, maxfield, err)
 
   Write 1-D field map files for Astra. The format is:
@@ -418,6 +430,7 @@ err : bool, optional
       py::arg("base_filename"),
       py::arg("ele"),
       py::arg("dz") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_astra_field_grid_file_3D (base_filename, ele, maxfield, dz, err)
 
   Writes 3-D field map files for Astra. The format is:
@@ -462,6 +475,7 @@ err : bool, optional
       py::arg("file_format") = py::none(),
       py::arg("lat") = py::none(),
       py::arg("alive_only") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_beam_file (file_name, beam, new_file, file_format, lat, alive_only)
 
 Routine to write a beam file.
@@ -497,6 +511,7 @@ alive_only : bool, optional
       py::arg("beam"),
       py::arg("ele"),
       py::arg("new_file") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_beam_floor_positions
 
 Parameters
@@ -520,6 +535,7 @@ new_file : bool, optional
       py::arg("file_name"),
       py::arg("ele"),
       py::arg("cart_map"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_binary_cartesian_map (file_name, ele, cart_map, err_flag)
 
 Routine to write a binary cartesian_map structure.
@@ -548,6 +564,7 @@ err_flag : bool
       py::arg("file_name"),
       py::arg("ele"),
       py::arg("cl_map"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_binary_cylindrical_map (file_name, ele, cl_map, err_flag)
 
 Routine to write a binary cylindrical_map structure.
@@ -576,6 +593,7 @@ err_flag : bool
       py::arg("file_name"),
       py::arg("ele"),
       py::arg("g_field"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_binary_grid_field (file_name, ele, g_field, err_flag)
 
 Routine to write a binary grid_field structure.
@@ -604,6 +622,7 @@ err_flag : bool
       py::arg("iu"),
       py::arg("ele"),
       py::arg("old_format") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_blender_ele
 
 Parameters
@@ -620,6 +639,7 @@ old_format : bool, optional
       &Bmad::write_blender_lat_layout,
       py::arg("file_name"),
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_blender_lat_layout
 
 Parameters
@@ -636,6 +656,7 @@ lat : LatStruct
       py::arg("lat"),
       py::arg("output_form") = py::none(),
       py::arg("orbit0") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_bmad_lattice_file
 
 Parameters
@@ -686,6 +707,7 @@ err : bool, optional
       py::arg("gpt_file_unit"),
       py::arg("ele"),
       py::arg("dz") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_gpt_field_grid_file_1D (gpt_file_unit, ele, maxfield, ref_time, dz, err)
 
   Write 1-D field map files for gpt. The format is:
@@ -745,6 +767,7 @@ err : bool, optional
       py::arg("dr") = py::none(),
       py::arg("dz") = py::none(),
       py::arg("r_max") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_gpt_field_grid_file_2D (gpt_file_unit, ele, maxfield, ref_time, dr, dz,  err)
 
 Subroutine to write an GPT lattice file using the information in
@@ -805,6 +828,7 @@ err : bool, optional
       py::arg("base_filename"),
       py::arg("ele"),
       py::arg("dz") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_gpt_field_grid_file_3D (base_filename, ele, maxfield, ref_time, dz, err)
 
   Writes 3-D field map files for gpt. The format is:
@@ -864,6 +888,7 @@ err : bool, optional
       py::arg("end_is_neigh"),
       py::arg("do_split") = py::none(),
       py::arg("scibmad") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_lat_line (line, iu, end_is_neigh, do_split)
 
 Routine to write strings to a lattice file.
@@ -911,6 +936,7 @@ line : str
       py::arg("include_apertures") = py::none(),
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_lattice_in_elegant_format
 
 Parameters
@@ -959,6 +985,7 @@ err : bool, optional
       py::arg("include_apertures") = py::none(),
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_lattice_in_foreign_format
 
 Parameters
@@ -1010,6 +1037,7 @@ err : bool, optional
       py::arg("include_apertures") = py::none(),
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_lattice_in_mad_format
 
 Parameters
@@ -1058,6 +1086,7 @@ err : bool, optional
       py::arg("include_apertures") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_lattice_in_sad_format
 
 Parameters
@@ -1094,6 +1123,7 @@ err : bool, optional
       "write_lattice_in_scibmad",
       &Bmad::write_lattice_in_scibmad,
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_lattice_in_scibmad
 
 Parameters
@@ -1117,6 +1147,7 @@ err_flag : bool, optional
       py::arg("iu"),
       py::arg("ele"),
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine write_line_element
 
 Parameters
@@ -1153,6 +1184,7 @@ lat : LatStruct
       py::arg("opal_file_unit"),
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_opal_field_grid_file (opal_file_unit, ele, param, maxfield, err)
 
 Subroutine to write an OPAL lattice file using the information in
@@ -1183,6 +1215,7 @@ err : bool, optional
       &Bmad::write_opal_lattice_file,
       py::arg("opal_file_unit"),
       py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_opal_lattice_file (opal_file_unit, lat, err)
 
 Subroutine to write an OPAL lattice file using the information in
@@ -1211,6 +1244,7 @@ err : bool, optional
       py::arg("style") = py::none(),
       py::arg("branch") = py::none(),
       py::arg("format") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine write_time_particle_distribution  (time_file_unit, bunch, ele, style, branch, format, err)
 
 Subroutine to write a time-based bunch from a standard Bmad bunch

@@ -10,6 +10,7 @@ void init_bsim_routines_l(py::module &m) {
       &bsim::logical_to_python,
       py::arg("logic"),
       py::arg("string"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine logical_to_python
 
 Parameters

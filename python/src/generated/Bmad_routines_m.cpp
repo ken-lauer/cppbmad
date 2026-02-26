@@ -9,6 +9,7 @@ void init_Bmad_routines_m(py::module &m) {
       "mad_add_offsets_and_multipoles",
       &Bmad::mad_add_offsets_and_multipoles,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_add_offsets_and_multipoles (ele, map)
 
 Subroutine to add in the effect of element offsets and/or multipoles
@@ -30,6 +31,7 @@ map : MadMapStruct
       &Bmad::mad_concat_map2,
       py::arg("map1"),
       py::arg("map2"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_concat_map2 (map1, map2, map3)
 
 Subroutine to concatinate two 2nd order transport maps.
@@ -55,6 +57,7 @@ map3 : MadMapStruct
       &Bmad::mad_drift,
       py::arg("ele"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_drift (ele, energy, map)
 
 Subroutine to make a transport map for a drift space.
@@ -79,6 +82,7 @@ map : MadMapStruct
       &Bmad::mad_elsep,
       py::arg("ele"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_elsep (ele, energy, map)
 
 Subroutine to make a transport map for an electric separator.
@@ -104,6 +108,7 @@ map : MadMapStruct
       py::arg("map"),
       py::arg("energy"),
       py::arg("taylor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_map_to_taylor (map, energy, taylor)
 
 Subroutine to convert a MAD order 2 map to a Bmad taylor map.
@@ -126,6 +131,7 @@ taylor : 1D array of TaylorStruct
       &Bmad::mad_quadrupole,
       py::arg("ele"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_quadrupole (ele, energy, map)
 
 Subroutine to make a transport map for an quadrupole element.
@@ -150,6 +156,7 @@ map : MadMapStruct
       &Bmad::mad_rfcavity,
       py::arg("ele"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_rfcavity (ele, energy, map)
 
 Subroutine to make a transport map for an rfcavity element.
@@ -174,6 +181,7 @@ map : MadMapStruct
       &Bmad::mad_sbend,
       py::arg("ele"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_sbend (ele, energy, map)
 
 Subroutine to make a transport map for a sector bend element.
@@ -198,6 +206,7 @@ map : MadMapStruct
       &Bmad::mad_sbend_body,
       py::arg("ele"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_sbend_body (ele, energy, map)
 
 Subroutine to make a transport map for the body of a sector dipole.
@@ -223,6 +232,7 @@ map : MadMapStruct
       py::arg("ele"),
       py::arg("energy"),
       py::arg("into"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_sbend_fringe (ele, energy, into, map)
 
 Subroutine to make a transport map for the fringe field of a dipole.
@@ -250,6 +260,7 @@ map : MadMapStruct
       &Bmad::mad_sextupole,
       py::arg("ele"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_sextupole (ele, energy, map)
 
 Subroutine to make a transport map for an sextupole.
@@ -274,6 +285,7 @@ map : MadMapStruct
       &Bmad::mad_solenoid,
       py::arg("ele"),
       py::arg("energy"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_solenoid (ele, energy, map)
 
 Subroutine to make a transport map for an solenoid.
@@ -321,6 +333,7 @@ map : MadMapStruct
       &Bmad::mad_tmfoc,
       py::arg("el"),
       py::arg("sk1"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_tmfoc (el, sk1, c, s, d, f)
 
 Subroutine to compute the linear focussing functions.
@@ -353,6 +366,7 @@ f : float
       "mad_tmsymm",
       &Bmad::mad_tmsymm,
       py::arg("te"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine mad_tmsymm (te)
 
 subroutine to symmertrize the 2nd order map t.
@@ -371,6 +385,7 @@ te : 3D array of float (shape: 6,6,6)
       &Bmad::mad_tmtilt,
       py::arg("map"),
       py::arg("tilt"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_tmtilt (map, tilt)
 
 Subroutine to apply a tilt to a transport map.
@@ -392,6 +407,7 @@ tilt : float
       &Bmad::mad_track1,
       py::arg("c0"),
       py::arg("map"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mad_track1 (c0, map, c1)
 
 Subroutine to track through a 2nd order transfer map.
@@ -417,6 +433,7 @@ c1 : CoordStruct
       py::arg("twiss"),
       py::arg("g2_mat"),
       py::arg("g2_inv_mat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_g2_mats
 
 Parameters
@@ -450,6 +467,7 @@ g2_inv_mat : 2D array of float (shape: 2,2)
       "make_g_mats",
       &Bmad::make_g_mats,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_g_mats
 
 Parameters
@@ -496,6 +514,7 @@ g_inv_mat : 2D array of float (shape: 4,4)
       "make_hvbp",
       &Bmad::make_hvbp,
       py::arg("N"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine make_HVBP(N, B, V, H, Vbar, Hbar)
 
 Parameterizes the eigen-decomposition of the 6x6 transfer matrix into HVBP as defined in:
@@ -544,6 +563,7 @@ Hbar : 2D array of float (shape: 6,6), optional
       py::arg("lat_in"),
       py::arg("use_taylor") = py::none(),
       py::arg("orb0_arr") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_hybrid_lat
 
 Parameters
@@ -587,6 +607,7 @@ lat_out : LatStruct
       &Bmad::make_mad_map,
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine make_mad_map (ele, param, energy, map)
 
 Subroutine to make a 2nd order transport map a la MAD.
@@ -631,6 +652,7 @@ map : MadMapStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_mat6
 
 Parameters
@@ -676,6 +698,7 @@ err_flag : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_mat6_bmad
 
 Parameters
@@ -723,6 +746,7 @@ err : bool, optional
       py::arg("ele"),
       py::arg("param"),
       py::arg("start_orb"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_mat6_bmad_photon
 
 Parameters
@@ -752,6 +776,7 @@ err : bool, optional
       &Bmad::make_mat6_high_energy_space_charge,
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine make_mat6_high_energy_space_charge (ele, param)
 
 Routine to add the ultra relativistic space charge kick to the element transfer matrix.
@@ -774,6 +799,7 @@ param : LatParamStruct
       py::arg("ele"),
       py::arg("param"),
       py::arg("c0"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine make_mat6_mad (ele, param, c0, c1)
 
 Subroutine to make the 6x6 transfer matrix for an element from the
@@ -803,6 +829,7 @@ c1 : CoordStruct
       &Bmad::make_mat6_symp_lie_ptc,
       py::arg("ele"),
       py::arg("start_orb"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_mat6_symp_lie_ptc
 
 Parameters
@@ -827,6 +854,7 @@ end_orb : CoordStruct
       py::arg("ele"),
       py::arg("start_orb"),
       py::arg("err_flag") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_mat6_taylor
 
 Parameters
@@ -871,6 +899,7 @@ end_orb : CoordStruct
       py::arg("param"),
       py::arg("start_orb"),
       py::arg("spin_only") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_mat6_tracking
 
 Parameters
@@ -922,6 +951,7 @@ err_flag : bool
       &Bmad::make_n,
       py::arg("t6"),
       py::arg("abz_tunes") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine make_N(t6, N, err_flag, abz_tunes, tunes_out, U)
 
 Given a 1-turn transfer matrix, this returns the matrix N.
@@ -988,6 +1018,7 @@ U : 2D array of float (shape: 6,6), optional
       &Bmad::make_pbrh,
       py::arg("M"),
       py::arg("abz_tunes"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine make_PBRH(M, P, Bp, R, H, abz_tunes)
 
 Decomposes the 1-turn transfer matrix into normal mode twiss-like parameters,
@@ -1044,6 +1075,7 @@ H : 2D array of complex (shape: 6,6)
       &Bmad::make_smat_from_abc,
       py::arg("t6"),
       py::arg("mode"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine make_smat_from_abc(t6, mode, sigma_mat, err_flag, Nout)
 
 Given the 1-turn transfer matrix and a normal_modes_struct containing the normal mode
@@ -1080,6 +1112,7 @@ Nout : 2D array of float (shape: 6,6), optional
       "make_unit_mad_map",
       &Bmad::make_unit_mad_map,
       py::arg("map"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine make_unit_mad_map (map)
 
 Subroutine to initialize a 2nd order transport map to unity.
@@ -1098,6 +1131,7 @@ map : MadMapStruct
       py::arg("M"),
       py::arg("V"),
       py::arg("abz_tunes"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(subroutine make_V(M,V,abz_tunes)
 
 For a one-turn transfer matrix M, this routine find the eigen matrix V.
@@ -1126,6 +1160,7 @@ It is normalized to be symplectic.
       "make_v_mats",
       &Bmad::make_v_mats,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine make_v_mats
 
 Parameters
@@ -1148,6 +1183,7 @@ v_inv_mat : 2D array of float (shape: 4,4), optional
       py::arg("lat"),
       py::arg("slave"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine makeup_control_slave (lat, slave, err_flag)
 
 This routine is not meant for general use.
@@ -1159,6 +1195,7 @@ This routine is not meant for general use.
       py::arg("lat"),
       py::arg("lord"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine makeup_group_lord (lat, lord, err_flag)
 
 Subroutine to calculate the attributes of group slave elements.
@@ -1171,6 +1208,7 @@ This routine is private to bookkeeper_mod.
       py::arg("lat"),
       py::arg("slave"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine makeup_multipass_slave (lat, slave, err_flag)
 
 Subroutine to calcualte the attributes of multipass slave elements.
@@ -1183,6 +1221,7 @@ This routine is not meant for guse.
       py::arg("lat"),
       py::arg("slave"),
       py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine makeup_super_slave (lat, slave, err_flag)
 
 Subroutine to calcualte the attributes of superposition slave elements.
@@ -1198,6 +1237,7 @@ This routine is not meant for general use.
       py::arg("param"),
       py::arg("include_upstream_end"),
       py::arg("include_downstream_end"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine makeup_super_slave1 (slave, lord, offset, param, include_upstream_end, include_downstream_end)
 
 Routine to construct a super_slave from a super_lord when the slave has only one lord.
@@ -1235,6 +1275,7 @@ err_flag : bool
       "map1_inverse",
       &Bmad::map1_inverse,
       py::arg("map1"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine map1_inverse
 
 Parameters
@@ -1251,6 +1292,7 @@ inv_map1 : SpinOrbitMap1Struct
   m.def(
       "map1_make_unit",
       &Bmad::map1_make_unit,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine map1_make_unit
 
 Returns
@@ -1265,6 +1307,7 @@ map1 : SpinOrbitMap1Struct
       py::arg("map2"),
       py::arg("map1"),
       py::arg("map_out"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine map1_times_map1
 
 Parameters
@@ -1280,6 +1323,7 @@ map_out : SpinOrbitMap1Struct
       "map_to_angle_coords",
       &Bmad::map_to_angle_coords,
       py::arg("t_canon"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine map_to_angle_coords
 
 Parameters
@@ -1297,6 +1341,7 @@ t_angle : 1D array of TaylorStruct (shape: 6)
       "mark_patch_regions",
       &Bmad::mark_patch_regions,
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mark_patch_regions (branch)
 
 Routine to mark which regions in a wall3d structure contain patch elements.
@@ -1315,6 +1360,7 @@ branch : BranchStruct
       &Bmad::master_parameter_value,
       py::arg("master_parameter"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine master_parameter_value
 
 Parameters
@@ -1338,6 +1384,7 @@ value : float
       py::arg("tilt"),
       py::arg("n"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine mat4_multipole
 
 Parameters
@@ -1364,6 +1411,7 @@ kick_mat : 2D array of float (shape: 4,4)
       &Bmad::mat6_add_offsets,
       py::arg("ele"),
       py::arg("param"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine mat6_add_offsets
 
 Parameters
@@ -1381,6 +1429,7 @@ param : LatParamStruct
       py::arg("y_pitch_tot"),
       py::arg("orientation"),
       py::arg("mat6"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine mat6_add_pitch
 
 Parameters
@@ -1405,6 +1454,7 @@ mat6 : 2D array of float (shape: 6,6)
       &Bmad::mat6_to_complex_taylor,
       py::arg("vec0"),
       py::arg("mat6"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine mat6_to_complex_taylor (vec0, mat6, complex_taylor)
 
 Subroutine to form a first order complex_taylor map from the 6x6 transfer
@@ -1467,6 +1517,7 @@ complex_taylor : 1D array of ComplexTaylorStruct (shape: 6)
       &Bmad::mat_symp_decouple,
       py::arg("t0"),
       py::arg("type_out"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine mat_symp_decouple
 
 Parameters
@@ -1534,6 +1585,7 @@ gamma : float
       py::arg("start_orb"),
       py::arg("include_delta_time") = py::none(),
       py::arg("set_trombone") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine match_ele_to_mat6
 
 Parameters
@@ -1568,6 +1620,7 @@ err_flag : bool
       &Bmad::mexp,
       py::arg("x"),
       py::arg("m"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine mexp
 
 Parameters
@@ -1592,6 +1645,7 @@ this_exp : float
       py::arg("n"),
       py::arg("ndim"),
       py::arg("isn"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine mfft1
 
 Parameters
@@ -1617,6 +1671,7 @@ ierr : int
       py::arg("ele"),
       py::arg("use_offsets"),
       py::arg("for_layout"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine misalign_ptc_fibre (ele, use_offsets, ptc_fibre, for_layout)
 
 Routine to misalign a fibre associated with a Bmad element.
@@ -1643,6 +1698,7 @@ ptc_fibre : Fibre, optional
       "momentum_compaction",
       &Bmad::momentum_compaction,
       py::arg("branch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine momentum_compaction
 
 Parameters
@@ -1690,6 +1746,7 @@ mom_comp : float
       &Bmad::multi_turn_tracking_analysis,
       py::arg("track"),
       py::arg("i_dim"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multi_turn_tracking_analysis
 
 Parameters
@@ -1726,6 +1783,7 @@ err_flag : bool
       "multilayer_type_to_multilayer_params",
       &Bmad::multilayer_type_to_multilayer_params,
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine multilayer_type_to_multilayer_params (ele, err_flag)
 
 Routine to set the multilayer parameters based upon the multilayer type.
@@ -1770,6 +1828,7 @@ err_flag : bool
       &Bmad::multipass_chain,
       py::arg("ele"),
       py::arg("use_super_lord") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipass_chain
 
 Parameters
@@ -1816,6 +1875,7 @@ chain_ele : 1D array of ElePointerStruct, optional
       py::arg("an"),
       py::arg("bn"),
       py::arg("n"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole1_ab_to_kt
 
 Parameters
@@ -1862,6 +1922,7 @@ tn : float
       py::arg("knsl"),
       py::arg("tn"),
       py::arg("n"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole1_kt_to_ab
 
 Parameters
@@ -1894,6 +1955,7 @@ bn : float
       py::arg("bn"),
       py::arg("knl"),
       py::arg("tn"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole_ab_to_kt
 
 Parameters
@@ -1942,6 +2004,7 @@ tn : 1D array of float
       py::arg("pole_type") = py::none(),
       py::arg("include_kicks") = py::none(),
       py::arg("original") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole_ele_to_ab
 
 Parameters
@@ -1989,6 +2052,7 @@ b1 : float, optional
       py::arg("tilt"),
       py::arg("pole_type") = py::none(),
       py::arg("include_kicks") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole_ele_to_kt
 
 Parameters
@@ -2023,6 +2087,7 @@ ix_pole_max : int
       &Bmad::multipole_init,
       py::arg("who"),
       py::arg("zero") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole_init
 
 Parameters
@@ -2051,6 +2116,7 @@ ele : EleStruct
       py::arg("coord"),
       py::arg("pole_type") = py::none(),
       py::arg("ref_orb_offset") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine multipole_kick (knl, tilt, n, ref_species, ele_orientation, coord, pole_type, ref_orb_offset)
 
 Subroutine to put in the kick due to a multipole.
@@ -2093,6 +2159,7 @@ ref_orb_offset : bool, optional
       py::arg("ele"),
       py::arg("orbit"),
       py::arg("factor"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole_kick_mat
 
 Parameters
@@ -2130,6 +2197,7 @@ mat6 : 2D array of float (shape: 6,6)
       py::arg("orbit"),
       py::arg("pole_type") = py::none(),
       py::arg("ref_orb_offset") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine multipole_kicks (knl, tilt, ele, orbit, pole_type, ref_orb_offset)
 
 Subroutine to put in the kick due to a multipole element.
@@ -2166,6 +2234,7 @@ ref_orb_offset : bool, optional
       py::arg("tn"),
       py::arg("an"),
       py::arg("bn"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole_kt_to_ab
 
 Parameters
@@ -2192,6 +2261,7 @@ bn : 1D array of float
       py::arg("ele"),
       py::arg("param"),
       py::arg("orbit"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine multipole_spin_tracking
 
 Parameters
@@ -2212,6 +2282,7 @@ orbit : CoordStruct
       py::arg("y"),
       py::arg("x"),
       py::arg("arg"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine mytan
 
 Parameters

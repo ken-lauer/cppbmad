@@ -10,6 +10,7 @@ void init_SimUtils_routines_j(py::module &m) {
       &SimUtils::j_bessel,
       py::arg("m"),
       py::arg("arg"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine j_bessel
 
 Parameters

@@ -76,6 +76,7 @@ void init_Bmad_routines_o(py::module &m) {
       py::arg("s2_body"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, track, mat6, make_matrix)
 
 Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
@@ -157,6 +158,7 @@ track : TrackStruct, optional
       py::arg("track") = py::none(),
       py::arg("t_end") = py::none(),
       py::arg("extra_field") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
 
 Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
@@ -244,6 +246,7 @@ dt_step : float, optional
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
       py::arg("time") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine offset_particle
 
 Parameters
@@ -315,6 +318,7 @@ time : float, optional
       py::arg("set"),
       py::arg("offset_position_only") = py::none(),
       py::arg("rot_mat") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine offset_photon
 
 Parameters
@@ -344,6 +348,7 @@ rot_mat : 2D array of float (shape: 3,3), optional
       py::arg("ele"),
       py::arg("phi_a"),
       py::arg("phi_b"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine one_turn_mat_at_ele
 
 Parameters
@@ -389,6 +394,7 @@ mat4 : 2D array of float (shape: 4,4)
       py::arg("file_name"),
       py::arg("action"),
       py::arg("r_name"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Function open_binary_file (file_name, action, iu, r_name, iver) result (is_ok)
 
 Routine to open a binary file for reading or writing.
@@ -444,6 +450,7 @@ is_ok : bool
       &Bmad::orbit_amplitude_calc,
       py::arg("ele"),
       py::arg("orb"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine orbit_amplitude_calc
 
 Parameters
@@ -476,6 +483,7 @@ amp_nb : float, optional
       py::arg("p0c_new"),
       py::arg("mat6") = py::none(),
       py::arg("make_matrix") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine orbit_reference_energy_correction
 
 Parameters
@@ -500,6 +508,7 @@ make_matrix : bool, optional
       &Bmad::orbit_to_floor_phase_space,
       py::arg("orbit"),
       py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine orbit_to_floor_phase_space
 
 Parameters
@@ -523,6 +532,7 @@ floor_phase_space : 1D array of float (shape: 6)
       py::arg("ele"),
       py::arg("z_direction") = py::none(),
       py::arg("relative_to") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine orbit_to_local_curvilinear
 
 Parameters
@@ -568,6 +578,7 @@ local_position : FloorPositionStruct
       &Bmad::orbit_too_large,
       py::arg("orbit"),
       py::arg("check_momentum") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine orbit_too_large
 
 Parameters
@@ -609,6 +620,7 @@ param : LatParamStruct, optional
       py::arg("eval"),
       py::arg("mat_tunes"),
       py::arg("Nmat"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine order_evecs_by_N_similarity(evec, eval, mat_tunes, Nmat, err_flag)
 
 This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
@@ -642,6 +654,7 @@ err_flag : bool
       py::arg("evec"),
       py::arg("eval"),
       py::arg("mat_tunes") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine order_evecs_by_plane_dominance(evec, eval, mat_tunes)
 
 This subroutine orderes the eigensystem according to which modes dominate the horizontal,
@@ -675,6 +688,7 @@ mat_tunes : 1D array of float (shape: 3), optional
       py::arg("eval"),
       py::arg("mat_tunes"),
       py::arg("abz_tunes"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine order_evecs_by_tune(evec, eval, mat_tunes, abz_tunes, err_flag)
 
 This subroutine orders the eigensystem by matching the tunes of the eigensystem to
@@ -708,6 +722,7 @@ err_flag : bool
       "order_particles_in_z",
       &Bmad::order_particles_in_z,
       py::arg("bunch"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine order_particles_in_z (bunch)
 
 Routine to order the particles longitudinally in terms of decreasing %vec(5).
@@ -725,6 +740,7 @@ bunch : BunchStruct
       &Bmad::order_super_lord_slaves,
       py::arg("lat"),
       py::arg("ix_lord"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine order_super_lord_slaves
 
 Parameters
@@ -744,6 +760,7 @@ ix_lord : int
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine osc_alloc_freespace_array
 
 Parameters
@@ -761,6 +778,7 @@ npad : 1D array of int (shape: 3)
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine osc_alloc_image_array
 
 Parameters
@@ -778,6 +796,7 @@ npad : 1D array of int (shape: 3)
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("npad"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine osc_alloc_rectpipe_arrays
 
 Parameters
@@ -798,6 +817,7 @@ npad : 1D array of int (shape: 3)
       py::arg("delta"),
       py::arg("umin"),
       py::arg("npad"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine osc_getgrnpipe
 
 Parameters
@@ -818,6 +838,7 @@ npad : 1D array of int (shape: 3)
   m.def(
       "osc_read_rectpipe_grn",
       &Bmad::osc_read_rectpipe_grn,
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine osc_read_rectpipe_grn
 )"""
   );
@@ -832,6 +853,7 @@ npad : 1D array of int (shape: 3)
       py::arg("nlo"),
       py::arg("nhi"),
       py::arg("gamma"),
+      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine osc_write_rectpipe_grn
 
 Parameters
