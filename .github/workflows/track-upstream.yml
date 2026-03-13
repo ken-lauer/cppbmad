@@ -1,0 +1,149 @@
+name: Track upstream releases
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      upstream_tag:
+        description: "Specific upstream tag to process (leave empty for latest)"
+        required: false
+        type: string
+
+concurrency:
+  group: track-upstream
+  cancel-in-progress: false
+
+env:
+  UPSTREAM_REPO: bmad-sim/bmad-ecosystem
+  FEEDSTOCK_REPO: conda-forge/cppbmad-feedstock
+
+jobs:
+  check-release:
+    runs-on: ubuntu-latest
+    outputs:
+      new_release: ${{ steps.check.outputs.new_release }}
+      upstream_tag: ${{ steps.check.outputs.upstream_tag }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check for new upstream release
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ -n "${{ inputs.upstream_tag }}" ]]; then
+            UPSTREAM_TAG="${{ inputs.upstream_tag }}"
+          else
+            UPSTREAM_TAG=$(gh api "repos/$UPSTREAM_REPO/releases/latest" --jq '.tag_name')
+          fi
+          echo "Latest upstream tag: $UPSTREAM_TAG"
+
+          if git tag -l "$UPSTREAM_TAG" | grep -q .; then
+            echo "Tag $UPSTREAM_TAG already exists, nothing to do"
+            echo "new_release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "New release detected: $UPSTREAM_TAG"
+            echo "new_release=true" >> "$GITHUB_OUTPUT"
+            echo "upstream_tag=$UPSTREAM_TAG" >> "$GITHUB_OUTPUT"
+          fi
+
+  regenerate:
+    needs: check-release
+    if: needs.check-release.outputs.new_release == 'true'
+    runs-on: ubuntu-latest
+    environment: auto-regen
+    defaults:
+      run:
+        shell: bash -eo pipefail -l {0}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.AUTOGENERATE_PAT }}
+
+      - uses: actions/checkout@v6
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ needs.check-release.outputs.upstream_tag }}
+          path: bmad_src
+
+      - name: Setup miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          use-mamba: true
+          activate-environment: bmad-build
+          channels: conda-forge
+          environment-file: bmad_src/.github/bmad-build-env.yaml
+          python-version: "3.12"
+          conda-remove-defaults: true
+
+      - name: Install additional conda dependencies
+        run: conda install -y libacl libgomp cmake pydantic clang-format
+
+      - name: Build Bmad
+        env:
+          USE_MPI: "N"
+          SHARED: "Y"
+          USE_CONDA: 1
+        working-directory: bmad_src
+        run: .github/scripts/install_bmad.sh
+
+      - name: Set environment
+        shell: bash -l {0}
+        run: |
+          echo "ACC_ROOT_DIR=$GITHUB_WORKSPACE/bmad_src" >> "$GITHUB_ENV"
+          echo "BUILD_TYPE=release" >> "$GITHUB_ENV"
+
+      - name: Regenerate bindings
+        run: python -m codegen
+
+      - name: Build cppbmad
+        run: |
+          cmake -DCMAKE_BUILD_TYPE=release -B release .
+          cmake --build release
+
+      - name: Run C++ tests
+        working-directory: release
+        run: |
+          ./test_all_encompassing
+          ./test_integration
+          ./test_arrays
+
+      - name: Install pybmad
+        run: CMAKE_BUILD_PARALLEL_LEVEL=1 python -m pip install -vv .
+
+      - name: Tweak library search path
+        shell: bash -l {0}
+        run: |
+          echo "LD_LIBRARY_PATH=$ACC_ROOT_DIR/production/lib:$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
+
+      - name: Run Python tests
+        run: python python/examples/parse.py
+
+      - name: Commit regenerated files and tag
+        env:
+          UPSTREAM_TAG: ${{ needs.check-release.outputs.upstream_tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add $(git ls-files | grep generated) \
+            python/pybmad/_*.pyi \
+            python/pybmad/__init__.py \
+            python/pybmad/_*.py \
+            coverage.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to generated files"
+          else
+            git commit -m "MAINT: regenerate for Bmad $UPSTREAM_TAG"
+          fi
+
+          git tag "$UPSTREAM_TAG"
+          git push origin HEAD "$UPSTREAM_TAG"
+
+      # - name: Trigger conda-forge feedstock rerender
