@@ -962,6 +962,8 @@ from ._pybmad import nametable_bracket_indexx
 from ._pybmad import nametable_change1
 from ._pybmad import nametable_init
 from ._pybmad import nametable_remove
+from ._pybmad import negative_ampsquared
+from ._pybmad import negative_dampsquared
 from ._pybmad import new_control
 from ._pybmad import nint_chk
 from ._pybmad import normal_form_complex_taylors
@@ -1216,6 +1218,7 @@ from ._pybmad import sol_quad_mat6_calc
 from ._pybmad import solve_psi_adaptive
 from ._pybmad import solve_psi_fixed_steps
 from ._pybmad import sort_complex_taylor_terms
+from ._pybmad import special_projection
 from ._pybmad import species_id
 from ._pybmad import species_id_from_openpmd
 from ._pybmad import species_name
@@ -1730,6 +1733,7 @@ from ._pybmad import write_lat_line
 from ._pybmad import write_lattice_in_elegant_format
 from ._pybmad import write_lattice_in_foreign_format
 from ._pybmad import write_lattice_in_mad_format
+from ._pybmad import write_lattice_in_pals
 from ._pybmad import write_lattice_in_sad_format
 from ._pybmad import write_lattice_in_scibmad
 from ._pybmad import write_line_element
@@ -1744,6 +1748,7 @@ from ._pybmad import z_at_surface
 from ._pybmad import zero_ele_kicks
 from ._pybmad import zero_ele_offsets
 from ._pybmad import zero_lr_wakes_in_lat
+from ._pybmad import zig_table_init
 from ._pybmad import zlafun
 
 # Enums
@@ -2629,6 +2634,7 @@ from ._enums import IS_REAL
 from ._enums import IS_SWITCH
 from ._enums import IS_STRING
 from ._enums import IS_STRUCT
+from ._enums import IS_SPECIES
 from ._enums import UNKNOWN
 from ._enums import PATCH_PROBLEM
 from ._enums import CANNOT_FIND
@@ -3801,6 +3807,8 @@ __all__ = [
     "nametable_change1",
     "nametable_init",
     "nametable_remove",
+    "negative_ampsquared",
+    "negative_dampsquared",
     "new_control",
     "nint_chk",
     "normal_form_complex_taylors",
@@ -4055,6 +4063,7 @@ __all__ = [
     "solve_psi_adaptive",
     "solve_psi_fixed_steps",
     "sort_complex_taylor_terms",
+    "special_projection",
     "species_id",
     "species_id_from_openpmd",
     "species_name",
@@ -4569,6 +4578,7 @@ __all__ = [
     "write_lattice_in_elegant_format",
     "write_lattice_in_foreign_format",
     "write_lattice_in_mad_format",
+    "write_lattice_in_pals",
     "write_lattice_in_sad_format",
     "write_lattice_in_scibmad",
     "write_line_element",
@@ -4583,6 +4593,7 @@ __all__ = [
     "zero_ele_kicks",
     "zero_ele_offsets",
     "zero_lr_wakes_in_lat",
+    "zig_table_init",
     "zlafun",
 
     # Enums
@@ -5468,6 +5479,7 @@ __all__ = [
     "IS_SWITCH",
     "IS_STRING",
     "IS_STRUCT",
+    "IS_SPECIES",
     "UNKNOWN",
     "PATCH_PROBLEM",
     "CANNOT_FIND",

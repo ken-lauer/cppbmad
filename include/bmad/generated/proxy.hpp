@@ -1650,6 +1650,11 @@ void bmad_common_struct_get_auto_bookkeeper(const void *struct_obj, bool *value_
 void bmad_common_struct_set_auto_bookkeeper(void *struct_obj, bool value_in);
 void bmad_common_struct_get_high_energy_space_charge_on(const void *struct_obj, bool *value_out);
 void bmad_common_struct_set_high_energy_space_charge_on(void *struct_obj, bool value_in);
+void bmad_common_struct_get_high_energy_space_charge_linear(
+    const void *struct_obj,
+    bool *value_out
+);
+void bmad_common_struct_set_high_energy_space_charge_linear(void *struct_obj, bool value_in);
 void bmad_common_struct_get_csr_and_space_charge_on(const void *struct_obj, bool *value_out);
 void bmad_common_struct_set_csr_and_space_charge_on(void *struct_obj, bool value_in);
 void bmad_common_struct_get_spin_tracking_on(const void *struct_obj, bool *value_out);
@@ -4166,8 +4171,6 @@ void tao_common_struct_get_single_mode_buffer_info(const void *s, char **d, int 
 void tao_common_struct_set_single_mode_buffer(void *struct_obj, const char *str_ptr, int str_len);
 void tao_common_struct_get_cmd_info(const void *s, char **d, int *bounds, bool *a);
 void tao_common_struct_set_cmd(void *struct_obj, const char *str_ptr, int str_len);
-void tao_common_struct_get_saved_cmd_line_info(const void *s, char **d, int *bounds, bool *a);
-void tao_common_struct_set_saved_cmd_line(void *struct_obj, const char *str_ptr, int str_len);
 void tao_plot_page_struct_get_title(const void *struct_obj, void **ptr_out);
 void tao_plot_page_struct_set_title(void *struct_obj, const void *src_ptr);
 void tao_plot_page_struct_get_subtitle(const void *struct_obj, void **ptr_out);
@@ -18128,6 +18131,7 @@ public:
       std::optional<bool> lr_wakes_on = std::nullopt,
       std::optional<bool> auto_bookkeeper = std::nullopt,
       std::optional<bool> high_energy_space_charge_on = std::nullopt,
+      std::optional<bool> high_energy_space_charge_linear = std::nullopt,
       std::optional<bool> csr_and_space_charge_on = std::nullopt,
       std::optional<bool> spin_tracking_on = std::nullopt,
       std::optional<bool> spin_sokolov_ternov_flipping_on = std::nullopt,
@@ -18200,6 +18204,8 @@ public:
       set_auto_bookkeeper(*auto_bookkeeper);
     if (high_energy_space_charge_on)
       set_high_energy_space_charge_on(*high_energy_space_charge_on);
+    if (high_energy_space_charge_linear)
+      set_high_energy_space_charge_linear(*high_energy_space_charge_linear);
     if (csr_and_space_charge_on)
       set_csr_and_space_charge_on(*csr_and_space_charge_on);
     if (spin_tracking_on)
@@ -18286,6 +18292,8 @@ public:
   void set_auto_bookkeeper(bool value);
   bool high_energy_space_charge_on() const; // 0D_NOT_logical
   void set_high_energy_space_charge_on(bool value);
+  bool high_energy_space_charge_linear() const; // 0D_NOT_logical
+  void set_high_energy_space_charge_linear(bool value);
   bool csr_and_space_charge_on() const; // 0D_NOT_logical
   void set_csr_and_space_charge_on(bool value);
   bool spin_tracking_on() const; // 0D_NOT_logical
@@ -24104,8 +24112,7 @@ public:
       std::optional<bool> rad_int_ri_calc_on = std::nullopt,
       std::optional<bool> rad_int_6d_calc_on = std::nullopt,
       std::optional<std::string> single_mode_buffer = std::nullopt,
-      std::optional<std::string> cmd = std::nullopt,
-      std::optional<std::string> saved_cmd_line = std::nullopt
+      std::optional<std::string> cmd = std::nullopt
   )
       : FortranProxy() {
     if (covar)
@@ -24184,8 +24191,6 @@ public:
       set_single_mode_buffer(*single_mode_buffer);
     if (cmd)
       set_cmd(*cmd);
-    if (saved_cmd_line)
-      set_saved_cmd_line(*saved_cmd_line);
   }
 
   TaoPlotRegionStructAlloc1D plot_place_buffer() const; // 1D_ALLOC_type
@@ -24266,8 +24271,6 @@ public:
   void set_single_mode_buffer(const std::string &value);
   std::string cmd() const; // 0D_NOT_character
   void set_cmd(const std::string &value);
-  std::string saved_cmd_line() const; // 0D_NOT_character
-  void set_saved_cmd_line(const std::string &value);
 };
 
 template <>
@@ -26006,7 +26009,8 @@ public:
   FArray2D<std::complex<double>> complex_dp_2d_alloc() const; // 2D_ALLOC_complex
   void set_complex_dp_2d_alloc(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d_alloc() const; // 3D_ALLOC_complex
-  void set_complex_dp_3d_alloc(const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+  void set_complex_dp_3d_alloc(
+      const std::vector<std::vector<std::vector<std::complex<double>>>> &v
   );
   int int_0d() const; // 0D_NOT_integer
   void set_int_0d(int value);

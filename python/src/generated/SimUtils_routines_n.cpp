@@ -173,4 +173,40 @@ nametable : NametableStruct
 ix_name : int
 )"""
   );
+  m.def(
+      "negative_ampsquared",
+      &SimUtils::negative_ampsquared,
+      py::arg("frequency"),
+      py::arg("amp"),
+      py::arg("status") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine negative_ampsquared
+
+Parameters
+----------
+frequency : float
+
+amp : float
+
+status : int, optional
+)"""
+  );
+  m.def(
+      "negative_dampsquared",
+      &SimUtils::negative_dampsquared,
+      py::arg("frequency"),
+      py::arg("damp"),
+      py::arg("status") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine negative_dampsquared
+
+Parameters
+----------
+frequency : float
+
+damp : float
+
+status : int, optional
+)"""
+  );
 }

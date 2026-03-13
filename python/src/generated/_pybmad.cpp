@@ -849,6 +849,7 @@ PYBIND11_MODULE(_pybmad, m, py::mod_gil_not_used()) {
   init_SimUtils_routines_v(m);
   init_SimUtils_routines_w(m);
   init_SimUtils_routines_x(m);
+  init_SimUtils_routines_z(m);
   init_Tao_routines_i(m);
   init_Tao_routines_t(m);
   init_bsim_routines_b(m);

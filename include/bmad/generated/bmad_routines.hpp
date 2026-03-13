@@ -437,13 +437,19 @@ extern "C" void fortran_bbi_kick(
     double &y /* 0D_NOT_real in */,
     Bmad::array_descriptor_t &sigma /* 1D_NOT_real in */,
     Bmad::array_descriptor_t &nk /* 1D_NOT_real out */,
-    Bmad::array_descriptor_t &dnk /* 2D_NOT_real out */
+    Bmad::array_descriptor_t &dnk /* 2D_NOT_real out */,
+    bool *linear_kick /* 0D_NOT_logical in */
 );
 struct BbiKick {
   FixedArray1D<Real, 2> nk;
   FixedArray2D<Real, 2, 2> dnk;
 };
-Bmad::BbiKick bbi_kick(double x, double y, FixedArray1D<Real, 2> sigma);
+Bmad::BbiKick bbi_kick(
+    double x,
+    double y,
+    FixedArray1D<Real, 2> sigma,
+    std::optional<bool> linear_kick = std::nullopt
+);
 extern "C" void fortran_bbi_slice_calc(
     void *ele /* 0D_NOT_type in */,
     int &n_slice /* 0D_NOT_integer in */,
@@ -1491,7 +1497,8 @@ extern "C" bool fortran_coords_local_curvilinear_to_floor(
     bool *in_body_frame /* 0D_NOT_logical in */,
     Bmad::array_descriptor_t &w_mat /* 2D_NOT_real out */,
     bool *calculate_angles /* 0D_NOT_logical in */,
-    int *relative_to /* 0D_NOT_integer in */,
+    int *end_origin /* 0D_NOT_integer in */,
+    bool *downstream_dir_ref /* 0D_NOT_logical in */,
     void *global_position /* 0D_NOT_type out */
 );
 struct CoordsLocalCurvilinearToFloor {
@@ -1503,7 +1510,8 @@ Bmad::CoordsLocalCurvilinearToFloor coords_local_curvilinear_to_floor(
     EleStruct &ele,
     std::optional<bool> in_body_frame = std::nullopt,
     std::optional<bool> calculate_angles = std::nullopt,
-    std::optional<int> relative_to = std::nullopt
+    std::optional<int> end_origin = std::nullopt,
+    std::optional<bool> downstream_dir_ref = std::nullopt
 );
 extern "C" bool fortran_coords_relative_to_floor(
     void *floor0 /* 0D_NOT_type in */,
@@ -9569,6 +9577,9 @@ FixedArray1D<Real, 6> wall3d_to_position(CoordStruct &orbit, EleStruct &ele);
 
 // Skipped unusable routine wall_hit_handler_custom_def:
 // - Routine in configuration skip list
+
+// Skipped unusable routine wiggler_field:
+// - Module name unset
 extern "C" void fortran_word_to_value(
     const char *word /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type inout */,
@@ -9809,14 +9820,14 @@ extern "C" void fortran_write_lat_line(
     int &iu /* 0D_NOT_integer in */,
     bool &end_is_neigh /* 0D_NOT_logical in */,
     bool *do_split /* 0D_NOT_logical in */,
-    bool *scibmad /* 0D_NOT_logical in */
+    bool *ampersand_at_ends /* 0D_NOT_logical in */
 );
 void write_lat_line(
     std::string &line,
     int iu,
     bool end_is_neigh,
     std::optional<bool> do_split = std::nullopt,
-    std::optional<bool> scibmad = std::nullopt
+    std::optional<bool> ampersand_at_ends = std::nullopt
 );
 extern "C" void fortran_write_lattice_in_elegant_format(
     const char *out_file_name /* 0D_NOT_character in */,
@@ -9879,6 +9890,16 @@ bool write_lattice_in_mad_format(
     std::optional<double> dr12_drift_max = std::nullopt,
     std::optional<int> ix_branch = std::nullopt
 );
+extern "C" void fortran_write_lattice_in_pals(
+    const char *pals_file /* 0D_NOT_character out */,
+    void *lat /* 0D_NOT_type in */,
+    bool &err_flag /* 0D_NOT_logical out */
+);
+struct WriteLatticeInPals {
+  std::string pals_file;
+  bool err_flag;
+};
+Bmad::WriteLatticeInPals write_lattice_in_pals(LatStruct &lat);
 extern "C" void fortran_write_lattice_in_sad_format(
     const char *out_file_name /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type inout */,

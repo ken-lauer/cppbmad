@@ -9,7 +9,7 @@ use bmad_struct_proxy_mod
 
 use random_mod, only: allocate_thread_states, pointer_to_ran_state, ran_default_state, &
     ran_engine, ran_gauss_converter, ran_gauss_scalar, ran_gauss_vector, ran_seed_get, &
-    ran_seed_put, ran_uniform, super_sobseq
+    ran_seed_put, ran_uniform, super_sobseq, zig_table_init
 
 use particle_species_mod, only: anomalous_moment_of, antiparticle, atomic_number, &
     atomic_species_id, charge_of, charge_to_mass_of, is_subatomic_species, mass_of, &
@@ -54,7 +54,8 @@ use elliptic_integral_mod, only: celbd, elbd, elcbd, ellipinc, elsbd, gelbd, rce
 
 use command_line_mod, only: cesr_getarg, cesr_iargc
 
-use fourier_mod, only: coarse_frequency_estimate, fine_frequency_estimate, fourier_amplitude
+use fourier_mod, only: coarse_frequency_estimate, fine_frequency_estimate, fourier_amplitude, &
+    negative_ampsquared, negative_dampsquared
 
 use windowls_mod, only: destfixedwindowls, fixedwindowls, initfixedwindowls
 
@@ -62,7 +63,8 @@ use input_mod, only: get_tty_char, read_a_line, readline_read_history, readline_
 
 use lmdif_mod, only: initial_lmdif, suggest_lmdif
 
-use naff_mod, only: interpolated_fft, interpolated_fft_gsl, maximize_projection, naff, projdd
+use naff_mod, only: interpolated_fft, interpolated_fft_gsl, maximize_projection, naff, projdd, &
+    special_projection
 
 use sim_utils_struct, only: is_false, is_true
 
@@ -3315,6 +3317,64 @@ subroutine fortran_nametable_remove (nametable, ix_name) bind(c)
   call nametable_remove(f_nametable, f_ix_name)
 
 end subroutine
+subroutine fortran_negative_ampsquared (frequency, status, amp) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: frequency  ! 0D_NOT_real
+  real(rp) :: f_frequency
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer(c_int) :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: amp  ! 0D_NOT_real
+  real(rp) :: f_amp
+  real(c_double), pointer :: f_amp_ptr
+  ! ** End of parameters **
+  ! in: f_frequency 0D_NOT_real
+  f_frequency = frequency
+  ! in: f_status 0D_NOT_integer
+  if (c_associated(status)) then
+    call c_f_pointer(status, f_status_ptr)
+  else
+    f_status_ptr => null()
+  endif
+  f_amp = negative_ampsquared(f_frequency, f_status_ptr)
+
+  ! out: f_amp 0D_NOT_real
+  call c_f_pointer(amp, f_amp_ptr)
+  f_amp_ptr = f_amp
+end subroutine
+subroutine fortran_negative_dampsquared (frequency, status, damp) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: frequency  ! 0D_NOT_real
+  real(rp) :: f_frequency
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer(c_int) :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: damp  ! 0D_NOT_real
+  real(rp) :: f_damp
+  real(c_double), pointer :: f_damp_ptr
+  ! ** End of parameters **
+  ! in: f_frequency 0D_NOT_real
+  f_frequency = frequency
+  ! in: f_status 0D_NOT_integer
+  if (c_associated(status)) then
+    call c_f_pointer(status, f_status_ptr)
+  else
+    f_status_ptr => null()
+  endif
+  f_damp = negative_dampsquared(f_frequency, f_status_ptr)
+
+  ! out: f_damp 0D_NOT_real
+  call c_f_pointer(damp, f_damp_ptr)
+  f_damp_ptr = f_damp
+end subroutine
 subroutine fortran_omega_to_quat (omega, quat) bind(c)
 
   use array_desc_mod
@@ -5864,6 +5924,35 @@ subroutine fortran_skip_header (ix_unit, error_flag) bind(c)
   call skip_header(f_ix_unit, f_error_flag)
 
 end subroutine
+subroutine fortran_special_projection (f, status, func_retval__) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: f  ! 0D_NOT_real
+  real(rp) :: f_f
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer(c_int) :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: func_retval__  ! 0D_NOT_real
+  real(rp) :: f_func_retval__
+  real(c_double), pointer :: f_func_retval___ptr
+  ! ** End of parameters **
+  ! in: f_f 0D_NOT_real
+  f_f = f
+  ! in: f_status 0D_NOT_integer
+  if (c_associated(status)) then
+    call c_f_pointer(status, f_status_ptr)
+  else
+    f_status_ptr => null()
+  endif
+  f_func_retval__ = special_projection(f_f, f_status_ptr)
+
+  ! out: f_func_retval__ 0D_NOT_real
+  call c_f_pointer(func_retval__, f_func_retval___ptr)
+  f_func_retval___ptr = f_func_retval__
+end subroutine
 subroutine fortran_species_id (name, default_, print_err, species) bind(c)
 
   use array_desc_mod
@@ -7417,6 +7506,14 @@ subroutine fortran_x0_radiation_length (species, x0) bind(c)
   ! out: f_x0 0D_NOT_real
   call c_f_pointer(x0, f_x0_ptr)
   f_x0_ptr = f_x0
+end subroutine
+subroutine fortran_zig_table_init () bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** End of parameters **
+  call zig_table_init()
+
 end subroutine
 
 end module cppbmad_sim_utils_routines

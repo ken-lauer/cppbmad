@@ -1041,6 +1041,10 @@ std::string to_string(const BmadCommonStruct &self) {
        std::pair{"lr_wakes_on", to_string(self.lr_wakes_on())},
        std::pair{"auto_bookkeeper", to_string(self.auto_bookkeeper())},
        std::pair{"high_energy_space_charge_on", to_string(self.high_energy_space_charge_on())},
+       std::pair{
+           "high_energy_space_charge_linear",
+           to_string(self.high_energy_space_charge_linear())
+       },
        std::pair{"csr_and_space_charge_on", to_string(self.csr_and_space_charge_on())},
        std::pair{"spin_tracking_on", to_string(self.spin_tracking_on())},
        std::pair{
@@ -1161,8 +1165,8 @@ std::string to_string(const LatStruct &self) {
   return repr(
       self.get_fortran_ptr(),
       "LatStruct",
-      {std::pair{"use_name", self.use_name()}, std::pair{"#branch", to_string(self.branch().size())}
-      }
+      {std::pair{"use_name", self.use_name()},
+       std::pair{"#branch", to_string(self.branch().size())}}
   );
 }
 std::string to_string(const BunchStruct &self) {
@@ -2256,8 +2260,7 @@ std::string to_string(const TaoCommonStruct &self) {
        std::pair{"rad_int_6d_calc_on", to_string(self.rad_int_6d_calc_on())},
        std::pair{"valid_plot_who", to_string(self.valid_plot_who())},
        std::pair{"single_mode_buffer", self.single_mode_buffer()},
-       std::pair{"cmd", self.cmd()},
-       std::pair{"saved_cmd_line", self.saved_cmd_line()}}
+       std::pair{"cmd", self.cmd()}}
   );
 }
 std::string to_string(const TaoPlotPageStruct &self) {
@@ -4795,12 +4798,19 @@ std::string to_string(const Bmad::WriteGptFieldGridFile3d &self) {
        std::pair{"err", to_string(self.err)}}
   );
 }
+std::string to_string(const Bmad::WriteLatticeInPals &self) {
+  return repr(
+      &self,
+      "Bmad::WriteLatticeInPals",
+      {std::pair{"pals_file", self.pals_file}, std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
 std::string to_string(const Bmad::WriteLatticeInScibmad &self) {
   return repr(
       &self,
       "Bmad::WriteLatticeInScibmad",
-      {std::pair{"scibmad_file", self.scibmad_file}, std::pair{"err_flag", to_string(self.err_flag)}
-      }
+      {std::pair{"scibmad_file", self.scibmad_file},
+       std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self) {

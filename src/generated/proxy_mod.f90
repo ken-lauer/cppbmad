@@ -24947,6 +24947,25 @@ contains
     struct_obj%high_energy_space_charge_on = value_in
   end subroutine
 
+  ! bmad_common_struct%high_energy_space_charge_linear: 0D_NOT_logical
+
+  subroutine bmad_common_struct_get_high_energy_space_charge_linear(struct_obj_ptr, value_out) bind(c, name='bmad_common_struct_get_high_energy_space_charge_linear')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    type(bmad_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%high_energy_space_charge_linear
+  end subroutine
+
+
+  subroutine bmad_common_struct_set_high_energy_space_charge_linear(struct_obj_ptr, value_in) bind(c, name='bmad_common_struct_set_high_energy_space_charge_linear')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(bmad_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%high_energy_space_charge_linear = value_in
+  end subroutine
+
   ! bmad_common_struct%csr_and_space_charge_on: 0D_NOT_logical
 
   subroutine bmad_common_struct_get_csr_and_space_charge_on(struct_obj_ptr, value_out) bind(c, name='bmad_common_struct_get_csr_and_space_charge_on')
@@ -56202,34 +56221,6 @@ contains
     call c_f_pointer(struct_obj_ptr, struct_obj)
     call c_f_pointer(str_ptr, str_in)
     struct_obj%cmd = str_in ! implicitly handles padding
-  end subroutine
-
-  ! tao_common_struct%saved_cmd_line: 0D_NOT_character
-
-  subroutine tao_common_struct_get_saved_cmd_line_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
-    bind(c, name='tao_common_struct_get_saved_cmd_line_info')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: data_ptr
-    integer(c_int), dimension(2), intent(out) :: bounds
-    logical(c_bool), intent(out) :: is_allocated
-    type(tao_common_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    data_ptr = c_loc(struct_obj%saved_cmd_line)
-    bounds(1) = 1_c_int
-    bounds(2) = int(len_trim(struct_obj%saved_cmd_line), c_int)
-    is_allocated = .true.
-  end subroutine
-
-
-  subroutine tao_common_struct_set_saved_cmd_line(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_common_struct_set_saved_cmd_line')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(in), value :: str_ptr
-    integer(c_int), intent(in), value :: str_len
-    type(tao_common_struct), pointer :: struct_obj
-    character(len=str_len), pointer :: str_in
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    call c_f_pointer(str_ptr, str_in)
-    struct_obj%saved_cmd_line = str_in ! implicitly handles padding
   end subroutine
 
   !! tao_plot_page_struct

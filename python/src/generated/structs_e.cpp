@@ -331,7 +331,9 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
           "ptc_fibre",
           py::cpp_function(&EleStruct::ptc_fibre, py::keep_alive<0, 1>()),
           &EleStruct::set_ptc_fibre,
-          "PTC track corresponding to this ele."
+          "PTC track corresponding to this ele. %floor is floor coord of lab coordinates at the "
+          "downstream end. Notice that if ele%direction = -1, the lab coords have the z-axis "
+          "antiparallel to the +s-direction."
       )
       .def_property(
           "floor",

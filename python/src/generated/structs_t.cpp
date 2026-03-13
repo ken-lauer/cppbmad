@@ -941,7 +941,6 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
              std::optional<bool>,
              std::optional<bool>,
              std::optional<std::string>,
-             std::optional<std::string>,
              std::optional<std::string>>(),
          py::arg("covar") = py::none(),
          py::arg("alpha") = py::none(),
@@ -980,8 +979,7 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
          py::arg("rad_int_ri_calc_on") = py::none(),
          py::arg("rad_int_6d_calc_on") = py::none(),
          py::arg("single_mode_buffer") = py::none(),
-         py::arg("cmd") = py::none(),
-         py::arg("saved_cmd_line") = py::none()
+         py::arg("cmd") = py::none()
   )
       .def_property_readonly(
           "plot_place_buffer",
@@ -1196,12 +1194,6 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
           &TaoCommonStruct::cmd,
           &TaoCommonStruct::set_cmd,
           "Used for the cmd history"
-      )
-      .def_property(
-          "saved_cmd_line",
-          &TaoCommonStruct::saved_cmd_line,
-          &TaoCommonStruct::set_saved_cmd_line,
-          "Saved part of command line when there are mulitple commands on a line"
       )
 
       .def("__repr__", [](const TaoCommonStruct &self) { return to_string(self); })

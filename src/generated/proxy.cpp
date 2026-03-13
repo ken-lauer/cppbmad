@@ -4291,6 +4291,14 @@ bool BmadCommonStruct::high_energy_space_charge_on() const {
 void BmadCommonStruct::set_high_energy_space_charge_on(bool value) {
   bmad_common_struct_set_high_energy_space_charge_on(fortran_ptr_, value);
 }
+bool BmadCommonStruct::high_energy_space_charge_linear() const {
+  bool value;
+  bmad_common_struct_get_high_energy_space_charge_linear(fortran_ptr_, &value);
+  return value;
+}
+void BmadCommonStruct::set_high_energy_space_charge_linear(bool value) {
+  bmad_common_struct_set_high_energy_space_charge_linear(fortran_ptr_, value);
+}
 bool BmadCommonStruct::csr_and_space_charge_on() const {
   bool value;
   bmad_common_struct_get_csr_and_space_charge_on(fortran_ptr_, &value);
@@ -11282,18 +11290,6 @@ std::string TaoCommonStruct::cmd() const {
 void TaoCommonStruct::set_cmd(const std::string &value) {
   tao_common_struct_set_cmd(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-std::string TaoCommonStruct::saved_cmd_line() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_common_struct_get_saved_cmd_line_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoCommonStruct::set_saved_cmd_line(const std::string &value) {
-  tao_common_struct_set_saved_cmd_line(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
 TaoTitleStruct TaoPlotPageStruct::title() const {
   void *ptr;
   tao_plot_page_struct_get_title(fortran_ptr_, &ptr);
@@ -13525,7 +13521,8 @@ FArray3D<int64_t> AllEncompassingStruct::int8_3d_ptr() const {
       all_encompassing_struct_get_int8_3d_ptr_info
   );
 }
-void AllEncompassingStruct::set_int8_3d_ptr(const std::vector<std::vector<std::vector<int64_t>>> &v
+void AllEncompassingStruct::set_int8_3d_ptr(
+    const std::vector<std::vector<std::vector<int64_t>>> &v
 ) {
   ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d_ptr, v);
 }

@@ -2156,7 +2156,8 @@ w_mat : 2D array of float (shape: 3,3), optional
       py::arg("ele"),
       py::arg("in_body_frame") = py::none(),
       py::arg("calculate_angles") = py::none(),
-      py::arg("relative_to") = py::none(),
+      py::arg("end_origin") = py::none(),
+      py::arg("downstream_dir_ref") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coords_local_curvilinear_to_floor
 
@@ -2164,7 +2165,7 @@ Parameters
 ----------
 local_position : FloorPositionStruct
     Floor position in local curvilinear coordinates, with .r = [x, y, z_local] where z_local is wrt the
-    entrance end of the element except if relative_to = downstream_end$. In this case, z_local is a distance
+    entrance end of the element except if end_origin = downstream_end$. In this case, z_local is a distance
     -ele.value(l$) from the exit end (important for patch elements).
 
 ele : EleStruct
@@ -2178,10 +2179,16 @@ calculate_angles : bool, optional
     calculate angles for global_position Default: True. False returns local_position angles (.theta, .phi,
     .psi) = 0.
 
-relative_to : int, optional
+end_origin : int, optional
     not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
     upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
     ele.orientation = -1.
+
+downstream_dir_ref : bool, optional
+    Default False. The output theta angle is calculated so that moduo 2pi this angle is near ele.floor.theta.
+    If the element is reversed (ele.direction = -1), the element body coords point upstream which is not
+    always wanted. If this arg is set True, ele.floor.theta+pi modulo to be in the range [-pi, pi] is the
+    reference.
 
 Returns
 -------

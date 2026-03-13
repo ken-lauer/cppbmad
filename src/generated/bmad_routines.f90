@@ -109,8 +109,8 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     valid_tracking_method, value_of_attribute, vec_to_polar, vec_to_spinor, &
     w_mat_for_bend_angle, w_mat_for_tilt, w_mat_for_x_pitch, w_mat_for_y_pitch, &
     write_beam_floor_positions, write_bmad_lattice_file, write_lattice_in_elegant_format, &
-    write_lattice_in_foreign_format, write_lattice_in_mad_format, write_lattice_in_sad_format, &
-    write_lattice_in_scibmad, zero_ele_kicks, zero_ele_offsets
+    write_lattice_in_foreign_format, write_lattice_in_mad_format, write_lattice_in_pals, &
+    write_lattice_in_sad_format, write_lattice_in_scibmad, zero_ele_kicks, zero_ele_offsets
 
 use mode3_mod, only: action_to_xyz, beam_tilts, eigen_decomp_6mat, get_emit_from_sigma_mat, &
     make_hvbp, make_n, make_smat_from_abc, mytan, normal_mode3_calc, normalize_evecs, &
@@ -1930,7 +1930,7 @@ subroutine fortran_average_twiss (frac1, twiss1, twiss2, ave_twiss) bind(c)
   ! out: f_ave_twiss 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_bbi_kick (x, y, sigma, nk, dnk) bind(c)
+subroutine fortran_bbi_kick (x, y, sigma, nk, dnk, linear_kick) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1942,6 +1942,11 @@ subroutine fortran_bbi_kick (x, y, sigma, nk, dnk) bind(c)
   type(array_descriptor_t), intent(in) :: sigma
   real(rp) :: f_sigma(2)
   real(c_double), pointer :: f_sigma_ptr(:)
+  type(c_ptr), intent(in), value :: linear_kick  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_linear_kick
+  logical, target :: f_linear_kick_native
+  logical, pointer :: f_linear_kick_native_ptr
+  logical(c_bool), pointer :: f_linear_kick_ptr
   ! ** Out parameters **
   type(array_descriptor_t), intent(in) :: nk
   real(rp) :: f_nk(2)
@@ -1975,7 +1980,15 @@ subroutine fortran_bbi_kick (x, y, sigma, nk, dnk) bind(c)
   else
     f_dnk_ptr => null()
   endif
-  call bbi_kick(f_x, f_y, f_sigma, f_nk, f_dnk)
+  ! in: f_linear_kick 0D_NOT_logical
+  if (c_associated(linear_kick)) then
+    call c_f_pointer(linear_kick, f_linear_kick_ptr)
+    f_linear_kick_native = f_linear_kick_ptr
+    f_linear_kick_native_ptr => f_linear_kick_native
+  else
+    f_linear_kick_native_ptr => null()
+  endif
+  call bbi_kick(f_x, f_y, f_sigma, f_nk, f_dnk, f_linear_kick_native_ptr)
 
   ! out: f_nk 1D_NOT_real
   if (c_associated(nk%data_ptr)) then
@@ -5728,7 +5741,7 @@ subroutine fortran_coords_local_curvilinear_to_body (local_position, ele, w_mat,
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_body_frame, &
-    w_mat, calculate_angles, relative_to, global_position) bind(c)
+    w_mat, calculate_angles, end_origin, downstream_dir_ref, global_position) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct, floor_position_struct
@@ -5748,9 +5761,14 @@ subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_bo
   logical, target :: f_calculate_angles_native
   logical, pointer :: f_calculate_angles_native_ptr
   logical(c_bool), pointer :: f_calculate_angles_ptr
-  type(c_ptr), intent(in), value :: relative_to  ! 0D_NOT_integer
-  integer(c_int) :: f_relative_to
-  integer(c_int), pointer :: f_relative_to_ptr
+  type(c_ptr), intent(in), value :: end_origin  ! 0D_NOT_integer
+  integer(c_int) :: f_end_origin
+  integer(c_int), pointer :: f_end_origin_ptr
+  type(c_ptr), intent(in), value :: downstream_dir_ref  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_downstream_dir_ref
+  logical, target :: f_downstream_dir_ref_native
+  logical, pointer :: f_downstream_dir_ref_native_ptr
+  logical(c_bool), pointer :: f_downstream_dir_ref_ptr
   ! ** Out parameters **
   type(array_descriptor_t), intent(in) :: w_mat
   real(rp) :: f_w_mat(3,3)
@@ -5787,17 +5805,26 @@ subroutine fortran_coords_local_curvilinear_to_floor (local_position, ele, in_bo
   else
     f_calculate_angles_native_ptr => null()
   endif
-  ! in: f_relative_to 0D_NOT_integer
-  if (c_associated(relative_to)) then
-    call c_f_pointer(relative_to, f_relative_to_ptr)
+  ! in: f_end_origin 0D_NOT_integer
+  if (c_associated(end_origin)) then
+    call c_f_pointer(end_origin, f_end_origin_ptr)
   else
-    f_relative_to_ptr => null()
+    f_end_origin_ptr => null()
+  endif
+  ! in: f_downstream_dir_ref 0D_NOT_logical
+  if (c_associated(downstream_dir_ref)) then
+    call c_f_pointer(downstream_dir_ref, f_downstream_dir_ref_ptr)
+    f_downstream_dir_ref_native = f_downstream_dir_ref_ptr
+    f_downstream_dir_ref_native_ptr => f_downstream_dir_ref_native
+  else
+    f_downstream_dir_ref_native_ptr => null()
   endif
   ! out: f_global_position 0D_NOT_type
   if (.not. c_associated(global_position)) return
   call c_f_pointer(global_position, f_global_position)
   f_global_position = coords_local_curvilinear_to_floor(f_local_position, f_ele, &
-      f_in_body_frame_native_ptr, f_w_mat, f_calculate_angles_native_ptr, f_relative_to_ptr)
+      f_in_body_frame_native_ptr, f_w_mat, f_calculate_angles_native_ptr, f_end_origin_ptr, &
+      f_downstream_dir_ref_native_ptr)
 
   ! out: f_w_mat 2D_NOT_real
   if (c_associated(w_mat%data_ptr)) f_w_mat_ptr = mat2vec(f_w_mat, product(w_mat%dims(1:w_mat%rank)))
@@ -36536,7 +36563,7 @@ subroutine fortran_write_gpt_field_grid_file_3d (base_filename, ele, maxfield, r
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
 end subroutine
-subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, scibmad) bind(c)
+subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, ampersand_at_ends) bind(c)
 
   use array_desc_mod
   implicit none
@@ -36550,11 +36577,11 @@ subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, scibmad) bi
   logical, target :: f_do_split_native
   logical, pointer :: f_do_split_native_ptr
   logical(c_bool), pointer :: f_do_split_ptr
-  type(c_ptr), intent(in), value :: scibmad  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_scibmad
-  logical, target :: f_scibmad_native
-  logical, pointer :: f_scibmad_native_ptr
-  logical(c_bool), pointer :: f_scibmad_ptr
+  type(c_ptr), intent(in), value :: ampersand_at_ends  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_ampersand_at_ends
+  logical, target :: f_ampersand_at_ends_native
+  logical, pointer :: f_ampersand_at_ends_native_ptr
+  logical(c_bool), pointer :: f_ampersand_at_ends_ptr
   ! ** Inout parameters **
   type(c_ptr), intent(in), value :: line
   character(len=4096), target :: f_line
@@ -36576,16 +36603,16 @@ subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, scibmad) bi
   else
     f_do_split_native_ptr => null()
   endif
-  ! in: f_scibmad 0D_NOT_logical
-  if (c_associated(scibmad)) then
-    call c_f_pointer(scibmad, f_scibmad_ptr)
-    f_scibmad_native = f_scibmad_ptr
-    f_scibmad_native_ptr => f_scibmad_native
+  ! in: f_ampersand_at_ends 0D_NOT_logical
+  if (c_associated(ampersand_at_ends)) then
+    call c_f_pointer(ampersand_at_ends, f_ampersand_at_ends_ptr)
+    f_ampersand_at_ends_native = f_ampersand_at_ends_ptr
+    f_ampersand_at_ends_native_ptr => f_ampersand_at_ends_native
   else
-    f_scibmad_native_ptr => null()
+    f_ampersand_at_ends_native_ptr => null()
   endif
   call write_lat_line(f_line, f_iu, f_end_is_neigh, f_do_split_native_ptr, &
-      f_scibmad_native_ptr)
+      f_ampersand_at_ends_native_ptr)
 
   ! inout: f_line 0D_NOT_character
   call c_f_pointer(line, f_line_ptr, [len_trim(f_line) + 1])
@@ -36859,6 +36886,43 @@ subroutine fortran_write_lattice_in_mad_format (out_type, out_file_name, lat, re
 
   ! out: f_err 0D_NOT_logical
   ! no output conversion for f_err
+end subroutine
+subroutine fortran_write_lattice_in_pals (pals_file, lat, err_flag) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: lat_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: pals_file
+  character(len=4096), target :: f_pals_file
+  character(kind=c_char), pointer :: f_pals_file_ptr(:)
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  ! ** End of parameters **
+  ! in: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(lat, f_lat)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  call write_lattice_in_pals(f_pals_file, f_lat, f_err_flag)
+
+  ! out: f_pals_file 0D_NOT_character
+  call c_f_pointer(pals_file, f_pals_file_ptr, [len_trim(f_pals_file) + 1])
+  call to_c_str(f_pals_file, f_pals_file_ptr)
+  ! out: f_err_flag 0D_NOT_logical
+  ! no output conversion for f_err_flag
 end subroutine
 subroutine fortran_write_lattice_in_sad_format (out_file_name, lat, include_apertures, &
     ix_branch, err) bind(c)

@@ -9,9 +9,9 @@ PyWriteLatLine python_write_lat_line(
     int iu,
     bool end_is_neigh,
     std::optional<bool> do_split = std::nullopt,
-    std::optional<bool> scibmad = std::nullopt
+    std::optional<bool> ampersand_at_ends = std::nullopt
 ) {
-  Bmad::write_lat_line(line, iu, end_is_neigh, do_split, scibmad);
+  Bmad::write_lat_line(line, iu, end_is_neigh, do_split, ampersand_at_ends);
   auto py_result{PyWriteLatLine{line}};
   return py_result;
 }
@@ -887,9 +887,9 @@ err : bool, optional
       py::arg("iu"),
       py::arg("end_is_neigh"),
       py::arg("do_split") = py::none(),
-      py::arg("scibmad") = py::none(),
+      py::arg("ampersand_at_ends") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine write_lat_line (line, iu, end_is_neigh, do_split)
+      R"""(Subroutine write_lat_line (line, iu, end_is_neigh, do_split, ampersand_at_ends)
 
 Routine to write strings to a lattice file.
 This routine will break the string up into multiple lines
@@ -915,8 +915,8 @@ do_split : bool, optional
     Split line if overlength? Default is True. False is used when line has already been split for expressions
     since the expression splitting routine does a much better job of it.
 
-scibmad : bool, optional
-    Default False. If True then do not include "&" line continuation
+ampersand_at_ends : bool, optional
+    Default True. If False then do not include "&" line continuation
 
 Returns
 -------
@@ -991,7 +991,7 @@ err : bool, optional
 Parameters
 ----------
 out_type : str
-    Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', or 'OPAL-T', 'SCIBMAD'.
+    Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', 'OPAL-T', 'PALS', or 'SCIBMAD'.
 
 out_file_name : str
     Name of the mad output lattice file.
@@ -1076,6 +1076,44 @@ Returns
 -------
 err : bool, optional
     Set True if, say a file could not be opened.
+)"""
+  );
+  py::class_<Bmad::WriteLatticeInPals, std::unique_ptr<Bmad::WriteLatticeInPals>>(
+      m,
+      "WriteLatticeInPals",
+      "write_lattice_in_pals return type"
+  )
+      .def_readonly("pals_file", &Bmad::WriteLatticeInPals::pals_file)
+      .def_readonly("err_flag", &Bmad::WriteLatticeInPals::err_flag)
+      .def("__len__", [](const Bmad::WriteLatticeInPals &) { return 2; })
+      .def("__getitem__", [](const Bmad::WriteLatticeInPals &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.pals_file);
+        if (i == 1)
+          return py::cast(s.err_flag);
+        throw py::index_error();
+      });
+  m.def(
+      "write_lattice_in_pals",
+      &Bmad::write_lattice_in_pals,
+      py::arg("lat"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine write_lattice_in_pals
+
+Parameters
+----------
+lat : LatStruct
+    Lattice
+
+Returns
+-------
+pals_file : str
+    Pals lattice file name.
+
+err_flag : bool, optional
+    Error flag
 )"""
   );
   m.def(

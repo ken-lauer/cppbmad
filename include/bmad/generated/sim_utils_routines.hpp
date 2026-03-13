@@ -994,6 +994,18 @@ extern "C" void fortran_nametable_remove(
     int &ix_name /* 0D_NOT_integer in */
 );
 void nametable_remove(NametableStruct &nametable, int ix_name);
+extern "C" bool fortran_negative_ampsquared(
+    double &frequency /* 0D_NOT_real in */,
+    int *status /* 0D_NOT_integer in */,
+    double &amp /* 0D_NOT_real in */
+);
+void negative_ampsquared(double frequency, double amp, std::optional<int> status = std::nullopt);
+extern "C" bool fortran_negative_dampsquared(
+    double &frequency /* 0D_NOT_real in */,
+    int *status /* 0D_NOT_integer in */,
+    double &damp /* 0D_NOT_real in */
+);
+void negative_dampsquared(double frequency, double damp, std::optional<int> status = std::nullopt);
 
 // Skipped unusable routine node_put:
 // - Routine in configuration skip list
@@ -1668,6 +1680,12 @@ double sinhx_x(double x, std::optional<int> nd = std::nullopt);
 extern "C" void
 fortran_skip_header(int &ix_unit /* 0D_NOT_integer in */, bool &error_flag /* 0D_NOT_logical in */);
 void skip_header(int ix_unit, bool error_flag);
+extern "C" bool fortran_special_projection(
+    double &f /* 0D_NOT_real in */,
+    int *status /* 0D_NOT_integer in */,
+    double &func_retval__ /* 0D_NOT_real in */
+);
+void special_projection(double f, double func_retval__, std::optional<int> status = std::nullopt);
 extern "C" bool fortran_species_id(
     const char *name /* 0D_NOT_character in */,
     int *default_ /* 0D_NOT_integer in */,
@@ -2209,4 +2227,6 @@ void word_read(
 extern "C" bool
 fortran_x0_radiation_length(int &species /* 0D_NOT_integer in */, double &x0 /* 0D_NOT_real out */);
 double x0_radiation_length(int species);
+extern "C" void fortran_zig_table_init();
+void zig_table_init();
 } // namespace SimUtils

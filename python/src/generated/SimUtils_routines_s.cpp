@@ -256,6 +256,20 @@ error_flag : bool
 )"""
   );
   m.def(
+      "special_projection",
+      &SimUtils::special_projection,
+      py::arg("f"),
+      py::arg("func_retval__"),
+      py::arg("status") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(function special_projection
+
+Calculates <cdata | exp(i theta)>
+
+Used only by maximize projection. Uses data global to the function to accomodate stock NR routine.
+)"""
+  );
+  m.def(
       "species_id",
       &SimUtils::species_id,
       py::arg("name"),

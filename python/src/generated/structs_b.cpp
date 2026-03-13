@@ -697,7 +697,7 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
           "random_gauss_converter",
           &BeamInitStruct::random_gauss_converter,
           &BeamInitStruct::set_random_gauss_converter,
-          "Or 'quick'. Uniform to gauss conversion method."
+          "Or 'quick' or 'exact'. Uniform to gauss conversion method."
       )
       .def_property(
           "random_sigma_cutoff",
@@ -900,6 +900,7 @@ void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
+             std::optional<bool>,
              std::optional<bool>>(),
          py::arg("max_aperture_limit") = py::none(),
          py::arg("d_orb") = py::none(),
@@ -929,6 +930,7 @@ void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
          py::arg("lr_wakes_on") = py::none(),
          py::arg("auto_bookkeeper") = py::none(),
          py::arg("high_energy_space_charge_on") = py::none(),
+         py::arg("high_energy_space_charge_linear") = py::none(),
          py::arg("csr_and_space_charge_on") = py::none(),
          py::arg("spin_tracking_on") = py::none(),
          py::arg("spin_sokolov_ternov_flipping_on") = py::none(),
@@ -1110,6 +1112,12 @@ void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
           "high_energy_space_charge_on",
           &BmadCommonStruct::high_energy_space_charge_on,
           &BmadCommonStruct::set_high_energy_space_charge_on,
+          "High energy space charge effect switch."
+      )
+      .def_property(
+          "high_energy_space_charge_linear",
+          &BmadCommonStruct::high_energy_space_charge_linear,
+          &BmadCommonStruct::set_high_energy_space_charge_linear,
           "High energy space charge effect switch."
       )
       .def_property(

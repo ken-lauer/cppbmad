@@ -24,6 +24,7 @@ void init_Bmad_routines_b(py::module &m) {
       py::arg("x"),
       py::arg("y"),
       py::arg("sigma"),
+      py::arg("linear_kick") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bbi_kick
 
@@ -38,6 +39,10 @@ y : float
 sigma : 1D array of float (shape: 2)
     Beam (x,y) sigmas.
 
+linear_kick : bool, optional
+    Default False. If present and True, kick and dnk are computed using the extrapolated kick from the linear
+    region.
+
 Returns
 -------
 nk : 1D array of float (shape: 2)
@@ -45,7 +50,7 @@ nk : 1D array of float (shape: 2)
     / beta_x), kick_y / (xi_y * sigma_y / beta_y) nk = -4 * pi * [x/sigma_x, y/sigma_y] in the linear region
 
 dnk : 2D array of float (shape: 2,2)
-    derivatives of nk. EG: dnk(2,1) = dnk(2)/dy
+    derivatives of nk. EG: dnk(2,1) = nk(2)/dx
 )"""
   );
   m.def(

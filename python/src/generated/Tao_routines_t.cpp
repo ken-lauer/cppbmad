@@ -2647,7 +2647,6 @@ ignore_if_not_limited : bool, optional
 Subroutine to get the next Tao command. In order of precedence, input may come from:
   1) s%com%cmd string (if s%com%use_cmd_here is set to True).
      Used for recalling commands from the history stack.
-  2) A saved command string.
   3) A command file.
   4) The cmd_in argument (if present). Used, for example, when interfacing with Python.
   5) The terminal.

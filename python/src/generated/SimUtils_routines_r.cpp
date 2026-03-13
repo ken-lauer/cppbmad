@@ -98,8 +98,8 @@ used independent of what was set with this routine.
 Parameters
 ----------
 set : str, optional
-    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' ''       !
-    Do nothing
+    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' 'ziggurat'
+    ''       ! Do nothing
 
 set_sigma_cut : float, optional
     Sigma cutoff. Initially: sigma_cut = -1.
@@ -230,7 +230,8 @@ mpi_offset : int, optional
   );
   m.def(
       "ran_uniform",
-      py::overload_cast<optional_ref<RandomStateStruct>, std::optional<int>>(&SimUtils::ran_uniform
+      py::overload_cast<optional_ref<RandomStateStruct>, std::optional<int>>(
+          &SimUtils::ran_uniform
       ),
       py::arg("ran_state") = py::none(),
       py::arg("index_quasi") = py::none(),

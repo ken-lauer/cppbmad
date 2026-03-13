@@ -1212,8 +1212,8 @@ ele : EleStruct, optional
 Returns
 -------
 attrib_type : int
-    Attribute type: is_string$, is_logical$, is_integer$, is_real$, is_switch$, is_struct$ or invalid_name$
-    Note: An overlay or group variable will be marked invalid_name$ if ele is missing.
+    Attribute type: is_string$, is_logical$, is_integer$, is_real$, is_switch$, is_struct$, is_species$ or
+    invalid_name$ Note: An overlay or group variable will be marked invalid_name$ if ele is missing.
 )"""
   );
   m.def(
