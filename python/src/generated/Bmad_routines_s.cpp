@@ -687,7 +687,7 @@ set_slaves : bool, optional
       py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
-Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+Routine to mark an element or lattice as modified.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 
@@ -728,7 +728,7 @@ set_dependent : bool, optional
       py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
-Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+Routine to mark an element or lattice as modified.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 
@@ -774,7 +774,7 @@ set_dependent : bool, optional
       py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
-Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+Routine to mark an element or lattice as modified.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 
@@ -818,7 +818,7 @@ set_dependent : bool, optional
       py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine set_flags_for_changed_attribute (...)
 
-Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
+Routine to mark an element or lattice as modified.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 

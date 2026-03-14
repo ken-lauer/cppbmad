@@ -2487,6 +2487,11 @@ SimUtils::Serbd SimUtils::serbd(double y, double m) {
   fortran_serbd(/* double& */ y, /* double& */ m, /* double& */ _b, /* double& */ _d);
   return Serbd{_b, _d};
 }
+void SimUtils::set_env(std::string env_name, std::string env_value, bool err_flag) {
+  auto _env_name = env_name.c_str();
+  auto _env_value = env_value.c_str();
+  fortran_set_env(/* const char* */ _env_name, /* const char* */ _env_value, /* bool& */ err_flag);
+}
 void SimUtils::set_parameter(int param_val, int set_val, int save_val) {
   fortran_set_parameter_int(/* int& */ param_val, /* int& */ set_val, /* int& */ save_val);
 }

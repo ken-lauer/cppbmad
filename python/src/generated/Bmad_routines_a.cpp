@@ -697,8 +697,7 @@ ele : EleStruct
 
 force_bookkeeping : bool, optional
     If present and True then force attribute bookkeeping to be done independent of the state of
-    ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
-    bookkeeping.
+    ele.bookkeeping_stat.attributes.
 )"""
   );
   py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
@@ -742,7 +741,7 @@ Overloaded function for:
   Function attribute_free2 (ele, attrib_name, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-                               except_overlay, why_not_free) result (free)
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
 
 Routine to check if an attribute is free to vary.
 
@@ -773,7 +772,8 @@ except_overlay : bool, optional
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
-    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
+    b1_field is dependent upon k1. Default is False. Also fixer Twiss/dispersion/orbit attributes are
+    considered "dependent".
 
 Returns
 -------
@@ -827,7 +827,7 @@ Overloaded function for:
   Function attribute_free2 (ele, attrib_name, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-                               except_overlay, why_not_free) result (free)
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
 
 Routine to check if an attribute is free to vary.
 
@@ -855,7 +855,8 @@ except_overlay : bool, optional
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
-    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
+    b1_field is dependent upon k1. Default is False. Also fixer Twiss/dispersion/orbit attributes are
+    considered "dependent".
 
 Returns
 -------
@@ -913,7 +914,7 @@ Overloaded function for:
   Function attribute_free2 (ele, attrib_name, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-                               except_overlay, why_not_free) result (free)
+                               except_overlay, dependent_attribs_free, why_not_free) result (free)
 
 Routine to check if an attribute is free to vary.
 
@@ -947,7 +948,8 @@ except_overlay : bool, optional
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
-    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
+    b1_field is dependent upon k1. Default is False. Also fixer Twiss/dispersion/orbit attributes are
+    considered "dependent".
 
 Returns
 -------

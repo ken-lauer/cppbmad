@@ -1623,6 +1623,12 @@ SimUtils::Serbd serbd(double y, double m);
 
 // Skipped unusable routine set_all_ptr:
 // - Untranslated type: all_pointer_struct (0D)
+extern "C" void fortran_set_env(
+    const char *env_name /* 0D_NOT_character in */,
+    const char *env_value /* 0D_NOT_character in */,
+    bool &err_flag /* 0D_NOT_logical in */
+);
+void set_env(std::string env_name, std::string env_value, bool err_flag);
 extern "C" bool fortran_set_parameter_int(
     int &param_val /* 0D_NOT_integer in */,
     int &set_val /* 0D_NOT_integer in */,

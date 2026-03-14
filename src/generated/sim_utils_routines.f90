@@ -30,7 +30,7 @@ use sim_utils_interface, only: asinc, assert_equal, calc_file_number, change_fil
     nametable_change1, nametable_init, nametable_remove, ordinal_str, parse_fortran_format, &
     poly_eval, probability_funct, quadratic_roots, query_string, quote, &
     real_num_fortran_format, real_path, real_str, real_to_string, rms_value, rot_2d, run_timer, &
-    set_parameter, sinc, sincc, sinhx_x, skip_header, sqrt_alpha, sqrt_one, str_count, &
+    set_env, set_parameter, sinc, sincc, sinhx_x, skip_header, sqrt_alpha, sqrt_one, str_count, &
     str_downcase, str_first_in_set, str_first_not_in_set, str_last_in_set, str_last_not_in_set, &
     str_match_wild, str_substitute, str_upcase, string_to_int, string_to_real, string_trim, &
     string_trim2, system_command, to_str, type_this_file, upcase_string, virtual_memory_usage, &
@@ -5657,6 +5657,33 @@ subroutine fortran_serbd (y, m, b, d) bind(c)
   ! out: f_d 0D_NOT_real
   call c_f_pointer(d, f_d_ptr)
   f_d_ptr = f_d
+end subroutine
+subroutine fortran_set_env (env_name, env_value, err_flag) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: env_name
+  character(len=4096), target :: f_env_name
+  character(kind=c_char), pointer :: f_env_name_ptr(:)
+  type(c_ptr), intent(in), value :: env_value
+  character(len=4096), target :: f_env_value
+  character(kind=c_char), pointer :: f_env_value_ptr(:)
+  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  ! ** End of parameters **
+  ! in: f_env_name 0D_NOT_character
+  if (.not. c_associated(env_name)) return
+  call c_f_pointer(env_name, f_env_name_ptr, [huge(0)])
+  call to_f_str(f_env_name_ptr, f_env_name)
+  ! in: f_env_value 0D_NOT_character
+  if (.not. c_associated(env_value)) return
+  call c_f_pointer(env_value, f_env_value_ptr, [huge(0)])
+  call to_f_str(f_env_value_ptr, f_env_value)
+  ! in: f_err_flag 0D_NOT_logical
+  f_err_flag = err_flag
+  call set_env(f_env_name, f_env_value, f_err_flag)
+
 end subroutine
 subroutine fortran_set_parameter_int (param_val, set_val, save_val) bind(c)
 

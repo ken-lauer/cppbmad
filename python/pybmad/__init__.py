@@ -1184,6 +1184,7 @@ from ._pybmad import set_ele_defaults
 from ._pybmad import set_ele_name
 from ._pybmad import set_ele_real_attribute
 from ._pybmad import set_ele_status_stale
+from ._pybmad import set_env
 from ._pybmad import set_flags_for_changed_attribute
 from ._pybmad import set_fringe_on_off
 from ._pybmad import set_lords_status_stale
@@ -4029,6 +4030,7 @@ __all__ = [
     "set_ele_name",
     "set_ele_real_attribute",
     "set_ele_status_stale",
+    "set_env",
     "set_flags_for_changed_attribute",
     "set_fringe_on_off",
     "set_lords_status_stale",

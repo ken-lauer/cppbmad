@@ -40,6 +40,24 @@ d : float
 )"""
   );
   m.def(
+      "set_env",
+      &SimUtils::set_env,
+      py::arg("env_name"),
+      py::arg("env_value"),
+      py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine set_env
+
+Parameters
+----------
+env_name : str
+
+env_value : str
+
+err_flag : bool
+)"""
+  );
+  m.def(
       "set_parameter",
       py::overload_cast<int, int, int>(&SimUtils::set_parameter),
       py::arg("param_val"),
