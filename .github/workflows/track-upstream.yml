@@ -55,6 +55,9 @@ jobs:
     if: needs.check-release.outputs.new_release == 'true'
     runs-on: ubuntu-latest
     environment: auto-regen
+    permissions:
+      contents: write
+      pull-requests: read
     defaults:
       run:
         shell: bash -eo pipefail -l {0}
@@ -149,7 +152,6 @@ jobs:
 
           git tag -a "$UPSTREAM_TAG" -m "Release $UPSTREAM_TAG"
           git push origin HEAD "$UPSTREAM_TAG"
-
           gh release create "$UPSTREAM_TAG" --title "Bmad $UPSTREAM_TAG" --generate-notes
 
       # - name: Trigger conda-forge feedstock rerender
