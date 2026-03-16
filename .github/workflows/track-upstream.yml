@@ -124,9 +124,10 @@ jobs:
       - name: Run Python tests
         run: python python/examples/parse.py
 
-      - name: Commit regenerated files and tag
+      - name: Commit regenerated files, tag, and release
         env:
           UPSTREAM_TAG: ${{ needs.check-release.outputs.upstream_tag }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -146,7 +147,9 @@ jobs:
             git commit -m "MAINT: regenerate for Bmad $UPSTREAM_TAG"
           fi
 
-          git tag "$UPSTREAM_TAG"
+          git tag -a "$UPSTREAM_TAG" -m "Release $UPSTREAM_TAG"
           git push origin HEAD "$UPSTREAM_TAG"
+
+          gh release create "$UPSTREAM_TAG" --title "Bmad $UPSTREAM_TAG" --generate-notes
 
       # - name: Trigger conda-forge feedstock rerender
