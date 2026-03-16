@@ -133,8 +133,11 @@ jobs:
 
           git add $(git ls-files | grep generated) \
             python/pybmad/_*.pyi \
-            python/pybmad/__init__.py \
-            python/pybmad/_*.py \
+            python/pybmad/*.py \
+            python/include/pybmad/generated/*.hpp \
+            python/src/generated/*.cpp \
+            src/generated/*.cpp \
+            src/generated/*.f90 \
             coverage.html
 
           if git diff --cached --quiet; then
