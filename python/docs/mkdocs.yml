@@ -1,11 +1,13 @@
 site_name: pybmad
-# repo_url: https://github.com/ken-lauer/cppbmad
-# repo_name: ken-lauer/cppbmad
+site_url: https://ken-lauer.github.io/cppbmad/
+repo_url: https://github.com/ken-lauer/cppbmad
+repo_name: ken-lauer/cppbmad
 docs_dir: source
+use_directory_urls: false
 
 nav:
-  - Home: api.md
-  - Coverage: coverage.md
+  - Home: index.md
+  - API Reference: api.md
 
 theme:
   icon:
