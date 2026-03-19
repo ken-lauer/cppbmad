@@ -152,6 +152,10 @@ jobs:
 
           git tag -a "$UPSTREAM_TAG" -m "Release $UPSTREAM_TAG"
           git push origin HEAD "$UPSTREAM_TAG"
-          gh release create "$UPSTREAM_TAG" --title "Bmad $UPSTREAM_TAG" --generate-notes
+          # gh release create "$UPSTREAM_TAG" --title "Bmad $UPSTREAM_TAG" --generate-notes
 
       # - name: Trigger conda-forge feedstock rerender
+
+  deploy-docs:
+    needs: regenerate
+    uses: ./.github/workflows/docs.yml

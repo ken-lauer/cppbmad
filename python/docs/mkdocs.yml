@@ -5,6 +5,7 @@ docs_dir: source
 
 nav:
   - Home: api.md
+  - Coverage: coverage.md
 
 theme:
   icon:
