@@ -14,7 +14,13 @@ runs:
   steps:
     - name: Install docs dependencies
       shell: bash -eo pipefail -l {0}
-      run: python -m pip install mkdocs 'mkdocstrings[python]' mkdocs-autorefs pymdown-extensions 'mkdocstrings-python<2'
+      run: python -m pip install mkdocs mkdocstrings[python] mkdocs-autorefs pymdown-extensions
+
+    - name: Copy installed pybmad into source tree for griffe
+      shell: bash -eo pipefail -l {0}
+      run: |
+        site_pkg=$(python -c "import pybmad; print(pybmad.__path__[0])")
+        cp -f "$site_pkg"/_pybmad*.so python/pybmad/ 2>/dev/null || true
 
     - name: Build mkdocs site
       shell: bash -eo pipefail -l {0}
