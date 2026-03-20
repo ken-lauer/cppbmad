@@ -61,6 +61,7 @@ plugins:
       default_handler: python
       handlers:
         python:
+          paths: [".."]  # resolves to python/ so griffe finds pybmad + _pybmad.pyi
           options:
             filters:
               - "!^_" # exclude all members starting with _
