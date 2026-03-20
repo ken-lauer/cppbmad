@@ -14,7 +14,7 @@ runs:
   steps:
     - name: Install docs dependencies
       shell: bash -eo pipefail -l {0}
-      run: python -m pip install mkdocs mkdocstrings[python] mkdocs-autorefs pymdown-extensions
+      run: python -m pip install mkdocs 'mkdocstrings[python]' mkdocs-autorefs pymdown-extensions 'mkdocstrings-python<2'
 
     - name: Build mkdocs site
       shell: bash -eo pipefail -l {0}
