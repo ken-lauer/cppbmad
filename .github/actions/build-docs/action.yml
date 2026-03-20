@@ -1,0 +1,23 @@
+name: Build docs
+description: >
+  Build mkdocs site. Expects pybmad to already be installed
+  (or the shared lib available on PYTHONPATH).
+
+inputs:
+  output_dir:
+    description: "Directory to write the built docs site"
+    required: false
+    default: docs-site
+
+runs:
+  using: composite
+  steps:
+    - name: Install docs dependencies
+      shell: bash -eo pipefail -l {0}
+      run: python -m pip install mkdocs mkdocstrings[python] mkdocs-autorefs pymdown-extensions
+
+    - name: Build mkdocs site
+      shell: bash -eo pipefail -l {0}
+      run: |
+        mkdocs build -f python/docs/mkdocs.yml -d "${{ inputs.output_dir }}"
+        cp coverage.html "${{ inputs.output_dir }}/coverage.html"
