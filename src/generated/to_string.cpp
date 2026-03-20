@@ -1165,8 +1165,8 @@ std::string to_string(const LatStruct &self) {
   return repr(
       self.get_fortran_ptr(),
       "LatStruct",
-      {std::pair{"use_name", self.use_name()},
-       std::pair{"#branch", to_string(self.branch().size())}}
+      {std::pair{"use_name", self.use_name()}, std::pair{"#branch", to_string(self.branch().size())}
+      }
   );
 }
 std::string to_string(const BunchStruct &self) {
@@ -4809,8 +4809,8 @@ std::string to_string(const Bmad::WriteLatticeInScibmad &self) {
   return repr(
       &self,
       "Bmad::WriteLatticeInScibmad",
-      {std::pair{"scibmad_file", self.scibmad_file},
-       std::pair{"err_flag", to_string(self.err_flag)}}
+      {std::pair{"scibmad_file", self.scibmad_file}, std::pair{"err_flag", to_string(self.err_flag)}
+      }
   );
 }
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self) {
