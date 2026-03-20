@@ -5,6 +5,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build-conda:
     name: ${{ matrix.name }}
@@ -22,18 +27,21 @@ jobs:
             openmp_mpi: N
             bmad_ref: main
             build_type: release
+            upload_wheel: true
           - name: macos-single-core
             os: macos-latest
             shared: Y
             openmp_mpi: N
             bmad_ref: main
             build_type: release
+            upload_wheel: false
           - name: ubuntu-openmp
             os: ubuntu-latest
             shared: Y
             openmp_mpi: Y
             bmad_ref: main
             build_type: release
+            upload_wheel: false
 
     steps:
       - uses: actions/checkout@v6
@@ -44,3 +52,28 @@ jobs:
           shared: ${{ matrix.shared }}
           openmp_mpi: ${{ matrix.openmp_mpi }}
           build_type: ${{ matrix.build_type }}
+          upload_wheel: ${{ matrix.upload_wheel && 'true' || 'false' }}
+
+      # Build docs in the same job that uploaded the wheel (pybmad already installed)
+      - uses: ./.github/actions/build-docs
+        if: matrix.upload_wheel
+        with:
+          output_dir: ${{ github.workspace }}/docs-site
+
+      - name: Upload docs artifact
+        if: matrix.upload_wheel
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs-site
+
+  deploy-docs:
+    needs: build-conda
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

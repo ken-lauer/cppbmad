@@ -25,10 +25,32 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # Try to download a pre-built wheel from a prior job/workflow
+      - name: Download pybmad wheel
+        id: wheel
+        uses: actions/download-artifact@v4
+        with:
+          name: pybmad-wheel
+          path: dist
+        continue-on-error: true
+
+      # If no wheel available, do a full build
       - uses: ./.github/actions/build-bmad
+        if: steps.wheel.outcome != 'success'
         with:
           bmad_ref: ${{ inputs.bmad_ref || 'main' }}
           run_tests: "false"
+
+      # If wheel was downloaded, just set up Python and install it
+      - uses: actions/setup-python@v5
+        if: steps.wheel.outcome == 'success'
+        with:
+          python-version: "3.12"
+
+      - name: Install pybmad from wheel
+        if: steps.wheel.outcome == 'success'
+        shell: bash
+        run: python -m pip install dist/*.whl
 
       - uses: ./.github/actions/build-docs
         with:
@@ -42,6 +64,9 @@ jobs:
   deploy-docs:
     needs: build-docs
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

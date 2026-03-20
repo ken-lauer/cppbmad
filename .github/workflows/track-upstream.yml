@@ -2,7 +2,7 @@ name: Track upstream releases
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/20 * * * *"
   workflow_dispatch:
     inputs:
       upstream_tag:
@@ -73,6 +73,7 @@ jobs:
         with:
           bmad_ref: ${{ needs.check-release.outputs.upstream_tag }}
           build_type: release
+          upload_wheel: "true"
 
       - name: Commit regenerated files, tag, and release
         env:
