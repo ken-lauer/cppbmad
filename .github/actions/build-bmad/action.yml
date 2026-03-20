@@ -1,0 +1,120 @@
+name: Build Bmad + cppbmad + pybmad
+description: >
+  Shared build steps: checkout Bmad, set up conda, build Bmad,
+  regenerate + build cppbmad, install pybmad, and set library paths.
+
+inputs:
+  bmad_ref:
+    description: "Bmad ecosystem git ref"
+    required: false
+    default: main
+  shared:
+    description: "Build Bmad with shared libraries"
+    required: false
+    default: "Y"
+  openmp_mpi:
+    description: "Build with OpenMP/MPI support"
+    required: false
+    default: "N"
+  build_type:
+    description: "CMake build type (release or debug)"
+    required: false
+    default: release
+  run_tests:
+    description: "Run C++ and Python tests after building"
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v6
+      with:
+        repository: bmad-sim/bmad-ecosystem
+        ref: ${{ inputs.bmad_ref }}
+        path: bmad_src
+
+    - name: Setup miniconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        miniforge-version: latest
+        use-mamba: true
+        activate-environment: bmad-build
+        channels: conda-forge
+        environment-file: bmad_src/.github/bmad-build-env.yaml
+        python-version: "3.12"
+        conda-remove-defaults: true
+
+    - name: Install Linux dependencies
+      if: runner.os == 'Linux'
+      shell: bash -eo pipefail -l {0}
+      run: conda install -y libacl libgomp
+
+    - name: Install OpenMPI variants
+      if: inputs.openmp_mpi == 'Y'
+      shell: bash -eo pipefail -l {0}
+      run: conda install -y 'hdf5=*=mpi_openmpi*'
+
+    - name: Build Bmad
+      env:
+        USE_MPI: ${{ inputs.openmp_mpi }}
+        SHARED: ${{ inputs.shared }}
+        USE_CONDA: 1
+      working-directory: bmad_src
+      shell: bash -eo pipefail -l {0}
+      run: .github/scripts/install_bmad.sh
+
+    - name: Set environment
+      shell: bash -l {0}
+      run: |
+        echo "ACC_ROOT_DIR=$GITHUB_WORKSPACE/bmad_src" >> "$GITHUB_ENV"
+        echo "BUILD_TYPE=${{ inputs.build_type }}" >> "$GITHUB_ENV"
+
+    - name: Install build dependencies
+      shell: bash -eo pipefail -l {0}
+      run: conda install -y cmake pydantic clang-format
+
+    - name: Regenerate bindings
+      shell: bash -eo pipefail -l {0}
+      run: python -m codegen
+
+    - name: Build cppbmad
+      shell: bash -eo pipefail -l {0}
+      run: |
+        cmake -DCMAKE_BUILD_TYPE="${{ inputs.build_type }}" -B "${{ inputs.build_type }}" .
+        cmake --build "${{ inputs.build_type }}"
+
+    - name: Run C++ tests
+      if: inputs.run_tests == 'true'
+      shell: bash -eo pipefail -l {0}
+      working-directory: ${{ inputs.build_type }}
+      run: |
+        ./test_all_encompassing
+        ./test_integration
+        ./test_arrays
+
+    - name: Install pybmad (Linux)
+      if: runner.os == 'Linux'
+      shell: bash -eo pipefail -l {0}
+      run: CMAKE_BUILD_PARALLEL_LEVEL=1 python -m pip install -vv .
+
+    - name: Install pybmad (macOS)
+      if: runner.os == 'macOS'
+      shell: bash -eo pipefail -l {0}
+      run: python -m pip install -vv .
+
+    - name: Set library search path
+      shell: bash -l {0}
+      run: |
+        if [[ "${{ inputs.build_type }}" == "release" ]]; then
+          BMAD_BUILD_TYPE="production"
+        else
+          BMAD_BUILD_TYPE="${{ inputs.build_type }}"
+        fi
+        lib_path="$ACC_ROOT_DIR/$BMAD_BUILD_TYPE/lib"
+        echo "LD_LIBRARY_PATH=$lib_path:$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
+
+    - name: Run Python tests
+      if: inputs.run_tests == 'true'
+      shell: bash -eo pipefail -l {0}
+      run: python python/examples/parse.py

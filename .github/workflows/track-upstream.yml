@@ -58,6 +58,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: read
+      pages: write
+      id-token: write
     defaults:
       run:
         shell: bash -eo pipefail -l {0}
@@ -67,65 +69,10 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.AUTOGENERATE_PAT }}
 
-      - uses: actions/checkout@v6
+      - uses: ./.github/actions/build-bmad
         with:
-          repository: ${{ env.UPSTREAM_REPO }}
-          ref: ${{ needs.check-release.outputs.upstream_tag }}
-          path: bmad_src
-
-      - name: Setup miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-version: latest
-          use-mamba: true
-          activate-environment: bmad-build
-          channels: conda-forge
-          environment-file: bmad_src/.github/bmad-build-env.yaml
-          python-version: "3.12"
-          conda-remove-defaults: true
-
-      - name: Install additional conda dependencies
-        run: conda install -y libacl libgomp cmake pydantic clang-format
-
-      - name: Build Bmad
-        env:
-          USE_MPI: "N"
-          SHARED: "Y"
-          USE_CONDA: 1
-        working-directory: bmad_src
-        run: .github/scripts/install_bmad.sh
-
-      - name: Set environment
-        shell: bash -l {0}
-        run: |
-          echo "ACC_ROOT_DIR=$GITHUB_WORKSPACE/bmad_src" >> "$GITHUB_ENV"
-          echo "BUILD_TYPE=release" >> "$GITHUB_ENV"
-
-      - name: Regenerate bindings
-        run: python -m codegen
-
-      - name: Build cppbmad
-        run: |
-          cmake -DCMAKE_BUILD_TYPE=release -B release .
-          cmake --build release
-
-      - name: Run C++ tests
-        working-directory: release
-        run: |
-          ./test_all_encompassing
-          ./test_integration
-          ./test_arrays
-
-      - name: Install pybmad
-        run: CMAKE_BUILD_PARALLEL_LEVEL=1 python -m pip install -vv .
-
-      - name: Tweak library search path
-        shell: bash -l {0}
-        run: |
-          echo "LD_LIBRARY_PATH=$ACC_ROOT_DIR/production/lib:$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
-
-      - name: Run Python tests
-        run: python python/examples/parse.py
+          bmad_ref: ${{ needs.check-release.outputs.upstream_tag }}
+          build_type: release
 
       - name: Commit regenerated files, tag, and release
         env:
@@ -135,14 +82,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add $(git ls-files | grep generated) \
-            python/pybmad/_*.pyi \
-            python/pybmad/*.py \
-            python/include/pybmad/generated/*.hpp \
-            python/src/generated/*.cpp \
-            src/generated/*.cpp \
-            src/generated/*.f90 \
-            coverage.html
+          git add $(bash list-generated.sh)
 
           if git diff --cached --quiet; then
             echo "No changes to generated files"
@@ -152,14 +92,31 @@ jobs:
 
           git tag -a "$UPSTREAM_TAG" -m "Release $UPSTREAM_TAG"
           git push origin HEAD "$UPSTREAM_TAG"
-          # gh release create "$UPSTREAM_TAG" --title "Bmad $UPSTREAM_TAG" --generate-notes
+
+      # Build docs (pybmad is already installed from the build step above)
+      - name: Build docs
+        run: |
+          python -m pip install mkdocs mkdocstrings[python] mkdocs-autorefs pymdown-extensions
+          mkdocs build -f python/docs/mkdocs.yml -d $GITHUB_WORKSPACE/docs-site
+          cp coverage.html $GITHUB_WORKSPACE/docs-site/coverage.html
+
+      - name: Upload docs artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs-site
 
       # - name: Trigger conda-forge feedstock rerender
 
   deploy-docs:
     needs: regenerate
+    runs-on: ubuntu-latest
     permissions:
-      contents: read
       pages: write
       id-token: write
-    uses: ./.github/workflows/docs.yml
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
