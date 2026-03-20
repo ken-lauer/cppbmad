@@ -9,6 +9,11 @@ inputs:
     required: false
     default: docs-site
 
+outputs:
+  success:
+    description: "'true' if the docs built successfully, 'false' otherwise"
+    value: ${{ steps.build.outputs.success }}
+
 runs:
   using: composite
   steps:
@@ -23,7 +28,14 @@ runs:
         cp -f "$site_pkg"/_pybmad*.so python/pybmad/ 2>/dev/null || true
 
     - name: Build mkdocs site
+      id: build
       shell: bash -eo pipefail -l {0}
       run: |
-        mkdocs build -f python/docs/mkdocs.yml -d "${{ inputs.output_dir }}"
-        cp coverage.html "${{ inputs.output_dir }}/coverage.html"
+        if mkdocs build -f python/docs/mkdocs.yml -d "${{ inputs.output_dir }}"; then
+          cp coverage.html "${{ inputs.output_dir }}/coverage.html"
+          echo "success=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "::warning::mkdocs build failed — docs will not be deployed"
+          echo "## ⚠️ Docs build failed!" >> "$GITHUB_STEP_SUMMARY"
+          echo "success=false" >> "$GITHUB_OUTPUT"
+        fi

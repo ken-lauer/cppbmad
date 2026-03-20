@@ -56,12 +56,13 @@ jobs:
 
       # Build docs in the same job that uploaded the wheel (pybmad already installed)
       - uses: ./.github/actions/build-docs
+        id: docs
         if: matrix.upload_wheel
         with:
           output_dir: ${{ github.workspace }}/docs-site
 
       - name: Upload docs artifact
-        if: matrix.upload_wheel
+        if: matrix.upload_wheel && steps.docs.outputs.success == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: docs-site
