@@ -1,3 +1,6 @@
+source_dir = "$ACC_ROOT_DIR"
+upstream_source_url = "https://github.com/bmad-sim/bmad-ecosystem/"
+
 enum_filenames = [
   "$ACC_ROOT_DIR/bmad/modules/bmad_struct.f90",
   "$ACC_ROOT_DIR/sim_utils/io/output_mod.f90",
@@ -441,6 +444,36 @@ python_imports = [
 "global" = "global_"
 "except" = "except_"
 "match" = "match_"
+
+[[projects]]
+name = "bmad"
+title = "Bmad"
+description = "Core Bmad particle accelerator simulation library."
+cpp_namespace = "Bmad"
+
+[[projects]]
+name = "sim_utils"
+title = "Sim Utils"
+description = "Simulation utility helpers from the sim_utils library."
+cpp_namespace = "SimUtils"
+
+[[projects]]
+name = "tao"
+title = "Tao"
+description = "Tao (The Tool for Accelerator Optics)"
+cpp_namespace = "Tao"
+
+[[projects]]
+name = "bsim"
+title = "Bsim"
+description = "Bsim application-level structs and routines (BBU, etc.)."
+cpp_namespace = "bsim"
+
+[[projects]]
+name = "forest"
+title = "Forest / PTC"
+description = "PTC (Polymorphic Tracking Code) and Forest library."
+cpp_namespace = ""
 
 [[routines]]
 fortran_output_filename = "bmad_routines.f90"

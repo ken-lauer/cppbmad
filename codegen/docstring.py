@@ -11,24 +11,13 @@ from .structs import (
     TypeInformation,
     get_in_parenthesis,
 )
-from .types import Intent, RoutineType
+from .types import FORTRAN_TO_PYTHON_TYPE, Intent, RoutineType
 from .util import struct_to_proxy_class_name
 
 if typing.TYPE_CHECKING:
     from .routines import RoutineArg
 
 logger = logging.getLogger(__name__)
-
-
-base_fortran_to_python_type = {
-    "real": "float",
-    "real16": "float",
-    "complex": "complex",
-    "integer": "int",
-    "integer8": "int",
-    "logical": "bool",
-    "character": "str",
-}
 
 
 @dataclass
@@ -318,11 +307,10 @@ def type_information_to_python_type(dt: TypeInformation) -> str:
         assert dt.kind is not None
         type_name = struct_to_proxy_class_name(dt.kind.lower())
     elif dt.type.lower().endswith("_struct"):
-        # TODO: this shouldn't be a thing, right?
-        type_name = struct_to_proxy_class_name(dt.type.lower())
+        raise RuntimeError()
     else:
         try:
-            type_name = base_fortran_to_python_type[dt.type.lower()]
+            type_name = FORTRAN_TO_PYTHON_TYPE[dt.type.lower()]
         except Exception:
             type_name = dt.type.lower()
 

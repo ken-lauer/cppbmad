@@ -108,9 +108,25 @@ class TypeInfo:
     cpp_bmad_type: str
     cpp_call_ref: str
     cpp_call_arr: str
+    python_type: str = ""
     fortran_native_type: str | None = None
     cpp_call_fortran_type: str | None = None
     allocatable_container: str | None = None
+
+    def python_container_type(self, kind: str, dim: int, ptr: PointerType) -> str:
+        """Return the Python-facing container type for a type with the given dimension/ptr."""
+        if self.name == "type":
+            cls = struct_to_proxy_class_name(kind)
+            if dim == 0:
+                return cls
+            container = "Alloc" if ptr == "ALLOC" else "Array"
+            return f"{cls}{container}{dim}D"
+        if dim == 0:
+            return self.python_type
+        if self.name == "character":
+            return "list[str]"
+        container = "Alloc" if ptr == ALLOC else "Array"
+        return f"{self.cpp_bmad_type}{container}{dim}D"
 
 
 @dataclass
@@ -309,10 +325,6 @@ def get_type_transform(
 
     # --- Fortran Type Logic ---
     fortran_type = info.fortran_type
-    # Note: Attributes like pointer, allocatable, value, intent are handled in fortran.py
-    # based on the argument properties, but we can store the base type here.
-    #
-
     fortran_native_type = info.fortran_native_type or ""
     if ft.type == "type" and kind:
         fortran_native_type = f"type({kind})"
@@ -332,6 +344,16 @@ def get_type_transform(
     )
 
 
+FORTRAN_TO_PYTHON_TYPE: dict[str, str] = {
+    "real": "float",
+    "real16": "float",
+    "complex": "complex",
+    "integer": "int",
+    "integer8": "int",
+    "logical": "bool",
+    "character": "str",
+}
+
 STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
     "integer": TypeInfo(
         name="integer",
@@ -340,6 +362,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_bmad_type="Int",
         cpp_call_ref="int&",
         cpp_call_arr="int*",
+        python_type="int",
         fortran_native_type="integer",
         allocatable_container="IntAlloc1D",
     ),
@@ -350,6 +373,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_bmad_type="Int8",
         cpp_call_ref="int64_t&",
         cpp_call_arr="int64_t*",
+        python_type="int",
         fortran_native_type="integer(8)",
         allocatable_container="Int8Alloc1D",
     ),
@@ -360,6 +384,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_bmad_type="Real",
         cpp_call_ref="double&",
         cpp_call_arr="double*",
+        python_type="float",
         fortran_native_type="real",
         allocatable_container="RealAlloc1D",
     ),
@@ -370,6 +395,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_bmad_type="long double",
         cpp_call_ref="long double&",
         cpp_call_arr="long double*",
+        python_type="float",
         fortran_native_type="real(16)",
         allocatable_container="Real16Alloc1D",
     ),
@@ -380,6 +406,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_bmad_type="Complex",
         cpp_call_ref="std::complex<double>&",
         cpp_call_arr="std::complex<double>*",
+        python_type="complex",
         fortran_native_type="complex",
         allocatable_container="ComplexAlloc1D",
     ),
@@ -390,6 +417,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_bmad_type="Bool",
         cpp_call_ref="bool&",
         cpp_call_arr="bool*",
+        python_type="bool",
         fortran_native_type="logical",
         allocatable_container="BoolAlloc1D",
     ),
@@ -400,6 +428,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_bmad_type="string",
         cpp_call_ref="const char*",
         cpp_call_arr="const char**",
+        python_type="str",
         fortran_native_type="character",
         cpp_call_fortran_type="char*",
     ),
@@ -410,6 +439,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_bmad_type="PROXYCLS",
         cpp_call_ref="PROXYCLS&",
         cpp_call_arr="void*",
+        python_type="PROXYCLS",
         fortran_native_type="type",
         cpp_call_fortran_type="void*",
     ),

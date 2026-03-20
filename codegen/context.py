@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import contextvars
+import logging
 import pathlib
 import re
+import subprocess
 import typing
 from dataclasses import dataclass, field
 from typing import Annotated
@@ -14,6 +16,8 @@ from . import paths
 from .paths import CODEGEN_ROOT
 from .proxy import struct_to_proxy_class_name
 
+logger = logging.getLogger(__name__)
+
 if typing.TYPE_CHECKING:
     from .arg import CodegenStructure
     from .enums import EnumValue
@@ -22,6 +26,13 @@ if typing.TYPE_CHECKING:
 
 
 NormalizedPath = Annotated[pathlib.Path, pydantic.BeforeValidator(paths.normalize)]
+
+
+class ProjectSettings(pydantic.BaseModel):
+    name: str
+    title: str
+    description: str
+    cpp_namespace: str = ""
 
 
 class RoutineSettings(pydantic.BaseModel):
@@ -44,6 +55,33 @@ class RoutineSettings(pydantic.BaseModel):
         return pathlib.Path(self.cpp_output_filename).with_suffix(".hpp").name
 
 
+@dataclass
+class UpstreamInfo:
+    """Git version info for the upstream Bmad source."""
+
+    tag: str = ""
+    commit_hash: str = ""
+
+    @classmethod
+    def from_source_dir(cls, source_dir: pathlib.Path) -> UpstreamInfo:
+        """Read git tag and commit hash from the upstream source directory."""
+        try:
+            tag = subprocess.check_output(
+                ["git", "describe", "--tags", "--always"],
+                cwd=source_dir,
+                text=True,
+            ).strip()
+            commit_hash = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"],
+                cwd=source_dir,
+                text=True,
+            ).strip()
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            logger.warning("Could not read git info from %s", source_dir)
+            return cls()
+        return cls(tag=tag, commit_hash=commit_hash)
+
+
 class CodegenConfig(pydantic.BaseModel):
     struct_list: list[str]
     component_no_translate_list: list[str]
@@ -53,6 +91,9 @@ class CodegenConfig(pydantic.BaseModel):
     c_side_name_translation: dict[str, str]
     c_to_python_name_translation: dict[str, str]
     skips: list[str]
+    source_dir: NormalizedPath = pathlib.Path()
+    upstream_source_url: str = ""
+    projects: list[ProjectSettings] = []
     routines: list[RoutineSettings] = []
     enum_filenames: list[NormalizedPath] = []
     python_imports: list[str] = []
@@ -77,6 +118,7 @@ SUPPORTED_ARRAY_DIMS = (1, 2, 3)
 @dataclass
 class ConfigContext:
     params: CodegenConfig
+    upstream: UpstreamInfo = field(default_factory=UpstreamInfo)
     parsed_structs: list[ParsedStructure] = field(default_factory=list)
     codegen_structs: list[CodegenStructure] = field(default_factory=list)
     enums: dict[str, dict[str, EnumValue]] = field(default_factory=dict)
@@ -86,6 +128,7 @@ class ConfigContext:
     pybmad_files: dict[pathlib.Path, str] = field(default_factory=dict)
     proxy_files: dict[pathlib.Path, str] = field(default_factory=dict)
     routine_files: dict[pathlib.Path, str] = field(default_factory=dict)
+    docs_files: dict[pathlib.Path, str] = field(default_factory=dict)
 
     @property
     def report_html(self) -> str:

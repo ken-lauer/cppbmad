@@ -7,7 +7,14 @@ use_directory_urls: false
 
 nav:
   - Home: index.md
-  - API Reference: api.md
+  - API Reference:
+      - Index: api/index.md
+      - Bmad: api/bmad.md
+      - Sim Utils: api/sim_utils.md
+      - Tao: api/tao.md
+      - Bsim: api/bsim.md
+      - Forest / PTC: api/forest.md
+      - Enums: api/enums.md
 
 theme:
   icon:
@@ -45,6 +52,7 @@ extra_css:
 
 plugins:
   - search
+  - autorefs
 
   # - mkdocs-jupyter:
   #     include_source: True
@@ -80,4 +88,4 @@ plugins:
             group_by_category: true
             unwrap_annotated: true
             force_inspection: false
-            allow_inspection: false
+            allow_inspection: true

@@ -268,6 +268,7 @@ class CodegenStructure:
     c_extra_methods: str = ""  # Additional custom methods
 
     module: str = "unknown_module"
+    project: str = ""
     parsed: ParsedStructure | None = None
 
     @property

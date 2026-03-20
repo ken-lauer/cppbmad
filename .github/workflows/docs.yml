@@ -27,7 +27,7 @@ jobs:
         env:
           PYTHONPATH: python
         run: |
-          python -m pip install mkdocs mkdocstrings[python] pymdown-extensions
+          python -m pip install mkdocs mkdocstrings[python] mkdocs-autorefs pymdown-extensions
           mkdocs build -f python/docs/mkdocs.yml -d $GITHUB_WORKSPACE/docs-site
           cp coverage.html $GITHUB_WORKSPACE/docs-site/coverage.html
 

@@ -22,7 +22,8 @@ import pathlib
 from codegen.proxy import get_proxy_classes
 
 from .arg import Argument, CodegenStructure
-from .context import CodegenConfig, ConfigContext, config_context
+from .context import CodegenConfig, ConfigContext, UpstreamInfo, config_context
+from .docs import generate_docs
 from .enums import get_enum_code, parse_all_enums
 from .paths import (
     CODEGEN_ROOT,
@@ -191,6 +192,12 @@ def get_structure_definitions(
         structs.append(struct)
         match_structure_definition(parsed_structures, struct, params)
         struct.arg = [arg for arg in struct.arg if arg.should_translate(struct.f_name, params)]
+        if struct.parsed and struct.parsed.filename:
+            try:
+                project = struct.parsed.filename.parts[1]  # TODO: $ACC_ROOT_DIR/(xyz) is the project
+                struct.project = project
+            except ValueError:
+                struct.project = "unknown"
     return structs
 
 
@@ -211,8 +218,12 @@ def load_context(
     structs = get_structure_definitions(params, parsed_structs)
     enums = parse_all_enums(params.enum_filenames)
 
+    upstream = UpstreamInfo.from_source_dir(params.source_dir)
+    logger.info("Upstream: %s (%s)", upstream.tag, upstream.commit_hash[:12])
+
     ctx = ConfigContext(
         params=params,
+        upstream=upstream,
         codegen_structs=structs,
         parsed_structs=parsed_structs,
         enums=enums,
@@ -230,6 +241,10 @@ def load_context(
 
     if pybmad:
         ctx.pybmad_files = generate_pybmad(ctx.params, ctx.codegen_structs, ctx.routines_by_name, ctx.enums)
+
+    ctx.docs_files = generate_docs(
+        ctx.codegen_structs, ctx.routines_by_name, ctx.enums, ctx.params, ctx.upstream
+    )
 
     return ctx
 
@@ -271,6 +286,8 @@ def generate(
 
     if pybmad:
         file_and_contents.extend(list(ctx.pybmad_files.items()))
+
+    file_and_contents.extend(list(ctx.docs_files.items()))
 
     for fn, contents in file_and_contents:
         write_contents_if_differs(target_path=fn, contents=contents)
