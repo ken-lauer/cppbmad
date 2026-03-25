@@ -1278,36 +1278,6 @@ field2 : EmFieldStruct
 field_tot : EmFieldStruct
 )"""
   );
-  m.def(
-      "em_taylor_equal_em_taylor",
-      &Bmad::em_taylor_equal_em_taylor,
-      py::arg("em_taylor1"),
-      py::arg("em_taylor2"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine em_taylor_equal_em_taylor
-
-Parameters
-----------
-em_taylor1 : EmTaylorStruct
-
-em_taylor2 : EmTaylorStruct
-)"""
-  );
-  m.def(
-      "em_taylors_equal_em_taylors",
-      &Bmad::em_taylors_equal_em_taylors,
-      py::arg("em_taylor1"),
-      py::arg("em_taylor2"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine em_taylors_equal_em_taylors
-
-Parameters
-----------
-em_taylor1 : 1D array of EmTaylorStruct
-
-em_taylor2 : 1D array of EmTaylorStruct
-)"""
-  );
   py::class_<Bmad::Emit6d, std::unique_ptr<Bmad::Emit6d>>(m, "Emit6d", "emit_6d return type")
       .def_readonly("mode", &Bmad::Emit6d::mode)
       .def_readonly("sigma_mat", &Bmad::Emit6d::sigma_mat)
@@ -2064,42 +2034,6 @@ is_eq : bool
 )"""
   );
   m.def(
-      "eq_em_taylor",
-      &Bmad::eq_em_taylor,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::arg("is_eq"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine eq_em_taylor
-
-Parameters
-----------
-f1 : EmTaylorStruct
-
-f2 : EmTaylorStruct
-
-is_eq : bool
-)"""
-  );
-  m.def(
-      "eq_em_taylor_term",
-      &Bmad::eq_em_taylor_term,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::arg("is_eq"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine eq_em_taylor_term
-
-Parameters
-----------
-f1 : EmTaylorTermStruct
-
-f2 : EmTaylorTermStruct
-
-is_eq : bool
-)"""
-  );
-  m.def(
       "eq_expression_atom",
       &Bmad::eq_expression_atom,
       py::arg("f1"),
@@ -2167,6 +2101,42 @@ Parameters
 f1 : GenGradMapStruct
 
 f2 : GenGradMapStruct
+
+is_eq : bool
+)"""
+  );
+  m.def(
+      "eq_gg_taylor",
+      &Bmad::eq_gg_taylor,
+      py::arg("f1"),
+      py::arg("f2"),
+      py::arg("is_eq"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine eq_gg_taylor
+
+Parameters
+----------
+f1 : GgTaylorStruct
+
+f2 : GgTaylorStruct
+
+is_eq : bool
+)"""
+  );
+  m.def(
+      "eq_gg_taylor_term",
+      &Bmad::eq_gg_taylor_term,
+      py::arg("f1"),
+      py::arg("f2"),
+      py::arg("is_eq"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine eq_gg_taylor_term
+
+Parameters
+----------
+f1 : GgTaylorTermStruct
+
+f2 : GgTaylorTermStruct
 
 is_eq : bool
 )"""

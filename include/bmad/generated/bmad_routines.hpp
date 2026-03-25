@@ -235,6 +235,9 @@ void apply_energy_kick(
     std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
     std::optional<bool> make_matrix = std::nullopt
 );
+
+// Skipped unusable routine apply_fft_3d_kicks:
+// - Untranslated type: csr_struct (0D)
 extern "C" void fortran_apply_patch_to_ptc_fibre(void *ele /* 0D_NOT_type in */);
 void apply_patch_to_ptc_fibre(EleStruct &ele);
 extern "C" void fortran_apply_rampers_to_slave(
@@ -2255,19 +2258,6 @@ extern "C" bool fortran_em_field_plus_em_field(
     void *field_tot /* 0D_NOT_type inout */
 );
 void em_field_plus_em_field(EmFieldStruct &field1, EmFieldStruct &field2, EmFieldStruct &field_tot);
-extern "C" void fortran_em_taylor_equal_em_taylor(
-    void *em_taylor1 /* 0D_NOT_type inout */,
-    void *em_taylor2 /* 0D_NOT_type in */
-);
-void em_taylor_equal_em_taylor(EmTaylorStruct &em_taylor1, EmTaylorStruct &em_taylor2);
-extern "C" void fortran_em_taylors_equal_em_taylors(
-    Bmad::array_descriptor_t &em_taylor1 /* 1D_NOT_type inout */,
-    Bmad::array_descriptor_t &em_taylor2 /* 1D_NOT_type in */
-);
-void em_taylors_equal_em_taylors(
-    EmTaylorStructArray1D em_taylor1,
-    EmTaylorStructArray1D em_taylor2
-);
 extern "C" void fortran_emit_6d(
     void *ele_ref /* 0D_NOT_type in */,
     bool &include_opening_angle /* 0D_NOT_logical in */,
@@ -2532,18 +2522,6 @@ extern "C" bool fortran_eq_em_field(
     bool &is_eq /* 0D_NOT_logical in */
 );
 void eq_em_field(EmFieldStruct &f1, EmFieldStruct &f2, bool is_eq);
-extern "C" bool fortran_eq_em_taylor(
-    void *f1 /* 0D_NOT_type in */,
-    void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
-);
-void eq_em_taylor(EmTaylorStruct &f1, EmTaylorStruct &f2, bool is_eq);
-extern "C" bool fortran_eq_em_taylor_term(
-    void *f1 /* 0D_NOT_type in */,
-    void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
-);
-void eq_em_taylor_term(EmTaylorTermStruct &f1, EmTaylorTermStruct &f2, bool is_eq);
 extern "C" bool fortran_eq_expression_atom(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
@@ -2568,6 +2546,18 @@ extern "C" bool fortran_eq_gen_grad_map(
     bool &is_eq /* 0D_NOT_logical in */
 );
 void eq_gen_grad_map(GenGradMapStruct &f1, GenGradMapStruct &f2, bool is_eq);
+extern "C" bool fortran_eq_gg_taylor(
+    void *f1 /* 0D_NOT_type in */,
+    void *f2 /* 0D_NOT_type in */,
+    bool &is_eq /* 0D_NOT_logical in */
+);
+void eq_gg_taylor(GgTaylorStruct &f1, GgTaylorStruct &f2, bool is_eq);
+extern "C" bool fortran_eq_gg_taylor_term(
+    void *f1 /* 0D_NOT_type in */,
+    void *f2 /* 0D_NOT_type in */,
+    bool &is_eq /* 0D_NOT_logical in */
+);
+void eq_gg_taylor_term(GgTaylorTermStruct &f1, GgTaylorTermStruct &f2, bool is_eq);
 extern "C" bool fortran_eq_grid_beam_init(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
@@ -3310,21 +3300,21 @@ void g_integrals_calc(LatStruct &lat);
 extern "C" bool
 fortran_gamma_ref(void *ele /* 0D_NOT_type in */, double &gamma /* 0D_NOT_real out */);
 double gamma_ref(EleStruct &ele);
-extern "C" void fortran_gen_grad1_to_em_taylor(
+extern "C" void fortran_gen_grad1_to_gg_taylor(
     void *ele /* 0D_NOT_type in */,
     void *gen_grad /* 0D_NOT_type in */,
     int &iz /* 0D_NOT_integer in */,
-    Bmad::array_descriptor_t &em_taylor /* 1D_NOT_type out */
+    Bmad::array_descriptor_t &gg_taylor /* 1D_NOT_type out */
 );
-EmTaylorStructArray1D gen_grad1_to_em_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, int iz);
-extern "C" void fortran_gen_grad_at_s_to_em_taylor(
+GgTaylorStructArray1D gen_grad1_to_gg_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, int iz);
+extern "C" void fortran_gen_grad_at_s_to_gg_taylor(
     void *ele /* 0D_NOT_type in */,
     void *gen_grad /* 0D_NOT_type in */,
     double &s_pos /* 0D_NOT_real in */,
-    Bmad::array_descriptor_t &em_taylor /* 1D_NOT_type out */
+    Bmad::array_descriptor_t &gg_taylor /* 1D_NOT_type out */
 );
-EmTaylorStructArray1D
-gen_grad_at_s_to_em_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, double s_pos);
+GgTaylorStructArray1D
+gen_grad_at_s_to_gg_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, double s_pos);
 extern "C" bool fortran_gen_grad_field(
     Bmad::array_descriptor_t &deriv /* 1D_NOT_real inout */,
     void *gg /* 0D_NOT_type inout */,
@@ -3431,6 +3421,19 @@ Bmad::GetSlaveList get_slave_list(EleStruct &lord);
 // - Array bounds handling: "Enum 'ILO' found in bounds 'ilo' but not in provided map."
 // - Array bounds handling: "Enum 'ILO' found in bounds 'ilo' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_gg_taylor_equal_gg_taylor(
+    void *gg_taylor1 /* 0D_NOT_type inout */,
+    void *gg_taylor2 /* 0D_NOT_type in */
+);
+void gg_taylor_equal_gg_taylor(GgTaylorStruct &gg_taylor1, GgTaylorStruct &gg_taylor2);
+extern "C" void fortran_gg_taylors_equal_gg_taylors(
+    Bmad::array_descriptor_t &gg_taylor1 /* 1D_NOT_type inout */,
+    Bmad::array_descriptor_t &gg_taylor2 /* 1D_NOT_type in */
+);
+void gg_taylors_equal_gg_taylors(
+    GgTaylorStructArray1D gg_taylor1,
+    GgTaylorStructArray1D gg_taylor2
+);
 extern "C" void fortran_gpt_field_grid_scaling(
     void *ele /* 0D_NOT_type inout */,
     int &dimensions /* 0D_NOT_integer in */,
@@ -3878,19 +3881,19 @@ EleStruct init_ele(
     std::optional<int> ix_ele = std::nullopt,
     optional_ref<BranchStruct> branch = std::nullopt
 );
-extern "C" void fortran_init_em_taylor_series(
-    void *em_taylor /* 0D_NOT_type inout */,
-    int &n_term /* 0D_NOT_integer in */,
-    bool *save_old /* 0D_NOT_logical in */
-);
-void init_em_taylor_series(
-    EmTaylorStruct &em_taylor,
-    int n_term,
-    std::optional<bool> save_old = std::nullopt
-);
 
 // Skipped unusable routine init_fringe_info:
 // - Untranslated type: fringe_field_info_struct (0D)
+extern "C" void fortran_init_gg_taylor_series(
+    void *gg_taylor /* 0D_NOT_type inout */,
+    int &n_term /* 0D_NOT_integer in */,
+    bool *save_old /* 0D_NOT_logical in */
+);
+void init_gg_taylor_series(
+    GgTaylorStruct &gg_taylor,
+    int n_term,
+    std::optional<bool> save_old = std::nullopt
+);
 extern "C" void fortran_init_lat(
     void *lat /* 0D_NOT_type out */,
     int *n /* 0D_NOT_integer in */,
@@ -4057,6 +4060,15 @@ void integration_timer(
 
 // Skipped unusable routine interpolate_field:
 // - Untranslated type: mesh3d_struct (0D)
+
+// Skipped unusable routine interpolate_field_batch:
+// - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
+// - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
+// - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
+// - Untranslated type: mesh3d_struct (0D)
+// - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
+// - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
+// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_ion_kick(
     void *orbit /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &r_beam /* 1D_NOT_real in */,

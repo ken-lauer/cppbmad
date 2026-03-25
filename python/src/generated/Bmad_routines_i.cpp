@@ -782,30 +782,30 @@ ele : EleStruct
 )"""
   );
   m.def(
-      "init_em_taylor_series",
-      &Bmad::init_em_taylor_series,
-      py::arg("em_taylor"),
+      "init_gg_taylor_series",
+      &Bmad::init_gg_taylor_series,
+      py::arg("gg_taylor"),
       py::arg("n_term"),
       py::arg("save_old") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_em_taylor_series (em_taylor, n_term, save_old)
+      R"""(Subroutine init_gg_taylor_series (gg_taylor, n_term, save_old)
 
-Subroutine to initialize a Bmad Em_taylor series (6 of these series make
-a Em_taylor map). Note: This routine does not zero the structure. The calling
+Subroutine to initialize a Bmad gg_taylor series (6 of these series make
+a gg_taylor map). Note: This routine does not zero the structure. The calling
 routine is responsible for setting all values.
 
 Parameters
 ----------
-em_taylor : EmTaylorStruct
+gg_taylor : GgTaylorStruct
     Old structure.
     This parameter is an input/output and is modified in-place.
-    As an output, em_taylor: Initalized structure.
+    As an output, gg_taylor: Initalized structure.
 
 n_term : int
-    Number of terms to allocate. n_term < 0 => em_taylor.term pointer will be disassociated.
+    Number of terms to allocate. n_term < 0 => gg_taylor.term pointer will be disassociated.
 
 save_old : bool, optional
-    If True then save any old terms when em_taylor is resized. Default is False.
+    If True then save any old terms when gg_taylor is resized. Default is False.
 )"""
   );
   m.def(

@@ -92,13 +92,13 @@ PYBIND11_MODULE(_pybmad, m, py::mod_gil_not_used()) {
       py::class_<TaylorTermStruct>(m, "TaylorTermStruct", "Fortran struct: taylor_term_struct");
   auto py_TaylorStruct =
       py::class_<TaylorStruct>(m, "TaylorStruct", "Fortran struct: taylor_struct");
-  auto py_EmTaylorTermStruct = py::class_<EmTaylorTermStruct>(
+  auto py_GgTaylorTermStruct = py::class_<GgTaylorTermStruct>(
       m,
-      "EmTaylorTermStruct",
-      "Fortran struct: em_taylor_term_struct"
+      "GgTaylorTermStruct",
+      "Fortran struct: gg_taylor_term_struct"
   );
-  auto py_EmTaylorStruct =
-      py::class_<EmTaylorStruct>(m, "EmTaylorStruct", "Fortran struct: em_taylor_struct");
+  auto py_GgTaylorStruct =
+      py::class_<GgTaylorStruct>(m, "GgTaylorStruct", "Fortran struct: gg_taylor_struct");
   auto py_CartesianMapTerm1Struct = py::class_<CartesianMapTerm1Struct>(
       m,
       "CartesianMapTerm1Struct",
@@ -638,8 +638,8 @@ PYBIND11_MODULE(_pybmad, m, py::mod_gil_not_used()) {
   init_wake_struct(m, py_WakeStruct);
   init_taylor_term_struct(m, py_TaylorTermStruct);
   init_taylor_struct(m, py_TaylorStruct);
-  init_em_taylor_term_struct(m, py_EmTaylorTermStruct);
-  init_em_taylor_struct(m, py_EmTaylorStruct);
+  init_gg_taylor_term_struct(m, py_GgTaylorTermStruct);
+  init_gg_taylor_struct(m, py_GgTaylorStruct);
   init_cartesian_map_term1_struct(m, py_CartesianMapTerm1Struct);
   init_cartesian_map_term_struct(m, py_CartesianMapTermStruct);
   init_cartesian_map_struct(m, py_CartesianMapStruct);

@@ -44,13 +44,13 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     ele_reference_energy_correction, ele_rf_step_index, ele_to_fibre, ele_to_spin_taylor, &
     ele_to_taylor, ele_unique_name, ele_value_has_changed, ele_vec_equal_ele_vec, &
     elec_multipole_field, element_slice_iterator, em_field_calc, em_field_plus_em_field, &
-    em_taylor_equal_em_taylor, em_taylors_equal_em_taylors, entering_element, &
-    equivalent_taylor_attributes, fibre_to_ele, find_element_ends, find_matching_fieldmap, &
-    floor_angles_to_w_mat, floor_w_mat_to_angles, fringe_here, &
-    g_bending_strength_from_em_field, g_integrals_calc, gamma_ref, gen_grad1_to_em_taylor, &
-    gen_grad_at_s_to_em_taylor, get_slave_list, gradient_shift_sr_wake, hdf5_write_beam, &
+    entering_element, equivalent_taylor_attributes, fibre_to_ele, find_element_ends, &
+    find_matching_fieldmap, floor_angles_to_w_mat, floor_w_mat_to_angles, fringe_here, &
+    g_bending_strength_from_em_field, g_integrals_calc, gamma_ref, gen_grad1_to_gg_taylor, &
+    gen_grad_at_s_to_gg_taylor, get_slave_list, gg_taylor_equal_gg_taylor, &
+    gg_taylors_equal_gg_taylors, gradient_shift_sr_wake, hdf5_write_beam, &
     hdf5_write_grid_field, init_bmad, init_bmad_parser_common, init_complex_taylor_series, &
-    init_coord, init_custom, init_ele, init_em_taylor_series, init_lat, init_multipole_cache, &
+    init_coord, init_custom, init_ele, init_gg_taylor_series, init_lat, init_multipole_cache, &
     init_photon_from_a_photon_init_ele, init_taylor_series, init_wake, insert_element, &
     ion_kick, key_name_to_key_index, kill_ptc_layouts, kill_taylor, knot_interpolate, &
     knots_to_string, lat_compute_ref_energy_and_time, lat_ele_locator, lat_equal_lat, &
@@ -243,8 +243,8 @@ use equality_mod, only: eq_ac_kicker, eq_ac_kicker_freq, eq_ac_kicker_time, eq_a
     eq_bunch_params, eq_cartesian_map, eq_cartesian_map_term, eq_cartesian_map_term1, &
     eq_complex_taylor, eq_complex_taylor_term, eq_control, eq_control_ramp1, eq_control_var1, &
     eq_controller, eq_coord, eq_coord_array, eq_cylindrical_map, eq_cylindrical_map_term, &
-    eq_cylindrical_map_term1, eq_ele, eq_ellipse_beam_init, eq_em_field, eq_em_taylor, &
-    eq_em_taylor_term, eq_expression_atom, eq_floor_position, eq_gen_grad1, eq_gen_grad_map, &
+    eq_cylindrical_map_term1, eq_ele, eq_ellipse_beam_init, eq_em_field, eq_expression_atom, &
+    eq_floor_position, eq_gen_grad1, eq_gen_grad_map, eq_gg_taylor, eq_gg_taylor_term, &
     eq_grid_beam_init, eq_grid_field, eq_grid_field_pt, eq_grid_field_pt1, &
     eq_high_energy_space_charge, eq_interval1_coef, eq_kv_beam_init, eq_lat, eq_lat_ele_loc, &
     eq_lat_param, eq_linac_normal_mode, eq_mode3, eq_mode_info, eq_normal_modes, &
@@ -8658,58 +8658,6 @@ subroutine fortran_em_field_plus_em_field (field1, field2, field_tot) bind(c)
   ! out: f_field_tot 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_em_taylor_equal_em_taylor (em_taylor1, em_taylor2) bind(c)
-
-  use array_desc_mod
-  use bmad_struct, only: em_taylor_struct
-  implicit none
-  ! ** In parameters **
-  type(c_ptr), value :: em_taylor2  ! 0D_NOT_type
-  type(em_taylor_struct), pointer :: f_em_taylor2
-  ! ** Inout parameters **
-  type(c_ptr), value :: em_taylor1  ! 0D_NOT_type
-  type(em_taylor_struct), pointer :: f_em_taylor1
-  ! ** End of parameters **
-  ! inout: f_em_taylor1 0D_NOT_type
-  if (.not. c_associated(em_taylor1)) return
-  call c_f_pointer(em_taylor1, f_em_taylor1)
-  ! in: f_em_taylor2 0D_NOT_type
-  if (.not. c_associated(em_taylor2)) return
-  call c_f_pointer(em_taylor2, f_em_taylor2)
-  call em_taylor_equal_em_taylor(f_em_taylor1, f_em_taylor2)
-
-end subroutine
-subroutine fortran_em_taylors_equal_em_taylors (em_taylor1, em_taylor2) bind(c)
-
-  use array_desc_mod
-  use bmad_struct, only: em_taylor_struct
-  implicit none
-  ! ** In parameters **
-  type(array_descriptor_t), intent(in) :: em_taylor2
-  type(em_taylor_struct), pointer :: f_em_taylor2(:)
-  type(em_taylor_struct), pointer :: f_em_taylor2_ptr(:)
-  ! ** Inout parameters **
-  type(array_descriptor_t), intent(in) :: em_taylor1
-  type(em_taylor_struct), pointer :: f_em_taylor1(:)
-  type(em_taylor_struct), pointer :: f_em_taylor1_ptr(:)
-  ! ** End of parameters **
-  !! type array (1D_NOT_type)
-  if (c_associated(em_taylor1%data_ptr)) then
-    call c_f_pointer(em_taylor1%data_ptr, f_em_taylor1_ptr, [em_taylor1%dims(1)])
-    f_em_taylor1 => f_em_taylor1_ptr
-  else
-    f_em_taylor1 => null()
-  endif
-  !! type array (1D_NOT_type)
-  if (c_associated(em_taylor2%data_ptr)) then
-    call c_f_pointer(em_taylor2%data_ptr, f_em_taylor2_ptr, [em_taylor2%dims(1)])
-    f_em_taylor2 => f_em_taylor2_ptr
-  else
-    f_em_taylor2 => null()
-  endif
-  call em_taylors_equal_em_taylors(f_em_taylor1, f_em_taylor2)
-
-end subroutine
 subroutine fortran_emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, closed_orbit, &
     rad_int_by_ele) bind(c)
 
@@ -9816,60 +9764,6 @@ subroutine fortran_eq_em_field (f1, f2, is_eq) bind(c)
   call c_f_pointer(is_eq, f_is_eq_ptr)
   f_is_eq_ptr = f_is_eq
 end subroutine
-subroutine fortran_eq_em_taylor (f1, f2, is_eq) bind(c)
-
-  use array_desc_mod
-  use bmad_struct, only: em_taylor_struct
-  implicit none
-  ! ** In parameters **
-  type(c_ptr), value :: f1  ! 0D_NOT_type
-  type(em_taylor_struct), pointer :: f_f1
-  type(c_ptr), value :: f2  ! 0D_NOT_type
-  type(em_taylor_struct), pointer :: f_f2
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: is_eq  ! 0D_NOT_logical
-  logical :: f_is_eq
-  logical(c_bool), pointer :: f_is_eq_ptr
-  ! ** End of parameters **
-  ! in: f_f1 0D_NOT_type
-  if (.not. c_associated(f1)) return
-  call c_f_pointer(f1, f_f1)
-  ! in: f_f2 0D_NOT_type
-  if (.not. c_associated(f2)) return
-  call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_em_taylor(f_f1, f_f2)
-
-  ! out: f_is_eq 0D_NOT_logical
-  call c_f_pointer(is_eq, f_is_eq_ptr)
-  f_is_eq_ptr = f_is_eq
-end subroutine
-subroutine fortran_eq_em_taylor_term (f1, f2, is_eq) bind(c)
-
-  use array_desc_mod
-  use bmad_struct, only: em_taylor_term_struct
-  implicit none
-  ! ** In parameters **
-  type(c_ptr), value :: f1  ! 0D_NOT_type
-  type(em_taylor_term_struct), pointer :: f_f1
-  type(c_ptr), value :: f2  ! 0D_NOT_type
-  type(em_taylor_term_struct), pointer :: f_f2
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: is_eq  ! 0D_NOT_logical
-  logical :: f_is_eq
-  logical(c_bool), pointer :: f_is_eq_ptr
-  ! ** End of parameters **
-  ! in: f_f1 0D_NOT_type
-  if (.not. c_associated(f1)) return
-  call c_f_pointer(f1, f_f1)
-  ! in: f_f2 0D_NOT_type
-  if (.not. c_associated(f2)) return
-  call c_f_pointer(f2, f_f2)
-  f_is_eq = eq_em_taylor_term(f_f1, f_f2)
-
-  ! out: f_is_eq 0D_NOT_logical
-  call c_f_pointer(is_eq, f_is_eq_ptr)
-  f_is_eq_ptr = f_is_eq
-end subroutine
 subroutine fortran_eq_expression_atom (f1, f2, is_eq) bind(c)
 
   use array_desc_mod
@@ -9973,6 +9867,60 @@ subroutine fortran_eq_gen_grad_map (f1, f2, is_eq) bind(c)
   if (.not. c_associated(f2)) return
   call c_f_pointer(f2, f_f2)
   f_is_eq = eq_gen_grad_map(f_f1, f_f2)
+
+  ! out: f_is_eq 0D_NOT_logical
+  call c_f_pointer(is_eq, f_is_eq_ptr)
+  f_is_eq_ptr = f_is_eq
+end subroutine
+subroutine fortran_eq_gg_taylor (f1, f2, is_eq) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: gg_taylor_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: f1  ! 0D_NOT_type
+  type(gg_taylor_struct), pointer :: f_f1
+  type(c_ptr), value :: f2  ! 0D_NOT_type
+  type(gg_taylor_struct), pointer :: f_f2
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: is_eq  ! 0D_NOT_logical
+  logical :: f_is_eq
+  logical(c_bool), pointer :: f_is_eq_ptr
+  ! ** End of parameters **
+  ! in: f_f1 0D_NOT_type
+  if (.not. c_associated(f1)) return
+  call c_f_pointer(f1, f_f1)
+  ! in: f_f2 0D_NOT_type
+  if (.not. c_associated(f2)) return
+  call c_f_pointer(f2, f_f2)
+  f_is_eq = eq_gg_taylor(f_f1, f_f2)
+
+  ! out: f_is_eq 0D_NOT_logical
+  call c_f_pointer(is_eq, f_is_eq_ptr)
+  f_is_eq_ptr = f_is_eq
+end subroutine
+subroutine fortran_eq_gg_taylor_term (f1, f2, is_eq) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: gg_taylor_term_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: f1  ! 0D_NOT_type
+  type(gg_taylor_term_struct), pointer :: f_f1
+  type(c_ptr), value :: f2  ! 0D_NOT_type
+  type(gg_taylor_term_struct), pointer :: f_f2
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: is_eq  ! 0D_NOT_logical
+  logical :: f_is_eq
+  logical(c_bool), pointer :: f_is_eq_ptr
+  ! ** End of parameters **
+  ! in: f_f1 0D_NOT_type
+  if (.not. c_associated(f1)) return
+  call c_f_pointer(f1, f_f1)
+  ! in: f_f2 0D_NOT_type
+  if (.not. c_associated(f2)) return
+  call c_f_pointer(f2, f_f2)
+  f_is_eq = eq_gg_taylor_term(f_f1, f_f2)
 
   ! out: f_is_eq 0D_NOT_logical
   call c_f_pointer(is_eq, f_is_eq_ptr)
@@ -12810,10 +12758,10 @@ subroutine fortran_gamma_ref (ele, gamma) bind(c)
   call c_f_pointer(gamma, f_gamma_ptr)
   f_gamma_ptr = f_gamma
 end subroutine
-subroutine fortran_gen_grad1_to_em_taylor (ele, gen_grad, iz, em_taylor) bind(c)
+subroutine fortran_gen_grad1_to_gg_taylor (ele, gen_grad, iz, gg_taylor) bind(c)
 
   use array_desc_mod
-  use bmad_struct, only: ele_struct, em_taylor_struct, gen_grad_map_struct
+  use bmad_struct, only: ele_struct, gen_grad_map_struct, gg_taylor_struct
   implicit none
   ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
@@ -12823,9 +12771,9 @@ subroutine fortran_gen_grad1_to_em_taylor (ele, gen_grad, iz, em_taylor) bind(c)
   integer(c_int) :: iz  ! 0D_NOT_integer
   integer :: f_iz
   ! ** Out parameters **
-  type(array_descriptor_t), intent(in) :: em_taylor
-  type(em_taylor_struct), pointer :: f_em_taylor(:)
-  type(em_taylor_struct), pointer :: f_em_taylor_ptr(:)
+  type(array_descriptor_t), intent(in) :: gg_taylor
+  type(gg_taylor_struct), pointer :: f_gg_taylor(:)
+  type(gg_taylor_struct), pointer :: f_gg_taylor_ptr(:)
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -12836,21 +12784,21 @@ subroutine fortran_gen_grad1_to_em_taylor (ele, gen_grad, iz, em_taylor) bind(c)
   ! in: f_iz 0D_NOT_integer
   f_iz = iz
   !! type array (1D_NOT_type)
-  if (c_associated(em_taylor%data_ptr)) then
-    call c_f_pointer(em_taylor%data_ptr, f_em_taylor_ptr, [em_taylor%dims(1)])
-    f_em_taylor => f_em_taylor_ptr
+  if (c_associated(gg_taylor%data_ptr)) then
+    call c_f_pointer(gg_taylor%data_ptr, f_gg_taylor_ptr, [gg_taylor%dims(1)])
+    f_gg_taylor => f_gg_taylor_ptr
   else
-    f_em_taylor => null()
+    f_gg_taylor => null()
   endif
-  call gen_grad1_to_em_taylor(f_ele, f_gen_grad, f_iz, f_em_taylor)
+  call gen_grad1_to_gg_taylor(f_ele, f_gen_grad, f_iz, f_gg_taylor)
 
-  ! out: f_em_taylor 1D_NOT_type
+  ! out: f_gg_taylor 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
 end subroutine
-subroutine fortran_gen_grad_at_s_to_em_taylor (ele, gen_grad, s_pos, em_taylor) bind(c)
+subroutine fortran_gen_grad_at_s_to_gg_taylor (ele, gen_grad, s_pos, gg_taylor) bind(c)
 
   use array_desc_mod
-  use bmad_struct, only: ele_struct, em_taylor_struct, gen_grad_map_struct
+  use bmad_struct, only: ele_struct, gen_grad_map_struct, gg_taylor_struct
   implicit none
   ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
@@ -12860,9 +12808,9 @@ subroutine fortran_gen_grad_at_s_to_em_taylor (ele, gen_grad, s_pos, em_taylor) 
   real(c_double) :: s_pos  ! 0D_NOT_real
   real(rp) :: f_s_pos
   ! ** Out parameters **
-  type(array_descriptor_t), intent(in) :: em_taylor
-  type(em_taylor_struct), pointer :: f_em_taylor(:)
-  type(em_taylor_struct), pointer :: f_em_taylor_ptr(:)
+  type(array_descriptor_t), intent(in) :: gg_taylor
+  type(gg_taylor_struct), pointer :: f_gg_taylor(:)
+  type(gg_taylor_struct), pointer :: f_gg_taylor_ptr(:)
   ! ** End of parameters **
   ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
@@ -12873,15 +12821,15 @@ subroutine fortran_gen_grad_at_s_to_em_taylor (ele, gen_grad, s_pos, em_taylor) 
   ! in: f_s_pos 0D_NOT_real
   f_s_pos = s_pos
   !! type array (1D_NOT_type)
-  if (c_associated(em_taylor%data_ptr)) then
-    call c_f_pointer(em_taylor%data_ptr, f_em_taylor_ptr, [em_taylor%dims(1)])
-    f_em_taylor => f_em_taylor_ptr
+  if (c_associated(gg_taylor%data_ptr)) then
+    call c_f_pointer(gg_taylor%data_ptr, f_gg_taylor_ptr, [gg_taylor%dims(1)])
+    f_gg_taylor => f_gg_taylor_ptr
   else
-    f_em_taylor => null()
+    f_gg_taylor => null()
   endif
-  call gen_grad_at_s_to_em_taylor(f_ele, f_gen_grad, f_s_pos, f_em_taylor)
+  call gen_grad_at_s_to_gg_taylor(f_ele, f_gen_grad, f_s_pos, f_gg_taylor)
 
-  ! out: f_em_taylor 1D_NOT_type
+  ! out: f_gg_taylor 1D_NOT_type
   ! TODO may require output conversion? 1D_NOT_type
 end subroutine
 subroutine fortran_gen_grad_field (deriv, gg, rho, theta, field) bind(c)
@@ -13156,6 +13104,58 @@ subroutine fortran_get_slave_list (lord, slaves, n_slave) bind(c)
   ! out: f_n_slave 0D_NOT_integer
   call c_f_pointer(n_slave, f_n_slave_ptr)
   f_n_slave_ptr = f_n_slave
+end subroutine
+subroutine fortran_gg_taylor_equal_gg_taylor (gg_taylor1, gg_taylor2) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: gg_taylor_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: gg_taylor2  ! 0D_NOT_type
+  type(gg_taylor_struct), pointer :: f_gg_taylor2
+  ! ** Inout parameters **
+  type(c_ptr), value :: gg_taylor1  ! 0D_NOT_type
+  type(gg_taylor_struct), pointer :: f_gg_taylor1
+  ! ** End of parameters **
+  ! inout: f_gg_taylor1 0D_NOT_type
+  if (.not. c_associated(gg_taylor1)) return
+  call c_f_pointer(gg_taylor1, f_gg_taylor1)
+  ! in: f_gg_taylor2 0D_NOT_type
+  if (.not. c_associated(gg_taylor2)) return
+  call c_f_pointer(gg_taylor2, f_gg_taylor2)
+  call gg_taylor_equal_gg_taylor(f_gg_taylor1, f_gg_taylor2)
+
+end subroutine
+subroutine fortran_gg_taylors_equal_gg_taylors (gg_taylor1, gg_taylor2) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: gg_taylor_struct
+  implicit none
+  ! ** In parameters **
+  type(array_descriptor_t), intent(in) :: gg_taylor2
+  type(gg_taylor_struct), pointer :: f_gg_taylor2(:)
+  type(gg_taylor_struct), pointer :: f_gg_taylor2_ptr(:)
+  ! ** Inout parameters **
+  type(array_descriptor_t), intent(in) :: gg_taylor1
+  type(gg_taylor_struct), pointer :: f_gg_taylor1(:)
+  type(gg_taylor_struct), pointer :: f_gg_taylor1_ptr(:)
+  ! ** End of parameters **
+  !! type array (1D_NOT_type)
+  if (c_associated(gg_taylor1%data_ptr)) then
+    call c_f_pointer(gg_taylor1%data_ptr, f_gg_taylor1_ptr, [gg_taylor1%dims(1)])
+    f_gg_taylor1 => f_gg_taylor1_ptr
+  else
+    f_gg_taylor1 => null()
+  endif
+  !! type array (1D_NOT_type)
+  if (c_associated(gg_taylor2%data_ptr)) then
+    call c_f_pointer(gg_taylor2%data_ptr, f_gg_taylor2_ptr, [gg_taylor2%dims(1)])
+    f_gg_taylor2 => f_gg_taylor2_ptr
+  else
+    f_gg_taylor2 => null()
+  endif
+  call gg_taylors_equal_gg_taylors(f_gg_taylor1, f_gg_taylor2)
+
 end subroutine
 subroutine fortran_gpt_field_grid_scaling (ele, dimensions, field_scale, ref_time) bind(c)
 
@@ -14610,10 +14610,10 @@ subroutine fortran_init_ele (ele, key, sub_key, ix_ele, branch) bind(c)
   ! out: f_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_init_em_taylor_series (em_taylor, n_term, save_old) bind(c)
+subroutine fortran_init_gg_taylor_series (gg_taylor, n_term, save_old) bind(c)
 
   use array_desc_mod
-  use bmad_struct, only: em_taylor_struct
+  use bmad_struct, only: gg_taylor_struct
   implicit none
   ! ** In parameters **
   integer(c_int) :: n_term  ! 0D_NOT_integer
@@ -14624,12 +14624,12 @@ subroutine fortran_init_em_taylor_series (em_taylor, n_term, save_old) bind(c)
   logical, pointer :: f_save_old_native_ptr
   logical(c_bool), pointer :: f_save_old_ptr
   ! ** Inout parameters **
-  type(c_ptr), value :: em_taylor  ! 0D_NOT_type
-  type(em_taylor_struct), pointer :: f_em_taylor
+  type(c_ptr), value :: gg_taylor  ! 0D_NOT_type
+  type(gg_taylor_struct), pointer :: f_gg_taylor
   ! ** End of parameters **
-  ! inout: f_em_taylor 0D_NOT_type
-  if (.not. c_associated(em_taylor)) return
-  call c_f_pointer(em_taylor, f_em_taylor)
+  ! inout: f_gg_taylor 0D_NOT_type
+  if (.not. c_associated(gg_taylor)) return
+  call c_f_pointer(gg_taylor, f_gg_taylor)
   ! in: f_n_term 0D_NOT_integer
   f_n_term = n_term
   ! in: f_save_old 0D_NOT_logical
@@ -14640,7 +14640,7 @@ subroutine fortran_init_em_taylor_series (em_taylor, n_term, save_old) bind(c)
   else
     f_save_old_native_ptr => null()
   endif
-  call init_em_taylor_series(f_em_taylor, f_n_term, f_save_old_native_ptr)
+  call init_gg_taylor_series(f_gg_taylor, f_n_term, f_save_old_native_ptr)
 
 end subroutine
 subroutine fortran_init_lat (lat, n, init_beginning_ele) bind(c)

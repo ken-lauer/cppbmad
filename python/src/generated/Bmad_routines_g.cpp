@@ -121,13 +121,13 @@ gamma : float
 )"""
   );
   m.def(
-      "gen_grad1_to_em_taylor",
-      &Bmad::gen_grad1_to_em_taylor,
+      "gen_grad1_to_gg_taylor",
+      &Bmad::gen_grad1_to_gg_taylor,
       py::arg("ele"),
       py::arg("gen_grad"),
       py::arg("iz"),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine gen_grad1_to_em_taylor
+      R"""(Wrapper for Fortran routine gen_grad1_to_gg_taylor
 
 Parameters
 ----------
@@ -142,18 +142,18 @@ iz : int
 
 Returns
 -------
-em_taylor : 1D array of EmTaylorStruct (shape: 3)
+gg_taylor : 1D array of GgTaylorStruct (shape: 3)
     Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
 )"""
   );
   m.def(
-      "gen_grad_at_s_to_em_taylor",
-      &Bmad::gen_grad_at_s_to_em_taylor,
+      "gen_grad_at_s_to_gg_taylor",
+      &Bmad::gen_grad_at_s_to_gg_taylor,
       py::arg("ele"),
       py::arg("gen_grad"),
       py::arg("s_pos"),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine gen_grad_at_s_to_em_taylor
+      R"""(Wrapper for Fortran routine gen_grad_at_s_to_gg_taylor
 
 Parameters
 ----------
@@ -164,11 +164,11 @@ gen_grad : GenGradMapStruct
     Gen_grad map.
 
 s_pos : float
-    Position to evaluate em_taylor at.
+    Position to evaluate gg_taylor at.
 
 Returns
 -------
-em_taylor : 1D array of EmTaylorStruct (shape: 3)
+gg_taylor : 1D array of GgTaylorStruct (shape: 3)
     Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
 )"""
   );
@@ -400,6 +400,36 @@ slaves : 1D array of ElePointerStruct
 
 n_slave : int
     Number of slaves.
+)"""
+  );
+  m.def(
+      "gg_taylor_equal_gg_taylor",
+      &Bmad::gg_taylor_equal_gg_taylor,
+      py::arg("gg_taylor1"),
+      py::arg("gg_taylor2"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine gg_taylor_equal_gg_taylor
+
+Parameters
+----------
+gg_taylor1 : GgTaylorStruct
+
+gg_taylor2 : GgTaylorStruct
+)"""
+  );
+  m.def(
+      "gg_taylors_equal_gg_taylors",
+      &Bmad::gg_taylors_equal_gg_taylors,
+      py::arg("gg_taylor1"),
+      py::arg("gg_taylor2"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine gg_taylors_equal_gg_taylors
+
+Parameters
+----------
+gg_taylor1 : 1D array of GgTaylorStruct
+
+gg_taylor2 : 1D array of GgTaylorStruct
 )"""
   );
   m.def(

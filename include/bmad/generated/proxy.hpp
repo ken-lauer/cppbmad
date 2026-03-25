@@ -402,21 +402,21 @@ void taylor_struct_get_term_info(
     size_t *el_size
 );
 
-void em_taylor_term_struct_get_coef(const void *struct_obj, double *value_out);
-void em_taylor_term_struct_set_coef(void *struct_obj, double value_in);
-void em_taylor_term_struct_get_expn_info(const void *s, int **d, int *bounds, bool *is_alloc);
-void em_taylor_term_struct_set_expn(void *s, const void *d, const int *shape);
-void em_taylor_struct_get_ref(const void *struct_obj, double *value_out);
-void em_taylor_struct_set_ref(void *struct_obj, double value_in);
+void gg_taylor_term_struct_get_coef(const void *struct_obj, double *value_out);
+void gg_taylor_term_struct_set_coef(void *struct_obj, double value_in);
+void gg_taylor_term_struct_get_expn_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void gg_taylor_term_struct_set_expn(void *s, const void *d, const int *shape);
+void gg_taylor_struct_get_ref(const void *struct_obj, double *value_out);
+void gg_taylor_struct_set_ref(void *struct_obj, double value_in);
 
-void em_taylor_struct_get_term_info(
+void gg_taylor_struct_get_term_info(
     const void *s,
     void **d,
     int *bounds,
     bool *is_alloc,
     size_t *el_size
 );
-void em_taylor_struct_reallocate_term(void *s, int lb, size_t n);
+void gg_taylor_struct_reallocate_term(void *s, int lb, size_t n);
 
 void cartesian_map_term1_struct_get_coef(const void *struct_obj, double *value_out);
 void cartesian_map_term1_struct_set_coef(void *struct_obj, double value_in);
@@ -1550,6 +1550,10 @@ void space_charge_common_struct_get_particle_sigma_cutoff(
     double *value_out
 );
 void space_charge_common_struct_set_particle_sigma_cutoff(void *struct_obj, double value_in);
+void space_charge_common_struct_get_mesh_growth_factor(const void *struct_obj, double *value_out);
+void space_charge_common_struct_set_mesh_growth_factor(void *struct_obj, double value_in);
+void space_charge_common_struct_get_mesh_shrink_factor(const void *struct_obj, double *value_out);
+void space_charge_common_struct_set_mesh_shrink_factor(void *struct_obj, double value_in);
 void space_charge_common_struct_get_space_charge_mesh_size_info(
     const void *s,
     int **d,
@@ -5621,14 +5625,14 @@ void access_taylor_struct_container(
     size_t *elem_size
 );
 
-void *allocate_fortran_em_taylor_term_struct(int n, size_t *element_size);
-void deallocate_fortran_em_taylor_term_struct(void *ptr, int n) noexcept;
-void copy_fortran_em_taylor_term_struct(const void *src, void *dst);
+void *allocate_fortran_gg_taylor_term_struct(int n, size_t *element_size);
+void deallocate_fortran_gg_taylor_term_struct(void *ptr, int n) noexcept;
+void copy_fortran_gg_taylor_term_struct(const void *src, void *dst);
 
-void *allocate_em_taylor_term_struct_container();
-void reallocate_em_taylor_term_struct_container_data(void *, int, size_t) noexcept;
-void deallocate_em_taylor_term_struct_container(void *) noexcept;
-void access_em_taylor_term_struct_container(
+void *allocate_gg_taylor_term_struct_container();
+void reallocate_gg_taylor_term_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_gg_taylor_term_struct_container(void *) noexcept;
+void access_gg_taylor_term_struct_container(
     const void *handle,
     void **data,
     int *bounds,
@@ -5636,14 +5640,14 @@ void access_em_taylor_term_struct_container(
     size_t *elem_size
 );
 
-void *allocate_fortran_em_taylor_struct(int n, size_t *element_size);
-void deallocate_fortran_em_taylor_struct(void *ptr, int n) noexcept;
-void copy_fortran_em_taylor_struct(const void *src, void *dst);
+void *allocate_fortran_gg_taylor_struct(int n, size_t *element_size);
+void deallocate_fortran_gg_taylor_struct(void *ptr, int n) noexcept;
+void copy_fortran_gg_taylor_struct(const void *src, void *dst);
 
-void *allocate_em_taylor_struct_container();
-void reallocate_em_taylor_struct_container_data(void *, int, size_t) noexcept;
-void deallocate_em_taylor_struct_container(void *) noexcept;
-void access_em_taylor_struct_container(
+void *allocate_gg_taylor_struct_container();
+void reallocate_gg_taylor_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_gg_taylor_struct_container(void *) noexcept;
+void access_gg_taylor_struct_container(
     const void *handle,
     void **data,
     int *bounds,
@@ -8766,65 +8770,65 @@ struct TaylorStructAlloc1D : public FTypeAlloc1D<TaylorStructArray1D> {
       : Base(handle, realloc, access) {}
 };
 
-class EmTaylorTermStruct;
+class GgTaylorTermStruct;
 
-using EmTaylorTermStructArray1D = FTypeArray1D<
-    EmTaylorTermStruct,
-    allocate_fortran_em_taylor_term_struct,
-    deallocate_fortran_em_taylor_term_struct>;
-using EmTaylorTermStructArray2D = FTypeArray2D<EmTaylorTermStruct>;
-using EmTaylorTermStructArray3D = FTypeArray3D<EmTaylorTermStruct>;
+using GgTaylorTermStructArray1D = FTypeArray1D<
+    GgTaylorTermStruct,
+    allocate_fortran_gg_taylor_term_struct,
+    deallocate_fortran_gg_taylor_term_struct>;
+using GgTaylorTermStructArray2D = FTypeArray2D<GgTaylorTermStruct>;
+using GgTaylorTermStructArray3D = FTypeArray3D<GgTaylorTermStruct>;
 
-struct EmTaylorTermStructAlloc1D : public FTypeAlloc1D<EmTaylorTermStructArray1D> {
-  using Base = FTypeAlloc1D<EmTaylorTermStructArray1D>;
+struct GgTaylorTermStructAlloc1D : public FTypeAlloc1D<GgTaylorTermStructArray1D> {
+  using Base = FTypeAlloc1D<GgTaylorTermStructArray1D>;
   using Base::Base;
-  EmTaylorTermStructAlloc1D()
+  GgTaylorTermStructAlloc1D()
       : Base(
-            allocate_em_taylor_term_struct_container,
-            deallocate_em_taylor_term_struct_container,
-            reallocate_em_taylor_term_struct_container_data,
-            access_em_taylor_term_struct_container
+            allocate_gg_taylor_term_struct_container,
+            deallocate_gg_taylor_term_struct_container,
+            reallocate_gg_taylor_term_struct_container_data,
+            access_gg_taylor_term_struct_container
         ) {}
-  EmTaylorTermStructAlloc1D(int n)
+  GgTaylorTermStructAlloc1D(int n)
       : Base(
             n,
-            allocate_em_taylor_term_struct_container,
-            deallocate_em_taylor_term_struct_container,
-            reallocate_em_taylor_term_struct_container_data,
-            access_em_taylor_term_struct_container
+            allocate_gg_taylor_term_struct_container,
+            deallocate_gg_taylor_term_struct_container,
+            reallocate_gg_taylor_term_struct_container_data,
+            access_gg_taylor_term_struct_container
         ) {}
-  EmTaylorTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+  GgTaylorTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
-class EmTaylorStruct;
+class GgTaylorStruct;
 
-using EmTaylorStructArray1D = FTypeArray1D<
-    EmTaylorStruct,
-    allocate_fortran_em_taylor_struct,
-    deallocate_fortran_em_taylor_struct>;
-using EmTaylorStructArray2D = FTypeArray2D<EmTaylorStruct>;
-using EmTaylorStructArray3D = FTypeArray3D<EmTaylorStruct>;
+using GgTaylorStructArray1D = FTypeArray1D<
+    GgTaylorStruct,
+    allocate_fortran_gg_taylor_struct,
+    deallocate_fortran_gg_taylor_struct>;
+using GgTaylorStructArray2D = FTypeArray2D<GgTaylorStruct>;
+using GgTaylorStructArray3D = FTypeArray3D<GgTaylorStruct>;
 
-struct EmTaylorStructAlloc1D : public FTypeAlloc1D<EmTaylorStructArray1D> {
-  using Base = FTypeAlloc1D<EmTaylorStructArray1D>;
+struct GgTaylorStructAlloc1D : public FTypeAlloc1D<GgTaylorStructArray1D> {
+  using Base = FTypeAlloc1D<GgTaylorStructArray1D>;
   using Base::Base;
-  EmTaylorStructAlloc1D()
+  GgTaylorStructAlloc1D()
       : Base(
-            allocate_em_taylor_struct_container,
-            deallocate_em_taylor_struct_container,
-            reallocate_em_taylor_struct_container_data,
-            access_em_taylor_struct_container
+            allocate_gg_taylor_struct_container,
+            deallocate_gg_taylor_struct_container,
+            reallocate_gg_taylor_struct_container_data,
+            access_gg_taylor_struct_container
         ) {}
-  EmTaylorStructAlloc1D(int n)
+  GgTaylorStructAlloc1D(int n)
       : Base(
             n,
-            allocate_em_taylor_struct_container,
-            deallocate_em_taylor_struct_container,
-            reallocate_em_taylor_struct_container_data,
-            access_em_taylor_struct_container
+            allocate_gg_taylor_struct_container,
+            deallocate_gg_taylor_struct_container,
+            reallocate_gg_taylor_struct_container_data,
+            access_gg_taylor_struct_container
         ) {}
-  EmTaylorStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+  GgTaylorStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
@@ -14705,22 +14709,22 @@ public:
 };
 
 template <>
-struct FortranTraits<EmTaylorTermStruct> {
+struct FortranTraits<GgTaylorTermStruct> {
   static void *allocate() {
     size_t sz;
-    return allocate_fortran_em_taylor_term_struct(0, &sz);
+    return allocate_fortran_gg_taylor_term_struct(0, &sz);
   }
-  static void deallocate(void *ptr) noexcept { deallocate_fortran_em_taylor_term_struct(ptr, 0); }
-  static void copy(const void *src, void *dst) { copy_fortran_em_taylor_term_struct(src, dst); }
-  static constexpr std::string_view type_name() { return "em_taylor_term_struct"; }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_gg_taylor_term_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_gg_taylor_term_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "gg_taylor_term_struct"; }
 };
 
-class EmTaylorTermStruct : public FortranProxy<EmTaylorTermStruct> {
+class GgTaylorTermStruct : public FortranProxy<GgTaylorTermStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit EmTaylorTermStruct(
+  explicit GgTaylorTermStruct(
       std::optional<double> coef = std::nullopt,
       std::optional<std::vector<int>> expn = std::nullopt
   )
@@ -14738,22 +14742,22 @@ public:
 };
 
 template <>
-struct FortranTraits<EmTaylorStruct> {
+struct FortranTraits<GgTaylorStruct> {
   static void *allocate() {
     size_t sz;
-    return allocate_fortran_em_taylor_struct(0, &sz);
+    return allocate_fortran_gg_taylor_struct(0, &sz);
   }
-  static void deallocate(void *ptr) noexcept { deallocate_fortran_em_taylor_struct(ptr, 0); }
-  static void copy(const void *src, void *dst) { copy_fortran_em_taylor_struct(src, dst); }
-  static constexpr std::string_view type_name() { return "em_taylor_struct"; }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_gg_taylor_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_gg_taylor_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "gg_taylor_struct"; }
 };
 
-class EmTaylorStruct : public FortranProxy<EmTaylorStruct> {
+class GgTaylorStruct : public FortranProxy<GgTaylorStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit EmTaylorStruct(std::optional<double> ref = std::nullopt)
+  explicit GgTaylorStruct(std::optional<double> ref = std::nullopt)
       : FortranProxy() {
     if (ref)
       set_ref(*ref);
@@ -14761,7 +14765,7 @@ public:
 
   double ref() const; // 0D_NOT_real
   void set_ref(double value);
-  EmTaylorTermStructAlloc1D term() const; // 1D_ALLOC_type
+  GgTaylorTermStructAlloc1D term() const; // 1D_ALLOC_type
 };
 
 template <>
@@ -18003,6 +18007,8 @@ public:
       std::optional<double> beam_chamber_height = std::nullopt,
       std::optional<double> lsc_sigma_cutoff = std::nullopt,
       std::optional<double> particle_sigma_cutoff = std::nullopt,
+      std::optional<double> mesh_growth_factor = std::nullopt,
+      std::optional<double> mesh_shrink_factor = std::nullopt,
       std::optional<std::vector<int>> space_charge_mesh_size = std::nullopt,
       std::optional<std::vector<int>> csr3d_mesh_size = std::nullopt,
       std::optional<int> n_bin = std::nullopt,
@@ -18030,6 +18036,10 @@ public:
       set_lsc_sigma_cutoff(*lsc_sigma_cutoff);
     if (particle_sigma_cutoff)
       set_particle_sigma_cutoff(*particle_sigma_cutoff);
+    if (mesh_growth_factor)
+      set_mesh_growth_factor(*mesh_growth_factor);
+    if (mesh_shrink_factor)
+      set_mesh_shrink_factor(*mesh_shrink_factor);
     if (space_charge_mesh_size)
       set_space_charge_mesh_size(*space_charge_mesh_size);
     if (csr3d_mesh_size)
@@ -18066,6 +18076,10 @@ public:
   void set_lsc_sigma_cutoff(double value);
   double particle_sigma_cutoff() const; // 0D_NOT_real
   void set_particle_sigma_cutoff(double value);
+  double mesh_growth_factor() const; // 0D_NOT_real
+  void set_mesh_growth_factor(double value);
+  double mesh_shrink_factor() const; // 0D_NOT_real
+  void set_mesh_shrink_factor(double value);
   FArray1D<int> space_charge_mesh_size() const; // 1D_NOT_integer
   void set_space_charge_mesh_size(const std::vector<int> &v);
   FArray1D<int> csr3d_mesh_size() const; // 1D_NOT_integer
@@ -26009,7 +26023,8 @@ public:
   FArray2D<std::complex<double>> complex_dp_2d_alloc() const; // 2D_ALLOC_complex
   void set_complex_dp_2d_alloc(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d_alloc() const; // 3D_ALLOC_complex
-  void set_complex_dp_3d_alloc(const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+  void set_complex_dp_3d_alloc(
+      const std::vector<std::vector<std::vector<std::complex<double>>>> &v
   );
   int int_0d() const; // 0D_NOT_integer
   void set_int_0d(int value);

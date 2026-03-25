@@ -596,16 +596,12 @@
 | [`em_field_derivatives`][pybmad.em_field_derivatives] | Routine | [Bmad](bmad.md) |
 | [`em_field_kick_vector_time`][pybmad.em_field_kick_vector_time] | Routine | [Bmad](bmad.md) |
 | [`em_field_plus_em_field`][pybmad.em_field_plus_em_field] | Routine | [Bmad](bmad.md) |
-| [`em_taylor_equal_em_taylor`][pybmad.em_taylor_equal_em_taylor] | Routine | [Bmad](bmad.md) |
-| [`em_taylors_equal_em_taylors`][pybmad.em_taylors_equal_em_taylors] | Routine | [Bmad](bmad.md) |
 | [EmFieldStruct](bmad.md#emfieldstruct) | Struct | [Bmad](bmad.md) |
 | [`emit_6d`][pybmad.emit_6d] | Routine | [Bmad](bmad.md) |
 | `EMIT_FRACTION` | Enum | [Enums](enums.md) |
 | `EMITTANCE_A` | Enum | [Enums](enums.md) |
 | `EMITTANCE_B` | Enum | [Enums](enums.md) |
 | `EMITTANCE_Z` | Enum | [Enums](enums.md) |
-| [EmTaylorStruct](bmad.md#emtaylorstruct) | Struct | [Bmad](bmad.md) |
-| [EmTaylorTermStruct](bmad.md#emtaylortermstruct) | Struct | [Bmad](bmad.md) |
 | [`end_akima_spline_calc`][pybmad.end_akima_spline_calc] | Routine | [Sim Utils](sim_utils.md) |
 | `END_EDGE` | Enum | [Enums](enums.md) |
 | `END_STACK` | Enum | [Enums](enums.md) |
@@ -648,12 +644,12 @@
 | [`eq_ele`][pybmad.eq_ele] | Routine | [Bmad](bmad.md) |
 | [`eq_ellipse_beam_init`][pybmad.eq_ellipse_beam_init] | Routine | [Bmad](bmad.md) |
 | [`eq_em_field`][pybmad.eq_em_field] | Routine | [Bmad](bmad.md) |
-| [`eq_em_taylor`][pybmad.eq_em_taylor] | Routine | [Bmad](bmad.md) |
-| [`eq_em_taylor_term`][pybmad.eq_em_taylor_term] | Routine | [Bmad](bmad.md) |
 | [`eq_expression_atom`][pybmad.eq_expression_atom] | Routine | [Bmad](bmad.md) |
 | [`eq_floor_position`][pybmad.eq_floor_position] | Routine | [Bmad](bmad.md) |
 | [`eq_gen_grad1`][pybmad.eq_gen_grad1] | Routine | [Bmad](bmad.md) |
 | [`eq_gen_grad_map`][pybmad.eq_gen_grad_map] | Routine | [Bmad](bmad.md) |
+| [`eq_gg_taylor`][pybmad.eq_gg_taylor] | Routine | [Bmad](bmad.md) |
+| [`eq_gg_taylor_term`][pybmad.eq_gg_taylor_term] | Routine | [Bmad](bmad.md) |
 | [`eq_grid_beam_init`][pybmad.eq_grid_beam_init] | Routine | [Bmad](bmad.md) |
 | [`eq_grid_field`][pybmad.eq_grid_field] | Routine | [Bmad](bmad.md) |
 | [`eq_grid_field_pt`][pybmad.eq_grid_field_pt] | Routine | [Bmad](bmad.md) |
@@ -848,8 +844,8 @@
 | `GAUSSIAN` | Enum | [Enums](enums.md) |
 | [`gelbd`][pybmad.gelbd] | Routine | [Sim Utils](sim_utils.md) |
 | [`gen_complete_elliptic`][pybmad.gen_complete_elliptic] | Routine | [Sim Utils](sim_utils.md) |
-| [`gen_grad1_to_em_taylor`][pybmad.gen_grad1_to_em_taylor] | Routine | [Bmad](bmad.md) |
-| [`gen_grad_at_s_to_em_taylor`][pybmad.gen_grad_at_s_to_em_taylor] | Routine | [Bmad](bmad.md) |
+| [`gen_grad1_to_gg_taylor`][pybmad.gen_grad1_to_gg_taylor] | Routine | [Bmad](bmad.md) |
+| [`gen_grad_at_s_to_gg_taylor`][pybmad.gen_grad_at_s_to_gg_taylor] | Routine | [Bmad](bmad.md) |
 | [`gen_grad_field`][pybmad.gen_grad_field] | Routine | [Bmad](bmad.md) |
 | `GEN_GRAD_MAP` | Enum | [Enums](enums.md) |
 | [GenGrad1Struct](bmad.md#gengrad1struct) | Struct | [Bmad](bmad.md) |
@@ -863,6 +859,10 @@
 | [`get_next_word`][pybmad.get_next_word] | Routine | [Bmad](bmad.md) |
 | [`get_slave_list`][pybmad.get_slave_list] | Routine | [Bmad](bmad.md) |
 | [`get_tty_char`][pybmad.get_tty_char] | Routine | [Sim Utils](sim_utils.md) |
+| [`gg_taylor_equal_gg_taylor`][pybmad.gg_taylor_equal_gg_taylor] | Routine | [Bmad](bmad.md) |
+| [`gg_taylors_equal_gg_taylors`][pybmad.gg_taylors_equal_gg_taylors] | Routine | [Bmad](bmad.md) |
+| [GgTaylorStruct](bmad.md#ggtaylorstruct) | Struct | [Bmad](bmad.md) |
+| [GgTaylorTermStruct](bmad.md#ggtaylortermstruct) | Struct | [Bmad](bmad.md) |
 | `GIRDER` | Enum | [Enums](enums.md) |
 | `GIRDER_LORD` | Enum | [Enums](enums.md) |
 | `GKICKER` | Enum | [Enums](enums.md) |
@@ -945,7 +945,7 @@
 | [`init_coord`][pybmad.init_coord] | Routine | [Bmad](bmad.md) |
 | [`init_custom`][pybmad.init_custom] | Routine | [Bmad](bmad.md) |
 | [`init_ele`][pybmad.init_ele] | Routine | [Bmad](bmad.md) |
-| [`init_em_taylor_series`][pybmad.init_em_taylor_series] | Routine | [Bmad](bmad.md) |
+| [`init_gg_taylor_series`][pybmad.init_gg_taylor_series] | Routine | [Bmad](bmad.md) |
 | [`init_lat`][pybmad.init_lat] | Routine | [Bmad](bmad.md) |
 | [`init_multipole_cache`][pybmad.init_multipole_cache] | Routine | [Bmad](bmad.md) |
 | `INIT_NEEDED` | Enum | [Enums](enums.md) |

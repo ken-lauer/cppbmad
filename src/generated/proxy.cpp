@@ -944,32 +944,32 @@ TaylorTermStructArray1D TaylorStruct::term() const {
       taylor_struct_get_term_info
   );
 }
-double EmTaylorTermStruct::coef() const {
+double GgTaylorTermStruct::coef() const {
   double value;
-  em_taylor_term_struct_get_coef(fortran_ptr_, &value);
+  gg_taylor_term_struct_get_coef(fortran_ptr_, &value);
   return value;
 }
-void EmTaylorTermStruct::set_coef(double value) {
-  em_taylor_term_struct_set_coef(fortran_ptr_, value);
+void GgTaylorTermStruct::set_coef(double value) {
+  gg_taylor_term_struct_set_coef(fortran_ptr_, value);
 }
-FArray1D<int> EmTaylorTermStruct::expn() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, em_taylor_term_struct_get_expn_info);
+FArray1D<int> GgTaylorTermStruct::expn() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, gg_taylor_term_struct_get_expn_info);
 }
-void EmTaylorTermStruct::set_expn(const std::vector<int> &v) {
+void GgTaylorTermStruct::set_expn(const std::vector<int> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  em_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
+  gg_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
 }
-double EmTaylorStruct::ref() const {
+double GgTaylorStruct::ref() const {
   double value;
-  em_taylor_struct_get_ref(fortran_ptr_, &value);
+  gg_taylor_struct_get_ref(fortran_ptr_, &value);
   return value;
 }
-void EmTaylorStruct::set_ref(double value) { em_taylor_struct_set_ref(fortran_ptr_, value); }
-EmTaylorTermStructAlloc1D EmTaylorStruct::term() const {
-  return EmTaylorTermStructAlloc1D(
+void GgTaylorStruct::set_ref(double value) { gg_taylor_struct_set_ref(fortran_ptr_, value); }
+GgTaylorTermStructAlloc1D GgTaylorStruct::term() const {
+  return GgTaylorTermStructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      em_taylor_struct_reallocate_term,
-      em_taylor_struct_get_term_info
+      gg_taylor_struct_reallocate_term,
+      gg_taylor_struct_get_term_info
   );
 }
 double CartesianMapTerm1Struct::coef() const {
@@ -3985,6 +3985,22 @@ double SpaceChargeCommonStruct::particle_sigma_cutoff() const {
 }
 void SpaceChargeCommonStruct::set_particle_sigma_cutoff(double value) {
   space_charge_common_struct_set_particle_sigma_cutoff(fortran_ptr_, value);
+}
+double SpaceChargeCommonStruct::mesh_growth_factor() const {
+  double value;
+  space_charge_common_struct_get_mesh_growth_factor(fortran_ptr_, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_mesh_growth_factor(double value) {
+  space_charge_common_struct_set_mesh_growth_factor(fortran_ptr_, value);
+}
+double SpaceChargeCommonStruct::mesh_shrink_factor() const {
+  double value;
+  space_charge_common_struct_get_mesh_shrink_factor(fortran_ptr_, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_mesh_shrink_factor(double value) {
+  space_charge_common_struct_set_mesh_shrink_factor(fortran_ptr_, value);
 }
 FArray1D<int> SpaceChargeCommonStruct::space_charge_mesh_size() const {
   return ProxyHelpers::get_array_1d<int>(
@@ -13521,7 +13537,8 @@ FArray3D<int64_t> AllEncompassingStruct::int8_3d_ptr() const {
       all_encompassing_struct_get_int8_3d_ptr_info
   );
 }
-void AllEncompassingStruct::set_int8_3d_ptr(const std::vector<std::vector<std::vector<int64_t>>> &v
+void AllEncompassingStruct::set_int8_3d_ptr(
+    const std::vector<std::vector<std::vector<int64_t>>> &v
 ) {
   ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d_ptr, v);
 }

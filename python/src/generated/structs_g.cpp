@@ -199,6 +199,109 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
 }
 
 // =============================================================================
+// gg_taylor_struct
+void init_gg_taylor_struct(py::module &m, py::class_<GgTaylorStruct> &cls) {
+  cls.def(py::init<std::optional<double>>(), py::arg("ref") = py::none())
+      .def_property("ref", &GgTaylorStruct::ref, &GgTaylorStruct::set_ref)
+      .def_property_readonly(
+          "term",
+          py::cpp_function(&GgTaylorStruct::term, py::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return GgTaylorStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = GgTaylorStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
+      )
+
+      .def("__repr__", [](const GgTaylorStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const GgTaylorStruct &self) {
+            return GgTaylorStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const GgTaylorStruct &self, py::dict &memo) { return GgTaylorStruct(self); }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<GgTaylorStructArray1D, GgTaylorStructAlloc1D>(
+      m,
+      "GgTaylorStructArray1D",
+      "GgTaylorStructAlloc1D"
+  );
+  // 2D GgTaylorStruct arrays are not used in structs/routines
+  // 3D GgTaylorStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// gg_taylor_term_struct
+void init_gg_taylor_term_struct(py::module &m, py::class_<GgTaylorTermStruct> &cls) {
+  cls.def(
+         py::init<std::optional<double>, std::optional<std::vector<int>>>(),
+         py::arg("coef") = py::none(),
+         py::arg("expn") = py::none()
+  )
+      .def_property("coef", &GgTaylorTermStruct::coef, &GgTaylorTermStruct::set_coef)
+      .def_property(
+          "expn",
+          py::cpp_function(&GgTaylorTermStruct::expn, py::keep_alive<0, 1>()),
+          &GgTaylorTermStruct::set_expn
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return GgTaylorTermStructAlloc1D(sz); },
+          py::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = GgTaylorTermStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          py::arg("lbound"),
+          py::arg("ubound")
+      )
+
+      .def("__repr__", [](const GgTaylorTermStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const GgTaylorTermStruct &self) {
+            return GgTaylorTermStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const GgTaylorTermStruct &self, py::dict &memo) { return GgTaylorTermStruct(self); }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<GgTaylorTermStructArray1D, GgTaylorTermStructAlloc1D>(
+      m,
+      "GgTaylorTermStructArray1D",
+      "GgTaylorTermStructAlloc1D"
+  );
+  // 2D GgTaylorTermStruct arrays are not used in structs/routines
+  // 3D GgTaylorTermStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // grid_beam_init_struct
 void init_grid_beam_init_struct(py::module &m, py::class_<GridBeamInitStruct> &cls) {
   cls.def(

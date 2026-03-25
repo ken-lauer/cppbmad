@@ -663,11 +663,9 @@ void SimUtils::find_location(FArray1D<Int> &arr, int value, int ix_match) {
 }
 void SimUtils::find_location(BoolAlloc1D &arr, bool value, int ix_match) {
   // intent=inout allocatable general array
-  fortran_find_location_logic(
-      /* void* */ arr.get_fortran_ptr(),
-      /* bool& */ value,
-      /* int& */ ix_match
-  );
+  fortran_find_location_logic(/* void* */ arr.get_fortran_ptr(),
+                              /* bool& */ value,
+                              /* int& */ ix_match);
 }
 int SimUtils::find_location(FArray1D<Real> &arr, double value) {
   // arr: in NOT (CppWrapperGeneralArgumentArray) ([':'])
@@ -1247,11 +1245,9 @@ void SimUtils::naff(
 }
 void SimUtils::nametable_add(NametableStruct &nametable, std::string name, int ix_name) {
   auto _name = name.c_str();
-  fortran_nametable_add(
-      /* void* */ nametable.get_fortran_ptr(),
-      /* const char* */ _name,
-      /* int& */ ix_name
-  );
+  fortran_nametable_add(/* void* */ nametable.get_fortran_ptr(),
+                        /* const char* */ _name,
+                        /* int& */ ix_name);
 }
 void SimUtils::nametable_bracket_indexx(
     NametableStruct &nametable,
@@ -1267,20 +1263,16 @@ void SimUtils::nametable_bracket_indexx(
   } else {
     _n_match = nullptr;
   }
-  fortran_nametable_bracket_indexx(
-      /* void* */ nametable.get_fortran_ptr(),
-      /* const char* */ _name,
-      /* int* */ _n_match,
-      /* int& */ ix_max
-  );
+  fortran_nametable_bracket_indexx(/* void* */ nametable.get_fortran_ptr(),
+                                   /* const char* */ _name,
+                                   /* int* */ _n_match,
+                                   /* int& */ ix_max);
 }
 void SimUtils::nametable_change1(NametableStruct &nametable, std::string name, int ix_name) {
   auto _name = name.c_str();
-  fortran_nametable_change1(
-      /* void* */ nametable.get_fortran_ptr(),
-      /* const char* */ _name,
-      /* int& */ ix_name
-  );
+  fortran_nametable_change1(/* void* */ nametable.get_fortran_ptr(),
+                            /* const char* */ _name,
+                            /* int& */ ix_name);
 }
 void SimUtils::nametable_init(
     NametableStruct &nametable,
@@ -1301,11 +1293,9 @@ void SimUtils::nametable_init(
   } else {
     _n_max = nullptr;
   }
-  fortran_nametable_init(
-      /* void* */ nametable.get_fortran_ptr(),
-      /* int* */ _n_min,
-      /* int* */ _n_max
-  );
+  fortran_nametable_init(/* void* */ nametable.get_fortran_ptr(),
+                         /* int* */ _n_min,
+                         /* int* */ _n_max);
 }
 void SimUtils::nametable_remove(NametableStruct &nametable, int ix_name) {
   fortran_nametable_remove(/* void* */ nametable.get_fortran_ptr(), /* int& */ ix_name);
@@ -2358,12 +2348,10 @@ void SimUtils::reallocate_spline(
   } else {
     _exact = nullptr;
   }
-  fortran_reallocate_spline(
-      /* void* */ spline.get_fortran_ptr(),
-      /* int& */ n,
-      /* int* */ _n_min,
-      /* bool* */ _exact
-  );
+  fortran_reallocate_spline(/* void* */ spline.get_fortran_ptr(),
+                            /* int& */ n,
+                            /* int* */ _n_min,
+                            /* bool* */ _exact);
 }
 void SimUtils::relbd(double phi, double phic, double mc, double b, double d) {
   fortran_relbd(
@@ -2665,12 +2653,10 @@ double SimUtils::spline1(SplineStruct &a_spline, double x, std::optional<int> n)
     _n = nullptr;
   }
   double _y{};
-  fortran_spline1(
-      /* void* */ a_spline.get_fortran_ptr(),
-      /* double& */ x,
-      /* int* */ _n,
-      /* double& */ _y
-  );
+  fortran_spline1(/* void* */ a_spline.get_fortran_ptr(),
+                  /* double& */ x,
+                  /* int* */ _n,
+                  /* double& */ _y);
   return _y;
 }
 bool SimUtils::spline_akima(SplineStructArray1D spline) {

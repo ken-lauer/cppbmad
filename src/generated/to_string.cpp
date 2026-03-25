@@ -248,17 +248,17 @@ std::string to_string(const TaylorStruct &self) {
       {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
   );
 }
-std::string to_string(const EmTaylorTermStruct &self) {
+std::string to_string(const GgTaylorTermStruct &self) {
   return repr(
       self.get_fortran_ptr(),
-      "EmTaylorTermStruct",
+      "GgTaylorTermStruct",
       {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
   );
 }
-std::string to_string(const EmTaylorStruct &self) {
+std::string to_string(const GgTaylorStruct &self) {
   return repr(
       self.get_fortran_ptr(),
-      "EmTaylorStruct",
+      "GgTaylorStruct",
       {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
   );
 }
@@ -995,6 +995,8 @@ std::string to_string(const SpaceChargeCommonStruct &self) {
        std::pair{"beam_chamber_height", to_string(self.beam_chamber_height())},
        std::pair{"lsc_sigma_cutoff", to_string(self.lsc_sigma_cutoff())},
        std::pair{"particle_sigma_cutoff", to_string(self.particle_sigma_cutoff())},
+       std::pair{"mesh_growth_factor", to_string(self.mesh_growth_factor())},
+       std::pair{"mesh_shrink_factor", to_string(self.mesh_shrink_factor())},
        std::pair{"space_charge_mesh_size", to_string(self.space_charge_mesh_size())},
        std::pair{"csr3d_mesh_size", to_string(self.csr3d_mesh_size())},
        std::pair{"n_bin", to_string(self.n_bin())},
@@ -1165,8 +1167,8 @@ std::string to_string(const LatStruct &self) {
   return repr(
       self.get_fortran_ptr(),
       "LatStruct",
-      {std::pair{"use_name", self.use_name()}, std::pair{"#branch", to_string(self.branch().size())}
-      }
+      {std::pair{"use_name", self.use_name()},
+       std::pair{"#branch", to_string(self.branch().size())}}
   );
 }
 std::string to_string(const BunchStruct &self) {
@@ -4809,8 +4811,8 @@ std::string to_string(const Bmad::WriteLatticeInScibmad &self) {
   return repr(
       &self,
       "Bmad::WriteLatticeInScibmad",
-      {std::pair{"scibmad_file", self.scibmad_file}, std::pair{"err_flag", to_string(self.err_flag)}
-      }
+      {std::pair{"scibmad_file", self.scibmad_file},
+       std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self) {

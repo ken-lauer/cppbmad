@@ -5,7 +5,7 @@ module bmad_struct_proxy_mod
   use, intrinsic :: iso_c_binding
 
     use spline_mod, only: spline_struct
-  use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, em_taylor_struct, em_taylor_term_struct, expression_atom_struct, expression_tree_struct, floor_position_struct, gen_grad1_struct, gen_grad_map_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_struct, linac_normal_mode_struct, mode3_struct, mode_info_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pre_tracker_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
+  use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, expression_atom_struct, expression_tree_struct, floor_position_struct, gen_grad1_struct, gen_grad_map_struct, gg_taylor_struct, gg_taylor_term_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_struct, linac_normal_mode_struct, mode3_struct, mode_info_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pre_tracker_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
   use cubic_interpolation_mod, only: bicubic_cmplx_coef_struct, tricubic_cmplx_coef_struct
   use sim_utils_struct, only: nametable_struct
   use tao_struct, only: tao_beam_branch_struct, tao_beam_uni_struct, tao_building_wall_orientation_struct, tao_building_wall_point_struct, tao_building_wall_section_struct, tao_building_wall_struct, tao_cmd_history_struct, tao_common_struct, tao_curve_color_struct, tao_curve_orbit_struct, tao_curve_struct, tao_d1_data_struct, tao_d2_data_struct, tao_data_struct, tao_data_var_component_struct, tao_drawing_struct, tao_dynamic_aperture_struct, tao_ele_pointer_struct, tao_ele_shape_struct, tao_eval_node_struct, tao_expression_info_struct, tao_floor_plan_struct, tao_global_struct, tao_graph_struct, tao_histogram_struct, tao_init_struct, tao_lat_sigma_struct, tao_lattice_branch_struct, tao_lattice_struct, tao_model_branch_struct, tao_model_element_struct, tao_ping_scale_struct, tao_plot_cache_struct, tao_plot_page_struct, tao_plot_region_struct, tao_plot_struct, tao_shape_pattern_point_struct, tao_shape_pattern_struct, tao_spin_dn_dpz_struct, tao_spin_ele_struct, tao_spin_map_struct, tao_spin_polarization_struct, tao_super_universe_struct, tao_title_struct, tao_universe_calc_struct, tao_universe_pointer_struct, tao_universe_struct, tao_v1_var_struct, tao_var_slave_struct, tao_var_struct, tao_wave_kick_pt_struct, tao_wave_struct
@@ -101,13 +101,13 @@ module bmad_struct_proxy_mod
     type(taylor_struct), allocatable :: data(:)
   end type taylor_struct_container_alloc
 
-  type :: em_taylor_term_struct_container_alloc
-    type(em_taylor_term_struct), allocatable :: data(:)
-  end type em_taylor_term_struct_container_alloc
+  type :: gg_taylor_term_struct_container_alloc
+    type(gg_taylor_term_struct), allocatable :: data(:)
+  end type gg_taylor_term_struct_container_alloc
 
-  type :: em_taylor_struct_container_alloc
-    type(em_taylor_struct), allocatable :: data(:)
-  end type em_taylor_struct_container_alloc
+  type :: gg_taylor_struct_container_alloc
+    type(gg_taylor_struct), allocatable :: data(:)
+  end type gg_taylor_struct_container_alloc
 
   type :: cartesian_map_term1_struct_container_alloc
     type(cartesian_map_term1_struct), allocatable :: data(:)
@@ -6853,15 +6853,15 @@ contains
     endif
   end subroutine
 
-  !! em_taylor_term_struct
+  !! gg_taylor_term_struct
 
-    function allocate_fortran_em_taylor_term_struct(n, element_size) result(ptr) bind(c)
+    function allocate_fortran_gg_taylor_term_struct(n, element_size) result(ptr) bind(c)
       implicit none
       integer(c_int), value :: n
       integer(c_size_t), intent(out) :: element_size
       type(c_ptr) :: ptr
-      type(em_taylor_term_struct), pointer :: fptr
-      type(em_taylor_term_struct), pointer :: fptr_array(:)
+      type(gg_taylor_term_struct), pointer :: fptr
+      type(gg_taylor_term_struct), pointer :: fptr_array(:)
 
       if (n <= 0) then
         allocate(fptr)
@@ -6874,12 +6874,12 @@ contains
       end if
     end function
 
-    subroutine deallocate_fortran_em_taylor_term_struct(ptr, n) bind(c)
+    subroutine deallocate_fortran_gg_taylor_term_struct(ptr, n) bind(c)
       implicit none
       type(c_ptr), value :: ptr
       integer(c_int), value :: n
-      type(em_taylor_term_struct), pointer :: fptr
-      type(em_taylor_term_struct), pointer :: fptr_array(:)
+      type(gg_taylor_term_struct), pointer :: fptr
+      type(gg_taylor_term_struct), pointer :: fptr_array(:)
 
       if (c_associated(ptr)) then
         if (n <= 0) then
@@ -6892,10 +6892,10 @@ contains
       end if
     end subroutine
 
-  subroutine copy_fortran_em_taylor_term_struct(src_ptr, dst_ptr) bind(c)
+  subroutine copy_fortran_gg_taylor_term_struct(src_ptr, dst_ptr) bind(c)
     implicit none
     type(c_ptr), value :: src_ptr, dst_ptr
-    type(em_taylor_term_struct), pointer :: src, dst
+    type(gg_taylor_term_struct), pointer :: src, dst
 
     if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
       call c_f_pointer(src_ptr, src)
@@ -6904,30 +6904,30 @@ contains
     end if
   end subroutine
 
-  function allocate_em_taylor_term_struct_container() result(ptr) bind(c)
+  function allocate_gg_taylor_term_struct_container() result(ptr) bind(c)
     implicit none
     type(c_ptr) :: ptr
-    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+    type(gg_taylor_term_struct_container_alloc), pointer :: ctr
     allocate(ctr)
     ptr = c_loc(ctr)
   end function
 
-  subroutine deallocate_em_taylor_term_struct_container(ptr) bind(c)
+  subroutine deallocate_gg_taylor_term_struct_container(ptr) bind(c)
     implicit none
     type(c_ptr), value :: ptr
-    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+    type(gg_taylor_term_struct_container_alloc), pointer :: ctr
     if (c_associated(ptr)) then
       call c_f_pointer(ptr, ctr)
       deallocate(ctr)
     end if
   end subroutine
 
-  subroutine reallocate_em_taylor_term_struct_container_data(container_ptr, lbound_, n) bind(c)
+  subroutine reallocate_gg_taylor_term_struct_container_data(container_ptr, lbound_, n) bind(c)
     implicit none
     type(c_ptr), value :: container_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+    type(gg_taylor_term_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) return
     call c_f_pointer(container_ptr, ctr)
@@ -6940,7 +6940,7 @@ contains
     end if
   end subroutine
 
-  subroutine access_em_taylor_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+  subroutine access_gg_taylor_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
@@ -6949,7 +6949,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     integer(c_size_t), intent(out) :: elem_size
 
-    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+    type(gg_taylor_term_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) then
        is_allocated = .false.
@@ -6973,34 +6973,34 @@ contains
     endif
   end subroutine
     
-  ! em_taylor_term_struct%coef: 0D_NOT_real
+  ! gg_taylor_term_struct%coef: 0D_NOT_real
 
-  subroutine em_taylor_term_struct_get_coef(struct_obj_ptr, value_out) bind(c, name='em_taylor_term_struct_get_coef')
+  subroutine gg_taylor_term_struct_get_coef(struct_obj_ptr, value_out) bind(c, name='gg_taylor_term_struct_get_coef')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     real(c_double), intent(out) :: value_out
-    type(em_taylor_term_struct), pointer :: struct_obj
+    type(gg_taylor_term_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     value_out = struct_obj%coef
   end subroutine
 
 
-  subroutine em_taylor_term_struct_set_coef(struct_obj_ptr, value_in) bind(c, name='em_taylor_term_struct_set_coef')
+  subroutine gg_taylor_term_struct_set_coef(struct_obj_ptr, value_in) bind(c, name='gg_taylor_term_struct_set_coef')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     real(c_double), intent(in), value :: value_in
-    type(em_taylor_term_struct), pointer :: struct_obj
+    type(gg_taylor_term_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%coef = value_in
   end subroutine
 
-  ! em_taylor_term_struct%expn: 1D_NOT_integer
+  ! gg_taylor_term_struct%expn: 1D_NOT_integer
 
-  subroutine em_taylor_term_struct_get_expn_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
-        bind(c, name='em_taylor_term_struct_get_expn_info')
+  subroutine gg_taylor_term_struct_get_expn_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='gg_taylor_term_struct_get_expn_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(em_taylor_term_struct), pointer :: struct_obj
+    type(gg_taylor_term_struct), pointer :: struct_obj
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
 
@@ -7019,12 +7019,12 @@ contains
   end subroutine
 
 
-  subroutine em_taylor_term_struct_set_expn(struct_obj_ptr, val_ptr, shape) &
-      bind(c, name='em_taylor_term_struct_set_expn')
+  subroutine gg_taylor_term_struct_set_expn(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='gg_taylor_term_struct_set_expn')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(in), value :: val_ptr
     integer(c_int), dimension(1), intent(in) :: shape
-    type(em_taylor_term_struct), pointer :: struct_obj
+    type(gg_taylor_term_struct), pointer :: struct_obj
     integer(c_int), pointer :: val(:)
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
@@ -7034,15 +7034,15 @@ contains
     endif
   end subroutine
 
-  !! em_taylor_struct
+  !! gg_taylor_struct
 
-    function allocate_fortran_em_taylor_struct(n, element_size) result(ptr) bind(c)
+    function allocate_fortran_gg_taylor_struct(n, element_size) result(ptr) bind(c)
       implicit none
       integer(c_int), value :: n
       integer(c_size_t), intent(out) :: element_size
       type(c_ptr) :: ptr
-      type(em_taylor_struct), pointer :: fptr
-      type(em_taylor_struct), pointer :: fptr_array(:)
+      type(gg_taylor_struct), pointer :: fptr
+      type(gg_taylor_struct), pointer :: fptr_array(:)
 
       if (n <= 0) then
         allocate(fptr)
@@ -7055,12 +7055,12 @@ contains
       end if
     end function
 
-    subroutine deallocate_fortran_em_taylor_struct(ptr, n) bind(c)
+    subroutine deallocate_fortran_gg_taylor_struct(ptr, n) bind(c)
       implicit none
       type(c_ptr), value :: ptr
       integer(c_int), value :: n
-      type(em_taylor_struct), pointer :: fptr
-      type(em_taylor_struct), pointer :: fptr_array(:)
+      type(gg_taylor_struct), pointer :: fptr
+      type(gg_taylor_struct), pointer :: fptr_array(:)
 
       if (c_associated(ptr)) then
         if (n <= 0) then
@@ -7073,10 +7073,10 @@ contains
       end if
     end subroutine
 
-  subroutine copy_fortran_em_taylor_struct(src_ptr, dst_ptr) bind(c)
+  subroutine copy_fortran_gg_taylor_struct(src_ptr, dst_ptr) bind(c)
     implicit none
     type(c_ptr), value :: src_ptr, dst_ptr
-    type(em_taylor_struct), pointer :: src, dst
+    type(gg_taylor_struct), pointer :: src, dst
 
     if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
       call c_f_pointer(src_ptr, src)
@@ -7085,30 +7085,30 @@ contains
     end if
   end subroutine
 
-  function allocate_em_taylor_struct_container() result(ptr) bind(c)
+  function allocate_gg_taylor_struct_container() result(ptr) bind(c)
     implicit none
     type(c_ptr) :: ptr
-    type(em_taylor_struct_container_alloc), pointer :: ctr
+    type(gg_taylor_struct_container_alloc), pointer :: ctr
     allocate(ctr)
     ptr = c_loc(ctr)
   end function
 
-  subroutine deallocate_em_taylor_struct_container(ptr) bind(c)
+  subroutine deallocate_gg_taylor_struct_container(ptr) bind(c)
     implicit none
     type(c_ptr), value :: ptr
-    type(em_taylor_struct_container_alloc), pointer :: ctr
+    type(gg_taylor_struct_container_alloc), pointer :: ctr
     if (c_associated(ptr)) then
       call c_f_pointer(ptr, ctr)
       deallocate(ctr)
     end if
   end subroutine
 
-  subroutine reallocate_em_taylor_struct_container_data(container_ptr, lbound_, n) bind(c)
+  subroutine reallocate_gg_taylor_struct_container_data(container_ptr, lbound_, n) bind(c)
     implicit none
     type(c_ptr), value :: container_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(em_taylor_struct_container_alloc), pointer :: ctr
+    type(gg_taylor_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) return
     call c_f_pointer(container_ptr, ctr)
@@ -7121,7 +7121,7 @@ contains
     end if
   end subroutine
 
-  subroutine access_em_taylor_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+  subroutine access_gg_taylor_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
@@ -7130,7 +7130,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     integer(c_size_t), intent(out) :: elem_size
 
-    type(em_taylor_struct_container_alloc), pointer :: ctr
+    type(gg_taylor_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) then
        is_allocated = .false.
@@ -7154,34 +7154,34 @@ contains
     endif
   end subroutine
     
-  ! em_taylor_struct%ref: 0D_NOT_real
+  ! gg_taylor_struct%ref: 0D_NOT_real
 
-  subroutine em_taylor_struct_get_ref(struct_obj_ptr, value_out) bind(c, name='em_taylor_struct_get_ref')
+  subroutine gg_taylor_struct_get_ref(struct_obj_ptr, value_out) bind(c, name='gg_taylor_struct_get_ref')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     real(c_double), intent(out) :: value_out
-    type(em_taylor_struct), pointer :: struct_obj
+    type(gg_taylor_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     value_out = struct_obj%ref
   end subroutine
 
 
-  subroutine em_taylor_struct_set_ref(struct_obj_ptr, value_in) bind(c, name='em_taylor_struct_set_ref')
+  subroutine gg_taylor_struct_set_ref(struct_obj_ptr, value_in) bind(c, name='gg_taylor_struct_set_ref')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     real(c_double), intent(in), value :: value_in
-    type(em_taylor_struct), pointer :: struct_obj
+    type(gg_taylor_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%ref = value_in
   end subroutine
 
-  ! em_taylor_struct%term: 1D_ALLOC_type
+  ! gg_taylor_struct%term: 1D_ALLOC_type
 
-  subroutine em_taylor_struct_get_term_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
-        bind(c, name='em_taylor_struct_get_term_info')
+  subroutine gg_taylor_struct_get_term_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='gg_taylor_struct_get_term_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(em_taylor_struct), pointer :: struct_obj
+    type(gg_taylor_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
@@ -7201,12 +7201,12 @@ contains
     endif
   end subroutine
 
-  subroutine em_taylor_struct_reallocate_term(struct_obj_ptr, lbound_, n) &
-        bind(c, name='em_taylor_struct_reallocate_term')
+  subroutine gg_taylor_struct_reallocate_term(struct_obj_ptr, lbound_, n) &
+        bind(c, name='gg_taylor_struct_reallocate_term')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(em_taylor_struct), pointer :: struct_obj
+    type(gg_taylor_struct), pointer :: struct_obj
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
     
@@ -24044,6 +24044,44 @@ contains
     type(space_charge_common_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     struct_obj%particle_sigma_cutoff = value_in
+  end subroutine
+
+  ! space_charge_common_struct%mesh_growth_factor: 0D_NOT_real
+
+  subroutine space_charge_common_struct_get_mesh_growth_factor(struct_obj_ptr, value_out) bind(c, name='space_charge_common_struct_get_mesh_growth_factor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(space_charge_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%mesh_growth_factor
+  end subroutine
+
+
+  subroutine space_charge_common_struct_set_mesh_growth_factor(struct_obj_ptr, value_in) bind(c, name='space_charge_common_struct_set_mesh_growth_factor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(space_charge_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%mesh_growth_factor = value_in
+  end subroutine
+
+  ! space_charge_common_struct%mesh_shrink_factor: 0D_NOT_real
+
+  subroutine space_charge_common_struct_get_mesh_shrink_factor(struct_obj_ptr, value_out) bind(c, name='space_charge_common_struct_get_mesh_shrink_factor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    type(space_charge_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    value_out = struct_obj%mesh_shrink_factor
+  end subroutine
+
+
+  subroutine space_charge_common_struct_set_mesh_shrink_factor(struct_obj_ptr, value_in) bind(c, name='space_charge_common_struct_set_mesh_shrink_factor')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(space_charge_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    struct_obj%mesh_shrink_factor = value_in
   end subroutine
 
   ! space_charge_common_struct%space_charge_mesh_size: 1D_NOT_integer

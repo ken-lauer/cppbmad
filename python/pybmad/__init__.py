@@ -65,12 +65,12 @@ from ._pybmad import TaylorTermStructAlloc1D
 from ._pybmad import TaylorStruct
 from ._pybmad import TaylorStructArray1D
 from ._pybmad import TaylorStructAlloc1D
-from ._pybmad import EmTaylorTermStruct
-from ._pybmad import EmTaylorTermStructArray1D
-from ._pybmad import EmTaylorTermStructAlloc1D
-from ._pybmad import EmTaylorStruct
-from ._pybmad import EmTaylorStructArray1D
-from ._pybmad import EmTaylorStructAlloc1D
+from ._pybmad import GgTaylorTermStruct
+from ._pybmad import GgTaylorTermStructArray1D
+from ._pybmad import GgTaylorTermStructAlloc1D
+from ._pybmad import GgTaylorStruct
+from ._pybmad import GgTaylorStructArray1D
+from ._pybmad import GgTaylorStructAlloc1D
 from ._pybmad import CartesianMapTerm1Struct
 from ._pybmad import CartesianMapTerm1StructArray1D
 from ._pybmad import CartesianMapTerm1StructAlloc1D
@@ -617,8 +617,6 @@ from ._pybmad import em_field_calc
 from ._pybmad import em_field_derivatives
 from ._pybmad import em_field_kick_vector_time
 from ._pybmad import em_field_plus_em_field
-from ._pybmad import em_taylor_equal_em_taylor
-from ._pybmad import em_taylors_equal_em_taylors
 from ._pybmad import emit_6d
 from ._pybmad import end_akima_spline_calc
 from ._pybmad import entering_element
@@ -656,12 +654,12 @@ from ._pybmad import eq_cylindrical_map_term1
 from ._pybmad import eq_ele
 from ._pybmad import eq_ellipse_beam_init
 from ._pybmad import eq_em_field
-from ._pybmad import eq_em_taylor
-from ._pybmad import eq_em_taylor_term
 from ._pybmad import eq_expression_atom
 from ._pybmad import eq_floor_position
 from ._pybmad import eq_gen_grad1
 from ._pybmad import eq_gen_grad_map
+from ._pybmad import eq_gg_taylor
+from ._pybmad import eq_gg_taylor_term
 from ._pybmad import eq_grid_beam_init
 from ._pybmad import eq_grid_field
 from ._pybmad import eq_grid_field_pt
@@ -763,8 +761,8 @@ from ._pybmad import g_integrals_calc
 from ._pybmad import gamma_ref
 from ._pybmad import gelbd
 from ._pybmad import gen_complete_elliptic
-from ._pybmad import gen_grad1_to_em_taylor
-from ._pybmad import gen_grad_at_s_to_em_taylor
+from ._pybmad import gen_grad1_to_gg_taylor
+from ._pybmad import gen_grad_at_s_to_gg_taylor
 from ._pybmad import gen_grad_field
 from ._pybmad import get_bl_from_fwhm
 from ._pybmad import get_called_file
@@ -774,6 +772,8 @@ from ._pybmad import get_file_time_stamp
 from ._pybmad import get_next_word
 from ._pybmad import get_slave_list
 from ._pybmad import get_tty_char
+from ._pybmad import gg_taylor_equal_gg_taylor
+from ._pybmad import gg_taylors_equal_gg_taylors
 from ._pybmad import gpt_field_grid_scaling
 from ._pybmad import gpt_max_field_reference
 from ._pybmad import gpt_to_particle_bunch
@@ -807,7 +807,7 @@ from ._pybmad import init_complex_taylor_series
 from ._pybmad import init_coord
 from ._pybmad import init_custom
 from ._pybmad import init_ele
-from ._pybmad import init_em_taylor_series
+from ._pybmad import init_gg_taylor_series
 from ._pybmad import init_lat
 from ._pybmad import init_multipole_cache
 from ._pybmad import init_photon_from_a_photon_init_ele
@@ -2911,12 +2911,12 @@ __all__ = [
     "TaylorStruct",
     "TaylorStructArray1D",
     "TaylorStructAlloc1D",
-    "EmTaylorTermStruct",
-    "EmTaylorTermStructArray1D",
-    "EmTaylorTermStructAlloc1D",
-    "EmTaylorStruct",
-    "EmTaylorStructArray1D",
-    "EmTaylorStructAlloc1D",
+    "GgTaylorTermStruct",
+    "GgTaylorTermStructArray1D",
+    "GgTaylorTermStructAlloc1D",
+    "GgTaylorStruct",
+    "GgTaylorStructArray1D",
+    "GgTaylorStructAlloc1D",
     "CartesianMapTerm1Struct",
     "CartesianMapTerm1StructArray1D",
     "CartesianMapTerm1StructAlloc1D",
@@ -3463,8 +3463,6 @@ __all__ = [
     "em_field_derivatives",
     "em_field_kick_vector_time",
     "em_field_plus_em_field",
-    "em_taylor_equal_em_taylor",
-    "em_taylors_equal_em_taylors",
     "emit_6d",
     "end_akima_spline_calc",
     "entering_element",
@@ -3502,12 +3500,12 @@ __all__ = [
     "eq_ele",
     "eq_ellipse_beam_init",
     "eq_em_field",
-    "eq_em_taylor",
-    "eq_em_taylor_term",
     "eq_expression_atom",
     "eq_floor_position",
     "eq_gen_grad1",
     "eq_gen_grad_map",
+    "eq_gg_taylor",
+    "eq_gg_taylor_term",
     "eq_grid_beam_init",
     "eq_grid_field",
     "eq_grid_field_pt",
@@ -3609,8 +3607,8 @@ __all__ = [
     "gamma_ref",
     "gelbd",
     "gen_complete_elliptic",
-    "gen_grad1_to_em_taylor",
-    "gen_grad_at_s_to_em_taylor",
+    "gen_grad1_to_gg_taylor",
+    "gen_grad_at_s_to_gg_taylor",
     "gen_grad_field",
     "get_bl_from_fwhm",
     "get_called_file",
@@ -3620,6 +3618,8 @@ __all__ = [
     "get_next_word",
     "get_slave_list",
     "get_tty_char",
+    "gg_taylor_equal_gg_taylor",
+    "gg_taylors_equal_gg_taylors",
     "gpt_field_grid_scaling",
     "gpt_max_field_reference",
     "gpt_to_particle_bunch",
@@ -3653,7 +3653,7 @@ __all__ = [
     "init_coord",
     "init_custom",
     "init_ele",
-    "init_em_taylor_series",
+    "init_gg_taylor_series",
     "init_lat",
     "init_multipole_cache",
     "init_photon_from_a_photon_init_ele",
