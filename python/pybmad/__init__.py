@@ -390,6 +390,7 @@ from ._pybmad import add_this_multipass
 from ._pybmad import add_this_taylor_term
 from ._pybmad import adjust_super_slave_names
 from ._pybmad import allocate_branch_array
+from ._pybmad import allocate_grid_field
 from ._pybmad import allocate_lat_ele_array
 from ._pybmad import allocate_thread_states
 from ._pybmad import angle_between_polars
@@ -3236,6 +3237,7 @@ __all__ = [
     "add_this_taylor_term",
     "adjust_super_slave_names",
     "allocate_branch_array",
+    "allocate_grid_field",
     "allocate_lat_ele_array",
     "allocate_thread_states",
     "angle_between_polars",

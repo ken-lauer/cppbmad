@@ -450,6 +450,21 @@ upper_bound : int
 )"""
   );
   m.def(
+      "allocate_grid_field",
+      &Bmad::allocate_grid_field,
+      py::arg("g_field"),
+      py::arg("n_gf"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine allocate_grid_field
+
+Parameters
+----------
+g_field : 1D array of GridFieldStruct
+
+n_gf : int
+)"""
+  );
+  m.def(
       "allocate_lat_ele_array",
       &Bmad::allocate_lat_ele_array,
       py::arg("lat"),

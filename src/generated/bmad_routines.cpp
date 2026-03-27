@@ -337,6 +337,15 @@ void Bmad::adjust_super_slave_names(
 void Bmad::allocate_branch_array(LatStruct &lat, int upper_bound) {
   fortran_allocate_branch_array(/* void* */ lat.get_fortran_ptr(), /* int& */ upper_bound);
 }
+void Bmad::allocate_grid_field(GridFieldStructArray1D g_field, int n_gf) {
+  // g_field: GridFieldStruct inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _g_field_desc;
+  _g_field_desc.rank = 1;
+  _g_field_desc.data_ptr = g_field.data();
+  _g_field_desc.dims[0] = g_field.size();
+  _g_field_desc.strides[0] = 1;
+  fortran_allocate_grid_field(/* Bmad::array_descriptor_t& */ _g_field_desc, /* int& */ n_gf);
+}
 void Bmad::allocate_lat_ele_array(
     LatStruct &lat,
     std::optional<int> upper_bound,

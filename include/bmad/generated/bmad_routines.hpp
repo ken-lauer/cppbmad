@@ -176,6 +176,11 @@ void allocate_branch_array(LatStruct &lat, int upper_bound);
 
 // Skipped unusable routine allocate_element_array:
 // - Routine in configuration skip list
+extern "C" void fortran_allocate_grid_field(
+    Bmad::array_descriptor_t &g_field /* 1D_PTR_type inout */,
+    int &n_gf /* 0D_NOT_integer in */
+);
+void allocate_grid_field(GridFieldStructArray1D g_field, int n_gf);
 extern "C" void fortran_allocate_lat_ele_array(
     void *lat /* 0D_NOT_type inout */,
     int *upper_bound /* 0D_NOT_integer in */,

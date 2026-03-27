@@ -15,12 +15,12 @@ use photon_init_mod, only: absolute_photon_position, bend_photon_e_rel_init, &
     e_crit_photon, init_photon_integ_prob
 
 use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
-    add_lattice_control_structs, allocate_branch_array, allocate_lat_ele_array, &
-    angle_between_polars, angle_to_canonical_coords, apply_all_rampers, apply_energy_kick, &
-    apply_rampers_to_slave, at_this_ele_end, attribute_bookkeeper, autoscale_phase_and_amp, &
-    average_twiss, bbi_kick, bbi_slice_calc, beam_equal_beam, beam_init_setup, &
-    bend_exact_multipole_field, bend_length_has_been_set, bend_shift, bmad_parser, &
-    bmad_parser2, branch_equal_branch, branch_name, bunch_equal_bunch, c_to_cbar, &
+    add_lattice_control_structs, allocate_branch_array, allocate_grid_field, &
+    allocate_lat_ele_array, angle_between_polars, angle_to_canonical_coords, apply_all_rampers, &
+    apply_energy_kick, apply_rampers_to_slave, at_this_ele_end, attribute_bookkeeper, &
+    autoscale_phase_and_amp, average_twiss, bbi_kick, bbi_slice_calc, beam_equal_beam, &
+    beam_init_setup, bend_exact_multipole_field, bend_length_has_been_set, bend_shift, &
+    bmad_parser, bmad_parser2, branch_equal_branch, branch_name, bunch_equal_bunch, c_to_cbar, &
     calc_super_slave_key, calc_z_tune, canonical_to_angle_coords, cbar_to_c, &
     check_aperture_limit, check_controller_controls, check_if_s_in_bounds, &
     choose_quads_for_set_tune, chrom_calc, chrom_tune, classical_radius, clear_lat_1turn_mats, &
@@ -921,6 +921,31 @@ subroutine fortran_allocate_branch_array (lat, upper_bound) bind(c)
   ! in: f_upper_bound 0D_NOT_integer
   f_upper_bound = upper_bound
   call allocate_branch_array(f_lat, f_upper_bound)
+
+end subroutine
+subroutine fortran_allocate_grid_field (g_field, n_gf) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: grid_field_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: n_gf  ! 0D_NOT_integer
+  integer :: f_n_gf
+  ! ** Inout parameters **
+  type(array_descriptor_t), intent(in) :: g_field
+  type(grid_field_struct), pointer :: f_g_field(:)
+  type(grid_field_struct), pointer :: f_g_field_ptr(:)
+  ! ** End of parameters **
+  !! type array (1D_PTR_type)
+  if (c_associated(g_field%data_ptr)) then
+    call c_f_pointer(g_field%data_ptr, f_g_field_ptr, [g_field%dims(1)])
+    f_g_field => f_g_field_ptr
+  else
+    f_g_field => null()
+  endif
+  ! in: f_n_gf 0D_NOT_integer
+  f_n_gf = n_gf
+  call allocate_grid_field(f_g_field, f_n_gf)
 
 end subroutine
 subroutine fortran_allocate_lat_ele_array (lat, upper_bound, ix_branch, do_ramper_slave_setup) &

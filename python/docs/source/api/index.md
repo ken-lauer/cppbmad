@@ -35,6 +35,7 @@
 | `ALL_CONTROL_VAR` | Enum | [Enums](enums.md) |
 | `ALL_GROUPS` | Enum | [Enums](enums.md) |
 | [`allocate_branch_array`][pybmad.allocate_branch_array] | Routine | [Bmad](bmad.md) |
+| [`allocate_grid_field`][pybmad.allocate_grid_field] | Routine | [Bmad](bmad.md) |
 | [`allocate_lat_ele_array`][pybmad.allocate_lat_ele_array] | Routine | [Bmad](bmad.md) |
 | [`allocate_thread_states`][pybmad.allocate_thread_states] | Routine | [Sim Utils](sim_utils.md) |
 | `ALPHA_A` | Enum | [Enums](enums.md) |
