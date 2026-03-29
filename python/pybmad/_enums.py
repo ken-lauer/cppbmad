@@ -461,6 +461,7 @@ RAMPER_LORD = 13
 # governor$ = Union of overlay and group lords.
 GOVERNOR = 14
 FIELD_LORD = 15
+FIELD_SLAVE = 16
 # Used with pointer_to_lord(...)
 MULTIPOLE_SOURCE = -1
 AUTO_APERTURE = 1

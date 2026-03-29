@@ -1807,6 +1807,7 @@ from ._enums import CONTROL_LORD
 from ._enums import RAMPER_LORD
 from ._enums import GOVERNOR
 from ._enums import FIELD_LORD
+from ._enums import FIELD_SLAVE
 from ._enums import MULTIPOLE_SOURCE
 from ._enums import AUTO_APERTURE
 from ._enums import RECTANGULAR
@@ -4654,6 +4655,7 @@ __all__ = [
     "RAMPER_LORD",
     "GOVERNOR",
     "FIELD_LORD",
+    "FIELD_SLAVE",
     "MULTIPOLE_SOURCE",
     "AUTO_APERTURE",
     "RECTANGULAR",

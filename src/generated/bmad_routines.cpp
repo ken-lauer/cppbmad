@@ -9972,14 +9972,14 @@ void Bmad::pointer_to_next_ele(
                               /* void* */ &next_ele);
 }
 Bmad::PointerToSlave
-Bmad::pointer_to_slave(EleStruct &lord, int ix_slave, std::optional<int> lord_type) {
+Bmad::pointer_to_slave(EleStruct &lord, int ix_slave, std::optional<int> slave_type) {
   void *_control;
-  int lord_type_lvalue;
-  auto *_lord_type{&lord_type_lvalue};
-  if (lord_type.has_value()) {
-    lord_type_lvalue = lord_type.value();
+  int slave_type_lvalue;
+  auto *_slave_type{&slave_type_lvalue};
+  if (slave_type.has_value()) {
+    slave_type_lvalue = slave_type.value();
   } else {
-    _lord_type = nullptr;
+    _slave_type = nullptr;
   }
   int _ix_lord_back{};
   int _ix_control{};
@@ -9988,7 +9988,7 @@ Bmad::pointer_to_slave(EleStruct &lord, int ix_slave, std::optional<int> lord_ty
   fortran_pointer_to_slave(/* void* */ lord.get_fortran_ptr(),
                            /* int& */ ix_slave,
                            /* void* */ &_control,
-                           /* int* */ _lord_type,
+                           /* int* */ _slave_type,
                            /* int& */ _ix_lord_back,
                            /* int& */ _ix_control,
                            /* int& */ _ix_ic,

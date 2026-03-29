@@ -59,6 +59,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `RAMPER_LORD` | `13` |  |
 | `GOVERNOR` | `14` | governor$ = Union of overlay and group lords. |
 | `FIELD_LORD` | `15` |  |
+| `FIELD_SLAVE` | `16` |  |
 | `MULTIPOLE_SOURCE` | `-1` | Used with pointer_to_lord(...) |
 | `AUTO_APERTURE` | `1` |  |
 | `RECTANGULAR` | `2` |  |

@@ -23000,7 +23000,7 @@ subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow
   ! out: f_next_ele 0D_PTR_type
   next_ele = c_loc(f_next_ele)
 end subroutine
-subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord_back, &
+subroutine fortran_pointer_to_slave (lord, ix_slave, control, slave_type, ix_lord_back, &
     ix_control, ix_ic, slave_ptr) bind(c)
 
   use array_desc_mod
@@ -23011,9 +23011,9 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   type(ele_struct), pointer :: f_lord
   integer(c_int) :: ix_slave  ! 0D_NOT_integer
   integer :: f_ix_slave
-  type(c_ptr), intent(in), value :: lord_type  ! 0D_NOT_integer
-  integer(c_int) :: f_lord_type
-  integer(c_int), pointer :: f_lord_type_ptr
+  type(c_ptr), intent(in), value :: slave_type  ! 0D_NOT_integer
+  integer(c_int) :: f_slave_type
+  integer(c_int), pointer :: f_slave_type_ptr
   ! ** Out parameters **
   type(c_ptr) :: control  ! 0D_PTR_type
   type(control_struct), pointer :: f_control
@@ -23036,11 +23036,11 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   f_ix_slave = ix_slave
   ! out: f_control 0D_PTR_type
   if (c_associated(control))   call c_f_pointer(control, f_control)
-  ! in: f_lord_type 0D_NOT_integer
-  if (c_associated(lord_type)) then
-    call c_f_pointer(lord_type, f_lord_type_ptr)
+  ! in: f_slave_type 0D_NOT_integer
+  if (c_associated(slave_type)) then
+    call c_f_pointer(slave_type, f_slave_type_ptr)
   else
-    f_lord_type_ptr => null()
+    f_slave_type_ptr => null()
   endif
   ! out: f_ix_lord_back 0D_NOT_integer
   if (c_associated(ix_lord_back)) then
@@ -23062,7 +23062,7 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord
   endif
   ! out: f_slave_ptr 0D_PTR_type
   if (c_associated(slave_ptr))   call c_f_pointer(slave_ptr, f_slave_ptr)
-  f_slave_ptr => pointer_to_slave(f_lord, f_ix_slave, f_control, f_lord_type_ptr, &
+  f_slave_ptr => pointer_to_slave(f_lord, f_ix_slave, f_control, f_slave_type_ptr, &
       f_ix_lord_back, f_ix_control, f_ix_ic)
 
   ! out: f_control 0D_PTR_type

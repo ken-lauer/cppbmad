@@ -1881,18 +1881,18 @@ follow_fork : bool, optional
       &Bmad::pointer_to_slave,
       py::arg("lord"),
       py::arg("ix_slave"),
-      py::arg("lord_type") = py::none(),
+      py::arg("slave_type") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_slave (lord, ix_slave, control, lord_type, ix_lord_back, ix_control, ix_ic) result (slave_ptr)
+      R"""(Function pointer_to_slave (lord, ix_slave, control, slave_type, ix_lord_back, ix_control, ix_ic) result (slave_ptr)
 
 Function to point to a slave of a lord.
 Note: Ramper lords do not have any associated slaves (slaves are assigned dynamically at run time).
 
-If lord_type = all$ (the default) the range for ix_slave is:
+If slave_type = all$ (the default) the range for ix_slave is:
   1 to lord%n_slave                                 for "regular" slaves.
   lord%n_slave+1 to lord%n_slave+lord%n_slave_field for field overlap slaves.
 
-If lord_type = field_lord$, only the field overlap slaves may be accessed and the range for ix_slave is:
+If slave_type = field_slave$, only the field overlap slaves may be accessed and the range for ix_slave is:
   1 to lord%n_slave_field
 
 Also see:
@@ -1909,7 +1909,7 @@ lord : EleStruct
 ix_slave : int
     Index of the slave in the list of slaves controled by the lord..
 
-lord_type : int, optional
+slave_type : int, optional
     See above.
 
 Returns

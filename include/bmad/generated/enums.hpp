@@ -75,6 +75,7 @@ const int RAMPER_LORD = 13;
 // governor$ = Union of overlay and group lords.
 const int GOVERNOR = 14;
 const int FIELD_LORD = 15;
+const int FIELD_SLAVE = 16;
 // Used with pointer_to_lord(...)
 const int MULTIPOLE_SOURCE = -1;
 const int AUTO_APERTURE = 1;

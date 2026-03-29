@@ -6148,7 +6148,7 @@ extern "C" bool fortran_pointer_to_slave(
     void *lord /* 0D_NOT_type in */,
     int &ix_slave /* 0D_NOT_integer in */,
     void *control /* 0D_PTR_type out */,
-    int *lord_type /* 0D_NOT_integer in */,
+    int *slave_type /* 0D_NOT_integer in */,
     int &ix_lord_back /* 0D_NOT_integer out */,
     int &ix_control /* 0D_NOT_integer out */,
     int &ix_ic /* 0D_NOT_integer out */,
@@ -6162,7 +6162,7 @@ struct PointerToSlave {
   std::optional<EleStruct> slave_ptr;
 };
 Bmad::PointerToSlave
-pointer_to_slave(EleStruct &lord, int ix_slave, std::optional<int> lord_type = std::nullopt);
+pointer_to_slave(EleStruct &lord, int ix_slave, std::optional<int> slave_type = std::nullopt);
 extern "C" bool fortran_pointer_to_super_lord(
     void *slave /* 0D_NOT_type in */,
     void *control /* 0D_PTR_type out */,

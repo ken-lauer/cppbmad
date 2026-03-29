@@ -782,6 +782,7 @@
 | `FIELD_MASTER` | Enum | [Enums](enums.md) |
 | `FIELD_OVERLAPS` | Enum | [Enums](enums.md) |
 | `FIELD_SCALE_FACTOR` | Enum | [Enums](enums.md) |
+| `FIELD_SLAVE` | Enum | [Enums](enums.md) |
 | `FIELD_X` | Enum | [Enums](enums.md) |
 | `FIELD_Y` | Enum | [Enums](enums.md) |
 | `FIELDMAP` | Enum | [Enums](enums.md) |
