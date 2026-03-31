@@ -3955,10 +3955,10 @@ extern "C" void fortran_init_spin_distribution(
 BunchStruct init_spin_distribution(BeamInitStruct &beam_init, EleStruct &ele);
 extern "C" void fortran_init_surface_segment(
     void *phot /* 0D_NOT_type in */,
-    int &ix /* 0D_NOT_integer in */,
-    int &iy /* 0D_NOT_integer in */
+    int &ix_pt /* 0D_NOT_integer in */,
+    int &iy_pt /* 0D_NOT_integer in */
 );
-void init_surface_segment(PhotonElementStruct &phot, int ix, int iy);
+void init_surface_segment(PhotonElementStruct &phot, int ix_pt, int iy_pt);
 extern "C" void fortran_init_taylor_series(
     void *bmad_taylor /* 0D_NOT_type inout */,
     int &n_term /* 0D_NOT_integer in */,

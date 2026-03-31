@@ -14879,7 +14879,7 @@ subroutine fortran_init_spin_distribution (beam_init, bunch, ele) bind(c)
   ! out: f_bunch 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_init_surface_segment (phot, ix, iy) bind(c)
+subroutine fortran_init_surface_segment (phot, ix_pt, iy_pt) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: photon_element_struct
@@ -14887,19 +14887,19 @@ subroutine fortran_init_surface_segment (phot, ix, iy) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: phot  ! 0D_NOT_type
   type(photon_element_struct), pointer :: f_phot
-  integer(c_int) :: ix  ! 0D_NOT_integer
-  integer :: f_ix
-  integer(c_int) :: iy  ! 0D_NOT_integer
-  integer :: f_iy
+  integer(c_int) :: ix_pt  ! 0D_NOT_integer
+  integer :: f_ix_pt
+  integer(c_int) :: iy_pt  ! 0D_NOT_integer
+  integer :: f_iy_pt
   ! ** End of parameters **
   ! in: f_phot 0D_NOT_type
   if (.not. c_associated(phot)) return
   call c_f_pointer(phot, f_phot)
-  ! in: f_ix 0D_NOT_integer
-  f_ix = ix
-  ! in: f_iy 0D_NOT_integer
-  f_iy = iy
-  call init_surface_segment(f_phot, f_ix, f_iy)
+  ! in: f_ix_pt 0D_NOT_integer
+  f_ix_pt = ix_pt
+  ! in: f_iy_pt 0D_NOT_integer
+  f_iy_pt = iy_pt
+  call init_surface_segment(f_phot, f_ix_pt, f_iy_pt)
 
 end subroutine
 subroutine fortran_init_taylor_series (bmad_taylor, n_term, save_old) bind(c)

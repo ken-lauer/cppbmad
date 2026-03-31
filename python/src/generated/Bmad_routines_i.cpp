@@ -969,22 +969,22 @@ bunch : BunchStruct
       "init_surface_segment",
       &Bmad::init_surface_segment,
       py::arg("phot"),
-      py::arg("ix"),
-      py::arg("iy"),
+      py::arg("ix_pt"),
+      py::arg("iy_pt"),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_surface_segment (phot, ix, iy)
+      R"""(Subroutine init_surface_segment (phot, ix_pt, iy_pt)
 
-Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
+Routine to init the componentes in ele%photon%segmented%pt(ix_pt,iy_pt) for use with segmented surface calculations.
 
 Parameters
 ----------
 phot : PhotonElementStruct
     Surface structure.
 
-ix : int
+ix_pt : int
     index of grid point to init.
 
-iy : int
+iy_pt : int
     index of grid point to init.
 )"""
   );

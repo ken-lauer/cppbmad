@@ -33973,21 +33973,21 @@ def init_spin_distribution(beam_init: BeamInitStruct, ele: EleStruct) -> BunchSt
     bunch : BunchStruct
         Bunch of particles. .particle(:).spin
     """
-def init_surface_segment(phot: PhotonElementStruct, ix: typing.SupportsInt | typing.SupportsIndex, iy: typing.SupportsInt | typing.SupportsIndex) -> None:
+def init_surface_segment(phot: PhotonElementStruct, ix_pt: typing.SupportsInt | typing.SupportsIndex, iy_pt: typing.SupportsInt | typing.SupportsIndex) -> None:
     """
-    Subroutine init_surface_segment (phot, ix, iy)
+    Subroutine init_surface_segment (phot, ix_pt, iy_pt)
     
-    Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
+    Routine to init the componentes in ele%photon%segmented%pt(ix_pt,iy_pt) for use with segmented surface calculations.
     
     Parameters
     ----------
     phot : PhotonElementStruct
         Surface structure.
     
-    ix : int
+    ix_pt : int
         index of grid point to init.
     
-    iy : int
+    iy_pt : int
         index of grid point to init.
     """
 def init_taylor_series(bmad_taylor: TaylorStruct, n_term: typing.SupportsInt | typing.SupportsIndex, save_old: bool | None = None) -> None:

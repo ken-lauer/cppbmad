@@ -6200,8 +6200,10 @@ BunchStruct Bmad::init_spin_distribution(BeamInitStruct &beam_init, EleStruct &e
                                  /* void* */ ele.get_fortran_ptr());
   return std::move(_bunch);
 }
-void Bmad::init_surface_segment(PhotonElementStruct &phot, int ix, int iy) {
-  fortran_init_surface_segment(/* void* */ phot.get_fortran_ptr(), /* int& */ ix, /* int& */ iy);
+void Bmad::init_surface_segment(PhotonElementStruct &phot, int ix_pt, int iy_pt) {
+  fortran_init_surface_segment(/* void* */ phot.get_fortran_ptr(),
+                               /* int& */ ix_pt,
+                               /* int& */ iy_pt);
 }
 void Bmad::init_taylor_series(TaylorStruct &bmad_taylor, int n_term, std::optional<bool> save_old) {
   bool save_old_lvalue;
