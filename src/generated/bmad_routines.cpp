@@ -12162,7 +12162,12 @@ bool Bmad::significant_difference(
 void Bmad::skip_ele_blender(EleStruct &ele, bool skip) {
   fortran_skip_ele_blender(/* void* */ ele.get_fortran_ptr(), /* bool& */ skip);
 }
-bool Bmad::slice_lattice(LatStruct &lat, std::string ele_list, std::optional<bool> do_bookkeeping) {
+bool Bmad::slice_lattice(
+    LatStruct &lat,
+    std::string ele_list,
+    std::optional<bool> do_bookkeeping,
+    std::optional<bool> set_phase_zero
+) {
   auto _ele_list = ele_list.c_str();
   bool _error{};
   bool do_bookkeeping_lvalue;
@@ -12172,10 +12177,18 @@ bool Bmad::slice_lattice(LatStruct &lat, std::string ele_list, std::optional<boo
   } else {
     _do_bookkeeping = nullptr;
   }
+  bool set_phase_zero_lvalue;
+  auto *_set_phase_zero{&set_phase_zero_lvalue};
+  if (set_phase_zero.has_value()) {
+    set_phase_zero_lvalue = set_phase_zero.value();
+  } else {
+    _set_phase_zero = nullptr;
+  }
   fortran_slice_lattice(/* void* */ lat.get_fortran_ptr(),
                         /* const char* */ _ele_list,
                         /* bool& */ _error,
-                        /* bool* */ _do_bookkeeping);
+                        /* bool* */ _do_bookkeeping,
+                        /* bool* */ _set_phase_zero);
   return _error;
 }
 void Bmad::soft_quadrupole_edge_kick(
@@ -15480,7 +15493,8 @@ int Bmad::twiss_and_track(
     LatStruct &lat,
     CoordArrayStructAlloc1D orb_array,
     std::optional<bool> print_err,
-    std::optional<bool> calc_chrom
+    std::optional<bool> calc_chrom,
+    std::optional<bool> use_particle_start
 ) {
   // intent=inout allocatable type array
   int _status{};
@@ -15498,11 +15512,19 @@ int Bmad::twiss_and_track(
   } else {
     _calc_chrom = nullptr;
   }
+  bool use_particle_start_lvalue;
+  auto *_use_particle_start{&use_particle_start_lvalue};
+  if (use_particle_start.has_value()) {
+    use_particle_start_lvalue = use_particle_start.value();
+  } else {
+    _use_particle_start = nullptr;
+  }
   fortran_twiss_and_track_all(/* void* */ lat.get_fortran_ptr(),
                               /* void* */ orb_array.get_fortran_ptr(),
                               /* int& */ _status,
                               /* bool* */ _print_err,
-                              /* bool* */ _calc_chrom);
+                              /* bool* */ _calc_chrom,
+                              /* bool* */ _use_particle_start);
   return _status;
 }
 bool Bmad::twiss_and_track_at_s(
@@ -15569,7 +15591,8 @@ int Bmad::twiss_and_track(
     std::optional<int> ix_branch,
     std::optional<bool> print_err,
     std::optional<bool> calc_chrom,
-    optional_ref<CoordStruct> orb_start
+    optional_ref<CoordStruct> orb_start,
+    std::optional<bool> use_particle_start
 ) {
   // intent=inout allocatable type array
   int _status{};
@@ -15596,13 +15619,21 @@ int Bmad::twiss_and_track(
   }
   auto *_orb_start =
       orb_start.has_value() ? orb_start->get().get_fortran_ptr() : nullptr; // input, optional
+  bool use_particle_start_lvalue;
+  auto *_use_particle_start{&use_particle_start_lvalue};
+  if (use_particle_start.has_value()) {
+    use_particle_start_lvalue = use_particle_start.value();
+  } else {
+    _use_particle_start = nullptr;
+  }
   fortran_twiss_and_track_branch(/* void* */ lat.get_fortran_ptr(),
                                  /* void* */ orb.get_fortran_ptr(),
                                  /* int& */ _status,
                                  /* int* */ _ix_branch,
                                  /* bool* */ _print_err,
                                  /* bool* */ _calc_chrom,
-                                 /* void* */ _orb_start);
+                                 /* void* */ _orb_start,
+                                 /* bool* */ _use_particle_start);
   return _status;
 }
 Bmad::TwissAndTrackFromSToS Bmad::twiss_and_track_from_s_to_s(

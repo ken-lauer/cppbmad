@@ -7480,12 +7480,14 @@ extern "C" void fortran_slice_lattice(
     void *lat /* 0D_NOT_type inout */,
     const char *ele_list /* 0D_NOT_character in */,
     bool &error /* 0D_NOT_logical out */,
-    bool *do_bookkeeping /* 0D_NOT_logical in */
+    bool *do_bookkeeping /* 0D_NOT_logical in */,
+    bool *set_phase_zero /* 0D_NOT_logical in */
 );
 bool slice_lattice(
     LatStruct &lat,
     std::string ele_list,
-    std::optional<bool> do_bookkeeping = std::nullopt
+    std::optional<bool> do_bookkeeping = std::nullopt,
+    std::optional<bool> set_phase_zero = std::nullopt
 );
 extern "C" void fortran_soft_quadrupole_edge_kick(
     void *ele /* 0D_NOT_type in */,
@@ -9178,13 +9180,15 @@ extern "C" void fortran_twiss_and_track_all(
     void *orb_array /* 1D_ALLOC_type inout */,
     int &status /* 0D_NOT_integer out */,
     bool *print_err /* 0D_NOT_logical in */,
-    bool *calc_chrom /* 0D_NOT_logical in */
+    bool *calc_chrom /* 0D_NOT_logical in */,
+    bool *use_particle_start /* 0D_NOT_logical in */
 );
 int twiss_and_track(
     LatStruct &lat,
     CoordArrayStructAlloc1D orb_array,
     std::optional<bool> print_err = std::nullopt,
-    std::optional<bool> calc_chrom = std::nullopt
+    std::optional<bool> calc_chrom = std::nullopt,
+    std::optional<bool> use_particle_start = std::nullopt
 );
 extern "C" void fortran_twiss_and_track_at_s(
     void *lat /* 0D_NOT_type in */,
@@ -9214,7 +9218,8 @@ extern "C" void fortran_twiss_and_track_branch(
     int *ix_branch /* 0D_NOT_integer in */,
     bool *print_err /* 0D_NOT_logical in */,
     bool *calc_chrom /* 0D_NOT_logical in */,
-    void *orb_start /* 0D_NOT_type in */
+    void *orb_start /* 0D_NOT_type in */,
+    bool *use_particle_start /* 0D_NOT_logical in */
 );
 int twiss_and_track(
     LatStruct &lat,
@@ -9222,7 +9227,8 @@ int twiss_and_track(
     std::optional<int> ix_branch = std::nullopt,
     std::optional<bool> print_err = std::nullopt,
     std::optional<bool> calc_chrom = std::nullopt,
-    optional_ref<CoordStruct> orb_start = std::nullopt
+    optional_ref<CoordStruct> orb_start = std::nullopt,
+    std::optional<bool> use_particle_start = std::nullopt
 );
 extern "C" void fortran_twiss_and_track_from_s_to_s(
     void *branch /* 0D_NOT_type in */,

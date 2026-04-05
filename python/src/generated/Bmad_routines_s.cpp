@@ -1411,6 +1411,7 @@ skip : bool
       py::arg("lat"),
       py::arg("ele_list"),
       py::arg("do_bookkeeping") = py::none(),
+      py::arg("set_phase_zero") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine slice_lattice
 
@@ -1428,6 +1429,9 @@ ele_list : str
 do_bookkeeping : bool, optional
     Default is True. If false, the calling routine is responsible for: * Modifying lat.particle_start if
     needed. * Calculating Twiss functions.
+
+set_phase_zero : bool, optional
+    Default is True. Set betatron phase to zero?
 
 Returns
 -------

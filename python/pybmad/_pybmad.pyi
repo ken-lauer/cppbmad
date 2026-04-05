@@ -42747,7 +42747,7 @@ def skip_header(ix_unit: typing.SupportsInt | typing.SupportsIndex, error_flag: 
     
     error_flag : bool
     """
-def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = None) -> bool:
+def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = None, set_phase_zero: bool | None = None) -> bool:
     """
     Wrapper for Fortran routine slice_lattice
     
@@ -42765,6 +42765,9 @@ def slice_lattice(lat: LatStruct, ele_list: str, do_bookkeeping: bool | None = N
     do_bookkeeping : bool, optional
         Default is True. If false, the calling routine is responsible for: * Modifying lat.particle_start if
         needed. * Calculating Twiss functions.
+    
+    set_phase_zero : bool, optional
+        Default is True. Set betatron phase to zero?
     
     Returns
     -------
@@ -51915,13 +51918,13 @@ def twiss3_propagate_all(lat: LatStruct, ix_branch: typing.SupportsInt | typing.
         : Branch index. 0 = default.
     """
 @typing.overload
-def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_err: bool | None = None, calc_chrom: bool | None = None) -> int:
+def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_err: bool | None = None, calc_chrom: bool | None = None, use_particle_start: bool | None = None) -> int:
     """
     Subroutine twiss_and_track
     
     This routine is an overloaded name for:
-      Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
-      Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+      Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start, use_particle_start)
+      Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, use_particle_start)
     
     Routine to calculate the twiss parameters, transport matrices and orbit.
     
@@ -51967,19 +51970,23 @@ def twiss_and_track(lat: LatStruct, orb_array: CoordArrayStructAlloc1D, print_er
     calc_chrom : bool, optional
         Default is False. If True, calculate the chromatic functions.
     
+    use_particle_start : bool, optional
+        Default is False. If True use branch.particle_start for the starting orbit. Do not use both this and
+        orb_start.
+    
     Returns
     -------
     status : int, optional
         Set ok$ if everything is OK and set to something else otherwise. See above for more details.
     """
 @typing.overload
-def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, print_err: bool | None = None, calc_chrom: bool | None = None, orb_start: CoordStruct | None = None) -> int:
+def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, print_err: bool | None = None, calc_chrom: bool | None = None, orb_start: CoordStruct | None = None, use_particle_start: bool | None = None) -> int:
     """
     Subroutine twiss_and_track
     
     This routine is an overloaded name for:
-      Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
-      Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+      Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start, use_particle_start)
+      Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, use_particle_start)
     
     Routine to calculate the twiss parameters, transport matrices and orbit.
     
@@ -52033,6 +52040,10 @@ def twiss_and_track(lat: LatStruct, orb: CoordStructAlloc1D, ix_branch: typing.S
     
     orb_start : CoordStruct, optional
         If present, use this as the starting orbit.
+    
+    use_particle_start : bool, optional
+        Default is False. If True use branch.particle_start for the starting orbit. Do not use both this and
+        orb_start.
     
     Returns
     -------

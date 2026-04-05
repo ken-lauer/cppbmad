@@ -27789,7 +27789,7 @@ subroutine fortran_skip_ele_blender (ele, skip) bind(c)
   call c_f_pointer(skip, f_skip_ptr)
   f_skip_ptr = f_skip
 end subroutine
-subroutine fortran_slice_lattice (lat, ele_list, error, do_bookkeeping) bind(c)
+subroutine fortran_slice_lattice (lat, ele_list, error, do_bookkeeping, set_phase_zero) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -27803,6 +27803,11 @@ subroutine fortran_slice_lattice (lat, ele_list, error, do_bookkeeping) bind(c)
   logical, target :: f_do_bookkeeping_native
   logical, pointer :: f_do_bookkeeping_native_ptr
   logical(c_bool), pointer :: f_do_bookkeeping_ptr
+  type(c_ptr), intent(in), value :: set_phase_zero  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_set_phase_zero
+  logical, target :: f_set_phase_zero_native
+  logical, pointer :: f_set_phase_zero_native_ptr
+  logical(c_bool), pointer :: f_set_phase_zero_ptr
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: error  ! 0D_NOT_logical
   logical :: f_error
@@ -27826,7 +27831,16 @@ subroutine fortran_slice_lattice (lat, ele_list, error, do_bookkeeping) bind(c)
   else
     f_do_bookkeeping_native_ptr => null()
   endif
-  call slice_lattice(f_lat, f_ele_list, f_error, f_do_bookkeeping_native_ptr)
+  ! in: f_set_phase_zero 0D_NOT_logical
+  if (c_associated(set_phase_zero)) then
+    call c_f_pointer(set_phase_zero, f_set_phase_zero_ptr)
+    f_set_phase_zero_native = f_set_phase_zero_ptr
+    f_set_phase_zero_native_ptr => f_set_phase_zero_native
+  else
+    f_set_phase_zero_native_ptr => null()
+  endif
+  call slice_lattice(f_lat, f_ele_list, f_error, f_do_bookkeeping_native_ptr, &
+      f_set_phase_zero_native_ptr)
 
   ! out: f_error 0D_NOT_logical
   call c_f_pointer(error, f_error_ptr)
@@ -34250,7 +34264,8 @@ subroutine fortran_twiss3_propagate_all (lat, ix_branch) bind(c)
   call twiss3_propagate_all(f_lat, f_ix_branch_ptr)
 
 end subroutine
-subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom) bind(c)
+subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, &
+    use_particle_start) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_array_struct, lat_struct
@@ -34266,6 +34281,11 @@ subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_
   logical, target :: f_calc_chrom_native
   logical, pointer :: f_calc_chrom_native_ptr
   logical(c_bool), pointer :: f_calc_chrom_ptr
+  type(c_ptr), intent(in), value :: use_particle_start  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_use_particle_start
+  logical, target :: f_use_particle_start_native
+  logical, pointer :: f_use_particle_start_native_ptr
+  logical(c_bool), pointer :: f_use_particle_start_ptr
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
   integer :: f_status
@@ -34303,8 +34323,16 @@ subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_
   else
     f_calc_chrom_native_ptr => null()
   endif
+  ! in: f_use_particle_start 0D_NOT_logical
+  if (c_associated(use_particle_start)) then
+    call c_f_pointer(use_particle_start, f_use_particle_start_ptr)
+    f_use_particle_start_native = f_use_particle_start_ptr
+    f_use_particle_start_native_ptr => f_use_particle_start_native
+  else
+    f_use_particle_start_native_ptr => null()
+  endif
   call twiss_and_track(f_lat, f_orb_array%data, f_status, f_print_err_native_ptr, &
-      f_calc_chrom_native_ptr)
+      f_calc_chrom_native_ptr, f_use_particle_start_native_ptr)
 
   ! out: f_status 0D_NOT_integer
   ! no output conversion for f_status
@@ -34397,7 +34425,7 @@ subroutine fortran_twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_bra
   ! no output conversion for f_err
 end subroutine
 subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, &
-    orb_start) bind(c)
+    orb_start, use_particle_start) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, lat_struct
@@ -34418,6 +34446,11 @@ subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_er
   logical(c_bool), pointer :: f_calc_chrom_ptr
   type(c_ptr), value :: orb_start  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orb_start
+  type(c_ptr), intent(in), value :: use_particle_start  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_use_particle_start
+  logical, target :: f_use_particle_start_native
+  logical, pointer :: f_use_particle_start_native_ptr
+  logical(c_bool), pointer :: f_use_particle_start_ptr
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
   integer :: f_status
@@ -34463,8 +34496,16 @@ subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_er
   endif
   ! in: f_orb_start 0D_NOT_type
   if (c_associated(orb_start))   call c_f_pointer(orb_start, f_orb_start)
+  ! in: f_use_particle_start 0D_NOT_logical
+  if (c_associated(use_particle_start)) then
+    call c_f_pointer(use_particle_start, f_use_particle_start_ptr)
+    f_use_particle_start_native = f_use_particle_start_ptr
+    f_use_particle_start_native_ptr => f_use_particle_start_native
+  else
+    f_use_particle_start_native_ptr => null()
+  endif
   call twiss_and_track(f_lat, f_orb%data, f_status, f_ix_branch_ptr, f_print_err_native_ptr, &
-      f_calc_chrom_native_ptr, f_orb_start)
+      f_calc_chrom_native_ptr, f_orb_start, f_use_particle_start_native_ptr)
 
   ! out: f_status 0D_NOT_integer
   ! no output conversion for f_status

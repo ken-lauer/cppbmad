@@ -3917,17 +3917,19 @@ ix_branch : int, optional
           LatStruct &,
           CoordArrayStructAlloc1D,
           std::optional<bool>,
+          std::optional<bool>,
           std::optional<bool>>(&Bmad::twiss_and_track),
       py::arg("lat"),
       py::arg("orb_array"),
       py::arg("print_err") = py::none(),
       py::arg("calc_chrom") = py::none(),
+      py::arg("use_particle_start") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss_and_track
 
 This routine is an overloaded name for:
-  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
-  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start, use_particle_start)
+  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, use_particle_start)
 
 Routine to calculate the twiss parameters, transport matrices and orbit.
 
@@ -3972,6 +3974,10 @@ print_err : bool, optional
 
 calc_chrom : bool, optional
     Default is False. If True, calculate the chromatic functions.
+
+use_particle_start : bool, optional
+    Default is False. If True use branch.particle_start for the starting orbit. Do not use both this and
+    orb_start.
 
 Returns
 -------
@@ -4058,19 +4064,21 @@ err : bool, optional
           std::optional<int>,
           std::optional<bool>,
           std::optional<bool>,
-          optional_ref<CoordStruct>>(&Bmad::twiss_and_track),
+          optional_ref<CoordStruct>,
+          std::optional<bool>>(&Bmad::twiss_and_track),
       py::arg("lat"),
       py::arg("orb"),
       py::arg("ix_branch") = py::none(),
       py::arg("print_err") = py::none(),
       py::arg("calc_chrom") = py::none(),
       py::arg("orb_start") = py::none(),
+      py::arg("use_particle_start") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Subroutine twiss_and_track
 
 This routine is an overloaded name for:
-  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
-  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
+  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start, use_particle_start)
+  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, use_particle_start)
 
 Routine to calculate the twiss parameters, transport matrices and orbit.
 
@@ -4124,6 +4132,10 @@ calc_chrom : bool, optional
 
 orb_start : CoordStruct, optional
     If present, use this as the starting orbit.
+
+use_particle_start : bool, optional
+    Default is False. If True use branch.particle_start for the starting orbit. Do not use both this and
+    orb_start.
 
 Returns
 -------
