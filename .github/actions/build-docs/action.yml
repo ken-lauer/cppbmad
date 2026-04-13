@@ -32,7 +32,6 @@ runs:
       shell: bash -eo pipefail -l {0}
       run: |
         if mkdocs build -f python/docs/mkdocs.yml -d "${{ inputs.output_dir }}"; then
-          cp coverage.html "${{ inputs.output_dir }}/coverage.html"
           echo "success=true" >> "$GITHUB_OUTPUT"
         else
           echo "::warning::mkdocs build failed — docs will not be deployed"

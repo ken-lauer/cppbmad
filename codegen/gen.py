@@ -30,8 +30,8 @@ from .paths import (
     CPPBMAD_INCLUDE,
     CPPBMAD_SRC,
     PYBMAD_INCLUDE,
+    PYBMAD_ROOT,
     PYBMAD_SRC,
-    REPO_ROOT,
 )
 from .py import generate_pybmad
 from .routines import generate_routines, load_routines
@@ -276,7 +276,7 @@ def generate(
             fn.unlink()
 
     file_and_contents = [
-        (REPO_ROOT / "coverage.html", ctx.report_html),
+        (PYBMAD_ROOT / "docs" / "source" / "coverage.html", ctx.report_html),
         (CPPBMAD_INCLUDE / "bmad" / "generated" / "enums.hpp", enum_code),
         (CPPBMAD_INCLUDE / "bmad" / "generated" / "to_string.hpp", to_string_header),
         (CPPBMAD_SRC / "generated" / "to_string.cpp", to_string_code),

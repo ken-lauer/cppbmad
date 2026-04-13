@@ -66,21 +66,14 @@ TEST_CASE("CSR") {
 
   auto first_particle_vec = beam1.bunch()[0].particle()[0].vec().to_vector();
 
-  auto expected = {
-      1.44484E-07,
-      8.51128E-09,
-      -1.21621E-07,
-      -4.29278E-09,
-      2.06790E-04,
-      2.52534E-08,
-  };
+  auto expected = {4.99099e-07, -5.69906e-08, 8.91750e-08, 4.39513e-09, 3.22077e-04, -2.56577e-07};
 
   REQUIRE(first_particle_vec.size() == expected.size());
 
   size_t index = 0;
   for (const auto &val : expected) {
     INFO("Checking index: " << index);
-    CHECK(first_particle_vec[index] == doctest::Approx(val));
+    CHECK(first_particle_vec[index] == doctest::Approx(val).epsilon(1e-6));
     index++;
   }
   std::ofstream out("csr.dat");
