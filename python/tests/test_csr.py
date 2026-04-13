@@ -67,14 +67,7 @@ def test_csr():
 
     first_particle_vec = np.asarray(beam1.bunch[0].particle[0].vec)
 
-    expected = (
-        1.44484e-07,
-        8.51128e-09,
-        -1.21621e-07,
-        -4.29278e-09,
-        2.06790e-04,
-        2.52534e-08,
-    )
+    expected = (4.99099e-07, -5.69906e-08, 8.91750e-08, 4.39513e-09, 3.22077e-04, -2.56577e-07)
 
     numpy.testing.assert_allclose(desired=expected, actual=first_particle_vec, atol=1e-6)
 

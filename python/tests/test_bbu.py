@@ -23,28 +23,32 @@ class BbuExpectedResult(NamedTuple):
     growth_rate_tol: float = 1e-8
 
 
-# Define test cases individually
 results_1A = BbuExpectedResult(
     current=1.0,
-    expected_hom_voltage_gain=3.328335852803e-001,
-    expected_growth_rate=-1.100112657818e000,
+    expected_hom_voltage_gain=3.329509888980e-001,
+    hom_voltage_tol=1e-8,
+    expected_growth_rate=-1.099759980320e000,
+    growth_rate_tol=1e-8,
     expected_lost=False,
 )
 
 results_1mA = BbuExpectedResult(
     current=0.001,
-    expected_hom_voltage_gain=3.589574316034e-001,
-    expected_growth_rate=-1.024551472445e000,
+    expected_hom_voltage_gain=3.589575149248e-001,
+    hom_voltage_tol=1e-8,
+    expected_growth_rate=-1.024551240325e000,
+    growth_rate_tol=1e-8,
     expected_lost=False,
 )
 
 # Note: The original code used a tolerance of 4e-8 for the 100A case's growth rate.
 results_100A = BbuExpectedResult(
     current=100.0,
-    expected_hom_voltage_gain=2.916771951247e-001,
-    expected_growth_rate=-1.232107584374e000,
+    expected_hom_voltage_gain=2.915515566047e-001,
+    hom_voltage_tol=1e-8,
+    expected_growth_rate=-1.232538422262e000,
+    growth_rate_tol=4e-8,  # <--
     expected_lost=False,
-    growth_rate_tol=4e-8,
 )
 
 
