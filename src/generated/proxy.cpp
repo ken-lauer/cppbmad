@@ -13537,8 +13537,7 @@ FArray3D<int64_t> AllEncompassingStruct::int8_3d_ptr() const {
       all_encompassing_struct_get_int8_3d_ptr_info
   );
 }
-void AllEncompassingStruct::set_int8_3d_ptr(
-    const std::vector<std::vector<std::vector<int64_t>>> &v
+void AllEncompassingStruct::set_int8_3d_ptr(const std::vector<std::vector<std::vector<int64_t>>> &v
 ) {
   ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d_ptr, v);
 }

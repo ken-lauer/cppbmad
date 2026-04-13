@@ -1386,7 +1386,8 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
       f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free)
 
   ! out: f_why_not_free 0D_NOT_integer
-  ! no output conversion for f_why_not_free
+  call c_f_pointer(why_not_free, f_why_not_free_ptr)
+  f_why_not_free_ptr = f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
   f_free_ptr = f_free
@@ -1467,7 +1468,8 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
       f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free)
 
   ! out: f_why_not_free 0D_NOT_integer
-  ! no output conversion for f_why_not_free
+  call c_f_pointer(why_not_free, f_why_not_free_ptr)
+  f_why_not_free_ptr = f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
   f_free_ptr = f_free
@@ -1557,7 +1559,8 @@ subroutine fortran_attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_pri
       f_dependent_attribs_free_native_ptr, f_why_not_free)
 
   ! out: f_why_not_free 0D_NOT_integer
-  ! no output conversion for f_why_not_free
+  call c_f_pointer(why_not_free, f_why_not_free_ptr)
+  f_why_not_free_ptr = f_why_not_free
   ! out: f_free 0D_NOT_logical
   call c_f_pointer(free, f_free_ptr)
   f_free_ptr = f_free
@@ -2184,7 +2187,8 @@ subroutine fortran_beam_init_setup (beam_init_in, ele, species, modes, err_flag,
   f_beam_init_set = beam_init_setup(f_beam_init_in, f_ele, f_species, f_modes, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_beam_init_set 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -2892,9 +2896,11 @@ subroutine fortran_bmad_parser (lat_file, lat, make_mats6, digested_read_ok, use
   ! out: f_lat 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_digested_read_ok 0D_NOT_logical
-  ! no output conversion for f_digested_read_ok
+  call c_f_pointer(digested_read_ok, f_digested_read_ok_ptr)
+  f_digested_read_ok_ptr = f_digested_read_ok
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_parse_lat 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -3554,7 +3560,8 @@ subroutine fortran_calc_wall_radius (v, cos_ang, sin_ang, r_wall, dr_dtheta, ix_
   call c_f_pointer(dr_dtheta, f_dr_dtheta_ptr)
   f_dr_dtheta_ptr = f_dr_dtheta
   ! out: f_ix_vertex 0D_NOT_integer
-  ! no output conversion for f_ix_vertex
+  call c_f_pointer(ix_vertex, f_ix_vertex_ptr)
+  f_ix_vertex_ptr = f_ix_vertex
 end subroutine
 subroutine fortran_calc_z_tune (branch) bind(c)
 
@@ -3815,7 +3822,8 @@ subroutine fortran_check_if_s_in_bounds (branch, s, err_flag, translated_s, prin
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_translated_s 0D_NOT_real
-  ! no output conversion for f_translated_s
+  call c_f_pointer(translated_s, f_translated_s_ptr)
+  f_translated_s_ptr = f_translated_s
 end subroutine
 subroutine fortran_choose_quads_for_set_tune (branch, dk1, eles, mask, err_flag) bind(c)
 
@@ -3867,7 +3875,8 @@ subroutine fortran_choose_quads_for_set_tune (branch, dk1, eles, mask, err_flag)
       f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low_E_lat, &
     high_E_lat, low_E_orb, high_E_orb, ix_branch, orb0) bind(c)
@@ -3962,7 +3971,8 @@ subroutine fortran_chrom_calc (lat, delta_e, chrom_a, chrom_b, err_flag, pz, low
   call c_f_pointer(chrom_b, f_chrom_b_ptr)
   f_chrom_b_ptr = f_chrom_b
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_low_E_lat 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_high_E_lat 0D_NOT_type
@@ -4146,7 +4156,8 @@ subroutine fortran_closed_orbit_calc (lat, closed_orb, i_dim, direction, ix_bran
       f_ix_branch_ptr, f_err_flag, f_print_err_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_closed_orbit_from_tracking (lat, closed_orb, i_dim, eps_rel, eps_abs, &
     init_guess, err_flag) bind(c)
@@ -4211,7 +4222,8 @@ subroutine fortran_closed_orbit_from_tracking (lat, closed_orb, i_dim, eps_rel, 
       f_init_guess, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_cmplx_re_str (cmp, str_out) bind(c)
 
@@ -4894,7 +4906,8 @@ subroutine fortran_convert_coords (in_type_str, coord_in, ele, out_type_str, coo
   ! out: f_coord_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_convert_field_ele_to_lab (ele, s_here, forward_transform, field, &
     calc_dfield, calc_potential) bind(c)
@@ -5083,7 +5096,8 @@ subroutine fortran_convert_particle_coordinates_t_to_s (particle, ele, s_body, &
       f_use_downstream_p0c_native_ptr)
 
   ! out: f_s_body 0D_NOT_real
-  ! no output conversion for f_s_body
+  call c_f_pointer(s_body, f_s_body_ptr)
+  f_s_body_ptr = f_s_body
 end subroutine
 subroutine fortran_convert_pc_to (pc, particle, E_tot, gamma, kinetic, beta, brho, beta1, &
     err_flag) bind(c)
@@ -5168,19 +5182,26 @@ subroutine fortran_convert_pc_to (pc, particle, E_tot, gamma, kinetic, beta, brh
       f_err_flag)
 
   ! out: f_E_tot 0D_NOT_real
-  ! no output conversion for f_E_tot
+  call c_f_pointer(E_tot, f_E_tot_ptr)
+  f_E_tot_ptr = f_E_tot
   ! out: f_gamma 0D_NOT_real
-  ! no output conversion for f_gamma
+  call c_f_pointer(gamma, f_gamma_ptr)
+  f_gamma_ptr = f_gamma
   ! out: f_kinetic 0D_NOT_real
-  ! no output conversion for f_kinetic
+  call c_f_pointer(kinetic, f_kinetic_ptr)
+  f_kinetic_ptr = f_kinetic
   ! out: f_beta 0D_NOT_real
-  ! no output conversion for f_beta
+  call c_f_pointer(beta, f_beta_ptr)
+  f_beta_ptr = f_beta
   ! out: f_brho 0D_NOT_real
-  ! no output conversion for f_brho
+  call c_f_pointer(brho, f_brho_ptr)
+  f_brho_ptr = f_brho
   ! out: f_beta1 0D_NOT_real
-  ! no output conversion for f_beta1
+  call c_f_pointer(beta1, f_beta1_ptr)
+  f_beta1_ptr = f_beta1
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_convert_total_energy_to (E_tot, particle, gamma, kinetic, beta, pc, brho, &
     beta1, err_flag, print_err) bind(c)
@@ -5278,19 +5299,26 @@ subroutine fortran_convert_total_energy_to (E_tot, particle, gamma, kinetic, bet
       f_beta1, f_err_flag, f_print_err_native_ptr)
 
   ! out: f_gamma 0D_NOT_real
-  ! no output conversion for f_gamma
+  call c_f_pointer(gamma, f_gamma_ptr)
+  f_gamma_ptr = f_gamma
   ! out: f_kinetic 0D_NOT_real
-  ! no output conversion for f_kinetic
+  call c_f_pointer(kinetic, f_kinetic_ptr)
+  f_kinetic_ptr = f_kinetic
   ! out: f_beta 0D_NOT_real
-  ! no output conversion for f_beta
+  call c_f_pointer(beta, f_beta_ptr)
+  f_beta_ptr = f_beta
   ! out: f_pc 0D_NOT_real
-  ! no output conversion for f_pc
+  call c_f_pointer(pc, f_pc_ptr)
+  f_pc_ptr = f_pc
   ! out: f_brho 0D_NOT_real
-  ! no output conversion for f_brho
+  call c_f_pointer(brho, f_brho_ptr)
+  f_brho_ptr = f_brho
   ! out: f_beta1 0D_NOT_real
-  ! no output conversion for f_beta1
+  call c_f_pointer(beta1, f_beta1_ptr)
+  f_beta1_ptr = f_beta1
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_converter_distribution_parser (ele, delim, delim_found, err_flag) bind(c)
 
@@ -6266,7 +6294,8 @@ subroutine fortran_create_planar_wiggler_model (wiggler_in, lat, err_flag, print
   ! out: f_lat 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_create_ramper (lord, contrl, err) bind(c)
 
@@ -6779,7 +6808,8 @@ subroutine fortran_do_mode_flip (ele, err_flag) bind(c)
   call do_mode_flip(f_ele, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_dpc_given_de (pc_old, mass, dE, dpc) bind(c)
 
@@ -7874,7 +7904,8 @@ subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max) bind(c)
   call ele_to_ptc_magnetic_bn_an(f_ele, f_bn, f_an, f_n_max)
 
   ! out: f_n_max 0D_NOT_integer
-  ! no output conversion for f_n_max
+  call c_f_pointer(n_max, f_n_max_ptr)
+  f_n_max_ptr = f_n_max
 end subroutine
 subroutine fortran_ele_to_spin_taylor (ele, param, orb0) bind(c)
 
@@ -8140,7 +8171,8 @@ subroutine fortran_elec_multipole_field (a, b, n, coord, Ex, Ey, dE, compute_dE)
   ! out: f_dE 2D_NOT_real
   if (c_associated(dE%data_ptr)) f_dE_ptr = mat2vec(f_dE, product(dE%dims(1:dE%rank)))
   ! out: f_compute_dE 0D_NOT_logical
-  ! no output conversion for f_compute_dE
+  call c_f_pointer(compute_dE, f_compute_dE_ptr)
+  f_compute_dE_ptr = f_compute_dE
 end subroutine
 subroutine fortran_element_at_s_branch (branch, s, choose_max, err_flag, s_eff, position, &
     print_err, ix_ele) bind(c)
@@ -8210,9 +8242,11 @@ subroutine fortran_element_at_s_branch (branch, s, choose_max, err_flag, s_eff, 
       f_print_err_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_s_eff 0D_NOT_real
-  ! no output conversion for f_s_eff
+  call c_f_pointer(s_eff, f_s_eff_ptr)
+  f_s_eff_ptr = f_s_eff
   ! out: f_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_ix_ele 0D_NOT_integer
@@ -8296,9 +8330,11 @@ subroutine fortran_element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_
       f_position, f_print_err_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_s_eff 0D_NOT_real
-  ! no output conversion for f_s_eff
+  call c_f_pointer(s_eff, f_s_eff_ptr)
+  f_s_eff_ptr = f_s_eff
   ! out: f_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_ix_ele 0D_NOT_integer
@@ -8520,7 +8556,8 @@ subroutine fortran_em_field_calc (ele, param, s_pos, orbit, local_ref_frame, fie
   ! out: f_field 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_em_field_derivatives (ele, param, s_pos, orbit, local_ref_frame, dfield, &
     grid_allow_s_out_of_bounds, rf_time) bind(c)
@@ -13102,7 +13139,8 @@ subroutine fortran_get_next_word (word, ix_word, delim_list, delim, delim_found,
   call c_f_pointer(delim_found, f_delim_found_ptr)
   f_delim_found_ptr = f_delim_found
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_get_slave_list (lord, slaves, n_slave) bind(c)
 
@@ -14075,7 +14113,8 @@ subroutine fortran_init_beam_distribution (ele, param, beam_init, beam, err_flag
   ! out: f_beam 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_beam_init_set 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -14200,7 +14239,8 @@ subroutine fortran_init_bunch_distribution (ele, param, beam_init, ix_bunch, bun
   ! out: f_bunch 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_beam_init_used 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -14845,7 +14885,8 @@ subroutine fortran_init_photon_integ_prob (gamma, g, E_min, E_max, vert_angle_mi
       f_E_photon)
 
   ! out: f_E_photon 0D_NOT_real
-  ! no output conversion for f_E_photon
+  call c_f_pointer(E_photon, f_E_photon_ptr)
+  f_E_photon_ptr = f_E_photon
   ! out: f_integ_prob 0D_NOT_real
   call c_f_pointer(integ_prob, f_integ_prob_ptr)
   f_integ_prob_ptr = f_integ_prob
@@ -15730,7 +15771,8 @@ subroutine fortran_lat_ele_locator (loc_str, lat, eles, n_loc, err, above_ubound
   ! inout: f_n_loc 0D_NOT_integer
   ! no output conversion for f_n_loc
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_lat_equal_lat (lat_out, lat_in) bind(c)
 
@@ -15826,7 +15868,8 @@ subroutine fortran_lat_make_mat6 (lat, ix_ele, ref_orb, ix_branch, err_flag) bin
   call lat_make_mat6(f_lat, f_ix_ele_ptr, f_ref_orb, f_ix_branch_ptr, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_lat_sanity_check (lat, err_flag) bind(c)
 
@@ -15929,7 +15972,8 @@ subroutine fortran_lattice_bookkeeper (lat, err_flag) bind(c)
   call lattice_bookkeeper(f_lat, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_lcavity_rf_step_setup (ele) bind(c)
 
@@ -16107,7 +16151,8 @@ subroutine fortran_load_parse_line (action, ix_start, end_of_file, err_flag) bin
   call c_f_pointer(end_of_file, f_end_of_file_ptr)
   f_end_of_file_ptr = f_end_of_file
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_lord_edge_aligned (slave, slave_edge, lord, is_aligned) bind(c)
 
@@ -16941,7 +16986,8 @@ subroutine fortran_make_mat6 (ele, param, start_orb, end_orb, err_flag) bind(c)
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_make_mat6_bmad (ele, param, start_orb, end_orb, err) bind(c)
 
@@ -16986,7 +17032,8 @@ subroutine fortran_make_mat6_bmad (ele, param, start_orb, end_orb, err) bind(c)
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_make_mat6_bmad_photon (ele, param, start_orb, end_orb, err) bind(c)
 
@@ -17031,7 +17078,8 @@ subroutine fortran_make_mat6_bmad_photon (ele, param, start_orb, end_orb, err) b
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_make_mat6_high_energy_space_charge (ele, param) bind(c)
 
@@ -18673,7 +18721,8 @@ subroutine fortran_multipole_ele_to_ab (ele, use_ele_tilt, ix_pole_max, a, b, po
     f_b_ptr = f_b(:)
   endif
   ! out: f_b1 0D_NOT_real
-  ! no output conversion for f_b1
+  call c_f_pointer(b1, f_b1_ptr)
+  f_b1_ptr = f_b1
 end subroutine
 subroutine fortran_multipole_ele_to_kt (ele, use_ele_tilt, ix_pole_max, knl, tilt, pole_type, &
     include_kicks) bind(c)
@@ -19638,7 +19687,8 @@ subroutine fortran_odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, 
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_dt_step 0D_NOT_real
-  ! no output conversion for f_dt_step
+  call c_f_pointer(dt_step, f_dt_step_ptr)
+  f_dt_step_ptr = f_dt_step
 end subroutine
 subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drift_to_edge, &
     s_pos, s_out, set_spin, mat6, make_matrix, spin_qrot, time) bind(c)
@@ -19777,7 +19827,8 @@ subroutine fortran_offset_particle (ele, set, orbit, set_tilt, set_hvkicks, drif
       f_make_matrix_native_ptr, f_spin_qrot, f_time_ptr)
 
   ! out: f_s_out 0D_NOT_real
-  ! no output conversion for f_s_out
+  call c_f_pointer(s_out, f_s_out_ptr)
+  f_s_out_ptr = f_s_out
   ! out: f_spin_qrot 1D_NOT_real
   if (c_associated(spin_qrot%data_ptr)) then
     call c_f_pointer(spin_qrot%data_ptr, f_spin_qrot_ptr, [spin_qrot%dims(1)])
@@ -19976,13 +20027,17 @@ subroutine fortran_orbit_amplitude_calc (ele, orb, amp_a, amp_b, amp_na, amp_nb)
   call orbit_amplitude_calc(f_ele, f_orb, f_amp_a, f_amp_b, f_amp_na, f_amp_nb)
 
   ! out: f_amp_a 0D_NOT_real
-  ! no output conversion for f_amp_a
+  call c_f_pointer(amp_a, f_amp_a_ptr)
+  f_amp_a_ptr = f_amp_a
   ! out: f_amp_b 0D_NOT_real
-  ! no output conversion for f_amp_b
+  call c_f_pointer(amp_b, f_amp_b_ptr)
+  f_amp_b_ptr = f_amp_b
   ! out: f_amp_na 0D_NOT_real
-  ! no output conversion for f_amp_na
+  call c_f_pointer(amp_na, f_amp_na_ptr)
+  f_amp_na_ptr = f_amp_na
   ! out: f_amp_nb 0D_NOT_real
-  ! no output conversion for f_amp_nb
+  call c_f_pointer(amp_nb, f_amp_nb_ptr)
+  f_amp_nb_ptr = f_amp_nb
 end subroutine
 subroutine fortran_orbit_reference_energy_correction (orbit, p0c_new, mat6, make_matrix) &
     bind(c)
@@ -21081,7 +21136,8 @@ subroutine fortran_parse_real_list (lat, err_str, real_array, exact_size, delim,
   call c_f_pointer(delim_found, f_delim_found_ptr)
   f_delim_found_ptr = f_delim_found
   ! out: f_num_found 0D_NOT_integer
-  ! no output conversion for f_num_found
+  call c_f_pointer(num_found, f_num_found_ptr)
+  f_num_found_ptr = f_num_found
   ! out: f_is_ok 0D_NOT_logical
   call c_f_pointer(is_ok, f_is_ok_ptr)
   f_is_ok_ptr = f_is_ok
@@ -21454,7 +21510,8 @@ subroutine fortran_parser_fast_real_read (real_vec, ele, end_delims, delim, err_
   call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
   call to_c_str(f_delim, f_delim_ptr)
   ! out: f_n_real 0D_NOT_integer
-  ! no output conversion for f_n_real
+  call c_f_pointer(n_real, f_n_real_ptr)
+  f_n_real_ptr = f_n_real
   ! out: f_is_ok 0D_NOT_logical
   call c_f_pointer(is_ok, f_is_ok_ptr)
   f_is_ok_ptr = f_is_ok
@@ -22197,9 +22254,11 @@ subroutine fortran_photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt,
       f_pixel_pt)
 
   ! out: f_ix_pt 0D_NOT_integer
-  ! no output conversion for f_ix_pt
+  call c_f_pointer(ix_pt, f_ix_pt_ptr)
+  f_ix_pt_ptr = f_ix_pt
   ! out: f_iy_pt 0D_NOT_integer
-  ! no output conversion for f_iy_pt
+  call c_f_pointer(iy_pt, f_iy_pt_ptr)
+  f_iy_pt_ptr = f_iy_pt
 end subroutine
 subroutine fortran_photon_reflection (graze_angle_in, energy, surface, graze_angle_out, &
     phi_out) bind(c)
@@ -22724,9 +22783,11 @@ subroutine fortran_pointer_to_element_at_s (branch, s, choose_max, err_flag, s_e
       f_position, f_print_err_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_s_eff 0D_NOT_real
-  ! no output conversion for f_s_eff
+  call c_f_pointer(s_eff, f_s_eff_ptr)
+  f_s_eff_ptr = f_s_eff
   ! out: f_position 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_ele 0D_PTR_type
@@ -22788,7 +22849,8 @@ subroutine fortran_pointer_to_field_ele (ele, ix_field_ele, dz_offset, field_ele
   f_field_ele => pointer_to_field_ele(f_ele, f_ix_field_ele, f_dz_offset)
 
   ! out: f_dz_offset 0D_NOT_real
-  ! no output conversion for f_dz_offset
+  call c_f_pointer(dz_offset, f_dz_offset_ptr)
+  f_dz_offset_ptr = f_dz_offset
   ! out: f_field_ele 0D_PTR_type
   field_ele = c_loc(f_field_ele)
 end subroutine
@@ -22821,7 +22883,8 @@ subroutine fortran_pointer_to_girder (ele, ix_slave_back, girder) bind(c)
   f_girder => pointer_to_girder(f_ele, f_ix_slave_back)
 
   ! out: f_ix_slave_back 0D_NOT_integer
-  ! no output conversion for f_ix_slave_back
+  call c_f_pointer(ix_slave_back, f_ix_slave_back_ptr)
+  f_ix_slave_back_ptr = f_ix_slave_back
   ! out: f_girder 0D_PTR_type
   girder = c_loc(f_girder)
 end subroutine
@@ -22893,11 +22956,14 @@ subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord
   ! out: f_control 0D_PTR_type
   control = c_loc(f_control)
   ! out: f_ix_slave_back 0D_NOT_integer
-  ! no output conversion for f_ix_slave_back
+  call c_f_pointer(ix_slave_back, f_ix_slave_back_ptr)
+  f_ix_slave_back_ptr = f_ix_slave_back
   ! out: f_ix_control 0D_NOT_integer
-  ! no output conversion for f_ix_control
+  call c_f_pointer(ix_control, f_ix_control_ptr)
+  f_ix_control_ptr = f_ix_control
   ! out: f_ix_ic 0D_NOT_integer
-  ! no output conversion for f_ix_ic
+  call c_f_pointer(ix_ic, f_ix_ic_ptr)
+  f_ix_ic_ptr = f_ix_ic
   ! out: f_lord_ptr 0D_PTR_type
   lord_ptr = c_loc(f_lord_ptr)
 end subroutine
@@ -22934,7 +23000,8 @@ subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lo
   f_multi_lord => pointer_to_multipass_lord(f_ele, f_ix_pass, f_super_lord)
 
   ! out: f_ix_pass 0D_NOT_integer
-  ! no output conversion for f_ix_pass
+  call c_f_pointer(ix_pass, f_ix_pass_ptr)
+  f_ix_pass_ptr = f_ix_pass
   ! out: f_super_lord 0D_PTR_type
   super_lord = c_loc(f_super_lord)
   ! out: f_multi_lord 0D_PTR_type
@@ -23068,11 +23135,14 @@ subroutine fortran_pointer_to_slave (lord, ix_slave, control, slave_type, ix_lor
   ! out: f_control 0D_PTR_type
   control = c_loc(f_control)
   ! out: f_ix_lord_back 0D_NOT_integer
-  ! no output conversion for f_ix_lord_back
+  call c_f_pointer(ix_lord_back, f_ix_lord_back_ptr)
+  f_ix_lord_back_ptr = f_ix_lord_back
   ! out: f_ix_control 0D_NOT_integer
-  ! no output conversion for f_ix_control
+  call c_f_pointer(ix_control, f_ix_control_ptr)
+  f_ix_control_ptr = f_ix_control
   ! out: f_ix_ic 0D_NOT_integer
-  ! no output conversion for f_ix_ic
+  call c_f_pointer(ix_ic, f_ix_ic_ptr)
+  f_ix_ic_ptr = f_ix_ic
   ! out: f_slave_ptr 0D_PTR_type
   slave_ptr = c_loc(f_slave_ptr)
 end subroutine
@@ -23140,11 +23210,14 @@ subroutine fortran_pointer_to_super_lord (slave, control, ix_slave_back, ix_cont
   ! out: f_control 0D_PTR_type
   control = c_loc(f_control)
   ! out: f_ix_slave_back 0D_NOT_integer
-  ! no output conversion for f_ix_slave_back
+  call c_f_pointer(ix_slave_back, f_ix_slave_back_ptr)
+  f_ix_slave_back_ptr = f_ix_slave_back
   ! out: f_ix_control 0D_NOT_integer
-  ! no output conversion for f_ix_control
+  call c_f_pointer(ix_control, f_ix_control_ptr)
+  f_ix_control_ptr = f_ix_control
   ! out: f_ix_ic 0D_NOT_integer
-  ! no output conversion for f_ix_ic
+  call c_f_pointer(ix_ic, f_ix_ic_ptr)
+  f_ix_ic_ptr = f_ix_ic
   ! out: f_lord_ptr 0D_PTR_type
   lord_ptr = c_loc(f_lord_ptr)
 end subroutine
@@ -23231,13 +23304,17 @@ subroutine fortran_pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, i
       f_extend_grid_native_ptr, f_xx, f_yy)
 
   ! out: f_ix 0D_NOT_integer
-  ! no output conversion for f_ix
+  call c_f_pointer(ix, f_ix_ptr)
+  f_ix_ptr = f_ix
   ! out: f_iy 0D_NOT_integer
-  ! no output conversion for f_iy
+  call c_f_pointer(iy, f_iy_ptr)
+  f_iy_ptr = f_iy
   ! out: f_xx 0D_NOT_real
-  ! no output conversion for f_xx
+  call c_f_pointer(xx, f_xx_ptr)
+  f_xx_ptr = f_xx
   ! out: f_yy 0D_NOT_real
-  ! no output conversion for f_yy
+  call c_f_pointer(yy, f_yy_ptr)
+  f_yy_ptr = f_yy
   ! out: f_pt 0D_PTR_type
   pt = c_loc(f_pt)
 end subroutine
@@ -23324,13 +23401,17 @@ subroutine fortran_pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, 
       f_extend_grid_native_ptr, f_xx, f_yy)
 
   ! out: f_ix 0D_NOT_integer
-  ! no output conversion for f_ix
+  call c_f_pointer(ix, f_ix_ptr)
+  f_ix_ptr = f_ix
   ! out: f_iy 0D_NOT_integer
-  ! no output conversion for f_iy
+  call c_f_pointer(iy, f_iy_ptr)
+  f_iy_ptr = f_iy
   ! out: f_xx 0D_NOT_real
-  ! no output conversion for f_xx
+  call c_f_pointer(xx, f_xx_ptr)
+  f_xx_ptr = f_xx
   ! out: f_yy 0D_NOT_real
-  ! no output conversion for f_yy
+  call c_f_pointer(yy, f_yy_ptr)
+  f_yy_ptr = f_yy
   ! out: f_pt 0D_PTR_type
   pt = c_loc(f_pt)
 end subroutine
@@ -23363,7 +23444,8 @@ subroutine fortran_pointer_to_wake_ele (ele, delta_s, wake_ele) bind(c)
   f_wake_ele => pointer_to_wake_ele(f_ele, f_delta_s)
 
   ! out: f_delta_s 0D_NOT_real
-  ! no output conversion for f_delta_s
+  call c_f_pointer(delta_s, f_delta_s_ptr)
+  f_delta_s_ptr = f_delta_s
   ! out: f_wake_ele 0D_PTR_type
   wake_ele = c_loc(f_wake_ele)
 end subroutine
@@ -23414,9 +23496,11 @@ subroutine fortran_pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall, w
   f_wall3d => pointer_to_wall3d(f_ele, f_ix_wall_ptr, f_ds_offset, f_is_branch_wall)
 
   ! out: f_ds_offset 0D_NOT_real
-  ! no output conversion for f_ds_offset
+  call c_f_pointer(ds_offset, f_ds_offset_ptr)
+  f_ds_offset_ptr = f_ds_offset
   ! out: f_is_branch_wall 0D_NOT_logical
-  ! no output conversion for f_is_branch_wall
+  call c_f_pointer(is_branch_wall, f_is_branch_wall_ptr)
+  f_is_branch_wall_ptr = f_is_branch_wall
   ! out: f_wall3d 0D_PTR_type
   wall3d = c_loc(f_wall3d)
 end subroutine
@@ -23969,9 +24053,11 @@ subroutine fortran_ptc_track_all (branch, orbit, track_state, err_flag) bind(c)
   call ptc_track_all(f_branch, f_orbit%data, f_track_state, f_err_flag)
 
   ! out: f_track_state 0D_NOT_integer
-  ! no output conversion for f_track_state
+  call c_f_pointer(track_state, f_track_state_ptr)
+  f_track_state_ptr = f_track_state
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_ptc_transfer_map_with_spin (branch, t_map, s_map, orb0, err_flag, ix1, ix2, &
     one_turn, unit_start) bind(c)
@@ -24547,7 +24633,8 @@ subroutine fortran_randomize_lr_wake_frequencies (ele, set_done) bind(c)
   call randomize_lr_wake_frequencies(f_ele, f_set_done)
 
   ! out: f_set_done 0D_NOT_logical
-  ! no output conversion for f_set_done
+  call c_f_pointer(set_done, f_set_done_ptr)
+  f_set_done_ptr = f_set_done
 end subroutine
 subroutine fortran_rchomp (rel, plc, out) bind(c)
 
@@ -26641,7 +26728,8 @@ subroutine fortran_sc_step (bunch, ele, include_image, t_end, sc_field, n_emit) 
     ! f_include_image unset
   endif
   ! out: f_n_emit 0D_NOT_integer
-  ! no output conversion for f_n_emit
+  call c_f_pointer(n_emit, f_n_emit_ptr)
+  f_n_emit_ptr = f_n_emit
 end subroutine
 subroutine fortran_set_active_fixer (fixer, turn_on, orbit) bind(c)
 
@@ -26790,7 +26878,8 @@ subroutine fortran_set_ele_attribute (ele, set_string, err_flag, err_print_flag,
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
   ! out: f_err_id 0D_NOT_integer
-  ! no output conversion for f_err_id
+  call c_f_pointer(err_id, f_err_id_ptr)
+  f_err_id_ptr = f_err_id
 end subroutine
 subroutine fortran_set_ele_defaults (ele, do_allocate) bind(c)
 
@@ -26933,7 +27022,8 @@ subroutine fortran_set_ele_status_stale (ele, status_group, set_slaves) bind(c)
   call c_f_pointer(status_group, f_status_group_ptr)
   f_status_group_ptr = f_status_group
   ! out: f_set_slaves 0D_NOT_logical
-  ! no output conversion for f_set_slaves
+  call c_f_pointer(set_slaves, f_set_slaves_ptr)
+  f_set_slaves_ptr = f_set_slaves
 end subroutine
 subroutine fortran_set_flags_for_changed_integer_attribute (ele, attrib, set_dependent) bind(c)
 
@@ -27369,7 +27459,8 @@ subroutine fortran_set_ptc_base_state (component, set_val, old_val) bind(c)
   call set_ptc_base_state(f_component, f_set_val, f_old_val)
 
   ! out: f_old_val 0D_NOT_logical
-  ! no output conversion for f_old_val
+  call c_f_pointer(old_val, f_old_val_ptr)
+  f_old_val_ptr = f_old_val
 end subroutine
 subroutine fortran_set_ptc_com_pointers () bind(c)
 
@@ -27627,7 +27718,8 @@ subroutine fortran_set_z_tune (branch, z_tune, ok, print_err) bind(c)
   call set_z_tune(f_branch, f_z_tune, f_ok, f_print_err_native_ptr)
 
   ! out: f_ok 0D_NOT_logical
-  ! no output conversion for f_ok
+  call c_f_pointer(ok, f_ok_ptr)
+  f_ok_ptr = f_ok
 end subroutine
 subroutine fortran_settable_dep_var_bookkeeping (ele) bind(c)
 
@@ -28728,7 +28820,8 @@ subroutine fortran_split_lat (lat, s_split, ix_branch, ix_split, split_done, add
   call c_f_pointer(split_done, f_split_done_ptr)
   f_split_done_ptr = f_split_done
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_sprint_spin_taylor_map (ele, start_orbit) bind(c)
 
@@ -29570,7 +29663,8 @@ subroutine fortran_taylor_inverse (taylor_in, taylor_inv, err) bind(c)
   call taylor_inverse(f_taylor_in, f_taylor_inv, f_err)
 
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, spin_taylor) &
     bind(c)
@@ -30287,7 +30381,8 @@ subroutine fortran_track1 (start_orb, ele, param, end_orb, track, err_flag, igno
   ! out: f_end_orb 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_track1_beam (beam, ele, err, centroid, direction) bind(c)
 
@@ -30412,7 +30507,8 @@ subroutine fortran_track1_bmad (orbit, ele, param, err_flag, track, mat6, make_m
       f_make_matrix_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_track 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
@@ -30464,7 +30560,8 @@ subroutine fortran_track1_bmad_photon (orbit, ele, param, err_flag) bind(c)
   call track1_bmad_photon(f_orbit, f_ele, f_param, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_track1_bunch (bunch, ele, err, centroid, direction, bunch_track) bind(c)
 
@@ -32215,9 +32312,11 @@ subroutine fortran_track_a_patch (ele, orbit, drift_to_exit, s_ent, ds_ref, trac
       f_track_spin_native_ptr, f_mat6, f_make_matrix_native_ptr)
 
   ! out: f_s_ent 0D_NOT_real
-  ! no output conversion for f_s_ent
+  call c_f_pointer(s_ent, f_s_ent_ptr)
+  f_s_ent_ptr = f_s_ent
   ! out: f_ds_ref 0D_NOT_real
-  ! no output conversion for f_ds_ref
+  call c_f_pointer(ds_ref, f_ds_ref_ptr)
+  f_ds_ref_ptr = f_ds_ref
   ! out: f_mat6 2D_NOT_real
   if (c_associated(mat6%data_ptr)) f_mat6_ptr = mat2vec(f_mat6, product(mat6%dims(1:mat6%rank)))
 end subroutine
@@ -32762,9 +32861,11 @@ subroutine fortran_track_all (lat, orbit, ix_branch, track_state, err_flag, orbi
       f_orbit0%data, f_init_lost_native_ptr)
 
   ! out: f_track_state 0D_NOT_integer
-  ! no output conversion for f_track_state
+  call c_f_pointer(track_state, f_track_state_ptr)
+  f_track_state_ptr = f_track_state
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks) &
     bind(c)
@@ -33103,7 +33204,8 @@ subroutine fortran_track_from_s_to_s (lat, s_start, s_end, orbit_start, orbit_en
   ! out: f_orbit_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_track_state 0D_NOT_integer
-  ! no output conversion for f_track_state
+  call c_f_pointer(track_state, f_track_state_ptr)
+  f_track_state_ptr = f_track_state
 end subroutine
 subroutine fortran_track_many (lat, orbit, ix_start, ix_end, direction, ix_branch, track_state) &
     bind(c)
@@ -33164,7 +33266,8 @@ subroutine fortran_track_many (lat, orbit, ix_start, ix_end, direction, ix_branc
       f_track_state)
 
   ! out: f_track_state 0D_NOT_integer
-  ! no output conversion for f_track_state
+  call c_f_pointer(track_state, f_track_state_ptr)
+  f_track_state_ptr = f_track_state
 end subroutine
 subroutine fortran_track_to_surface (ele, orbit, param, w_surface) bind(c)
 
@@ -33848,7 +33951,8 @@ subroutine fortran_transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref
   ! out: f_ref_orb_out 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_transfer_mat2_from_twiss (twiss1, twiss2, mat) bind(c)
 
@@ -34335,7 +34439,8 @@ subroutine fortran_twiss_and_track_all (lat, orb_array, status, print_err, calc_
       f_calc_chrom_native_ptr, f_use_particle_start_native_ptr)
 
   ! out: f_status 0D_NOT_integer
-  ! no output conversion for f_status
+  call c_f_pointer(status, f_status_ptr)
+  f_status_ptr = f_status
 end subroutine
 subroutine fortran_twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, &
     use_last, compute_floor_coords) bind(c)
@@ -34422,7 +34527,8 @@ subroutine fortran_twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_bra
       f_use_last_native_ptr, f_compute_floor_coords_native_ptr)
 
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, &
     orb_start, use_particle_start) bind(c)
@@ -34508,7 +34614,8 @@ subroutine fortran_twiss_and_track_branch (lat, orb, status, ix_branch, print_er
       f_calc_chrom_native_ptr, f_orb_start, f_use_particle_start_native_ptr)
 
   ! out: f_status 0D_NOT_integer
-  ! no output conversion for f_status
+  call c_f_pointer(status, f_status_ptr)
+  f_status_ptr = f_status
 end subroutine
 subroutine fortran_twiss_and_track_from_s_to_s (branch, orbit_start, s_end, orbit_end, &
     ele_start, ele_end, err, compute_floor_coords, compute_twiss) bind(c)
@@ -34589,7 +34696,8 @@ subroutine fortran_twiss_and_track_from_s_to_s (branch, orbit_start, s_end, orbi
   ! out: f_ele_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_twiss_and_track_intra_ele (ele, param, l_start, l_end, track_upstream_end, &
     track_downstream_end, orbit_start, orbit_end, ele_start, ele_end, err, &
@@ -34700,7 +34808,8 @@ subroutine fortran_twiss_and_track_intra_ele (ele, param, l_start, l_end, track_
   ! out: f_orbit_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_twiss_at_element (ele, start, end, average) bind(c)
 
@@ -34784,7 +34893,8 @@ subroutine fortran_twiss_at_start (lat, status, ix_branch, type_out) bind(c)
   call twiss_at_start(f_lat, f_status, f_ix_branch_ptr, f_type_out_native_ptr)
 
   ! out: f_status 0D_NOT_integer
-  ! no output conversion for f_status
+  call c_f_pointer(status, f_status_ptr)
+  f_status_ptr = f_status
 end subroutine
 subroutine fortran_twiss_from_tracking (lat, ref_orb0, symp_err, err_flag, d_orb) bind(c)
 
@@ -34890,7 +35000,8 @@ subroutine fortran_twiss_propagate1 (ele1, ele2, err_flag, forward) bind(c)
   call twiss_propagate1(f_ele1, f_ele2, f_err_flag, f_forward_native_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_twiss_propagate_all (lat, ix_branch, err_flag, ie_start, ie_end) bind(c)
 
@@ -34949,7 +35060,8 @@ subroutine fortran_twiss_propagate_all (lat, ix_branch, err_flag, ie_start, ie_e
   call twiss_propagate_all(f_lat, f_ix_branch_ptr, f_err_flag, f_ie_start_ptr, f_ie_end_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_twiss_to_1_turn_mat (twiss, phi, mat2) bind(c)
 
@@ -35299,7 +35411,8 @@ subroutine fortran_value_of_attribute (ele, attrib_name, err_flag, err_print_fla
       f_err_value_ptr)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
@@ -35763,18 +35876,22 @@ subroutine fortran_wall3d_d_radius (position, ele, ix_wall, perp, ix_section, no
     f_perp_ptr = f_perp(:)
   endif
   ! out: f_ix_section 0D_NOT_integer
-  ! no output conversion for f_ix_section
+  call c_f_pointer(ix_section, f_ix_section_ptr)
+  f_ix_section_ptr = f_ix_section
   ! out: f_no_wall_here 0D_NOT_logical
-  ! no output conversion for f_no_wall_here
+  call c_f_pointer(no_wall_here, f_no_wall_here_ptr)
+  f_no_wall_here_ptr = f_no_wall_here
   ! out: f_origin 1D_NOT_real
   if (c_associated(origin%data_ptr)) then
     call c_f_pointer(origin%data_ptr, f_origin_ptr, [origin%dims(1)])
     f_origin_ptr = f_origin(:)
   endif
   ! out: f_radius_wall 0D_NOT_real
-  ! no output conversion for f_radius_wall
+  call c_f_pointer(radius_wall, f_radius_wall_ptr)
+  f_radius_wall_ptr = f_radius_wall
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
   ! out: f_d_radius 0D_NOT_real
   call c_f_pointer(d_radius, f_d_radius_ptr)
   f_d_radius_ptr = f_d_radius
@@ -36050,7 +36167,8 @@ subroutine fortran_write_astra_field_grid_file (astra_file_unit, ele, maxfield, 
   call c_f_pointer(maxfield, f_maxfield_ptr)
   f_maxfield_ptr = f_maxfield
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_astra_field_grid_file_3d (base_filename, ele, maxfield, dz, err) &
     bind(c)
@@ -36100,7 +36218,8 @@ subroutine fortran_write_astra_field_grid_file_3d (base_filename, ele, maxfield,
   call c_f_pointer(maxfield, f_maxfield_ptr)
   f_maxfield_ptr = f_maxfield
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_beam_file (file_name, beam, new_file, file_format, lat, alive_only) &
     bind(c)
@@ -36444,7 +36563,8 @@ subroutine fortran_write_bmad_lattice_file (bmad_file, lat, err, output_form, or
   call write_bmad_lattice_file(f_bmad_file, f_lat, f_err, f_output_form_ptr, f_orbit0)
 
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_gpt_field_grid_file_1d (gpt_file_unit, ele, maxfield, ref_time, dz, &
     err) bind(c)
@@ -36498,7 +36618,8 @@ subroutine fortran_write_gpt_field_grid_file_1d (gpt_file_unit, ele, maxfield, r
   call c_f_pointer(ref_time, f_ref_time_ptr)
   f_ref_time_ptr = f_ref_time
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_gpt_field_grid_file_2d (gpt_file_unit, ele, maxfield, ref_time, dr, &
     dz, r_max, err) bind(c)
@@ -36570,7 +36691,8 @@ subroutine fortran_write_gpt_field_grid_file_2d (gpt_file_unit, ele, maxfield, r
   call c_f_pointer(ref_time, f_ref_time_ptr)
   f_ref_time_ptr = f_ref_time
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_gpt_field_grid_file_3d (base_filename, ele, maxfield, ref_time, dz, &
     err) bind(c)
@@ -36627,7 +36749,8 @@ subroutine fortran_write_gpt_field_grid_file_3d (base_filename, ele, maxfield, r
   call c_f_pointer(ref_time, f_ref_time_ptr)
   f_ref_time_ptr = f_ref_time
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, ampersand_at_ends) bind(c)
 
@@ -36767,7 +36890,8 @@ subroutine fortran_write_lattice_in_elegant_format (out_file_name, lat, ref_orbi
       f_ix_branch_ptr, f_err)
 
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_lattice_in_foreign_format (out_type, out_file_name, lat, ref_orbit, &
     use_matrix_model, include_apertures, dr12_drift_max, ix_branch, err) bind(c)
@@ -36859,7 +36983,8 @@ subroutine fortran_write_lattice_in_foreign_format (out_type, out_file_name, lat
       f_ix_branch_ptr, f_err)
 
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_lattice_in_mad_format (out_type, out_file_name, lat, ref_orbit, &
     use_matrix_model, include_apertures, dr12_drift_max, ix_branch, err) bind(c)
@@ -36951,7 +37076,8 @@ subroutine fortran_write_lattice_in_mad_format (out_type, out_file_name, lat, re
       f_ix_branch_ptr, f_err)
 
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_lattice_in_pals (pals_file, lat, err_flag) bind(c)
 
@@ -36988,7 +37114,8 @@ subroutine fortran_write_lattice_in_pals (pals_file, lat, err_flag) bind(c)
   call c_f_pointer(pals_file, f_pals_file_ptr, [len_trim(f_pals_file) + 1])
   call to_c_str(f_pals_file, f_pals_file_ptr)
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_write_lattice_in_sad_format (out_file_name, lat, include_apertures, &
     ix_branch, err) bind(c)
@@ -37085,7 +37212,8 @@ subroutine fortran_write_lattice_in_scibmad (scibmad_file, lat, err_flag) bind(c
   call c_f_pointer(scibmad_file, f_scibmad_file_ptr, [len_trim(f_scibmad_file) + 1])
   call to_c_str(f_scibmad_file, f_scibmad_file_ptr)
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_write_line_element (line, iu, ele, lat) bind(c)
 
@@ -37160,7 +37288,8 @@ subroutine fortran_write_opal_field_grid_file (opal_file_unit, ele, param, maxfi
   call c_f_pointer(maxfield, f_maxfield_ptr)
   f_maxfield_ptr = f_maxfield
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_opal_lattice_file (opal_file_unit, lat, err) bind(c)
 
@@ -37191,7 +37320,8 @@ subroutine fortran_write_opal_lattice_file (opal_file_unit, lat, err) bind(c)
   call write_opal_lattice_file(f_opal_file_unit, f_lat, f_err)
 
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_write_time_particle_distribution (time_file_unit, bunch, ele, style, branch, &
     format, err) bind(c)
@@ -37257,7 +37387,8 @@ subroutine fortran_write_time_particle_distribution (time_file_unit, bunch, ele,
       f_branch, f_format_call_ptr, f_err)
 
   ! out: f_err 0D_NOT_logical
-  ! no output conversion for f_err
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_xlafun (x, y, z, res) bind(c)
 

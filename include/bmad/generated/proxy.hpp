@@ -26023,8 +26023,7 @@ public:
   FArray2D<std::complex<double>> complex_dp_2d_alloc() const; // 2D_ALLOC_complex
   void set_complex_dp_2d_alloc(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d_alloc() const; // 3D_ALLOC_complex
-  void set_complex_dp_3d_alloc(
-      const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+  void set_complex_dp_3d_alloc(const std::vector<std::vector<std::vector<std::complex<double>>>> &v
   );
   int int_0d() const; // 0D_NOT_integer
   void set_int_0d(int value);

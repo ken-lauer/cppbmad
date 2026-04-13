@@ -3288,9 +3288,11 @@ subroutine fortran_tao_get_opt_vars (var_value, var_step, var_delta, var_weight,
       f_var_ix%data, f_ignore_if_weight_is_zero, f_ignore_if_not_limited)
 
   ! out: f_ignore_if_weight_is_zero 0D_NOT_logical
-  ! no output conversion for f_ignore_if_weight_is_zero
+  call c_f_pointer(ignore_if_weight_is_zero, f_ignore_if_weight_is_zero_ptr)
+  f_ignore_if_weight_is_zero_ptr = f_ignore_if_weight_is_zero
   ! out: f_ignore_if_not_limited 0D_NOT_logical
-  ! no output conversion for f_ignore_if_not_limited
+  call c_f_pointer(ignore_if_not_limited, f_ignore_if_not_limited_ptr)
+  f_ignore_if_not_limited_ptr = f_ignore_if_not_limited
 end subroutine
 subroutine fortran_tao_get_user_input (cmd_out, prompt_str, wait_flag, cmd_in) bind(c)
 
@@ -3746,7 +3748,8 @@ subroutine fortran_tao_init_find_elements (u, search_string, eles, attribute, fo
       f_found_one)
 
   ! out: f_found_one 0D_NOT_logical
-  ! no output conversion for f_found_one
+  call c_f_pointer(found_one, f_found_one_ptr)
+  f_found_one_ptr = f_found_one
 end subroutine
 subroutine fortran_tao_init_global (init_file) bind(c)
 
@@ -4170,7 +4173,8 @@ subroutine fortran_tao_lattice_calc (calc_ok, print_err) bind(c)
   call c_f_pointer(calc_ok, f_calc_ok_ptr)
   f_calc_ok_ptr = f_calc_ok
   ! out: f_print_err 0D_NOT_logical
-  ! no output conversion for f_print_err
+  call c_f_pointer(print_err, f_print_err_ptr)
+  f_print_err_ptr = f_print_err
 end subroutine
 subroutine fortran_tao_lattice_equal_tao_lattice (lat1, lat2) bind(c)
 
@@ -4489,7 +4493,8 @@ subroutine fortran_tao_merit (calc_ok, this_merit) bind(c)
   f_this_merit = tao_merit(f_calc_ok)
 
   ! out: f_calc_ok 0D_NOT_logical
-  ! no output conversion for f_calc_ok
+  call c_f_pointer(calc_ok, f_calc_ok_ptr)
+  f_calc_ok_ptr = f_calc_ok
   ! out: f_this_merit 0D_NOT_real
   call c_f_pointer(this_merit, f_this_merit_ptr)
   f_this_merit_ptr = f_this_merit
@@ -4773,9 +4778,11 @@ subroutine fortran_tao_param_value_at_s (dat_name, ele_to_s, ele_here, orbit, er
     call to_c_str(f_why_invalid, f_why_invalid_ptr)
   endif
   ! out: f_print_err 0D_NOT_logical
-  ! no output conversion for f_print_err
+  call c_f_pointer(print_err, f_print_err_ptr)
+  f_print_err_ptr = f_print_err
   ! out: f_bad_datum 0D_NOT_logical
-  ! no output conversion for f_bad_datum
+  call c_f_pointer(bad_datum, f_bad_datum_ptr)
+  f_bad_datum_ptr = f_bad_datum
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
@@ -5171,9 +5178,11 @@ subroutine fortran_tao_pick_universe (name_in, name_out, picked, err, ix_uni, ex
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
   ! out: f_ix_uni 0D_NOT_integer
-  ! no output conversion for f_ix_uni
+  call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  f_ix_uni_ptr = f_ix_uni
   ! out: f_explicit_uni 0D_NOT_logical
-  ! no output conversion for f_explicit_uni
+  call c_f_pointer(explicit_uni, f_explicit_uni_ptr)
+  f_explicit_uni_ptr = f_explicit_uni
 end subroutine
 subroutine fortran_tao_pipe_cmd (input_str) bind(c)
 
@@ -5562,7 +5571,8 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
     call to_c_str(f_dat_var_name, f_dat_var_name_ptr)
   endif
   ! out: f_dat_var_value 0D_NOT_real
-  ! no output conversion for f_dat_var_value
+  call c_f_pointer(dat_var_value, f_dat_var_value_ptr)
+  f_dat_var_value_ptr = f_dat_var_value
   ! inout: f_ix_shape_min 0D_NOT_integer
   ! no output conversion for f_ix_shape_min
   ! out: f_e_shape 0D_PTR_type
@@ -5738,7 +5748,8 @@ subroutine fortran_tao_pointer_to_universes (name_in, unis, err, name_out, expli
     call to_c_str(f_name_out, f_name_out_ptr)
   endif
   ! out: f_explicit_uni 0D_NOT_logical
-  ! no output conversion for f_explicit_uni
+  call c_f_pointer(explicit_uni, f_explicit_uni_ptr)
+  f_explicit_uni_ptr = f_explicit_uni
 end subroutine
 subroutine fortran_tao_pointer_to_var_in_lattice (var, ix_uni, ele, err) bind(c)
 
@@ -7364,7 +7375,8 @@ subroutine fortran_tao_set_qp_axis_struct (qp_axis_name, component, qp_axis, val
   call c_f_pointer(error, f_error_ptr)
   f_error_ptr = f_error
   ! out: f_ix_uni 0D_NOT_integer
-  ! no output conversion for f_ix_uni
+  call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  f_ix_uni_ptr = f_ix_uni
 end subroutine
 subroutine fortran_tao_set_qp_point_struct (qp_point_name, component, qp_point, value, error, &
     ix_uni) bind(c)
@@ -7421,7 +7433,8 @@ subroutine fortran_tao_set_qp_point_struct (qp_point_name, component, qp_point, 
   call c_f_pointer(error, f_error_ptr)
   f_error_ptr = f_error
   ! out: f_ix_uni 0D_NOT_integer
-  ! no output conversion for f_ix_uni
+  call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  f_ix_uni_ptr = f_ix_uni
 end subroutine
 subroutine fortran_tao_set_qp_rect_struct (qp_rect_name, component, qp_rect, value, error, &
     ix_uni) bind(c)
@@ -7478,7 +7491,8 @@ subroutine fortran_tao_set_qp_rect_struct (qp_rect_name, component, qp_rect, val
   call c_f_pointer(error, f_error_ptr)
   f_error_ptr = f_error
   ! out: f_ix_uni 0D_NOT_integer
-  ! no output conversion for f_ix_uni
+  call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  f_ix_uni_ptr = f_ix_uni
 end subroutine
 subroutine fortran_tao_set_ran_state_cmd (state_string) bind(c)
 
@@ -8378,7 +8392,8 @@ subroutine fortran_tao_top_level (command, errcode) bind(c)
   call tao_top_level(f_command_call_ptr, f_errcode)
 
   ! out: f_errcode 0D_NOT_integer
-  ! no output conversion for f_errcode
+  call c_f_pointer(errcode, f_errcode_ptr)
+  f_errcode_ptr = f_errcode
 end subroutine
 subroutine fortran_tao_tracking_ele_index (ele, datum, ix_branch, ix_ele) bind(c)
 
@@ -8414,7 +8429,8 @@ subroutine fortran_tao_tracking_ele_index (ele, datum, ix_branch, ix_ele) bind(c
   f_ix_ele = tao_tracking_ele_index(f_ele, f_datum, f_ix_branch)
 
   ! out: f_ix_branch 0D_NOT_integer
-  ! no output conversion for f_ix_branch
+  call c_f_pointer(ix_branch, f_ix_branch_ptr)
+  f_ix_branch_ptr = f_ix_branch
   ! out: f_ix_ele 0D_NOT_integer
   call c_f_pointer(ix_ele, f_ix_ele_ptr)
   f_ix_ele_ptr = f_ix_ele
@@ -9088,7 +9104,8 @@ subroutine fortran_tao_x_scale_plot (plot, x_min_in, x_max_in, include_wall, gan
       f_gang_call_ptr, f_have_scaled)
 
   ! out: f_have_scaled 0D_NOT_logical
-  ! no output conversion for f_have_scaled
+  call c_f_pointer(have_scaled, f_have_scaled_ptr)
+  f_have_scaled_ptr = f_have_scaled
 end subroutine
 
 end module cppbmad_tao_routines

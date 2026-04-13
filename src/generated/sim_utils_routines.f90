@@ -547,9 +547,11 @@ subroutine fortran_bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy, f_
   f_f_val = bicubic_cmplx_eval(f_x_norm, f_y_norm, f_bi_coef, f_df_dx, f_df_dy)
 
   ! out: f_df_dx 0D_NOT_complex
-  ! no output conversion for f_df_dx
+  call c_f_pointer(df_dx, f_df_dx_ptr)
+  f_df_dx_ptr = f_df_dx
   ! out: f_df_dy 0D_NOT_complex
-  ! no output conversion for f_df_dy
+  call c_f_pointer(df_dy, f_df_dy_ptr)
+  f_df_dy_ptr = f_df_dy
   ! out: f_f_val 0D_NOT_complex
   call c_f_pointer(f_val, f_f_val_ptr)
   f_f_val_ptr = f_f_val
@@ -1849,9 +1851,11 @@ subroutine fortran_fourier_amplitude (data, frequency, cos_amp, sin_amp, dcos_am
   call c_f_pointer(sin_amp, f_sin_amp_ptr)
   f_sin_amp_ptr = f_sin_amp
   ! out: f_dcos_amp 0D_NOT_real
-  ! no output conversion for f_dcos_amp
+  call c_f_pointer(dcos_amp, f_dcos_amp_ptr)
+  f_dcos_amp_ptr = f_dcos_amp
   ! out: f_dsin_amp 0D_NOT_real
-  ! no output conversion for f_dsin_amp
+  call c_f_pointer(dsin_amp, f_dsin_amp_ptr)
+  f_dsin_amp_ptr = f_dsin_amp
 end subroutine
 subroutine fortran_gelbd (phi, mc, elb, eld) bind(c)
 
@@ -4795,7 +4799,8 @@ subroutine fortran_ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, 
     call to_c_str(f_get, f_get_ptr)
   endif
   ! out: f_get_sigma_cut 0D_NOT_real
-  ! no output conversion for f_get_sigma_cut
+  call c_f_pointer(get_sigma_cut, f_get_sigma_cut_ptr)
+  f_get_sigma_cut_ptr = f_get_sigma_cut
 end subroutine
 subroutine fortran_ran_gauss_scalar (harvest, ran_state, sigma_cut, index_quasi) bind(c)
 
@@ -5428,7 +5433,8 @@ subroutine fortran_rms_value (val_arr, good_val, ave_val, rms_val) bind(c)
   f_rms_val = rms_value(f_val_arr, f_good_val%data, f_ave_val)
 
   ! out: f_ave_val 0D_NOT_real
-  ! no output conversion for f_ave_val
+  call c_f_pointer(ave_val, f_ave_val_ptr)
+  f_ave_val_ptr = f_ave_val
   ! out: f_rms_val 0D_NOT_real
   call c_f_pointer(rms_val, f_rms_val_ptr)
   f_rms_val_ptr = f_rms_val
@@ -6245,9 +6251,11 @@ subroutine fortran_spline_akima_interpolate (x_knot, y_knot, x, ok, y, dy) bind(
   call c_f_pointer(ok, f_ok_ptr)
   f_ok_ptr = f_ok
   ! out: f_y 0D_NOT_real
-  ! no output conversion for f_y
+  call c_f_pointer(y, f_y_ptr)
+  f_y_ptr = f_y
   ! out: f_dy 0D_NOT_real
-  ! no output conversion for f_dy
+  call c_f_pointer(dy, f_dy_ptr)
+  f_dy_ptr = f_dy
 end subroutine
 subroutine fortran_spline_evaluate (spline, x, ok, y, dy) bind(c)
 
@@ -6298,9 +6306,11 @@ subroutine fortran_spline_evaluate (spline, x, ok, y, dy) bind(c)
   call c_f_pointer(ok, f_ok_ptr)
   f_ok_ptr = f_ok
   ! out: f_y 0D_NOT_real
-  ! no output conversion for f_y
+  call c_f_pointer(y, f_y_ptr)
+  f_y_ptr = f_y
   ! out: f_dy 0D_NOT_real
-  ! no output conversion for f_dy
+  call c_f_pointer(dy, f_dy_ptr)
+  f_dy_ptr = f_dy
 end subroutine
 subroutine fortran_sqrt_alpha (alpha, x, y) bind(c)
 
@@ -7193,7 +7203,8 @@ subroutine fortran_system_command (line, err_flag) bind(c)
   call system_command(f_line, f_err_flag)
 
   ! out: f_err_flag 0D_NOT_logical
-  ! no output conversion for f_err_flag
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_test_xgelbd () bind(c)
 
@@ -7292,11 +7303,14 @@ subroutine fortran_tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx,
       f_df_dz)
 
   ! out: f_df_dx 0D_NOT_complex
-  ! no output conversion for f_df_dx
+  call c_f_pointer(df_dx, f_df_dx_ptr)
+  f_df_dx_ptr = f_df_dx
   ! out: f_df_dy 0D_NOT_complex
-  ! no output conversion for f_df_dy
+  call c_f_pointer(df_dy, f_df_dy_ptr)
+  f_df_dy_ptr = f_df_dy
   ! out: f_df_dz 0D_NOT_complex
-  ! no output conversion for f_df_dz
+  call c_f_pointer(df_dz, f_df_dz_ptr)
+  f_df_dz_ptr = f_df_dz
   ! out: f_f_val 0D_NOT_complex
   call c_f_pointer(f_val, f_f_val_ptr)
   f_f_val_ptr = f_f_val
