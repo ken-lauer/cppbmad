@@ -2209,7 +2209,6 @@ from ._enums import GRADIENT_ERR
 from ._enums import CRITICAL_ANGLE
 from ._enums import BRAGG_ANGLE_IN
 from ._enums import SPIN_DN_DPZ_X
-from ._enums import DELTA_E_REF
 from ._enums import INTERPOLATION
 from ._enums import BRAGG_ANGLE_OUT
 from ._enums import K1X
@@ -2372,6 +2371,7 @@ from ._enums import TRANSVERSE_SIGMA_CUT
 from ._enums import PZ_APERTURE_CENTER
 from ._enums import MEAN_EXCITATION_ENERGY
 from ._enums import FIDUCIAL_PT
+from ._enums import DELTA_E_REF
 from ._enums import CMAT_22
 from ._enums import DPSI_ORIGIN
 from ._enums import T_OFFSET
@@ -5057,7 +5057,6 @@ __all__ = [
     "CRITICAL_ANGLE",
     "BRAGG_ANGLE_IN",
     "SPIN_DN_DPZ_X",
-    "DELTA_E_REF",
     "INTERPOLATION",
     "BRAGG_ANGLE_OUT",
     "K1X",
@@ -5220,6 +5219,7 @@ __all__ = [
     "PZ_APERTURE_CENTER",
     "MEAN_EXCITATION_ENERGY",
     "FIDUCIAL_PT",
+    "DELTA_E_REF",
     "CMAT_22",
     "DPSI_ORIGIN",
     "T_OFFSET",

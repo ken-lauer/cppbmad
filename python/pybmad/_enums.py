@@ -59,7 +59,6 @@ class EleAttribute(enum.IntEnum):
     CRITICAL_ANGLE = 7 - 1
     BRAGG_ANGLE_IN = 7 - 1
     SPIN_DN_DPZ_X = 7 - 1
-    DELTA_E_REF = 8 - 1
     INTERPOLATION = 8 - 1
     BRAGG_ANGLE_OUT = 8 - 1
     K1X = 8 - 1
@@ -222,6 +221,7 @@ class EleAttribute(enum.IntEnum):
     PZ_APERTURE_CENTER = 31 - 1
     MEAN_EXCITATION_ENERGY = 31 - 1
     FIDUCIAL_PT = 31 - 1
+    DELTA_E_REF = 31 - 1
     CMAT_22 = 32 - 1
     DPSI_ORIGIN = 32 - 1
     T_OFFSET = 32 - 1
@@ -401,7 +401,7 @@ class EleKey(enum.IntEnum):
     N_KEY = 70
 
 # Constants from bmad_struct.f90
-BMAD_INC_VERSION = 356
+BMAD_INC_VERSION = 358
 NONE = 1
 # maximum multipole order
 N_POLE_MAXX = 21
@@ -873,7 +873,6 @@ GRADIENT_ERR = EleAttribute.GRADIENT_ERR
 CRITICAL_ANGLE = EleAttribute.CRITICAL_ANGLE
 BRAGG_ANGLE_IN = EleAttribute.BRAGG_ANGLE_IN
 SPIN_DN_DPZ_X = EleAttribute.SPIN_DN_DPZ_X
-DELTA_E_REF = EleAttribute.DELTA_E_REF
 INTERPOLATION = EleAttribute.INTERPOLATION
 BRAGG_ANGLE_OUT = EleAttribute.BRAGG_ANGLE_OUT
 K1X = EleAttribute.K1X
@@ -1036,6 +1035,7 @@ TRANSVERSE_SIGMA_CUT = EleAttribute.TRANSVERSE_SIGMA_CUT
 PZ_APERTURE_CENTER = EleAttribute.PZ_APERTURE_CENTER
 MEAN_EXCITATION_ENERGY = EleAttribute.MEAN_EXCITATION_ENERGY
 FIDUCIAL_PT = EleAttribute.FIDUCIAL_PT
+DELTA_E_REF = EleAttribute.DELTA_E_REF
 CMAT_22 = EleAttribute.CMAT_22
 DPSI_ORIGIN = EleAttribute.DPSI_ORIGIN
 T_OFFSET = EleAttribute.T_OFFSET

@@ -15,7 +15,7 @@
 namespace Bmad {
 
 // Enums from bmad_struct.f90
-const int BMAD_INC_VERSION = 356;
+const int BMAD_INC_VERSION = 358;
 const int NONE = 1;
 // maximum multipole order
 const int N_POLE_MAXX = 21;
@@ -487,7 +487,6 @@ const int GRADIENT_ERR = 7;
 const int CRITICAL_ANGLE = 7;
 const int BRAGG_ANGLE_IN = 7;
 const int SPIN_DN_DPZ_X = 7;
-const int DELTA_E_REF = 8;
 const int INTERPOLATION = 8;
 const int BRAGG_ANGLE_OUT = 8;
 const int K1X = 8;
@@ -650,6 +649,7 @@ const int TRANSVERSE_SIGMA_CUT = 31;
 const int PZ_APERTURE_CENTER = 31;
 const int MEAN_EXCITATION_ENERGY = 31;
 const int FIDUCIAL_PT = 31;
+const int DELTA_E_REF = 31;
 const int CMAT_22 = 32;
 const int DPSI_ORIGIN = 32;
 const int T_OFFSET = 32;
@@ -1061,7 +1061,6 @@ enum class EleAttribute : size_t {
   CRITICAL_ANGLE = 7 - 1,
   BRAGG_ANGLE_IN = 7 - 1,
   SPIN_DN_DPZ_X = 7 - 1,
-  DELTA_E_REF = 8 - 1,
   INTERPOLATION = 8 - 1,
   BRAGG_ANGLE_OUT = 8 - 1,
   K1X = 8 - 1,
@@ -1224,6 +1223,7 @@ enum class EleAttribute : size_t {
   PZ_APERTURE_CENTER = 31 - 1,
   MEAN_EXCITATION_ENERGY = 31 - 1,
   FIDUCIAL_PT = 31 - 1,
+  DELTA_E_REF = 31 - 1,
   CMAT_22 = 32 - 1,
   DPSI_ORIGIN = 32 - 1,
   T_OFFSET = 32 - 1,
@@ -1387,7 +1387,6 @@ enum class EleAttributeFortran : size_t {
   CRITICAL_ANGLE = 7,
   BRAGG_ANGLE_IN = 7,
   SPIN_DN_DPZ_X = 7,
-  DELTA_E_REF = 8,
   INTERPOLATION = 8,
   BRAGG_ANGLE_OUT = 8,
   K1X = 8,
@@ -1550,6 +1549,7 @@ enum class EleAttributeFortran : size_t {
   PZ_APERTURE_CENTER = 31,
   MEAN_EXCITATION_ENERGY = 31,
   FIDUCIAL_PT = 31,
+  DELTA_E_REF = 31,
   CMAT_22 = 32,
   DPSI_ORIGIN = 32,
   T_OFFSET = 32,

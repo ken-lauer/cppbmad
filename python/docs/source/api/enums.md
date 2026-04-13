@@ -6,7 +6,7 @@ Fortran integer and real parameters exposed as Python constants.
 
 | Name | Value | Description |
 |------|-------|-------------|
-| `BMAD_INC_VERSION` | `356` |  |
+| `BMAD_INC_VERSION` | `358` |  |
 | `NONE` | `1` |  |
 | `N_POLE_MAXX` | `21` | maximum multipole order |
 | `OLD_CONTROL_VAR_OFFSET` | `1000` | For indexing into ele%control%var(:) array |
@@ -461,7 +461,6 @@ Fortran integer and real parameters exposed as Python constants.
 | `CRITICAL_ANGLE` | `7` |  |
 | `BRAGG_ANGLE_IN` | `7` |  |
 | `SPIN_DN_DPZ_X` | `7` |  |
-| `DELTA_E_REF` | `8` |  |
 | `INTERPOLATION` | `8` |  |
 | `BRAGG_ANGLE_OUT` | `8` |  |
 | `K1X` | `8` |  |
@@ -624,6 +623,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `PZ_APERTURE_CENTER` | `31` |  |
 | `MEAN_EXCITATION_ENERGY` | `31` |  |
 | `FIDUCIAL_PT` | `31` |  |
+| `DELTA_E_REF` | `31` |  |
 | `CMAT_22` | `32` |  |
 | `DPSI_ORIGIN` | `32` |  |
 | `T_OFFSET` | `32` |  |
