@@ -387,7 +387,7 @@ class FortranWrapperGeneralArgument(FortranWrapperArgument):
                 self.if_then_else_block(f"c_associated({self.c_name})", code, f"! {self.f_name} unset")
             )
 
-        elif self.type_info.optional or self.intent == "inout" or self.type_info.pointer:
+        elif self.intent == "inout" or self.type_info.pointer:
             result.append(f"  ! no output conversion for {self.f_name}")
             # code = textwrap.dedent(f"""\
             #     {self.c_f_ptr_conversion}
