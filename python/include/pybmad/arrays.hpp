@@ -94,6 +94,22 @@ void bind_1D_array_pair(
   view_cls.def("to_list", &ViewClass::to_vector);
 
   if constexpr (!is_bool) {
+    view_cls.def(
+        "__iter__",
+        [](ViewClass &self) { return py::make_iterator(self.begin(), self.end()); },
+        py::keep_alive<0, 1>()
+    );
+  } else {
+    view_cls.def("__iter__", [](ViewClass &self) {
+      py::list result;
+      for (int i = 0; i < self.size(); ++i) {
+        result.append(static_cast<bool>(self.at(i)));
+      }
+      return result.attr("__iter__")();
+    });
+  }
+
+  if constexpr (!is_bool) {
     view_cls.def_buffer([](ViewClass &a) -> py::buffer_info {
       if (!a.is_valid())
         throw std::runtime_error("Invalid Fortran array access");
