@@ -866,6 +866,24 @@ is_valid : bool
 )"""
   );
   m.def(
+      "tao_data_show_use",
+      &Tao::tao_data_show_use,
+      py::arg("d2_data"),
+      py::arg("lines") = py::none(),
+      py::arg("nl") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine tao_data_show_use
+
+Parameters
+----------
+d2_data : TaoD2DataStruct
+
+lines : 1D array of str, optional
+
+nl : int, optional
+)"""
+  );
+  m.def(
       "tao_data_type_substitute",
       &Tao::tao_data_type_substitute,
       py::arg("template_"),
@@ -2842,6 +2860,44 @@ Parameters
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
+)"""
+  );
+  py::class_<Tao::TaoHelp, std::unique_ptr<Tao::TaoHelp>>(m, "TaoHelp", "tao_help return type")
+      .def_readonly("lines", &Tao::TaoHelp::lines)
+      .def_readonly("n_lines", &Tao::TaoHelp::n_lines)
+      .def("__len__", [](const Tao::TaoHelp &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoHelp &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.lines);
+        if (i == 1)
+          return py::cast(s.n_lines);
+        throw py::index_error();
+      });
+  m.def(
+      "tao_help",
+      &Tao::tao_help,
+      py::arg("what1"),
+      py::arg("what2"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine tao_help
+
+Parameters
+----------
+what1 : str
+    command to query. EG: "show".
+
+what2 : str
+    subcommand to query. EG: "element".
+
+Returns
+-------
+lines : 1D array of str, optional
+    If present then the output will be put in this string array instead of printing to the terminal.
+
+n_lines : int, optional
+    Must be present if lines is present. Number of lines used in the lines(:) array.
 )"""
   );
   m.def(
@@ -6288,6 +6344,50 @@ form : str
     to the merit function.
 )"""
   );
+  py::class_<Tao::TaoShowThis, std::unique_ptr<Tao::TaoShowThis>>(
+      m,
+      "TaoShowThis",
+      "tao_show_this return type"
+  )
+      .def_readonly("result_id", &Tao::TaoShowThis::result_id)
+      .def_readonly("lines", &Tao::TaoShowThis::lines)
+      .def_readonly("nl", &Tao::TaoShowThis::nl)
+      .def("__len__", [](const Tao::TaoShowThis &) { return 3; })
+      .def("__getitem__", [](const Tao::TaoShowThis &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.result_id);
+        if (i == 1)
+          return py::cast(s.lines);
+        if (i == 2)
+          return py::cast(s.nl);
+        throw py::index_error();
+      });
+  m.def(
+      "tao_show_this",
+      &Tao::tao_show_this,
+      py::arg("what"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine tao_show_this
+
+Parameters
+----------
+what : str
+    What to show.
+
+Returns
+-------
+result_id : str
+    ID string idendifying what was shown. Used by the Tao GUI.
+
+lines : 1D array of str
+    Output.
+
+nl : int
+    Number of lines(:).
+)"""
+  );
   m.def(
       "tao_single_mode",
       &Tao::tao_single_mode,
@@ -6896,6 +6996,25 @@ silent : bool
       &Tao::tao_var_repoint,
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_var_repoint
+)"""
+  );
+  m.def(
+      "tao_var_show_use",
+      &Tao::tao_var_show_use,
+      py::arg("v1_var"),
+      py::arg("lines") = py::none(),
+      py::arg("nl") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine tao_var_show_use
+
+Parameters
+----------
+v1_var : TaoV1VarStruct
+    tao_v1_var_struct
+
+lines : 1D array of str, optional
+
+nl : int, optional
 )"""
   );
   m.def(

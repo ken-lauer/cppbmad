@@ -5310,6 +5310,17 @@ void reallocate_complex_container_data(void *, int, size_t) noexcept;
 void deallocate_complex_container(void *) noexcept;
 void access_complex_container(const void *handle, void **data, int *bounds, bool *alloc);
 
+void *allocate_character_container();
+void reallocate_character_container_data(void *, int, size_t, int) noexcept;
+void deallocate_character_container(void *) noexcept;
+void access_character_container(
+    const void *handle,
+    void **data,
+    int *bounds,
+    int *str_len,
+    bool *alloc
+);
+
 void *allocate_fortran_spline_struct(int n, size_t *element_size);
 void deallocate_fortran_spline_struct(void *ptr, int n) noexcept;
 void copy_fortran_spline_struct(const void *src, void *dst);
@@ -8128,6 +8139,29 @@ struct ComplexAlloc1D : public FAlloc1D<std::complex<double>> {
             access_complex_container
         ) {}
   ComplexAlloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
+
+struct CharacterAlloc1D : public FCharAlloc1D {
+  using Base = FCharAlloc1D;
+  using Base::Base;
+  CharacterAlloc1D()
+      : Base(
+            allocate_character_container,
+            deallocate_character_container,
+            reallocate_character_container_data,
+            access_character_container
+        ) {}
+  CharacterAlloc1D(int n, int str_len = 200)
+      : Base(
+            n,
+            str_len,
+            allocate_character_container,
+            deallocate_character_container,
+            reallocate_character_container_data,
+            access_character_container
+        ) {}
+  CharacterAlloc1D(void *handle, CharReallocFuncPtr realloc, CharAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 

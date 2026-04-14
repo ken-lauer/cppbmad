@@ -8,6 +8,7 @@ from ._pybmad import get_bmad_com
 from ._pybmad import get_space_charge_com
 from ._pybmad import get_super_universe
 from ._pybmad import BoolAlloc1D
+from ._pybmad import CharacterAlloc1D
 from ._pybmad import ComplexAlloc1D
 from ._pybmad import Int8Alloc1D
 from ._pybmad import IntAlloc1D
@@ -387,6 +388,7 @@ from ._pybmad import action_to_xyz
 from ._pybmad import add_lattice_control_structs
 from ._pybmad import add_superimpose
 from ._pybmad import add_this_multipass
+from ._pybmad import add_this_name_to_list
 from ._pybmad import add_this_taylor_term
 from ._pybmad import adjust_super_slave_names
 from ._pybmad import allocate_branch_array
@@ -551,6 +553,7 @@ from ._pybmad import crystal_attribute_bookkeeper
 from ._pybmad import crystal_h_misalign
 from ._pybmad import crystal_type_to_crystal_params
 from ._pybmad import custom_attribute_ubound_index
+from ._pybmad import custom_ele_attrib_name_list
 from ._pybmad import damping_matrix_d
 from ._pybmad import date_and_time_stamp
 from ._pybmad import deallocate_ele_pointers
@@ -770,7 +773,9 @@ from ._pybmad import get_called_file
 from ._pybmad import get_emit_from_sigma_mat
 from ._pybmad import get_file_number
 from ._pybmad import get_file_time_stamp
+from ._pybmad import get_list_of_names
 from ._pybmad import get_next_word
+from ._pybmad import get_sequence_args
 from ._pybmad import get_slave_list
 from ._pybmad import get_tty_char
 from ._pybmad import gg_taylor_equal_gg_taylor
@@ -1120,6 +1125,7 @@ from ._pybmad import read_beam_file
 from ._pybmad import read_binary_cartesian_map
 from ._pybmad import read_binary_cylindrical_map
 from ._pybmad import read_binary_grid_field
+from ._pybmad import read_digested_bmad_file
 from ._pybmad import read_surface_reflection_file
 from ._pybmad import readline_read_history
 from ._pybmad import readline_write_history
@@ -1241,6 +1247,7 @@ from ._pybmad import spline_akima
 from ._pybmad import spline_akima_interpolate
 from ._pybmad import spline_evaluate
 from ._pybmad import spline_fit_orbit
+from ._pybmad import split_expression_string
 from ._pybmad import split_lat
 from ._pybmad import sprint_spin_taylor_map
 from ._pybmad import sqrt_alpha
@@ -1276,6 +1283,7 @@ from ._pybmad import super_poly
 from ._pybmad import super_sobseq
 from ._pybmad import super_sort
 from ._pybmad import surface_grid_displacement
+from ._pybmad import switch_attrib_value_name
 from ._pybmad import symp_lie_bmad
 from ._pybmad import system_command
 from ._pybmad import t6_to_b123
@@ -1318,6 +1326,7 @@ from ._pybmad import tao_d2_data_stuffit
 from ._pybmad import tao_data_check
 from ._pybmad import tao_data_coupling_init
 from ._pybmad import tao_data_sanity_check
+from ._pybmad import tao_data_show_use
 from ._pybmad import tao_data_type_substitute
 from ._pybmad import tao_data_useit_plot_calc
 from ._pybmad import tao_datum_has_associated_ele
@@ -1371,6 +1380,7 @@ from ._pybmad import tao_graph_name
 from ._pybmad import tao_graph_phase_space_setup
 from ._pybmad import tao_graph_s_min_max_calc
 from ._pybmad import tao_graph_setup
+from ._pybmad import tao_help
 from ._pybmad import tao_init
 from ._pybmad import tao_init_beam_in_universe
 from ._pybmad import tao_init_beams
@@ -1503,6 +1513,7 @@ from ._pybmad import tao_setup_key_table
 from ._pybmad import tao_shape_init
 from ._pybmad import tao_show_cmd
 from ._pybmad import tao_show_constraints
+from ._pybmad import tao_show_this
 from ._pybmad import tao_single_mode
 from ._pybmad import tao_single_track
 from ._pybmad import tao_spin_matrices_calc_needed
@@ -1533,6 +1544,7 @@ from ._pybmad import tao_var1_name
 from ._pybmad import tao_var_attrib_name
 from ._pybmad import tao_var_check
 from ._pybmad import tao_var_repoint
+from ._pybmad import tao_var_show_use
 from ._pybmad import tao_var_target_calc
 from ._pybmad import tao_var_useit_plot_calc
 from ._pybmad import tao_var_write
@@ -1683,9 +1695,14 @@ from ._pybmad import twiss_from_tracking
 from ._pybmad import twiss_propagate1
 from ._pybmad import twiss_propagate_all
 from ._pybmad import twiss_to_1_turn_mat
+from ._pybmad import type_complex_taylors
 from ._pybmad import type_coord
+from ._pybmad import type_ele
+from ._pybmad import type_end_stuff
 from ._pybmad import type_expression_tree
+from ._pybmad import type_ptc_fibre
 from ._pybmad import type_ptc_layout
+from ._pybmad import type_taylors
 from ._pybmad import type_this_file
 from ._pybmad import upcase_string
 from ._pybmad import update_ele_from_fibre
@@ -2856,6 +2873,7 @@ __all__ = [
     "get_space_charge_com",
     "get_super_universe",
     "BoolAlloc1D",
+    "CharacterAlloc1D",
     "ComplexAlloc1D",
     "Int8Alloc1D",
     "IntAlloc1D",
@@ -3235,6 +3253,7 @@ __all__ = [
     "add_lattice_control_structs",
     "add_superimpose",
     "add_this_multipass",
+    "add_this_name_to_list",
     "add_this_taylor_term",
     "adjust_super_slave_names",
     "allocate_branch_array",
@@ -3399,6 +3418,7 @@ __all__ = [
     "crystal_h_misalign",
     "crystal_type_to_crystal_params",
     "custom_attribute_ubound_index",
+    "custom_ele_attrib_name_list",
     "damping_matrix_d",
     "date_and_time_stamp",
     "deallocate_ele_pointers",
@@ -3618,7 +3638,9 @@ __all__ = [
     "get_emit_from_sigma_mat",
     "get_file_number",
     "get_file_time_stamp",
+    "get_list_of_names",
     "get_next_word",
+    "get_sequence_args",
     "get_slave_list",
     "get_tty_char",
     "gg_taylor_equal_gg_taylor",
@@ -3968,6 +3990,7 @@ __all__ = [
     "read_binary_cartesian_map",
     "read_binary_cylindrical_map",
     "read_binary_grid_field",
+    "read_digested_bmad_file",
     "read_surface_reflection_file",
     "readline_read_history",
     "readline_write_history",
@@ -4089,6 +4112,7 @@ __all__ = [
     "spline_akima_interpolate",
     "spline_evaluate",
     "spline_fit_orbit",
+    "split_expression_string",
     "split_lat",
     "sprint_spin_taylor_map",
     "sqrt_alpha",
@@ -4124,6 +4148,7 @@ __all__ = [
     "super_sobseq",
     "super_sort",
     "surface_grid_displacement",
+    "switch_attrib_value_name",
     "symp_lie_bmad",
     "system_command",
     "t6_to_b123",
@@ -4166,6 +4191,7 @@ __all__ = [
     "tao_data_check",
     "tao_data_coupling_init",
     "tao_data_sanity_check",
+    "tao_data_show_use",
     "tao_data_type_substitute",
     "tao_data_useit_plot_calc",
     "tao_datum_has_associated_ele",
@@ -4219,6 +4245,7 @@ __all__ = [
     "tao_graph_phase_space_setup",
     "tao_graph_s_min_max_calc",
     "tao_graph_setup",
+    "tao_help",
     "tao_init",
     "tao_init_beam_in_universe",
     "tao_init_beams",
@@ -4351,6 +4378,7 @@ __all__ = [
     "tao_shape_init",
     "tao_show_cmd",
     "tao_show_constraints",
+    "tao_show_this",
     "tao_single_mode",
     "tao_single_track",
     "tao_spin_matrices_calc_needed",
@@ -4381,6 +4409,7 @@ __all__ = [
     "tao_var_attrib_name",
     "tao_var_check",
     "tao_var_repoint",
+    "tao_var_show_use",
     "tao_var_target_calc",
     "tao_var_useit_plot_calc",
     "tao_var_write",
@@ -4531,9 +4560,14 @@ __all__ = [
     "twiss_propagate1",
     "twiss_propagate_all",
     "twiss_to_1_turn_mat",
+    "type_complex_taylors",
     "type_coord",
+    "type_ele",
+    "type_end_stuff",
     "type_expression_tree",
+    "type_ptc_fibre",
     "type_ptc_layout",
+    "type_taylors",
     "type_this_file",
     "upcase_string",
     "update_ele_from_fibre",

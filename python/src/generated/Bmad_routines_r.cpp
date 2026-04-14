@@ -786,6 +786,66 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
+  py::class_<Bmad::ReadDigestedBmadFile, std::unique_ptr<Bmad::ReadDigestedBmadFile>>(
+      m,
+      "ReadDigestedBmadFile",
+      "read_digested_bmad_file return type"
+  )
+      .def_readonly("lat", &Bmad::ReadDigestedBmadFile::lat)
+      .def_readonly("inc_version", &Bmad::ReadDigestedBmadFile::inc_version)
+      .def_readonly("err_flag", &Bmad::ReadDigestedBmadFile::err_flag)
+      .def_readonly("parser_calling", &Bmad::ReadDigestedBmadFile::parser_calling)
+      .def_readonly("lat_files", &Bmad::ReadDigestedBmadFile::lat_files)
+      .def("__len__", [](const Bmad::ReadDigestedBmadFile &) { return 5; })
+      .def("__getitem__", [](const Bmad::ReadDigestedBmadFile &s, int i) -> py::object {
+        if (i < 0)
+          i += 5;
+        if (i == 0)
+          return py::cast(s.lat);
+        if (i == 1)
+          return py::cast(s.inc_version);
+        if (i == 2)
+          return py::cast(s.err_flag);
+        if (i == 3)
+          return py::cast(s.parser_calling);
+        if (i == 4)
+          return py::cast(s.lat_files);
+        throw py::index_error();
+      });
+  m.def(
+      "read_digested_bmad_file",
+      &Bmad::read_digested_bmad_file,
+      py::arg("digested_file"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine read_digested_bmad_file
+
+Parameters
+----------
+digested_file : str
+    Name of the digested file.
+
+Returns
+-------
+lat : LatStruct
+    Output lattice structure
+
+inc_version : int
+    bmad version number stored in the lattice file. If the file is current this number should be the same as
+    the global parameter bmad_inc_version$. Set to -1 if there is a read error.
+
+err_flag : bool, optional
+    Set True if there is an error. False otherwise.
+
+parser_calling : bool, optional
+    Is this routine being called from a parser routine (like bmad_parser)? Default is False. This argument
+    determines what are considered errors. For example, a moved digested file is considered an error if this
+    routine is called from a parser but not otherwise. The reason for this dichotomy is that a parser is able
+    to reread the original lattice file.
+
+lat_files : 1D array of str, optional
+    List of Bmad lattice files that defined this lattice.
+)"""
+  );
   m.def(
       "read_surface_reflection_file",
       &Bmad::read_surface_reflection_file,

@@ -19,32 +19,32 @@ use tao_interface, only: tao_abort_command_file, tao_alias_cmd, tao_beam_emit_ca
     tao_clip_cmd, tao_close_command_file, tao_command, tao_constraint_type_name, &
     tao_control_tree_list, tao_count_strings, tao_curve_ele_ref, tao_curve_ix_uni, &
     tao_curve_name, tao_curve_rms_calc, tao_d2_d1_name, tao_data_check, tao_data_coupling_init, &
-    tao_data_sanity_check, tao_datum_has_associated_ele, tao_datum_name, tao_de_optimizer, &
-    tao_ele_shape_info, tao_evaluate_a_datum, tao_evaluate_element_parameters, &
-    tao_evaluate_expression, tao_evaluate_expression_new, tao_evaluate_expression_old, &
-    tao_evaluate_tree, tao_evaluate_tune, tao_find_plot_region, tao_fixer, tao_floor_to_screen, &
-    tao_floor_to_screen_coords, tao_get_opt_vars, tao_graph_name, tao_init, &
-    tao_init_find_elements, tao_init_lattice, tao_init_plotting, tao_is_valid_name, &
-    tao_json_cmd, tao_key_info_to_str, tao_lat_bookkeeper, tao_lat_emit_calc, &
-    tao_lat_sigma_calc_needed, tao_lattice_calc, tao_limit_calc, tao_lmdif_optimizer, &
-    tao_locate_all_elements, tao_locate_elements, tao_mark_lattice_ele, tao_merit, &
-    tao_one_turn_map_calc_needed, tao_open_file, tao_open_scratch_file, &
-    tao_optimization_status, tao_oreint_building_wall_pt, tao_param_value_at_s, &
-    tao_parse_command_args, tao_parse_element_param_str, tao_pause_cmd, tao_pick_universe, &
-    tao_pipe_cmd, tao_place_cmd, tao_plot_cmd, tao_plot_setup, tao_plot_struct_transfer, &
-    tao_pointer_to_building_wall_shape, tao_pointer_to_datum, tao_pointer_to_ele_shape, &
-    tao_pointer_to_tao_lat, tao_pointer_to_universe, tao_pointer_to_universes, &
-    tao_print_command_line_info, tao_ptc_normal_form, tao_python_cmd, tao_quiet_set, &
-    tao_rad_int_calc_needed, tao_re_allocate_expression_info, tao_read_cmd, &
+    tao_data_sanity_check, tao_data_show_use, tao_datum_has_associated_ele, tao_datum_name, &
+    tao_de_optimizer, tao_ele_shape_info, tao_evaluate_a_datum, &
+    tao_evaluate_element_parameters, tao_evaluate_expression, tao_evaluate_expression_new, &
+    tao_evaluate_expression_old, tao_evaluate_tree, tao_evaluate_tune, tao_find_plot_region, &
+    tao_fixer, tao_floor_to_screen, tao_floor_to_screen_coords, tao_get_opt_vars, &
+    tao_graph_name, tao_help, tao_init, tao_init_find_elements, tao_init_lattice, &
+    tao_init_plotting, tao_is_valid_name, tao_json_cmd, tao_key_info_to_str, &
+    tao_lat_bookkeeper, tao_lat_emit_calc, tao_lat_sigma_calc_needed, tao_lattice_calc, &
+    tao_limit_calc, tao_lmdif_optimizer, tao_locate_all_elements, tao_locate_elements, &
+    tao_mark_lattice_ele, tao_merit, tao_one_turn_map_calc_needed, tao_open_file, &
+    tao_open_scratch_file, tao_optimization_status, tao_oreint_building_wall_pt, &
+    tao_param_value_at_s, tao_parse_command_args, tao_parse_element_param_str, tao_pause_cmd, &
+    tao_pick_universe, tao_pipe_cmd, tao_place_cmd, tao_plot_cmd, tao_plot_setup, &
+    tao_plot_struct_transfer, tao_pointer_to_building_wall_shape, tao_pointer_to_datum, &
+    tao_pointer_to_ele_shape, tao_pointer_to_tao_lat, tao_pointer_to_universe, &
+    tao_pointer_to_universes, tao_print_command_line_info, tao_ptc_normal_form, tao_python_cmd, &
+    tao_quiet_set, tao_rad_int_calc_needed, tao_re_allocate_expression_info, tao_read_cmd, &
     tao_read_phase_space_index, tao_regression_test, tao_remove_blank_characters, tao_run_cmd, &
     tao_scale_ping_data, tao_set_data_useit_opt, tao_set_invalid, tao_set_opt_vars, &
     tao_set_var_model_value, tao_set_var_useit_opt, tao_setup_key_table, tao_shape_init, &
-    tao_show_cmd, tao_single_mode, tao_spin_matrices_calc_needed, tao_spin_tracking_turn_on, &
-    tao_split_component, tao_srdt_calc_needed, tao_subin_uni_number, &
+    tao_show_cmd, tao_show_this, tao_single_mode, tao_spin_matrices_calc_needed, &
+    tao_spin_tracking_turn_on, tao_split_component, tao_srdt_calc_needed, tao_subin_uni_number, &
     tao_symbol_import_from_lat, tao_taper_cmd, tao_to_real, tao_top_level, &
     tao_turn_on_special_calcs_if_needed_for_plotting, tao_uni_atsign_index, tao_universe_index, &
     tao_use_data, tao_use_var, tao_user_is_terminating_optimization, tao_var1_name, &
-    tao_var_attrib_name, tao_var_check, tao_var_repoint, tao_var_target_calc, &
+    tao_var_attrib_name, tao_var_check, tao_var_repoint, tao_var_show_use, tao_var_target_calc, &
     tao_var_useit_plot_calc, tao_write_cmd, tao_x_axis_cmd
 
 use tao_init_data_mod, only: tao_add_to_normal_mode_h_array, tao_allocate_data_array, &
@@ -1299,6 +1299,41 @@ subroutine fortran_tao_data_sanity_check (datum, print_err, default_data_type, u
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
   f_is_valid_ptr = f_is_valid
+end subroutine
+subroutine fortran_tao_data_show_use (d2_data, lines, nl) bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_d2_data_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: d2_data  ! 0D_NOT_type
+  type(tao_d2_data_struct), pointer :: f_d2_data
+  type(c_ptr), intent(in), value :: nl  ! 0D_NOT_integer
+  integer(c_int) :: f_nl
+  integer(c_int), pointer :: f_nl_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  ! ** End of parameters **
+  ! in: f_d2_data 0D_NOT_type
+  if (.not. c_associated(d2_data)) return
+  call c_f_pointer(d2_data, f_d2_data)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! in: f_nl 0D_NOT_integer
+  if (c_associated(nl)) then
+    call c_f_pointer(nl, f_nl_ptr)
+  else
+    f_nl_ptr => null()
+  endif
+  call tao_data_show_use(f_d2_data, f_lines_local, f_nl_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
 end subroutine
 subroutine fortran_tao_data_type_substitute (template_, str_out, curve, graph) bind(c)
 
@@ -3551,6 +3586,52 @@ subroutine fortran_tao_graph_setup (plot, graph) bind(c)
   call c_f_pointer(graph, f_graph)
   call tao_graph_setup(f_plot, f_graph)
 
+end subroutine
+subroutine fortran_tao_help (what1, what2, lines, n_lines) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: what1
+  character(len=4096), target :: f_what1
+  character(kind=c_char), pointer :: f_what1_ptr(:)
+  type(c_ptr), intent(in), value :: what2
+  character(len=4096), target :: f_what2
+  character(kind=c_char), pointer :: f_what2_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  type(c_ptr), intent(in), value :: n_lines  ! 0D_NOT_integer
+  integer :: f_n_lines
+  integer(c_int), pointer :: f_n_lines_ptr
+  ! ** End of parameters **
+  ! in: f_what1 0D_NOT_character
+  if (.not. c_associated(what1)) return
+  call c_f_pointer(what1, f_what1_ptr, [huge(0)])
+  call to_f_str(f_what1_ptr, f_what1)
+  ! in: f_what2 0D_NOT_character
+  if (.not. c_associated(what2)) return
+  call c_f_pointer(what2, f_what2_ptr, [huge(0)])
+  call to_f_str(f_what2_ptr, f_what2)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! out: f_n_lines 0D_NOT_integer
+  if (c_associated(n_lines)) then
+    call c_f_pointer(n_lines, f_n_lines_ptr)
+  else
+    f_n_lines_ptr => null()
+  endif
+  call tao_help(f_what1, f_what2, f_lines_local, f_n_lines)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+  ! out: f_n_lines 0D_NOT_integer
+  call c_f_pointer(n_lines, f_n_lines_ptr)
+  f_n_lines_ptr = f_n_lines
 end subroutine
 subroutine fortran_tao_init (err_flag) bind(c)
 
@@ -7942,6 +8023,45 @@ subroutine fortran_tao_show_constraints (iunit, form) bind(c)
   call tao_show_constraints(f_iunit, f_form)
 
 end subroutine
+subroutine fortran_tao_show_this (what, result_id, lines, nl) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: what
+  character(len=4096), target :: f_what
+  character(kind=c_char), pointer :: f_what_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: result_id
+  character(len=4096), target :: f_result_id
+  character(kind=c_char), pointer :: f_result_id_ptr(:)
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  type(c_ptr), intent(in), value :: nl  ! 0D_NOT_integer
+  integer :: f_nl
+  integer(c_int), pointer :: f_nl_ptr
+  ! ** End of parameters **
+  ! in: f_what 0D_NOT_character
+  if (.not. c_associated(what)) return
+  call c_f_pointer(what, f_what_ptr, [huge(0)])
+  call to_f_str(f_what_ptr, f_what)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  call tao_show_this(f_what, f_result_id, f_lines_local, f_nl)
+
+  ! out: f_result_id 0D_NOT_character
+  call c_f_pointer(result_id, f_result_id_ptr, [len_trim(f_result_id) + 1])
+  call to_c_str(f_result_id, f_result_id_ptr)
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+  ! out: f_nl 0D_NOT_integer
+  call c_f_pointer(nl, f_nl_ptr)
+  f_nl_ptr = f_nl
+end subroutine
 subroutine fortran_tao_single_mode (char_) bind(c)
 
   use array_desc_mod
@@ -8660,6 +8780,41 @@ subroutine fortran_tao_var_repoint () bind(c)
   ! ** End of parameters **
   call tao_var_repoint()
 
+end subroutine
+subroutine fortran_tao_var_show_use (v1_var, lines, nl) bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_v1_var_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: v1_var  ! 0D_NOT_type
+  type(tao_v1_var_struct), pointer :: f_v1_var
+  type(c_ptr), intent(in), value :: nl  ! 0D_NOT_integer
+  integer(c_int) :: f_nl
+  integer(c_int), pointer :: f_nl_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  ! ** End of parameters **
+  ! in: f_v1_var 0D_NOT_type
+  if (.not. c_associated(v1_var)) return
+  call c_f_pointer(v1_var, f_v1_var)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! in: f_nl 0D_NOT_integer
+  if (c_associated(nl)) then
+    call c_f_pointer(nl, f_nl_ptr)
+  else
+    f_nl_ptr => null()
+  endif
+  call tao_var_show_use(f_v1_var, f_lines_local, f_nl_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
 end subroutine
 subroutine fortran_tao_var_target_calc () bind(c)
 

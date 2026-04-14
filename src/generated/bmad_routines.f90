@@ -73,41 +73,42 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     pointer_to_girder, pointer_to_lord, pointer_to_multipass_lord, pointer_to_next_ele, &
     pointer_to_super_lord, pointer_to_wake_ele, polar_to_spinor, polar_to_vec, ptc_bookkeeper, &
     ptc_ran_seed_put, ptc_set_rf_state_for_c_normal, ptc_transfer_map_with_spin, &
-    radiation_integrals, ramper_slave_setup, ramper_value, re_allocate_eles, reallocate_beam, &
-    reallocate_bunch, reallocate_control, reallocate_coord, reallocate_expression_stack, &
-    rel_tracking_charge_to_mass, relative_mode_flip, remove_dead_from_bunch, &
-    remove_eles_from_lat, remove_lord_slave_link, reverse_lat, rf_coupler_kick, rf_is_on, &
-    rf_ref_time_offset, rotate_for_curved_surface, rotate_spin, rotate_spin_a_step, &
-    rotate_spin_given_field, s_body_calc, s_calc, save_a_beam_step, save_a_bunch_step, &
-    save_a_step, sbend_body_with_k1_map, set_ele_attribute, set_ele_defaults, set_ele_name, &
-    set_ele_real_attribute, set_ele_status_stale, set_flags_for_changed_attribute, &
-    set_fringe_on_off, set_lords_status_stale, set_on_off, set_orbit_to_zero, set_ptc, &
-    set_ptc_base_state, set_status_flags, set_tune, set_twiss, set_z_tune, &
-    significant_difference, slice_lattice, sol_quad_mat6_calc, spin_dn_dpz_from_mat8, &
-    spin_dn_dpz_from_qmap, spin_map1_normalize, spin_mat8_resonance_strengths, &
-    spin_mat_to_eigen, spin_omega, spin_quat_resonance_strengths, spin_taylor_to_linear, &
-    spinor_to_polar, spinor_to_vec, spline_fit_orbit, split_lat, sprint_spin_taylor_map, &
-    start_branch_at, stream_ele_end, strong_beam_sigma_calc, strong_beam_strength, &
-    symp_lie_bmad, taper_mag_strengths, taylor_equal_taylor, taylors_equal_taylors, &
-    tilt_coords, tilt_coords_photon, tilt_mat6, to_surface_coords, track1, track1_bmad, &
-    track1_bmad_photon, track1_bunch_space_charge, track1_linear, track1_runge_kutta, &
-    track1_spin, track1_spin_integration, track1_spin_taylor, track1_symp_lie_ptc, &
-    track1_taylor, track1_time_runge_kutta, track_a_beambeam, track_a_bend, track_a_converter, &
-    track_a_crab_cavity, track_a_drift, track_a_drift_photon, track_a_foil, track_a_gkicker, &
-    track_a_lcavity, track_a_lcavity_old, track_a_mask, track_a_match, track_a_patch, &
-    track_a_pickup, track_a_quadrupole, track_a_rfcavity, track_a_sad_mult, track_a_sol_quad, &
-    track_a_thick_multipole, track_a_wiggler, track_a_zero_length_element, track_all, &
-    track_bunch_time, track_from_s_to_s, track_many, track_to_surface, tracking_rad_map_setup, &
-    transfer_ac_kick, transfer_branch, transfer_branch_parameters, transfer_branches, &
-    transfer_ele, transfer_ele_taylor, transfer_eles, transfer_fieldmap, transfer_lat, &
+    radiation_integrals, ramper_slave_setup, ramper_value, re_allocate_eles, &
+    read_digested_bmad_file, reallocate_beam, reallocate_bunch, reallocate_control, &
+    reallocate_coord, reallocate_expression_stack, rel_tracking_charge_to_mass, &
+    relative_mode_flip, remove_dead_from_bunch, remove_eles_from_lat, remove_lord_slave_link, &
+    reverse_lat, rf_coupler_kick, rf_is_on, rf_ref_time_offset, rotate_for_curved_surface, &
+    rotate_spin, rotate_spin_a_step, rotate_spin_given_field, s_body_calc, s_calc, &
+    save_a_beam_step, save_a_bunch_step, save_a_step, sbend_body_with_k1_map, &
+    set_ele_attribute, set_ele_defaults, set_ele_name, set_ele_real_attribute, &
+    set_ele_status_stale, set_flags_for_changed_attribute, set_fringe_on_off, &
+    set_lords_status_stale, set_on_off, set_orbit_to_zero, set_ptc, set_ptc_base_state, &
+    set_status_flags, set_tune, set_twiss, set_z_tune, significant_difference, slice_lattice, &
+    sol_quad_mat6_calc, spin_dn_dpz_from_mat8, spin_dn_dpz_from_qmap, spin_map1_normalize, &
+    spin_mat8_resonance_strengths, spin_mat_to_eigen, spin_omega, &
+    spin_quat_resonance_strengths, spin_taylor_to_linear, spinor_to_polar, spinor_to_vec, &
+    spline_fit_orbit, split_lat, sprint_spin_taylor_map, start_branch_at, stream_ele_end, &
+    strong_beam_sigma_calc, strong_beam_strength, symp_lie_bmad, taper_mag_strengths, &
+    taylor_equal_taylor, taylors_equal_taylors, tilt_coords, tilt_coords_photon, tilt_mat6, &
+    to_surface_coords, track1, track1_bmad, track1_bmad_photon, track1_bunch_space_charge, &
+    track1_linear, track1_runge_kutta, track1_spin, track1_spin_integration, &
+    track1_spin_taylor, track1_symp_lie_ptc, track1_taylor, track1_time_runge_kutta, &
+    track_a_beambeam, track_a_bend, track_a_converter, track_a_crab_cavity, track_a_drift, &
+    track_a_drift_photon, track_a_foil, track_a_gkicker, track_a_lcavity, track_a_lcavity_old, &
+    track_a_mask, track_a_match, track_a_patch, track_a_pickup, track_a_quadrupole, &
+    track_a_rfcavity, track_a_sad_mult, track_a_sol_quad, track_a_thick_multipole, &
+    track_a_wiggler, track_a_zero_length_element, track_all, track_bunch_time, &
+    track_from_s_to_s, track_many, track_to_surface, tracking_rad_map_setup, transfer_ac_kick, &
+    transfer_branch, transfer_branch_parameters, transfer_branches, transfer_ele, &
+    transfer_ele_taylor, transfer_eles, transfer_fieldmap, transfer_lat, &
     transfer_lat_parameters, transfer_map_calc, transfer_mat2_from_twiss, &
     transfer_mat_from_twiss, transfer_matrix_calc, transfer_twiss, transfer_wake, &
     twiss1_propagate, twiss_and_track_from_s_to_s, twiss_and_track_intra_ele, twiss_at_element, &
     twiss_at_start, twiss_from_tracking, twiss_propagate1, twiss_propagate_all, &
-    twiss_to_1_turn_mat, type_coord, update_fibre_from_ele, update_floor_angles, &
-    valid_field_calc, valid_fringe_type, valid_mat6_calc_method, valid_spin_tracking_method, &
-    valid_tracking_method, value_of_attribute, vec_to_polar, vec_to_spinor, &
-    w_mat_for_bend_angle, w_mat_for_tilt, w_mat_for_x_pitch, w_mat_for_y_pitch, &
+    twiss_to_1_turn_mat, type_coord, type_ele, type_taylors, update_fibre_from_ele, &
+    update_floor_angles, valid_field_calc, valid_fringe_type, valid_mat6_calc_method, &
+    valid_spin_tracking_method, valid_tracking_method, value_of_attribute, vec_to_polar, &
+    vec_to_spinor, w_mat_for_bend_angle, w_mat_for_tilt, w_mat_for_x_pitch, w_mat_for_y_pitch, &
     write_beam_floor_positions, write_bmad_lattice_file, write_lattice_in_elegant_format, &
     write_lattice_in_foreign_format, write_lattice_in_mad_format, write_lattice_in_pals, &
     write_lattice_in_sad_format, write_lattice_in_scibmad, zero_ele_kicks, zero_ele_offsets
@@ -123,16 +124,19 @@ use superimpose_mod, only: add_superimpose, adjust_super_slave_names
 use bmad_parser_mod, only: add_this_multipass, add_this_taylor_term, bp_set_ran_status, &
     check_for_superimpose_problem, drift_and_pipe_track_methods_adjustment, &
     drift_multipass_name_correction, equal_sign_here, evaluate_array_index, evaluate_logical, &
-    expect_one_of, expect_this, form_digested_bmad_file_name, get_called_file, get_next_word, &
-    init_surface_segment, load_parse_line, nint_chk, parse_cartesian_map, &
-    parse_cylindrical_map, parse_gen_grad_map, parse_grid_field, parse_integer_list, &
-    parse_integer_list2, parse_real_list, parse_real_list2, parser_add_constant, &
-    parser_call_check, parser_fast_complex_read, parser_fast_integer_read, &
+    expect_one_of, expect_this, form_digested_bmad_file_name, get_called_file, &
+    get_list_of_names, get_next_word, get_sequence_args, init_surface_segment, load_parse_line, &
+    nint_chk, parse_cartesian_map, parse_cylindrical_map, parse_gen_grad_map, parse_grid_field, &
+    parse_integer_list, parse_integer_list2, parse_real_list, parse_real_list2, &
+    parser_add_constant, parser_call_check, parser_fast_complex_read, parser_fast_integer_read, &
     parser_fast_real_read, parser_file_stack, parser_get_integer, parser_get_logical, &
     parser_identify_fork_to_element, parser_init_custom_elements, parser_print_line, &
     parser_read_lr_wake, parser_read_old_format_lr_wake, parser_read_old_format_sr_wake, &
     parser_read_sr_wake, parser_transfer_control_struct, reallocate_bp_com_const, &
     settable_dep_var_bookkeeping, verify_valid_name, word_to_value
+
+use write_lattice_file_mod, only: add_this_name_to_list, array_re_str, cmplx_re_str, rchomp, &
+    re_str, value_to_line, write_lat_line, write_line_element
 
 use bookkeeper_mod, only: aperture_bookkeeper, compute_slave_coupler, makeup_control_slave, &
     makeup_group_lord, makeup_multipass_slave, makeup_super_slave, makeup_super_slave1
@@ -141,18 +145,16 @@ use ptc_interface_mod, only: apply_patch_to_ptc_fibre, beambeam_fibre_setup, &
     bmad_patch_parameters_to_ptc, concat_ele_taylor, concat_taylor, ele_to_ptc_magnetic_bn_an, &
     form_complex_taylor, kind_name, misalign_ptc_fibre, ptc_set_taylor_order_if_needed, &
     remove_constant_taylor, set_ptc_com_pointers, set_ptc_quiet, sigma_mat_ptc_to_bmad, &
-    taylor_inverse, taylor_propagate1
-
-use write_lattice_file_mod, only: array_re_str, cmplx_re_str, rchomp, re_str, value_to_line, &
-    write_lat_line, write_line_element
+    taylor_inverse, taylor_propagate1, type_end_stuff, type_ptc_fibre
 
 use astra_interface_mod, only: astra_max_field_reference, rotate3, write_astra_bend, &
     write_astra_field_grid_file, write_astra_field_grid_file_3d
 
 use attribute_mod, only: attribute_free, attribute_index, attribute_name, attribute_type, &
-    attribute_units, custom_attribute_ubound_index, field_attribute_free, has_attribute, &
-    has_orientation_attributes, init_attribute_name1, init_attribute_name_array, &
-    n_attrib_string_max_len, set_custom_attribute_name, string_attrib
+    attribute_units, custom_attribute_ubound_index, custom_ele_attrib_name_list, &
+    field_attribute_free, has_attribute, has_orientation_attributes, init_attribute_name1, &
+    init_attribute_name_array, n_attrib_string_max_len, set_custom_attribute_name, &
+    string_attrib, switch_attrib_value_name
 
 use envelope_mod, only: beam_envelope_ibs, damping_matrix_d, diffusion_matrix_b, &
     envelope_radints, envelope_radints_ibs, etdiv, ibs_matrix_c, integrated_mats, make_pbrh, &
@@ -180,7 +182,7 @@ use wall3d_mod, only: calc_wall_radius, create_concatenated_wall3d, mark_patch_r
 use complex_taylor_mod, only: complex_taylor_clean, complex_taylor_coef, &
     complex_taylor_exponent_index, complex_taylor_make_unit, complex_taylor_to_mat6, &
     kill_complex_taylor, mat6_to_complex_taylor, sort_complex_taylor_terms, &
-    track_complex_taylor, truncate_complex_taylor_to_order
+    track_complex_taylor, truncate_complex_taylor_to_order, type_complex_taylors
 
 use transfer_map_mod, only: concat_transfer_mat, transfer_map_from_s_to_s
 
@@ -212,7 +214,7 @@ use xraylib_interface, only: crystal_type_to_crystal_params, &
 use expression_mod, only: deallocate_expression_tree, expression_stack_to_string, &
     expression_stack_value, expression_string_to_stack, expression_string_to_tree, &
     expression_tree_to_string, expression_value, linear_coef, re_associate_node_array, &
-    type_expression_tree
+    split_expression_string, type_expression_tree
 
 use photon_target_mod, only: detector_pixel_pt, photon_add_to_detector_statistics, &
     photon_target_corner_calc, photon_target_setup, to_photon_angle_coords
@@ -831,6 +833,54 @@ subroutine fortran_add_this_multipass (lat, m_slaves, lord_in) bind(c)
   if (c_associated(lord_in))   call c_f_pointer(lord_in, f_lord_in)
   call add_this_multipass(f_lat, f_m_slaves, f_lord_in)
 
+end subroutine
+subroutine fortran_add_this_name_to_list (ele, names, an_indexx, n_names, ix_match, &
+    has_been_added, named_eles) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_pointer_struct, ele_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: n_names  ! 0D_NOT_integer
+  integer :: f_n_names
+  integer(c_int) :: ix_match  ! 0D_NOT_integer
+  integer :: f_ix_match
+  logical(c_bool) :: has_been_added  ! 0D_NOT_logical
+  logical :: f_has_been_added
+  ! ** Inout parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), intent(in), value :: names
+  type(character_container_alloc), pointer :: f_names
+  character(40), allocatable :: f_names_local(:)
+  type(c_ptr), intent(in), value :: an_indexx
+  type(integer_container_alloc), pointer :: f_an_indexx
+  type(c_ptr), intent(in), value :: named_eles
+  type(ele_pointer_struct_container_alloc), pointer :: f_named_eles
+  ! ** End of parameters **
+  ! inout: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(names))   call c_f_pointer(names, f_names)
+  !! container general array (1D_ALLOC_integer)
+  if (c_associated(an_indexx))   call c_f_pointer(an_indexx, f_an_indexx)
+  ! in: f_n_names 0D_NOT_integer
+  f_n_names = n_names
+  ! in: f_ix_match 0D_NOT_integer
+  f_ix_match = ix_match
+  ! in: f_has_been_added 0D_NOT_logical
+  f_has_been_added = has_been_added
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(named_eles))   call c_f_pointer(named_eles, f_named_eles)
+  call add_this_name_to_list(f_ele, f_names_local, f_an_indexx%data, f_n_names, f_ix_match, &
+      f_has_been_added, f_named_eles%data)
+
+  !! copy allocatable character result into container
+  if (c_associated(names) .and. allocated(f_names_local)) then
+    if (allocated(f_names%data)) deallocate(f_names%data)
+    allocate(f_names%data, source=f_names_local)
+  endif
 end subroutine
 subroutine fortran_add_this_taylor_term (ele, i_out, coef, expn) bind(c)
 
@@ -6488,6 +6538,29 @@ subroutine fortran_custom_attribute_ubound_index (ele_class, ix_ubound) bind(c)
   ! out: f_ix_ubound 0D_NOT_integer
   call c_f_pointer(ix_ubound, f_ix_ubound_ptr)
   f_ix_ubound_ptr = f_ix_ubound
+end subroutine
+subroutine fortran_custom_ele_attrib_name_list (index_list, name_list) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: index_list
+  type(integer_container_alloc), pointer :: f_index_list
+  type(c_ptr), intent(in), value :: name_list
+  type(character_container_alloc), pointer :: f_name_list
+  character(200), allocatable :: f_name_list_local(:)
+  ! ** End of parameters **
+  !! container general array (1D_ALLOC_integer)
+  if (c_associated(index_list))   call c_f_pointer(index_list, f_index_list)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(name_list))   call c_f_pointer(name_list, f_name_list)
+  call custom_ele_attrib_name_list(f_index_list%data, f_name_list_local)
+
+  !! copy allocatable character result into container
+  if (c_associated(name_list) .and. allocated(f_name_list_local)) then
+    if (allocated(f_name_list%data)) deallocate(f_name_list%data)
+    allocate(f_name_list%data, source=f_name_list_local)
+  endif
 end subroutine
 subroutine fortran_damping_matrix_d (gamma, g_tot, B0, B1, delta, species, mat) bind(c)
 
@@ -13052,6 +13125,56 @@ subroutine fortran_get_emit_from_sigma_mat (sigma_mat, normal, Nmat, err_flag) b
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
+subroutine fortran_get_list_of_names (ele, err_str, name_list, delim, delim_found, err_flag) &
+    bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: err_str
+  character(len=4096), target :: f_err_str
+  character(kind=c_char), pointer :: f_err_str_ptr(:)
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  logical(c_bool) :: delim_found  ! 0D_NOT_logical
+  logical :: f_delim_found
+  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  ! ** Inout parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), intent(in), value :: name_list
+  type(character_container_alloc), pointer :: f_name_list
+  character(200), allocatable :: f_name_list_local(:)
+  ! ** End of parameters **
+  ! inout: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_err_str 0D_NOT_character
+  if (.not. c_associated(err_str)) return
+  call c_f_pointer(err_str, f_err_str_ptr, [huge(0)])
+  call to_f_str(f_err_str_ptr, f_err_str)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(name_list))   call c_f_pointer(name_list, f_name_list)
+  ! in: f_delim 0D_NOT_character
+  if (.not. c_associated(delim)) return
+  call c_f_pointer(delim, f_delim_ptr, [huge(0)])
+  call to_f_str(f_delim_ptr, f_delim)
+  ! in: f_delim_found 0D_NOT_logical
+  f_delim_found = delim_found
+  ! in: f_err_flag 0D_NOT_logical
+  f_err_flag = err_flag
+  call get_list_of_names(f_ele, f_err_str, f_name_list_local, f_delim, f_delim_found, &
+      f_err_flag)
+
+  !! copy allocatable character result into container
+  if (c_associated(name_list) .and. allocated(f_name_list_local)) then
+    if (allocated(f_name_list%data)) deallocate(f_name_list%data)
+    allocate(f_name_list%data, source=f_name_list_local)
+  endif
+end subroutine
 subroutine fortran_get_next_word (word, ix_word, delim_list, delim, delim_found, &
     upper_case_word, call_check, err_flag) bind(c)
 
@@ -13141,6 +13264,44 @@ subroutine fortran_get_next_word (word, ix_word, delim_list, delim, delim_found,
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
+end subroutine
+subroutine fortran_get_sequence_args (seq_name, arg_list, delim, err_flag) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: seq_name
+  character(len=4096), target :: f_seq_name
+  character(kind=c_char), pointer :: f_seq_name_ptr(:)
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: arg_list
+  type(character_container_alloc), pointer :: f_arg_list
+  character(200), allocatable :: f_arg_list_local(:)
+  ! ** End of parameters **
+  ! in: f_seq_name 0D_NOT_character
+  if (.not. c_associated(seq_name)) return
+  call c_f_pointer(seq_name, f_seq_name_ptr, [huge(0)])
+  call to_f_str(f_seq_name_ptr, f_seq_name)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(arg_list))   call c_f_pointer(arg_list, f_arg_list)
+  ! in: f_delim 0D_NOT_character
+  if (.not. c_associated(delim)) return
+  call c_f_pointer(delim, f_delim_ptr, [huge(0)])
+  call to_f_str(f_delim_ptr, f_delim)
+  ! in: f_err_flag 0D_NOT_logical
+  f_err_flag = err_flag
+  call get_sequence_args(f_seq_name, f_arg_list_local, f_delim, f_err_flag)
+
+  !! copy allocatable character result into container
+  if (c_associated(arg_list) .and. allocated(f_arg_list_local)) then
+    if (allocated(f_arg_list%data)) deallocate(f_arg_list%data)
+    allocate(f_arg_list%data, source=f_arg_list_local)
+  endif
 end subroutine
 subroutine fortran_get_slave_list (lord, slaves, n_slave) bind(c)
 
@@ -25114,6 +25275,81 @@ subroutine fortran_read_binary_grid_field (file_name, ele, g_field, err_flag) bi
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
+subroutine fortran_read_digested_bmad_file (digested_file, lat, inc_version, err_flag, &
+    parser_calling, lat_files) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: lat_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: digested_file
+  character(len=4096), target :: f_digested_file
+  character(kind=c_char), pointer :: f_digested_file_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), intent(in), value :: inc_version  ! 0D_NOT_integer
+  integer :: f_inc_version
+  integer(c_int), pointer :: f_inc_version_ptr
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: parser_calling  ! 0D_NOT_logical
+  logical :: f_parser_calling
+  logical(c_bool), pointer :: f_parser_calling_ptr
+  type(c_ptr), intent(in), value :: lat_files
+  type(character_container_alloc), pointer :: f_lat_files
+  character(200), allocatable :: f_lat_files_local(:)
+  ! ** End of parameters **
+  ! in: f_digested_file 0D_NOT_character
+  if (.not. c_associated(digested_file)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(digested_file, f_digested_file_ptr, [huge(0)])
+  call to_f_str(f_digested_file_ptr, f_digested_file)
+  ! out: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(lat, f_lat)
+  ! out: f_err_flag 0D_NOT_logical
+  if (c_associated(err_flag)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+  else
+    f_err_flag_ptr => null()
+  endif
+  ! out: f_parser_calling 0D_NOT_logical
+  if (c_associated(parser_calling)) then
+    call c_f_pointer(parser_calling, f_parser_calling_ptr)
+  else
+    f_parser_calling_ptr => null()
+  endif
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lat_files))   call c_f_pointer(lat_files, f_lat_files)
+  call read_digested_bmad_file(f_digested_file, f_lat, f_inc_version, f_err_flag, &
+      f_parser_calling, f_lat_files_local)
+
+  ! out: f_lat 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_inc_version 0D_NOT_integer
+  call c_f_pointer(inc_version, f_inc_version_ptr)
+  f_inc_version_ptr = f_inc_version
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+  ! out: f_parser_calling 0D_NOT_logical
+  call c_f_pointer(parser_calling, f_parser_calling_ptr)
+  f_parser_calling_ptr = f_parser_calling
+  !! copy allocatable character result into container
+  if (c_associated(lat_files) .and. allocated(f_lat_files_local)) then
+    if (allocated(f_lat_files%data)) deallocate(f_lat_files%data)
+    allocate(f_lat_files%data, source=f_lat_files_local)
+  endif
+end subroutine
 subroutine fortran_read_surface_reflection_file (file_name, surface) bind(c)
 
   use array_desc_mod
@@ -28706,6 +28942,53 @@ subroutine fortran_spline_fit_orbit (start_orb, end_orb, spline_x, spline_y) bin
   call spline_fit_orbit(f_start_orb, f_end_orb, f_spline_x, f_spline_y)
 
 end subroutine
+subroutine fortran_split_expression_string (expr, width, indent, lines, break_str) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: expr
+  character(len=4096), target :: f_expr
+  character(kind=c_char), pointer :: f_expr_ptr(:)
+  integer(c_int) :: width  ! 0D_NOT_integer
+  integer :: f_width
+  integer(c_int) :: indent  ! 0D_NOT_integer
+  integer :: f_indent
+  type(c_ptr), intent(in), value :: break_str
+  character(len=4096), target :: f_break_str
+  character(kind=c_char), pointer :: f_break_str_ptr(:)
+  character(len=4096), pointer :: f_break_str_call_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  ! ** End of parameters **
+  ! in: f_expr 0D_NOT_character
+  if (.not. c_associated(expr)) return
+  call c_f_pointer(expr, f_expr_ptr, [huge(0)])
+  call to_f_str(f_expr_ptr, f_expr)
+  ! in: f_width 0D_NOT_integer
+  f_width = width
+  ! in: f_indent 0D_NOT_integer
+  f_indent = indent
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! in: f_break_str 0D_NOT_character
+  if (c_associated(break_str)) then
+    call c_f_pointer(break_str, f_break_str_ptr, [huge(0)])
+    call to_f_str(f_break_str_ptr, f_break_str)
+    f_break_str_call_ptr => f_break_str
+  else
+    f_break_str_call_ptr => null()
+  endif
+  call split_expression_string(f_expr, f_width, f_indent, f_lines_local, f_break_str_call_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+end subroutine
 subroutine fortran_split_lat (lat, s_split, ix_branch, ix_split, split_done, add_suffix, &
     check_sanity, save_null_drift, err_flag, choose_max, ix_insert) bind(c)
 
@@ -29279,6 +29562,63 @@ subroutine fortran_surface_grid_displacement (ele, x, y, err_flag, z, dz_dxy, ex
     call c_f_pointer(dz_dxy%data_ptr, f_dz_dxy_ptr, [dz_dxy%dims(1)])
     f_dz_dxy_ptr = f_dz_dxy(:)
   endif
+end subroutine
+subroutine fortran_switch_attrib_value_name (attrib_name, attrib_value, ele, is_default, &
+    name_list, attrib_val_name) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
+  real(c_double) :: attrib_value  ! 0D_NOT_real
+  real(rp) :: f_attrib_value
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: is_default  ! 0D_NOT_logical
+  logical :: f_is_default
+  logical(c_bool), pointer :: f_is_default_ptr
+  type(c_ptr), intent(in), value :: name_list
+  type(character_container_alloc), pointer :: f_name_list
+  character(200), allocatable :: f_name_list_local(:)
+  type(c_ptr), intent(in), value :: attrib_val_name
+  character(len=4096), target :: f_attrib_val_name
+  character(kind=c_char), pointer :: f_attrib_val_name_ptr(:)
+  ! ** End of parameters **
+  ! in: f_attrib_name 0D_NOT_character
+  if (.not. c_associated(attrib_name)) return
+  call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
+  call to_f_str(f_attrib_name_ptr, f_attrib_name)
+  ! in: f_attrib_value 0D_NOT_real
+  f_attrib_value = attrib_value
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! out: f_is_default 0D_NOT_logical
+  if (c_associated(is_default)) then
+    call c_f_pointer(is_default, f_is_default_ptr)
+  else
+    f_is_default_ptr => null()
+  endif
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(name_list))   call c_f_pointer(name_list, f_name_list)
+  f_attrib_val_name = switch_attrib_value_name(f_attrib_name, f_attrib_value, f_ele, &
+      f_is_default, f_name_list_local)
+
+  ! out: f_is_default 0D_NOT_logical
+  call c_f_pointer(is_default, f_is_default_ptr)
+  f_is_default_ptr = f_is_default
+  !! copy allocatable character result into container
+  if (c_associated(name_list) .and. allocated(f_name_list_local)) then
+    if (allocated(f_name_list%data)) deallocate(f_name_list%data)
+    allocate(f_name_list%data, source=f_name_list_local)
+  endif
+  ! out: f_attrib_val_name 0D_NOT_character
+  call c_f_pointer(attrib_val_name, f_attrib_val_name_ptr, [len_trim(f_attrib_val_name) + 1])
+  call to_c_str(f_attrib_val_name, f_attrib_val_name_ptr)
 end subroutine
 subroutine fortran_symp_lie_bmad (ele, param, orbit, track, mat6, make_matrix, offset_ele) &
     bind(c)
@@ -35095,6 +35435,94 @@ subroutine fortran_twiss_to_1_turn_mat (twiss, phi, mat2) bind(c)
   ! out: f_mat2 2D_NOT_real
   if (c_associated(mat2%data_ptr)) f_mat2_ptr = mat2vec(f_mat2, product(mat2%dims(1:mat2%rank)))
 end subroutine
+subroutine fortran_type_complex_taylors (complex_taylor, max_order, lines, n_lines, file_id, &
+    out_type, clean) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: complex_taylor_struct
+  implicit none
+  ! ** In parameters **
+  type(array_descriptor_t), intent(in) :: complex_taylor
+  type(complex_taylor_struct), pointer :: f_complex_taylor(:)
+  type(complex_taylor_struct), pointer :: f_complex_taylor_ptr(:)
+  type(c_ptr), intent(in), value :: max_order  ! 0D_NOT_integer
+  integer(c_int) :: f_max_order
+  integer(c_int), pointer :: f_max_order_ptr
+  type(c_ptr), intent(in), value :: file_id  ! 0D_NOT_integer
+  integer(c_int) :: f_file_id
+  integer(c_int), pointer :: f_file_id_ptr
+  type(c_ptr), intent(in), value :: out_type
+  character(len=4096), target :: f_out_type
+  character(kind=c_char), pointer :: f_out_type_ptr(:)
+  character(len=4096), pointer :: f_out_type_call_ptr
+  type(c_ptr), intent(in), value :: clean  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_clean
+  logical, target :: f_clean_native
+  logical, pointer :: f_clean_native_ptr
+  logical(c_bool), pointer :: f_clean_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  type(c_ptr), intent(in), value :: n_lines  ! 0D_NOT_integer
+  integer :: f_n_lines
+  integer(c_int), pointer :: f_n_lines_ptr
+  ! ** End of parameters **
+  !! type array (1D_NOT_type)
+  if (c_associated(complex_taylor%data_ptr)) then
+    call c_f_pointer(complex_taylor%data_ptr, f_complex_taylor_ptr, [complex_taylor%dims(1)])
+    f_complex_taylor => f_complex_taylor_ptr
+  else
+    f_complex_taylor => null()
+  endif
+  ! in: f_max_order 0D_NOT_integer
+  if (c_associated(max_order)) then
+    call c_f_pointer(max_order, f_max_order_ptr)
+  else
+    f_max_order_ptr => null()
+  endif
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! out: f_n_lines 0D_NOT_integer
+  if (c_associated(n_lines)) then
+    call c_f_pointer(n_lines, f_n_lines_ptr)
+  else
+    f_n_lines_ptr => null()
+  endif
+  ! in: f_file_id 0D_NOT_integer
+  if (c_associated(file_id)) then
+    call c_f_pointer(file_id, f_file_id_ptr)
+  else
+    f_file_id_ptr => null()
+  endif
+  ! in: f_out_type 0D_NOT_character
+  if (c_associated(out_type)) then
+    call c_f_pointer(out_type, f_out_type_ptr, [huge(0)])
+    call to_f_str(f_out_type_ptr, f_out_type)
+    f_out_type_call_ptr => f_out_type
+  else
+    f_out_type_call_ptr => null()
+  endif
+  ! in: f_clean 0D_NOT_logical
+  if (c_associated(clean)) then
+    call c_f_pointer(clean, f_clean_ptr)
+    f_clean_native = f_clean_ptr
+    f_clean_native_ptr => f_clean_native
+  else
+    f_clean_native_ptr => null()
+  endif
+  call type_complex_taylors(f_complex_taylor, f_max_order_ptr, f_lines_local, f_n_lines, &
+      f_file_id_ptr, f_out_type_call_ptr, f_clean_native_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+  ! out: f_n_lines 0D_NOT_integer
+  call c_f_pointer(n_lines, f_n_lines_ptr)
+  f_n_lines_ptr = f_n_lines
+end subroutine
 subroutine fortran_type_coord (coord) bind(c)
 
   use array_desc_mod
@@ -35109,6 +35537,219 @@ subroutine fortran_type_coord (coord) bind(c)
   call c_f_pointer(coord, f_coord)
   call type_coord(f_coord)
 
+end subroutine
+subroutine fortran_type_ele (ele, type_zero_attrib, type_mat6, type_taylor, twiss_out, &
+    type_control, type_wake, type_floor_coords, type_field, type_wall, type_rad_kick, &
+    type_internal, lines, n_lines) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), intent(in), value :: type_zero_attrib  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_type_zero_attrib
+  logical, target :: f_type_zero_attrib_native
+  logical, pointer :: f_type_zero_attrib_native_ptr
+  logical(c_bool), pointer :: f_type_zero_attrib_ptr
+  type(c_ptr), intent(in), value :: type_mat6  ! 0D_NOT_integer
+  integer(c_int) :: f_type_mat6
+  integer(c_int), pointer :: f_type_mat6_ptr
+  type(c_ptr), intent(in), value :: type_taylor  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_type_taylor
+  logical, target :: f_type_taylor_native
+  logical, pointer :: f_type_taylor_native_ptr
+  logical(c_bool), pointer :: f_type_taylor_ptr
+  type(c_ptr), intent(in), value :: twiss_out  ! 0D_NOT_integer
+  integer(c_int) :: f_twiss_out
+  integer(c_int), pointer :: f_twiss_out_ptr
+  type(c_ptr), intent(in), value :: type_control  ! 0D_NOT_integer
+  integer(c_int) :: f_type_control
+  integer(c_int), pointer :: f_type_control_ptr
+  type(c_ptr), intent(in), value :: type_wake  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_type_wake
+  logical, target :: f_type_wake_native
+  logical, pointer :: f_type_wake_native_ptr
+  logical(c_bool), pointer :: f_type_wake_ptr
+  type(c_ptr), intent(in), value :: type_floor_coords  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_type_floor_coords
+  logical, target :: f_type_floor_coords_native
+  logical, pointer :: f_type_floor_coords_native_ptr
+  logical(c_bool), pointer :: f_type_floor_coords_ptr
+  type(c_ptr), intent(in), value :: type_field  ! 0D_NOT_integer
+  integer(c_int) :: f_type_field
+  integer(c_int), pointer :: f_type_field_ptr
+  type(c_ptr), intent(in), value :: type_wall  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_type_wall
+  logical, target :: f_type_wall_native
+  logical, pointer :: f_type_wall_native_ptr
+  logical(c_bool), pointer :: f_type_wall_ptr
+  type(c_ptr), intent(in), value :: type_rad_kick  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_type_rad_kick
+  logical, target :: f_type_rad_kick_native
+  logical, pointer :: f_type_rad_kick_native_ptr
+  logical(c_bool), pointer :: f_type_rad_kick_ptr
+  type(c_ptr), intent(in), value :: type_internal  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_type_internal
+  logical, target :: f_type_internal_native
+  logical, pointer :: f_type_internal_native_ptr
+  logical(c_bool), pointer :: f_type_internal_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  type(c_ptr), intent(in), value :: n_lines  ! 0D_NOT_integer
+  integer :: f_n_lines
+  integer(c_int), pointer :: f_n_lines_ptr
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_type_zero_attrib 0D_NOT_logical
+  if (c_associated(type_zero_attrib)) then
+    call c_f_pointer(type_zero_attrib, f_type_zero_attrib_ptr)
+    f_type_zero_attrib_native = f_type_zero_attrib_ptr
+    f_type_zero_attrib_native_ptr => f_type_zero_attrib_native
+  else
+    f_type_zero_attrib_native_ptr => null()
+  endif
+  ! in: f_type_mat6 0D_NOT_integer
+  if (c_associated(type_mat6)) then
+    call c_f_pointer(type_mat6, f_type_mat6_ptr)
+  else
+    f_type_mat6_ptr => null()
+  endif
+  ! in: f_type_taylor 0D_NOT_logical
+  if (c_associated(type_taylor)) then
+    call c_f_pointer(type_taylor, f_type_taylor_ptr)
+    f_type_taylor_native = f_type_taylor_ptr
+    f_type_taylor_native_ptr => f_type_taylor_native
+  else
+    f_type_taylor_native_ptr => null()
+  endif
+  ! in: f_twiss_out 0D_NOT_integer
+  if (c_associated(twiss_out)) then
+    call c_f_pointer(twiss_out, f_twiss_out_ptr)
+  else
+    f_twiss_out_ptr => null()
+  endif
+  ! in: f_type_control 0D_NOT_integer
+  if (c_associated(type_control)) then
+    call c_f_pointer(type_control, f_type_control_ptr)
+  else
+    f_type_control_ptr => null()
+  endif
+  ! in: f_type_wake 0D_NOT_logical
+  if (c_associated(type_wake)) then
+    call c_f_pointer(type_wake, f_type_wake_ptr)
+    f_type_wake_native = f_type_wake_ptr
+    f_type_wake_native_ptr => f_type_wake_native
+  else
+    f_type_wake_native_ptr => null()
+  endif
+  ! in: f_type_floor_coords 0D_NOT_logical
+  if (c_associated(type_floor_coords)) then
+    call c_f_pointer(type_floor_coords, f_type_floor_coords_ptr)
+    f_type_floor_coords_native = f_type_floor_coords_ptr
+    f_type_floor_coords_native_ptr => f_type_floor_coords_native
+  else
+    f_type_floor_coords_native_ptr => null()
+  endif
+  ! in: f_type_field 0D_NOT_integer
+  if (c_associated(type_field)) then
+    call c_f_pointer(type_field, f_type_field_ptr)
+  else
+    f_type_field_ptr => null()
+  endif
+  ! in: f_type_wall 0D_NOT_logical
+  if (c_associated(type_wall)) then
+    call c_f_pointer(type_wall, f_type_wall_ptr)
+    f_type_wall_native = f_type_wall_ptr
+    f_type_wall_native_ptr => f_type_wall_native
+  else
+    f_type_wall_native_ptr => null()
+  endif
+  ! in: f_type_rad_kick 0D_NOT_logical
+  if (c_associated(type_rad_kick)) then
+    call c_f_pointer(type_rad_kick, f_type_rad_kick_ptr)
+    f_type_rad_kick_native = f_type_rad_kick_ptr
+    f_type_rad_kick_native_ptr => f_type_rad_kick_native
+  else
+    f_type_rad_kick_native_ptr => null()
+  endif
+  ! in: f_type_internal 0D_NOT_logical
+  if (c_associated(type_internal)) then
+    call c_f_pointer(type_internal, f_type_internal_ptr)
+    f_type_internal_native = f_type_internal_ptr
+    f_type_internal_native_ptr => f_type_internal_native
+  else
+    f_type_internal_native_ptr => null()
+  endif
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! out: f_n_lines 0D_NOT_integer
+  if (c_associated(n_lines)) then
+    call c_f_pointer(n_lines, f_n_lines_ptr)
+  else
+    f_n_lines_ptr => null()
+  endif
+  call type_ele(f_ele, f_type_zero_attrib_native_ptr, f_type_mat6_ptr, &
+      f_type_taylor_native_ptr, f_twiss_out_ptr, f_type_control_ptr, f_type_wake_native_ptr, &
+      f_type_floor_coords_native_ptr, f_type_field_ptr, f_type_wall_native_ptr, &
+      f_type_rad_kick_native_ptr, f_type_internal_native_ptr, f_lines_local, f_n_lines)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+  ! out: f_n_lines 0D_NOT_integer
+  call c_f_pointer(n_lines, f_n_lines_ptr)
+  f_n_lines_ptr = f_n_lines
+end subroutine
+subroutine fortran_type_end_stuff (li, nl, lines, n_lines) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: nl  ! 0D_NOT_integer
+  integer :: f_nl
+  type(c_ptr), intent(in), value :: n_lines  ! 0D_NOT_integer
+  integer(c_int) :: f_n_lines
+  integer(c_int), pointer :: f_n_lines_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: li
+  type(character_container_alloc), pointer :: f_li
+  character(200), allocatable :: f_li_local(:)
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  ! ** End of parameters **
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(li))   call c_f_pointer(li, f_li)
+  ! in: f_nl 0D_NOT_integer
+  f_nl = nl
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! in: f_n_lines 0D_NOT_integer
+  if (c_associated(n_lines)) then
+    call c_f_pointer(n_lines, f_n_lines_ptr)
+  else
+    f_n_lines_ptr => null()
+  endif
+  call type_end_stuff(f_li_local, f_nl, f_lines_local, f_n_lines_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(li) .and. allocated(f_li_local)) then
+    if (allocated(f_li%data)) deallocate(f_li%data)
+    allocate(f_li%data, source=f_li_local)
+  endif
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
 end subroutine
 subroutine fortran_type_expression_tree (tree, indent) bind(c)
 
@@ -35134,6 +35775,57 @@ subroutine fortran_type_expression_tree (tree, indent) bind(c)
   call type_expression_tree(f_tree, f_indent_ptr)
 
 end subroutine
+subroutine fortran_type_ptc_fibre (ptc_fibre, print_coords, lines, n_lines) bind(c)
+
+  use array_desc_mod
+  use definition, only: fibre
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ptc_fibre  ! 0D_PTR_type
+  type(fibre), pointer :: f_ptc_fibre
+  type(c_ptr), intent(in), value :: print_coords  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_coords
+  logical, target :: f_print_coords_native
+  logical, pointer :: f_print_coords_native_ptr
+  logical(c_bool), pointer :: f_print_coords_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  type(c_ptr), intent(in), value :: n_lines  ! 0D_NOT_integer
+  integer :: f_n_lines
+  integer(c_int), pointer :: f_n_lines_ptr
+  ! ** End of parameters **
+  ! in: f_ptc_fibre 0D_PTR_type
+  if (.not. c_associated(ptc_fibre)) return
+  call c_f_pointer(ptc_fibre, f_ptc_fibre)
+  ! in: f_print_coords 0D_NOT_logical
+  if (c_associated(print_coords)) then
+    call c_f_pointer(print_coords, f_print_coords_ptr)
+    f_print_coords_native = f_print_coords_ptr
+    f_print_coords_native_ptr => f_print_coords_native
+  else
+    f_print_coords_native_ptr => null()
+  endif
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! out: f_n_lines 0D_NOT_integer
+  if (c_associated(n_lines)) then
+    call c_f_pointer(n_lines, f_n_lines_ptr)
+  else
+    f_n_lines_ptr => null()
+  endif
+  call type_ptc_fibre(f_ptc_fibre, f_print_coords_native_ptr, f_lines_local, f_n_lines)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+  ! out: f_n_lines 0D_NOT_integer
+  call c_f_pointer(n_lines, f_n_lines_ptr)
+  f_n_lines_ptr = f_n_lines
+end subroutine
 subroutine fortran_type_ptc_layout (lay) bind(c)
 
   use array_desc_mod
@@ -35148,6 +35840,119 @@ subroutine fortran_type_ptc_layout (lay) bind(c)
   call c_f_pointer(lay, f_lay)
   call type_ptc_layout(f_lay)
 
+end subroutine
+subroutine fortran_type_taylors (bmad_taylor, max_order, lines, n_lines, file_id, out_style, &
+    clean, out_var_suffix, append) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: taylor_struct
+  implicit none
+  ! ** In parameters **
+  type(array_descriptor_t), intent(in) :: bmad_taylor
+  type(taylor_struct), pointer :: f_bmad_taylor(:)
+  type(taylor_struct), pointer :: f_bmad_taylor_ptr(:)
+  type(c_ptr), intent(in), value :: max_order  ! 0D_NOT_integer
+  integer(c_int) :: f_max_order
+  integer(c_int), pointer :: f_max_order_ptr
+  type(c_ptr), intent(in), value :: file_id  ! 0D_NOT_integer
+  integer(c_int) :: f_file_id
+  integer(c_int), pointer :: f_file_id_ptr
+  type(c_ptr), intent(in), value :: out_style
+  character(len=4096), target :: f_out_style
+  character(kind=c_char), pointer :: f_out_style_ptr(:)
+  character(len=4096), pointer :: f_out_style_call_ptr
+  type(c_ptr), intent(in), value :: clean  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_clean
+  logical, target :: f_clean_native
+  logical, pointer :: f_clean_native_ptr
+  logical(c_bool), pointer :: f_clean_ptr
+  type(c_ptr), intent(in), value :: out_var_suffix
+  character(len=4096), target :: f_out_var_suffix
+  character(kind=c_char), pointer :: f_out_var_suffix_ptr(:)
+  character(len=4096), pointer :: f_out_var_suffix_call_ptr
+  type(c_ptr), intent(in), value :: append  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_append
+  logical, target :: f_append_native
+  logical, pointer :: f_append_native_ptr
+  logical(c_bool), pointer :: f_append_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  type(c_ptr), intent(in), value :: n_lines  ! 0D_NOT_integer
+  integer(c_int) :: f_n_lines
+  integer(c_int), pointer :: f_n_lines_ptr
+  ! ** End of parameters **
+  !! type array (1D_NOT_type)
+  if (c_associated(bmad_taylor%data_ptr)) then
+    call c_f_pointer(bmad_taylor%data_ptr, f_bmad_taylor_ptr, [bmad_taylor%dims(1)])
+    f_bmad_taylor => f_bmad_taylor_ptr
+  else
+    f_bmad_taylor => null()
+  endif
+  ! in: f_max_order 0D_NOT_integer
+  if (c_associated(max_order)) then
+    call c_f_pointer(max_order, f_max_order_ptr)
+  else
+    f_max_order_ptr => null()
+  endif
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  ! inout: f_n_lines 0D_NOT_integer
+  if (c_associated(n_lines)) then
+    call c_f_pointer(n_lines, f_n_lines_ptr)
+  else
+    f_n_lines_ptr => null()
+  endif
+  ! in: f_file_id 0D_NOT_integer
+  if (c_associated(file_id)) then
+    call c_f_pointer(file_id, f_file_id_ptr)
+  else
+    f_file_id_ptr => null()
+  endif
+  ! in: f_out_style 0D_NOT_character
+  if (c_associated(out_style)) then
+    call c_f_pointer(out_style, f_out_style_ptr, [huge(0)])
+    call to_f_str(f_out_style_ptr, f_out_style)
+    f_out_style_call_ptr => f_out_style
+  else
+    f_out_style_call_ptr => null()
+  endif
+  ! in: f_clean 0D_NOT_logical
+  if (c_associated(clean)) then
+    call c_f_pointer(clean, f_clean_ptr)
+    f_clean_native = f_clean_ptr
+    f_clean_native_ptr => f_clean_native
+  else
+    f_clean_native_ptr => null()
+  endif
+  ! in: f_out_var_suffix 0D_NOT_character
+  if (c_associated(out_var_suffix)) then
+    call c_f_pointer(out_var_suffix, f_out_var_suffix_ptr, [huge(0)])
+    call to_f_str(f_out_var_suffix_ptr, f_out_var_suffix)
+    f_out_var_suffix_call_ptr => f_out_var_suffix
+  else
+    f_out_var_suffix_call_ptr => null()
+  endif
+  ! in: f_append 0D_NOT_logical
+  if (c_associated(append)) then
+    call c_f_pointer(append, f_append_ptr)
+    f_append_native = f_append_ptr
+    f_append_native_ptr => f_append_native
+  else
+    f_append_native_ptr => null()
+  endif
+  call type_taylors(f_bmad_taylor, f_max_order_ptr, f_lines_local, f_n_lines_ptr, &
+      f_file_id_ptr, f_out_style_call_ptr, f_clean_native_ptr, f_out_var_suffix_call_ptr, &
+      f_append_native_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+  ! inout: f_n_lines 0D_NOT_integer
+  ! no output conversion for f_n_lines
 end subroutine
 subroutine fortran_update_ele_from_fibre (ele) bind(c)
 

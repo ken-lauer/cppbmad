@@ -519,7 +519,6 @@ int find_location(FArray1D<Real> &arr, double value);
 
 // Skipped unusable routine find_location_str:
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_fine_frequency_estimate(
     Bmad::array_descriptor_t &data /* 1D_NOT_real in */,
     double &frequency /* 0D_NOT_real out */
@@ -584,7 +583,6 @@ double gen_complete_elliptic(
 
 // Skipped unusable routine get_a_char:
 // - Variable-sized in character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_get_file_number(
     const char *file_name /* 0D_NOT_character in */,
     const char *cnum_in /* 0D_NOT_character in */,
@@ -881,7 +879,6 @@ void match_wild(std::string string, std::string template_, bool is_match);
 
 // Skipped unusable routine match_word:
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine max_nonzero:
 // - Module name unset
@@ -1125,7 +1122,6 @@ void out_io(
 
 // Skipped unusable routine out_io_lines:
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_out_io_logical(
     int &level /* 0D_NOT_integer in */,
     const char *routine_name /* 0D_NOT_character in */,
@@ -1190,7 +1186,6 @@ void parse_fortran_format(
 
 // Skipped unusable routine pointer_to_locations:
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_pointer_to_ran_state(
     void *ran_state /* 0D_NOT_type in */,
     int *ix_thread /* 0D_NOT_integer in */,
@@ -1357,7 +1352,6 @@ void quote(std::string str, std::string q_str);
 
 // Skipped unusable routine quoten:
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_ran_default_state(
     void *set_state /* 0D_NOT_type in */,
     void *get_state /* 0D_NOT_type out */

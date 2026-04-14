@@ -317,6 +317,28 @@ void Bmad::add_this_multipass(
       /* void* */ _lord_in
   );
 }
+void Bmad::add_this_name_to_list(
+    EleStruct &ele,
+    CharacterAlloc1D &names,
+    IntAlloc1D &an_indexx,
+    int n_names,
+    int ix_match,
+    bool has_been_added,
+    ElePointerStructAlloc1D named_eles
+) {
+  // intent=inout allocatable character array
+  // intent=inout allocatable general array
+  // intent=inout allocatable type array
+  fortran_add_this_name_to_list(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ names.get_fortran_ptr(),
+      /* void* */ an_indexx.get_fortran_ptr(),
+      /* int& */ n_names,
+      /* int& */ ix_match,
+      /* bool& */ has_been_added,
+      /* void* */ named_eles.get_fortran_ptr()
+  );
+}
 void Bmad::add_this_taylor_term(EleStruct &ele, int i_out, double coef, FixedArray1D<Int, 6> expn) {
   // expn: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
   Bmad::array_descriptor_t _expn_desc;
@@ -3017,6 +3039,17 @@ int Bmad::custom_attribute_ubound_index(int ele_class) {
   fortran_custom_attribute_ubound_index(/* int& */ ele_class, /* int& */ _ix_ubound);
   return _ix_ubound;
 }
+Bmad::CustomEleAttribNameList Bmad::custom_ele_attrib_name_list() {
+  // intent=out allocatable general array
+  auto index_list{IntAlloc1D()};
+  // intent=out allocatable character array
+  auto name_list{CharacterAlloc1D()};
+  fortran_custom_ele_attrib_name_list(
+      /* void* */ index_list.get_fortran_ptr(),
+      /* void* */ name_list.get_fortran_ptr()
+  );
+  return CustomEleAttribNameList{std::move(index_list), std::move(name_list)};
+}
 void Bmad::damping_matrix_d(
     double gamma,
     double g_tot,
@@ -5641,6 +5674,26 @@ Bmad::GetEmitFromSigmaMat Bmad::get_emit_from_sigma_mat(
   );
   return GetEmitFromSigmaMat{_normal, _err_flag};
 }
+void Bmad::get_list_of_names(
+    EleStruct &ele,
+    std::string err_str,
+    CharacterAlloc1D &name_list,
+    std::string delim,
+    bool delim_found,
+    bool err_flag
+) {
+  auto _err_str = err_str.c_str();
+  // intent=inout allocatable character array
+  auto _delim = delim.c_str();
+  fortran_get_list_of_names(
+      /* void* */ ele.get_fortran_ptr(),
+      /* const char* */ _err_str,
+      /* void* */ name_list.get_fortran_ptr(),
+      /* const char* */ _delim,
+      /* bool& */ delim_found,
+      /* bool& */ err_flag
+  );
+}
 Bmad::GetNextWord Bmad::get_next_word(
     std::string word,
     std::string delim_list,
@@ -5678,6 +5731,22 @@ Bmad::GetNextWord Bmad::get_next_word(
       /* bool& */ _err_flag
   );
   return GetNextWord{_ix_word, _delim, _delim_found, _err_flag};
+}
+void Bmad::get_sequence_args(
+    std::string seq_name,
+    CharacterAlloc1D &arg_list,
+    std::string delim,
+    bool err_flag
+) {
+  auto _seq_name = seq_name.c_str();
+  // intent=inout allocatable character array
+  auto _delim = delim.c_str();
+  fortran_get_sequence_args(
+      /* const char* */ _seq_name,
+      /* void* */ arg_list.get_fortran_ptr(),
+      /* const char* */ _delim,
+      /* bool& */ err_flag
+  );
 }
 Bmad::GetSlaveList Bmad::get_slave_list(EleStruct &lord) {
   // intent=out allocatable type array
@@ -11510,6 +11579,30 @@ Bmad::ReadBinaryGridField Bmad::read_binary_grid_field(std::string file_name, El
   );
   return ReadBinaryGridField{std::move(_g_field), _err_flag};
 }
+Bmad::ReadDigestedBmadFile Bmad::read_digested_bmad_file(std::string digested_file) {
+  auto _digested_file = digested_file.c_str();
+  LatStruct _lat;
+  int _inc_version{};
+  bool _err_flag{};
+  bool _parser_calling{};
+  // intent=out allocatable character array
+  auto lat_files{CharacterAlloc1D()};
+  fortran_read_digested_bmad_file(
+      /* const char* */ _digested_file,
+      /* void* */ _lat.get_fortran_ptr(),
+      /* int& */ _inc_version,
+      /* bool& */ _err_flag,
+      /* bool& */ _parser_calling,
+      /* void* */ lat_files.get_fortran_ptr()
+  );
+  return ReadDigestedBmadFile{
+      std::move(_lat),
+      _inc_version,
+      _err_flag,
+      _parser_calling,
+      std::move(lat_files)
+  };
+}
 PhotonReflectSurfaceStruct Bmad::read_surface_reflection_file(std::string file_name) {
   auto _file_name = file_name.c_str();
   PhotonReflectSurfaceStruct _surface;
@@ -13451,6 +13544,25 @@ void Bmad::spline_fit_orbit(
       /* Bmad::array_descriptor_t& */ _spline_y_desc
   );
 }
+CharacterAlloc1D Bmad::split_expression_string(
+    std::string expr,
+    int width,
+    int indent,
+    std::optional<std::string> break_str
+) {
+  auto _expr = expr.c_str();
+  // intent=out allocatable character array
+  auto lines{CharacterAlloc1D()};
+  const char *_break_str = break_str.has_value() ? break_str->c_str() : nullptr;
+  fortran_split_expression_string(
+      /* const char* */ _expr,
+      /* int& */ width,
+      /* int& */ indent,
+      /* void* */ lines.get_fortran_ptr(),
+      /* const char* */ _break_str
+  );
+  return std::move(lines);
+}
 Bmad::SplitLat Bmad::split_lat(
     LatStruct &lat,
     double s_split,
@@ -13742,6 +13854,23 @@ Bmad::SurfaceGridDisplacement Bmad::surface_grid_displacement(
       /* bool* */ _extend_grid
   );
   return SurfaceGridDisplacement{_err_flag, _z, _dz_dxy};
+}
+Bmad::SwitchAttribValueName
+Bmad::switch_attrib_value_name(std::string attrib_name, double attrib_value, EleStruct &ele) {
+  auto _attrib_name = attrib_name.c_str();
+  bool _is_default{};
+  // intent=out allocatable character array
+  auto name_list{CharacterAlloc1D()};
+  char _attrib_val_name[4096];
+  fortran_switch_attrib_value_name(
+      /* const char* */ _attrib_name,
+      /* double& */ attrib_value,
+      /* void* */ ele.get_fortran_ptr(),
+      /* bool& */ _is_default,
+      /* void* */ name_list.get_fortran_ptr(),
+      /* const char* */ _attrib_val_name
+  );
+  return SwitchAttribValueName{_is_default, std::move(name_list), _attrib_val_name};
 }
 TrackStruct Bmad::symp_lie_bmad(
     EleStruct &ele,
@@ -16862,8 +16991,192 @@ FixedArray2D<Real, 2, 2> Bmad::twiss_to_1_turn_mat(TwissStruct &twiss, double ph
   vec_to_matrix(_mat2_vec, mat2);
   return mat2;
 }
+Bmad::TypeComplexTaylors Bmad::type_complex_taylors(
+    ComplexTaylorStructArray1D complex_taylor,
+    std::optional<int> max_order,
+    std::optional<int> file_id,
+    std::optional<std::string> out_type,
+    std::optional<bool> clean
+) {
+  // complex_taylor: ComplexTaylorStruct in (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _complex_taylor_desc;
+  _complex_taylor_desc.rank = 1;
+  _complex_taylor_desc.data_ptr = complex_taylor.data();
+  _complex_taylor_desc.dims[0] = complex_taylor.size();
+  _complex_taylor_desc.strides[0] = 1;
+  int max_order_lvalue;
+  auto *_max_order{&max_order_lvalue};
+  if (max_order.has_value()) {
+    max_order_lvalue = max_order.value();
+  } else {
+    _max_order = nullptr;
+  }
+  // intent=out allocatable character array
+  auto lines{CharacterAlloc1D()};
+  int _n_lines{};
+  int file_id_lvalue;
+  auto *_file_id{&file_id_lvalue};
+  if (file_id.has_value()) {
+    file_id_lvalue = file_id.value();
+  } else {
+    _file_id = nullptr;
+  }
+  const char *_out_type = out_type.has_value() ? out_type->c_str() : nullptr;
+  bool clean_lvalue;
+  auto *_clean{&clean_lvalue};
+  if (clean.has_value()) {
+    clean_lvalue = clean.value();
+  } else {
+    _clean = nullptr;
+  }
+  fortran_type_complex_taylors(
+      /* Bmad::array_descriptor_t& */ _complex_taylor_desc,
+      /* int* */ _max_order,
+      /* void* */ lines.get_fortran_ptr(),
+      /* int& */ _n_lines,
+      /* int* */ _file_id,
+      /* const char* */ _out_type,
+      /* bool* */ _clean
+  );
+  return TypeComplexTaylors{std::move(lines), _n_lines};
+}
 void Bmad::type_coord(CoordStruct &coord) {
   fortran_type_coord(/* void* */ coord.get_fortran_ptr());
+}
+Bmad::TypeEle Bmad::type_ele(
+    EleStruct &ele,
+    std::optional<bool> type_zero_attrib,
+    std::optional<int> type_mat6,
+    std::optional<bool> type_taylor,
+    std::optional<int> twiss_out,
+    std::optional<int> type_control,
+    std::optional<bool> type_wake,
+    std::optional<bool> type_floor_coords,
+    std::optional<int> type_field,
+    std::optional<bool> type_wall,
+    std::optional<bool> type_rad_kick,
+    std::optional<bool> type_internal
+) {
+  bool type_zero_attrib_lvalue;
+  auto *_type_zero_attrib{&type_zero_attrib_lvalue};
+  if (type_zero_attrib.has_value()) {
+    type_zero_attrib_lvalue = type_zero_attrib.value();
+  } else {
+    _type_zero_attrib = nullptr;
+  }
+  int type_mat6_lvalue;
+  auto *_type_mat6{&type_mat6_lvalue};
+  if (type_mat6.has_value()) {
+    type_mat6_lvalue = type_mat6.value();
+  } else {
+    _type_mat6 = nullptr;
+  }
+  bool type_taylor_lvalue;
+  auto *_type_taylor{&type_taylor_lvalue};
+  if (type_taylor.has_value()) {
+    type_taylor_lvalue = type_taylor.value();
+  } else {
+    _type_taylor = nullptr;
+  }
+  int twiss_out_lvalue;
+  auto *_twiss_out{&twiss_out_lvalue};
+  if (twiss_out.has_value()) {
+    twiss_out_lvalue = twiss_out.value();
+  } else {
+    _twiss_out = nullptr;
+  }
+  int type_control_lvalue;
+  auto *_type_control{&type_control_lvalue};
+  if (type_control.has_value()) {
+    type_control_lvalue = type_control.value();
+  } else {
+    _type_control = nullptr;
+  }
+  bool type_wake_lvalue;
+  auto *_type_wake{&type_wake_lvalue};
+  if (type_wake.has_value()) {
+    type_wake_lvalue = type_wake.value();
+  } else {
+    _type_wake = nullptr;
+  }
+  bool type_floor_coords_lvalue;
+  auto *_type_floor_coords{&type_floor_coords_lvalue};
+  if (type_floor_coords.has_value()) {
+    type_floor_coords_lvalue = type_floor_coords.value();
+  } else {
+    _type_floor_coords = nullptr;
+  }
+  int type_field_lvalue;
+  auto *_type_field{&type_field_lvalue};
+  if (type_field.has_value()) {
+    type_field_lvalue = type_field.value();
+  } else {
+    _type_field = nullptr;
+  }
+  bool type_wall_lvalue;
+  auto *_type_wall{&type_wall_lvalue};
+  if (type_wall.has_value()) {
+    type_wall_lvalue = type_wall.value();
+  } else {
+    _type_wall = nullptr;
+  }
+  bool type_rad_kick_lvalue;
+  auto *_type_rad_kick{&type_rad_kick_lvalue};
+  if (type_rad_kick.has_value()) {
+    type_rad_kick_lvalue = type_rad_kick.value();
+  } else {
+    _type_rad_kick = nullptr;
+  }
+  bool type_internal_lvalue;
+  auto *_type_internal{&type_internal_lvalue};
+  if (type_internal.has_value()) {
+    type_internal_lvalue = type_internal.value();
+  } else {
+    _type_internal = nullptr;
+  }
+  // intent=out allocatable character array
+  auto lines{CharacterAlloc1D()};
+  int _n_lines{};
+  fortran_type_ele(
+      /* void* */ ele.get_fortran_ptr(),
+      /* bool* */ _type_zero_attrib,
+      /* int* */ _type_mat6,
+      /* bool* */ _type_taylor,
+      /* int* */ _twiss_out,
+      /* int* */ _type_control,
+      /* bool* */ _type_wake,
+      /* bool* */ _type_floor_coords,
+      /* int* */ _type_field,
+      /* bool* */ _type_wall,
+      /* bool* */ _type_rad_kick,
+      /* bool* */ _type_internal,
+      /* void* */ lines.get_fortran_ptr(),
+      /* int& */ _n_lines
+  );
+  return TypeEle{std::move(lines), _n_lines};
+}
+void Bmad::type_end_stuff(
+    CharacterAlloc1D &li,
+    int nl,
+    optional_ref<CharacterAlloc1D> lines,
+    std::optional<int> n_lines
+) {
+  // intent=inout allocatable character array
+  // intent=inout allocatable character array
+  auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
+  int n_lines_lvalue;
+  auto *_n_lines{&n_lines_lvalue};
+  if (n_lines.has_value()) {
+    n_lines_lvalue = n_lines.value();
+  } else {
+    _n_lines = nullptr;
+  }
+  fortran_type_end_stuff(
+      /* void* */ li.get_fortran_ptr(),
+      /* int& */ nl,
+      /* void* */ _lines,
+      /* int* */ _n_lines
+  );
 }
 void Bmad::type_expression_tree(ExpressionTreeStruct &tree, std::optional<int> indent) {
   int indent_lvalue;
@@ -16875,8 +17188,90 @@ void Bmad::type_expression_tree(ExpressionTreeStruct &tree, std::optional<int> i
   }
   fortran_type_expression_tree(/* void* */ tree.get_fortran_ptr(), /* int* */ _indent);
 }
+Bmad::TypePtcFibre Bmad::type_ptc_fibre(Fibre &ptc_fibre, std::optional<bool> print_coords) {
+  auto _ptc_fibre = &ptc_fibre; // input, required, pointer
+  bool print_coords_lvalue;
+  auto *_print_coords{&print_coords_lvalue};
+  if (print_coords.has_value()) {
+    print_coords_lvalue = print_coords.value();
+  } else {
+    _print_coords = nullptr;
+  }
+  // intent=out allocatable character array
+  auto lines{CharacterAlloc1D()};
+  int _n_lines{};
+  fortran_type_ptc_fibre(
+      /* void* */ &ptc_fibre,
+      /* bool* */ _print_coords,
+      /* void* */ lines.get_fortran_ptr(),
+      /* int& */ _n_lines
+  );
+  return TypePtcFibre{std::move(lines), _n_lines};
+}
 void Bmad::type_ptc_layout(Layout &lay) {
   fortran_type_ptc_layout(/* void* */ lay.get_fortran_ptr());
+}
+void Bmad::type_taylors(
+    TaylorStructArray1D bmad_taylor,
+    std::optional<int> max_order,
+    optional_ref<CharacterAlloc1D> lines,
+    optional_ref<int> n_lines,
+    std::optional<int> file_id,
+    std::optional<std::string> out_style,
+    std::optional<bool> clean,
+    std::optional<std::string> out_var_suffix,
+    std::optional<bool> append
+) {
+  // bmad_taylor: TaylorStruct in (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _bmad_taylor_desc;
+  _bmad_taylor_desc.rank = 1;
+  _bmad_taylor_desc.data_ptr = bmad_taylor.data();
+  _bmad_taylor_desc.dims[0] = bmad_taylor.size();
+  _bmad_taylor_desc.strides[0] = 1;
+  int max_order_lvalue;
+  auto *_max_order{&max_order_lvalue};
+  if (max_order.has_value()) {
+    max_order_lvalue = max_order.value();
+  } else {
+    _max_order = nullptr;
+  }
+  // intent=inout allocatable character array
+  auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
+  auto *_n_lines = n_lines.has_value() ? &n_lines->get() : nullptr; // inout, optional
+  int file_id_lvalue;
+  auto *_file_id{&file_id_lvalue};
+  if (file_id.has_value()) {
+    file_id_lvalue = file_id.value();
+  } else {
+    _file_id = nullptr;
+  }
+  const char *_out_style = out_style.has_value() ? out_style->c_str() : nullptr;
+  bool clean_lvalue;
+  auto *_clean{&clean_lvalue};
+  if (clean.has_value()) {
+    clean_lvalue = clean.value();
+  } else {
+    _clean = nullptr;
+  }
+  const char *_out_var_suffix = out_var_suffix.has_value() ? out_var_suffix->c_str() : nullptr;
+  bool append_lvalue;
+  auto *_append{&append_lvalue};
+  if (append.has_value()) {
+    append_lvalue = append.value();
+  } else {
+    _append = nullptr;
+  }
+  fortran_type_taylors(
+      /* Bmad::array_descriptor_t& */ _bmad_taylor_desc,
+      /* int* */ _max_order,
+      /* void* */ _lines,
+      /* int* */ _n_lines,
+      /* int* */ _file_id,
+      /* const char* */ _out_style,
+      /* bool* */ _clean,
+      /* const char* */ _out_var_suffix,
+      /* bool* */ _append
+  );
 }
 void Bmad::update_ele_from_fibre(EleStruct &ele) {
   fortran_update_ele_from_fibre(/* void* */ ele.get_fortran_ptr());

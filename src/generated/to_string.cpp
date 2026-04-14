@@ -3019,6 +3019,14 @@ std::string to_string(const Bmad::CreatePlanarWigglerModel &self) {
       {std::pair{"lat", to_string(self.lat)}, std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const Bmad::CustomEleAttribNameList &self) {
+  return repr(
+      &self,
+      "Bmad::CustomEleAttribNameList",
+      {std::pair{"index_list", to_string(self.index_list)},
+       std::pair{"name_list", to_string(self.name_list)}}
+  );
+}
 std::string to_string(const Bmad::DistanceToAperture &self) {
   return repr(
       &self,
@@ -3909,6 +3917,17 @@ std::string to_string(const Bmad::ReadBinaryGridField &self) {
        std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const Bmad::ReadDigestedBmadFile &self) {
+  return repr(
+      &self,
+      "Bmad::ReadDigestedBmadFile",
+      {std::pair{"lat", to_string(self.lat)},
+       std::pair{"inc_version", to_string(self.inc_version)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"parser_calling", to_string(self.parser_calling)},
+       std::pair{"lat_files", to_string(self.lat_files)}}
+  );
+}
 std::string to_string(const SimUtils::RmsValue &self) {
   return repr(
       &self,
@@ -4037,6 +4056,15 @@ std::string to_string(const Bmad::SurfaceGridDisplacement &self) {
       {std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"z", to_string(self.z)},
        std::pair{"dz_dxy", to_string(self.dz_dxy)}}
+  );
+}
+std::string to_string(const Bmad::SwitchAttribValueName &self) {
+  return repr(
+      &self,
+      "Bmad::SwitchAttribValueName",
+      {std::pair{"is_default", to_string(self.is_default)},
+       std::pair{"name_list", to_string(self.name_list)},
+       std::pair{"attrib_val_name", self.attrib_val_name}}
   );
 }
 std::string to_string(const Bmad::T6ToB123 &self) {
@@ -4216,6 +4244,13 @@ std::string to_string(const Tao::TaoGraphSMinMaxCalc &self) {
       {std::pair{"s_min", to_string(self.s_min)}, std::pair{"s_max", to_string(self.s_max)}}
   );
 }
+std::string to_string(const Tao::TaoHelp &self) {
+  return repr(
+      &self,
+      "Tao::TaoHelp",
+      {std::pair{"lines", to_string(self.lines)}, std::pair{"n_lines", to_string(self.n_lines)}}
+  );
+}
 std::string to_string(const Tao::TaoInitFindElements &self) {
   return repr(
       &self,
@@ -4391,6 +4426,15 @@ std::string to_string(const Tao::TaoSetRealValue &self) {
       &self,
       "Tao::TaoSetRealValue",
       {std::pair{"var", to_string(self.var)}, std::pair{"error", to_string(self.error)}}
+  );
+}
+std::string to_string(const Tao::TaoShowThis &self) {
+  return repr(
+      &self,
+      "Tao::TaoShowThis",
+      {std::pair{"result_id", self.result_id},
+       std::pair{"lines", to_string(self.lines)},
+       std::pair{"nl", to_string(self.nl)}}
   );
 }
 std::string to_string(const Tao::TaoSplitComponent &self) {
@@ -4730,6 +4774,27 @@ std::string to_string(const Bmad::TwissFromTracking &self) {
       "Bmad::TwissFromTracking",
       {std::pair{"symp_err", to_string(self.symp_err)},
        std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::TypeComplexTaylors &self) {
+  return repr(
+      &self,
+      "Bmad::TypeComplexTaylors",
+      {std::pair{"lines", to_string(self.lines)}, std::pair{"n_lines", to_string(self.n_lines)}}
+  );
+}
+std::string to_string(const Bmad::TypeEle &self) {
+  return repr(
+      &self,
+      "Bmad::TypeEle",
+      {std::pair{"lines", to_string(self.lines)}, std::pair{"n_lines", to_string(self.n_lines)}}
+  );
+}
+std::string to_string(const Bmad::TypePtcFibre &self) {
+  return repr(
+      &self,
+      "Bmad::TypePtcFibre",
+      {std::pair{"lines", to_string(self.lines)}, std::pair{"n_lines", to_string(self.n_lines)}}
   );
 }
 std::string to_string(const Bmad::ValueOfAttribute &self) {

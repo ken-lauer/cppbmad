@@ -757,6 +757,10 @@ module bmad_struct_proxy_mod
     complex(rp), allocatable :: data(:)
   end type complex_container_alloc
 
+  type :: character_container_alloc
+    character(:), allocatable :: data(:)
+  end type character_container_alloc
+
 contains
 
 
@@ -1155,6 +1159,76 @@ contains
     endif
   end subroutine
             
+
+  function allocate_character_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(character_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_character_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(character_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_character_container_data(container_ptr, lbound_, n, str_len) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    integer(c_int), value :: str_len
+    type(character_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(character(str_len) :: ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_character_container(container_ptr, d_ptr, bounds, str_len, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    integer(c_int), intent(out) :: str_len
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(character_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      str_len = int(len(ctr%data), c_int)
+      d_ptr = c_loc(ctr%data(bounds(1)))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      bounds = 0
+      str_len = 0
+    endif
+  end subroutine
+        
   !! spline_struct
 
     function allocate_fortran_spline_struct(n, element_size) result(ptr) bind(c)

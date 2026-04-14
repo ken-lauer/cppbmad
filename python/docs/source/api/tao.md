@@ -1973,6 +1973,15 @@ Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_data_show_use
+
+Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/tao/code/tao_interface.f90#L206)
+
+::: pybmad.tao_data_show_use
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_data_type_substitute
 
 Fortran source: [`tao/code/tao_graph_setup_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/tao/code/tao_graph_setup_mod.f90#L389)
@@ -2446,6 +2455,15 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`](https://github.com/bmad-sim
 Fortran source: [`tao/code/tao_graph_setup_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/tao/code/tao_graph_setup_mod.f90#L13)
 
 ::: pybmad.tao_graph_setup
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tao_help
+
+Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/tao/code/tao_interface.f90#L455)
+
+::: pybmad.tao_help
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -3641,6 +3659,15 @@ Fortran source: [`tao/code/tao_top10_mod.f90`](https://github.com/bmad-sim/bmad-
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_show_this
+
+Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/tao/code/tao_interface.f90#L936)
+
+::: pybmad.tao_show_this
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_single_mode
 
 Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/tao/code/tao_interface.f90#L882)
@@ -3907,6 +3934,15 @@ Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-
 Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/tao/code/tao_interface.f90#L1015)
 
 ::: pybmad.tao_var_repoint
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tao_var_show_use
+
+Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/tao/code/tao_interface.f90#L1018)
+
+::: pybmad.tao_var_show_use
     options:
       show_root_heading: false
       show_root_toc_entry: false

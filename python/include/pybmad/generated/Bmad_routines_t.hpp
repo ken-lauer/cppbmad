@@ -26,3 +26,6 @@ struct PyTrack1TimeRungeKutta : public Bmad::Track1TimeRungeKutta {
 struct PyTrackADrift {
   std::optional<double> time;
 };
+struct PyTypeTaylors {
+  std::optional<int> n_lines;
+};

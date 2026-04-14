@@ -149,7 +149,6 @@ void tao_calc_data_at_s_pts(
 
 // Skipped unusable routine tao_call_cmd:
 // - Variable-sized in character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_cbar_wave_anal(void *plot /* 0D_NOT_type inout */);
 void tao_cbar_wave_anal(TaoPlotStruct &plot);
 extern "C" void fortran_tao_change_ele(
@@ -218,7 +217,6 @@ void tao_cmd_history_record(std::string cmd);
 
 // Skipped unusable routine tao_cmd_split:
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_command(
     const char *command_line /* 0D_NOT_character in */,
     bool &err /* 0D_NOT_logical in */,
@@ -322,10 +320,16 @@ bool tao_data_sanity_check(
     std::string default_data_type,
     optional_ref<TaoUniverseStruct> uni = std::nullopt
 );
-
-// Skipped unusable routine tao_data_show_use:
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_tao_data_show_use(
+    void *d2_data /* 0D_NOT_type in */,
+    void *lines /* 1D_ALLOC_character inout */,
+    int *nl /* 0D_NOT_integer in */
+);
+void tao_data_show_use(
+    TaoD2DataStruct &d2_data,
+    optional_ref<CharacterAlloc1D> lines = std::nullopt,
+    std::optional<int> nl = std::nullopt
+);
 extern "C" void fortran_tao_data_type_substitute(
     const char *template_ /* 0D_NOT_character in */,
     const char *str_out /* 0D_NOT_character out */,
@@ -988,10 +992,17 @@ Tao::TaoGraphSMinMaxCalc tao_graph_s_min_max_calc(TaoGraphStruct &graph, BranchS
 extern "C" void
 fortran_tao_graph_setup(void *plot /* 0D_NOT_type inout */, void *graph /* 0D_NOT_type inout */);
 void tao_graph_setup(TaoPlotStruct &plot, TaoGraphStruct &graph);
-
-// Skipped unusable routine tao_help:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_tao_help(
+    const char *what1 /* 0D_NOT_character in */,
+    const char *what2 /* 0D_NOT_character in */,
+    void *lines /* 1D_ALLOC_character out */,
+    int &n_lines /* 0D_NOT_integer out */
+);
+struct TaoHelp {
+  CharacterAlloc1D lines;
+  int n_lines;
+};
+Tao::TaoHelp tao_help(std::string what1, std::string what2);
 
 // Skipped unusable routine tao_hook_branch_calc_def:
 // - Routine in configuration skip list
@@ -1319,7 +1330,6 @@ Tao::TaoMerit tao_merit();
 
 // Skipped unusable routine tao_next_switch:
 // - Variable-sized in character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_next_word(
     const char *line /* 0D_NOT_character inout */,
     const char *word /* 0D_NOT_character out */
@@ -2188,10 +2198,18 @@ extern "C" void fortran_tao_show_constraints(
     const char *form /* 0D_NOT_character in */
 );
 void tao_show_constraints(int iunit, std::string form);
-
-// Skipped unusable routine tao_show_this:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_tao_show_this(
+    const char *what /* 0D_NOT_character in */,
+    const char *result_id /* 0D_NOT_character out */,
+    void *lines /* 1D_ALLOC_character out */,
+    int &nl /* 0D_NOT_integer out */
+);
+struct TaoShowThis {
+  std::string result_id;
+  CharacterAlloc1D lines;
+  int nl;
+};
+Tao::TaoShowThis tao_show_this(std::string what);
 extern "C" void fortran_tao_single_mode(const char *char_ /* 0D_NOT_character in */);
 void tao_single_mode(std::string char_);
 extern "C" void fortran_tao_single_track(
@@ -2381,10 +2399,16 @@ extern "C" void fortran_tao_var_check(
 void tao_var_check(ElePointerStructAlloc1D eles, std::string attribute, bool silent);
 extern "C" void fortran_tao_var_repoint();
 void tao_var_repoint();
-
-// Skipped unusable routine tao_var_show_use:
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_tao_var_show_use(
+    void *v1_var /* 0D_NOT_type in */,
+    void *lines /* 1D_ALLOC_character inout */,
+    int *nl /* 0D_NOT_integer in */
+);
+void tao_var_show_use(
+    TaoV1VarStruct &v1_var,
+    optional_ref<CharacterAlloc1D> lines = std::nullopt,
+    std::optional<int> nl = std::nullopt
+);
 
 // Skipped unusable routine tao_var_stuffit1:
 // - Untranslated type: tao_var_input (1D)
@@ -2453,7 +2477,6 @@ void tao_write_cmd(std::string what);
 
 // Skipped unusable routine tao_write_lines:
 // - Variable-sized in character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_x_axis_cmd(
     const char *where /* 0D_NOT_character in */,
     const char *what /* 0D_NOT_character in */

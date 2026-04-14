@@ -298,6 +298,22 @@ err_flag : bool
     Set to true if something went wrong.  Otherwise set to false.
 )"""
   );
+  m.def(
+      "get_list_of_names",
+      &Bmad::get_list_of_names,
+      py::arg("ele"),
+      py::arg("err_str"),
+      py::arg("name_list"),
+      py::arg("delim"),
+      py::arg("delim_found"),
+      py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine get_list_of_names (ele, err_str, delim, delim_found)
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
+  );
   py::class_<Bmad::GetNextWord, std::unique_ptr<Bmad::GetNextWord>>(
       m,
       "GetNextWord",
@@ -362,6 +378,21 @@ delim_found : bool
 
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
+)"""
+  );
+  m.def(
+      "get_sequence_args",
+      &Bmad::get_sequence_args,
+      py::arg("seq_name"),
+      py::arg("arg_list"),
+      py::arg("delim"),
+      py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine get_sequence_args (seq_name, arg_list, delim, err_flag)
+
+Subroutine to get the argument list for a replacement_line or a list.
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
 )"""
   );
   py::class_<Bmad::GetSlaveList, std::unique_ptr<Bmad::GetSlaveList>>(

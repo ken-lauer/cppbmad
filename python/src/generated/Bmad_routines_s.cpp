@@ -1997,6 +1997,40 @@ spline_y : 1D array of float (shape: 0:3)
     Spline coefs for vertical trajectory.
 )"""
   );
+  m.def(
+      "split_expression_string",
+      &Bmad::split_expression_string,
+      py::arg("expr"),
+      py::arg("width"),
+      py::arg("indent"),
+      py::arg("break_str") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine split_expression_string (expr, width, indent, lines)
+
+Routine to break an expression into a number of lines for a nicer display.
+Used when printing expressions.
+
+Parameters
+----------
+expr : str
+    String containing the expression.
+
+width : int
+    Maximum width of split expression.
+
+indent : int
+    If positive: Number of spaces to indent for every line after the first. If negative: No indentation but
+    first line is shortened by |indent|.
+
+break_str : str, optional
+    If present, only break lines at places where this string is.
+
+Returns
+-------
+lines : 1D array of str
+    Split expression.
+)"""
+  );
   py::class_<Bmad::SplitLat, std::unique_ptr<Bmad::SplitLat>>(
       m,
       "SplitLat",
@@ -2463,6 +2497,72 @@ z : float
 
 dz_dxy : 1D array of float (shape: 2), optional
     Surface slope at (x, y).
+)"""
+  );
+  py::class_<Bmad::SwitchAttribValueName, std::unique_ptr<Bmad::SwitchAttribValueName>>(
+      m,
+      "SwitchAttribValueName",
+      "switch_attrib_value_name return type"
+  )
+      .def_readonly("is_default", &Bmad::SwitchAttribValueName::is_default)
+      .def_readonly("name_list", &Bmad::SwitchAttribValueName::name_list)
+      .def_readonly("attrib_val_name", &Bmad::SwitchAttribValueName::attrib_val_name)
+      .def("__len__", [](const Bmad::SwitchAttribValueName &) { return 3; })
+      .def("__getitem__", [](const Bmad::SwitchAttribValueName &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.is_default);
+        if (i == 1)
+          return py::cast(s.name_list);
+        if (i == 2)
+          return py::cast(s.attrib_val_name);
+        throw py::index_error();
+      });
+  m.def(
+      "switch_attrib_value_name",
+      &Bmad::switch_attrib_value_name,
+      py::arg("attrib_name"),
+      py::arg("attrib_value"),
+      py::arg("ele"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Function switch_attrib_value_name (attrib_name, attrib_value, ele,
+                                    is_default, name_list) result (attrib_val_name)
+
+Routine to return the name corresponding to the value of a given switch attribute.
+
+This routine is for "switch" and "species" attributes. For example, the "aperture_type" attribute
+can have value names of "Entrance_End", "Exit_End", etc.
+
+Optionally, this routine can determine if the attribute value corresponds
+to the default value. That is, the value that the attribute would have if
+not specified in the lattice file.
+
+Use the routine attribute_type to first test if the type of the attribute
+corresponds to is_switch$.
+
+Parameters
+----------
+attrib_name : str
+    Name of the attribute. Must be upper case.
+
+attrib_value : float
+    Value of the attribute.
+
+ele : EleStruct
+    Lattice element that the attribute is contained in. Generally only needed to determine the default value.
+
+Returns
+-------
+attrib_val_name : str
+    Name corresponding to the value. Set to null_name$ if there is a problem.
+
+is_default : bool, optional
+    If True then the value of the attiribute corresponds to the default value. If this argument is present,
+    the ele argument must also be present.
+
+name_list : 1D array of str, optional
+    List of names the switch can take. Deallocated if there is an error.
 )"""
   );
   m.def(

@@ -145,10 +145,24 @@ void add_this_multipass(
     LatEleLocStructArray1D m_slaves,
     optional_ref<EleStruct> lord_in = std::nullopt
 );
-
-// Skipped unusable routine add_this_name_to_list:
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_add_this_name_to_list(
+    void *ele /* 0D_NOT_type inout */,
+    void *names /* 1D_ALLOC_character inout */,
+    void *an_indexx /* 1D_ALLOC_integer inout */,
+    int &n_names /* 0D_NOT_integer in */,
+    int &ix_match /* 0D_NOT_integer in */,
+    bool &has_been_added /* 0D_NOT_logical in */,
+    void *named_eles /* 1D_ALLOC_type inout */
+);
+void add_this_name_to_list(
+    EleStruct &ele,
+    CharacterAlloc1D &names,
+    IntAlloc1D &an_indexx,
+    int n_names,
+    int ix_match,
+    bool has_been_added,
+    ElePointerStructAlloc1D named_eles
+);
 extern "C" void fortran_add_this_taylor_term(
     void *ele /* 0D_NOT_type inout */,
     int &i_out /* 0D_NOT_integer in */,
@@ -1582,7 +1596,6 @@ Bmad::CreateElementSlice create_element_slice(
 // Skipped unusable routine create_feedback:
 // - Variable-sized in character array: 1D_NOT_character
 // - Variable-sized in character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_create_field_overlap(
     void *lat /* 0D_NOT_type inout */,
     const char *lord_name /* 0D_NOT_character in */,
@@ -1689,10 +1702,15 @@ extern "C" bool fortran_custom_attribute_ubound_index(
     int &ix_ubound /* 0D_NOT_integer out */
 );
 int custom_attribute_ubound_index(int ele_class);
-
-// Skipped unusable routine custom_ele_attrib_name_list:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_custom_ele_attrib_name_list(
+    void *index_list /* 1D_ALLOC_integer out */,
+    void *name_list /* 1D_ALLOC_character out */
+);
+struct CustomEleAttribNameList {
+  IntAlloc1D index_list;
+  CharacterAlloc1D name_list;
+};
+Bmad::CustomEleAttribNameList custom_ele_attrib_name_list();
 
 // Skipped unusable routine damap_equal_bmad_taylor:
 // - Untranslated type: damap (0D)
@@ -3369,10 +3387,22 @@ Bmad::GetEmitFromSigmaMat get_emit_from_sigma_mat(
 
 // Skipped unusable routine get_gpt_fieldgrid_name_and_scaling:
 // - Untranslated type: str_index_struct (0D)
-
-// Skipped unusable routine get_list_of_names:
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_get_list_of_names(
+    void *ele /* 0D_NOT_type inout */,
+    const char *err_str /* 0D_NOT_character in */,
+    void *name_list /* 1D_ALLOC_character inout */,
+    const char *delim /* 0D_NOT_character in */,
+    bool &delim_found /* 0D_NOT_logical in */,
+    bool &err_flag /* 0D_NOT_logical in */
+);
+void get_list_of_names(
+    EleStruct &ele,
+    std::string err_str,
+    CharacterAlloc1D &name_list,
+    std::string delim,
+    bool delim_found,
+    bool err_flag
+);
 extern "C" void fortran_get_next_word(
     const char *word /* 0D_NOT_character in */,
     int &ix_word /* 0D_NOT_integer out */,
@@ -3401,12 +3431,18 @@ Bmad::GetNextWord get_next_word(
 
 // Skipped unusable routine get_overlay_group_names:
 // - Untranslated type: parser_ele_struct (0D)
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine get_sequence_args:
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_get_sequence_args(
+    const char *seq_name /* 0D_NOT_character in */,
+    void *arg_list /* 1D_ALLOC_character inout */,
+    const char *delim /* 0D_NOT_character in */,
+    bool &err_flag /* 0D_NOT_logical in */
+);
+void get_sequence_args(
+    std::string seq_name,
+    CharacterAlloc1D &arg_list,
+    std::string delim,
+    bool err_flag
+);
 extern "C" void fortran_get_slave_list(
     void *lord /* 0D_NOT_type in */,
     void *slaves /* 1D_ALLOC_type out */,
@@ -3420,7 +3456,6 @@ Bmad::GetSlaveList get_slave_list(EleStruct &lord);
 
 // Skipped unusable routine get_switch:
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine getrhotilde:
 // - Array bounds handling: "Enum 'ILO' found in bounds 'ilo' but not in provided map."
@@ -5639,9 +5674,7 @@ Bmad::ParseRealList2 parse_real_list2(
 
 // Skipped unusable routine parser_add_branch:
 // - Untranslated type: seq_struct (1D)
-// - Variable-sized inout character array: 1D_ALLOC_character
 // - Untranslated type: parser_lat_struct (0D)
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_parser_add_constant(
     const char *word /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type inout */,
@@ -5681,9 +5714,7 @@ void parser_call_check(
 
 // Skipped unusable routine parser_expand_line:
 // - Untranslated type: seq_struct (1D)
-// - Variable-sized in character array: 1D_ALLOC_character
 // - Untranslated type: base_line_ele_struct (1D)
-// - Translated arg count mismatch (unsupported?)
 extern "C" bool fortran_parser_fast_complex_read(
     Bmad::array_descriptor_t &cmplx_vec /* 1D_NOT_complex inout */,
     void *ele /* 0D_NOT_type in */,
@@ -6405,7 +6436,6 @@ void ptc_ran_seed_put(int iseed);
 
 // Skipped unusable routine ptc_read_flat_file:
 // - Variable-sized in character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine ptc_read_map_with_radiation:
 // - Untranslated type: ptc_rad_map_struct (0D)
@@ -6740,10 +6770,22 @@ struct ReadBinaryGridField {
   bool err_flag;
 };
 Bmad::ReadBinaryGridField read_binary_grid_field(std::string file_name, EleStruct &ele);
-
-// Skipped unusable routine read_digested_bmad_file:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_read_digested_bmad_file(
+    const char *digested_file /* 0D_NOT_character in */,
+    void *lat /* 0D_NOT_type out */,
+    int &inc_version /* 0D_NOT_integer out */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    bool &parser_calling /* 0D_NOT_logical out */,
+    void *lat_files /* 1D_ALLOC_character out */
+);
+struct ReadDigestedBmadFile {
+  LatStruct lat;
+  int inc_version;
+  bool err_flag;
+  bool parser_calling;
+  CharacterAlloc1D lat_files;
+};
+Bmad::ReadDigestedBmadFile read_digested_bmad_file(std::string digested_file);
 extern "C" void fortran_read_surface_reflection_file(
     const char *file_name /* 0D_NOT_character in */,
     void *surface /* 0D_NOT_type out */
@@ -7709,10 +7751,19 @@ void spline_fit_orbit(
     FixedArray1D<Real, 4> spline_x,
     FixedArray1D<Real, 4> spline_y
 );
-
-// Skipped unusable routine split_expression_string:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_split_expression_string(
+    const char *expr /* 0D_NOT_character in */,
+    int &width /* 0D_NOT_integer in */,
+    int &indent /* 0D_NOT_integer in */,
+    void *lines /* 1D_ALLOC_character out */,
+    const char *break_str /* 0D_NOT_character in */
+);
+CharacterAlloc1D split_expression_string(
+    std::string expr,
+    int width,
+    int indent,
+    std::optional<std::string> break_str = std::nullopt
+);
 extern "C" void fortran_split_lat(
     void *lat /* 0D_NOT_type inout */,
     double &s_split /* 0D_NOT_real in */,
@@ -7860,10 +7911,21 @@ Bmad::SurfaceGridDisplacement surface_grid_displacement(
     double y,
     std::optional<bool> extend_grid = std::nullopt
 );
-
-// Skipped unusable routine switch_attrib_value_name:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" bool fortran_switch_attrib_value_name(
+    const char *attrib_name /* 0D_NOT_character in */,
+    double &attrib_value /* 0D_NOT_real in */,
+    void *ele /* 0D_NOT_type in */,
+    bool &is_default /* 0D_NOT_logical out */,
+    void *name_list /* 1D_ALLOC_character out */,
+    const char *attrib_val_name /* 0D_NOT_character out */
+);
+struct SwitchAttribValueName {
+  bool is_default;
+  CharacterAlloc1D name_list;
+  std::string attrib_val_name;
+};
+Bmad::SwitchAttribValueName
+switch_attrib_value_name(std::string attrib_name, double attrib_value, EleStruct &ele);
 extern "C" void fortran_symp_lie_bmad(
     void *ele /* 0D_NOT_type inout */,
     void *param /* 0D_NOT_type in */,
@@ -9359,21 +9421,74 @@ extern "C" void fortran_twiss_to_1_turn_mat(
     Bmad::array_descriptor_t &mat2 /* 2D_NOT_real out */
 );
 FixedArray2D<Real, 2, 2> twiss_to_1_turn_mat(TwissStruct &twiss, double phi);
-
-// Skipped unusable routine type_complex_taylors:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_type_complex_taylors(
+    Bmad::array_descriptor_t &complex_taylor /* 1D_NOT_type in */,
+    int *max_order /* 0D_NOT_integer in */,
+    void *lines /* 1D_ALLOC_character out */,
+    int &n_lines /* 0D_NOT_integer out */,
+    int *file_id /* 0D_NOT_integer in */,
+    const char *out_type /* 0D_NOT_character in */,
+    bool *clean /* 0D_NOT_logical in */
+);
+struct TypeComplexTaylors {
+  CharacterAlloc1D lines;
+  int n_lines;
+};
+Bmad::TypeComplexTaylors type_complex_taylors(
+    ComplexTaylorStructArray1D complex_taylor,
+    std::optional<int> max_order = std::nullopt,
+    std::optional<int> file_id = std::nullopt,
+    std::optional<std::string> out_type = std::nullopt,
+    std::optional<bool> clean = std::nullopt
+);
 extern "C" void fortran_type_coord(void *coord /* 0D_NOT_type in */);
 void type_coord(CoordStruct &coord);
-
-// Skipped unusable routine type_ele:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine type_end_stuff:
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_type_ele(
+    void *ele /* 0D_NOT_type in */,
+    bool *type_zero_attrib /* 0D_NOT_logical in */,
+    int *type_mat6 /* 0D_NOT_integer in */,
+    bool *type_taylor /* 0D_NOT_logical in */,
+    int *twiss_out /* 0D_NOT_integer in */,
+    int *type_control /* 0D_NOT_integer in */,
+    bool *type_wake /* 0D_NOT_logical in */,
+    bool *type_floor_coords /* 0D_NOT_logical in */,
+    int *type_field /* 0D_NOT_integer in */,
+    bool *type_wall /* 0D_NOT_logical in */,
+    bool *type_rad_kick /* 0D_NOT_logical in */,
+    bool *type_internal /* 0D_NOT_logical in */,
+    void *lines /* 1D_ALLOC_character out */,
+    int &n_lines /* 0D_NOT_integer out */
+);
+struct TypeEle {
+  CharacterAlloc1D lines;
+  int n_lines;
+};
+Bmad::TypeEle type_ele(
+    EleStruct &ele,
+    std::optional<bool> type_zero_attrib = std::nullopt,
+    std::optional<int> type_mat6 = std::nullopt,
+    std::optional<bool> type_taylor = std::nullopt,
+    std::optional<int> twiss_out = std::nullopt,
+    std::optional<int> type_control = std::nullopt,
+    std::optional<bool> type_wake = std::nullopt,
+    std::optional<bool> type_floor_coords = std::nullopt,
+    std::optional<int> type_field = std::nullopt,
+    std::optional<bool> type_wall = std::nullopt,
+    std::optional<bool> type_rad_kick = std::nullopt,
+    std::optional<bool> type_internal = std::nullopt
+);
+extern "C" void fortran_type_end_stuff(
+    void *li /* 1D_ALLOC_character inout */,
+    int &nl /* 0D_NOT_integer in */,
+    void *lines /* 1D_ALLOC_character inout */,
+    int *n_lines /* 0D_NOT_integer in */
+);
+void type_end_stuff(
+    CharacterAlloc1D &li,
+    int nl,
+    optional_ref<CharacterAlloc1D> lines = std::nullopt,
+    std::optional<int> n_lines = std::nullopt
+);
 extern "C" void
 fortran_type_expression_tree(void *tree /* 0D_NOT_type in */, int *indent /* 0D_NOT_integer in */);
 void type_expression_tree(ExpressionTreeStruct &tree, std::optional<int> indent = std::nullopt);
@@ -9383,28 +9498,51 @@ void type_expression_tree(ExpressionTreeStruct &tree, std::optional<int> indent 
 
 // Skipped unusable routine type_map1:
 // - Untranslated type: real_8 (1D)
-
-// Skipped unusable routine type_ptc_fibre:
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_type_ptc_fibre(
+    void *ptc_fibre /* 0D_PTR_type in */,
+    bool *print_coords /* 0D_NOT_logical in */,
+    void *lines /* 1D_ALLOC_character out */,
+    int &n_lines /* 0D_NOT_integer out */
+);
+struct TypePtcFibre {
+  CharacterAlloc1D lines;
+  int n_lines;
+};
+Bmad::TypePtcFibre
+type_ptc_fibre(Fibre &ptc_fibre, std::optional<bool> print_coords = std::nullopt);
 
 // Skipped unusable routine type_ptc_internal_state:
 // - Untranslated type: internal_state (0D)
-// - Variable-sized out character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_type_ptc_layout(void *lay /* 0D_NOT_type inout */);
 void type_ptc_layout(Layout &lay);
 
 // Skipped unusable routine type_real_8_taylors:
 // - Untranslated type: real_8 (1D)
-
-// Skipped unusable routine type_taylors:
-// - Variable-sized inout character array: 1D_ALLOC_character
-// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_type_taylors(
+    Bmad::array_descriptor_t &bmad_taylor /* 1D_NOT_type in */,
+    int *max_order /* 0D_NOT_integer in */,
+    void *lines /* 1D_ALLOC_character inout */,
+    int *n_lines /* 0D_NOT_integer inout */,
+    int *file_id /* 0D_NOT_integer in */,
+    const char *out_style /* 0D_NOT_character in */,
+    bool *clean /* 0D_NOT_logical in */,
+    const char *out_var_suffix /* 0D_NOT_character in */,
+    bool *append /* 0D_NOT_logical in */
+);
+void type_taylors(
+    TaylorStructArray1D bmad_taylor,
+    std::optional<int> max_order = std::nullopt,
+    optional_ref<CharacterAlloc1D> lines = std::nullopt,
+    optional_ref<int> n_lines = std::nullopt,
+    std::optional<int> file_id = std::nullopt,
+    std::optional<std::string> out_style = std::nullopt,
+    std::optional<bool> clean = std::nullopt,
+    std::optional<std::string> out_var_suffix = std::nullopt,
+    std::optional<bool> append = std::nullopt
+);
 
 // Skipped unusable routine type_twiss:
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine universal_equal_universal:
 // - Untranslated type: universal_taylor (0D)
@@ -9773,7 +9911,6 @@ bool write_bmad_lattice_file(
 // Skipped unusable routine write_digested_bmad_file:
 // - Variable-sized in character array: 1D_NOT_character
 // - Untranslated type: extra_parsing_info_struct (0D)
-// - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine write_gpt_ele:
 // - Untranslated type: str_index_struct (0D)

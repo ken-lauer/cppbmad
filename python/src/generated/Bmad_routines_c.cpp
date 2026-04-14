@@ -2699,4 +2699,43 @@ ix_ubound : int
     Maximum index needed.
 )"""
   );
+  py::class_<Bmad::CustomEleAttribNameList, std::unique_ptr<Bmad::CustomEleAttribNameList>>(
+      m,
+      "CustomEleAttribNameList",
+      "custom_ele_attrib_name_list return type"
+  )
+      .def_readonly("index_list", &Bmad::CustomEleAttribNameList::index_list)
+      .def_readonly("name_list", &Bmad::CustomEleAttribNameList::name_list)
+      .def("__len__", [](const Bmad::CustomEleAttribNameList &) { return 2; })
+      .def("__getitem__", [](const Bmad::CustomEleAttribNameList &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.index_list);
+        if (i == 1)
+          return py::cast(s.name_list);
+        throw py::index_error();
+      });
+  m.def(
+      "custom_ele_attrib_name_list",
+      &Bmad::custom_ele_attrib_name_list,
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine custom_ele_attrib_name_list (index_list, name_list)
+
+Routine to create an array (index_list(i), name_list(i)) of custom element attribute names and indexes.
+Each name in the name_list is of the form:
+  "{<class>::}<attribute_name>"
+where:
+  <class>:: is an optional class prefix.
+  <attribute_name> is the name of the attribute.
+
+Returns
+-------
+index_list : 1D array of int
+    Index of the custom attribute.
+
+name_list : 1D array of str
+    List of custom attributes.
+)"""
+  );
 }

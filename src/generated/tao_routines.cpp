@@ -422,6 +422,26 @@ bool Tao::tao_data_sanity_check(
   );
   return _is_valid;
 }
+void Tao::tao_data_show_use(
+    TaoD2DataStruct &d2_data,
+    optional_ref<CharacterAlloc1D> lines,
+    std::optional<int> nl
+) {
+  // intent=inout allocatable character array
+  auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
+  int nl_lvalue;
+  auto *_nl{&nl_lvalue};
+  if (nl.has_value()) {
+    nl_lvalue = nl.value();
+  } else {
+    _nl = nullptr;
+  }
+  fortran_tao_data_show_use(
+      /* void* */ d2_data.get_fortran_ptr(),
+      /* void* */ _lines,
+      /* int* */ _nl
+  );
+}
 std::string
 Tao::tao_data_type_substitute(std::string template_, TaoCurveStruct &curve, TaoGraphStruct &graph) {
   auto _template_ = template_.c_str();
@@ -1458,6 +1478,20 @@ Tao::tao_graph_s_min_max_calc(TaoGraphStruct &graph, BranchStruct &branch) {
 }
 void Tao::tao_graph_setup(TaoPlotStruct &plot, TaoGraphStruct &graph) {
   fortran_tao_graph_setup(/* void* */ plot.get_fortran_ptr(), /* void* */ graph.get_fortran_ptr());
+}
+Tao::TaoHelp Tao::tao_help(std::string what1, std::string what2) {
+  auto _what1 = what1.c_str();
+  auto _what2 = what2.c_str();
+  // intent=out allocatable character array
+  auto lines{CharacterAlloc1D()};
+  int _n_lines{};
+  fortran_tao_help(
+      /* const char* */ _what1,
+      /* const char* */ _what2,
+      /* void* */ lines.get_fortran_ptr(),
+      /* int& */ _n_lines
+  );
+  return TaoHelp{std::move(lines), _n_lines};
 }
 bool Tao::tao_init() {
   bool _err_flag{};
@@ -3192,6 +3226,20 @@ void Tao::tao_show_constraints(int iunit, std::string form) {
   auto _form = form.c_str();
   fortran_tao_show_constraints(/* int& */ iunit, /* const char* */ _form);
 }
+Tao::TaoShowThis Tao::tao_show_this(std::string what) {
+  auto _what = what.c_str();
+  char _result_id[4096];
+  // intent=out allocatable character array
+  auto lines{CharacterAlloc1D()};
+  int _nl{};
+  fortran_tao_show_this(
+      /* const char* */ _what,
+      /* const char* */ _result_id,
+      /* void* */ lines.get_fortran_ptr(),
+      /* int& */ _nl
+  );
+  return TaoShowThis{_result_id, std::move(lines), _nl};
+}
 void Tao::tao_single_mode(std::string char_) {
   auto _char_ = char_.c_str();
   fortran_tao_single_mode(/* const char* */ _char_);
@@ -3421,6 +3469,26 @@ void Tao::tao_var_check(ElePointerStructAlloc1D eles, std::string attribute, boo
   );
 }
 void Tao::tao_var_repoint() { fortran_tao_var_repoint(); }
+void Tao::tao_var_show_use(
+    TaoV1VarStruct &v1_var,
+    optional_ref<CharacterAlloc1D> lines,
+    std::optional<int> nl
+) {
+  // intent=inout allocatable character array
+  auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
+  int nl_lvalue;
+  auto *_nl{&nl_lvalue};
+  if (nl.has_value()) {
+    nl_lvalue = nl.value();
+  } else {
+    _nl = nullptr;
+  }
+  fortran_tao_var_show_use(
+      /* void* */ v1_var.get_fortran_ptr(),
+      /* void* */ _lines,
+      /* int* */ _nl
+  );
+}
 void Tao::tao_var_target_calc() { fortran_tao_var_target_calc(); }
 void Tao::tao_var_useit_plot_calc(TaoGraphStruct &graph, TaoVarStructArray1D var) {
   // var: TaoVarStruct inout (CppWrapperTypeArgumentArray)

@@ -406,6 +406,36 @@ lord_in : EleStruct, optional
 )"""
   );
   m.def(
+      "add_this_name_to_list",
+      &Bmad::add_this_name_to_list,
+      py::arg("ele"),
+      py::arg("names"),
+      py::arg("an_indexx"),
+      py::arg("n_names"),
+      py::arg("ix_match"),
+      py::arg("has_been_added"),
+      py::arg("named_eles"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine add_this_name_to_list
+
+Parameters
+----------
+ele : EleStruct
+
+names : 1D array of str
+
+an_indexx : 1D array of int
+
+n_names : int
+
+ix_match : int
+
+has_been_added : bool
+
+named_eles : 1D array of ElePointerStruct
+)"""
+  );
+  m.def(
       "add_this_taylor_term",
       &Bmad::add_this_taylor_term,
       py::arg("ele"),

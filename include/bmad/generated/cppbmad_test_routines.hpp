@@ -50,10 +50,8 @@ CppBmadTest::TestBunchStructScalar test_bunch_struct_scalar(
 // Skipped unusable routine test_character_array:
 // - Variable-sized in character array: 1D_NOT_character
 // - Variable-sized inout character array: 1D_NOT_character
-// - Variable-sized out character array: 1D_ALLOC_character
 // - Variable-sized in character array: 1D_NOT_character
 // - Variable-sized inout character array: 1D_NOT_character
-// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_test_character_scalar(
     const char *val_in /* 0D_NOT_character in */,
     const char *val_inout /* 0D_NOT_character inout */,

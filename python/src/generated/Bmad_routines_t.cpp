@@ -49,6 +49,31 @@ PyTrackADrift python_track_a_drift(
   auto py_result{PyTrackADrift{time}};
   return py_result;
 }
+PyTypeTaylors python_type_taylors(
+    TaylorStructArray1D bmad_taylor,
+    std::optional<int> max_order = std::nullopt,
+    optional_ref<CharacterAlloc1D> lines = std::nullopt,
+    std::optional<int> n_lines = std::nullopt,
+    std::optional<int> file_id = std::nullopt,
+    std::optional<std::string> out_style = std::nullopt,
+    std::optional<bool> clean = std::nullopt,
+    std::optional<std::string> out_var_suffix = std::nullopt,
+    std::optional<bool> append = std::nullopt
+) {
+  Bmad::type_taylors(
+      bmad_taylor,
+      max_order,
+      lines,
+      make_opt_ref(n_lines),
+      file_id,
+      out_style,
+      clean,
+      out_var_suffix,
+      append
+  );
+  auto py_result{PyTypeTaylors{n_lines}};
+  return py_result;
+}
 
 void init_Bmad_routines_t(py::module &m) {
   py::class_<Bmad::T6ToB123, std::unique_ptr<Bmad::T6ToB123>>(
@@ -4503,6 +4528,67 @@ mat2 : 2D array of float (shape: 2,2)
     1-turn matrix.
 )"""
   );
+  py::class_<Bmad::TypeComplexTaylors, std::unique_ptr<Bmad::TypeComplexTaylors>>(
+      m,
+      "TypeComplexTaylors",
+      "type_complex_taylors return type"
+  )
+      .def_readonly("lines", &Bmad::TypeComplexTaylors::lines)
+      .def_readonly("n_lines", &Bmad::TypeComplexTaylors::n_lines)
+      .def("__len__", [](const Bmad::TypeComplexTaylors &) { return 2; })
+      .def("__getitem__", [](const Bmad::TypeComplexTaylors &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.lines);
+        if (i == 1)
+          return py::cast(s.n_lines);
+        throw py::index_error();
+      });
+  m.def(
+      "type_complex_taylors",
+      &Bmad::type_complex_taylors,
+      py::arg("complex_taylor"),
+      py::arg("max_order") = py::none(),
+      py::arg("file_id") = py::none(),
+      py::arg("out_type") = py::none(),
+      py::arg("clean") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine type_complex_taylors (complex_taylor, max_order, lines, n_lines, file_id, out_type, clean)
+
+Subroutine to print or put in a string array a Bmad taylor map.
+If the lines(:) argument is not present, the element information is printed to the terminal.
+
+Parameters
+----------
+complex_taylor : 1D array of ComplexTaylorStruct
+    Array of taylors.
+
+max_order : int, optional
+    Maximum order to print.
+
+file_id : int, optional
+    If present, write output to a file with handle file_id.
+
+out_type : str, optional
+    Determins the string to be used for the output type column. '' (default)  -> '1', '2', '3', etc. 'PHASE'
+    -> 'X', 'Px, 'Y', 'Py', 'Z', 'Pz' 'SPIN'        -> 'S1', 'Sx', 'Sy', 'Sz'  ! If size = 4: quaternion
+    representation 'SPIN'        -> 'Sx', 'Sy', 'Sz'  ! If size = 3: 'NONE'        -> No out column Anything
+    else -> Use this for the output column.
+
+clean : bool, optional
+    If True then do not include terms whose coefficients are negligible. Default is false
+
+Returns
+-------
+lines : 1D array of str, optional
+    : Character array to hold the output. If not present, the information is printed to the terminal. Char
+    width should be 120 or above for out_type = 'PHASE' but can be less for other out_types.
+
+n_lines : int, optional
+    Number of lines in lines(:) that hold valid output. n_lines must be present if lines(:) is.
+)"""
+  );
   m.def(
       "type_coord",
       &Bmad::type_coord,
@@ -4514,6 +4600,112 @@ Parameters
 ----------
 coord : CoordStruct
     Coordinate
+)"""
+  );
+  py::class_<Bmad::TypeEle, std::unique_ptr<Bmad::TypeEle>>(m, "TypeEle", "type_ele return type")
+      .def_readonly("lines", &Bmad::TypeEle::lines)
+      .def_readonly("n_lines", &Bmad::TypeEle::n_lines)
+      .def("__len__", [](const Bmad::TypeEle &) { return 2; })
+      .def("__getitem__", [](const Bmad::TypeEle &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.lines);
+        if (i == 1)
+          return py::cast(s.n_lines);
+        throw py::index_error();
+      });
+  m.def(
+      "type_ele",
+      &Bmad::type_ele,
+      py::arg("ele"),
+      py::arg("type_zero_attrib") = py::none(),
+      py::arg("type_mat6") = py::none(),
+      py::arg("type_taylor") = py::none(),
+      py::arg("twiss_out") = py::none(),
+      py::arg("type_control") = py::none(),
+      py::arg("type_wake") = py::none(),
+      py::arg("type_floor_coords") = py::none(),
+      py::arg("type_field") = py::none(),
+      py::arg("type_wall") = py::none(),
+      py::arg("type_rad_kick") = py::none(),
+      py::arg("type_internal") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine type_ele
+
+Parameters
+----------
+ele : EleStruct
+    Element
+
+type_zero_attrib : bool, optional
+    If False then surpress printing of real attributes whose value is 0 or switch attributes that have their
+    default value. Default is False.
+
+type_mat6 : int, optional
+    = 0   => Do not type ele.mat6 = 4   => Type 4X4 xy submatrix = 6   => Type full 6x6 matrix (Default)
+
+type_taylor : bool, optional
+    Print out taylor map terms? If ele.taylor is not allocated then this is ignored. Default is False.
+
+twiss_out : int, optional
+    Print the Twiss parameters at the element end? = 0         => Do not print the Twiss parameters = radians$
+    => Print Twiss, phi in radians (Default). = degrees$  => Print Twiss, phi in degrees. = cycles$   => Print
+    Twiss, phi in radians/2pi.
+
+type_control : int, optional
+    Print control status? If ele.branch.lat is not associated cannot print status info. = no$      => One line
+    of info. = short$   => Almost all info except long knot point lists are truncated (default). = all$     =>
+    Everything.
+
+type_wake : bool, optional
+    If True then print the long-range and short-range wakes information. If False then just print how many
+    terms the wake has. Default is True. If ele.wake is not allocated then this is ignored.
+
+type_floor_coords : bool, optional
+    Default is False. If True then print the global ("floor") coordinates at the exit end of the element.
+
+type_field : int, optional
+    Print field maps? = no$      => One line of info (default). = short$   => Header info. No tables. = all$
+    => Everything.
+
+type_wall : bool, optional
+    Default is False. If True, print wall info.
+
+type_rad_kick : bool, optional
+    Default is False. If True, print synch rad kick info.
+
+type_internal : bool, optional
+    Default is False. If True, print some internal parameters.
+
+Returns
+-------
+lines : 1D array of str, optional
+    Character array to hold the output. If not present, the information is printed to the terminal.
+
+n_lines : int, optional
+    Number of lines in lines(:) that hold valid output. n_lines must be present if lines(:) is.
+)"""
+  );
+  m.def(
+      "type_end_stuff",
+      &Bmad::type_end_stuff,
+      py::arg("li"),
+      py::arg("nl"),
+      py::arg("lines") = py::none(),
+      py::arg("n_lines") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine type_end_stuff
+
+Parameters
+----------
+li : 1D array of str
+
+nl : int
+
+lines : 1D array of str, optional
+
+n_lines : int, optional
 )"""
   );
   m.def(
@@ -4536,6 +4728,51 @@ indent : int, optional
     Initial indent. Default is zero.
 )"""
   );
+  py::class_<Bmad::TypePtcFibre, std::unique_ptr<Bmad::TypePtcFibre>>(
+      m,
+      "TypePtcFibre",
+      "type_ptc_fibre return type"
+  )
+      .def_readonly("lines", &Bmad::TypePtcFibre::lines)
+      .def_readonly("n_lines", &Bmad::TypePtcFibre::n_lines)
+      .def("__len__", [](const Bmad::TypePtcFibre &) { return 2; })
+      .def("__getitem__", [](const Bmad::TypePtcFibre &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.lines);
+        if (i == 1)
+          return py::cast(s.n_lines);
+        throw py::index_error();
+      });
+  m.def(
+      "type_ptc_fibre",
+      &Bmad::type_ptc_fibre,
+      py::arg("ptc_fibre"),
+      py::arg("print_coords") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine type_ptc_fibre (ptc_fibre, print_coords, lines, n_lines)
+
+Routine to put information on a PTC fibre element into a string array.
+If "lines" is not present, the information will be printed to the screen.
+
+Parameters
+----------
+ptc_fibre : Fibre
+    Fibre to type info of.
+
+print_coords : bool, optional
+    If True then print coordinate and patch information. Default is True.
+
+Returns
+-------
+lines : 1D array of str, optional
+    Character array to hold the output.
+
+n_lines : int, optional
+    Number of lines used in lines(:)
+)"""
+  );
   m.def(
       "type_ptc_layout",
       &Bmad::type_ptc_layout,
@@ -4544,6 +4781,80 @@ indent : int, optional
       R"""(Subroutine type_ptc_layout (lay)
 
 Subroutine to print the global information in a layout
+)"""
+  );
+  py::class_<PyTypeTaylors, std::unique_ptr<PyTypeTaylors>>(
+      m,
+      "TypeTaylors",
+      "type_taylors return type"
+  )
+      .def_readonly("n_lines", &PyTypeTaylors::n_lines)
+      .def("__len__", [](const PyTypeTaylors &) { return 1; })
+      .def("__getitem__", [](const PyTypeTaylors &s, int i) -> py::object {
+        if (i < 0)
+          i += 1;
+        if (i == 0)
+          return py::cast(s.n_lines);
+        throw py::index_error();
+      });
+  m.def(
+      "type_taylors",
+      &python_type_taylors,
+      py::arg("bmad_taylor"),
+      py::arg("max_order") = py::none(),
+      py::arg("lines") = py::none(),
+      py::arg("n_lines") = py::none(),
+      py::arg("file_id") = py::none(),
+      py::arg("out_style") = py::none(),
+      py::arg("clean") = py::none(),
+      py::arg("out_var_suffix") = py::none(),
+      py::arg("append") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine type_taylors
+
+Parameters
+----------
+bmad_taylor : 1D array of TaylorStruct
+    Array of taylors.
+
+max_order : int, optional
+    Maximum order to print.
+
+lines : 1D array of str, optional
+    Used with append = True. Output will start at n_lines+1
+    This parameter is an input/output and is modified in-place.
+    As an output, lines: Array to hold the output.
+
+n_lines : int, optional
+    Used with append = True. Output will start at n_lines+1.
+    This parameter is an input/output and is modified in-place.
+    As an output, n_lines: Number of lines in lines(
+
+file_id : int, optional
+    If present, write output to a file with handle file_id.
+
+out_style : str, optional
+    Determins the string to be used for the output type column. '' (default) -> 'X', 'Px, 'Y', 'Py', 'Z', 'Pz'
+    If size(bmad_taylor) = 6 -> 'S1', 'Sx', 'Sy', 'Sz' (Spin quaternions) If size(bmad_taylor) = 4 -> '1',
+    '2', '3', etc. Otherwiase 'NUMBER'     -> '1', '2', '3', etc. 'BMAD'       -> Bmad lattice file format.
+
+clean : bool, optional
+    If True then do not include terms whose coefficients are negligible. Default is false.
+
+out_var_suffix : str, optional
+    If out_style = 'SCIBMAD', out_var_suffix is used as the suffix of the variable holding the taylor map.
+    Default is "z". For example, if "z" is the suffix then: Descriptor = "d_z", orbital map name = "v_z", ref
+    orbit name = v0_z, and spin map name = "q_z".
+
+append : bool, optional
+    Default is False. If True, n_lines on input is the number of existing lines in lines(:) to save.
+
+Returns
+-------
+n_lines : int, optional
+    Used with append = True. Output will start at n_lines+1.
+    This parameter is an input/output and is modified in-place.
+    As an output, n_lines: Number of lines in lines(
 )"""
   );
 }
