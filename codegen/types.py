@@ -271,8 +271,8 @@ def get_type_transform(
                 cpp_type = cpp_type.replace("&", "")
                 cpp_type = f"optional_ref<{cpp_type}>"
     elif ft.dim > 0:
-        if ft.ptr == "ALLOC":
-            assert info.allocatable_container
+        if ft.ptr == "ALLOC" or (ft.type == "character" and is_dynamic_array):
+            assert info.allocatable_container, f"No allocatable_container for {ft}"
             assert ft.dim == 1  # only 1D container support for now
             cpp_type = wrap_optional_ref(info.allocatable_container, is_optional)
         elif is_optional:

@@ -55,7 +55,7 @@ class FortranWrapperArgument(ABC):
         arg_type = arg.member.type.lower()
 
         if arg_type == "character":
-            if arg.array and arg.member.type_info.allocatable:
+            if arg.array and (arg.member.type_info.allocatable or arg.is_dynamic_array):
                 return FortranWrapperStringArrayAllocatableArgument(arg, routine, lines, have_err_flag)
             return FortranWrapperStringArgument(arg, routine, lines, have_err_flag)
         if arg.array:
@@ -225,10 +225,13 @@ class FortranWrapperStringArrayAllocatableArgument(FortranWrapperArgument):
 
     @property
     def needs_local_copy(self) -> bool:
-        """Only ``character(:)`` (deferred-length) can pass container data directly.
+        """Whether a local variable + copy is required.
 
-        Fixed-length (``character(N)``) and assumed-length (``character(*)``)
-        are both incompatible with the container's ``character(:)`` component.
+        The container stores ``character(:)`` (deferred-length).  Passing
+        this to ``character(*)`` or ``character(N)`` dummies is unreliable
+        at runtime even when the compiler accepts it, because the
+        deferred-length metadata does not propagate correctly.  Only
+        ``character(:)`` dummies can receive the container data directly.
         """
         return self.type_info.kind != ":"
 
@@ -257,6 +260,16 @@ class FortranWrapperStringArrayAllocatableArgument(FortranWrapperArgument):
         result.extend(self.if_block(f"c_associated({self.c_name})", code))
         if self.needs_local_copy:
             self.custom_call_arg_name = self.local_name
+            if not self.type_info.allocatable:
+                # Non-allocatable dummy: pre-allocate and blank-fill local from container
+                result.extend(
+                    [
+                        f"  if (c_associated({self.c_name}) .and. allocated({self.f_name}%data)) then",
+                        f"    allocate({self.local_name}, mold={self.f_name}%data)",
+                        f"    {self.local_name} = ''",
+                        "  endif",
+                    ]
+                )
         else:
             self.custom_call_arg_name = f"{self.f_name}%data"
         return result

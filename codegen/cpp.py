@@ -38,7 +38,7 @@ class CppWrapperArgument(ABC):
                     return CppWrapperTypeArgumentAllocArray(arg)
                 return CppWrapperTypeArgumentArray(arg)
             if arg.type == "character":
-                if arg.member.type_info.allocatable:
+                if arg.member.type_info.allocatable or arg.is_dynamic_array:
                     return CppWrapperStringArgumentAllocArray(arg)
                 return CppWrapperStringArgumentArray(arg)
             if arg.member.type_info.allocatable:  #  or arg.is_dynamic_array:
@@ -346,11 +346,20 @@ class CppWrapperStringArgument(CppWrapperArgument):
 
 @dataclasses.dataclass
 class CppWrapperStringArgumentAllocArray(CppWrapperArgument):
-    """Handler for allocatable character(:) arrays passed via CharacterAlloc1D container."""
+    """Handler for character arrays passed via CharacterAlloc1D container.
+
+    Handles both allocatable and non-allocatable (assumed-shape) dynamic
+    character arrays.  Non-allocatable outputs need pre-allocation since
+    the called routine will not allocate.
+    """
+
+    # Pre-allocation size for non-allocatable output arrays
+    _PREALLOC_LINES = 100
 
     def pre_call_lines(self) -> list[str]:
-        lines = [f"// intent={self.arg.intent} allocatable character array"]
+        lines = [f"// intent={self.arg.intent} character array container"]
         argname = self.arg.c_name
+        is_alloc = self.arg.member.type_info.allocatable
 
         if self.arg.intent in {"in", "inout"}:
             if self.arg.is_optional:
@@ -362,7 +371,12 @@ class CppWrapperStringArgumentAllocArray(CppWrapperArgument):
                     )
                 )
         elif self.arg.intent == "out":
-            lines.append(f"auto {argname} {{ CharacterAlloc1D() }};")
+            if is_alloc:
+                # Allocatable: routine will allocate, empty container is fine
+                lines.append(f"auto {argname} {{ CharacterAlloc1D() }};")
+            else:
+                # Non-allocatable assumed-shape: pre-allocate a buffer
+                lines.append(f"auto {argname} {{ CharacterAlloc1D({self._PREALLOC_LINES}) }};")
 
         return lines
 
