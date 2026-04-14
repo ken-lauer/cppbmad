@@ -17,6 +17,12 @@ python_add_library(${PYBIND_LIBNAME} MODULE
     src/common_structs.cpp
 )
 
+# Hide all symbols except the pybind11 module init
+set_target_properties(${PYBIND_LIBNAME} PROPERTIES
+    CXX_VISIBILITY_PRESET hidden
+    VISIBILITY_INLINES_HIDDEN ON
+)
+
 # Include directories
 target_include_directories(${PYBIND_LIBNAME} PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
