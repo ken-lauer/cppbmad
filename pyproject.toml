@@ -24,7 +24,7 @@ classifiers = [
 ]
 
 [tool.scikit-build]
-cmake.version = ">=3.15"
+cmake.version = ">=3.16"
 wheel.packages = ["python/pybmad"]
 # cmake.define = { BUILD_TYPE = "debug" }
 

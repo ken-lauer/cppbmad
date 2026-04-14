@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15...3.27)
+cmake_minimum_required(VERSION 3.16...4.3)
 include(CMakePackageConfigHelpers)
 
 set(LIBNAME cppbmad)
@@ -16,7 +16,7 @@ set(BUILD_TYPE "${_default_acc_build_type}"
 )
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
-if(DEFINED $ENV{PKG_VERSION})
+if(DEFINED ENV{PKG_VERSION})
   set(PROJECT_VERSION_STRING "$ENV{PKG_VERSION}")
 else()
   find_package(Git)
