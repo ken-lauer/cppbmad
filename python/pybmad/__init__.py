@@ -538,6 +538,7 @@ from ._pybmad import count_lines_in_file
 from ._pybmad import create_a_spline
 from ._pybmad import create_concatenated_wall3d
 from ._pybmad import create_element_slice
+from ._pybmad import create_feedback
 from ._pybmad import create_field_overlap
 from ._pybmad import create_girder
 from ._pybmad import create_group
@@ -768,6 +769,7 @@ from ._pybmad import gen_complete_elliptic
 from ._pybmad import gen_grad1_to_gg_taylor
 from ._pybmad import gen_grad_at_s_to_gg_taylor
 from ._pybmad import gen_grad_field
+from ._pybmad import get_a_char
 from ._pybmad import get_bl_from_fwhm
 from ._pybmad import get_called_file
 from ._pybmad import get_emit_from_sigma_mat
@@ -777,6 +779,7 @@ from ._pybmad import get_list_of_names
 from ._pybmad import get_next_word
 from ._pybmad import get_sequence_args
 from ._pybmad import get_slave_list
+from ._pybmad import get_switch
 from ._pybmad import get_tty_char
 from ._pybmad import gg_taylor_equal_gg_taylor
 from ._pybmad import gg_taylors_equal_gg_taylors
@@ -933,6 +936,7 @@ from ._pybmad import mat_symp_decouple
 from ._pybmad import match_ele_to_mat6
 from ._pybmad import match_reg
 from ._pybmad import match_wild
+from ._pybmad import match_word
 from ._pybmad import maximize_projection
 from ._pybmad import mexp
 from ._pybmad import mfft1
@@ -1056,6 +1060,7 @@ from ._pybmad import pointer_to_element_at_s
 from ._pybmad import pointer_to_fibre
 from ._pybmad import pointer_to_field_ele
 from ._pybmad import pointer_to_girder
+from ._pybmad import pointer_to_locations
 from ._pybmad import pointer_to_lord
 from ._pybmad import pointer_to_multipass_lord
 from ._pybmad import pointer_to_next_ele
@@ -1081,6 +1086,7 @@ from ._pybmad import ptc_emit_calc
 from ._pybmad import ptc_layouts_resplit
 from ._pybmad import ptc_one_turn_mat_and_closed_orbit_calc
 from ._pybmad import ptc_ran_seed_put
+from ._pybmad import ptc_read_flat_file
 from ._pybmad import ptc_set_rf_state_for_c_normal
 from ._pybmad import ptc_set_taylor_order_if_needed
 from ._pybmad import ptc_spin_calc
@@ -1097,6 +1103,7 @@ from ._pybmad import quat_to_omega
 from ._pybmad import quat_to_w_mat
 from ._pybmad import query_string
 from ._pybmad import quote
+from ._pybmad import quoten
 from ._pybmad import rad1_damp_and_stoc_mats
 from ._pybmad import rad_damp_and_stoc_mats
 from ._pybmad import rad_g_integrals
@@ -1298,6 +1305,7 @@ from ._pybmad import tao_beam_track
 from ._pybmad import tao_beam_track_endpoint
 from ._pybmad import tao_branch_index
 from ._pybmad import tao_calc_data_at_s_pts
+from ._pybmad import tao_call_cmd
 from ._pybmad import tao_cbar_wave_anal
 from ._pybmad import tao_change_ele
 from ._pybmad import tao_change_tune
@@ -1308,6 +1316,7 @@ from ._pybmad import tao_clear_cmd
 from ._pybmad import tao_clip_cmd
 from ._pybmad import tao_close_command_file
 from ._pybmad import tao_cmd_history_record
+from ._pybmad import tao_cmd_split
 from ._pybmad import tao_command
 from ._pybmad import tao_constraint_type_name
 from ._pybmad import tao_control_tree_list
@@ -1413,6 +1422,7 @@ from ._pybmad import tao_locate_all_elements
 from ._pybmad import tao_locate_elements
 from ._pybmad import tao_mark_lattice_ele
 from ._pybmad import tao_merit
+from ._pybmad import tao_next_switch
 from ._pybmad import tao_next_word
 from ._pybmad import tao_one_turn_map_calc_needed
 from ._pybmad import tao_open_file
@@ -1553,6 +1563,7 @@ from ._pybmad import tao_wave_analysis
 from ._pybmad import tao_wave_cmd
 from ._pybmad import tao_wave_fit
 from ._pybmad import tao_write_cmd
+from ._pybmad import tao_write_lines
 from ._pybmad import tao_x_axis_cmd
 from ._pybmad import tao_x_scale_cmd
 from ._pybmad import tao_x_scale_graph
@@ -1567,6 +1578,7 @@ from ._pybmad import taylor_to_mad_map
 from ._pybmad import taylors_equal_taylors
 from ._pybmad import test_bunch_struct_array
 from ._pybmad import test_bunch_struct_scalar
+from ._pybmad import test_character_array
 from ._pybmad import test_character_scalar
 from ._pybmad import test_complex_array
 from ._pybmad import test_complex_scalar
@@ -1704,6 +1716,7 @@ from ._pybmad import type_ptc_fibre
 from ._pybmad import type_ptc_layout
 from ._pybmad import type_taylors
 from ._pybmad import type_this_file
+from ._pybmad import type_twiss
 from ._pybmad import upcase_string
 from ._pybmad import update_ele_from_fibre
 from ._pybmad import update_fibre_from_ele
@@ -3403,6 +3416,7 @@ __all__ = [
     "create_a_spline",
     "create_concatenated_wall3d",
     "create_element_slice",
+    "create_feedback",
     "create_field_overlap",
     "create_girder",
     "create_group",
@@ -3633,6 +3647,7 @@ __all__ = [
     "gen_grad1_to_gg_taylor",
     "gen_grad_at_s_to_gg_taylor",
     "gen_grad_field",
+    "get_a_char",
     "get_bl_from_fwhm",
     "get_called_file",
     "get_emit_from_sigma_mat",
@@ -3642,6 +3657,7 @@ __all__ = [
     "get_next_word",
     "get_sequence_args",
     "get_slave_list",
+    "get_switch",
     "get_tty_char",
     "gg_taylor_equal_gg_taylor",
     "gg_taylors_equal_gg_taylors",
@@ -3798,6 +3814,7 @@ __all__ = [
     "match_ele_to_mat6",
     "match_reg",
     "match_wild",
+    "match_word",
     "maximize_projection",
     "mexp",
     "mfft1",
@@ -3921,6 +3938,7 @@ __all__ = [
     "pointer_to_fibre",
     "pointer_to_field_ele",
     "pointer_to_girder",
+    "pointer_to_locations",
     "pointer_to_lord",
     "pointer_to_multipass_lord",
     "pointer_to_next_ele",
@@ -3946,6 +3964,7 @@ __all__ = [
     "ptc_layouts_resplit",
     "ptc_one_turn_mat_and_closed_orbit_calc",
     "ptc_ran_seed_put",
+    "ptc_read_flat_file",
     "ptc_set_rf_state_for_c_normal",
     "ptc_set_taylor_order_if_needed",
     "ptc_spin_calc",
@@ -3962,6 +3981,7 @@ __all__ = [
     "quat_to_w_mat",
     "query_string",
     "quote",
+    "quoten",
     "rad1_damp_and_stoc_mats",
     "rad_damp_and_stoc_mats",
     "rad_g_integrals",
@@ -4163,6 +4183,7 @@ __all__ = [
     "tao_beam_track_endpoint",
     "tao_branch_index",
     "tao_calc_data_at_s_pts",
+    "tao_call_cmd",
     "tao_cbar_wave_anal",
     "tao_change_ele",
     "tao_change_tune",
@@ -4173,6 +4194,7 @@ __all__ = [
     "tao_clip_cmd",
     "tao_close_command_file",
     "tao_cmd_history_record",
+    "tao_cmd_split",
     "tao_command",
     "tao_constraint_type_name",
     "tao_control_tree_list",
@@ -4278,6 +4300,7 @@ __all__ = [
     "tao_locate_elements",
     "tao_mark_lattice_ele",
     "tao_merit",
+    "tao_next_switch",
     "tao_next_word",
     "tao_one_turn_map_calc_needed",
     "tao_open_file",
@@ -4418,6 +4441,7 @@ __all__ = [
     "tao_wave_cmd",
     "tao_wave_fit",
     "tao_write_cmd",
+    "tao_write_lines",
     "tao_x_axis_cmd",
     "tao_x_scale_cmd",
     "tao_x_scale_graph",
@@ -4432,6 +4456,7 @@ __all__ = [
     "taylors_equal_taylors",
     "test_bunch_struct_array",
     "test_bunch_struct_scalar",
+    "test_character_array",
     "test_character_scalar",
     "test_complex_array",
     "test_complex_scalar",
@@ -4569,6 +4594,7 @@ __all__ = [
     "type_ptc_layout",
     "type_taylors",
     "type_this_file",
+    "type_twiss",
     "upcase_string",
     "update_ele_from_fibre",
     "update_fibre_from_ele",

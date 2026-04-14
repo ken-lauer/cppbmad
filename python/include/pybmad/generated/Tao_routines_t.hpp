@@ -23,6 +23,12 @@ struct PyTaoEleShapeInfo : public Tao::TaoEleShapeInfo {
       : Tao::TaoEleShapeInfo(std::move(_base))
       , ix_shape_min(ix_shape_min) {}
 };
+struct PyTaoNextSwitch : public Tao::TaoNextSwitch {
+  std::string line;
+  PyTaoNextSwitch(Tao::TaoNextSwitch _base, std::string line)
+      : Tao::TaoNextSwitch(std::move(_base))
+      , line(line) {}
+};
 
 struct PyTaoNextWord {
   std::string word;

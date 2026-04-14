@@ -175,6 +175,13 @@ void Tao::tao_calc_data_at_s_pts(
       /* void* */ good.get_fortran_ptr()
   );
 }
+void Tao::tao_call_cmd(std::string file_name, optional_ref<CharacterAlloc1D> cmd_arg) {
+  auto _file_name = file_name.c_str();
+  // intent=in character array container
+  auto *_cmd_arg =
+      cmd_arg.has_value() ? cmd_arg->get().get_fortran_ptr() : nullptr; // input, optional
+  fortran_tao_call_cmd(/* const char* */ _file_name, /* void* */ _cmd_arg);
+}
 void Tao::tao_cbar_wave_anal(TaoPlotStruct &plot) {
   fortran_tao_cbar_wave_anal(/* void* */ plot.get_fortran_ptr());
 }
@@ -268,6 +275,27 @@ void Tao::tao_close_command_file() { fortran_tao_close_command_file(); }
 void Tao::tao_cmd_history_record(std::string cmd) {
   auto _cmd = cmd.c_str();
   fortran_tao_cmd_history_record(/* const char* */ _cmd);
+}
+bool Tao::tao_cmd_split(
+    std::string cmd_line,
+    int n_word,
+    CharacterAlloc1D &cmd_word,
+    bool extra_words_is_error,
+    std::optional<std::string> separator
+) {
+  auto _cmd_line = cmd_line.c_str();
+  // intent=inout character array container
+  bool _err{};
+  const char *_separator = separator.has_value() ? separator->c_str() : nullptr;
+  fortran_tao_cmd_split(
+      /* const char* */ _cmd_line,
+      /* int& */ n_word,
+      /* void* */ cmd_word.get_fortran_ptr(),
+      /* bool& */ extra_words_is_error,
+      /* bool& */ _err,
+      /* const char* */ _separator
+  );
+  return _err;
 }
 bool Tao::tao_command(std::string command_line, bool err) {
   auto _command_line = command_line.c_str();
@@ -427,7 +455,7 @@ void Tao::tao_data_show_use(
     optional_ref<CharacterAlloc1D> lines,
     std::optional<int> nl
 ) {
-  // intent=inout allocatable character array
+  // intent=inout character array container
   auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
   int nl_lvalue;
   auto *_nl{&nl_lvalue};
@@ -1482,7 +1510,7 @@ void Tao::tao_graph_setup(TaoPlotStruct &plot, TaoGraphStruct &graph) {
 Tao::TaoHelp Tao::tao_help(std::string what1, std::string what2) {
   auto _what1 = what1.c_str();
   auto _what2 = what2.c_str();
-  // intent=out allocatable character array
+  // intent=out character array container
   auto lines{CharacterAlloc1D()};
   int _n_lines{};
   fortran_tao_help(
@@ -1879,6 +1907,42 @@ Tao::TaoMerit Tao::tao_merit() {
   double _this_merit{};
   fortran_tao_merit(/* bool& */ _calc_ok, /* double& */ _this_merit);
   return TaoMerit{_calc_ok, _this_merit};
+}
+Tao::TaoNextSwitch Tao::tao_next_switch(
+    std::string &line,
+    CharacterAlloc1D &switch_list,
+    bool return_next_word,
+    std::optional<bool> neg_num_not_switch,
+    std::optional<bool> print_err
+) {
+  auto _line = line.c_str(); // ptr, inout, required
+  // intent=in character array container
+  char _switch_[4096];
+  bool _err{};
+  bool neg_num_not_switch_lvalue;
+  auto *_neg_num_not_switch{&neg_num_not_switch_lvalue};
+  if (neg_num_not_switch.has_value()) {
+    neg_num_not_switch_lvalue = neg_num_not_switch.value();
+  } else {
+    _neg_num_not_switch = nullptr;
+  }
+  bool print_err_lvalue;
+  auto *_print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  fortran_tao_next_switch(
+      /* const char* */ _line,
+      /* void* */ switch_list.get_fortran_ptr(),
+      /* bool& */ return_next_word,
+      /* const char* */ _switch_,
+      /* bool& */ _err,
+      /* bool* */ _neg_num_not_switch,
+      /* bool* */ _print_err
+  );
+  return TaoNextSwitch{_switch_, _err};
 }
 std::string Tao::tao_next_word(std::string &line) {
   auto _line = line.c_str(); // ptr, inout, required
@@ -3229,7 +3293,7 @@ void Tao::tao_show_constraints(int iunit, std::string form) {
 Tao::TaoShowThis Tao::tao_show_this(std::string what) {
   auto _what = what.c_str();
   char _result_id[4096];
-  // intent=out allocatable character array
+  // intent=out character array container
   auto lines{CharacterAlloc1D()};
   int _nl{};
   fortran_tao_show_this(
@@ -3474,7 +3538,7 @@ void Tao::tao_var_show_use(
     optional_ref<CharacterAlloc1D> lines,
     std::optional<int> nl
 ) {
-  // intent=inout allocatable character array
+  // intent=inout character array container
   auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
   int nl_lvalue;
   auto *_nl{&nl_lvalue};
@@ -3612,6 +3676,10 @@ void Tao::tao_wave_fit(
 void Tao::tao_write_cmd(std::string what) {
   auto _what = what.c_str();
   fortran_tao_write_cmd(/* const char* */ _what);
+}
+void Tao::tao_write_lines(int iunit, CharacterAlloc1D &line) {
+  // intent=in character array container
+  fortran_tao_write_lines(/* int& */ iunit, /* void* */ line.get_fortran_ptr());
 }
 void Tao::tao_x_axis_cmd(std::string where, std::string what) {
   auto _where = where.c_str();

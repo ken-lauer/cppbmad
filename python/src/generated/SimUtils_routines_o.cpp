@@ -201,6 +201,43 @@ insert_tag_line : bool, optional
   );
   m.def(
       "out_io",
+      py::overload_cast<
+          int,
+          std::string,
+          CharacterAlloc1D &,
+          std::optional<FArray1D<Real>>,
+          std::optional<FArray1D<Int>>,
+          optional_ref<BoolAlloc1D>,
+          std::optional<bool>>(&SimUtils::out_io),
+      py::arg("level"),
+      py::arg("routine_name"),
+      py::arg("lines"),
+      py::arg("r_array") = py::none(),
+      py::arg("i_array") = py::none(),
+      py::arg("l_array") = py::none(),
+      py::arg("insert_tag_line") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine out_io_lines
+
+Parameters
+----------
+level : int
+
+routine_name : str
+
+lines : 1D array of str
+
+r_array : 1D array of float, optional
+
+i_array : 1D array of int, optional
+
+l_array : 1D array of bool, optional
+
+insert_tag_line : bool, optional
+)"""
+  );
+  m.def(
+      "out_io",
       py::overload_cast<int, std::string, std::string, bool, std::optional<bool>>(&SimUtils::out_io
       ),
       py::arg("level"),

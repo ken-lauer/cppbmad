@@ -363,4 +363,22 @@ str : str
 q_str : str
 )"""
   );
+  m.def(
+      "quoten",
+      &SimUtils::quoten,
+      py::arg("str"),
+      py::arg("q_str"),
+      py::arg("delim") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine quoten
+
+Parameters
+----------
+str : 1D array of str
+
+q_str : str
+
+delim : str, optional
+)"""
+  );
 }

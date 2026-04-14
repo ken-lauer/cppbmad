@@ -99,6 +99,38 @@ CppBmadTest::TestBunchStructScalar CppBmadTest::test_bunch_struct_scalar(
   );
   return TestBunchStructScalar{std::move(_val_out), _opt_status};
 }
+CppBmadTest::TestCharacterArray CppBmadTest::test_character_array(
+    CharacterAlloc1D &arr_in,
+    CharacterAlloc1D &arr_inout,
+    optional_ref<CharacterAlloc1D> arr_in_opt,
+    optional_ref<CharacterAlloc1D> arr_inout_opt
+) {
+  // intent=in character array container
+  // intent=inout character array container
+  // intent=out character array container
+  auto arr_out{CharacterAlloc1D()};
+  // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
+  Bmad::array_descriptor_t _opt_status_desc;
+  _opt_status_desc.rank = 1;
+  FixedArray1D<Int, 2> _opt_status;
+  _opt_status_desc.data_ptr = _opt_status.data();
+  _opt_status_desc.dims[0] = _opt_status.size();
+  // intent=in character array container
+  auto *_arr_in_opt =
+      arr_in_opt.has_value() ? arr_in_opt->get().get_fortran_ptr() : nullptr; // input, optional
+  // intent=inout character array container
+  auto *_arr_inout_opt = arr_inout_opt.has_value() ? arr_inout_opt->get().get_fortran_ptr()
+                                                   : nullptr; // input, optional
+  fortran_test_character_array(
+      /* void* */ arr_in.get_fortran_ptr(),
+      /* void* */ arr_inout.get_fortran_ptr(),
+      /* void* */ arr_out.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _opt_status_desc,
+      /* void* */ _arr_in_opt,
+      /* void* */ _arr_inout_opt
+  );
+  return TestCharacterArray{std::move(arr_out), _opt_status};
+}
 CppBmadTest::TestCharacterScalar CppBmadTest::test_character_scalar(
     std::string val_in,
     std::string &val_inout,

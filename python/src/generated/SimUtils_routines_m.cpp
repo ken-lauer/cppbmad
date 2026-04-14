@@ -80,6 +80,33 @@ is_match : bool
 )"""
   );
   m.def(
+      "match_word",
+      &SimUtils::match_word,
+      py::arg("string"),
+      py::arg("names"),
+      py::arg("ix"),
+      py::arg("exact_case") = py::none(),
+      py::arg("can_abbreviate") = py::none(),
+      py::arg("matched_name") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine match_word
+
+Parameters
+----------
+string : str
+
+names : 1D array of str
+
+ix : int
+
+exact_case : bool, optional
+
+can_abbreviate : bool, optional
+
+matched_name : str, optional
+)"""
+  );
+  m.def(
       "maximize_projection",
       &SimUtils::maximize_projection,
       py::arg("seed"),

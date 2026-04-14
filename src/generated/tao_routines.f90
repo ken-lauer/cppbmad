@@ -15,8 +15,8 @@ use tao_data_and_eval_mod, only: integrate_max, integrate_min, tao_datum_integra
     tao_to_phase_and_coupling_reading, tao_tracking_ele_index
 
 use tao_interface, only: tao_abort_command_file, tao_alias_cmd, tao_beam_emit_calc, &
-    tao_beam_track_endpoint, tao_branch_index, tao_chrom_calc_needed, tao_clear_cmd, &
-    tao_clip_cmd, tao_close_command_file, tao_command, tao_constraint_type_name, &
+    tao_beam_track_endpoint, tao_branch_index, tao_call_cmd, tao_chrom_calc_needed, &
+    tao_clear_cmd, tao_clip_cmd, tao_close_command_file, tao_command, tao_constraint_type_name, &
     tao_control_tree_list, tao_count_strings, tao_curve_ele_ref, tao_curve_ix_uni, &
     tao_curve_name, tao_curve_rms_calc, tao_d2_d1_name, tao_data_check, tao_data_coupling_init, &
     tao_data_sanity_check, tao_data_show_use, tao_datum_has_associated_ele, tao_datum_name, &
@@ -69,7 +69,8 @@ use tao_wave_mod, only: tao_cbar_wave_anal, tao_orbit_beta_wave_anal, tao_phase_
 use tao_change_mod, only: tao_change_ele, tao_change_tune, tao_change_var, tao_change_z_tune, &
     tao_to_change_number
 
-use tao_command_mod, only: tao_cmd_history_record, tao_next_word, tao_re_execute
+use tao_command_mod, only: tao_cmd_history_record, tao_cmd_split, tao_next_switch, &
+    tao_next_word, tao_re_execute
 
 use tao_plot_window_mod, only: tao_create_plot_window, tao_destroy_plot_window
 
@@ -110,7 +111,7 @@ use tao_set_mod, only: tao_set_beam_cmd, tao_set_beam_init_cmd, tao_set_bmad_com
     tao_set_z_tune_cmd
 
 use tao_top10_mod, only: tao_show_constraints, tao_top10_derivative_print, &
-    tao_top10_merit_categories_print, tao_var_write
+    tao_top10_merit_categories_print, tao_var_write, tao_write_lines
 
 use tao_svd_optimizer_mod, only: tao_svd_optimizer
 
@@ -532,6 +533,36 @@ subroutine fortran_tao_calc_data_at_s_pts (tao_lat, curve, comp_sign, good) bind
   call tao_calc_data_at_s_pts(f_tao_lat, f_curve, f_comp_sign, f_good%data)
 
 end subroutine
+subroutine fortran_tao_call_cmd (file_name, cmd_arg) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: file_name
+  character(len=4096), target :: f_file_name
+  character(kind=c_char), pointer :: f_file_name_ptr(:)
+  type(c_ptr), intent(in), value :: cmd_arg
+  type(character_container_alloc), pointer :: f_cmd_arg
+  character(200), allocatable :: f_cmd_arg_local(:)
+  ! ** End of parameters **
+  ! in: f_file_name 0D_NOT_character
+  if (.not. c_associated(file_name)) return
+  call c_f_pointer(file_name, f_file_name_ptr, [huge(0)])
+  call to_f_str(f_file_name_ptr, f_file_name)
+  !! container character array (1D_NOT_character)
+  if (c_associated(cmd_arg))   call c_f_pointer(cmd_arg, f_cmd_arg)
+  if (c_associated(cmd_arg) .and. allocated(f_cmd_arg%data)) then
+    allocate(f_cmd_arg_local, mold=f_cmd_arg%data)
+    f_cmd_arg_local = ''
+  endif
+  call tao_call_cmd(f_file_name, f_cmd_arg_local)
+
+  !! copy allocatable character result into container
+  if (c_associated(cmd_arg) .and. allocated(f_cmd_arg_local)) then
+    if (allocated(f_cmd_arg%data)) deallocate(f_cmd_arg%data)
+    allocate(f_cmd_arg%data, source=f_cmd_arg_local)
+  endif
+end subroutine
 subroutine fortran_tao_cbar_wave_anal (plot) bind(c)
 
   use array_desc_mod
@@ -843,6 +874,66 @@ subroutine fortran_tao_cmd_history_record (cmd) bind(c)
   call to_f_str(f_cmd_ptr, f_cmd)
   call tao_cmd_history_record(f_cmd)
 
+end subroutine
+subroutine fortran_tao_cmd_split (cmd_line, n_word, cmd_word, extra_words_is_error, err, &
+    separator) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: cmd_line
+  character(len=4096), target :: f_cmd_line
+  character(kind=c_char), pointer :: f_cmd_line_ptr(:)
+  integer(c_int) :: n_word  ! 0D_NOT_integer
+  integer :: f_n_word
+  logical(c_bool) :: extra_words_is_error  ! 0D_NOT_logical
+  logical :: f_extra_words_is_error
+  type(c_ptr), intent(in), value :: separator
+  character(len=4096), target :: f_separator
+  character(kind=c_char), pointer :: f_separator_ptr(:)
+  character(len=4096), pointer :: f_separator_call_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: cmd_word
+  type(character_container_alloc), pointer :: f_cmd_word
+  character(200), allocatable :: f_cmd_word_local(:)
+  ! ** End of parameters **
+  ! in: f_cmd_line 0D_NOT_character
+  if (.not. c_associated(cmd_line)) return
+  call c_f_pointer(cmd_line, f_cmd_line_ptr, [huge(0)])
+  call to_f_str(f_cmd_line_ptr, f_cmd_line)
+  ! in: f_n_word 0D_NOT_integer
+  f_n_word = n_word
+  !! container character array (1D_NOT_character)
+  if (c_associated(cmd_word))   call c_f_pointer(cmd_word, f_cmd_word)
+  if (c_associated(cmd_word) .and. allocated(f_cmd_word%data)) then
+    allocate(f_cmd_word_local, mold=f_cmd_word%data)
+    f_cmd_word_local = ''
+  endif
+  ! in: f_extra_words_is_error 0D_NOT_logical
+  f_extra_words_is_error = extra_words_is_error
+  ! in: f_separator 0D_NOT_character
+  if (c_associated(separator)) then
+    call c_f_pointer(separator, f_separator_ptr, [huge(0)])
+    call to_f_str(f_separator_ptr, f_separator)
+    f_separator_call_ptr => f_separator
+  else
+    f_separator_call_ptr => null()
+  endif
+  call tao_cmd_split(f_cmd_line, f_n_word, f_cmd_word_local, f_extra_words_is_error, f_err, &
+      f_separator_call_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(cmd_word) .and. allocated(f_cmd_word_local)) then
+    if (allocated(f_cmd_word%data)) deallocate(f_cmd_word%data)
+    allocate(f_cmd_word%data, source=f_cmd_word_local)
+  endif
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_tao_command (command_line, err, err_is_fatal) bind(c)
 
@@ -4579,6 +4670,85 @@ subroutine fortran_tao_merit (calc_ok, this_merit) bind(c)
   ! out: f_this_merit 0D_NOT_real
   call c_f_pointer(this_merit, f_this_merit_ptr)
   f_this_merit_ptr = f_this_merit
+end subroutine
+subroutine fortran_tao_next_switch (line, switch_list, return_next_word, switch_, err, &
+    neg_num_not_switch, print_err) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: switch_list
+  type(character_container_alloc), pointer :: f_switch_list
+  character(200), allocatable :: f_switch_list_local(:)
+  logical(c_bool) :: return_next_word  ! 0D_NOT_logical
+  logical :: f_return_next_word
+  type(c_ptr), intent(in), value :: neg_num_not_switch  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_neg_num_not_switch
+  logical, target :: f_neg_num_not_switch_native
+  logical, pointer :: f_neg_num_not_switch_native_ptr
+  logical(c_bool), pointer :: f_neg_num_not_switch_ptr
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: switch_
+  character(len=4096), target :: f_switch
+  character(kind=c_char), pointer :: f_switch_ptr(:)
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
+  ! ** End of parameters **
+  ! inout: f_line 0D_NOT_character
+  if (.not. c_associated(line)) return
+  call c_f_pointer(line, f_line_ptr, [huge(0)])
+  call to_f_str(f_line_ptr, f_line)
+  !! container character array (1D_NOT_character)
+  if (c_associated(switch_list))   call c_f_pointer(switch_list, f_switch_list)
+  if (c_associated(switch_list) .and. allocated(f_switch_list%data)) then
+    allocate(f_switch_list_local, mold=f_switch_list%data)
+    f_switch_list_local = ''
+  endif
+  ! in: f_return_next_word 0D_NOT_logical
+  f_return_next_word = return_next_word
+  ! in: f_neg_num_not_switch 0D_NOT_logical
+  if (c_associated(neg_num_not_switch)) then
+    call c_f_pointer(neg_num_not_switch, f_neg_num_not_switch_ptr)
+    f_neg_num_not_switch_native = f_neg_num_not_switch_ptr
+    f_neg_num_not_switch_native_ptr => f_neg_num_not_switch_native
+  else
+    f_neg_num_not_switch_native_ptr => null()
+  endif
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  call tao_next_switch(f_line, f_switch_list_local, f_return_next_word, f_switch, f_err, &
+      f_neg_num_not_switch_native_ptr, f_print_err_native_ptr)
+
+  ! inout: f_line 0D_NOT_character
+  call c_f_pointer(line, f_line_ptr, [len_trim(f_line) + 1])
+  call to_c_str(f_line, f_line_ptr)
+  !! copy allocatable character result into container
+  if (c_associated(switch_list) .and. allocated(f_switch_list_local)) then
+    if (allocated(f_switch_list%data)) deallocate(f_switch_list%data)
+    allocate(f_switch_list%data, source=f_switch_list_local)
+  endif
+  ! out: f_switch 0D_NOT_character
+  call c_f_pointer(switch_, f_switch_ptr, [len_trim(f_switch) + 1])
+  call to_c_str(f_switch, f_switch_ptr)
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
 end subroutine
 subroutine fortran_tao_next_word (line, word) bind(c)
 
@@ -9040,6 +9210,33 @@ subroutine fortran_tao_write_cmd (what) bind(c)
   call to_f_str(f_what_ptr, f_what)
   call tao_write_cmd(f_what)
 
+end subroutine
+subroutine fortran_tao_write_lines (iunit, line) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: iunit  ! 0D_NOT_integer
+  integer :: f_iunit
+  type(c_ptr), intent(in), value :: line
+  type(character_container_alloc), pointer :: f_line
+  character(200), allocatable :: f_line_local(:)
+  ! ** End of parameters **
+  ! in: f_iunit 0D_NOT_integer
+  f_iunit = iunit
+  !! container character array (1D_NOT_character)
+  if (c_associated(line))   call c_f_pointer(line, f_line)
+  if (c_associated(line) .and. allocated(f_line%data)) then
+    allocate(f_line_local, mold=f_line%data)
+    f_line_local = ''
+  endif
+  call tao_write_lines(f_iunit, f_line_local)
+
+  !! copy allocatable character result into container
+  if (c_associated(line) .and. allocated(f_line_local)) then
+    if (allocated(f_line%data)) deallocate(f_line%data)
+    allocate(f_line%data, source=f_line_local)
+  endif
 end subroutine
 subroutine fortran_tao_x_axis_cmd (where, what) bind(c)
 

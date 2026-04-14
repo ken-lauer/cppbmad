@@ -8,10 +8,10 @@ use precision_def ! , only: global_com, rp
 use bmad_struct_proxy_mod
 
 use cppbmad_test_mod, only: test_bunch_struct_array, test_bunch_struct_scalar, &
-    test_character_scalar, test_complex_array, test_complex_scalar, test_integer8_array, &
-    test_integer8_scalar, test_integer_array, test_integer_scalar, test_logical_array, &
-    test_logical_scalar, test_real16_array, test_real16_scalar, test_real_array, &
-    test_real_scalar
+    test_character_array, test_character_scalar, test_complex_array, test_complex_scalar, &
+    test_integer8_array, test_integer8_scalar, test_integer_array, test_integer_scalar, &
+    test_logical_array, test_logical_scalar, test_real16_array, test_real16_scalar, &
+    test_real_array, test_real_scalar
 
 
 use, intrinsic :: iso_c_binding
@@ -151,6 +151,100 @@ subroutine fortran_test_bunch_struct_scalar (val_in, val_inout, val_out, opt_sta
   if (c_associated(opt_status%data_ptr)) then
     call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
     f_opt_status_ptr = f_opt_status(:)
+  endif
+end subroutine
+subroutine fortran_test_character_array (arr_in, arr_inout, arr_out, opt_status, arr_in_opt, &
+    arr_inout_opt) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: arr_in
+  type(character_container_alloc), pointer :: f_arr_in
+  character(200), allocatable :: f_arr_in_local(:)
+  type(c_ptr), intent(in), value :: arr_in_opt
+  type(character_container_alloc), pointer :: f_arr_in_opt
+  character(200), allocatable :: f_arr_in_opt_local(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: arr_out
+  type(character_container_alloc), pointer :: f_arr_out
+  character(200), allocatable :: f_arr_out_local(:)
+  type(array_descriptor_t), intent(in) :: opt_status
+  integer :: f_opt_status(2)
+  integer(c_int), pointer :: f_opt_status_ptr(:)
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: arr_inout
+  type(character_container_alloc), pointer :: f_arr_inout
+  character(200), allocatable :: f_arr_inout_local(:)
+  type(c_ptr), intent(in), value :: arr_inout_opt
+  type(character_container_alloc), pointer :: f_arr_inout_opt
+  character(200), allocatable :: f_arr_inout_opt_local(:)
+  ! ** End of parameters **
+  !! container character array (1D_NOT_character)
+  if (c_associated(arr_in))   call c_f_pointer(arr_in, f_arr_in)
+  if (c_associated(arr_in) .and. allocated(f_arr_in%data)) then
+    allocate(f_arr_in_local, mold=f_arr_in%data)
+    f_arr_in_local = ''
+  endif
+  !! container character array (1D_NOT_character)
+  if (c_associated(arr_inout))   call c_f_pointer(arr_inout, f_arr_inout)
+  if (c_associated(arr_inout) .and. allocated(f_arr_inout%data)) then
+    allocate(f_arr_inout_local, mold=f_arr_inout%data)
+    f_arr_inout_local = ''
+  endif
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
+  !! general array (1D_NOT_integer) out
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    ! output-only
+  else
+    f_opt_status_ptr => null()
+  endif
+  !! container character array (1D_NOT_character)
+  if (c_associated(arr_in_opt))   call c_f_pointer(arr_in_opt, f_arr_in_opt)
+  if (c_associated(arr_in_opt) .and. allocated(f_arr_in_opt%data)) then
+    allocate(f_arr_in_opt_local, mold=f_arr_in_opt%data)
+    f_arr_in_opt_local = ''
+  endif
+  !! container character array (1D_NOT_character)
+  if (c_associated(arr_inout_opt))   call c_f_pointer(arr_inout_opt, f_arr_inout_opt)
+  if (c_associated(arr_inout_opt) .and. allocated(f_arr_inout_opt%data)) then
+    allocate(f_arr_inout_opt_local, mold=f_arr_inout_opt%data)
+    f_arr_inout_opt_local = ''
+  endif
+  call test_character_array(f_arr_in_local, f_arr_inout_local, f_arr_out_local, f_opt_status, &
+      f_arr_in_opt_local, f_arr_inout_opt_local)
+
+  !! copy allocatable character result into container
+  if (c_associated(arr_in) .and. allocated(f_arr_in_local)) then
+    if (allocated(f_arr_in%data)) deallocate(f_arr_in%data)
+    allocate(f_arr_in%data, source=f_arr_in_local)
+  endif
+  !! copy allocatable character result into container
+  if (c_associated(arr_inout) .and. allocated(f_arr_inout_local)) then
+    if (allocated(f_arr_inout%data)) deallocate(f_arr_inout%data)
+    allocate(f_arr_inout%data, source=f_arr_inout_local)
+  endif
+  !! copy allocatable character result into container
+  if (c_associated(arr_out) .and. allocated(f_arr_out_local)) then
+    if (allocated(f_arr_out%data)) deallocate(f_arr_out%data)
+    allocate(f_arr_out%data, source=f_arr_out_local)
+  endif
+  ! out: f_opt_status 1D_NOT_integer
+  if (c_associated(opt_status%data_ptr)) then
+    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
+    f_opt_status_ptr = f_opt_status(:)
+  endif
+  !! copy allocatable character result into container
+  if (c_associated(arr_in_opt) .and. allocated(f_arr_in_opt_local)) then
+    if (allocated(f_arr_in_opt%data)) deallocate(f_arr_in_opt%data)
+    allocate(f_arr_in_opt%data, source=f_arr_in_opt_local)
+  endif
+  !! copy allocatable character result into container
+  if (c_associated(arr_inout_opt) .and. allocated(f_arr_inout_opt_local)) then
+    if (allocated(f_arr_inout_opt%data)) deallocate(f_arr_inout_opt%data)
+    allocate(f_arr_inout_opt%data, source=f_arr_inout_opt_local)
   endif
 end subroutine
 subroutine fortran_test_character_scalar (val_in, val_inout, val_out, opt_status, val_in_opt, &

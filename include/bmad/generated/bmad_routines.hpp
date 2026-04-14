@@ -1592,10 +1592,18 @@ Bmad::CreateElementSlice create_element_slice(
     optional_ref<EleStruct> old_slice = std::nullopt,
     optional_ref<CoordStruct> orb_in = std::nullopt
 );
-
-// Skipped unusable routine create_feedback:
-// - Variable-sized in character array: 1D_NOT_character
-// - Variable-sized in character array: 1D_NOT_character
+extern "C" void fortran_create_feedback(
+    void *lord /* 0D_NOT_type inout */,
+    void *input /* 1D_NOT_character in */,
+    void *output /* 1D_NOT_character in */,
+    bool &err_flag /* 0D_NOT_logical in */
+);
+void create_feedback(
+    EleStruct &lord,
+    CharacterAlloc1D &input,
+    CharacterAlloc1D &output,
+    bool err_flag
+);
 extern "C" void fortran_create_field_overlap(
     void *lat /* 0D_NOT_type inout */,
     const char *lord_name /* 0D_NOT_character in */,
@@ -3453,9 +3461,24 @@ struct GetSlaveList {
   int n_slave;
 };
 Bmad::GetSlaveList get_slave_list(EleStruct &lord);
-
-// Skipped unusable routine get_switch:
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" void fortran_get_switch(
+    const char *name /* 0D_NOT_character in */,
+    void *name_list /* 1D_NOT_character inout */,
+    int &switch_ /* 0D_NOT_integer in */,
+    bool &err /* 0D_NOT_logical in */,
+    void *ele /* 0D_NOT_type inout */,
+    const char *delim /* 0D_NOT_character in */,
+    bool &delim_found /* 0D_NOT_logical in */
+);
+void get_switch(
+    std::string name,
+    CharacterAlloc1D &name_list,
+    int switch_,
+    bool err,
+    EleStruct &ele,
+    std::string delim,
+    bool delim_found
+);
 
 // Skipped unusable routine getrhotilde:
 // - Array bounds handling: "Enum 'ILO' found in bounds 'ilo' but not in provided map."
@@ -6433,9 +6456,22 @@ void ptc_one_turn_mat_and_closed_orbit_calc(
 );
 extern "C" void fortran_ptc_ran_seed_put(int &iseed /* 0D_NOT_integer in */);
 void ptc_ran_seed_put(int iseed);
-
-// Skipped unusable routine ptc_read_flat_file:
-// - Variable-sized in character array: 1D_NOT_character
+extern "C" void fortran_ptc_read_flat_file(
+    void *flat_file /* 1D_NOT_character in */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    void *lat /* 0D_NOT_type out */,
+    bool *create_end_marker /* 0D_NOT_logical in */,
+    bool *from_mad /* 0D_NOT_logical in */
+);
+struct PtcReadFlatFile {
+  bool err_flag;
+  LatStruct lat;
+};
+Bmad::PtcReadFlatFile ptc_read_flat_file(
+    CharacterAlloc1D &flat_file,
+    std::optional<bool> create_end_marker = std::nullopt,
+    std::optional<bool> from_mad = std::nullopt
+);
 
 // Skipped unusable routine ptc_read_map_with_radiation:
 // - Untranslated type: ptc_rad_map_struct (0D)
@@ -9540,9 +9576,19 @@ void type_taylors(
     std::optional<std::string> out_var_suffix = std::nullopt,
     std::optional<bool> append = std::nullopt
 );
-
-// Skipped unusable routine type_twiss:
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" void fortran_type_twiss(
+    void *ele /* 0D_NOT_type in */,
+    int *frequency_units /* 0D_NOT_integer in */,
+    bool *compact_format /* 0D_NOT_logical in */,
+    void *lines /* 1D_NOT_character inout */,
+    int &n_lines /* 0D_NOT_integer out */
+);
+int type_twiss(
+    EleStruct &ele,
+    std::optional<int> frequency_units = std::nullopt,
+    std::optional<bool> compact_format = std::nullopt,
+    optional_ref<CharacterAlloc1D> lines = std::nullopt
+);
 
 // Skipped unusable routine universal_equal_universal:
 // - Untranslated type: universal_taylor (0D)
@@ -9909,7 +9955,6 @@ bool write_bmad_lattice_file(
 );
 
 // Skipped unusable routine write_digested_bmad_file:
-// - Variable-sized in character array: 1D_NOT_character
 // - Untranslated type: extra_parsing_info_struct (0D)
 
 // Skipped unusable routine write_gpt_ele:

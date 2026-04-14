@@ -516,9 +516,12 @@ extern "C" bool fortran_find_location_real(
     int &ix_match /* 0D_NOT_integer out */
 );
 int find_location(FArray1D<Real> &arr, double value);
-
-// Skipped unusable routine find_location_str:
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" bool fortran_find_location_str(
+    void *arr /* 1D_NOT_character inout */,
+    const char *value /* 0D_NOT_character in */,
+    int &ix_match /* 0D_NOT_integer in */
+);
+void find_location(CharacterAlloc1D &arr, std::string value, int ix_match);
 extern "C" bool fortran_fine_frequency_estimate(
     Bmad::array_descriptor_t &data /* 1D_NOT_real in */,
     double &frequency /* 0D_NOT_real out */
@@ -580,9 +583,12 @@ double gen_complete_elliptic(
 
 // Skipped unusable routine general_bin_index_in_bounds:
 // - Untranslated type: general_bin_struct (0D)
-
-// Skipped unusable routine get_a_char:
-// - Variable-sized in character array: 1D_NOT_character
+extern "C" void fortran_get_a_char(
+    const char *this_char /* 0D_NOT_character out */,
+    bool &wait /* 0D_NOT_logical in */,
+    void *ignore_this /* 1D_NOT_character in */
+);
+std::string get_a_char(bool wait, optional_ref<CharacterAlloc1D> ignore_this = std::nullopt);
 extern "C" void fortran_get_file_number(
     const char *file_name /* 0D_NOT_character in */,
     const char *cnum_in /* 0D_NOT_character in */,
@@ -876,9 +882,22 @@ extern "C" bool fortran_match_wild(
     bool &is_match /* 0D_NOT_logical in */
 );
 void match_wild(std::string string, std::string template_, bool is_match);
-
-// Skipped unusable routine match_word:
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" void fortran_match_word(
+    const char *string /* 0D_NOT_character in */,
+    void *names /* 1D_NOT_character inout */,
+    int &ix /* 0D_NOT_integer in */,
+    bool *exact_case /* 0D_NOT_logical in */,
+    bool *can_abbreviate /* 0D_NOT_logical in */,
+    const char *matched_name /* 0D_NOT_character in */
+);
+void match_word(
+    std::string string,
+    CharacterAlloc1D &names,
+    int ix,
+    std::optional<bool> exact_case = std::nullopt,
+    std::optional<bool> can_abbreviate = std::nullopt,
+    std::optional<std::string> matched_name = std::nullopt
+);
 
 // Skipped unusable routine max_nonzero:
 // - Module name unset
@@ -1119,9 +1138,24 @@ void out_io(
     optional_ref<BoolAlloc1D> l_array = std::nullopt,
     std::optional<bool> insert_tag_line = std::nullopt
 );
-
-// Skipped unusable routine out_io_lines:
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" void fortran_out_io_lines(
+    int &level /* 0D_NOT_integer in */,
+    const char *routine_name /* 0D_NOT_character in */,
+    void *lines /* 1D_NOT_character inout */,
+    Bmad::array_descriptor_t &r_array /* 1D_NOT_real inout */,
+    Bmad::array_descriptor_t &i_array /* 1D_NOT_integer inout */,
+    void *l_array /* 1D_ALLOC_logical inout */,
+    bool *insert_tag_line /* 0D_NOT_logical in */
+);
+void out_io(
+    int level,
+    std::string routine_name,
+    CharacterAlloc1D &lines,
+    std::optional<FArray1D<Real>> r_array = std::nullopt,
+    std::optional<FArray1D<Int>> i_array = std::nullopt,
+    optional_ref<BoolAlloc1D> l_array = std::nullopt,
+    std::optional<bool> insert_tag_line = std::nullopt
+);
 extern "C" void fortran_out_io_logical(
     int &level /* 0D_NOT_integer in */,
     const char *routine_name /* 0D_NOT_character in */,
@@ -1183,9 +1217,26 @@ void parse_fortran_format(
     int width,
     int digits
 );
-
-// Skipped unusable routine pointer_to_locations:
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" void fortran_pointer_to_locations(
+    const char *string /* 0D_NOT_character in */,
+    void *array /* 1D_ALLOC_integer inout */,
+    int &num /* 0D_NOT_integer in */,
+    int &ix_min /* 0D_NOT_integer in */,
+    int &ix_max /* 0D_NOT_integer in */,
+    void *names /* 1D_NOT_character inout */,
+    bool *exact_case /* 0D_NOT_logical in */,
+    bool *print_err /* 0D_NOT_logical in */
+);
+void pointer_to_locations(
+    std::string string,
+    IntAlloc1D &array,
+    int num,
+    int ix_min,
+    int ix_max,
+    optional_ref<CharacterAlloc1D> names = std::nullopt,
+    std::optional<bool> exact_case = std::nullopt,
+    std::optional<bool> print_err = std::nullopt
+);
 extern "C" bool fortran_pointer_to_ran_state(
     void *ran_state /* 0D_NOT_type in */,
     int *ix_thread /* 0D_NOT_integer in */,
@@ -1349,9 +1400,16 @@ extern "C" bool fortran_quote(
     const char *q_str /* 0D_ALLOC_character in */
 );
 void quote(std::string str, std::string q_str);
-
-// Skipped unusable routine quoten:
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" bool fortran_quoten(
+    void *str /* 1D_NOT_character inout */,
+    const char *delim /* 0D_NOT_character in */,
+    const char *q_str /* 0D_ALLOC_character in */
+);
+void quoten(
+    CharacterAlloc1D &str,
+    std::string q_str,
+    std::optional<std::string> delim = std::nullopt
+);
 extern "C" void fortran_ran_default_state(
     void *set_state /* 0D_NOT_type in */,
     void *get_state /* 0D_NOT_type out */

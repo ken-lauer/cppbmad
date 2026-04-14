@@ -3928,6 +3928,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### create_feedback
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/bmad/modules/bmad_routine_interface.f90#L933)
+
+::: pybmad.create_feedback
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### create_field_overlap
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/bmad/modules/bmad_routine_interface.f90#L953)
@@ -5808,6 +5817,15 @@ Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/bmad/modules/bmad_routine_interface.f90#L1395)
 
 ::: pybmad.get_slave_list
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### get_switch
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/bmad/parsing/bmad_parser_mod.f90#L7818)
+
+::: pybmad.get_switch
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -7983,6 +8001,15 @@ Fortran source: [`bmad/ptc/ptc_layout_mod.f90`](https://github.com/bmad-sim/bmad
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/bmad/modules/bmad_routine_interface.f90#L2259)
 
 ::: pybmad.ptc_ran_seed_put
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ptc_read_flat_file
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/bmad/modules/bmad_routine_interface.f90#L2264)
+
+::: pybmad.ptc_read_flat_file
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -10269,6 +10296,15 @@ Fortran source: [`bmad/ptc/ptc_layout_mod.f90`](https://github.com/bmad-sim/bmad
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/bmad/modules/bmad_routine_interface.f90#L3548)
 
 ::: pybmad.type_taylors
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### type_twiss
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/8c56734eb5767ee7e9835e6b1d80ab31f54b7777/bmad/modules/bmad_routine_interface.f90#L3559)
+
+::: pybmad.type_twiss
     options:
       show_root_heading: false
       show_root_toc_entry: false

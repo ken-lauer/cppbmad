@@ -33,6 +33,39 @@ digits : int
 )"""
   );
   m.def(
+      "pointer_to_locations",
+      &SimUtils::pointer_to_locations,
+      py::arg("string"),
+      py::arg("array"),
+      py::arg("num"),
+      py::arg("ix_min"),
+      py::arg("ix_max"),
+      py::arg("names") = py::none(),
+      py::arg("exact_case") = py::none(),
+      py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine pointer_to_locations
+
+Parameters
+----------
+string : str
+
+array : 1D array of int
+
+num : int
+
+ix_min : int
+
+ix_max : int
+
+names : 1D array of str, optional
+
+exact_case : bool, optional
+
+print_err : bool, optional
+)"""
+  );
+  m.def(
       "pointer_to_ran_state",
       &SimUtils::pointer_to_ran_state,
       py::arg("ran_state") = py::none(),

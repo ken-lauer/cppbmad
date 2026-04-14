@@ -26,15 +26,15 @@ use sim_utils_interface, only: asinc, assert_equal, calc_file_number, change_fil
     i_bessel, i_bessel_extended, increment_file_number, index_nocase, int_str, is_alphabetic, &
     is_decreasing_sequence, is_increasing_sequence, is_integer, is_logical, is_real, j_bessel, &
     linear_fit, linear_fit_2d, logic_str, lunget, make_legal_comment, match_reg, match_wild, &
-    milli_sleep, n_choose_k, n_spline_create, nametable_add, nametable_bracket_indexx, &
-    nametable_change1, nametable_init, nametable_remove, ordinal_str, parse_fortran_format, &
-    poly_eval, probability_funct, quadratic_roots, query_string, quote, &
-    real_num_fortran_format, real_path, real_str, real_to_string, rms_value, rot_2d, run_timer, &
-    set_env, set_parameter, sinc, sincc, sinhx_x, skip_header, sqrt_alpha, sqrt_one, str_count, &
-    str_downcase, str_first_in_set, str_first_not_in_set, str_last_in_set, str_last_not_in_set, &
-    str_match_wild, str_substitute, str_upcase, string_to_int, string_to_real, string_trim, &
-    string_trim2, system_command, to_str, type_this_file, upcase_string, virtual_memory_usage, &
-    word_len, word_read
+    match_word, milli_sleep, n_choose_k, n_spline_create, nametable_add, &
+    nametable_bracket_indexx, nametable_change1, nametable_init, nametable_remove, ordinal_str, &
+    parse_fortran_format, pointer_to_locations, poly_eval, probability_funct, quadratic_roots, &
+    query_string, quote, quoten, real_num_fortran_format, real_path, real_str, real_to_string, &
+    rms_value, rot_2d, run_timer, set_env, set_parameter, sinc, sincc, sinhx_x, skip_header, &
+    sqrt_alpha, sqrt_one, str_count, str_downcase, str_first_in_set, str_first_not_in_set, &
+    str_last_in_set, str_last_not_in_set, str_match_wild, str_substitute, str_upcase, &
+    string_to_int, string_to_real, string_trim, string_trim2, system_command, to_str, &
+    type_this_file, upcase_string, virtual_memory_usage, word_len, word_read
 
 use rotation_3d_mod, only: axis_angle_to_quat, axis_angle_to_w_mat, omega_to_quat, quat_conj, &
     quat_inverse, quat_mul, quat_rotate, quat_to_axis_angle, quat_to_omega, quat_to_w_mat, &
@@ -59,7 +59,8 @@ use fourier_mod, only: coarse_frequency_estimate, fine_frequency_estimate, fouri
 
 use windowls_mod, only: destfixedwindowls, fixedwindowls, initfixedwindowls
 
-use input_mod, only: get_tty_char, read_a_line, readline_read_history, readline_write_history
+use input_mod, only: get_a_char, get_tty_char, read_a_line, readline_read_history, &
+    readline_write_history
 
 use lmdif_mod, only: initial_lmdif, suggest_lmdif
 
@@ -1746,6 +1747,44 @@ subroutine fortran_find_location_real (arr, value, ix_match) bind(c)
   call c_f_pointer(ix_match, f_ix_match_ptr)
   f_ix_match_ptr = f_ix_match
 end subroutine
+subroutine fortran_find_location_str (arr, value, ix_match) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: value
+  character(len=4096), target :: f_value
+  character(kind=c_char), pointer :: f_value_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ix_match  ! 0D_NOT_integer
+  integer :: f_ix_match
+  integer(c_int), pointer :: f_ix_match_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: arr
+  type(character_container_alloc), pointer :: f_arr
+  character(200), allocatable :: f_arr_local(:)
+  ! ** End of parameters **
+  !! container character array (1D_NOT_character)
+  if (c_associated(arr))   call c_f_pointer(arr, f_arr)
+  if (c_associated(arr) .and. allocated(f_arr%data)) then
+    allocate(f_arr_local, mold=f_arr%data)
+    f_arr_local = ''
+  endif
+  ! in: f_value 0D_NOT_character
+  if (.not. c_associated(value)) return
+  call c_f_pointer(value, f_value_ptr, [huge(0)])
+  call to_f_str(f_value_ptr, f_value)
+  f_ix_match = find_location(f_arr_local, f_value)
+
+  !! copy allocatable character result into container
+  if (c_associated(arr) .and. allocated(f_arr_local)) then
+    if (allocated(f_arr%data)) deallocate(f_arr%data)
+    allocate(f_arr%data, source=f_arr_local)
+  endif
+  ! out: f_ix_match 0D_NOT_integer
+  call c_f_pointer(ix_match, f_ix_match_ptr)
+  f_ix_match_ptr = f_ix_match
+end subroutine
 subroutine fortran_fine_frequency_estimate (data, frequency) bind(c)
 
   use array_desc_mod
@@ -1927,6 +1966,40 @@ subroutine fortran_gen_complete_elliptic (kc, p, c, s, err_tol, value) bind(c)
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
+end subroutine
+subroutine fortran_get_a_char (this_char, wait, ignore_this) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  logical(c_bool) :: wait  ! 0D_NOT_logical
+  logical :: f_wait
+  type(c_ptr), intent(in), value :: ignore_this
+  type(character_container_alloc), pointer :: f_ignore_this
+  character(200), allocatable :: f_ignore_this_local(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: this_char
+  character(len=4096), target :: f_this_char
+  character(kind=c_char), pointer :: f_this_char_ptr(:)
+  ! ** End of parameters **
+  ! in: f_wait 0D_NOT_logical
+  f_wait = wait
+  !! container character array (1D_NOT_character)
+  if (c_associated(ignore_this))   call c_f_pointer(ignore_this, f_ignore_this)
+  if (c_associated(ignore_this) .and. allocated(f_ignore_this%data)) then
+    allocate(f_ignore_this_local, mold=f_ignore_this%data)
+    f_ignore_this_local = ''
+  endif
+  call get_a_char(f_this_char, f_wait, f_ignore_this_local)
+
+  ! out: f_this_char 0D_NOT_character
+  call c_f_pointer(this_char, f_this_char_ptr, [len_trim(f_this_char) + 1])
+  call to_c_str(f_this_char, f_this_char_ptr)
+  !! copy allocatable character result into container
+  if (c_associated(ignore_this) .and. allocated(f_ignore_this_local)) then
+    if (allocated(f_ignore_this%data)) deallocate(f_ignore_this%data)
+    allocate(f_ignore_this%data, source=f_ignore_this_local)
+  endif
 end subroutine
 subroutine fortran_get_file_number (file_name, cnum_in, num_out, err_flag) bind(c)
 
@@ -2884,6 +2957,81 @@ subroutine fortran_match_wild (string, template_, is_match) bind(c)
   call c_f_pointer(is_match, f_is_match_ptr)
   f_is_match_ptr = f_is_match
 end subroutine
+subroutine fortran_match_word (string, names, ix, exact_case, can_abbreviate, matched_name) &
+    bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: string
+  character(len=4096), target :: f_string
+  character(kind=c_char), pointer :: f_string_ptr(:)
+  integer(c_int) :: ix  ! 0D_NOT_integer
+  integer :: f_ix
+  type(c_ptr), intent(in), value :: exact_case  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_exact_case
+  logical, target :: f_exact_case_native
+  logical, pointer :: f_exact_case_native_ptr
+  logical(c_bool), pointer :: f_exact_case_ptr
+  type(c_ptr), intent(in), value :: can_abbreviate  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_can_abbreviate
+  logical, target :: f_can_abbreviate_native
+  logical, pointer :: f_can_abbreviate_native_ptr
+  logical(c_bool), pointer :: f_can_abbreviate_ptr
+  type(c_ptr), intent(in), value :: matched_name
+  character(len=4096), target :: f_matched_name
+  character(kind=c_char), pointer :: f_matched_name_ptr(:)
+  character(len=4096), pointer :: f_matched_name_call_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: names
+  type(character_container_alloc), pointer :: f_names
+  character(200), allocatable :: f_names_local(:)
+  ! ** End of parameters **
+  ! in: f_string 0D_NOT_character
+  if (.not. c_associated(string)) return
+  call c_f_pointer(string, f_string_ptr, [huge(0)])
+  call to_f_str(f_string_ptr, f_string)
+  !! container character array (1D_NOT_character)
+  if (c_associated(names))   call c_f_pointer(names, f_names)
+  if (c_associated(names) .and. allocated(f_names%data)) then
+    allocate(f_names_local, mold=f_names%data)
+    f_names_local = ''
+  endif
+  ! in: f_ix 0D_NOT_integer
+  f_ix = ix
+  ! in: f_exact_case 0D_NOT_logical
+  if (c_associated(exact_case)) then
+    call c_f_pointer(exact_case, f_exact_case_ptr)
+    f_exact_case_native = f_exact_case_ptr
+    f_exact_case_native_ptr => f_exact_case_native
+  else
+    f_exact_case_native_ptr => null()
+  endif
+  ! in: f_can_abbreviate 0D_NOT_logical
+  if (c_associated(can_abbreviate)) then
+    call c_f_pointer(can_abbreviate, f_can_abbreviate_ptr)
+    f_can_abbreviate_native = f_can_abbreviate_ptr
+    f_can_abbreviate_native_ptr => f_can_abbreviate_native
+  else
+    f_can_abbreviate_native_ptr => null()
+  endif
+  ! in: f_matched_name 0D_NOT_character
+  if (c_associated(matched_name)) then
+    call c_f_pointer(matched_name, f_matched_name_ptr, [huge(0)])
+    call to_f_str(f_matched_name_ptr, f_matched_name)
+    f_matched_name_call_ptr => f_matched_name
+  else
+    f_matched_name_call_ptr => null()
+  endif
+  call match_word(f_string, f_names_local, f_ix, f_exact_case_native_ptr, &
+      f_can_abbreviate_native_ptr, f_matched_name_call_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(names) .and. allocated(f_names_local)) then
+    if (allocated(f_names%data)) deallocate(f_names%data)
+    allocate(f_names%data, source=f_names_local)
+  endif
+end subroutine
 subroutine fortran_maximize_projection (seed, cdata, func_retval__) bind(c)
 
   use array_desc_mod
@@ -3743,6 +3891,80 @@ subroutine fortran_out_io_line12 (level, routine_name, line1, line2, line3, line
       f_i_array, f_l_array%data, f_insert_tag_line_native_ptr)
 
 end subroutine
+subroutine fortran_out_io_lines (level, routine_name, lines, r_array, i_array, l_array, &
+    insert_tag_line) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: level  ! 0D_NOT_integer
+  integer :: f_level
+  type(c_ptr), intent(in), value :: routine_name
+  character(len=4096), target :: f_routine_name
+  character(kind=c_char), pointer :: f_routine_name_ptr(:)
+  type(c_ptr), intent(in), value :: insert_tag_line  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_insert_tag_line
+  logical, target :: f_insert_tag_line_native
+  logical, pointer :: f_insert_tag_line_native_ptr
+  logical(c_bool), pointer :: f_insert_tag_line_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  type(array_descriptor_t), intent(in) :: r_array
+  real(rp), pointer :: f_r_array(:)
+  real(c_double), pointer :: f_r_array_ptr(:)
+  type(array_descriptor_t), intent(in) :: i_array
+  integer, pointer :: f_i_array(:)
+  integer(c_int), pointer :: f_i_array_ptr(:)
+  type(c_ptr), intent(in), value :: l_array
+  type(logical_container_alloc), pointer :: f_l_array
+  ! ** End of parameters **
+  ! in: f_level 0D_NOT_integer
+  f_level = level
+  ! in: f_routine_name 0D_NOT_character
+  if (.not. c_associated(routine_name)) return
+  call c_f_pointer(routine_name, f_routine_name_ptr, [huge(0)])
+  call to_f_str(f_routine_name_ptr, f_routine_name)
+  !! container character array (1D_NOT_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  if (c_associated(lines) .and. allocated(f_lines%data)) then
+    allocate(f_lines_local, mold=f_lines%data)
+    f_lines_local = ''
+  endif
+  !! general array (1D_NOT_real) inout
+  if (c_associated(r_array%data_ptr)) then
+    call c_f_pointer(r_array%data_ptr, f_r_array_ptr, [r_array%dims(1)])
+    f_r_array => f_r_array_ptr
+  else
+    f_r_array => null()
+  endif
+  !! general array (1D_NOT_integer) inout
+  if (c_associated(i_array%data_ptr)) then
+    call c_f_pointer(i_array%data_ptr, f_i_array_ptr, [i_array%dims(1)])
+    f_i_array => f_i_array_ptr
+  else
+    f_i_array => null()
+  endif
+  !! container general array (1D_ALLOC_logical)
+  if (c_associated(l_array))   call c_f_pointer(l_array, f_l_array)
+  ! in: f_insert_tag_line 0D_NOT_logical
+  if (c_associated(insert_tag_line)) then
+    call c_f_pointer(insert_tag_line, f_insert_tag_line_ptr)
+    f_insert_tag_line_native = f_insert_tag_line_ptr
+    f_insert_tag_line_native_ptr => f_insert_tag_line_native
+  else
+    f_insert_tag_line_native_ptr => null()
+  endif
+  call out_io(f_level, f_routine_name, f_lines_local, f_r_array, f_i_array, f_l_array%data, &
+      f_insert_tag_line_native_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+end subroutine
 subroutine fortran_out_io_logical (level, routine_name, line, l_num, insert_tag_line) bind(c)
 
   use array_desc_mod
@@ -3919,6 +4141,81 @@ subroutine fortran_parse_fortran_format (format_str, n_repeat, power, descrip, w
   f_digits = digits
   call parse_fortran_format(f_format_str, f_n_repeat, f_power, f_descrip, f_width, f_digits)
 
+end subroutine
+subroutine fortran_pointer_to_locations (string, array, num, ix_min, ix_max, names, exact_case, &
+    print_err) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: string
+  character(len=4096), target :: f_string
+  character(kind=c_char), pointer :: f_string_ptr(:)
+  integer(c_int) :: num  ! 0D_NOT_integer
+  integer :: f_num
+  integer(c_int) :: ix_min  ! 0D_NOT_integer
+  integer :: f_ix_min
+  integer(c_int) :: ix_max  ! 0D_NOT_integer
+  integer :: f_ix_max
+  type(c_ptr), intent(in), value :: exact_case  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_exact_case
+  logical, target :: f_exact_case_native
+  logical, pointer :: f_exact_case_native_ptr
+  logical(c_bool), pointer :: f_exact_case_ptr
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: array
+  type(integer_container_alloc), pointer :: f_array
+  type(c_ptr), intent(in), value :: names
+  type(character_container_alloc), pointer :: f_names
+  character(200), allocatable :: f_names_local(:)
+  ! ** End of parameters **
+  ! in: f_string 0D_NOT_character
+  if (.not. c_associated(string)) return
+  call c_f_pointer(string, f_string_ptr, [huge(0)])
+  call to_f_str(f_string_ptr, f_string)
+  !! container general array (1D_ALLOC_integer)
+  if (c_associated(array))   call c_f_pointer(array, f_array)
+  ! in: f_num 0D_NOT_integer
+  f_num = num
+  ! in: f_ix_min 0D_NOT_integer
+  f_ix_min = ix_min
+  ! in: f_ix_max 0D_NOT_integer
+  f_ix_max = ix_max
+  !! container character array (1D_NOT_character)
+  if (c_associated(names))   call c_f_pointer(names, f_names)
+  if (c_associated(names) .and. allocated(f_names%data)) then
+    allocate(f_names_local, mold=f_names%data)
+    f_names_local = ''
+  endif
+  ! in: f_exact_case 0D_NOT_logical
+  if (c_associated(exact_case)) then
+    call c_f_pointer(exact_case, f_exact_case_ptr)
+    f_exact_case_native = f_exact_case_ptr
+    f_exact_case_native_ptr => f_exact_case_native
+  else
+    f_exact_case_native_ptr => null()
+  endif
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  call pointer_to_locations(f_string, f_array%data, f_num, f_ix_min, f_ix_max, f_names_local, &
+      f_exact_case_native_ptr, f_print_err_native_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(names) .and. allocated(f_names_local)) then
+    if (allocated(f_names%data)) deallocate(f_names%data)
+    allocate(f_names%data, source=f_names_local)
+  endif
 end subroutine
 subroutine fortran_pointer_to_ran_state (ran_state, ix_thread, ran_state_ptr) bind(c)
 
@@ -4673,6 +4970,49 @@ subroutine fortran_quote (str, q_str) bind(c)
   call to_f_str(f_str_ptr, f_str)
   f_q_str = quote(f_str)
 
+  ! out: f_q_str 0D_ALLOC_character
+  call c_f_pointer(q_str, f_q_str_ptr, [len_trim(f_q_str) + 1])
+  call to_c_str(f_q_str, f_q_str_ptr)
+end subroutine
+subroutine fortran_quoten (str, delim, q_str) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  character(len=4096), pointer :: f_delim_call_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: q_str
+  character(len=4096), target :: f_q_str
+  character(kind=c_char), pointer :: f_q_str_ptr(:)
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: str
+  type(character_container_alloc), pointer :: f_str
+  character(200), allocatable :: f_str_local(:)
+  ! ** End of parameters **
+  !! container character array (1D_NOT_character)
+  if (c_associated(str))   call c_f_pointer(str, f_str)
+  if (c_associated(str) .and. allocated(f_str%data)) then
+    allocate(f_str_local, mold=f_str%data)
+    f_str_local = ''
+  endif
+  ! in: f_delim 0D_NOT_character
+  if (c_associated(delim)) then
+    call c_f_pointer(delim, f_delim_ptr, [huge(0)])
+    call to_f_str(f_delim_ptr, f_delim)
+    f_delim_call_ptr => f_delim
+  else
+    f_delim_call_ptr => null()
+  endif
+  f_q_str = quoten(f_str_local, f_delim_call_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(str) .and. allocated(f_str_local)) then
+    if (allocated(f_str%data)) deallocate(f_str%data)
+    allocate(f_str%data, source=f_str_local)
+  endif
   ! out: f_q_str 0D_ALLOC_character
   call c_f_pointer(q_str, f_q_str_ptr, [len_trim(f_q_str) + 1])
   call to_c_str(f_q_str, f_q_str_ptr)

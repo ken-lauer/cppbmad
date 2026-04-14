@@ -46,12 +46,24 @@ CppBmadTest::TestBunchStructScalar test_bunch_struct_scalar(
     optional_ref<BunchStruct> val_in_opt = std::nullopt,
     optional_ref<BunchStruct> val_inout_opt = std::nullopt
 );
-
-// Skipped unusable routine test_character_array:
-// - Variable-sized in character array: 1D_NOT_character
-// - Variable-sized inout character array: 1D_NOT_character
-// - Variable-sized in character array: 1D_NOT_character
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" void fortran_test_character_array(
+    void *arr_in /* 1D_NOT_character in */,
+    void *arr_inout /* 1D_NOT_character inout */,
+    void *arr_out /* 1D_ALLOC_character out */,
+    Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
+    void *arr_in_opt /* 1D_NOT_character in */,
+    void *arr_inout_opt /* 1D_NOT_character inout */
+);
+struct TestCharacterArray {
+  CharacterAlloc1D arr_out;
+  FixedArray1D<Int, 2> opt_status;
+};
+CppBmadTest::TestCharacterArray test_character_array(
+    CharacterAlloc1D &arr_in,
+    CharacterAlloc1D &arr_inout,
+    optional_ref<CharacterAlloc1D> arr_in_opt = std::nullopt,
+    optional_ref<CharacterAlloc1D> arr_inout_opt = std::nullopt
+);
 extern "C" void fortran_test_character_scalar(
     const char *val_in /* 0D_NOT_character in */,
     const char *val_inout /* 0D_NOT_character inout */,

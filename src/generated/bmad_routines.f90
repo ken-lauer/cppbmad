@@ -32,8 +32,8 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     coords_body_to_local, coords_body_to_rel_exit, coords_curvilinear_to_floor, &
     coords_floor_to_curvilinear, coords_floor_to_local_curvilinear, coords_floor_to_relative, &
     coords_local_curvilinear_to_body, coords_local_curvilinear_to_floor, &
-    coords_relative_to_floor, create_element_slice, create_field_overlap, create_girder, &
-    create_group, create_lat_ele_nametable, create_overlay, create_ramper, &
+    coords_relative_to_floor, create_element_slice, create_feedback, create_field_overlap, &
+    create_girder, create_group, create_lat_ele_nametable, create_overlay, create_ramper, &
     create_unique_ele_names, create_wiggler_cartesian_map, crystal_attribute_bookkeeper, &
     deallocate_ele_pointers, deallocate_lat_pointers, default_tracking_species, &
     diffraction_plate_or_mask_hit_spot, distance_to_aperture, do_mode_flip, dpc_given_de, &
@@ -72,40 +72,40 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     pointer_to_branch, pointer_to_ele, pointer_to_fibre, pointer_to_field_ele, &
     pointer_to_girder, pointer_to_lord, pointer_to_multipass_lord, pointer_to_next_ele, &
     pointer_to_super_lord, pointer_to_wake_ele, polar_to_spinor, polar_to_vec, ptc_bookkeeper, &
-    ptc_ran_seed_put, ptc_set_rf_state_for_c_normal, ptc_transfer_map_with_spin, &
-    radiation_integrals, ramper_slave_setup, ramper_value, re_allocate_eles, &
-    read_digested_bmad_file, reallocate_beam, reallocate_bunch, reallocate_control, &
-    reallocate_coord, reallocate_expression_stack, rel_tracking_charge_to_mass, &
-    relative_mode_flip, remove_dead_from_bunch, remove_eles_from_lat, remove_lord_slave_link, &
-    reverse_lat, rf_coupler_kick, rf_is_on, rf_ref_time_offset, rotate_for_curved_surface, &
-    rotate_spin, rotate_spin_a_step, rotate_spin_given_field, s_body_calc, s_calc, &
-    save_a_beam_step, save_a_bunch_step, save_a_step, sbend_body_with_k1_map, &
-    set_ele_attribute, set_ele_defaults, set_ele_name, set_ele_real_attribute, &
-    set_ele_status_stale, set_flags_for_changed_attribute, set_fringe_on_off, &
-    set_lords_status_stale, set_on_off, set_orbit_to_zero, set_ptc, set_ptc_base_state, &
-    set_status_flags, set_tune, set_twiss, set_z_tune, significant_difference, slice_lattice, &
-    sol_quad_mat6_calc, spin_dn_dpz_from_mat8, spin_dn_dpz_from_qmap, spin_map1_normalize, &
-    spin_mat8_resonance_strengths, spin_mat_to_eigen, spin_omega, &
-    spin_quat_resonance_strengths, spin_taylor_to_linear, spinor_to_polar, spinor_to_vec, &
-    spline_fit_orbit, split_lat, sprint_spin_taylor_map, start_branch_at, stream_ele_end, &
-    strong_beam_sigma_calc, strong_beam_strength, symp_lie_bmad, taper_mag_strengths, &
-    taylor_equal_taylor, taylors_equal_taylors, tilt_coords, tilt_coords_photon, tilt_mat6, &
-    to_surface_coords, track1, track1_bmad, track1_bmad_photon, track1_bunch_space_charge, &
-    track1_linear, track1_runge_kutta, track1_spin, track1_spin_integration, &
-    track1_spin_taylor, track1_symp_lie_ptc, track1_taylor, track1_time_runge_kutta, &
-    track_a_beambeam, track_a_bend, track_a_converter, track_a_crab_cavity, track_a_drift, &
-    track_a_drift_photon, track_a_foil, track_a_gkicker, track_a_lcavity, track_a_lcavity_old, &
-    track_a_mask, track_a_match, track_a_patch, track_a_pickup, track_a_quadrupole, &
-    track_a_rfcavity, track_a_sad_mult, track_a_sol_quad, track_a_thick_multipole, &
-    track_a_wiggler, track_a_zero_length_element, track_all, track_bunch_time, &
-    track_from_s_to_s, track_many, track_to_surface, tracking_rad_map_setup, transfer_ac_kick, &
-    transfer_branch, transfer_branch_parameters, transfer_branches, transfer_ele, &
-    transfer_ele_taylor, transfer_eles, transfer_fieldmap, transfer_lat, &
+    ptc_ran_seed_put, ptc_read_flat_file, ptc_set_rf_state_for_c_normal, &
+    ptc_transfer_map_with_spin, radiation_integrals, ramper_slave_setup, ramper_value, &
+    re_allocate_eles, read_digested_bmad_file, reallocate_beam, reallocate_bunch, &
+    reallocate_control, reallocate_coord, reallocate_expression_stack, &
+    rel_tracking_charge_to_mass, relative_mode_flip, remove_dead_from_bunch, &
+    remove_eles_from_lat, remove_lord_slave_link, reverse_lat, rf_coupler_kick, rf_is_on, &
+    rf_ref_time_offset, rotate_for_curved_surface, rotate_spin, rotate_spin_a_step, &
+    rotate_spin_given_field, s_body_calc, s_calc, save_a_beam_step, save_a_bunch_step, &
+    save_a_step, sbend_body_with_k1_map, set_ele_attribute, set_ele_defaults, set_ele_name, &
+    set_ele_real_attribute, set_ele_status_stale, set_flags_for_changed_attribute, &
+    set_fringe_on_off, set_lords_status_stale, set_on_off, set_orbit_to_zero, set_ptc, &
+    set_ptc_base_state, set_status_flags, set_tune, set_twiss, set_z_tune, &
+    significant_difference, slice_lattice, sol_quad_mat6_calc, spin_dn_dpz_from_mat8, &
+    spin_dn_dpz_from_qmap, spin_map1_normalize, spin_mat8_resonance_strengths, &
+    spin_mat_to_eigen, spin_omega, spin_quat_resonance_strengths, spin_taylor_to_linear, &
+    spinor_to_polar, spinor_to_vec, spline_fit_orbit, split_lat, sprint_spin_taylor_map, &
+    start_branch_at, stream_ele_end, strong_beam_sigma_calc, strong_beam_strength, &
+    symp_lie_bmad, taper_mag_strengths, taylor_equal_taylor, taylors_equal_taylors, &
+    tilt_coords, tilt_coords_photon, tilt_mat6, to_surface_coords, track1, track1_bmad, &
+    track1_bmad_photon, track1_bunch_space_charge, track1_linear, track1_runge_kutta, &
+    track1_spin, track1_spin_integration, track1_spin_taylor, track1_symp_lie_ptc, &
+    track1_taylor, track1_time_runge_kutta, track_a_beambeam, track_a_bend, track_a_converter, &
+    track_a_crab_cavity, track_a_drift, track_a_drift_photon, track_a_foil, track_a_gkicker, &
+    track_a_lcavity, track_a_lcavity_old, track_a_mask, track_a_match, track_a_patch, &
+    track_a_pickup, track_a_quadrupole, track_a_rfcavity, track_a_sad_mult, track_a_sol_quad, &
+    track_a_thick_multipole, track_a_wiggler, track_a_zero_length_element, track_all, &
+    track_bunch_time, track_from_s_to_s, track_many, track_to_surface, tracking_rad_map_setup, &
+    transfer_ac_kick, transfer_branch, transfer_branch_parameters, transfer_branches, &
+    transfer_ele, transfer_ele_taylor, transfer_eles, transfer_fieldmap, transfer_lat, &
     transfer_lat_parameters, transfer_map_calc, transfer_mat2_from_twiss, &
     transfer_mat_from_twiss, transfer_matrix_calc, transfer_twiss, transfer_wake, &
     twiss1_propagate, twiss_and_track_from_s_to_s, twiss_and_track_intra_ele, twiss_at_element, &
     twiss_at_start, twiss_from_tracking, twiss_propagate1, twiss_propagate_all, &
-    twiss_to_1_turn_mat, type_coord, type_ele, type_taylors, update_fibre_from_ele, &
+    twiss_to_1_turn_mat, type_coord, type_ele, type_taylors, type_twiss, update_fibre_from_ele, &
     update_floor_angles, valid_field_calc, valid_fringe_type, valid_mat6_calc_method, &
     valid_spin_tracking_method, valid_tracking_method, value_of_attribute, vec_to_polar, &
     vec_to_spinor, w_mat_for_bend_angle, w_mat_for_tilt, w_mat_for_x_pitch, w_mat_for_y_pitch, &
@@ -125,15 +125,15 @@ use bmad_parser_mod, only: add_this_multipass, add_this_taylor_term, bp_set_ran_
     check_for_superimpose_problem, drift_and_pipe_track_methods_adjustment, &
     drift_multipass_name_correction, equal_sign_here, evaluate_array_index, evaluate_logical, &
     expect_one_of, expect_this, form_digested_bmad_file_name, get_called_file, &
-    get_list_of_names, get_next_word, get_sequence_args, init_surface_segment, load_parse_line, &
-    nint_chk, parse_cartesian_map, parse_cylindrical_map, parse_gen_grad_map, parse_grid_field, &
-    parse_integer_list, parse_integer_list2, parse_real_list, parse_real_list2, &
-    parser_add_constant, parser_call_check, parser_fast_complex_read, parser_fast_integer_read, &
-    parser_fast_real_read, parser_file_stack, parser_get_integer, parser_get_logical, &
-    parser_identify_fork_to_element, parser_init_custom_elements, parser_print_line, &
-    parser_read_lr_wake, parser_read_old_format_lr_wake, parser_read_old_format_sr_wake, &
-    parser_read_sr_wake, parser_transfer_control_struct, reallocate_bp_com_const, &
-    settable_dep_var_bookkeeping, verify_valid_name, word_to_value
+    get_list_of_names, get_next_word, get_sequence_args, get_switch, init_surface_segment, &
+    load_parse_line, nint_chk, parse_cartesian_map, parse_cylindrical_map, parse_gen_grad_map, &
+    parse_grid_field, parse_integer_list, parse_integer_list2, parse_real_list, &
+    parse_real_list2, parser_add_constant, parser_call_check, parser_fast_complex_read, &
+    parser_fast_integer_read, parser_fast_real_read, parser_file_stack, parser_get_integer, &
+    parser_get_logical, parser_identify_fork_to_element, parser_init_custom_elements, &
+    parser_print_line, parser_read_lr_wake, parser_read_old_format_lr_wake, &
+    parser_read_old_format_sr_wake, parser_read_sr_wake, parser_transfer_control_struct, &
+    reallocate_bp_com_const, settable_dep_var_bookkeeping, verify_valid_name, word_to_value
 
 use write_lattice_file_mod, only: add_this_name_to_list, array_re_str, cmplx_re_str, rchomp, &
     re_str, value_to_line, write_lat_line, write_line_element
@@ -6117,6 +6117,54 @@ subroutine fortran_create_element_slice (sliced_ele, ele_in, l_slice, offset, pa
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
+end subroutine
+subroutine fortran_create_feedback (lord, input, output, err_flag) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: input
+  type(character_container_alloc), pointer :: f_input
+  character(200), allocatable :: f_input_local(:)
+  type(c_ptr), intent(in), value :: output
+  type(character_container_alloc), pointer :: f_output
+  character(200), allocatable :: f_output_local(:)
+  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  ! ** Inout parameters **
+  type(c_ptr), value :: lord  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_lord
+  ! ** End of parameters **
+  ! inout: f_lord 0D_NOT_type
+  if (.not. c_associated(lord)) return
+  call c_f_pointer(lord, f_lord)
+  !! container character array (1D_NOT_character)
+  if (c_associated(input))   call c_f_pointer(input, f_input)
+  if (c_associated(input) .and. allocated(f_input%data)) then
+    allocate(f_input_local, mold=f_input%data)
+    f_input_local = ''
+  endif
+  !! container character array (1D_NOT_character)
+  if (c_associated(output))   call c_f_pointer(output, f_output)
+  if (c_associated(output) .and. allocated(f_output%data)) then
+    allocate(f_output_local, mold=f_output%data)
+    f_output_local = ''
+  endif
+  ! in: f_err_flag 0D_NOT_logical
+  f_err_flag = err_flag
+  call create_feedback(f_lord, f_input_local, f_output_local, f_err_flag)
+
+  !! copy allocatable character result into container
+  if (c_associated(input) .and. allocated(f_input_local)) then
+    if (allocated(f_input%data)) deallocate(f_input%data)
+    allocate(f_input%data, source=f_input_local)
+  endif
+  !! copy allocatable character result into container
+  if (c_associated(output) .and. allocated(f_output_local)) then
+    if (allocated(f_output%data)) deallocate(f_output%data)
+    allocate(f_output%data, source=f_output_local)
+  endif
 end subroutine
 subroutine fortran_create_field_overlap (lat, lord_name, slave_name, err_flag) bind(c)
 
@@ -13328,6 +13376,62 @@ subroutine fortran_get_slave_list (lord, slaves, n_slave) bind(c)
   ! out: f_n_slave 0D_NOT_integer
   call c_f_pointer(n_slave, f_n_slave_ptr)
   f_n_slave_ptr = f_n_slave
+end subroutine
+subroutine fortran_get_switch (name, name_list, switch_, err, ele, delim, delim_found) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: name
+  character(len=4096), target :: f_name
+  character(kind=c_char), pointer :: f_name_ptr(:)
+  integer(c_int) :: switch_  ! 0D_NOT_integer
+  integer :: f_switch
+  logical(c_bool) :: err  ! 0D_NOT_logical
+  logical :: f_err
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  logical(c_bool) :: delim_found  ! 0D_NOT_logical
+  logical :: f_delim_found
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: name_list
+  type(character_container_alloc), pointer :: f_name_list
+  character(200), allocatable :: f_name_list_local(:)
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  ! ** End of parameters **
+  ! in: f_name 0D_NOT_character
+  if (.not. c_associated(name)) return
+  call c_f_pointer(name, f_name_ptr, [huge(0)])
+  call to_f_str(f_name_ptr, f_name)
+  !! container character array (1D_NOT_character)
+  if (c_associated(name_list))   call c_f_pointer(name_list, f_name_list)
+  if (c_associated(name_list) .and. allocated(f_name_list%data)) then
+    allocate(f_name_list_local, mold=f_name_list%data)
+    f_name_list_local = ''
+  endif
+  ! in: f_switch 0D_NOT_integer
+  f_switch = switch_
+  ! in: f_err 0D_NOT_logical
+  f_err = err
+  ! inout: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_delim 0D_NOT_character
+  if (.not. c_associated(delim)) return
+  call c_f_pointer(delim, f_delim_ptr, [huge(0)])
+  call to_f_str(f_delim_ptr, f_delim)
+  ! in: f_delim_found 0D_NOT_logical
+  f_delim_found = delim_found
+  call get_switch(f_name, f_name_list_local, f_switch, f_err, f_ele, f_delim, f_delim_found)
+
+  !! copy allocatable character result into container
+  if (c_associated(name_list) .and. allocated(f_name_list_local)) then
+    if (allocated(f_name_list%data)) deallocate(f_name_list%data)
+    allocate(f_name_list%data, source=f_name_list_local)
+  endif
 end subroutine
 subroutine fortran_gg_taylor_equal_gg_taylor (gg_taylor1, gg_taylor2) bind(c)
 
@@ -24108,6 +24212,71 @@ subroutine fortran_ptc_ran_seed_put (iseed) bind(c)
   f_iseed = iseed
   call ptc_ran_seed_put(f_iseed)
 
+end subroutine
+subroutine fortran_ptc_read_flat_file (flat_file, err_flag, lat, create_end_marker, from_mad) &
+    bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: lat_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: flat_file
+  type(character_container_alloc), pointer :: f_flat_file
+  character(200), allocatable :: f_flat_file_local(:)
+  type(c_ptr), intent(in), value :: create_end_marker  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_create_end_marker
+  logical, target :: f_create_end_marker_native
+  logical, pointer :: f_create_end_marker_native_ptr
+  logical(c_bool), pointer :: f_create_end_marker_ptr
+  type(c_ptr), intent(in), value :: from_mad  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_from_mad
+  logical, target :: f_from_mad_native
+  logical, pointer :: f_from_mad_native_ptr
+  logical(c_bool), pointer :: f_from_mad_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  ! ** End of parameters **
+  !! container character array (1D_NOT_character)
+  if (c_associated(flat_file))   call c_f_pointer(flat_file, f_flat_file)
+  if (c_associated(flat_file) .and. allocated(f_flat_file%data)) then
+    allocate(f_flat_file_local, mold=f_flat_file%data)
+    f_flat_file_local = ''
+  endif
+  ! out: f_lat 0D_NOT_type
+  if (c_associated(lat))   call c_f_pointer(lat, f_lat)
+  ! in: f_create_end_marker 0D_NOT_logical
+  if (c_associated(create_end_marker)) then
+    call c_f_pointer(create_end_marker, f_create_end_marker_ptr)
+    f_create_end_marker_native = f_create_end_marker_ptr
+    f_create_end_marker_native_ptr => f_create_end_marker_native
+  else
+    f_create_end_marker_native_ptr => null()
+  endif
+  ! in: f_from_mad 0D_NOT_logical
+  if (c_associated(from_mad)) then
+    call c_f_pointer(from_mad, f_from_mad_ptr)
+    f_from_mad_native = f_from_mad_ptr
+    f_from_mad_native_ptr => f_from_mad_native
+  else
+    f_from_mad_native_ptr => null()
+  endif
+  call ptc_read_flat_file(f_flat_file_local, f_err_flag, f_lat, f_create_end_marker_native_ptr, &
+      f_from_mad_native_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(flat_file) .and. allocated(f_flat_file_local)) then
+    if (allocated(f_flat_file%data)) deallocate(f_flat_file%data)
+    allocate(f_flat_file%data, source=f_flat_file_local)
+  endif
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+  ! out: f_lat 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_ptc_set_rf_state_for_c_normal (nocavity) bind(c)
 
@@ -35953,6 +36122,72 @@ subroutine fortran_type_taylors (bmad_taylor, max_order, lines, n_lines, file_id
   endif
   ! inout: f_n_lines 0D_NOT_integer
   ! no output conversion for f_n_lines
+end subroutine
+subroutine fortran_type_twiss (ele, frequency_units, compact_format, lines, n_lines) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), intent(in), value :: frequency_units  ! 0D_NOT_integer
+  integer(c_int) :: f_frequency_units
+  integer(c_int), pointer :: f_frequency_units_ptr
+  type(c_ptr), intent(in), value :: compact_format  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_compact_format
+  logical, target :: f_compact_format_native
+  logical, pointer :: f_compact_format_native_ptr
+  logical(c_bool), pointer :: f_compact_format_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: n_lines  ! 0D_NOT_integer
+  integer :: f_n_lines
+  integer(c_int), pointer :: f_n_lines_ptr
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: lines
+  type(character_container_alloc), pointer :: f_lines
+  character(200), allocatable :: f_lines_local(:)
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_frequency_units 0D_NOT_integer
+  if (c_associated(frequency_units)) then
+    call c_f_pointer(frequency_units, f_frequency_units_ptr)
+  else
+    f_frequency_units_ptr => null()
+  endif
+  ! in: f_compact_format 0D_NOT_logical
+  if (c_associated(compact_format)) then
+    call c_f_pointer(compact_format, f_compact_format_ptr)
+    f_compact_format_native = f_compact_format_ptr
+    f_compact_format_native_ptr => f_compact_format_native
+  else
+    f_compact_format_native_ptr => null()
+  endif
+  !! container character array (1D_NOT_character)
+  if (c_associated(lines))   call c_f_pointer(lines, f_lines)
+  if (c_associated(lines) .and. allocated(f_lines%data)) then
+    allocate(f_lines_local, mold=f_lines%data)
+    f_lines_local = ''
+  endif
+  ! out: f_n_lines 0D_NOT_integer
+  if (c_associated(n_lines)) then
+    call c_f_pointer(n_lines, f_n_lines_ptr)
+  else
+    f_n_lines_ptr => null()
+  endif
+  call type_twiss(f_ele, f_frequency_units_ptr, f_compact_format_native_ptr, f_lines_local, &
+      f_n_lines)
+
+  !! copy allocatable character result into container
+  if (c_associated(lines) .and. allocated(f_lines_local)) then
+    if (allocated(f_lines%data)) deallocate(f_lines%data)
+    allocate(f_lines%data, source=f_lines_local)
+  endif
+  ! out: f_n_lines 0D_NOT_integer
+  call c_f_pointer(n_lines, f_n_lines_ptr)
+  f_n_lines_ptr = f_n_lines
 end subroutine
 subroutine fortran_update_ele_from_fibre (ele) bind(c)
 

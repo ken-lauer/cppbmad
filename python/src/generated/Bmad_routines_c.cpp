@@ -2356,6 +2356,33 @@ err_flag : bool
 )"""
   );
   m.def(
+      "create_feedback",
+      &Bmad::create_feedback,
+      py::arg("lord"),
+      py::arg("input"),
+      py::arg("output"),
+      py::arg("err_flag"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine create_feedback
+
+Parameters
+----------
+lord : EleStruct
+    Feedback element.
+    This parameter is an input/output and is modified in-place.
+    As an output, lord: Modified feedback elment.
+
+input : 1D array of str
+    Names of input slaves.
+
+output : 1D array of str
+    Names of output slaves.
+
+err_flag : bool
+    Set True if there is a problem.
+)"""
+  );
+  m.def(
       "create_field_overlap",
       &Bmad::create_field_overlap,
       py::arg("lat"),

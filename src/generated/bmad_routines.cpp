@@ -326,7 +326,7 @@ void Bmad::add_this_name_to_list(
     bool has_been_added,
     ElePointerStructAlloc1D named_eles
 ) {
-  // intent=inout allocatable character array
+  // intent=inout character array container
   // intent=inout allocatable general array
   // intent=inout allocatable type array
   fortran_add_this_name_to_list(
@@ -2893,6 +2893,21 @@ Bmad::CreateElementSlice Bmad::create_element_slice(
   );
   return CreateElementSlice{std::move(_sliced_ele), _err_flag};
 }
+void Bmad::create_feedback(
+    EleStruct &lord,
+    CharacterAlloc1D &input,
+    CharacterAlloc1D &output,
+    bool err_flag
+) {
+  // intent=in character array container
+  // intent=in character array container
+  fortran_create_feedback(
+      /* void* */ lord.get_fortran_ptr(),
+      /* void* */ input.get_fortran_ptr(),
+      /* void* */ output.get_fortran_ptr(),
+      /* bool& */ err_flag
+  );
+}
 bool Bmad::create_field_overlap(LatStruct &lat, std::string lord_name, std::string slave_name) {
   auto _lord_name = lord_name.c_str();
   auto _slave_name = slave_name.c_str();
@@ -3042,7 +3057,7 @@ int Bmad::custom_attribute_ubound_index(int ele_class) {
 Bmad::CustomEleAttribNameList Bmad::custom_ele_attrib_name_list() {
   // intent=out allocatable general array
   auto index_list{IntAlloc1D()};
-  // intent=out allocatable character array
+  // intent=out character array container
   auto name_list{CharacterAlloc1D()};
   fortran_custom_ele_attrib_name_list(
       /* void* */ index_list.get_fortran_ptr(),
@@ -5683,7 +5698,7 @@ void Bmad::get_list_of_names(
     bool err_flag
 ) {
   auto _err_str = err_str.c_str();
-  // intent=inout allocatable character array
+  // intent=inout character array container
   auto _delim = delim.c_str();
   fortran_get_list_of_names(
       /* void* */ ele.get_fortran_ptr(),
@@ -5739,7 +5754,7 @@ void Bmad::get_sequence_args(
     bool err_flag
 ) {
   auto _seq_name = seq_name.c_str();
-  // intent=inout allocatable character array
+  // intent=inout character array container
   auto _delim = delim.c_str();
   fortran_get_sequence_args(
       /* const char* */ _seq_name,
@@ -5758,6 +5773,28 @@ Bmad::GetSlaveList Bmad::get_slave_list(EleStruct &lord) {
       /* int& */ _n_slave
   );
   return GetSlaveList{std::move(slaves), _n_slave};
+}
+void Bmad::get_switch(
+    std::string name,
+    CharacterAlloc1D &name_list,
+    int switch_,
+    bool err,
+    EleStruct &ele,
+    std::string delim,
+    bool delim_found
+) {
+  auto _name = name.c_str();
+  // intent=inout character array container
+  auto _delim = delim.c_str();
+  fortran_get_switch(
+      /* const char* */ _name,
+      /* void* */ name_list.get_fortran_ptr(),
+      /* int& */ switch_,
+      /* bool& */ err,
+      /* void* */ ele.get_fortran_ptr(),
+      /* const char* */ _delim,
+      /* bool& */ delim_found
+  );
 }
 void Bmad::gg_taylor_equal_gg_taylor(GgTaylorStruct &gg_taylor1, GgTaylorStruct &gg_taylor2) {
   fortran_gg_taylor_equal_gg_taylor(
@@ -11105,6 +11142,37 @@ void Bmad::ptc_one_turn_mat_and_closed_orbit_calc(BranchStruct &branch, std::opt
   );
 }
 void Bmad::ptc_ran_seed_put(int iseed) { fortran_ptc_ran_seed_put(/* int& */ iseed); }
+Bmad::PtcReadFlatFile Bmad::ptc_read_flat_file(
+    CharacterAlloc1D &flat_file,
+    std::optional<bool> create_end_marker,
+    std::optional<bool> from_mad
+) {
+  // intent=in character array container
+  bool _err_flag{};
+  LatStruct _lat;
+  bool create_end_marker_lvalue;
+  auto *_create_end_marker{&create_end_marker_lvalue};
+  if (create_end_marker.has_value()) {
+    create_end_marker_lvalue = create_end_marker.value();
+  } else {
+    _create_end_marker = nullptr;
+  }
+  bool from_mad_lvalue;
+  auto *_from_mad{&from_mad_lvalue};
+  if (from_mad.has_value()) {
+    from_mad_lvalue = from_mad.value();
+  } else {
+    _from_mad = nullptr;
+  }
+  fortran_ptc_read_flat_file(
+      /* void* */ flat_file.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* void* */ _lat.get_fortran_ptr(),
+      /* bool* */ _create_end_marker,
+      /* bool* */ _from_mad
+  );
+  return PtcReadFlatFile{_err_flag, std::move(_lat)};
+}
 void Bmad::ptc_set_rf_state_for_c_normal(bool nocavity) {
   fortran_ptc_set_rf_state_for_c_normal(/* bool& */ nocavity);
 }
@@ -11585,7 +11653,7 @@ Bmad::ReadDigestedBmadFile Bmad::read_digested_bmad_file(std::string digested_fi
   int _inc_version{};
   bool _err_flag{};
   bool _parser_calling{};
-  // intent=out allocatable character array
+  // intent=out character array container
   auto lat_files{CharacterAlloc1D()};
   fortran_read_digested_bmad_file(
       /* const char* */ _digested_file,
@@ -13551,7 +13619,7 @@ CharacterAlloc1D Bmad::split_expression_string(
     std::optional<std::string> break_str
 ) {
   auto _expr = expr.c_str();
-  // intent=out allocatable character array
+  // intent=out character array container
   auto lines{CharacterAlloc1D()};
   const char *_break_str = break_str.has_value() ? break_str->c_str() : nullptr;
   fortran_split_expression_string(
@@ -13859,7 +13927,7 @@ Bmad::SwitchAttribValueName
 Bmad::switch_attrib_value_name(std::string attrib_name, double attrib_value, EleStruct &ele) {
   auto _attrib_name = attrib_name.c_str();
   bool _is_default{};
-  // intent=out allocatable character array
+  // intent=out character array container
   auto name_list{CharacterAlloc1D()};
   char _attrib_val_name[4096];
   fortran_switch_attrib_value_name(
@@ -17011,7 +17079,7 @@ Bmad::TypeComplexTaylors Bmad::type_complex_taylors(
   } else {
     _max_order = nullptr;
   }
-  // intent=out allocatable character array
+  // intent=out character array container
   auto lines{CharacterAlloc1D()};
   int _n_lines{};
   int file_id_lvalue;
@@ -17134,7 +17202,7 @@ Bmad::TypeEle Bmad::type_ele(
   } else {
     _type_internal = nullptr;
   }
-  // intent=out allocatable character array
+  // intent=out character array container
   auto lines{CharacterAlloc1D()};
   int _n_lines{};
   fortran_type_ele(
@@ -17161,8 +17229,8 @@ void Bmad::type_end_stuff(
     optional_ref<CharacterAlloc1D> lines,
     std::optional<int> n_lines
 ) {
-  // intent=inout allocatable character array
-  // intent=inout allocatable character array
+  // intent=inout character array container
+  // intent=inout character array container
   auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
   int n_lines_lvalue;
   auto *_n_lines{&n_lines_lvalue};
@@ -17197,7 +17265,7 @@ Bmad::TypePtcFibre Bmad::type_ptc_fibre(Fibre &ptc_fibre, std::optional<bool> pr
   } else {
     _print_coords = nullptr;
   }
-  // intent=out allocatable character array
+  // intent=out character array container
   auto lines{CharacterAlloc1D()};
   int _n_lines{};
   fortran_type_ptc_fibre(
@@ -17235,7 +17303,7 @@ void Bmad::type_taylors(
   } else {
     _max_order = nullptr;
   }
-  // intent=inout allocatable character array
+  // intent=inout character array container
   auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
   auto *_n_lines = n_lines.has_value() ? &n_lines->get() : nullptr; // inout, optional
   int file_id_lvalue;
@@ -17272,6 +17340,38 @@ void Bmad::type_taylors(
       /* const char* */ _out_var_suffix,
       /* bool* */ _append
   );
+}
+int Bmad::type_twiss(
+    EleStruct &ele,
+    std::optional<int> frequency_units,
+    std::optional<bool> compact_format,
+    optional_ref<CharacterAlloc1D> lines
+) {
+  int frequency_units_lvalue;
+  auto *_frequency_units{&frequency_units_lvalue};
+  if (frequency_units.has_value()) {
+    frequency_units_lvalue = frequency_units.value();
+  } else {
+    _frequency_units = nullptr;
+  }
+  bool compact_format_lvalue;
+  auto *_compact_format{&compact_format_lvalue};
+  if (compact_format.has_value()) {
+    compact_format_lvalue = compact_format.value();
+  } else {
+    _compact_format = nullptr;
+  }
+  // intent=inout character array container
+  auto *_lines = lines.has_value() ? lines->get().get_fortran_ptr() : nullptr; // input, optional
+  int _n_lines{};
+  fortran_type_twiss(
+      /* void* */ ele.get_fortran_ptr(),
+      /* int* */ _frequency_units,
+      /* bool* */ _compact_format,
+      /* void* */ _lines,
+      /* int& */ _n_lines
+  );
+  return _n_lines;
 }
 void Bmad::update_ele_from_fibre(EleStruct &ele) {
   fortran_update_ele_from_fibre(/* void* */ ele.get_fortran_ptr());

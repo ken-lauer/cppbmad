@@ -3808,6 +3808,13 @@ std::string to_string(const Bmad::PtcEmitCalc &self) {
        std::pair{"closed_orb", to_string(self.closed_orb)}}
   );
 }
+std::string to_string(const Bmad::PtcReadFlatFile &self) {
+  return repr(
+      &self,
+      "Bmad::PtcReadFlatFile",
+      {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"lat", to_string(self.lat)}}
+  );
+}
 std::string to_string(const Bmad::PtcSpinCalc &self) {
   return repr(
       &self,
@@ -4302,6 +4309,13 @@ std::string to_string(const Tao::TaoMerit &self) {
        std::pair{"this_merit", to_string(self.this_merit)}}
   );
 }
+std::string to_string(const Tao::TaoNextSwitch &self) {
+  return repr(
+      &self,
+      "Tao::TaoNextSwitch",
+      {std::pair{"switch_", self.switch_}, std::pair{"err", to_string(self.err)}}
+  );
+}
 std::string to_string(const Tao::TaoOpenScratchFile &self) {
   return repr(
       &self,
@@ -4494,6 +4508,14 @@ std::string to_string(const CppBmadTest::TestBunchStructScalar &self) {
       &self,
       "CppBmadTest::TestBunchStructScalar",
       {std::pair{"val_out", to_string(self.val_out)},
+       std::pair{"opt_status", to_string(self.opt_status)}}
+  );
+}
+std::string to_string(const CppBmadTest::TestCharacterArray &self) {
+  return repr(
+      &self,
+      "CppBmadTest::TestCharacterArray",
+      {std::pair{"arr_out", to_string(self.arr_out)},
        std::pair{"opt_status", to_string(self.opt_status)}}
   );
 }

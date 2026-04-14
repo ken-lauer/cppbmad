@@ -4857,4 +4857,36 @@ n_lines : int, optional
     As an output, n_lines: Number of lines in lines(
 )"""
   );
+  m.def(
+      "type_twiss",
+      &Bmad::type_twiss,
+      py::arg("ele"),
+      py::arg("frequency_units") = py::none(),
+      py::arg("compact_format") = py::none(),
+      py::arg("lines") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine type_twiss
+
+Parameters
+----------
+ele : EleStruct
+    Element containing the Twiss parameters.
+
+frequency_units : int, optional
+    Units for phi: = radians$  => Type Twiss, use radians for phi (Default). = degrees$  => Type Twiss, use
+    degrees for phi. = cycles$   => Type Twiss, use cycles (1 = 2pi) units.
+
+compact_format : bool, optional
+    If present and True then use a compact output form.
+
+lines : 1D array of str, optional
+    : Character array to hold the output. The string length should be at least 120 characters. 13 lines are
+    needed for the verbose form. If not present, the information is printed to the terminal.
+
+Returns
+-------
+n_lines : int, optional
+    Number of lines in lines(:) that hold valid output. n_lines must be present if lines(:) is.
+)"""
+  );
 }

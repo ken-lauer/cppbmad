@@ -2644,6 +2644,53 @@ iseed : int
     0 -> Use system clock.
 )"""
   );
+  py::class_<Bmad::PtcReadFlatFile, std::unique_ptr<Bmad::PtcReadFlatFile>>(
+      m,
+      "PtcReadFlatFile",
+      "ptc_read_flat_file return type"
+  )
+      .def_readonly("err_flag", &Bmad::PtcReadFlatFile::err_flag)
+      .def_readonly("lat", &Bmad::PtcReadFlatFile::lat)
+      .def("__len__", [](const Bmad::PtcReadFlatFile &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcReadFlatFile &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.err_flag);
+        if (i == 1)
+          return py::cast(s.lat);
+        throw py::index_error();
+      });
+  m.def(
+      "ptc_read_flat_file",
+      &Bmad::ptc_read_flat_file,
+      py::arg("flat_file"),
+      py::arg("create_end_marker") = py::none(),
+      py::arg("from_mad") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine ptc_read_flat_file
+
+Parameters
+----------
+flat_file : 1D array of str
+    Name(s) of PTC flat file(s).
+
+create_end_marker : bool, optional
+    Put a marker element named END at the end of the lattice brances? Default is True.
+
+from_mad : bool, optional
+    If True, ignore PTC specific parameters like integrator_order. Default is False. True is used when the
+    fibre has been created via MAD. In this case, the PTC specific parameters may not have good values.
+
+Returns
+-------
+err_flag : bool
+    Set True if there is a problem.
+
+lat : LatStruct, optional
+    If present then setup a Bmad lattice.
+)"""
+  );
   m.def(
       "ptc_set_rf_state_for_c_normal",
       &Bmad::ptc_set_rf_state_for_c_normal,

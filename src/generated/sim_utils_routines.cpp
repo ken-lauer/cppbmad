@@ -683,6 +683,15 @@ int SimUtils::find_location(FArray1D<Real> &arr, double value) {
   );
   return _ix_match;
 }
+void SimUtils::find_location(CharacterAlloc1D &arr, std::string value, int ix_match) {
+  // intent=inout character array container
+  auto _value = value.c_str();
+  fortran_find_location_str(
+      /* void* */ arr.get_fortran_ptr(),
+      /* const char* */ _value,
+      /* int& */ ix_match
+  );
+}
 double SimUtils::fine_frequency_estimate(FArray1D<Real> &data) {
   // data: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _data_desc;
@@ -749,6 +758,14 @@ double SimUtils::gen_complete_elliptic(
       /* double& */ _value
   );
   return _value;
+}
+std::string SimUtils::get_a_char(bool wait, optional_ref<CharacterAlloc1D> ignore_this) {
+  char _this_char[4096];
+  // intent=in character array container
+  auto *_ignore_this =
+      ignore_this.has_value() ? ignore_this->get().get_fortran_ptr() : nullptr; // input, optional
+  fortran_get_a_char(/* const char* */ _this_char, /* bool& */ wait, /* void* */ _ignore_this);
+  return _this_char;
 }
 void SimUtils::get_file_number(
     std::string file_name,
@@ -1132,6 +1149,40 @@ void SimUtils::match_wild(std::string string, std::string template_, bool is_mat
   auto _template_ = template_.c_str();
   fortran_match_wild(/* const char* */ _string, /* const char* */ _template_, /* bool& */ is_match);
 }
+void SimUtils::match_word(
+    std::string string,
+    CharacterAlloc1D &names,
+    int ix,
+    std::optional<bool> exact_case,
+    std::optional<bool> can_abbreviate,
+    std::optional<std::string> matched_name
+) {
+  auto _string = string.c_str();
+  // intent=inout character array container
+  bool exact_case_lvalue;
+  auto *_exact_case{&exact_case_lvalue};
+  if (exact_case.has_value()) {
+    exact_case_lvalue = exact_case.value();
+  } else {
+    _exact_case = nullptr;
+  }
+  bool can_abbreviate_lvalue;
+  auto *_can_abbreviate{&can_abbreviate_lvalue};
+  if (can_abbreviate.has_value()) {
+    can_abbreviate_lvalue = can_abbreviate.value();
+  } else {
+    _can_abbreviate = nullptr;
+  }
+  const char *_matched_name = matched_name.has_value() ? matched_name->c_str() : nullptr;
+  fortran_match_word(
+      /* const char* */ _string,
+      /* void* */ names.get_fortran_ptr(),
+      /* int& */ ix,
+      /* bool* */ _exact_case,
+      /* bool* */ _can_abbreviate,
+      /* const char* */ _matched_name
+  );
+}
 void SimUtils::maximize_projection(double seed, FArray1D<Complex> &cdata, double func_retval__) {
   // cdata: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _cdata_desc;
@@ -1476,6 +1527,57 @@ void SimUtils::out_io(
 void SimUtils::out_io(
     int level,
     std::string routine_name,
+    CharacterAlloc1D &lines,
+    std::optional<FArray1D<Real>> r_array,
+    std::optional<FArray1D<Int>> i_array,
+    optional_ref<BoolAlloc1D> l_array,
+    std::optional<bool> insert_tag_line
+) {
+  auto _routine_name = routine_name.c_str();
+  // intent=inout character array container
+  // r_array: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _r_array_desc;
+  _r_array_desc.rank = 1;
+  if (r_array.has_value()) {
+    _r_array_desc.data_ptr = r_array->data();
+    _r_array_desc.dims[0] = r_array->size();
+  } else {
+    _r_array_desc.data_ptr = nullptr;
+    _r_array_desc.dims[0] = 0;
+  }
+  // i_array: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _i_array_desc;
+  _i_array_desc.rank = 1;
+  if (i_array.has_value()) {
+    _i_array_desc.data_ptr = i_array->data();
+    _i_array_desc.dims[0] = i_array->size();
+  } else {
+    _i_array_desc.data_ptr = nullptr;
+    _i_array_desc.dims[0] = 0;
+  }
+  // intent=inout allocatable general array
+  auto *_l_array =
+      l_array.has_value() ? l_array->get().get_fortran_ptr() : nullptr; // input, optional
+  bool insert_tag_line_lvalue;
+  auto *_insert_tag_line{&insert_tag_line_lvalue};
+  if (insert_tag_line.has_value()) {
+    insert_tag_line_lvalue = insert_tag_line.value();
+  } else {
+    _insert_tag_line = nullptr;
+  }
+  fortran_out_io_lines(
+      /* int& */ level,
+      /* const char* */ _routine_name,
+      /* void* */ lines.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _r_array_desc,
+      /* Bmad::array_descriptor_t& */ _i_array_desc,
+      /* void* */ _l_array,
+      /* bool* */ _insert_tag_line
+  );
+}
+void SimUtils::out_io(
+    int level,
+    std::string routine_name,
     std::string line,
     bool l_num,
     std::optional<bool> insert_tag_line
@@ -1564,6 +1666,45 @@ void SimUtils::parse_fortran_format(
       /* const char* */ _descrip,
       /* int& */ width,
       /* int& */ digits
+  );
+}
+void SimUtils::pointer_to_locations(
+    std::string string,
+    IntAlloc1D &array,
+    int num,
+    int ix_min,
+    int ix_max,
+    optional_ref<CharacterAlloc1D> names,
+    std::optional<bool> exact_case,
+    std::optional<bool> print_err
+) {
+  auto _string = string.c_str();
+  // intent=inout allocatable general array
+  // intent=inout character array container
+  auto *_names = names.has_value() ? names->get().get_fortran_ptr() : nullptr; // input, optional
+  bool exact_case_lvalue;
+  auto *_exact_case{&exact_case_lvalue};
+  if (exact_case.has_value()) {
+    exact_case_lvalue = exact_case.value();
+  } else {
+    _exact_case = nullptr;
+  }
+  bool print_err_lvalue;
+  auto *_print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  fortran_pointer_to_locations(
+      /* const char* */ _string,
+      /* void* */ array.get_fortran_ptr(),
+      /* int& */ num,
+      /* int& */ ix_min,
+      /* int& */ ix_max,
+      /* void* */ _names,
+      /* bool* */ _exact_case,
+      /* bool* */ _print_err
   );
 }
 std::optional<RandomStateStruct> SimUtils::pointer_to_ran_state(
@@ -2059,6 +2200,16 @@ void SimUtils::quote(std::string str, std::string q_str) {
   auto _str = str.c_str();
   auto _q_str = q_str.c_str();
   fortran_quote(/* const char* */ _str, /* const char* */ _q_str);
+}
+void SimUtils::quoten(CharacterAlloc1D &str, std::string q_str, std::optional<std::string> delim) {
+  // intent=inout character array container
+  const char *_delim = delim.has_value() ? delim->c_str() : nullptr;
+  auto _q_str = q_str.c_str();
+  fortran_quoten(
+      /* void* */ str.get_fortran_ptr(),
+      /* const char* */ _delim,
+      /* const char* */ _q_str
+  );
 }
 RandomStateStruct SimUtils::ran_default_state(optional_ref<RandomStateStruct> set_state) {
   auto *_set_state =

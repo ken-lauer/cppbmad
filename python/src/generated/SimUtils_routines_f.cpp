@@ -208,6 +208,24 @@ ix_match : int
 )"""
   );
   m.def(
+      "find_location",
+      py::overload_cast<CharacterAlloc1D &, std::string, int>(&SimUtils::find_location),
+      py::arg("arr"),
+      py::arg("value"),
+      py::arg("ix_match"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine find_location_str
+
+Parameters
+----------
+arr : 1D array of str
+
+value : str
+
+ix_match : int
+)"""
+  );
+  m.def(
       "fine_frequency_estimate",
       &SimUtils::fine_frequency_estimate,
       py::arg("data"),

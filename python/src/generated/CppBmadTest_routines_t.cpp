@@ -177,6 +177,50 @@ val_out : BunchStruct
 opt_status : 1D array of int (shape: 2)
 )"""
   );
+  py::class_<CppBmadTest::TestCharacterArray, std::unique_ptr<CppBmadTest::TestCharacterArray>>(
+      m,
+      "TestCharacterArray",
+      "test_character_array return type"
+  )
+      .def_readonly("arr_out", &CppBmadTest::TestCharacterArray::arr_out)
+      .def_readonly("opt_status", &CppBmadTest::TestCharacterArray::opt_status)
+      .def("__len__", [](const CppBmadTest::TestCharacterArray &) { return 2; })
+      .def("__getitem__", [](const CppBmadTest::TestCharacterArray &s, int i) -> py::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return py::cast(s.arr_out);
+        if (i == 1)
+          return py::cast(s.opt_status);
+        throw py::index_error();
+      });
+  m.def(
+      "test_character_array",
+      &CppBmadTest::test_character_array,
+      py::arg("arr_in"),
+      py::arg("arr_inout"),
+      py::arg("arr_in_opt") = py::none(),
+      py::arg("arr_inout_opt") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine test_character_array
+
+Parameters
+----------
+arr_in : 1D array of str
+
+arr_inout : 1D array of str
+
+arr_in_opt : 1D array of str, optional
+
+arr_inout_opt : 1D array of str, optional
+
+Returns
+-------
+arr_out : 1D array of str
+
+opt_status : 1D array of int (shape: 2)
+)"""
+  );
   py::class_<PyTestCharacterScalar, std::unique_ptr<PyTestCharacterScalar>>(
       m,
       "TestCharacterScalar",

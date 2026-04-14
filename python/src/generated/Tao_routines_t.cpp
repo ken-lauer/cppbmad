@@ -34,6 +34,18 @@ PyTaoEleShapeInfo python_tao_ele_shape_info(
   auto py_result{PyTaoEleShapeInfo{_result, ix_shape_min}};
   return py_result;
 }
+PyTaoNextSwitch python_tao_next_switch(
+    std::string line,
+    CharacterAlloc1D &switch_list,
+    bool return_next_word,
+    std::optional<bool> neg_num_not_switch = std::nullopt,
+    std::optional<bool> print_err = std::nullopt
+) {
+  auto _result =
+      Tao::tao_next_switch(line, switch_list, return_next_word, neg_num_not_switch, print_err);
+  auto py_result{PyTaoNextSwitch{_result, line}};
+  return py_result;
+}
 PyTaoNextWord python_tao_next_word(std::string line) {
   auto _result = Tao::tao_next_word(line);
   auto py_result{PyTaoNextWord{_result, line}};
@@ -304,6 +316,23 @@ good : 1D array of bool
 )"""
   );
   m.def(
+      "tao_call_cmd",
+      &Tao::tao_call_cmd,
+      py::arg("file_name"),
+      py::arg("cmd_arg") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine tao_call_cmd
+
+Parameters
+----------
+file_name : str
+    Name of the tao command file.
+
+cmd_arg : 1D array of str, optional
+    Command file arguments.
+)"""
+  );
+  m.def(
       "tao_cbar_wave_anal",
       &Tao::tao_cbar_wave_anal,
       py::arg("plot"),
@@ -493,6 +522,51 @@ value2 : float
       R"""(Subroutine tao_cmd_history_record (cmd)
 
 Subroutine to record a cmd in the command history stack
+)"""
+  );
+  m.def(
+      "tao_cmd_split",
+      &Tao::tao_cmd_split,
+      py::arg("cmd_line"),
+      py::arg("n_word"),
+      py::arg("cmd_word"),
+      py::arg("extra_words_is_error"),
+      py::arg("separator") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine tao_cmd_split (cmd_line, n_word, cmd_word, extra_words_is_error, err, separator)
+
+This routine splits the command line into "words" (everything between separators).
+
+Parameters
+----------
+cmd_line : str
+    The command line.
+
+n_word : int
+    Maximum number of words to split command line into.
+
+cmd_word : 1D array of str
+    The individual words.
+
+extra_words_is_error : bool
+    are extra words allowed at the end? If True then err argument is set True. If False then cmd_word(n_word)
+    will contain everything after the n_word-1 word.
+
+separator : str, optional
+    a list of characters that, besides a blank space, signify a word boundary.
+
+Returns
+-------
+err : bool
+    error in splitting words For example: separator = '-+' cmd_line = 'model-design' cmd_word(1) = 'model'
+    cmd_word(2) = '-' cmd_word(3) = 'design'
+
+Notes
+-----
+Anything between single or double quotes is treated as a single word.
+Quoted words have quote marks removed.
+Whitespace or a separator inside of "{}", "()", or "[]" is ignored.
+Whitespace after or before a comma is ignored.
 )"""
   );
   m.def(
@@ -3649,6 +3723,85 @@ this_merit : float
 
 calc_ok : bool, optional
     Set False if there was an error in the calculation like a particle was lost or a lat is unstable.
+)"""
+  );
+  py::class_<PyTaoNextSwitch, std::unique_ptr<PyTaoNextSwitch>>(
+      m,
+      "TaoNextSwitch",
+      "tao_next_switch return type"
+  )
+      .def_readonly("switch_", &PyTaoNextSwitch::switch_)
+      .def_readonly("err", &PyTaoNextSwitch::err)
+      .def_readonly("line", &PyTaoNextSwitch::line)
+      .def("__len__", [](const PyTaoNextSwitch &) { return 3; })
+      .def("__getitem__", [](const PyTaoNextSwitch &s, int i) -> py::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return py::cast(s.switch_);
+        if (i == 1)
+          return py::cast(s.err);
+        if (i == 2)
+          return py::cast(s.line);
+        throw py::index_error();
+      });
+  m.def(
+      "tao_next_switch",
+      &python_tao_next_switch,
+      py::arg("line"),
+      py::arg("switch_list"),
+      py::arg("return_next_word"),
+      py::arg("neg_num_not_switch") = py::none(),
+      py::arg("print_err") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine tao_next_switch (line, switch_list, return_next_word, switch, err, neg_num_not_switch, print_err)
+
+Subroutine look at the next word on the command line and match this word to a list of "switches"
+given by the switch_list argument.
+
+If switch_list(1) starts with a "-" or "#" character, switches are assumed to start with this character.
+If switch_list(1) starts with any other character, everything is considered to be a switch.
+
+Switch abbreviations are permitted.
+
+If return_next_word = True then, when a non-switch word is encountered, the switch argument
+will be set to that word and that word will be removed from the line argument.
+
+If return_next_word = False then, when a non-switch word is encountered, the switch argument
+will be set to '' and the non-switch word will be left on the line argument.
+
+If the first non-blank character in line is a single or double quote. The word returned will be the
+substring from the initial quote mark to the next matching quote mark. The quote marks will be removed
+from the returned switch argument.
+
+Parameters
+----------
+line : str
+    Command line
+    This parameter is an input/output and is modified in-place.
+    As an output, line: Command line with first word removed if
+
+switch_list : 1D array of str
+    List of valid switches.
+
+return_next_word : bool
+    See above.
+
+neg_num_not_switch : bool, optional
+    If present and True then a word like "-34" will be treated as a non-switch.
+
+print_err : bool, optional
+    Default is True. If False, do not print unknown switch error.
+
+Returns
+-------
+line : str
+    Command line
+    This parameter is an input/output and is modified in-place.
+    As an output, line: Command line with first word removed if
+
+err : bool
+    Set True if the next word begins with '-' but there is no match to anything in switch_list.
 )"""
   );
   py::class_<PyTaoNextWord, std::unique_ptr<PyTaoNextWord>>(
@@ -7178,6 +7331,26 @@ Parameters
 ----------
 what : str
     What to output. See the code for more details.
+)"""
+  );
+  m.def(
+      "tao_write_lines",
+      &Tao::tao_write_lines,
+      py::arg("iunit"),
+      py::arg("line"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine tao_write_lines (iunit, line)
+
+Subroutine to write out a series of lines to a file or to the terminal.
+It is assumed that any file has already been opened.
+
+Parameters
+----------
+iunit : int
+    File unit to write to. 0 => print to the terminal.
+
+line : 1D array of str
+    A series of lines.
 )"""
   );
   m.def(

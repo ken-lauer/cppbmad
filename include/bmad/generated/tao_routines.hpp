@@ -146,9 +146,11 @@ void tao_calc_data_at_s_pts(
     double comp_sign,
     BoolAlloc1D &good
 );
-
-// Skipped unusable routine tao_call_cmd:
-// - Variable-sized in character array: 1D_NOT_character
+extern "C" void fortran_tao_call_cmd(
+    const char *file_name /* 0D_NOT_character in */,
+    void *cmd_arg /* 1D_NOT_character in */
+);
+void tao_call_cmd(std::string file_name, optional_ref<CharacterAlloc1D> cmd_arg = std::nullopt);
 extern "C" void fortran_tao_cbar_wave_anal(void *plot /* 0D_NOT_type inout */);
 void tao_cbar_wave_anal(TaoPlotStruct &plot);
 extern "C" void fortran_tao_change_ele(
@@ -214,9 +216,21 @@ void tao_close_command_file();
 // - Module name unset
 extern "C" void fortran_tao_cmd_history_record(const char *cmd /* 0D_NOT_character in */);
 void tao_cmd_history_record(std::string cmd);
-
-// Skipped unusable routine tao_cmd_split:
-// - Variable-sized inout character array: 1D_NOT_character
+extern "C" void fortran_tao_cmd_split(
+    const char *cmd_line /* 0D_NOT_character in */,
+    int &n_word /* 0D_NOT_integer in */,
+    void *cmd_word /* 1D_NOT_character inout */,
+    bool &extra_words_is_error /* 0D_NOT_logical in */,
+    bool &err /* 0D_NOT_logical out */,
+    const char *separator /* 0D_NOT_character in */
+);
+bool tao_cmd_split(
+    std::string cmd_line,
+    int n_word,
+    CharacterAlloc1D &cmd_word,
+    bool extra_words_is_error,
+    std::optional<std::string> separator = std::nullopt
+);
 extern "C" void fortran_tao_command(
     const char *command_line /* 0D_NOT_character in */,
     bool &err /* 0D_NOT_logical in */,
@@ -1327,9 +1341,26 @@ Tao::TaoMerit tao_merit();
 
 // Skipped unusable routine tao_mrq_func:
 // - Variable inout sized array: 2D_NOT_real
-
-// Skipped unusable routine tao_next_switch:
-// - Variable-sized in character array: 1D_NOT_character
+extern "C" void fortran_tao_next_switch(
+    const char *line /* 0D_NOT_character inout */,
+    void *switch_list /* 1D_NOT_character in */,
+    bool &return_next_word /* 0D_NOT_logical in */,
+    const char *switch_ /* 0D_NOT_character out */,
+    bool &err /* 0D_NOT_logical out */,
+    bool *neg_num_not_switch /* 0D_NOT_logical in */,
+    bool *print_err /* 0D_NOT_logical in */
+);
+struct TaoNextSwitch {
+  std::string switch_;
+  bool err;
+};
+Tao::TaoNextSwitch tao_next_switch(
+    std::string &line,
+    CharacterAlloc1D &switch_list,
+    bool return_next_word,
+    std::optional<bool> neg_num_not_switch = std::nullopt,
+    std::optional<bool> print_err = std::nullopt
+);
 extern "C" void fortran_tao_next_word(
     const char *line /* 0D_NOT_character inout */,
     const char *word /* 0D_NOT_character out */
@@ -2474,9 +2505,9 @@ void tao_wave_fit(
 );
 extern "C" void fortran_tao_write_cmd(const char *what /* 0D_NOT_character in */);
 void tao_write_cmd(std::string what);
-
-// Skipped unusable routine tao_write_lines:
-// - Variable-sized in character array: 1D_NOT_character
+extern "C" void
+fortran_tao_write_lines(int &iunit /* 0D_NOT_integer in */, void *line /* 1D_NOT_character in */);
+void tao_write_lines(int iunit, CharacterAlloc1D &line);
 extern "C" void fortran_tao_x_axis_cmd(
     const char *where /* 0D_NOT_character in */,
     const char *what /* 0D_NOT_character in */

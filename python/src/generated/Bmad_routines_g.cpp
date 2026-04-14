@@ -434,6 +434,34 @@ n_slave : int
 )"""
   );
   m.def(
+      "get_switch",
+      &Bmad::get_switch,
+      py::arg("name"),
+      py::arg("name_list"),
+      py::arg("switch_"),
+      py::arg("err"),
+      py::arg("ele"),
+      py::arg("delim"),
+      py::arg("delim_found"),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Wrapper for Fortran routine get_switch
+
+Parameters
+----------
+name : str
+
+name_list : 1D array of str
+
+err : bool
+
+ele : EleStruct
+
+delim : str
+
+delim_found : bool
+)"""
+  );
+  m.def(
       "gg_taylor_equal_gg_taylor",
       &Bmad::gg_taylor_equal_gg_taylor,
       py::arg("gg_taylor1"),

@@ -373,6 +373,7 @@
 | [`create_a_spline`][pybmad.create_a_spline] | Routine | [Sim Utils](sim_utils.md) |
 | [`create_concatenated_wall3d`][pybmad.create_concatenated_wall3d] | Routine | [Bmad](bmad.md) |
 | [`create_element_slice`][pybmad.create_element_slice] | Routine | [Bmad](bmad.md) |
+| [`create_feedback`][pybmad.create_feedback] | Routine | [Bmad](bmad.md) |
 | [`create_field_overlap`][pybmad.create_field_overlap] | Routine | [Bmad](bmad.md) |
 | [`create_girder`][pybmad.create_girder] | Routine | [Bmad](bmad.md) |
 | [`create_group`][pybmad.create_group] | Routine | [Bmad](bmad.md) |
@@ -855,6 +856,7 @@
 | [GenGrad1Struct](bmad.md#gengrad1struct) | Struct | [Bmad](bmad.md) |
 | [GenGradMapStruct](bmad.md#gengradmapstruct) | Struct | [Bmad](bmad.md) |
 | `GEOMETRY` | Enum | [Enums](enums.md) |
+| [`get_a_char`][pybmad.get_a_char] | Routine | [Sim Utils](sim_utils.md) |
 | [`get_bl_from_fwhm`][pybmad.get_bl_from_fwhm] | Routine | [Bmad](bmad.md) |
 | [`get_called_file`][pybmad.get_called_file] | Routine | [Bmad](bmad.md) |
 | [`get_emit_from_sigma_mat`][pybmad.get_emit_from_sigma_mat] | Routine | [Bmad](bmad.md) |
@@ -864,6 +866,7 @@
 | [`get_next_word`][pybmad.get_next_word] | Routine | [Bmad](bmad.md) |
 | [`get_sequence_args`][pybmad.get_sequence_args] | Routine | [Bmad](bmad.md) |
 | [`get_slave_list`][pybmad.get_slave_list] | Routine | [Bmad](bmad.md) |
+| [`get_switch`][pybmad.get_switch] | Routine | [Bmad](bmad.md) |
 | [`get_tty_char`][pybmad.get_tty_char] | Routine | [Sim Utils](sim_utils.md) |
 | [`gg_taylor_equal_gg_taylor`][pybmad.gg_taylor_equal_gg_taylor] | Routine | [Bmad](bmad.md) |
 | [`gg_taylors_equal_gg_taylors`][pybmad.gg_taylors_equal_gg_taylors] | Routine | [Bmad](bmad.md) |
@@ -1187,6 +1190,7 @@
 | [`match_reg`][pybmad.match_reg] | Routine | [Sim Utils](sim_utils.md) |
 | `MATCH_TWISS` | Enum | [Enums](enums.md) |
 | [`match_wild`][pybmad.match_wild] | Routine | [Sim Utils](sim_utils.md) |
+| [`match_word`][pybmad.match_word] | Routine | [Sim Utils](sim_utils.md) |
 | `MATERIAL_TYPE` | Enum | [Enums](enums.md) |
 | `MATRIX` | Enum | [Enums](enums.md) |
 | `MATRIX_KICK` | Enum | [Enums](enums.md) |
@@ -1466,6 +1470,7 @@
 | [`pointer_to_fibre`][pybmad.pointer_to_fibre] | Routine | [Bmad](bmad.md) |
 | [`pointer_to_field_ele`][pybmad.pointer_to_field_ele] | Routine | [Bmad](bmad.md) |
 | [`pointer_to_girder`][pybmad.pointer_to_girder] | Routine | [Bmad](bmad.md) |
+| [`pointer_to_locations`][pybmad.pointer_to_locations] | Routine | [Sim Utils](sim_utils.md) |
 | [`pointer_to_lord`][pybmad.pointer_to_lord] | Routine | [Bmad](bmad.md) |
 | [`pointer_to_multipass_lord`][pybmad.pointer_to_multipass_lord] | Routine | [Bmad](bmad.md) |
 | [`pointer_to_next_ele`][pybmad.pointer_to_next_ele] | Routine | [Bmad](bmad.md) |
@@ -1507,6 +1512,7 @@
 | [`ptc_layouts_resplit`][pybmad.ptc_layouts_resplit] | Routine | [Bmad](bmad.md) |
 | [`ptc_one_turn_mat_and_closed_orbit_calc`][pybmad.ptc_one_turn_mat_and_closed_orbit_calc] | Routine | [Bmad](bmad.md) |
 | [`ptc_ran_seed_put`][pybmad.ptc_ran_seed_put] | Routine | [Bmad](bmad.md) |
+| [`ptc_read_flat_file`][pybmad.ptc_read_flat_file] | Routine | [Bmad](bmad.md) |
 | [`ptc_set_rf_state_for_c_normal`][pybmad.ptc_set_rf_state_for_c_normal] | Routine | [Bmad](bmad.md) |
 | [`ptc_set_taylor_order_if_needed`][pybmad.ptc_set_taylor_order_if_needed] | Routine | [Bmad](bmad.md) |
 | [`ptc_spin_calc`][pybmad.ptc_spin_calc] | Routine | [Bmad](bmad.md) |
@@ -1558,6 +1564,7 @@
 | [`quat_to_w_mat`][pybmad.quat_to_w_mat] | Routine | [Sim Utils](sim_utils.md) |
 | [`query_string`][pybmad.query_string] | Routine | [Sim Utils](sim_utils.md) |
 | [`quote`][pybmad.quote] | Routine | [Sim Utils](sim_utils.md) |
+| [`quoten`][pybmad.quoten] | Routine | [Sim Utils](sim_utils.md) |
 | `R0_ELEC` | Enum | [Enums](enums.md) |
 | `R0_MAG` | Enum | [Enums](enums.md) |
 | `R_E` | Enum | [Enums](enums.md) |
@@ -1952,6 +1959,7 @@
 | [`tao_beam_track_endpoint`][pybmad.tao_beam_track_endpoint] | Routine | [Tao](tao.md) |
 | [`tao_branch_index`][pybmad.tao_branch_index] | Routine | [Tao](tao.md) |
 | [`tao_calc_data_at_s_pts`][pybmad.tao_calc_data_at_s_pts] | Routine | [Tao](tao.md) |
+| [`tao_call_cmd`][pybmad.tao_call_cmd] | Routine | [Tao](tao.md) |
 | [`tao_cbar_wave_anal`][pybmad.tao_cbar_wave_anal] | Routine | [Tao](tao.md) |
 | [`tao_change_ele`][pybmad.tao_change_ele] | Routine | [Tao](tao.md) |
 | [`tao_change_tune`][pybmad.tao_change_tune] | Routine | [Tao](tao.md) |
@@ -1962,6 +1970,7 @@
 | [`tao_clip_cmd`][pybmad.tao_clip_cmd] | Routine | [Tao](tao.md) |
 | [`tao_close_command_file`][pybmad.tao_close_command_file] | Routine | [Tao](tao.md) |
 | [`tao_cmd_history_record`][pybmad.tao_cmd_history_record] | Routine | [Tao](tao.md) |
+| [`tao_cmd_split`][pybmad.tao_cmd_split] | Routine | [Tao](tao.md) |
 | [`tao_command`][pybmad.tao_command] | Routine | [Tao](tao.md) |
 | [`tao_constraint_type_name`][pybmad.tao_constraint_type_name] | Routine | [Tao](tao.md) |
 | [`tao_control_tree_list`][pybmad.tao_control_tree_list] | Routine | [Tao](tao.md) |
@@ -2067,6 +2076,7 @@
 | [`tao_locate_elements`][pybmad.tao_locate_elements] | Routine | [Tao](tao.md) |
 | [`tao_mark_lattice_ele`][pybmad.tao_mark_lattice_ele] | Routine | [Tao](tao.md) |
 | [`tao_merit`][pybmad.tao_merit] | Routine | [Tao](tao.md) |
+| [`tao_next_switch`][pybmad.tao_next_switch] | Routine | [Tao](tao.md) |
 | [`tao_next_word`][pybmad.tao_next_word] | Routine | [Tao](tao.md) |
 | [`tao_one_turn_map_calc_needed`][pybmad.tao_one_turn_map_calc_needed] | Routine | [Tao](tao.md) |
 | [`tao_open_file`][pybmad.tao_open_file] | Routine | [Tao](tao.md) |
@@ -2207,6 +2217,7 @@
 | [`tao_wave_cmd`][pybmad.tao_wave_cmd] | Routine | [Tao](tao.md) |
 | [`tao_wave_fit`][pybmad.tao_wave_fit] | Routine | [Tao](tao.md) |
 | [`tao_write_cmd`][pybmad.tao_write_cmd] | Routine | [Tao](tao.md) |
+| [`tao_write_lines`][pybmad.tao_write_lines] | Routine | [Tao](tao.md) |
 | [`tao_x_axis_cmd`][pybmad.tao_x_axis_cmd] | Routine | [Tao](tao.md) |
 | [`tao_x_scale_cmd`][pybmad.tao_x_scale_cmd] | Routine | [Tao](tao.md) |
 | [`tao_x_scale_graph`][pybmad.tao_x_scale_graph] | Routine | [Tao](tao.md) |
@@ -2435,6 +2446,7 @@
 | [`type_ptc_layout`][pybmad.type_ptc_layout] | Routine | [Bmad](bmad.md) |
 | [`type_taylors`][pybmad.type_taylors] | Routine | [Bmad](bmad.md) |
 | [`type_this_file`][pybmad.type_this_file] | Routine | [Sim Utils](sim_utils.md) |
+| [`type_twiss`][pybmad.type_twiss] | Routine | [Bmad](bmad.md) |
 | `UB_SUBATOMIC` | Enum | [Enums](enums.md) |
 | `UNARY_MINUS` | Enum | [Enums](enums.md) |
 | `UNARY_PLUS` | Enum | [Enums](enums.md) |

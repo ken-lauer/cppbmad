@@ -74,6 +74,35 @@ value : float
 )"""
   );
   m.def(
+      "get_a_char",
+      &SimUtils::get_a_char,
+      py::arg("wait"),
+      py::arg("ignore_this") = py::none(),
+      py::call_guard<py::gil_scoped_release>(),
+      R"""(Subroutine get_a_char (this_char, wait, ignore_this)
+
+Subroutine for getting a single character from the terminal.
+Also see: get_tty_char
+
+System Libraries that need to be linked to:
+  readline curses
+
+Parameters
+----------
+wait : bool
+    If True then routine will wait until a keystroke has occured. If False and no keystroke is in the buffer
+    then achar(0) will be returned as this_char.
+
+ignore_this : 1D array of str, optional
+    List of characters to ignore. If a keystroke matches a character on this list the keystroke is ignored.
+
+Returns
+-------
+this_char : str
+    Character returned
+)"""
+  );
+  m.def(
       "get_file_number",
       &SimUtils::get_file_number,
       py::arg("file_name"),
