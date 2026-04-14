@@ -25,7 +25,8 @@ runs:
       shell: bash -eo pipefail -l {0}
       run: |
         site_pkg=$(python -c "import pybmad; print(pybmad.__path__[0])")
-        cp -f "$site_pkg"/_pybmad*.so python/pybmad/ 2>/dev/null || true
+        cp -f "$site_pkg"/_pybmad*.so python/pybmad/
+        echo "$site_pkg -> $PWD/python/pybmad"
 
     - name: Build mkdocs site
       id: build

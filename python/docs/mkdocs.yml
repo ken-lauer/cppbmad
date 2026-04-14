@@ -61,7 +61,10 @@ plugins:
       default_handler: python
       handlers:
         python:
-          paths: [".."]  # resolves to python/ so griffe finds pybmad + _pybmad.pyi
+          # With this, pybmad is never found in site-packages and Griffe may fail on
+          # locating the first overloaded function (attribute_free typically).
+          # For local docs building without a pip install, uncomment this:
+          # paths: [".."]  # resolves to python/ so griffe finds pybmad + _pybmad.pyi
           options:
             filters:
               - "!^_" # exclude all members starting with _
