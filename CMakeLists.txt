@@ -139,6 +139,11 @@ endif()
 set_property(TARGET ${LIBNAME} PROPERTY CXX_STANDARD 17)
 target_compile_definitions(${LIBNAME} PRIVATE VERSION_INFO="${PROJECT_VERSION}")
 
+# Large reused header(s) should be precompiled:
+target_precompile_headers(${LIBNAME} PRIVATE
+  "$<$<COMPILE_LANGUAGE:CXX>:${CMAKE_CURRENT_SOURCE_DIR}/include/bmad/generated/proxy.hpp>"
+)
+
 find_program(CCACHE_PROGRAM ccache)
 if(CCACHE_PROGRAM)
   set(CMAKE_C_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")

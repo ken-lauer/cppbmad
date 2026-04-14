@@ -45,6 +45,16 @@ target_link_libraries(${PYBIND_LIBNAME} PRIVATE
 
 target_compile_definitions(${PYBIND_LIBNAME} PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
+# Large reused header(s) should be precompiled:
+target_precompile_headers(${PYBIND_LIBNAME} PRIVATE
+  <pybind11/pybind11.h>
+  <pybind11/stl.h>
+  <pybind11/numpy.h>
+  <pybind11/complex.h>
+  "${CMAKE_CURRENT_SOURCE_DIR}/../include/bmad/generated/proxy.hpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../include/bmad/generated/to_string.hpp"
+)
+
 # --- Installation Strategy for pyproject.toml ---
 
 # When using scikit-build-core, we install into the python package directory
