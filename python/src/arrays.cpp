@@ -9,6 +9,81 @@ inline int normalize_index(int i, int size) {
     throw py::index_error();
   return i;
 }
+void bind_FCharAlloc1D(py::module &m) {
+  py::class_<CharacterAlloc1D>(m, "CharacterAlloc1D")
+      .def(py::init<>())
+      .def(py::init<int, int>(), py::arg("n"), py::arg("str_len") = 200)
+      .def("resize", &CharacterAlloc1D::resize, py::arg("n"), py::arg("str_len"))
+      .def("clear", &CharacterAlloc1D::clear)
+      .def("__len__", &CharacterAlloc1D::size)
+      .def("string_length", &CharacterAlloc1D::string_length)
+      .def("to_list", &CharacterAlloc1D::to_vector)
+      .def(
+          "__getitem__",
+          [](CharacterAlloc1D &self, int i) -> std::string {
+            if (i < 0)
+              i += self.size();
+            if (i < 0 || i >= self.size())
+              throw py::index_error();
+            return self.view()[i];
+          }
+      )
+      .def(
+          "__setitem__",
+          [](CharacterAlloc1D &self, int i, const std::string &val) {
+            if (i < 0)
+              i += self.size();
+            if (i < 0 || i >= self.size())
+              throw py::index_error();
+            self.view()[i] = val;
+          }
+      )
+      .def(
+          "__iter__",
+          [](CharacterAlloc1D &self) {
+            // Convert to Python list and iterate (avoids StringProxy)
+            py::list result;
+            auto &view = self.view();
+            for (int i = 0; i < view.size(); ++i)
+              result.append(view.get_string(view.lower_bound() + i));
+            return result.attr("__iter__")();
+          }
+      )
+      .def(
+          "view",
+          [](CharacterAlloc1D &self) { return self.view(); },
+          py::keep_alive<0, 1>()
+      )
+      .def(
+          "__repr__",
+          [](CharacterAlloc1D &self) {
+            auto vec = self.to_vector();
+            std::string result = "CharacterAlloc1D([";
+            for (size_t i = 0; i < vec.size(); ++i) {
+              if (i > 0)
+                result += ", ";
+              result += "'" + vec[i] + "'";
+            }
+            result += "])";
+            return result;
+          }
+      )
+      .def("__str__", [](CharacterAlloc1D &self) {
+        auto vec = self.to_vector();
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); ++i) {
+          if (i > 0)
+            result += ", ";
+          result += "'" + vec[i] + "'";
+        }
+        result += "]";
+        return result;
+      });
+
+  // Implicit conversion from list[str]
+  py::implicitly_convertible<std::vector<std::string>, CharacterAlloc1D>();
+}
+
 void bind_FCharArray1D(py::module &m) {
   py::class_<FCharArray1D>(m, "FCharArray1D")
       .def(py::init<>())
@@ -79,5 +154,6 @@ void bind_standard_arrays(py::module &m) {
 
   // 3. String Arrays
   bind_FCharArray1D(m);
+  bind_FCharAlloc1D(m);
 }
 } // namespace Pybmad

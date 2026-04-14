@@ -271,7 +271,7 @@ def get_type_transform(
                 cpp_type = cpp_type.replace("&", "")
                 cpp_type = f"optional_ref<{cpp_type}>"
     elif ft.dim > 0:
-        if ft.ptr == "ALLOC" and ft.type != "character":
+        if ft.ptr == "ALLOC":
             assert info.allocatable_container
             assert ft.dim == 1  # only 1D container support for now
             cpp_type = wrap_optional_ref(info.allocatable_container, is_optional)
@@ -431,6 +431,7 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         python_type="str",
         fortran_native_type="character",
         cpp_call_fortran_type="char*",
+        allocatable_container="CharacterAlloc1D",
     ),
     "type": TypeInfo(
         name="type",

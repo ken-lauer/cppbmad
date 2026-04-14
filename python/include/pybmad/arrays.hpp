@@ -533,6 +533,7 @@ void bind_1d_type_array_pair(
 // =============================================================================
 
 void bind_FCharArray1D(py::module &m);
+void bind_FCharAlloc1D(py::module &m);
 
 void bind_standard_arrays(py::module &m);
 }; // namespace Pybmad

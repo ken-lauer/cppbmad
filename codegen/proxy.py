@@ -1132,6 +1132,15 @@ def create_fortran_proxy_code(structs: list[CodegenStructure]) -> str:
             """.rstrip()
         )
 
+    container_types.append(
+        """\
+
+  type :: character_container_alloc
+    character(:), allocatable :: data(:)
+  end type character_container_alloc
+        """.rstrip()
+    )
+
     imports_map = {}
     for struct in structs:
         module = struct.module
@@ -1232,6 +1241,80 @@ contains
   end subroutine
             """
         )
+
+    # Character container (special: deferred-length, needs str_len in realloc/access)
+    output.append(
+        """
+  function allocate_character_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(character_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_character_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(character_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_character_container_data(container_ptr, lbound_, n, str_len) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    integer(c_int), value :: str_len
+    type(character_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(character(str_len) :: ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_character_container(container_ptr, d_ptr, bounds, str_len, is_allocated) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    integer(c_int), intent(out) :: str_len
+    logical(c_bool), intent(out) :: is_allocated
+
+    type(character_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      str_len = int(len(ctr%data), c_int)
+      d_ptr = c_loc(ctr%data(bounds(1)))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      bounds = 0
+      str_len = 0
+    endif
+  end subroutine
+        """
+    )
 
     for struct in structs:
         struct_name = struct.f_name.lower()
@@ -1559,6 +1642,14 @@ class ${class_name} : public FortranProxy<${class_name}> {
   void access_{name}_container(const void* handle, void** data, int* bounds, bool* alloc);
 """)
 
+    # Character container (special: deferred-length character arrays)
+    class_forward_declarations.append("""
+  void* allocate_character_container();
+  void reallocate_character_container_data(void *, int, size_t, int) noexcept;
+  void deallocate_character_container(void *) noexcept;
+  void access_character_container(const void* handle, void** data, int* bounds, int* str_len, bool* alloc);
+""")
+
     for struct_name in classes:
         class_forward_declarations.append(f"""
   void* allocate_fortran_{struct_name}(int n, size_t *element_size);
@@ -1597,9 +1688,32 @@ struct {nt.cpp_container_name} : public FAlloc1D<{nt.cpp_type}> {{
         reallocate_{name}_container_data,
         access_{name}_container
     ) {{}}
-    {nt.cpp_container_name}(void* handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access) 
+    {nt.cpp_container_name}(void* handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
        : Base(handle, realloc, access) {{}}
 }};
+""")
+
+    # CharacterAlloc1D container
+    class_forward_declarations.append("""
+struct CharacterAlloc1D : public FCharAlloc1D {
+    using Base = FCharAlloc1D;
+    using Base::Base;
+    CharacterAlloc1D() : Base(
+        allocate_character_container,
+        deallocate_character_container,
+        reallocate_character_container_data,
+        access_character_container
+    ) {}
+    CharacterAlloc1D(int n, int str_len = 200) : Base(
+        n, str_len,
+        allocate_character_container,
+        deallocate_character_container,
+        reallocate_character_container_data,
+        access_character_container
+    ) {}
+    CharacterAlloc1D(void* handle, CharReallocFuncPtr realloc, CharAccessFuncPtr access)
+       : Base(handle, realloc, access) {}
+};
 """)
 
     for struct_name, class_body in classes.items():

@@ -38,6 +38,8 @@ class CppWrapperArgument(ABC):
                     return CppWrapperTypeArgumentAllocArray(arg)
                 return CppWrapperTypeArgumentArray(arg)
             if arg.type == "character":
+                if arg.member.type_info.allocatable:
+                    return CppWrapperStringArgumentAllocArray(arg)
                 return CppWrapperStringArgumentArray(arg)
             if arg.member.type_info.allocatable:  #  or arg.is_dynamic_array:
                 return CppWrapperGeneralArgumentAllocArray(arg)
@@ -339,6 +341,50 @@ class CppWrapperStringArgument(CppWrapperArgument):
     def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
         if self.arg.intent == "out" or ignore_intent:
             return "std::string", self.arg.c_name
+        return None
+
+
+@dataclasses.dataclass
+class CppWrapperStringArgumentAllocArray(CppWrapperArgument):
+    """Handler for allocatable character(:) arrays passed via CharacterAlloc1D container."""
+
+    def pre_call_lines(self) -> list[str]:
+        lines = [f"// intent={self.arg.intent} allocatable character array"]
+        argname = self.arg.c_name
+
+        if self.arg.intent in {"in", "inout"}:
+            if self.arg.is_optional:
+                lines.append(
+                    self.unwrap_optional(
+                        f"{argname}->get().get_fortran_ptr()",
+                        type_="auto*",
+                        comment="input, optional",
+                    )
+                )
+        elif self.arg.intent == "out":
+            lines.append(f"auto {argname} {{ CharacterAlloc1D() }};")
+
+        return lines
+
+    def call_argument(self) -> str:
+        argname = self.arg.c_name
+        if self.arg.intent in {"in", "inout"}:
+            if self.arg.is_optional:
+                return self.fortran_call_arg_name
+            return f"{argname}.get_fortran_ptr()"
+        if self.arg.intent == "out":
+            return f"{argname}.get_fortran_ptr()"
+        return ""
+
+    @property
+    def output_arg_name(self) -> str | None:
+        if self.arg.intent == "out":
+            return f"std::move({self.arg.c_name})"
+        return super().output_arg_name
+
+    def struct_decl(self, ignore_intent: bool = False) -> tuple[str, str] | None:
+        if self.arg.intent == "out" or ignore_intent:
+            return "CharacterAlloc1D", self.arg.c_name
         return None
 
 

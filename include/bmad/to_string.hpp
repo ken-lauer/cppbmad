@@ -206,4 +206,7 @@ template <typename T>
 std::string to_string(const FAlloc1D<T> &arr) {
   return to_string(arr.view());
 }
+
+// Overload for FCharAlloc1D (Allocatable Character Arrays)
+inline std::string to_string(const FCharAlloc1D &arr) { return to_string(arr.view()); }
 } // namespace Bmad

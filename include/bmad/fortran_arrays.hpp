@@ -67,6 +67,10 @@ using ReallocFuncPtr = void (*)(void *, int, size_t);
 using TypeAccessFuncPtr = void (*)(const void *, void **, int *, bool *, size_t *);
 using PrimAccessFuncPtr = void (*)(const void *, void **, int *, bool *);
 
+// Character-specific: access also returns str_len; realloc takes str_len
+using CharAccessFuncPtr = void (*)(const void *, void **, int *, int *, bool *);
+using CharReallocFuncPtr = void (*)(void *, int, size_t, int);
+
 // Convenience for container allocators (parameterless alloc/dealloc wrappers)
 using ContainerAllocFuncPtr = void *(*)();
 using ContainerDeallocFuncPtr = void (*)(void *);
@@ -965,11 +969,109 @@ public:
   Iterator end() { return Iterator(this, size_); }
 };
 
+static void NullDeleter(void *) {}
+
+// =============================================================================
+// FCharAlloc1D - Container for Fortran allocatable character arrays
+// =============================================================================
+
+class FCharAlloc1D {
+public:
+  using view_type = FCharArray1D;
+
+private:
+  std::shared_ptr<void> handle_;
+  ContainerAllocFuncPtr alloc_func_ = nullptr;
+  ContainerDeallocFuncPtr dealloc_func_ = nullptr;
+  CharReallocFuncPtr realloc_func_ = nullptr;
+  CharAccessFuncPtr access_func_ = nullptr;
+
+  mutable FCharArray1D view_;
+
+  void refresh() const {
+    void *data_ptr = nullptr;
+    int bounds[2] = {1, 0};
+    int str_len = 0;
+    bool alloc = false;
+    if (access_func_)
+      access_func_(handle_.get(), &data_ptr, bounds, &str_len, &alloc);
+    char *data = static_cast<char *>(data_ptr);
+    int size = alloc ? (bounds[1] - bounds[0] + 1) : 0;
+    view_ = (alloc && data && size > 0)
+                ? FCharArray1D(data, size, bounds[0], bounds[1], str_len, true)
+                : FCharArray1D();
+  }
+
+public:
+  FCharAlloc1D() = default;
+
+  FCharAlloc1D(
+      ContainerAllocFuncPtr alloc,
+      ContainerDeallocFuncPtr dealloc,
+      CharReallocFuncPtr realloc,
+      CharAccessFuncPtr access
+  )
+      : alloc_func_(alloc)
+      , dealloc_func_(dealloc)
+      , realloc_func_(realloc)
+      , access_func_(access) {
+    if (!alloc_func_)
+      throw std::logic_error("Default construction not supported (no AllocFunc)");
+    handle_ = std::shared_ptr<void>(alloc_func_(), dealloc_func_);
+  }
+
+  FCharAlloc1D(
+      int n,
+      int str_len,
+      ContainerAllocFuncPtr alloc,
+      ContainerDeallocFuncPtr dealloc,
+      CharReallocFuncPtr realloc,
+      CharAccessFuncPtr access
+  )
+      : FCharAlloc1D(alloc, dealloc, realloc, access) {
+    if (n > 0)
+      resize(n, str_len);
+  }
+
+  FCharAlloc1D(void *existing_handle, CharReallocFuncPtr realloc, CharAccessFuncPtr access)
+      : realloc_func_(realloc)
+      , access_func_(access) {
+    if (!existing_handle)
+      throw std::runtime_error("handle is NULL");
+    handle_ = std::shared_ptr<void>(existing_handle, NullDeleter);
+  }
+
+  void resize(int n, int str_len) {
+    if (realloc_func_)
+      realloc_func_(handle_.get(), 1, n, str_len);
+  }
+  void clear() {
+    if (realloc_func_)
+      realloc_func_(handle_.get(), 0, 0, 0);
+  }
+
+  void *get_fortran_ptr() const { return handle_.get(); }
+  FCharArray1D &view() const {
+    refresh();
+    return view_;
+  }
+  FCharArray1D &get() const { return view(); }
+  int size() const { return view().size(); }
+  bool empty() const { return size() == 0; }
+  int string_length() const { return view().string_length(); }
+
+  std::string get_string(int i) const { return view().get_string(i); }
+  void set_string(int i, const std::string &s) { view().set_string(i, s); }
+
+  std::vector<std::string> to_vector() const { return view().to_vector(); }
+
+  auto begin() { return view().begin(); }
+  auto end() { return view().end(); }
+};
+
 // =============================================================================
 // FTypeAlloc1D - Container for Fortran allocatable arrays
 // =============================================================================
-
-static void NullDeleter(void *) {}
 
 template <typename ViewType>
 class FTypeAlloc1D {

@@ -415,6 +415,7 @@ python_imports = [
   "get_super_universe",
   #
   "BoolAlloc1D",
+  "CharacterAlloc1D",
   "ComplexAlloc1D",
   "Int8Alloc1D",
   "IntAlloc1D",

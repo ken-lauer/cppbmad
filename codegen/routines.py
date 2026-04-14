@@ -630,7 +630,7 @@ class FortranRoutine:
                     )
                 if ":" in arg.array or "0:" in arg.array or "*" in arg.array:
                     arr = ",".join(arg.array)
-                    if arg.type == "character":
+                    if arg.type == "character" and not arg.member.type_info.allocatable:
                         reasons.append(f"Variable-sized {arg.intent} character array: {arg.full_type}")
                     if len(arg.array) > 1:
                         if arg.member.type_info.pointer:

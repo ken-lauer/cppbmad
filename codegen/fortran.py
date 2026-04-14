@@ -55,6 +55,8 @@ class FortranWrapperArgument(ABC):
         arg_type = arg.member.type.lower()
 
         if arg_type == "character":
+            if arg.array and arg.member.type_info.allocatable:
+                return FortranWrapperStringArrayAllocatableArgument(arg, routine, lines, have_err_flag)
             return FortranWrapperStringArgument(arg, routine, lines, have_err_flag)
         if arg.array:
             if arg_type == "type":
@@ -198,6 +200,77 @@ class FortranWrapperGeneralArrayAllocatableArgument(FortranWrapperArgument):
 
     def get_output_conversion(self) -> list[str]:
         return []
+
+
+@dataclasses.dataclass
+class FortranWrapperStringArrayAllocatableArgument(FortranWrapperArgument):
+    """Handler for allocatable character arrays passed via container.
+
+    When the dummy argument uses ``character(*)`` (assumed-length), a local
+    variable with a fixed character length is needed because ``character(*)``
+    is incompatible with the container's ``character(:)`` (deferred-length)
+    component.  When the kind is ``:`` (deferred) or a fixed integer, the
+    container data can be passed directly.
+    """
+
+    _DEFAULT_CHAR_LEN = 200
+
+    @property
+    def container_type(self) -> str:
+        return "character_container_alloc"
+
+    @property
+    def local_name(self) -> str:
+        return f"{self.f_name}_local"
+
+    @property
+    def needs_local_copy(self) -> bool:
+        """Only ``character(:)`` (deferred-length) can pass container data directly.
+
+        Fixed-length (``character(N)``) and assumed-length (``character(*)``)
+        are both incompatible with the container's ``character(:)`` component.
+        """
+        return self.type_info.kind != ":"
+
+    @property
+    def char_len(self) -> str:
+        """Character length specifier for the local variable declaration."""
+        kind = self.type_info.kind
+        if kind is not None and kind not in ("*", ":"):
+            return kind  # e.g., "40", "200"
+        return str(self._DEFAULT_CHAR_LEN)
+
+    def get_declarations(self) -> list[str]:
+        arg_ctype = "type(c_ptr), intent(in), value"
+        arg_ftype = f"type({self.container_type}), pointer"
+        decls = [
+            f"  {arg_ctype} :: {self.c_name}",
+            f"  {arg_ftype} :: {self.f_name}",
+        ]
+        if self.needs_local_copy:
+            decls.append(f"  character({self.char_len}), allocatable :: {self.local_name}(:)")
+        return decls
+
+    def get_input_conversion(self) -> list[str]:
+        result = [f"  !! container character array ({self.arg.full_type})"]
+        code = f"  call c_f_pointer({self.c_name}, {self.f_name})"
+        result.extend(self.if_block(f"c_associated({self.c_name})", code))
+        if self.needs_local_copy:
+            self.custom_call_arg_name = self.local_name
+        else:
+            self.custom_call_arg_name = f"{self.f_name}%data"
+        return result
+
+    def get_output_conversion(self) -> list[str]:
+        if not self.needs_local_copy:
+            return []
+        return [
+            "  !! copy allocatable character result into container",
+            f"  if (c_associated({self.c_name}) .and. allocated({self.local_name})) then",
+            f"    if (allocated({self.f_name}%data)) deallocate({self.f_name}%data)",
+            f"    allocate({self.f_name}%data, source={self.local_name})",
+            "  endif",
+        ]
 
 
 @dataclasses.dataclass
