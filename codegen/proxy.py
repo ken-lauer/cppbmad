@@ -1050,6 +1050,73 @@ templates[FullType("character", 1, "ALLOC")] = make_char_array_1d("ALLOC")
 
 
 # ---------------------------------------------------------------------------
+# Dispatch-based scalar access
+# ---------------------------------------------------------------------------
+# Types eligible for dispatch: simple scalars with ptr=NOT, dim=0
+DISPATCHABLE_SCALAR_TYPES: set[ArgumentType] = {"real", "real16", "integer", "integer8", "logical", "complex"}
+
+
+def is_dispatchable_scalar(arg: Argument) -> bool:
+    ft = arg.full_type
+    return ft.dim == 0 and ft.ptr == "NOT" and ft.type in DISPATCHABLE_SCALAR_TYPES and arg.is_component
+
+
+def group_dispatch_fields(
+    struct: CodegenStructure,
+) -> dict[ArgumentType, list[tuple[int, Argument]]]:
+    """Group dispatchable scalar fields by type, assigning sequential field IDs."""
+    groups: dict[ArgumentType, list[tuple[int, Argument]]] = {}
+    for arg in struct.arg:
+        if not is_dispatchable_scalar(arg):
+            continue
+        type_name = arg.full_type.type
+        if type_name not in groups:
+            groups[type_name] = []
+        groups[type_name].append((len(groups[type_name]), arg))
+    return groups
+
+
+def generate_fortran_dispatch_getter(
+    struct_name: str, type_name: ArgumentType, fields: list[tuple[int, Argument]]
+) -> str:
+    info = STANDARD_TYPES[type_name]
+    cases = "\n".join(f"    case({fid}); value_out = struct_obj%{arg.f_name}" for fid, arg in fields)
+    return f"""
+  subroutine {struct_name}_get_{type_name}(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='{struct_name}_get_{type_name}')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    {info.fortran_type}, intent(out) :: value_out
+    type({struct_name}), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+{cases}
+    end select
+  end subroutine
+"""
+
+
+def generate_fortran_dispatch_setter(
+    struct_name: str, type_name: ArgumentType, fields: list[tuple[int, Argument]]
+) -> str:
+    info = STANDARD_TYPES[type_name]
+    cases = "\n".join(f"    case({fid}); struct_obj%{arg.f_name} = value_in" for fid, arg in fields)
+    return f"""
+  subroutine {struct_name}_set_{type_name}(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='{struct_name}_set_{type_name}')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    {info.fortran_type}, intent(in), value :: value_in
+    type({struct_name}), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+{cases}
+    end select
+  end subroutine
+"""
+
+
+# ---------------------------------------------------------------------------
 # Remaining Code Generation Functions
 # ---------------------------------------------------------------------------
 def split_signature(cpp_template: str, class_name: str) -> tuple[str, str]:
@@ -1441,8 +1508,20 @@ contains
     """
         )
 
+        # Dispatch-based scalar accessors
+        dispatch_groups = group_dispatch_fields(struct)
+        dispatched_fields: set[str] = set()
+        for type_name, fields in sorted(dispatch_groups.items()):
+            output.append(f"  ! dispatch: {struct_name}%{type_name} ({len(fields)} fields)")
+            output.append(generate_fortran_dispatch_getter(struct_name, type_name, fields))
+            output.append(generate_fortran_dispatch_setter(struct_name, type_name, fields))
+            for _, arg in fields:
+                dispatched_fields.add(arg.f_name)
+
         for arg in struct.arg:
             if not arg.is_component:
+                continue
+            if arg.f_name in dispatched_fields:
                 continue
             try:
                 acc = generate_accessor_code(struct.f_name, arg, arg.full_type, arg.kind)
@@ -1594,9 +1673,54 @@ class ${class_name} : public FortranProxy<${class_name}> {
         if ctor_code:
             class_body.append(ctor_code)
 
+        # Dispatch-based scalar accessors
+        dispatch_groups = group_dispatch_fields(struct)
+        dispatched_fields: dict[str, tuple[ArgumentType, int]] = {}
+        for type_name, fields in sorted(dispatch_groups.items()):
+            info = STANDARD_TYPES[type_name]
+            c_forward_declarations.append(
+                f"    void {struct.f_name}_get_{type_name}"
+                f"(const void* struct_obj, int field_id, {info.c_type}* value_out);"
+            )
+            c_forward_declarations.append(
+                f"    void {struct.f_name}_set_{type_name}"
+                f"(void* struct_obj, int field_id, {info.c_type} value_in);"
+            )
+            for field_id, arg in fields:
+                dispatched_fields[arg.f_name] = (type_name, field_id)
+
         for arg in struct.arg:
             if not arg.is_component:
                 continue
+
+            if arg.f_name in dispatched_fields:
+                type_name, field_id = dispatched_fields[arg.f_name]
+                info = STANDARD_TYPES[type_name]
+                c_type = info.c_type
+                c_name = arg.c_name
+                struct_name = struct.f_name
+
+                getter_body = (
+                    f"    {c_type} {c_name}() const {{\n"
+                    f"        {c_type} value;\n"
+                    f"        {struct_name}_get_{type_name}(fortran_ptr_, {field_id}, &value);\n"
+                    f"        return value;\n"
+                    f"    }}"
+                )
+                sig, impl = split_signature(getter_body, proxy_class_name)
+                all_impl.append(impl)
+                class_body.append(f"{sig} // {arg.full_type} [dispatch:{field_id}]")
+
+                setter_body = (
+                    f"    void set_{c_name}({c_type} value) {{\n"
+                    f"        {struct_name}_set_{type_name}(fortran_ptr_, {field_id}, value);\n"
+                    f"    }}"
+                )
+                sig, impl = split_signature(setter_body, proxy_class_name)
+                all_impl.append(impl)
+                class_body.append(sig)
+                continue
+
             try:
                 acc = generate_accessor_code(struct.f_name, arg, arg.full_type, arg.kind)
             except ValueError as ex:
