@@ -238,7 +238,8 @@ insert_tag_line : bool, optional
   );
   m.def(
       "out_io",
-      py::overload_cast<int, std::string, std::string, bool, std::optional<bool>>(&SimUtils::out_io
+      py::overload_cast<int, std::string, std::string, bool, std::optional<bool>>(
+          &SimUtils::out_io
       ),
       py::arg("level"),
       py::arg("routine_name"),
