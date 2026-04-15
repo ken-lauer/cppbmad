@@ -207,6 +207,11 @@ def _get_py_routine_arg_type(arg: RoutineArg) -> str:
             cpp_type = remove_optional(cpp_type)
             cpp_type = f"std::optional<{cpp_type}>"
         cpp_type = cpp_type.replace("&", "")
+    elif cpp_type.startswith("optional_ref"):
+        # nanobind cannot bind optional_ref<T> (std::optional<std::reference_wrapper<T>>),
+        # so expose as T* at the Python boundary and convert back in the wrapper.
+        inner = remove_optional(cpp_type)
+        cpp_type = f"{inner} *"
     return cpp_type
 
 
@@ -225,6 +230,11 @@ def _get_py_routine_decl_spec(routine: FortranRoutine, allow_defaults: bool) -> 
             allow_defaults = False
 
         cpp_type = _get_py_routine_arg_type(arg)
+
+        # When optional_ref<T> is converted to T*, fix the default from std::nullopt to nullptr
+        if cpp_type.endswith("*") and default_str == " = std::nullopt":
+            default_str = " = nullptr"
+
         specs.append(f"{cpp_type} {arg.c_name}{default_str}")
 
     return list(reversed(specs))
@@ -277,6 +287,8 @@ def generate_py_routine_wrapper(routine: FortranRoutine) -> list[str]:
     def get_call_arg(arg: CppWrapperArgument):
         if arg.arg.transform.is_optional_ref and arg.arg.is_python_immutable:
             return f"make_opt_ref({arg.arg.c_name})"
+        if arg.arg.transform.is_optional_ref:
+            return f"ptr_to_opt_ref({arg.arg.c_name})"
         return arg.arg.c_name
 
     call_args = [get_call_arg(arg) for arg in args if arg.arg.intent in ("in", "inout")]
@@ -302,6 +314,46 @@ def generate_py_routine_wrapper(routine: FortranRoutine) -> list[str]:
     return lines
 
 
+def _has_optional_ref_args(routine: FortranRoutine) -> bool:
+    """Check if routine has optional_ref args that need lambda wrapping for nanobind."""
+    return any(arg.transform.is_optional_ref for arg in routine.args if arg.is_input)
+
+
+def _generate_optional_ref_lambda(routine: FortranRoutine) -> str:
+    """Generate an inline lambda that converts T* to optional_ref<T> for nanobind."""
+    args = routine.wrapper_args
+    lambda_params = []
+    call_args = []
+    for arg in args:
+        if not arg.is_input:
+            continue
+        cpp_type = arg.transform.cpp_type
+        if arg.transform.is_optional_ref:
+            inner = remove_optional(cpp_type)
+            lambda_params.append(f"{inner} *{arg.c_name}")
+            call_args.append(f"ptr_to_opt_ref({arg.c_name})")
+        else:
+            lambda_params.append(f"{cpp_type} {arg.c_name}")
+            call_args.append(arg.c_name)
+
+    param_str = ", ".join(lambda_params)
+    call_str = ", ".join(call_args)
+    fn = f"{routine.cpp_namespace}::{routine.overloaded_name}"
+
+    # For overloaded functions, disambiguate with a typed function pointer
+    input_arg_types = [arg.transform.cpp_type for arg in args if arg.is_input]
+    fptr_args = ", ".join(input_arg_types)
+    ret_type = routine.cpp_return_type or "void"
+    # Assign the correct overload to a local function pointer, then call it
+    fptr_type = f"{ret_type} (*)({fptr_args})"
+    return (
+        f"[]({param_str}) {{\n"
+        f"        auto fn = static_cast<{fptr_type}>(&{fn});\n"
+        f"        return fn({call_str});\n"
+        f"    }}"
+    )
+
+
 def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[FortranRoutine]) -> list[str]:
     assert routine.docstring is not None
     lines = []
@@ -309,22 +361,30 @@ def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[Fortran
     lines.append("m.def(")
     lines.append(f'  "{routine.overloaded_name}",')
 
-    if routine.needs_python_wrapper:
+    args = routine.wrapper_args
+
+    # nanobind cannot bind optional_ref<T> (std::optional<std::reference_wrapper<T>>).
+    # For routines not already wrapped, generate a lambda that takes T* and converts.
+    needs_lambda = not routine.needs_python_wrapper and _has_optional_ref_args(routine)
+
+    if needs_lambda:
+        lines.append(f"{_generate_optional_ref_lambda(routine)},")
+    elif routine.needs_python_wrapper:
         routine_ref = f"&python_{routine.name}"
+        if overloads:
+            arg_types = [_get_py_routine_arg_type(arg) for arg in args if arg.is_input]
+            overload_args = ", ".join(arg_types)
+            lines.append(f"nb::overload_cast<{overload_args}>({routine_ref}),")
+        else:
+            lines.append(f"{routine_ref},")
     else:
         routine_ref = f"&{routine.cpp_namespace}::{routine.overloaded_name}"
-
-    args = routine.wrapper_args
-    if overloads:
-        if routine.needs_python_wrapper:
-            arg_types = [_get_py_routine_arg_type(arg) for arg in args if arg.is_input]
-        else:
+        if overloads:
             arg_types = [arg.transform.cpp_type for arg in args if arg.is_input]
-        overload_args = ", ".join(arg_types)
-        lines.append(f"nb::overload_cast<{overload_args}>({routine_ref}),")
-
-    else:
-        lines.append(f"{routine_ref},")
+            overload_args = ", ".join(arg_types)
+            lines.append(f"nb::overload_cast<{overload_args}>({routine_ref}),")
+        else:
+            lines.append(f"{routine_ref},")
 
     for arg in args:
         if arg.is_input:
