@@ -196,10 +196,11 @@ def _generate_index_page(
                 continue
 
             seen.add(name)
+            anchor = name.lower()
             entries.append(
                 (
                     name.lower(),
-                    f"[`{name}`][pybmad.{name}]",
+                    f"[`{name}`]({project}.md#{anchor})",
                     "Routine",
                     f"[{title}]({project}.md)",
                 )
