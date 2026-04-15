@@ -127,18 +127,16 @@ def generate_routine_return_value_wrapper(routine: FortranRoutine) -> list[str]:
     clsname, full_clsname = routine.python_class_return_type
 
     lines = []
-    lines.append(
-        f'    py::class_<{full_clsname}, std::unique_ptr<{full_clsname}>>(m, "{clsname}", "{routine.name} return type")'
-    )
+    lines.append(f'    nb::class_<{full_clsname}>(m, "{clsname}", "{routine.name} return type")')
     for arg in outputs:
-        lines.append(f'        .def_readonly("{arg.python_name}", &{full_clsname}::{arg.c_name})')
+        lines.append(f'        .def_ro("{arg.python_name}", &{full_clsname}::{arg.c_name})')
 
     lines.append(f'        .def("__len__", [](const {full_clsname} &) {{ return {len(outputs)}; }})')
-    lines.append(f'        .def("__getitem__", [](const {full_clsname} &s, int i) -> py::object {{')
+    lines.append(f'        .def("__getitem__", [](const {full_clsname} &s, int i) -> nb::object {{')
     lines.append(f"            if (i < 0) i += {len(outputs)};")
     for i, arg in enumerate(outputs):
-        lines.append(f"            if (i == {i}) return py::cast(s.{arg.c_name});")
-    lines.append("            throw py::index_error();")
+        lines.append(f"            if (i == {i}) return nb::cast(s.{arg.c_name});")
+    lines.append("            throw nb::index_error();")
     lines.append("        })")
 
     # lines.append(f'      .def("__repr__", [](const {full_clsname} &self){{ return to_string(self); }})')
@@ -323,7 +321,7 @@ def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[Fortran
         else:
             arg_types = [arg.transform.cpp_type for arg in args if arg.is_input]
         overload_args = ", ".join(arg_types)
-        lines.append(f"py::overload_cast<{overload_args}>({routine_ref}),")
+        lines.append(f"nb::overload_cast<{overload_args}>({routine_ref}),")
 
     else:
         lines.append(f"{routine_ref},")
@@ -331,12 +329,11 @@ def generate_routine_pybind_def(routine: FortranRoutine, overloads: list[Fortran
     for arg in args:
         if arg.is_input:
             if arg.is_optional:
-                lines.append(f'py::arg("{arg.python_name}") = py::none(),')
+                lines.append(f'nb::arg("{arg.python_name}") = nb::none(),')
             else:
-                lines.append(f'py::arg("{arg.python_name}"),')
+                lines.append(f'nb::arg("{arg.python_name}"),')
 
     doc = routine.docstring.to_numpy_docstring(args)
-    lines.append("py::call_guard<py::gil_scoped_release>(),")
     lines.append(rf'R"""({doc})"""')
     lines.append(");")
 
@@ -385,7 +382,7 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
     code_lines = [""]
     code_lines.append("// =============================================================================")
     code_lines.append(f"// {struct.f_name}")
-    code_lines.append(f"void init_{struct.f_name}(py::module &m, py::class_<{struct.cpp_class}> &cls) {{")
+    code_lines.append(f"void init_{struct.f_name}(nb::module_ &m, nb::class_<{struct.cpp_class}> &cls) {{")
 
     ctor_args: list[str] = []
     ctor_types: list[str] = []
@@ -393,18 +390,18 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
     for arg in struct.arg:
         (ctor_type, _ctor_body) = _generate_proxy_constructor_arg(struct, arg)
         if ctor_type is not None:
-            ctor_args.append(f'py::arg("{arg.python_name}") = py::none()')
+            ctor_args.append(f'nb::arg("{arg.python_name}") = nb::none()')
             ctor_types.append(ctor_type)
 
     if ctor_args:
         types_str = ", ".join(ctor_types)
         args_str = ", ".join(ctor_args)
 
-        # cls.def(py::init<T1, T2>(), py::arg("x")=none, py::arg("y")=none);
-        code_lines.append(f"    cls.def(py::init<{types_str}>(),")
+        # cls.def(nb::init<T1, T2>(), nb::arg("x")=none, nb::arg("y")=none);
+        code_lines.append(f"    cls.def(nb::init<{types_str}>(),")
         code_lines.append(f"        {args_str})")
     else:
-        code_lines.append("    cls.def(py::init<>())")
+        code_lines.append("    cls.def(nb::init<>())")
 
     for arg in struct.arg:
         if not arg.is_component:
@@ -422,26 +419,25 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
 
         getter = f"&{struct.cpp_class}::{arg.c_name}"
 
-        if arg.needs_python_keepalive:
-            getter_fn = f"py::cpp_function({getter}, py::keep_alive<0, 1>())"
-        else:
-            getter_fn = getter
+        keepalive = ", nb::keep_alive<0, 1>()" if arg.needs_python_keepalive else ""
 
         if tpl.fortran_setter:
             setter = f"&{struct.cpp_class}::set_{arg.c_name}"
-            code_lines.append(f'        .def_property("{arg.python_name}", {getter_fn}, {setter}{docstring})')
+            code_lines.append(
+                f'        .def_prop_rw("{arg.python_name}", {getter}, {setter}{keepalive}{docstring})'
+            )
         else:
-            code_lines.append(f'        .def_property_readonly("{arg.python_name}", {getter_fn}{docstring})')
+            code_lines.append(f'        .def_prop_ro("{arg.python_name}", {getter}{keepalive}{docstring})')
 
     if 1 in used_array_dims:
         container_cls = f"{struct.cpp_class}Alloc1D"
         code_lines.append(
             f'      .def_static("new_array1d", [](int sz) {{ return {container_cls}(sz); }}, '
-            f'py::arg("sz") = 0)'
+            f'nb::arg("sz") = 0)'
         )
         code_lines.append(
             f'      .def_static("new_array1d_bounds", [](int lbound, int ubound) {{ auto cnt = {container_cls}(); cnt.resize_bounds(lbound, ubound); return cnt; }}, '
-            f'py::arg("lbound"), py::arg("ubound"))'
+            f'nb::arg("lbound"), nb::arg("ubound"))'
         )
 
     # TODO json
@@ -465,7 +461,7 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
             .def("__copy__", [](const {struct.cpp_class} &self){{
                 return {struct.cpp_class}(self);  // under-the-hood fortran copy
             }})
-            .def("__deepcopy__", [](const {struct.cpp_class} &self, py::dict& memo){{
+            .def("__deepcopy__", [](const {struct.cpp_class} &self, nb::dict& memo){{
                 return {struct.cpp_class}(self);
             }})
             .def("__eq__", [](const {struct.cpp_class} &self, const {struct.cpp_class} &other){{
@@ -570,15 +566,15 @@ def _generate_structure_files(
 
         header_decls = []
         for st in char_structs:
-            header_decls.append(f"void init_{st.f_name}(py::module &m, py::class_<{st.cpp_class}> &class_);")
+            header_decls.append(f"void init_{st.f_name}(nb::module_ &m, nb::class_<{st.cpp_class}> &class_);")
 
         newline = "\n"
         files[header_path] = textwrap.dedent(f"""\
             #pragma once
-            #include <pybind11/pybind11.h>
+            #include <nanobind/nanobind.h>
             #include "bmad/generated/proxy.hpp"
             #include "pybmad/generated/structs.hpp"
-            namespace py = pybind11;
+            namespace nb = nanobind;
 
             using namespace Bmad;
 
@@ -598,7 +594,7 @@ def _generate_structure_files(
             "#include <functional>",
             "",
             "using namespace Pybmad;",
-            "namespace py = pybind11;",
+            "namespace nb = nanobind;",
             "",
         ]
 
@@ -646,17 +642,18 @@ def _generate_routine_files(
             header_path = PYBMAD_INCLUDE / "pybmad" / "generated" / header_name
             files[header_path] = textwrap.dedent(f"""\
                 #pragma once
-                #include <pybind11/complex.h>
-                #include <pybind11/numpy.h>
-                #include <pybind11/pybind11.h>
-                #include <pybind11/stl.h>
+                #include <nanobind/nanobind.h>
+                #include <nanobind/stl/complex.h>
+                #include <nanobind/stl/optional.h>
+                #include <nanobind/stl/vector.h>
+                #include <nanobind/stl/string.h>
 
                 #include "pybmad/arrays.hpp"
                 #include "pybmad/util.hpp"
 
-                namespace py = pybind11;
+                namespace nb = nanobind;
 
-                void {init_fn_name}(py::module &m);
+                void {init_fn_name}(nb::module_ &m);
 
                 {wrapper_structs}
             """)
@@ -670,13 +667,13 @@ def _generate_routine_files(
             cpp_content = textwrap.dedent(f"""\
                 #include "pybmad/generated/{header_name}"
 
-                namespace py = pybind11;
-                using namespace pybind11::literals;
+                namespace nb = nanobind;
+                using namespace nanobind::literals;
                 using namespace Pybmad;
 
                 {wrappers_code}
-                
-                void {init_fn_name}(py::module &m) {{
+
+                void {init_fn_name}(nb::module_ &m) {{
                 {defs_block}
                 }}
             """)
@@ -690,7 +687,7 @@ def _generate_struct_init(structs: list[CodegenStructure]):
     src_lines = []
     for st in structs:
         src_lines.append(
-            f"    auto py_{st.python_class_name} = py::class_<{st.cpp_class}>(m, "
+            f"    auto py_{st.python_class_name} = nb::class_<{st.cpp_class}>(m, "
             f'"{st.python_class_name}", "Fortran struct: {st.f_name}");'
         )
 

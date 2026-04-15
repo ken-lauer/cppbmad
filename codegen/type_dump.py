@@ -263,15 +263,15 @@ def generate_struct_member_code(
     tpl = proxy_templates[ft]
     getter = f"&{EXAMPLE_CLASS}::{EXAMPLE_MEMBER}"
     if arg.needs_python_keepalive:
-        getter_fn = f"py::cpp_function({getter}, py::keep_alive<0, 1>())"
+        getter_fn = f"nb::cpp_function({getter}, nb::keep_alive<0, 1>())"
     else:
         getter_fn = getter
 
     if tpl.fortran_setter:
         setter = f"&{EXAMPLE_CLASS}::set_{EXAMPLE_MEMBER}"
-        result["Python binding (pybind11)"] = f'    .def_property("{EXAMPLE_MEMBER}", {getter_fn}, {setter})'
+        result["Python binding (nanobind)"] = f'    .def_prop_rw("{EXAMPLE_MEMBER}", {getter_fn}, {setter})'
     else:
-        result["Python binding (pybind11)"] = f'    .def_property_readonly("{EXAMPLE_MEMBER}", {getter_fn})'
+        result["Python binding (nanobind)"] = f'    .def_prop_ro("{EXAMPLE_MEMBER}", {getter_fn})'
 
     return result
 

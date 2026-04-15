@@ -1,9 +1,10 @@
-#include <pybind11/complex.h>
-#include <pybind11/native_enum.h>
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/stl_bind.h>
+#include <nanobind/nanobind.h>
+#include <nanobind/ndarray.h>
+#include <nanobind/stl/complex.h>
+#include <nanobind/stl/optional.h>
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/unique_ptr.h>
+#include <nanobind/stl/vector.h>
 
 #include <string>
 
@@ -15,12 +16,12 @@
 using namespace Bmad;
 using namespace Pybmad;
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 
 // ${pybind11_routine_wrappers}
 
-PYBIND11_MODULE(_pybmad, m, py::mod_gil_not_used()) {
+NB_MODULE(_pybmad, m) {
   // Generated definitions:
   // ${pybind11_definitions}
 }

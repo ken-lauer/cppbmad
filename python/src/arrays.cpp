@@ -6,14 +6,14 @@ inline int normalize_index(int i, int size) {
   if (i < 0)
     i += size;
   if (i < 0 || i >= size)
-    throw py::index_error();
+    throw nb::index_error();
   return i;
 }
-void bind_FCharAlloc1D(py::module &m) {
-  py::class_<CharacterAlloc1D>(m, "CharacterAlloc1D")
-      .def(py::init<>())
-      .def(py::init<int, int>(), py::arg("n"), py::arg("str_len") = 200)
-      .def("resize", &CharacterAlloc1D::resize, py::arg("n"), py::arg("str_len"))
+void bind_FCharAlloc1D(nb::module_ &m) {
+  nb::class_<CharacterAlloc1D>(m, "CharacterAlloc1D")
+      .def(nb::init<>())
+      .def(nb::init<int, int>(), nb::arg("n"), nb::arg("str_len") = 200)
+      .def("resize", &CharacterAlloc1D::resize, nb::arg("n"), nb::arg("str_len"))
       .def("clear", &CharacterAlloc1D::clear)
       .def("__len__", &CharacterAlloc1D::size)
       .def("string_length", &CharacterAlloc1D::string_length)
@@ -24,7 +24,7 @@ void bind_FCharAlloc1D(py::module &m) {
             if (i < 0)
               i += self.size();
             if (i < 0 || i >= self.size())
-              throw py::index_error();
+              throw nb::index_error();
             return self.view()[i];
           }
       )
@@ -34,7 +34,7 @@ void bind_FCharAlloc1D(py::module &m) {
             if (i < 0)
               i += self.size();
             if (i < 0 || i >= self.size())
-              throw py::index_error();
+              throw nb::index_error();
             self.view()[i] = val;
           }
       )
@@ -42,7 +42,7 @@ void bind_FCharAlloc1D(py::module &m) {
           "__iter__",
           [](CharacterAlloc1D &self) {
             // Convert to Python list and iterate (avoids StringProxy)
-            py::list result;
+            nb::list result;
             auto &view = self.view();
             for (int i = 0; i < view.size(); ++i)
               result.append(view.get_string(view.lower_bound() + i));
@@ -52,7 +52,7 @@ void bind_FCharAlloc1D(py::module &m) {
       .def(
           "view",
           [](CharacterAlloc1D &self) { return self.view(); },
-          py::keep_alive<0, 1>()
+          nb::keep_alive<0, 1>()
       )
       .def(
           "__repr__",
@@ -81,12 +81,12 @@ void bind_FCharAlloc1D(py::module &m) {
       });
 
   // Implicit conversion from list[str]
-  py::implicitly_convertible<std::vector<std::string>, CharacterAlloc1D>();
+  nb::implicitly_convertible<std::vector<std::string>, CharacterAlloc1D>();
 }
 
-void bind_FCharArray1D(py::module &m) {
-  py::class_<FCharArray1D>(m, "FCharArray1D")
-      .def(py::init<>())
+void bind_FCharArray1D(nb::module_ &m) {
+  nb::class_<FCharArray1D>(m, "FCharArray1D")
+      .def(nb::init<>())
       .def("is_valid", &FCharArray1D::is_valid)
       .def("__len__", &FCharArray1D::size)
       // Return std::string directly for Python convenience
@@ -96,7 +96,7 @@ void bind_FCharArray1D(py::module &m) {
             if (i < 0)
               i += self.size();
             if (i < 0 || i >= self.size())
-              throw py::index_error();
+              throw nb::index_error();
             return self[i];
           }
       )
@@ -106,7 +106,7 @@ void bind_FCharArray1D(py::module &m) {
             if (i < 0)
               i += self.size();
             if (i < 0 || i >= self.size())
-              throw py::index_error();
+              throw nb::index_error();
             // FCharArray1D::operator[] returns proxy which implements operator=(string)
             self[i] = val;
           }
@@ -114,16 +114,19 @@ void bind_FCharArray1D(py::module &m) {
       .def(
           "__iter__",
           [](FCharArray1D &self) {
-            // Helper to make iterator that yields strings instead of StringProxy objects
-            // to make Python life easier
-            return py::make_iterator(self.begin(), self.end());
+            return nb::make_iterator(
+                nb::type<FCharArray1D>(),
+                "FCharArray1DIterator",
+                self.begin(),
+                self.end()
+            );
           },
-          py::keep_alive<0, 1>()
+          nb::keep_alive<0, 1>()
       )
       .def("to_list", &FCharArray1D::to_vector)
       .def("__str__", [](const FCharArray1D &t) { return Bmad::to_string(t); });
 }
-void bind_standard_arrays(py::module &m) {
+void bind_standard_arrays(nb::module_ &m) {
   // 1. Primitive Arrays (View + Allocator + Vector Interop)
   //    This generates: RealArray1D, RealAlloc1D, and all permutations of conversion
   //    between them and python lists (std::vector).
