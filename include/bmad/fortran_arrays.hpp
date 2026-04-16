@@ -9,6 +9,8 @@
 #include <utility>
 #include <vector>
 
+#include "bmad/exceptions.hpp"
+
 namespace Bmad {
 
 const int MAX_ARRAY_RANK = 3;
@@ -121,7 +123,7 @@ private:
   template <typename... Indices>
   void check_fortran_bounds(Indices... indices) const {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     std::array<int, N> idx{static_cast<int>(indices)...};
     for (std::size_t i = 0; i < N; ++i) {
       if (idx[i] < lower_bounds_[i] || idx[i] > upper_bounds_[i])
@@ -132,7 +134,7 @@ private:
   template <typename... Indices>
   void check_c_bounds(Indices... indices) const {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     std::array<int, N> idx{static_cast<int>(indices)...};
     for (std::size_t i = 0; i < N; ++i) {
       if (idx[i] < 0 || idx[i] >= sizes_[i])
@@ -297,14 +299,14 @@ public:
   // Fortran-style indexing (uses bounds)
   T &operator()(int i) {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < lower_bound_ || i > upper_bound_)
       throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
     return data_[i - lower_bound_];
   }
   const T &operator()(int i) const {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < lower_bound_ || i > upper_bound_)
       throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
     return data_[i - lower_bound_];
@@ -313,14 +315,14 @@ public:
   // C-style indexing (0-based)
   T &operator[](int i) {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < 0 || i >= size_)
       throw std::out_of_range("Index out of bounds");
     return data_[i];
   }
   const T &operator[](int i) const {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < 0 || i >= size_)
       throw std::out_of_range("Index out of bounds");
     return data_[i];
@@ -467,7 +469,7 @@ public:
   // Fortran-style indexing
   ReferenceProxy operator()(int i) {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < lower_bound_ || i > upper_bound_)
       throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
     return ReferenceProxy(data_ + (i - lower_bound_));
@@ -475,7 +477,7 @@ public:
 
   ConstReferenceProxy operator()(int i) const {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < lower_bound_ || i > upper_bound_)
       throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
     return ConstReferenceProxy(data_ + (i - lower_bound_));
@@ -490,7 +492,7 @@ public:
 
   ReferenceProxy at(int i) {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < 0 || i >= size_)
       throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
     return operator[](i);
@@ -498,7 +500,7 @@ public:
 
   ConstReferenceProxy at(int i) const {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < 0 || i >= size_)
       throw std::out_of_range("Index " + std::to_string(i) + " out of bounds");
     return operator[](i);
@@ -745,14 +747,14 @@ public:
   // Fortran-style indexing
   ProxyType operator()(int i) {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < lower_bound_ || i > upper_bound_)
       throw std::out_of_range("Index out of bounds");
     return ProxyType(element_ptr(i - lower_bound_));
   }
   const ProxyType operator()(int i) const {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < lower_bound_ || i > upper_bound_)
       throw std::out_of_range("Index out of bounds");
     return ProxyType(element_ptr(i - lower_bound_));
@@ -761,14 +763,14 @@ public:
   // C-style indexing
   ProxyType operator[](int i) {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < 0 || i >= size_)
       throw std::out_of_range("Index out of bounds");
     return ProxyType(element_ptr(i));
   }
   const ProxyType operator[](int i) const {
     if (!valid_)
-      throw std::runtime_error("Array not allocated");
+      throw std::out_of_range("Array not allocated");
     if (i < 0 || i >= size_)
       throw std::out_of_range("Index out of bounds");
     return ProxyType(element_ptr(i));
@@ -1037,7 +1039,7 @@ public:
       : realloc_func_(realloc)
       , access_func_(access) {
     if (!existing_handle)
-      throw std::runtime_error("handle is NULL");
+      throw Bmad::NullPointerException("FCharAlloc1D handle");
     handle_ = std::shared_ptr<void>(existing_handle, NullDeleter);
   }
 
@@ -1138,7 +1140,7 @@ public:
       : realloc_func_(realloc)
       , access_func_(access) {
     if (!existing_handle)
-      throw std::runtime_error("handle is NULL");
+      throw Bmad::NullPointerException("FTypeAlloc1D handle");
     // Non-owned variant.
     handle_ = std::shared_ptr<void>(existing_handle, NullDeleter);
   }
@@ -1243,7 +1245,7 @@ public:
       : realloc_func_(realloc)
       , access_func_(access) {
     if (!existing_handle)
-      throw std::runtime_error("handle is NULL");
+      throw Bmad::NullPointerException("FAlloc1D handle");
     handle_ = std::shared_ptr<void>(existing_handle, NullDeleter);
   }
 
