@@ -1,6 +1,7 @@
 
 #include "bmad/to_string.hpp"
 
+#include <cstdint>
 #include <string>
 
 #include "bmad/fortran_arrays.hpp"
