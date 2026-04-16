@@ -184,37 +184,27 @@ else()
   )
 endif()
 
-foreach(TEST_NAME test_csr test_arrays)
-  add_executable(${TEST_NAME} src/tests/${TEST_NAME}.cpp)
-  target_include_directories(${TEST_NAME} PRIVATE "./include" "./src/tests")
-  target_link_directories(
-    ${TEST_NAME}
-    PRIVATE
-    "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib"
-  )
-  target_link_libraries(${TEST_NAME} PRIVATE ${LIBNAME})
-  set_property(TARGET ${TEST_NAME} PROPERTY CXX_STANDARD 17)
-endforeach()
-
 # Unit tests with doctest
-add_executable(test_all_encompassing
+add_executable(cppbmad_tests
   src/tests/test_main.cpp
   src/tests/test_all_encompassing_proxy.cpp
+  src/tests/test_arrays.cpp
+  src/tests/test_csr.cpp
   src/tests/test_enums.cpp
   src/tests/test_to_string.cpp
   src/tests/test_exceptions.cpp
 )
-target_include_directories(test_all_encompassing PRIVATE
+target_include_directories(cppbmad_tests PRIVATE
   "./include"
   "./src/tests"  # for doctest.h
 )
-target_link_directories(test_all_encompassing PRIVATE "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib")
-target_link_libraries(test_all_encompassing PRIVATE ${LIBNAME})
-set_property(TARGET test_all_encompassing PROPERTY CXX_STANDARD 17)
+target_link_directories(cppbmad_tests PRIVATE "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib")
+target_link_libraries(cppbmad_tests PRIVATE ${LIBNAME})
+set_property(TARGET cppbmad_tests PROPERTY CXX_STANDARD 17)
 
 # Enable CTest
 enable_testing()
-add_test(NAME AllEncompassingProxyTests COMMAND test_all_encompassing)
+add_test(NAME cppbmad_tests COMMAND cppbmad_tests)
 
 # Python / pybmad
 find_package(pybind11 QUIET)
