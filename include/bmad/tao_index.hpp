@@ -1,12 +1,10 @@
 #pragma once
 
-#include <complex>
 #include <memory>
 #include <string>
 
-#include "bmad/fortran_arrays.hpp"
+#include "bmad/exceptions.hpp"
 #include "bmad/generated/proxy.hpp"
-#include "bmad/proxy_base.hpp"
 
 extern "C" {
 
