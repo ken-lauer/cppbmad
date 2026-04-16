@@ -93,9 +93,7 @@ runs:
       shell: bash -eo pipefail -l {0}
       working-directory: ${{ inputs.build_type }}
       run: |
-        ./test_all_encompassing
-        ./test_integration
-        ./test_arrays
+        ./cppbmad_tests
 
     - name: Build pybmad wheel
       shell: bash -eo pipefail -l {0}
