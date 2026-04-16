@@ -96,5 +96,11 @@ isort.required-imports = ["from __future__ import annotations"]
 "codegen/structs.py" = ["E402"]
 "python/examples/*.py" = ["T201"]
 
+[tool.pytest.ini_options]
+filterwarnings = [
+  "ignore:cannot collect test class 'TestSubStruct':pytest.PytestCollectionWarning",
+  "ignore:cannot collect test class 'TestSubStructAlloc1D':pytest.PytestCollectionWarning",
+]
+
 # [tool.setuptools_scm]
 # version_file = "codegen/_version.py"
