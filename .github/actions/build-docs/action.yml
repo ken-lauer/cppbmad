@@ -31,8 +31,9 @@ runs:
     - name: Build mkdocs site
       id: build
       shell: bash -eo pipefail -l {0}
+      working-directory: python/docs
       run: |
-        if mkdocs build -f python/docs/mkdocs.yml -d "${{ inputs.output_dir }}"; then
+        if mkdocs build -d "${{ inputs.output_dir }}"; then
           echo "success=true" >> "$GITHUB_OUTPUT"
         else
           echo "::warning::mkdocs build failed — docs will not be deployed"
