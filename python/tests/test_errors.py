@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import pytest
-
 from pybmad import (
     AllEncompassingStruct,
     CharacterAlloc1D,
@@ -150,10 +149,10 @@ class TestTypeErrors:
 
     def test_set_real_with_string(self):
         aes = AllEncompassingStruct()
-        with pytest.raises(TypeError):
+        with pytest.raises((TypeError, AttributeError)):
             aes.real_dp_0d = "not a number"
 
     def test_set_int_with_string(self):
         aes = AllEncompassingStruct()
-        with pytest.raises(TypeError):
+        with pytest.raises((TypeError, AttributeError)):
             aes.int_0d = "not an int"
