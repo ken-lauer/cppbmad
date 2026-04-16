@@ -184,7 +184,7 @@ else()
   )
 endif()
 
-foreach(TEST_NAME test_integration test_csr test_arrays)
+foreach(TEST_NAME test_csr test_arrays)
   add_executable(${TEST_NAME} src/tests/${TEST_NAME}.cpp)
   target_include_directories(${TEST_NAME} PRIVATE "./include" "./src/tests")
   target_link_directories(
@@ -200,6 +200,9 @@ endforeach()
 add_executable(test_all_encompassing
   src/tests/test_main.cpp
   src/tests/test_all_encompassing_proxy.cpp
+  src/tests/test_enums.cpp
+  src/tests/test_to_string.cpp
+  src/tests/test_exceptions.cpp
 )
 target_include_directories(test_all_encompassing PRIVATE
   "./include"
