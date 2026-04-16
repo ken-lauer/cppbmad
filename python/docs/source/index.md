@@ -2,6 +2,10 @@
 
 Python interface to the [Bmad](https://github.com/bmad-sim/bmad-ecosystem) particle accelerator simulation library, built on [cppbmad](https://github.com/ken-lauer/cppbmad).
 
+## Examples
+
+- [Examples](examples.md) — Python examples
+
 ## API Reference
 
 - [API Index](api/index.md) — searchable listing of all wrapped names
