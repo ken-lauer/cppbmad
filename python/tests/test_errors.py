@@ -150,10 +150,10 @@ class TestTypeErrors:
 
     def test_set_real_with_string(self):
         aes = AllEncompassingStruct()
-        with pytest.raises((TypeError, AttributeError)):
+        with pytest.raises(TypeError):
             aes.real_dp_0d = "not a number"
 
     def test_set_int_with_string(self):
         aes = AllEncompassingStruct()
-        with pytest.raises((TypeError, AttributeError)):
+        with pytest.raises(TypeError):
             aes.int_0d = "not an int"
