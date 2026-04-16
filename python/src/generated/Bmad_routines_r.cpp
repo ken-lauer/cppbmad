@@ -968,8 +968,7 @@ lat : LatStruct
   );
   m.def(
       "reallocate_coord",
-      py::overload_cast<CoordStructAlloc1D, LatStruct &, std::optional<int>>(
-          &Bmad::reallocate_coord
+      py::overload_cast<CoordStructAlloc1D, LatStruct &, std::optional<int>>(&Bmad::reallocate_coord
       ),
       py::arg("coord"),
       py::arg("lat"),

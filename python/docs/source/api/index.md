@@ -7,15 +7,15 @@
 | `A21` | Enum | [Enums](enums.md) |
 | `A21_ELEC` | Enum | [Enums](enums.md) |
 | `AB_MULTIPOLE` | Enum | [Enums](enums.md) |
-| [`ab_multipole_kick`][pybmad.ab_multipole_kick] | Routine | [Bmad](bmad.md) |
-| [`ab_multipole_kicks`][pybmad.ab_multipole_kicks] | Routine | [Bmad](bmad.md) |
+| [`ab_multipole_kick`](bmad.md#ab_multipole_kick) | Routine | [Bmad](bmad.md) |
+| [`ab_multipole_kicks`](bmad.md#ab_multipole_kicks) | Routine | [Bmad](bmad.md) |
 | `ABS` | Enum | [Enums](enums.md) |
 | `ABSOLUTE` | Enum | [Enums](enums.md) |
-| [`absolute_photon_position`][pybmad.absolute_photon_position] | Routine | [Bmad](bmad.md) |
-| [`absolute_time_tracking`][pybmad.absolute_time_tracking] | Routine | [Bmad](bmad.md) |
+| [`absolute_photon_position`](bmad.md#absolute_photon_position) | Routine | [Bmad](bmad.md) |
+| [`absolute_time_tracking`](bmad.md#absolute_time_tracking) | Routine | [Bmad](bmad.md) |
 | `ABSOLUTE_TIME_TRACKING` | Enum | [Enums](enums.md) |
 | `AC_KICKER` | Enum | [Enums](enums.md) |
-| [`ac_kicker_amp`][pybmad.ac_kicker_amp] | Routine | [Bmad](bmad.md) |
+| [`ac_kicker_amp`](bmad.md#ac_kicker_amp) | Routine | [Bmad](bmad.md) |
 | `ACCORDION_EDGE` | Enum | [Enums](enums.md) |
 | [AcKickerFreqStruct](bmad.md#ackickerfreqstruct) | Struct | [Bmad](bmad.md) |
 | [AcKickerStruct](bmad.md#ackickerstruct) | Struct | [Bmad](bmad.md) |
@@ -23,22 +23,22 @@
 | `ACOS` | Enum | [Enums](enums.md) |
 | `ACOSH` | Enum | [Enums](enums.md) |
 | `ACOTH` | Enum | [Enums](enums.md) |
-| [`action_to_xyz`][pybmad.action_to_xyz] | Routine | [Bmad](bmad.md) |
-| [`add_lattice_control_structs`][pybmad.add_lattice_control_structs] | Routine | [Bmad](bmad.md) |
-| [`add_superimpose`][pybmad.add_superimpose] | Routine | [Bmad](bmad.md) |
-| [`add_this_multipass`][pybmad.add_this_multipass] | Routine | [Bmad](bmad.md) |
-| [`add_this_name_to_list`][pybmad.add_this_name_to_list] | Routine | [Bmad](bmad.md) |
-| [`add_this_taylor_term`][pybmad.add_this_taylor_term] | Routine | [Bmad](bmad.md) |
-| [`adjust_super_slave_names`][pybmad.adjust_super_slave_names] | Routine | [Bmad](bmad.md) |
+| [`action_to_xyz`](bmad.md#action_to_xyz) | Routine | [Bmad](bmad.md) |
+| [`add_lattice_control_structs`](bmad.md#add_lattice_control_structs) | Routine | [Bmad](bmad.md) |
+| [`add_superimpose`](bmad.md#add_superimpose) | Routine | [Bmad](bmad.md) |
+| [`add_this_multipass`](bmad.md#add_this_multipass) | Routine | [Bmad](bmad.md) |
+| [`add_this_name_to_list`](bmad.md#add_this_name_to_list) | Routine | [Bmad](bmad.md) |
+| [`add_this_taylor_term`](bmad.md#add_this_taylor_term) | Routine | [Bmad](bmad.md) |
+| [`adjust_super_slave_names`](bmad.md#adjust_super_slave_names) | Routine | [Bmad](bmad.md) |
 | `ALIAS` | Enum | [Enums](enums.md) |
 | `ALIVE` | Enum | [Enums](enums.md) |
 | `ALL` | Enum | [Enums](enums.md) |
 | `ALL_CONTROL_VAR` | Enum | [Enums](enums.md) |
 | `ALL_GROUPS` | Enum | [Enums](enums.md) |
-| [`allocate_branch_array`][pybmad.allocate_branch_array] | Routine | [Bmad](bmad.md) |
-| [`allocate_grid_field`][pybmad.allocate_grid_field] | Routine | [Bmad](bmad.md) |
-| [`allocate_lat_ele_array`][pybmad.allocate_lat_ele_array] | Routine | [Bmad](bmad.md) |
-| [`allocate_thread_states`][pybmad.allocate_thread_states] | Routine | [Sim Utils](sim_utils.md) |
+| [`allocate_branch_array`](bmad.md#allocate_branch_array) | Routine | [Bmad](bmad.md) |
+| [`allocate_grid_field`](bmad.md#allocate_grid_field) | Routine | [Bmad](bmad.md) |
+| [`allocate_lat_ele_array`](bmad.md#allocate_lat_ele_array) | Routine | [Bmad](bmad.md) |
+| [`allocate_thread_states`](sim_utils.md#allocate_thread_states) | Routine | [Sim Utils](sim_utils.md) |
 | `ALPHA_A` | Enum | [Enums](enums.md) |
 | `ALPHA_A0` | Enum | [Enums](enums.md) |
 | `ALPHA_A1` | Enum | [Enums](enums.md) |
@@ -58,16 +58,16 @@
 | `ANCHOR_CENTER` | Enum | [Enums](enums.md) |
 | `ANCHOR_END` | Enum | [Enums](enums.md) |
 | `ANGLE` | Enum | [Enums](enums.md) |
-| [`angle_between_polars`][pybmad.angle_between_polars] | Routine | [Bmad](bmad.md) |
+| [`angle_between_polars`](bmad.md#angle_between_polars) | Routine | [Bmad](bmad.md) |
 | `ANGLE_OUT_MAX` | Enum | [Enums](enums.md) |
-| [`angle_to_canonical_coords`][pybmad.angle_to_canonical_coords] | Routine | [Bmad](bmad.md) |
+| [`angle_to_canonical_coords`](bmad.md#angle_to_canonical_coords) | Routine | [Bmad](bmad.md) |
 | `ANOMALOUS_MAG_MOMENT_DEUTERON` | Enum | [Enums](enums.md) |
 | `ANOMALOUS_MAG_MOMENT_ELECTRON` | Enum | [Enums](enums.md) |
 | `ANOMALOUS_MAG_MOMENT_HE3` | Enum | [Enums](enums.md) |
 | `ANOMALOUS_MAG_MOMENT_MUON` | Enum | [Enums](enums.md) |
 | `ANOMALOUS_MAG_MOMENT_NEUTRON` | Enum | [Enums](enums.md) |
 | `ANOMALOUS_MAG_MOMENT_PROTON` | Enum | [Enums](enums.md) |
-| [`anomalous_moment_of`][pybmad.anomalous_moment_of] | Routine | [Sim Utils](sim_utils.md) |
+| [`anomalous_moment_of`](sim_utils.md#anomalous_moment_of) | Routine | [Sim Utils](sim_utils.md) |
 | `ANOMALOUS_MOMENT_OF` | Enum | [Enums](enums.md) |
 | [AnormalModeStruct](bmad.md#anormalmodestruct) | Struct | [Bmad](bmad.md) |
 | `ANTI_ATOM` | Enum | [Enums](enums.md) |
@@ -76,57 +76,57 @@
 | `ANTI_NEUTRON` | Enum | [Enums](enums.md) |
 | `ANTI_REF_PARTICLE` | Enum | [Enums](enums.md) |
 | `ANTIMUON` | Enum | [Enums](enums.md) |
-| [`antiparticle`][pybmad.antiparticle] | Routine | [Sim Utils](sim_utils.md) |
+| [`antiparticle`](sim_utils.md#antiparticle) | Routine | [Sim Utils](sim_utils.md) |
 | `ANTIPARTICLE` | Enum | [Enums](enums.md) |
 | `ANTIPROTON` | Enum | [Enums](enums.md) |
 | `APERTURE` | Enum | [Enums](enums.md) |
 | `APERTURE_AT` | Enum | [Enums](enums.md) |
-| [`aperture_bookkeeper`][pybmad.aperture_bookkeeper] | Routine | [Bmad](bmad.md) |
+| [`aperture_bookkeeper`](bmad.md#aperture_bookkeeper) | Routine | [Bmad](bmad.md) |
 | `APERTURE_TYPE` | Enum | [Enums](enums.md) |
 | [ApertureParamStruct](bmad.md#apertureparamstruct) | Struct | [Bmad](bmad.md) |
 | [AperturePointStruct](bmad.md#aperturepointstruct) | Struct | [Bmad](bmad.md) |
 | [ApertureScanStruct](bmad.md#aperturescanstruct) | Struct | [Bmad](bmad.md) |
-| [`apfft`][pybmad.apfft] | Routine | [Sim Utils](sim_utils.md) |
-| [`apfft_corr`][pybmad.apfft_corr] | Routine | [Sim Utils](sim_utils.md) |
-| [`apfft_ext`][pybmad.apfft_ext] | Routine | [Sim Utils](sim_utils.md) |
-| [`apply_all_rampers`][pybmad.apply_all_rampers] | Routine | [Bmad](bmad.md) |
-| [`apply_energy_kick`][pybmad.apply_energy_kick] | Routine | [Bmad](bmad.md) |
-| [`apply_patch_to_ptc_fibre`][pybmad.apply_patch_to_ptc_fibre] | Routine | [Bmad](bmad.md) |
-| [`apply_rampers_to_slave`][pybmad.apply_rampers_to_slave] | Routine | [Bmad](bmad.md) |
+| [`apfft`](sim_utils.md#apfft) | Routine | [Sim Utils](sim_utils.md) |
+| [`apfft_corr`](sim_utils.md#apfft_corr) | Routine | [Sim Utils](sim_utils.md) |
+| [`apfft_ext`](sim_utils.md#apfft_ext) | Routine | [Sim Utils](sim_utils.md) |
+| [`apply_all_rampers`](bmad.md#apply_all_rampers) | Routine | [Bmad](bmad.md) |
+| [`apply_energy_kick`](bmad.md#apply_energy_kick) | Routine | [Bmad](bmad.md) |
+| [`apply_patch_to_ptc_fibre`](bmad.md#apply_patch_to_ptc_fibre) | Routine | [Bmad](bmad.md) |
+| [`apply_rampers_to_slave`](bmad.md#apply_rampers_to_slave) | Routine | [Bmad](bmad.md) |
 | `AREA_DENSITY` | Enum | [Enums](enums.md) |
 | `AREA_DENSITY_USED` | Enum | [Enums](enums.md) |
 | `ARG_COUNT` | Enum | [Enums](enums.md) |
-| [`array_re_str`][pybmad.array_re_str] | Routine | [Bmad](bmad.md) |
+| [`array_re_str`](bmad.md#array_re_str) | Routine | [Bmad](bmad.md) |
 | `ARROW` | Enum | [Enums](enums.md) |
 | `ASCII` | Enum | [Enums](enums.md) |
 | `ASIN` | Enum | [Enums](enums.md) |
-| [`asinc`][pybmad.asinc] | Routine | [Sim Utils](sim_utils.md) |
+| [`asinc`](sim_utils.md#asinc) | Routine | [Sim Utils](sim_utils.md) |
 | `ASINH` | Enum | [Enums](enums.md) |
-| [`assert_equal`][pybmad.assert_equal] | Routine | [Sim Utils](sim_utils.md) |
-| [`astra_max_field_reference`][pybmad.astra_max_field_reference] | Routine | [Bmad](bmad.md) |
-| [`at_this_ele_end`][pybmad.at_this_ele_end] | Routine | [Bmad](bmad.md) |
+| [`assert_equal`](sim_utils.md#assert_equal) | Routine | [Sim Utils](sim_utils.md) |
+| [`astra_max_field_reference`](bmad.md#astra_max_field_reference) | Routine | [Bmad](bmad.md) |
+| [`at_this_ele_end`](bmad.md#at_this_ele_end) | Routine | [Bmad](bmad.md) |
 | `ATAN` | Enum | [Enums](enums.md) |
 | `ATAN2` | Enum | [Enums](enums.md) |
 | `ATANH` | Enum | [Enums](enums.md) |
 | `ATOMIC_MASS_UNIT` | Enum | [Enums](enums.md) |
-| [`atomic_number`][pybmad.atomic_number] | Routine | [Sim Utils](sim_utils.md) |
-| [`atomic_species_id`][pybmad.atomic_species_id] | Routine | [Sim Utils](sim_utils.md) |
-| [`attribute_bookkeeper`][pybmad.attribute_bookkeeper] | Routine | [Bmad](bmad.md) |
-| [`attribute_free`][pybmad.attribute_free] | Routine | [Bmad](bmad.md) |
+| [`atomic_number`](sim_utils.md#atomic_number) | Routine | [Sim Utils](sim_utils.md) |
+| [`atomic_species_id`](sim_utils.md#atomic_species_id) | Routine | [Sim Utils](sim_utils.md) |
+| [`attribute_bookkeeper`](bmad.md#attribute_bookkeeper) | Routine | [Bmad](bmad.md) |
+| [`attribute_free`](bmad.md#attribute_free) | Routine | [Bmad](bmad.md) |
 | `ATTRIBUTE_GROUP` | Enum | [Enums](enums.md) |
-| [`attribute_index`][pybmad.attribute_index] | Routine | [Bmad](bmad.md) |
-| [`attribute_name`][pybmad.attribute_name] | Routine | [Bmad](bmad.md) |
-| [`attribute_type`][pybmad.attribute_type] | Routine | [Bmad](bmad.md) |
-| [`attribute_units`][pybmad.attribute_units] | Routine | [Bmad](bmad.md) |
+| [`attribute_index`](bmad.md#attribute_index) | Routine | [Bmad](bmad.md) |
+| [`attribute_name`](bmad.md#attribute_name) | Routine | [Bmad](bmad.md) |
+| [`attribute_type`](bmad.md#attribute_type) | Routine | [Bmad](bmad.md) |
+| [`attribute_units`](bmad.md#attribute_units) | Routine | [Bmad](bmad.md) |
 | `AUTO` | Enum | [Enums](enums.md) |
 | `AUTO_APERTURE` | Enum | [Enums](enums.md) |
 | `AUTOSCALE_AMPLITUDE` | Enum | [Enums](enums.md) |
 | `AUTOSCALE_PHASE` | Enum | [Enums](enums.md) |
-| [`autoscale_phase_and_amp`][pybmad.autoscale_phase_and_amp] | Routine | [Bmad](bmad.md) |
+| [`autoscale_phase_and_amp`](bmad.md#autoscale_phase_and_amp) | Routine | [Bmad](bmad.md) |
 | `AVERAGE` | Enum | [Enums](enums.md) |
-| [`average_twiss`][pybmad.average_twiss] | Routine | [Bmad](bmad.md) |
-| [`axis_angle_to_quat`][pybmad.axis_angle_to_quat] | Routine | [Sim Utils](sim_utils.md) |
-| [`axis_angle_to_w_mat`][pybmad.axis_angle_to_w_mat] | Routine | [Sim Utils](sim_utils.md) |
+| [`average_twiss`](bmad.md#average_twiss) | Routine | [Bmad](bmad.md) |
+| [`axis_angle_to_quat`](sim_utils.md#axis_angle_to_quat) | Routine | [Sim Utils](sim_utils.md) |
+| [`axis_angle_to_w_mat`](sim_utils.md#axis_angle_to_w_mat) | Routine | [Sim Utils](sim_utils.md) |
 | `B0` | Enum | [Enums](enums.md) |
 | `B0_ELEC` | Enum | [Enums](enums.md) |
 | `B1_GRADIENT` | Enum | [Enums](enums.md) |
@@ -141,38 +141,38 @@
 | `B_PARAM` | Enum | [Enums](enums.md) |
 | `BASIC_BEND` | Enum | [Enums](enums.md) |
 | `BBI_CONST` | Enum | [Enums](enums.md) |
-| [`bbi_kick`][pybmad.bbi_kick] | Routine | [Bmad](bmad.md) |
-| [`bbi_slice_calc`][pybmad.bbi_slice_calc] | Routine | [Bmad](bmad.md) |
-| [`bbu_add_a_bunch`][pybmad.bbu_add_a_bunch] | Routine | [Bsim](bsim.md) |
-| [`bbu_hom_voltage_calc`][pybmad.bbu_hom_voltage_calc] | Routine | [Bsim](bsim.md) |
-| [`bbu_remove_head_bunch`][pybmad.bbu_remove_head_bunch] | Routine | [Bsim](bsim.md) |
-| [`bbu_setup`][pybmad.bbu_setup] | Routine | [Bsim](bsim.md) |
-| [`bbu_track_a_stage`][pybmad.bbu_track_a_stage] | Routine | [Bsim](bsim.md) |
-| [`bbu_track_all`][pybmad.bbu_track_all] | Routine | [Bsim](bsim.md) |
+| [`bbi_kick`](bmad.md#bbi_kick) | Routine | [Bmad](bmad.md) |
+| [`bbi_slice_calc`](bmad.md#bbi_slice_calc) | Routine | [Bmad](bmad.md) |
+| [`bbu_add_a_bunch`](bsim.md#bbu_add_a_bunch) | Routine | [Bsim](bsim.md) |
+| [`bbu_hom_voltage_calc`](bsim.md#bbu_hom_voltage_calc) | Routine | [Bsim](bsim.md) |
+| [`bbu_remove_head_bunch`](bsim.md#bbu_remove_head_bunch) | Routine | [Bsim](bsim.md) |
+| [`bbu_setup`](bsim.md#bbu_setup) | Routine | [Bsim](bsim.md) |
+| [`bbu_track_a_stage`](bsim.md#bbu_track_a_stage) | Routine | [Bsim](bsim.md) |
+| [`bbu_track_all`](bsim.md#bbu_track_all) | Routine | [Bsim](bsim.md) |
 | [BbuBeamStruct](bsim.md#bbubeamstruct) | Struct | [Bsim](bsim.md) |
 | [BbuParamStruct](bsim.md#bbuparamstruct) | Struct | [Bsim](bsim.md) |
 | [BbuStageStruct](bsim.md#bbustagestruct) | Struct | [Bsim](bsim.md) |
-| [`beam_envelope_ibs`][pybmad.beam_envelope_ibs] | Routine | [Bmad](bmad.md) |
-| [`beam_equal_beam`][pybmad.beam_equal_beam] | Routine | [Bmad](bmad.md) |
-| [`beam_init_setup`][pybmad.beam_init_setup] | Routine | [Bmad](bmad.md) |
-| [`beam_tilts`][pybmad.beam_tilts] | Routine | [Bmad](bmad.md) |
+| [`beam_envelope_ibs`](bmad.md#beam_envelope_ibs) | Routine | [Bmad](bmad.md) |
+| [`beam_equal_beam`](bmad.md#beam_equal_beam) | Routine | [Bmad](bmad.md) |
+| [`beam_init_setup`](bmad.md#beam_init_setup) | Routine | [Bmad](bmad.md) |
+| [`beam_tilts`](bmad.md#beam_tilts) | Routine | [Bmad](bmad.md) |
 | `BEAMBEAM` | Enum | [Enums](enums.md) |
-| [`beambeam_fibre_setup`][pybmad.beambeam_fibre_setup] | Routine | [Bmad](bmad.md) |
+| [`beambeam_fibre_setup`](bmad.md#beambeam_fibre_setup) | Routine | [Bmad](bmad.md) |
 | [BeamInitStruct](bmad.md#beaminitstruct) | Struct | [Bmad](bmad.md) |
 | [BeamStruct](bmad.md#beamstruct) | Struct | [Bmad](bmad.md) |
 | `BEGINNING_ELE` | Enum | [Enums](enums.md) |
-| [`bend_edge_kick`][pybmad.bend_edge_kick] | Routine | [Bmad](bmad.md) |
-| [`bend_exact_multipole_field`][pybmad.bend_exact_multipole_field] | Routine | [Bmad](bmad.md) |
-| [`bend_length_has_been_set`][pybmad.bend_length_has_been_set] | Routine | [Bmad](bmad.md) |
-| [`bend_photon_e_rel_init`][pybmad.bend_photon_e_rel_init] | Routine | [Bmad](bmad.md) |
-| [`bend_photon_energy_integ_prob`][pybmad.bend_photon_energy_integ_prob] | Routine | [Bmad](bmad.md) |
-| [`bend_photon_energy_normalized_probability`][pybmad.bend_photon_energy_normalized_probability] | Routine | [Bmad](bmad.md) |
-| [`bend_photon_init`][pybmad.bend_photon_init] | Routine | [Bmad](bmad.md) |
-| [`bend_photon_polarization_init`][pybmad.bend_photon_polarization_init] | Routine | [Bmad](bmad.md) |
-| [`bend_photon_vert_angle_init`][pybmad.bend_photon_vert_angle_init] | Routine | [Bmad](bmad.md) |
-| [`bend_shift`][pybmad.bend_shift] | Routine | [Bmad](bmad.md) |
+| [`bend_edge_kick`](bmad.md#bend_edge_kick) | Routine | [Bmad](bmad.md) |
+| [`bend_exact_multipole_field`](bmad.md#bend_exact_multipole_field) | Routine | [Bmad](bmad.md) |
+| [`bend_length_has_been_set`](bmad.md#bend_length_has_been_set) | Routine | [Bmad](bmad.md) |
+| [`bend_photon_e_rel_init`](bmad.md#bend_photon_e_rel_init) | Routine | [Bmad](bmad.md) |
+| [`bend_photon_energy_integ_prob`](bmad.md#bend_photon_energy_integ_prob) | Routine | [Bmad](bmad.md) |
+| [`bend_photon_energy_normalized_probability`](bmad.md#bend_photon_energy_normalized_probability) | Routine | [Bmad](bmad.md) |
+| [`bend_photon_init`](bmad.md#bend_photon_init) | Routine | [Bmad](bmad.md) |
+| [`bend_photon_polarization_init`](bmad.md#bend_photon_polarization_init) | Routine | [Bmad](bmad.md) |
+| [`bend_photon_vert_angle_init`](bmad.md#bend_photon_vert_angle_init) | Routine | [Bmad](bmad.md) |
+| [`bend_shift`](bmad.md#bend_shift) | Routine | [Bmad](bmad.md) |
 | `BEND_TILT` | Enum | [Enums](enums.md) |
-| [`bend_vert_angle_integ_prob`][pybmad.bend_vert_angle_integ_prob] | Routine | [Bmad](bmad.md) |
+| [`bend_vert_angle_integ_prob`](bmad.md#bend_vert_angle_integ_prob) | Routine | [Bmad](bmad.md) |
 | `BENDS` | Enum | [Enums](enums.md) |
 | `BENDS_REFERENCE` | Enum | [Enums](enums.md) |
 | `BETA_A` | Enum | [Enums](enums.md) |
@@ -187,41 +187,41 @@
 | `BETA_B_OUT` | Enum | [Enums](enums.md) |
 | `BETA_B_STORED` | Enum | [Enums](enums.md) |
 | `BETA_B_STRONG` | Enum | [Enums](enums.md) |
-| [`bicubic_cmplx_eval`][pybmad.bicubic_cmplx_eval] | Routine | [Sim Utils](sim_utils.md) |
+| [`bicubic_cmplx_eval`](sim_utils.md#bicubic_cmplx_eval) | Routine | [Sim Utils](sim_utils.md) |
 | [BicubicCmplxCoefStruct](sim_utils.md#bicubiccmplxcoefstruct) | Struct | [Sim Utils](sim_utils.md) |
-| [`bin_index`][pybmad.bin_index] | Routine | [Sim Utils](sim_utils.md) |
-| [`bin_x_center`][pybmad.bin_x_center] | Routine | [Sim Utils](sim_utils.md) |
+| [`bin_index`](sim_utils.md#bin_index) | Routine | [Sim Utils](sim_utils.md) |
+| [`bin_x_center`](sim_utils.md#bin_x_center) | Routine | [Sim Utils](sim_utils.md) |
 | `BINARY` | Enum | [Enums](enums.md) |
-| [`bit_set`][pybmad.bit_set] | Routine | [Sim Utils](sim_utils.md) |
+| [`bit_set`](sim_utils.md#bit_set) | Routine | [Sim Utils](sim_utils.md) |
 | `BL_HKICK` | Enum | [Enums](enums.md) |
 | `BL_KICK` | Enum | [Enums](enums.md) |
-| [`bl_via_vlassov`][pybmad.bl_via_vlassov] | Routine | [Bmad](bmad.md) |
+| [`bl_via_vlassov`](bmad.md#bl_via_vlassov) | Routine | [Bmad](bmad.md) |
 | `BL_VKICK` | Enum | [Enums](enums.md) |
 | `BLACK` | Enum | [Enums](enums.md) |
 | `BLANK` | Enum | [Enums](enums.md) |
 | `BLUE` | Enum | [Enums](enums.md) |
 | `BMAD_INC_VERSION` | Enum | [Enums](enums.md) |
-| [`bmad_parser`][pybmad.bmad_parser] | Routine | [Bmad](bmad.md) |
-| [`bmad_parser2`][pybmad.bmad_parser2] | Routine | [Bmad](bmad.md) |
-| [`bmad_patch_parameters_to_ptc`][pybmad.bmad_patch_parameters_to_ptc] | Routine | [Bmad](bmad.md) |
+| [`bmad_parser`](bmad.md#bmad_parser) | Routine | [Bmad](bmad.md) |
+| [`bmad_parser2`](bmad.md#bmad_parser2) | Routine | [Bmad](bmad.md) |
+| [`bmad_patch_parameters_to_ptc`](bmad.md#bmad_patch_parameters_to_ptc) | Routine | [Bmad](bmad.md) |
 | `BMAD_STANDARD` | Enum | [Enums](enums.md) |
 | [BmadCommonStruct](bmad.md#bmadcommonstruct) | Struct | [Bmad](bmad.md) |
 | [BmadNormalFormStruct](bmad.md#bmadnormalformstruct) | Struct | [Bmad](bmad.md) |
 | [BookkeepingStateStruct](bmad.md#bookkeepingstatestruct) | Struct | [Bmad](bmad.md) |
 | `BOTH_ENDS` | Enum | [Enums](enums.md) |
-| [`bp_set_ran_status`][pybmad.bp_set_ran_status] | Routine | [Bmad](bmad.md) |
+| [`bp_set_ran_status`](bmad.md#bp_set_ran_status) | Routine | [Bmad](bmad.md) |
 | [BpmPhaseCouplingStruct](bmad.md#bpmphasecouplingstruct) | Struct | [Bmad](bmad.md) |
-| [`bracket_index_for_spline`][pybmad.bracket_index_for_spline] | Routine | [Sim Utils](sim_utils.md) |
+| [`bracket_index_for_spline`](sim_utils.md#bracket_index_for_spline) | Routine | [Sim Utils](sim_utils.md) |
 | `BRAGG_ANGLE` | Enum | [Enums](enums.md) |
 | `BRAGG_ANGLE_IN` | Enum | [Enums](enums.md) |
 | `BRAGG_ANGLE_OUT` | Enum | [Enums](enums.md) |
 | `BRAGG_DIFFRACTED` | Enum | [Enums](enums.md) |
-| [`branch_equal_branch`][pybmad.branch_equal_branch] | Routine | [Bmad](bmad.md) |
-| [`branch_name`][pybmad.branch_name] | Routine | [Bmad](bmad.md) |
-| [`branch_to_ptc_m_u`][pybmad.branch_to_ptc_m_u] | Routine | [Bmad](bmad.md) |
+| [`branch_equal_branch`](bmad.md#branch_equal_branch) | Routine | [Bmad](bmad.md) |
+| [`branch_name`](bmad.md#branch_name) | Routine | [Bmad](bmad.md) |
+| [`branch_to_ptc_m_u`](bmad.md#branch_to_ptc_m_u) | Routine | [Bmad](bmad.md) |
 | [BranchStruct](bmad.md#branchstruct) | Struct | [Bmad](bmad.md) |
 | `BS_FIELD` | Enum | [Enums](enums.md) |
-| [`bunch_equal_bunch`][pybmad.bunch_equal_bunch] | Routine | [Bmad](bmad.md) |
+| [`bunch_equal_bunch`](bmad.md#bunch_equal_bunch) | Routine | [Bmad](bmad.md) |
 | [BunchParamsStruct](bmad.md#bunchparamsstruct) | Struct | [Bmad](bmad.md) |
 | [BunchStruct](bmad.md#bunchstruct) | Struct | [Bmad](bmad.md) |
 | [BunchTrackStruct](bmad.md#bunchtrackstruct) | Struct | [Bmad](bmad.md) |
@@ -234,19 +234,19 @@
 | `C22_MAT0` | Enum | [Enums](enums.md) |
 | `C22_MAT1` | Enum | [Enums](enums.md) |
 | `C_LIGHT` | Enum | [Enums](enums.md) |
-| [`c_to_cbar`][pybmad.c_to_cbar] | Routine | [Bmad](bmad.md) |
-| [`calc_bunch_params`][pybmad.calc_bunch_params] | Routine | [Bmad](bmad.md) |
-| [`calc_bunch_params_slice`][pybmad.calc_bunch_params_slice] | Routine | [Bmad](bmad.md) |
-| [`calc_bunch_params_z_slice`][pybmad.calc_bunch_params_z_slice] | Routine | [Bmad](bmad.md) |
-| [`calc_bunch_sigma_matrix_etc`][pybmad.calc_bunch_sigma_matrix_etc] | Routine | [Bmad](bmad.md) |
-| [`calc_emittances_and_twiss_from_sigma_matrix`][pybmad.calc_emittances_and_twiss_from_sigma_matrix] | Routine | [Bmad](bmad.md) |
-| [`calc_file_number`][pybmad.calc_file_number] | Routine | [Sim Utils](sim_utils.md) |
-| [`calc_spin_params`][pybmad.calc_spin_params] | Routine | [Bmad](bmad.md) |
-| [`calc_super_slave_key`][pybmad.calc_super_slave_key] | Routine | [Bmad](bmad.md) |
-| [`calc_wall_radius`][pybmad.calc_wall_radius] | Routine | [Bmad](bmad.md) |
-| [`calc_z_tune`][pybmad.calc_z_tune] | Routine | [Bmad](bmad.md) |
+| [`c_to_cbar`](bmad.md#c_to_cbar) | Routine | [Bmad](bmad.md) |
+| [`calc_bunch_params`](bmad.md#calc_bunch_params) | Routine | [Bmad](bmad.md) |
+| [`calc_bunch_params_slice`](bmad.md#calc_bunch_params_slice) | Routine | [Bmad](bmad.md) |
+| [`calc_bunch_params_z_slice`](bmad.md#calc_bunch_params_z_slice) | Routine | [Bmad](bmad.md) |
+| [`calc_bunch_sigma_matrix_etc`](bmad.md#calc_bunch_sigma_matrix_etc) | Routine | [Bmad](bmad.md) |
+| [`calc_emittances_and_twiss_from_sigma_matrix`](bmad.md#calc_emittances_and_twiss_from_sigma_matrix) | Routine | [Bmad](bmad.md) |
+| [`calc_file_number`](sim_utils.md#calc_file_number) | Routine | [Sim Utils](sim_utils.md) |
+| [`calc_spin_params`](bmad.md#calc_spin_params) | Routine | [Bmad](bmad.md) |
+| [`calc_super_slave_key`](bmad.md#calc_super_slave_key) | Routine | [Bmad](bmad.md) |
+| [`calc_wall_radius`](bmad.md#calc_wall_radius) | Routine | [Bmad](bmad.md) |
+| [`calc_z_tune`](bmad.md#calc_z_tune) | Routine | [Bmad](bmad.md) |
 | `CANNOT_FIND` | Enum | [Enums](enums.md) |
-| [`canonical_to_angle_coords`][pybmad.canonical_to_angle_coords] | Routine | [Bmad](bmad.md) |
+| [`canonical_to_angle_coords`](bmad.md#canonical_to_angle_coords) | Routine | [Bmad](bmad.md) |
 | `CAPILLARY` | Enum | [Enums](enums.md) |
 | `CARTESIAN_MAP` | Enum | [Enums](enums.md) |
 | [CartesianMapStruct](bmad.md#cartesianmapstruct) | Struct | [Bmad](bmad.md) |
@@ -254,39 +254,39 @@
 | [CartesianMapTermStruct](bmad.md#cartesianmaptermstruct) | Struct | [Bmad](bmad.md) |
 | `CATHODE_FFT_3D` | Enum | [Enums](enums.md) |
 | `CAVITY_TYPE` | Enum | [Enums](enums.md) |
-| [`cbar_to_c`][pybmad.cbar_to_c] | Routine | [Bmad](bmad.md) |
+| [`cbar_to_c`](bmad.md#cbar_to_c) | Routine | [Bmad](bmad.md) |
 | `CEILING` | Enum | [Enums](enums.md) |
-| [`celbd`][pybmad.celbd] | Routine | [Sim Utils](sim_utils.md) |
+| [`celbd`](sim_utils.md#celbd) | Routine | [Sim Utils](sim_utils.md) |
 | `CENTER_PT` | Enum | [Enums](enums.md) |
-| [`cesr_getarg`][pybmad.cesr_getarg] | Routine | [Sim Utils](sim_utils.md) |
-| [`cesr_iargc`][pybmad.cesr_iargc] | Routine | [Sim Utils](sim_utils.md) |
+| [`cesr_getarg`](sim_utils.md#cesr_getarg) | Routine | [Sim Utils](sim_utils.md) |
+| [`cesr_iargc`](sim_utils.md#cesr_iargc) | Routine | [Sim Utils](sim_utils.md) |
 | `CHAMBER_WALL` | Enum | [Enums](enums.md) |
-| [`change_file_number`][pybmad.change_file_number] | Routine | [Sim Utils](sim_utils.md) |
+| [`change_file_number`](sim_utils.md#change_file_number) | Routine | [Sim Utils](sim_utils.md) |
 | `CHARGE` | Enum | [Enums](enums.md) |
-| [`charge_of`][pybmad.charge_of] | Routine | [Sim Utils](sim_utils.md) |
+| [`charge_of`](sim_utils.md#charge_of) | Routine | [Sim Utils](sim_utils.md) |
 | `CHARGE_OF` | Enum | [Enums](enums.md) |
-| [`charge_to_mass_of`][pybmad.charge_to_mass_of] | Routine | [Sim Utils](sim_utils.md) |
-| [`check_aperture_limit`][pybmad.check_aperture_limit] | Routine | [Bmad](bmad.md) |
-| [`check_controller_controls`][pybmad.check_controller_controls] | Routine | [Bmad](bmad.md) |
-| [`check_for_superimpose_problem`][pybmad.check_for_superimpose_problem] | Routine | [Bmad](bmad.md) |
-| [`check_if_s_in_bounds`][pybmad.check_if_s_in_bounds] | Routine | [Bmad](bmad.md) |
-| [`check_rf_freq`][pybmad.check_rf_freq] | Routine | [Bsim](bsim.md) |
+| [`charge_to_mass_of`](sim_utils.md#charge_to_mass_of) | Routine | [Sim Utils](sim_utils.md) |
+| [`check_aperture_limit`](bmad.md#check_aperture_limit) | Routine | [Bmad](bmad.md) |
+| [`check_controller_controls`](bmad.md#check_controller_controls) | Routine | [Bmad](bmad.md) |
+| [`check_for_superimpose_problem`](bmad.md#check_for_superimpose_problem) | Routine | [Bmad](bmad.md) |
+| [`check_if_s_in_bounds`](bmad.md#check_if_s_in_bounds) | Routine | [Bmad](bmad.md) |
+| [`check_rf_freq`](bsim.md#check_rf_freq) | Routine | [Bsim](bsim.md) |
 | `CHECK_SUM` | Enum | [Enums](enums.md) |
-| [`choose_quads_for_set_tune`][pybmad.choose_quads_for_set_tune] | Routine | [Bmad](bmad.md) |
-| [`chrom_calc`][pybmad.chrom_calc] | Routine | [Bmad](bmad.md) |
-| [`chrom_tune`][pybmad.chrom_tune] | Routine | [Bmad](bmad.md) |
+| [`choose_quads_for_set_tune`](bmad.md#choose_quads_for_set_tune) | Routine | [Bmad](bmad.md) |
+| [`chrom_calc`](bmad.md#chrom_calc) | Routine | [Bmad](bmad.md) |
+| [`chrom_tune`](bmad.md#chrom_tune) | Routine | [Bmad](bmad.md) |
 | `CIRCLE_DOT_SYM` | Enum | [Enums](enums.md) |
 | `CIRCLE_FILLED_SYM` | Enum | [Enums](enums.md) |
 | `CIRCLE_PLUS_SYM` | Enum | [Enums](enums.md) |
 | `CIRCLE_SYM` | Enum | [Enums](enums.md) |
-| [`classical_radius`][pybmad.classical_radius] | Routine | [Bmad](bmad.md) |
+| [`classical_radius`](bmad.md#classical_radius) | Routine | [Bmad](bmad.md) |
 | `CLASSICAL_RADIUS_FACTOR` | Enum | [Enums](enums.md) |
 | `CLEAR` | Enum | [Enums](enums.md) |
-| [`clear_lat_1turn_mats`][pybmad.clear_lat_1turn_mats] | Routine | [Bmad](bmad.md) |
-| [`clear_taylor_maps_from_elements`][pybmad.clear_taylor_maps_from_elements] | Routine | [Bmad](bmad.md) |
+| [`clear_lat_1turn_mats`](bmad.md#clear_lat_1turn_mats) | Routine | [Bmad](bmad.md) |
+| [`clear_taylor_maps_from_elements`](bmad.md#clear_taylor_maps_from_elements) | Routine | [Bmad](bmad.md) |
 | `CLOSED` | Enum | [Enums](enums.md) |
-| [`closed_orbit_calc`][pybmad.closed_orbit_calc] | Routine | [Bmad](bmad.md) |
-| [`closed_orbit_from_tracking`][pybmad.closed_orbit_from_tracking] | Routine | [Bmad](bmad.md) |
+| [`closed_orbit_calc`](bmad.md#closed_orbit_calc) | Routine | [Bmad](bmad.md) |
+| [`closed_orbit_from_tracking`](bmad.md#closed_orbit_from_tracking) | Routine | [Bmad](bmad.md) |
 | `CMAT_11` | Enum | [Enums](enums.md) |
 | `CMAT_11_STORED` | Enum | [Enums](enums.md) |
 | `CMAT_12` | Enum | [Enums](enums.md) |
@@ -295,31 +295,31 @@
 | `CMAT_21_STORED` | Enum | [Enums](enums.md) |
 | `CMAT_22` | Enum | [Enums](enums.md) |
 | `CMAT_22_STORED` | Enum | [Enums](enums.md) |
-| [`cmplx_re_str`][pybmad.cmplx_re_str] | Routine | [Bmad](bmad.md) |
-| [`coarse_frequency_estimate`][pybmad.coarse_frequency_estimate] | Routine | [Sim Utils](sim_utils.md) |
+| [`cmplx_re_str`](bmad.md#cmplx_re_str) | Routine | [Bmad](bmad.md) |
+| [`coarse_frequency_estimate`](sim_utils.md#coarse_frequency_estimate) | Routine | [Sim Utils](sim_utils.md) |
 | `COHERENT` | Enum | [Enums](enums.md) |
 | `COLON` | Enum | [Enums](enums.md) |
-| [`combine_consecutive_elements`][pybmad.combine_consecutive_elements] | Routine | [Bmad](bmad.md) |
+| [`combine_consecutive_elements`](bmad.md#combine_consecutive_elements) | Routine | [Bmad](bmad.md) |
 | `COMMA` | Enum | [Enums](enums.md) |
-| [`complex_error_function`][pybmad.complex_error_function] | Routine | [Sim Utils](sim_utils.md) |
-| [`complex_taylor_clean`][pybmad.complex_taylor_clean] | Routine | [Bmad](bmad.md) |
-| [`complex_taylor_coef`][pybmad.complex_taylor_coef] | Routine | [Bmad](bmad.md) |
-| [`complex_taylor_equal_complex_taylor`][pybmad.complex_taylor_equal_complex_taylor] | Routine | [Bmad](bmad.md) |
-| [`complex_taylor_exponent_index`][pybmad.complex_taylor_exponent_index] | Routine | [Bmad](bmad.md) |
-| [`complex_taylor_make_unit`][pybmad.complex_taylor_make_unit] | Routine | [Bmad](bmad.md) |
-| [`complex_taylor_to_mat6`][pybmad.complex_taylor_to_mat6] | Routine | [Bmad](bmad.md) |
-| [`complex_taylors_equal_complex_taylors`][pybmad.complex_taylors_equal_complex_taylors] | Routine | [Bmad](bmad.md) |
+| [`complex_error_function`](sim_utils.md#complex_error_function) | Routine | [Sim Utils](sim_utils.md) |
+| [`complex_taylor_clean`](bmad.md#complex_taylor_clean) | Routine | [Bmad](bmad.md) |
+| [`complex_taylor_coef`](bmad.md#complex_taylor_coef) | Routine | [Bmad](bmad.md) |
+| [`complex_taylor_equal_complex_taylor`](bmad.md#complex_taylor_equal_complex_taylor) | Routine | [Bmad](bmad.md) |
+| [`complex_taylor_exponent_index`](bmad.md#complex_taylor_exponent_index) | Routine | [Bmad](bmad.md) |
+| [`complex_taylor_make_unit`](bmad.md#complex_taylor_make_unit) | Routine | [Bmad](bmad.md) |
+| [`complex_taylor_to_mat6`](bmad.md#complex_taylor_to_mat6) | Routine | [Bmad](bmad.md) |
+| [`complex_taylors_equal_complex_taylors`](bmad.md#complex_taylors_equal_complex_taylors) | Routine | [Bmad](bmad.md) |
 | [ComplexTaylorStruct](bmad.md#complextaylorstruct) | Struct | [Bmad](bmad.md) |
 | [ComplexTaylorTermStruct](bmad.md#complextaylortermstruct) | Struct | [Bmad](bmad.md) |
 | `COMPOUND` | Enum | [Enums](enums.md) |
-| [`compute_slave_coupler`][pybmad.compute_slave_coupler] | Routine | [Bmad](bmad.md) |
-| [`concat_ele_taylor`][pybmad.concat_ele_taylor] | Routine | [Bmad](bmad.md) |
-| [`concat_taylor`][pybmad.concat_taylor] | Routine | [Bmad](bmad.md) |
-| [`concat_transfer_mat`][pybmad.concat_transfer_mat] | Routine | [Bmad](bmad.md) |
+| [`compute_slave_coupler`](bmad.md#compute_slave_coupler) | Routine | [Bmad](bmad.md) |
+| [`concat_ele_taylor`](bmad.md#concat_ele_taylor) | Routine | [Bmad](bmad.md) |
+| [`concat_taylor`](bmad.md#concat_taylor) | Routine | [Bmad](bmad.md) |
+| [`concat_transfer_mat`](bmad.md#concat_transfer_mat) | Routine | [Bmad](bmad.md) |
 | `CONSTANT` | Enum | [Enums](enums.md) |
 | `CONSTANT_REF_ENERGY` | Enum | [Enums](enums.md) |
 | `CONTINUOUS` | Enum | [Enums](enums.md) |
-| [`control_bookkeeper`][pybmad.control_bookkeeper] | Routine | [Bmad](bmad.md) |
+| [`control_bookkeeper`](bmad.md#control_bookkeeper) | Routine | [Bmad](bmad.md) |
 | `CONTROL_GROUP` | Enum | [Enums](enums.md) |
 | `CONTROL_LORD` | Enum | [Enums](enums.md) |
 | `CONTROL_VAR` | Enum | [Enums](enums.md) |
@@ -327,38 +327,38 @@
 | [ControlRamp1Struct](bmad.md#controlramp1struct) | Struct | [Bmad](bmad.md) |
 | [ControlStruct](bmad.md#controlstruct) | Struct | [Bmad](bmad.md) |
 | [ControlVar1Struct](bmad.md#controlvar1struct) | Struct | [Bmad](bmad.md) |
-| [`convert_bend_exact_multipole`][pybmad.convert_bend_exact_multipole] | Routine | [Bmad](bmad.md) |
-| [`convert_coords`][pybmad.convert_coords] | Routine | [Bmad](bmad.md) |
-| [`convert_field_ele_to_lab`][pybmad.convert_field_ele_to_lab] | Routine | [Bmad](bmad.md) |
-| [`convert_local_cartesian_to_local_curvilinear`][pybmad.convert_local_cartesian_to_local_curvilinear] | Routine | [Bmad](bmad.md) |
-| [`convert_local_curvilinear_to_local_cartesian`][pybmad.convert_local_curvilinear_to_local_cartesian] | Routine | [Bmad](bmad.md) |
-| [`convert_particle_coordinates_s_to_t`][pybmad.convert_particle_coordinates_s_to_t] | Routine | [Bmad](bmad.md) |
-| [`convert_particle_coordinates_t_to_s`][pybmad.convert_particle_coordinates_t_to_s] | Routine | [Bmad](bmad.md) |
-| [`convert_pc_to`][pybmad.convert_pc_to] | Routine | [Bmad](bmad.md) |
-| [`convert_total_energy_to`][pybmad.convert_total_energy_to] | Routine | [Bmad](bmad.md) |
+| [`convert_bend_exact_multipole`](bmad.md#convert_bend_exact_multipole) | Routine | [Bmad](bmad.md) |
+| [`convert_coords`](bmad.md#convert_coords) | Routine | [Bmad](bmad.md) |
+| [`convert_field_ele_to_lab`](bmad.md#convert_field_ele_to_lab) | Routine | [Bmad](bmad.md) |
+| [`convert_local_cartesian_to_local_curvilinear`](bmad.md#convert_local_cartesian_to_local_curvilinear) | Routine | [Bmad](bmad.md) |
+| [`convert_local_curvilinear_to_local_cartesian`](bmad.md#convert_local_curvilinear_to_local_cartesian) | Routine | [Bmad](bmad.md) |
+| [`convert_particle_coordinates_s_to_t`](bmad.md#convert_particle_coordinates_s_to_t) | Routine | [Bmad](bmad.md) |
+| [`convert_particle_coordinates_t_to_s`](bmad.md#convert_particle_coordinates_t_to_s) | Routine | [Bmad](bmad.md) |
+| [`convert_pc_to`](bmad.md#convert_pc_to) | Routine | [Bmad](bmad.md) |
+| [`convert_total_energy_to`](bmad.md#convert_total_energy_to) | Routine | [Bmad](bmad.md) |
 | `CONVERTER` | Enum | [Enums](enums.md) |
-| [`converter_distribution_parser`][pybmad.converter_distribution_parser] | Routine | [Bmad](bmad.md) |
-| [`coord_equal_coord`][pybmad.coord_equal_coord] | Routine | [Bmad](bmad.md) |
-| [`coord_state_name`][pybmad.coord_state_name] | Routine | [Bmad](bmad.md) |
+| [`converter_distribution_parser`](bmad.md#converter_distribution_parser) | Routine | [Bmad](bmad.md) |
+| [`coord_equal_coord`](bmad.md#coord_equal_coord) | Routine | [Bmad](bmad.md) |
+| [`coord_state_name`](bmad.md#coord_state_name) | Routine | [Bmad](bmad.md) |
 | [CoordArrayStruct](bmad.md#coordarraystruct) | Struct | [Bmad](bmad.md) |
-| [`coords_body_to_local`][pybmad.coords_body_to_local] | Routine | [Bmad](bmad.md) |
-| [`coords_body_to_rel_exit`][pybmad.coords_body_to_rel_exit] | Routine | [Bmad](bmad.md) |
-| [`coords_curvilinear_to_floor`][pybmad.coords_curvilinear_to_floor] | Routine | [Bmad](bmad.md) |
-| [`coords_floor_to_curvilinear`][pybmad.coords_floor_to_curvilinear] | Routine | [Bmad](bmad.md) |
-| [`coords_floor_to_local_curvilinear`][pybmad.coords_floor_to_local_curvilinear] | Routine | [Bmad](bmad.md) |
-| [`coords_floor_to_relative`][pybmad.coords_floor_to_relative] | Routine | [Bmad](bmad.md) |
-| [`coords_local_curvilinear_to_body`][pybmad.coords_local_curvilinear_to_body] | Routine | [Bmad](bmad.md) |
-| [`coords_local_curvilinear_to_floor`][pybmad.coords_local_curvilinear_to_floor] | Routine | [Bmad](bmad.md) |
-| [`coords_relative_to_floor`][pybmad.coords_relative_to_floor] | Routine | [Bmad](bmad.md) |
+| [`coords_body_to_local`](bmad.md#coords_body_to_local) | Routine | [Bmad](bmad.md) |
+| [`coords_body_to_rel_exit`](bmad.md#coords_body_to_rel_exit) | Routine | [Bmad](bmad.md) |
+| [`coords_curvilinear_to_floor`](bmad.md#coords_curvilinear_to_floor) | Routine | [Bmad](bmad.md) |
+| [`coords_floor_to_curvilinear`](bmad.md#coords_floor_to_curvilinear) | Routine | [Bmad](bmad.md) |
+| [`coords_floor_to_local_curvilinear`](bmad.md#coords_floor_to_local_curvilinear) | Routine | [Bmad](bmad.md) |
+| [`coords_floor_to_relative`](bmad.md#coords_floor_to_relative) | Routine | [Bmad](bmad.md) |
+| [`coords_local_curvilinear_to_body`](bmad.md#coords_local_curvilinear_to_body) | Routine | [Bmad](bmad.md) |
+| [`coords_local_curvilinear_to_floor`](bmad.md#coords_local_curvilinear_to_floor) | Routine | [Bmad](bmad.md) |
+| [`coords_relative_to_floor`](bmad.md#coords_relative_to_floor) | Routine | [Bmad](bmad.md) |
 | [CoordStruct](bmad.md#coordstruct) | Struct | [Bmad](bmad.md) |
 | `COS` | Enum | [Enums](enums.md) |
-| [`cos_one`][pybmad.cos_one] | Routine | [Sim Utils](sim_utils.md) |
-| [`cosc`][pybmad.cosc] | Routine | [Sim Utils](sim_utils.md) |
+| [`cos_one`](sim_utils.md#cos_one) | Routine | [Sim Utils](sim_utils.md) |
+| [`cosc`](sim_utils.md#cosc) | Routine | [Sim Utils](sim_utils.md) |
 | `COSH` | Enum | [Enums](enums.md) |
 | `COT` | Enum | [Enums](enums.md) |
 | `COTH` | Enum | [Enums](enums.md) |
-| [`coulombfun`][pybmad.coulombfun] | Routine | [Bmad](bmad.md) |
-| [`count_lines_in_file`][pybmad.count_lines_in_file] | Routine | [Bsim](bsim.md) |
+| [`coulombfun`](bmad.md#coulombfun) | Routine | [Bmad](bmad.md) |
+| [`count_lines_in_file`](bsim.md#count_lines_in_file) | Routine | [Bsim](bsim.md) |
 | `COUPLER_ANGLE` | Enum | [Enums](enums.md) |
 | `COUPLER_AT` | Enum | [Enums](enums.md) |
 | `COUPLER_PHASE` | Enum | [Enums](enums.md) |
@@ -370,33 +370,33 @@
 | `CRAB_X3` | Enum | [Enums](enums.md) |
 | `CRAB_X4` | Enum | [Enums](enums.md) |
 | `CRAB_X5` | Enum | [Enums](enums.md) |
-| [`create_a_spline`][pybmad.create_a_spline] | Routine | [Sim Utils](sim_utils.md) |
-| [`create_concatenated_wall3d`][pybmad.create_concatenated_wall3d] | Routine | [Bmad](bmad.md) |
-| [`create_element_slice`][pybmad.create_element_slice] | Routine | [Bmad](bmad.md) |
-| [`create_feedback`][pybmad.create_feedback] | Routine | [Bmad](bmad.md) |
-| [`create_field_overlap`][pybmad.create_field_overlap] | Routine | [Bmad](bmad.md) |
-| [`create_girder`][pybmad.create_girder] | Routine | [Bmad](bmad.md) |
-| [`create_group`][pybmad.create_group] | Routine | [Bmad](bmad.md) |
+| [`create_a_spline`](sim_utils.md#create_a_spline) | Routine | [Sim Utils](sim_utils.md) |
+| [`create_concatenated_wall3d`](bmad.md#create_concatenated_wall3d) | Routine | [Bmad](bmad.md) |
+| [`create_element_slice`](bmad.md#create_element_slice) | Routine | [Bmad](bmad.md) |
+| [`create_feedback`](bmad.md#create_feedback) | Routine | [Bmad](bmad.md) |
+| [`create_field_overlap`](bmad.md#create_field_overlap) | Routine | [Bmad](bmad.md) |
+| [`create_girder`](bmad.md#create_girder) | Routine | [Bmad](bmad.md) |
+| [`create_group`](bmad.md#create_group) | Routine | [Bmad](bmad.md) |
 | `CREATE_JUMBO_SLAVE` | Enum | [Enums](enums.md) |
-| [`create_lat_ele_nametable`][pybmad.create_lat_ele_nametable] | Routine | [Bmad](bmad.md) |
-| [`create_overlay`][pybmad.create_overlay] | Routine | [Bmad](bmad.md) |
-| [`create_planar_wiggler_model`][pybmad.create_planar_wiggler_model] | Routine | [Bmad](bmad.md) |
-| [`create_ramper`][pybmad.create_ramper] | Routine | [Bmad](bmad.md) |
-| [`create_sol_quad_model`][pybmad.create_sol_quad_model] | Routine | [Bmad](bmad.md) |
-| [`create_unique_ele_names`][pybmad.create_unique_ele_names] | Routine | [Bmad](bmad.md) |
-| [`create_wiggler_cartesian_map`][pybmad.create_wiggler_cartesian_map] | Routine | [Bmad](bmad.md) |
+| [`create_lat_ele_nametable`](bmad.md#create_lat_ele_nametable) | Routine | [Bmad](bmad.md) |
+| [`create_overlay`](bmad.md#create_overlay) | Routine | [Bmad](bmad.md) |
+| [`create_planar_wiggler_model`](bmad.md#create_planar_wiggler_model) | Routine | [Bmad](bmad.md) |
+| [`create_ramper`](bmad.md#create_ramper) | Routine | [Bmad](bmad.md) |
+| [`create_sol_quad_model`](bmad.md#create_sol_quad_model) | Routine | [Bmad](bmad.md) |
+| [`create_unique_ele_names`](bmad.md#create_unique_ele_names) | Routine | [Bmad](bmad.md) |
+| [`create_wiggler_cartesian_map`](bmad.md#create_wiggler_cartesian_map) | Routine | [Bmad](bmad.md) |
 | `CRITICAL_ANGLE` | Enum | [Enums](enums.md) |
 | `CRITICAL_ANGLE_FACTOR` | Enum | [Enums](enums.md) |
 | `CROSS_HATCHED` | Enum | [Enums](enums.md) |
-| [`cross_product`][pybmad.cross_product] | Routine | [Sim Utils](sim_utils.md) |
+| [`cross_product`](sim_utils.md#cross_product) | Routine | [Sim Utils](sim_utils.md) |
 | `CROSSING_TIME` | Enum | [Enums](enums.md) |
 | `CRUNCH` | Enum | [Enums](enums.md) |
 | `CRUNCH_CALIB` | Enum | [Enums](enums.md) |
 | `CRYSTAL` | Enum | [Enums](enums.md) |
-| [`crystal_attribute_bookkeeper`][pybmad.crystal_attribute_bookkeeper] | Routine | [Bmad](bmad.md) |
-| [`crystal_h_misalign`][pybmad.crystal_h_misalign] | Routine | [Bmad](bmad.md) |
+| [`crystal_attribute_bookkeeper`](bmad.md#crystal_attribute_bookkeeper) | Routine | [Bmad](bmad.md) |
+| [`crystal_h_misalign`](bmad.md#crystal_h_misalign) | Routine | [Bmad](bmad.md) |
 | `CRYSTAL_TYPE` | Enum | [Enums](enums.md) |
-| [`crystal_type_to_crystal_params`][pybmad.crystal_type_to_crystal_params] | Routine | [Bmad](bmad.md) |
+| [`crystal_type_to_crystal_params`](bmad.md#crystal_type_to_crystal_params) | Routine | [Bmad](bmad.md) |
 | `CSC` | Enum | [Enums](enums.md) |
 | `CSR_DS_STEP` | Enum | [Enums](enums.md) |
 | `CSR_METHOD` | Enum | [Enums](enums.md) |
@@ -409,8 +409,8 @@
 | `CUSTOM_APERTURE` | Enum | [Enums](enums.md) |
 | `CUSTOM_ATTRIBUTE0` | Enum | [Enums](enums.md) |
 | `CUSTOM_ATTRIBUTE_NUM` | Enum | [Enums](enums.md) |
-| [`custom_attribute_ubound_index`][pybmad.custom_attribute_ubound_index] | Routine | [Bmad](bmad.md) |
-| [`custom_ele_attrib_name_list`][pybmad.custom_ele_attrib_name_list] | Routine | [Bmad](bmad.md) |
+| [`custom_attribute_ubound_index`](bmad.md#custom_attribute_ubound_index) | Routine | [Bmad](bmad.md) |
+| [`custom_ele_attrib_name_list`](bmad.md#custom_ele_attrib_name_list) | Routine | [Bmad](bmad.md) |
 | `CYAN` | Enum | [Enums](enums.md) |
 | `CYCLES` | Enum | [Enums](enums.md) |
 | `CYLINDRICAL_MAP` | Enum | [Enums](enums.md) |
@@ -424,14 +424,14 @@
 | `DALPHA_DPZ_A_STORED` | Enum | [Enums](enums.md) |
 | `DALPHA_DPZ_B` | Enum | [Enums](enums.md) |
 | `DALPHA_DPZ_B_STORED` | Enum | [Enums](enums.md) |
-| [`damping_matrix_d`][pybmad.damping_matrix_d] | Routine | [Bmad](bmad.md) |
+| [`damping_matrix_d`](bmad.md#damping_matrix_d) | Routine | [Bmad](bmad.md) |
 | `DARK_GREY` | Enum | [Enums](enums.md) |
 | `DARWIN_WIDTH_PI` | Enum | [Enums](enums.md) |
 | `DARWIN_WIDTH_SIGMA` | Enum | [Enums](enums.md) |
 | `DASH_DOT` | Enum | [Enums](enums.md) |
 | `DASH_DOT3` | Enum | [Enums](enums.md) |
 | `DASHED` | Enum | [Enums](enums.md) |
-| [`date_and_time_stamp`][pybmad.date_and_time_stamp] | Routine | [Sim Utils](sim_utils.md) |
+| [`date_and_time_stamp`](sim_utils.md#date_and_time_stamp) | Routine | [Sim Utils](sim_utils.md) |
 | `DB_FIELD` | Enum | [Enums](enums.md) |
 | `DBETA_DPZ_A` | Enum | [Enums](enums.md) |
 | `DBETA_DPZ_A_STORED` | Enum | [Enums](enums.md) |
@@ -443,9 +443,9 @@
 | `DCMAT_DPZ_21_STORED` | Enum | [Enums](enums.md) |
 | `DCMAT_DPZ_22_STORED` | Enum | [Enums](enums.md) |
 | `DE_ETA_MEAS` | Enum | [Enums](enums.md) |
-| [`deallocate_ele_pointers`][pybmad.deallocate_ele_pointers] | Routine | [Bmad](bmad.md) |
-| [`deallocate_expression_tree`][pybmad.deallocate_expression_tree] | Routine | [Bmad](bmad.md) |
-| [`deallocate_lat_pointers`][pybmad.deallocate_lat_pointers] | Routine | [Bmad](bmad.md) |
+| [`deallocate_ele_pointers`](bmad.md#deallocate_ele_pointers) | Routine | [Bmad](bmad.md) |
+| [`deallocate_expression_tree`](bmad.md#deallocate_expression_tree) | Routine | [Bmad](bmad.md) |
+| [`deallocate_lat_pointers`](bmad.md#deallocate_lat_pointers) | Routine | [Bmad](bmad.md) |
 | `DEF_BMAD_COM` | Enum | [Enums](enums.md) |
 | `DEF_LINE` | Enum | [Enums](enums.md) |
 | `DEF_MAD_BEAM` | Enum | [Enums](enums.md) |
@@ -453,7 +453,7 @@
 | `DEF_PARTICLE_START` | Enum | [Enums](enums.md) |
 | `DEF_PTC_COM` | Enum | [Enums](enums.md) |
 | `DEF_SPACE_CHARGE_COM` | Enum | [Enums](enums.md) |
-| [`default_tracking_species`][pybmad.default_tracking_species] | Routine | [Bmad](bmad.md) |
+| [`default_tracking_species`](bmad.md#default_tracking_species) | Routine | [Bmad](bmad.md) |
 | `DEFAULT_TRACKING_SPECIES` | Enum | [Enums](enums.md) |
 | `DEGREES` | Enum | [Enums](enums.md) |
 | `DELTA_E_REF` | Enum | [Enums](enums.md) |
@@ -463,67 +463,67 @@
 | `DENSITY` | Enum | [Enums](enums.md) |
 | `DENSITY_USED` | Enum | [Enums](enums.md) |
 | `DESCRIP` | Enum | [Enums](enums.md) |
-| [`destfixedwindowls`][pybmad.destfixedwindowls] | Routine | [Sim Utils](sim_utils.md) |
+| [`destfixedwindowls`](sim_utils.md#destfixedwindowls) | Routine | [Sim Utils](sim_utils.md) |
 | `DETA_DPZ_X` | Enum | [Enums](enums.md) |
 | `DETA_DPZ_X_STORED` | Enum | [Enums](enums.md) |
 | `DETA_DPZ_Y` | Enum | [Enums](enums.md) |
 | `DETA_DPZ_Y_STORED` | Enum | [Enums](enums.md) |
 | `DETA_DS_MASTER` | Enum | [Enums](enums.md) |
-| [`detab`][pybmad.detab] | Routine | [Sim Utils](sim_utils.md) |
+| [`detab`](sim_utils.md#detab) | Routine | [Sim Utils](sim_utils.md) |
 | `DETAP_DPZ_X` | Enum | [Enums](enums.md) |
 | `DETAP_DPZ_X_STORED` | Enum | [Enums](enums.md) |
 | `DETAP_DPZ_Y` | Enum | [Enums](enums.md) |
 | `DETAP_DPZ_Y_STORED` | Enum | [Enums](enums.md) |
 | `DETECTOR` | Enum | [Enums](enums.md) |
-| [`detector_pixel_pt`][pybmad.detector_pixel_pt] | Routine | [Bmad](bmad.md) |
+| [`detector_pixel_pt`](bmad.md#detector_pixel_pt) | Routine | [Bmad](bmad.md) |
 | `DEUTERON` | Enum | [Enums](enums.md) |
 | `DFLT_DRAW` | Enum | [Enums](enums.md) |
 | `DFLT_SET` | Enum | [Enums](enums.md) |
 | `DG` | Enum | [Enums](enums.md) |
 | `DIAMOND_SYM` | Enum | [Enums](enums.md) |
 | `DIFFRACTION_PLATE` | Enum | [Enums](enums.md) |
-| [`diffraction_plate_or_mask_hit_spot`][pybmad.diffraction_plate_or_mask_hit_spot] | Routine | [Bmad](bmad.md) |
-| [`diffusion_matrix_b`][pybmad.diffusion_matrix_b] | Routine | [Bmad](bmad.md) |
+| [`diffraction_plate_or_mask_hit_spot`](bmad.md#diffraction_plate_or_mask_hit_spot) | Routine | [Bmad](bmad.md) |
+| [`diffusion_matrix_b`](bmad.md#diffusion_matrix_b) | Routine | [Bmad](bmad.md) |
 | `DIRECTION` | Enum | [Enums](enums.md) |
 | `DISPATCH` | Enum | [Enums](enums.md) |
-| [`display_size_and_resolution`][pybmad.display_size_and_resolution] | Routine | [Sim Utils](sim_utils.md) |
-| [`distance_to_aperture`][pybmad.distance_to_aperture] | Routine | [Bmad](bmad.md) |
+| [`display_size_and_resolution`](sim_utils.md#display_size_and_resolution) | Routine | [Sim Utils](sim_utils.md) |
+| [`distance_to_aperture`](bmad.md#distance_to_aperture) | Routine | [Bmad](bmad.md) |
 | `DISTRIBUTION` | Enum | [Enums](enums.md) |
 | `DIVIDE` | Enum | [Enums](enums.md) |
-| [`dj_bessel`][pybmad.dj_bessel] | Routine | [Sim Utils](sim_utils.md) |
-| [`djb_hash`][pybmad.djb_hash] | Routine | [Sim Utils](sim_utils.md) |
-| [`djb_str_hash`][pybmad.djb_str_hash] | Routine | [Sim Utils](sim_utils.md) |
-| [`do_mode_flip`][pybmad.do_mode_flip] | Routine | [Bmad](bmad.md) |
+| [`dj_bessel`](sim_utils.md#dj_bessel) | Routine | [Sim Utils](sim_utils.md) |
+| [`djb_hash`](sim_utils.md#djb_hash) | Routine | [Sim Utils](sim_utils.md) |
+| [`djb_str_hash`](sim_utils.md#djb_str_hash) | Routine | [Sim Utils](sim_utils.md) |
+| [`do_mode_flip`](bmad.md#do_mode_flip) | Routine | [Bmad](bmad.md) |
 | `DOT_SYM` | Enum | [Enums](enums.md) |
 | `DOTTED` | Enum | [Enums](enums.md) |
 | `DOUBLE_COLON` | Enum | [Enums](enums.md) |
-| [`downcase_string`][pybmad.downcase_string] | Routine | [Sim Utils](sim_utils.md) |
+| [`downcase_string`](sim_utils.md#downcase_string) | Routine | [Sim Utils](sim_utils.md) |
 | `DOWNSTREAM` | Enum | [Enums](enums.md) |
 | `DOWNSTREAM_COORD_DIR` | Enum | [Enums](enums.md) |
 | `DOWNSTREAM_END` | Enum | [Enums](enums.md) |
-| [`dpc_given_de`][pybmad.dpc_given_de] | Routine | [Bmad](bmad.md) |
+| [`dpc_given_de`](bmad.md#dpc_given_de) | Routine | [Bmad](bmad.md) |
 | `DPHI_A` | Enum | [Enums](enums.md) |
 | `DPHI_B` | Enum | [Enums](enums.md) |
 | `DPHI_ORIGIN` | Enum | [Enums](enums.md) |
 | `DPSI_ORIGIN` | Enum | [Enums](enums.md) |
 | `DRIFT` | Enum | [Enums](enums.md) |
-| [`drift_and_pipe_track_methods_adjustment`][pybmad.drift_and_pipe_track_methods_adjustment] | Routine | [Bmad](bmad.md) |
+| [`drift_and_pipe_track_methods_adjustment`](bmad.md#drift_and_pipe_track_methods_adjustment) | Routine | [Bmad](bmad.md) |
 | `DRIFT_KICK` | Enum | [Enums](enums.md) |
-| [`drift_multipass_name_correction`][pybmad.drift_multipass_name_correction] | Routine | [Bmad](bmad.md) |
-| [`drift_orbit_time`][pybmad.drift_orbit_time] | Routine | [Bmad](bmad.md) |
-| [`drift_particle_to_s`][pybmad.drift_particle_to_s] | Routine | [Bmad](bmad.md) |
-| [`drift_particle_to_t`][pybmad.drift_particle_to_t] | Routine | [Bmad](bmad.md) |
+| [`drift_multipass_name_correction`](bmad.md#drift_multipass_name_correction) | Routine | [Bmad](bmad.md) |
+| [`drift_orbit_time`](bmad.md#drift_orbit_time) | Routine | [Bmad](bmad.md) |
+| [`drift_particle_to_s`](bmad.md#drift_particle_to_s) | Routine | [Bmad](bmad.md) |
+| [`drift_particle_to_t`](bmad.md#drift_particle_to_t) | Routine | [Bmad](bmad.md) |
 | `DS_PHOTON_SLICE` | Enum | [Enums](enums.md) |
 | `DS_SLICE` | Enum | [Enums](enums.md) |
 | `DS_STEP` | Enum | [Enums](enums.md) |
-| [`dspline_len`][pybmad.dspline_len] | Routine | [Bmad](bmad.md) |
+| [`dspline_len`](bmad.md#dspline_len) | Routine | [Bmad](bmad.md) |
 | `DT_MAX` | Enum | [Enums](enums.md) |
 | `DTHETA_ORIGIN` | Enum | [Enums](enums.md) |
 | `DTHICKNESS_DX` | Enum | [Enums](enums.md) |
 | `DX_ORIGIN` | Enum | [Enums](enums.md) |
 | `DY_ORIGIN` | Enum | [Enums](enums.md) |
-| [`dynamic_aperture_point`][pybmad.dynamic_aperture_point] | Routine | [Bmad](bmad.md) |
-| [`dynamic_aperture_scan`][pybmad.dynamic_aperture_scan] | Routine | [Bmad](bmad.md) |
+| [`dynamic_aperture_point`](bmad.md#dynamic_aperture_point) | Routine | [Bmad](bmad.md) |
+| [`dynamic_aperture_scan`](bmad.md#dynamic_aperture_scan) | Routine | [Bmad](bmad.md) |
 | `DZ_ORIGIN` | Enum | [Enums](enums.md) |
 | `E1` | Enum | [Enums](enums.md) |
 | `E1_GRADIENT` | Enum | [Enums](enums.md) |
@@ -532,11 +532,11 @@
 | `E2_GRADIENT` | Enum | [Enums](enums.md) |
 | `E2_PROBABILITY` | Enum | [Enums](enums.md) |
 | `E3_GRADIENT` | Enum | [Enums](enums.md) |
-| [`e_accel_field`][pybmad.e_accel_field] | Routine | [Bmad](bmad.md) |
+| [`e_accel_field`](bmad.md#e_accel_field) | Routine | [Bmad](bmad.md) |
 | `E_CENTER` | Enum | [Enums](enums.md) |
 | `E_CENTER_RELATIVE_TO_REF` | Enum | [Enums](enums.md) |
 | `E_CHARGE` | Enum | [Enums](enums.md) |
-| [`e_crit_photon`][pybmad.e_crit_photon] | Routine | [Bmad](bmad.md) |
+| [`e_crit_photon`](bmad.md#e_crit_photon) | Routine | [Bmad](bmad.md) |
 | `E_FIELD` | Enum | [Enums](enums.md) |
 | `E_FIELD_X` | Enum | [Enums](enums.md) |
 | `E_FIELD_Y` | Enum | [Enums](enums.md) |
@@ -551,168 +551,168 @@
 | `E_TOT_START` | Enum | [Enums](enums.md) |
 | `E_TOT_STRONG` | Enum | [Enums](enums.md) |
 | `ECOLLIMATOR` | Enum | [Enums](enums.md) |
-| [`eigen_decomp_6mat`][pybmad.eigen_decomp_6mat] | Routine | [Bmad](bmad.md) |
-| [`elbd`][pybmad.elbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`elcbd`][pybmad.elcbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`ele_compute_ref_energy_and_time`][pybmad.ele_compute_ref_energy_and_time] | Routine | [Bmad](bmad.md) |
-| [`ele_equal_ele`][pybmad.ele_equal_ele] | Routine | [Bmad](bmad.md) |
-| [`ele_equals_ele`][pybmad.ele_equals_ele] | Routine | [Bmad](bmad.md) |
-| [`ele_finalizer`][pybmad.ele_finalizer] | Routine | [Bmad](bmad.md) |
-| [`ele_full_name`][pybmad.ele_full_name] | Routine | [Bmad](bmad.md) |
-| [`ele_geometry`][pybmad.ele_geometry] | Routine | [Bmad](bmad.md) |
-| [`ele_geometry_with_misalignments`][pybmad.ele_geometry_with_misalignments] | Routine | [Bmad](bmad.md) |
-| [`ele_has_constant_ds_dt_ref`][pybmad.ele_has_constant_ds_dt_ref] | Routine | [Bmad](bmad.md) |
-| [`ele_has_nonzero_kick`][pybmad.ele_has_nonzero_kick] | Routine | [Bmad](bmad.md) |
-| [`ele_has_nonzero_offset`][pybmad.ele_has_nonzero_offset] | Routine | [Bmad](bmad.md) |
-| [`ele_is_monitor`][pybmad.ele_is_monitor] | Routine | [Bmad](bmad.md) |
-| [`ele_loc`][pybmad.ele_loc] | Routine | [Bmad](bmad.md) |
-| [`ele_loc_name`][pybmad.ele_loc_name] | Routine | [Bmad](bmad.md) |
-| [`ele_misalignment_l_s_calc`][pybmad.ele_misalignment_l_s_calc] | Routine | [Bmad](bmad.md) |
-| [`ele_nametable_index`][pybmad.ele_nametable_index] | Routine | [Bmad](bmad.md) |
-| [`ele_order_calc`][pybmad.ele_order_calc] | Routine | [Bmad](bmad.md) |
+| [`eigen_decomp_6mat`](bmad.md#eigen_decomp_6mat) | Routine | [Bmad](bmad.md) |
+| [`elbd`](sim_utils.md#elbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`elcbd`](sim_utils.md#elcbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`ele_compute_ref_energy_and_time`](bmad.md#ele_compute_ref_energy_and_time) | Routine | [Bmad](bmad.md) |
+| [`ele_equal_ele`](bmad.md#ele_equal_ele) | Routine | [Bmad](bmad.md) |
+| [`ele_equals_ele`](bmad.md#ele_equals_ele) | Routine | [Bmad](bmad.md) |
+| [`ele_finalizer`](bmad.md#ele_finalizer) | Routine | [Bmad](bmad.md) |
+| [`ele_full_name`](bmad.md#ele_full_name) | Routine | [Bmad](bmad.md) |
+| [`ele_geometry`](bmad.md#ele_geometry) | Routine | [Bmad](bmad.md) |
+| [`ele_geometry_with_misalignments`](bmad.md#ele_geometry_with_misalignments) | Routine | [Bmad](bmad.md) |
+| [`ele_has_constant_ds_dt_ref`](bmad.md#ele_has_constant_ds_dt_ref) | Routine | [Bmad](bmad.md) |
+| [`ele_has_nonzero_kick`](bmad.md#ele_has_nonzero_kick) | Routine | [Bmad](bmad.md) |
+| [`ele_has_nonzero_offset`](bmad.md#ele_has_nonzero_offset) | Routine | [Bmad](bmad.md) |
+| [`ele_is_monitor`](bmad.md#ele_is_monitor) | Routine | [Bmad](bmad.md) |
+| [`ele_loc`](bmad.md#ele_loc) | Routine | [Bmad](bmad.md) |
+| [`ele_loc_name`](bmad.md#ele_loc_name) | Routine | [Bmad](bmad.md) |
+| [`ele_misalignment_l_s_calc`](bmad.md#ele_misalignment_l_s_calc) | Routine | [Bmad](bmad.md) |
+| [`ele_nametable_index`](bmad.md#ele_nametable_index) | Routine | [Bmad](bmad.md) |
+| [`ele_order_calc`](bmad.md#ele_order_calc) | Routine | [Bmad](bmad.md) |
 | `ELE_ORIGIN` | Enum | [Enums](enums.md) |
-| [`ele_reference_energy_correction`][pybmad.ele_reference_energy_correction] | Routine | [Bmad](bmad.md) |
-| [`ele_rf_step_index`][pybmad.ele_rf_step_index] | Routine | [Bmad](bmad.md) |
-| [`ele_to_fibre`][pybmad.ele_to_fibre] | Routine | [Bmad](bmad.md) |
-| [`ele_to_ptc_magnetic_bn_an`][pybmad.ele_to_ptc_magnetic_bn_an] | Routine | [Bmad](bmad.md) |
-| [`ele_to_spin_taylor`][pybmad.ele_to_spin_taylor] | Routine | [Bmad](bmad.md) |
-| [`ele_to_taylor`][pybmad.ele_to_taylor] | Routine | [Bmad](bmad.md) |
-| [`ele_unique_name`][pybmad.ele_unique_name] | Routine | [Bmad](bmad.md) |
-| [`ele_value_has_changed`][pybmad.ele_value_has_changed] | Routine | [Bmad](bmad.md) |
-| [`ele_vec_equal_ele_vec`][pybmad.ele_vec_equal_ele_vec] | Routine | [Bmad](bmad.md) |
+| [`ele_reference_energy_correction`](bmad.md#ele_reference_energy_correction) | Routine | [Bmad](bmad.md) |
+| [`ele_rf_step_index`](bmad.md#ele_rf_step_index) | Routine | [Bmad](bmad.md) |
+| [`ele_to_fibre`](bmad.md#ele_to_fibre) | Routine | [Bmad](bmad.md) |
+| [`ele_to_ptc_magnetic_bn_an`](bmad.md#ele_to_ptc_magnetic_bn_an) | Routine | [Bmad](bmad.md) |
+| [`ele_to_spin_taylor`](bmad.md#ele_to_spin_taylor) | Routine | [Bmad](bmad.md) |
+| [`ele_to_taylor`](bmad.md#ele_to_taylor) | Routine | [Bmad](bmad.md) |
+| [`ele_unique_name`](bmad.md#ele_unique_name) | Routine | [Bmad](bmad.md) |
+| [`ele_value_has_changed`](bmad.md#ele_value_has_changed) | Routine | [Bmad](bmad.md) |
+| [`ele_vec_equal_ele_vec`](bmad.md#ele_vec_equal_ele_vec) | Routine | [Bmad](bmad.md) |
 | `ELEC_MULTIPOLE` | Enum | [Enums](enums.md) |
-| [`elec_multipole_field`][pybmad.elec_multipole_field] | Routine | [Bmad](bmad.md) |
+| [`elec_multipole_field`](bmad.md#elec_multipole_field) | Routine | [Bmad](bmad.md) |
 | `ELECTRIC` | Enum | [Enums](enums.md) |
 | `ELECTRIC_DIPOLE_MOMENT` | Enum | [Enums](enums.md) |
 | `ELECTRON` | Enum | [Enums](enums.md) |
-| [`element_at_s`][pybmad.element_at_s] | Routine | [Bmad](bmad.md) |
-| [`element_slice_iterator`][pybmad.element_slice_iterator] | Routine | [Bmad](bmad.md) |
+| [`element_at_s`](bmad.md#element_at_s) | Routine | [Bmad](bmad.md) |
+| [`element_slice_iterator`](bmad.md#element_slice_iterator) | Routine | [Bmad](bmad.md) |
 | [ElePointerStruct](bmad.md#elepointerstruct) | Struct | [Bmad](bmad.md) |
 | [EleStruct](bmad.md#elestruct) | Struct | [Bmad](bmad.md) |
-| [`ellipinc`][pybmad.ellipinc] | Routine | [Sim Utils](sim_utils.md) |
-| [`ellipinc_test`][pybmad.ellipinc_test] | Routine | [Bmad](bmad.md) |
+| [`ellipinc`](sim_utils.md#ellipinc) | Routine | [Sim Utils](sim_utils.md) |
+| [`ellipinc_test`](bmad.md#ellipinc_test) | Routine | [Bmad](bmad.md) |
 | [EllipseBeamInitStruct](bmad.md#ellipsebeaminitstruct) | Struct | [Bmad](bmad.md) |
 | `ELLIPTICAL` | Enum | [Enums](enums.md) |
-| [`elsbd`][pybmad.elsbd] | Routine | [Sim Utils](sim_utils.md) |
+| [`elsbd`](sim_utils.md#elsbd) | Routine | [Sim Utils](sim_utils.md) |
 | `ELSEPARATOR` | Enum | [Enums](enums.md) |
 | `EM_FIELD` | Enum | [Enums](enums.md) |
-| [`em_field_calc`][pybmad.em_field_calc] | Routine | [Bmad](bmad.md) |
-| [`em_field_derivatives`][pybmad.em_field_derivatives] | Routine | [Bmad](bmad.md) |
-| [`em_field_kick_vector_time`][pybmad.em_field_kick_vector_time] | Routine | [Bmad](bmad.md) |
-| [`em_field_plus_em_field`][pybmad.em_field_plus_em_field] | Routine | [Bmad](bmad.md) |
+| [`em_field_calc`](bmad.md#em_field_calc) | Routine | [Bmad](bmad.md) |
+| [`em_field_derivatives`](bmad.md#em_field_derivatives) | Routine | [Bmad](bmad.md) |
+| [`em_field_kick_vector_time`](bmad.md#em_field_kick_vector_time) | Routine | [Bmad](bmad.md) |
+| [`em_field_plus_em_field`](bmad.md#em_field_plus_em_field) | Routine | [Bmad](bmad.md) |
 | [EmFieldStruct](bmad.md#emfieldstruct) | Struct | [Bmad](bmad.md) |
-| [`emit_6d`][pybmad.emit_6d] | Routine | [Bmad](bmad.md) |
+| [`emit_6d`](bmad.md#emit_6d) | Routine | [Bmad](bmad.md) |
 | `EMIT_FRACTION` | Enum | [Enums](enums.md) |
 | `EMITTANCE_A` | Enum | [Enums](enums.md) |
 | `EMITTANCE_B` | Enum | [Enums](enums.md) |
 | `EMITTANCE_Z` | Enum | [Enums](enums.md) |
-| [`end_akima_spline_calc`][pybmad.end_akima_spline_calc] | Routine | [Sim Utils](sim_utils.md) |
+| [`end_akima_spline_calc`](sim_utils.md#end_akima_spline_calc) | Routine | [Sim Utils](sim_utils.md) |
 | `END_EDGE` | Enum | [Enums](enums.md) |
 | `END_STACK` | Enum | [Enums](enums.md) |
 | `ENERGY_DISTRIBUTION` | Enum | [Enums](enums.md) |
 | `ENERGY_PROBABILITY_CURVE` | Enum | [Enums](enums.md) |
-| [`entering_element`][pybmad.entering_element] | Routine | [Bmad](bmad.md) |
+| [`entering_element`](bmad.md#entering_element) | Routine | [Bmad](bmad.md) |
 | `ENTRANCE_END` | Enum | [Enums](enums.md) |
-| [`envelope_radints`][pybmad.envelope_radints] | Routine | [Bmad](bmad.md) |
-| [`envelope_radints_ibs`][pybmad.envelope_radints_ibs] | Routine | [Bmad](bmad.md) |
+| [`envelope_radints`](bmad.md#envelope_radints) | Routine | [Bmad](bmad.md) |
+| [`envelope_radints_ibs`](bmad.md#envelope_radints_ibs) | Routine | [Bmad](bmad.md) |
 | `EPS_STEP_SCALE` | Enum | [Enums](enums.md) |
-| [`eq_ac_kicker`][pybmad.eq_ac_kicker] | Routine | [Bmad](bmad.md) |
-| [`eq_ac_kicker_freq`][pybmad.eq_ac_kicker_freq] | Routine | [Bmad](bmad.md) |
-| [`eq_ac_kicker_time`][pybmad.eq_ac_kicker_time] | Routine | [Bmad](bmad.md) |
-| [`eq_anormal_mode`][pybmad.eq_anormal_mode] | Routine | [Bmad](bmad.md) |
-| [`eq_aperture_param`][pybmad.eq_aperture_param] | Routine | [Bmad](bmad.md) |
-| [`eq_aperture_point`][pybmad.eq_aperture_point] | Routine | [Bmad](bmad.md) |
-| [`eq_aperture_scan`][pybmad.eq_aperture_scan] | Routine | [Bmad](bmad.md) |
-| [`eq_beam`][pybmad.eq_beam] | Routine | [Bmad](bmad.md) |
-| [`eq_beam_init`][pybmad.eq_beam_init] | Routine | [Bmad](bmad.md) |
-| [`eq_bmad_common`][pybmad.eq_bmad_common] | Routine | [Bmad](bmad.md) |
-| [`eq_bookkeeping_state`][pybmad.eq_bookkeeping_state] | Routine | [Bmad](bmad.md) |
-| [`eq_bpm_phase_coupling`][pybmad.eq_bpm_phase_coupling] | Routine | [Bmad](bmad.md) |
-| [`eq_branch`][pybmad.eq_branch] | Routine | [Bmad](bmad.md) |
-| [`eq_bunch`][pybmad.eq_bunch] | Routine | [Bmad](bmad.md) |
-| [`eq_bunch_params`][pybmad.eq_bunch_params] | Routine | [Bmad](bmad.md) |
-| [`eq_cartesian_map`][pybmad.eq_cartesian_map] | Routine | [Bmad](bmad.md) |
-| [`eq_cartesian_map_term`][pybmad.eq_cartesian_map_term] | Routine | [Bmad](bmad.md) |
-| [`eq_cartesian_map_term1`][pybmad.eq_cartesian_map_term1] | Routine | [Bmad](bmad.md) |
-| [`eq_complex_taylor`][pybmad.eq_complex_taylor] | Routine | [Bmad](bmad.md) |
-| [`eq_complex_taylor_term`][pybmad.eq_complex_taylor_term] | Routine | [Bmad](bmad.md) |
-| [`eq_control`][pybmad.eq_control] | Routine | [Bmad](bmad.md) |
-| [`eq_control_ramp1`][pybmad.eq_control_ramp1] | Routine | [Bmad](bmad.md) |
-| [`eq_control_var1`][pybmad.eq_control_var1] | Routine | [Bmad](bmad.md) |
-| [`eq_controller`][pybmad.eq_controller] | Routine | [Bmad](bmad.md) |
-| [`eq_coord`][pybmad.eq_coord] | Routine | [Bmad](bmad.md) |
-| [`eq_coord_array`][pybmad.eq_coord_array] | Routine | [Bmad](bmad.md) |
-| [`eq_cylindrical_map`][pybmad.eq_cylindrical_map] | Routine | [Bmad](bmad.md) |
-| [`eq_cylindrical_map_term`][pybmad.eq_cylindrical_map_term] | Routine | [Bmad](bmad.md) |
-| [`eq_cylindrical_map_term1`][pybmad.eq_cylindrical_map_term1] | Routine | [Bmad](bmad.md) |
-| [`eq_ele`][pybmad.eq_ele] | Routine | [Bmad](bmad.md) |
-| [`eq_ellipse_beam_init`][pybmad.eq_ellipse_beam_init] | Routine | [Bmad](bmad.md) |
-| [`eq_em_field`][pybmad.eq_em_field] | Routine | [Bmad](bmad.md) |
-| [`eq_expression_atom`][pybmad.eq_expression_atom] | Routine | [Bmad](bmad.md) |
-| [`eq_floor_position`][pybmad.eq_floor_position] | Routine | [Bmad](bmad.md) |
-| [`eq_gen_grad1`][pybmad.eq_gen_grad1] | Routine | [Bmad](bmad.md) |
-| [`eq_gen_grad_map`][pybmad.eq_gen_grad_map] | Routine | [Bmad](bmad.md) |
-| [`eq_gg_taylor`][pybmad.eq_gg_taylor] | Routine | [Bmad](bmad.md) |
-| [`eq_gg_taylor_term`][pybmad.eq_gg_taylor_term] | Routine | [Bmad](bmad.md) |
-| [`eq_grid_beam_init`][pybmad.eq_grid_beam_init] | Routine | [Bmad](bmad.md) |
-| [`eq_grid_field`][pybmad.eq_grid_field] | Routine | [Bmad](bmad.md) |
-| [`eq_grid_field_pt`][pybmad.eq_grid_field_pt] | Routine | [Bmad](bmad.md) |
-| [`eq_grid_field_pt1`][pybmad.eq_grid_field_pt1] | Routine | [Bmad](bmad.md) |
-| [`eq_high_energy_space_charge`][pybmad.eq_high_energy_space_charge] | Routine | [Bmad](bmad.md) |
-| [`eq_interval1_coef`][pybmad.eq_interval1_coef] | Routine | [Bmad](bmad.md) |
-| [`eq_kv_beam_init`][pybmad.eq_kv_beam_init] | Routine | [Bmad](bmad.md) |
-| [`eq_lat`][pybmad.eq_lat] | Routine | [Bmad](bmad.md) |
-| [`eq_lat_ele_loc`][pybmad.eq_lat_ele_loc] | Routine | [Bmad](bmad.md) |
-| [`eq_lat_param`][pybmad.eq_lat_param] | Routine | [Bmad](bmad.md) |
-| [`eq_linac_normal_mode`][pybmad.eq_linac_normal_mode] | Routine | [Bmad](bmad.md) |
-| [`eq_mode3`][pybmad.eq_mode3] | Routine | [Bmad](bmad.md) |
-| [`eq_mode_info`][pybmad.eq_mode_info] | Routine | [Bmad](bmad.md) |
-| [`eq_normal_modes`][pybmad.eq_normal_modes] | Routine | [Bmad](bmad.md) |
-| [`eq_photon_element`][pybmad.eq_photon_element] | Routine | [Bmad](bmad.md) |
-| [`eq_photon_material`][pybmad.eq_photon_material] | Routine | [Bmad](bmad.md) |
-| [`eq_photon_reflect_surface`][pybmad.eq_photon_reflect_surface] | Routine | [Bmad](bmad.md) |
-| [`eq_photon_reflect_table`][pybmad.eq_photon_reflect_table] | Routine | [Bmad](bmad.md) |
-| [`eq_photon_target`][pybmad.eq_photon_target] | Routine | [Bmad](bmad.md) |
-| [`eq_pixel_detec`][pybmad.eq_pixel_detec] | Routine | [Bmad](bmad.md) |
-| [`eq_pixel_pt`][pybmad.eq_pixel_pt] | Routine | [Bmad](bmad.md) |
-| [`eq_pre_tracker`][pybmad.eq_pre_tracker] | Routine | [Bmad](bmad.md) |
-| [`eq_rad_int1`][pybmad.eq_rad_int1] | Routine | [Bmad](bmad.md) |
-| [`eq_rad_int_all_ele`][pybmad.eq_rad_int_all_ele] | Routine | [Bmad](bmad.md) |
-| [`eq_rad_int_branch`][pybmad.eq_rad_int_branch] | Routine | [Bmad](bmad.md) |
-| [`eq_rad_map`][pybmad.eq_rad_map] | Routine | [Bmad](bmad.md) |
-| [`eq_rad_map_ele`][pybmad.eq_rad_map_ele] | Routine | [Bmad](bmad.md) |
-| [`eq_ramper_lord`][pybmad.eq_ramper_lord] | Routine | [Bmad](bmad.md) |
-| [`eq_space_charge_common`][pybmad.eq_space_charge_common] | Routine | [Bmad](bmad.md) |
-| [`eq_spin_polar`][pybmad.eq_spin_polar] | Routine | [Bmad](bmad.md) |
-| [`eq_spline`][pybmad.eq_spline] | Routine | [Bmad](bmad.md) |
-| [`eq_strong_beam`][pybmad.eq_strong_beam] | Routine | [Bmad](bmad.md) |
-| [`eq_surface_curvature`][pybmad.eq_surface_curvature] | Routine | [Bmad](bmad.md) |
-| [`eq_surface_displacement`][pybmad.eq_surface_displacement] | Routine | [Bmad](bmad.md) |
-| [`eq_surface_displacement_pt`][pybmad.eq_surface_displacement_pt] | Routine | [Bmad](bmad.md) |
-| [`eq_surface_h_misalign`][pybmad.eq_surface_h_misalign] | Routine | [Bmad](bmad.md) |
-| [`eq_surface_h_misalign_pt`][pybmad.eq_surface_h_misalign_pt] | Routine | [Bmad](bmad.md) |
-| [`eq_surface_segmented`][pybmad.eq_surface_segmented] | Routine | [Bmad](bmad.md) |
-| [`eq_surface_segmented_pt`][pybmad.eq_surface_segmented_pt] | Routine | [Bmad](bmad.md) |
-| [`eq_target_point`][pybmad.eq_target_point] | Routine | [Bmad](bmad.md) |
-| [`eq_taylor`][pybmad.eq_taylor] | Routine | [Bmad](bmad.md) |
-| [`eq_taylor_term`][pybmad.eq_taylor_term] | Routine | [Bmad](bmad.md) |
-| [`eq_track`][pybmad.eq_track] | Routine | [Bmad](bmad.md) |
-| [`eq_track_point`][pybmad.eq_track_point] | Routine | [Bmad](bmad.md) |
-| [`eq_twiss`][pybmad.eq_twiss] | Routine | [Bmad](bmad.md) |
-| [`eq_wake`][pybmad.eq_wake] | Routine | [Bmad](bmad.md) |
-| [`eq_wake_lr`][pybmad.eq_wake_lr] | Routine | [Bmad](bmad.md) |
-| [`eq_wake_lr_mode`][pybmad.eq_wake_lr_mode] | Routine | [Bmad](bmad.md) |
-| [`eq_wake_sr`][pybmad.eq_wake_sr] | Routine | [Bmad](bmad.md) |
-| [`eq_wake_sr_mode`][pybmad.eq_wake_sr_mode] | Routine | [Bmad](bmad.md) |
-| [`eq_wake_sr_z_long`][pybmad.eq_wake_sr_z_long] | Routine | [Bmad](bmad.md) |
-| [`eq_wall3d`][pybmad.eq_wall3d] | Routine | [Bmad](bmad.md) |
-| [`eq_wall3d_section`][pybmad.eq_wall3d_section] | Routine | [Bmad](bmad.md) |
-| [`eq_wall3d_vertex`][pybmad.eq_wall3d_vertex] | Routine | [Bmad](bmad.md) |
-| [`eq_xy_disp`][pybmad.eq_xy_disp] | Routine | [Bmad](bmad.md) |
+| [`eq_ac_kicker`](bmad.md#eq_ac_kicker) | Routine | [Bmad](bmad.md) |
+| [`eq_ac_kicker_freq`](bmad.md#eq_ac_kicker_freq) | Routine | [Bmad](bmad.md) |
+| [`eq_ac_kicker_time`](bmad.md#eq_ac_kicker_time) | Routine | [Bmad](bmad.md) |
+| [`eq_anormal_mode`](bmad.md#eq_anormal_mode) | Routine | [Bmad](bmad.md) |
+| [`eq_aperture_param`](bmad.md#eq_aperture_param) | Routine | [Bmad](bmad.md) |
+| [`eq_aperture_point`](bmad.md#eq_aperture_point) | Routine | [Bmad](bmad.md) |
+| [`eq_aperture_scan`](bmad.md#eq_aperture_scan) | Routine | [Bmad](bmad.md) |
+| [`eq_beam`](bmad.md#eq_beam) | Routine | [Bmad](bmad.md) |
+| [`eq_beam_init`](bmad.md#eq_beam_init) | Routine | [Bmad](bmad.md) |
+| [`eq_bmad_common`](bmad.md#eq_bmad_common) | Routine | [Bmad](bmad.md) |
+| [`eq_bookkeeping_state`](bmad.md#eq_bookkeeping_state) | Routine | [Bmad](bmad.md) |
+| [`eq_bpm_phase_coupling`](bmad.md#eq_bpm_phase_coupling) | Routine | [Bmad](bmad.md) |
+| [`eq_branch`](bmad.md#eq_branch) | Routine | [Bmad](bmad.md) |
+| [`eq_bunch`](bmad.md#eq_bunch) | Routine | [Bmad](bmad.md) |
+| [`eq_bunch_params`](bmad.md#eq_bunch_params) | Routine | [Bmad](bmad.md) |
+| [`eq_cartesian_map`](bmad.md#eq_cartesian_map) | Routine | [Bmad](bmad.md) |
+| [`eq_cartesian_map_term`](bmad.md#eq_cartesian_map_term) | Routine | [Bmad](bmad.md) |
+| [`eq_cartesian_map_term1`](bmad.md#eq_cartesian_map_term1) | Routine | [Bmad](bmad.md) |
+| [`eq_complex_taylor`](bmad.md#eq_complex_taylor) | Routine | [Bmad](bmad.md) |
+| [`eq_complex_taylor_term`](bmad.md#eq_complex_taylor_term) | Routine | [Bmad](bmad.md) |
+| [`eq_control`](bmad.md#eq_control) | Routine | [Bmad](bmad.md) |
+| [`eq_control_ramp1`](bmad.md#eq_control_ramp1) | Routine | [Bmad](bmad.md) |
+| [`eq_control_var1`](bmad.md#eq_control_var1) | Routine | [Bmad](bmad.md) |
+| [`eq_controller`](bmad.md#eq_controller) | Routine | [Bmad](bmad.md) |
+| [`eq_coord`](bmad.md#eq_coord) | Routine | [Bmad](bmad.md) |
+| [`eq_coord_array`](bmad.md#eq_coord_array) | Routine | [Bmad](bmad.md) |
+| [`eq_cylindrical_map`](bmad.md#eq_cylindrical_map) | Routine | [Bmad](bmad.md) |
+| [`eq_cylindrical_map_term`](bmad.md#eq_cylindrical_map_term) | Routine | [Bmad](bmad.md) |
+| [`eq_cylindrical_map_term1`](bmad.md#eq_cylindrical_map_term1) | Routine | [Bmad](bmad.md) |
+| [`eq_ele`](bmad.md#eq_ele) | Routine | [Bmad](bmad.md) |
+| [`eq_ellipse_beam_init`](bmad.md#eq_ellipse_beam_init) | Routine | [Bmad](bmad.md) |
+| [`eq_em_field`](bmad.md#eq_em_field) | Routine | [Bmad](bmad.md) |
+| [`eq_expression_atom`](bmad.md#eq_expression_atom) | Routine | [Bmad](bmad.md) |
+| [`eq_floor_position`](bmad.md#eq_floor_position) | Routine | [Bmad](bmad.md) |
+| [`eq_gen_grad1`](bmad.md#eq_gen_grad1) | Routine | [Bmad](bmad.md) |
+| [`eq_gen_grad_map`](bmad.md#eq_gen_grad_map) | Routine | [Bmad](bmad.md) |
+| [`eq_gg_taylor`](bmad.md#eq_gg_taylor) | Routine | [Bmad](bmad.md) |
+| [`eq_gg_taylor_term`](bmad.md#eq_gg_taylor_term) | Routine | [Bmad](bmad.md) |
+| [`eq_grid_beam_init`](bmad.md#eq_grid_beam_init) | Routine | [Bmad](bmad.md) |
+| [`eq_grid_field`](bmad.md#eq_grid_field) | Routine | [Bmad](bmad.md) |
+| [`eq_grid_field_pt`](bmad.md#eq_grid_field_pt) | Routine | [Bmad](bmad.md) |
+| [`eq_grid_field_pt1`](bmad.md#eq_grid_field_pt1) | Routine | [Bmad](bmad.md) |
+| [`eq_high_energy_space_charge`](bmad.md#eq_high_energy_space_charge) | Routine | [Bmad](bmad.md) |
+| [`eq_interval1_coef`](bmad.md#eq_interval1_coef) | Routine | [Bmad](bmad.md) |
+| [`eq_kv_beam_init`](bmad.md#eq_kv_beam_init) | Routine | [Bmad](bmad.md) |
+| [`eq_lat`](bmad.md#eq_lat) | Routine | [Bmad](bmad.md) |
+| [`eq_lat_ele_loc`](bmad.md#eq_lat_ele_loc) | Routine | [Bmad](bmad.md) |
+| [`eq_lat_param`](bmad.md#eq_lat_param) | Routine | [Bmad](bmad.md) |
+| [`eq_linac_normal_mode`](bmad.md#eq_linac_normal_mode) | Routine | [Bmad](bmad.md) |
+| [`eq_mode3`](bmad.md#eq_mode3) | Routine | [Bmad](bmad.md) |
+| [`eq_mode_info`](bmad.md#eq_mode_info) | Routine | [Bmad](bmad.md) |
+| [`eq_normal_modes`](bmad.md#eq_normal_modes) | Routine | [Bmad](bmad.md) |
+| [`eq_photon_element`](bmad.md#eq_photon_element) | Routine | [Bmad](bmad.md) |
+| [`eq_photon_material`](bmad.md#eq_photon_material) | Routine | [Bmad](bmad.md) |
+| [`eq_photon_reflect_surface`](bmad.md#eq_photon_reflect_surface) | Routine | [Bmad](bmad.md) |
+| [`eq_photon_reflect_table`](bmad.md#eq_photon_reflect_table) | Routine | [Bmad](bmad.md) |
+| [`eq_photon_target`](bmad.md#eq_photon_target) | Routine | [Bmad](bmad.md) |
+| [`eq_pixel_detec`](bmad.md#eq_pixel_detec) | Routine | [Bmad](bmad.md) |
+| [`eq_pixel_pt`](bmad.md#eq_pixel_pt) | Routine | [Bmad](bmad.md) |
+| [`eq_pre_tracker`](bmad.md#eq_pre_tracker) | Routine | [Bmad](bmad.md) |
+| [`eq_rad_int1`](bmad.md#eq_rad_int1) | Routine | [Bmad](bmad.md) |
+| [`eq_rad_int_all_ele`](bmad.md#eq_rad_int_all_ele) | Routine | [Bmad](bmad.md) |
+| [`eq_rad_int_branch`](bmad.md#eq_rad_int_branch) | Routine | [Bmad](bmad.md) |
+| [`eq_rad_map`](bmad.md#eq_rad_map) | Routine | [Bmad](bmad.md) |
+| [`eq_rad_map_ele`](bmad.md#eq_rad_map_ele) | Routine | [Bmad](bmad.md) |
+| [`eq_ramper_lord`](bmad.md#eq_ramper_lord) | Routine | [Bmad](bmad.md) |
+| [`eq_space_charge_common`](bmad.md#eq_space_charge_common) | Routine | [Bmad](bmad.md) |
+| [`eq_spin_polar`](bmad.md#eq_spin_polar) | Routine | [Bmad](bmad.md) |
+| [`eq_spline`](bmad.md#eq_spline) | Routine | [Bmad](bmad.md) |
+| [`eq_strong_beam`](bmad.md#eq_strong_beam) | Routine | [Bmad](bmad.md) |
+| [`eq_surface_curvature`](bmad.md#eq_surface_curvature) | Routine | [Bmad](bmad.md) |
+| [`eq_surface_displacement`](bmad.md#eq_surface_displacement) | Routine | [Bmad](bmad.md) |
+| [`eq_surface_displacement_pt`](bmad.md#eq_surface_displacement_pt) | Routine | [Bmad](bmad.md) |
+| [`eq_surface_h_misalign`](bmad.md#eq_surface_h_misalign) | Routine | [Bmad](bmad.md) |
+| [`eq_surface_h_misalign_pt`](bmad.md#eq_surface_h_misalign_pt) | Routine | [Bmad](bmad.md) |
+| [`eq_surface_segmented`](bmad.md#eq_surface_segmented) | Routine | [Bmad](bmad.md) |
+| [`eq_surface_segmented_pt`](bmad.md#eq_surface_segmented_pt) | Routine | [Bmad](bmad.md) |
+| [`eq_target_point`](bmad.md#eq_target_point) | Routine | [Bmad](bmad.md) |
+| [`eq_taylor`](bmad.md#eq_taylor) | Routine | [Bmad](bmad.md) |
+| [`eq_taylor_term`](bmad.md#eq_taylor_term) | Routine | [Bmad](bmad.md) |
+| [`eq_track`](bmad.md#eq_track) | Routine | [Bmad](bmad.md) |
+| [`eq_track_point`](bmad.md#eq_track_point) | Routine | [Bmad](bmad.md) |
+| [`eq_twiss`](bmad.md#eq_twiss) | Routine | [Bmad](bmad.md) |
+| [`eq_wake`](bmad.md#eq_wake) | Routine | [Bmad](bmad.md) |
+| [`eq_wake_lr`](bmad.md#eq_wake_lr) | Routine | [Bmad](bmad.md) |
+| [`eq_wake_lr_mode`](bmad.md#eq_wake_lr_mode) | Routine | [Bmad](bmad.md) |
+| [`eq_wake_sr`](bmad.md#eq_wake_sr) | Routine | [Bmad](bmad.md) |
+| [`eq_wake_sr_mode`](bmad.md#eq_wake_sr_mode) | Routine | [Bmad](bmad.md) |
+| [`eq_wake_sr_z_long`](bmad.md#eq_wake_sr_z_long) | Routine | [Bmad](bmad.md) |
+| [`eq_wall3d`](bmad.md#eq_wall3d) | Routine | [Bmad](bmad.md) |
+| [`eq_wall3d_section`](bmad.md#eq_wall3d_section) | Routine | [Bmad](bmad.md) |
+| [`eq_wall3d_vertex`](bmad.md#eq_wall3d_vertex) | Routine | [Bmad](bmad.md) |
+| [`eq_xy_disp`](bmad.md#eq_xy_disp) | Routine | [Bmad](bmad.md) |
 | `EQUAL` | Enum | [Enums](enums.md) |
-| [`equal_sign_here`][pybmad.equal_sign_here] | Routine | [Bmad](bmad.md) |
-| [`equivalent_taylor_attributes`][pybmad.equivalent_taylor_attributes] | Routine | [Bmad](bmad.md) |
-| [`err_exit`][pybmad.err_exit] | Routine | [Sim Utils](sim_utils.md) |
+| [`equal_sign_here`](bmad.md#equal_sign_here) | Routine | [Bmad](bmad.md) |
+| [`equivalent_taylor_attributes`](bmad.md#equivalent_taylor_attributes) | Routine | [Bmad](bmad.md) |
+| [`err_exit`](sim_utils.md#err_exit) | Routine | [Sim Utils](sim_utils.md) |
 | `ETA_A` | Enum | [Enums](enums.md) |
 | `ETA_B` | Enum | [Enums](enums.md) |
 | `ETA_X` | Enum | [Enums](enums.md) |
@@ -738,30 +738,30 @@
 | `ETAP_Y1` | Enum | [Enums](enums.md) |
 | `ETAP_Y_OUT` | Enum | [Enums](enums.md) |
 | `ETAP_Y_STORED` | Enum | [Enums](enums.md) |
-| [`etdiv`][pybmad.etdiv] | Routine | [Bmad](bmad.md) |
-| [`evaluate_array_index`][pybmad.evaluate_array_index] | Routine | [Bmad](bmad.md) |
-| [`evaluate_logical`][pybmad.evaluate_logical] | Routine | [Bmad](bmad.md) |
-| [`exact_bend_edge_kick`][pybmad.exact_bend_edge_kick] | Routine | [Bmad](bmad.md) |
+| [`etdiv`](bmad.md#etdiv) | Routine | [Bmad](bmad.md) |
+| [`evaluate_array_index`](bmad.md#evaluate_array_index) | Routine | [Bmad](bmad.md) |
+| [`evaluate_logical`](bmad.md#evaluate_logical) | Routine | [Bmad](bmad.md) |
+| [`exact_bend_edge_kick`](bmad.md#exact_bend_edge_kick) | Routine | [Bmad](bmad.md) |
 | `EXACT_MISALIGN` | Enum | [Enums](enums.md) |
 | `EXACT_MODEL` | Enum | [Enums](enums.md) |
 | `EXACT_MULTIPOLES` | Enum | [Enums](enums.md) |
 | `EXIT_END` | Enum | [Enums](enums.md) |
 | `EXP` | Enum | [Enums](enums.md) |
-| [`exp_bessi0`][pybmad.exp_bessi0] | Routine | [Bmad](bmad.md) |
-| [`expect_one_of`][pybmad.expect_one_of] | Routine | [Bmad](bmad.md) |
-| [`expect_this`][pybmad.expect_this] | Routine | [Bmad](bmad.md) |
-| [`expression_stack_to_string`][pybmad.expression_stack_to_string] | Routine | [Bmad](bmad.md) |
-| [`expression_stack_value`][pybmad.expression_stack_value] | Routine | [Bmad](bmad.md) |
-| [`expression_string_to_stack`][pybmad.expression_string_to_stack] | Routine | [Bmad](bmad.md) |
-| [`expression_string_to_tree`][pybmad.expression_string_to_tree] | Routine | [Bmad](bmad.md) |
-| [`expression_tree_to_string`][pybmad.expression_tree_to_string] | Routine | [Bmad](bmad.md) |
-| [`expression_value`][pybmad.expression_value] | Routine | [Bmad](bmad.md) |
+| [`exp_bessi0`](bmad.md#exp_bessi0) | Routine | [Bmad](bmad.md) |
+| [`expect_one_of`](bmad.md#expect_one_of) | Routine | [Bmad](bmad.md) |
+| [`expect_this`](bmad.md#expect_this) | Routine | [Bmad](bmad.md) |
+| [`expression_stack_to_string`](bmad.md#expression_stack_to_string) | Routine | [Bmad](bmad.md) |
+| [`expression_stack_value`](bmad.md#expression_stack_value) | Routine | [Bmad](bmad.md) |
+| [`expression_string_to_stack`](bmad.md#expression_string_to_stack) | Routine | [Bmad](bmad.md) |
+| [`expression_string_to_tree`](bmad.md#expression_string_to_tree) | Routine | [Bmad](bmad.md) |
+| [`expression_tree_to_string`](bmad.md#expression_tree_to_string) | Routine | [Bmad](bmad.md) |
+| [`expression_value`](bmad.md#expression_value) | Routine | [Bmad](bmad.md) |
 | [ExpressionAtomStruct](bmad.md#expressionatomstruct) | Struct | [Bmad](bmad.md) |
 | [ExpressionTreeStruct](bmad.md#expressiontreestruct) | Struct | [Bmad](bmad.md) |
 | `F_FACTOR` | Enum | [Enums](enums.md) |
-| [`factorial`][pybmad.factorial] | Routine | [Sim Utils](sim_utils.md) |
+| [`factorial`](sim_utils.md#factorial) | Routine | [Sim Utils](sim_utils.md) |
 | `FACTORIAL` | Enum | [Enums](enums.md) |
-| [`faddeeva_function`][pybmad.faddeeva_function] | Routine | [Sim Utils](sim_utils.md) |
+| [`faddeeva_function`](sim_utils.md#faddeeva_function) | Routine | [Sim Utils](sim_utils.md) |
 | `FALSE_` | Enum | [Enums](enums.md) |
 | `FALSE_INT` | Enum | [Enums](enums.md) |
 | `FAMILY_QU` | Enum | [Enums](enums.md) |
@@ -771,14 +771,14 @@
 | `FB1` | Enum | [Enums](enums.md) |
 | `FB2` | Enum | [Enums](enums.md) |
 | `FEEDBACK` | Enum | [Enums](enums.md) |
-| [`fft1`][pybmad.fft1] | Routine | [Bmad](bmad.md) |
-| [`fft_1d`][pybmad.fft_1d] | Routine | [Sim Utils](sim_utils.md) |
+| [`fft1`](bmad.md#fft1) | Routine | [Bmad](bmad.md) |
+| [`fft_1d`](sim_utils.md#fft_1d) | Routine | [Sim Utils](sim_utils.md) |
 | `FFT_3D` | Enum | [Enums](enums.md) |
 | [Fibre](forest.md#fibre) | Struct | [Forest / PTC](forest.md) |
-| [`fibre_to_ele`][pybmad.fibre_to_ele] | Routine | [Bmad](bmad.md) |
+| [`fibre_to_ele`](bmad.md#fibre_to_ele) | Routine | [Bmad](bmad.md) |
 | `FIDUCIAL` | Enum | [Enums](enums.md) |
 | `FIDUCIAL_PT` | Enum | [Enums](enums.md) |
-| [`field_attribute_free`][pybmad.field_attribute_free] | Routine | [Bmad](bmad.md) |
+| [`field_attribute_free`](bmad.md#field_attribute_free) | Routine | [Bmad](bmad.md) |
 | `FIELD_AUTOSCALE` | Enum | [Enums](enums.md) |
 | `FIELD_CALC` | Enum | [Enums](enums.md) |
 | `FIELD_LORD` | Enum | [Enums](enums.md) |
@@ -789,19 +789,19 @@
 | `FIELD_X` | Enum | [Enums](enums.md) |
 | `FIELD_Y` | Enum | [Enums](enums.md) |
 | `FIELDMAP` | Enum | [Enums](enums.md) |
-| [`file_directorizer`][pybmad.file_directorizer] | Routine | [Sim Utils](sim_utils.md) |
-| [`file_get`][pybmad.file_get] | Routine | [Sim Utils](sim_utils.md) |
-| [`file_get_open`][pybmad.file_get_open] | Routine | [Sim Utils](sim_utils.md) |
-| [`file_suffixer`][pybmad.file_suffixer] | Routine | [Sim Utils](sim_utils.md) |
+| [`file_directorizer`](sim_utils.md#file_directorizer) | Routine | [Sim Utils](sim_utils.md) |
+| [`file_get`](sim_utils.md#file_get) | Routine | [Sim Utils](sim_utils.md) |
+| [`file_get_open`](sim_utils.md#file_get_open) | Routine | [Sim Utils](sim_utils.md) |
+| [`file_suffixer`](sim_utils.md#file_suffixer) | Routine | [Sim Utils](sim_utils.md) |
 | `FILLED_ARROW_HEAD` | Enum | [Enums](enums.md) |
 | `FINAL_CHARGE` | Enum | [Enums](enums.md) |
-| [`finalize_reflectivity_table`][pybmad.finalize_reflectivity_table] | Routine | [Bmad](bmad.md) |
-| [`find_element_ends`][pybmad.find_element_ends] | Routine | [Bmad](bmad.md) |
-| [`find_fwhm`][pybmad.find_fwhm] | Routine | [Bmad](bmad.md) |
-| [`find_location`][pybmad.find_location] | Routine | [Sim Utils](sim_utils.md) |
-| [`find_matching_fieldmap`][pybmad.find_matching_fieldmap] | Routine | [Bmad](bmad.md) |
-| [`find_normalization`][pybmad.find_normalization] | Routine | [Bmad](bmad.md) |
-| [`fine_frequency_estimate`][pybmad.fine_frequency_estimate] | Routine | [Sim Utils](sim_utils.md) |
+| [`finalize_reflectivity_table`](bmad.md#finalize_reflectivity_table) | Routine | [Bmad](bmad.md) |
+| [`find_element_ends`](bmad.md#find_element_ends) | Routine | [Bmad](bmad.md) |
+| [`find_fwhm`](bmad.md#find_fwhm) | Routine | [Bmad](bmad.md) |
+| [`find_location`](sim_utils.md#find_location) | Routine | [Sim Utils](sim_utils.md) |
+| [`find_matching_fieldmap`](bmad.md#find_matching_fieldmap) | Routine | [Bmad](bmad.md) |
+| [`find_normalization`](bmad.md#find_normalization) | Routine | [Bmad](bmad.md) |
+| [`fine_frequency_estimate`](sim_utils.md#fine_frequency_estimate) | Routine | [Sim Utils](sim_utils.md) |
 | `FINE_STRUCTURE_CONSTANT` | Enum | [Enums](enums.md) |
 | `FINT` | Enum | [Enums](enums.md) |
 | `FINTX` | Enum | [Enums](enums.md) |
@@ -809,86 +809,86 @@
 | `FIRST_TRACK_EDGE` | Enum | [Enums](enums.md) |
 | `FIXED_STEP_RUNGE_KUTTA` | Enum | [Enums](enums.md) |
 | `FIXED_STEP_TIME_RUNGE_KUTTA` | Enum | [Enums](enums.md) |
-| [`fixedwindowls`][pybmad.fixedwindowls] | Routine | [Sim Utils](sim_utils.md) |
+| [`fixedwindowls`](sim_utils.md#fixedwindowls) | Routine | [Sim Utils](sim_utils.md) |
 | `FIXER` | Enum | [Enums](enums.md) |
 | `FLEXIBLE` | Enum | [Enums](enums.md) |
 | `FLOOR` | Enum | [Enums](enums.md) |
-| [`floor_angles_to_w_mat`][pybmad.floor_angles_to_w_mat] | Routine | [Bmad](bmad.md) |
+| [`floor_angles_to_w_mat`](bmad.md#floor_angles_to_w_mat) | Routine | [Bmad](bmad.md) |
 | `FLOOR_POSITION_GROUP` | Enum | [Enums](enums.md) |
 | `FLOOR_SHIFT` | Enum | [Enums](enums.md) |
-| [`floor_w_mat_to_angles`][pybmad.floor_w_mat_to_angles] | Routine | [Bmad](bmad.md) |
+| [`floor_w_mat_to_angles`](bmad.md#floor_w_mat_to_angles) | Routine | [Bmad](bmad.md) |
 | [FloorPositionStruct](bmad.md#floorpositionstruct) | Struct | [Bmad](bmad.md) |
 | `FOCAL_STRENGTH` | Enum | [Enums](enums.md) |
 | `FOIL` | Enum | [Enums](enums.md) |
 | `FORK` | Enum | [Enums](enums.md) |
-| [`form_complex_taylor`][pybmad.form_complex_taylor] | Routine | [Bmad](bmad.md) |
-| [`form_digested_bmad_file_name`][pybmad.form_digested_bmad_file_name] | Routine | [Bmad](bmad.md) |
+| [`form_complex_taylor`](bmad.md#form_complex_taylor) | Routine | [Bmad](bmad.md) |
+| [`form_digested_bmad_file_name`](bmad.md#form_digested_bmad_file_name) | Routine | [Bmad](bmad.md) |
 | `FORWARD_DIFFRACTED` | Enum | [Enums](enums.md) |
-| [`fourier_amplitude`][pybmad.fourier_amplitude] | Routine | [Sim Utils](sim_utils.md) |
+| [`fourier_amplitude`](sim_utils.md#fourier_amplitude) | Routine | [Sim Utils](sim_utils.md) |
 | `FOURPI` | Enum | [Enums](enums.md) |
 | `FQ1` | Enum | [Enums](enums.md) |
 | `FQ2` | Enum | [Enums](enums.md) |
 | `FREE` | Enum | [Enums](enums.md) |
 | `FREQUENCIES` | Enum | [Enums](enums.md) |
 | `FRINGE_AT` | Enum | [Enums](enums.md) |
-| [`fringe_here`][pybmad.fringe_here] | Routine | [Bmad](bmad.md) |
+| [`fringe_here`](bmad.md#fringe_here) | Routine | [Bmad](bmad.md) |
 | `FRINGE_TYPE` | Enum | [Enums](enums.md) |
 | `FULL` | Enum | [Enums](enums.md) |
 | `FUNC_PARENS` | Enum | [Enums](enums.md) |
 | `FUNCTION` | Enum | [Enums](enums.md) |
 | `G` | Enum | [Enums](enums.md) |
-| [`g_bend_from_em_field`][pybmad.g_bend_from_em_field] | Routine | [Bmad](bmad.md) |
-| [`g_bending_strength_from_em_field`][pybmad.g_bending_strength_from_em_field] | Routine | [Bmad](bmad.md) |
+| [`g_bend_from_em_field`](bmad.md#g_bend_from_em_field) | Routine | [Bmad](bmad.md) |
+| [`g_bending_strength_from_em_field`](bmad.md#g_bending_strength_from_em_field) | Routine | [Bmad](bmad.md) |
 | `G_ERR` | Enum | [Enums](enums.md) |
-| [`g_integrals_calc`][pybmad.g_integrals_calc] | Routine | [Bmad](bmad.md) |
+| [`g_integrals_calc`](bmad.md#g_integrals_calc) | Routine | [Bmad](bmad.md) |
 | `G_MAX` | Enum | [Enums](enums.md) |
 | `G_TOT` | Enum | [Enums](enums.md) |
-| [`gamma_ref`][pybmad.gamma_ref] | Routine | [Bmad](bmad.md) |
+| [`gamma_ref`](bmad.md#gamma_ref) | Routine | [Bmad](bmad.md) |
 | `GANG` | Enum | [Enums](enums.md) |
 | `GAP` | Enum | [Enums](enums.md) |
 | `GAUSSIAN` | Enum | [Enums](enums.md) |
-| [`gelbd`][pybmad.gelbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`gen_complete_elliptic`][pybmad.gen_complete_elliptic] | Routine | [Sim Utils](sim_utils.md) |
-| [`gen_grad1_to_gg_taylor`][pybmad.gen_grad1_to_gg_taylor] | Routine | [Bmad](bmad.md) |
-| [`gen_grad_at_s_to_gg_taylor`][pybmad.gen_grad_at_s_to_gg_taylor] | Routine | [Bmad](bmad.md) |
-| [`gen_grad_field`][pybmad.gen_grad_field] | Routine | [Bmad](bmad.md) |
+| [`gelbd`](sim_utils.md#gelbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`gen_complete_elliptic`](sim_utils.md#gen_complete_elliptic) | Routine | [Sim Utils](sim_utils.md) |
+| [`gen_grad1_to_gg_taylor`](bmad.md#gen_grad1_to_gg_taylor) | Routine | [Bmad](bmad.md) |
+| [`gen_grad_at_s_to_gg_taylor`](bmad.md#gen_grad_at_s_to_gg_taylor) | Routine | [Bmad](bmad.md) |
+| [`gen_grad_field`](bmad.md#gen_grad_field) | Routine | [Bmad](bmad.md) |
 | `GEN_GRAD_MAP` | Enum | [Enums](enums.md) |
 | [GenGrad1Struct](bmad.md#gengrad1struct) | Struct | [Bmad](bmad.md) |
 | [GenGradMapStruct](bmad.md#gengradmapstruct) | Struct | [Bmad](bmad.md) |
 | `GEOMETRY` | Enum | [Enums](enums.md) |
-| [`get_a_char`][pybmad.get_a_char] | Routine | [Sim Utils](sim_utils.md) |
-| [`get_bl_from_fwhm`][pybmad.get_bl_from_fwhm] | Routine | [Bmad](bmad.md) |
-| [`get_called_file`][pybmad.get_called_file] | Routine | [Bmad](bmad.md) |
-| [`get_emit_from_sigma_mat`][pybmad.get_emit_from_sigma_mat] | Routine | [Bmad](bmad.md) |
-| [`get_file_number`][pybmad.get_file_number] | Routine | [Sim Utils](sim_utils.md) |
-| [`get_file_time_stamp`][pybmad.get_file_time_stamp] | Routine | [Sim Utils](sim_utils.md) |
-| [`get_list_of_names`][pybmad.get_list_of_names] | Routine | [Bmad](bmad.md) |
-| [`get_next_word`][pybmad.get_next_word] | Routine | [Bmad](bmad.md) |
-| [`get_sequence_args`][pybmad.get_sequence_args] | Routine | [Bmad](bmad.md) |
-| [`get_slave_list`][pybmad.get_slave_list] | Routine | [Bmad](bmad.md) |
-| [`get_switch`][pybmad.get_switch] | Routine | [Bmad](bmad.md) |
-| [`get_tty_char`][pybmad.get_tty_char] | Routine | [Sim Utils](sim_utils.md) |
-| [`gg_taylor_equal_gg_taylor`][pybmad.gg_taylor_equal_gg_taylor] | Routine | [Bmad](bmad.md) |
-| [`gg_taylors_equal_gg_taylors`][pybmad.gg_taylors_equal_gg_taylors] | Routine | [Bmad](bmad.md) |
+| [`get_a_char`](sim_utils.md#get_a_char) | Routine | [Sim Utils](sim_utils.md) |
+| [`get_bl_from_fwhm`](bmad.md#get_bl_from_fwhm) | Routine | [Bmad](bmad.md) |
+| [`get_called_file`](bmad.md#get_called_file) | Routine | [Bmad](bmad.md) |
+| [`get_emit_from_sigma_mat`](bmad.md#get_emit_from_sigma_mat) | Routine | [Bmad](bmad.md) |
+| [`get_file_number`](sim_utils.md#get_file_number) | Routine | [Sim Utils](sim_utils.md) |
+| [`get_file_time_stamp`](sim_utils.md#get_file_time_stamp) | Routine | [Sim Utils](sim_utils.md) |
+| [`get_list_of_names`](bmad.md#get_list_of_names) | Routine | [Bmad](bmad.md) |
+| [`get_next_word`](bmad.md#get_next_word) | Routine | [Bmad](bmad.md) |
+| [`get_sequence_args`](bmad.md#get_sequence_args) | Routine | [Bmad](bmad.md) |
+| [`get_slave_list`](bmad.md#get_slave_list) | Routine | [Bmad](bmad.md) |
+| [`get_switch`](bmad.md#get_switch) | Routine | [Bmad](bmad.md) |
+| [`get_tty_char`](sim_utils.md#get_tty_char) | Routine | [Sim Utils](sim_utils.md) |
+| [`gg_taylor_equal_gg_taylor`](bmad.md#gg_taylor_equal_gg_taylor) | Routine | [Bmad](bmad.md) |
+| [`gg_taylors_equal_gg_taylors`](bmad.md#gg_taylors_equal_gg_taylors) | Routine | [Bmad](bmad.md) |
 | [GgTaylorStruct](bmad.md#ggtaylorstruct) | Struct | [Bmad](bmad.md) |
 | [GgTaylorTermStruct](bmad.md#ggtaylortermstruct) | Struct | [Bmad](bmad.md) |
 | `GIRDER` | Enum | [Enums](enums.md) |
 | `GIRDER_LORD` | Enum | [Enums](enums.md) |
 | `GKICKER` | Enum | [Enums](enums.md) |
 | `GOVERNOR` | Enum | [Enums](enums.md) |
-| [`gpt_field_grid_scaling`][pybmad.gpt_field_grid_scaling] | Routine | [Bmad](bmad.md) |
-| [`gpt_max_field_reference`][pybmad.gpt_max_field_reference] | Routine | [Bmad](bmad.md) |
-| [`gpt_to_particle_bunch`][pybmad.gpt_to_particle_bunch] | Routine | [Bmad](bmad.md) |
+| [`gpt_field_grid_scaling`](bmad.md#gpt_field_grid_scaling) | Routine | [Bmad](bmad.md) |
+| [`gpt_max_field_reference`](bmad.md#gpt_max_field_reference) | Routine | [Bmad](bmad.md) |
+| [`gpt_to_particle_bunch`](bmad.md#gpt_to_particle_bunch) | Routine | [Bmad](bmad.md) |
 | `GRADIENT` | Enum | [Enums](enums.md) |
 | `GRADIENT_ERR` | Enum | [Enums](enums.md) |
-| [`gradient_shift_sr_wake`][pybmad.gradient_shift_sr_wake] | Routine | [Bmad](bmad.md) |
+| [`gradient_shift_sr_wake`](bmad.md#gradient_shift_sr_wake) | Routine | [Bmad](bmad.md) |
 | `GRADIENT_TOT` | Enum | [Enums](enums.md) |
 | `GRAZE_ANGLE` | Enum | [Enums](enums.md) |
 | `GRAZE_ANGLE_IN` | Enum | [Enums](enums.md) |
 | `GRAZE_ANGLE_OUT` | Enum | [Enums](enums.md) |
 | `GREEN` | Enum | [Enums](enums.md) |
 | `GRID_FIELD` | Enum | [Enums](enums.md) |
-| [`grid_field_interpolate`][pybmad.grid_field_interpolate] | Routine | [Bmad](bmad.md) |
+| [`grid_field_interpolate`](bmad.md#grid_field_interpolate) | Routine | [Bmad](bmad.md) |
 | [GridBeamInitStruct](bmad.md#gridbeaminitstruct) | Struct | [Bmad](bmad.md) |
 | [GridFieldPt1Struct](bmad.md#gridfieldpt1struct) | Struct | [Bmad](bmad.md) |
 | [GridFieldPtStruct](bmad.md#gridfieldptstruct) | Struct | [Bmad](bmad.md) |
@@ -900,18 +900,18 @@
 | `H_BAR_PLANCK` | Enum | [Enums](enums.md) |
 | `H_DISPLACE` | Enum | [Enums](enums.md) |
 | `H_PLANCK` | Enum | [Enums](enums.md) |
-| [`hanhan`][pybmad.hanhan] | Routine | [Sim Utils](sim_utils.md) |
+| [`hanhan`](sim_utils.md#hanhan) | Routine | [Sim Utils](sim_utils.md) |
 | `HARD_EDGE_ONLY` | Enum | [Enums](enums.md) |
-| [`hard_multipole_edge_kick`][pybmad.hard_multipole_edge_kick] | Routine | [Bmad](bmad.md) |
+| [`hard_multipole_edge_kick`](bmad.md#hard_multipole_edge_kick) | Routine | [Bmad](bmad.md) |
 | `HARMON` | Enum | [Enums](enums.md) |
 | `HARMON_MASTER` | Enum | [Enums](enums.md) |
-| [`has_attribute`][pybmad.has_attribute] | Routine | [Bmad](bmad.md) |
-| [`has_curvature`][pybmad.has_curvature] | Routine | [Bmad](bmad.md) |
-| [`has_orientation_attributes`][pybmad.has_orientation_attributes] | Routine | [Bmad](bmad.md) |
+| [`has_attribute`](bmad.md#has_attribute) | Routine | [Bmad](bmad.md) |
+| [`has_curvature`](bmad.md#has_curvature) | Routine | [Bmad](bmad.md) |
+| [`has_orientation_attributes`](bmad.md#has_orientation_attributes) | Routine | [Bmad](bmad.md) |
 | `HATCHED` | Enum | [Enums](enums.md) |
 | `HDF5` | Enum | [Enums](enums.md) |
-| [`hdf5_write_beam`][pybmad.hdf5_write_beam] | Routine | [Bmad](bmad.md) |
-| [`hdf5_write_grid_field`][pybmad.hdf5_write_grid_field] | Routine | [Bmad](bmad.md) |
+| [`hdf5_write_beam`](bmad.md#hdf5_write_beam) | Routine | [Bmad](bmad.md) |
+| [`hdf5_write_grid_field`](bmad.md#hdf5_write_grid_field) | Routine | [Bmad](bmad.md) |
 | `HELICAL_MODEL` | Enum | [Enums](enums.md) |
 | `HELION` | Enum | [Enums](enums.md) |
 | `HGAP` | Enum | [Enums](enums.md) |
@@ -921,98 +921,98 @@
 | `HIGHLAND` | Enum | [Enums](enums.md) |
 | `HKICK` | Enum | [Enums](enums.md) |
 | `HKICKER` | Enum | [Enums](enums.md) |
-| [`hom_voltage`][pybmad.hom_voltage] | Routine | [Bsim](bsim.md) |
+| [`hom_voltage`](bsim.md#hom_voltage) | Routine | [Bsim](bsim.md) |
 | `HORIZONTALLY_PURE` | Enum | [Enums](enums.md) |
-| [`hwang_bend_edge_kick`][pybmad.hwang_bend_edge_kick] | Routine | [Bmad](bmad.md) |
+| [`hwang_bend_edge_kick`](bmad.md#hwang_bend_edge_kick) | Routine | [Bmad](bmad.md) |
 | `HYBRID` | Enum | [Enums](enums.md) |
 | `HYPER_X` | Enum | [Enums](enums.md) |
 | `HYPER_XY` | Enum | [Enums](enums.md) |
 | `HYPER_Y` | Enum | [Enums](enums.md) |
-| [`i_bessel`][pybmad.i_bessel] | Routine | [Sim Utils](sim_utils.md) |
-| [`i_bessel_extended`][pybmad.i_bessel_extended] | Routine | [Sim Utils](sim_utils.md) |
-| [`ibs_matrix_c`][pybmad.ibs_matrix_c] | Routine | [Bmad](bmad.md) |
+| [`i_bessel`](sim_utils.md#i_bessel) | Routine | [Sim Utils](sim_utils.md) |
+| [`i_bessel_extended`](sim_utils.md#i_bessel_extended) | Routine | [Sim Utils](sim_utils.md) |
+| [`ibs_matrix_c`](bmad.md#ibs_matrix_c) | Routine | [Bmad](bmad.md) |
 | `IDENTITY` | Enum | [Enums](enums.md) |
-| [`igfcoulombfun`][pybmad.igfcoulombfun] | Routine | [Bmad](bmad.md) |
-| [`igfexfun`][pybmad.igfexfun] | Routine | [Bmad](bmad.md) |
-| [`igfeyfun`][pybmad.igfeyfun] | Routine | [Bmad](bmad.md) |
-| [`igfezfun`][pybmad.igfezfun] | Routine | [Bmad](bmad.md) |
+| [`igfcoulombfun`](bmad.md#igfcoulombfun) | Routine | [Bmad](bmad.md) |
+| [`igfexfun`](bmad.md#igfexfun) | Routine | [Bmad](bmad.md) |
+| [`igfeyfun`](bmad.md#igfeyfun) | Routine | [Bmad](bmad.md) |
+| [`igfezfun`](bmad.md#igfezfun) | Routine | [Bmad](bmad.md) |
 | `IMPACTT` | Enum | [Enums](enums.md) |
 | `IN_BETWEEN` | Enum | [Enums](enums.md) |
 | `IN_STOP_BAND` | Enum | [Enums](enums.md) |
 | `INCLUDE_KICKS` | Enum | [Enums](enums.md) |
 | `INCOHERENT` | Enum | [Enums](enums.md) |
-| [`increment_file_number`][pybmad.increment_file_number] | Routine | [Sim Utils](sim_utils.md) |
-| [`index_nocase`][pybmad.index_nocase] | Routine | [Sim Utils](sim_utils.md) |
+| [`increment_file_number`](sim_utils.md#increment_file_number) | Routine | [Sim Utils](sim_utils.md) |
+| [`index_nocase`](sim_utils.md#index_nocase) | Routine | [Sim Utils](sim_utils.md) |
 | `INHERIT_FROM_FORK` | Enum | [Enums](enums.md) |
-| [`init_attribute_name1`][pybmad.init_attribute_name1] | Routine | [Bmad](bmad.md) |
-| [`init_attribute_name_array`][pybmad.init_attribute_name_array] | Routine | [Bmad](bmad.md) |
-| [`init_beam_distribution`][pybmad.init_beam_distribution] | Routine | [Bmad](bmad.md) |
-| [`init_bmad`][pybmad.init_bmad] | Routine | [Bmad](bmad.md) |
-| [`init_bmad_parser_common`][pybmad.init_bmad_parser_common] | Routine | [Bmad](bmad.md) |
-| [`init_bunch_distribution`][pybmad.init_bunch_distribution] | Routine | [Bmad](bmad.md) |
-| [`init_complex_taylor_series`][pybmad.init_complex_taylor_series] | Routine | [Bmad](bmad.md) |
-| [`init_coord`][pybmad.init_coord] | Routine | [Bmad](bmad.md) |
-| [`init_custom`][pybmad.init_custom] | Routine | [Bmad](bmad.md) |
-| [`init_ele`][pybmad.init_ele] | Routine | [Bmad](bmad.md) |
-| [`init_gg_taylor_series`][pybmad.init_gg_taylor_series] | Routine | [Bmad](bmad.md) |
-| [`init_lat`][pybmad.init_lat] | Routine | [Bmad](bmad.md) |
-| [`init_multipole_cache`][pybmad.init_multipole_cache] | Routine | [Bmad](bmad.md) |
+| [`init_attribute_name1`](bmad.md#init_attribute_name1) | Routine | [Bmad](bmad.md) |
+| [`init_attribute_name_array`](bmad.md#init_attribute_name_array) | Routine | [Bmad](bmad.md) |
+| [`init_beam_distribution`](bmad.md#init_beam_distribution) | Routine | [Bmad](bmad.md) |
+| [`init_bmad`](bmad.md#init_bmad) | Routine | [Bmad](bmad.md) |
+| [`init_bmad_parser_common`](bmad.md#init_bmad_parser_common) | Routine | [Bmad](bmad.md) |
+| [`init_bunch_distribution`](bmad.md#init_bunch_distribution) | Routine | [Bmad](bmad.md) |
+| [`init_complex_taylor_series`](bmad.md#init_complex_taylor_series) | Routine | [Bmad](bmad.md) |
+| [`init_coord`](bmad.md#init_coord) | Routine | [Bmad](bmad.md) |
+| [`init_custom`](bmad.md#init_custom) | Routine | [Bmad](bmad.md) |
+| [`init_ele`](bmad.md#init_ele) | Routine | [Bmad](bmad.md) |
+| [`init_gg_taylor_series`](bmad.md#init_gg_taylor_series) | Routine | [Bmad](bmad.md) |
+| [`init_lat`](bmad.md#init_lat) | Routine | [Bmad](bmad.md) |
+| [`init_multipole_cache`](bmad.md#init_multipole_cache) | Routine | [Bmad](bmad.md) |
 | `INIT_NEEDED` | Enum | [Enums](enums.md) |
-| [`init_photon_from_a_photon_init_ele`][pybmad.init_photon_from_a_photon_init_ele] | Routine | [Bmad](bmad.md) |
-| [`init_photon_integ_prob`][pybmad.init_photon_integ_prob] | Routine | [Bmad](bmad.md) |
-| [`init_spin_distribution`][pybmad.init_spin_distribution] | Routine | [Bmad](bmad.md) |
-| [`init_surface_segment`][pybmad.init_surface_segment] | Routine | [Bmad](bmad.md) |
-| [`init_taylor_series`][pybmad.init_taylor_series] | Routine | [Bmad](bmad.md) |
-| [`init_wake`][pybmad.init_wake] | Routine | [Bmad](bmad.md) |
-| [`initfixedwindowls`][pybmad.initfixedwindowls] | Routine | [Sim Utils](sim_utils.md) |
-| [`initial_lmdif`][pybmad.initial_lmdif] | Routine | [Sim Utils](sim_utils.md) |
+| [`init_photon_from_a_photon_init_ele`](bmad.md#init_photon_from_a_photon_init_ele) | Routine | [Bmad](bmad.md) |
+| [`init_photon_integ_prob`](bmad.md#init_photon_integ_prob) | Routine | [Bmad](bmad.md) |
+| [`init_spin_distribution`](bmad.md#init_spin_distribution) | Routine | [Bmad](bmad.md) |
+| [`init_surface_segment`](bmad.md#init_surface_segment) | Routine | [Bmad](bmad.md) |
+| [`init_taylor_series`](bmad.md#init_taylor_series) | Routine | [Bmad](bmad.md) |
+| [`init_wake`](bmad.md#init_wake) | Routine | [Bmad](bmad.md) |
+| [`initfixedwindowls`](sim_utils.md#initfixedwindowls) | Routine | [Sim Utils](sim_utils.md) |
+| [`initial_lmdif`](sim_utils.md#initial_lmdif) | Routine | [Sim Utils](sim_utils.md) |
 | `INPUT_ELE` | Enum | [Enums](enums.md) |
-| [`insert_element`][pybmad.insert_element] | Routine | [Bmad](bmad.md) |
-| [`insert_phase_trombone`][pybmad.insert_phase_trombone] | Routine | [Bsim](bsim.md) |
+| [`insert_element`](bmad.md#insert_element) | Routine | [Bmad](bmad.md) |
+| [`insert_phase_trombone`](bsim.md#insert_phase_trombone) | Routine | [Bsim](bsim.md) |
 | `INSIDE` | Enum | [Enums](enums.md) |
 | `INSTRUMENT` | Enum | [Enums](enums.md) |
 | `INT` | Enum | [Enums](enums.md) |
 | `INT_GARBAGE` | Enum | [Enums](enums.md) |
-| [`int_str`][pybmad.int_str] | Routine | [Sim Utils](sim_utils.md) |
-| [`integrand_base`][pybmad.integrand_base] | Routine | [Bmad](bmad.md) |
-| [`integrate_max`][pybmad.integrate_max] | Routine | [Tao](tao.md) |
-| [`integrate_min`][pybmad.integrate_min] | Routine | [Tao](tao.md) |
-| [`integrate_psi`][pybmad.integrate_psi] | Routine | [Bmad](bmad.md) |
-| [`integrated_mats`][pybmad.integrated_mats] | Routine | [Bmad](bmad.md) |
-| [`integration_timer`][pybmad.integration_timer] | Routine | [Bmad](bmad.md) |
+| [`int_str`](sim_utils.md#int_str) | Routine | [Sim Utils](sim_utils.md) |
+| [`integrand_base`](bmad.md#integrand_base) | Routine | [Bmad](bmad.md) |
+| [`integrate_max`](tao.md#integrate_max) | Routine | [Tao](tao.md) |
+| [`integrate_min`](tao.md#integrate_min) | Routine | [Tao](tao.md) |
+| [`integrate_psi`](bmad.md#integrate_psi) | Routine | [Bmad](bmad.md) |
+| [`integrated_mats`](bmad.md#integrated_mats) | Routine | [Bmad](bmad.md) |
+| [`integration_timer`](bmad.md#integration_timer) | Routine | [Bmad](bmad.md) |
 | `INTEGRATOR_ORDER` | Enum | [Enums](enums.md) |
-| [`interpolated_fft`][pybmad.interpolated_fft] | Routine | [Sim Utils](sim_utils.md) |
-| [`interpolated_fft_gsl`][pybmad.interpolated_fft_gsl] | Routine | [Sim Utils](sim_utils.md) |
+| [`interpolated_fft`](sim_utils.md#interpolated_fft) | Routine | [Sim Utils](sim_utils.md) |
+| [`interpolated_fft_gsl`](sim_utils.md#interpolated_fft_gsl) | Routine | [Sim Utils](sim_utils.md) |
 | `INTERPOLATION` | Enum | [Enums](enums.md) |
 | [Interval1CoefStruct](bmad.md#interval1coefstruct) | Struct | [Bmad](bmad.md) |
 | `INVALID` | Enum | [Enums](enums.md) |
 | `INVALID_NAME` | Enum | [Enums](enums.md) |
-| [`ion_kick`][pybmad.ion_kick] | Routine | [Bmad](bmad.md) |
-| [`is_alphabetic`][pybmad.is_alphabetic] | Routine | [Sim Utils](sim_utils.md) |
-| [`is_attribute`][pybmad.is_attribute] | Routine | [Bmad](bmad.md) |
-| [`is_decreasing_sequence`][pybmad.is_decreasing_sequence] | Routine | [Sim Utils](sim_utils.md) |
-| [`is_false`][pybmad.is_false] | Routine | [Sim Utils](sim_utils.md) |
-| [`is_increasing_sequence`][pybmad.is_increasing_sequence] | Routine | [Sim Utils](sim_utils.md) |
-| [`is_integer`][pybmad.is_integer] | Routine | [Sim Utils](sim_utils.md) |
+| [`ion_kick`](bmad.md#ion_kick) | Routine | [Bmad](bmad.md) |
+| [`is_alphabetic`](sim_utils.md#is_alphabetic) | Routine | [Sim Utils](sim_utils.md) |
+| [`is_attribute`](bmad.md#is_attribute) | Routine | [Bmad](bmad.md) |
+| [`is_decreasing_sequence`](sim_utils.md#is_decreasing_sequence) | Routine | [Sim Utils](sim_utils.md) |
+| [`is_false`](sim_utils.md#is_false) | Routine | [Sim Utils](sim_utils.md) |
+| [`is_increasing_sequence`](sim_utils.md#is_increasing_sequence) | Routine | [Sim Utils](sim_utils.md) |
+| [`is_integer`](sim_utils.md#is_integer) | Routine | [Sim Utils](sim_utils.md) |
 | `IS_INTEGER` | Enum | [Enums](enums.md) |
-| [`is_logical`][pybmad.is_logical] | Routine | [Sim Utils](sim_utils.md) |
+| [`is_logical`](sim_utils.md#is_logical) | Routine | [Sim Utils](sim_utils.md) |
 | `IS_LOGICAL` | Enum | [Enums](enums.md) |
 | `IS_MOSAIC` | Enum | [Enums](enums.md) |
 | `IS_ON` | Enum | [Enums](enums.md) |
-| [`is_real`][pybmad.is_real] | Routine | [Sim Utils](sim_utils.md) |
+| [`is_real`](sim_utils.md#is_real) | Routine | [Sim Utils](sim_utils.md) |
 | `IS_REAL` | Enum | [Enums](enums.md) |
 | `IS_SPECIES` | Enum | [Enums](enums.md) |
 | `IS_STRING` | Enum | [Enums](enums.md) |
 | `IS_STRUCT` | Enum | [Enums](enums.md) |
-| [`is_subatomic_species`][pybmad.is_subatomic_species] | Routine | [Sim Utils](sim_utils.md) |
+| [`is_subatomic_species`](sim_utils.md#is_subatomic_species) | Routine | [Sim Utils](sim_utils.md) |
 | `IS_SWITCH` | Enum | [Enums](enums.md) |
-| [`is_true`][pybmad.is_true] | Routine | [Sim Utils](sim_utils.md) |
+| [`is_true`](sim_utils.md#is_true) | Routine | [Sim Utils](sim_utils.md) |
 | `IX_BRANCH` | Enum | [Enums](enums.md) |
 | `IX_FIXER` | Enum | [Enums](enums.md) |
 | `IX_SLICE_SLAVE` | Enum | [Enums](enums.md) |
 | `IX_TO_BRANCH` | Enum | [Enums](enums.md) |
 | `IX_TO_ELEMENT` | Enum | [Enums](enums.md) |
-| [`j_bessel`][pybmad.j_bessel] | Routine | [Sim Utils](sim_utils.md) |
+| [`j_bessel`](sim_utils.md#j_bessel) | Routine | [Sim Utils](sim_utils.md) |
 | `K0L` | Enum | [Enums](enums.md) |
 | `K0L_STATUS` | Enum | [Enums](enums.md) |
 | `K0SL` | Enum | [Enums](enums.md) |
@@ -1023,17 +1023,17 @@
 | `K21L` | Enum | [Enums](enums.md) |
 | `K21SL` | Enum | [Enums](enums.md) |
 | `K3` | Enum | [Enums](enums.md) |
-| [`key_name_to_key_index`][pybmad.key_name_to_key_index] | Routine | [Bmad](bmad.md) |
+| [`key_name_to_key_index`](bmad.md#key_name_to_key_index) | Routine | [Bmad](bmad.md) |
 | `KICK` | Enum | [Enums](enums.md) |
 | `KICK0` | Enum | [Enums](enums.md) |
-| [`kick_vector_calc`][pybmad.kick_vector_calc] | Routine | [Bmad](bmad.md) |
+| [`kick_vector_calc`](bmad.md#kick_vector_calc) | Routine | [Bmad](bmad.md) |
 | `KICKER` | Enum | [Enums](enums.md) |
-| [`kill_complex_taylor`][pybmad.kill_complex_taylor] | Routine | [Bmad](bmad.md) |
-| [`kill_ptc_layouts`][pybmad.kill_ptc_layouts] | Routine | [Bmad](bmad.md) |
-| [`kill_taylor`][pybmad.kill_taylor] | Routine | [Bmad](bmad.md) |
-| [`kind_name`][pybmad.kind_name] | Routine | [Bmad](bmad.md) |
-| [`knot_interpolate`][pybmad.knot_interpolate] | Routine | [Bmad](bmad.md) |
-| [`knots_to_string`][pybmad.knots_to_string] | Routine | [Bmad](bmad.md) |
+| [`kill_complex_taylor`](bmad.md#kill_complex_taylor) | Routine | [Bmad](bmad.md) |
+| [`kill_ptc_layouts`](bmad.md#kill_ptc_layouts) | Routine | [Bmad](bmad.md) |
+| [`kill_taylor`](bmad.md#kill_taylor) | Routine | [Bmad](bmad.md) |
+| [`kind_name`](bmad.md#kind_name) | Routine | [Bmad](bmad.md) |
+| [`knot_interpolate`](bmad.md#knot_interpolate) | Routine | [Bmad](bmad.md) |
+| [`knots_to_string`](bmad.md#knots_to_string) | Routine | [Bmad](bmad.md) |
 | `KS` | Enum | [Enums](enums.md) |
 | [KvBeamInitStruct](bmad.md#kvbeaminitstruct) | Struct | [Bmad](bmad.md) |
 | `KX` | Enum | [Enums](enums.md) |
@@ -1046,15 +1046,15 @@
 | `L_RECTANGLE` | Enum | [Enums](enums.md) |
 | `L_SAGITTA` | Enum | [Enums](enums.md) |
 | `L_SOFT_EDGE` | Enum | [Enums](enums.md) |
-| [`lafun`][pybmad.lafun] | Routine | [Bmad](bmad.md) |
-| [`lat_compute_ref_energy_and_time`][pybmad.lat_compute_ref_energy_and_time] | Routine | [Bmad](bmad.md) |
-| [`lat_ele_locator`][pybmad.lat_ele_locator] | Routine | [Bmad](bmad.md) |
-| [`lat_equal_lat`][pybmad.lat_equal_lat] | Routine | [Bmad](bmad.md) |
-| [`lat_geometry`][pybmad.lat_geometry] | Routine | [Bmad](bmad.md) |
-| [`lat_make_mat6`][pybmad.lat_make_mat6] | Routine | [Bmad](bmad.md) |
-| [`lat_sanity_check`][pybmad.lat_sanity_check] | Routine | [Bmad](bmad.md) |
-| [`lat_to_ptc_layout`][pybmad.lat_to_ptc_layout] | Routine | [Bmad](bmad.md) |
-| [`lat_vec_equal_lat_vec`][pybmad.lat_vec_equal_lat_vec] | Routine | [Bmad](bmad.md) |
+| [`lafun`](bmad.md#lafun) | Routine | [Bmad](bmad.md) |
+| [`lat_compute_ref_energy_and_time`](bmad.md#lat_compute_ref_energy_and_time) | Routine | [Bmad](bmad.md) |
+| [`lat_ele_locator`](bmad.md#lat_ele_locator) | Routine | [Bmad](bmad.md) |
+| [`lat_equal_lat`](bmad.md#lat_equal_lat) | Routine | [Bmad](bmad.md) |
+| [`lat_geometry`](bmad.md#lat_geometry) | Routine | [Bmad](bmad.md) |
+| [`lat_make_mat6`](bmad.md#lat_make_mat6) | Routine | [Bmad](bmad.md) |
+| [`lat_sanity_check`](bmad.md#lat_sanity_check) | Routine | [Bmad](bmad.md) |
+| [`lat_to_ptc_layout`](bmad.md#lat_to_ptc_layout) | Routine | [Bmad](bmad.md) |
+| [`lat_vec_equal_lat_vec`](bmad.md#lat_vec_equal_lat_vec) | Routine | [Bmad](bmad.md) |
 | [LatEleLocStruct](bmad.md#latelelocstruct) | Struct | [Bmad](bmad.md) |
 | [LatEleOrder1Struct](bmad.md#lateleorder1struct) | Struct | [Bmad](bmad.md) |
 | [LatEleOrderArrayStruct](bmad.md#lateleorderarraystruct) | Struct | [Bmad](bmad.md) |
@@ -1062,32 +1062,32 @@
 | [LatParamStruct](bmad.md#latparamstruct) | Struct | [Bmad](bmad.md) |
 | [LatStruct](bmad.md#latstruct) | Struct | [Bmad](bmad.md) |
 | `LATTICE` | Enum | [Enums](enums.md) |
-| [`lattice_bookkeeper`][pybmad.lattice_bookkeeper] | Routine | [Bmad](bmad.md) |
+| [`lattice_bookkeeper`](bmad.md#lattice_bookkeeper) | Routine | [Bmad](bmad.md) |
 | `LATTICE_TYPE` | Enum | [Enums](enums.md) |
 | [Layout](forest.md#layout) | Struct | [Forest / PTC](forest.md) |
 | `LB_SUBATOMIC` | Enum | [Enums](enums.md) |
 | `LCAVITY` | Enum | [Enums](enums.md) |
-| [`lcavity_rf_step_setup`][pybmad.lcavity_rf_step_setup] | Routine | [Bmad](bmad.md) |
+| [`lcavity_rf_step_setup`](bmad.md#lcavity_rf_step_setup) | Routine | [Bmad](bmad.md) |
 | `LEADING` | Enum | [Enums](enums.md) |
 | `LENS` | Enum | [Enums](enums.md) |
 | `LIGHT_GREEN` | Enum | [Enums](enums.md) |
 | `LIGHT_GREY` | Enum | [Enums](enums.md) |
 | [LinacNormalModeStruct](bmad.md#linacnormalmodestruct) | Struct | [Bmad](bmad.md) |
 | `LINEAR` | Enum | [Enums](enums.md) |
-| [`linear_bend_edge_kick`][pybmad.linear_bend_edge_kick] | Routine | [Bmad](bmad.md) |
-| [`linear_coef`][pybmad.linear_coef] | Routine | [Bmad](bmad.md) |
+| [`linear_bend_edge_kick`](bmad.md#linear_bend_edge_kick) | Routine | [Bmad](bmad.md) |
+| [`linear_coef`](bmad.md#linear_coef) | Routine | [Bmad](bmad.md) |
 | `LINEAR_EDGE` | Enum | [Enums](enums.md) |
-| [`linear_fit`][pybmad.linear_fit] | Routine | [Sim Utils](sim_utils.md) |
-| [`linear_fit_2d`][pybmad.linear_fit_2d] | Routine | [Sim Utils](sim_utils.md) |
-| [`linear_to_spin_taylor`][pybmad.linear_to_spin_taylor] | Routine | [Bmad](bmad.md) |
+| [`linear_fit`](sim_utils.md#linear_fit) | Routine | [Sim Utils](sim_utils.md) |
+| [`linear_fit_2d`](sim_utils.md#linear_fit_2d) | Routine | [Sim Utils](sim_utils.md) |
+| [`linear_to_spin_taylor`](bmad.md#linear_to_spin_taylor) | Routine | [Bmad](bmad.md) |
 | `LIVE_BRANCH` | Enum | [Enums](enums.md) |
-| [`load_parse_line`][pybmad.load_parse_line] | Routine | [Bmad](bmad.md) |
+| [`load_parse_line`](bmad.md#load_parse_line) | Routine | [Bmad](bmad.md) |
 | `LOG` | Enum | [Enums](enums.md) |
-| [`logic_str`][pybmad.logic_str] | Routine | [Sim Utils](sim_utils.md) |
-| [`logical_to_python`][pybmad.logical_to_python] | Routine | [Bsim](bsim.md) |
+| [`logic_str`](sim_utils.md#logic_str) | Routine | [Sim Utils](sim_utils.md) |
+| [`logical_to_python`](bsim.md#logical_to_python) | Routine | [Bsim](bsim.md) |
 | `LONGITUDINAL_MODE` | Enum | [Enums](enums.md) |
 | `LORD_DEFINED` | Enum | [Enums](enums.md) |
-| [`lord_edge_aligned`][pybmad.lord_edge_aligned] | Routine | [Bmad](bmad.md) |
+| [`lord_edge_aligned`](bmad.md#lord_edge_aligned) | Routine | [Bmad](bmad.md) |
 | `LORD_PAD1` | Enum | [Enums](enums.md) |
 | `LORD_PAD2` | Enum | [Enums](enums.md) |
 | `LOST` | Enum | [Enums](enums.md) |
@@ -1103,12 +1103,12 @@
 | `LOST_PZ_APERTURE` | Enum | [Enums](enums.md) |
 | `LOST_Z` | Enum | [Enums](enums.md) |
 | `LOST_Z_APERTURE` | Enum | [Enums](enums.md) |
-| [`low_energy_z_correction`][pybmad.low_energy_z_correction] | Routine | [Bmad](bmad.md) |
+| [`low_energy_z_correction`](bmad.md#low_energy_z_correction) | Routine | [Bmad](bmad.md) |
 | `LR_FREQ_SPREAD` | Enum | [Enums](enums.md) |
 | `LR_SELF_WAKE_ON` | Enum | [Enums](enums.md) |
 | `LR_WAKE` | Enum | [Enums](enums.md) |
 | `LR_WAKE_FILE` | Enum | [Enums](enums.md) |
-| [`lunget`][pybmad.lunget] | Routine | [Sim Utils](sim_utils.md) |
+| [`lunget`](sim_utils.md#lunget) | Routine | [Sim Utils](sim_utils.md) |
 | `LYNCH_DAHL` | Enum | [Enums](enums.md) |
 | `M_DEUTERON` | Enum | [Enums](enums.md) |
 | `M_ELECTRON` | Enum | [Enums](enums.md) |
@@ -1120,93 +1120,93 @@
 | `M_PROTON` | Enum | [Enums](enums.md) |
 | `MACHINE` | Enum | [Enums](enums.md) |
 | `MAD` | Enum | [Enums](enums.md) |
-| [`mad_add_offsets_and_multipoles`][pybmad.mad_add_offsets_and_multipoles] | Routine | [Bmad](bmad.md) |
-| [`mad_concat_map2`][pybmad.mad_concat_map2] | Routine | [Bmad](bmad.md) |
-| [`mad_drift`][pybmad.mad_drift] | Routine | [Bmad](bmad.md) |
-| [`mad_elsep`][pybmad.mad_elsep] | Routine | [Bmad](bmad.md) |
-| [`mad_map_to_taylor`][pybmad.mad_map_to_taylor] | Routine | [Bmad](bmad.md) |
-| [`mad_quadrupole`][pybmad.mad_quadrupole] | Routine | [Bmad](bmad.md) |
-| [`mad_rfcavity`][pybmad.mad_rfcavity] | Routine | [Bmad](bmad.md) |
-| [`mad_sbend`][pybmad.mad_sbend] | Routine | [Bmad](bmad.md) |
-| [`mad_sbend_body`][pybmad.mad_sbend_body] | Routine | [Bmad](bmad.md) |
-| [`mad_sbend_fringe`][pybmad.mad_sbend_fringe] | Routine | [Bmad](bmad.md) |
-| [`mad_sextupole`][pybmad.mad_sextupole] | Routine | [Bmad](bmad.md) |
-| [`mad_solenoid`][pybmad.mad_solenoid] | Routine | [Bmad](bmad.md) |
-| [`mad_tmfoc`][pybmad.mad_tmfoc] | Routine | [Bmad](bmad.md) |
-| [`mad_tmsymm`][pybmad.mad_tmsymm] | Routine | [Bmad](bmad.md) |
-| [`mad_tmtilt`][pybmad.mad_tmtilt] | Routine | [Bmad](bmad.md) |
-| [`mad_track1`][pybmad.mad_track1] | Routine | [Bmad](bmad.md) |
+| [`mad_add_offsets_and_multipoles`](bmad.md#mad_add_offsets_and_multipoles) | Routine | [Bmad](bmad.md) |
+| [`mad_concat_map2`](bmad.md#mad_concat_map2) | Routine | [Bmad](bmad.md) |
+| [`mad_drift`](bmad.md#mad_drift) | Routine | [Bmad](bmad.md) |
+| [`mad_elsep`](bmad.md#mad_elsep) | Routine | [Bmad](bmad.md) |
+| [`mad_map_to_taylor`](bmad.md#mad_map_to_taylor) | Routine | [Bmad](bmad.md) |
+| [`mad_quadrupole`](bmad.md#mad_quadrupole) | Routine | [Bmad](bmad.md) |
+| [`mad_rfcavity`](bmad.md#mad_rfcavity) | Routine | [Bmad](bmad.md) |
+| [`mad_sbend`](bmad.md#mad_sbend) | Routine | [Bmad](bmad.md) |
+| [`mad_sbend_body`](bmad.md#mad_sbend_body) | Routine | [Bmad](bmad.md) |
+| [`mad_sbend_fringe`](bmad.md#mad_sbend_fringe) | Routine | [Bmad](bmad.md) |
+| [`mad_sextupole`](bmad.md#mad_sextupole) | Routine | [Bmad](bmad.md) |
+| [`mad_solenoid`](bmad.md#mad_solenoid) | Routine | [Bmad](bmad.md) |
+| [`mad_tmfoc`](bmad.md#mad_tmfoc) | Routine | [Bmad](bmad.md) |
+| [`mad_tmsymm`](bmad.md#mad_tmsymm) | Routine | [Bmad](bmad.md) |
+| [`mad_tmtilt`](bmad.md#mad_tmtilt) | Routine | [Bmad](bmad.md) |
+| [`mad_track1`](bmad.md#mad_track1) | Routine | [Bmad](bmad.md) |
 | [MadEnergyStruct](bmad.md#madenergystruct) | Struct | [Bmad](bmad.md) |
 | [MadMapStruct](bmad.md#madmapstruct) | Struct | [Bmad](bmad.md) |
 | `MAGENTA` | Enum | [Enums](enums.md) |
 | `MAGNETIC` | Enum | [Enums](enums.md) |
 | `MAGNUS` | Enum | [Enums](enums.md) |
-| [`make_g2_mats`][pybmad.make_g2_mats] | Routine | [Bmad](bmad.md) |
-| [`make_g_mats`][pybmad.make_g_mats] | Routine | [Bmad](bmad.md) |
-| [`make_hvbp`][pybmad.make_hvbp] | Routine | [Bmad](bmad.md) |
-| [`make_hybrid_lat`][pybmad.make_hybrid_lat] | Routine | [Bmad](bmad.md) |
-| [`make_legal_comment`][pybmad.make_legal_comment] | Routine | [Sim Utils](sim_utils.md) |
-| [`make_mad_map`][pybmad.make_mad_map] | Routine | [Bmad](bmad.md) |
-| [`make_mat6`][pybmad.make_mat6] | Routine | [Bmad](bmad.md) |
-| [`make_mat6_bmad`][pybmad.make_mat6_bmad] | Routine | [Bmad](bmad.md) |
-| [`make_mat6_bmad_photon`][pybmad.make_mat6_bmad_photon] | Routine | [Bmad](bmad.md) |
-| [`make_mat6_high_energy_space_charge`][pybmad.make_mat6_high_energy_space_charge] | Routine | [Bmad](bmad.md) |
-| [`make_mat6_mad`][pybmad.make_mat6_mad] | Routine | [Bmad](bmad.md) |
-| [`make_mat6_symp_lie_ptc`][pybmad.make_mat6_symp_lie_ptc] | Routine | [Bmad](bmad.md) |
-| [`make_mat6_taylor`][pybmad.make_mat6_taylor] | Routine | [Bmad](bmad.md) |
-| [`make_mat6_tracking`][pybmad.make_mat6_tracking] | Routine | [Bmad](bmad.md) |
-| [`make_n`][pybmad.make_n] | Routine | [Bmad](bmad.md) |
-| [`make_pbrh`][pybmad.make_pbrh] | Routine | [Bmad](bmad.md) |
-| [`make_smat_from_abc`][pybmad.make_smat_from_abc] | Routine | [Bmad](bmad.md) |
-| [`make_unit_mad_map`][pybmad.make_unit_mad_map] | Routine | [Bmad](bmad.md) |
-| [`make_v`][pybmad.make_v] | Routine | [Bmad](bmad.md) |
-| [`make_v_mats`][pybmad.make_v_mats] | Routine | [Bmad](bmad.md) |
-| [`makeup_control_slave`][pybmad.makeup_control_slave] | Routine | [Bmad](bmad.md) |
-| [`makeup_group_lord`][pybmad.makeup_group_lord] | Routine | [Bmad](bmad.md) |
-| [`makeup_multipass_slave`][pybmad.makeup_multipass_slave] | Routine | [Bmad](bmad.md) |
-| [`makeup_super_slave`][pybmad.makeup_super_slave] | Routine | [Bmad](bmad.md) |
-| [`makeup_super_slave1`][pybmad.makeup_super_slave1] | Routine | [Bmad](bmad.md) |
-| [`map1_inverse`][pybmad.map1_inverse] | Routine | [Bmad](bmad.md) |
-| [`map1_make_unit`][pybmad.map1_make_unit] | Routine | [Bmad](bmad.md) |
-| [`map1_times_map1`][pybmad.map1_times_map1] | Routine | [Bmad](bmad.md) |
-| [`map_to_angle_coords`][pybmad.map_to_angle_coords] | Routine | [Bmad](bmad.md) |
-| [`mark_patch_regions`][pybmad.mark_patch_regions] | Routine | [Bmad](bmad.md) |
+| [`make_g2_mats`](bmad.md#make_g2_mats) | Routine | [Bmad](bmad.md) |
+| [`make_g_mats`](bmad.md#make_g_mats) | Routine | [Bmad](bmad.md) |
+| [`make_hvbp`](bmad.md#make_hvbp) | Routine | [Bmad](bmad.md) |
+| [`make_hybrid_lat`](bmad.md#make_hybrid_lat) | Routine | [Bmad](bmad.md) |
+| [`make_legal_comment`](sim_utils.md#make_legal_comment) | Routine | [Sim Utils](sim_utils.md) |
+| [`make_mad_map`](bmad.md#make_mad_map) | Routine | [Bmad](bmad.md) |
+| [`make_mat6`](bmad.md#make_mat6) | Routine | [Bmad](bmad.md) |
+| [`make_mat6_bmad`](bmad.md#make_mat6_bmad) | Routine | [Bmad](bmad.md) |
+| [`make_mat6_bmad_photon`](bmad.md#make_mat6_bmad_photon) | Routine | [Bmad](bmad.md) |
+| [`make_mat6_high_energy_space_charge`](bmad.md#make_mat6_high_energy_space_charge) | Routine | [Bmad](bmad.md) |
+| [`make_mat6_mad`](bmad.md#make_mat6_mad) | Routine | [Bmad](bmad.md) |
+| [`make_mat6_symp_lie_ptc`](bmad.md#make_mat6_symp_lie_ptc) | Routine | [Bmad](bmad.md) |
+| [`make_mat6_taylor`](bmad.md#make_mat6_taylor) | Routine | [Bmad](bmad.md) |
+| [`make_mat6_tracking`](bmad.md#make_mat6_tracking) | Routine | [Bmad](bmad.md) |
+| [`make_n`](bmad.md#make_n) | Routine | [Bmad](bmad.md) |
+| [`make_pbrh`](bmad.md#make_pbrh) | Routine | [Bmad](bmad.md) |
+| [`make_smat_from_abc`](bmad.md#make_smat_from_abc) | Routine | [Bmad](bmad.md) |
+| [`make_unit_mad_map`](bmad.md#make_unit_mad_map) | Routine | [Bmad](bmad.md) |
+| [`make_v`](bmad.md#make_v) | Routine | [Bmad](bmad.md) |
+| [`make_v_mats`](bmad.md#make_v_mats) | Routine | [Bmad](bmad.md) |
+| [`makeup_control_slave`](bmad.md#makeup_control_slave) | Routine | [Bmad](bmad.md) |
+| [`makeup_group_lord`](bmad.md#makeup_group_lord) | Routine | [Bmad](bmad.md) |
+| [`makeup_multipass_slave`](bmad.md#makeup_multipass_slave) | Routine | [Bmad](bmad.md) |
+| [`makeup_super_slave`](bmad.md#makeup_super_slave) | Routine | [Bmad](bmad.md) |
+| [`makeup_super_slave1`](bmad.md#makeup_super_slave1) | Routine | [Bmad](bmad.md) |
+| [`map1_inverse`](bmad.md#map1_inverse) | Routine | [Bmad](bmad.md) |
+| [`map1_make_unit`](bmad.md#map1_make_unit) | Routine | [Bmad](bmad.md) |
+| [`map1_times_map1`](bmad.md#map1_times_map1) | Routine | [Bmad](bmad.md) |
+| [`map_to_angle_coords`](bmad.md#map_to_angle_coords) | Routine | [Bmad](bmad.md) |
+| [`mark_patch_regions`](bmad.md#mark_patch_regions) | Routine | [Bmad](bmad.md) |
 | `MARKER` | Enum | [Enums](enums.md) |
 | `MASK` | Enum | [Enums](enums.md) |
 | `MASK_PLATE` | Enum | [Enums](enums.md) |
-| [`mass_of`][pybmad.mass_of] | Routine | [Sim Utils](sim_utils.md) |
+| [`mass_of`](sim_utils.md#mass_of) | Routine | [Sim Utils](sim_utils.md) |
 | `MASS_OF` | Enum | [Enums](enums.md) |
-| [`master_parameter_value`][pybmad.master_parameter_value] | Routine | [Bmad](bmad.md) |
-| [`mat4_multipole`][pybmad.mat4_multipole] | Routine | [Bmad](bmad.md) |
-| [`mat6_add_offsets`][pybmad.mat6_add_offsets] | Routine | [Bmad](bmad.md) |
-| [`mat6_add_pitch`][pybmad.mat6_add_pitch] | Routine | [Bmad](bmad.md) |
+| [`master_parameter_value`](bmad.md#master_parameter_value) | Routine | [Bmad](bmad.md) |
+| [`mat4_multipole`](bmad.md#mat4_multipole) | Routine | [Bmad](bmad.md) |
+| [`mat6_add_offsets`](bmad.md#mat6_add_offsets) | Routine | [Bmad](bmad.md) |
+| [`mat6_add_pitch`](bmad.md#mat6_add_pitch) | Routine | [Bmad](bmad.md) |
 | `MAT6_CALC_METHOD` | Enum | [Enums](enums.md) |
 | `MAT6_GROUP` | Enum | [Enums](enums.md) |
-| [`mat6_to_complex_taylor`][pybmad.mat6_to_complex_taylor] | Routine | [Bmad](bmad.md) |
-| [`mat_symp_decouple`][pybmad.mat_symp_decouple] | Routine | [Bmad](bmad.md) |
+| [`mat6_to_complex_taylor`](bmad.md#mat6_to_complex_taylor) | Routine | [Bmad](bmad.md) |
+| [`mat_symp_decouple`](bmad.md#mat_symp_decouple) | Routine | [Bmad](bmad.md) |
 | `MATCH` | Enum | [Enums](enums.md) |
-| [`match_ele_to_mat6`][pybmad.match_ele_to_mat6] | Routine | [Bmad](bmad.md) |
+| [`match_ele_to_mat6`](bmad.md#match_ele_to_mat6) | Routine | [Bmad](bmad.md) |
 | `MATCH_ORBIT` | Enum | [Enums](enums.md) |
-| [`match_reg`][pybmad.match_reg] | Routine | [Sim Utils](sim_utils.md) |
+| [`match_reg`](sim_utils.md#match_reg) | Routine | [Sim Utils](sim_utils.md) |
 | `MATCH_TWISS` | Enum | [Enums](enums.md) |
-| [`match_wild`][pybmad.match_wild] | Routine | [Sim Utils](sim_utils.md) |
-| [`match_word`][pybmad.match_word] | Routine | [Sim Utils](sim_utils.md) |
+| [`match_wild`](sim_utils.md#match_wild) | Routine | [Sim Utils](sim_utils.md) |
+| [`match_word`](sim_utils.md#match_word) | Routine | [Sim Utils](sim_utils.md) |
 | `MATERIAL_TYPE` | Enum | [Enums](enums.md) |
 | `MATRIX` | Enum | [Enums](enums.md) |
 | `MATRIX_KICK` | Enum | [Enums](enums.md) |
 | `MAX` | Enum | [Enums](enums.md) |
 | `MAX_FRINGE_ORDER` | Enum | [Enums](enums.md) |
-| [`maximize_projection`][pybmad.maximize_projection] | Routine | [Sim Utils](sim_utils.md) |
+| [`maximize_projection`](sim_utils.md#maximize_projection) | Routine | [Sim Utils](sim_utils.md) |
 | `MAYBE` | Enum | [Enums](enums.md) |
 | `MEAN_EXCITATION_ENERGY` | Enum | [Enums](enums.md) |
-| [`mexp`][pybmad.mexp] | Routine | [Bmad](bmad.md) |
-| [`mfft1`][pybmad.mfft1] | Routine | [Bmad](bmad.md) |
-| [`milli_sleep`][pybmad.milli_sleep] | Routine | [Sim Utils](sim_utils.md) |
+| [`mexp`](bmad.md#mexp) | Routine | [Bmad](bmad.md) |
+| [`mfft1`](bmad.md#mfft1) | Routine | [Bmad](bmad.md) |
+| [`milli_sleep`](sim_utils.md#milli_sleep) | Routine | [Sim Utils](sim_utils.md) |
 | `MIN` | Enum | [Enums](enums.md) |
 | `MINOR_SLAVE` | Enum | [Enums](enums.md) |
 | `MINUS` | Enum | [Enums](enums.md) |
 | `MIRROR` | Enum | [Enums](enums.md) |
-| [`misalign_ptc_fibre`][pybmad.misalign_ptc_fibre] | Routine | [Bmad](bmad.md) |
+| [`misalign_ptc_fibre`](bmad.md#misalign_ptc_fibre) | Routine | [Bmad](bmad.md) |
 | `MIXED` | Enum | [Enums](enums.md) |
 | `MODE` | Enum | [Enums](enums.md) |
 | [Mode3Struct](bmad.md#mode3struct) | Struct | [Bmad](bmad.md) |
@@ -1216,11 +1216,11 @@
 | `MODE_FLIP_STORED` | Enum | [Enums](enums.md) |
 | [ModeInfoStruct](bmad.md#modeinfostruct) | Struct | [Bmad](bmad.md) |
 | `MODULO` | Enum | [Enums](enums.md) |
-| [`modulo2_dp`][pybmad.modulo2_dp] | Routine | [Sim Utils](sim_utils.md) |
-| [`modulo2_int`][pybmad.modulo2_int] | Routine | [Sim Utils](sim_utils.md) |
-| [`modulo2_qp`][pybmad.modulo2_qp] | Routine | [Sim Utils](sim_utils.md) |
-| [`modulo2_sp`][pybmad.modulo2_sp] | Routine | [Sim Utils](sim_utils.md) |
-| [`momentum_compaction`][pybmad.momentum_compaction] | Routine | [Bmad](bmad.md) |
+| [`modulo2_dp`](sim_utils.md#modulo2_dp) | Routine | [Sim Utils](sim_utils.md) |
+| [`modulo2_int`](sim_utils.md#modulo2_int) | Routine | [Sim Utils](sim_utils.md) |
+| [`modulo2_qp`](sim_utils.md#modulo2_qp) | Routine | [Sim Utils](sim_utils.md) |
+| [`modulo2_sp`](sim_utils.md#modulo2_sp) | Routine | [Sim Utils](sim_utils.md) |
+| [`momentum_compaction`](bmad.md#momentum_compaction) | Routine | [Bmad](bmad.md) |
 | `MONITOR` | Enum | [Enums](enums.md) |
 | `MOSAIC_ANGLE_RMS_IN_PLANE` | Enum | [Enums](enums.md) |
 | `MOSAIC_ANGLE_RMS_OUT_PLANE` | Enum | [Enums](enums.md) |
@@ -1228,35 +1228,35 @@
 | `MOSAIC_THICKNESS` | Enum | [Enums](enums.md) |
 | `MOVING_FORWARD` | Enum | [Enums](enums.md) |
 | `MU_0_VAC` | Enum | [Enums](enums.md) |
-| [`multi_turn_tracking_analysis`][pybmad.multi_turn_tracking_analysis] | Routine | [Bmad](bmad.md) |
+| [`multi_turn_tracking_analysis`](bmad.md#multi_turn_tracking_analysis) | Routine | [Bmad](bmad.md) |
 | `MULTILAYER_MIRROR` | Enum | [Enums](enums.md) |
-| [`multilayer_type_to_multilayer_params`][pybmad.multilayer_type_to_multilayer_params] | Routine | [Bmad](bmad.md) |
-| [`multipass_chain`][pybmad.multipass_chain] | Routine | [Bmad](bmad.md) |
+| [`multilayer_type_to_multilayer_params`](bmad.md#multilayer_type_to_multilayer_params) | Routine | [Bmad](bmad.md) |
+| [`multipass_chain`](bmad.md#multipass_chain) | Routine | [Bmad](bmad.md) |
 | `MULTIPASS_LORD` | Enum | [Enums](enums.md) |
 | `MULTIPASS_REF_ENERGY` | Enum | [Enums](enums.md) |
 | `MULTIPASS_SLAVE` | Enum | [Enums](enums.md) |
 | `MULTIPOLE` | Enum | [Enums](enums.md) |
-| [`multipole1_ab_to_kt`][pybmad.multipole1_ab_to_kt] | Routine | [Bmad](bmad.md) |
-| [`multipole1_kt_to_ab`][pybmad.multipole1_kt_to_ab] | Routine | [Bmad](bmad.md) |
-| [`multipole_ab_to_kt`][pybmad.multipole_ab_to_kt] | Routine | [Bmad](bmad.md) |
-| [`multipole_ele_to_ab`][pybmad.multipole_ele_to_ab] | Routine | [Bmad](bmad.md) |
-| [`multipole_ele_to_kt`][pybmad.multipole_ele_to_kt] | Routine | [Bmad](bmad.md) |
-| [`multipole_init`][pybmad.multipole_init] | Routine | [Bmad](bmad.md) |
-| [`multipole_kick`][pybmad.multipole_kick] | Routine | [Bmad](bmad.md) |
-| [`multipole_kick_mat`][pybmad.multipole_kick_mat] | Routine | [Bmad](bmad.md) |
-| [`multipole_kicks`][pybmad.multipole_kicks] | Routine | [Bmad](bmad.md) |
-| [`multipole_kt_to_ab`][pybmad.multipole_kt_to_ab] | Routine | [Bmad](bmad.md) |
+| [`multipole1_ab_to_kt`](bmad.md#multipole1_ab_to_kt) | Routine | [Bmad](bmad.md) |
+| [`multipole1_kt_to_ab`](bmad.md#multipole1_kt_to_ab) | Routine | [Bmad](bmad.md) |
+| [`multipole_ab_to_kt`](bmad.md#multipole_ab_to_kt) | Routine | [Bmad](bmad.md) |
+| [`multipole_ele_to_ab`](bmad.md#multipole_ele_to_ab) | Routine | [Bmad](bmad.md) |
+| [`multipole_ele_to_kt`](bmad.md#multipole_ele_to_kt) | Routine | [Bmad](bmad.md) |
+| [`multipole_init`](bmad.md#multipole_init) | Routine | [Bmad](bmad.md) |
+| [`multipole_kick`](bmad.md#multipole_kick) | Routine | [Bmad](bmad.md) |
+| [`multipole_kick_mat`](bmad.md#multipole_kick_mat) | Routine | [Bmad](bmad.md) |
+| [`multipole_kicks`](bmad.md#multipole_kicks) | Routine | [Bmad](bmad.md) |
+| [`multipole_kt_to_ab`](bmad.md#multipole_kt_to_ab) | Routine | [Bmad](bmad.md) |
 | `MULTIPOLE_SOURCE` | Enum | [Enums](enums.md) |
-| [`multipole_spin_tracking`][pybmad.multipole_spin_tracking] | Routine | [Bmad](bmad.md) |
+| [`multipole_spin_tracking`](bmad.md#multipole_spin_tracking) | Routine | [Bmad](bmad.md) |
 | `MULTIPOLE_SYMMETRY` | Enum | [Enums](enums.md) |
 | `MULTIPOLES_ON` | Enum | [Enums](enums.md) |
 | `MUON` | Enum | [Enums](enums.md) |
-| [`mytan`][pybmad.mytan] | Routine | [Bmad](bmad.md) |
-| [`n_attrib_string_max_len`][pybmad.n_attrib_string_max_len] | Routine | [Bmad](bmad.md) |
+| [`mytan`](bmad.md#mytan) | Routine | [Bmad](bmad.md) |
+| [`n_attrib_string_max_len`](bmad.md#n_attrib_string_max_len) | Routine | [Bmad](bmad.md) |
 | `N_AVOGADRO` | Enum | [Enums](enums.md) |
-| [`n_bins_automatic`][pybmad.n_bins_automatic] | Routine | [Sim Utils](sim_utils.md) |
+| [`n_bins_automatic`](sim_utils.md#n_bins_automatic) | Routine | [Sim Utils](sim_utils.md) |
 | `N_CELL` | Enum | [Enums](enums.md) |
-| [`n_choose_k`][pybmad.n_choose_k] | Routine | [Sim Utils](sim_utils.md) |
+| [`n_choose_k`](sim_utils.md#n_choose_k) | Routine | [Sim Utils](sim_utils.md) |
 | `N_KEY` | Enum | [Enums](enums.md) |
 | `N_PART` | Enum | [Enums](enums.md) |
 | `N_PARTICLE` | Enum | [Enums](enums.md) |
@@ -1267,23 +1267,23 @@
 | `N_SAMPLE` | Enum | [Enums](enums.md) |
 | `N_SLICE` | Enum | [Enums](enums.md) |
 | `N_SLICE_SPLINE` | Enum | [Enums](enums.md) |
-| [`n_spline_create`][pybmad.n_spline_create] | Routine | [Sim Utils](sim_utils.md) |
+| [`n_spline_create`](sim_utils.md#n_spline_create) | Routine | [Sim Utils](sim_utils.md) |
 | `N_VAR_MAX` | Enum | [Enums](enums.md) |
-| [`naff`][pybmad.naff] | Routine | [Sim Utils](sim_utils.md) |
-| [`nametable_add`][pybmad.nametable_add] | Routine | [Sim Utils](sim_utils.md) |
-| [`nametable_bracket_indexx`][pybmad.nametable_bracket_indexx] | Routine | [Sim Utils](sim_utils.md) |
-| [`nametable_change1`][pybmad.nametable_change1] | Routine | [Sim Utils](sim_utils.md) |
-| [`nametable_init`][pybmad.nametable_init] | Routine | [Sim Utils](sim_utils.md) |
-| [`nametable_remove`][pybmad.nametable_remove] | Routine | [Sim Utils](sim_utils.md) |
+| [`naff`](sim_utils.md#naff) | Routine | [Sim Utils](sim_utils.md) |
+| [`nametable_add`](sim_utils.md#nametable_add) | Routine | [Sim Utils](sim_utils.md) |
+| [`nametable_bracket_indexx`](sim_utils.md#nametable_bracket_indexx) | Routine | [Sim Utils](sim_utils.md) |
+| [`nametable_change1`](sim_utils.md#nametable_change1) | Routine | [Sim Utils](sim_utils.md) |
+| [`nametable_init`](sim_utils.md#nametable_init) | Routine | [Sim Utils](sim_utils.md) |
+| [`nametable_remove`](sim_utils.md#nametable_remove) | Routine | [Sim Utils](sim_utils.md) |
 | [NametableStruct](sim_utils.md#nametablestruct) | Struct | [Sim Utils](sim_utils.md) |
 | `NAVY_BLUE` | Enum | [Enums](enums.md) |
-| [`negative_ampsquared`][pybmad.negative_ampsquared] | Routine | [Sim Utils](sim_utils.md) |
-| [`negative_dampsquared`][pybmad.negative_dampsquared] | Routine | [Sim Utils](sim_utils.md) |
+| [`negative_ampsquared`](sim_utils.md#negative_ampsquared) | Routine | [Sim Utils](sim_utils.md) |
+| [`negative_dampsquared`](sim_utils.md#negative_dampsquared) | Routine | [Sim Utils](sim_utils.md) |
 | `NEUTRON` | Enum | [Enums](enums.md) |
 | `NEW_BRANCH` | Enum | [Enums](enums.md) |
-| [`new_control`][pybmad.new_control] | Routine | [Bmad](bmad.md) |
+| [`new_control`](bmad.md#new_control) | Routine | [Bmad](bmad.md) |
 | `NINT` | Enum | [Enums](enums.md) |
-| [`nint_chk`][pybmad.nint_chk] | Routine | [Bmad](bmad.md) |
+| [`nint_chk`](bmad.md#nint_chk) | Routine | [Bmad](bmad.md) |
 | `NO` | Enum | [Enums](enums.md) |
 | `NO_APERTURE` | Enum | [Enums](enums.md) |
 | `NO_CLOSED_ORBIT` | Enum | [Enums](enums.md) |
@@ -1299,11 +1299,11 @@
 | `NONE` | Enum | [Enums](enums.md) |
 | `NONE_PT` | Enum | [Enums](enums.md) |
 | `NORMAL` | Enum | [Enums](enums.md) |
-| [`normal_form_complex_taylors`][pybmad.normal_form_complex_taylors] | Routine | [Bmad](bmad.md) |
-| [`normal_form_taylors`][pybmad.normal_form_taylors] | Routine | [Bmad](bmad.md) |
-| [`normal_mode3_calc`][pybmad.normal_mode3_calc] | Routine | [Bmad](bmad.md) |
-| [`normal_mode_dispersion`][pybmad.normal_mode_dispersion] | Routine | [Bmad](bmad.md) |
-| [`normalize_evecs`][pybmad.normalize_evecs] | Routine | [Bmad](bmad.md) |
+| [`normal_form_complex_taylors`](bmad.md#normal_form_complex_taylors) | Routine | [Bmad](bmad.md) |
+| [`normal_form_taylors`](bmad.md#normal_form_taylors) | Routine | [Bmad](bmad.md) |
+| [`normal_mode3_calc`](bmad.md#normal_mode3_calc) | Routine | [Bmad](bmad.md) |
+| [`normal_mode_dispersion`](bmad.md#normal_mode_dispersion) | Routine | [Bmad](bmad.md) |
+| [`normalize_evecs`](bmad.md#normalize_evecs) | Routine | [Bmad](bmad.md) |
 | [NormalModesStruct](bmad.md#normalmodesstruct) | Struct | [Bmad](bmad.md) |
 | `NOT_A_LORD` | Enum | [Enums](enums.md) |
 | `NOT_ALLOWED` | Enum | [Enums](enums.md) |
@@ -1312,59 +1312,59 @@
 | `NULL_ELE` | Enum | [Enums](enums.md) |
 | `NUM_ELE_ATTRIB` | Enum | [Enums](enums.md) |
 | `NUM_ELE_ATTRIB_EXTENDED` | Enum | [Enums](enums.md) |
-| [`num_field_eles`][pybmad.num_field_eles] | Routine | [Bmad](bmad.md) |
-| [`num_lords`][pybmad.num_lords] | Routine | [Bmad](bmad.md) |
+| [`num_field_eles`](bmad.md#num_field_eles) | Routine | [Bmad](bmad.md) |
+| [`num_lords`](bmad.md#num_lords) | Routine | [Bmad](bmad.md) |
 | `NUM_STEPS` | Enum | [Enums](enums.md) |
 | `NUMERIC` | Enum | [Enums](enums.md) |
 | `OCTUPOLE` | Enum | [Enums](enums.md) |
-| [`odeint_bmad`][pybmad.odeint_bmad] | Routine | [Bmad](bmad.md) |
-| [`odeint_bmad_time`][pybmad.odeint_bmad_time] | Routine | [Bmad](bmad.md) |
+| [`odeint_bmad`](bmad.md#odeint_bmad) | Routine | [Bmad](bmad.md) |
+| [`odeint_bmad_time`](bmad.md#odeint_bmad_time) | Routine | [Bmad](bmad.md) |
 | `OFF` | Enum | [Enums](enums.md) |
 | `OFF_AND_SAVE` | Enum | [Enums](enums.md) |
 | `OFFSET_MOVES_APERTURE` | Enum | [Enums](enums.md) |
-| [`offset_particle`][pybmad.offset_particle] | Routine | [Bmad](bmad.md) |
-| [`offset_photon`][pybmad.offset_photon] | Routine | [Bmad](bmad.md) |
+| [`offset_particle`](bmad.md#offset_particle) | Routine | [Bmad](bmad.md) |
+| [`offset_photon`](bmad.md#offset_photon) | Routine | [Bmad](bmad.md) |
 | `OK` | Enum | [Enums](enums.md) |
 | `OLD_ASCII` | Enum | [Enums](enums.md) |
 | `OLD_CONTROL_VAR` | Enum | [Enums](enums.md) |
 | `OLD_CONTROL_VAR_OFFSET` | Enum | [Enums](enums.md) |
 | `OLD_INTEGRATOR` | Enum | [Enums](enums.md) |
-| [`omega_to_quat`][pybmad.omega_to_quat] | Routine | [Sim Utils](sim_utils.md) |
+| [`omega_to_quat`](sim_utils.md#omega_to_quat) | Routine | [Sim Utils](sim_utils.md) |
 | `ON` | Enum | [Enums](enums.md) |
 | `ONE_DIM` | Enum | [Enums](enums.md) |
 | `ONE_FILE` | Enum | [Enums](enums.md) |
-| [`one_turn_mat_at_ele`][pybmad.one_turn_mat_at_ele] | Routine | [Bmad](bmad.md) |
+| [`one_turn_mat_at_ele`](bmad.md#one_turn_mat_at_ele) | Routine | [Bmad](bmad.md) |
 | `OPAL` | Enum | [Enums](enums.md) |
 | `OPAQUE` | Enum | [Enums](enums.md) |
 | `OPEN` | Enum | [Enums](enums.md) |
-| [`open_binary_file`][pybmad.open_binary_file] | Routine | [Bmad](bmad.md) |
-| [`openpmd_species_name`][pybmad.openpmd_species_name] | Routine | [Sim Utils](sim_utils.md) |
+| [`open_binary_file`](bmad.md#open_binary_file) | Routine | [Bmad](bmad.md) |
+| [`openpmd_species_name`](sim_utils.md#openpmd_species_name) | Routine | [Sim Utils](sim_utils.md) |
 | `ORANGE` | Enum | [Enums](enums.md) |
-| [`orbit_amplitude_calc`][pybmad.orbit_amplitude_calc] | Routine | [Bmad](bmad.md) |
-| [`orbit_reference_energy_correction`][pybmad.orbit_reference_energy_correction] | Routine | [Bmad](bmad.md) |
-| [`orbit_to_floor_phase_space`][pybmad.orbit_to_floor_phase_space] | Routine | [Bmad](bmad.md) |
-| [`orbit_to_local_curvilinear`][pybmad.orbit_to_local_curvilinear] | Routine | [Bmad](bmad.md) |
-| [`orbit_too_large`][pybmad.orbit_too_large] | Routine | [Bmad](bmad.md) |
-| [`order_evecs_by_n_similarity`][pybmad.order_evecs_by_n_similarity] | Routine | [Bmad](bmad.md) |
-| [`order_evecs_by_plane_dominance`][pybmad.order_evecs_by_plane_dominance] | Routine | [Bmad](bmad.md) |
-| [`order_evecs_by_tune`][pybmad.order_evecs_by_tune] | Routine | [Bmad](bmad.md) |
-| [`order_particles_in_z`][pybmad.order_particles_in_z] | Routine | [Bmad](bmad.md) |
-| [`order_super_lord_slaves`][pybmad.order_super_lord_slaves] | Routine | [Bmad](bmad.md) |
-| [`ordinal_str`][pybmad.ordinal_str] | Routine | [Sim Utils](sim_utils.md) |
+| [`orbit_amplitude_calc`](bmad.md#orbit_amplitude_calc) | Routine | [Bmad](bmad.md) |
+| [`orbit_reference_energy_correction`](bmad.md#orbit_reference_energy_correction) | Routine | [Bmad](bmad.md) |
+| [`orbit_to_floor_phase_space`](bmad.md#orbit_to_floor_phase_space) | Routine | [Bmad](bmad.md) |
+| [`orbit_to_local_curvilinear`](bmad.md#orbit_to_local_curvilinear) | Routine | [Bmad](bmad.md) |
+| [`orbit_too_large`](bmad.md#orbit_too_large) | Routine | [Bmad](bmad.md) |
+| [`order_evecs_by_n_similarity`](bmad.md#order_evecs_by_n_similarity) | Routine | [Bmad](bmad.md) |
+| [`order_evecs_by_plane_dominance`](bmad.md#order_evecs_by_plane_dominance) | Routine | [Bmad](bmad.md) |
+| [`order_evecs_by_tune`](bmad.md#order_evecs_by_tune) | Routine | [Bmad](bmad.md) |
+| [`order_particles_in_z`](bmad.md#order_particles_in_z) | Routine | [Bmad](bmad.md) |
+| [`order_super_lord_slaves`](bmad.md#order_super_lord_slaves) | Routine | [Bmad](bmad.md) |
+| [`ordinal_str`](sim_utils.md#ordinal_str) | Routine | [Sim Utils](sim_utils.md) |
 | `ORIGIN_ELE` | Enum | [Enums](enums.md) |
 | `ORIGIN_ELE_REF_PT` | Enum | [Enums](enums.md) |
-| [`osc_alloc_freespace_array`][pybmad.osc_alloc_freespace_array] | Routine | [Bmad](bmad.md) |
-| [`osc_alloc_image_array`][pybmad.osc_alloc_image_array] | Routine | [Bmad](bmad.md) |
-| [`osc_alloc_rectpipe_arrays`][pybmad.osc_alloc_rectpipe_arrays] | Routine | [Bmad](bmad.md) |
+| [`osc_alloc_freespace_array`](bmad.md#osc_alloc_freespace_array) | Routine | [Bmad](bmad.md) |
+| [`osc_alloc_image_array`](bmad.md#osc_alloc_image_array) | Routine | [Bmad](bmad.md) |
+| [`osc_alloc_rectpipe_arrays`](bmad.md#osc_alloc_rectpipe_arrays) | Routine | [Bmad](bmad.md) |
 | `OSC_AMPLITUDE` | Enum | [Enums](enums.md) |
-| [`osc_getgrnpipe`][pybmad.osc_getgrnpipe] | Routine | [Bmad](bmad.md) |
-| [`osc_read_rectpipe_grn`][pybmad.osc_read_rectpipe_grn] | Routine | [Bmad](bmad.md) |
-| [`osc_write_rectpipe_grn`][pybmad.osc_write_rectpipe_grn] | Routine | [Bmad](bmad.md) |
-| [`out_io`][pybmad.out_io] | Routine | [Sim Utils](sim_utils.md) |
-| [`out_io_buffer_get_line`][pybmad.out_io_buffer_get_line] | Routine | [Sim Utils](sim_utils.md) |
-| [`out_io_buffer_num_lines`][pybmad.out_io_buffer_num_lines] | Routine | [Sim Utils](sim_utils.md) |
-| [`out_io_buffer_reset`][pybmad.out_io_buffer_reset] | Routine | [Sim Utils](sim_utils.md) |
-| [`out_io_print_and_capture_setup`][pybmad.out_io_print_and_capture_setup] | Routine | [Sim Utils](sim_utils.md) |
+| [`osc_getgrnpipe`](bmad.md#osc_getgrnpipe) | Routine | [Bmad](bmad.md) |
+| [`osc_read_rectpipe_grn`](bmad.md#osc_read_rectpipe_grn) | Routine | [Bmad](bmad.md) |
+| [`osc_write_rectpipe_grn`](bmad.md#osc_write_rectpipe_grn) | Routine | [Bmad](bmad.md) |
+| [`out_io`](sim_utils.md#out_io) | Routine | [Sim Utils](sim_utils.md) |
+| [`out_io_buffer_get_line`](sim_utils.md#out_io_buffer_get_line) | Routine | [Sim Utils](sim_utils.md) |
+| [`out_io_buffer_num_lines`](sim_utils.md#out_io_buffer_num_lines) | Routine | [Sim Utils](sim_utils.md) |
+| [`out_io_buffer_reset`](sim_utils.md#out_io_buffer_reset) | Routine | [Sim Utils](sim_utils.md) |
+| [`out_io_print_and_capture_setup`](sim_utils.md#out_io_print_and_capture_setup) | Routine | [Sim Utils](sim_utils.md) |
 | `OUTLINE_ARROW_HEAD` | Enum | [Enums](enums.md) |
 | `OUTPUT_ELE` | Enum | [Enums](enums.md) |
 | `OUTSIDE` | Enum | [Enums](enums.md) |
@@ -1379,40 +1379,40 @@
 | `P90` | Enum | [Enums](enums.md) |
 | `P_MASS` | Enum | [Enums](enums.md) |
 | `PARENS` | Enum | [Enums](enums.md) |
-| [`parse_cartesian_map`][pybmad.parse_cartesian_map] | Routine | [Bmad](bmad.md) |
-| [`parse_cylindrical_map`][pybmad.parse_cylindrical_map] | Routine | [Bmad](bmad.md) |
-| [`parse_fortran_format`][pybmad.parse_fortran_format] | Routine | [Sim Utils](sim_utils.md) |
-| [`parse_gen_grad_map`][pybmad.parse_gen_grad_map] | Routine | [Bmad](bmad.md) |
-| [`parse_grid_field`][pybmad.parse_grid_field] | Routine | [Bmad](bmad.md) |
-| [`parse_integer_list`][pybmad.parse_integer_list] | Routine | [Bmad](bmad.md) |
-| [`parse_integer_list2`][pybmad.parse_integer_list2] | Routine | [Bmad](bmad.md) |
-| [`parse_real_list`][pybmad.parse_real_list] | Routine | [Bmad](bmad.md) |
-| [`parse_real_list2`][pybmad.parse_real_list2] | Routine | [Bmad](bmad.md) |
-| [`parser_add_constant`][pybmad.parser_add_constant] | Routine | [Bmad](bmad.md) |
-| [`parser_call_check`][pybmad.parser_call_check] | Routine | [Bmad](bmad.md) |
-| [`parser_fast_complex_read`][pybmad.parser_fast_complex_read] | Routine | [Bmad](bmad.md) |
-| [`parser_fast_integer_read`][pybmad.parser_fast_integer_read] | Routine | [Bmad](bmad.md) |
-| [`parser_fast_real_read`][pybmad.parser_fast_real_read] | Routine | [Bmad](bmad.md) |
-| [`parser_file_stack`][pybmad.parser_file_stack] | Routine | [Bmad](bmad.md) |
-| [`parser_get_integer`][pybmad.parser_get_integer] | Routine | [Bmad](bmad.md) |
-| [`parser_get_logical`][pybmad.parser_get_logical] | Routine | [Bmad](bmad.md) |
-| [`parser_identify_fork_to_element`][pybmad.parser_identify_fork_to_element] | Routine | [Bmad](bmad.md) |
-| [`parser_init_custom_elements`][pybmad.parser_init_custom_elements] | Routine | [Bmad](bmad.md) |
+| [`parse_cartesian_map`](bmad.md#parse_cartesian_map) | Routine | [Bmad](bmad.md) |
+| [`parse_cylindrical_map`](bmad.md#parse_cylindrical_map) | Routine | [Bmad](bmad.md) |
+| [`parse_fortran_format`](sim_utils.md#parse_fortran_format) | Routine | [Sim Utils](sim_utils.md) |
+| [`parse_gen_grad_map`](bmad.md#parse_gen_grad_map) | Routine | [Bmad](bmad.md) |
+| [`parse_grid_field`](bmad.md#parse_grid_field) | Routine | [Bmad](bmad.md) |
+| [`parse_integer_list`](bmad.md#parse_integer_list) | Routine | [Bmad](bmad.md) |
+| [`parse_integer_list2`](bmad.md#parse_integer_list2) | Routine | [Bmad](bmad.md) |
+| [`parse_real_list`](bmad.md#parse_real_list) | Routine | [Bmad](bmad.md) |
+| [`parse_real_list2`](bmad.md#parse_real_list2) | Routine | [Bmad](bmad.md) |
+| [`parser_add_constant`](bmad.md#parser_add_constant) | Routine | [Bmad](bmad.md) |
+| [`parser_call_check`](bmad.md#parser_call_check) | Routine | [Bmad](bmad.md) |
+| [`parser_fast_complex_read`](bmad.md#parser_fast_complex_read) | Routine | [Bmad](bmad.md) |
+| [`parser_fast_integer_read`](bmad.md#parser_fast_integer_read) | Routine | [Bmad](bmad.md) |
+| [`parser_fast_real_read`](bmad.md#parser_fast_real_read) | Routine | [Bmad](bmad.md) |
+| [`parser_file_stack`](bmad.md#parser_file_stack) | Routine | [Bmad](bmad.md) |
+| [`parser_get_integer`](bmad.md#parser_get_integer) | Routine | [Bmad](bmad.md) |
+| [`parser_get_logical`](bmad.md#parser_get_logical) | Routine | [Bmad](bmad.md) |
+| [`parser_identify_fork_to_element`](bmad.md#parser_identify_fork_to_element) | Routine | [Bmad](bmad.md) |
+| [`parser_init_custom_elements`](bmad.md#parser_init_custom_elements) | Routine | [Bmad](bmad.md) |
 | `PARSER_MAKE_XFER_MATS` | Enum | [Enums](enums.md) |
-| [`parser_print_line`][pybmad.parser_print_line] | Routine | [Bmad](bmad.md) |
-| [`parser_read_lr_wake`][pybmad.parser_read_lr_wake] | Routine | [Bmad](bmad.md) |
-| [`parser_read_old_format_lr_wake`][pybmad.parser_read_old_format_lr_wake] | Routine | [Bmad](bmad.md) |
-| [`parser_read_old_format_sr_wake`][pybmad.parser_read_old_format_sr_wake] | Routine | [Bmad](bmad.md) |
-| [`parser_read_sr_wake`][pybmad.parser_read_sr_wake] | Routine | [Bmad](bmad.md) |
-| [`parser_transfer_control_struct`][pybmad.parser_transfer_control_struct] | Routine | [Bmad](bmad.md) |
+| [`parser_print_line`](bmad.md#parser_print_line) | Routine | [Bmad](bmad.md) |
+| [`parser_read_lr_wake`](bmad.md#parser_read_lr_wake) | Routine | [Bmad](bmad.md) |
+| [`parser_read_old_format_lr_wake`](bmad.md#parser_read_old_format_lr_wake) | Routine | [Bmad](bmad.md) |
+| [`parser_read_old_format_sr_wake`](bmad.md#parser_read_old_format_sr_wake) | Routine | [Bmad](bmad.md) |
+| [`parser_read_sr_wake`](bmad.md#parser_read_sr_wake) | Routine | [Bmad](bmad.md) |
+| [`parser_transfer_control_struct`](bmad.md#parser_transfer_control_struct) | Routine | [Bmad](bmad.md) |
 | `PARTICLE` | Enum | [Enums](enums.md) |
-| [`particle_in_global_frame`][pybmad.particle_in_global_frame] | Routine | [Bmad](bmad.md) |
-| [`particle_is_moving_backwards`][pybmad.particle_is_moving_backwards] | Routine | [Bmad](bmad.md) |
-| [`particle_is_moving_forward`][pybmad.particle_is_moving_forward] | Routine | [Bmad](bmad.md) |
-| [`particle_rf_time`][pybmad.particle_rf_time] | Routine | [Bmad](bmad.md) |
+| [`particle_in_global_frame`](bmad.md#particle_in_global_frame) | Routine | [Bmad](bmad.md) |
+| [`particle_is_moving_backwards`](bmad.md#particle_is_moving_backwards) | Routine | [Bmad](bmad.md) |
+| [`particle_is_moving_forward`](bmad.md#particle_is_moving_forward) | Routine | [Bmad](bmad.md) |
+| [`particle_rf_time`](bmad.md#particle_rf_time) | Routine | [Bmad](bmad.md) |
 | `PATCH` | Enum | [Enums](enums.md) |
-| [`patch_flips_propagation_direction`][pybmad.patch_flips_propagation_direction] | Routine | [Bmad](bmad.md) |
-| [`patch_length`][pybmad.patch_length] | Routine | [Bmad](bmad.md) |
+| [`patch_flips_propagation_direction`](bmad.md#patch_flips_propagation_direction) | Routine | [Bmad](bmad.md) |
+| [`patch_length`](bmad.md#patch_length) | Routine | [Bmad](bmad.md) |
 | `PATCH_PROBLEM` | Enum | [Enums](enums.md) |
 | `PC_OUT_MAX` | Enum | [Enums](enums.md) |
 | `PC_OUT_MIN` | Enum | [Enums](enums.md) |
@@ -1433,23 +1433,23 @@
 | `PHI_B_STORED` | Enum | [Enums](enums.md) |
 | `PHI_POSITION` | Enum | [Enums](enums.md) |
 | `PHOTON` | Enum | [Enums](enums.md) |
-| [`photon_absorption_and_phase_shift`][pybmad.photon_absorption_and_phase_shift] | Routine | [Bmad](bmad.md) |
-| [`photon_add_to_detector_statistics`][pybmad.photon_add_to_detector_statistics] | Routine | [Bmad](bmad.md) |
+| [`photon_absorption_and_phase_shift`](bmad.md#photon_absorption_and_phase_shift) | Routine | [Bmad](bmad.md) |
+| [`photon_add_to_detector_statistics`](bmad.md#photon_add_to_detector_statistics) | Routine | [Bmad](bmad.md) |
 | `PHOTON_FORK` | Enum | [Enums](enums.md) |
 | `PHOTON_INIT` | Enum | [Enums](enums.md) |
-| [`photon_reflection`][pybmad.photon_reflection] | Routine | [Bmad](bmad.md) |
-| [`photon_reflection_std_surface_init`][pybmad.photon_reflection_std_surface_init] | Routine | [Bmad](bmad.md) |
-| [`photon_reflectivity`][pybmad.photon_reflectivity] | Routine | [Bmad](bmad.md) |
-| [`photon_target_corner_calc`][pybmad.photon_target_corner_calc] | Routine | [Bmad](bmad.md) |
-| [`photon_target_setup`][pybmad.photon_target_setup] | Routine | [Bmad](bmad.md) |
-| [`photon_type`][pybmad.photon_type] | Routine | [Bmad](bmad.md) |
+| [`photon_reflection`](bmad.md#photon_reflection) | Routine | [Bmad](bmad.md) |
+| [`photon_reflection_std_surface_init`](bmad.md#photon_reflection_std_surface_init) | Routine | [Bmad](bmad.md) |
+| [`photon_reflectivity`](bmad.md#photon_reflectivity) | Routine | [Bmad](bmad.md) |
+| [`photon_target_corner_calc`](bmad.md#photon_target_corner_calc) | Routine | [Bmad](bmad.md) |
+| [`photon_target_setup`](bmad.md#photon_target_setup) | Routine | [Bmad](bmad.md) |
+| [`photon_type`](bmad.md#photon_type) | Routine | [Bmad](bmad.md) |
 | `PHOTON_TYPE` | Enum | [Enums](enums.md) |
 | [PhotonElementStruct](bmad.md#photonelementstruct) | Struct | [Bmad](bmad.md) |
 | [PhotonMaterialStruct](bmad.md#photonmaterialstruct) | Struct | [Bmad](bmad.md) |
 | [PhotonReflectSurfaceStruct](bmad.md#photonreflectsurfacestruct) | Struct | [Bmad](bmad.md) |
 | [PhotonReflectTableStruct](bmad.md#photonreflecttablestruct) | Struct | [Bmad](bmad.md) |
 | [PhotonTargetStruct](bmad.md#photontargetstruct) | Struct | [Bmad](bmad.md) |
-| [`physical_ele_end`][pybmad.physical_ele_end] | Routine | [Bmad](bmad.md) |
+| [`physical_ele_end`](bmad.md#physical_ele_end) | Routine | [Bmad](bmad.md) |
 | `PHYSICAL_SOURCE` | Enum | [Enums](enums.md) |
 | `PI` | Enum | [Enums](enums.md) |
 | `PICKUP` | Enum | [Enums](enums.md) |
@@ -1463,65 +1463,65 @@
 | `PLANAR_MODEL` | Enum | [Enums](enums.md) |
 | `PLUS` | Enum | [Enums](enums.md) |
 | `PLUS_SYM` | Enum | [Enums](enums.md) |
-| [`point_photon_emission`][pybmad.point_photon_emission] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_branch`][pybmad.pointer_to_branch] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_ele`][pybmad.pointer_to_ele] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_element_at_s`][pybmad.pointer_to_element_at_s] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_fibre`][pybmad.pointer_to_fibre] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_field_ele`][pybmad.pointer_to_field_ele] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_girder`][pybmad.pointer_to_girder] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_locations`][pybmad.pointer_to_locations] | Routine | [Sim Utils](sim_utils.md) |
-| [`pointer_to_lord`][pybmad.pointer_to_lord] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_multipass_lord`][pybmad.pointer_to_multipass_lord] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_next_ele`][pybmad.pointer_to_next_ele] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_ran_state`][pybmad.pointer_to_ran_state] | Routine | [Sim Utils](sim_utils.md) |
-| [`pointer_to_slave`][pybmad.pointer_to_slave] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_super_lord`][pybmad.pointer_to_super_lord] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_surface_displacement_pt`][pybmad.pointer_to_surface_displacement_pt] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_surface_segmented_pt`][pybmad.pointer_to_surface_segmented_pt] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_wake_ele`][pybmad.pointer_to_wake_ele] | Routine | [Bmad](bmad.md) |
-| [`pointer_to_wall3d`][pybmad.pointer_to_wall3d] | Routine | [Bmad](bmad.md) |
-| [`polar_to_spinor`][pybmad.polar_to_spinor] | Routine | [Bmad](bmad.md) |
-| [`polar_to_vec`][pybmad.polar_to_vec] | Routine | [Bmad](bmad.md) |
+| [`point_photon_emission`](bmad.md#point_photon_emission) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_branch`](bmad.md#pointer_to_branch) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_ele`](bmad.md#pointer_to_ele) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_element_at_s`](bmad.md#pointer_to_element_at_s) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_fibre`](bmad.md#pointer_to_fibre) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_field_ele`](bmad.md#pointer_to_field_ele) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_girder`](bmad.md#pointer_to_girder) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_locations`](sim_utils.md#pointer_to_locations) | Routine | [Sim Utils](sim_utils.md) |
+| [`pointer_to_lord`](bmad.md#pointer_to_lord) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_multipass_lord`](bmad.md#pointer_to_multipass_lord) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_next_ele`](bmad.md#pointer_to_next_ele) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_ran_state`](sim_utils.md#pointer_to_ran_state) | Routine | [Sim Utils](sim_utils.md) |
+| [`pointer_to_slave`](bmad.md#pointer_to_slave) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_super_lord`](bmad.md#pointer_to_super_lord) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_surface_displacement_pt`](bmad.md#pointer_to_surface_displacement_pt) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_surface_segmented_pt`](bmad.md#pointer_to_surface_segmented_pt) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_wake_ele`](bmad.md#pointer_to_wake_ele) | Routine | [Bmad](bmad.md) |
+| [`pointer_to_wall3d`](bmad.md#pointer_to_wall3d) | Routine | [Bmad](bmad.md) |
+| [`polar_to_spinor`](bmad.md#polar_to_spinor) | Routine | [Bmad](bmad.md) |
+| [`polar_to_vec`](bmad.md#polar_to_vec) | Routine | [Bmad](bmad.md) |
 | `POLARITY` | Enum | [Enums](enums.md) |
 | `POLARIZED` | Enum | [Enums](enums.md) |
-| [`poly_eval`][pybmad.poly_eval] | Routine | [Sim Utils](sim_utils.md) |
+| [`poly_eval`](sim_utils.md#poly_eval) | Routine | [Sim Utils](sim_utils.md) |
 | `POSITRON` | Enum | [Enums](enums.md) |
 | `POWER` | Enum | [Enums](enums.md) |
 | `PRE_BORN` | Enum | [Enums](enums.md) |
 | [PreTrackerStruct](bmad.md#pretrackerstruct) | Struct | [Bmad](bmad.md) |
 | `PRINT_PAGE_LONG_LEN` | Enum | [Enums](enums.md) |
 | `PRINT_PAGE_SHORT_LEN` | Enum | [Enums](enums.md) |
-| [`probability_funct`][pybmad.probability_funct] | Routine | [Sim Utils](sim_utils.md) |
-| [`projdd`][pybmad.projdd] | Routine | [Sim Utils](sim_utils.md) |
-| [`project_emit_to_xyz`][pybmad.project_emit_to_xyz] | Routine | [Bmad](bmad.md) |
+| [`probability_funct`](sim_utils.md#probability_funct) | Routine | [Sim Utils](sim_utils.md) |
+| [`projdd`](sim_utils.md#projdd) | Routine | [Sim Utils](sim_utils.md) |
+| [`project_emit_to_xyz`](bmad.md#project_emit_to_xyz) | Routine | [Bmad](bmad.md) |
 | `PROTON` | Enum | [Enums](enums.md) |
 | `PROVISIONAL` | Enum | [Enums](enums.md) |
 | `PSI_ANGLE` | Enum | [Enums](enums.md) |
 | `PSI_POSITION` | Enum | [Enums](enums.md) |
-| [`psi_prime_sca`][pybmad.psi_prime_sca] | Routine | [Bmad](bmad.md) |
-| [`ptc_bookkeeper`][pybmad.ptc_bookkeeper] | Routine | [Bmad](bmad.md) |
-| [`ptc_calculate_tracking_step_size`][pybmad.ptc_calculate_tracking_step_size] | Routine | [Bmad](bmad.md) |
+| [`psi_prime_sca`](bmad.md#psi_prime_sca) | Routine | [Bmad](bmad.md) |
+| [`ptc_bookkeeper`](bmad.md#ptc_bookkeeper) | Routine | [Bmad](bmad.md) |
+| [`ptc_calculate_tracking_step_size`](bmad.md#ptc_calculate_tracking_step_size) | Routine | [Bmad](bmad.md) |
 | `PTC_CANONICAL_COORDS` | Enum | [Enums](enums.md) |
-| [`ptc_check_for_lost_particle`][pybmad.ptc_check_for_lost_particle] | Routine | [Bmad](bmad.md) |
-| [`ptc_closed_orbit_calc`][pybmad.ptc_closed_orbit_calc] | Routine | [Bmad](bmad.md) |
-| [`ptc_emit_calc`][pybmad.ptc_emit_calc] | Routine | [Bmad](bmad.md) |
+| [`ptc_check_for_lost_particle`](bmad.md#ptc_check_for_lost_particle) | Routine | [Bmad](bmad.md) |
+| [`ptc_closed_orbit_calc`](bmad.md#ptc_closed_orbit_calc) | Routine | [Bmad](bmad.md) |
+| [`ptc_emit_calc`](bmad.md#ptc_emit_calc) | Routine | [Bmad](bmad.md) |
 | `PTC_FIELD_GEOMETRY` | Enum | [Enums](enums.md) |
 | `PTC_FRINGE_GEOMETRY` | Enum | [Enums](enums.md) |
 | `PTC_INTEGRATION_TYPE` | Enum | [Enums](enums.md) |
-| [`ptc_layouts_resplit`][pybmad.ptc_layouts_resplit] | Routine | [Bmad](bmad.md) |
-| [`ptc_one_turn_mat_and_closed_orbit_calc`][pybmad.ptc_one_turn_mat_and_closed_orbit_calc] | Routine | [Bmad](bmad.md) |
-| [`ptc_ran_seed_put`][pybmad.ptc_ran_seed_put] | Routine | [Bmad](bmad.md) |
-| [`ptc_read_flat_file`][pybmad.ptc_read_flat_file] | Routine | [Bmad](bmad.md) |
-| [`ptc_set_rf_state_for_c_normal`][pybmad.ptc_set_rf_state_for_c_normal] | Routine | [Bmad](bmad.md) |
-| [`ptc_set_taylor_order_if_needed`][pybmad.ptc_set_taylor_order_if_needed] | Routine | [Bmad](bmad.md) |
-| [`ptc_spin_calc`][pybmad.ptc_spin_calc] | Routine | [Bmad](bmad.md) |
+| [`ptc_layouts_resplit`](bmad.md#ptc_layouts_resplit) | Routine | [Bmad](bmad.md) |
+| [`ptc_one_turn_mat_and_closed_orbit_calc`](bmad.md#ptc_one_turn_mat_and_closed_orbit_calc) | Routine | [Bmad](bmad.md) |
+| [`ptc_ran_seed_put`](bmad.md#ptc_ran_seed_put) | Routine | [Bmad](bmad.md) |
+| [`ptc_read_flat_file`](bmad.md#ptc_read_flat_file) | Routine | [Bmad](bmad.md) |
+| [`ptc_set_rf_state_for_c_normal`](bmad.md#ptc_set_rf_state_for_c_normal) | Routine | [Bmad](bmad.md) |
+| [`ptc_set_taylor_order_if_needed`](bmad.md#ptc_set_taylor_order_if_needed) | Routine | [Bmad](bmad.md) |
+| [`ptc_spin_calc`](bmad.md#ptc_spin_calc) | Routine | [Bmad](bmad.md) |
 | `PTC_STANDARD` | Enum | [Enums](enums.md) |
-| [`ptc_track_all`][pybmad.ptc_track_all] | Routine | [Bmad](bmad.md) |
-| [`ptc_transfer_map_with_spin`][pybmad.ptc_transfer_map_with_spin] | Routine | [Bmad](bmad.md) |
+| [`ptc_track_all`](bmad.md#ptc_track_all) | Routine | [Bmad](bmad.md) |
+| [`ptc_transfer_map_with_spin`](bmad.md#ptc_transfer_map_with_spin) | Routine | [Bmad](bmad.md) |
 | [PtcNormalFormStruct](bmad.md#ptcnormalformstruct) | Struct | [Bmad](bmad.md) |
 | `PURPLE` | Enum | [Enums](enums.md) |
-| [`pwd_mat`][pybmad.pwd_mat] | Routine | [Bmad](bmad.md) |
+| [`pwd_mat`](bmad.md#pwd_mat) | Routine | [Bmad](bmad.md) |
 | `PX` | Enum | [Enums](enums.md) |
 | `PX0` | Enum | [Enums](enums.md) |
 | `PX1` | Enum | [Enums](enums.md) |
@@ -1553,34 +1553,34 @@
 | [QpRectStruct](sim_utils.md#qprectstruct) | Struct | [Sim Utils](sim_utils.md) |
 | [QpSymbolStruct](sim_utils.md#qpsymbolstruct) | Struct | [Sim Utils](sim_utils.md) |
 | `QUAD_TILT` | Enum | [Enums](enums.md) |
-| [`quadratic_roots`][pybmad.quadratic_roots] | Routine | [Sim Utils](sim_utils.md) |
+| [`quadratic_roots`](sim_utils.md#quadratic_roots) | Routine | [Sim Utils](sim_utils.md) |
 | `QUADRUPOLE` | Enum | [Enums](enums.md) |
-| [`quat_conj`][pybmad.quat_conj] | Routine | [Sim Utils](sim_utils.md) |
-| [`quat_inverse`][pybmad.quat_inverse] | Routine | [Sim Utils](sim_utils.md) |
-| [`quat_mul`][pybmad.quat_mul] | Routine | [Sim Utils](sim_utils.md) |
-| [`quat_rotate`][pybmad.quat_rotate] | Routine | [Sim Utils](sim_utils.md) |
-| [`quat_to_axis_angle`][pybmad.quat_to_axis_angle] | Routine | [Sim Utils](sim_utils.md) |
-| [`quat_to_omega`][pybmad.quat_to_omega] | Routine | [Sim Utils](sim_utils.md) |
-| [`quat_to_w_mat`][pybmad.quat_to_w_mat] | Routine | [Sim Utils](sim_utils.md) |
-| [`query_string`][pybmad.query_string] | Routine | [Sim Utils](sim_utils.md) |
-| [`quote`][pybmad.quote] | Routine | [Sim Utils](sim_utils.md) |
-| [`quoten`][pybmad.quoten] | Routine | [Sim Utils](sim_utils.md) |
+| [`quat_conj`](sim_utils.md#quat_conj) | Routine | [Sim Utils](sim_utils.md) |
+| [`quat_inverse`](sim_utils.md#quat_inverse) | Routine | [Sim Utils](sim_utils.md) |
+| [`quat_mul`](sim_utils.md#quat_mul) | Routine | [Sim Utils](sim_utils.md) |
+| [`quat_rotate`](sim_utils.md#quat_rotate) | Routine | [Sim Utils](sim_utils.md) |
+| [`quat_to_axis_angle`](sim_utils.md#quat_to_axis_angle) | Routine | [Sim Utils](sim_utils.md) |
+| [`quat_to_omega`](sim_utils.md#quat_to_omega) | Routine | [Sim Utils](sim_utils.md) |
+| [`quat_to_w_mat`](sim_utils.md#quat_to_w_mat) | Routine | [Sim Utils](sim_utils.md) |
+| [`query_string`](sim_utils.md#query_string) | Routine | [Sim Utils](sim_utils.md) |
+| [`quote`](sim_utils.md#quote) | Routine | [Sim Utils](sim_utils.md) |
+| [`quoten`](sim_utils.md#quoten) | Routine | [Sim Utils](sim_utils.md) |
 | `R0_ELEC` | Enum | [Enums](enums.md) |
 | `R0_MAG` | Enum | [Enums](enums.md) |
 | `R_E` | Enum | [Enums](enums.md) |
 | `R_P` | Enum | [Enums](enums.md) |
 | `R_PARENS` | Enum | [Enums](enums.md) |
 | `R_SOLENOID` | Enum | [Enums](enums.md) |
-| [`rad1_damp_and_stoc_mats`][pybmad.rad1_damp_and_stoc_mats] | Routine | [Bmad](bmad.md) |
-| [`rad_damp_and_stoc_mats`][pybmad.rad_damp_and_stoc_mats] | Routine | [Bmad](bmad.md) |
-| [`rad_g_integrals`][pybmad.rad_g_integrals] | Routine | [Bmad](bmad.md) |
+| [`rad1_damp_and_stoc_mats`](bmad.md#rad1_damp_and_stoc_mats) | Routine | [Bmad](bmad.md) |
+| [`rad_damp_and_stoc_mats`](bmad.md#rad_damp_and_stoc_mats) | Routine | [Bmad](bmad.md) |
+| [`rad_g_integrals`](bmad.md#rad_g_integrals) | Routine | [Bmad](bmad.md) |
 | `RAD_INT_GROUP` | Enum | [Enums](enums.md) |
 | `RADIANS` | Enum | [Enums](enums.md) |
 | `RADIANS_OVER_2PI` | Enum | [Enums](enums.md) |
-| [`radiation_integrals`][pybmad.radiation_integrals] | Routine | [Bmad](bmad.md) |
+| [`radiation_integrals`](bmad.md#radiation_integrals) | Routine | [Bmad](bmad.md) |
 | `RADIATION_LENGTH` | Enum | [Enums](enums.md) |
 | `RADIATION_LENGTH_USED` | Enum | [Enums](enums.md) |
-| [`radiation_map_setup`][pybmad.radiation_map_setup] | Routine | [Bmad](bmad.md) |
+| [`radiation_map_setup`](bmad.md#radiation_map_setup) | Routine | [Bmad](bmad.md) |
 | [RadInt1Struct](bmad.md#radint1struct) | Struct | [Bmad](bmad.md) |
 | [RadIntAllEleStruct](bmad.md#radintallelestruct) | Struct | [Bmad](bmad.md) |
 | [RadIntBranchStruct](bmad.md#radintbranchstruct) | Struct | [Bmad](bmad.md) |
@@ -1589,52 +1589,52 @@
 | [RadMapStruct](bmad.md#radmapstruct) | Struct | [Bmad](bmad.md) |
 | `RAMPER` | Enum | [Enums](enums.md) |
 | `RAMPER_LORD` | Enum | [Enums](enums.md) |
-| [`ramper_slave_setup`][pybmad.ramper_slave_setup] | Routine | [Bmad](bmad.md) |
-| [`ramper_value`][pybmad.ramper_value] | Routine | [Bmad](bmad.md) |
+| [`ramper_slave_setup`](bmad.md#ramper_slave_setup) | Routine | [Bmad](bmad.md) |
+| [`ramper_value`](bmad.md#ramper_value) | Routine | [Bmad](bmad.md) |
 | [RamperLordStruct](bmad.md#ramperlordstruct) | Struct | [Bmad](bmad.md) |
 | `RAN` | Enum | [Enums](enums.md) |
-| [`ran_default_state`][pybmad.ran_default_state] | Routine | [Sim Utils](sim_utils.md) |
-| [`ran_engine`][pybmad.ran_engine] | Routine | [Sim Utils](sim_utils.md) |
+| [`ran_default_state`](sim_utils.md#ran_default_state) | Routine | [Sim Utils](sim_utils.md) |
+| [`ran_engine`](sim_utils.md#ran_engine) | Routine | [Sim Utils](sim_utils.md) |
 | `RAN_GAUSS` | Enum | [Enums](enums.md) |
-| [`ran_gauss_converter`][pybmad.ran_gauss_converter] | Routine | [Sim Utils](sim_utils.md) |
-| [`ran_gauss_scalar`][pybmad.ran_gauss_scalar] | Routine | [Sim Utils](sim_utils.md) |
-| [`ran_gauss_vector`][pybmad.ran_gauss_vector] | Routine | [Sim Utils](sim_utils.md) |
+| [`ran_gauss_converter`](sim_utils.md#ran_gauss_converter) | Routine | [Sim Utils](sim_utils.md) |
+| [`ran_gauss_scalar`](sim_utils.md#ran_gauss_scalar) | Routine | [Sim Utils](sim_utils.md) |
+| [`ran_gauss_vector`](sim_utils.md#ran_gauss_vector) | Routine | [Sim Utils](sim_utils.md) |
 | `RAN_SEED` | Enum | [Enums](enums.md) |
-| [`ran_seed_get`][pybmad.ran_seed_get] | Routine | [Sim Utils](sim_utils.md) |
-| [`ran_seed_put`][pybmad.ran_seed_put] | Routine | [Sim Utils](sim_utils.md) |
-| [`ran_uniform`][pybmad.ran_uniform] | Routine | [Sim Utils](sim_utils.md) |
-| [`randomize_lr_wake_frequencies`][pybmad.randomize_lr_wake_frequencies] | Routine | [Bmad](bmad.md) |
+| [`ran_seed_get`](sim_utils.md#ran_seed_get) | Routine | [Sim Utils](sim_utils.md) |
+| [`ran_seed_put`](sim_utils.md#ran_seed_put) | Routine | [Sim Utils](sim_utils.md) |
+| [`ran_uniform`](sim_utils.md#ran_uniform) | Routine | [Sim Utils](sim_utils.md) |
+| [`randomize_lr_wake_frequencies`](bmad.md#randomize_lr_wake_frequencies) | Routine | [Bmad](bmad.md) |
 | [RandomStateStruct](sim_utils.md#randomstatestruct) | Struct | [Sim Utils](sim_utils.md) |
 | `RBEND` | Enum | [Enums](enums.md) |
-| [`rcelbd`][pybmad.rcelbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`rchomp`][pybmad.rchomp] | Routine | [Bmad](bmad.md) |
+| [`rcelbd`](sim_utils.md#rcelbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`rchomp`](bmad.md#rchomp) | Routine | [Bmad](bmad.md) |
 | `RCOLLIMATOR` | Enum | [Enums](enums.md) |
-| [`re_allocate`][pybmad.re_allocate] | Routine | [Bmad](bmad.md) |
-| [`re_allocate_eles`][pybmad.re_allocate_eles] | Routine | [Bmad](bmad.md) |
-| [`re_associate_node_array`][pybmad.re_associate_node_array] | Routine | [Bmad](bmad.md) |
-| [`re_str`][pybmad.re_str] | Routine | [Bmad](bmad.md) |
-| [`read_a_line`][pybmad.read_a_line] | Routine | [Sim Utils](sim_utils.md) |
-| [`read_beam_ascii`][pybmad.read_beam_ascii] | Routine | [Bmad](bmad.md) |
-| [`read_beam_file`][pybmad.read_beam_file] | Routine | [Bmad](bmad.md) |
-| [`read_binary_cartesian_map`][pybmad.read_binary_cartesian_map] | Routine | [Bmad](bmad.md) |
-| [`read_binary_cylindrical_map`][pybmad.read_binary_cylindrical_map] | Routine | [Bmad](bmad.md) |
-| [`read_binary_grid_field`][pybmad.read_binary_grid_field] | Routine | [Bmad](bmad.md) |
-| [`read_digested_bmad_file`][pybmad.read_digested_bmad_file] | Routine | [Bmad](bmad.md) |
-| [`read_surface_reflection_file`][pybmad.read_surface_reflection_file] | Routine | [Bmad](bmad.md) |
-| [`readline_read_history`][pybmad.readline_read_history] | Routine | [Sim Utils](sim_utils.md) |
-| [`readline_write_history`][pybmad.readline_write_history] | Routine | [Sim Utils](sim_utils.md) |
+| [`re_allocate`](bmad.md#re_allocate) | Routine | [Bmad](bmad.md) |
+| [`re_allocate_eles`](bmad.md#re_allocate_eles) | Routine | [Bmad](bmad.md) |
+| [`re_associate_node_array`](bmad.md#re_associate_node_array) | Routine | [Bmad](bmad.md) |
+| [`re_str`](bmad.md#re_str) | Routine | [Bmad](bmad.md) |
+| [`read_a_line`](sim_utils.md#read_a_line) | Routine | [Sim Utils](sim_utils.md) |
+| [`read_beam_ascii`](bmad.md#read_beam_ascii) | Routine | [Bmad](bmad.md) |
+| [`read_beam_file`](bmad.md#read_beam_file) | Routine | [Bmad](bmad.md) |
+| [`read_binary_cartesian_map`](bmad.md#read_binary_cartesian_map) | Routine | [Bmad](bmad.md) |
+| [`read_binary_cylindrical_map`](bmad.md#read_binary_cylindrical_map) | Routine | [Bmad](bmad.md) |
+| [`read_binary_grid_field`](bmad.md#read_binary_grid_field) | Routine | [Bmad](bmad.md) |
+| [`read_digested_bmad_file`](bmad.md#read_digested_bmad_file) | Routine | [Bmad](bmad.md) |
+| [`read_surface_reflection_file`](bmad.md#read_surface_reflection_file) | Routine | [Bmad](bmad.md) |
+| [`readline_read_history`](sim_utils.md#readline_read_history) | Routine | [Sim Utils](sim_utils.md) |
+| [`readline_write_history`](sim_utils.md#readline_write_history) | Routine | [Sim Utils](sim_utils.md) |
 | `REAL_GARBAGE` | Enum | [Enums](enums.md) |
-| [`real_num_fortran_format`][pybmad.real_num_fortran_format] | Routine | [Sim Utils](sim_utils.md) |
-| [`real_path`][pybmad.real_path] | Routine | [Sim Utils](sim_utils.md) |
-| [`real_str`][pybmad.real_str] | Routine | [Sim Utils](sim_utils.md) |
-| [`real_to_string`][pybmad.real_to_string] | Routine | [Sim Utils](sim_utils.md) |
-| [`reallocate_beam`][pybmad.reallocate_beam] | Routine | [Bmad](bmad.md) |
-| [`reallocate_bp_com_const`][pybmad.reallocate_bp_com_const] | Routine | [Bmad](bmad.md) |
-| [`reallocate_bunch`][pybmad.reallocate_bunch] | Routine | [Bmad](bmad.md) |
-| [`reallocate_control`][pybmad.reallocate_control] | Routine | [Bmad](bmad.md) |
-| [`reallocate_coord`][pybmad.reallocate_coord] | Routine | [Bmad](bmad.md) |
-| [`reallocate_expression_stack`][pybmad.reallocate_expression_stack] | Routine | [Bmad](bmad.md) |
-| [`reallocate_spline`][pybmad.reallocate_spline] | Routine | [Sim Utils](sim_utils.md) |
+| [`real_num_fortran_format`](sim_utils.md#real_num_fortran_format) | Routine | [Sim Utils](sim_utils.md) |
+| [`real_path`](sim_utils.md#real_path) | Routine | [Sim Utils](sim_utils.md) |
+| [`real_str`](sim_utils.md#real_str) | Routine | [Sim Utils](sim_utils.md) |
+| [`real_to_string`](sim_utils.md#real_to_string) | Routine | [Sim Utils](sim_utils.md) |
+| [`reallocate_beam`](bmad.md#reallocate_beam) | Routine | [Bmad](bmad.md) |
+| [`reallocate_bp_com_const`](bmad.md#reallocate_bp_com_const) | Routine | [Bmad](bmad.md) |
+| [`reallocate_bunch`](bmad.md#reallocate_bunch) | Routine | [Bmad](bmad.md) |
+| [`reallocate_control`](bmad.md#reallocate_control) | Routine | [Bmad](bmad.md) |
+| [`reallocate_coord`](bmad.md#reallocate_coord) | Routine | [Bmad](bmad.md) |
+| [`reallocate_expression_stack`](bmad.md#reallocate_expression_stack) | Routine | [Bmad](bmad.md) |
+| [`reallocate_spline`](sim_utils.md#reallocate_spline) | Routine | [Sim Utils](sim_utils.md) |
 | `RECALC` | Enum | [Enums](enums.md) |
 | `RECTANGULAR` | Enum | [Enums](enums.md) |
 | `RED` | Enum | [Enums](enums.md) |
@@ -1657,62 +1657,62 @@
 | `REFERENCE` | Enum | [Enums](enums.md) |
 | `REFLECTION` | Enum | [Enums](enums.md) |
 | `REFLECTIVITY_TABLE` | Enum | [Enums](enums.md) |
-| [`rel_tracking_charge_to_mass`][pybmad.rel_tracking_charge_to_mass] | Routine | [Bmad](bmad.md) |
+| [`rel_tracking_charge_to_mass`](bmad.md#rel_tracking_charge_to_mass) | Routine | [Bmad](bmad.md) |
 | `RELATIVE` | Enum | [Enums](enums.md) |
-| [`relative_mode_flip`][pybmad.relative_mode_flip] | Routine | [Bmad](bmad.md) |
-| [`relbd`][pybmad.relbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`relcbd`][pybmad.relcbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`release_rad_int_cache`][pybmad.release_rad_int_cache] | Routine | [Bmad](bmad.md) |
-| [`relsbd`][pybmad.relsbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`remove_constant_taylor`][pybmad.remove_constant_taylor] | Routine | [Bmad](bmad.md) |
-| [`remove_dead_from_bunch`][pybmad.remove_dead_from_bunch] | Routine | [Bmad](bmad.md) |
-| [`remove_eles_from_lat`][pybmad.remove_eles_from_lat] | Routine | [Bmad](bmad.md) |
-| [`remove_lord_slave_link`][pybmad.remove_lord_slave_link] | Routine | [Bmad](bmad.md) |
+| [`relative_mode_flip`](bmad.md#relative_mode_flip) | Routine | [Bmad](bmad.md) |
+| [`relbd`](sim_utils.md#relbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`relcbd`](sim_utils.md#relcbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`release_rad_int_cache`](bmad.md#release_rad_int_cache) | Routine | [Bmad](bmad.md) |
+| [`relsbd`](sim_utils.md#relsbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`remove_constant_taylor`](bmad.md#remove_constant_taylor) | Routine | [Bmad](bmad.md) |
+| [`remove_dead_from_bunch`](bmad.md#remove_dead_from_bunch) | Routine | [Bmad](bmad.md) |
+| [`remove_eles_from_lat`](bmad.md#remove_eles_from_lat) | Routine | [Bmad](bmad.md) |
+| [`remove_lord_slave_link`](bmad.md#remove_lord_slave_link) | Routine | [Bmad](bmad.md) |
 | `REPETITION_FREQUENCY` | Enum | [Enums](enums.md) |
 | [ResonanceHStruct](bmad.md#resonancehstruct) | Struct | [Bmad](bmad.md) |
 | `RESTORE_STATE` | Enum | [Enums](enums.md) |
-| [`reverse_lat`][pybmad.reverse_lat] | Routine | [Bmad](bmad.md) |
+| [`reverse_lat`](bmad.md#reverse_lat) | Routine | [Bmad](bmad.md) |
 | `RF_BEND` | Enum | [Enums](enums.md) |
-| [`rf_cav_names`][pybmad.rf_cav_names] | Routine | [Bsim](bsim.md) |
-| [`rf_coupler_kick`][pybmad.rf_coupler_kick] | Routine | [Bmad](bmad.md) |
+| [`rf_cav_names`](bsim.md#rf_cav_names) | Routine | [Bsim](bsim.md) |
+| [`rf_coupler_kick`](bmad.md#rf_coupler_kick) | Routine | [Bmad](bmad.md) |
 | `RF_FREQUENCY` | Enum | [Enums](enums.md) |
-| [`rf_is_on`][pybmad.rf_is_on] | Routine | [Bmad](bmad.md) |
-| [`rf_ref_time_offset`][pybmad.rf_ref_time_offset] | Routine | [Bmad](bmad.md) |
+| [`rf_is_on`](bmad.md#rf_is_on) | Routine | [Bmad](bmad.md) |
+| [`rf_ref_time_offset`](bmad.md#rf_ref_time_offset) | Routine | [Bmad](bmad.md) |
 | `RF_WAVELENGTH` | Enum | [Enums](enums.md) |
 | `RFCAVITY` | Enum | [Enums](enums.md) |
 | [RfEleStruct](bmad.md#rfelestruct) | Struct | [Bmad](bmad.md) |
 | [RfStairStepStruct](bmad.md#rfstairstepstruct) | Struct | [Bmad](bmad.md) |
-| [`rfun`][pybmad.rfun] | Routine | [Bmad](bmad.md) |
-| [`rgelbd`][pybmad.rgelbd] | Routine | [Sim Utils](sim_utils.md) |
+| [`rfun`](bmad.md#rfun) | Routine | [Bmad](bmad.md) |
+| [`rgelbd`](sim_utils.md#rgelbd) | Routine | [Sim Utils](sim_utils.md) |
 | `RHO` | Enum | [Enums](enums.md) |
 | `RIPKEN_KICK` | Enum | [Enums](enums.md) |
-| [`rk_adaptive_time_step`][pybmad.rk_adaptive_time_step] | Routine | [Bmad](bmad.md) |
-| [`rk_time_step1`][pybmad.rk_time_step1] | Routine | [Bmad](bmad.md) |
+| [`rk_adaptive_time_step`](bmad.md#rk_adaptive_time_step) | Routine | [Bmad](bmad.md) |
+| [`rk_time_step1`](bmad.md#rk_time_step1) | Routine | [Bmad](bmad.md) |
 | `RMS` | Enum | [Enums](enums.md) |
-| [`rms_value`][pybmad.rms_value] | Routine | [Sim Utils](sim_utils.md) |
+| [`rms_value`](sim_utils.md#rms_value) | Routine | [Sim Utils](sim_utils.md) |
 | `ROLL` | Enum | [Enums](enums.md) |
 | `ROLL_TOT` | Enum | [Enums](enums.md) |
 | `ROOT` | Enum | [Enums](enums.md) |
-| [`rot_2d`][pybmad.rot_2d] | Routine | [Sim Utils](sim_utils.md) |
-| [`rotate3`][pybmad.rotate3] | Routine | [Bmad](bmad.md) |
-| [`rotate_em_field`][pybmad.rotate_em_field] | Routine | [Bmad](bmad.md) |
-| [`rotate_field_zx`][pybmad.rotate_field_zx] | Routine | [Bmad](bmad.md) |
-| [`rotate_for_curved_surface`][pybmad.rotate_for_curved_surface] | Routine | [Bmad](bmad.md) |
-| [`rotate_spin`][pybmad.rotate_spin] | Routine | [Bmad](bmad.md) |
-| [`rotate_spin_a_step`][pybmad.rotate_spin_a_step] | Routine | [Bmad](bmad.md) |
-| [`rotate_spin_given_field`][pybmad.rotate_spin_given_field] | Routine | [Bmad](bmad.md) |
-| [`rotate_vec`][pybmad.rotate_vec] | Routine | [Sim Utils](sim_utils.md) |
-| [`rotate_vec_given_axis_angle`][pybmad.rotate_vec_given_axis_angle] | Routine | [Sim Utils](sim_utils.md) |
+| [`rot_2d`](sim_utils.md#rot_2d) | Routine | [Sim Utils](sim_utils.md) |
+| [`rotate3`](bmad.md#rotate3) | Routine | [Bmad](bmad.md) |
+| [`rotate_em_field`](bmad.md#rotate_em_field) | Routine | [Bmad](bmad.md) |
+| [`rotate_field_zx`](bmad.md#rotate_field_zx) | Routine | [Bmad](bmad.md) |
+| [`rotate_for_curved_surface`](bmad.md#rotate_for_curved_surface) | Routine | [Bmad](bmad.md) |
+| [`rotate_spin`](bmad.md#rotate_spin) | Routine | [Bmad](bmad.md) |
+| [`rotate_spin_a_step`](bmad.md#rotate_spin_a_step) | Routine | [Bmad](bmad.md) |
+| [`rotate_spin_given_field`](bmad.md#rotate_spin_given_field) | Routine | [Bmad](bmad.md) |
+| [`rotate_vec`](sim_utils.md#rotate_vec) | Routine | [Sim Utils](sim_utils.md) |
+| [`rotate_vec_given_axis_angle`](sim_utils.md#rotate_vec_given_axis_angle) | Routine | [Sim Utils](sim_utils.md) |
 | `ROTATIONALLY_SYMMETRIC_RZ` | Enum | [Enums](enums.md) |
-| [`rp8`][pybmad.rp8] | Routine | [Sim Utils](sim_utils.md) |
-| [`rserbd`][pybmad.rserbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`run_timer`][pybmad.run_timer] | Routine | [Sim Utils](sim_utils.md) |
+| [`rp8`](sim_utils.md#rp8) | Routine | [Sim Utils](sim_utils.md) |
+| [`rserbd`](sim_utils.md#rserbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`run_timer`](sim_utils.md#run_timer) | Routine | [Sim Utils](sim_utils.md) |
 | `RUNGE_KUTTA` | Enum | [Enums](enums.md) |
 | `S_ABORT` | Enum | [Enums](enums.md) |
 | `S_AND_FLOOR_POSITION_GROUP` | Enum | [Enums](enums.md) |
 | `S_BLANK` | Enum | [Enums](enums.md) |
-| [`s_body_calc`][pybmad.s_body_calc] | Routine | [Bmad](bmad.md) |
-| [`s_calc`][pybmad.s_calc] | Routine | [Bmad](bmad.md) |
+| [`s_body_calc`](bmad.md#s_body_calc) | Routine | [Bmad](bmad.md) |
+| [`s_calc`](bmad.md#s_calc) | Routine | [Bmad](bmad.md) |
 | `S_DINFO` | Enum | [Enums](enums.md) |
 | `S_DWARN` | Enum | [Enums](enums.md) |
 | `S_ERROR` | Enum | [Enums](enums.md) |
@@ -1729,17 +1729,17 @@
 | `S_WARN` | Enum | [Enums](enums.md) |
 | `SAD_FULL` | Enum | [Enums](enums.md) |
 | `SAD_MULT` | Enum | [Enums](enums.md) |
-| [`sad_mult_hard_bend_edge_kick`][pybmad.sad_mult_hard_bend_edge_kick] | Routine | [Bmad](bmad.md) |
-| [`sad_soft_bend_edge_kick`][pybmad.sad_soft_bend_edge_kick] | Routine | [Bmad](bmad.md) |
+| [`sad_mult_hard_bend_edge_kick`](bmad.md#sad_mult_hard_bend_edge_kick) | Routine | [Bmad](bmad.md) |
+| [`sad_soft_bend_edge_kick`](bmad.md#sad_soft_bend_edge_kick) | Routine | [Bmad](bmad.md) |
 | `SAMPLE` | Enum | [Enums](enums.md) |
-| [`save_a_beam_step`][pybmad.save_a_beam_step] | Routine | [Bmad](bmad.md) |
-| [`save_a_bunch_step`][pybmad.save_a_bunch_step] | Routine | [Bmad](bmad.md) |
-| [`save_a_step`][pybmad.save_a_step] | Routine | [Bmad](bmad.md) |
+| [`save_a_beam_step`](bmad.md#save_a_beam_step) | Routine | [Bmad](bmad.md) |
+| [`save_a_bunch_step`](bmad.md#save_a_bunch_step) | Routine | [Bmad](bmad.md) |
+| [`save_a_step`](bmad.md#save_a_step) | Routine | [Bmad](bmad.md) |
 | `SAVE_STATE` | Enum | [Enums](enums.md) |
 | `SBEND` | Enum | [Enums](enums.md) |
-| [`sbend_body_with_k1_map`][pybmad.sbend_body_with_k1_map] | Routine | [Bmad](bmad.md) |
-| [`sc_adaptive_step`][pybmad.sc_adaptive_step] | Routine | [Bmad](bmad.md) |
-| [`sc_step`][pybmad.sc_step] | Routine | [Bmad](bmad.md) |
+| [`sbend_body_with_k1_map`](bmad.md#sbend_body_with_k1_map) | Routine | [Bmad](bmad.md) |
+| [`sc_adaptive_step`](bmad.md#sc_adaptive_step) | Routine | [Bmad](bmad.md) |
+| [`sc_step`](bmad.md#sc_step) | Routine | [Bmad](bmad.md) |
 | `SCALE_FIELD_TO_ONE` | Enum | [Enums](enums.md) |
 | `SCALE_MULTIPOLES` | Enum | [Enums](enums.md) |
 | `SCATTER_METHOD` | Enum | [Enums](enums.md) |
@@ -1747,35 +1747,35 @@
 | `SEC` | Enum | [Enums](enums.md) |
 | `SECOND_TRACK_EDGE` | Enum | [Enums](enums.md) |
 | `SECTOR` | Enum | [Enums](enums.md) |
-| [`serbd`][pybmad.serbd] | Routine | [Sim Utils](sim_utils.md) |
-| [`set_active_fixer`][pybmad.set_active_fixer] | Routine | [Bmad](bmad.md) |
-| [`set_custom_attribute_name`][pybmad.set_custom_attribute_name] | Routine | [Bmad](bmad.md) |
-| [`set_ele_attribute`][pybmad.set_ele_attribute] | Routine | [Bmad](bmad.md) |
-| [`set_ele_defaults`][pybmad.set_ele_defaults] | Routine | [Bmad](bmad.md) |
-| [`set_ele_name`][pybmad.set_ele_name] | Routine | [Bmad](bmad.md) |
-| [`set_ele_real_attribute`][pybmad.set_ele_real_attribute] | Routine | [Bmad](bmad.md) |
-| [`set_ele_status_stale`][pybmad.set_ele_status_stale] | Routine | [Bmad](bmad.md) |
-| [`set_env`][pybmad.set_env] | Routine | [Sim Utils](sim_utils.md) |
-| [`set_flags_for_changed_attribute`][pybmad.set_flags_for_changed_attribute] | Routine | [Bmad](bmad.md) |
-| [`set_fringe_on_off`][pybmad.set_fringe_on_off] | Routine | [Bmad](bmad.md) |
-| [`set_lords_status_stale`][pybmad.set_lords_status_stale] | Routine | [Bmad](bmad.md) |
-| [`set_on_off`][pybmad.set_on_off] | Routine | [Bmad](bmad.md) |
-| [`set_orbit_to_zero`][pybmad.set_orbit_to_zero] | Routine | [Bmad](bmad.md) |
-| [`set_parameter`][pybmad.set_parameter] | Routine | [Sim Utils](sim_utils.md) |
-| [`set_ptc`][pybmad.set_ptc] | Routine | [Bmad](bmad.md) |
-| [`set_ptc_base_state`][pybmad.set_ptc_base_state] | Routine | [Bmad](bmad.md) |
-| [`set_ptc_com_pointers`][pybmad.set_ptc_com_pointers] | Routine | [Bmad](bmad.md) |
-| [`set_ptc_quiet`][pybmad.set_ptc_quiet] | Routine | [Bmad](bmad.md) |
-| [`set_ptc_verbose`][pybmad.set_ptc_verbose] | Routine | [Bmad](bmad.md) |
-| [`set_pwd_ele`][pybmad.set_pwd_ele] | Routine | [Bmad](bmad.md) |
-| [`set_species_charge`][pybmad.set_species_charge] | Routine | [Sim Utils](sim_utils.md) |
-| [`set_status_flags`][pybmad.set_status_flags] | Routine | [Bmad](bmad.md) |
-| [`set_tune`][pybmad.set_tune] | Routine | [Bmad](bmad.md) |
-| [`set_tune_3d`][pybmad.set_tune_3d] | Routine | [Bsim](bsim.md) |
-| [`set_twiss`][pybmad.set_twiss] | Routine | [Bmad](bmad.md) |
-| [`set_z_tune`][pybmad.set_z_tune] | Routine | [Bmad](bmad.md) |
-| [`settable_dep_var_bookkeeping`][pybmad.settable_dep_var_bookkeeping] | Routine | [Bmad](bmad.md) |
-| [`setup_high_energy_space_charge_calc`][pybmad.setup_high_energy_space_charge_calc] | Routine | [Bmad](bmad.md) |
+| [`serbd`](sim_utils.md#serbd) | Routine | [Sim Utils](sim_utils.md) |
+| [`set_active_fixer`](bmad.md#set_active_fixer) | Routine | [Bmad](bmad.md) |
+| [`set_custom_attribute_name`](bmad.md#set_custom_attribute_name) | Routine | [Bmad](bmad.md) |
+| [`set_ele_attribute`](bmad.md#set_ele_attribute) | Routine | [Bmad](bmad.md) |
+| [`set_ele_defaults`](bmad.md#set_ele_defaults) | Routine | [Bmad](bmad.md) |
+| [`set_ele_name`](bmad.md#set_ele_name) | Routine | [Bmad](bmad.md) |
+| [`set_ele_real_attribute`](bmad.md#set_ele_real_attribute) | Routine | [Bmad](bmad.md) |
+| [`set_ele_status_stale`](bmad.md#set_ele_status_stale) | Routine | [Bmad](bmad.md) |
+| [`set_env`](sim_utils.md#set_env) | Routine | [Sim Utils](sim_utils.md) |
+| [`set_flags_for_changed_attribute`](bmad.md#set_flags_for_changed_attribute) | Routine | [Bmad](bmad.md) |
+| [`set_fringe_on_off`](bmad.md#set_fringe_on_off) | Routine | [Bmad](bmad.md) |
+| [`set_lords_status_stale`](bmad.md#set_lords_status_stale) | Routine | [Bmad](bmad.md) |
+| [`set_on_off`](bmad.md#set_on_off) | Routine | [Bmad](bmad.md) |
+| [`set_orbit_to_zero`](bmad.md#set_orbit_to_zero) | Routine | [Bmad](bmad.md) |
+| [`set_parameter`](sim_utils.md#set_parameter) | Routine | [Sim Utils](sim_utils.md) |
+| [`set_ptc`](bmad.md#set_ptc) | Routine | [Bmad](bmad.md) |
+| [`set_ptc_base_state`](bmad.md#set_ptc_base_state) | Routine | [Bmad](bmad.md) |
+| [`set_ptc_com_pointers`](bmad.md#set_ptc_com_pointers) | Routine | [Bmad](bmad.md) |
+| [`set_ptc_quiet`](bmad.md#set_ptc_quiet) | Routine | [Bmad](bmad.md) |
+| [`set_ptc_verbose`](bmad.md#set_ptc_verbose) | Routine | [Bmad](bmad.md) |
+| [`set_pwd_ele`](bmad.md#set_pwd_ele) | Routine | [Bmad](bmad.md) |
+| [`set_species_charge`](sim_utils.md#set_species_charge) | Routine | [Sim Utils](sim_utils.md) |
+| [`set_status_flags`](bmad.md#set_status_flags) | Routine | [Bmad](bmad.md) |
+| [`set_tune`](bmad.md#set_tune) | Routine | [Bmad](bmad.md) |
+| [`set_tune_3d`](bsim.md#set_tune_3d) | Routine | [Bsim](bsim.md) |
+| [`set_twiss`](bmad.md#set_twiss) | Routine | [Bmad](bmad.md) |
+| [`set_z_tune`](bmad.md#set_z_tune) | Routine | [Bmad](bmad.md) |
+| [`settable_dep_var_bookkeeping`](bmad.md#settable_dep_var_bookkeeping) | Routine | [Bmad](bmad.md) |
+| [`setup_high_energy_space_charge_calc`](bmad.md#setup_high_energy_space_charge_calc) | Routine | [Bmad](bmad.md) |
 | `SEXTUPOLE` | Enum | [Enums](enums.md) |
 | `SHIFTED_TO_RELATIVE` | Enum | [Enums](enums.md) |
 | `SHORT` | Enum | [Enums](enums.md) |
@@ -1787,61 +1787,61 @@
 | `SIG_X` | Enum | [Enums](enums.md) |
 | `SIG_Y` | Enum | [Enums](enums.md) |
 | `SIG_Z` | Enum | [Enums](enums.md) |
-| [`sigma_mat_ptc_to_bmad`][pybmad.sigma_mat_ptc_to_bmad] | Routine | [Bmad](bmad.md) |
+| [`sigma_mat_ptc_to_bmad`](bmad.md#sigma_mat_ptc_to_bmad) | Routine | [Bmad](bmad.md) |
 | `SIGN` | Enum | [Enums](enums.md) |
-| [`sign_of`][pybmad.sign_of] | Routine | [Sim Utils](sim_utils.md) |
-| [`significant_difference`][pybmad.significant_difference] | Routine | [Bmad](bmad.md) |
+| [`sign_of`](sim_utils.md#sign_of) | Routine | [Sim Utils](sim_utils.md) |
+| [`significant_difference`](bmad.md#significant_difference) | Routine | [Bmad](bmad.md) |
 | `SIN` | Enum | [Enums](enums.md) |
-| [`sinc`][pybmad.sinc] | Routine | [Sim Utils](sim_utils.md) |
+| [`sinc`](sim_utils.md#sinc) | Routine | [Sim Utils](sim_utils.md) |
 | `SINC` | Enum | [Enums](enums.md) |
-| [`sincc`][pybmad.sincc] | Routine | [Sim Utils](sim_utils.md) |
+| [`sincc`](sim_utils.md#sincc) | Routine | [Sim Utils](sim_utils.md) |
 | `SINH` | Enum | [Enums](enums.md) |
-| [`sinhx_x`][pybmad.sinhx_x] | Routine | [Sim Utils](sim_utils.md) |
-| [`skip_ele_blender`][pybmad.skip_ele_blender] | Routine | [Bmad](bmad.md) |
-| [`skip_header`][pybmad.skip_header] | Routine | [Sim Utils](sim_utils.md) |
+| [`sinhx_x`](sim_utils.md#sinhx_x) | Routine | [Sim Utils](sim_utils.md) |
+| [`skip_ele_blender`](bmad.md#skip_ele_blender) | Routine | [Bmad](bmad.md) |
+| [`skip_header`](sim_utils.md#skip_header) | Routine | [Sim Utils](sim_utils.md) |
 | `SLAVE` | Enum | [Enums](enums.md) |
 | `SLICE` | Enum | [Enums](enums.md) |
-| [`slice_lattice`][pybmad.slice_lattice] | Routine | [Bmad](bmad.md) |
+| [`slice_lattice`](bmad.md#slice_lattice) | Routine | [Bmad](bmad.md) |
 | `SLICE_SLAVE` | Enum | [Enums](enums.md) |
 | `SMALL_REL_CHANGE` | Enum | [Enums](enums.md) |
 | `SOFT_EDGE` | Enum | [Enums](enums.md) |
 | `SOFT_EDGE_ONLY` | Enum | [Enums](enums.md) |
-| [`soft_quadrupole_edge_kick`][pybmad.soft_quadrupole_edge_kick] | Routine | [Bmad](bmad.md) |
+| [`soft_quadrupole_edge_kick`](bmad.md#soft_quadrupole_edge_kick) | Routine | [Bmad](bmad.md) |
 | `SOL_QUAD` | Enum | [Enums](enums.md) |
-| [`sol_quad_mat6_calc`][pybmad.sol_quad_mat6_calc] | Routine | [Bmad](bmad.md) |
+| [`sol_quad_mat6_calc`](bmad.md#sol_quad_mat6_calc) | Routine | [Bmad](bmad.md) |
 | `SOLENOID` | Enum | [Enums](enums.md) |
 | `SOLID` | Enum | [Enums](enums.md) |
 | `SOLID_FILL` | Enum | [Enums](enums.md) |
-| [`solve_psi_adaptive`][pybmad.solve_psi_adaptive] | Routine | [Bmad](bmad.md) |
-| [`solve_psi_fixed_steps`][pybmad.solve_psi_fixed_steps] | Routine | [Bmad](bmad.md) |
-| [`sort_complex_taylor_terms`][pybmad.sort_complex_taylor_terms] | Routine | [Bmad](bmad.md) |
+| [`solve_psi_adaptive`](bmad.md#solve_psi_adaptive) | Routine | [Bmad](bmad.md) |
+| [`solve_psi_fixed_steps`](bmad.md#solve_psi_fixed_steps) | Routine | [Bmad](bmad.md) |
+| [`sort_complex_taylor_terms`](bmad.md#sort_complex_taylor_terms) | Routine | [Bmad](bmad.md) |
 | `SPACE_CHARGE_METHOD` | Enum | [Enums](enums.md) |
 | [SpaceChargeCommonStruct](bmad.md#spacechargecommonstruct) | Struct | [Bmad](bmad.md) |
 | `SPATIAL_DISTRIBUTION` | Enum | [Enums](enums.md) |
-| [`special_projection`][pybmad.special_projection] | Routine | [Sim Utils](sim_utils.md) |
+| [`special_projection`](sim_utils.md#special_projection) | Routine | [Sim Utils](sim_utils.md) |
 | `SPECIES` | Enum | [Enums](enums.md) |
 | `SPECIES_CONST` | Enum | [Enums](enums.md) |
-| [`species_id`][pybmad.species_id] | Routine | [Sim Utils](sim_utils.md) |
-| [`species_id_from_openpmd`][pybmad.species_id_from_openpmd] | Routine | [Sim Utils](sim_utils.md) |
-| [`species_name`][pybmad.species_name] | Routine | [Sim Utils](sim_utils.md) |
-| [`species_of`][pybmad.species_of] | Routine | [Sim Utils](sim_utils.md) |
+| [`species_id`](sim_utils.md#species_id) | Routine | [Sim Utils](sim_utils.md) |
+| [`species_id_from_openpmd`](sim_utils.md#species_id_from_openpmd) | Routine | [Sim Utils](sim_utils.md) |
+| [`species_name`](sim_utils.md#species_name) | Routine | [Sim Utils](sim_utils.md) |
+| [`species_of`](sim_utils.md#species_of) | Routine | [Sim Utils](sim_utils.md) |
 | `SPECIES_OUT` | Enum | [Enums](enums.md) |
 | `SPECIES_STRONG` | Enum | [Enums](enums.md) |
 | `SPHERICAL` | Enum | [Enums](enums.md) |
-| [`spin_dn_dpz_from_mat8`][pybmad.spin_dn_dpz_from_mat8] | Routine | [Bmad](bmad.md) |
-| [`spin_dn_dpz_from_qmap`][pybmad.spin_dn_dpz_from_qmap] | Routine | [Bmad](bmad.md) |
+| [`spin_dn_dpz_from_mat8`](bmad.md#spin_dn_dpz_from_mat8) | Routine | [Bmad](bmad.md) |
+| [`spin_dn_dpz_from_qmap`](bmad.md#spin_dn_dpz_from_qmap) | Routine | [Bmad](bmad.md) |
 | `SPIN_DN_DPZ_X` | Enum | [Enums](enums.md) |
 | `SPIN_DN_DPZ_Y` | Enum | [Enums](enums.md) |
 | `SPIN_DN_DPZ_Z` | Enum | [Enums](enums.md) |
 | `SPIN_FRINGE_ON` | Enum | [Enums](enums.md) |
 | `SPIN_INTEGRATION` | Enum | [Enums](enums.md) |
-| [`spin_map1_normalize`][pybmad.spin_map1_normalize] | Routine | [Bmad](bmad.md) |
-| [`spin_mat8_resonance_strengths`][pybmad.spin_mat8_resonance_strengths] | Routine | [Bmad](bmad.md) |
-| [`spin_mat_to_eigen`][pybmad.spin_mat_to_eigen] | Routine | [Bmad](bmad.md) |
-| [`spin_of`][pybmad.spin_of] | Routine | [Sim Utils](sim_utils.md) |
-| [`spin_omega`][pybmad.spin_omega] | Routine | [Bmad](bmad.md) |
-| [`spin_quat_resonance_strengths`][pybmad.spin_quat_resonance_strengths] | Routine | [Bmad](bmad.md) |
-| [`spin_taylor_to_linear`][pybmad.spin_taylor_to_linear] | Routine | [Bmad](bmad.md) |
+| [`spin_map1_normalize`](bmad.md#spin_map1_normalize) | Routine | [Bmad](bmad.md) |
+| [`spin_mat8_resonance_strengths`](bmad.md#spin_mat8_resonance_strengths) | Routine | [Bmad](bmad.md) |
+| [`spin_mat_to_eigen`](bmad.md#spin_mat_to_eigen) | Routine | [Bmad](bmad.md) |
+| [`spin_of`](sim_utils.md#spin_of) | Routine | [Sim Utils](sim_utils.md) |
+| [`spin_omega`](bmad.md#spin_omega) | Routine | [Bmad](bmad.md) |
+| [`spin_quat_resonance_strengths`](bmad.md#spin_quat_resonance_strengths) | Routine | [Bmad](bmad.md) |
+| [`spin_taylor_to_linear`](bmad.md#spin_taylor_to_linear) | Routine | [Bmad](bmad.md) |
 | `SPIN_TRACKING_METHOD` | Enum | [Enums](enums.md) |
 | `SPIN_X` | Enum | [Enums](enums.md) |
 | `SPIN_X_STORED` | Enum | [Enums](enums.md) |
@@ -1850,83 +1850,83 @@
 | `SPIN_Z` | Enum | [Enums](enums.md) |
 | `SPIN_Z_STORED` | Enum | [Enums](enums.md) |
 | [SpinAxisStruct](bmad.md#spinaxisstruct) | Struct | [Bmad](bmad.md) |
-| [`spinor_to_polar`][pybmad.spinor_to_polar] | Routine | [Bmad](bmad.md) |
-| [`spinor_to_vec`][pybmad.spinor_to_vec] | Routine | [Bmad](bmad.md) |
+| [`spinor_to_polar`](bmad.md#spinor_to_polar) | Routine | [Bmad](bmad.md) |
+| [`spinor_to_vec`](bmad.md#spinor_to_vec) | Routine | [Bmad](bmad.md) |
 | [SpinOrbitMap1Struct](bmad.md#spinorbitmap1struct) | Struct | [Bmad](bmad.md) |
 | [SpinPolarStruct](bmad.md#spinpolarstruct) | Struct | [Bmad](bmad.md) |
-| [`spline1`][pybmad.spline1] | Routine | [Sim Utils](sim_utils.md) |
-| [`spline_akima`][pybmad.spline_akima] | Routine | [Sim Utils](sim_utils.md) |
-| [`spline_akima_interpolate`][pybmad.spline_akima_interpolate] | Routine | [Sim Utils](sim_utils.md) |
-| [`spline_evaluate`][pybmad.spline_evaluate] | Routine | [Sim Utils](sim_utils.md) |
-| [`spline_fit_orbit`][pybmad.spline_fit_orbit] | Routine | [Bmad](bmad.md) |
+| [`spline1`](sim_utils.md#spline1) | Routine | [Sim Utils](sim_utils.md) |
+| [`spline_akima`](sim_utils.md#spline_akima) | Routine | [Sim Utils](sim_utils.md) |
+| [`spline_akima_interpolate`](sim_utils.md#spline_akima_interpolate) | Routine | [Sim Utils](sim_utils.md) |
+| [`spline_evaluate`](sim_utils.md#spline_evaluate) | Routine | [Sim Utils](sim_utils.md) |
+| [`spline_fit_orbit`](bmad.md#spline_fit_orbit) | Routine | [Bmad](bmad.md) |
 | [SplineStruct](sim_utils.md#splinestruct) | Struct | [Sim Utils](sim_utils.md) |
-| [`split_expression_string`][pybmad.split_expression_string] | Routine | [Bmad](bmad.md) |
+| [`split_expression_string`](bmad.md#split_expression_string) | Routine | [Bmad](bmad.md) |
 | `SPLIT_ID` | Enum | [Enums](enums.md) |
-| [`split_lat`][pybmad.split_lat] | Routine | [Bmad](bmad.md) |
+| [`split_lat`](bmad.md#split_lat) | Routine | [Bmad](bmad.md) |
 | `SPRINT` | Enum | [Enums](enums.md) |
-| [`sprint_spin_taylor_map`][pybmad.sprint_spin_taylor_map] | Routine | [Bmad](bmad.md) |
+| [`sprint_spin_taylor_map`](bmad.md#sprint_spin_taylor_map) | Routine | [Bmad](bmad.md) |
 | `SQRT` | Enum | [Enums](enums.md) |
 | `SQRT_2` | Enum | [Enums](enums.md) |
 | `SQRT_3` | Enum | [Enums](enums.md) |
-| [`sqrt_alpha`][pybmad.sqrt_alpha] | Routine | [Sim Utils](sim_utils.md) |
-| [`sqrt_one`][pybmad.sqrt_one] | Routine | [Sim Utils](sim_utils.md) |
+| [`sqrt_alpha`](sim_utils.md#sqrt_alpha) | Routine | [Sim Utils](sim_utils.md) |
+| [`sqrt_one`](sim_utils.md#sqrt_one) | Routine | [Sim Utils](sim_utils.md) |
 | `SQUARE_BRACKETS` | Enum | [Enums](enums.md) |
 | `SQUARE_CONCAVE_SYM` | Enum | [Enums](enums.md) |
 | `SQUARE_FILLED_SYM` | Enum | [Enums](enums.md) |
 | `SQUARE_SYM` | Enum | [Enums](enums.md) |
-| [`sr_longitudinal_wake_particle`][pybmad.sr_longitudinal_wake_particle] | Routine | [Bmad](bmad.md) |
-| [`sr_transverse_wake_particle`][pybmad.sr_transverse_wake_particle] | Routine | [Bmad](bmad.md) |
+| [`sr_longitudinal_wake_particle`](bmad.md#sr_longitudinal_wake_particle) | Routine | [Bmad](bmad.md) |
+| [`sr_transverse_wake_particle`](bmad.md#sr_transverse_wake_particle) | Routine | [Bmad](bmad.md) |
 | `SR_WAKE` | Enum | [Enums](enums.md) |
 | `SR_WAKE_FILE` | Enum | [Enums](enums.md) |
-| [`sr_z_long_wake`][pybmad.sr_z_long_wake] | Routine | [Bmad](bmad.md) |
-| [`srdt_calc`][pybmad.srdt_calc] | Routine | [Bmad](bmad.md) |
-| [`srdt_lsq_solution`][pybmad.srdt_lsq_solution] | Routine | [Bmad](bmad.md) |
+| [`sr_z_long_wake`](bmad.md#sr_z_long_wake) | Routine | [Bmad](bmad.md) |
+| [`srdt_calc`](bmad.md#srdt_calc) | Routine | [Bmad](bmad.md) |
+| [`srdt_lsq_solution`](bmad.md#srdt_lsq_solution) | Routine | [Bmad](bmad.md) |
 | `STALE` | Enum | [Enums](enums.md) |
 | `STANDARD` | Enum | [Enums](enums.md) |
 | `STANDING_WAVE` | Enum | [Enums](enums.md) |
 | `STAR5_FILLED_SYM` | Enum | [Enums](enums.md) |
 | `STAR5_SYM` | Enum | [Enums](enums.md) |
 | `STAR_OF_DAVID_SYM` | Enum | [Enums](enums.md) |
-| [`start_branch_at`][pybmad.start_branch_at] | Routine | [Bmad](bmad.md) |
+| [`start_branch_at`](bmad.md#start_branch_at) | Routine | [Bmad](bmad.md) |
 | `START_EDGE` | Enum | [Enums](enums.md) |
 | `START_END` | Enum | [Enums](enums.md) |
 | `STEADY_STATE_3D` | Enum | [Enums](enums.md) |
-| [`str_count`][pybmad.str_count] | Routine | [Sim Utils](sim_utils.md) |
-| [`str_downcase`][pybmad.str_downcase] | Routine | [Sim Utils](sim_utils.md) |
-| [`str_first_in_set`][pybmad.str_first_in_set] | Routine | [Sim Utils](sim_utils.md) |
-| [`str_first_not_in_set`][pybmad.str_first_not_in_set] | Routine | [Sim Utils](sim_utils.md) |
-| [`str_last_in_set`][pybmad.str_last_in_set] | Routine | [Sim Utils](sim_utils.md) |
-| [`str_last_not_in_set`][pybmad.str_last_not_in_set] | Routine | [Sim Utils](sim_utils.md) |
-| [`str_match_wild`][pybmad.str_match_wild] | Routine | [Sim Utils](sim_utils.md) |
-| [`str_substitute`][pybmad.str_substitute] | Routine | [Sim Utils](sim_utils.md) |
-| [`str_upcase`][pybmad.str_upcase] | Routine | [Sim Utils](sim_utils.md) |
+| [`str_count`](sim_utils.md#str_count) | Routine | [Sim Utils](sim_utils.md) |
+| [`str_downcase`](sim_utils.md#str_downcase) | Routine | [Sim Utils](sim_utils.md) |
+| [`str_first_in_set`](sim_utils.md#str_first_in_set) | Routine | [Sim Utils](sim_utils.md) |
+| [`str_first_not_in_set`](sim_utils.md#str_first_not_in_set) | Routine | [Sim Utils](sim_utils.md) |
+| [`str_last_in_set`](sim_utils.md#str_last_in_set) | Routine | [Sim Utils](sim_utils.md) |
+| [`str_last_not_in_set`](sim_utils.md#str_last_not_in_set) | Routine | [Sim Utils](sim_utils.md) |
+| [`str_match_wild`](sim_utils.md#str_match_wild) | Routine | [Sim Utils](sim_utils.md) |
+| [`str_substitute`](sim_utils.md#str_substitute) | Routine | [Sim Utils](sim_utils.md) |
+| [`str_upcase`](sim_utils.md#str_upcase) | Routine | [Sim Utils](sim_utils.md) |
 | `STRAIGHT` | Enum | [Enums](enums.md) |
 | `STRAIGHT_REFERENCE` | Enum | [Enums](enums.md) |
-| [`stream_ele_end`][pybmad.stream_ele_end] | Routine | [Bmad](bmad.md) |
-| [`string_attrib`][pybmad.string_attrib] | Routine | [Bmad](bmad.md) |
-| [`string_to_int`][pybmad.string_to_int] | Routine | [Sim Utils](sim_utils.md) |
-| [`string_to_real`][pybmad.string_to_real] | Routine | [Sim Utils](sim_utils.md) |
-| [`string_trim`][pybmad.string_trim] | Routine | [Sim Utils](sim_utils.md) |
-| [`string_trim2`][pybmad.string_trim2] | Routine | [Sim Utils](sim_utils.md) |
-| [`strong_beam_sigma_calc`][pybmad.strong_beam_sigma_calc] | Routine | [Bmad](bmad.md) |
-| [`strong_beam_strength`][pybmad.strong_beam_strength] | Routine | [Bmad](bmad.md) |
+| [`stream_ele_end`](bmad.md#stream_ele_end) | Routine | [Bmad](bmad.md) |
+| [`string_attrib`](bmad.md#string_attrib) | Routine | [Bmad](bmad.md) |
+| [`string_to_int`](sim_utils.md#string_to_int) | Routine | [Sim Utils](sim_utils.md) |
+| [`string_to_real`](sim_utils.md#string_to_real) | Routine | [Sim Utils](sim_utils.md) |
+| [`string_trim`](sim_utils.md#string_trim) | Routine | [Sim Utils](sim_utils.md) |
+| [`string_trim2`](sim_utils.md#string_trim2) | Routine | [Sim Utils](sim_utils.md) |
+| [`strong_beam_sigma_calc`](bmad.md#strong_beam_sigma_calc) | Routine | [Bmad](bmad.md) |
+| [`strong_beam_strength`](bmad.md#strong_beam_strength) | Routine | [Bmad](bmad.md) |
 | [StrongBeamStruct](bmad.md#strongbeamstruct) | Struct | [Bmad](bmad.md) |
-| [`suggest_lmdif`][pybmad.suggest_lmdif] | Routine | [Sim Utils](sim_utils.md) |
+| [`suggest_lmdif`](sim_utils.md#suggest_lmdif) | Routine | [Sim Utils](sim_utils.md) |
 | `SUM` | Enum | [Enums](enums.md) |
 | [SummationRdtStruct](bmad.md#summationrdtstruct) | Struct | [Bmad](bmad.md) |
-| [`super_bicubic_coef`][pybmad.super_bicubic_coef] | Routine | [Sim Utils](sim_utils.md) |
-| [`super_bicubic_interpolation`][pybmad.super_bicubic_interpolation] | Routine | [Sim Utils](sim_utils.md) |
+| [`super_bicubic_coef`](sim_utils.md#super_bicubic_coef) | Routine | [Sim Utils](sim_utils.md) |
+| [`super_bicubic_interpolation`](sim_utils.md#super_bicubic_interpolation) | Routine | [Sim Utils](sim_utils.md) |
 | `SUPER_LORD` | Enum | [Enums](enums.md) |
 | `SUPER_OFFSET` | Enum | [Enums](enums.md) |
 | `SUPER_OK` | Enum | [Enums](enums.md) |
-| [`super_polint`][pybmad.super_polint] | Routine | [Sim Utils](sim_utils.md) |
-| [`super_poly`][pybmad.super_poly] | Routine | [Sim Utils](sim_utils.md) |
+| [`super_polint`](sim_utils.md#super_polint) | Routine | [Sim Utils](sim_utils.md) |
+| [`super_poly`](sim_utils.md#super_poly) | Routine | [Sim Utils](sim_utils.md) |
 | `SUPER_SLAVE` | Enum | [Enums](enums.md) |
-| [`super_sobseq`][pybmad.super_sobseq] | Routine | [Sim Utils](sim_utils.md) |
-| [`super_sort`][pybmad.super_sort] | Routine | [Sim Utils](sim_utils.md) |
+| [`super_sobseq`](sim_utils.md#super_sobseq) | Routine | [Sim Utils](sim_utils.md) |
+| [`super_sort`](sim_utils.md#super_sort) | Routine | [Sim Utils](sim_utils.md) |
 | `SUPERIMPOSE` | Enum | [Enums](enums.md) |
 | `SURFACE` | Enum | [Enums](enums.md) |
-| [`surface_grid_displacement`][pybmad.surface_grid_displacement] | Routine | [Bmad](bmad.md) |
+| [`surface_grid_displacement`](bmad.md#surface_grid_displacement) | Routine | [Bmad](bmad.md) |
 | [SurfaceCurvatureStruct](bmad.md#surfacecurvaturestruct) | Struct | [Bmad](bmad.md) |
 | [SurfaceDisplacementPtStruct](bmad.md#surfacedisplacementptstruct) | Struct | [Bmad](bmad.md) |
 | [SurfaceDisplacementStruct](bmad.md#surfacedisplacementstruct) | Struct | [Bmad](bmad.md) |
@@ -1934,294 +1934,294 @@
 | [SurfaceHMisalignStruct](bmad.md#surfacehmisalignstruct) | Struct | [Bmad](bmad.md) |
 | [SurfaceSegmentedPtStruct](bmad.md#surfacesegmentedptstruct) | Struct | [Bmad](bmad.md) |
 | [SurfaceSegmentedStruct](bmad.md#surfacesegmentedstruct) | Struct | [Bmad](bmad.md) |
-| [`switch_attrib_value_name`][pybmad.switch_attrib_value_name] | Routine | [Bmad](bmad.md) |
+| [`switch_attrib_value_name`](bmad.md#switch_attrib_value_name) | Routine | [Bmad](bmad.md) |
 | `SYMMETRY` | Enum | [Enums](enums.md) |
-| [`symp_lie_bmad`][pybmad.symp_lie_bmad] | Routine | [Bmad](bmad.md) |
+| [`symp_lie_bmad`](bmad.md#symp_lie_bmad) | Routine | [Bmad](bmad.md) |
 | `SYMP_LIE_BMAD` | Enum | [Enums](enums.md) |
 | `SYMP_LIE_PTC` | Enum | [Enums](enums.md) |
 | `SYMPLECTIFY` | Enum | [Enums](enums.md) |
-| [`system_command`][pybmad.system_command] | Routine | [Sim Utils](sim_utils.md) |
+| [`system_command`](sim_utils.md#system_command) | Routine | [Sim Utils](sim_utils.md) |
 | `T` | Enum | [Enums](enums.md) |
 | `T0` | Enum | [Enums](enums.md) |
 | `T21` | Enum | [Enums](enums.md) |
-| [`t6_to_b123`][pybmad.t6_to_b123] | Routine | [Bmad](bmad.md) |
+| [`t6_to_b123`](bmad.md#t6_to_b123) | Routine | [Bmad](bmad.md) |
 | `T_OFFSET` | Enum | [Enums](enums.md) |
 | `TAN` | Enum | [Enums](enums.md) |
 | `TANH` | Enum | [Enums](enums.md) |
-| [`tao_abort_command_file`][pybmad.tao_abort_command_file] | Routine | [Tao](tao.md) |
-| [`tao_add_to_normal_mode_h_array`][pybmad.tao_add_to_normal_mode_h_array] | Routine | [Tao](tao.md) |
-| [`tao_alias_cmd`][pybmad.tao_alias_cmd] | Routine | [Tao](tao.md) |
-| [`tao_allocate_data_array`][pybmad.tao_allocate_data_array] | Routine | [Tao](tao.md) |
-| [`tao_allocate_v1_var`][pybmad.tao_allocate_v1_var] | Routine | [Tao](tao.md) |
-| [`tao_allocate_var_array`][pybmad.tao_allocate_var_array] | Routine | [Tao](tao.md) |
-| [`tao_beam_emit_calc`][pybmad.tao_beam_emit_calc] | Routine | [Tao](tao.md) |
-| [`tao_beam_track`][pybmad.tao_beam_track] | Routine | [Tao](tao.md) |
-| [`tao_beam_track_endpoint`][pybmad.tao_beam_track_endpoint] | Routine | [Tao](tao.md) |
-| [`tao_branch_index`][pybmad.tao_branch_index] | Routine | [Tao](tao.md) |
-| [`tao_calc_data_at_s_pts`][pybmad.tao_calc_data_at_s_pts] | Routine | [Tao](tao.md) |
-| [`tao_call_cmd`][pybmad.tao_call_cmd] | Routine | [Tao](tao.md) |
-| [`tao_cbar_wave_anal`][pybmad.tao_cbar_wave_anal] | Routine | [Tao](tao.md) |
-| [`tao_change_ele`][pybmad.tao_change_ele] | Routine | [Tao](tao.md) |
-| [`tao_change_tune`][pybmad.tao_change_tune] | Routine | [Tao](tao.md) |
-| [`tao_change_var`][pybmad.tao_change_var] | Routine | [Tao](tao.md) |
-| [`tao_change_z_tune`][pybmad.tao_change_z_tune] | Routine | [Tao](tao.md) |
-| [`tao_chrom_calc_needed`][pybmad.tao_chrom_calc_needed] | Routine | [Tao](tao.md) |
-| [`tao_clear_cmd`][pybmad.tao_clear_cmd] | Routine | [Tao](tao.md) |
-| [`tao_clip_cmd`][pybmad.tao_clip_cmd] | Routine | [Tao](tao.md) |
-| [`tao_close_command_file`][pybmad.tao_close_command_file] | Routine | [Tao](tao.md) |
-| [`tao_cmd_history_record`][pybmad.tao_cmd_history_record] | Routine | [Tao](tao.md) |
-| [`tao_cmd_split`][pybmad.tao_cmd_split] | Routine | [Tao](tao.md) |
-| [`tao_command`][pybmad.tao_command] | Routine | [Tao](tao.md) |
-| [`tao_constraint_type_name`][pybmad.tao_constraint_type_name] | Routine | [Tao](tao.md) |
-| [`tao_control_tree_list`][pybmad.tao_control_tree_list] | Routine | [Tao](tao.md) |
-| [`tao_count_strings`][pybmad.tao_count_strings] | Routine | [Tao](tao.md) |
-| [`tao_create_plot_window`][pybmad.tao_create_plot_window] | Routine | [Tao](tao.md) |
-| [`tao_curve_beam_ellipse_setup`][pybmad.tao_curve_beam_ellipse_setup] | Routine | [Tao](tao.md) |
-| [`tao_curve_check_universe`][pybmad.tao_curve_check_universe] | Routine | [Tao](tao.md) |
-| [`tao_curve_data_setup`][pybmad.tao_curve_data_setup] | Routine | [Tao](tao.md) |
-| [`tao_curve_datum_calc`][pybmad.tao_curve_datum_calc] | Routine | [Tao](tao.md) |
-| [`tao_curve_ele_ref`][pybmad.tao_curve_ele_ref] | Routine | [Tao](tao.md) |
-| [`tao_curve_ix_uni`][pybmad.tao_curve_ix_uni] | Routine | [Tao](tao.md) |
-| [`tao_curve_name`][pybmad.tao_curve_name] | Routine | [Tao](tao.md) |
-| [`tao_curve_rms_calc`][pybmad.tao_curve_rms_calc] | Routine | [Tao](tao.md) |
-| [`tao_d2_d1_name`][pybmad.tao_d2_d1_name] | Routine | [Tao](tao.md) |
-| [`tao_d2_data_stuffit`][pybmad.tao_d2_data_stuffit] | Routine | [Tao](tao.md) |
-| [`tao_data_check`][pybmad.tao_data_check] | Routine | [Tao](tao.md) |
-| [`tao_data_coupling_init`][pybmad.tao_data_coupling_init] | Routine | [Tao](tao.md) |
-| [`tao_data_sanity_check`][pybmad.tao_data_sanity_check] | Routine | [Tao](tao.md) |
-| [`tao_data_show_use`][pybmad.tao_data_show_use] | Routine | [Tao](tao.md) |
-| [`tao_data_type_substitute`][pybmad.tao_data_type_substitute] | Routine | [Tao](tao.md) |
-| [`tao_data_useit_plot_calc`][pybmad.tao_data_useit_plot_calc] | Routine | [Tao](tao.md) |
-| [`tao_datum_has_associated_ele`][pybmad.tao_datum_has_associated_ele] | Routine | [Tao](tao.md) |
-| [`tao_datum_integrate`][pybmad.tao_datum_integrate] | Routine | [Tao](tao.md) |
-| [`tao_datum_name`][pybmad.tao_datum_name] | Routine | [Tao](tao.md) |
-| [`tao_datum_s_position`][pybmad.tao_datum_s_position] | Routine | [Tao](tao.md) |
-| [`tao_de_optimizer`][pybmad.tao_de_optimizer] | Routine | [Tao](tao.md) |
-| [`tao_deallocate_plot_cache`][pybmad.tao_deallocate_plot_cache] | Routine | [Tao](tao.md) |
-| [`tao_deallocate_tree`][pybmad.tao_deallocate_tree] | Routine | [Tao](tao.md) |
-| [`tao_destroy_plot_window`][pybmad.tao_destroy_plot_window] | Routine | [Tao](tao.md) |
-| [`tao_dmerit_calc`][pybmad.tao_dmerit_calc] | Routine | [Tao](tao.md) |
-| [`tao_dmodel_dvar_calc`][pybmad.tao_dmodel_dvar_calc] | Routine | [Tao](tao.md) |
-| [`tao_do_wire_scan`][pybmad.tao_do_wire_scan] | Routine | [Tao](tao.md) |
-| [`tao_draw_beam_chamber_wall`][pybmad.tao_draw_beam_chamber_wall] | Routine | [Tao](tao.md) |
-| [`tao_draw_curve_data`][pybmad.tao_draw_curve_data] | Routine | [Tao](tao.md) |
-| [`tao_draw_ele_for_floor_plan`][pybmad.tao_draw_ele_for_floor_plan] | Routine | [Tao](tao.md) |
-| [`tao_draw_floor_plan`][pybmad.tao_draw_floor_plan] | Routine | [Tao](tao.md) |
-| [`tao_draw_graph_axes`][pybmad.tao_draw_graph_axes] | Routine | [Tao](tao.md) |
-| [`tao_draw_histogram_data`][pybmad.tao_draw_histogram_data] | Routine | [Tao](tao.md) |
-| [`tao_draw_lat_layout`][pybmad.tao_draw_lat_layout] | Routine | [Tao](tao.md) |
-| [`tao_draw_plots`][pybmad.tao_draw_plots] | Routine | [Tao](tao.md) |
-| [`tao_ele_geometry_with_misalignments`][pybmad.tao_ele_geometry_with_misalignments] | Routine | [Tao](tao.md) |
-| [`tao_ele_shape_info`][pybmad.tao_ele_shape_info] | Routine | [Tao](tao.md) |
-| [`tao_eval_floor_orbit`][pybmad.tao_eval_floor_orbit] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_a_datum`][pybmad.tao_evaluate_a_datum] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_datum_at_s`][pybmad.tao_evaluate_datum_at_s] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_element_parameters`][pybmad.tao_evaluate_element_parameters] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_expression`][pybmad.tao_evaluate_expression] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_expression_new`][pybmad.tao_evaluate_expression_new] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_expression_old`][pybmad.tao_evaluate_expression_old] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_lat_or_beam_data`][pybmad.tao_evaluate_lat_or_beam_data] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_stack_old`][pybmad.tao_evaluate_stack_old] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_tree`][pybmad.tao_evaluate_tree] | Routine | [Tao](tao.md) |
-| [`tao_evaluate_tune`][pybmad.tao_evaluate_tune] | Routine | [Tao](tao.md) |
-| [`tao_expression_hash_substitute`][pybmad.tao_expression_hash_substitute] | Routine | [Tao](tao.md) |
-| [`tao_expression_tree_to_string`][pybmad.tao_expression_tree_to_string] | Routine | [Tao](tao.md) |
-| [`tao_find_plot_region`][pybmad.tao_find_plot_region] | Routine | [Tao](tao.md) |
-| [`tao_fixer`][pybmad.tao_fixer] | Routine | [Tao](tao.md) |
-| [`tao_floor_to_screen`][pybmad.tao_floor_to_screen] | Routine | [Tao](tao.md) |
-| [`tao_floor_to_screen_coords`][pybmad.tao_floor_to_screen_coords] | Routine | [Tao](tao.md) |
-| [`tao_geodesic_lm_optimizer`][pybmad.tao_geodesic_lm_optimizer] | Routine | [Tao](tao.md) |
-| [`tao_get_data`][pybmad.tao_get_data] | Routine | [Tao](tao.md) |
-| [`tao_get_opt_vars`][pybmad.tao_get_opt_vars] | Routine | [Tao](tao.md) |
-| [`tao_get_user_input`][pybmad.tao_get_user_input] | Routine | [Tao](tao.md) |
-| [`tao_graph_controller_setup`][pybmad.tao_graph_controller_setup] | Routine | [Tao](tao.md) |
-| [`tao_graph_data_setup`][pybmad.tao_graph_data_setup] | Routine | [Tao](tao.md) |
-| [`tao_graph_data_slice_setup`][pybmad.tao_graph_data_slice_setup] | Routine | [Tao](tao.md) |
-| [`tao_graph_dynamic_aperture_setup`][pybmad.tao_graph_dynamic_aperture_setup] | Routine | [Tao](tao.md) |
-| [`tao_graph_histogram_setup`][pybmad.tao_graph_histogram_setup] | Routine | [Tao](tao.md) |
-| [`tao_graph_name`][pybmad.tao_graph_name] | Routine | [Tao](tao.md) |
-| [`tao_graph_phase_space_setup`][pybmad.tao_graph_phase_space_setup] | Routine | [Tao](tao.md) |
-| [`tao_graph_s_min_max_calc`][pybmad.tao_graph_s_min_max_calc] | Routine | [Tao](tao.md) |
-| [`tao_graph_setup`][pybmad.tao_graph_setup] | Routine | [Tao](tao.md) |
-| [`tao_help`][pybmad.tao_help] | Routine | [Tao](tao.md) |
-| [`tao_init`][pybmad.tao_init] | Routine | [Tao](tao.md) |
-| [`tao_init_beam_in_universe`][pybmad.tao_init_beam_in_universe] | Routine | [Tao](tao.md) |
-| [`tao_init_beams`][pybmad.tao_init_beams] | Routine | [Tao](tao.md) |
-| [`tao_init_data`][pybmad.tao_init_data] | Routine | [Tao](tao.md) |
-| [`tao_init_data_end_stuff`][pybmad.tao_init_data_end_stuff] | Routine | [Tao](tao.md) |
-| [`tao_init_data_in_universe`][pybmad.tao_init_data_in_universe] | Routine | [Tao](tao.md) |
-| [`tao_init_dynamic_aperture`][pybmad.tao_init_dynamic_aperture] | Routine | [Tao](tao.md) |
-| [`tao_init_find_elements`][pybmad.tao_init_find_elements] | Routine | [Tao](tao.md) |
-| [`tao_init_global`][pybmad.tao_init_global] | Routine | [Tao](tao.md) |
-| [`tao_init_lattice`][pybmad.tao_init_lattice] | Routine | [Tao](tao.md) |
-| [`tao_init_plotting`][pybmad.tao_init_plotting] | Routine | [Tao](tao.md) |
-| [`tao_init_variables`][pybmad.tao_init_variables] | Routine | [Tao](tao.md) |
-| [`tao_inject_beam`][pybmad.tao_inject_beam] | Routine | [Tao](tao.md) |
-| [`tao_inject_particle`][pybmad.tao_inject_particle] | Routine | [Tao](tao.md) |
-| [`tao_is_valid_name`][pybmad.tao_is_valid_name] | Routine | [Tao](tao.md) |
-| [`tao_json_cmd`][pybmad.tao_json_cmd] | Routine | [Tao](tao.md) |
-| [`tao_key_info_to_str`][pybmad.tao_key_info_to_str] | Routine | [Tao](tao.md) |
-| [`tao_lat_bookkeeper`][pybmad.tao_lat_bookkeeper] | Routine | [Tao](tao.md) |
-| [`tao_lat_emit_calc`][pybmad.tao_lat_emit_calc] | Routine | [Tao](tao.md) |
-| [`tao_lat_sigma_calc_needed`][pybmad.tao_lat_sigma_calc_needed] | Routine | [Tao](tao.md) |
-| [`tao_lat_sigma_track`][pybmad.tao_lat_sigma_track] | Routine | [Tao](tao.md) |
-| [`tao_lattice_branches_equal_tao_lattice_branches`][pybmad.tao_lattice_branches_equal_tao_lattice_branches] | Routine | [Tao](tao.md) |
-| [`tao_lattice_calc`][pybmad.tao_lattice_calc] | Routine | [Tao](tao.md) |
-| [`tao_lattice_equal_tao_lattice`][pybmad.tao_lattice_equal_tao_lattice] | Routine | [Tao](tao.md) |
-| [`tao_limit_calc`][pybmad.tao_limit_calc] | Routine | [Tao](tao.md) |
-| [`tao_lm_optimizer`][pybmad.tao_lm_optimizer] | Routine | [Tao](tao.md) |
-| [`tao_lmdif_optimizer`][pybmad.tao_lmdif_optimizer] | Routine | [Tao](tao.md) |
-| [`tao_load_this_datum`][pybmad.tao_load_this_datum] | Routine | [Tao](tao.md) |
-| [`tao_locate_all_elements`][pybmad.tao_locate_all_elements] | Routine | [Tao](tao.md) |
-| [`tao_locate_elements`][pybmad.tao_locate_elements] | Routine | [Tao](tao.md) |
-| [`tao_mark_lattice_ele`][pybmad.tao_mark_lattice_ele] | Routine | [Tao](tao.md) |
-| [`tao_merit`][pybmad.tao_merit] | Routine | [Tao](tao.md) |
-| [`tao_next_switch`][pybmad.tao_next_switch] | Routine | [Tao](tao.md) |
-| [`tao_next_word`][pybmad.tao_next_word] | Routine | [Tao](tao.md) |
-| [`tao_one_turn_map_calc_needed`][pybmad.tao_one_turn_map_calc_needed] | Routine | [Tao](tao.md) |
-| [`tao_open_file`][pybmad.tao_open_file] | Routine | [Tao](tao.md) |
-| [`tao_open_scratch_file`][pybmad.tao_open_scratch_file] | Routine | [Tao](tao.md) |
-| [`tao_optimization_status`][pybmad.tao_optimization_status] | Routine | [Tao](tao.md) |
-| [`tao_orbit_beta_wave_anal`][pybmad.tao_orbit_beta_wave_anal] | Routine | [Tao](tao.md) |
-| [`tao_oreint_building_wall_pt`][pybmad.tao_oreint_building_wall_pt] | Routine | [Tao](tao.md) |
-| [`tao_param_value_at_s`][pybmad.tao_param_value_at_s] | Routine | [Tao](tao.md) |
-| [`tao_param_value_routine`][pybmad.tao_param_value_routine] | Routine | [Tao](tao.md) |
-| [`tao_parse_command_args`][pybmad.tao_parse_command_args] | Routine | [Tao](tao.md) |
-| [`tao_parse_element_param_str`][pybmad.tao_parse_element_param_str] | Routine | [Tao](tao.md) |
-| [`tao_particle_data_value`][pybmad.tao_particle_data_value] | Routine | [Tao](tao.md) |
-| [`tao_pause_cmd`][pybmad.tao_pause_cmd] | Routine | [Tao](tao.md) |
-| [`tao_phase_space_axis_index`][pybmad.tao_phase_space_axis_index] | Routine | [Tao](tao.md) |
-| [`tao_phase_wave_anal`][pybmad.tao_phase_wave_anal] | Routine | [Tao](tao.md) |
-| [`tao_pick_universe`][pybmad.tao_pick_universe] | Routine | [Tao](tao.md) |
-| [`tao_pipe_cmd`][pybmad.tao_pipe_cmd] | Routine | [Tao](tao.md) |
-| [`tao_place_cmd`][pybmad.tao_place_cmd] | Routine | [Tao](tao.md) |
-| [`tao_plot_cmd`][pybmad.tao_plot_cmd] | Routine | [Tao](tao.md) |
-| [`tao_plot_data`][pybmad.tao_plot_data] | Routine | [Tao](tao.md) |
-| [`tao_plot_histogram`][pybmad.tao_plot_histogram] | Routine | [Tao](tao.md) |
-| [`tao_plot_key_table`][pybmad.tao_plot_key_table] | Routine | [Tao](tao.md) |
-| [`tao_plot_setup`][pybmad.tao_plot_setup] | Routine | [Tao](tao.md) |
-| [`tao_plot_struct_transfer`][pybmad.tao_plot_struct_transfer] | Routine | [Tao](tao.md) |
-| [`tao_plot_wave`][pybmad.tao_plot_wave] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_building_wall_shape`][pybmad.tao_pointer_to_building_wall_shape] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_datum`][pybmad.tao_pointer_to_datum] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_datum_ele`][pybmad.tao_pointer_to_datum_ele] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_ele_shape`][pybmad.tao_pointer_to_ele_shape] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_tao_lat`][pybmad.tao_pointer_to_tao_lat] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_universe`][pybmad.tao_pointer_to_universe] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_universes`][pybmad.tao_pointer_to_universes] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_var_in_lattice`][pybmad.tao_pointer_to_var_in_lattice] | Routine | [Tao](tao.md) |
-| [`tao_pointer_to_var_in_lattice2`][pybmad.tao_pointer_to_var_in_lattice2] | Routine | [Tao](tao.md) |
-| [`tao_print_command_line_info`][pybmad.tao_print_command_line_info] | Routine | [Tao](tao.md) |
-| [`tao_ptc_normal_form`][pybmad.tao_ptc_normal_form] | Routine | [Tao](tao.md) |
-| [`tao_python_cmd`][pybmad.tao_python_cmd] | Routine | [Tao](tao.md) |
-| [`tao_quiet_set`][pybmad.tao_quiet_set] | Routine | [Tao](tao.md) |
-| [`tao_rad_int_calc_needed`][pybmad.tao_rad_int_calc_needed] | Routine | [Tao](tao.md) |
-| [`tao_re_allocate_expression_info`][pybmad.tao_re_allocate_expression_info] | Routine | [Tao](tao.md) |
-| [`tao_re_associate_node_array`][pybmad.tao_re_associate_node_array] | Routine | [Tao](tao.md) |
-| [`tao_re_execute`][pybmad.tao_re_execute] | Routine | [Tao](tao.md) |
-| [`tao_read_cmd`][pybmad.tao_read_cmd] | Routine | [Tao](tao.md) |
-| [`tao_read_phase_space_index`][pybmad.tao_read_phase_space_index] | Routine | [Tao](tao.md) |
-| [`tao_regression_test`][pybmad.tao_regression_test] | Routine | [Tao](tao.md) |
-| [`tao_remove_blank_characters`][pybmad.tao_remove_blank_characters] | Routine | [Tao](tao.md) |
-| [`tao_run_cmd`][pybmad.tao_run_cmd] | Routine | [Tao](tao.md) |
-| [`tao_scale_cmd`][pybmad.tao_scale_cmd] | Routine | [Tao](tao.md) |
-| [`tao_scale_graph`][pybmad.tao_scale_graph] | Routine | [Tao](tao.md) |
-| [`tao_scale_ping_data`][pybmad.tao_scale_ping_data] | Routine | [Tao](tao.md) |
-| [`tao_scale_plot`][pybmad.tao_scale_plot] | Routine | [Tao](tao.md) |
-| [`tao_scratch_values_calc`][pybmad.tao_scratch_values_calc] | Routine | [Tao](tao.md) |
-| [`tao_set_beam_cmd`][pybmad.tao_set_beam_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_beam_init_cmd`][pybmad.tao_set_beam_init_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_bmad_com_cmd`][pybmad.tao_set_bmad_com_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_branch_cmd`][pybmad.tao_set_branch_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_calculate_cmd`][pybmad.tao_set_calculate_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_curve_cmd`][pybmad.tao_set_curve_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_curve_invalid`][pybmad.tao_set_curve_invalid] | Routine | [Tao](tao.md) |
-| [`tao_set_data_cmd`][pybmad.tao_set_data_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_data_useit_opt`][pybmad.tao_set_data_useit_opt] | Routine | [Tao](tao.md) |
-| [`tao_set_default_cmd`][pybmad.tao_set_default_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_drawing_cmd`][pybmad.tao_set_drawing_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_dynamic_aperture_cmd`][pybmad.tao_set_dynamic_aperture_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_elements_cmd`][pybmad.tao_set_elements_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_floor_plan_axis_label`][pybmad.tao_set_floor_plan_axis_label] | Routine | [Tao](tao.md) |
-| [`tao_set_geodesic_lm_cmd`][pybmad.tao_set_geodesic_lm_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_global_cmd`][pybmad.tao_set_global_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_graph_cmd`][pybmad.tao_set_graph_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_integer_value`][pybmad.tao_set_integer_value] | Routine | [Tao](tao.md) |
-| [`tao_set_invalid`][pybmad.tao_set_invalid] | Routine | [Tao](tao.md) |
-| [`tao_set_key_cmd`][pybmad.tao_set_key_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_lattice_cmd`][pybmad.tao_set_lattice_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_logical_value`][pybmad.tao_set_logical_value] | Routine | [Tao](tao.md) |
-| [`tao_set_openmp_n_threads`][pybmad.tao_set_openmp_n_threads] | Routine | [Tao](tao.md) |
-| [`tao_set_opt_vars`][pybmad.tao_set_opt_vars] | Routine | [Tao](tao.md) |
-| [`tao_set_opti_de_param_cmd`][pybmad.tao_set_opti_de_param_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_particle_start_cmd`][pybmad.tao_set_particle_start_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_plot_cmd`][pybmad.tao_set_plot_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_plot_page_cmd`][pybmad.tao_set_plot_page_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_ptc_com_cmd`][pybmad.tao_set_ptc_com_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_qp_axis_struct`][pybmad.tao_set_qp_axis_struct] | Routine | [Tao](tao.md) |
-| [`tao_set_qp_point_struct`][pybmad.tao_set_qp_point_struct] | Routine | [Tao](tao.md) |
-| [`tao_set_qp_rect_struct`][pybmad.tao_set_qp_rect_struct] | Routine | [Tao](tao.md) |
-| [`tao_set_ran_state_cmd`][pybmad.tao_set_ran_state_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_real_value`][pybmad.tao_set_real_value] | Routine | [Tao](tao.md) |
-| [`tao_set_region_cmd`][pybmad.tao_set_region_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_space_charge_com_cmd`][pybmad.tao_set_space_charge_com_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_symbolic_number_cmd`][pybmad.tao_set_symbolic_number_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_tune_cmd`][pybmad.tao_set_tune_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_universe_cmd`][pybmad.tao_set_universe_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_var_cmd`][pybmad.tao_set_var_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_var_model_value`][pybmad.tao_set_var_model_value] | Routine | [Tao](tao.md) |
-| [`tao_set_var_useit_opt`][pybmad.tao_set_var_useit_opt] | Routine | [Tao](tao.md) |
-| [`tao_set_wave_cmd`][pybmad.tao_set_wave_cmd] | Routine | [Tao](tao.md) |
-| [`tao_set_z_tune_cmd`][pybmad.tao_set_z_tune_cmd] | Routine | [Tao](tao.md) |
-| [`tao_setup_key_table`][pybmad.tao_setup_key_table] | Routine | [Tao](tao.md) |
-| [`tao_shape_init`][pybmad.tao_shape_init] | Routine | [Tao](tao.md) |
-| [`tao_show_cmd`][pybmad.tao_show_cmd] | Routine | [Tao](tao.md) |
-| [`tao_show_constraints`][pybmad.tao_show_constraints] | Routine | [Tao](tao.md) |
-| [`tao_show_this`][pybmad.tao_show_this] | Routine | [Tao](tao.md) |
-| [`tao_single_mode`][pybmad.tao_single_mode] | Routine | [Tao](tao.md) |
-| [`tao_single_track`][pybmad.tao_single_track] | Routine | [Tao](tao.md) |
-| [`tao_spin_matrices_calc_needed`][pybmad.tao_spin_matrices_calc_needed] | Routine | [Tao](tao.md) |
-| [`tao_spin_tracking_turn_on`][pybmad.tao_spin_tracking_turn_on] | Routine | [Tao](tao.md) |
-| [`tao_split_component`][pybmad.tao_split_component] | Routine | [Tao](tao.md) |
-| [`tao_srdt_calc_needed`][pybmad.tao_srdt_calc_needed] | Routine | [Tao](tao.md) |
-| [`tao_subin_uni_number`][pybmad.tao_subin_uni_number] | Routine | [Tao](tao.md) |
-| [`tao_svd_optimizer`][pybmad.tao_svd_optimizer] | Routine | [Tao](tao.md) |
-| [`tao_symbol_import_from_lat`][pybmad.tao_symbol_import_from_lat] | Routine | [Tao](tao.md) |
-| [`tao_taper_cmd`][pybmad.tao_taper_cmd] | Routine | [Tao](tao.md) |
-| [`tao_to_change_number`][pybmad.tao_to_change_number] | Routine | [Tao](tao.md) |
-| [`tao_to_int`][pybmad.tao_to_int] | Routine | [Tao](tao.md) |
-| [`tao_to_phase_and_coupling_reading`][pybmad.tao_to_phase_and_coupling_reading] | Routine | [Tao](tao.md) |
-| [`tao_to_real`][pybmad.tao_to_real] | Routine | [Tao](tao.md) |
-| [`tao_too_many_particles_lost`][pybmad.tao_too_many_particles_lost] | Routine | [Tao](tao.md) |
-| [`tao_top10_derivative_print`][pybmad.tao_top10_derivative_print] | Routine | [Tao](tao.md) |
-| [`tao_top10_merit_categories_print`][pybmad.tao_top10_merit_categories_print] | Routine | [Tao](tao.md) |
-| [`tao_top_level`][pybmad.tao_top_level] | Routine | [Tao](tao.md) |
-| [`tao_tracking_ele_index`][pybmad.tao_tracking_ele_index] | Routine | [Tao](tao.md) |
-| [`tao_turn_on_special_calcs_if_needed_for_plotting`][pybmad.tao_turn_on_special_calcs_if_needed_for_plotting] | Routine | [Tao](tao.md) |
-| [`tao_type_expression_tree`][pybmad.tao_type_expression_tree] | Routine | [Tao](tao.md) |
-| [`tao_uni_atsign_index`][pybmad.tao_uni_atsign_index] | Routine | [Tao](tao.md) |
-| [`tao_universe_index`][pybmad.tao_universe_index] | Routine | [Tao](tao.md) |
-| [`tao_use_data`][pybmad.tao_use_data] | Routine | [Tao](tao.md) |
-| [`tao_use_var`][pybmad.tao_use_var] | Routine | [Tao](tao.md) |
-| [`tao_user_is_terminating_optimization`][pybmad.tao_user_is_terminating_optimization] | Routine | [Tao](tao.md) |
-| [`tao_var1_name`][pybmad.tao_var1_name] | Routine | [Tao](tao.md) |
-| [`tao_var_attrib_name`][pybmad.tao_var_attrib_name] | Routine | [Tao](tao.md) |
-| [`tao_var_check`][pybmad.tao_var_check] | Routine | [Tao](tao.md) |
-| [`tao_var_repoint`][pybmad.tao_var_repoint] | Routine | [Tao](tao.md) |
-| [`tao_var_show_use`][pybmad.tao_var_show_use] | Routine | [Tao](tao.md) |
-| [`tao_var_target_calc`][pybmad.tao_var_target_calc] | Routine | [Tao](tao.md) |
-| [`tao_var_useit_plot_calc`][pybmad.tao_var_useit_plot_calc] | Routine | [Tao](tao.md) |
-| [`tao_var_write`][pybmad.tao_var_write] | Routine | [Tao](tao.md) |
-| [`tao_veto_vars_with_zero_dmodel`][pybmad.tao_veto_vars_with_zero_dmodel] | Routine | [Tao](tao.md) |
-| [`tao_wave_analysis`][pybmad.tao_wave_analysis] | Routine | [Tao](tao.md) |
-| [`tao_wave_cmd`][pybmad.tao_wave_cmd] | Routine | [Tao](tao.md) |
-| [`tao_wave_fit`][pybmad.tao_wave_fit] | Routine | [Tao](tao.md) |
-| [`tao_write_cmd`][pybmad.tao_write_cmd] | Routine | [Tao](tao.md) |
-| [`tao_write_lines`][pybmad.tao_write_lines] | Routine | [Tao](tao.md) |
-| [`tao_x_axis_cmd`][pybmad.tao_x_axis_cmd] | Routine | [Tao](tao.md) |
-| [`tao_x_scale_cmd`][pybmad.tao_x_scale_cmd] | Routine | [Tao](tao.md) |
-| [`tao_x_scale_graph`][pybmad.tao_x_scale_graph] | Routine | [Tao](tao.md) |
-| [`tao_x_scale_plot`][pybmad.tao_x_scale_plot] | Routine | [Tao](tao.md) |
+| [`tao_abort_command_file`](tao.md#tao_abort_command_file) | Routine | [Tao](tao.md) |
+| [`tao_add_to_normal_mode_h_array`](tao.md#tao_add_to_normal_mode_h_array) | Routine | [Tao](tao.md) |
+| [`tao_alias_cmd`](tao.md#tao_alias_cmd) | Routine | [Tao](tao.md) |
+| [`tao_allocate_data_array`](tao.md#tao_allocate_data_array) | Routine | [Tao](tao.md) |
+| [`tao_allocate_v1_var`](tao.md#tao_allocate_v1_var) | Routine | [Tao](tao.md) |
+| [`tao_allocate_var_array`](tao.md#tao_allocate_var_array) | Routine | [Tao](tao.md) |
+| [`tao_beam_emit_calc`](tao.md#tao_beam_emit_calc) | Routine | [Tao](tao.md) |
+| [`tao_beam_track`](tao.md#tao_beam_track) | Routine | [Tao](tao.md) |
+| [`tao_beam_track_endpoint`](tao.md#tao_beam_track_endpoint) | Routine | [Tao](tao.md) |
+| [`tao_branch_index`](tao.md#tao_branch_index) | Routine | [Tao](tao.md) |
+| [`tao_calc_data_at_s_pts`](tao.md#tao_calc_data_at_s_pts) | Routine | [Tao](tao.md) |
+| [`tao_call_cmd`](tao.md#tao_call_cmd) | Routine | [Tao](tao.md) |
+| [`tao_cbar_wave_anal`](tao.md#tao_cbar_wave_anal) | Routine | [Tao](tao.md) |
+| [`tao_change_ele`](tao.md#tao_change_ele) | Routine | [Tao](tao.md) |
+| [`tao_change_tune`](tao.md#tao_change_tune) | Routine | [Tao](tao.md) |
+| [`tao_change_var`](tao.md#tao_change_var) | Routine | [Tao](tao.md) |
+| [`tao_change_z_tune`](tao.md#tao_change_z_tune) | Routine | [Tao](tao.md) |
+| [`tao_chrom_calc_needed`](tao.md#tao_chrom_calc_needed) | Routine | [Tao](tao.md) |
+| [`tao_clear_cmd`](tao.md#tao_clear_cmd) | Routine | [Tao](tao.md) |
+| [`tao_clip_cmd`](tao.md#tao_clip_cmd) | Routine | [Tao](tao.md) |
+| [`tao_close_command_file`](tao.md#tao_close_command_file) | Routine | [Tao](tao.md) |
+| [`tao_cmd_history_record`](tao.md#tao_cmd_history_record) | Routine | [Tao](tao.md) |
+| [`tao_cmd_split`](tao.md#tao_cmd_split) | Routine | [Tao](tao.md) |
+| [`tao_command`](tao.md#tao_command) | Routine | [Tao](tao.md) |
+| [`tao_constraint_type_name`](tao.md#tao_constraint_type_name) | Routine | [Tao](tao.md) |
+| [`tao_control_tree_list`](tao.md#tao_control_tree_list) | Routine | [Tao](tao.md) |
+| [`tao_count_strings`](tao.md#tao_count_strings) | Routine | [Tao](tao.md) |
+| [`tao_create_plot_window`](tao.md#tao_create_plot_window) | Routine | [Tao](tao.md) |
+| [`tao_curve_beam_ellipse_setup`](tao.md#tao_curve_beam_ellipse_setup) | Routine | [Tao](tao.md) |
+| [`tao_curve_check_universe`](tao.md#tao_curve_check_universe) | Routine | [Tao](tao.md) |
+| [`tao_curve_data_setup`](tao.md#tao_curve_data_setup) | Routine | [Tao](tao.md) |
+| [`tao_curve_datum_calc`](tao.md#tao_curve_datum_calc) | Routine | [Tao](tao.md) |
+| [`tao_curve_ele_ref`](tao.md#tao_curve_ele_ref) | Routine | [Tao](tao.md) |
+| [`tao_curve_ix_uni`](tao.md#tao_curve_ix_uni) | Routine | [Tao](tao.md) |
+| [`tao_curve_name`](tao.md#tao_curve_name) | Routine | [Tao](tao.md) |
+| [`tao_curve_rms_calc`](tao.md#tao_curve_rms_calc) | Routine | [Tao](tao.md) |
+| [`tao_d2_d1_name`](tao.md#tao_d2_d1_name) | Routine | [Tao](tao.md) |
+| [`tao_d2_data_stuffit`](tao.md#tao_d2_data_stuffit) | Routine | [Tao](tao.md) |
+| [`tao_data_check`](tao.md#tao_data_check) | Routine | [Tao](tao.md) |
+| [`tao_data_coupling_init`](tao.md#tao_data_coupling_init) | Routine | [Tao](tao.md) |
+| [`tao_data_sanity_check`](tao.md#tao_data_sanity_check) | Routine | [Tao](tao.md) |
+| [`tao_data_show_use`](tao.md#tao_data_show_use) | Routine | [Tao](tao.md) |
+| [`tao_data_type_substitute`](tao.md#tao_data_type_substitute) | Routine | [Tao](tao.md) |
+| [`tao_data_useit_plot_calc`](tao.md#tao_data_useit_plot_calc) | Routine | [Tao](tao.md) |
+| [`tao_datum_has_associated_ele`](tao.md#tao_datum_has_associated_ele) | Routine | [Tao](tao.md) |
+| [`tao_datum_integrate`](tao.md#tao_datum_integrate) | Routine | [Tao](tao.md) |
+| [`tao_datum_name`](tao.md#tao_datum_name) | Routine | [Tao](tao.md) |
+| [`tao_datum_s_position`](tao.md#tao_datum_s_position) | Routine | [Tao](tao.md) |
+| [`tao_de_optimizer`](tao.md#tao_de_optimizer) | Routine | [Tao](tao.md) |
+| [`tao_deallocate_plot_cache`](tao.md#tao_deallocate_plot_cache) | Routine | [Tao](tao.md) |
+| [`tao_deallocate_tree`](tao.md#tao_deallocate_tree) | Routine | [Tao](tao.md) |
+| [`tao_destroy_plot_window`](tao.md#tao_destroy_plot_window) | Routine | [Tao](tao.md) |
+| [`tao_dmerit_calc`](tao.md#tao_dmerit_calc) | Routine | [Tao](tao.md) |
+| [`tao_dmodel_dvar_calc`](tao.md#tao_dmodel_dvar_calc) | Routine | [Tao](tao.md) |
+| [`tao_do_wire_scan`](tao.md#tao_do_wire_scan) | Routine | [Tao](tao.md) |
+| [`tao_draw_beam_chamber_wall`](tao.md#tao_draw_beam_chamber_wall) | Routine | [Tao](tao.md) |
+| [`tao_draw_curve_data`](tao.md#tao_draw_curve_data) | Routine | [Tao](tao.md) |
+| [`tao_draw_ele_for_floor_plan`](tao.md#tao_draw_ele_for_floor_plan) | Routine | [Tao](tao.md) |
+| [`tao_draw_floor_plan`](tao.md#tao_draw_floor_plan) | Routine | [Tao](tao.md) |
+| [`tao_draw_graph_axes`](tao.md#tao_draw_graph_axes) | Routine | [Tao](tao.md) |
+| [`tao_draw_histogram_data`](tao.md#tao_draw_histogram_data) | Routine | [Tao](tao.md) |
+| [`tao_draw_lat_layout`](tao.md#tao_draw_lat_layout) | Routine | [Tao](tao.md) |
+| [`tao_draw_plots`](tao.md#tao_draw_plots) | Routine | [Tao](tao.md) |
+| [`tao_ele_geometry_with_misalignments`](tao.md#tao_ele_geometry_with_misalignments) | Routine | [Tao](tao.md) |
+| [`tao_ele_shape_info`](tao.md#tao_ele_shape_info) | Routine | [Tao](tao.md) |
+| [`tao_eval_floor_orbit`](tao.md#tao_eval_floor_orbit) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_a_datum`](tao.md#tao_evaluate_a_datum) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_datum_at_s`](tao.md#tao_evaluate_datum_at_s) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_element_parameters`](tao.md#tao_evaluate_element_parameters) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_expression`](tao.md#tao_evaluate_expression) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_expression_new`](tao.md#tao_evaluate_expression_new) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_expression_old`](tao.md#tao_evaluate_expression_old) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_lat_or_beam_data`](tao.md#tao_evaluate_lat_or_beam_data) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_stack_old`](tao.md#tao_evaluate_stack_old) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_tree`](tao.md#tao_evaluate_tree) | Routine | [Tao](tao.md) |
+| [`tao_evaluate_tune`](tao.md#tao_evaluate_tune) | Routine | [Tao](tao.md) |
+| [`tao_expression_hash_substitute`](tao.md#tao_expression_hash_substitute) | Routine | [Tao](tao.md) |
+| [`tao_expression_tree_to_string`](tao.md#tao_expression_tree_to_string) | Routine | [Tao](tao.md) |
+| [`tao_find_plot_region`](tao.md#tao_find_plot_region) | Routine | [Tao](tao.md) |
+| [`tao_fixer`](tao.md#tao_fixer) | Routine | [Tao](tao.md) |
+| [`tao_floor_to_screen`](tao.md#tao_floor_to_screen) | Routine | [Tao](tao.md) |
+| [`tao_floor_to_screen_coords`](tao.md#tao_floor_to_screen_coords) | Routine | [Tao](tao.md) |
+| [`tao_geodesic_lm_optimizer`](tao.md#tao_geodesic_lm_optimizer) | Routine | [Tao](tao.md) |
+| [`tao_get_data`](tao.md#tao_get_data) | Routine | [Tao](tao.md) |
+| [`tao_get_opt_vars`](tao.md#tao_get_opt_vars) | Routine | [Tao](tao.md) |
+| [`tao_get_user_input`](tao.md#tao_get_user_input) | Routine | [Tao](tao.md) |
+| [`tao_graph_controller_setup`](tao.md#tao_graph_controller_setup) | Routine | [Tao](tao.md) |
+| [`tao_graph_data_setup`](tao.md#tao_graph_data_setup) | Routine | [Tao](tao.md) |
+| [`tao_graph_data_slice_setup`](tao.md#tao_graph_data_slice_setup) | Routine | [Tao](tao.md) |
+| [`tao_graph_dynamic_aperture_setup`](tao.md#tao_graph_dynamic_aperture_setup) | Routine | [Tao](tao.md) |
+| [`tao_graph_histogram_setup`](tao.md#tao_graph_histogram_setup) | Routine | [Tao](tao.md) |
+| [`tao_graph_name`](tao.md#tao_graph_name) | Routine | [Tao](tao.md) |
+| [`tao_graph_phase_space_setup`](tao.md#tao_graph_phase_space_setup) | Routine | [Tao](tao.md) |
+| [`tao_graph_s_min_max_calc`](tao.md#tao_graph_s_min_max_calc) | Routine | [Tao](tao.md) |
+| [`tao_graph_setup`](tao.md#tao_graph_setup) | Routine | [Tao](tao.md) |
+| [`tao_help`](tao.md#tao_help) | Routine | [Tao](tao.md) |
+| [`tao_init`](tao.md#tao_init) | Routine | [Tao](tao.md) |
+| [`tao_init_beam_in_universe`](tao.md#tao_init_beam_in_universe) | Routine | [Tao](tao.md) |
+| [`tao_init_beams`](tao.md#tao_init_beams) | Routine | [Tao](tao.md) |
+| [`tao_init_data`](tao.md#tao_init_data) | Routine | [Tao](tao.md) |
+| [`tao_init_data_end_stuff`](tao.md#tao_init_data_end_stuff) | Routine | [Tao](tao.md) |
+| [`tao_init_data_in_universe`](tao.md#tao_init_data_in_universe) | Routine | [Tao](tao.md) |
+| [`tao_init_dynamic_aperture`](tao.md#tao_init_dynamic_aperture) | Routine | [Tao](tao.md) |
+| [`tao_init_find_elements`](tao.md#tao_init_find_elements) | Routine | [Tao](tao.md) |
+| [`tao_init_global`](tao.md#tao_init_global) | Routine | [Tao](tao.md) |
+| [`tao_init_lattice`](tao.md#tao_init_lattice) | Routine | [Tao](tao.md) |
+| [`tao_init_plotting`](tao.md#tao_init_plotting) | Routine | [Tao](tao.md) |
+| [`tao_init_variables`](tao.md#tao_init_variables) | Routine | [Tao](tao.md) |
+| [`tao_inject_beam`](tao.md#tao_inject_beam) | Routine | [Tao](tao.md) |
+| [`tao_inject_particle`](tao.md#tao_inject_particle) | Routine | [Tao](tao.md) |
+| [`tao_is_valid_name`](tao.md#tao_is_valid_name) | Routine | [Tao](tao.md) |
+| [`tao_json_cmd`](tao.md#tao_json_cmd) | Routine | [Tao](tao.md) |
+| [`tao_key_info_to_str`](tao.md#tao_key_info_to_str) | Routine | [Tao](tao.md) |
+| [`tao_lat_bookkeeper`](tao.md#tao_lat_bookkeeper) | Routine | [Tao](tao.md) |
+| [`tao_lat_emit_calc`](tao.md#tao_lat_emit_calc) | Routine | [Tao](tao.md) |
+| [`tao_lat_sigma_calc_needed`](tao.md#tao_lat_sigma_calc_needed) | Routine | [Tao](tao.md) |
+| [`tao_lat_sigma_track`](tao.md#tao_lat_sigma_track) | Routine | [Tao](tao.md) |
+| [`tao_lattice_branches_equal_tao_lattice_branches`](tao.md#tao_lattice_branches_equal_tao_lattice_branches) | Routine | [Tao](tao.md) |
+| [`tao_lattice_calc`](tao.md#tao_lattice_calc) | Routine | [Tao](tao.md) |
+| [`tao_lattice_equal_tao_lattice`](tao.md#tao_lattice_equal_tao_lattice) | Routine | [Tao](tao.md) |
+| [`tao_limit_calc`](tao.md#tao_limit_calc) | Routine | [Tao](tao.md) |
+| [`tao_lm_optimizer`](tao.md#tao_lm_optimizer) | Routine | [Tao](tao.md) |
+| [`tao_lmdif_optimizer`](tao.md#tao_lmdif_optimizer) | Routine | [Tao](tao.md) |
+| [`tao_load_this_datum`](tao.md#tao_load_this_datum) | Routine | [Tao](tao.md) |
+| [`tao_locate_all_elements`](tao.md#tao_locate_all_elements) | Routine | [Tao](tao.md) |
+| [`tao_locate_elements`](tao.md#tao_locate_elements) | Routine | [Tao](tao.md) |
+| [`tao_mark_lattice_ele`](tao.md#tao_mark_lattice_ele) | Routine | [Tao](tao.md) |
+| [`tao_merit`](tao.md#tao_merit) | Routine | [Tao](tao.md) |
+| [`tao_next_switch`](tao.md#tao_next_switch) | Routine | [Tao](tao.md) |
+| [`tao_next_word`](tao.md#tao_next_word) | Routine | [Tao](tao.md) |
+| [`tao_one_turn_map_calc_needed`](tao.md#tao_one_turn_map_calc_needed) | Routine | [Tao](tao.md) |
+| [`tao_open_file`](tao.md#tao_open_file) | Routine | [Tao](tao.md) |
+| [`tao_open_scratch_file`](tao.md#tao_open_scratch_file) | Routine | [Tao](tao.md) |
+| [`tao_optimization_status`](tao.md#tao_optimization_status) | Routine | [Tao](tao.md) |
+| [`tao_orbit_beta_wave_anal`](tao.md#tao_orbit_beta_wave_anal) | Routine | [Tao](tao.md) |
+| [`tao_oreint_building_wall_pt`](tao.md#tao_oreint_building_wall_pt) | Routine | [Tao](tao.md) |
+| [`tao_param_value_at_s`](tao.md#tao_param_value_at_s) | Routine | [Tao](tao.md) |
+| [`tao_param_value_routine`](tao.md#tao_param_value_routine) | Routine | [Tao](tao.md) |
+| [`tao_parse_command_args`](tao.md#tao_parse_command_args) | Routine | [Tao](tao.md) |
+| [`tao_parse_element_param_str`](tao.md#tao_parse_element_param_str) | Routine | [Tao](tao.md) |
+| [`tao_particle_data_value`](tao.md#tao_particle_data_value) | Routine | [Tao](tao.md) |
+| [`tao_pause_cmd`](tao.md#tao_pause_cmd) | Routine | [Tao](tao.md) |
+| [`tao_phase_space_axis_index`](tao.md#tao_phase_space_axis_index) | Routine | [Tao](tao.md) |
+| [`tao_phase_wave_anal`](tao.md#tao_phase_wave_anal) | Routine | [Tao](tao.md) |
+| [`tao_pick_universe`](tao.md#tao_pick_universe) | Routine | [Tao](tao.md) |
+| [`tao_pipe_cmd`](tao.md#tao_pipe_cmd) | Routine | [Tao](tao.md) |
+| [`tao_place_cmd`](tao.md#tao_place_cmd) | Routine | [Tao](tao.md) |
+| [`tao_plot_cmd`](tao.md#tao_plot_cmd) | Routine | [Tao](tao.md) |
+| [`tao_plot_data`](tao.md#tao_plot_data) | Routine | [Tao](tao.md) |
+| [`tao_plot_histogram`](tao.md#tao_plot_histogram) | Routine | [Tao](tao.md) |
+| [`tao_plot_key_table`](tao.md#tao_plot_key_table) | Routine | [Tao](tao.md) |
+| [`tao_plot_setup`](tao.md#tao_plot_setup) | Routine | [Tao](tao.md) |
+| [`tao_plot_struct_transfer`](tao.md#tao_plot_struct_transfer) | Routine | [Tao](tao.md) |
+| [`tao_plot_wave`](tao.md#tao_plot_wave) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_building_wall_shape`](tao.md#tao_pointer_to_building_wall_shape) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_datum`](tao.md#tao_pointer_to_datum) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_datum_ele`](tao.md#tao_pointer_to_datum_ele) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_ele_shape`](tao.md#tao_pointer_to_ele_shape) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_tao_lat`](tao.md#tao_pointer_to_tao_lat) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_universe`](tao.md#tao_pointer_to_universe) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_universes`](tao.md#tao_pointer_to_universes) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_var_in_lattice`](tao.md#tao_pointer_to_var_in_lattice) | Routine | [Tao](tao.md) |
+| [`tao_pointer_to_var_in_lattice2`](tao.md#tao_pointer_to_var_in_lattice2) | Routine | [Tao](tao.md) |
+| [`tao_print_command_line_info`](tao.md#tao_print_command_line_info) | Routine | [Tao](tao.md) |
+| [`tao_ptc_normal_form`](tao.md#tao_ptc_normal_form) | Routine | [Tao](tao.md) |
+| [`tao_python_cmd`](tao.md#tao_python_cmd) | Routine | [Tao](tao.md) |
+| [`tao_quiet_set`](tao.md#tao_quiet_set) | Routine | [Tao](tao.md) |
+| [`tao_rad_int_calc_needed`](tao.md#tao_rad_int_calc_needed) | Routine | [Tao](tao.md) |
+| [`tao_re_allocate_expression_info`](tao.md#tao_re_allocate_expression_info) | Routine | [Tao](tao.md) |
+| [`tao_re_associate_node_array`](tao.md#tao_re_associate_node_array) | Routine | [Tao](tao.md) |
+| [`tao_re_execute`](tao.md#tao_re_execute) | Routine | [Tao](tao.md) |
+| [`tao_read_cmd`](tao.md#tao_read_cmd) | Routine | [Tao](tao.md) |
+| [`tao_read_phase_space_index`](tao.md#tao_read_phase_space_index) | Routine | [Tao](tao.md) |
+| [`tao_regression_test`](tao.md#tao_regression_test) | Routine | [Tao](tao.md) |
+| [`tao_remove_blank_characters`](tao.md#tao_remove_blank_characters) | Routine | [Tao](tao.md) |
+| [`tao_run_cmd`](tao.md#tao_run_cmd) | Routine | [Tao](tao.md) |
+| [`tao_scale_cmd`](tao.md#tao_scale_cmd) | Routine | [Tao](tao.md) |
+| [`tao_scale_graph`](tao.md#tao_scale_graph) | Routine | [Tao](tao.md) |
+| [`tao_scale_ping_data`](tao.md#tao_scale_ping_data) | Routine | [Tao](tao.md) |
+| [`tao_scale_plot`](tao.md#tao_scale_plot) | Routine | [Tao](tao.md) |
+| [`tao_scratch_values_calc`](tao.md#tao_scratch_values_calc) | Routine | [Tao](tao.md) |
+| [`tao_set_beam_cmd`](tao.md#tao_set_beam_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_beam_init_cmd`](tao.md#tao_set_beam_init_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_bmad_com_cmd`](tao.md#tao_set_bmad_com_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_branch_cmd`](tao.md#tao_set_branch_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_calculate_cmd`](tao.md#tao_set_calculate_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_curve_cmd`](tao.md#tao_set_curve_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_curve_invalid`](tao.md#tao_set_curve_invalid) | Routine | [Tao](tao.md) |
+| [`tao_set_data_cmd`](tao.md#tao_set_data_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_data_useit_opt`](tao.md#tao_set_data_useit_opt) | Routine | [Tao](tao.md) |
+| [`tao_set_default_cmd`](tao.md#tao_set_default_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_drawing_cmd`](tao.md#tao_set_drawing_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_dynamic_aperture_cmd`](tao.md#tao_set_dynamic_aperture_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_elements_cmd`](tao.md#tao_set_elements_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_floor_plan_axis_label`](tao.md#tao_set_floor_plan_axis_label) | Routine | [Tao](tao.md) |
+| [`tao_set_geodesic_lm_cmd`](tao.md#tao_set_geodesic_lm_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_global_cmd`](tao.md#tao_set_global_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_graph_cmd`](tao.md#tao_set_graph_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_integer_value`](tao.md#tao_set_integer_value) | Routine | [Tao](tao.md) |
+| [`tao_set_invalid`](tao.md#tao_set_invalid) | Routine | [Tao](tao.md) |
+| [`tao_set_key_cmd`](tao.md#tao_set_key_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_lattice_cmd`](tao.md#tao_set_lattice_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_logical_value`](tao.md#tao_set_logical_value) | Routine | [Tao](tao.md) |
+| [`tao_set_openmp_n_threads`](tao.md#tao_set_openmp_n_threads) | Routine | [Tao](tao.md) |
+| [`tao_set_opt_vars`](tao.md#tao_set_opt_vars) | Routine | [Tao](tao.md) |
+| [`tao_set_opti_de_param_cmd`](tao.md#tao_set_opti_de_param_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_particle_start_cmd`](tao.md#tao_set_particle_start_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_plot_cmd`](tao.md#tao_set_plot_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_plot_page_cmd`](tao.md#tao_set_plot_page_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_ptc_com_cmd`](tao.md#tao_set_ptc_com_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_qp_axis_struct`](tao.md#tao_set_qp_axis_struct) | Routine | [Tao](tao.md) |
+| [`tao_set_qp_point_struct`](tao.md#tao_set_qp_point_struct) | Routine | [Tao](tao.md) |
+| [`tao_set_qp_rect_struct`](tao.md#tao_set_qp_rect_struct) | Routine | [Tao](tao.md) |
+| [`tao_set_ran_state_cmd`](tao.md#tao_set_ran_state_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_real_value`](tao.md#tao_set_real_value) | Routine | [Tao](tao.md) |
+| [`tao_set_region_cmd`](tao.md#tao_set_region_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_space_charge_com_cmd`](tao.md#tao_set_space_charge_com_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_symbolic_number_cmd`](tao.md#tao_set_symbolic_number_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_tune_cmd`](tao.md#tao_set_tune_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_universe_cmd`](tao.md#tao_set_universe_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_var_cmd`](tao.md#tao_set_var_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_var_model_value`](tao.md#tao_set_var_model_value) | Routine | [Tao](tao.md) |
+| [`tao_set_var_useit_opt`](tao.md#tao_set_var_useit_opt) | Routine | [Tao](tao.md) |
+| [`tao_set_wave_cmd`](tao.md#tao_set_wave_cmd) | Routine | [Tao](tao.md) |
+| [`tao_set_z_tune_cmd`](tao.md#tao_set_z_tune_cmd) | Routine | [Tao](tao.md) |
+| [`tao_setup_key_table`](tao.md#tao_setup_key_table) | Routine | [Tao](tao.md) |
+| [`tao_shape_init`](tao.md#tao_shape_init) | Routine | [Tao](tao.md) |
+| [`tao_show_cmd`](tao.md#tao_show_cmd) | Routine | [Tao](tao.md) |
+| [`tao_show_constraints`](tao.md#tao_show_constraints) | Routine | [Tao](tao.md) |
+| [`tao_show_this`](tao.md#tao_show_this) | Routine | [Tao](tao.md) |
+| [`tao_single_mode`](tao.md#tao_single_mode) | Routine | [Tao](tao.md) |
+| [`tao_single_track`](tao.md#tao_single_track) | Routine | [Tao](tao.md) |
+| [`tao_spin_matrices_calc_needed`](tao.md#tao_spin_matrices_calc_needed) | Routine | [Tao](tao.md) |
+| [`tao_spin_tracking_turn_on`](tao.md#tao_spin_tracking_turn_on) | Routine | [Tao](tao.md) |
+| [`tao_split_component`](tao.md#tao_split_component) | Routine | [Tao](tao.md) |
+| [`tao_srdt_calc_needed`](tao.md#tao_srdt_calc_needed) | Routine | [Tao](tao.md) |
+| [`tao_subin_uni_number`](tao.md#tao_subin_uni_number) | Routine | [Tao](tao.md) |
+| [`tao_svd_optimizer`](tao.md#tao_svd_optimizer) | Routine | [Tao](tao.md) |
+| [`tao_symbol_import_from_lat`](tao.md#tao_symbol_import_from_lat) | Routine | [Tao](tao.md) |
+| [`tao_taper_cmd`](tao.md#tao_taper_cmd) | Routine | [Tao](tao.md) |
+| [`tao_to_change_number`](tao.md#tao_to_change_number) | Routine | [Tao](tao.md) |
+| [`tao_to_int`](tao.md#tao_to_int) | Routine | [Tao](tao.md) |
+| [`tao_to_phase_and_coupling_reading`](tao.md#tao_to_phase_and_coupling_reading) | Routine | [Tao](tao.md) |
+| [`tao_to_real`](tao.md#tao_to_real) | Routine | [Tao](tao.md) |
+| [`tao_too_many_particles_lost`](tao.md#tao_too_many_particles_lost) | Routine | [Tao](tao.md) |
+| [`tao_top10_derivative_print`](tao.md#tao_top10_derivative_print) | Routine | [Tao](tao.md) |
+| [`tao_top10_merit_categories_print`](tao.md#tao_top10_merit_categories_print) | Routine | [Tao](tao.md) |
+| [`tao_top_level`](tao.md#tao_top_level) | Routine | [Tao](tao.md) |
+| [`tao_tracking_ele_index`](tao.md#tao_tracking_ele_index) | Routine | [Tao](tao.md) |
+| [`tao_turn_on_special_calcs_if_needed_for_plotting`](tao.md#tao_turn_on_special_calcs_if_needed_for_plotting) | Routine | [Tao](tao.md) |
+| [`tao_type_expression_tree`](tao.md#tao_type_expression_tree) | Routine | [Tao](tao.md) |
+| [`tao_uni_atsign_index`](tao.md#tao_uni_atsign_index) | Routine | [Tao](tao.md) |
+| [`tao_universe_index`](tao.md#tao_universe_index) | Routine | [Tao](tao.md) |
+| [`tao_use_data`](tao.md#tao_use_data) | Routine | [Tao](tao.md) |
+| [`tao_use_var`](tao.md#tao_use_var) | Routine | [Tao](tao.md) |
+| [`tao_user_is_terminating_optimization`](tao.md#tao_user_is_terminating_optimization) | Routine | [Tao](tao.md) |
+| [`tao_var1_name`](tao.md#tao_var1_name) | Routine | [Tao](tao.md) |
+| [`tao_var_attrib_name`](tao.md#tao_var_attrib_name) | Routine | [Tao](tao.md) |
+| [`tao_var_check`](tao.md#tao_var_check) | Routine | [Tao](tao.md) |
+| [`tao_var_repoint`](tao.md#tao_var_repoint) | Routine | [Tao](tao.md) |
+| [`tao_var_show_use`](tao.md#tao_var_show_use) | Routine | [Tao](tao.md) |
+| [`tao_var_target_calc`](tao.md#tao_var_target_calc) | Routine | [Tao](tao.md) |
+| [`tao_var_useit_plot_calc`](tao.md#tao_var_useit_plot_calc) | Routine | [Tao](tao.md) |
+| [`tao_var_write`](tao.md#tao_var_write) | Routine | [Tao](tao.md) |
+| [`tao_veto_vars_with_zero_dmodel`](tao.md#tao_veto_vars_with_zero_dmodel) | Routine | [Tao](tao.md) |
+| [`tao_wave_analysis`](tao.md#tao_wave_analysis) | Routine | [Tao](tao.md) |
+| [`tao_wave_cmd`](tao.md#tao_wave_cmd) | Routine | [Tao](tao.md) |
+| [`tao_wave_fit`](tao.md#tao_wave_fit) | Routine | [Tao](tao.md) |
+| [`tao_write_cmd`](tao.md#tao_write_cmd) | Routine | [Tao](tao.md) |
+| [`tao_write_lines`](tao.md#tao_write_lines) | Routine | [Tao](tao.md) |
+| [`tao_x_axis_cmd`](tao.md#tao_x_axis_cmd) | Routine | [Tao](tao.md) |
+| [`tao_x_scale_cmd`](tao.md#tao_x_scale_cmd) | Routine | [Tao](tao.md) |
+| [`tao_x_scale_graph`](tao.md#tao_x_scale_graph) | Routine | [Tao](tao.md) |
+| [`tao_x_scale_plot`](tao.md#tao_x_scale_plot) | Routine | [Tao](tao.md) |
 | [TaoBeamBranchStruct](tao.md#taobeambranchstruct) | Struct | [Tao](tao.md) |
 | [TaoBeamUniStruct](tao.md#taobeamunistruct) | Struct | [Tao](tao.md) |
 | [TaoBuildingWallOrientationStruct](tao.md#taobuildingwallorientationstruct) | Struct | [Tao](tao.md) |
@@ -2274,137 +2274,137 @@
 | [TaoVarStruct](tao.md#taovarstruct) | Struct | [Tao](tao.md) |
 | [TaoWaveKickPtStruct](tao.md#taowavekickptstruct) | Struct | [Tao](tao.md) |
 | [TaoWaveStruct](tao.md#taowavestruct) | Struct | [Tao](tao.md) |
-| [`taper_mag_strengths`][pybmad.taper_mag_strengths] | Routine | [Bmad](bmad.md) |
-| [`target_min_max_calc`][pybmad.target_min_max_calc] | Routine | [Bmad](bmad.md) |
-| [`target_rot_mats`][pybmad.target_rot_mats] | Routine | [Bmad](bmad.md) |
+| [`taper_mag_strengths`](bmad.md#taper_mag_strengths) | Routine | [Bmad](bmad.md) |
+| [`target_min_max_calc`](bmad.md#target_min_max_calc) | Routine | [Bmad](bmad.md) |
+| [`target_rot_mats`](bmad.md#target_rot_mats) | Routine | [Bmad](bmad.md) |
 | [TargetPointStruct](bmad.md#targetpointstruct) | Struct | [Bmad](bmad.md) |
 | `TAYLOR` | Enum | [Enums](enums.md) |
-| [`taylor_equal_taylor`][pybmad.taylor_equal_taylor] | Routine | [Bmad](bmad.md) |
-| [`taylor_inverse`][pybmad.taylor_inverse] | Routine | [Bmad](bmad.md) |
+| [`taylor_equal_taylor`](bmad.md#taylor_equal_taylor) | Routine | [Bmad](bmad.md) |
+| [`taylor_inverse`](bmad.md#taylor_inverse) | Routine | [Bmad](bmad.md) |
 | `TAYLOR_MAP_INCLUDES_OFFSETS` | Enum | [Enums](enums.md) |
 | `TAYLOR_OFFSET` | Enum | [Enums](enums.md) |
 | `TAYLOR_ORDER` | Enum | [Enums](enums.md) |
-| [`taylor_propagate1`][pybmad.taylor_propagate1] | Routine | [Bmad](bmad.md) |
-| [`taylor_to_mad_map`][pybmad.taylor_to_mad_map] | Routine | [Bmad](bmad.md) |
-| [`taylors_equal_taylors`][pybmad.taylors_equal_taylors] | Routine | [Bmad](bmad.md) |
+| [`taylor_propagate1`](bmad.md#taylor_propagate1) | Routine | [Bmad](bmad.md) |
+| [`taylor_to_mad_map`](bmad.md#taylor_to_mad_map) | Routine | [Bmad](bmad.md) |
+| [`taylors_equal_taylors`](bmad.md#taylors_equal_taylors) | Routine | [Bmad](bmad.md) |
 | [TaylorStruct](bmad.md#taylorstruct) | Struct | [Bmad](bmad.md) |
 | [TaylorTermStruct](bmad.md#taylortermstruct) | Struct | [Bmad](bmad.md) |
 | `TERM` | Enum | [Enums](enums.md) |
-| [`test_xgelbd`][pybmad.test_xgelbd] | Routine | [Sim Utils](sim_utils.md) |
+| [`test_xgelbd`](sim_utils.md#test_xgelbd) | Routine | [Sim Utils](sim_utils.md) |
 | `THETA_POSITION` | Enum | [Enums](enums.md) |
 | `THICK_MULTIPOLE` | Enum | [Enums](enums.md) |
 | `THICKNESS` | Enum | [Enums](enums.md) |
 | `TILT` | Enum | [Enums](enums.md) |
 | `TILT_CALIB` | Enum | [Enums](enums.md) |
-| [`tilt_coords`][pybmad.tilt_coords] | Routine | [Bmad](bmad.md) |
-| [`tilt_coords_photon`][pybmad.tilt_coords_photon] | Routine | [Bmad](bmad.md) |
+| [`tilt_coords`](bmad.md#tilt_coords) | Routine | [Bmad](bmad.md) |
+| [`tilt_coords_photon`](bmad.md#tilt_coords_photon) | Routine | [Bmad](bmad.md) |
 | `TILT_CORR` | Enum | [Enums](enums.md) |
-| [`tilt_mat6`][pybmad.tilt_mat6] | Routine | [Bmad](bmad.md) |
+| [`tilt_mat6`](bmad.md#tilt_mat6) | Routine | [Bmad](bmad.md) |
 | `TILT_TOT` | Enum | [Enums](enums.md) |
 | `TIME_RUNGE_KUTTA` | Enum | [Enums](enums.md) |
 | `TIMES` | Enum | [Enums](enums.md) |
 | `TIMES_SYM` | Enum | [Enums](enums.md) |
 | `TO_ELEMENT` | Enum | [Enums](enums.md) |
-| [`to_eta_reading`][pybmad.to_eta_reading] | Routine | [Bmad](bmad.md) |
-| [`to_fieldmap_coords`][pybmad.to_fieldmap_coords] | Routine | [Bmad](bmad.md) |
+| [`to_eta_reading`](bmad.md#to_eta_reading) | Routine | [Bmad](bmad.md) |
+| [`to_fieldmap_coords`](bmad.md#to_fieldmap_coords) | Routine | [Bmad](bmad.md) |
 | `TO_LINE` | Enum | [Enums](enums.md) |
-| [`to_orbit_reading`][pybmad.to_orbit_reading] | Routine | [Bmad](bmad.md) |
-| [`to_phase_and_coupling_reading`][pybmad.to_phase_and_coupling_reading] | Routine | [Bmad](bmad.md) |
-| [`to_photon_angle_coords`][pybmad.to_photon_angle_coords] | Routine | [Bmad](bmad.md) |
-| [`to_str`][pybmad.to_str] | Routine | [Sim Utils](sim_utils.md) |
-| [`to_surface_coords`][pybmad.to_surface_coords] | Routine | [Bmad](bmad.md) |
-| [`touschek_lifetime`][pybmad.touschek_lifetime] | Routine | [Bmad](bmad.md) |
-| [`touschek_rate1`][pybmad.touschek_rate1] | Routine | [Bmad](bmad.md) |
-| [`touschek_rate1_zap`][pybmad.touschek_rate1_zap] | Routine | [Bmad](bmad.md) |
-| [`track1`][pybmad.track1] | Routine | [Bmad](bmad.md) |
-| [`track1_beam`][pybmad.track1_beam] | Routine | [Bmad](bmad.md) |
-| [`track1_bmad`][pybmad.track1_bmad] | Routine | [Bmad](bmad.md) |
-| [`track1_bmad_photon`][pybmad.track1_bmad_photon] | Routine | [Bmad](bmad.md) |
-| [`track1_bunch`][pybmad.track1_bunch] | Routine | [Bmad](bmad.md) |
-| [`track1_bunch_csr`][pybmad.track1_bunch_csr] | Routine | [Bmad](bmad.md) |
-| [`track1_bunch_csr3d`][pybmad.track1_bunch_csr3d] | Routine | [Bmad](bmad.md) |
-| [`track1_bunch_hom`][pybmad.track1_bunch_hom] | Routine | [Bmad](bmad.md) |
-| [`track1_bunch_space_charge`][pybmad.track1_bunch_space_charge] | Routine | [Bmad](bmad.md) |
-| [`track1_crystal`][pybmad.track1_crystal] | Routine | [Bmad](bmad.md) |
-| [`track1_diffraction_plate_or_mask`][pybmad.track1_diffraction_plate_or_mask] | Routine | [Bmad](bmad.md) |
-| [`track1_high_energy_space_charge`][pybmad.track1_high_energy_space_charge] | Routine | [Bmad](bmad.md) |
-| [`track1_lens`][pybmad.track1_lens] | Routine | [Bmad](bmad.md) |
-| [`track1_linear`][pybmad.track1_linear] | Routine | [Bmad](bmad.md) |
-| [`track1_lr_wake`][pybmad.track1_lr_wake] | Routine | [Bmad](bmad.md) |
-| [`track1_mad`][pybmad.track1_mad] | Routine | [Bmad](bmad.md) |
-| [`track1_mirror`][pybmad.track1_mirror] | Routine | [Bmad](bmad.md) |
-| [`track1_mosaic_crystal`][pybmad.track1_mosaic_crystal] | Routine | [Bmad](bmad.md) |
-| [`track1_multilayer_mirror`][pybmad.track1_multilayer_mirror] | Routine | [Bmad](bmad.md) |
-| [`track1_radiation`][pybmad.track1_radiation] | Routine | [Bmad](bmad.md) |
-| [`track1_radiation_center`][pybmad.track1_radiation_center] | Routine | [Bmad](bmad.md) |
-| [`track1_runge_kutta`][pybmad.track1_runge_kutta] | Routine | [Bmad](bmad.md) |
-| [`track1_sample`][pybmad.track1_sample] | Routine | [Bmad](bmad.md) |
-| [`track1_spin`][pybmad.track1_spin] | Routine | [Bmad](bmad.md) |
-| [`track1_spin_integration`][pybmad.track1_spin_integration] | Routine | [Bmad](bmad.md) |
-| [`track1_spin_taylor`][pybmad.track1_spin_taylor] | Routine | [Bmad](bmad.md) |
-| [`track1_sr_wake`][pybmad.track1_sr_wake] | Routine | [Bmad](bmad.md) |
-| [`track1_symp_lie_ptc`][pybmad.track1_symp_lie_ptc] | Routine | [Bmad](bmad.md) |
-| [`track1_taylor`][pybmad.track1_taylor] | Routine | [Bmad](bmad.md) |
-| [`track1_time_runge_kutta`][pybmad.track1_time_runge_kutta] | Routine | [Bmad](bmad.md) |
-| [`track_a_beambeam`][pybmad.track_a_beambeam] | Routine | [Bmad](bmad.md) |
-| [`track_a_bend`][pybmad.track_a_bend] | Routine | [Bmad](bmad.md) |
-| [`track_a_bend_photon`][pybmad.track_a_bend_photon] | Routine | [Bmad](bmad.md) |
-| [`track_a_capillary`][pybmad.track_a_capillary] | Routine | [Bmad](bmad.md) |
-| [`track_a_converter`][pybmad.track_a_converter] | Routine | [Bmad](bmad.md) |
-| [`track_a_crab_cavity`][pybmad.track_a_crab_cavity] | Routine | [Bmad](bmad.md) |
-| [`track_a_drift`][pybmad.track_a_drift] | Routine | [Bmad](bmad.md) |
-| [`track_a_drift_photon`][pybmad.track_a_drift_photon] | Routine | [Bmad](bmad.md) |
-| [`track_a_foil`][pybmad.track_a_foil] | Routine | [Bmad](bmad.md) |
-| [`track_a_gkicker`][pybmad.track_a_gkicker] | Routine | [Bmad](bmad.md) |
-| [`track_a_lcavity`][pybmad.track_a_lcavity] | Routine | [Bmad](bmad.md) |
-| [`track_a_lcavity_old`][pybmad.track_a_lcavity_old] | Routine | [Bmad](bmad.md) |
-| [`track_a_mask`][pybmad.track_a_mask] | Routine | [Bmad](bmad.md) |
-| [`track_a_match`][pybmad.track_a_match] | Routine | [Bmad](bmad.md) |
-| [`track_a_patch`][pybmad.track_a_patch] | Routine | [Bmad](bmad.md) |
-| [`track_a_patch_photon`][pybmad.track_a_patch_photon] | Routine | [Bmad](bmad.md) |
-| [`track_a_pickup`][pybmad.track_a_pickup] | Routine | [Bmad](bmad.md) |
-| [`track_a_quadrupole`][pybmad.track_a_quadrupole] | Routine | [Bmad](bmad.md) |
-| [`track_a_rfcavity`][pybmad.track_a_rfcavity] | Routine | [Bmad](bmad.md) |
-| [`track_a_sad_mult`][pybmad.track_a_sad_mult] | Routine | [Bmad](bmad.md) |
-| [`track_a_sol_quad`][pybmad.track_a_sol_quad] | Routine | [Bmad](bmad.md) |
-| [`track_a_thick_multipole`][pybmad.track_a_thick_multipole] | Routine | [Bmad](bmad.md) |
-| [`track_a_wiggler`][pybmad.track_a_wiggler] | Routine | [Bmad](bmad.md) |
-| [`track_a_zero_length_element`][pybmad.track_a_zero_length_element] | Routine | [Bmad](bmad.md) |
-| [`track_all`][pybmad.track_all] | Routine | [Bmad](bmad.md) |
-| [`track_beam`][pybmad.track_beam] | Routine | [Bmad](bmad.md) |
-| [`track_bunch`][pybmad.track_bunch] | Routine | [Bmad](bmad.md) |
-| [`track_bunch_time`][pybmad.track_bunch_time] | Routine | [Bmad](bmad.md) |
-| [`track_bunch_to_s`][pybmad.track_bunch_to_s] | Routine | [Bmad](bmad.md) |
-| [`track_bunch_to_t`][pybmad.track_bunch_to_t] | Routine | [Bmad](bmad.md) |
-| [`track_complex_taylor`][pybmad.track_complex_taylor] | Routine | [Bmad](bmad.md) |
-| [`track_from_s_to_s`][pybmad.track_from_s_to_s] | Routine | [Bmad](bmad.md) |
-| [`track_many`][pybmad.track_many] | Routine | [Bmad](bmad.md) |
-| [`track_to_surface`][pybmad.track_to_surface] | Routine | [Bmad](bmad.md) |
-| [`track_until_dead`][pybmad.track_until_dead] | Routine | [Bmad](bmad.md) |
+| [`to_orbit_reading`](bmad.md#to_orbit_reading) | Routine | [Bmad](bmad.md) |
+| [`to_phase_and_coupling_reading`](bmad.md#to_phase_and_coupling_reading) | Routine | [Bmad](bmad.md) |
+| [`to_photon_angle_coords`](bmad.md#to_photon_angle_coords) | Routine | [Bmad](bmad.md) |
+| [`to_str`](sim_utils.md#to_str) | Routine | [Sim Utils](sim_utils.md) |
+| [`to_surface_coords`](bmad.md#to_surface_coords) | Routine | [Bmad](bmad.md) |
+| [`touschek_lifetime`](bmad.md#touschek_lifetime) | Routine | [Bmad](bmad.md) |
+| [`touschek_rate1`](bmad.md#touschek_rate1) | Routine | [Bmad](bmad.md) |
+| [`touschek_rate1_zap`](bmad.md#touschek_rate1_zap) | Routine | [Bmad](bmad.md) |
+| [`track1`](bmad.md#track1) | Routine | [Bmad](bmad.md) |
+| [`track1_beam`](bmad.md#track1_beam) | Routine | [Bmad](bmad.md) |
+| [`track1_bmad`](bmad.md#track1_bmad) | Routine | [Bmad](bmad.md) |
+| [`track1_bmad_photon`](bmad.md#track1_bmad_photon) | Routine | [Bmad](bmad.md) |
+| [`track1_bunch`](bmad.md#track1_bunch) | Routine | [Bmad](bmad.md) |
+| [`track1_bunch_csr`](bmad.md#track1_bunch_csr) | Routine | [Bmad](bmad.md) |
+| [`track1_bunch_csr3d`](bmad.md#track1_bunch_csr3d) | Routine | [Bmad](bmad.md) |
+| [`track1_bunch_hom`](bmad.md#track1_bunch_hom) | Routine | [Bmad](bmad.md) |
+| [`track1_bunch_space_charge`](bmad.md#track1_bunch_space_charge) | Routine | [Bmad](bmad.md) |
+| [`track1_crystal`](bmad.md#track1_crystal) | Routine | [Bmad](bmad.md) |
+| [`track1_diffraction_plate_or_mask`](bmad.md#track1_diffraction_plate_or_mask) | Routine | [Bmad](bmad.md) |
+| [`track1_high_energy_space_charge`](bmad.md#track1_high_energy_space_charge) | Routine | [Bmad](bmad.md) |
+| [`track1_lens`](bmad.md#track1_lens) | Routine | [Bmad](bmad.md) |
+| [`track1_linear`](bmad.md#track1_linear) | Routine | [Bmad](bmad.md) |
+| [`track1_lr_wake`](bmad.md#track1_lr_wake) | Routine | [Bmad](bmad.md) |
+| [`track1_mad`](bmad.md#track1_mad) | Routine | [Bmad](bmad.md) |
+| [`track1_mirror`](bmad.md#track1_mirror) | Routine | [Bmad](bmad.md) |
+| [`track1_mosaic_crystal`](bmad.md#track1_mosaic_crystal) | Routine | [Bmad](bmad.md) |
+| [`track1_multilayer_mirror`](bmad.md#track1_multilayer_mirror) | Routine | [Bmad](bmad.md) |
+| [`track1_radiation`](bmad.md#track1_radiation) | Routine | [Bmad](bmad.md) |
+| [`track1_radiation_center`](bmad.md#track1_radiation_center) | Routine | [Bmad](bmad.md) |
+| [`track1_runge_kutta`](bmad.md#track1_runge_kutta) | Routine | [Bmad](bmad.md) |
+| [`track1_sample`](bmad.md#track1_sample) | Routine | [Bmad](bmad.md) |
+| [`track1_spin`](bmad.md#track1_spin) | Routine | [Bmad](bmad.md) |
+| [`track1_spin_integration`](bmad.md#track1_spin_integration) | Routine | [Bmad](bmad.md) |
+| [`track1_spin_taylor`](bmad.md#track1_spin_taylor) | Routine | [Bmad](bmad.md) |
+| [`track1_sr_wake`](bmad.md#track1_sr_wake) | Routine | [Bmad](bmad.md) |
+| [`track1_symp_lie_ptc`](bmad.md#track1_symp_lie_ptc) | Routine | [Bmad](bmad.md) |
+| [`track1_taylor`](bmad.md#track1_taylor) | Routine | [Bmad](bmad.md) |
+| [`track1_time_runge_kutta`](bmad.md#track1_time_runge_kutta) | Routine | [Bmad](bmad.md) |
+| [`track_a_beambeam`](bmad.md#track_a_beambeam) | Routine | [Bmad](bmad.md) |
+| [`track_a_bend`](bmad.md#track_a_bend) | Routine | [Bmad](bmad.md) |
+| [`track_a_bend_photon`](bmad.md#track_a_bend_photon) | Routine | [Bmad](bmad.md) |
+| [`track_a_capillary`](bmad.md#track_a_capillary) | Routine | [Bmad](bmad.md) |
+| [`track_a_converter`](bmad.md#track_a_converter) | Routine | [Bmad](bmad.md) |
+| [`track_a_crab_cavity`](bmad.md#track_a_crab_cavity) | Routine | [Bmad](bmad.md) |
+| [`track_a_drift`](bmad.md#track_a_drift) | Routine | [Bmad](bmad.md) |
+| [`track_a_drift_photon`](bmad.md#track_a_drift_photon) | Routine | [Bmad](bmad.md) |
+| [`track_a_foil`](bmad.md#track_a_foil) | Routine | [Bmad](bmad.md) |
+| [`track_a_gkicker`](bmad.md#track_a_gkicker) | Routine | [Bmad](bmad.md) |
+| [`track_a_lcavity`](bmad.md#track_a_lcavity) | Routine | [Bmad](bmad.md) |
+| [`track_a_lcavity_old`](bmad.md#track_a_lcavity_old) | Routine | [Bmad](bmad.md) |
+| [`track_a_mask`](bmad.md#track_a_mask) | Routine | [Bmad](bmad.md) |
+| [`track_a_match`](bmad.md#track_a_match) | Routine | [Bmad](bmad.md) |
+| [`track_a_patch`](bmad.md#track_a_patch) | Routine | [Bmad](bmad.md) |
+| [`track_a_patch_photon`](bmad.md#track_a_patch_photon) | Routine | [Bmad](bmad.md) |
+| [`track_a_pickup`](bmad.md#track_a_pickup) | Routine | [Bmad](bmad.md) |
+| [`track_a_quadrupole`](bmad.md#track_a_quadrupole) | Routine | [Bmad](bmad.md) |
+| [`track_a_rfcavity`](bmad.md#track_a_rfcavity) | Routine | [Bmad](bmad.md) |
+| [`track_a_sad_mult`](bmad.md#track_a_sad_mult) | Routine | [Bmad](bmad.md) |
+| [`track_a_sol_quad`](bmad.md#track_a_sol_quad) | Routine | [Bmad](bmad.md) |
+| [`track_a_thick_multipole`](bmad.md#track_a_thick_multipole) | Routine | [Bmad](bmad.md) |
+| [`track_a_wiggler`](bmad.md#track_a_wiggler) | Routine | [Bmad](bmad.md) |
+| [`track_a_zero_length_element`](bmad.md#track_a_zero_length_element) | Routine | [Bmad](bmad.md) |
+| [`track_all`](bmad.md#track_all) | Routine | [Bmad](bmad.md) |
+| [`track_beam`](bmad.md#track_beam) | Routine | [Bmad](bmad.md) |
+| [`track_bunch`](bmad.md#track_bunch) | Routine | [Bmad](bmad.md) |
+| [`track_bunch_time`](bmad.md#track_bunch_time) | Routine | [Bmad](bmad.md) |
+| [`track_bunch_to_s`](bmad.md#track_bunch_to_s) | Routine | [Bmad](bmad.md) |
+| [`track_bunch_to_t`](bmad.md#track_bunch_to_t) | Routine | [Bmad](bmad.md) |
+| [`track_complex_taylor`](bmad.md#track_complex_taylor) | Routine | [Bmad](bmad.md) |
+| [`track_from_s_to_s`](bmad.md#track_from_s_to_s) | Routine | [Bmad](bmad.md) |
+| [`track_many`](bmad.md#track_many) | Routine | [Bmad](bmad.md) |
+| [`track_to_surface`](bmad.md#track_to_surface) | Routine | [Bmad](bmad.md) |
+| [`track_until_dead`](bmad.md#track_until_dead) | Routine | [Bmad](bmad.md) |
 | `TRACKING` | Enum | [Enums](enums.md) |
 | `TRACKING_METHOD` | Enum | [Enums](enums.md) |
-| [`tracking_rad_map_setup`][pybmad.tracking_rad_map_setup] | Routine | [Bmad](bmad.md) |
+| [`tracking_rad_map_setup`](bmad.md#tracking_rad_map_setup) | Routine | [Bmad](bmad.md) |
 | [TrackPointStruct](bmad.md#trackpointstruct) | Struct | [Bmad](bmad.md) |
 | [TrackStruct](bmad.md#trackstruct) | Struct | [Bmad](bmad.md) |
 | `TRAILING` | Enum | [Enums](enums.md) |
-| [`transfer_ac_kick`][pybmad.transfer_ac_kick] | Routine | [Bmad](bmad.md) |
-| [`transfer_branch`][pybmad.transfer_branch] | Routine | [Bmad](bmad.md) |
-| [`transfer_branch_parameters`][pybmad.transfer_branch_parameters] | Routine | [Bmad](bmad.md) |
-| [`transfer_branches`][pybmad.transfer_branches] | Routine | [Bmad](bmad.md) |
-| [`transfer_ele`][pybmad.transfer_ele] | Routine | [Bmad](bmad.md) |
-| [`transfer_ele_taylor`][pybmad.transfer_ele_taylor] | Routine | [Bmad](bmad.md) |
-| [`transfer_eles`][pybmad.transfer_eles] | Routine | [Bmad](bmad.md) |
-| [`transfer_fieldmap`][pybmad.transfer_fieldmap] | Routine | [Bmad](bmad.md) |
-| [`transfer_fixer_params`][pybmad.transfer_fixer_params] | Routine | [Bmad](bmad.md) |
-| [`transfer_lat`][pybmad.transfer_lat] | Routine | [Bmad](bmad.md) |
-| [`transfer_lat_parameters`][pybmad.transfer_lat_parameters] | Routine | [Bmad](bmad.md) |
-| [`transfer_map_calc`][pybmad.transfer_map_calc] | Routine | [Bmad](bmad.md) |
-| [`transfer_map_from_s_to_s`][pybmad.transfer_map_from_s_to_s] | Routine | [Bmad](bmad.md) |
-| [`transfer_mat2_from_twiss`][pybmad.transfer_mat2_from_twiss] | Routine | [Bmad](bmad.md) |
-| [`transfer_mat_from_twiss`][pybmad.transfer_mat_from_twiss] | Routine | [Bmad](bmad.md) |
-| [`transfer_matrix_calc`][pybmad.transfer_matrix_calc] | Routine | [Bmad](bmad.md) |
-| [`transfer_twiss`][pybmad.transfer_twiss] | Routine | [Bmad](bmad.md) |
-| [`transfer_wake`][pybmad.transfer_wake] | Routine | [Bmad](bmad.md) |
+| [`transfer_ac_kick`](bmad.md#transfer_ac_kick) | Routine | [Bmad](bmad.md) |
+| [`transfer_branch`](bmad.md#transfer_branch) | Routine | [Bmad](bmad.md) |
+| [`transfer_branch_parameters`](bmad.md#transfer_branch_parameters) | Routine | [Bmad](bmad.md) |
+| [`transfer_branches`](bmad.md#transfer_branches) | Routine | [Bmad](bmad.md) |
+| [`transfer_ele`](bmad.md#transfer_ele) | Routine | [Bmad](bmad.md) |
+| [`transfer_ele_taylor`](bmad.md#transfer_ele_taylor) | Routine | [Bmad](bmad.md) |
+| [`transfer_eles`](bmad.md#transfer_eles) | Routine | [Bmad](bmad.md) |
+| [`transfer_fieldmap`](bmad.md#transfer_fieldmap) | Routine | [Bmad](bmad.md) |
+| [`transfer_fixer_params`](bmad.md#transfer_fixer_params) | Routine | [Bmad](bmad.md) |
+| [`transfer_lat`](bmad.md#transfer_lat) | Routine | [Bmad](bmad.md) |
+| [`transfer_lat_parameters`](bmad.md#transfer_lat_parameters) | Routine | [Bmad](bmad.md) |
+| [`transfer_map_calc`](bmad.md#transfer_map_calc) | Routine | [Bmad](bmad.md) |
+| [`transfer_map_from_s_to_s`](bmad.md#transfer_map_from_s_to_s) | Routine | [Bmad](bmad.md) |
+| [`transfer_mat2_from_twiss`](bmad.md#transfer_mat2_from_twiss) | Routine | [Bmad](bmad.md) |
+| [`transfer_mat_from_twiss`](bmad.md#transfer_mat_from_twiss) | Routine | [Bmad](bmad.md) |
+| [`transfer_matrix_calc`](bmad.md#transfer_matrix_calc) | Routine | [Bmad](bmad.md) |
+| [`transfer_twiss`](bmad.md#transfer_twiss) | Routine | [Bmad](bmad.md) |
+| [`transfer_wake`](bmad.md#transfer_wake) | Routine | [Bmad](bmad.md) |
 | `TRANSMISSION` | Enum | [Enums](enums.md) |
 | `TRANSPARENT` | Enum | [Enums](enums.md) |
 | `TRANSVERSE_KICK` | Enum | [Enums](enums.md) |
@@ -2412,41 +2412,41 @@
 | `TRAVELING_WAVE` | Enum | [Enums](enums.md) |
 | `TRIANGLE_FILLED_SYM` | Enum | [Enums](enums.md) |
 | `TRIANGLE_SYM` | Enum | [Enums](enums.md) |
-| [`tricubic_cmplx_eval`][pybmad.tricubic_cmplx_eval] | Routine | [Sim Utils](sim_utils.md) |
+| [`tricubic_cmplx_eval`](sim_utils.md#tricubic_cmplx_eval) | Routine | [Sim Utils](sim_utils.md) |
 | [TricubicCmplxCoefStruct](sim_utils.md#tricubiccmplxcoefstruct) | Struct | [Sim Utils](sim_utils.md) |
 | `TRUE_` | Enum | [Enums](enums.md) |
 | `TRUE_INT` | Enum | [Enums](enums.md) |
-| [`truncate_complex_taylor_to_order`][pybmad.truncate_complex_taylor_to_order] | Routine | [Bmad](bmad.md) |
+| [`truncate_complex_taylor_to_order`](bmad.md#truncate_complex_taylor_to_order) | Routine | [Bmad](bmad.md) |
 | `TT` | Enum | [Enums](enums.md) |
-| [`twiss1_propagate`][pybmad.twiss1_propagate] | Routine | [Bmad](bmad.md) |
-| [`twiss3_at_start`][pybmad.twiss3_at_start] | Routine | [Bmad](bmad.md) |
-| [`twiss3_from_twiss2`][pybmad.twiss3_from_twiss2] | Routine | [Bmad](bmad.md) |
-| [`twiss3_propagate1`][pybmad.twiss3_propagate1] | Routine | [Bmad](bmad.md) |
-| [`twiss3_propagate_all`][pybmad.twiss3_propagate_all] | Routine | [Bmad](bmad.md) |
-| [`twiss_and_track`][pybmad.twiss_and_track] | Routine | [Bmad](bmad.md) |
-| [`twiss_and_track_at_s`][pybmad.twiss_and_track_at_s] | Routine | [Bmad](bmad.md) |
-| [`twiss_and_track_from_s_to_s`][pybmad.twiss_and_track_from_s_to_s] | Routine | [Bmad](bmad.md) |
-| [`twiss_and_track_intra_ele`][pybmad.twiss_and_track_intra_ele] | Routine | [Bmad](bmad.md) |
-| [`twiss_at_element`][pybmad.twiss_at_element] | Routine | [Bmad](bmad.md) |
-| [`twiss_at_start`][pybmad.twiss_at_start] | Routine | [Bmad](bmad.md) |
-| [`twiss_from_tracking`][pybmad.twiss_from_tracking] | Routine | [Bmad](bmad.md) |
-| [`twiss_propagate1`][pybmad.twiss_propagate1] | Routine | [Bmad](bmad.md) |
-| [`twiss_propagate_all`][pybmad.twiss_propagate_all] | Routine | [Bmad](bmad.md) |
+| [`twiss1_propagate`](bmad.md#twiss1_propagate) | Routine | [Bmad](bmad.md) |
+| [`twiss3_at_start`](bmad.md#twiss3_at_start) | Routine | [Bmad](bmad.md) |
+| [`twiss3_from_twiss2`](bmad.md#twiss3_from_twiss2) | Routine | [Bmad](bmad.md) |
+| [`twiss3_propagate1`](bmad.md#twiss3_propagate1) | Routine | [Bmad](bmad.md) |
+| [`twiss3_propagate_all`](bmad.md#twiss3_propagate_all) | Routine | [Bmad](bmad.md) |
+| [`twiss_and_track`](bmad.md#twiss_and_track) | Routine | [Bmad](bmad.md) |
+| [`twiss_and_track_at_s`](bmad.md#twiss_and_track_at_s) | Routine | [Bmad](bmad.md) |
+| [`twiss_and_track_from_s_to_s`](bmad.md#twiss_and_track_from_s_to_s) | Routine | [Bmad](bmad.md) |
+| [`twiss_and_track_intra_ele`](bmad.md#twiss_and_track_intra_ele) | Routine | [Bmad](bmad.md) |
+| [`twiss_at_element`](bmad.md#twiss_at_element) | Routine | [Bmad](bmad.md) |
+| [`twiss_at_start`](bmad.md#twiss_at_start) | Routine | [Bmad](bmad.md) |
+| [`twiss_from_tracking`](bmad.md#twiss_from_tracking) | Routine | [Bmad](bmad.md) |
+| [`twiss_propagate1`](bmad.md#twiss_propagate1) | Routine | [Bmad](bmad.md) |
+| [`twiss_propagate_all`](bmad.md#twiss_propagate_all) | Routine | [Bmad](bmad.md) |
 | `TWISS_PROPAGATE_FAILURE` | Enum | [Enums](enums.md) |
-| [`twiss_to_1_turn_mat`][pybmad.twiss_to_1_turn_mat] | Routine | [Bmad](bmad.md) |
+| [`twiss_to_1_turn_mat`](bmad.md#twiss_to_1_turn_mat) | Routine | [Bmad](bmad.md) |
 | [TwissStruct](bmad.md#twissstruct) | Struct | [Bmad](bmad.md) |
 | `TWOPI` | Enum | [Enums](enums.md) |
 | `TYPE` | Enum | [Enums](enums.md) |
-| [`type_complex_taylors`][pybmad.type_complex_taylors] | Routine | [Bmad](bmad.md) |
-| [`type_coord`][pybmad.type_coord] | Routine | [Bmad](bmad.md) |
-| [`type_ele`][pybmad.type_ele] | Routine | [Bmad](bmad.md) |
-| [`type_end_stuff`][pybmad.type_end_stuff] | Routine | [Bmad](bmad.md) |
-| [`type_expression_tree`][pybmad.type_expression_tree] | Routine | [Bmad](bmad.md) |
-| [`type_ptc_fibre`][pybmad.type_ptc_fibre] | Routine | [Bmad](bmad.md) |
-| [`type_ptc_layout`][pybmad.type_ptc_layout] | Routine | [Bmad](bmad.md) |
-| [`type_taylors`][pybmad.type_taylors] | Routine | [Bmad](bmad.md) |
-| [`type_this_file`][pybmad.type_this_file] | Routine | [Sim Utils](sim_utils.md) |
-| [`type_twiss`][pybmad.type_twiss] | Routine | [Bmad](bmad.md) |
+| [`type_complex_taylors`](bmad.md#type_complex_taylors) | Routine | [Bmad](bmad.md) |
+| [`type_coord`](bmad.md#type_coord) | Routine | [Bmad](bmad.md) |
+| [`type_ele`](bmad.md#type_ele) | Routine | [Bmad](bmad.md) |
+| [`type_end_stuff`](bmad.md#type_end_stuff) | Routine | [Bmad](bmad.md) |
+| [`type_expression_tree`](bmad.md#type_expression_tree) | Routine | [Bmad](bmad.md) |
+| [`type_ptc_fibre`](bmad.md#type_ptc_fibre) | Routine | [Bmad](bmad.md) |
+| [`type_ptc_layout`](bmad.md#type_ptc_layout) | Routine | [Bmad](bmad.md) |
+| [`type_taylors`](bmad.md#type_taylors) | Routine | [Bmad](bmad.md) |
+| [`type_this_file`](sim_utils.md#type_this_file) | Routine | [Sim Utils](sim_utils.md) |
+| [`type_twiss`](bmad.md#type_twiss) | Routine | [Bmad](bmad.md) |
 | `UB_SUBATOMIC` | Enum | [Enums](enums.md) |
 | `UNARY_MINUS` | Enum | [Enums](enums.md) |
 | `UNARY_PLUS` | Enum | [Enums](enums.md) |
@@ -2458,10 +2458,10 @@
 | `UNSTABLE` | Enum | [Enums](enums.md) |
 | `UNSTABLE_A` | Enum | [Enums](enums.md) |
 | `UNSTABLE_B` | Enum | [Enums](enums.md) |
-| [`upcase_string`][pybmad.upcase_string] | Routine | [Sim Utils](sim_utils.md) |
-| [`update_ele_from_fibre`][pybmad.update_ele_from_fibre] | Routine | [Bmad](bmad.md) |
-| [`update_fibre_from_ele`][pybmad.update_fibre_from_ele] | Routine | [Bmad](bmad.md) |
-| [`update_floor_angles`][pybmad.update_floor_angles] | Routine | [Bmad](bmad.md) |
+| [`upcase_string`](sim_utils.md#upcase_string) | Routine | [Sim Utils](sim_utils.md) |
+| [`update_ele_from_fibre`](bmad.md#update_ele_from_fibre) | Routine | [Bmad](bmad.md) |
+| [`update_fibre_from_ele`](bmad.md#update_fibre_from_ele) | Routine | [Bmad](bmad.md) |
+| [`update_floor_angles`](bmad.md#update_floor_angles) | Routine | [Bmad](bmad.md) |
 | `UPSTREAM` | Enum | [Enums](enums.md) |
 | `UPSTREAM_COORD_DIR` | Enum | [Enums](enums.md) |
 | `UPSTREAM_END` | Enum | [Enums](enums.md) |
@@ -2484,35 +2484,35 @@
 | `VAL7` | Enum | [Enums](enums.md) |
 | `VAL8` | Enum | [Enums](enums.md) |
 | `VAL9` | Enum | [Enums](enums.md) |
-| [`valid_field_calc`][pybmad.valid_field_calc] | Routine | [Bmad](bmad.md) |
-| [`valid_fringe_type`][pybmad.valid_fringe_type] | Routine | [Bmad](bmad.md) |
-| [`valid_mat6_calc_method`][pybmad.valid_mat6_calc_method] | Routine | [Bmad](bmad.md) |
-| [`valid_spin_tracking_method`][pybmad.valid_spin_tracking_method] | Routine | [Bmad](bmad.md) |
-| [`valid_tracking_method`][pybmad.valid_tracking_method] | Routine | [Bmad](bmad.md) |
-| [`value_of_attribute`][pybmad.value_of_attribute] | Routine | [Bmad](bmad.md) |
-| [`value_to_line`][pybmad.value_to_line] | Routine | [Bmad](bmad.md) |
+| [`valid_field_calc`](bmad.md#valid_field_calc) | Routine | [Bmad](bmad.md) |
+| [`valid_fringe_type`](bmad.md#valid_fringe_type) | Routine | [Bmad](bmad.md) |
+| [`valid_mat6_calc_method`](bmad.md#valid_mat6_calc_method) | Routine | [Bmad](bmad.md) |
+| [`valid_spin_tracking_method`](bmad.md#valid_spin_tracking_method) | Routine | [Bmad](bmad.md) |
+| [`valid_tracking_method`](bmad.md#valid_tracking_method) | Routine | [Bmad](bmad.md) |
+| [`value_of_attribute`](bmad.md#value_of_attribute) | Routine | [Bmad](bmad.md) |
+| [`value_to_line`](bmad.md#value_to_line) | Routine | [Bmad](bmad.md) |
 | `VAR` | Enum | [Enums](enums.md) |
 | `VAR_OFFSET` | Enum | [Enums](enums.md) |
 | `VARIABLE` | Enum | [Enums](enums.md) |
-| [`vec_to_polar`][pybmad.vec_to_polar] | Routine | [Bmad](bmad.md) |
-| [`vec_to_spinor`][pybmad.vec_to_spinor] | Routine | [Bmad](bmad.md) |
+| [`vec_to_polar`](bmad.md#vec_to_polar) | Routine | [Bmad](bmad.md) |
+| [`vec_to_spinor`](bmad.md#vec_to_spinor) | Routine | [Bmad](bmad.md) |
 | `VELOCITY_DISTRIBUTION` | Enum | [Enums](enums.md) |
-| [`verify_valid_name`][pybmad.verify_valid_name] | Routine | [Bmad](bmad.md) |
+| [`verify_valid_name`](bmad.md#verify_valid_name) | Routine | [Bmad](bmad.md) |
 | `VERTICAL_BAR` | Enum | [Enums](enums.md) |
 | `VERTICAL_KICK` | Enum | [Enums](enums.md) |
 | `VERTICALLY_PURE` | Enum | [Enums](enums.md) |
-| [`virtual_memory_usage`][pybmad.virtual_memory_usage] | Routine | [Sim Utils](sim_utils.md) |
+| [`virtual_memory_usage`](sim_utils.md#virtual_memory_usage) | Routine | [Sim Utils](sim_utils.md) |
 | `VKICK` | Enum | [Enums](enums.md) |
 | `VKICKER` | Enum | [Enums](enums.md) |
 | `VOLTAGE` | Enum | [Enums](enums.md) |
 | `VOLTAGE_ERR` | Enum | [Enums](enums.md) |
 | `VOLTAGE_TOT` | Enum | [Enums](enums.md) |
-| [`w_mat_for_bend_angle`][pybmad.w_mat_for_bend_angle] | Routine | [Bmad](bmad.md) |
-| [`w_mat_for_tilt`][pybmad.w_mat_for_tilt] | Routine | [Bmad](bmad.md) |
-| [`w_mat_for_x_pitch`][pybmad.w_mat_for_x_pitch] | Routine | [Bmad](bmad.md) |
-| [`w_mat_for_y_pitch`][pybmad.w_mat_for_y_pitch] | Routine | [Bmad](bmad.md) |
-| [`w_mat_to_axis_angle`][pybmad.w_mat_to_axis_angle] | Routine | [Sim Utils](sim_utils.md) |
-| [`w_mat_to_quat`][pybmad.w_mat_to_quat] | Routine | [Sim Utils](sim_utils.md) |
+| [`w_mat_for_bend_angle`](bmad.md#w_mat_for_bend_angle) | Routine | [Bmad](bmad.md) |
+| [`w_mat_for_tilt`](bmad.md#w_mat_for_tilt) | Routine | [Bmad](bmad.md) |
+| [`w_mat_for_x_pitch`](bmad.md#w_mat_for_x_pitch) | Routine | [Bmad](bmad.md) |
+| [`w_mat_for_y_pitch`](bmad.md#w_mat_for_y_pitch) | Routine | [Bmad](bmad.md) |
+| [`w_mat_to_axis_angle`](sim_utils.md#w_mat_to_axis_angle) | Routine | [Sim Utils](sim_utils.md) |
+| [`w_mat_to_quat`](sim_utils.md#w_mat_to_quat) | Routine | [Sim Utils](sim_utils.md) |
 | [WakeLrModeStruct](bmad.md#wakelrmodestruct) | Struct | [Bmad](bmad.md) |
 | [WakeLrStruct](bmad.md#wakelrstruct) | Struct | [Bmad](bmad.md) |
 | [WakeSrModeStruct](bmad.md#wakesrmodestruct) | Struct | [Bmad](bmad.md) |
@@ -2521,10 +2521,10 @@
 | [WakeStruct](bmad.md#wakestruct) | Struct | [Bmad](bmad.md) |
 | `WALL` | Enum | [Enums](enums.md) |
 | `WALL3D` | Enum | [Enums](enums.md) |
-| [`wall3d_d_radius`][pybmad.wall3d_d_radius] | Routine | [Bmad](bmad.md) |
-| [`wall3d_initializer`][pybmad.wall3d_initializer] | Routine | [Bmad](bmad.md) |
-| [`wall3d_section_initializer`][pybmad.wall3d_section_initializer] | Routine | [Bmad](bmad.md) |
-| [`wall3d_to_position`][pybmad.wall3d_to_position] | Routine | [Bmad](bmad.md) |
+| [`wall3d_d_radius`](bmad.md#wall3d_d_radius) | Routine | [Bmad](bmad.md) |
+| [`wall3d_initializer`](bmad.md#wall3d_initializer) | Routine | [Bmad](bmad.md) |
+| [`wall3d_section_initializer`](bmad.md#wall3d_section_initializer) | Routine | [Bmad](bmad.md) |
+| [`wall3d_to_position`](bmad.md#wall3d_to_position) | Routine | [Bmad](bmad.md) |
 | [Wall3DSectionStruct](bmad.md#wall3dsectionstruct) | Struct | [Bmad](bmad.md) |
 | [Wall3DStruct](bmad.md#wall3dstruct) | Struct | [Bmad](bmad.md) |
 | [Wall3DVertexStruct](bmad.md#wall3dvertexstruct) | Struct | [Bmad](bmad.md) |
@@ -2535,40 +2535,40 @@
 | `WHITE` | Enum | [Enums](enums.md) |
 | `WIGGLER` | Enum | [Enums](enums.md) |
 | `WIGGLERS` | Enum | [Enums](enums.md) |
-| [`word_len`][pybmad.word_len] | Routine | [Sim Utils](sim_utils.md) |
-| [`word_read`][pybmad.word_read] | Routine | [Sim Utils](sim_utils.md) |
-| [`word_to_value`][pybmad.word_to_value] | Routine | [Bmad](bmad.md) |
+| [`word_len`](sim_utils.md#word_len) | Routine | [Sim Utils](sim_utils.md) |
+| [`word_read`](sim_utils.md#word_read) | Routine | [Sim Utils](sim_utils.md) |
+| [`word_to_value`](bmad.md#word_to_value) | Routine | [Bmad](bmad.md) |
 | `WRAP_SUPERIMPOSE` | Enum | [Enums](enums.md) |
-| [`write_ascii_beam_file`][pybmad.write_ascii_beam_file] | Routine | [Bmad](bmad.md) |
-| [`write_astra_bend`][pybmad.write_astra_bend] | Routine | [Bmad](bmad.md) |
-| [`write_astra_field_grid_file`][pybmad.write_astra_field_grid_file] | Routine | [Bmad](bmad.md) |
-| [`write_astra_field_grid_file_3d`][pybmad.write_astra_field_grid_file_3d] | Routine | [Bmad](bmad.md) |
-| [`write_beam_file`][pybmad.write_beam_file] | Routine | [Bmad](bmad.md) |
-| [`write_beam_floor_positions`][pybmad.write_beam_floor_positions] | Routine | [Bmad](bmad.md) |
-| [`write_binary_cartesian_map`][pybmad.write_binary_cartesian_map] | Routine | [Bmad](bmad.md) |
-| [`write_binary_cylindrical_map`][pybmad.write_binary_cylindrical_map] | Routine | [Bmad](bmad.md) |
-| [`write_binary_grid_field`][pybmad.write_binary_grid_field] | Routine | [Bmad](bmad.md) |
-| [`write_blender_ele`][pybmad.write_blender_ele] | Routine | [Bmad](bmad.md) |
-| [`write_blender_lat_layout`][pybmad.write_blender_lat_layout] | Routine | [Bmad](bmad.md) |
-| [`write_bmad_lattice_file`][pybmad.write_bmad_lattice_file] | Routine | [Bmad](bmad.md) |
-| [`write_bunch_by_bunch_info`][pybmad.write_bunch_by_bunch_info] | Routine | [Bsim](bsim.md) |
-| [`write_gpt_field_grid_file_1d`][pybmad.write_gpt_field_grid_file_1d] | Routine | [Bmad](bmad.md) |
-| [`write_gpt_field_grid_file_2d`][pybmad.write_gpt_field_grid_file_2d] | Routine | [Bmad](bmad.md) |
-| [`write_gpt_field_grid_file_3d`][pybmad.write_gpt_field_grid_file_3d] | Routine | [Bmad](bmad.md) |
-| [`write_lat_line`][pybmad.write_lat_line] | Routine | [Bmad](bmad.md) |
-| [`write_lattice_in_elegant_format`][pybmad.write_lattice_in_elegant_format] | Routine | [Bmad](bmad.md) |
-| [`write_lattice_in_foreign_format`][pybmad.write_lattice_in_foreign_format] | Routine | [Bmad](bmad.md) |
-| [`write_lattice_in_mad_format`][pybmad.write_lattice_in_mad_format] | Routine | [Bmad](bmad.md) |
-| [`write_lattice_in_pals`][pybmad.write_lattice_in_pals] | Routine | [Bmad](bmad.md) |
-| [`write_lattice_in_sad_format`][pybmad.write_lattice_in_sad_format] | Routine | [Bmad](bmad.md) |
-| [`write_lattice_in_scibmad`][pybmad.write_lattice_in_scibmad] | Routine | [Bmad](bmad.md) |
-| [`write_line_element`][pybmad.write_line_element] | Routine | [Bmad](bmad.md) |
-| [`write_opal_field_grid_file`][pybmad.write_opal_field_grid_file] | Routine | [Bmad](bmad.md) |
-| [`write_opal_lattice_file`][pybmad.write_opal_lattice_file] | Routine | [Bmad](bmad.md) |
-| [`write_time_particle_distribution`][pybmad.write_time_particle_distribution] | Routine | [Bmad](bmad.md) |
+| [`write_ascii_beam_file`](bmad.md#write_ascii_beam_file) | Routine | [Bmad](bmad.md) |
+| [`write_astra_bend`](bmad.md#write_astra_bend) | Routine | [Bmad](bmad.md) |
+| [`write_astra_field_grid_file`](bmad.md#write_astra_field_grid_file) | Routine | [Bmad](bmad.md) |
+| [`write_astra_field_grid_file_3d`](bmad.md#write_astra_field_grid_file_3d) | Routine | [Bmad](bmad.md) |
+| [`write_beam_file`](bmad.md#write_beam_file) | Routine | [Bmad](bmad.md) |
+| [`write_beam_floor_positions`](bmad.md#write_beam_floor_positions) | Routine | [Bmad](bmad.md) |
+| [`write_binary_cartesian_map`](bmad.md#write_binary_cartesian_map) | Routine | [Bmad](bmad.md) |
+| [`write_binary_cylindrical_map`](bmad.md#write_binary_cylindrical_map) | Routine | [Bmad](bmad.md) |
+| [`write_binary_grid_field`](bmad.md#write_binary_grid_field) | Routine | [Bmad](bmad.md) |
+| [`write_blender_ele`](bmad.md#write_blender_ele) | Routine | [Bmad](bmad.md) |
+| [`write_blender_lat_layout`](bmad.md#write_blender_lat_layout) | Routine | [Bmad](bmad.md) |
+| [`write_bmad_lattice_file`](bmad.md#write_bmad_lattice_file) | Routine | [Bmad](bmad.md) |
+| [`write_bunch_by_bunch_info`](bsim.md#write_bunch_by_bunch_info) | Routine | [Bsim](bsim.md) |
+| [`write_gpt_field_grid_file_1d`](bmad.md#write_gpt_field_grid_file_1d) | Routine | [Bmad](bmad.md) |
+| [`write_gpt_field_grid_file_2d`](bmad.md#write_gpt_field_grid_file_2d) | Routine | [Bmad](bmad.md) |
+| [`write_gpt_field_grid_file_3d`](bmad.md#write_gpt_field_grid_file_3d) | Routine | [Bmad](bmad.md) |
+| [`write_lat_line`](bmad.md#write_lat_line) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_elegant_format`](bmad.md#write_lattice_in_elegant_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_foreign_format`](bmad.md#write_lattice_in_foreign_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_mad_format`](bmad.md#write_lattice_in_mad_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_pals`](bmad.md#write_lattice_in_pals) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_sad_format`](bmad.md#write_lattice_in_sad_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_scibmad`](bmad.md#write_lattice_in_scibmad) | Routine | [Bmad](bmad.md) |
+| [`write_line_element`](bmad.md#write_line_element) | Routine | [Bmad](bmad.md) |
+| [`write_opal_field_grid_file`](bmad.md#write_opal_field_grid_file) | Routine | [Bmad](bmad.md) |
+| [`write_opal_lattice_file`](bmad.md#write_opal_lattice_file) | Routine | [Bmad](bmad.md) |
+| [`write_time_particle_distribution`](bmad.md#write_time_particle_distribution) | Routine | [Bmad](bmad.md) |
 | `X` | Enum | [Enums](enums.md) |
 | `X0` | Enum | [Enums](enums.md) |
-| [`x0_radiation_length`][pybmad.x0_radiation_length] | Routine | [Sim Utils](sim_utils.md) |
+| [`x0_radiation_length`](sim_utils.md#x0_radiation_length) | Routine | [Sim Utils](sim_utils.md) |
 | `X1` | Enum | [Enums](enums.md) |
 | `X1_EDGE` | Enum | [Enums](enums.md) |
 | `X1_LIMIT` | Enum | [Enums](enums.md) |
@@ -2599,8 +2599,8 @@
 | `X_SYMBOL_SYM` | Enum | [Enums](enums.md) |
 | `X_TRAILING` | Enum | [Enums](enums.md) |
 | `XFER_MAT_CALC_FAILURE` | Enum | [Enums](enums.md) |
-| [`xlafun`][pybmad.xlafun] | Routine | [Bmad](bmad.md) |
-| [`xraylib_nist_compound`][pybmad.xraylib_nist_compound] | Routine | [Bmad](bmad.md) |
+| [`xlafun`](bmad.md#xlafun) | Routine | [Bmad](bmad.md) |
+| [`xraylib_nist_compound`](bmad.md#xraylib_nist_compound) | Routine | [Bmad](bmad.md) |
 | `XY` | Enum | [Enums](enums.md) |
 | `XY_AXIS` | Enum | [Enums](enums.md) |
 | [XyDispStruct](bmad.md#xydispstruct) | Struct | [Bmad](bmad.md) |
@@ -2637,13 +2637,13 @@
 | `YELLOW` | Enum | [Enums](enums.md) |
 | `YELLOW_GREEN` | Enum | [Enums](enums.md) |
 | `YES` | Enum | [Enums](enums.md) |
-| [`ylafun`][pybmad.ylafun] | Routine | [Bmad](bmad.md) |
+| [`ylafun`](bmad.md#ylafun) | Routine | [Bmad](bmad.md) |
 | `Z` | Enum | [Enums](enums.md) |
 | `Z0` | Enum | [Enums](enums.md) |
 | `Z1` | Enum | [Enums](enums.md) |
 | `Z_APERTURE_CENTER` | Enum | [Enums](enums.md) |
 | `Z_APERTURE_WIDTH2` | Enum | [Enums](enums.md) |
-| [`z_at_surface`][pybmad.z_at_surface] | Routine | [Bmad](bmad.md) |
+| [`z_at_surface`](bmad.md#z_at_surface) | Routine | [Bmad](bmad.md) |
 | `Z_AXIS` | Enum | [Enums](enums.md) |
 | `Z_KICK` | Enum | [Enums](enums.md) |
 | `Z_OFFSET` | Enum | [Enums](enums.md) |
@@ -2653,8 +2653,8 @@
 | `Z_REF` | Enum | [Enums](enums.md) |
 | `Z_STORED` | Enum | [Enums](enums.md) |
 | `ZERO` | Enum | [Enums](enums.md) |
-| [`zero_ele_kicks`][pybmad.zero_ele_kicks] | Routine | [Bmad](bmad.md) |
-| [`zero_ele_offsets`][pybmad.zero_ele_offsets] | Routine | [Bmad](bmad.md) |
-| [`zero_lr_wakes_in_lat`][pybmad.zero_lr_wakes_in_lat] | Routine | [Bmad](bmad.md) |
-| [`zig_table_init`][pybmad.zig_table_init] | Routine | [Sim Utils](sim_utils.md) |
-| [`zlafun`][pybmad.zlafun] | Routine | [Bmad](bmad.md) |
+| [`zero_ele_kicks`](bmad.md#zero_ele_kicks) | Routine | [Bmad](bmad.md) |
+| [`zero_ele_offsets`](bmad.md#zero_ele_offsets) | Routine | [Bmad](bmad.md) |
+| [`zero_lr_wakes_in_lat`](bmad.md#zero_lr_wakes_in_lat) | Routine | [Bmad](bmad.md) |
+| [`zig_table_init`](sim_utils.md#zig_table_init) | Routine | [Sim Utils](sim_utils.md) |
+| [`zlafun`](bmad.md#zlafun) | Routine | [Bmad](bmad.md) |

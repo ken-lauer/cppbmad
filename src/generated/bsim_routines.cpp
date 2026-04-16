@@ -20,10 +20,12 @@ void bsim::bbu_add_a_bunch(
     BbuParamStruct &bbu_param,
     BeamInitStruct &beam_init
 ) {
-  fortran_bbu_add_a_bunch(/* void* */ lat.get_fortran_ptr(),
-                          /* void* */ bbu_beam.get_fortran_ptr(),
-                          /* void* */ bbu_param.get_fortran_ptr(),
-                          /* void* */ beam_init.get_fortran_ptr());
+  fortran_bbu_add_a_bunch(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ bbu_beam.get_fortran_ptr(),
+      /* void* */ bbu_param.get_fortran_ptr(),
+      /* void* */ beam_init.get_fortran_ptr()
+  );
 }
 void bsim::bbu_hom_voltage_calc(
     LatStruct &lat,
@@ -31,10 +33,12 @@ void bsim::bbu_hom_voltage_calc(
     int n_period,
     int ix_stage_last_tracked
 ) {
-  fortran_bbu_hom_voltage_calc(/* void* */ lat.get_fortran_ptr(),
-                               /* void* */ bbu_beam.get_fortran_ptr(),
-                               /* int& */ n_period,
-                               /* int& */ ix_stage_last_tracked);
+  fortran_bbu_hom_voltage_calc(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ bbu_beam.get_fortran_ptr(),
+      /* int& */ n_period,
+      /* int& */ ix_stage_last_tracked
+  );
 }
 void bsim::bbu_remove_head_bunch(BbuBeamStruct &bbu_beam) {
   fortran_bbu_remove_head_bunch(/* void* */ bbu_beam.get_fortran_ptr());
@@ -45,10 +49,12 @@ void bsim::bbu_setup(
     BbuParamStruct &bbu_param,
     BbuBeamStruct &bbu_beam
 ) {
-  fortran_bbu_setup(/* void* */ lat.get_fortran_ptr(),
-                    /* double& */ dt_bunch,
-                    /* void* */ bbu_param.get_fortran_ptr(),
-                    /* void* */ bbu_beam.get_fortran_ptr());
+  fortran_bbu_setup(
+      /* void* */ lat.get_fortran_ptr(),
+      /* double& */ dt_bunch,
+      /* void* */ bbu_param.get_fortran_ptr(),
+      /* void* */ bbu_beam.get_fortran_ptr()
+  );
 }
 void bsim::bbu_track_a_stage(
     LatStruct &lat,
@@ -57,11 +63,13 @@ void bsim::bbu_track_a_stage(
     bool lost,
     int ix_stage_tracked
 ) {
-  fortran_bbu_track_a_stage(/* void* */ lat.get_fortran_ptr(),
-                            /* void* */ bbu_beam.get_fortran_ptr(),
-                            /* void* */ bbu_param.get_fortran_ptr(),
-                            /* bool& */ lost,
-                            /* int& */ ix_stage_tracked);
+  fortran_bbu_track_a_stage(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ bbu_beam.get_fortran_ptr(),
+      /* void* */ bbu_param.get_fortran_ptr(),
+      /* bool& */ lost,
+      /* int& */ ix_stage_tracked
+  );
 }
 bsim::BbuTrackAll bsim::bbu_track_all(
     LatStruct &lat,
@@ -73,14 +81,16 @@ bsim::BbuTrackAll bsim::bbu_track_all(
   double _growth_rate{};
   bool _lost{};
   int _irep{};
-  fortran_bbu_track_all(/* void* */ lat.get_fortran_ptr(),
-                        /* void* */ bbu_beam.get_fortran_ptr(),
-                        /* void* */ bbu_param.get_fortran_ptr(),
-                        /* void* */ beam_init.get_fortran_ptr(),
-                        /* double& */ _hom_voltage_normalized,
-                        /* double& */ _growth_rate,
-                        /* bool& */ _lost,
-                        /* int& */ _irep);
+  fortran_bbu_track_all(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ bbu_beam.get_fortran_ptr(),
+      /* void* */ bbu_param.get_fortran_ptr(),
+      /* void* */ beam_init.get_fortran_ptr(),
+      /* double& */ _hom_voltage_normalized,
+      /* double& */ _growth_rate,
+      /* bool& */ _lost,
+      /* int& */ _irep
+  );
   return BbuTrackAll{_hom_voltage_normalized, _growth_rate, _lost, _irep};
 }
 void bsim::check_rf_freq(LatStruct &lat, double fb) {
@@ -146,14 +156,16 @@ bool bsim::set_tune_3d(
     _print_err = nullptr;
   }
   bool _everything_ok{};
-  fortran_set_tune_3d(/* void* */ branch.get_fortran_ptr(),
-                      /* Bmad::array_descriptor_t& */ _target_tunes_desc,
-                      /* const char* */ _mask,
-                      /* bool* */ _use_phase_trombone,
-                      /* bool* */ _z_tune_set,
-                      /* const char** */ _group_knobs.size() ? _group_knobs.data() : nullptr,
-                      /* bool* */ _print_err,
-                      /* bool& */ _everything_ok);
+  fortran_set_tune_3d(
+      /* void* */ branch.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _target_tunes_desc,
+      /* const char* */ _mask,
+      /* bool* */ _use_phase_trombone,
+      /* bool* */ _z_tune_set,
+      /* const char** */ _group_knobs.size() ? _group_knobs.data() : nullptr,
+      /* bool* */ _print_err,
+      /* bool& */ _everything_ok
+  );
   return _everything_ok;
 }
 void bsim::write_bunch_by_bunch_info(
@@ -163,8 +175,10 @@ void bsim::write_bunch_by_bunch_info(
     BbuStageStruct &this_stage
 ) {
   auto _this_stage = &this_stage; // input, required, pointer
-  fortran_write_bunch_by_bunch_info(/* void* */ lat.get_fortran_ptr(),
-                                    /* void* */ bbu_beam.get_fortran_ptr(),
-                                    /* void* */ bbu_param.get_fortran_ptr(),
-                                    /* void* */ &this_stage);
+  fortran_write_bunch_by_bunch_info(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ bbu_beam.get_fortran_ptr(),
+      /* void* */ bbu_param.get_fortran_ptr(),
+      /* void* */ &this_stage
+  );
 }
