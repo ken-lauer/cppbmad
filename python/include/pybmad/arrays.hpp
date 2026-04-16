@@ -39,8 +39,18 @@ void bind_1D_array_pair(
   view_cls.def(nb::init<>())
       .def("__len__", &ViewClass::size)
       .def("is_valid", &ViewClass::is_valid)
-      .def("__str__", [](const ViewClass &self) { return Bmad::to_string(self); })
-      .def("__repr__", [](const ViewClass &self) { return Bmad::to_string(self); })
+      .def(
+          "__str__",
+          [](const ViewClass &self) {
+            return self.is_valid() ? Bmad::to_string(self) : "<invalid>";
+          }
+      )
+      .def(
+          "__repr__",
+          [](const ViewClass &self) {
+            return self.is_valid() ? Bmad::to_string(self) : "<invalid>";
+          }
+      )
       .def_prop_ro("lower_bound", &ViewClass::lower_bound)
       .def_prop_ro("upper_bound", &ViewClass::upper_bound);
 
@@ -242,36 +252,50 @@ void bind_FArrayND(nb::module_ &m, const std::string &name) {
                  .def(nb::init<>())
                  .def("is_valid", &Class::is_valid)
                  .def("__len__", &Class::total_size)
-                 .def("__str__", [](const Class &self) { return Bmad::to_string(self); })
-                 .def("__repr__", [](const Class &self) { return Bmad::to_string(self); })
+                 .def(
+                     "__str__",
+                     [](const Class &self) {
+                       return self.is_valid() ? Bmad::to_string(self) : "<invalid>";
+                     }
+                 )
+                 .def(
+                     "__repr__",
+                     [](const Class &self) {
+                       return self.is_valid() ? Bmad::to_string(self) : "<invalid>";
+                     }
+                 )
                  .def("to_list", &Class::to_flat_vector)
                  .def_prop_ro("total_size", &Class::total_size);
 
-  cls.def("__array__", [](nb::handle_t<Class> self, nb::kwargs kwargs) {
-    auto &a = nb::cast<Class &>(self);
-    if (!a.is_valid()) {
-      throw std::runtime_error("Attempted to access invalid FArray");
-    }
+  // Fortran logical uses 4 bytes per element; numpy bool uses 1 byte.
+  // Zero-copy __array__ is only safe for types with matching element sizes.
+  if constexpr (!std::is_same_v<T, bool>) {
+    cls.def("__array__", [](nb::handle_t<Class> self, nb::kwargs kwargs) {
+      auto &a = nb::cast<Class &>(self);
+      if (!a.is_valid()) {
+        throw std::runtime_error("Attempted to access invalid FArray");
+      }
 
-    size_t shape[Rank];
-    auto bmad_sizes = a.size();
-    for (size_t i = 0; i < Rank; ++i) {
-      shape[i] = bmad_sizes[i];
-    }
+      size_t shape[Rank];
+      auto bmad_sizes = a.size();
+      for (size_t i = 0; i < Rank; ++i) {
+        shape[i] = bmad_sizes[i];
+      }
 
-    // Fortran arrays are column-major
-    return nb::ndarray<nb::numpy, T>(
-        a.data(),
-        Rank,
-        shape,
-        nb::handle(self),
-        /* strides */ nullptr,
-        nanobind::dtype<T>(),
-        nanobind::device::cpu::value,
-        0,
-        'F'
-    );
-  });
+      // Fortran arrays are column-major
+      return nb::ndarray<nb::numpy, T>(
+          a.data(),
+          Rank,
+          shape,
+          nb::handle(self),
+          /* strides */ nullptr,
+          nanobind::dtype<T>(),
+          nanobind::device::cpu::value,
+          0,
+          'F'
+      );
+    });
+  }
 }
 // =============================================================================
 // Derived Type (Proxy) Alloc + View (FTypeArrayND<ProxyType, N...>)
@@ -341,7 +365,9 @@ void bind_FTypeArrayND(nb::module_ &m, const std::string &name) {
           nb::keep_alive<0, 1>()
       )
 
-      .def("__str__", [](const ArrayType &self) { return Bmad::to_string(self); });
+      .def("__str__", [](const ArrayType &self) {
+        return self.is_valid() ? Bmad::to_string(self) : "<invalid>";
+      });
 }
 
 template <typename ArrayType, typename AllocClass>
@@ -360,7 +386,9 @@ void bind_1d_type_array_pair(
   view_cls.def(nb::init<>())
       .def("__len__", [](const ArrayType &a) { return a.total_size(); })
       .def("is_valid", &ArrayType::is_valid)
-      .def("__str__", [](const ArrayType &self) { return Bmad::to_string(self); });
+      .def("__str__", [](const ArrayType &self) {
+        return self.is_valid() ? Bmad::to_string(self) : "<invalid>";
+      });
 
   // View: Single Item Access
   view_cls
