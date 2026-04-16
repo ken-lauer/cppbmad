@@ -1,8 +1,9 @@
 #pragma once
 
 #include <complex>
-#include <memory>
+#include <optional>
 #include <string>
+#include <string_view>
 
 #include "bmad/fortran_arrays.hpp"
 #include "bmad/proxy_base.hpp"
