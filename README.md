@@ -6,7 +6,7 @@
 
 ## Code Generation Overview
 
-`codegen` is a Python package which generates:
+`codegen` is a Python package which parses the Bmad source code and generates:
 
 1. Proxy class C++ headers and source code
 2. Fortran-side accessors (and setters)
@@ -15,9 +15,6 @@
    attributes get special treatment with the `enum class` `EleAttribute`.
 4. Pybind11 wrappers for proxy classes, enums, routines, and Python-only
    return-value structures (due to immutability of Python booleans and such).
-
-It relies on a not-yet-merged branch upstream in [Bmad](), including Fortran JSON
-support and `struct` parsing utilities.
 
 ## Wrapping other codebases?
 
@@ -40,7 +37,7 @@ generator.
 - 2D+ derived type (structure) arrays are not handled
 - 2D+ logical arrays are not supported
 - 2D+ character arrays are not supported
-- Compile-time assumed array dimensions are not supported (`arr(M)` where `M` is a parameter)
+- Compile-time assumed array dimensions are mostly not supported (`arr(M)` where `M` is a parameter)
 
 ## Building
 
@@ -74,5 +71,5 @@ I use the following locally:
 
 ```
 cd python/pybmad
-ln -s ../../debug/python/_pybmad.so
+ln -s ../../debug/python/_pybmad*.so
 ```
