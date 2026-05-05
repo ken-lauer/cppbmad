@@ -637,36 +637,22 @@ err_flag : bool
     Set True if there is an error, False otherwise.
 )"""
   );
-  py::class_<Bmad::SetEleStatusStale, std::unique_ptr<Bmad::SetEleStatusStale>>(
-      m,
-      "SetEleStatusStale",
-      "set_ele_status_stale return type"
-  )
-      .def_readonly("ele", &Bmad::SetEleStatusStale::ele)
-      .def_readonly("status_group", &Bmad::SetEleStatusStale::status_group)
-      .def_readonly("set_slaves", &Bmad::SetEleStatusStale::set_slaves)
-      .def("__len__", [](const Bmad::SetEleStatusStale &) { return 3; })
-      .def("__getitem__", [](const Bmad::SetEleStatusStale &s, int i) -> py::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return py::cast(s.ele);
-        if (i == 1)
-          return py::cast(s.status_group);
-        if (i == 2)
-          return py::cast(s.set_slaves);
-        throw py::index_error();
-      });
   m.def(
       "set_ele_status_stale",
       &Bmad::set_ele_status_stale,
+      py::arg("ele"),
+      py::arg("status_group"),
+      py::arg("set_slaves") = py::none(),
+      py::arg("old_eles") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_ele_status_stale
 
-Returns
--------
+Parameters
+----------
 ele : EleStruct
-    Element.
+    Element to set.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Element.
 
 status_group : int
     Which flag groups to set. Possibilities are: attribute_group$, control_group$, floor_position_group$,
@@ -674,6 +660,9 @@ status_group : int
 
 set_slaves : bool, optional
     If present and False then do not set the status for any slaves. Default is True.
+
+old_eles : 1D array of ElePointerStruct, optional
+    List of elements already set. This argument is only used when this routine is called recursively.
 )"""
   );
   m.def(

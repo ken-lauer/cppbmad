@@ -27395,40 +27395,42 @@ subroutine fortran_set_ele_real_attribute (ele, attrib_name, value, err_flag, er
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
-subroutine fortran_set_ele_status_stale (ele, status_group, set_slaves) bind(c)
+subroutine fortran_set_ele_status_stale (ele, status_group, set_slaves, old_eles) bind(c)
 
   use array_desc_mod
-  use bmad_struct, only: ele_struct
+  use bmad_struct, only: ele_pointer_struct, ele_struct
   implicit none
-  ! ** Out parameters **
+  ! ** In parameters **
+  integer(c_int) :: status_group  ! 0D_NOT_integer
+  integer :: f_status_group
+  type(c_ptr), intent(in), value :: set_slaves  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_set_slaves
+  logical, target :: f_set_slaves_native
+  logical, pointer :: f_set_slaves_native_ptr
+  logical(c_bool), pointer :: f_set_slaves_ptr
+  type(c_ptr), intent(in), value :: old_eles
+  type(ele_pointer_struct_container_alloc), pointer :: f_old_eles
+  ! ** Inout parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  type(c_ptr), intent(in), value :: status_group  ! 0D_NOT_integer
-  integer :: f_status_group
-  integer(c_int), pointer :: f_status_group_ptr
-  type(c_ptr), intent(in), value :: set_slaves  ! 0D_NOT_logical
-  logical :: f_set_slaves
-  logical(c_bool), pointer :: f_set_slaves_ptr
   ! ** End of parameters **
-  ! out: f_ele 0D_NOT_type
+  ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! out: f_set_slaves 0D_NOT_logical
+  ! in: f_status_group 0D_NOT_integer
+  f_status_group = status_group
+  ! in: f_set_slaves 0D_NOT_logical
   if (c_associated(set_slaves)) then
     call c_f_pointer(set_slaves, f_set_slaves_ptr)
+    f_set_slaves_native = f_set_slaves_ptr
+    f_set_slaves_native_ptr => f_set_slaves_native
   else
-    f_set_slaves_ptr => null()
+    f_set_slaves_native_ptr => null()
   endif
-  call set_ele_status_stale(f_ele, f_status_group, f_set_slaves)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(old_eles))   call c_f_pointer(old_eles, f_old_eles)
+  call set_ele_status_stale(f_ele, f_status_group, f_set_slaves_native_ptr, f_old_eles%data)
 
-  ! out: f_ele 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
-  ! out: f_status_group 0D_NOT_integer
-  call c_f_pointer(status_group, f_status_group_ptr)
-  f_status_group_ptr = f_status_group
-  ! out: f_set_slaves 0D_NOT_logical
-  call c_f_pointer(set_slaves, f_set_slaves_ptr)
-  f_set_slaves_ptr = f_set_slaves
 end subroutine
 subroutine fortran_set_flags_for_changed_integer_attribute (ele, attrib, set_dependent) bind(c)
 

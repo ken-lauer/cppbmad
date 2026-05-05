@@ -7317,16 +7317,17 @@ bool set_ele_real_attribute(
     std::optional<bool> err_print_flag = std::nullopt
 );
 extern "C" void fortran_set_ele_status_stale(
-    void *ele /* 0D_NOT_type out */,
-    int &status_group /* 0D_NOT_integer out */,
-    bool &set_slaves /* 0D_NOT_logical out */
+    void *ele /* 0D_NOT_type inout */,
+    int &status_group /* 0D_NOT_integer in */,
+    bool *set_slaves /* 0D_NOT_logical in */,
+    void *old_eles /* 1D_ALLOC_type in */
 );
-struct SetEleStatusStale {
-  EleStruct ele;
-  int status_group;
-  bool set_slaves;
-};
-Bmad::SetEleStatusStale set_ele_status_stale();
+void set_ele_status_stale(
+    EleStruct &ele,
+    int status_group,
+    std::optional<bool> set_slaves = std::nullopt,
+    std::optional<ElePointerStructAlloc1D> old_eles = std::nullopt
+);
 
 // Skipped unusable routine set_flags_for_changed_all_attribute:
 // - Untranslated type: all_pointer_struct (0D)

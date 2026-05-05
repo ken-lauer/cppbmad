@@ -11862,14 +11862,25 @@ bool Bmad::set_ele_real_attribute(
                                  /* bool* */ _err_print_flag);
   return _err_flag;
 }
-Bmad::SetEleStatusStale Bmad::set_ele_status_stale() {
-  EleStruct _ele;
-  int _status_group{};
-  bool _set_slaves{};
-  fortran_set_ele_status_stale(/* void* */ _ele.get_fortran_ptr(),
-                               /* int& */ _status_group,
-                               /* bool& */ _set_slaves);
-  return SetEleStatusStale{std::move(_ele), _status_group, _set_slaves};
+void Bmad::set_ele_status_stale(
+    EleStruct &ele,
+    int status_group,
+    std::optional<bool> set_slaves,
+    std::optional<ElePointerStructAlloc1D> old_eles
+) {
+  bool set_slaves_lvalue;
+  auto *_set_slaves{&set_slaves_lvalue};
+  if (set_slaves.has_value()) {
+    set_slaves_lvalue = set_slaves.value();
+  } else {
+    _set_slaves = nullptr;
+  }
+  // intent=in allocatable type array
+  auto *_old_eles = old_eles.has_value() ? old_eles->get_fortran_ptr() : nullptr; // input, optional
+  fortran_set_ele_status_stale(/* void* */ ele.get_fortran_ptr(),
+                               /* int& */ status_group,
+                               /* bool* */ _set_slaves,
+                               /* void* */ _old_eles);
 }
 void Bmad::set_flags_for_changed_attribute(
     EleStruct &ele,

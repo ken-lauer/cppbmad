@@ -336,7 +336,6 @@ std::string to_string(const Bmad::ReadDigestedBmadFile &self);
 std::string to_string(const SimUtils::RmsValue &self);
 std::string to_string(const SimUtils::Serbd &self);
 std::string to_string(const Bmad::SetEleAttribute &self);
-std::string to_string(const Bmad::SetEleStatusStale &self);
 std::string to_string(const Bmad::SpinDnDpzFromMat8 &self);
 std::string to_string(const Bmad::SpinDnDpzFromQmap &self);
 std::string to_string(const Bmad::SpinMat8ResonanceStrengths &self);

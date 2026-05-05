@@ -3956,15 +3956,6 @@ std::string to_string(const Bmad::SetEleAttribute &self) {
       {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"err_id", to_string(self.err_id)}}
   );
 }
-std::string to_string(const Bmad::SetEleStatusStale &self) {
-  return repr(
-      &self,
-      "Bmad::SetEleStatusStale",
-      {std::pair{"ele", to_string(self.ele)},
-       std::pair{"status_group", to_string(self.status_group)},
-       std::pair{"set_slaves", to_string(self.set_slaves)}}
-  );
-}
 std::string to_string(const Bmad::SpinDnDpzFromMat8 &self) {
   return repr(
       &self,
