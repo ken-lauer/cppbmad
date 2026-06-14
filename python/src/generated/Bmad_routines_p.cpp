@@ -1825,10 +1825,10 @@ multi_lord : EleStruct, optional
       "pointer_to_next_ele",
       &Bmad::pointer_to_next_ele,
       py::arg("this_ele"),
-      py::arg("next_ele"),
       py::arg("offset") = py::none(),
       py::arg("skip_beginning") = py::none(),
       py::arg("follow_fork") = py::none(),
+      py::arg("ix_multipass") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine pointer_to_next_ele
 
@@ -1836,9 +1836,6 @@ Parameters
 ----------
 this_ele : EleStruct
     Starting element.
-
-next_ele : EleStruct
-    Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
 
 offset : int, optional
     +1 -> return next element, +2 -> element after that, etc. Can be negative. Default = +1.
@@ -1848,6 +1845,14 @@ skip_beginning : bool, optional
 
 follow_fork : bool, optional
     If True then fork at any fork element. Default is False.
+
+ix_multipass : int, optional
+    Default = 1. Used to select the multipass branch if this_ele is a multipass_lord.
+
+Returns
+-------
+next_ele : EleStruct, optional
+    Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
 )"""
   );
   py::class_<Bmad::PointerToSlave, std::unique_ptr<Bmad::PointerToSlave>>(

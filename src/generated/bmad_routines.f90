@@ -109,9 +109,9 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     update_floor_angles, valid_field_calc, valid_fringe_type, valid_mat6_calc_method, &
     valid_spin_tracking_method, valid_tracking_method, value_of_attribute, vec_to_polar, &
     vec_to_spinor, w_mat_for_bend_angle, w_mat_for_tilt, w_mat_for_x_pitch, w_mat_for_y_pitch, &
-    write_beam_floor_positions, write_bmad_lattice_file, write_lattice_in_elegant_format, &
-    write_lattice_in_foreign_format, write_lattice_in_mad_format, write_lattice_in_pals, &
-    write_lattice_in_sad_format, write_lattice_in_scibmad, zero_ele_kicks, zero_ele_offsets
+    write_beam_floor_positions, write_bmad_lattice_file, write_lattice_elegant_format, &
+    write_lattice_foreign_format, write_lattice_mad_format, write_lattice_pals_format, &
+    write_lattice_sad_format, write_lattice_scibmad_format, zero_ele_kicks, zero_ele_offsets
 
 use mode3_mod, only: action_to_xyz, beam_tilts, eigen_decomp_6mat, get_emit_from_sigma_mat, &
     make_hvbp, make_n, make_smat_from_abc, mytan, normal_mode3_calc, normalize_evecs, &
@@ -23273,7 +23273,7 @@ subroutine fortran_pointer_to_multipass_lord (ele, ix_pass, super_lord, multi_lo
   multi_lord = c_loc(f_multi_lord)
 end subroutine
 subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow_fork, &
-    next_ele) bind(c)
+    ix_multipass, next_ele) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -23294,8 +23294,11 @@ subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow
   logical, target :: f_follow_fork_native
   logical, pointer :: f_follow_fork_native_ptr
   logical(c_bool), pointer :: f_follow_fork_ptr
+  type(c_ptr), intent(in), value :: ix_multipass  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_multipass
+  integer(c_int), pointer :: f_ix_multipass_ptr
   ! ** Out parameters **
-  type(c_ptr), value :: next_ele  ! 0D_PTR_type
+  type(c_ptr) :: next_ele  ! 0D_PTR_type
   type(ele_struct), pointer :: f_next_ele
   ! ** End of parameters **
   ! in: f_this_ele 0D_NOT_type
@@ -23323,11 +23326,16 @@ subroutine fortran_pointer_to_next_ele (this_ele, offset, skip_beginning, follow
   else
     f_follow_fork_native_ptr => null()
   endif
+  ! in: f_ix_multipass 0D_NOT_integer
+  if (c_associated(ix_multipass)) then
+    call c_f_pointer(ix_multipass, f_ix_multipass_ptr)
+  else
+    f_ix_multipass_ptr => null()
+  endif
   ! out: f_next_ele 0D_PTR_type
-  if (.not. c_associated(next_ele)) return
-  call c_f_pointer(next_ele, f_next_ele)
+  if (c_associated(next_ele))   call c_f_pointer(next_ele, f_next_ele)
   f_next_ele => pointer_to_next_ele(f_this_ele, f_offset_ptr, f_skip_beginning_native_ptr, &
-      f_follow_fork_native_ptr)
+      f_follow_fork_native_ptr, f_ix_multipass_ptr)
 
   ! out: f_next_ele 0D_PTR_type
   next_ele = c_loc(f_next_ele)
@@ -37849,7 +37857,7 @@ subroutine fortran_write_lat_line (line, iu, end_is_neigh, do_split, ampersand_a
   call c_f_pointer(line, f_line_ptr, [len_trim(f_line) + 1])
   call to_c_str(f_line, f_line_ptr)
 end subroutine
-subroutine fortran_write_lattice_in_elegant_format (out_file_name, lat, ref_orbit, &
+subroutine fortran_write_lattice_elegant_format (out_file_name, lat, ref_orbit, &
     use_matrix_model, include_apertures, dr12_drift_max, ix_branch, err) bind(c)
 
   use array_desc_mod
@@ -37927,7 +37935,7 @@ subroutine fortran_write_lattice_in_elegant_format (out_file_name, lat, ref_orbi
   else
     f_err_ptr => null()
   endif
-  call write_lattice_in_elegant_format(f_out_file_name, f_lat, f_ref_orbit%data, &
+  call write_lattice_elegant_format(f_out_file_name, f_lat, f_ref_orbit%data, &
       f_use_matrix_model_native_ptr, f_include_apertures_native_ptr, f_dr12_drift_max_ptr, &
       f_ix_branch_ptr, f_err)
 
@@ -37935,100 +37943,7 @@ subroutine fortran_write_lattice_in_elegant_format (out_file_name, lat, ref_orbi
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
 end subroutine
-subroutine fortran_write_lattice_in_foreign_format (out_type, out_file_name, lat, ref_orbit, &
-    use_matrix_model, include_apertures, dr12_drift_max, ix_branch, err) bind(c)
-
-  use array_desc_mod
-  use bmad_struct, only: coord_struct, lat_struct
-  implicit none
-  ! ** In parameters **
-  type(c_ptr), intent(in), value :: out_type
-  character(len=4096), target :: f_out_type
-  character(kind=c_char), pointer :: f_out_type_ptr(:)
-  type(c_ptr), intent(in), value :: out_file_name
-  character(len=4096), target :: f_out_file_name
-  character(kind=c_char), pointer :: f_out_file_name_ptr(:)
-  type(c_ptr), value :: lat  ! 0D_NOT_type
-  type(lat_struct), pointer :: f_lat
-  type(c_ptr), intent(in), value :: ref_orbit
-  type(coord_struct_container_alloc), pointer :: f_ref_orbit
-  type(c_ptr), intent(in), value :: use_matrix_model  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_use_matrix_model
-  logical, target :: f_use_matrix_model_native
-  logical, pointer :: f_use_matrix_model_native_ptr
-  logical(c_bool), pointer :: f_use_matrix_model_ptr
-  type(c_ptr), intent(in), value :: include_apertures  ! 0D_NOT_logical
-  logical(c_bool), pointer :: f_include_apertures
-  logical, target :: f_include_apertures_native
-  logical, pointer :: f_include_apertures_native_ptr
-  logical(c_bool), pointer :: f_include_apertures_ptr
-  type(c_ptr), intent(in), value :: dr12_drift_max  ! 0D_NOT_real
-  real(c_double) :: f_dr12_drift_max
-  real(c_double), pointer :: f_dr12_drift_max_ptr
-  type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
-  integer(c_int) :: f_ix_branch
-  integer(c_int), pointer :: f_ix_branch_ptr
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
-  logical :: f_err
-  logical(c_bool), pointer :: f_err_ptr
-  ! ** End of parameters **
-  ! in: f_out_type 0D_NOT_character
-  if (.not. c_associated(out_type)) return
-  call c_f_pointer(out_type, f_out_type_ptr, [huge(0)])
-  call to_f_str(f_out_type_ptr, f_out_type)
-  ! in: f_out_file_name 0D_NOT_character
-  if (.not. c_associated(out_file_name)) return
-  call c_f_pointer(out_file_name, f_out_file_name_ptr, [huge(0)])
-  call to_f_str(f_out_file_name_ptr, f_out_file_name)
-  ! in: f_lat 0D_NOT_type
-  if (.not. c_associated(lat)) return
-  call c_f_pointer(lat, f_lat)
-  !! container type array (1D_ALLOC_type)
-  if (c_associated(ref_orbit))   call c_f_pointer(ref_orbit, f_ref_orbit)
-  ! in: f_use_matrix_model 0D_NOT_logical
-  if (c_associated(use_matrix_model)) then
-    call c_f_pointer(use_matrix_model, f_use_matrix_model_ptr)
-    f_use_matrix_model_native = f_use_matrix_model_ptr
-    f_use_matrix_model_native_ptr => f_use_matrix_model_native
-  else
-    f_use_matrix_model_native_ptr => null()
-  endif
-  ! in: f_include_apertures 0D_NOT_logical
-  if (c_associated(include_apertures)) then
-    call c_f_pointer(include_apertures, f_include_apertures_ptr)
-    f_include_apertures_native = f_include_apertures_ptr
-    f_include_apertures_native_ptr => f_include_apertures_native
-  else
-    f_include_apertures_native_ptr => null()
-  endif
-  ! in: f_dr12_drift_max 0D_NOT_real
-  if (c_associated(dr12_drift_max)) then
-    call c_f_pointer(dr12_drift_max, f_dr12_drift_max_ptr)
-  else
-    f_dr12_drift_max_ptr => null()
-  endif
-  ! in: f_ix_branch 0D_NOT_integer
-  if (c_associated(ix_branch)) then
-    call c_f_pointer(ix_branch, f_ix_branch_ptr)
-  else
-    f_ix_branch_ptr => null()
-  endif
-  ! out: f_err 0D_NOT_logical
-  if (c_associated(err)) then
-    call c_f_pointer(err, f_err_ptr)
-  else
-    f_err_ptr => null()
-  endif
-  call write_lattice_in_foreign_format(f_out_type, f_out_file_name, f_lat, f_ref_orbit%data, &
-      f_use_matrix_model_native_ptr, f_include_apertures_native_ptr, f_dr12_drift_max_ptr, &
-      f_ix_branch_ptr, f_err)
-
-  ! out: f_err 0D_NOT_logical
-  call c_f_pointer(err, f_err_ptr)
-  f_err_ptr = f_err
-end subroutine
-subroutine fortran_write_lattice_in_mad_format (out_type, out_file_name, lat, ref_orbit, &
+subroutine fortran_write_lattice_foreign_format (out_type, out_file_name, lat, ref_orbit, &
     use_matrix_model, include_apertures, dr12_drift_max, ix_branch, err) bind(c)
 
   use array_desc_mod
@@ -38113,7 +38028,7 @@ subroutine fortran_write_lattice_in_mad_format (out_type, out_file_name, lat, re
   else
     f_err_ptr => null()
   endif
-  call write_lattice_in_mad_format(f_out_type, f_out_file_name, f_lat, f_ref_orbit%data, &
+  call write_lattice_foreign_format(f_out_type, f_out_file_name, f_lat, f_ref_orbit%data, &
       f_use_matrix_model_native_ptr, f_include_apertures_native_ptr, f_dr12_drift_max_ptr, &
       f_ix_branch_ptr, f_err)
 
@@ -38121,7 +38036,100 @@ subroutine fortran_write_lattice_in_mad_format (out_type, out_file_name, lat, re
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
 end subroutine
-subroutine fortran_write_lattice_in_pals (pals_file, lat, err_flag) bind(c)
+subroutine fortran_write_lattice_mad_format (out_type, out_file_name, lat, ref_orbit, &
+    use_matrix_model, include_apertures, dr12_drift_max, ix_branch, err) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: coord_struct, lat_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: out_type
+  character(len=4096), target :: f_out_type
+  character(kind=c_char), pointer :: f_out_type_ptr(:)
+  type(c_ptr), intent(in), value :: out_file_name
+  character(len=4096), target :: f_out_file_name
+  character(kind=c_char), pointer :: f_out_file_name_ptr(:)
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), intent(in), value :: ref_orbit
+  type(coord_struct_container_alloc), pointer :: f_ref_orbit
+  type(c_ptr), intent(in), value :: use_matrix_model  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_use_matrix_model
+  logical, target :: f_use_matrix_model_native
+  logical, pointer :: f_use_matrix_model_native_ptr
+  logical(c_bool), pointer :: f_use_matrix_model_ptr
+  type(c_ptr), intent(in), value :: include_apertures  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_include_apertures
+  logical, target :: f_include_apertures_native
+  logical, pointer :: f_include_apertures_native_ptr
+  logical(c_bool), pointer :: f_include_apertures_ptr
+  type(c_ptr), intent(in), value :: dr12_drift_max  ! 0D_NOT_real
+  real(c_double) :: f_dr12_drift_max
+  real(c_double), pointer :: f_dr12_drift_max_ptr
+  type(c_ptr), intent(in), value :: ix_branch  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_branch
+  integer(c_int), pointer :: f_ix_branch_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
+  ! ** End of parameters **
+  ! in: f_out_type 0D_NOT_character
+  if (.not. c_associated(out_type)) return
+  call c_f_pointer(out_type, f_out_type_ptr, [huge(0)])
+  call to_f_str(f_out_type_ptr, f_out_type)
+  ! in: f_out_file_name 0D_NOT_character
+  if (.not. c_associated(out_file_name)) return
+  call c_f_pointer(out_file_name, f_out_file_name_ptr, [huge(0)])
+  call to_f_str(f_out_file_name_ptr, f_out_file_name)
+  ! in: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) return
+  call c_f_pointer(lat, f_lat)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(ref_orbit))   call c_f_pointer(ref_orbit, f_ref_orbit)
+  ! in: f_use_matrix_model 0D_NOT_logical
+  if (c_associated(use_matrix_model)) then
+    call c_f_pointer(use_matrix_model, f_use_matrix_model_ptr)
+    f_use_matrix_model_native = f_use_matrix_model_ptr
+    f_use_matrix_model_native_ptr => f_use_matrix_model_native
+  else
+    f_use_matrix_model_native_ptr => null()
+  endif
+  ! in: f_include_apertures 0D_NOT_logical
+  if (c_associated(include_apertures)) then
+    call c_f_pointer(include_apertures, f_include_apertures_ptr)
+    f_include_apertures_native = f_include_apertures_ptr
+    f_include_apertures_native_ptr => f_include_apertures_native
+  else
+    f_include_apertures_native_ptr => null()
+  endif
+  ! in: f_dr12_drift_max 0D_NOT_real
+  if (c_associated(dr12_drift_max)) then
+    call c_f_pointer(dr12_drift_max, f_dr12_drift_max_ptr)
+  else
+    f_dr12_drift_max_ptr => null()
+  endif
+  ! in: f_ix_branch 0D_NOT_integer
+  if (c_associated(ix_branch)) then
+    call c_f_pointer(ix_branch, f_ix_branch_ptr)
+  else
+    f_ix_branch_ptr => null()
+  endif
+  ! out: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+  else
+    f_err_ptr => null()
+  endif
+  call write_lattice_mad_format(f_out_type, f_out_file_name, f_lat, f_ref_orbit%data, &
+      f_use_matrix_model_native_ptr, f_include_apertures_native_ptr, f_dr12_drift_max_ptr, &
+      f_ix_branch_ptr, f_err)
+
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
+end subroutine
+subroutine fortran_write_lattice_pals_format (pals_file, lat, err_flag) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -38150,7 +38158,7 @@ subroutine fortran_write_lattice_in_pals (pals_file, lat, err_flag) bind(c)
   else
     f_err_flag_ptr => null()
   endif
-  call write_lattice_in_pals(f_pals_file, f_lat, f_err_flag)
+  call write_lattice_pals_format(f_pals_file, f_lat, f_err_flag)
 
   ! out: f_pals_file 0D_NOT_character
   call c_f_pointer(pals_file, f_pals_file_ptr, [len_trim(f_pals_file) + 1])
@@ -38159,8 +38167,8 @@ subroutine fortran_write_lattice_in_pals (pals_file, lat, err_flag) bind(c)
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
-subroutine fortran_write_lattice_in_sad_format (out_file_name, lat, include_apertures, &
-    ix_branch, err) bind(c)
+subroutine fortran_write_lattice_sad_format (out_file_name, lat, include_apertures, ix_branch, &
+    err) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -38215,11 +38223,11 @@ subroutine fortran_write_lattice_in_sad_format (out_file_name, lat, include_aper
   else
     f_err_native_ptr => null()
   endif
-  call write_lattice_in_sad_format(f_out_file_name, f_lat, f_include_apertures_native_ptr, &
+  call write_lattice_sad_format(f_out_file_name, f_lat, f_include_apertures_native_ptr, &
       f_ix_branch_ptr, f_err_native_ptr)
 
 end subroutine
-subroutine fortran_write_lattice_in_scibmad (scibmad_file, lat, err_flag) bind(c)
+subroutine fortran_write_lattice_scibmad_format (scibmad_file, lat, err_flag) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: lat_struct
@@ -38248,7 +38256,7 @@ subroutine fortran_write_lattice_in_scibmad (scibmad_file, lat, err_flag) bind(c
   else
     f_err_flag_ptr => null()
   endif
-  call write_lattice_in_scibmad(f_scibmad_file, f_lat, f_err_flag)
+  call write_lattice_scibmad_format(f_scibmad_file, f_lat, f_err_flag)
 
   ! out: f_scibmad_file 0D_NOT_character
   call c_f_pointer(scibmad_file, f_scibmad_file_ptr, [len_trim(f_scibmad_file) + 1])

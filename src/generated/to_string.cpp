@@ -4878,17 +4878,17 @@ std::string to_string(const Bmad::WriteGptFieldGridFile3d &self) {
        std::pair{"err", to_string(self.err)}}
   );
 }
-std::string to_string(const Bmad::WriteLatticeInPals &self) {
+std::string to_string(const Bmad::WriteLatticePalsFormat &self) {
   return repr(
       &self,
-      "Bmad::WriteLatticeInPals",
+      "Bmad::WriteLatticePalsFormat",
       {std::pair{"pals_file", self.pals_file}, std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
-std::string to_string(const Bmad::WriteLatticeInScibmad &self) {
+std::string to_string(const Bmad::WriteLatticeScibmadFormat &self) {
   return repr(
       &self,
-      "Bmad::WriteLatticeInScibmad",
+      "Bmad::WriteLatticeScibmadFormat",
       {std::pair{"scibmad_file", self.scibmad_file},
        std::pair{"err_flag", to_string(self.err_flag)}}
   );

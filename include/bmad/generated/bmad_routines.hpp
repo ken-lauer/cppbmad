@@ -6189,14 +6189,15 @@ extern "C" bool fortran_pointer_to_next_ele(
     int *offset /* 0D_NOT_integer in */,
     bool *skip_beginning /* 0D_NOT_logical in */,
     bool *follow_fork /* 0D_NOT_logical in */,
-    void *next_ele /* 0D_PTR_type in */
+    int *ix_multipass /* 0D_NOT_integer in */,
+    void *next_ele /* 0D_PTR_type out */
 );
-void pointer_to_next_ele(
+std::optional<EleStruct> pointer_to_next_ele(
     EleStruct &this_ele,
-    EleStruct &next_ele,
     std::optional<int> offset = std::nullopt,
     std::optional<bool> skip_beginning = std::nullopt,
-    std::optional<bool> follow_fork = std::nullopt
+    std::optional<bool> follow_fork = std::nullopt,
+    std::optional<int> ix_multipass = std::nullopt
 );
 extern "C" bool fortran_pointer_to_slave(
     void *lord /* 0D_NOT_type in */,
@@ -10035,7 +10036,7 @@ void write_lat_line(
     std::optional<bool> do_split = std::nullopt,
     std::optional<bool> ampersand_at_ends = std::nullopt
 );
-extern "C" void fortran_write_lattice_in_elegant_format(
+extern "C" void fortran_write_lattice_elegant_format(
     const char *out_file_name /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type in */,
     void *ref_orbit /* 1D_ALLOC_type in */,
@@ -10045,7 +10046,7 @@ extern "C" void fortran_write_lattice_in_elegant_format(
     int *ix_branch /* 0D_NOT_integer in */,
     bool &err /* 0D_NOT_logical out */
 );
-bool write_lattice_in_elegant_format(
+bool write_lattice_elegant_format(
     std::string out_file_name,
     LatStruct &lat,
     std::optional<CoordStructAlloc1D> ref_orbit = std::nullopt,
@@ -10054,7 +10055,7 @@ bool write_lattice_in_elegant_format(
     std::optional<double> dr12_drift_max = std::nullopt,
     std::optional<int> ix_branch = std::nullopt
 );
-extern "C" void fortran_write_lattice_in_foreign_format(
+extern "C" void fortran_write_lattice_foreign_format(
     const char *out_type /* 0D_NOT_character in */,
     const char *out_file_name /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type in */,
@@ -10065,7 +10066,7 @@ extern "C" void fortran_write_lattice_in_foreign_format(
     int *ix_branch /* 0D_NOT_integer in */,
     bool &err /* 0D_NOT_logical out */
 );
-bool write_lattice_in_foreign_format(
+bool write_lattice_foreign_format(
     std::string out_type,
     std::string out_file_name,
     LatStruct &lat,
@@ -10075,7 +10076,7 @@ bool write_lattice_in_foreign_format(
     std::optional<double> dr12_drift_max = std::nullopt,
     std::optional<int> ix_branch = std::nullopt
 );
-extern "C" void fortran_write_lattice_in_mad_format(
+extern "C" void fortran_write_lattice_mad_format(
     const char *out_type /* 0D_NOT_character in */,
     const char *out_file_name /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type in */,
@@ -10086,7 +10087,7 @@ extern "C" void fortran_write_lattice_in_mad_format(
     int *ix_branch /* 0D_NOT_integer in */,
     bool &err /* 0D_NOT_logical out */
 );
-bool write_lattice_in_mad_format(
+bool write_lattice_mad_format(
     std::string out_type,
     std::string out_file_name,
     LatStruct &lat,
@@ -10096,40 +10097,40 @@ bool write_lattice_in_mad_format(
     std::optional<double> dr12_drift_max = std::nullopt,
     std::optional<int> ix_branch = std::nullopt
 );
-extern "C" void fortran_write_lattice_in_pals(
+extern "C" void fortran_write_lattice_pals_format(
     const char *pals_file /* 0D_NOT_character out */,
     void *lat /* 0D_NOT_type in */,
     bool &err_flag /* 0D_NOT_logical out */
 );
-struct WriteLatticeInPals {
+struct WriteLatticePalsFormat {
   std::string pals_file;
   bool err_flag;
 };
-Bmad::WriteLatticeInPals write_lattice_in_pals(LatStruct &lat);
-extern "C" void fortran_write_lattice_in_sad_format(
+Bmad::WriteLatticePalsFormat write_lattice_pals_format(LatStruct &lat);
+extern "C" void fortran_write_lattice_sad_format(
     const char *out_file_name /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type inout */,
     bool *include_apertures /* 0D_NOT_logical in */,
     int *ix_branch /* 0D_NOT_integer in */,
     bool *err /* 0D_NOT_logical in */
 );
-void write_lattice_in_sad_format(
+void write_lattice_sad_format(
     std::string out_file_name,
     LatStruct &lat,
     std::optional<bool> include_apertures = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
     std::optional<bool> err = std::nullopt
 );
-extern "C" void fortran_write_lattice_in_scibmad(
+extern "C" void fortran_write_lattice_scibmad_format(
     const char *scibmad_file /* 0D_NOT_character out */,
     void *lat /* 0D_NOT_type in */,
     bool &err_flag /* 0D_NOT_logical out */
 );
-struct WriteLatticeInScibmad {
+struct WriteLatticeScibmadFormat {
   std::string scibmad_file;
   bool err_flag;
 };
-Bmad::WriteLatticeInScibmad write_lattice_in_scibmad(LatStruct &lat);
+Bmad::WriteLatticeScibmadFormat write_lattice_scibmad_format(LatStruct &lat);
 extern "C" void fortran_write_line_element(
     const char *line /* 0D_NOT_character in */,
     int &iu /* 0D_NOT_integer in */,

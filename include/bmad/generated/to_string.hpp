@@ -449,8 +449,8 @@ std::string to_string(const Bmad::WriteAstraFieldGridFile3d &self);
 std::string to_string(const Bmad::WriteGptFieldGridFile1d &self);
 std::string to_string(const Bmad::WriteGptFieldGridFile2d &self);
 std::string to_string(const Bmad::WriteGptFieldGridFile3d &self);
-std::string to_string(const Bmad::WriteLatticeInPals &self);
-std::string to_string(const Bmad::WriteLatticeInScibmad &self);
+std::string to_string(const Bmad::WriteLatticePalsFormat &self);
+std::string to_string(const Bmad::WriteLatticeScibmadFormat &self);
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self);
 std::string to_string(const Bmad::ZAtSurface &self);
 } // namespace Bmad

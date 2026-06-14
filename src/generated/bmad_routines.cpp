@@ -10036,12 +10036,12 @@ Bmad::PointerToMultipassLord Bmad::pointer_to_multipass_lord(EleStruct &ele) {
       std::move((_multi_lord ? std::make_optional<EleStruct>(_multi_lord) : std::nullopt))
   };
 }
-void Bmad::pointer_to_next_ele(
+std::optional<EleStruct> Bmad::pointer_to_next_ele(
     EleStruct &this_ele,
-    EleStruct &next_ele,
     std::optional<int> offset,
     std::optional<bool> skip_beginning,
-    std::optional<bool> follow_fork
+    std::optional<bool> follow_fork,
+    std::optional<int> ix_multipass
 ) {
   int offset_lvalue;
   auto *_offset{&offset_lvalue};
@@ -10064,12 +10064,21 @@ void Bmad::pointer_to_next_ele(
   } else {
     _follow_fork = nullptr;
   }
-  auto _next_ele = &next_ele; // input, required, pointer
+  int ix_multipass_lvalue;
+  auto *_ix_multipass{&ix_multipass_lvalue};
+  if (ix_multipass.has_value()) {
+    ix_multipass_lvalue = ix_multipass.value();
+  } else {
+    _ix_multipass = nullptr;
+  }
+  void *_next_ele;
   fortran_pointer_to_next_ele(/* void* */ this_ele.get_fortran_ptr(),
                               /* int* */ _offset,
                               /* bool* */ _skip_beginning,
                               /* bool* */ _follow_fork,
-                              /* void* */ &next_ele);
+                              /* int* */ _ix_multipass,
+                              /* void* */ &_next_ele);
+  return std::move((_next_ele ? std::make_optional<EleStruct>(_next_ele) : std::nullopt));
 }
 Bmad::PointerToSlave
 Bmad::pointer_to_slave(EleStruct &lord, int ix_slave, std::optional<int> slave_type) {
@@ -17137,7 +17146,7 @@ void Bmad::write_lat_line(
       /* bool* */ _ampersand_at_ends
   );
 }
-bool Bmad::write_lattice_in_elegant_format(
+bool Bmad::write_lattice_elegant_format(
     std::string out_file_name,
     LatStruct &lat,
     std::optional<CoordStructAlloc1D> ref_orbit,
@@ -17179,7 +17188,7 @@ bool Bmad::write_lattice_in_elegant_format(
     _ix_branch = nullptr;
   }
   bool _err{};
-  fortran_write_lattice_in_elegant_format(
+  fortran_write_lattice_elegant_format(
       /* const char* */ _out_file_name,
       /* void* */ lat.get_fortran_ptr(),
       /* void* */ _ref_orbit,
@@ -17191,7 +17200,7 @@ bool Bmad::write_lattice_in_elegant_format(
   );
   return _err;
 }
-bool Bmad::write_lattice_in_foreign_format(
+bool Bmad::write_lattice_foreign_format(
     std::string out_type,
     std::string out_file_name,
     LatStruct &lat,
@@ -17235,7 +17244,7 @@ bool Bmad::write_lattice_in_foreign_format(
     _ix_branch = nullptr;
   }
   bool _err{};
-  fortran_write_lattice_in_foreign_format(
+  fortran_write_lattice_foreign_format(
       /* const char* */ _out_type,
       /* const char* */ _out_file_name,
       /* void* */ lat.get_fortran_ptr(),
@@ -17248,7 +17257,7 @@ bool Bmad::write_lattice_in_foreign_format(
   );
   return _err;
 }
-bool Bmad::write_lattice_in_mad_format(
+bool Bmad::write_lattice_mad_format(
     std::string out_type,
     std::string out_file_name,
     LatStruct &lat,
@@ -17292,7 +17301,7 @@ bool Bmad::write_lattice_in_mad_format(
     _ix_branch = nullptr;
   }
   bool _err{};
-  fortran_write_lattice_in_mad_format(
+  fortran_write_lattice_mad_format(
       /* const char* */ _out_type,
       /* const char* */ _out_file_name,
       /* void* */ lat.get_fortran_ptr(),
@@ -17305,17 +17314,17 @@ bool Bmad::write_lattice_in_mad_format(
   );
   return _err;
 }
-Bmad::WriteLatticeInPals Bmad::write_lattice_in_pals(LatStruct &lat) {
+Bmad::WriteLatticePalsFormat Bmad::write_lattice_pals_format(LatStruct &lat) {
   char _pals_file[4096];
   bool _err_flag{};
-  fortran_write_lattice_in_pals(
+  fortran_write_lattice_pals_format(
       /* const char* */ _pals_file,
       /* void* */ lat.get_fortran_ptr(),
       /* bool& */ _err_flag
   );
-  return WriteLatticeInPals{_pals_file, _err_flag};
+  return WriteLatticePalsFormat{_pals_file, _err_flag};
 }
-void Bmad::write_lattice_in_sad_format(
+void Bmad::write_lattice_sad_format(
     std::string out_file_name,
     LatStruct &lat,
     std::optional<bool> include_apertures,
@@ -17344,7 +17353,7 @@ void Bmad::write_lattice_in_sad_format(
   } else {
     _err = nullptr;
   }
-  fortran_write_lattice_in_sad_format(
+  fortran_write_lattice_sad_format(
       /* const char* */ _out_file_name,
       /* void* */ lat.get_fortran_ptr(),
       /* bool* */ _include_apertures,
@@ -17352,15 +17361,15 @@ void Bmad::write_lattice_in_sad_format(
       /* bool* */ _err
   );
 }
-Bmad::WriteLatticeInScibmad Bmad::write_lattice_in_scibmad(LatStruct &lat) {
+Bmad::WriteLatticeScibmadFormat Bmad::write_lattice_scibmad_format(LatStruct &lat) {
   char _scibmad_file[4096];
   bool _err_flag{};
-  fortran_write_lattice_in_scibmad(
+  fortran_write_lattice_scibmad_format(
       /* const char* */ _scibmad_file,
       /* void* */ lat.get_fortran_ptr(),
       /* bool& */ _err_flag
   );
-  return WriteLatticeInScibmad{_scibmad_file, _err_flag};
+  return WriteLatticeScibmadFormat{_scibmad_file, _err_flag};
 }
 void Bmad::write_line_element(std::string line, int iu, EleStruct &ele, LatStruct &lat) {
   auto _line = line.c_str();

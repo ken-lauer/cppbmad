@@ -927,8 +927,8 @@ line : str
 )"""
   );
   m.def(
-      "write_lattice_in_elegant_format",
-      &Bmad::write_lattice_in_elegant_format,
+      "write_lattice_elegant_format",
+      &Bmad::write_lattice_elegant_format,
       py::arg("out_file_name"),
       py::arg("lat"),
       py::arg("ref_orbit") = py::none(),
@@ -937,7 +937,7 @@ line : str
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine write_lattice_in_elegant_format
+      R"""(Wrapper for Fortran routine write_lattice_elegant_format
 
 Parameters
 ----------
@@ -975,8 +975,8 @@ err : bool, optional
 )"""
   );
   m.def(
-      "write_lattice_in_foreign_format",
-      &Bmad::write_lattice_in_foreign_format,
+      "write_lattice_foreign_format",
+      &Bmad::write_lattice_foreign_format,
       py::arg("out_type"),
       py::arg("out_file_name"),
       py::arg("lat"),
@@ -986,7 +986,7 @@ err : bool, optional
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine write_lattice_in_foreign_format
+      R"""(Wrapper for Fortran routine write_lattice_foreign_format
 
 Parameters
 ----------
@@ -1027,8 +1027,8 @@ err : bool, optional
 )"""
   );
   m.def(
-      "write_lattice_in_mad_format",
-      &Bmad::write_lattice_in_mad_format,
+      "write_lattice_mad_format",
+      &Bmad::write_lattice_mad_format,
       py::arg("out_type"),
       py::arg("out_file_name"),
       py::arg("lat"),
@@ -1038,7 +1038,7 @@ err : bool, optional
       py::arg("dr12_drift_max") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine write_lattice_in_mad_format
+      R"""(Wrapper for Fortran routine write_lattice_mad_format
 
 Parameters
 ----------
@@ -1078,15 +1078,15 @@ err : bool, optional
     Set True if, say a file could not be opened.
 )"""
   );
-  py::class_<Bmad::WriteLatticeInPals, std::unique_ptr<Bmad::WriteLatticeInPals>>(
+  py::class_<Bmad::WriteLatticePalsFormat, std::unique_ptr<Bmad::WriteLatticePalsFormat>>(
       m,
-      "WriteLatticeInPals",
-      "write_lattice_in_pals return type"
+      "WriteLatticePalsFormat",
+      "write_lattice_pals_format return type"
   )
-      .def_readonly("pals_file", &Bmad::WriteLatticeInPals::pals_file)
-      .def_readonly("err_flag", &Bmad::WriteLatticeInPals::err_flag)
-      .def("__len__", [](const Bmad::WriteLatticeInPals &) { return 2; })
-      .def("__getitem__", [](const Bmad::WriteLatticeInPals &s, int i) -> py::object {
+      .def_readonly("pals_file", &Bmad::WriteLatticePalsFormat::pals_file)
+      .def_readonly("err_flag", &Bmad::WriteLatticePalsFormat::err_flag)
+      .def("__len__", [](const Bmad::WriteLatticePalsFormat &) { return 2; })
+      .def("__getitem__", [](const Bmad::WriteLatticePalsFormat &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -1096,11 +1096,11 @@ err : bool, optional
         throw py::index_error();
       });
   m.def(
-      "write_lattice_in_pals",
-      &Bmad::write_lattice_in_pals,
+      "write_lattice_pals_format",
+      &Bmad::write_lattice_pals_format,
       py::arg("lat"),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine write_lattice_in_pals
+      R"""(Wrapper for Fortran routine write_lattice_pals_format
 
 Parameters
 ----------
@@ -1117,15 +1117,15 @@ err_flag : bool, optional
 )"""
   );
   m.def(
-      "write_lattice_in_sad_format",
-      &Bmad::write_lattice_in_sad_format,
+      "write_lattice_sad_format",
+      &Bmad::write_lattice_sad_format,
       py::arg("out_file_name"),
       py::arg("lat"),
       py::arg("include_apertures") = py::none(),
       py::arg("ix_branch") = py::none(),
       py::arg("err") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine write_lattice_in_sad_format
+      R"""(Wrapper for Fortran routine write_lattice_sad_format
 
 Parameters
 ----------
@@ -1140,15 +1140,15 @@ ix_branch : int, optional
 err : bool, optional
 )"""
   );
-  py::class_<Bmad::WriteLatticeInScibmad, std::unique_ptr<Bmad::WriteLatticeInScibmad>>(
+  py::class_<Bmad::WriteLatticeScibmadFormat, std::unique_ptr<Bmad::WriteLatticeScibmadFormat>>(
       m,
-      "WriteLatticeInScibmad",
-      "write_lattice_in_scibmad return type"
+      "WriteLatticeScibmadFormat",
+      "write_lattice_scibmad_format return type"
   )
-      .def_readonly("scibmad_file", &Bmad::WriteLatticeInScibmad::scibmad_file)
-      .def_readonly("err_flag", &Bmad::WriteLatticeInScibmad::err_flag)
-      .def("__len__", [](const Bmad::WriteLatticeInScibmad &) { return 2; })
-      .def("__getitem__", [](const Bmad::WriteLatticeInScibmad &s, int i) -> py::object {
+      .def_readonly("scibmad_file", &Bmad::WriteLatticeScibmadFormat::scibmad_file)
+      .def_readonly("err_flag", &Bmad::WriteLatticeScibmadFormat::err_flag)
+      .def("__len__", [](const Bmad::WriteLatticeScibmadFormat &) { return 2; })
+      .def("__getitem__", [](const Bmad::WriteLatticeScibmadFormat &s, int i) -> py::object {
         if (i < 0)
           i += 2;
         if (i == 0)
@@ -1158,11 +1158,11 @@ err : bool, optional
         throw py::index_error();
       });
   m.def(
-      "write_lattice_in_scibmad",
-      &Bmad::write_lattice_in_scibmad,
+      "write_lattice_scibmad_format",
+      &Bmad::write_lattice_scibmad_format,
       py::arg("lat"),
       py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine write_lattice_in_scibmad
+      R"""(Wrapper for Fortran routine write_lattice_scibmad_format
 
 Parameters
 ----------

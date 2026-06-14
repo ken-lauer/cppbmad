@@ -1762,12 +1762,12 @@ from ._pybmad import write_gpt_field_grid_file_1d
 from ._pybmad import write_gpt_field_grid_file_2d
 from ._pybmad import write_gpt_field_grid_file_3d
 from ._pybmad import write_lat_line
-from ._pybmad import write_lattice_in_elegant_format
-from ._pybmad import write_lattice_in_foreign_format
-from ._pybmad import write_lattice_in_mad_format
-from ._pybmad import write_lattice_in_pals
-from ._pybmad import write_lattice_in_sad_format
-from ._pybmad import write_lattice_in_scibmad
+from ._pybmad import write_lattice_elegant_format
+from ._pybmad import write_lattice_foreign_format
+from ._pybmad import write_lattice_mad_format
+from ._pybmad import write_lattice_pals_format
+from ._pybmad import write_lattice_sad_format
+from ._pybmad import write_lattice_scibmad_format
 from ._pybmad import write_line_element
 from ._pybmad import write_opal_field_grid_file
 from ._pybmad import write_opal_lattice_file
@@ -4640,12 +4640,12 @@ __all__ = [
     "write_gpt_field_grid_file_2d",
     "write_gpt_field_grid_file_3d",
     "write_lat_line",
-    "write_lattice_in_elegant_format",
-    "write_lattice_in_foreign_format",
-    "write_lattice_in_mad_format",
-    "write_lattice_in_pals",
-    "write_lattice_in_sad_format",
-    "write_lattice_in_scibmad",
+    "write_lattice_elegant_format",
+    "write_lattice_foreign_format",
+    "write_lattice_mad_format",
+    "write_lattice_pals_format",
+    "write_lattice_sad_format",
+    "write_lattice_scibmad_format",
     "write_line_element",
     "write_opal_field_grid_file",
     "write_opal_lattice_file",
