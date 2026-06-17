@@ -389,22 +389,21 @@ void bind_1d_type_array_pair(
       });
 
   // View: Slice Access
-  view_cls.def(
-      "__getitem__",
-      [](ArrayType &self, py::slice slice) {
-        size_t start, stop, step, slice_length;
-        if (!slice.compute(self.total_size(), &start, &stop, &step, &slice_length))
-          throw py::error_already_set();
+  view_cls.def("__getitem__", [](py::object self_py, py::slice slice) {
+    auto &self = self_py.cast<ArrayType &>();
+    size_t start, stop, step, slice_length;
+    if (!slice.compute(self.total_size(), &start, &stop, &step, &slice_length))
+      throw py::error_already_set();
 
-        py::list list;
-        for (size_t i = 0; i < slice_length; ++i) {
-          list.append(self.at(start));
-          start += step;
-        }
-        return list;
-      },
-      py::keep_alive<0, 1>()
-  );
+    py::list list;
+    for (size_t i = 0; i < slice_length; ++i) {
+      py::object py_item = py::cast(self.at(start), py::return_value_policy::move);
+      py::detail::keep_alive_impl(py_item, self_py);
+      list.append(py_item);
+      start += step;
+    }
+    return list;
+  });
 
   // View: Iteration
   view_cls.def(
