@@ -355,6 +355,11 @@ class FortranRoutine:
     args: list[RoutineArg] = field(default_factory=list)
 
     @property
+    def is_function(self) -> bool:
+        """True for any function variant (plain, elemental, pure, recursive, module)."""
+        return self.proc_type.endswith("function")
+
+    @property
     def overloaded_name(self) -> str:
         """Some routines have interfaces which result in overloaded functions in C++"""
         if not self.interface or self.interface == GLOBAL_INTERFACE:
@@ -388,7 +393,7 @@ class FortranRoutine:
         Parses the docstring comment, matches up arguments, and creates all translated args.
         """
         self.docstring = self._parse_comment()
-        if self.proc_type == "function" and not self.result_name:
+        if self.is_function and not self.result_name:
             self.result_name = self.name.lower()
         self.declarations = self._parse_argument_types()
         if not self.docstring:
@@ -413,7 +418,7 @@ class FortranRoutine:
         for arg in docstring_hotfixes.get(self.name.lower(), []):
             self.docstring.update_parameter(arg)
 
-        if self.proc_type == "function" and self.result_name == self.name.lower():
+        if self.is_function and self.result_name == self.name.lower():
             assert self.result_name is not None
             retval = self.declarations.pop(self.result_name)
             self.declarations["func_retval__"] = retval
@@ -421,11 +426,6 @@ class FortranRoutine:
             retval.name = "func_retval__"
 
         self.args = self.translate_args(config)
-
-        if self.proc_type == "function":
-            assert self.result_name is not None
-            # self.args_by_c_name[self.result_name].intent = "inout"
-            self.args_by_c_name[self.result_name].intent = "out"
 
     def _parse_argument_types(self) -> dict[str, StructureMember]:
         skips = {
@@ -484,6 +484,14 @@ class FortranRoutine:
         for arg in args:
             # smoke check that we can transform all args
             _ = arg.transform
+
+        if self.is_function:
+            args_by_c_name = {arg.c_name: arg for arg in args}
+            if self.result_name in args_by_c_name:
+                args_by_c_name[self.result_name].intent = "out"
+            else:
+                logger.error(f"Function result not in arg list? {list(args_by_c_name)}")
+
         return args
 
     def _parse_comment(self) -> RoutineDocstring | None:
