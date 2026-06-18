@@ -466,6 +466,12 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
             .def("__deepcopy__", [](const {struct.cpp_class} &self, py::dict& memo){{
                 return {struct.cpp_class}(self);
             }})
+            .def("__eq__", [](const {struct.cpp_class} &self, const {struct.cpp_class} &other){{
+                return self.get_fortran_ptr() == other.get_fortran_ptr();
+            }}, py::is_operator())
+            .def("__hash__", [](const {struct.cpp_class} &self){{
+                return std::hash<std::uintptr_t>{{}}(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            }})
             """)
     )
     code_lines.append("        ;")
@@ -581,6 +587,8 @@ def _generate_structure_files(
             '#include "bmad/generated/to_string.hpp"',
             '#include "bmad/to_string.hpp"',
             '#include "pybmad/arrays.hpp"',
+            "#include <cstdint>",
+            "#include <functional>",
             "",
             "using namespace Pybmad;",
             "namespace py = pybind11;",
