@@ -267,19 +267,15 @@ bool apply_rampers_to_slave(EleStruct &slave);
 extern "C" bool fortran_array_re_str(
     Bmad::array_descriptor_t &arr /* 1D_NOT_real inout */,
     const char *parens_in /* 0D_NOT_character in */,
-    const char *str_out /* 0D_NOT_character in */
+    const char *str_out /* 0D_NOT_character out */
 );
-void array_re_str(
-    FArray1D<Real> &arr,
-    std::string str_out,
-    std::optional<std::string> parens_in = std::nullopt
-);
+std::string array_re_str(FArray1D<Real> &arr, std::optional<std::string> parens_in = std::nullopt);
 extern "C" bool fortran_astra_max_field_reference(
     void *pt0 /* 0D_NOT_type inout */,
     void *ele /* 0D_NOT_type inout */,
-    double &field_value /* 0D_NOT_real in */
+    double &field_value /* 0D_NOT_real out */
 );
-void astra_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele, double field_value);
+double astra_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele);
 extern "C" bool fortran_at_this_ele_end(
     int &now_at /* 0D_NOT_integer in */,
     int &where_at /* 0D_NOT_integer in */,
@@ -1098,9 +1094,9 @@ Bmad::ClosedOrbitFromTracking closed_orbit_from_tracking(
 );
 extern "C" bool fortran_cmplx_re_str(
     std::complex<double> &cmp /* 0D_NOT_complex in */,
-    const char *str_out /* 0D_NOT_character in */
+    const char *str_out /* 0D_NOT_character out */
 );
-void cmplx_re_str(std::complex<double> cmp, std::string str_out);
+std::string cmplx_re_str(std::complex<double> cmp);
 extern "C" void fortran_combine_consecutive_elements(
     void *lat /* 0D_NOT_type inout */,
     bool &error /* 0D_NOT_logical out */
@@ -1111,13 +1107,9 @@ void complex_taylor_clean(ComplexTaylorStruct &complex_taylor);
 extern "C" bool fortran_complex_taylor_coef1(
     void *complex_taylor /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &exp /* 1D_NOT_integer in */,
-    std::complex<double> &coef /* 0D_NOT_complex in */
+    std::complex<double> &coef /* 0D_NOT_complex out */
 );
-void complex_taylor_coef(
-    ComplexTaylorStruct &complex_taylor,
-    FArray1D<Int> &exp,
-    std::complex<double> coef
-);
+std::complex<double> complex_taylor_coef(ComplexTaylorStruct &complex_taylor, FArray1D<Int> &exp);
 extern "C" bool fortran_complex_taylor_coef2(
     void *complex_taylor /* 0D_NOT_type in */,
     int *i1 /* 0D_NOT_integer in */,
@@ -1129,11 +1121,10 @@ extern "C" bool fortran_complex_taylor_coef2(
     int *i7 /* 0D_NOT_integer in */,
     int *i8 /* 0D_NOT_integer in */,
     int *i9 /* 0D_NOT_integer in */,
-    std::complex<double> &coef /* 0D_NOT_complex in */
+    std::complex<double> &coef /* 0D_NOT_complex out */
 );
-void complex_taylor_coef(
+std::complex<double> complex_taylor_coef(
     ComplexTaylorStruct &complex_taylor,
-    std::complex<double> coef,
     std::optional<int> i1 = std::nullopt,
     std::optional<int> i2 = std::nullopt,
     std::optional<int> i3 = std::nullopt,
@@ -1558,9 +1549,9 @@ extern "C" bool fortran_coulombfun(
     double &v /* 0D_NOT_real in */,
     double &w /* 0D_NOT_real in */,
     double &gam /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void coulombfun(double u, double v, double w, double gam, double res);
+double coulombfun(double u, double v, double w, double gam);
 extern "C" void fortran_create_concatenated_wall3d(
     void *lat /* 0D_NOT_type inout */,
     bool &err /* 0D_NOT_logical in */
@@ -1729,17 +1720,10 @@ extern "C" bool fortran_damping_matrix_d(
     double &B1 /* 0D_NOT_real in */,
     double &delta /* 0D_NOT_real in */,
     int &species /* 0D_NOT_integer in */,
-    Bmad::array_descriptor_t &mat /* 2D_NOT_real inout */
+    Bmad::array_descriptor_t &mat /* 2D_NOT_real out */
 );
-void damping_matrix_d(
-    double gamma,
-    double g_tot,
-    double B0,
-    double B1,
-    double delta,
-    int species,
-    FixedArray2D<Real, 6, 6> mat
-);
+FixedArray2D<Real, 6, 6>
+damping_matrix_d(double gamma, double g_tot, double B0, double B1, double delta, int species);
 
 // Skipped unusable routine deallocate_ele_array_pointers:
 // - Routine in configuration skip list
@@ -1783,9 +1767,9 @@ extern "C" bool fortran_diffusion_matrix_b(
     double &gamma /* 0D_NOT_real in */,
     double &g_tot /* 0D_NOT_real in */,
     int &species /* 0D_NOT_integer in */,
-    Bmad::array_descriptor_t &mat /* 2D_NOT_real inout */
+    Bmad::array_descriptor_t &mat /* 2D_NOT_real out */
 );
-void diffusion_matrix_b(double gamma, double g_tot, int species, FixedArray2D<Real, 6, 6> mat);
+FixedArray2D<Real, 6, 6> diffusion_matrix_b(double gamma, double g_tot, int species);
 extern "C" bool fortran_distance_to_aperture(
     void *orbit /* 0D_NOT_type in */,
     int &particle_at /* 0D_NOT_integer in */,
@@ -1808,9 +1792,9 @@ extern "C" bool fortran_dpc_given_de(
     double &pc_old /* 0D_NOT_real in */,
     double &mass /* 0D_NOT_real in */,
     double &dE /* 0D_NOT_real in */,
-    double &dpc /* 0D_NOT_real in */
+    double &dpc /* 0D_NOT_real out */
 );
-void dpc_given_de(double pc_old, double mass, double dE, double dpc);
+double dpc_given_de(double pc_old, double mass, double dE);
 extern "C" void fortran_drift_and_pipe_track_methods_adjustment(void *lat /* 0D_NOT_type inout */);
 void drift_and_pipe_track_methods_adjustment(LatStruct &lat);
 extern "C" void fortran_drift_multipass_name_correction(void *lat /* 0D_NOT_type inout */);
@@ -1979,9 +1963,9 @@ extern "C" bool fortran_ele_has_constant_ds_dt_ref(
 bool ele_has_constant_ds_dt_ref(EleStruct &ele);
 extern "C" bool fortran_ele_has_nonzero_kick(
     void *ele /* 0D_NOT_type inout */,
-    bool &has_kick /* 0D_NOT_logical in */
+    bool &has_kick /* 0D_NOT_logical out */
 );
-void ele_has_nonzero_kick(EleStruct &ele, bool has_kick);
+bool ele_has_nonzero_kick(EleStruct &ele);
 extern "C" bool fortran_ele_has_nonzero_offset(
     void *ele /* 0D_NOT_type in */,
     bool &has_offset /* 0D_NOT_logical out */
@@ -2286,9 +2270,9 @@ FixedArray1D<Real, 10> em_field_kick_vector_time(
 extern "C" bool fortran_em_field_plus_em_field(
     void *field1 /* 0D_NOT_type in */,
     void *field2 /* 0D_NOT_type in */,
-    void *field_tot /* 0D_NOT_type inout */
+    void *field_tot /* 0D_NOT_type out */
 );
-void em_field_plus_em_field(EmFieldStruct &field1, EmFieldStruct &field2, EmFieldStruct &field_tot);
+EmFieldStruct em_field_plus_em_field(EmFieldStruct &field1, EmFieldStruct &field2);
 extern "C" void fortran_emit_6d(
     void *ele_ref /* 0D_NOT_type in */,
     bool &include_opening_angle /* 0D_NOT_logical in */,
@@ -2356,603 +2340,567 @@ Bmad::EnvelopeRadintsIbs envelope_radints_ibs(
 extern "C" bool fortran_eq_ac_kicker(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_ac_kicker(AcKickerStruct &f1, AcKickerStruct &f2, bool is_eq);
+bool eq_ac_kicker(AcKickerStruct &f1, AcKickerStruct &f2);
 extern "C" bool fortran_eq_ac_kicker_freq(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_ac_kicker_freq(AcKickerFreqStruct &f1, AcKickerFreqStruct &f2, bool is_eq);
+bool eq_ac_kicker_freq(AcKickerFreqStruct &f1, AcKickerFreqStruct &f2);
 extern "C" bool fortran_eq_ac_kicker_time(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_ac_kicker_time(AcKickerTimeStruct &f1, AcKickerTimeStruct &f2, bool is_eq);
+bool eq_ac_kicker_time(AcKickerTimeStruct &f1, AcKickerTimeStruct &f2);
 extern "C" bool fortran_eq_anormal_mode(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_anormal_mode(AnormalModeStruct &f1, AnormalModeStruct &f2, bool is_eq);
+bool eq_anormal_mode(AnormalModeStruct &f1, AnormalModeStruct &f2);
 extern "C" bool fortran_eq_aperture_param(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_aperture_param(ApertureParamStruct &f1, ApertureParamStruct &f2, bool is_eq);
+bool eq_aperture_param(ApertureParamStruct &f1, ApertureParamStruct &f2);
 extern "C" bool fortran_eq_aperture_point(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_aperture_point(AperturePointStruct &f1, AperturePointStruct &f2, bool is_eq);
+bool eq_aperture_point(AperturePointStruct &f1, AperturePointStruct &f2);
 extern "C" bool fortran_eq_aperture_scan(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_aperture_scan(ApertureScanStruct &f1, ApertureScanStruct &f2, bool is_eq);
+bool eq_aperture_scan(ApertureScanStruct &f1, ApertureScanStruct &f2);
 extern "C" bool fortran_eq_beam(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_beam(BeamStruct &f1, BeamStruct &f2, bool is_eq);
+bool eq_beam(BeamStruct &f1, BeamStruct &f2);
 extern "C" bool fortran_eq_beam_init(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_beam_init(BeamInitStruct &f1, BeamInitStruct &f2, bool is_eq);
+bool eq_beam_init(BeamInitStruct &f1, BeamInitStruct &f2);
 extern "C" bool fortran_eq_bmad_common(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_bmad_common(BmadCommonStruct &f1, BmadCommonStruct &f2, bool is_eq);
+bool eq_bmad_common(BmadCommonStruct &f1, BmadCommonStruct &f2);
 extern "C" bool fortran_eq_bookkeeping_state(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_bookkeeping_state(BookkeepingStateStruct &f1, BookkeepingStateStruct &f2, bool is_eq);
+bool eq_bookkeeping_state(BookkeepingStateStruct &f1, BookkeepingStateStruct &f2);
 extern "C" bool fortran_eq_bpm_phase_coupling(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_bpm_phase_coupling(BpmPhaseCouplingStruct &f1, BpmPhaseCouplingStruct &f2, bool is_eq);
+bool eq_bpm_phase_coupling(BpmPhaseCouplingStruct &f1, BpmPhaseCouplingStruct &f2);
 extern "C" bool fortran_eq_branch(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_branch(BranchStruct &f1, BranchStruct &f2, bool is_eq);
+bool eq_branch(BranchStruct &f1, BranchStruct &f2);
 extern "C" bool fortran_eq_bunch(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_bunch(BunchStruct &f1, BunchStruct &f2, bool is_eq);
+bool eq_bunch(BunchStruct &f1, BunchStruct &f2);
 extern "C" bool fortran_eq_bunch_params(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_bunch_params(BunchParamsStruct &f1, BunchParamsStruct &f2, bool is_eq);
+bool eq_bunch_params(BunchParamsStruct &f1, BunchParamsStruct &f2);
 extern "C" bool fortran_eq_cartesian_map(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_cartesian_map(CartesianMapStruct &f1, CartesianMapStruct &f2, bool is_eq);
+bool eq_cartesian_map(CartesianMapStruct &f1, CartesianMapStruct &f2);
 extern "C" bool fortran_eq_cartesian_map_term(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_cartesian_map_term(CartesianMapTermStruct &f1, CartesianMapTermStruct &f2, bool is_eq);
+bool eq_cartesian_map_term(CartesianMapTermStruct &f1, CartesianMapTermStruct &f2);
 extern "C" bool fortran_eq_cartesian_map_term1(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_cartesian_map_term1(CartesianMapTerm1Struct &f1, CartesianMapTerm1Struct &f2, bool is_eq);
+bool eq_cartesian_map_term1(CartesianMapTerm1Struct &f1, CartesianMapTerm1Struct &f2);
 extern "C" bool fortran_eq_complex_taylor(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_complex_taylor(ComplexTaylorStruct &f1, ComplexTaylorStruct &f2, bool is_eq);
+bool eq_complex_taylor(ComplexTaylorStruct &f1, ComplexTaylorStruct &f2);
 extern "C" bool fortran_eq_complex_taylor_term(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_complex_taylor_term(ComplexTaylorTermStruct &f1, ComplexTaylorTermStruct &f2, bool is_eq);
+bool eq_complex_taylor_term(ComplexTaylorTermStruct &f1, ComplexTaylorTermStruct &f2);
 extern "C" bool fortran_eq_control(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_control(ControlStruct &f1, ControlStruct &f2, bool is_eq);
+bool eq_control(ControlStruct &f1, ControlStruct &f2);
 extern "C" bool fortran_eq_control_ramp1(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_control_ramp1(ControlRamp1Struct &f1, ControlRamp1Struct &f2, bool is_eq);
+bool eq_control_ramp1(ControlRamp1Struct &f1, ControlRamp1Struct &f2);
 extern "C" bool fortran_eq_control_var1(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_control_var1(ControlVar1Struct &f1, ControlVar1Struct &f2, bool is_eq);
+bool eq_control_var1(ControlVar1Struct &f1, ControlVar1Struct &f2);
 extern "C" bool fortran_eq_controller(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_controller(ControllerStruct &f1, ControllerStruct &f2, bool is_eq);
+bool eq_controller(ControllerStruct &f1, ControllerStruct &f2);
 extern "C" bool fortran_eq_coord(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_coord(CoordStruct &f1, CoordStruct &f2, bool is_eq);
+bool eq_coord(CoordStruct &f1, CoordStruct &f2);
 extern "C" bool fortran_eq_coord_array(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_coord_array(CoordArrayStruct &f1, CoordArrayStruct &f2, bool is_eq);
+bool eq_coord_array(CoordArrayStruct &f1, CoordArrayStruct &f2);
 extern "C" bool fortran_eq_cylindrical_map(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_cylindrical_map(CylindricalMapStruct &f1, CylindricalMapStruct &f2, bool is_eq);
+bool eq_cylindrical_map(CylindricalMapStruct &f1, CylindricalMapStruct &f2);
 extern "C" bool fortran_eq_cylindrical_map_term(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_cylindrical_map_term(
-    CylindricalMapTermStruct &f1,
-    CylindricalMapTermStruct &f2,
-    bool is_eq
-);
+bool eq_cylindrical_map_term(CylindricalMapTermStruct &f1, CylindricalMapTermStruct &f2);
 extern "C" bool fortran_eq_cylindrical_map_term1(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_cylindrical_map_term1(
-    CylindricalMapTerm1Struct &f1,
-    CylindricalMapTerm1Struct &f2,
-    bool is_eq
-);
+bool eq_cylindrical_map_term1(CylindricalMapTerm1Struct &f1, CylindricalMapTerm1Struct &f2);
 extern "C" bool fortran_eq_ele(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_ele(EleStruct &f1, EleStruct &f2, bool is_eq);
+bool eq_ele(EleStruct &f1, EleStruct &f2);
 extern "C" bool fortran_eq_ellipse_beam_init(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_ellipse_beam_init(EllipseBeamInitStruct &f1, EllipseBeamInitStruct &f2, bool is_eq);
+bool eq_ellipse_beam_init(EllipseBeamInitStruct &f1, EllipseBeamInitStruct &f2);
 extern "C" bool fortran_eq_em_field(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_em_field(EmFieldStruct &f1, EmFieldStruct &f2, bool is_eq);
+bool eq_em_field(EmFieldStruct &f1, EmFieldStruct &f2);
 extern "C" bool fortran_eq_expression_atom(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_expression_atom(ExpressionAtomStruct &f1, ExpressionAtomStruct &f2, bool is_eq);
+bool eq_expression_atom(ExpressionAtomStruct &f1, ExpressionAtomStruct &f2);
 extern "C" bool fortran_eq_floor_position(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_floor_position(FloorPositionStruct &f1, FloorPositionStruct &f2, bool is_eq);
+bool eq_floor_position(FloorPositionStruct &f1, FloorPositionStruct &f2);
 extern "C" bool fortran_eq_gen_grad1(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_gen_grad1(GenGrad1Struct &f1, GenGrad1Struct &f2, bool is_eq);
+bool eq_gen_grad1(GenGrad1Struct &f1, GenGrad1Struct &f2);
 extern "C" bool fortran_eq_gen_grad_map(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_gen_grad_map(GenGradMapStruct &f1, GenGradMapStruct &f2, bool is_eq);
+bool eq_gen_grad_map(GenGradMapStruct &f1, GenGradMapStruct &f2);
 extern "C" bool fortran_eq_gg_taylor(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_gg_taylor(GgTaylorStruct &f1, GgTaylorStruct &f2, bool is_eq);
+bool eq_gg_taylor(GgTaylorStruct &f1, GgTaylorStruct &f2);
 extern "C" bool fortran_eq_gg_taylor_term(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_gg_taylor_term(GgTaylorTermStruct &f1, GgTaylorTermStruct &f2, bool is_eq);
+bool eq_gg_taylor_term(GgTaylorTermStruct &f1, GgTaylorTermStruct &f2);
 extern "C" bool fortran_eq_grid_beam_init(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_grid_beam_init(GridBeamInitStruct &f1, GridBeamInitStruct &f2, bool is_eq);
+bool eq_grid_beam_init(GridBeamInitStruct &f1, GridBeamInitStruct &f2);
 extern "C" bool fortran_eq_grid_field(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_grid_field(GridFieldStruct &f1, GridFieldStruct &f2, bool is_eq);
+bool eq_grid_field(GridFieldStruct &f1, GridFieldStruct &f2);
 extern "C" bool fortran_eq_grid_field_pt(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_grid_field_pt(GridFieldPtStruct &f1, GridFieldPtStruct &f2, bool is_eq);
+bool eq_grid_field_pt(GridFieldPtStruct &f1, GridFieldPtStruct &f2);
 extern "C" bool fortran_eq_grid_field_pt1(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_grid_field_pt1(GridFieldPt1Struct &f1, GridFieldPt1Struct &f2, bool is_eq);
+bool eq_grid_field_pt1(GridFieldPt1Struct &f1, GridFieldPt1Struct &f2);
 extern "C" bool fortran_eq_high_energy_space_charge(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_high_energy_space_charge(
-    HighEnergySpaceChargeStruct &f1,
-    HighEnergySpaceChargeStruct &f2,
-    bool is_eq
-);
+bool eq_high_energy_space_charge(HighEnergySpaceChargeStruct &f1, HighEnergySpaceChargeStruct &f2);
 extern "C" bool fortran_eq_interval1_coef(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_interval1_coef(Interval1CoefStruct &f1, Interval1CoefStruct &f2, bool is_eq);
+bool eq_interval1_coef(Interval1CoefStruct &f1, Interval1CoefStruct &f2);
 extern "C" bool fortran_eq_kv_beam_init(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_kv_beam_init(KvBeamInitStruct &f1, KvBeamInitStruct &f2, bool is_eq);
+bool eq_kv_beam_init(KvBeamInitStruct &f1, KvBeamInitStruct &f2);
 extern "C" bool fortran_eq_lat(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_lat(LatStruct &f1, LatStruct &f2, bool is_eq);
+bool eq_lat(LatStruct &f1, LatStruct &f2);
 extern "C" bool fortran_eq_lat_ele_loc(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_lat_ele_loc(LatEleLocStruct &f1, LatEleLocStruct &f2, bool is_eq);
+bool eq_lat_ele_loc(LatEleLocStruct &f1, LatEleLocStruct &f2);
 extern "C" bool fortran_eq_lat_param(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_lat_param(LatParamStruct &f1, LatParamStruct &f2, bool is_eq);
+bool eq_lat_param(LatParamStruct &f1, LatParamStruct &f2);
 extern "C" bool fortran_eq_linac_normal_mode(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_linac_normal_mode(LinacNormalModeStruct &f1, LinacNormalModeStruct &f2, bool is_eq);
+bool eq_linac_normal_mode(LinacNormalModeStruct &f1, LinacNormalModeStruct &f2);
 extern "C" bool fortran_eq_mode3(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_mode3(Mode3Struct &f1, Mode3Struct &f2, bool is_eq);
+bool eq_mode3(Mode3Struct &f1, Mode3Struct &f2);
 extern "C" bool fortran_eq_mode_info(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_mode_info(ModeInfoStruct &f1, ModeInfoStruct &f2, bool is_eq);
+bool eq_mode_info(ModeInfoStruct &f1, ModeInfoStruct &f2);
 extern "C" bool fortran_eq_normal_modes(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_normal_modes(NormalModesStruct &f1, NormalModesStruct &f2, bool is_eq);
+bool eq_normal_modes(NormalModesStruct &f1, NormalModesStruct &f2);
 extern "C" bool fortran_eq_photon_element(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_photon_element(PhotonElementStruct &f1, PhotonElementStruct &f2, bool is_eq);
+bool eq_photon_element(PhotonElementStruct &f1, PhotonElementStruct &f2);
 extern "C" bool fortran_eq_photon_material(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_photon_material(PhotonMaterialStruct &f1, PhotonMaterialStruct &f2, bool is_eq);
+bool eq_photon_material(PhotonMaterialStruct &f1, PhotonMaterialStruct &f2);
 extern "C" bool fortran_eq_photon_reflect_surface(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_photon_reflect_surface(
-    PhotonReflectSurfaceStruct &f1,
-    PhotonReflectSurfaceStruct &f2,
-    bool is_eq
-);
+bool eq_photon_reflect_surface(PhotonReflectSurfaceStruct &f1, PhotonReflectSurfaceStruct &f2);
 extern "C" bool fortran_eq_photon_reflect_table(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_photon_reflect_table(
-    PhotonReflectTableStruct &f1,
-    PhotonReflectTableStruct &f2,
-    bool is_eq
-);
+bool eq_photon_reflect_table(PhotonReflectTableStruct &f1, PhotonReflectTableStruct &f2);
 extern "C" bool fortran_eq_photon_target(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_photon_target(PhotonTargetStruct &f1, PhotonTargetStruct &f2, bool is_eq);
+bool eq_photon_target(PhotonTargetStruct &f1, PhotonTargetStruct &f2);
 extern "C" bool fortran_eq_pixel_detec(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_pixel_detec(PixelDetecStruct &f1, PixelDetecStruct &f2, bool is_eq);
+bool eq_pixel_detec(PixelDetecStruct &f1, PixelDetecStruct &f2);
 extern "C" bool fortran_eq_pixel_pt(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_pixel_pt(PixelPtStruct &f1, PixelPtStruct &f2, bool is_eq);
+bool eq_pixel_pt(PixelPtStruct &f1, PixelPtStruct &f2);
 extern "C" bool fortran_eq_pre_tracker(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_pre_tracker(PreTrackerStruct &f1, PreTrackerStruct &f2, bool is_eq);
+bool eq_pre_tracker(PreTrackerStruct &f1, PreTrackerStruct &f2);
 extern "C" bool fortran_eq_rad_int1(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_rad_int1(RadInt1Struct &f1, RadInt1Struct &f2, bool is_eq);
+bool eq_rad_int1(RadInt1Struct &f1, RadInt1Struct &f2);
 extern "C" bool fortran_eq_rad_int_all_ele(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_rad_int_all_ele(RadIntAllEleStruct &f1, RadIntAllEleStruct &f2, bool is_eq);
+bool eq_rad_int_all_ele(RadIntAllEleStruct &f1, RadIntAllEleStruct &f2);
 extern "C" bool fortran_eq_rad_int_branch(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_rad_int_branch(RadIntBranchStruct &f1, RadIntBranchStruct &f2, bool is_eq);
+bool eq_rad_int_branch(RadIntBranchStruct &f1, RadIntBranchStruct &f2);
 extern "C" bool fortran_eq_rad_map(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_rad_map(RadMapStruct &f1, RadMapStruct &f2, bool is_eq);
+bool eq_rad_map(RadMapStruct &f1, RadMapStruct &f2);
 extern "C" bool fortran_eq_rad_map_ele(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_rad_map_ele(RadMapEleStruct &f1, RadMapEleStruct &f2, bool is_eq);
+bool eq_rad_map_ele(RadMapEleStruct &f1, RadMapEleStruct &f2);
 extern "C" bool fortran_eq_ramper_lord(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_ramper_lord(RamperLordStruct &f1, RamperLordStruct &f2, bool is_eq);
+bool eq_ramper_lord(RamperLordStruct &f1, RamperLordStruct &f2);
 extern "C" bool fortran_eq_space_charge_common(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_space_charge_common(SpaceChargeCommonStruct &f1, SpaceChargeCommonStruct &f2, bool is_eq);
+bool eq_space_charge_common(SpaceChargeCommonStruct &f1, SpaceChargeCommonStruct &f2);
 extern "C" bool fortran_eq_spin_polar(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_spin_polar(SpinPolarStruct &f1, SpinPolarStruct &f2, bool is_eq);
+bool eq_spin_polar(SpinPolarStruct &f1, SpinPolarStruct &f2);
 extern "C" bool fortran_eq_spline(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_spline(SplineStruct &f1, SplineStruct &f2, bool is_eq);
+bool eq_spline(SplineStruct &f1, SplineStruct &f2);
 extern "C" bool fortran_eq_strong_beam(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_strong_beam(StrongBeamStruct &f1, StrongBeamStruct &f2, bool is_eq);
+bool eq_strong_beam(StrongBeamStruct &f1, StrongBeamStruct &f2);
 extern "C" bool fortran_eq_surface_curvature(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_surface_curvature(SurfaceCurvatureStruct &f1, SurfaceCurvatureStruct &f2, bool is_eq);
+bool eq_surface_curvature(SurfaceCurvatureStruct &f1, SurfaceCurvatureStruct &f2);
 extern "C" bool fortran_eq_surface_displacement(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_surface_displacement(
-    SurfaceDisplacementStruct &f1,
-    SurfaceDisplacementStruct &f2,
-    bool is_eq
-);
+bool eq_surface_displacement(SurfaceDisplacementStruct &f1, SurfaceDisplacementStruct &f2);
 extern "C" bool fortran_eq_surface_displacement_pt(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_surface_displacement_pt(
-    SurfaceDisplacementPtStruct &f1,
-    SurfaceDisplacementPtStruct &f2,
-    bool is_eq
-);
+bool eq_surface_displacement_pt(SurfaceDisplacementPtStruct &f1, SurfaceDisplacementPtStruct &f2);
 extern "C" bool fortran_eq_surface_h_misalign(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_surface_h_misalign(SurfaceHMisalignStruct &f1, SurfaceHMisalignStruct &f2, bool is_eq);
+bool eq_surface_h_misalign(SurfaceHMisalignStruct &f1, SurfaceHMisalignStruct &f2);
 extern "C" bool fortran_eq_surface_h_misalign_pt(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_surface_h_misalign_pt(
-    SurfaceHMisalignPtStruct &f1,
-    SurfaceHMisalignPtStruct &f2,
-    bool is_eq
-);
+bool eq_surface_h_misalign_pt(SurfaceHMisalignPtStruct &f1, SurfaceHMisalignPtStruct &f2);
 extern "C" bool fortran_eq_surface_segmented(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_surface_segmented(SurfaceSegmentedStruct &f1, SurfaceSegmentedStruct &f2, bool is_eq);
+bool eq_surface_segmented(SurfaceSegmentedStruct &f1, SurfaceSegmentedStruct &f2);
 extern "C" bool fortran_eq_surface_segmented_pt(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_surface_segmented_pt(
-    SurfaceSegmentedPtStruct &f1,
-    SurfaceSegmentedPtStruct &f2,
-    bool is_eq
-);
+bool eq_surface_segmented_pt(SurfaceSegmentedPtStruct &f1, SurfaceSegmentedPtStruct &f2);
 extern "C" bool fortran_eq_target_point(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_target_point(TargetPointStruct &f1, TargetPointStruct &f2, bool is_eq);
+bool eq_target_point(TargetPointStruct &f1, TargetPointStruct &f2);
 extern "C" bool fortran_eq_taylor(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_taylor(TaylorStruct &f1, TaylorStruct &f2, bool is_eq);
+bool eq_taylor(TaylorStruct &f1, TaylorStruct &f2);
 extern "C" bool fortran_eq_taylor_term(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_taylor_term(TaylorTermStruct &f1, TaylorTermStruct &f2, bool is_eq);
+bool eq_taylor_term(TaylorTermStruct &f1, TaylorTermStruct &f2);
 extern "C" bool fortran_eq_track(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_track(TrackStruct &f1, TrackStruct &f2, bool is_eq);
+bool eq_track(TrackStruct &f1, TrackStruct &f2);
 extern "C" bool fortran_eq_track_point(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_track_point(TrackPointStruct &f1, TrackPointStruct &f2, bool is_eq);
+bool eq_track_point(TrackPointStruct &f1, TrackPointStruct &f2);
 extern "C" bool fortran_eq_twiss(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_twiss(TwissStruct &f1, TwissStruct &f2, bool is_eq);
+bool eq_twiss(TwissStruct &f1, TwissStruct &f2);
 extern "C" bool fortran_eq_wake(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wake(WakeStruct &f1, WakeStruct &f2, bool is_eq);
+bool eq_wake(WakeStruct &f1, WakeStruct &f2);
 extern "C" bool fortran_eq_wake_lr(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wake_lr(WakeLrStruct &f1, WakeLrStruct &f2, bool is_eq);
+bool eq_wake_lr(WakeLrStruct &f1, WakeLrStruct &f2);
 extern "C" bool fortran_eq_wake_lr_mode(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wake_lr_mode(WakeLrModeStruct &f1, WakeLrModeStruct &f2, bool is_eq);
+bool eq_wake_lr_mode(WakeLrModeStruct &f1, WakeLrModeStruct &f2);
 extern "C" bool fortran_eq_wake_sr(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wake_sr(WakeSrStruct &f1, WakeSrStruct &f2, bool is_eq);
+bool eq_wake_sr(WakeSrStruct &f1, WakeSrStruct &f2);
 extern "C" bool fortran_eq_wake_sr_mode(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wake_sr_mode(WakeSrModeStruct &f1, WakeSrModeStruct &f2, bool is_eq);
+bool eq_wake_sr_mode(WakeSrModeStruct &f1, WakeSrModeStruct &f2);
 extern "C" bool fortran_eq_wake_sr_z_long(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wake_sr_z_long(WakeSrZLongStruct &f1, WakeSrZLongStruct &f2, bool is_eq);
+bool eq_wake_sr_z_long(WakeSrZLongStruct &f1, WakeSrZLongStruct &f2);
 extern "C" bool fortran_eq_wall3d(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wall3d(Wall3dStruct &f1, Wall3dStruct &f2, bool is_eq);
+bool eq_wall3d(Wall3dStruct &f1, Wall3dStruct &f2);
 extern "C" bool fortran_eq_wall3d_section(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wall3d_section(Wall3dSectionStruct &f1, Wall3dSectionStruct &f2, bool is_eq);
+bool eq_wall3d_section(Wall3dSectionStruct &f1, Wall3dSectionStruct &f2);
 extern "C" bool fortran_eq_wall3d_vertex(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_wall3d_vertex(Wall3dVertexStruct &f1, Wall3dVertexStruct &f2, bool is_eq);
+bool eq_wall3d_vertex(Wall3dVertexStruct &f1, Wall3dVertexStruct &f2);
 extern "C" bool fortran_eq_xy_disp(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
-    bool &is_eq /* 0D_NOT_logical in */
+    bool &is_eq /* 0D_NOT_logical out */
 );
-void eq_xy_disp(XyDispStruct &f1, XyDispStruct &f2, bool is_eq);
+bool eq_xy_disp(XyDispStruct &f1, XyDispStruct &f2);
 extern "C" bool fortran_equal_sign_here(
     void *ele /* 0D_NOT_type inout */,
     const char *delim /* 0D_NOT_character in */,
-    bool &is_here /* 0D_NOT_logical in */
+    bool &is_here /* 0D_NOT_logical out */
 );
-void equal_sign_here(EleStruct &ele, std::string delim, bool is_here);
+bool equal_sign_here(EleStruct &ele, std::string delim);
 extern "C" bool fortran_equivalent_taylor_attributes(
     void *ele_taylor /* 0D_NOT_type in */,
     void *ele2 /* 0D_NOT_type in */,
@@ -3031,24 +2979,23 @@ extern "C" bool fortran_exp_bessi0(
     double &t /* 0D_NOT_real in */,
     double &B1 /* 0D_NOT_real in */,
     double &B2 /* 0D_NOT_real in */,
-    double &func_retval__ /* 0D_NOT_real in */
+    double &func_retval__ /* 0D_NOT_real out */
 );
-void exp_bessi0(double t, double B1, double B2, double func_retval__);
+double exp_bessi0(double t, double B1, double B2);
 extern "C" bool fortran_expect_one_of(
     const char *delim_list /* 0D_NOT_character in */,
     bool &check_input_delim /* 0D_NOT_logical in */,
     const char *ele_name /* 0D_NOT_character in */,
     const char *delim /* 0D_NOT_character inout */,
     bool &delim_found /* 0D_NOT_logical in */,
-    bool &is_ok /* 0D_NOT_logical in */
+    bool &is_ok /* 0D_NOT_logical out */
 );
-void expect_one_of(
+bool expect_one_of(
     std::string delim_list,
     bool check_input_delim,
     std::string ele_name,
     std::string &delim,
-    bool delim_found,
-    bool is_ok
+    bool delim_found
 );
 extern "C" bool fortran_expect_this(
     const char *expecting /* 0D_NOT_character in */,
@@ -3058,19 +3005,19 @@ extern "C" bool fortran_expect_this(
     void *ele /* 0D_NOT_type in */,
     const char *delim /* 0D_NOT_character out */,
     bool &delim_found /* 0D_NOT_logical out */,
-    bool &is_ok /* 0D_NOT_logical in */
+    bool &is_ok /* 0D_NOT_logical out */
 );
 struct ExpectThis {
   std::string delim;
   bool delim_found;
+  bool is_ok;
 };
 Bmad::ExpectThis expect_this(
     std::string expecting,
     bool check_delim,
     bool call_check,
     std::string err_str,
-    EleStruct &ele,
-    bool is_ok
+    EleStruct &ele
 );
 extern "C" bool fortran_expression_stack_to_string(
     Bmad::array_descriptor_t &stack /* 1D_NOT_type in */,
@@ -3351,15 +3298,10 @@ extern "C" bool fortran_gen_grad_field(
     void *gg /* 0D_NOT_type inout */,
     double &rho /* 0D_NOT_real in */,
     double &theta /* 0D_NOT_real in */,
-    Bmad::array_descriptor_t &field /* 1D_NOT_real inout */
+    Bmad::array_descriptor_t &field /* 1D_NOT_real out */
 );
-void gen_grad_field(
-    FArray1D<Real> &deriv,
-    GenGrad1Struct &gg,
-    double rho,
-    double theta,
-    FixedArray1D<Real, 3> field
-);
+FixedArray1D<Real, 3>
+gen_grad_field(FArray1D<Real> &deriv, GenGrad1Struct &gg, double rho, double theta);
 
 // Skipped unusable routine get_astra_fieldgrid_name_and_scaling:
 // - Untranslated type: str_index_struct (0D)
@@ -3507,9 +3449,9 @@ void gpt_field_grid_scaling(EleStruct &ele, int dimensions, double field_scale, 
 extern "C" bool fortran_gpt_max_field_reference(
     void *pt0 /* 0D_NOT_type inout */,
     void *ele /* 0D_NOT_type inout */,
-    double &field_value /* 0D_NOT_real in */
+    double &field_value /* 0D_NOT_real out */
 );
-void gpt_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele, double field_value);
+double gpt_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele);
 extern "C" void fortran_gpt_to_particle_bunch(
     const char *gpt_file /* 0D_NOT_character in */,
     void *ele /* 0D_NOT_type in */,
@@ -3569,9 +3511,9 @@ void hard_multipole_edge_kick(
 extern "C" bool fortran_has_attribute(
     void *ele /* 0D_NOT_type inout */,
     const char *attrib /* 0D_NOT_character in */,
-    bool &has_it /* 0D_NOT_logical in */
+    bool &has_it /* 0D_NOT_logical out */
 );
-void has_attribute(EleStruct &ele, std::string attrib, bool has_it);
+bool has_attribute(EleStruct &ele, std::string attrib);
 extern "C" bool
 fortran_has_curvature(void *phot_ele /* 0D_NOT_type in */, bool &curved /* 0D_NOT_logical out */);
 bool has_curvature(PhotonElementStruct &phot_ele);
@@ -3662,16 +3604,15 @@ extern "C" bool fortran_ibs_matrix_c(
     double &energy /* 0D_NOT_real in */,
     double &n_part /* 0D_NOT_real in */,
     int &species /* 0D_NOT_integer in */,
-    Bmad::array_descriptor_t &ibs_mat /* 2D_NOT_real inout */
+    Bmad::array_descriptor_t &ibs_mat /* 2D_NOT_real out */
 );
-void ibs_matrix_c(
+FixedArray2D<Real, 6, 6> ibs_matrix_c(
     FixedArray2D<Real, 6, 6> sigma_mat,
     bool tail_cut,
     double tau,
     double energy,
     double n_part,
-    int species,
-    FixedArray2D<Real, 6, 6> ibs_mat
+    int species
 );
 
 // Skipped unusable routine ibs_rates1turn:
@@ -3685,18 +3626,9 @@ extern "C" bool fortran_igfcoulombfun(
     double &dx /* 0D_NOT_real in */,
     double &dy /* 0D_NOT_real in */,
     double &dz /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void igfcoulombfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double dx,
-    double dy,
-    double dz,
-    double res
-);
+double igfcoulombfun(double u, double v, double w, double gam, double dx, double dy, double dz);
 extern "C" bool fortran_igfexfun(
     double &u /* 0D_NOT_real in */,
     double &v /* 0D_NOT_real in */,
@@ -3705,18 +3637,9 @@ extern "C" bool fortran_igfexfun(
     double &dx /* 0D_NOT_real in */,
     double &dy /* 0D_NOT_real in */,
     double &dz /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void igfexfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double dx,
-    double dy,
-    double dz,
-    double res
-);
+double igfexfun(double u, double v, double w, double gam, double dx, double dy, double dz);
 extern "C" bool fortran_igfeyfun(
     double &u /* 0D_NOT_real in */,
     double &v /* 0D_NOT_real in */,
@@ -3725,18 +3648,9 @@ extern "C" bool fortran_igfeyfun(
     double &dx /* 0D_NOT_real in */,
     double &dy /* 0D_NOT_real in */,
     double &dz /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void igfeyfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double dx,
-    double dy,
-    double dz,
-    double res
-);
+double igfeyfun(double u, double v, double w, double gam, double dx, double dy, double dz);
 extern "C" bool fortran_igfezfun(
     double &u /* 0D_NOT_real in */,
     double &v /* 0D_NOT_real in */,
@@ -3745,18 +3659,9 @@ extern "C" bool fortran_igfezfun(
     double &dx /* 0D_NOT_real in */,
     double &dy /* 0D_NOT_real in */,
     double &dz /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void igfezfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double dx,
-    double dy,
-    double dz,
-    double res
-);
+double igfezfun(double u, double v, double w, double gam, double dx, double dy, double dz);
 
 // Skipped unusable routine image_charge_kick_calc:
 // - Untranslated type: csr_kick1_struct (0D)
@@ -4062,9 +3967,9 @@ void insert_element(
 extern "C" bool fortran_integrand_base(
     double &t /* 0D_NOT_real in */,
     Bmad::array_descriptor_t &args /* 1D_NOT_real inout */,
-    double &func_retval__ /* 0D_NOT_real in */
+    double &func_retval__ /* 0D_NOT_real out */
 );
-void integrand_base(double t, FArray1D<Real> &args, double func_retval__);
+double integrand_base(double t, FArray1D<Real> &args);
 
 // Skipped unusable routine integrand_base_cov:
 // - Untranslated type: c_ptr (0D)
@@ -4216,9 +4121,9 @@ knot_interpolate(FArray1D<Real> &x_knot, FArray1D<Real> &y_knot, double x_pt, in
 extern "C" bool fortran_knots_to_string(
     Bmad::array_descriptor_t &x_knot /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &y_knot /* 1D_NOT_real inout */,
-    const char *str /* 0D_ALLOC_character in */
+    const char *str /* 0D_ALLOC_character out */
 );
-void knots_to_string(FArray1D<Real> &x_knot, FArray1D<Real> &y_knot, std::string str);
+std::string knots_to_string(FArray1D<Real> &x_knot, FArray1D<Real> &y_knot);
 
 // Skipped unusable routine kubo_integrand:
 // - Untranslated type: c_ptr (0D)
@@ -4226,9 +4131,9 @@ extern "C" bool fortran_lafun(
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
     double &z /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void lafun(double x, double y, double z, double res);
+double lafun(double x, double y, double z);
 extern "C" void fortran_lat_compute_ref_energy_and_time(
     void *lat /* 0D_NOT_type inout */,
     bool &err_flag /* 0D_NOT_logical out */
@@ -4735,13 +4640,9 @@ SpinOrbitMap1Struct map1_make_unit();
 extern "C" bool fortran_map1_times_map1(
     void *map2 /* 0D_NOT_type in */,
     void *map1 /* 0D_NOT_type in */,
-    void *map_out /* 0D_NOT_type inout */
+    void *map_out /* 0D_NOT_type out */
 );
-void map1_times_map1(
-    SpinOrbitMap1Struct &map2,
-    SpinOrbitMap1Struct &map1,
-    SpinOrbitMap1Struct &map_out
-);
+SpinOrbitMap1Struct map1_times_map1(SpinOrbitMap1Struct &map2, SpinOrbitMap1Struct &map1);
 
 // Skipped unusable routine map_coef:
 // - Untranslated type: real_8 (1D)
@@ -5086,9 +4987,9 @@ void multipole_spin_tracking(EleStruct &ele, LatParamStruct &param, CoordStruct 
 extern "C" bool fortran_mytan(
     double &y /* 0D_NOT_real in */,
     double &x /* 0D_NOT_real in */,
-    double &arg /* 0D_NOT_real in */
+    double &arg /* 0D_NOT_real out */
 );
-void mytan(double y, double x, double arg);
+double mytan(double y, double x);
 extern "C" bool fortran_n_attrib_string_max_len(int &max_len /* 0D_NOT_integer out */);
 int n_attrib_string_max_len();
 extern "C" void fortran_new_control(
@@ -5574,16 +5475,15 @@ extern "C" bool fortran_parse_integer_list(
     const char *separator /* 0D_NOT_character in */,
     const char *close_delim /* 0D_NOT_character in */,
     int *default_value /* 0D_NOT_integer in */,
-    bool &is_ok /* 0D_NOT_logical in */
+    bool &is_ok /* 0D_NOT_logical out */
 );
-void parse_integer_list(
+bool parse_integer_list(
     std::string err_str,
     LatStruct &lat,
     FArray1D<Int> &int_array,
     bool exact_size,
     std::string delim,
     bool delim_found,
-    bool is_ok,
     std::optional<std::string> open_delim = std::nullopt,
     std::optional<std::string> separator = std::nullopt,
     std::optional<std::string> close_delim = std::nullopt,
@@ -5634,19 +5534,19 @@ extern "C" bool fortran_parse_real_list(
     const char *close_delim /* 0D_NOT_character in */,
     double *default_value /* 0D_NOT_real in */,
     int &num_found /* 0D_NOT_integer out */,
-    bool &is_ok /* 0D_NOT_logical in */
+    bool &is_ok /* 0D_NOT_logical out */
 );
 struct ParseRealList {
   std::string delim;
   bool delim_found;
   int num_found;
+  bool is_ok;
 };
 Bmad::ParseRealList parse_real_list(
     LatStruct &lat,
     std::string err_str,
     FArray1D<Real> &real_array,
     bool exact_size,
-    bool is_ok,
     std::optional<std::string> open_delim = std::nullopt,
     std::optional<std::string> separator = std::nullopt,
     std::optional<std::string> close_delim = std::nullopt,
@@ -5756,14 +5656,13 @@ extern "C" bool fortran_parser_fast_integer_read(
     void *ele /* 0D_NOT_type inout */,
     const char *delim_wanted /* 0D_NOT_character in */,
     const char *err_str /* 0D_NOT_character in */,
-    bool &is_ok /* 0D_NOT_logical in */
+    bool &is_ok /* 0D_NOT_logical out */
 );
-void parser_fast_integer_read(
+bool parser_fast_integer_read(
     FArray1D<Int> &int_vec,
     EleStruct &ele,
     std::string delim_wanted,
-    std::string err_str,
-    bool is_ok
+    std::string err_str
 );
 extern "C" bool fortran_parser_fast_real_read(
     Bmad::array_descriptor_t &real_vec /* 1D_NOT_real inout */,
@@ -6691,9 +6590,9 @@ bool randomize_lr_wake_frequencies(EleStruct &ele);
 extern "C" bool fortran_rchomp(
     double &rel /* 0D_NOT_real in */,
     int &plc /* 0D_NOT_integer in */,
-    const char *out /* 0D_NOT_character in */
+    const char *out /* 0D_NOT_character out */
 );
-void rchomp(double rel, int plc, std::string out);
+std::string rchomp(double rel, int plc);
 
 // Skipped unusable routine rclog_integrand:
 // - Untranslated type: c_ptr (0D)
@@ -6737,12 +6636,12 @@ void re_associate_node_array(
 );
 extern "C" bool fortran_re_str_qp(
     long double &rel /* 0D_NOT_real16 in */,
-    const char *str_out /* 0D_NOT_character in */
+    const char *str_out /* 0D_NOT_character out */
 );
-void re_str(long double rel, std::string str_out);
+std::string re_str(long double rel);
 extern "C" bool
-fortran_re_str_rp(double &rel /* 0D_NOT_real in */, const char *str_out /* 0D_NOT_character in */);
-void re_str(double rel, std::string str_out);
+fortran_re_str_rp(double &rel /* 0D_NOT_real in */, const char *str_out /* 0D_NOT_character out */);
+std::string re_str(double rel);
 extern "C" void fortran_read_beam_ascii(
     const char *file_name /* 0D_NOT_character in */,
     void *beam /* 0D_NOT_type out */,
@@ -6899,9 +6798,9 @@ double rel_tracking_charge_to_mass(CoordStruct &orbit, int ref_species);
 extern "C" bool fortran_relative_mode_flip(
     void *ele1 /* 0D_NOT_type in */,
     void *ele2 /* 0D_NOT_type in */,
-    bool &func_retval__ /* 0D_NOT_logical in */
+    bool &func_retval__ /* 0D_NOT_logical out */
 );
-void relative_mode_flip(EleStruct &ele1, EleStruct &ele2, bool func_retval__);
+bool relative_mode_flip(EleStruct &ele1, EleStruct &ele2);
 extern "C" void fortran_release_rad_int_cache(int &ix_cache /* 0D_NOT_integer inout */);
 void release_rad_int_cache(int &ix_cache);
 extern "C" void fortran_remove_constant_taylor(
@@ -6982,20 +6881,9 @@ extern "C" bool fortran_rfun(
     double &hz /* 0D_NOT_real in */,
     int &i /* 0D_NOT_integer in */,
     int &j /* 0D_NOT_integer in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void rfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double a,
-    double b,
-    double hz,
-    int i,
-    int j,
-    double res
-);
+double rfun(double u, double v, double w, double gam, double a, double b, double hz, int i, int j);
 extern "C" void fortran_rk_adaptive_time_step(
     void *ele /* 0D_NOT_type inout */,
     void *param /* 0D_NOT_type inout */,
@@ -7048,9 +6936,9 @@ FixedArray1D<Real, 10> rk_time_step1(
 extern "C" bool fortran_rotate3(
     Bmad::array_descriptor_t &vec /* 1D_NOT_real inout */,
     double &angle /* 0D_NOT_real in */,
-    Bmad::array_descriptor_t &rvec /* 1D_NOT_real inout */
+    Bmad::array_descriptor_t &rvec /* 1D_NOT_real out */
 );
-void rotate3(FixedArray1D<Real, 3> vec, double angle, FixedArray1D<Real, 3> rvec);
+FixedArray1D<Real, 3> rotate3(FixedArray1D<Real, 3> vec, double angle);
 extern "C" void fortran_rotate_em_field(
     void *field /* 0D_NOT_type inout */,
     Bmad::array_descriptor_t &w_mat /* 2D_NOT_real in */,
@@ -7554,8 +7442,8 @@ bool significant_difference(
     std::optional<double> rel_tol = std::nullopt
 );
 extern "C" bool
-fortran_skip_ele_blender(void *ele /* 0D_NOT_type inout */, bool &skip /* 0D_NOT_logical in */);
-void skip_ele_blender(EleStruct &ele, bool skip);
+fortran_skip_ele_blender(void *ele /* 0D_NOT_type inout */, bool &skip /* 0D_NOT_logical out */);
+bool skip_ele_blender(EleStruct &ele);
 extern "C" void fortran_slice_lattice(
     void *lat /* 0D_NOT_type inout */,
     const char *ele_list /* 0D_NOT_character in */,
@@ -7733,13 +7621,12 @@ extern "C" bool fortran_spin_omega(
     void *orbit /* 0D_NOT_type inout */,
     int &sign_z_vel /* 0D_NOT_integer in */,
     bool *phase_space_coords /* 0D_NOT_logical in */,
-    Bmad::array_descriptor_t &omega /* 1D_NOT_real inout */
+    Bmad::array_descriptor_t &omega /* 1D_NOT_real out */
 );
-void spin_omega(
+FixedArray1D<Real, 3> spin_omega(
     EmFieldStruct &field,
     CoordStruct &orbit,
     int sign_z_vel,
-    FixedArray1D<Real, 3> omega,
     std::optional<bool> phase_space_coords = std::nullopt
 );
 extern "C" void fortran_spin_quat_resonance_strengths(
@@ -10178,9 +10065,9 @@ extern "C" bool fortran_xlafun(
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
     double &z /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void xlafun(double x, double y, double z, double res);
+double xlafun(double x, double y, double z);
 extern "C" bool fortran_xraylib_nist_compound(
     const char *name /* 0D_NOT_character in */,
     int &indx /* 0D_NOT_integer out */
@@ -10196,9 +10083,9 @@ extern "C" bool fortran_ylafun(
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
     double &z /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void ylafun(double x, double y, double z, double res);
+double ylafun(double x, double y, double z);
 extern "C" bool fortran_z_at_surface(
     void *ele /* 0D_NOT_type in */,
     double &x /* 0D_NOT_real in */,
@@ -10225,9 +10112,9 @@ extern "C" bool fortran_zlafun(
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
     double &z /* 0D_NOT_real in */,
-    double &res /* 0D_NOT_real in */
+    double &res /* 0D_NOT_real out */
 );
-void zlafun(double x, double y, double z, double res);
+double zlafun(double x, double y, double z);
 
 // Skipped unusable routine zot_integrand:
 // - Untranslated type: c_ptr (0D)

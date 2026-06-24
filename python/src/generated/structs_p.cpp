@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_p.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -113,6 +116,21 @@ void init_photon_element_struct(py::module &m, py::class_<PhotonElementStruct> &
           "__deepcopy__",
           [](const PhotonElementStruct &self, py::dict &memo) { return PhotonElementStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const PhotonElementStruct &self, const PhotonElementStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonElementStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -201,6 +219,21 @@ void init_photon_material_struct(py::module &m, py::class_<PhotonMaterialStruct>
             return PhotonMaterialStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const PhotonMaterialStruct &self, const PhotonMaterialStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonMaterialStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -280,6 +313,21 @@ void init_photon_reflect_surface_struct(
           "__deepcopy__",
           [](const PhotonReflectSurfaceStruct &self, py::dict &memo) {
             return PhotonReflectSurfaceStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const PhotonReflectSurfaceStruct &self, const PhotonReflectSurfaceStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonReflectSurfaceStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -378,6 +426,21 @@ void init_photon_reflect_table_struct(py::module &m, py::class_<PhotonReflectTab
             return PhotonReflectTableStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const PhotonReflectTableStruct &self, const PhotonReflectTableStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonReflectTableStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -437,6 +500,21 @@ void init_photon_target_struct(py::module &m, py::class_<PhotonTargetStruct> &cl
       .def(
           "__deepcopy__",
           [](const PhotonTargetStruct &self, py::dict &memo) { return PhotonTargetStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PhotonTargetStruct &self, const PhotonTargetStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonTargetStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -507,6 +585,21 @@ void init_pixel_detec_struct(py::module &m, py::class_<PixelDetecStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const PixelDetecStruct &self, py::dict &memo) { return PixelDetecStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PixelDetecStruct &self, const PixelDetecStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PixelDetecStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -585,6 +678,21 @@ void init_pixel_pt_struct(py::module &m, py::class_<PixelPtStruct> &cls) {
           "__deepcopy__",
           [](const PixelPtStruct &self, py::dict &memo) { return PixelPtStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const PixelPtStruct &self, const PixelPtStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PixelPtStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -632,6 +740,21 @@ void init_pre_tracker_struct(py::module &m, py::class_<PreTrackerStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const PreTrackerStruct &self, py::dict &memo) { return PreTrackerStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PreTrackerStruct &self, const PreTrackerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PreTrackerStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -682,6 +805,21 @@ void init_ptc_normal_form_struct(py::module &m, py::class_<PtcNormalFormStruct> 
       .def(
           "__deepcopy__",
           [](const PtcNormalFormStruct &self, py::dict &memo) { return PtcNormalFormStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PtcNormalFormStruct &self, const PtcNormalFormStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PtcNormalFormStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

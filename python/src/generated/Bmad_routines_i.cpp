@@ -27,7 +27,6 @@ void init_Bmad_routines_i(py::module &m) {
       py::arg("energy"),
       py::arg("n_part"),
       py::arg("species"),
-      py::arg("ibs_mat"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ibs_matrix_c
 
@@ -45,6 +44,8 @@ n_part : float
 
 species : int
 
+Returns
+-------
 ibs_mat : 2D array of float (shape: 6,6)
 )"""
   );
@@ -58,7 +59,6 @@ ibs_mat : 2D array of float (shape: 6,6)
       py::arg("dx"),
       py::arg("dy"),
       py::arg("dz"),
-      py::arg("res"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine igfcoulombfun
 
@@ -78,6 +78,8 @@ dy : float
 
 dz : float
 
+Returns
+-------
 res : float
 )"""
   );
@@ -91,7 +93,6 @@ res : float
       py::arg("dx"),
       py::arg("dy"),
       py::arg("dz"),
-      py::arg("res"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine igfexfun
 
@@ -111,6 +112,8 @@ dy : float
 
 dz : float
 
+Returns
+-------
 res : float
 )"""
   );
@@ -124,7 +127,6 @@ res : float
       py::arg("dx"),
       py::arg("dy"),
       py::arg("dz"),
-      py::arg("res"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine igfeyfun
 
@@ -144,6 +146,8 @@ dy : float
 
 dz : float
 
+Returns
+-------
 res : float
 )"""
   );
@@ -157,7 +161,6 @@ res : float
       py::arg("dx"),
       py::arg("dy"),
       py::arg("dz"),
-      py::arg("res"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine igfezfun
 
@@ -177,6 +180,8 @@ dy : float
 
 dz : float
 
+Returns
+-------
 res : float
 )"""
   );
@@ -1084,7 +1089,6 @@ orbit : 1D array of CoordStruct, optional
       &Bmad::integrand_base,
       py::arg("t"),
       py::arg("args"),
-      py::arg("func_retval__"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function integrand_base(t)
 

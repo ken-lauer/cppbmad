@@ -86,9 +86,9 @@ double asinc(double x, std::optional<int> nd = std::nullopt);
 extern "C" bool fortran_assert_equal(
     Bmad::array_descriptor_t &int_arr /* 1D_NOT_integer in */,
     const char *err_str /* 0D_NOT_character in */,
-    int &ival /* 0D_NOT_integer in */
+    int &ival /* 0D_NOT_integer out */
 );
-void assert_equal(FArray1D<Int> &int_arr, std::string err_str, int ival);
+int assert_equal(FArray1D<Int> &int_arr, std::string err_str);
 extern "C" bool fortran_atomic_number(
     int &species /* 0D_NOT_integer in */,
     int &atomic_num /* 0D_NOT_integer out */
@@ -172,9 +172,9 @@ extern "C" bool fortran_bin_x_center(
     int &ix_bin /* 0D_NOT_integer inout */,
     double &bin1_x_min /* 0D_NOT_real in */,
     double &bin_delta /* 0D_NOT_real in */,
-    double &x_center /* 0D_NOT_real in */
+    double &x_center /* 0D_NOT_real out */
 );
-void bin_x_center(int &ix_bin, double bin1_x_min, double bin_delta, double x_center);
+double bin_x_center(int &ix_bin, double bin1_x_min, double bin_delta);
 extern "C" void fortran_bit_set(
     int &word /* 0D_NOT_integer inout */,
     int &pos /* 0D_NOT_integer in */,
@@ -231,8 +231,8 @@ SimUtils::Celbd celbd(double mc);
 extern "C" void
 fortran_cesr_getarg(int &i_arg /* 0D_NOT_integer in */, const char *arg /* 0D_NOT_character out */);
 std::string cesr_getarg(int i_arg);
-extern "C" bool fortran_cesr_iargc(int &func_retval__ /* 0D_NOT_integer in */);
-void cesr_iargc(int func_retval__);
+extern "C" bool fortran_cesr_iargc(int &func_retval__ /* 0D_NOT_integer out */);
+int cesr_iargc();
 extern "C" void fortran_change_file_number(
     const char *file_name /* 0D_NOT_character in */,
     int &change /* 0D_NOT_integer in */
@@ -358,14 +358,14 @@ double dj_bessel(int m, double arg);
 extern "C" bool fortran_djb_hash(
     const char *str /* 0D_NOT_character in */,
     int *old_hash /* 0D_NOT_integer in */,
-    int &hash /* 0D_NOT_integer in */
+    int &hash /* 0D_NOT_integer out */
 );
-void djb_hash(std::string str, int hash, std::optional<int> old_hash = std::nullopt);
+int djb_hash(std::string str, std::optional<int> old_hash = std::nullopt);
 extern "C" bool fortran_djb_str_hash(
     const char *in_str /* 0D_NOT_character in */,
-    const char *hash_str /* 0D_NOT_character in */
+    const char *hash_str /* 0D_NOT_character out */
 );
-void djb_str_hash(std::string in_str, std::string hash_str);
+std::string djb_str_hash(std::string in_str);
 
 // Skipped unusable routine doubleup_quotes:
 // - No matching docstring
@@ -501,15 +501,15 @@ void file_suffixer(
 extern "C" bool fortran_find_location_int(
     Bmad::array_descriptor_t &arr /* 1D_NOT_integer inout */,
     int &value /* 0D_NOT_integer in */,
-    int &ix_match /* 0D_NOT_integer in */
+    int &ix_match /* 0D_NOT_integer out */
 );
-void find_location(FArray1D<Int> &arr, int value, int ix_match);
+int find_location(FArray1D<Int> &arr, int value);
 extern "C" bool fortran_find_location_logic(
     void *arr /* 1D_ALLOC_logical inout */,
     bool &value /* 0D_NOT_logical in */,
-    int &ix_match /* 0D_NOT_integer in */
+    int &ix_match /* 0D_NOT_integer out */
 );
-void find_location(BoolAlloc1D &arr, bool value, int ix_match);
+int find_location(BoolAlloc1D &arr, bool value);
 extern "C" bool fortran_find_location_real(
     Bmad::array_descriptor_t &arr /* 1D_NOT_real in */,
     double &value /* 0D_NOT_real in */,
@@ -519,9 +519,9 @@ int find_location(FArray1D<Real> &arr, double value);
 extern "C" bool fortran_find_location_str(
     void *arr /* 1D_NOT_character inout */,
     const char *value /* 0D_NOT_character in */,
-    int &ix_match /* 0D_NOT_integer in */
+    int &ix_match /* 0D_NOT_integer out */
 );
-void find_location(CharacterAlloc1D &arr, std::string value, int ix_match);
+int find_location(CharacterAlloc1D &arr, std::string value);
 extern "C" bool fortran_fine_frequency_estimate(
     Bmad::array_descriptor_t &data /* 1D_NOT_real in */,
     double &frequency /* 0D_NOT_real out */
@@ -530,9 +530,9 @@ double fine_frequency_estimate(FArray1D<Real> &data);
 extern "C" bool fortran_fixedwindowls(
     double &ynew /* 0D_NOT_real in */,
     int &id /* 0D_NOT_integer in */,
-    double &z /* 0D_NOT_real in */
+    double &z /* 0D_NOT_real out */
 );
-void fixedwindowls(double ynew, int id, double z);
+double fixedwindowls(double ynew, int id);
 extern "C" void fortran_fourier_amplitude(
     Bmad::array_descriptor_t &data /* 1D_NOT_real in */,
     double &frequency /* 0D_NOT_real in */,
@@ -637,17 +637,17 @@ void increment_file_number(std::string file_name, int digits, int number, std::s
 extern "C" bool fortran_index_nocase(
     const char *string1 /* 0D_NOT_character in */,
     const char *string2 /* 0D_NOT_character in */,
-    int &indx /* 0D_NOT_integer in */
+    int &indx /* 0D_NOT_integer out */
 );
-void index_nocase(std::string string1, std::string string2, int indx);
+int index_nocase(std::string string1, std::string string2);
 extern "C" bool fortran_initfixedwindowls(
     int &N /* 0D_NOT_integer in */,
     double &dt /* 0D_NOT_real in */,
     int &order /* 0D_NOT_integer in */,
     int &der /* 0D_NOT_integer in */,
-    int &id /* 0D_NOT_integer in */
+    int &id /* 0D_NOT_integer out */
 );
-void initfixedwindowls(int N, double dt, int order, int der, int id);
+int initfixedwindowls(int N, double dt, int order, int der);
 extern "C" void fortran_initial_lmdif();
 void initial_lmdif();
 
@@ -656,20 +656,19 @@ void initial_lmdif();
 extern "C" bool fortran_int_str(
     int &int_ /* 0D_NOT_integer in */,
     int *width /* 0D_NOT_integer in */,
-    const char *str /* 0D_ALLOC_character in */
+    const char *str /* 0D_ALLOC_character out */
 );
-void int_str(int int_, std::string str, std::optional<int> width = std::nullopt);
+std::string int_str(int int_, std::optional<int> width = std::nullopt);
 extern "C" bool fortran_interpolated_fft(
     Bmad::array_descriptor_t &cdata /* 1D_NOT_complex inout */,
     bool &calc_ok /* 0D_NOT_logical in */,
     int *opt_dump_spectrum /* 0D_NOT_integer in */,
     int *opt_dump_index /* 0D_NOT_integer in */,
-    double &this_fft /* 0D_NOT_real in */
+    double &this_fft /* 0D_NOT_real out */
 );
-void interpolated_fft(
+double interpolated_fft(
     FArray1D<Complex> &cdata,
     bool calc_ok,
-    double this_fft,
     std::optional<int> opt_dump_spectrum = std::nullopt,
     std::optional<int> opt_dump_index = std::nullopt
 );
@@ -678,12 +677,11 @@ extern "C" bool fortran_interpolated_fft_gsl(
     bool &calc_ok /* 0D_NOT_logical in */,
     int *opt_dump_spectrum /* 0D_NOT_integer in */,
     int *opt_dump_index /* 0D_NOT_integer in */,
-    double &this_fft /* 0D_NOT_real in */
+    double &this_fft /* 0D_NOT_real out */
 );
-void interpolated_fft_gsl(
+double interpolated_fft_gsl(
     FArray1D<Complex> &cdata,
     bool calc_ok,
-    double this_fft,
     std::optional<int> opt_dump_spectrum = std::nullopt,
     std::optional<int> opt_dump_index = std::nullopt
 );
@@ -699,13 +697,9 @@ void interpolated_fft_gsl(
 extern "C" bool fortran_is_alphabetic(
     const char *string /* 0D_NOT_character in */,
     const char *valid_chars /* 0D_NOT_character in */,
-    bool &is_alpha /* 0D_NOT_logical in */
+    bool &is_alpha /* 0D_NOT_logical out */
 );
-void is_alphabetic(
-    std::string string,
-    bool is_alpha,
-    std::optional<std::string> valid_chars = std::nullopt
-);
+bool is_alphabetic(std::string string, std::optional<std::string> valid_chars = std::nullopt);
 extern "C" bool fortran_is_decreasing_sequence(
     Bmad::array_descriptor_t &array /* 1D_NOT_real in */,
     bool *strict /* 0D_NOT_logical in */,
@@ -726,11 +720,10 @@ extern "C" bool fortran_is_integer(
     int *int_ /* 0D_NOT_integer in */,
     const char *delims /* 0D_NOT_character in */,
     int *ix_word /* 0D_NOT_integer in */,
-    bool &valid /* 0D_NOT_logical in */
+    bool &valid /* 0D_NOT_logical out */
 );
-void is_integer(
+bool is_integer(
     std::string string,
-    bool valid,
     std::optional<int> int_ = std::nullopt,
     std::optional<std::string> delims = std::nullopt,
     std::optional<int> ix_word = std::nullopt
@@ -738,18 +731,17 @@ void is_integer(
 extern "C" bool fortran_is_logical(
     const char *string /* 0D_NOT_character in */,
     bool *ignore /* 0D_NOT_logical in */,
-    bool &valid /* 0D_NOT_logical in */
+    bool &valid /* 0D_NOT_logical out */
 );
-void is_logical(std::string string, bool valid, std::optional<bool> ignore = std::nullopt);
+bool is_logical(std::string string, std::optional<bool> ignore = std::nullopt);
 extern "C" bool fortran_is_real(
     const char *string /* 0D_NOT_character in */,
     bool *ignore /* 0D_NOT_logical in */,
     double *real_num /* 0D_NOT_real in */,
-    bool &valid /* 0D_NOT_logical in */
+    bool &valid /* 0D_NOT_logical out */
 );
-void is_real(
+bool is_real(
     std::string string,
-    bool valid,
     std::optional<bool> ignore = std::nullopt,
     std::optional<double> real_num = std::nullopt
 );
@@ -825,10 +817,10 @@ FixedArray1D<Real, 3> linear_fit_2d(FArray1D<Real> &x, FArray1D<Real> &y, FArray
 // - Array bounds handling: "Enum 'IX_MIN' found in bounds 'ix_min' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool
-fortran_logic_str(bool &logic /* 0D_NOT_logical in */, const char *str /* 0D_NOT_character in */);
-void logic_str(bool logic, std::string str);
-extern "C" bool fortran_lunget(int &func_retval__ /* 0D_NOT_integer in */);
-void lunget(int func_retval__);
+fortran_logic_str(bool &logic /* 0D_NOT_logical in */, const char *str /* 0D_NOT_character out */);
+std::string logic_str(bool logic);
+extern "C" bool fortran_lunget(int &func_retval__ /* 0D_NOT_integer out */);
+int lunget();
 extern "C" void fortran_make_legal_comment(
     const char *comment_in /* 0D_NOT_character in */,
     const char *comment_out /* 0D_NOT_character in */
@@ -873,15 +865,15 @@ double mass_of(int species);
 extern "C" bool fortran_match_reg(
     const char *str /* 0D_NOT_character in */,
     const char *pat /* 0D_NOT_character in */,
-    bool &is_match /* 0D_NOT_logical in */
+    bool &is_match /* 0D_NOT_logical out */
 );
-void match_reg(std::string str, std::string pat, bool is_match);
+bool match_reg(std::string str, std::string pat);
 extern "C" bool fortran_match_wild(
     const char *string /* 0D_NOT_character in */,
     const char *template_ /* 0D_NOT_character in */,
-    bool &is_match /* 0D_NOT_logical in */
+    bool &is_match /* 0D_NOT_logical out */
 );
-void match_wild(std::string string, std::string template_, bool is_match);
+bool match_wild(std::string string, std::string template_);
 extern "C" void fortran_match_word(
     const char *string /* 0D_NOT_character in */,
     void *names /* 1D_NOT_character inout */,
@@ -904,9 +896,9 @@ void match_word(
 extern "C" bool fortran_maximize_projection(
     double &seed /* 0D_NOT_real in */,
     Bmad::array_descriptor_t &cdata /* 1D_NOT_complex inout */,
-    double &func_retval__ /* 0D_NOT_real in */
+    double &func_retval__ /* 0D_NOT_real out */
 );
-void maximize_projection(double seed, FArray1D<Complex> &cdata, double func_retval__);
+double maximize_projection(double seed, FArray1D<Complex> &cdata);
 extern "C" void fortran_milli_sleep(int &milli_sec /* 0D_NOT_integer in */);
 void milli_sleep(int milli_sec);
 extern "C" bool fortran_modulo2_dp(
@@ -937,8 +929,8 @@ double modulo2_sp(double x, double amp);
 // Skipped unusable routine molecular_components:
 // - Untranslated type: molecular_component_struct (1D)
 extern "C" bool
-fortran_n_bins_automatic(int &n_data /* 0D_NOT_integer in */, int &n /* 0D_NOT_integer in */);
-void n_bins_automatic(int n_data, int n);
+fortran_n_bins_automatic(int &n_data /* 0D_NOT_integer in */, int &n /* 0D_NOT_integer out */);
+int n_bins_automatic(int n_data);
 extern "C" bool fortran_n_choose_k(
     int &n /* 0D_NOT_integer in */,
     int &k /* 0D_NOT_integer in */,
@@ -981,12 +973,11 @@ extern "C" bool fortran_nametable_bracket_indexx(
     void *nametable /* 0D_NOT_type inout */,
     const char *name /* 0D_NOT_character in */,
     int *n_match /* 0D_NOT_integer in */,
-    int &ix_max /* 0D_NOT_integer in */
+    int &ix_max /* 0D_NOT_integer out */
 );
-void nametable_bracket_indexx(
+int nametable_bracket_indexx(
     NametableStruct &nametable,
     std::string name,
-    int ix_max,
     std::optional<int> n_match = std::nullopt
 );
 extern "C" void fortran_nametable_change1(
@@ -1013,15 +1004,15 @@ void nametable_remove(NametableStruct &nametable, int ix_name);
 extern "C" bool fortran_negative_ampsquared(
     double &frequency /* 0D_NOT_real in */,
     int *status /* 0D_NOT_integer in */,
-    double &amp /* 0D_NOT_real in */
+    double &amp /* 0D_NOT_real out */
 );
-void negative_ampsquared(double frequency, double amp, std::optional<int> status = std::nullopt);
+double negative_ampsquared(double frequency, std::optional<int> status = std::nullopt);
 extern "C" bool fortran_negative_dampsquared(
     double &frequency /* 0D_NOT_real in */,
     int *status /* 0D_NOT_integer in */,
-    double &damp /* 0D_NOT_real in */
+    double &damp /* 0D_NOT_real out */
 );
-void negative_dampsquared(double frequency, double damp, std::optional<int> status = std::nullopt);
+double negative_dampsquared(double frequency, std::optional<int> status = std::nullopt);
 
 // Skipped unusable routine node_put:
 // - Routine in configuration skip list
@@ -1064,15 +1055,15 @@ std::string openpmd_species_name(int species);
 // - Argument not defined: this_opti (have: [])
 // - Translated arg count mismatch (unsupported?)
 extern "C" bool
-fortran_ordinal_str(int &n /* 0D_NOT_integer in */, const char *str /* 0D_ALLOC_character in */);
-void ordinal_str(int n, std::string str);
+fortran_ordinal_str(int &n /* 0D_NOT_integer in */, const char *str /* 0D_ALLOC_character out */);
+std::string ordinal_str(int n);
 extern "C" bool fortran_out_io_buffer_get_line(
     int &ix_line /* 0D_NOT_integer in */,
-    const char *line /* 0D_NOT_character in */
+    const char *line /* 0D_NOT_character out */
 );
-void out_io_buffer_get_line(int ix_line, std::string line);
-extern "C" bool fortran_out_io_buffer_num_lines(int &n_lines /* 0D_NOT_integer in */);
-void out_io_buffer_num_lines(int n_lines);
+std::string out_io_buffer_get_line(int ix_line);
+extern "C" bool fortran_out_io_buffer_num_lines(int &n_lines /* 0D_NOT_integer out */);
+int out_io_buffer_num_lines();
 extern "C" void fortran_out_io_buffer_reset();
 void out_io_buffer_reset();
 
@@ -1257,14 +1248,14 @@ double poly_eval(FArray1D<Real> &poly, double x, std::optional<bool> diff_coef =
 // Skipped unusable routine print_mat:
 // - Variable in sized array: 2D_NOT_real
 extern "C" bool
-fortran_probability_funct(double &x /* 0D_NOT_real in */, double &prob /* 0D_NOT_real in */);
-void probability_funct(double x, double prob);
+fortran_probability_funct(double &x /* 0D_NOT_real in */, double &prob /* 0D_NOT_real out */);
+double probability_funct(double x);
 extern "C" bool fortran_projdd(
     Bmad::array_descriptor_t &a /* 1D_NOT_complex inout */,
     Bmad::array_descriptor_t &b /* 1D_NOT_complex inout */,
-    std::complex<double> &func_retval__ /* 0D_NOT_complex in */
+    std::complex<double> &func_retval__ /* 0D_NOT_complex out */
 );
-void projdd(FArray1D<Complex> &a, FArray1D<Complex> &b, std::complex<double> func_retval__);
+std::complex<double> projdd(FArray1D<Complex> &a, FArray1D<Complex> &b);
 
 // Skipped unusable routine qr:
 // - Variable in sized array: 2D_NOT_real
@@ -1397,19 +1388,15 @@ extern "C" void fortran_query_string(
 void query_string(std::string query_str, bool upcase, std::string return_str, int ix, int ios);
 extern "C" bool fortran_quote(
     const char *str /* 0D_NOT_character in */,
-    const char *q_str /* 0D_ALLOC_character in */
+    const char *q_str /* 0D_ALLOC_character out */
 );
-void quote(std::string str, std::string q_str);
+std::string quote(std::string str);
 extern "C" bool fortran_quoten(
     void *str /* 1D_NOT_character inout */,
     const char *delim /* 0D_NOT_character in */,
-    const char *q_str /* 0D_ALLOC_character in */
+    const char *q_str /* 0D_ALLOC_character out */
 );
-void quoten(
-    CharacterAlloc1D &str,
-    std::string q_str,
-    std::optional<std::string> delim = std::nullopt
-);
+std::string quoten(CharacterAlloc1D &str, std::optional<std::string> delim = std::nullopt);
 extern "C" void fortran_ran_default_state(
     void *set_state /* 0D_NOT_type in */,
     void *get_state /* 0D_NOT_type out */
@@ -1519,29 +1506,24 @@ extern "C" bool fortran_real_num_fortran_format(
     double &number /* 0D_NOT_real in */,
     int &width /* 0D_NOT_integer in */,
     int *n_blanks /* 0D_NOT_integer in */,
-    const char *fmt_str /* 0D_NOT_character in */
+    const char *fmt_str /* 0D_NOT_character out */
 );
-void real_num_fortran_format(
-    double number,
-    int width,
-    std::string fmt_str,
-    std::optional<int> n_blanks = std::nullopt
-);
+std::string
+real_num_fortran_format(double number, int width, std::optional<int> n_blanks = std::nullopt);
 extern "C" bool fortran_real_path(
     const char *path_in /* 0D_NOT_character in */,
     const char *path_out /* 0D_NOT_character in */,
-    bool &is_ok /* 0D_NOT_logical in */
+    bool &is_ok /* 0D_NOT_logical out */
 );
-void real_path(std::string path_in, std::string path_out, bool is_ok);
+bool real_path(std::string path_in, std::string path_out);
 extern "C" bool fortran_real_str(
     double &r_num /* 0D_NOT_real in */,
     int *n_signif /* 0D_NOT_integer in */,
     int *n_decimal /* 0D_NOT_integer in */,
-    const char *str /* 0D_ALLOC_character in */
+    const char *str /* 0D_ALLOC_character out */
 );
-void real_str(
+std::string real_str(
     double r_num,
-    std::string str,
     std::optional<int> n_signif = std::nullopt,
     std::optional<int> n_decimal = std::nullopt
 );
@@ -1550,12 +1532,11 @@ extern "C" bool fortran_real_to_string(
     int &width /* 0D_NOT_integer in */,
     int *n_signif /* 0D_NOT_integer in */,
     int *n_decimal /* 0D_NOT_integer in */,
-    const char *str /* 0D_NOT_character in */
+    const char *str /* 0D_NOT_character out */
 );
-void real_to_string(
+std::string real_to_string(
     double real_num,
     int width,
-    std::string str,
     std::optional<int> n_signif = std::nullopt,
     std::optional<int> n_decimal = std::nullopt
 );
@@ -1684,21 +1665,21 @@ void set_env(std::string env_name, std::string env_value, bool err_flag);
 extern "C" bool fortran_set_parameter_int(
     int &param_val /* 0D_NOT_integer in */,
     int &set_val /* 0D_NOT_integer in */,
-    int &save_val /* 0D_NOT_integer in */
+    int &save_val /* 0D_NOT_integer out */
 );
-void set_parameter(int param_val, int set_val, int save_val);
+int set_parameter(int param_val, int set_val);
 extern "C" bool fortran_set_parameter_logic(
     bool &param_val /* 0D_NOT_logical in */,
     bool &set_val /* 0D_NOT_logical in */,
-    bool &save_val /* 0D_NOT_logical in */
+    bool &save_val /* 0D_NOT_logical out */
 );
-void set_parameter(bool param_val, bool set_val, bool save_val);
+bool set_parameter(bool param_val, bool set_val);
 extern "C" bool fortran_set_parameter_real(
     double &param_val /* 0D_NOT_real in */,
     double &set_val /* 0D_NOT_real in */,
-    double &save_val /* 0D_NOT_real in */
+    double &save_val /* 0D_NOT_real out */
 );
-void set_parameter(double param_val, double set_val, double save_val);
+double set_parameter(double param_val, double set_val);
 extern "C" bool fortran_set_species_charge(
     int &species_in /* 0D_NOT_integer in */,
     int &charge /* 0D_NOT_integer in */,
@@ -1741,9 +1722,9 @@ void skip_header(int ix_unit, bool error_flag);
 extern "C" bool fortran_special_projection(
     double &f /* 0D_NOT_real in */,
     int *status /* 0D_NOT_integer in */,
-    double &func_retval__ /* 0D_NOT_real in */
+    double &func_retval__ /* 0D_NOT_real out */
 );
-void special_projection(double f, double func_retval__, std::optional<int> status = std::nullopt);
+double special_projection(double f, std::optional<int> status = std::nullopt);
 extern "C" bool fortran_species_id(
     const char *name /* 0D_NOT_character in */,
     int *default_ /* 0D_NOT_integer in */,
@@ -1827,15 +1808,15 @@ double sqrt_alpha(double alpha, double x);
 extern "C" bool fortran_sqrt_one(
     double &x /* 0D_NOT_real in */,
     int *nd /* 0D_NOT_integer in */,
-    double &ds1 /* 0D_NOT_real in */
+    double &ds1 /* 0D_NOT_real out */
 );
-void sqrt_one(double x, double ds1, std::optional<int> nd = std::nullopt);
+double sqrt_one(double x, std::optional<int> nd = std::nullopt);
 extern "C" bool fortran_str_count(
     const char *str /* 0D_NOT_character in */,
     const char *match /* 0D_NOT_character in */,
-    int &num /* 0D_NOT_integer in */
+    int &num /* 0D_NOT_integer out */
 );
-void str_count(std::string str, std::string match, int num);
+int str_count(std::string str, std::string match);
 extern "C" void fortran_str_downcase(
     const char *dst /* 0D_NOT_character out */,
     const char *src /* 0D_NOT_character in */
@@ -1845,38 +1826,37 @@ extern "C" bool fortran_str_first_in_set(
     const char *line /* 0D_NOT_character in */,
     const char *set /* 0D_NOT_character in */,
     bool *ignore_clauses /* 0D_NOT_logical in */,
-    int &ix_match /* 0D_NOT_integer in */
+    int &ix_match /* 0D_NOT_integer out */
 );
-void str_first_in_set(
+int str_first_in_set(
     std::string line,
     std::string set,
-    int ix_match,
     std::optional<bool> ignore_clauses = std::nullopt
 );
 extern "C" bool fortran_str_first_not_in_set(
     const char *line /* 0D_NOT_character in */,
     const char *set /* 0D_NOT_character in */,
-    int &ix_match /* 0D_NOT_integer in */
+    int &ix_match /* 0D_NOT_integer out */
 );
-void str_first_not_in_set(std::string line, std::string set, int ix_match);
+int str_first_not_in_set(std::string line, std::string set);
 extern "C" bool fortran_str_last_in_set(
     const char *line /* 0D_NOT_character in */,
     const char *set /* 0D_NOT_character in */,
-    int &ix_match /* 0D_NOT_integer in */
+    int &ix_match /* 0D_NOT_integer out */
 );
-void str_last_in_set(std::string line, std::string set, int ix_match);
+int str_last_in_set(std::string line, std::string set);
 extern "C" bool fortran_str_last_not_in_set(
     const char *line /* 0D_NOT_character in */,
     const char *set /* 0D_NOT_character in */,
-    int &ix_match /* 0D_NOT_integer in */
+    int &ix_match /* 0D_NOT_integer out */
 );
-void str_last_not_in_set(std::string line, std::string set, int ix_match);
+int str_last_not_in_set(std::string line, std::string set);
 extern "C" bool fortran_str_match_wild(
     const char *str /* 0D_NOT_character in */,
     const char *pat /* 0D_NOT_character in */,
-    bool &a_match /* 0D_NOT_logical in */
+    bool &a_match /* 0D_NOT_logical out */
 );
-void str_match_wild(std::string str, std::string pat, bool a_match);
+bool str_match_wild(std::string str, std::string pat);
 
 // Skipped unusable routine str_set:
 // - Routine in configuration skip list
@@ -1904,13 +1884,12 @@ extern "C" bool fortran_string_to_int(
     int &default_ /* 0D_NOT_integer in */,
     bool &err_flag /* 0D_NOT_logical in */,
     bool *err_print_flag /* 0D_NOT_logical in */,
-    int &value /* 0D_NOT_integer in */
+    int &value /* 0D_NOT_integer out */
 );
-void string_to_int(
+int string_to_int(
     std::string line,
     int default_,
     bool err_flag,
-    int value,
     std::optional<bool> err_print_flag = std::nullopt
 );
 extern "C" bool fortran_string_to_real(
@@ -1918,13 +1897,12 @@ extern "C" bool fortran_string_to_real(
     double &default_ /* 0D_NOT_real in */,
     bool &err_flag /* 0D_NOT_logical in */,
     bool *err_print_flag /* 0D_NOT_logical in */,
-    double &value /* 0D_NOT_real in */
+    double &value /* 0D_NOT_real out */
 );
-void string_to_real(
+double string_to_real(
     std::string line,
     double default_,
     bool err_flag,
-    double value,
     std::optional<bool> err_print_flag = std::nullopt
 );
 extern "C" void fortran_string_trim(
@@ -2188,9 +2166,9 @@ void test_xgelbd();
 extern "C" bool fortran_to_str(
     double &num /* 0D_NOT_real in */,
     int *max_signif /* 0D_NOT_integer in */,
-    const char *string /* 0D_ALLOC_character in */
+    const char *string /* 0D_ALLOC_character out */
 );
-void to_str(double num, std::string string, std::optional<int> max_signif = std::nullopt);
+std::string to_str(double num, std::optional<int> max_signif = std::nullopt);
 extern "C" bool fortran_tricubic_cmplx_eval(
     double &x_norm /* 0D_NOT_real in */,
     double &y_norm /* 0D_NOT_real in */,
@@ -2242,8 +2220,8 @@ void upcase_string(std::string string);
 
 // Skipped unusable routine value_of_all_ptr:
 // - Untranslated type: all_pointer_struct (0D)
-extern "C" bool fortran_virtual_memory_usage(int &usage /* 0D_NOT_integer in */);
-void virtual_memory_usage(int usage);
+extern "C" bool fortran_virtual_memory_usage(int &usage /* 0D_NOT_integer out */);
+int virtual_memory_usage();
 extern "C" void fortran_w_mat_to_axis_angle(
     Bmad::array_descriptor_t &w_mat /* 2D_NOT_real in */,
     Bmad::array_descriptor_t &axis /* 1D_NOT_real out */,
@@ -2260,8 +2238,8 @@ extern "C" bool fortran_w_mat_to_quat(
 );
 FixedArray1D<Real, 4> w_mat_to_quat(FixedArray2D<Real, 3, 3> w_mat);
 extern "C" bool
-fortran_word_len(const char *wording /* 0D_NOT_character in */, int &wlen /* 0D_NOT_integer in */);
-void word_len(std::string wording, int wlen);
+fortran_word_len(const char *wording /* 0D_NOT_character in */, int &wlen /* 0D_NOT_integer out */);
+int word_len(std::string wording);
 extern "C" void fortran_word_read(
     const char *in_str /* 0D_NOT_character in */,
     const char *delim_list /* 0D_NOT_character in */,

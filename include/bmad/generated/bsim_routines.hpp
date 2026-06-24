@@ -88,15 +88,15 @@ extern "C" void fortran_count_lines_in_file(
 );
 int count_lines_in_file(std::string file_name);
 extern "C" bool
-fortran_hom_voltage(void *lr_wake /* 0D_NOT_type inout */, double &voltage /* 0D_NOT_real in */);
-void hom_voltage(WakeLrModeStruct &lr_wake, double voltage);
+fortran_hom_voltage(void *lr_wake /* 0D_NOT_type inout */, double &voltage /* 0D_NOT_real out */);
+double hom_voltage(WakeLrModeStruct &lr_wake);
 extern "C" void fortran_insert_phase_trombone(void *branch /* 0D_NOT_type inout */);
 void insert_phase_trombone(BranchStruct &branch);
 extern "C" bool fortran_logical_to_python(
     bool &logic /* 0D_NOT_logical in */,
-    const char *string /* 0D_NOT_character in */
+    const char *string /* 0D_NOT_character out */
 );
-void logical_to_python(bool logic, std::string string);
+std::string logical_to_python(bool logic);
 
 // Skipped unusable routine longitudinal_beta:
 // - Module name unset

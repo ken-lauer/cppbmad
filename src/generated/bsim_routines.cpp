@@ -92,15 +92,18 @@ int bsim::count_lines_in_file(std::string file_name) {
   fortran_count_lines_in_file(/* const char* */ _file_name, /* int& */ _lines);
   return _lines;
 }
-void bsim::hom_voltage(WakeLrModeStruct &lr_wake, double voltage) {
-  fortran_hom_voltage(/* void* */ lr_wake.get_fortran_ptr(), /* double& */ voltage);
+double bsim::hom_voltage(WakeLrModeStruct &lr_wake) {
+  double _voltage{};
+  fortran_hom_voltage(/* void* */ lr_wake.get_fortran_ptr(), /* double& */ _voltage);
+  return _voltage;
 }
 void bsim::insert_phase_trombone(BranchStruct &branch) {
   fortran_insert_phase_trombone(/* void* */ branch.get_fortran_ptr());
 }
-void bsim::logical_to_python(bool logic, std::string string) {
-  auto _string = string.c_str();
+std::string bsim::logical_to_python(bool logic) {
+  char _string[4096];
   fortran_logical_to_python(/* bool& */ logic, /* const char* */ _string);
+  return _string;
 }
 void bsim::rf_cav_names(LatStruct &lat) { fortran_rf_cav_names(/* void* */ lat.get_fortran_ptr()); }
 bool bsim::set_tune_3d(

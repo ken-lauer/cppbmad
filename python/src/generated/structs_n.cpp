@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_n.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -121,6 +124,21 @@ void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls)
           "__deepcopy__",
           [](const NormalModesStruct &self, py::dict &memo) { return NormalModesStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const NormalModesStruct &self, const NormalModesStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const NormalModesStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -173,6 +191,21 @@ void init_nametable_struct(py::module &m, py::class_<NametableStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const NametableStruct &self, py::dict &memo) { return NametableStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const NametableStruct &self, const NametableStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const NametableStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

@@ -51,7 +51,6 @@ pmd_name : str
       "ordinal_str",
       &SimUtils::ordinal_str,
       py::arg("n"),
-      py::arg("str"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ordinal_str
 
@@ -59,6 +58,8 @@ Parameters
 ----------
 n : int
 
+Returns
+-------
 str : str
 )"""
   );
@@ -66,7 +67,6 @@ str : str
       "out_io_buffer_get_line",
       &SimUtils::out_io_buffer_get_line,
       py::arg("ix_line"),
-      py::arg("line"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function out_io_buffer_get_line(ix_line) result (line)
 
@@ -77,7 +77,6 @@ See the output_direct documentation for more details.
   m.def(
       "out_io_buffer_num_lines",
       &SimUtils::out_io_buffer_num_lines,
-      py::arg("n_lines"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function out_io_buffer_num_lines() result (n_lines)
 

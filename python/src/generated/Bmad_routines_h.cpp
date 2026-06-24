@@ -57,7 +57,6 @@ make_matrix : bool, optional
       &Bmad::has_attribute,
       py::arg("ele"),
       py::arg("attrib"),
-      py::arg("has_it"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine has_attribute
 
@@ -67,6 +66,8 @@ ele : EleStruct
 
 attrib : str
 
+Returns
+-------
 has_it : bool
 )"""
   );

@@ -75,7 +75,6 @@ cnumber : str
       &SimUtils::index_nocase,
       py::arg("string1"),
       py::arg("string2"),
-      py::arg("indx"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine index_nocase
 
@@ -85,6 +84,8 @@ string1 : str
 
 string2 : str
 
+Returns
+-------
 indx : int
 )"""
   );
@@ -95,7 +96,6 @@ indx : int
       py::arg("dt"),
       py::arg("order"),
       py::arg("der"),
-      py::arg("id"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function initFixedWindowLS
 
@@ -129,16 +129,17 @@ der : int
       "int_str",
       &SimUtils::int_str,
       py::arg("int_"),
-      py::arg("str"),
       py::arg("width") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine int_str
 
 Parameters
 ----------
-str : str
-
 width : int, optional
+
+Returns
+-------
+str : str
 )"""
   );
   m.def(
@@ -146,7 +147,6 @@ width : int, optional
       &SimUtils::interpolated_fft,
       py::arg("cdata"),
       py::arg("calc_ok"),
-      py::arg("this_fft"),
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
@@ -162,7 +162,6 @@ available.
       &SimUtils::interpolated_fft_gsl,
       py::arg("cdata"),
       py::arg("calc_ok"),
-      py::arg("this_fft"),
       py::arg("opt_dump_spectrum") = py::none(),
       py::arg("opt_dump_index") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
@@ -177,7 +176,6 @@ available.
       "is_alphabetic",
       &SimUtils::is_alphabetic,
       py::arg("string"),
-      py::arg("is_alpha"),
       py::arg("valid_chars") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(no longer exists
@@ -264,7 +262,6 @@ is_increasing : bool
       "is_integer",
       &SimUtils::is_integer,
       py::arg("string"),
-      py::arg("valid"),
       py::arg("int_") = py::none(),
       py::arg("delims") = py::none(),
       py::arg("ix_word") = py::none(),
@@ -275,18 +272,19 @@ Parameters
 ----------
 string : str
 
-valid : bool
-
 delims : str, optional
 
 ix_word : int, optional
+
+Returns
+-------
+valid : bool
 )"""
   );
   m.def(
       "is_logical",
       &SimUtils::is_logical,
       py::arg("string"),
-      py::arg("valid"),
       py::arg("ignore") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine is_logical
@@ -295,16 +293,17 @@ Parameters
 ----------
 string : str
 
-valid : bool
-
 ignore : bool, optional
+
+Returns
+-------
+valid : bool
 )"""
   );
   m.def(
       "is_real",
       &SimUtils::is_real,
       py::arg("string"),
-      py::arg("valid"),
       py::arg("ignore") = py::none(),
       py::arg("real_num") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
@@ -314,11 +313,13 @@ Parameters
 ----------
 string : str
 
-valid : bool
-
 ignore : bool, optional
 
 real_num : float, optional
+
+Returns
+-------
+valid : bool
 )"""
   );
   m.def(

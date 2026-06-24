@@ -119,7 +119,6 @@ y : float
       "probability_funct",
       &SimUtils::probability_funct,
       py::arg("x"),
-      py::arg("prob"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine probability_funct
 
@@ -128,6 +127,8 @@ Parameters
 x : float
     Function argument.
 
+Returns
+-------
 prob : float
 )"""
   );
@@ -136,7 +137,6 @@ prob : float
       &SimUtils::projdd,
       py::arg("a"),
       py::arg("b"),
-      py::arg("func_retval__"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine projdd
 

@@ -243,14 +243,16 @@ bool Tao::tao_change_z_tune(std::string branch_str, std::string dq_str) {
   );
   return _err_flag;
 }
-void Tao::tao_chrom_calc_needed(std::string data_type, std::string data_source, bool do_chrom) {
+bool Tao::tao_chrom_calc_needed(std::string data_type, std::string data_source) {
   auto _data_type = data_type.c_str();
   auto _data_source = data_source.c_str();
+  bool _do_chrom{};
   fortran_tao_chrom_calc_needed(
       /* const char* */ _data_type,
       /* const char* */ _data_source,
-      /* bool& */ do_chrom
+      /* bool& */ _do_chrom
   );
+  return _do_chrom;
 }
 void Tao::tao_clear_cmd(std::string cmd_line) {
   auto _cmd_line = cmd_line.c_str();
@@ -347,11 +349,12 @@ void Tao::tao_curve_datum_calc(
                                /* void* */ curve.get_fortran_ptr(),
                                /* const char* */ _who);
 }
-void Tao::tao_curve_ele_ref(TaoCurveStruct &curve, bool point_to_ele_ref, EleStruct &ele_track) {
-  auto _ele_track = &ele_track; // input, required, pointer
+std::optional<EleStruct> Tao::tao_curve_ele_ref(TaoCurveStruct &curve, bool point_to_ele_ref) {
+  void *_ele_track;
   fortran_tao_curve_ele_ref(/* void* */ curve.get_fortran_ptr(),
                             /* bool& */ point_to_ele_ref,
-                            /* void* */ &ele_track);
+                            /* void* */ &_ele_track);
+  return std::move((_ele_track ? std::make_optional<EleStruct>(_ele_track) : std::nullopt));
 }
 int Tao::tao_curve_ix_uni(TaoCurveStruct &curve) {
   int _ix_uni{};
@@ -1581,18 +1584,16 @@ double Tao::tao_lat_emit_calc(int plane, int emit_type, EleStruct &ele, NormalMo
   );
   return _emit;
 }
-void Tao::tao_lat_sigma_calc_needed(
-    std::string data_type,
-    std::string data_source,
-    bool do_lat_sigma
-) {
+bool Tao::tao_lat_sigma_calc_needed(std::string data_type, std::string data_source) {
   auto _data_type = data_type.c_str();
   auto _data_source = data_source.c_str();
+  bool _do_lat_sigma{};
   fortran_tao_lat_sigma_calc_needed(
       /* const char* */ _data_type,
       /* const char* */ _data_source,
-      /* bool& */ do_lat_sigma
+      /* bool& */ _do_lat_sigma
   );
+  return _do_lat_sigma;
 }
 bool Tao::tao_lat_sigma_track(
     TaoLatticeStruct &tao_lat,
@@ -1846,18 +1847,16 @@ std::string Tao::tao_next_word(std::string &line) {
   fortran_tao_next_word(/* const char* */ _line, /* const char* */ _word);
   return _word;
 }
-void Tao::tao_one_turn_map_calc_needed(
-    std::string data_type,
-    std::string data_source,
-    bool do_one_turn_map
-) {
+bool Tao::tao_one_turn_map_calc_needed(std::string data_type, std::string data_source) {
   auto _data_type = data_type.c_str();
   auto _data_source = data_source.c_str();
+  bool _do_one_turn_map{};
   fortran_tao_one_turn_map_calc_needed(
       /* const char* */ _data_type,
       /* const char* */ _data_source,
-      /* bool& */ do_one_turn_map
+      /* bool& */ _do_one_turn_map
   );
+  return _do_one_turn_map;
 }
 int Tao::tao_open_file(
     std::string file,
@@ -2346,14 +2345,16 @@ void Tao::tao_quiet_set(std::string set) {
   auto _set = set.c_str();
   fortran_tao_quiet_set(/* const char* */ _set);
 }
-void Tao::tao_rad_int_calc_needed(std::string data_type, std::string data_source, bool do_rad_int) {
+bool Tao::tao_rad_int_calc_needed(std::string data_type, std::string data_source) {
   auto _data_type = data_type.c_str();
   auto _data_source = data_source.c_str();
+  bool _do_rad_int{};
   fortran_tao_rad_int_calc_needed(
       /* const char* */ _data_type,
       /* const char* */ _data_source,
-      /* bool& */ do_rad_int
+      /* bool& */ _do_rad_int
   );
+  return _do_rad_int;
 }
 void Tao::tao_re_allocate_expression_info(
     TaoExpressionInfoStructAlloc1D info,
@@ -3183,18 +3184,16 @@ bool Tao::tao_single_track(
                            /* bool* */ _print_err);
   return _calc_ok;
 }
-void Tao::tao_spin_matrices_calc_needed(
-    std::string data_type,
-    std::string data_source,
-    bool do_calc
-) {
+bool Tao::tao_spin_matrices_calc_needed(std::string data_type, std::string data_source) {
   auto _data_type = data_type.c_str();
   auto _data_source = data_source.c_str();
+  bool _do_calc{};
   fortran_tao_spin_matrices_calc_needed(
       /* const char* */ _data_type,
       /* const char* */ _data_source,
-      /* bool& */ do_calc
+      /* bool& */ _do_calc
   );
+  return _do_calc;
 }
 void Tao::tao_spin_tracking_turn_on() { fortran_tao_spin_tracking_turn_on(); }
 Tao::TaoSplitComponent Tao::tao_split_component(std::string comp_str) {
@@ -3209,14 +3208,16 @@ Tao::TaoSplitComponent Tao::tao_split_component(std::string comp_str) {
   );
   return TaoSplitComponent{std::move(comp), _err};
 }
-void Tao::tao_srdt_calc_needed(std::string data_type, std::string data_source, int do_srdt) {
+int Tao::tao_srdt_calc_needed(std::string data_type, std::string data_source) {
   auto _data_type = data_type.c_str();
   auto _data_source = data_source.c_str();
+  int _do_srdt{};
   fortran_tao_srdt_calc_needed(
       /* const char* */ _data_type,
       /* const char* */ _data_source,
-      /* int& */ do_srdt
+      /* int& */ _do_srdt
   );
+  return _do_srdt;
 }
 Tao::TaoSubinUniNumber Tao::tao_subin_uni_number(std::string name_in, int ix_uni) {
   auto _name_in = name_in.c_str();
@@ -3287,8 +3288,10 @@ Tao::TaoToReal Tao::tao_to_real(std::string expression) {
   fortran_tao_to_real(/* const char* */ _expression, /* double& */ _value, /* bool& */ _err_flag);
   return TaoToReal{_value, _err_flag};
 }
-void Tao::tao_too_many_particles_lost(BeamStruct &beam, bool no_beam) {
-  fortran_tao_too_many_particles_lost(/* void* */ beam.get_fortran_ptr(), /* bool& */ no_beam);
+bool Tao::tao_too_many_particles_lost(BeamStruct &beam) {
+  bool _no_beam{};
+  fortran_tao_too_many_particles_lost(/* void* */ beam.get_fortran_ptr(), /* bool& */ _no_beam);
+  return _no_beam;
 }
 void Tao::tao_top10_derivative_print() { fortran_tao_top10_derivative_print(); }
 void Tao::tao_top10_merit_categories_print(int iunit) {

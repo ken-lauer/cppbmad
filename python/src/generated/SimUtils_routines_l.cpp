@@ -65,7 +65,6 @@ coef : 1D array of float (shape: 3)
       "logic_str",
       &SimUtils::logic_str,
       py::arg("logic"),
-      py::arg("str"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine logic_str
 
@@ -73,13 +72,14 @@ Parameters
 ----------
 logic : bool
 
+Returns
+-------
 str : str
 )"""
   );
   m.def(
       "lunget",
       &SimUtils::lunget,
-      py::arg("func_retval__"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lunget
 

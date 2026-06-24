@@ -9,11 +9,10 @@ PyExpectOneOf python_expect_one_of(
     bool check_input_delim,
     std::string ele_name,
     std::string delim,
-    bool delim_found,
-    bool is_ok
+    bool delim_found
 ) {
-  Bmad::expect_one_of(delim_list, check_input_delim, ele_name, delim, delim_found, is_ok);
-  auto py_result{PyExpectOneOf{delim}};
+  auto _result = Bmad::expect_one_of(delim_list, check_input_delim, ele_name, delim, delim_found);
+  auto py_result{PyExpectOneOf{_result, delim}};
   return py_result;
 }
 
@@ -304,7 +303,6 @@ is_const : bool
       "ele_has_nonzero_kick",
       &Bmad::ele_has_nonzero_kick,
       py::arg("ele"),
-      py::arg("has_kick"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ele_has_nonzero_kick
 
@@ -315,6 +313,8 @@ ele : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, ele: Element with no kicks.
 
+Returns
+-------
 has_kick : bool
 )"""
   );
@@ -1265,7 +1265,6 @@ dvec_dt : 1D array of float (shape: 10)
       &Bmad::em_field_plus_em_field,
       py::arg("field1"),
       py::arg("field2"),
-      py::arg("field_tot"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine em_field_plus_em_field
 
@@ -1275,6 +1274,8 @@ field1 : EmFieldStruct
 
 field2 : EmFieldStruct
 
+Returns
+-------
 field_tot : EmFieldStruct
 )"""
   );
@@ -1462,7 +1463,6 @@ emit : 1D array of float (shape: 3)
       &Bmad::eq_ac_kicker,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_ac_kicker
 
@@ -1472,6 +1472,8 @@ f1 : AcKickerStruct
 
 f2 : AcKickerStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1480,7 +1482,6 @@ is_eq : bool
       &Bmad::eq_ac_kicker_freq,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_ac_kicker_freq
 
@@ -1490,6 +1491,8 @@ f1 : AcKickerFreqStruct
 
 f2 : AcKickerFreqStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1498,7 +1501,6 @@ is_eq : bool
       &Bmad::eq_ac_kicker_time,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_ac_kicker_time
 
@@ -1508,6 +1510,8 @@ f1 : AcKickerTimeStruct
 
 f2 : AcKickerTimeStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1516,7 +1520,6 @@ is_eq : bool
       &Bmad::eq_anormal_mode,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_anormal_mode
 
@@ -1526,6 +1529,8 @@ f1 : AnormalModeStruct
 
 f2 : AnormalModeStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1534,7 +1539,6 @@ is_eq : bool
       &Bmad::eq_aperture_param,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_aperture_param
 
@@ -1544,6 +1548,8 @@ f1 : ApertureParamStruct
 
 f2 : ApertureParamStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1552,7 +1558,6 @@ is_eq : bool
       &Bmad::eq_aperture_point,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_aperture_point
 
@@ -1562,6 +1567,8 @@ f1 : AperturePointStruct
 
 f2 : AperturePointStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1570,7 +1577,6 @@ is_eq : bool
       &Bmad::eq_aperture_scan,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_aperture_scan
 
@@ -1580,6 +1586,8 @@ f1 : ApertureScanStruct
 
 f2 : ApertureScanStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1588,7 +1596,6 @@ is_eq : bool
       &Bmad::eq_beam,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_beam
 
@@ -1598,6 +1605,8 @@ f1 : BeamStruct
 
 f2 : BeamStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1606,7 +1615,6 @@ is_eq : bool
       &Bmad::eq_beam_init,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_beam_init
 
@@ -1616,6 +1624,8 @@ f1 : BeamInitStruct
 
 f2 : BeamInitStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1624,7 +1634,6 @@ is_eq : bool
       &Bmad::eq_bmad_common,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_bmad_common
 
@@ -1634,6 +1643,8 @@ f1 : BmadCommonStruct
 
 f2 : BmadCommonStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1642,7 +1653,6 @@ is_eq : bool
       &Bmad::eq_bookkeeping_state,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_bookkeeping_state
 
@@ -1652,6 +1662,8 @@ f1 : BookkeepingStateStruct
 
 f2 : BookkeepingStateStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1660,7 +1672,6 @@ is_eq : bool
       &Bmad::eq_bpm_phase_coupling,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_bpm_phase_coupling
 
@@ -1670,6 +1681,8 @@ f1 : BpmPhaseCouplingStruct
 
 f2 : BpmPhaseCouplingStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1678,7 +1691,6 @@ is_eq : bool
       &Bmad::eq_branch,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_branch
 
@@ -1688,6 +1700,8 @@ f1 : BranchStruct
 
 f2 : BranchStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1696,7 +1710,6 @@ is_eq : bool
       &Bmad::eq_bunch,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_bunch
 
@@ -1706,6 +1719,8 @@ f1 : BunchStruct
 
 f2 : BunchStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1714,7 +1729,6 @@ is_eq : bool
       &Bmad::eq_bunch_params,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_bunch_params
 
@@ -1724,6 +1738,8 @@ f1 : BunchParamsStruct
 
 f2 : BunchParamsStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1732,7 +1748,6 @@ is_eq : bool
       &Bmad::eq_cartesian_map,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_cartesian_map
 
@@ -1742,6 +1757,8 @@ f1 : CartesianMapStruct
 
 f2 : CartesianMapStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1750,7 +1767,6 @@ is_eq : bool
       &Bmad::eq_cartesian_map_term,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_cartesian_map_term
 
@@ -1760,6 +1776,8 @@ f1 : CartesianMapTermStruct
 
 f2 : CartesianMapTermStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1768,7 +1786,6 @@ is_eq : bool
       &Bmad::eq_cartesian_map_term1,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_cartesian_map_term1
 
@@ -1778,6 +1795,8 @@ f1 : CartesianMapTerm1Struct
 
 f2 : CartesianMapTerm1Struct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1786,7 +1805,6 @@ is_eq : bool
       &Bmad::eq_complex_taylor,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_complex_taylor
 
@@ -1796,6 +1814,8 @@ f1 : ComplexTaylorStruct
 
 f2 : ComplexTaylorStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1804,7 +1824,6 @@ is_eq : bool
       &Bmad::eq_complex_taylor_term,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_complex_taylor_term
 
@@ -1814,6 +1833,8 @@ f1 : ComplexTaylorTermStruct
 
 f2 : ComplexTaylorTermStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1822,7 +1843,6 @@ is_eq : bool
       &Bmad::eq_control,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_control
 
@@ -1832,6 +1852,8 @@ f1 : ControlStruct
 
 f2 : ControlStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1840,7 +1862,6 @@ is_eq : bool
       &Bmad::eq_control_ramp1,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_control_ramp1
 
@@ -1850,6 +1871,8 @@ f1 : ControlRamp1Struct
 
 f2 : ControlRamp1Struct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1858,7 +1881,6 @@ is_eq : bool
       &Bmad::eq_control_var1,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_control_var1
 
@@ -1868,6 +1890,8 @@ f1 : ControlVar1Struct
 
 f2 : ControlVar1Struct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1876,7 +1900,6 @@ is_eq : bool
       &Bmad::eq_controller,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_controller
 
@@ -1886,6 +1909,8 @@ f1 : ControllerStruct
 
 f2 : ControllerStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1894,7 +1919,6 @@ is_eq : bool
       &Bmad::eq_coord,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_coord
 
@@ -1904,6 +1928,8 @@ f1 : CoordStruct
 
 f2 : CoordStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1912,7 +1938,6 @@ is_eq : bool
       &Bmad::eq_coord_array,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_coord_array
 
@@ -1922,6 +1947,8 @@ f1 : CoordArrayStruct
 
 f2 : CoordArrayStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1930,7 +1957,6 @@ is_eq : bool
       &Bmad::eq_cylindrical_map,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_cylindrical_map
 
@@ -1940,6 +1966,8 @@ f1 : CylindricalMapStruct
 
 f2 : CylindricalMapStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1948,7 +1976,6 @@ is_eq : bool
       &Bmad::eq_cylindrical_map_term,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_cylindrical_map_term
 
@@ -1958,6 +1985,8 @@ f1 : CylindricalMapTermStruct
 
 f2 : CylindricalMapTermStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1966,7 +1995,6 @@ is_eq : bool
       &Bmad::eq_cylindrical_map_term1,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_cylindrical_map_term1
 
@@ -1976,6 +2004,8 @@ f1 : CylindricalMapTerm1Struct
 
 f2 : CylindricalMapTerm1Struct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -1984,7 +2014,6 @@ is_eq : bool
       &Bmad::eq_ele,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_ele
 
@@ -1994,6 +2023,8 @@ f1 : EleStruct
 
 f2 : EleStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2002,7 +2033,6 @@ is_eq : bool
       &Bmad::eq_ellipse_beam_init,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_ellipse_beam_init
 
@@ -2012,6 +2042,8 @@ f1 : EllipseBeamInitStruct
 
 f2 : EllipseBeamInitStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2020,7 +2052,6 @@ is_eq : bool
       &Bmad::eq_em_field,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_em_field
 
@@ -2030,6 +2061,8 @@ f1 : EmFieldStruct
 
 f2 : EmFieldStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2038,7 +2071,6 @@ is_eq : bool
       &Bmad::eq_expression_atom,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_expression_atom
 
@@ -2048,6 +2080,8 @@ f1 : ExpressionAtomStruct
 
 f2 : ExpressionAtomStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2056,7 +2090,6 @@ is_eq : bool
       &Bmad::eq_floor_position,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_floor_position
 
@@ -2066,6 +2099,8 @@ f1 : FloorPositionStruct
 
 f2 : FloorPositionStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2074,7 +2109,6 @@ is_eq : bool
       &Bmad::eq_gen_grad1,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_gen_grad1
 
@@ -2084,6 +2118,8 @@ f1 : GenGrad1Struct
 
 f2 : GenGrad1Struct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2092,7 +2128,6 @@ is_eq : bool
       &Bmad::eq_gen_grad_map,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_gen_grad_map
 
@@ -2102,6 +2137,8 @@ f1 : GenGradMapStruct
 
 f2 : GenGradMapStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2110,7 +2147,6 @@ is_eq : bool
       &Bmad::eq_gg_taylor,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_gg_taylor
 
@@ -2120,6 +2156,8 @@ f1 : GgTaylorStruct
 
 f2 : GgTaylorStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2128,7 +2166,6 @@ is_eq : bool
       &Bmad::eq_gg_taylor_term,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_gg_taylor_term
 
@@ -2138,6 +2175,8 @@ f1 : GgTaylorTermStruct
 
 f2 : GgTaylorTermStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2146,7 +2185,6 @@ is_eq : bool
       &Bmad::eq_grid_beam_init,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_grid_beam_init
 
@@ -2156,6 +2194,8 @@ f1 : GridBeamInitStruct
 
 f2 : GridBeamInitStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2164,7 +2204,6 @@ is_eq : bool
       &Bmad::eq_grid_field,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_grid_field
 
@@ -2174,6 +2213,8 @@ f1 : GridFieldStruct
 
 f2 : GridFieldStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2182,7 +2223,6 @@ is_eq : bool
       &Bmad::eq_grid_field_pt,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_grid_field_pt
 
@@ -2192,6 +2232,8 @@ f1 : GridFieldPtStruct
 
 f2 : GridFieldPtStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2200,7 +2242,6 @@ is_eq : bool
       &Bmad::eq_grid_field_pt1,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_grid_field_pt1
 
@@ -2210,6 +2251,8 @@ f1 : GridFieldPt1Struct
 
 f2 : GridFieldPt1Struct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2218,7 +2261,6 @@ is_eq : bool
       &Bmad::eq_high_energy_space_charge,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_high_energy_space_charge
 
@@ -2228,6 +2270,8 @@ f1 : HighEnergySpaceChargeStruct
 
 f2 : HighEnergySpaceChargeStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2236,7 +2280,6 @@ is_eq : bool
       &Bmad::eq_interval1_coef,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_interval1_coef
 
@@ -2246,6 +2289,8 @@ f1 : Interval1CoefStruct
 
 f2 : Interval1CoefStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2254,7 +2299,6 @@ is_eq : bool
       &Bmad::eq_kv_beam_init,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_kv_beam_init
 
@@ -2264,6 +2308,8 @@ f1 : KvBeamInitStruct
 
 f2 : KvBeamInitStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2272,7 +2318,6 @@ is_eq : bool
       &Bmad::eq_lat,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_lat
 
@@ -2282,6 +2327,8 @@ f1 : LatStruct
 
 f2 : LatStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2290,7 +2337,6 @@ is_eq : bool
       &Bmad::eq_lat_ele_loc,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_lat_ele_loc
 
@@ -2300,6 +2346,8 @@ f1 : LatEleLocStruct
 
 f2 : LatEleLocStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2308,7 +2356,6 @@ is_eq : bool
       &Bmad::eq_lat_param,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_lat_param
 
@@ -2318,6 +2365,8 @@ f1 : LatParamStruct
 
 f2 : LatParamStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2326,7 +2375,6 @@ is_eq : bool
       &Bmad::eq_linac_normal_mode,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_linac_normal_mode
 
@@ -2336,6 +2384,8 @@ f1 : LinacNormalModeStruct
 
 f2 : LinacNormalModeStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2344,7 +2394,6 @@ is_eq : bool
       &Bmad::eq_mode3,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_mode3
 
@@ -2354,6 +2403,8 @@ f1 : Mode3Struct
 
 f2 : Mode3Struct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2362,7 +2413,6 @@ is_eq : bool
       &Bmad::eq_mode_info,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_mode_info
 
@@ -2372,6 +2422,8 @@ f1 : ModeInfoStruct
 
 f2 : ModeInfoStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2380,7 +2432,6 @@ is_eq : bool
       &Bmad::eq_normal_modes,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_normal_modes
 
@@ -2390,6 +2441,8 @@ f1 : NormalModesStruct
 
 f2 : NormalModesStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2398,7 +2451,6 @@ is_eq : bool
       &Bmad::eq_photon_element,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_photon_element
 
@@ -2408,6 +2460,8 @@ f1 : PhotonElementStruct
 
 f2 : PhotonElementStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2416,7 +2470,6 @@ is_eq : bool
       &Bmad::eq_photon_material,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_photon_material
 
@@ -2426,6 +2479,8 @@ f1 : PhotonMaterialStruct
 
 f2 : PhotonMaterialStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2434,7 +2489,6 @@ is_eq : bool
       &Bmad::eq_photon_reflect_surface,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_photon_reflect_surface
 
@@ -2444,6 +2498,8 @@ f1 : PhotonReflectSurfaceStruct
 
 f2 : PhotonReflectSurfaceStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2452,7 +2508,6 @@ is_eq : bool
       &Bmad::eq_photon_reflect_table,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_photon_reflect_table
 
@@ -2462,6 +2517,8 @@ f1 : PhotonReflectTableStruct
 
 f2 : PhotonReflectTableStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2470,7 +2527,6 @@ is_eq : bool
       &Bmad::eq_photon_target,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_photon_target
 
@@ -2480,6 +2536,8 @@ f1 : PhotonTargetStruct
 
 f2 : PhotonTargetStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2488,7 +2546,6 @@ is_eq : bool
       &Bmad::eq_pixel_detec,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_pixel_detec
 
@@ -2498,6 +2555,8 @@ f1 : PixelDetecStruct
 
 f2 : PixelDetecStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2506,7 +2565,6 @@ is_eq : bool
       &Bmad::eq_pixel_pt,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_pixel_pt
 
@@ -2516,6 +2574,8 @@ f1 : PixelPtStruct
 
 f2 : PixelPtStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2524,7 +2584,6 @@ is_eq : bool
       &Bmad::eq_pre_tracker,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_pre_tracker
 
@@ -2534,6 +2593,8 @@ f1 : PreTrackerStruct
 
 f2 : PreTrackerStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2542,7 +2603,6 @@ is_eq : bool
       &Bmad::eq_rad_int1,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_rad_int1
 
@@ -2552,6 +2612,8 @@ f1 : RadInt1Struct
 
 f2 : RadInt1Struct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2560,7 +2622,6 @@ is_eq : bool
       &Bmad::eq_rad_int_all_ele,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_rad_int_all_ele
 
@@ -2570,6 +2631,8 @@ f1 : RadIntAllEleStruct
 
 f2 : RadIntAllEleStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2578,7 +2641,6 @@ is_eq : bool
       &Bmad::eq_rad_int_branch,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_rad_int_branch
 
@@ -2588,6 +2650,8 @@ f1 : RadIntBranchStruct
 
 f2 : RadIntBranchStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2596,7 +2660,6 @@ is_eq : bool
       &Bmad::eq_rad_map,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_rad_map
 
@@ -2606,6 +2669,8 @@ f1 : RadMapStruct
 
 f2 : RadMapStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2614,7 +2679,6 @@ is_eq : bool
       &Bmad::eq_rad_map_ele,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_rad_map_ele
 
@@ -2624,6 +2688,8 @@ f1 : RadMapEleStruct
 
 f2 : RadMapEleStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2632,7 +2698,6 @@ is_eq : bool
       &Bmad::eq_ramper_lord,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_ramper_lord
 
@@ -2642,6 +2707,8 @@ f1 : RamperLordStruct
 
 f2 : RamperLordStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2650,7 +2717,6 @@ is_eq : bool
       &Bmad::eq_space_charge_common,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_space_charge_common
 
@@ -2660,6 +2726,8 @@ f1 : SpaceChargeCommonStruct
 
 f2 : SpaceChargeCommonStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2668,7 +2736,6 @@ is_eq : bool
       &Bmad::eq_spin_polar,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_spin_polar
 
@@ -2678,6 +2745,8 @@ f1 : SpinPolarStruct
 
 f2 : SpinPolarStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2686,7 +2755,6 @@ is_eq : bool
       &Bmad::eq_spline,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_spline
 
@@ -2696,6 +2764,8 @@ f1 : SplineStruct
 
 f2 : SplineStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2704,7 +2774,6 @@ is_eq : bool
       &Bmad::eq_strong_beam,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_strong_beam
 
@@ -2714,6 +2783,8 @@ f1 : StrongBeamStruct
 
 f2 : StrongBeamStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2722,7 +2793,6 @@ is_eq : bool
       &Bmad::eq_surface_curvature,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_surface_curvature
 
@@ -2732,6 +2802,8 @@ f1 : SurfaceCurvatureStruct
 
 f2 : SurfaceCurvatureStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2740,7 +2812,6 @@ is_eq : bool
       &Bmad::eq_surface_displacement,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_surface_displacement
 
@@ -2750,6 +2821,8 @@ f1 : SurfaceDisplacementStruct
 
 f2 : SurfaceDisplacementStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2758,7 +2831,6 @@ is_eq : bool
       &Bmad::eq_surface_displacement_pt,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_surface_displacement_pt
 
@@ -2768,6 +2840,8 @@ f1 : SurfaceDisplacementPtStruct
 
 f2 : SurfaceDisplacementPtStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2776,7 +2850,6 @@ is_eq : bool
       &Bmad::eq_surface_h_misalign,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_surface_h_misalign
 
@@ -2786,6 +2859,8 @@ f1 : SurfaceHMisalignStruct
 
 f2 : SurfaceHMisalignStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2794,7 +2869,6 @@ is_eq : bool
       &Bmad::eq_surface_h_misalign_pt,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_surface_h_misalign_pt
 
@@ -2804,6 +2878,8 @@ f1 : SurfaceHMisalignPtStruct
 
 f2 : SurfaceHMisalignPtStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2812,7 +2888,6 @@ is_eq : bool
       &Bmad::eq_surface_segmented,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_surface_segmented
 
@@ -2822,6 +2897,8 @@ f1 : SurfaceSegmentedStruct
 
 f2 : SurfaceSegmentedStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2830,7 +2907,6 @@ is_eq : bool
       &Bmad::eq_surface_segmented_pt,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_surface_segmented_pt
 
@@ -2840,6 +2916,8 @@ f1 : SurfaceSegmentedPtStruct
 
 f2 : SurfaceSegmentedPtStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2848,7 +2926,6 @@ is_eq : bool
       &Bmad::eq_target_point,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_target_point
 
@@ -2858,6 +2935,8 @@ f1 : TargetPointStruct
 
 f2 : TargetPointStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2866,7 +2945,6 @@ is_eq : bool
       &Bmad::eq_taylor,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_taylor
 
@@ -2876,6 +2954,8 @@ f1 : TaylorStruct
 
 f2 : TaylorStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2884,7 +2964,6 @@ is_eq : bool
       &Bmad::eq_taylor_term,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_taylor_term
 
@@ -2894,6 +2973,8 @@ f1 : TaylorTermStruct
 
 f2 : TaylorTermStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2902,7 +2983,6 @@ is_eq : bool
       &Bmad::eq_track,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_track
 
@@ -2912,6 +2992,8 @@ f1 : TrackStruct
 
 f2 : TrackStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2920,7 +3002,6 @@ is_eq : bool
       &Bmad::eq_track_point,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_track_point
 
@@ -2930,6 +3011,8 @@ f1 : TrackPointStruct
 
 f2 : TrackPointStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2938,7 +3021,6 @@ is_eq : bool
       &Bmad::eq_twiss,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_twiss
 
@@ -2948,6 +3030,8 @@ f1 : TwissStruct
 
 f2 : TwissStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2956,7 +3040,6 @@ is_eq : bool
       &Bmad::eq_wake,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wake
 
@@ -2966,6 +3049,8 @@ f1 : WakeStruct
 
 f2 : WakeStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2974,7 +3059,6 @@ is_eq : bool
       &Bmad::eq_wake_lr,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wake_lr
 
@@ -2984,6 +3068,8 @@ f1 : WakeLrStruct
 
 f2 : WakeLrStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -2992,7 +3078,6 @@ is_eq : bool
       &Bmad::eq_wake_lr_mode,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wake_lr_mode
 
@@ -3002,6 +3087,8 @@ f1 : WakeLrModeStruct
 
 f2 : WakeLrModeStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -3010,7 +3097,6 @@ is_eq : bool
       &Bmad::eq_wake_sr,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wake_sr
 
@@ -3020,6 +3106,8 @@ f1 : WakeSrStruct
 
 f2 : WakeSrStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -3028,7 +3116,6 @@ is_eq : bool
       &Bmad::eq_wake_sr_mode,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wake_sr_mode
 
@@ -3038,6 +3125,8 @@ f1 : WakeSrModeStruct
 
 f2 : WakeSrModeStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -3046,7 +3135,6 @@ is_eq : bool
       &Bmad::eq_wake_sr_z_long,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wake_sr_z_long
 
@@ -3056,6 +3144,8 @@ f1 : WakeSrZLongStruct
 
 f2 : WakeSrZLongStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -3064,7 +3154,6 @@ is_eq : bool
       &Bmad::eq_wall3d,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wall3d
 
@@ -3074,6 +3163,8 @@ f1 : Wall3dStruct
 
 f2 : Wall3dStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -3082,7 +3173,6 @@ is_eq : bool
       &Bmad::eq_wall3d_section,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wall3d_section
 
@@ -3092,6 +3182,8 @@ f1 : Wall3dSectionStruct
 
 f2 : Wall3dSectionStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -3100,7 +3192,6 @@ is_eq : bool
       &Bmad::eq_wall3d_vertex,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_wall3d_vertex
 
@@ -3110,6 +3201,8 @@ f1 : Wall3dVertexStruct
 
 f2 : Wall3dVertexStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -3118,7 +3211,6 @@ is_eq : bool
       &Bmad::eq_xy_disp,
       py::arg("f1"),
       py::arg("f2"),
-      py::arg("is_eq"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine eq_xy_disp
 
@@ -3128,6 +3220,8 @@ f1 : XyDispStruct
 
 f2 : XyDispStruct
 
+Returns
+-------
 is_eq : bool
 )"""
   );
@@ -3136,7 +3230,6 @@ is_eq : bool
       &Bmad::equal_sign_here,
       py::arg("ele"),
       py::arg("delim"),
-      py::arg("is_here"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine equal_sign_here
 
@@ -3146,6 +3239,8 @@ ele : EleStruct
 
 delim : str
 
+Returns
+-------
 is_here : bool
 )"""
   );
@@ -3343,7 +3438,6 @@ make_matrix : bool, optional
       py::arg("t"),
       py::arg("B1"),
       py::arg("B2"),
-      py::arg("func_retval__"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function exp_bessi0(t, B1, B2)
 
@@ -3370,12 +3464,15 @@ B2 : float
       "ExpectOneOf",
       "expect_one_of return type"
   )
+      .def_readonly("is_ok", &PyExpectOneOf::is_ok)
       .def_readonly("delim", &PyExpectOneOf::delim)
-      .def("__len__", [](const PyExpectOneOf &) { return 1; })
+      .def("__len__", [](const PyExpectOneOf &) { return 2; })
       .def("__getitem__", [](const PyExpectOneOf &s, int i) -> py::object {
         if (i < 0)
-          i += 1;
+          i += 2;
         if (i == 0)
+          return py::cast(s.is_ok);
+        if (i == 1)
           return py::cast(s.delim);
         throw py::index_error();
       });
@@ -3387,7 +3484,6 @@ B2 : float
       py::arg("ele_name"),
       py::arg("delim"),
       py::arg("delim_found"),
-      py::arg("is_ok"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function expect_one_of (delim_list, check_input_delim, ele_name, delim, delim_found) result (is_ok)
 
@@ -3430,14 +3526,17 @@ delim : str
   )
       .def_readonly("delim", &Bmad::ExpectThis::delim)
       .def_readonly("delim_found", &Bmad::ExpectThis::delim_found)
-      .def("__len__", [](const Bmad::ExpectThis &) { return 2; })
+      .def_readonly("is_ok", &Bmad::ExpectThis::is_ok)
+      .def("__len__", [](const Bmad::ExpectThis &) { return 3; })
       .def("__getitem__", [](const Bmad::ExpectThis &s, int i) -> py::object {
         if (i < 0)
-          i += 2;
+          i += 3;
         if (i == 0)
           return py::cast(s.delim);
         if (i == 1)
           return py::cast(s.delim_found);
+        if (i == 2)
+          return py::cast(s.is_ok);
         throw py::index_error();
       });
   m.def(
@@ -3448,7 +3547,6 @@ delim : str
       py::arg("call_check"),
       py::arg("err_str"),
       py::arg("ele"),
-      py::arg("is_ok"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function expect_this (expecting, check_delim, call_check, err_str, ele, delim, delim_found) result (is_ok)
 

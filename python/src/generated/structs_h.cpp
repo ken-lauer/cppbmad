@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_h.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -88,6 +91,21 @@ void init_high_energy_space_charge_struct(
           "__deepcopy__",
           [](const HighEnergySpaceChargeStruct &self, py::dict &memo) {
             return HighEnergySpaceChargeStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const HighEnergySpaceChargeStruct &self, const HighEnergySpaceChargeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const HighEnergySpaceChargeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

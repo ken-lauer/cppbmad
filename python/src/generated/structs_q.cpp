@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_q.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -199,6 +202,21 @@ void init_qp_axis_struct(py::module &m, py::class_<QpAxisStruct> &cls) {
           "__deepcopy__",
           [](const QpAxisStruct &self, py::dict &memo) { return QpAxisStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const QpAxisStruct &self, const QpAxisStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const QpAxisStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -274,6 +292,21 @@ void init_qp_legend_struct(py::module &m, py::class_<QpLegendStruct> &cls) {
           "__deepcopy__",
           [](const QpLegendStruct &self, py::dict &memo) { return QpLegendStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const QpLegendStruct &self, const QpLegendStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const QpLegendStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -307,6 +340,21 @@ void init_qp_line_struct(py::module &m, py::class_<QpLineStruct> &cls) {
           "__deepcopy__",
           [](const QpLineStruct &self, py::dict &memo) { return QpLineStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const QpLineStruct &self, const QpLineStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const QpLineStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -339,6 +387,21 @@ void init_qp_point_struct(py::module &m, py::class_<QpPointStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const QpPointStruct &self, py::dict &memo) { return QpPointStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const QpPointStruct &self, const QpPointStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const QpPointStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -381,6 +444,21 @@ void init_qp_rect_struct(py::module &m, py::class_<QpRectStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const QpRectStruct &self, py::dict &memo) { return QpRectStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const QpRectStruct &self, const QpRectStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const QpRectStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -432,6 +510,21 @@ void init_qp_symbol_struct(py::module &m, py::class_<QpSymbolStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const QpSymbolStruct &self, py::dict &memo) { return QpSymbolStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const QpSymbolStruct &self, const QpSymbolStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const QpSymbolStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

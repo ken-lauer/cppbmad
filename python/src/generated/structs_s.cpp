@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_s.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -182,6 +185,21 @@ void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommon
             return SpaceChargeCommonStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const SpaceChargeCommonStruct &self, const SpaceChargeCommonStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SpaceChargeCommonStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -232,6 +250,21 @@ void init_spin_axis_struct(py::module &m, py::class_<SpinAxisStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const SpinAxisStruct &self, py::dict &memo) { return SpinAxisStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const SpinAxisStruct &self, const SpinAxisStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SpinAxisStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -299,6 +332,21 @@ void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> 
           "__deepcopy__",
           [](const SpinOrbitMap1Struct &self, py::dict &memo) { return SpinOrbitMap1Struct(self); }
       )
+      .def(
+          "__eq__",
+          [](const SpinOrbitMap1Struct &self, const SpinOrbitMap1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SpinOrbitMap1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -360,6 +408,21 @@ void init_spin_polar_struct(py::module &m, py::class_<SpinPolarStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const SpinPolarStruct &self, py::dict &memo) { return SpinPolarStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const SpinPolarStruct &self, const SpinPolarStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SpinPolarStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -444,6 +507,21 @@ void init_strong_beam_struct(py::module &m, py::class_<StrongBeamStruct> &cls) {
           "__deepcopy__",
           [](const StrongBeamStruct &self, py::dict &memo) { return StrongBeamStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const StrongBeamStruct &self, const StrongBeamStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const StrongBeamStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -501,6 +579,21 @@ void init_surface_curvature_struct(py::module &m, py::class_<SurfaceCurvatureStr
           "__deepcopy__",
           [](const SurfaceCurvatureStruct &self, py::dict &memo) {
             return SurfaceCurvatureStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const SurfaceCurvatureStruct &self, const SurfaceCurvatureStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SurfaceCurvatureStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -575,6 +668,21 @@ void init_surface_displacement_pt_struct(
             return SurfaceDisplacementPtStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const SurfaceDisplacementPtStruct &self, const SurfaceDisplacementPtStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SurfaceDisplacementPtStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -627,6 +735,21 @@ void init_surface_displacement_struct(py::module &m, py::class_<SurfaceDisplacem
           "__deepcopy__",
           [](const SurfaceDisplacementStruct &self, py::dict &memo) {
             return SurfaceDisplacementStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const SurfaceDisplacementStruct &self, const SurfaceDisplacementStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SurfaceDisplacementStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -706,6 +829,21 @@ void init_surface_h_misalign_pt_struct(py::module &m, py::class_<SurfaceHMisalig
             return SurfaceHMisalignPtStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const SurfaceHMisalignPtStruct &self, const SurfaceHMisalignPtStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SurfaceHMisalignPtStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -754,6 +892,21 @@ void init_surface_h_misalign_struct(py::module &m, py::class_<SurfaceHMisalignSt
           "__deepcopy__",
           [](const SurfaceHMisalignStruct &self, py::dict &memo) {
             return SurfaceHMisalignStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const SurfaceHMisalignStruct &self, const SurfaceHMisalignStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SurfaceHMisalignStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -825,6 +978,21 @@ void init_surface_segmented_pt_struct(py::module &m, py::class_<SurfaceSegmented
             return SurfaceSegmentedPtStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const SurfaceSegmentedPtStruct &self, const SurfaceSegmentedPtStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SurfaceSegmentedPtStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -873,6 +1041,21 @@ void init_surface_segmented_struct(py::module &m, py::class_<SurfaceSegmentedStr
           "__deepcopy__",
           [](const SurfaceSegmentedStruct &self, py::dict &memo) {
             return SurfaceSegmentedStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const SurfaceSegmentedStruct &self, const SurfaceSegmentedStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SurfaceSegmentedStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -933,6 +1116,21 @@ void init_spline_struct(py::module &m, py::class_<SplineStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const SplineStruct &self, py::dict &memo) { return SplineStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const SplineStruct &self, const SplineStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SplineStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -1047,6 +1245,21 @@ void init_summation_rdt_struct(py::module &m, py::class_<SummationRdtStruct> &cl
       .def(
           "__deepcopy__",
           [](const SummationRdtStruct &self, py::dict &memo) { return SummationRdtStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const SummationRdtStruct &self, const SummationRdtStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SummationRdtStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

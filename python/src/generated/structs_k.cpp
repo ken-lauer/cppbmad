@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_k.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -37,6 +40,21 @@ void init_kv_beam_init_struct(py::module &m, py::class_<KvBeamInitStruct> &cls) 
       .def(
           "__deepcopy__",
           [](const KvBeamInitStruct &self, py::dict &memo) { return KvBeamInitStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const KvBeamInitStruct &self, const KvBeamInitStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const KvBeamInitStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

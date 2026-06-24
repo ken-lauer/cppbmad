@@ -405,7 +405,6 @@ status : int
       &SimUtils::real_num_fortran_format,
       py::arg("number"),
       py::arg("width"),
-      py::arg("fmt_str"),
       py::arg("n_blanks") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine real_num_fortran_format
@@ -416,9 +415,11 @@ number : float
 
 width : int
 
-fmt_str : str
-
 n_blanks : int, optional
+
+Returns
+-------
+fmt_str : str
 )"""
   );
   m.def(
@@ -426,7 +427,6 @@ n_blanks : int, optional
       &SimUtils::real_path,
       py::arg("path_in"),
       py::arg("path_out"),
-      py::arg("is_ok"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine real_path
 
@@ -436,6 +436,8 @@ path_in : str
 
 path_out : str
 
+Returns
+-------
 is_ok : bool
 )"""
   );
@@ -443,7 +445,6 @@ is_ok : bool
       "real_str",
       &SimUtils::real_str,
       py::arg("r_num"),
-      py::arg("str"),
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
@@ -453,11 +454,13 @@ Parameters
 ----------
 r_num : float
 
-str : str
-
 n_signif : int, optional
 
 n_decimal : int, optional
+
+Returns
+-------
+str : str
 )"""
   );
   m.def(
@@ -465,7 +468,6 @@ n_decimal : int, optional
       &SimUtils::real_to_string,
       py::arg("real_num"),
       py::arg("width"),
-      py::arg("str"),
       py::arg("n_signif") = py::none(),
       py::arg("n_decimal") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
@@ -477,11 +479,13 @@ real_num : float
 
 width : int
 
-str : str
-
 n_signif : int, optional
 
 n_decimal : int, optional
+
+Returns
+-------
+str : str
 )"""
   );
   m.def(

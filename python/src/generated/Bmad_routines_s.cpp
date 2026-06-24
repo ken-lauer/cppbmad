@@ -1383,7 +1383,6 @@ is_different : bool
       "skip_ele_blender",
       &Bmad::skip_ele_blender,
       py::arg("ele"),
-      py::arg("skip"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine skip_ele_blender
 
@@ -1391,6 +1390,8 @@ Parameters
 ----------
 ele : EleStruct
 
+Returns
+-------
 skip : bool
 )"""
   );
@@ -1835,7 +1836,6 @@ error : bool
       py::arg("field"),
       py::arg("orbit"),
       py::arg("sign_z_vel"),
-      py::arg("omega"),
       py::arg("phase_space_coords") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine spin_omega
@@ -1848,9 +1848,11 @@ orbit : CoordStruct
 
 sign_z_vel : int
 
-omega : 1D array of float (shape: 3)
-
 phase_space_coords : bool, optional
+
+Returns
+-------
+omega : 1D array of float (shape: 3)
 )"""
   );
   py::class_<Bmad::SpinQuatResonanceStrengths, std::unique_ptr<Bmad::SpinQuatResonanceStrengths>>(

@@ -1155,7 +1155,7 @@ subroutine fortran_tao_curve_ele_ref (curve, point_to_ele_ref, ele_track) bind(c
   logical(c_bool) :: point_to_ele_ref  ! 0D_NOT_logical
   logical :: f_point_to_ele_ref
   ! ** Out parameters **
-  type(c_ptr), value :: ele_track  ! 0D_PTR_type
+  type(c_ptr) :: ele_track  ! 0D_PTR_type
   type(ele_struct), pointer :: f_ele_track
   ! ** End of parameters **
   ! in: f_curve 0D_NOT_type

@@ -179,7 +179,6 @@ y : float
       &SimUtils::assert_equal,
       py::arg("int_arr"),
       py::arg("err_str"),
-      py::arg("ival"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine assert_equal
 
@@ -189,6 +188,8 @@ int_arr : 1D array of int
 
 err_str : str
 
+Returns
+-------
 ival : int
 )"""
   );

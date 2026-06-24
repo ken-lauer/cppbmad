@@ -96,7 +96,6 @@ dj_bes : float
       "djb_hash",
       &SimUtils::djb_hash,
       py::arg("str"),
-      py::arg("hash"),
       py::arg("old_hash") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine djb_hash
@@ -105,16 +104,17 @@ Parameters
 ----------
 str : str
 
-hash : int
-
 old_hash : int, optional
+
+Returns
+-------
+hash : int
 )"""
   );
   m.def(
       "djb_str_hash",
       &SimUtils::djb_str_hash,
       py::arg("in_str"),
-      py::arg("hash_str"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine djb_str_hash
 
@@ -122,6 +122,8 @@ Parameters
 ----------
 in_str : str
 
+Returns
+-------
 hash_str : str
 )"""
   );

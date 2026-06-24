@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_i.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -47,6 +50,21 @@ void init_interval1_coef_struct(py::module &m, py::class_<Interval1CoefStruct> &
       .def(
           "__deepcopy__",
           [](const Interval1CoefStruct &self, py::dict &memo) { return Interval1CoefStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const Interval1CoefStruct &self, const Interval1CoefStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const Interval1CoefStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

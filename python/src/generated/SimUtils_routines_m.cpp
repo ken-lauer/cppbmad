@@ -50,7 +50,6 @@ mass : float
       &SimUtils::match_reg,
       py::arg("str"),
       py::arg("pat"),
-      py::arg("is_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine match_reg
 
@@ -60,6 +59,8 @@ str : str
 
 pat : str
 
+Returns
+-------
 is_match : bool
 )"""
   );
@@ -68,7 +69,6 @@ is_match : bool
       &SimUtils::match_wild,
       py::arg("string"),
       py::arg("template_"),
-      py::arg("is_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine match_wild
 
@@ -76,6 +76,8 @@ Parameters
 ----------
 string : str
 
+Returns
+-------
 is_match : bool
 )"""
   );
@@ -111,7 +113,6 @@ matched_name : str, optional
       &SimUtils::maximize_projection,
       py::arg("seed"),
       py::arg("cdata"),
-      py::arg("func_retval__"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(function maximize_projection
 

@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_x.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -44,6 +47,21 @@ void init_xy_disp_struct(py::module &m, py::class_<XyDispStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const XyDispStruct &self, py::dict &memo) { return XyDispStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const XyDispStruct &self, const XyDispStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const XyDispStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

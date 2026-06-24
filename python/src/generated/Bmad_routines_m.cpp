@@ -1306,7 +1306,6 @@ map1 : SpinOrbitMap1Struct
       &Bmad::map1_times_map1,
       py::arg("map2"),
       py::arg("map1"),
-      py::arg("map_out"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine map1_times_map1
 
@@ -1316,6 +1315,8 @@ map2 : SpinOrbitMap1Struct
 
 map1 : SpinOrbitMap1Struct
 
+Returns
+-------
 map_out : SpinOrbitMap1Struct
 )"""
   );
@@ -2281,7 +2282,6 @@ orbit : CoordStruct
       &Bmad::mytan,
       py::arg("y"),
       py::arg("x"),
-      py::arg("arg"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine mytan
 
@@ -2291,6 +2291,8 @@ y : float
 
 x : float
 
+Returns
+-------
 arg : float
 )"""
   );

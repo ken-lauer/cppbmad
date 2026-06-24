@@ -410,7 +410,6 @@ set_done : bool, optional
       &Bmad::rchomp,
       py::arg("rel"),
       py::arg("plc"),
-      py::arg("out"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rchomp
 
@@ -420,6 +419,8 @@ rel : float
 
 plc : int
 
+Returns
+-------
 out : str
 )"""
   );
@@ -514,9 +515,8 @@ exact : bool, optional
   );
   m.def(
       "re_str",
-      py::overload_cast<long double, std::string>(&Bmad::re_str),
+      py::overload_cast<long double>(&Bmad::re_str),
       py::arg("rel"),
-      py::arg("str_out"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine re_str_qp
 
@@ -524,14 +524,15 @@ Parameters
 ----------
 rel : float
 
+Returns
+-------
 str_out : str
 )"""
   );
   m.def(
       "re_str",
-      py::overload_cast<double, std::string>(&Bmad::re_str),
+      py::overload_cast<double>(&Bmad::re_str),
       py::arg("rel"),
-      py::arg("str_out"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine re_str_rp
 
@@ -539,6 +540,8 @@ Parameters
 ----------
 rel : float
 
+Returns
+-------
 str_out : str
 )"""
   );
@@ -1086,7 +1089,6 @@ rel_charge : float
       &Bmad::relative_mode_flip,
       py::arg("ele1"),
       py::arg("ele2"),
-      py::arg("func_retval__"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine relative_mode_flip
 
@@ -1360,7 +1362,6 @@ time : float
       py::arg("hz"),
       py::arg("i"),
       py::arg("j"),
-      py::arg("res"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rfun
 
@@ -1384,6 +1385,8 @@ i : int
 
 j : int
 
+Returns
+-------
 res : float
 )"""
   );
@@ -1474,7 +1477,6 @@ r_err : 1D array of float (shape: 10)
       &Bmad::rotate3,
       py::arg("vec"),
       py::arg("angle"),
-      py::arg("rvec"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine rotate3
 
@@ -1484,6 +1486,8 @@ vec : 1D array of float (shape: 3)
 
 angle : float
 
+Returns
+-------
 rvec : 1D array of float (shape: 3)
 )"""
   );

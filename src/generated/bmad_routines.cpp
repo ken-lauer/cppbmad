@@ -467,28 +467,27 @@ bool Bmad::apply_rampers_to_slave(EleStruct &slave) {
   fortran_apply_rampers_to_slave(/* void* */ slave.get_fortran_ptr(), /* bool& */ _err_flag);
   return _err_flag;
 }
-void Bmad::array_re_str(
-    FArray1D<Real> &arr,
-    std::string str_out,
-    std::optional<std::string> parens_in
-) {
+std::string Bmad::array_re_str(FArray1D<Real> &arr, std::optional<std::string> parens_in) {
   // arr: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _arr_desc;
   _arr_desc.rank = 1;
   _arr_desc.data_ptr = arr.data();
   _arr_desc.dims[0] = arr.size();
   const char *_parens_in = parens_in.has_value() ? parens_in->c_str() : nullptr;
-  auto _str_out = str_out.c_str();
+  char _str_out[4096];
   fortran_array_re_str(
       /* Bmad::array_descriptor_t& */ _arr_desc,
       /* const char* */ _parens_in,
       /* const char* */ _str_out
   );
+  return _str_out;
 }
-void Bmad::astra_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele, double field_value) {
+double Bmad::astra_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele) {
+  double _field_value{};
   fortran_astra_max_field_reference(/* void* */ pt0.get_fortran_ptr(),
                                     /* void* */ ele.get_fortran_ptr(),
-                                    /* double& */ field_value);
+                                    /* double& */ _field_value);
+  return _field_value;
 }
 bool Bmad::at_this_ele_end(int now_at, int where_at) {
   bool _is_at_this_end{};
@@ -1889,9 +1888,10 @@ Bmad::ClosedOrbitFromTracking Bmad::closed_orbit_from_tracking(
                                      /* bool& */ _err_flag);
   return ClosedOrbitFromTracking{std::move(closed_orb), _err_flag};
 }
-void Bmad::cmplx_re_str(std::complex<double> cmp, std::string str_out) {
-  auto _str_out = str_out.c_str();
+std::string Bmad::cmplx_re_str(std::complex<double> cmp) {
+  char _str_out[4096];
   fortran_cmplx_re_str(/* std::complex<double>& */ cmp, /* const char* */ _str_out);
+  return _str_out;
 }
 bool Bmad::combine_consecutive_elements(LatStruct &lat) {
   bool _error{};
@@ -1901,23 +1901,21 @@ bool Bmad::combine_consecutive_elements(LatStruct &lat) {
 void Bmad::complex_taylor_clean(ComplexTaylorStruct &complex_taylor) {
   fortran_complex_taylor_clean(/* void* */ complex_taylor.get_fortran_ptr());
 }
-void Bmad::complex_taylor_coef(
-    ComplexTaylorStruct &complex_taylor,
-    FArray1D<Int> &exp,
-    std::complex<double> coef
-) {
+std::complex<double>
+Bmad::complex_taylor_coef(ComplexTaylorStruct &complex_taylor, FArray1D<Int> &exp) {
   // exp: in NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _exp_desc;
   _exp_desc.rank = 1;
   _exp_desc.data_ptr = exp.data();
   _exp_desc.dims[0] = exp.size();
+  std::complex<double> _coef{};
   fortran_complex_taylor_coef1(/* void* */ complex_taylor.get_fortran_ptr(),
                                /* Bmad::array_descriptor_t& */ _exp_desc,
-                               /* std::complex<double>& */ coef);
+                               /* std::complex<double>& */ _coef);
+  return _coef;
 }
-void Bmad::complex_taylor_coef(
+std::complex<double> Bmad::complex_taylor_coef(
     ComplexTaylorStruct &complex_taylor,
-    std::complex<double> coef,
     std::optional<int> i1,
     std::optional<int> i2,
     std::optional<int> i3,
@@ -1991,6 +1989,7 @@ void Bmad::complex_taylor_coef(
   } else {
     _i9 = nullptr;
   }
+  std::complex<double> _coef{};
   fortran_complex_taylor_coef2(/* void* */ complex_taylor.get_fortran_ptr(),
                                /* int* */ _i1,
                                /* int* */ _i2,
@@ -2001,7 +2000,8 @@ void Bmad::complex_taylor_coef(
                                /* int* */ _i7,
                                /* int* */ _i8,
                                /* int* */ _i9,
-                               /* std::complex<double>& */ coef);
+                               /* std::complex<double>& */ _coef);
+  return _coef;
 }
 void Bmad::complex_taylor_equal_complex_taylor(
     ComplexTaylorStruct &complex_taylor1,
@@ -2738,14 +2738,16 @@ FloorPositionStruct Bmad::coords_relative_to_floor(
                                    /* void* */ _floor1.get_fortran_ptr());
   return std::move(_floor1);
 }
-void Bmad::coulombfun(double u, double v, double w, double gam, double res) {
+double Bmad::coulombfun(double u, double v, double w, double gam) {
+  double _res{};
   fortran_coulombfun(
       /* double& */ u,
       /* double& */ v,
       /* double& */ w,
       /* double& */ gam,
-      /* double& */ res
+      /* double& */ _res
   );
+  return _res;
 }
 void Bmad::create_concatenated_wall3d(LatStruct &lat, bool err) {
   fortran_create_concatenated_wall3d(/* void* */ lat.get_fortran_ptr(), /* bool& */ err);
@@ -2923,23 +2925,22 @@ Bmad::CustomEleAttribNameList Bmad::custom_ele_attrib_name_list() {
                                       /* void* */ name_list.get_fortran_ptr());
   return CustomEleAttribNameList{std::move(index_list), std::move(name_list)};
 }
-void Bmad::damping_matrix_d(
+FixedArray2D<Real, 6, 6> Bmad::damping_matrix_d(
     double gamma,
     double g_tot,
     double B0,
     double B1,
     double delta,
-    int species,
-    FixedArray2D<Real, 6, 6> mat
+    int species
 ) {
-  // mat: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
+  // mat: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _mat_desc;
   _mat_desc.rank = 2;
+  FixedArray2D<Real, 6, 6> mat;
   double _mat_vec[6 * 6];
   _mat_desc.data_ptr = _mat_vec;
   _mat_desc.dims[0] = 6;
   _mat_desc.dims[1] = 6;
-  matrix_to_vec(mat, _mat_vec);
   fortran_damping_matrix_d(
       /* double& */ gamma,
       /* double& */ g_tot,
@@ -2950,6 +2951,7 @@ void Bmad::damping_matrix_d(
       /* Bmad::array_descriptor_t& */ _mat_desc
   );
   vec_to_matrix(_mat_vec, mat);
+  return mat;
 }
 void Bmad::deallocate_ele_pointers(
     EleStruct &ele,
@@ -3013,20 +3015,15 @@ int Bmad::diffraction_plate_or_mask_hit_spot(EleStruct &ele, CoordStruct &orbit)
                                              /* int& */ _ix_section);
   return _ix_section;
 }
-void Bmad::diffusion_matrix_b(
-    double gamma,
-    double g_tot,
-    int species,
-    FixedArray2D<Real, 6, 6> mat
-) {
-  // mat: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
+FixedArray2D<Real, 6, 6> Bmad::diffusion_matrix_b(double gamma, double g_tot, int species) {
+  // mat: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _mat_desc;
   _mat_desc.rank = 2;
+  FixedArray2D<Real, 6, 6> mat;
   double _mat_vec[6 * 6];
   _mat_desc.data_ptr = _mat_vec;
   _mat_desc.dims[0] = 6;
   _mat_desc.dims[1] = 6;
-  matrix_to_vec(mat, _mat_vec);
   fortran_diffusion_matrix_b(
       /* double& */ gamma,
       /* double& */ g_tot,
@@ -3034,6 +3031,7 @@ void Bmad::diffusion_matrix_b(
       /* Bmad::array_descriptor_t& */ _mat_desc
   );
   vec_to_matrix(_mat_vec, mat);
+  return mat;
 }
 Bmad::DistanceToAperture
 Bmad::distance_to_aperture(CoordStruct &orbit, int particle_at, EleStruct &ele) {
@@ -3051,13 +3049,15 @@ bool Bmad::do_mode_flip(EleStruct &ele) {
   fortran_do_mode_flip(/* void* */ ele.get_fortran_ptr(), /* bool& */ _err_flag);
   return _err_flag;
 }
-void Bmad::dpc_given_de(double pc_old, double mass, double dE, double dpc) {
+double Bmad::dpc_given_de(double pc_old, double mass, double dE) {
+  double _dpc{};
   fortran_dpc_given_de(
       /* double& */ pc_old,
       /* double& */ mass,
       /* double& */ dE,
-      /* double& */ dpc
+      /* double& */ _dpc
   );
+  return _dpc;
 }
 void Bmad::drift_and_pipe_track_methods_adjustment(LatStruct &lat) {
   fortran_drift_and_pipe_track_methods_adjustment(/* void* */ lat.get_fortran_ptr());
@@ -3320,8 +3320,10 @@ bool Bmad::ele_has_constant_ds_dt_ref(EleStruct &ele) {
   fortran_ele_has_constant_ds_dt_ref(/* void* */ ele.get_fortran_ptr(), /* bool& */ _is_const);
   return _is_const;
 }
-void Bmad::ele_has_nonzero_kick(EleStruct &ele, bool has_kick) {
-  fortran_ele_has_nonzero_kick(/* void* */ ele.get_fortran_ptr(), /* bool& */ has_kick);
+bool Bmad::ele_has_nonzero_kick(EleStruct &ele) {
+  bool _has_kick{};
+  fortran_ele_has_nonzero_kick(/* void* */ ele.get_fortran_ptr(), /* bool& */ _has_kick);
+  return _has_kick;
 }
 bool Bmad::ele_has_nonzero_offset(EleStruct &ele) {
   bool _has_offset{};
@@ -3871,14 +3873,12 @@ FixedArray1D<Real, 10> Bmad::em_field_kick_vector_time(
                                     /* void* */ _extra_field);
   return _dvec_dt;
 }
-void Bmad::em_field_plus_em_field(
-    EmFieldStruct &field1,
-    EmFieldStruct &field2,
-    EmFieldStruct &field_tot
-) {
+EmFieldStruct Bmad::em_field_plus_em_field(EmFieldStruct &field1, EmFieldStruct &field2) {
+  EmFieldStruct _field_tot;
   fortran_em_field_plus_em_field(/* void* */ field1.get_fortran_ptr(),
                                  /* void* */ field2.get_fortran_ptr(),
-                                 /* void* */ field_tot.get_fortran_ptr());
+                                 /* void* */ _field_tot.get_fortran_ptr());
+  return std::move(_field_tot);
 }
 Bmad::Emit6d Bmad::emit_6d(
     EleStruct &ele_ref,
@@ -4040,548 +4040,673 @@ Bmad::EnvelopeRadintsIbs Bmad::envelope_radints_ibs(
   );
   return EnvelopeRadintsIbs{_alpha, _emit};
 }
-void Bmad::eq_ac_kicker(AcKickerStruct &f1, AcKickerStruct &f2, bool is_eq) {
+bool Bmad::eq_ac_kicker(AcKickerStruct &f1, AcKickerStruct &f2) {
+  bool _is_eq{};
   fortran_eq_ac_kicker(/* void* */ f1.get_fortran_ptr(),
                        /* void* */ f2.get_fortran_ptr(),
-                       /* bool& */ is_eq);
+                       /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_ac_kicker_freq(AcKickerFreqStruct &f1, AcKickerFreqStruct &f2, bool is_eq) {
+bool Bmad::eq_ac_kicker_freq(AcKickerFreqStruct &f1, AcKickerFreqStruct &f2) {
+  bool _is_eq{};
   fortran_eq_ac_kicker_freq(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_ac_kicker_time(AcKickerTimeStruct &f1, AcKickerTimeStruct &f2, bool is_eq) {
+bool Bmad::eq_ac_kicker_time(AcKickerTimeStruct &f1, AcKickerTimeStruct &f2) {
+  bool _is_eq{};
   fortran_eq_ac_kicker_time(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_anormal_mode(AnormalModeStruct &f1, AnormalModeStruct &f2, bool is_eq) {
+bool Bmad::eq_anormal_mode(AnormalModeStruct &f1, AnormalModeStruct &f2) {
+  bool _is_eq{};
   fortran_eq_anormal_mode(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_aperture_param(ApertureParamStruct &f1, ApertureParamStruct &f2, bool is_eq) {
+bool Bmad::eq_aperture_param(ApertureParamStruct &f1, ApertureParamStruct &f2) {
+  bool _is_eq{};
   fortran_eq_aperture_param(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_aperture_point(AperturePointStruct &f1, AperturePointStruct &f2, bool is_eq) {
+bool Bmad::eq_aperture_point(AperturePointStruct &f1, AperturePointStruct &f2) {
+  bool _is_eq{};
   fortran_eq_aperture_point(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_aperture_scan(ApertureScanStruct &f1, ApertureScanStruct &f2, bool is_eq) {
+bool Bmad::eq_aperture_scan(ApertureScanStruct &f1, ApertureScanStruct &f2) {
+  bool _is_eq{};
   fortran_eq_aperture_scan(/* void* */ f1.get_fortran_ptr(),
                            /* void* */ f2.get_fortran_ptr(),
-                           /* bool& */ is_eq);
+                           /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_beam(BeamStruct &f1, BeamStruct &f2, bool is_eq) {
+bool Bmad::eq_beam(BeamStruct &f1, BeamStruct &f2) {
+  bool _is_eq{};
   fortran_eq_beam(/* void* */ f1.get_fortran_ptr(),
                   /* void* */ f2.get_fortran_ptr(),
-                  /* bool& */ is_eq);
+                  /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_beam_init(BeamInitStruct &f1, BeamInitStruct &f2, bool is_eq) {
+bool Bmad::eq_beam_init(BeamInitStruct &f1, BeamInitStruct &f2) {
+  bool _is_eq{};
   fortran_eq_beam_init(/* void* */ f1.get_fortran_ptr(),
                        /* void* */ f2.get_fortran_ptr(),
-                       /* bool& */ is_eq);
+                       /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_bmad_common(BmadCommonStruct &f1, BmadCommonStruct &f2, bool is_eq) {
+bool Bmad::eq_bmad_common(BmadCommonStruct &f1, BmadCommonStruct &f2) {
+  bool _is_eq{};
   fortran_eq_bmad_common(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_bookkeeping_state(
-    BookkeepingStateStruct &f1,
-    BookkeepingStateStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_bookkeeping_state(BookkeepingStateStruct &f1, BookkeepingStateStruct &f2) {
+  bool _is_eq{};
   fortran_eq_bookkeeping_state(/* void* */ f1.get_fortran_ptr(),
                                /* void* */ f2.get_fortran_ptr(),
-                               /* bool& */ is_eq);
+                               /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_bpm_phase_coupling(
-    BpmPhaseCouplingStruct &f1,
-    BpmPhaseCouplingStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_bpm_phase_coupling(BpmPhaseCouplingStruct &f1, BpmPhaseCouplingStruct &f2) {
+  bool _is_eq{};
   fortran_eq_bpm_phase_coupling(/* void* */ f1.get_fortran_ptr(),
                                 /* void* */ f2.get_fortran_ptr(),
-                                /* bool& */ is_eq);
+                                /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_branch(BranchStruct &f1, BranchStruct &f2, bool is_eq) {
+bool Bmad::eq_branch(BranchStruct &f1, BranchStruct &f2) {
+  bool _is_eq{};
   fortran_eq_branch(/* void* */ f1.get_fortran_ptr(),
                     /* void* */ f2.get_fortran_ptr(),
-                    /* bool& */ is_eq);
+                    /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_bunch(BunchStruct &f1, BunchStruct &f2, bool is_eq) {
+bool Bmad::eq_bunch(BunchStruct &f1, BunchStruct &f2) {
+  bool _is_eq{};
   fortran_eq_bunch(/* void* */ f1.get_fortran_ptr(),
                    /* void* */ f2.get_fortran_ptr(),
-                   /* bool& */ is_eq);
+                   /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_bunch_params(BunchParamsStruct &f1, BunchParamsStruct &f2, bool is_eq) {
+bool Bmad::eq_bunch_params(BunchParamsStruct &f1, BunchParamsStruct &f2) {
+  bool _is_eq{};
   fortran_eq_bunch_params(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_cartesian_map(CartesianMapStruct &f1, CartesianMapStruct &f2, bool is_eq) {
+bool Bmad::eq_cartesian_map(CartesianMapStruct &f1, CartesianMapStruct &f2) {
+  bool _is_eq{};
   fortran_eq_cartesian_map(/* void* */ f1.get_fortran_ptr(),
                            /* void* */ f2.get_fortran_ptr(),
-                           /* bool& */ is_eq);
+                           /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_cartesian_map_term(
-    CartesianMapTermStruct &f1,
-    CartesianMapTermStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_cartesian_map_term(CartesianMapTermStruct &f1, CartesianMapTermStruct &f2) {
+  bool _is_eq{};
   fortran_eq_cartesian_map_term(/* void* */ f1.get_fortran_ptr(),
                                 /* void* */ f2.get_fortran_ptr(),
-                                /* bool& */ is_eq);
+                                /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_cartesian_map_term1(
-    CartesianMapTerm1Struct &f1,
-    CartesianMapTerm1Struct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_cartesian_map_term1(CartesianMapTerm1Struct &f1, CartesianMapTerm1Struct &f2) {
+  bool _is_eq{};
   fortran_eq_cartesian_map_term1(/* void* */ f1.get_fortran_ptr(),
                                  /* void* */ f2.get_fortran_ptr(),
-                                 /* bool& */ is_eq);
+                                 /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_complex_taylor(ComplexTaylorStruct &f1, ComplexTaylorStruct &f2, bool is_eq) {
+bool Bmad::eq_complex_taylor(ComplexTaylorStruct &f1, ComplexTaylorStruct &f2) {
+  bool _is_eq{};
   fortran_eq_complex_taylor(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_complex_taylor_term(
-    ComplexTaylorTermStruct &f1,
-    ComplexTaylorTermStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_complex_taylor_term(ComplexTaylorTermStruct &f1, ComplexTaylorTermStruct &f2) {
+  bool _is_eq{};
   fortran_eq_complex_taylor_term(/* void* */ f1.get_fortran_ptr(),
                                  /* void* */ f2.get_fortran_ptr(),
-                                 /* bool& */ is_eq);
+                                 /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_control(ControlStruct &f1, ControlStruct &f2, bool is_eq) {
+bool Bmad::eq_control(ControlStruct &f1, ControlStruct &f2) {
+  bool _is_eq{};
   fortran_eq_control(/* void* */ f1.get_fortran_ptr(),
                      /* void* */ f2.get_fortran_ptr(),
-                     /* bool& */ is_eq);
+                     /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_control_ramp1(ControlRamp1Struct &f1, ControlRamp1Struct &f2, bool is_eq) {
+bool Bmad::eq_control_ramp1(ControlRamp1Struct &f1, ControlRamp1Struct &f2) {
+  bool _is_eq{};
   fortran_eq_control_ramp1(/* void* */ f1.get_fortran_ptr(),
                            /* void* */ f2.get_fortran_ptr(),
-                           /* bool& */ is_eq);
+                           /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_control_var1(ControlVar1Struct &f1, ControlVar1Struct &f2, bool is_eq) {
+bool Bmad::eq_control_var1(ControlVar1Struct &f1, ControlVar1Struct &f2) {
+  bool _is_eq{};
   fortran_eq_control_var1(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_controller(ControllerStruct &f1, ControllerStruct &f2, bool is_eq) {
+bool Bmad::eq_controller(ControllerStruct &f1, ControllerStruct &f2) {
+  bool _is_eq{};
   fortran_eq_controller(/* void* */ f1.get_fortran_ptr(),
                         /* void* */ f2.get_fortran_ptr(),
-                        /* bool& */ is_eq);
+                        /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_coord(CoordStruct &f1, CoordStruct &f2, bool is_eq) {
+bool Bmad::eq_coord(CoordStruct &f1, CoordStruct &f2) {
+  bool _is_eq{};
   fortran_eq_coord(/* void* */ f1.get_fortran_ptr(),
                    /* void* */ f2.get_fortran_ptr(),
-                   /* bool& */ is_eq);
+                   /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_coord_array(CoordArrayStruct &f1, CoordArrayStruct &f2, bool is_eq) {
+bool Bmad::eq_coord_array(CoordArrayStruct &f1, CoordArrayStruct &f2) {
+  bool _is_eq{};
   fortran_eq_coord_array(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_cylindrical_map(CylindricalMapStruct &f1, CylindricalMapStruct &f2, bool is_eq) {
+bool Bmad::eq_cylindrical_map(CylindricalMapStruct &f1, CylindricalMapStruct &f2) {
+  bool _is_eq{};
   fortran_eq_cylindrical_map(/* void* */ f1.get_fortran_ptr(),
                              /* void* */ f2.get_fortran_ptr(),
-                             /* bool& */ is_eq);
+                             /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_cylindrical_map_term(
-    CylindricalMapTermStruct &f1,
-    CylindricalMapTermStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_cylindrical_map_term(CylindricalMapTermStruct &f1, CylindricalMapTermStruct &f2) {
+  bool _is_eq{};
   fortran_eq_cylindrical_map_term(/* void* */ f1.get_fortran_ptr(),
                                   /* void* */ f2.get_fortran_ptr(),
-                                  /* bool& */ is_eq);
+                                  /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_cylindrical_map_term1(
-    CylindricalMapTerm1Struct &f1,
-    CylindricalMapTerm1Struct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_cylindrical_map_term1(CylindricalMapTerm1Struct &f1, CylindricalMapTerm1Struct &f2) {
+  bool _is_eq{};
   fortran_eq_cylindrical_map_term1(/* void* */ f1.get_fortran_ptr(),
                                    /* void* */ f2.get_fortran_ptr(),
-                                   /* bool& */ is_eq);
+                                   /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_ele(EleStruct &f1, EleStruct &f2, bool is_eq) {
+bool Bmad::eq_ele(EleStruct &f1, EleStruct &f2) {
+  bool _is_eq{};
   fortran_eq_ele(/* void* */ f1.get_fortran_ptr(),
                  /* void* */ f2.get_fortran_ptr(),
-                 /* bool& */ is_eq);
+                 /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_ellipse_beam_init(EllipseBeamInitStruct &f1, EllipseBeamInitStruct &f2, bool is_eq) {
+bool Bmad::eq_ellipse_beam_init(EllipseBeamInitStruct &f1, EllipseBeamInitStruct &f2) {
+  bool _is_eq{};
   fortran_eq_ellipse_beam_init(/* void* */ f1.get_fortran_ptr(),
                                /* void* */ f2.get_fortran_ptr(),
-                               /* bool& */ is_eq);
+                               /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_em_field(EmFieldStruct &f1, EmFieldStruct &f2, bool is_eq) {
+bool Bmad::eq_em_field(EmFieldStruct &f1, EmFieldStruct &f2) {
+  bool _is_eq{};
   fortran_eq_em_field(/* void* */ f1.get_fortran_ptr(),
                       /* void* */ f2.get_fortran_ptr(),
-                      /* bool& */ is_eq);
+                      /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_expression_atom(ExpressionAtomStruct &f1, ExpressionAtomStruct &f2, bool is_eq) {
+bool Bmad::eq_expression_atom(ExpressionAtomStruct &f1, ExpressionAtomStruct &f2) {
+  bool _is_eq{};
   fortran_eq_expression_atom(/* void* */ f1.get_fortran_ptr(),
                              /* void* */ f2.get_fortran_ptr(),
-                             /* bool& */ is_eq);
+                             /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_floor_position(FloorPositionStruct &f1, FloorPositionStruct &f2, bool is_eq) {
+bool Bmad::eq_floor_position(FloorPositionStruct &f1, FloorPositionStruct &f2) {
+  bool _is_eq{};
   fortran_eq_floor_position(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_gen_grad1(GenGrad1Struct &f1, GenGrad1Struct &f2, bool is_eq) {
+bool Bmad::eq_gen_grad1(GenGrad1Struct &f1, GenGrad1Struct &f2) {
+  bool _is_eq{};
   fortran_eq_gen_grad1(/* void* */ f1.get_fortran_ptr(),
                        /* void* */ f2.get_fortran_ptr(),
-                       /* bool& */ is_eq);
+                       /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_gen_grad_map(GenGradMapStruct &f1, GenGradMapStruct &f2, bool is_eq) {
+bool Bmad::eq_gen_grad_map(GenGradMapStruct &f1, GenGradMapStruct &f2) {
+  bool _is_eq{};
   fortran_eq_gen_grad_map(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_gg_taylor(GgTaylorStruct &f1, GgTaylorStruct &f2, bool is_eq) {
+bool Bmad::eq_gg_taylor(GgTaylorStruct &f1, GgTaylorStruct &f2) {
+  bool _is_eq{};
   fortran_eq_gg_taylor(/* void* */ f1.get_fortran_ptr(),
                        /* void* */ f2.get_fortran_ptr(),
-                       /* bool& */ is_eq);
+                       /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_gg_taylor_term(GgTaylorTermStruct &f1, GgTaylorTermStruct &f2, bool is_eq) {
+bool Bmad::eq_gg_taylor_term(GgTaylorTermStruct &f1, GgTaylorTermStruct &f2) {
+  bool _is_eq{};
   fortran_eq_gg_taylor_term(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_grid_beam_init(GridBeamInitStruct &f1, GridBeamInitStruct &f2, bool is_eq) {
+bool Bmad::eq_grid_beam_init(GridBeamInitStruct &f1, GridBeamInitStruct &f2) {
+  bool _is_eq{};
   fortran_eq_grid_beam_init(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_grid_field(GridFieldStruct &f1, GridFieldStruct &f2, bool is_eq) {
+bool Bmad::eq_grid_field(GridFieldStruct &f1, GridFieldStruct &f2) {
+  bool _is_eq{};
   fortran_eq_grid_field(/* void* */ f1.get_fortran_ptr(),
                         /* void* */ f2.get_fortran_ptr(),
-                        /* bool& */ is_eq);
+                        /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_grid_field_pt(GridFieldPtStruct &f1, GridFieldPtStruct &f2, bool is_eq) {
+bool Bmad::eq_grid_field_pt(GridFieldPtStruct &f1, GridFieldPtStruct &f2) {
+  bool _is_eq{};
   fortran_eq_grid_field_pt(/* void* */ f1.get_fortran_ptr(),
                            /* void* */ f2.get_fortran_ptr(),
-                           /* bool& */ is_eq);
+                           /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_grid_field_pt1(GridFieldPt1Struct &f1, GridFieldPt1Struct &f2, bool is_eq) {
+bool Bmad::eq_grid_field_pt1(GridFieldPt1Struct &f1, GridFieldPt1Struct &f2) {
+  bool _is_eq{};
   fortran_eq_grid_field_pt1(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_high_energy_space_charge(
+bool Bmad::eq_high_energy_space_charge(
     HighEnergySpaceChargeStruct &f1,
-    HighEnergySpaceChargeStruct &f2,
-    bool is_eq
+    HighEnergySpaceChargeStruct &f2
 ) {
+  bool _is_eq{};
   fortran_eq_high_energy_space_charge(/* void* */ f1.get_fortran_ptr(),
                                       /* void* */ f2.get_fortran_ptr(),
-                                      /* bool& */ is_eq);
+                                      /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_interval1_coef(Interval1CoefStruct &f1, Interval1CoefStruct &f2, bool is_eq) {
+bool Bmad::eq_interval1_coef(Interval1CoefStruct &f1, Interval1CoefStruct &f2) {
+  bool _is_eq{};
   fortran_eq_interval1_coef(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_kv_beam_init(KvBeamInitStruct &f1, KvBeamInitStruct &f2, bool is_eq) {
+bool Bmad::eq_kv_beam_init(KvBeamInitStruct &f1, KvBeamInitStruct &f2) {
+  bool _is_eq{};
   fortran_eq_kv_beam_init(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_lat(LatStruct &f1, LatStruct &f2, bool is_eq) {
+bool Bmad::eq_lat(LatStruct &f1, LatStruct &f2) {
+  bool _is_eq{};
   fortran_eq_lat(/* void* */ f1.get_fortran_ptr(),
                  /* void* */ f2.get_fortran_ptr(),
-                 /* bool& */ is_eq);
+                 /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_lat_ele_loc(LatEleLocStruct &f1, LatEleLocStruct &f2, bool is_eq) {
+bool Bmad::eq_lat_ele_loc(LatEleLocStruct &f1, LatEleLocStruct &f2) {
+  bool _is_eq{};
   fortran_eq_lat_ele_loc(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_lat_param(LatParamStruct &f1, LatParamStruct &f2, bool is_eq) {
+bool Bmad::eq_lat_param(LatParamStruct &f1, LatParamStruct &f2) {
+  bool _is_eq{};
   fortran_eq_lat_param(/* void* */ f1.get_fortran_ptr(),
                        /* void* */ f2.get_fortran_ptr(),
-                       /* bool& */ is_eq);
+                       /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_linac_normal_mode(LinacNormalModeStruct &f1, LinacNormalModeStruct &f2, bool is_eq) {
+bool Bmad::eq_linac_normal_mode(LinacNormalModeStruct &f1, LinacNormalModeStruct &f2) {
+  bool _is_eq{};
   fortran_eq_linac_normal_mode(/* void* */ f1.get_fortran_ptr(),
                                /* void* */ f2.get_fortran_ptr(),
-                               /* bool& */ is_eq);
+                               /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_mode3(Mode3Struct &f1, Mode3Struct &f2, bool is_eq) {
+bool Bmad::eq_mode3(Mode3Struct &f1, Mode3Struct &f2) {
+  bool _is_eq{};
   fortran_eq_mode3(/* void* */ f1.get_fortran_ptr(),
                    /* void* */ f2.get_fortran_ptr(),
-                   /* bool& */ is_eq);
+                   /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_mode_info(ModeInfoStruct &f1, ModeInfoStruct &f2, bool is_eq) {
+bool Bmad::eq_mode_info(ModeInfoStruct &f1, ModeInfoStruct &f2) {
+  bool _is_eq{};
   fortran_eq_mode_info(/* void* */ f1.get_fortran_ptr(),
                        /* void* */ f2.get_fortran_ptr(),
-                       /* bool& */ is_eq);
+                       /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_normal_modes(NormalModesStruct &f1, NormalModesStruct &f2, bool is_eq) {
+bool Bmad::eq_normal_modes(NormalModesStruct &f1, NormalModesStruct &f2) {
+  bool _is_eq{};
   fortran_eq_normal_modes(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_photon_element(PhotonElementStruct &f1, PhotonElementStruct &f2, bool is_eq) {
+bool Bmad::eq_photon_element(PhotonElementStruct &f1, PhotonElementStruct &f2) {
+  bool _is_eq{};
   fortran_eq_photon_element(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_photon_material(PhotonMaterialStruct &f1, PhotonMaterialStruct &f2, bool is_eq) {
+bool Bmad::eq_photon_material(PhotonMaterialStruct &f1, PhotonMaterialStruct &f2) {
+  bool _is_eq{};
   fortran_eq_photon_material(/* void* */ f1.get_fortran_ptr(),
                              /* void* */ f2.get_fortran_ptr(),
-                             /* bool& */ is_eq);
+                             /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_photon_reflect_surface(
+bool Bmad::eq_photon_reflect_surface(
     PhotonReflectSurfaceStruct &f1,
-    PhotonReflectSurfaceStruct &f2,
-    bool is_eq
+    PhotonReflectSurfaceStruct &f2
 ) {
+  bool _is_eq{};
   fortran_eq_photon_reflect_surface(/* void* */ f1.get_fortran_ptr(),
                                     /* void* */ f2.get_fortran_ptr(),
-                                    /* bool& */ is_eq);
+                                    /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_photon_reflect_table(
-    PhotonReflectTableStruct &f1,
-    PhotonReflectTableStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_photon_reflect_table(PhotonReflectTableStruct &f1, PhotonReflectTableStruct &f2) {
+  bool _is_eq{};
   fortran_eq_photon_reflect_table(/* void* */ f1.get_fortran_ptr(),
                                   /* void* */ f2.get_fortran_ptr(),
-                                  /* bool& */ is_eq);
+                                  /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_photon_target(PhotonTargetStruct &f1, PhotonTargetStruct &f2, bool is_eq) {
+bool Bmad::eq_photon_target(PhotonTargetStruct &f1, PhotonTargetStruct &f2) {
+  bool _is_eq{};
   fortran_eq_photon_target(/* void* */ f1.get_fortran_ptr(),
                            /* void* */ f2.get_fortran_ptr(),
-                           /* bool& */ is_eq);
+                           /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_pixel_detec(PixelDetecStruct &f1, PixelDetecStruct &f2, bool is_eq) {
+bool Bmad::eq_pixel_detec(PixelDetecStruct &f1, PixelDetecStruct &f2) {
+  bool _is_eq{};
   fortran_eq_pixel_detec(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_pixel_pt(PixelPtStruct &f1, PixelPtStruct &f2, bool is_eq) {
+bool Bmad::eq_pixel_pt(PixelPtStruct &f1, PixelPtStruct &f2) {
+  bool _is_eq{};
   fortran_eq_pixel_pt(/* void* */ f1.get_fortran_ptr(),
                       /* void* */ f2.get_fortran_ptr(),
-                      /* bool& */ is_eq);
+                      /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_pre_tracker(PreTrackerStruct &f1, PreTrackerStruct &f2, bool is_eq) {
+bool Bmad::eq_pre_tracker(PreTrackerStruct &f1, PreTrackerStruct &f2) {
+  bool _is_eq{};
   fortran_eq_pre_tracker(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_rad_int1(RadInt1Struct &f1, RadInt1Struct &f2, bool is_eq) {
+bool Bmad::eq_rad_int1(RadInt1Struct &f1, RadInt1Struct &f2) {
+  bool _is_eq{};
   fortran_eq_rad_int1(/* void* */ f1.get_fortran_ptr(),
                       /* void* */ f2.get_fortran_ptr(),
-                      /* bool& */ is_eq);
+                      /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_rad_int_all_ele(RadIntAllEleStruct &f1, RadIntAllEleStruct &f2, bool is_eq) {
+bool Bmad::eq_rad_int_all_ele(RadIntAllEleStruct &f1, RadIntAllEleStruct &f2) {
+  bool _is_eq{};
   fortran_eq_rad_int_all_ele(/* void* */ f1.get_fortran_ptr(),
                              /* void* */ f2.get_fortran_ptr(),
-                             /* bool& */ is_eq);
+                             /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_rad_int_branch(RadIntBranchStruct &f1, RadIntBranchStruct &f2, bool is_eq) {
+bool Bmad::eq_rad_int_branch(RadIntBranchStruct &f1, RadIntBranchStruct &f2) {
+  bool _is_eq{};
   fortran_eq_rad_int_branch(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_rad_map(RadMapStruct &f1, RadMapStruct &f2, bool is_eq) {
+bool Bmad::eq_rad_map(RadMapStruct &f1, RadMapStruct &f2) {
+  bool _is_eq{};
   fortran_eq_rad_map(/* void* */ f1.get_fortran_ptr(),
                      /* void* */ f2.get_fortran_ptr(),
-                     /* bool& */ is_eq);
+                     /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_rad_map_ele(RadMapEleStruct &f1, RadMapEleStruct &f2, bool is_eq) {
+bool Bmad::eq_rad_map_ele(RadMapEleStruct &f1, RadMapEleStruct &f2) {
+  bool _is_eq{};
   fortran_eq_rad_map_ele(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_ramper_lord(RamperLordStruct &f1, RamperLordStruct &f2, bool is_eq) {
+bool Bmad::eq_ramper_lord(RamperLordStruct &f1, RamperLordStruct &f2) {
+  bool _is_eq{};
   fortran_eq_ramper_lord(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_space_charge_common(
-    SpaceChargeCommonStruct &f1,
-    SpaceChargeCommonStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_space_charge_common(SpaceChargeCommonStruct &f1, SpaceChargeCommonStruct &f2) {
+  bool _is_eq{};
   fortran_eq_space_charge_common(/* void* */ f1.get_fortran_ptr(),
                                  /* void* */ f2.get_fortran_ptr(),
-                                 /* bool& */ is_eq);
+                                 /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_spin_polar(SpinPolarStruct &f1, SpinPolarStruct &f2, bool is_eq) {
+bool Bmad::eq_spin_polar(SpinPolarStruct &f1, SpinPolarStruct &f2) {
+  bool _is_eq{};
   fortran_eq_spin_polar(/* void* */ f1.get_fortran_ptr(),
                         /* void* */ f2.get_fortran_ptr(),
-                        /* bool& */ is_eq);
+                        /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_spline(SplineStruct &f1, SplineStruct &f2, bool is_eq) {
+bool Bmad::eq_spline(SplineStruct &f1, SplineStruct &f2) {
+  bool _is_eq{};
   fortran_eq_spline(/* void* */ f1.get_fortran_ptr(),
                     /* void* */ f2.get_fortran_ptr(),
-                    /* bool& */ is_eq);
+                    /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_strong_beam(StrongBeamStruct &f1, StrongBeamStruct &f2, bool is_eq) {
+bool Bmad::eq_strong_beam(StrongBeamStruct &f1, StrongBeamStruct &f2) {
+  bool _is_eq{};
   fortran_eq_strong_beam(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_surface_curvature(
-    SurfaceCurvatureStruct &f1,
-    SurfaceCurvatureStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_surface_curvature(SurfaceCurvatureStruct &f1, SurfaceCurvatureStruct &f2) {
+  bool _is_eq{};
   fortran_eq_surface_curvature(/* void* */ f1.get_fortran_ptr(),
                                /* void* */ f2.get_fortran_ptr(),
-                               /* bool& */ is_eq);
+                               /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_surface_displacement(
-    SurfaceDisplacementStruct &f1,
-    SurfaceDisplacementStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_surface_displacement(SurfaceDisplacementStruct &f1, SurfaceDisplacementStruct &f2) {
+  bool _is_eq{};
   fortran_eq_surface_displacement(/* void* */ f1.get_fortran_ptr(),
                                   /* void* */ f2.get_fortran_ptr(),
-                                  /* bool& */ is_eq);
+                                  /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_surface_displacement_pt(
+bool Bmad::eq_surface_displacement_pt(
     SurfaceDisplacementPtStruct &f1,
-    SurfaceDisplacementPtStruct &f2,
-    bool is_eq
+    SurfaceDisplacementPtStruct &f2
 ) {
+  bool _is_eq{};
   fortran_eq_surface_displacement_pt(/* void* */ f1.get_fortran_ptr(),
                                      /* void* */ f2.get_fortran_ptr(),
-                                     /* bool& */ is_eq);
+                                     /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_surface_h_misalign(
-    SurfaceHMisalignStruct &f1,
-    SurfaceHMisalignStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_surface_h_misalign(SurfaceHMisalignStruct &f1, SurfaceHMisalignStruct &f2) {
+  bool _is_eq{};
   fortran_eq_surface_h_misalign(/* void* */ f1.get_fortran_ptr(),
                                 /* void* */ f2.get_fortran_ptr(),
-                                /* bool& */ is_eq);
+                                /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_surface_h_misalign_pt(
-    SurfaceHMisalignPtStruct &f1,
-    SurfaceHMisalignPtStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_surface_h_misalign_pt(SurfaceHMisalignPtStruct &f1, SurfaceHMisalignPtStruct &f2) {
+  bool _is_eq{};
   fortran_eq_surface_h_misalign_pt(/* void* */ f1.get_fortran_ptr(),
                                    /* void* */ f2.get_fortran_ptr(),
-                                   /* bool& */ is_eq);
+                                   /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_surface_segmented(
-    SurfaceSegmentedStruct &f1,
-    SurfaceSegmentedStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_surface_segmented(SurfaceSegmentedStruct &f1, SurfaceSegmentedStruct &f2) {
+  bool _is_eq{};
   fortran_eq_surface_segmented(/* void* */ f1.get_fortran_ptr(),
                                /* void* */ f2.get_fortran_ptr(),
-                               /* bool& */ is_eq);
+                               /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_surface_segmented_pt(
-    SurfaceSegmentedPtStruct &f1,
-    SurfaceSegmentedPtStruct &f2,
-    bool is_eq
-) {
+bool Bmad::eq_surface_segmented_pt(SurfaceSegmentedPtStruct &f1, SurfaceSegmentedPtStruct &f2) {
+  bool _is_eq{};
   fortran_eq_surface_segmented_pt(/* void* */ f1.get_fortran_ptr(),
                                   /* void* */ f2.get_fortran_ptr(),
-                                  /* bool& */ is_eq);
+                                  /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_target_point(TargetPointStruct &f1, TargetPointStruct &f2, bool is_eq) {
+bool Bmad::eq_target_point(TargetPointStruct &f1, TargetPointStruct &f2) {
+  bool _is_eq{};
   fortran_eq_target_point(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_taylor(TaylorStruct &f1, TaylorStruct &f2, bool is_eq) {
+bool Bmad::eq_taylor(TaylorStruct &f1, TaylorStruct &f2) {
+  bool _is_eq{};
   fortran_eq_taylor(/* void* */ f1.get_fortran_ptr(),
                     /* void* */ f2.get_fortran_ptr(),
-                    /* bool& */ is_eq);
+                    /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_taylor_term(TaylorTermStruct &f1, TaylorTermStruct &f2, bool is_eq) {
+bool Bmad::eq_taylor_term(TaylorTermStruct &f1, TaylorTermStruct &f2) {
+  bool _is_eq{};
   fortran_eq_taylor_term(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_track(TrackStruct &f1, TrackStruct &f2, bool is_eq) {
+bool Bmad::eq_track(TrackStruct &f1, TrackStruct &f2) {
+  bool _is_eq{};
   fortran_eq_track(/* void* */ f1.get_fortran_ptr(),
                    /* void* */ f2.get_fortran_ptr(),
-                   /* bool& */ is_eq);
+                   /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_track_point(TrackPointStruct &f1, TrackPointStruct &f2, bool is_eq) {
+bool Bmad::eq_track_point(TrackPointStruct &f1, TrackPointStruct &f2) {
+  bool _is_eq{};
   fortran_eq_track_point(/* void* */ f1.get_fortran_ptr(),
                          /* void* */ f2.get_fortran_ptr(),
-                         /* bool& */ is_eq);
+                         /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_twiss(TwissStruct &f1, TwissStruct &f2, bool is_eq) {
+bool Bmad::eq_twiss(TwissStruct &f1, TwissStruct &f2) {
+  bool _is_eq{};
   fortran_eq_twiss(/* void* */ f1.get_fortran_ptr(),
                    /* void* */ f2.get_fortran_ptr(),
-                   /* bool& */ is_eq);
+                   /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wake(WakeStruct &f1, WakeStruct &f2, bool is_eq) {
+bool Bmad::eq_wake(WakeStruct &f1, WakeStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wake(/* void* */ f1.get_fortran_ptr(),
                   /* void* */ f2.get_fortran_ptr(),
-                  /* bool& */ is_eq);
+                  /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wake_lr(WakeLrStruct &f1, WakeLrStruct &f2, bool is_eq) {
+bool Bmad::eq_wake_lr(WakeLrStruct &f1, WakeLrStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wake_lr(/* void* */ f1.get_fortran_ptr(),
                      /* void* */ f2.get_fortran_ptr(),
-                     /* bool& */ is_eq);
+                     /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wake_lr_mode(WakeLrModeStruct &f1, WakeLrModeStruct &f2, bool is_eq) {
+bool Bmad::eq_wake_lr_mode(WakeLrModeStruct &f1, WakeLrModeStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wake_lr_mode(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wake_sr(WakeSrStruct &f1, WakeSrStruct &f2, bool is_eq) {
+bool Bmad::eq_wake_sr(WakeSrStruct &f1, WakeSrStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wake_sr(/* void* */ f1.get_fortran_ptr(),
                      /* void* */ f2.get_fortran_ptr(),
-                     /* bool& */ is_eq);
+                     /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wake_sr_mode(WakeSrModeStruct &f1, WakeSrModeStruct &f2, bool is_eq) {
+bool Bmad::eq_wake_sr_mode(WakeSrModeStruct &f1, WakeSrModeStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wake_sr_mode(/* void* */ f1.get_fortran_ptr(),
                           /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ is_eq);
+                          /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wake_sr_z_long(WakeSrZLongStruct &f1, WakeSrZLongStruct &f2, bool is_eq) {
+bool Bmad::eq_wake_sr_z_long(WakeSrZLongStruct &f1, WakeSrZLongStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wake_sr_z_long(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wall3d(Wall3dStruct &f1, Wall3dStruct &f2, bool is_eq) {
+bool Bmad::eq_wall3d(Wall3dStruct &f1, Wall3dStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wall3d(/* void* */ f1.get_fortran_ptr(),
                     /* void* */ f2.get_fortran_ptr(),
-                    /* bool& */ is_eq);
+                    /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wall3d_section(Wall3dSectionStruct &f1, Wall3dSectionStruct &f2, bool is_eq) {
+bool Bmad::eq_wall3d_section(Wall3dSectionStruct &f1, Wall3dSectionStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wall3d_section(/* void* */ f1.get_fortran_ptr(),
                             /* void* */ f2.get_fortran_ptr(),
-                            /* bool& */ is_eq);
+                            /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_wall3d_vertex(Wall3dVertexStruct &f1, Wall3dVertexStruct &f2, bool is_eq) {
+bool Bmad::eq_wall3d_vertex(Wall3dVertexStruct &f1, Wall3dVertexStruct &f2) {
+  bool _is_eq{};
   fortran_eq_wall3d_vertex(/* void* */ f1.get_fortran_ptr(),
                            /* void* */ f2.get_fortran_ptr(),
-                           /* bool& */ is_eq);
+                           /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::eq_xy_disp(XyDispStruct &f1, XyDispStruct &f2, bool is_eq) {
+bool Bmad::eq_xy_disp(XyDispStruct &f1, XyDispStruct &f2) {
+  bool _is_eq{};
   fortran_eq_xy_disp(/* void* */ f1.get_fortran_ptr(),
                      /* void* */ f2.get_fortran_ptr(),
-                     /* bool& */ is_eq);
+                     /* bool& */ _is_eq);
+  return _is_eq;
 }
-void Bmad::equal_sign_here(EleStruct &ele, std::string delim, bool is_here) {
+bool Bmad::equal_sign_here(EleStruct &ele, std::string delim) {
   auto _delim = delim.c_str();
+  bool _is_here{};
   fortran_equal_sign_here(/* void* */ ele.get_fortran_ptr(),
                           /* const char* */ _delim,
-                          /* bool& */ is_here);
+                          /* bool& */ _is_here);
+  return _is_here;
 }
 bool Bmad::equivalent_taylor_attributes(EleStruct &ele_taylor, EleStruct &ele2) {
   bool _equiv{};
@@ -4661,46 +4786,49 @@ void Bmad::exact_bend_edge_kick(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
-void Bmad::exp_bessi0(double t, double B1, double B2, double func_retval__) {
+double Bmad::exp_bessi0(double t, double B1, double B2) {
+  double _func_retval__{};
   fortran_exp_bessi0(
       /* double& */ t,
       /* double& */ B1,
       /* double& */ B2,
-      /* double& */ func_retval__
+      /* double& */ _func_retval__
   );
+  return _func_retval__;
 }
-void Bmad::expect_one_of(
+bool Bmad::expect_one_of(
     std::string delim_list,
     bool check_input_delim,
     std::string ele_name,
     std::string &delim,
-    bool delim_found,
-    bool is_ok
+    bool delim_found
 ) {
   auto _delim_list = delim_list.c_str();
   auto _ele_name = ele_name.c_str();
   auto _delim = delim.c_str(); // ptr, inout, required
+  bool _is_ok{};
   fortran_expect_one_of(
       /* const char* */ _delim_list,
       /* bool& */ check_input_delim,
       /* const char* */ _ele_name,
       /* const char* */ _delim,
       /* bool& */ delim_found,
-      /* bool& */ is_ok
+      /* bool& */ _is_ok
   );
+  return _is_ok;
 }
 Bmad::ExpectThis Bmad::expect_this(
     std::string expecting,
     bool check_delim,
     bool call_check,
     std::string err_str,
-    EleStruct &ele,
-    bool is_ok
+    EleStruct &ele
 ) {
   auto _expecting = expecting.c_str();
   auto _err_str = err_str.c_str();
   char _delim[4096];
   bool _delim_found{};
+  bool _is_ok{};
   fortran_expect_this(
       /* const char* */ _expecting,
       /* bool& */ check_delim,
@@ -4709,9 +4837,9 @@ Bmad::ExpectThis Bmad::expect_this(
       /* void* */ ele.get_fortran_ptr(),
       /* const char* */ _delim,
       /* bool& */ _delim_found,
-      /* bool& */ is_ok
+      /* bool& */ _is_ok
   );
-  return ExpectThis{_delim, _delim_found};
+  return ExpectThis{_delim, _delim_found, _is_ok};
 }
 std::string
 Bmad::expression_stack_to_string(ExpressionAtomStructArray1D stack, std::optional<bool> polish) {
@@ -5184,23 +5312,19 @@ Bmad::gen_grad_at_s_to_gg_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, dou
                                      /* Bmad::array_descriptor_t& */ _gg_taylor_desc);
   return std::move(std::move(gg_taylor));
 }
-void Bmad::gen_grad_field(
-    FArray1D<Real> &deriv,
-    GenGrad1Struct &gg,
-    double rho,
-    double theta,
-    FixedArray1D<Real, 3> field
-) {
+FixedArray1D<Real, 3>
+Bmad::gen_grad_field(FArray1D<Real> &deriv, GenGrad1Struct &gg, double rho, double theta) {
   // deriv: inout NOT (CppWrapperGeneralArgumentArray) (['0:'])
   Bmad::array_descriptor_t _deriv_desc;
   _deriv_desc.rank = 1;
   _deriv_desc.data_ptr = deriv.data();
   _deriv_desc.dims[0] = deriv.size();
-  // field: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
+  // field: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _field_desc;
   _field_desc.rank = 1;
-  _field_desc.data_ptr = field.data();
-  _field_desc.dims[0] = field.size();
+  FixedArray1D<Real, 3> _field;
+  _field_desc.data_ptr = _field.data();
+  _field_desc.dims[0] = _field.size();
   fortran_gen_grad_field(
       /* Bmad::array_descriptor_t& */ _deriv_desc,
       /* void* */ gg.get_fortran_ptr(),
@@ -5208,6 +5332,7 @@ void Bmad::gen_grad_field(
       /* double& */ theta,
       /* Bmad::array_descriptor_t& */ _field_desc
   );
+  return _field;
 }
 double Bmad::get_bl_from_fwhm(double bound, FixedArray1D<Real, 8> args) {
   // args: in NOT (CppWrapperGeneralArgumentArray) (['1:8'])
@@ -5406,10 +5531,12 @@ void Bmad::gpt_field_grid_scaling(
                                  /* double& */ field_scale,
                                  /* double& */ ref_time);
 }
-void Bmad::gpt_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele, double field_value) {
+double Bmad::gpt_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele) {
+  double _field_value{};
   fortran_gpt_max_field_reference(/* void* */ pt0.get_fortran_ptr(),
                                   /* void* */ ele.get_fortran_ptr(),
-                                  /* double& */ field_value);
+                                  /* double& */ _field_value);
+  return _field_value;
 }
 Bmad::GptToParticleBunch Bmad::gpt_to_particle_bunch(std::string gpt_file, EleStruct &ele) {
   auto _gpt_file = gpt_file.c_str();
@@ -5518,11 +5645,13 @@ void Bmad::hard_multipole_edge_kick(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
-void Bmad::has_attribute(EleStruct &ele, std::string attrib, bool has_it) {
+bool Bmad::has_attribute(EleStruct &ele, std::string attrib) {
   auto _attrib = attrib.c_str();
+  bool _has_it{};
   fortran_has_attribute(/* void* */ ele.get_fortran_ptr(),
                         /* const char* */ _attrib,
-                        /* bool& */ has_it);
+                        /* bool& */ _has_it);
+  return _has_it;
 }
 bool Bmad::has_curvature(PhotonElementStruct &phot_ele) {
   bool _curved{};
@@ -5622,14 +5751,13 @@ void Bmad::hwang_bend_edge_kick(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
-void Bmad::ibs_matrix_c(
+FixedArray2D<Real, 6, 6> Bmad::ibs_matrix_c(
     FixedArray2D<Real, 6, 6> sigma_mat,
     bool tail_cut,
     double tau,
     double energy,
     double n_part,
-    int species,
-    FixedArray2D<Real, 6, 6> ibs_mat
+    int species
 ) {
   // sigma_mat: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _sigma_mat_desc;
@@ -5639,14 +5767,14 @@ void Bmad::ibs_matrix_c(
   _sigma_mat_desc.dims[0] = 6;
   _sigma_mat_desc.dims[1] = 6;
   matrix_to_vec(sigma_mat, _sigma_mat_vec);
-  // ibs_mat: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
+  // ibs_mat: out NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
   Bmad::array_descriptor_t _ibs_mat_desc;
   _ibs_mat_desc.rank = 2;
+  FixedArray2D<Real, 6, 6> ibs_mat;
   double _ibs_mat_vec[6 * 6];
   _ibs_mat_desc.data_ptr = _ibs_mat_vec;
   _ibs_mat_desc.dims[0] = 6;
   _ibs_mat_desc.dims[1] = 6;
-  matrix_to_vec(ibs_mat, _ibs_mat_vec);
   fortran_ibs_matrix_c(
       /* Bmad::array_descriptor_t& */ _sigma_mat_desc,
       /* bool& */ tail_cut,
@@ -5658,17 +5786,11 @@ void Bmad::ibs_matrix_c(
   );
   vec_to_matrix(_sigma_mat_vec, sigma_mat);
   vec_to_matrix(_ibs_mat_vec, ibs_mat);
+  return ibs_mat;
 }
-void Bmad::igfcoulombfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double dx,
-    double dy,
-    double dz,
-    double res
-) {
+double
+Bmad::igfcoulombfun(double u, double v, double w, double gam, double dx, double dy, double dz) {
+  double _res{};
   fortran_igfcoulombfun(
       /* double& */ u,
       /* double& */ v,
@@ -5677,19 +5799,12 @@ void Bmad::igfcoulombfun(
       /* double& */ dx,
       /* double& */ dy,
       /* double& */ dz,
-      /* double& */ res
+      /* double& */ _res
   );
+  return _res;
 }
-void Bmad::igfexfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double dx,
-    double dy,
-    double dz,
-    double res
-) {
+double Bmad::igfexfun(double u, double v, double w, double gam, double dx, double dy, double dz) {
+  double _res{};
   fortran_igfexfun(
       /* double& */ u,
       /* double& */ v,
@@ -5698,19 +5813,12 @@ void Bmad::igfexfun(
       /* double& */ dx,
       /* double& */ dy,
       /* double& */ dz,
-      /* double& */ res
+      /* double& */ _res
   );
+  return _res;
 }
-void Bmad::igfeyfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double dx,
-    double dy,
-    double dz,
-    double res
-) {
+double Bmad::igfeyfun(double u, double v, double w, double gam, double dx, double dy, double dz) {
+  double _res{};
   fortran_igfeyfun(
       /* double& */ u,
       /* double& */ v,
@@ -5719,19 +5827,12 @@ void Bmad::igfeyfun(
       /* double& */ dx,
       /* double& */ dy,
       /* double& */ dz,
-      /* double& */ res
+      /* double& */ _res
   );
+  return _res;
 }
-void Bmad::igfezfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double dx,
-    double dy,
-    double dz,
-    double res
-) {
+double Bmad::igfezfun(double u, double v, double w, double gam, double dx, double dy, double dz) {
+  double _res{};
   fortran_igfezfun(
       /* double& */ u,
       /* double& */ v,
@@ -5740,8 +5841,9 @@ void Bmad::igfezfun(
       /* double& */ dx,
       /* double& */ dy,
       /* double& */ dz,
-      /* double& */ res
+      /* double& */ _res
   );
+  return _res;
 }
 void Bmad::init_attribute_name1(
     bool &is_ok,
@@ -6360,17 +6462,19 @@ void Bmad::insert_element(
                          /* int* */ _ix_branch,
                          /* void* */ _orbit);
 }
-void Bmad::integrand_base(double t, FArray1D<Real> &args, double func_retval__) {
+double Bmad::integrand_base(double t, FArray1D<Real> &args) {
   // args: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _args_desc;
   _args_desc.rank = 1;
   _args_desc.data_ptr = args.data();
   _args_desc.dims[0] = args.size();
+  double _func_retval__{};
   fortran_integrand_base(
       /* double& */ t,
       /* Bmad::array_descriptor_t& */ _args_desc,
-      /* double& */ func_retval__
+      /* double& */ _func_retval__
   );
+  return _func_retval__;
 }
 double Bmad::integrate_psi(double bound, double p0, FixedArray1D<Real, 8> args) {
   // args: in NOT (CppWrapperGeneralArgumentArray) (['1:8'])
@@ -6611,7 +6715,7 @@ Bmad::KnotInterpolate Bmad::knot_interpolate(
   );
   return KnotInterpolate{_err_flag, _y_pt};
 }
-void Bmad::knots_to_string(FArray1D<Real> &x_knot, FArray1D<Real> &y_knot, std::string str) {
+std::string Bmad::knots_to_string(FArray1D<Real> &x_knot, FArray1D<Real> &y_knot) {
   // x_knot: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _x_knot_desc;
   _x_knot_desc.rank = 1;
@@ -6622,15 +6726,18 @@ void Bmad::knots_to_string(FArray1D<Real> &x_knot, FArray1D<Real> &y_knot, std::
   _y_knot_desc.rank = 1;
   _y_knot_desc.data_ptr = y_knot.data();
   _y_knot_desc.dims[0] = y_knot.size();
-  auto _str = str.c_str();
+  char _str[4096];
   fortran_knots_to_string(
       /* Bmad::array_descriptor_t& */ _x_knot_desc,
       /* Bmad::array_descriptor_t& */ _y_knot_desc,
       /* const char* */ _str
   );
+  return _str;
 }
-void Bmad::lafun(double x, double y, double z, double res) {
-  fortran_lafun(/* double& */ x, /* double& */ y, /* double& */ z, /* double& */ res);
+double Bmad::lafun(double x, double y, double z) {
+  double _res{};
+  fortran_lafun(/* double& */ x, /* double& */ y, /* double& */ z, /* double& */ _res);
+  return _res;
 }
 bool Bmad::lat_compute_ref_energy_and_time(LatStruct &lat) {
   bool _err_flag{};
@@ -7541,14 +7648,12 @@ SpinOrbitMap1Struct Bmad::map1_make_unit() {
   fortran_map1_make_unit(/* void* */ _map1.get_fortran_ptr());
   return std::move(_map1);
 }
-void Bmad::map1_times_map1(
-    SpinOrbitMap1Struct &map2,
-    SpinOrbitMap1Struct &map1,
-    SpinOrbitMap1Struct &map_out
-) {
+SpinOrbitMap1Struct Bmad::map1_times_map1(SpinOrbitMap1Struct &map2, SpinOrbitMap1Struct &map1) {
+  SpinOrbitMap1Struct _map_out;
   fortran_map1_times_map1(/* void* */ map2.get_fortran_ptr(),
                           /* void* */ map1.get_fortran_ptr(),
-                          /* void* */ map_out.get_fortran_ptr());
+                          /* void* */ _map_out.get_fortran_ptr());
+  return std::move(_map_out);
 }
 TaylorStructArray1D Bmad::map_to_angle_coords(TaylorStructArray1D t_canon) {
   // t_canon: TaylorStruct in (CppWrapperTypeArgumentArray)
@@ -8214,8 +8319,10 @@ void Bmad::multipole_spin_tracking(EleStruct &ele, LatParamStruct &param, CoordS
                                   /* void* */ param.get_fortran_ptr(),
                                   /* void* */ orbit.get_fortran_ptr());
 }
-void Bmad::mytan(double y, double x, double arg) {
-  fortran_mytan(/* double& */ y, /* double& */ x, /* double& */ arg);
+double Bmad::mytan(double y, double x) {
+  double _arg{};
+  fortran_mytan(/* double& */ y, /* double& */ x, /* double& */ _arg);
+  return _arg;
 }
 int Bmad::n_attrib_string_max_len() {
   int _max_len{};
@@ -9140,14 +9247,13 @@ void Bmad::parse_grid_field(
                            /* bool& */ delim_found,
                            /* bool& */ err_flag);
 }
-void Bmad::parse_integer_list(
+bool Bmad::parse_integer_list(
     std::string err_str,
     LatStruct &lat,
     FArray1D<Int> &int_array,
     bool exact_size,
     std::string delim,
     bool delim_found,
-    bool is_ok,
     std::optional<std::string> open_delim,
     std::optional<std::string> separator,
     std::optional<std::string> close_delim,
@@ -9170,6 +9276,7 @@ void Bmad::parse_integer_list(
   } else {
     _default_value = nullptr;
   }
+  bool _is_ok{};
   fortran_parse_integer_list(
       /* const char* */ _err_str,
       /* void* */ lat.get_fortran_ptr(),
@@ -9181,8 +9288,9 @@ void Bmad::parse_integer_list(
       /* const char* */ _separator,
       /* const char* */ _close_delim,
       /* int* */ _default_value,
-      /* bool& */ is_ok
+      /* bool& */ _is_ok
   );
+  return _is_ok;
 }
 Bmad::ParseIntegerList2 Bmad::parse_integer_list2(
     std::string err_str,
@@ -9238,7 +9346,6 @@ Bmad::ParseRealList Bmad::parse_real_list(
     std::string err_str,
     FArray1D<Real> &real_array,
     bool exact_size,
-    bool is_ok,
     std::optional<std::string> open_delim,
     std::optional<std::string> separator,
     std::optional<std::string> close_delim,
@@ -9263,6 +9370,7 @@ Bmad::ParseRealList Bmad::parse_real_list(
     _default_value = nullptr;
   }
   int _num_found{};
+  bool _is_ok{};
   fortran_parse_real_list(/* void* */ lat.get_fortran_ptr(),
                           /* const char* */ _err_str,
                           /* Bmad::array_descriptor_t& */ _real_array_desc,
@@ -9274,8 +9382,8 @@ Bmad::ParseRealList Bmad::parse_real_list(
                           /* const char* */ _close_delim,
                           /* double* */ _default_value,
                           /* int& */ _num_found,
-                          /* bool& */ is_ok);
-  return ParseRealList{_delim, _delim_found, _num_found};
+                          /* bool& */ _is_ok);
+  return ParseRealList{_delim, _delim_found, _num_found, _is_ok};
 }
 Bmad::ParseRealList2 Bmad::parse_real_list2(
     LatStruct &lat,
@@ -9386,12 +9494,11 @@ Bmad::parser_fast_complex_read(FArray1D<Complex> &cmplx_vec, EleStruct &ele, std
   );
   return ParserFastComplexRead{_delim, _is_ok};
 }
-void Bmad::parser_fast_integer_read(
+bool Bmad::parser_fast_integer_read(
     FArray1D<Int> &int_vec,
     EleStruct &ele,
     std::string delim_wanted,
-    std::string err_str,
-    bool is_ok
+    std::string err_str
 ) {
   // int_vec: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _int_vec_desc;
@@ -9400,13 +9507,15 @@ void Bmad::parser_fast_integer_read(
   _int_vec_desc.dims[0] = int_vec.size();
   auto _delim_wanted = delim_wanted.c_str();
   auto _err_str = err_str.c_str();
+  bool _is_ok{};
   fortran_parser_fast_integer_read(
       /* Bmad::array_descriptor_t& */ _int_vec_desc,
       /* void* */ ele.get_fortran_ptr(),
       /* const char* */ _delim_wanted,
       /* const char* */ _err_str,
-      /* bool& */ is_ok
+      /* bool& */ _is_ok
   );
+  return _is_ok;
 }
 Bmad::ParserFastRealRead Bmad::parser_fast_real_read(
     FArray1D<Real> &real_vec,
@@ -10790,9 +10899,10 @@ bool Bmad::randomize_lr_wake_frequencies(EleStruct &ele) {
   fortran_randomize_lr_wake_frequencies(/* void* */ ele.get_fortran_ptr(), /* bool& */ _set_done);
   return _set_done;
 }
-void Bmad::rchomp(double rel, int plc, std::string out) {
-  auto _out = out.c_str();
+std::string Bmad::rchomp(double rel, int plc) {
+  char _out[4096];
   fortran_rchomp(/* double& */ rel, /* int& */ plc, /* const char* */ _out);
+  return _out;
 }
 void Bmad::re_allocate_eles(
     ElePointerStructAlloc1D eles,
@@ -10858,13 +10968,15 @@ void Bmad::re_associate_node_array(ExpressionTreeStruct &tree, int n, std::optio
                                   /* int& */ n,
                                   /* bool* */ _exact);
 }
-void Bmad::re_str(long double rel, std::string str_out) {
-  auto _str_out = str_out.c_str();
+std::string Bmad::re_str(long double rel) {
+  char _str_out[4096];
   fortran_re_str_qp(/* long double& */ rel, /* const char* */ _str_out);
+  return _str_out;
 }
-void Bmad::re_str(double rel, std::string str_out) {
-  auto _str_out = str_out.c_str();
+std::string Bmad::re_str(double rel) {
+  char _str_out[4096];
   fortran_re_str_rp(/* double& */ rel, /* const char* */ _str_out);
+  return _str_out;
 }
 Bmad::ReadBeamAscii Bmad::read_beam_ascii(std::string file_name, BeamInitStruct &beam_init) {
   auto _file_name = file_name.c_str();
@@ -11078,10 +11190,12 @@ double Bmad::rel_tracking_charge_to_mass(CoordStruct &orbit, int ref_species) {
                                       /* double& */ _rel_charge);
   return _rel_charge;
 }
-void Bmad::relative_mode_flip(EleStruct &ele1, EleStruct &ele2, bool func_retval__) {
+bool Bmad::relative_mode_flip(EleStruct &ele1, EleStruct &ele2) {
+  bool _func_retval__{};
   fortran_relative_mode_flip(/* void* */ ele1.get_fortran_ptr(),
                              /* void* */ ele2.get_fortran_ptr(),
-                             /* bool& */ func_retval__);
+                             /* bool& */ _func_retval__);
+  return _func_retval__;
 }
 void Bmad::release_rad_int_cache(int &ix_cache) {
   fortran_release_rad_int_cache(/* int& */ ix_cache);
@@ -11224,18 +11338,9 @@ double Bmad::rf_ref_time_offset(EleStruct &ele, std::optional<double> ds) {
                              /* double& */ _time);
   return _time;
 }
-void Bmad::rfun(
-    double u,
-    double v,
-    double w,
-    double gam,
-    double a,
-    double b,
-    double hz,
-    int i,
-    int j,
-    double res
-) {
+double
+Bmad::rfun(double u, double v, double w, double gam, double a, double b, double hz, int i, int j) {
+  double _res{};
   fortran_rfun(
       /* double& */ u,
       /* double& */ v,
@@ -11246,8 +11351,9 @@ void Bmad::rfun(
       /* double& */ hz,
       /* int& */ i,
       /* int& */ j,
-      /* double& */ res
+      /* double& */ _res
   );
+  return _res;
 }
 void Bmad::rk_adaptive_time_step(
     EleStruct &ele,
@@ -11324,22 +11430,24 @@ FixedArray1D<Real, 10> Bmad::rk_time_step1(
                         /* void* */ _extra_field);
   return _r_err;
 }
-void Bmad::rotate3(FixedArray1D<Real, 3> vec, double angle, FixedArray1D<Real, 3> rvec) {
+FixedArray1D<Real, 3> Bmad::rotate3(FixedArray1D<Real, 3> vec, double angle) {
   // vec: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _vec_desc;
   _vec_desc.rank = 1;
   _vec_desc.data_ptr = vec.data();
   _vec_desc.dims[0] = vec.size();
-  // rvec: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
+  // rvec: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _rvec_desc;
   _rvec_desc.rank = 1;
-  _rvec_desc.data_ptr = rvec.data();
-  _rvec_desc.dims[0] = rvec.size();
+  FixedArray1D<Real, 3> _rvec;
+  _rvec_desc.data_ptr = _rvec.data();
+  _rvec_desc.dims[0] = _rvec.size();
   fortran_rotate3(
       /* Bmad::array_descriptor_t& */ _vec_desc,
       /* double& */ angle,
       /* Bmad::array_descriptor_t& */ _rvec_desc
   );
+  return _rvec;
 }
 void Bmad::rotate_em_field(
     EmFieldStruct &field,
@@ -12330,8 +12438,10 @@ bool Bmad::significant_difference(
   );
   return _is_different;
 }
-void Bmad::skip_ele_blender(EleStruct &ele, bool skip) {
-  fortran_skip_ele_blender(/* void* */ ele.get_fortran_ptr(), /* bool& */ skip);
+bool Bmad::skip_ele_blender(EleStruct &ele) {
+  bool _skip{};
+  fortran_skip_ele_blender(/* void* */ ele.get_fortran_ptr(), /* bool& */ _skip);
+  return _skip;
 }
 bool Bmad::slice_lattice(
     LatStruct &lat,
@@ -12699,11 +12809,10 @@ Bmad::spin_mat_to_eigen(FixedArray2D<Real, 6, 6> orb_mat, FixedArray2D<Real, 4, 
   vec_to_matrix(_spin_evec_vec, spin_evec);
   return SpinMatToEigen{_orb_eval, orb_evec, _n0, spin_evec, _error};
 }
-void Bmad::spin_omega(
+FixedArray1D<Real, 3> Bmad::spin_omega(
     EmFieldStruct &field,
     CoordStruct &orbit,
     int sign_z_vel,
-    FixedArray1D<Real, 3> omega,
     std::optional<bool> phase_space_coords
 ) {
   bool phase_space_coords_lvalue;
@@ -12713,16 +12822,18 @@ void Bmad::spin_omega(
   } else {
     _phase_space_coords = nullptr;
   }
-  // omega: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
+  // omega: out NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _omega_desc;
   _omega_desc.rank = 1;
-  _omega_desc.data_ptr = omega.data();
-  _omega_desc.dims[0] = omega.size();
+  FixedArray1D<Real, 3> _omega;
+  _omega_desc.data_ptr = _omega.data();
+  _omega_desc.dims[0] = _omega.size();
   fortran_spin_omega(/* void* */ field.get_fortran_ptr(),
                      /* void* */ orbit.get_fortran_ptr(),
                      /* int& */ sign_z_vel,
                      /* bool* */ _phase_space_coords,
                      /* Bmad::array_descriptor_t& */ _omega_desc);
+  return _omega;
 }
 Bmad::SpinQuatResonanceStrengths Bmad::spin_quat_resonance_strengths(
     FixedArray1D<Complex, 6> orb_evec,
@@ -17425,8 +17536,10 @@ bool Bmad::write_time_particle_distribution(
   );
   return _err;
 }
-void Bmad::xlafun(double x, double y, double z, double res) {
-  fortran_xlafun(/* double& */ x, /* double& */ y, /* double& */ z, /* double& */ res);
+double Bmad::xlafun(double x, double y, double z) {
+  double _res{};
+  fortran_xlafun(/* double& */ x, /* double& */ y, /* double& */ z, /* double& */ _res);
+  return _res;
 }
 int Bmad::xraylib_nist_compound(std::string name) {
   auto _name = name.c_str();
@@ -17434,8 +17547,10 @@ int Bmad::xraylib_nist_compound(std::string name) {
   fortran_xraylib_nist_compound(/* const char* */ _name, /* int& */ _indx);
   return _indx;
 }
-void Bmad::ylafun(double x, double y, double z, double res) {
-  fortran_ylafun(/* double& */ x, /* double& */ y, /* double& */ z, /* double& */ res);
+double Bmad::ylafun(double x, double y, double z) {
+  double _res{};
+  fortran_ylafun(/* double& */ x, /* double& */ y, /* double& */ z, /* double& */ _res);
+  return _res;
 }
 Bmad::ZAtSurface
 Bmad::z_at_surface(EleStruct &ele, double x, double y, std::optional<bool> extend_grid) {
@@ -17472,6 +17587,8 @@ void Bmad::zero_ele_offsets(EleStruct &ele) {
 void Bmad::zero_lr_wakes_in_lat(LatStruct &lat) {
   fortran_zero_lr_wakes_in_lat(/* void* */ lat.get_fortran_ptr());
 }
-void Bmad::zlafun(double x, double y, double z, double res) {
-  fortran_zlafun(/* double& */ x, /* double& */ y, /* double& */ z, /* double& */ res);
+double Bmad::zlafun(double x, double y, double z) {
+  double _res{};
+  fortran_zlafun(/* double& */ x, /* double& */ y, /* double& */ z, /* double& */ _res);
+  return _res;
 }

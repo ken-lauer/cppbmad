@@ -36,6 +36,10 @@ class AcKickerFreqStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AcKickerFreqStruct:
         ...
+    def __eq__(self, arg0: AcKickerFreqStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, f: typing.SupportsFloat | typing.SupportsIndex | None = None, amp: typing.SupportsFloat | typing.SupportsIndex | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -124,6 +128,10 @@ class AcKickerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AcKickerStruct:
         ...
+    def __eq__(self, arg0: AcKickerStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self) -> None:
         ...
     def __repr__(self) -> str:
@@ -148,6 +156,10 @@ class AcKickerTimeStruct:
     def __copy__(self) -> AcKickerTimeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AcKickerTimeStruct:
+        ...
+    def __eq__(self, arg0: AcKickerTimeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, amp: typing.SupportsFloat | typing.SupportsIndex | None = None, time: typing.SupportsFloat | typing.SupportsIndex | None = None, spline: SplineStruct | None = None) -> None:
         ...
@@ -260,6 +272,10 @@ class AllEncompassingStruct:
     def __copy__(self) -> AllEncompassingStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AllEncompassingStruct:
+        ...
+    def __eq__(self, arg0: AllEncompassingStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, real_rp_0d: typing.SupportsFloat | typing.SupportsIndex | None = None, real_rp_1d: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, real_rp_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, real_rp_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]]] | None = None, real_rp_0d_ptr: typing.SupportsFloat | typing.SupportsIndex | None = None, real_rp_1d_ptr: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, real_rp_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, real_rp_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]]] | None = None, real_rp_1d_alloc: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, real_rp_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, real_rp_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]]] | None = None, real_dp_0d: typing.SupportsFloat | typing.SupportsIndex | None = None, real_dp_1d: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, real_dp_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, real_dp_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]]] | None = None, real_dp_0d_ptr: typing.SupportsFloat | typing.SupportsIndex | None = None, real_dp_1d_ptr: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, real_dp_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, real_dp_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]]] | None = None, real_dp_1d_alloc: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, real_dp_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, real_dp_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]]] | None = None, complex_dp_0d: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, complex_dp_1d: collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex] | None = None, complex_dp_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex]] | None = None, complex_dp_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex]]] | None = None, complex_dp_0d_ptr: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, complex_dp_1d_ptr: collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex] | None = None, complex_dp_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex]] | None = None, complex_dp_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex]]] | None = None, complex_dp_1d_alloc: collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex] | None = None, complex_dp_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex]] | None = None, complex_dp_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex]]] | None = None, int_0d: typing.SupportsInt | typing.SupportsIndex | None = None, int_1d: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, int_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]] | None = None, int_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]]] | None = None, int_0d_ptr: typing.SupportsInt | typing.SupportsIndex | None = None, int_1d_ptr: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, int_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]] | None = None, int_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]]] | None = None, int_1d_alloc: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, int_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]] | None = None, int_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]]] | None = None, int8_0d: typing.SupportsInt | typing.SupportsIndex | None = None, int8_1d: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, int8_2d: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]] | None = None, int8_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]]] | None = None, int8_0d_ptr: typing.SupportsInt | typing.SupportsIndex | None = None, int8_1d_ptr: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, int8_2d_ptr: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]] | None = None, int8_3d_ptr: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]]] | None = None, int8_1d_alloc: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, int8_2d_alloc: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]] | None = None, int8_3d_alloc: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex]]] | None = None, logical_0d: bool | None = None, logical_1d: collections.abc.Sequence[bool] | None = None, logical_2d: collections.abc.Sequence[collections.abc.Sequence[bool]] | None = None, logical_3d: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[bool]]] | None = None, logical_0d_ptr: bool | None = None, logical_1d_ptr: collections.abc.Sequence[bool] | None = None, type_0d: TestSubStruct | None = None, type_0d_ptr: TestSubStruct | None = None) -> None:
         ...
@@ -678,6 +694,10 @@ class AnormalModeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AnormalModeStruct:
         ...
+    def __eq__(self, arg0: AnormalModeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, emittance: typing.SupportsFloat | typing.SupportsIndex | None = None, emittance_no_vert: typing.SupportsFloat | typing.SupportsIndex | None = None, synch_int: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, j_damp: typing.SupportsFloat | typing.SupportsIndex | None = None, alpha_damp: typing.SupportsFloat | typing.SupportsIndex | None = None, chrom: typing.SupportsFloat | typing.SupportsIndex | None = None, tune: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -745,6 +765,10 @@ class ApertureParamStruct:
     def __copy__(self) -> ApertureParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ApertureParamStruct:
+        ...
+    def __eq__(self, arg0: ApertureParamStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, min_angle: typing.SupportsFloat | typing.SupportsIndex | None = None, max_angle: typing.SupportsFloat | typing.SupportsIndex | None = None, n_angle: typing.SupportsInt | typing.SupportsIndex | None = None, n_turn: typing.SupportsInt | typing.SupportsIndex | None = None, x_init: typing.SupportsFloat | typing.SupportsIndex | None = None, y_init: typing.SupportsFloat | typing.SupportsIndex | None = None, rel_accuracy: typing.SupportsFloat | typing.SupportsIndex | None = None, abs_accuracy: typing.SupportsFloat | typing.SupportsIndex | None = None, start_ele: str | None = None) -> None:
         ...
@@ -829,6 +853,10 @@ class AperturePointStruct:
     def __copy__(self) -> AperturePointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> AperturePointStruct:
+        ...
+    def __eq__(self, arg0: AperturePointStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x: typing.SupportsFloat | typing.SupportsIndex | None = None, y: typing.SupportsFloat | typing.SupportsIndex | None = None, plane: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, i_turn: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -945,6 +973,10 @@ class ApertureScanStruct:
     def __copy__(self) -> ApertureScanStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ApertureScanStruct:
+        ...
+    def __eq__(self, arg0: ApertureScanStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ref_orb: CoordStruct | None = None, pz_start: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -1138,6 +1170,10 @@ class BbuBeamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BbuBeamStruct:
         ...
+    def __eq__(self, arg0: BbuBeamStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ix_ele_bunch: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, ix_bunch_head: typing.SupportsInt | typing.SupportsIndex | None = None, ix_bunch_end: typing.SupportsInt | typing.SupportsIndex | None = None, n_bunch_in_lat: typing.SupportsInt | typing.SupportsIndex | None = None, ix_stage_voltage_max: typing.SupportsInt | typing.SupportsIndex | None = None, hom_voltage_max: typing.SupportsFloat | typing.SupportsIndex | None = None, time_now: typing.SupportsFloat | typing.SupportsIndex | None = None, one_turn_time: typing.SupportsFloat | typing.SupportsIndex | None = None, rf_wavelength_max: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -1222,6 +1258,10 @@ class BbuParamStruct:
     def __copy__(self) -> BbuParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BbuParamStruct:
+        ...
+    def __eq__(self, arg0: BbuParamStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, lat_filename: str | None = None, lat2_filename: str | None = None, bunch_by_bunch_info_file: str | None = None, hybridize: bool | None = None, write_digested_hybrid_lat: bool | None = None, write_voltage_vs_time_dat: bool | None = None, keep_overlays_and_groups: bool | None = None, keep_all_lcavities: bool | None = None, use_taylor_for_hybrids: bool | None = None, stable_orbit_anal: bool | None = None, limit_factor: typing.SupportsFloat | typing.SupportsIndex | None = None, simulation_turns_max: typing.SupportsFloat | typing.SupportsIndex | None = None, bunch_freq: typing.SupportsFloat | typing.SupportsIndex | None = None, init_particle_offset: typing.SupportsFloat | typing.SupportsIndex | None = None, current: typing.SupportsFloat | typing.SupportsIndex | None = None, rel_tol: typing.SupportsFloat | typing.SupportsIndex | None = None, drscan: bool | None = None, use_interpolated_threshold: bool | None = None, write_hom_info: bool | None = None, elindex: typing.SupportsInt | typing.SupportsIndex | None = None, elname: str | None = None, nstep: typing.SupportsInt | typing.SupportsIndex | None = None, begdr: typing.SupportsFloat | typing.SupportsIndex | None = None, enddr: typing.SupportsFloat | typing.SupportsIndex | None = None, nrep: typing.SupportsInt | typing.SupportsIndex | None = None, ran_seed: typing.SupportsInt | typing.SupportsIndex | None = None, hom_order_cutoff: typing.SupportsInt | typing.SupportsIndex | None = None, ran_gauss_sigma_cut: typing.SupportsFloat | typing.SupportsIndex | None = None, ele_track_end: str | None = None, ix_ele_track_end: typing.SupportsInt | typing.SupportsIndex | None = None, regression: bool | None = None, normalize_z_to_rf: bool | None = None, ramp_on: bool | None = None, ramp_pattern: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, ramp_n_start: typing.SupportsInt | typing.SupportsIndex | None = None, n_ramp_pattern: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -1499,6 +1539,10 @@ class BbuStageStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BbuStageStruct:
         ...
+    def __eq__(self, arg0: BbuStageStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ix_ele_lr_wake: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele_stage_end: typing.SupportsInt | typing.SupportsIndex | None = None, ix_pass: typing.SupportsInt | typing.SupportsIndex | None = None, ix_stage_pass1: typing.SupportsInt | typing.SupportsIndex | None = None, ix_head_bunch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_hom_max: typing.SupportsInt | typing.SupportsIndex | None = None, hom_voltage_max: typing.SupportsFloat | typing.SupportsIndex | None = None, time_at_wake_ele: typing.SupportsFloat | typing.SupportsIndex | None = None, ave_orb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, rms_orb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, min_orb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, max_orb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, n_orb: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -1688,6 +1732,10 @@ class BeamInitStruct:
     def __copy__(self) -> BeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BeamInitStruct:
+        ...
+    def __eq__(self, arg0: BeamInitStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, position_file: str | None = None, spin: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, KV: KvBeamInitStruct | None = None, center_jitter: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, emit_jitter: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, sig_z_jitter: typing.SupportsFloat | typing.SupportsIndex | None = None, sig_pz_jitter: typing.SupportsFloat | typing.SupportsIndex | None = None, n_particle: typing.SupportsInt | typing.SupportsIndex | None = None, renorm_center: bool | None = None, renorm_sigma: bool | None = None, random_engine: str | None = None, random_gauss_converter: str | None = None, random_sigma_cutoff: typing.SupportsFloat | typing.SupportsIndex | None = None, a_norm_emit: typing.SupportsFloat | typing.SupportsIndex | None = None, b_norm_emit: typing.SupportsFloat | typing.SupportsIndex | None = None, a_emit: typing.SupportsFloat | typing.SupportsIndex | None = None, b_emit: typing.SupportsFloat | typing.SupportsIndex | None = None, dPz_dz: typing.SupportsFloat | typing.SupportsIndex | None = None, center: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, t_offset: typing.SupportsFloat | typing.SupportsIndex | None = None, dt_bunch: typing.SupportsFloat | typing.SupportsIndex | None = None, sig_z: typing.SupportsFloat | typing.SupportsIndex | None = None, sig_pz: typing.SupportsFloat | typing.SupportsIndex | None = None, bunch_charge: typing.SupportsFloat | typing.SupportsIndex | None = None, n_bunch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_turn: typing.SupportsInt | typing.SupportsIndex | None = None, species: str | None = None, full_6D_coupling_calc: bool | None = None, use_particle_start: bool | None = None, use_t_coords: bool | None = None, use_z_as_t: bool | None = None, file_name: str | None = None) -> None:
         ...
@@ -1972,6 +2020,10 @@ class BeamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BeamStruct:
         ...
+    def __eq__(self, arg0: BeamStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self) -> None:
         ...
     def __repr__(self) -> str:
@@ -2023,6 +2075,10 @@ class BicubicCmplxCoefStruct:
     def __copy__(self) -> BicubicCmplxCoefStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BicubicCmplxCoefStruct:
+        ...
+    def __eq__(self, arg0: BicubicCmplxCoefStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, coef: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex]] | None = None, i_box: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -2091,6 +2147,9 @@ class BinXCenter:
     @property
     def ix_bin(self) -> int:
         ...
+    @property
+    def x_center(self) -> float:
+        ...
 class BitSet:
     """
     bit_set return type
@@ -2109,6 +2168,10 @@ class BmadCommonStruct:
     def __copy__(self) -> BmadCommonStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BmadCommonStruct:
+        ...
+    def __eq__(self, arg0: BmadCommonStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, max_aperture_limit: typing.SupportsFloat | typing.SupportsIndex | None = None, d_orb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, default_ds_step: typing.SupportsFloat | typing.SupportsIndex | None = None, significant_length: typing.SupportsFloat | typing.SupportsIndex | None = None, rel_tol_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, abs_tol_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, rel_tol_adaptive_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, abs_tol_adaptive_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, init_ds_adaptive_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, min_ds_adaptive_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, fatal_ds_adaptive_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, autoscale_amp_abs_tol: typing.SupportsFloat | typing.SupportsIndex | None = None, autoscale_amp_rel_tol: typing.SupportsFloat | typing.SupportsIndex | None = None, autoscale_phase_tol: typing.SupportsFloat | typing.SupportsIndex | None = None, electric_dipole_moment: typing.SupportsFloat | typing.SupportsIndex | None = None, synch_rad_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, sad_eps_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, sad_amp_max: typing.SupportsFloat | typing.SupportsIndex | None = None, sad_n_div_max: typing.SupportsInt | typing.SupportsIndex | None = None, taylor_order: typing.SupportsInt | typing.SupportsIndex | None = None, runge_kutta_order: typing.SupportsInt | typing.SupportsIndex | None = None, default_integ_order: typing.SupportsInt | typing.SupportsIndex | None = None, max_num_runge_kutta_step: typing.SupportsInt | typing.SupportsIndex | None = None, rf_phase_below_transition_ref: bool | None = None, sr_wakes_on: bool | None = None, lr_wakes_on: bool | None = None, auto_bookkeeper: bool | None = None, high_energy_space_charge_on: bool | None = None, high_energy_space_charge_linear: bool | None = None, csr_and_space_charge_on: bool | None = None, spin_tracking_on: bool | None = None, spin_sokolov_ternov_flipping_on: bool | None = None, radiation_damping_on: bool | None = None, radiation_zero_average: bool | None = None, radiation_fluctuations_on: bool | None = None, conserve_taylor_maps: bool | None = None, absolute_time_tracking: bool | None = None, absolute_time_ref_shift: bool | None = None, convert_to_kinetic_momentum: bool | None = None, normalize_twiss: bool | None = None, aperture_limit_on: bool | None = None, spin_n0_direction_user_set: bool | None = None, debug: bool | None = None) -> None:
         ...
@@ -2466,6 +2529,10 @@ class BmadNormalFormStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BmadNormalFormStruct:
         ...
+    def __eq__(self, arg0: BmadNormalFormStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ele_origin: EleStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -2538,6 +2605,10 @@ class BookkeepingStateStruct:
     def __copy__(self) -> BookkeepingStateStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BookkeepingStateStruct:
+        ...
+    def __eq__(self, arg0: BookkeepingStateStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, attributes: typing.SupportsInt | typing.SupportsIndex | None = None, control: typing.SupportsInt | typing.SupportsIndex | None = None, floor_position: typing.SupportsInt | typing.SupportsIndex | None = None, s_position: typing.SupportsInt | typing.SupportsIndex | None = None, ref_energy: typing.SupportsInt | typing.SupportsIndex | None = None, mat6: typing.SupportsInt | typing.SupportsIndex | None = None, rad_int: typing.SupportsInt | typing.SupportsIndex | None = None, ptc: typing.SupportsInt | typing.SupportsIndex | None = None, has_misalign: bool | None = None) -> None:
         ...
@@ -2745,6 +2816,10 @@ class BpmPhaseCouplingStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BpmPhaseCouplingStruct:
         ...
+    def __eq__(self, arg0: BpmPhaseCouplingStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, K_22a: typing.SupportsFloat | typing.SupportsIndex | None = None, K_12a: typing.SupportsFloat | typing.SupportsIndex | None = None, K_11b: typing.SupportsFloat | typing.SupportsIndex | None = None, K_12b: typing.SupportsFloat | typing.SupportsIndex | None = None, Cbar22_a: typing.SupportsFloat | typing.SupportsIndex | None = None, Cbar12_a: typing.SupportsFloat | typing.SupportsIndex | None = None, Cbar11_b: typing.SupportsFloat | typing.SupportsIndex | None = None, Cbar12_b: typing.SupportsFloat | typing.SupportsIndex | None = None, phi_a: typing.SupportsFloat | typing.SupportsIndex | None = None, phi_b: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -2858,6 +2933,10 @@ class BranchStruct:
     def __copy__(self) -> BranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BranchStruct:
+        ...
+    def __eq__(self, arg0: BranchStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, name: str | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_from_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_from_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_to_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_fixer: typing.SupportsInt | typing.SupportsIndex | None = None, n_ele_track: typing.SupportsInt | typing.SupportsIndex | None = None, n_ele_max: typing.SupportsInt | typing.SupportsIndex | None = None, lat: LatStruct | None = None, a: ModeInfoStruct | None = None, b: ModeInfoStruct | None = None, z: ModeInfoStruct | None = None, param: LatParamStruct | None = None, particle_start: CoordStruct | None = None) -> None:
         ...
@@ -3030,6 +3109,10 @@ class BunchParamsStruct:
     def __copy__(self) -> BunchParamsStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BunchParamsStruct:
+        ...
+    def __eq__(self, arg0: BunchParamsStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, centroid: CoordStruct | None = None, x: TwissStruct | None = None, y: TwissStruct | None = None, z: TwissStruct | None = None, a: TwissStruct | None = None, b: TwissStruct | None = None, c: TwissStruct | None = None, sigma: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, rel_max: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, rel_min: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None, t: typing.SupportsFloat | typing.SupportsIndex | None = None, sigma_t: typing.SupportsFloat | typing.SupportsIndex | None = None, charge_live: typing.SupportsFloat | typing.SupportsIndex | None = None, charge_tot: typing.SupportsFloat | typing.SupportsIndex | None = None, n_particle_tot: typing.SupportsInt | typing.SupportsIndex | None = None, n_particle_live: typing.SupportsInt | typing.SupportsIndex | None = None, n_particle_lost_in_ele: typing.SupportsInt | typing.SupportsIndex | None = None, n_good_steps: typing.SupportsInt | typing.SupportsIndex | None = None, n_bad_steps: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, location: typing.SupportsInt | typing.SupportsIndex | None = None, twiss_valid: bool | None = None) -> None:
         ...
@@ -3291,6 +3374,10 @@ class BunchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BunchStruct:
         ...
+    def __eq__(self, arg0: BunchStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ix_z: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, charge_tot: typing.SupportsFloat | typing.SupportsIndex | None = None, charge_live: typing.SupportsFloat | typing.SupportsIndex | None = None, z_center: typing.SupportsFloat | typing.SupportsIndex | None = None, t_center: typing.SupportsFloat | typing.SupportsIndex | None = None, t0: typing.SupportsFloat | typing.SupportsIndex | None = None, drift_between_t_and_s: bool | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_bunch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_turn: typing.SupportsInt | typing.SupportsIndex | None = None, n_live: typing.SupportsInt | typing.SupportsIndex | None = None, n_good: typing.SupportsInt | typing.SupportsIndex | None = None, n_bad: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -3472,6 +3559,10 @@ class BunchTrackStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> BunchTrackStruct:
         ...
+    def __eq__(self, arg0: BunchTrackStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ds_save: typing.SupportsFloat | typing.SupportsIndex | None = None, n_pt: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -3620,6 +3711,10 @@ class CartesianMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CartesianMapStruct:
         ...
+    def __eq__(self, arg0: CartesianMapStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, field_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, master_parameter: typing.SupportsInt | typing.SupportsIndex | None = None, ele_anchor_pt: typing.SupportsInt | typing.SupportsIndex | None = None, field_type: typing.SupportsInt | typing.SupportsIndex | None = None, ptr: CartesianMapTermStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -3741,6 +3836,10 @@ class CartesianMapTerm1Struct:
     def __copy__(self) -> CartesianMapTerm1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> CartesianMapTerm1Struct:
+        ...
+    def __eq__(self, arg0: CartesianMapTerm1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, coef: typing.SupportsFloat | typing.SupportsIndex | None = None, kx: typing.SupportsFloat | typing.SupportsIndex | None = None, ky: typing.SupportsFloat | typing.SupportsIndex | None = None, kz: typing.SupportsFloat | typing.SupportsIndex | None = None, x0: typing.SupportsFloat | typing.SupportsIndex | None = None, y0: typing.SupportsFloat | typing.SupportsIndex | None = None, phi_z: typing.SupportsFloat | typing.SupportsIndex | None = None, family: typing.SupportsInt | typing.SupportsIndex | None = None, form: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -3869,6 +3968,10 @@ class CartesianMapTermStruct:
     def __copy__(self) -> CartesianMapTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CartesianMapTermStruct:
+        ...
+    def __eq__(self, arg0: CartesianMapTermStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, file: str | None = None, n_link: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -4171,6 +4274,10 @@ class ComplexTaylorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ComplexTaylorStruct:
         ...
+    def __eq__(self, arg0: ComplexTaylorStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ref: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -4255,6 +4362,10 @@ class ComplexTaylorTermStruct:
     def __copy__(self) -> ComplexTaylorTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ComplexTaylorTermStruct:
+        ...
+    def __eq__(self, arg0: ComplexTaylorTermStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, coef: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, expn: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -4372,6 +4483,10 @@ class ControlRamp1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> ControlRamp1Struct:
         ...
+    def __eq__(self, arg0: ControlRamp1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, y_knot: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, attribute: str | None = None, slave_name: str | None = None, is_controller: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -4484,6 +4599,10 @@ class ControlStruct:
     def __copy__(self) -> ControlStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ControlStruct:
+        ...
+    def __eq__(self, arg0: ControlStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, value: typing.SupportsFloat | typing.SupportsIndex | None = None, y_knot: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, slave: LatEleLocStruct | None = None, lord: LatEleLocStruct | None = None, slave_name: str | None = None, attribute: str | None = None, ix_attrib: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -4605,6 +4724,10 @@ class ControlVar1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> ControlVar1Struct:
         ...
+    def __eq__(self, arg0: ControlVar1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, value: typing.SupportsFloat | typing.SupportsIndex | None = None, old_value: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -4686,6 +4809,10 @@ class ControllerStruct:
     def __copy__(self) -> ControllerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ControllerStruct:
+        ...
+    def __eq__(self, arg0: ControllerStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x_knot: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -4816,6 +4943,10 @@ class CoordArrayStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CoordArrayStruct:
         ...
+    def __eq__(self, arg0: CoordArrayStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self) -> None:
         ...
     def __repr__(self) -> str:
@@ -4894,6 +5025,10 @@ class CoordStruct:
     def __copy__(self) -> CoordStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CoordStruct:
+        ...
+    def __eq__(self, arg0: CoordStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, vec: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None, t: typing.SupportsFloat | typing.SupportsIndex | None = None, spin: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, field: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, phase: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, charge: typing.SupportsFloat | typing.SupportsIndex | None = None, dt_ref: typing.SupportsFloat | typing.SupportsIndex | None = None, r: typing.SupportsFloat | typing.SupportsIndex | None = None, p0c: typing.SupportsFloat | typing.SupportsIndex | None = None, E_potential: typing.SupportsFloat | typing.SupportsIndex | None = None, beta: typing.SupportsFloat | typing.SupportsIndex | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_turn: typing.SupportsInt | typing.SupportsIndex | None = None, ix_user: typing.SupportsInt | typing.SupportsIndex | None = None, state: typing.SupportsInt | typing.SupportsIndex | None = None, direction: typing.SupportsInt | typing.SupportsIndex | None = None, time_dir: typing.SupportsInt | typing.SupportsIndex | None = None, species: typing.SupportsInt | typing.SupportsIndex | None = None, location: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -5288,6 +5423,10 @@ class CylindricalMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CylindricalMapStruct:
         ...
+    def __eq__(self, arg0: CylindricalMapStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, m: typing.SupportsInt | typing.SupportsIndex | None = None, harmonic: typing.SupportsInt | typing.SupportsIndex | None = None, phi0_fieldmap: typing.SupportsFloat | typing.SupportsIndex | None = None, theta0_azimuth: typing.SupportsFloat | typing.SupportsIndex | None = None, field_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, master_parameter: typing.SupportsInt | typing.SupportsIndex | None = None, ele_anchor_pt: typing.SupportsInt | typing.SupportsIndex | None = None, dz: typing.SupportsFloat | typing.SupportsIndex | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, ptr: CylindricalMapTermStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -5442,6 +5581,10 @@ class CylindricalMapTerm1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> CylindricalMapTerm1Struct:
         ...
+    def __eq__(self, arg0: CylindricalMapTerm1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, e_coef: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, b_coef: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -5523,6 +5666,10 @@ class CylindricalMapTermStruct:
     def __copy__(self) -> CylindricalMapTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> CylindricalMapTermStruct:
+        ...
+    def __eq__(self, arg0: CylindricalMapTermStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, file: str | None = None, n_link: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -5638,6 +5785,10 @@ class ElePointerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ElePointerStruct:
         ...
+    def __eq__(self, arg0: ElePointerStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ele: EleStruct | None = None, loc: LatEleLocStruct | None = None, id: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -5728,6 +5879,10 @@ class EleStruct:
     def __copy__(self) -> EleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> EleStruct:
+        ...
+    def __eq__(self, arg0: EleStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, name: str | None = None, type: str | None = None, alias: str | None = None, component_name: str | None = None, descrip: str | None = None, a: TwissStruct | None = None, b: TwissStruct | None = None, z: TwissStruct | None = None, x: XyDispStruct | None = None, y: XyDispStruct | None = None, ac_kick: AcKickerStruct | None = None, bookkeeping_state: BookkeepingStateStruct | None = None, branch: BranchStruct | None = None, control: ControllerStruct | None = None, rf: RfEleStruct | None = None, lord: EleStruct | None = None, ptc_fibre: Fibre | None = None, floor: FloorPositionStruct | None = None, high_energy_space_charge: HighEnergySpaceChargeStruct | None = None, mode3: Mode3Struct | None = None, photon: PhotonElementStruct | None = None, rad_map: RadMapEleStruct | None = None, spin_taylor_ref_orb_in: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, wake: WakeStruct | None = None, map_ref_orb_in: CoordStruct | None = None, map_ref_orb_out: CoordStruct | None = None, time_ref_orb_in: CoordStruct | None = None, time_ref_orb_out: CoordStruct | None = None, value: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, old_value: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, spin_q: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, vec0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, mat6: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, c_mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, dc_mat_dpz: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, gamma_c: typing.SupportsFloat | typing.SupportsIndex | None = None, s_start: typing.SupportsFloat | typing.SupportsIndex | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None, ref_time: typing.SupportsFloat | typing.SupportsIndex | None = None, a_pole: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, b_pole: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, a_pole_elec: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, b_pole_elec: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, custom: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, r: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]]] | None = None, key: typing.SupportsInt | typing.SupportsIndex | None = None, sub_key: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, lord_status: typing.SupportsInt | typing.SupportsIndex | None = None, n_slave: typing.SupportsInt | typing.SupportsIndex | None = None, n_slave_field: typing.SupportsInt | typing.SupportsIndex | None = None, ix1_slave: typing.SupportsInt | typing.SupportsIndex | None = None, slave_status: typing.SupportsInt | typing.SupportsIndex | None = None, n_lord: typing.SupportsInt | typing.SupportsIndex | None = None, n_lord_field: typing.SupportsInt | typing.SupportsIndex | None = None, n_lord_ramper: typing.SupportsInt | typing.SupportsIndex | None = None, ic1_lord: typing.SupportsInt | typing.SupportsIndex | None = None, ix_pointer: typing.SupportsInt | typing.SupportsIndex | None = None, ixx: typing.SupportsInt | typing.SupportsIndex | None = None, iyy: typing.SupportsInt | typing.SupportsIndex | None = None, izz: typing.SupportsInt | typing.SupportsIndex | None = None, mat6_calc_method: typing.SupportsInt | typing.SupportsIndex | None = None, tracking_method: typing.SupportsInt | typing.SupportsIndex | None = None, spin_tracking_method: typing.SupportsInt | typing.SupportsIndex | None = None, csr_method: typing.SupportsInt | typing.SupportsIndex | None = None, space_charge_method: typing.SupportsInt | typing.SupportsIndex | None = None, ptc_integration_type: typing.SupportsInt | typing.SupportsIndex | None = None, field_calc: typing.SupportsInt | typing.SupportsIndex | None = None, aperture_at: typing.SupportsInt | typing.SupportsIndex | None = None, aperture_type: typing.SupportsInt | typing.SupportsIndex | None = None, ref_species: typing.SupportsInt | typing.SupportsIndex | None = None, orientation: typing.SupportsInt | typing.SupportsIndex | None = None, symplectify: bool | None = None, mode_flip: bool | None = None, multipoles_on: bool | None = None, scale_multipoles: bool | None = None, taylor_map_includes_offsets: bool | None = None, field_master: bool | None = None, is_on: bool | None = None, logic: bool | None = None, bmad_logic: bool | None = None, select: bool | None = None, offset_moves_aperture: bool | None = None) -> None:
         ...
@@ -6600,6 +6755,10 @@ class EllipseBeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> EllipseBeamInitStruct:
         ...
+    def __eq__(self, arg0: EllipseBeamInitStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, part_per_ellipse: typing.SupportsInt | typing.SupportsIndex | None = None, n_ellipse: typing.SupportsInt | typing.SupportsIndex | None = None, sigma_cutoff: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -6727,6 +6886,10 @@ class EmFieldStruct:
     def __copy__(self) -> EmFieldStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> EmFieldStruct:
+        ...
+    def __eq__(self, arg0: EmFieldStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, E: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, B: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, dE: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, dB: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None, phi_B: typing.SupportsFloat | typing.SupportsIndex | None = None, A: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -6922,6 +7085,9 @@ class ExpectOneOf:
     @property
     def delim(self) -> str:
         ...
+    @property
+    def is_ok(self) -> bool:
+        ...
 class ExpectThis:
     """
     expect_this return type
@@ -6935,6 +7101,9 @@ class ExpectThis:
         ...
     @property
     def delim_found(self) -> bool:
+        ...
+    @property
+    def is_ok(self) -> bool:
         ...
 class ExpressionAtomStruct:
     """
@@ -6950,6 +7119,10 @@ class ExpressionAtomStruct:
     def __copy__(self) -> ExpressionAtomStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ExpressionAtomStruct:
+        ...
+    def __eq__(self, arg0: ExpressionAtomStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, name: str | None = None, type: typing.SupportsInt | typing.SupportsIndex | None = None, value: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -7093,6 +7266,10 @@ class ExpressionTreeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ExpressionTreeStruct:
         ...
+    def __eq__(self, arg0: ExpressionTreeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, type: typing.SupportsInt | typing.SupportsIndex | None = None, value: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -7215,6 +7392,10 @@ class Fibre:
     def __copy__(self) -> Fibre:
         ...
     def __deepcopy__(self, arg0: dict) -> Fibre:
+        ...
+    def __eq__(self, arg0: Fibre) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, DIR: typing.SupportsInt | typing.SupportsIndex | None = None, PREVIOUS: Fibre | None = None, NEXT: Fibre | None = None, PARENT_LAYOUT: Layout | None = None, pos: typing.SupportsInt | typing.SupportsIndex | None = None, BETA0: typing.SupportsFloat | typing.SupportsIndex | None = None, GAMMA0I: typing.SupportsFloat | typing.SupportsIndex | None = None, GAMBET: typing.SupportsFloat | typing.SupportsIndex | None = None, MASS: typing.SupportsFloat | typing.SupportsIndex | None = None, CHARGE: typing.SupportsFloat | typing.SupportsIndex | None = None, AG: typing.SupportsFloat | typing.SupportsIndex | None = None, P: Fibre | None = None, N: Fibre | None = None, loc: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -7384,6 +7565,10 @@ class FloorPositionStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> FloorPositionStruct:
         ...
+    def __eq__(self, arg0: FloorPositionStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, r: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, w: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, theta: typing.SupportsFloat | typing.SupportsIndex | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None, psi: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -7521,6 +7706,10 @@ class GenGrad1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> GenGrad1Struct:
         ...
+    def __eq__(self, arg0: GenGrad1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, m: typing.SupportsInt | typing.SupportsIndex | None = None, sincos: typing.SupportsInt | typing.SupportsIndex | None = None, n_deriv_max: typing.SupportsInt | typing.SupportsIndex | None = None, deriv: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -7629,6 +7818,10 @@ class GenGradMapStruct:
     def __copy__(self) -> GenGradMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GenGradMapStruct:
+        ...
+    def __eq__(self, arg0: GenGradMapStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, file: str | None = None, ele_anchor_pt: typing.SupportsInt | typing.SupportsIndex | None = None, field_type: typing.SupportsInt | typing.SupportsIndex | None = None, iz0: typing.SupportsInt | typing.SupportsIndex | None = None, iz1: typing.SupportsInt | typing.SupportsIndex | None = None, dz: typing.SupportsFloat | typing.SupportsIndex | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, field_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, master_parameter: typing.SupportsInt | typing.SupportsIndex | None = None, curved_ref_frame: bool | None = None) -> None:
         ...
@@ -7829,6 +8022,10 @@ class GgTaylorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GgTaylorStruct:
         ...
+    def __eq__(self, arg0: GgTaylorStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ref: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -7913,6 +8110,10 @@ class GgTaylorTermStruct:
     def __copy__(self) -> GgTaylorTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GgTaylorTermStruct:
+        ...
+    def __eq__(self, arg0: GgTaylorTermStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, coef: typing.SupportsFloat | typing.SupportsIndex | None = None, expn: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -8015,6 +8216,10 @@ class GridBeamInitStruct:
     def __copy__(self) -> GridBeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridBeamInitStruct:
+        ...
+    def __eq__(self, arg0: GridBeamInitStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, n_x: typing.SupportsInt | typing.SupportsIndex | None = None, n_px: typing.SupportsInt | typing.SupportsIndex | None = None, x_min: typing.SupportsFloat | typing.SupportsIndex | None = None, x_max: typing.SupportsFloat | typing.SupportsIndex | None = None, px_min: typing.SupportsFloat | typing.SupportsIndex | None = None, px_max: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -8134,6 +8339,10 @@ class GridFieldPt1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridFieldPt1Struct:
         ...
+    def __eq__(self, arg0: GridFieldPt1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, E: collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex] | None = None, B: collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -8177,6 +8386,10 @@ class GridFieldPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridFieldPtStruct:
         ...
+    def __eq__(self, arg0: GridFieldPtStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, file: str | None = None, n_link: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -8214,6 +8427,10 @@ class GridFieldStruct:
     def __copy__(self) -> GridFieldStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> GridFieldStruct:
+        ...
+    def __eq__(self, arg0: GridFieldStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, geometry: typing.SupportsInt | typing.SupportsIndex | None = None, harmonic: typing.SupportsInt | typing.SupportsIndex | None = None, phi0_fieldmap: typing.SupportsFloat | typing.SupportsIndex | None = None, field_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, field_type: typing.SupportsInt | typing.SupportsIndex | None = None, master_parameter: typing.SupportsInt | typing.SupportsIndex | None = None, ele_anchor_pt: typing.SupportsInt | typing.SupportsIndex | None = None, interpolation_order: typing.SupportsInt | typing.SupportsIndex | None = None, dr: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, curved_ref_frame: bool | None = None, ptr: GridFieldPtStruct | None = None) -> None:
         ...
@@ -8380,6 +8597,10 @@ class HighEnergySpaceChargeStruct:
     def __copy__(self) -> HighEnergySpaceChargeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> HighEnergySpaceChargeStruct:
+        ...
+    def __eq__(self, arg0: HighEnergySpaceChargeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, closed_orb: CoordStruct | None = None, kick_const: typing.SupportsFloat | typing.SupportsIndex | None = None, sig_x: typing.SupportsFloat | typing.SupportsIndex | None = None, sig_y: typing.SupportsFloat | typing.SupportsIndex | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None, sin_phi: typing.SupportsFloat | typing.SupportsIndex | None = None, cos_phi: typing.SupportsFloat | typing.SupportsIndex | None = None, sig_z: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -8770,6 +8991,10 @@ class Interval1CoefStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> Interval1CoefStruct:
         ...
+    def __eq__(self, arg0: Interval1CoefStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, c0: typing.SupportsFloat | typing.SupportsIndex | None = None, c1: typing.SupportsFloat | typing.SupportsIndex | None = None, n_exp: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -8886,6 +9111,10 @@ class KvBeamInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> KvBeamInitStruct:
         ...
+    def __eq__(self, arg0: KvBeamInitStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, part_per_phi: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, n_I2: typing.SupportsInt | typing.SupportsIndex | None = None, A: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -8927,6 +9156,10 @@ class LatEleLocStruct:
     def __copy__(self) -> LatEleLocStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatEleLocStruct:
+        ...
+    def __eq__(self, arg0: LatEleLocStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -9030,6 +9263,10 @@ class LatEleOrder1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatEleOrder1Struct:
         ...
+    def __eq__(self, arg0: LatEleOrder1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_order: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -9122,6 +9359,10 @@ class LatEleOrderArrayStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatEleOrderArrayStruct:
         ...
+    def __eq__(self, arg0: LatEleOrderArrayStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self) -> None:
         ...
     def __repr__(self) -> str:
@@ -9195,6 +9436,10 @@ class LatEleOrderStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatEleOrderStruct:
         ...
+    def __eq__(self, arg0: LatEleOrderStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self) -> None:
         ...
     def __repr__(self) -> str:
@@ -9209,6 +9454,10 @@ class LatParamStruct:
     def __copy__(self) -> LatParamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatParamStruct:
+        ...
+    def __eq__(self, arg0: LatParamStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, n_part: typing.SupportsFloat | typing.SupportsIndex | None = None, total_length: typing.SupportsFloat | typing.SupportsIndex | None = None, unstable_factor: typing.SupportsFloat | typing.SupportsIndex | None = None, t1_with_RF: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, t1_no_RF: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, spin_tune: typing.SupportsFloat | typing.SupportsIndex | None = None, particle: typing.SupportsInt | typing.SupportsIndex | None = None, default_tracking_species: typing.SupportsInt | typing.SupportsIndex | None = None, geometry: typing.SupportsInt | typing.SupportsIndex | None = None, ixx: typing.SupportsInt | typing.SupportsIndex | None = None, stable: bool | None = None, live_branch: bool | None = None, g1_integral: typing.SupportsFloat | typing.SupportsIndex | None = None, g2_integral: typing.SupportsFloat | typing.SupportsIndex | None = None, g3_integral: typing.SupportsFloat | typing.SupportsIndex | None = None, bookkeeping_state: BookkeepingStateStruct | None = None, beam_init: BeamInitStruct | None = None) -> None:
         ...
@@ -9363,6 +9612,10 @@ class LatStruct:
     def __copy__(self) -> LatStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LatStruct:
+        ...
+    def __eq__(self, arg0: LatStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, use_name: str | None = None, lattice: str | None = None, machine: str | None = None, input_file_name: str | None = None, title: str | None = None, a: ModeInfoStruct | None = None, b: ModeInfoStruct | None = None, z: ModeInfoStruct | None = None, param: LatParamStruct | None = None, lord_state: BookkeepingStateStruct | None = None, ele_init: EleStruct | None = None, particle_start: CoordStruct | None = None, beam_init: BeamInitStruct | None = None, pre_tracker: PreTrackerStruct | None = None, custom: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, version: typing.SupportsInt | typing.SupportsIndex | None = None, n_ele_track: typing.SupportsInt | typing.SupportsIndex | None = None, n_ele_max: typing.SupportsInt | typing.SupportsIndex | None = None, n_control_max: typing.SupportsInt | typing.SupportsIndex | None = None, n_ic_max: typing.SupportsInt | typing.SupportsIndex | None = None, input_taylor_order: typing.SupportsInt | typing.SupportsIndex | None = None, ic: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, photon_type: typing.SupportsInt | typing.SupportsIndex | None = None, creation_hash: typing.SupportsInt | typing.SupportsIndex | None = None, ramper_slave_bookkeeping: typing.SupportsInt | typing.SupportsIndex | None = None, parser_make_xfer_mats: bool | None = None) -> None:
         ...
@@ -9665,6 +9918,10 @@ class Layout:
         ...
     def __deepcopy__(self, arg0: dict) -> Layout:
         ...
+    def __eq__(self, arg0: Layout) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, NAME: str | None = None, INDEX: typing.SupportsInt | typing.SupportsIndex | None = None, HARMONIC_NUMBER: typing.SupportsFloat | typing.SupportsIndex | None = None, CLOSED: bool | None = None, N: typing.SupportsInt | typing.SupportsIndex | None = None, NTHIN: typing.SupportsInt | typing.SupportsIndex | None = None, THIN: typing.SupportsFloat | typing.SupportsIndex | None = None, LASTPOS: typing.SupportsInt | typing.SupportsIndex | None = None, LAST: Fibre | None = None, END: Fibre | None = None, START: Fibre | None = None, START_GROUND: Fibre | None = None, END_GROUND: Fibre | None = None, NEXT: Layout | None = None, PREVIOUS: Layout | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -9785,6 +10042,10 @@ class LinacNormalModeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> LinacNormalModeStruct:
         ...
+    def __eq__(self, arg0: LinacNormalModeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, i2_E4: typing.SupportsFloat | typing.SupportsIndex | None = None, i3_E7: typing.SupportsFloat | typing.SupportsIndex | None = None, i5a_E6: typing.SupportsFloat | typing.SupportsIndex | None = None, i5b_E6: typing.SupportsFloat | typing.SupportsIndex | None = None, sig_E1: typing.SupportsFloat | typing.SupportsIndex | None = None, a_emittance_end: typing.SupportsFloat | typing.SupportsIndex | None = None, b_emittance_end: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -9881,6 +10142,10 @@ class MadEnergyStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> MadEnergyStruct:
         ...
+    def __eq__(self, arg0: MadEnergyStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, total: typing.SupportsFloat | typing.SupportsIndex | None = None, beta: typing.SupportsFloat | typing.SupportsIndex | None = None, gamma: typing.SupportsFloat | typing.SupportsIndex | None = None, kinetic: typing.SupportsFloat | typing.SupportsIndex | None = None, p0c: typing.SupportsFloat | typing.SupportsIndex | None = None, particle: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -9938,6 +10203,10 @@ class MadMapStruct:
     def __copy__(self) -> MadMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> MadMapStruct:
+        ...
+    def __eq__(self, arg0: MadMapStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, k: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, r: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, t: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]]] | None = None) -> None:
         ...
@@ -10230,6 +10499,10 @@ class Mode3Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> Mode3Struct:
         ...
+    def __eq__(self, arg0: Mode3Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, v: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, a: TwissStruct | None = None, b: TwissStruct | None = None, c: TwissStruct | None = None, x: TwissStruct | None = None, y: TwissStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -10247,6 +10520,10 @@ class ModeInfoStruct:
     def __copy__(self) -> ModeInfoStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ModeInfoStruct:
+        ...
+    def __eq__(self, arg0: ModeInfoStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, stable: bool | None = None, tune: typing.SupportsFloat | typing.SupportsIndex | None = None, emit: typing.SupportsFloat | typing.SupportsIndex | None = None, chrom: typing.SupportsFloat | typing.SupportsIndex | None = None, sigma: typing.SupportsFloat | typing.SupportsIndex | None = None, sigmap: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -10399,6 +10676,10 @@ class NametableStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> NametableStruct:
         ...
+    def __eq__(self, arg0: NametableStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, index: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, n_min: typing.SupportsInt | typing.SupportsIndex | None = None, n_max: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -10477,6 +10758,10 @@ class NormalModesStruct:
     def __copy__(self) -> NormalModesStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> NormalModesStruct:
+        ...
+    def __eq__(self, arg0: NormalModesStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, synch_int: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, sigE_E: typing.SupportsFloat | typing.SupportsIndex | None = None, sig_z: typing.SupportsFloat | typing.SupportsIndex | None = None, e_loss: typing.SupportsFloat | typing.SupportsIndex | None = None, rf_voltage: typing.SupportsFloat | typing.SupportsIndex | None = None, pz_aperture: typing.SupportsFloat | typing.SupportsIndex | None = None, pz_average: typing.SupportsFloat | typing.SupportsIndex | None = None, momentum_compaction: typing.SupportsFloat | typing.SupportsIndex | None = None, dpz_damp: typing.SupportsFloat | typing.SupportsIndex | None = None, a: AnormalModeStruct | None = None, b: AnormalModeStruct | None = None, z: AnormalModeStruct | None = None, lin: LinacNormalModeStruct | None = None) -> None:
         ...
@@ -10700,6 +10985,9 @@ class ParseRealList:
     def delim_found(self) -> bool:
         ...
     @property
+    def is_ok(self) -> bool:
+        ...
+    @property
     def num_found(self) -> int:
         ...
 class ParseRealList2:
@@ -10800,6 +11088,10 @@ class PhotonElementStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonElementStruct:
         ...
+    def __eq__(self, arg0: PhotonElementStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, curvature: SurfaceCurvatureStruct | None = None, target: PhotonTargetStruct | None = None, material: PhotonMaterialStruct | None = None, segmented: SurfaceSegmentedStruct | None = None, h_misalign: SurfaceHMisalignStruct | None = None, displacement: SurfaceDisplacementStruct | None = None, pixel: PixelDetecStruct | None = None, reflectivity_table_type: typing.SupportsInt | typing.SupportsIndex | None = None, reflectivity_table_sigma: PhotonReflectTableStruct | None = None, reflectivity_table_pi: PhotonReflectTableStruct | None = None, integrated_init_energy_prob: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -10836,6 +11128,10 @@ class PhotonMaterialStruct:
     def __copy__(self) -> PhotonMaterialStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonMaterialStruct:
+        ...
+    def __eq__(self, arg0: PhotonMaterialStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, f0_m1: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, f0_m2: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, f_0: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, f_h: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, f_hbar: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, f_hkl: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h_norm: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, l_ref: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -10913,6 +11209,10 @@ class PhotonReflectSurfaceStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonReflectSurfaceStruct:
         ...
+    def __eq__(self, arg0: PhotonReflectSurfaceStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, description: str | None = None, reflectivity_file: str | None = None, surface_roughness_rms: typing.SupportsFloat | typing.SupportsIndex | None = None, roughness_correlation_len: typing.SupportsFloat | typing.SupportsIndex | None = None, ix_surface: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -10963,6 +11263,10 @@ class PhotonReflectTableStruct:
     def __copy__(self) -> PhotonReflectTableStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonReflectTableStruct:
+        ...
+    def __eq__(self, arg0: PhotonReflectTableStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, angle: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, energy: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, p_reflect: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, max_energy: typing.SupportsFloat | typing.SupportsIndex | None = None, p_reflect_scratch: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, bragg_angle: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -11115,6 +11419,10 @@ class PhotonTargetStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PhotonTargetStruct:
         ...
+    def __eq__(self, arg0: PhotonTargetStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, type: typing.SupportsInt | typing.SupportsIndex | None = None, n_corner: typing.SupportsInt | typing.SupportsIndex | None = None, ele_loc: LatEleLocStruct | None = None, center: TargetPointStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -11143,6 +11451,10 @@ class PixelDetecStruct:
     def __copy__(self) -> PixelDetecStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PixelDetecStruct:
+        ...
+    def __eq__(self, arg0: PixelDetecStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, dr: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, n_track_tot: typing.SupportsInt | typing.SupportsIndex | None = None, n_hit_detec: typing.SupportsInt | typing.SupportsIndex | None = None, n_hit_pixel: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -11196,6 +11508,10 @@ class PixelPtStruct:
     def __copy__(self) -> PixelPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PixelPtStruct:
+        ...
+    def __eq__(self, arg0: PixelPtStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, n_photon: typing.SupportsInt | typing.SupportsIndex | None = None, E_x: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, E_y: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, intensity_x: typing.SupportsFloat | typing.SupportsIndex | None = None, intensity_y: typing.SupportsFloat | typing.SupportsIndex | None = None, intensity: typing.SupportsFloat | typing.SupportsIndex | None = None, orbit: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, orbit_rms: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, init_orbit: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, init_orbit_rms: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -11508,6 +11824,10 @@ class PreTrackerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PreTrackerStruct:
         ...
+    def __eq__(self, arg0: PreTrackerStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, who: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele_start: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele_end: typing.SupportsInt | typing.SupportsIndex | None = None, input_file: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -11586,6 +11906,10 @@ class PtcNormalFormStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> PtcNormalFormStruct:
         ...
+    def __eq__(self, arg0: PtcNormalFormStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ele_origin: EleStruct | None = None, orb0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, valid_map: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -11658,6 +11982,10 @@ class QpAxisStruct:
     def __copy__(self) -> QpAxisStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpAxisStruct:
+        ...
+    def __eq__(self, arg0: QpAxisStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, label: str | None = None, min: typing.SupportsFloat | typing.SupportsIndex | None = None, max: typing.SupportsFloat | typing.SupportsIndex | None = None, tick_min: typing.SupportsFloat | typing.SupportsIndex | None = None, tick_max: typing.SupportsFloat | typing.SupportsIndex | None = None, eval_min: typing.SupportsFloat | typing.SupportsIndex | None = None, eval_max: typing.SupportsFloat | typing.SupportsIndex | None = None, dtick: typing.SupportsFloat | typing.SupportsIndex | None = None, number_offset: typing.SupportsFloat | typing.SupportsIndex | None = None, label_offset: typing.SupportsFloat | typing.SupportsIndex | None = None, major_tick_len: typing.SupportsFloat | typing.SupportsIndex | None = None, minor_tick_len: typing.SupportsFloat | typing.SupportsIndex | None = None, label_color: str | None = None, major_div: typing.SupportsInt | typing.SupportsIndex | None = None, major_div_nominal: typing.SupportsInt | typing.SupportsIndex | None = None, minor_div: typing.SupportsInt | typing.SupportsIndex | None = None, minor_div_max: typing.SupportsInt | typing.SupportsIndex | None = None, places: typing.SupportsInt | typing.SupportsIndex | None = None, type: str | None = None, bounds: str | None = None, tick_side: typing.SupportsInt | typing.SupportsIndex | None = None, number_side: typing.SupportsInt | typing.SupportsIndex | None = None, draw_label: bool | None = None, draw_numbers: bool | None = None) -> None:
         ...
@@ -11839,6 +12167,10 @@ class QpLegendStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpLegendStruct:
         ...
+    def __eq__(self, arg0: QpLegendStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, row_spacing: typing.SupportsFloat | typing.SupportsIndex | None = None, line_length: typing.SupportsFloat | typing.SupportsIndex | None = None, text_offset: typing.SupportsFloat | typing.SupportsIndex | None = None, draw_line: bool | None = None, draw_symbol: bool | None = None, draw_text: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -11901,6 +12233,10 @@ class QpLineStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpLineStruct:
         ...
+    def __eq__(self, arg0: QpLineStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, width: typing.SupportsInt | typing.SupportsIndex | None = None, color: str | None = None, pattern: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -11919,6 +12255,10 @@ class QpPointStruct:
     def __copy__(self) -> QpPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpPointStruct:
+        ...
+    def __eq__(self, arg0: QpPointStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x: typing.SupportsFloat | typing.SupportsIndex | None = None, y: typing.SupportsFloat | typing.SupportsIndex | None = None, units: str | None = None) -> None:
         ...
@@ -11944,6 +12284,10 @@ class QpRectStruct:
     def __copy__(self) -> QpRectStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpRectStruct:
+        ...
+    def __eq__(self, arg0: QpRectStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x1: typing.SupportsFloat | typing.SupportsIndex | None = None, x2: typing.SupportsFloat | typing.SupportsIndex | None = None, y1: typing.SupportsFloat | typing.SupportsIndex | None = None, y2: typing.SupportsFloat | typing.SupportsIndex | None = None, units: str | None = None) -> None:
         ...
@@ -11983,6 +12327,10 @@ class QpSymbolStruct:
     def __copy__(self) -> QpSymbolStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> QpSymbolStruct:
+        ...
+    def __eq__(self, arg0: QpSymbolStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, type: str | None = None, height: typing.SupportsFloat | typing.SupportsIndex | None = None, color: str | None = None, fill_pattern: str | None = None, line_width: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -12083,6 +12431,10 @@ class RadInt1Struct:
     def __copy__(self) -> RadInt1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> RadInt1Struct:
+        ...
+    def __eq__(self, arg0: RadInt1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, i0: typing.SupportsFloat | typing.SupportsIndex | None = None, i1: typing.SupportsFloat | typing.SupportsIndex | None = None, i2: typing.SupportsFloat | typing.SupportsIndex | None = None, i3: typing.SupportsFloat | typing.SupportsIndex | None = None, i4a: typing.SupportsFloat | typing.SupportsIndex | None = None, i4b: typing.SupportsFloat | typing.SupportsIndex | None = None, i4z: typing.SupportsFloat | typing.SupportsIndex | None = None, i5a: typing.SupportsFloat | typing.SupportsIndex | None = None, i5b: typing.SupportsFloat | typing.SupportsIndex | None = None, i6b: typing.SupportsFloat | typing.SupportsIndex | None = None, lin_i2_E4: typing.SupportsFloat | typing.SupportsIndex | None = None, lin_i3_E7: typing.SupportsFloat | typing.SupportsIndex | None = None, lin_i5a_E6: typing.SupportsFloat | typing.SupportsIndex | None = None, lin_i5b_E6: typing.SupportsFloat | typing.SupportsIndex | None = None, lin_norm_emit_a: typing.SupportsFloat | typing.SupportsIndex | None = None, lin_norm_emit_b: typing.SupportsFloat | typing.SupportsIndex | None = None, lin_sig_E: typing.SupportsFloat | typing.SupportsIndex | None = None, n_steps: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -12270,6 +12622,10 @@ class RadIntAllEleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RadIntAllEleStruct:
         ...
+    def __eq__(self, arg0: RadIntAllEleStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self) -> None:
         ...
     def __repr__(self) -> str:
@@ -12292,6 +12648,10 @@ class RadIntBranchStruct:
     def __copy__(self) -> RadIntBranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RadIntBranchStruct:
+        ...
+    def __eq__(self, arg0: RadIntBranchStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self) -> None:
         ...
@@ -12369,6 +12729,10 @@ class RadMapEleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RadMapEleStruct:
         ...
+    def __eq__(self, arg0: RadMapEleStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, rm0: RadMapStruct | None = None, rm1: RadMapStruct | None = None, stale: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -12396,6 +12760,10 @@ class RadMapStruct:
     def __copy__(self) -> RadMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RadMapStruct:
+        ...
+    def __eq__(self, arg0: RadMapStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ref_orb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, damp_dmat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, xfer_damp_vec: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, xfer_damp_mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, stoc_mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None) -> None:
         ...
@@ -12471,6 +12839,10 @@ class RamperLordStruct:
     def __copy__(self) -> RamperLordStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RamperLordStruct:
+        ...
+    def __eq__(self, arg0: RamperLordStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_con: typing.SupportsInt | typing.SupportsIndex | None = None, attrib_ptr: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -12594,6 +12966,10 @@ class RandomStateStruct:
     def __copy__(self) -> RandomStateStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RandomStateStruct:
+        ...
+    def __eq__(self, arg0: RandomStateStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ix: typing.SupportsInt | typing.SupportsIndex | None = None, iy: typing.SupportsInt | typing.SupportsIndex | None = None, number_stored: bool | None = None, h_saved: typing.SupportsFloat | typing.SupportsIndex | None = None, engine: typing.SupportsInt | typing.SupportsIndex | None = None, seed: typing.SupportsInt | typing.SupportsIndex | None = None, am: typing.SupportsFloat | typing.SupportsIndex | None = None, gauss_converter: typing.SupportsInt | typing.SupportsIndex | None = None, gauss_sigma_cut: typing.SupportsFloat | typing.SupportsIndex | None = None, in_sobseq: typing.SupportsInt | typing.SupportsIndex | None = None, ix_sobseq: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, x_sobseq: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -12999,6 +13375,10 @@ class ResonanceHStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> ResonanceHStruct:
         ...
+    def __eq__(self, arg0: ResonanceHStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, id: str | None = None, c_val: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -13085,6 +13465,10 @@ class RfEleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RfEleStruct:
         ...
+    def __eq__(self, arg0: RfEleStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ds_step: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -13115,6 +13499,10 @@ class RfStairStepStruct:
     def __copy__(self) -> RfStairStepStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> RfStairStepStruct:
+        ...
+    def __eq__(self, arg0: RfStairStepStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, E_tot0: typing.SupportsFloat | typing.SupportsIndex | None = None, E_tot1: typing.SupportsFloat | typing.SupportsIndex | None = None, p0c: typing.SupportsFloat | typing.SupportsIndex | None = None, p1c: typing.SupportsFloat | typing.SupportsIndex | None = None, scale: typing.SupportsFloat | typing.SupportsIndex | None = None, time: typing.SupportsFloat | typing.SupportsIndex | None = None, s0: typing.SupportsFloat | typing.SupportsIndex | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None, ix_step: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -13355,6 +13743,10 @@ class SpaceChargeCommonStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SpaceChargeCommonStruct:
         ...
+    def __eq__(self, arg0: SpaceChargeCommonStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ds_track_step: typing.SupportsFloat | typing.SupportsIndex | None = None, dt_track_step: typing.SupportsFloat | typing.SupportsIndex | None = None, cathode_strength_cutoff: typing.SupportsFloat | typing.SupportsIndex | None = None, rel_tol_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, abs_tol_tracking: typing.SupportsFloat | typing.SupportsIndex | None = None, beam_chamber_height: typing.SupportsFloat | typing.SupportsIndex | None = None, lsc_sigma_cutoff: typing.SupportsFloat | typing.SupportsIndex | None = None, particle_sigma_cutoff: typing.SupportsFloat | typing.SupportsIndex | None = None, mesh_growth_factor: typing.SupportsFloat | typing.SupportsIndex | None = None, mesh_shrink_factor: typing.SupportsFloat | typing.SupportsIndex | None = None, space_charge_mesh_size: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, csr3d_mesh_size: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, n_bin: typing.SupportsInt | typing.SupportsIndex | None = None, particle_bin_span: typing.SupportsInt | typing.SupportsIndex | None = None, n_shield_images: typing.SupportsInt | typing.SupportsIndex | None = None, sc_min_in_bin: typing.SupportsInt | typing.SupportsIndex | None = None, lsc_kick_transverse_dependence: bool | None = None, debug: bool | None = None, diagnostic_output_file: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -13503,6 +13895,10 @@ class SpinAxisStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SpinAxisStruct:
         ...
+    def __eq__(self, arg0: SpinAxisStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, l: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, n0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, m: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -13610,6 +14006,10 @@ class SpinOrbitMap1Struct:
         ...
     def __deepcopy__(self, arg0: dict) -> SpinOrbitMap1Struct:
         ...
+    def __eq__(self, arg0: SpinOrbitMap1Struct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, orb_mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, vec0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, spin_q: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -13703,6 +14103,10 @@ class SpinPolarStruct:
     def __copy__(self) -> SpinPolarStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SpinPolarStruct:
+        ...
+    def __eq__(self, arg0: SpinPolarStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, polarization: typing.SupportsFloat | typing.SupportsIndex | None = None, theta: typing.SupportsFloat | typing.SupportsIndex | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None, xi: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -13799,6 +14203,10 @@ class SplineStruct:
     def __copy__(self) -> SplineStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SplineStruct:
+        ...
+    def __eq__(self, arg0: SplineStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x0: typing.SupportsFloat | typing.SupportsIndex | None = None, y0: typing.SupportsFloat | typing.SupportsIndex | None = None, x1: typing.SupportsFloat | typing.SupportsIndex | None = None, coef: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -13936,6 +14344,10 @@ class StrongBeamStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> StrongBeamStruct:
         ...
+    def __eq__(self, arg0: StrongBeamStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ix_slice: typing.SupportsInt | typing.SupportsIndex | None = None, x_center: typing.SupportsFloat | typing.SupportsIndex | None = None, y_center: typing.SupportsFloat | typing.SupportsIndex | None = None, x_sigma: typing.SupportsFloat | typing.SupportsIndex | None = None, y_sigma: typing.SupportsFloat | typing.SupportsIndex | None = None, dx: typing.SupportsFloat | typing.SupportsIndex | None = None, dy: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -14009,6 +14421,10 @@ class SummationRdtStruct:
     def __copy__(self) -> SummationRdtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SummationRdtStruct:
+        ...
+    def __eq__(self, arg0: SummationRdtStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, h11001: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h00111: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h20001: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h00201: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h10002: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h21000: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h30000: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h10110: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h10020: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h10200: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h31000: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h40000: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h20110: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h11200: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h20020: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h20200: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h00310: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h00400: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h22000: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h00220: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None, h11110: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -14239,6 +14655,10 @@ class SurfaceCurvatureStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceCurvatureStruct:
         ...
+    def __eq__(self, arg0: SurfaceCurvatureStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, xy: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, spherical: typing.SupportsFloat | typing.SupportsIndex | None = None, elliptical: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, has_curvature: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -14278,6 +14698,10 @@ class SurfaceDisplacementPtStruct:
     def __copy__(self) -> SurfaceDisplacementPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceDisplacementPtStruct:
+        ...
+    def __eq__(self, arg0: SurfaceDisplacementPtStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x0: typing.SupportsFloat | typing.SupportsIndex | None = None, y0: typing.SupportsFloat | typing.SupportsIndex | None = None, z0: typing.SupportsFloat | typing.SupportsIndex | None = None, dz_dx: typing.SupportsFloat | typing.SupportsIndex | None = None, dz_dy: typing.SupportsFloat | typing.SupportsIndex | None = None, d2z_dxdy: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -14351,6 +14775,10 @@ class SurfaceDisplacementStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceDisplacementStruct:
         ...
+    def __eq__(self, arg0: SurfaceDisplacementStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, active: bool | None = None, dr: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -14394,6 +14822,10 @@ class SurfaceHMisalignPtStruct:
     def __copy__(self) -> SurfaceHMisalignPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceHMisalignPtStruct:
+        ...
+    def __eq__(self, arg0: SurfaceHMisalignPtStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x0: typing.SupportsFloat | typing.SupportsIndex | None = None, y0: typing.SupportsFloat | typing.SupportsIndex | None = None, rot_y: typing.SupportsFloat | typing.SupportsIndex | None = None, rot_t: typing.SupportsFloat | typing.SupportsIndex | None = None, rot_y_rms: typing.SupportsFloat | typing.SupportsIndex | None = None, rot_t_rms: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -14475,6 +14907,10 @@ class SurfaceHMisalignStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceHMisalignStruct:
         ...
+    def __eq__(self, arg0: SurfaceHMisalignStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, active: bool | None = None, dr: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -14501,6 +14937,10 @@ class SurfaceSegmentedPtStruct:
     def __copy__(self) -> SurfaceSegmentedPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceSegmentedPtStruct:
+        ...
+    def __eq__(self, arg0: SurfaceSegmentedPtStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x0: typing.SupportsFloat | typing.SupportsIndex | None = None, y0: typing.SupportsFloat | typing.SupportsIndex | None = None, z0: typing.SupportsFloat | typing.SupportsIndex | None = None, dz_dx: typing.SupportsFloat | typing.SupportsIndex | None = None, dz_dy: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -14574,6 +15014,10 @@ class SurfaceSegmentedStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> SurfaceSegmentedStruct:
         ...
+    def __eq__(self, arg0: SurfaceSegmentedStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, active: bool | None = None, dr: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -14638,6 +15082,10 @@ class TaoBeamBranchStruct:
     def __copy__(self) -> TaoBeamBranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBeamBranchStruct:
+        ...
+    def __eq__(self, arg0: TaoBeamBranchStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, beam_at_start: BeamStruct | None = None, beam_init: BeamInitStruct | None = None, beam_init_used: BeamInitStruct | None = None, init_starting_distribution: bool | None = None, track_start: str | None = None, track_end: str | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_track_start: typing.SupportsInt | typing.SupportsIndex | None = None, ix_track_end: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -14719,6 +15167,10 @@ class TaoBeamUniStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBeamUniStruct:
         ...
+    def __eq__(self, arg0: TaoBeamUniStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, saved_at: str | None = None, dump_file: str | None = None, dump_at: str | None = None, track_beam_in_universe: bool | None = None, always_reinit: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -14738,6 +15190,10 @@ class TaoBuildingWallOrientationStruct:
     def __copy__(self) -> TaoBuildingWallOrientationStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBuildingWallOrientationStruct:
+        ...
+    def __eq__(self, arg0: TaoBuildingWallOrientationStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, theta: typing.SupportsFloat | typing.SupportsIndex | None = None, x_offset: typing.SupportsFloat | typing.SupportsIndex | None = None, z_offset: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -14774,6 +15230,10 @@ class TaoBuildingWallPointStruct:
     def __copy__(self) -> TaoBuildingWallPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBuildingWallPointStruct:
+        ...
+    def __eq__(self, arg0: TaoBuildingWallPointStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, z: typing.SupportsFloat | typing.SupportsIndex | None = None, x: typing.SupportsFloat | typing.SupportsIndex | None = None, radius: typing.SupportsFloat | typing.SupportsIndex | None = None, z_center: typing.SupportsFloat | typing.SupportsIndex | None = None, x_center: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -14892,6 +15352,10 @@ class TaoBuildingWallSectionStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBuildingWallSectionStruct:
         ...
+    def __eq__(self, arg0: TaoBuildingWallSectionStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, constraint: str | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -14974,6 +15438,10 @@ class TaoBuildingWallStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoBuildingWallStruct:
         ...
+    def __eq__(self, arg0: TaoBuildingWallStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, orientation: TaoBuildingWallOrientationStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -14994,6 +15462,10 @@ class TaoCmdHistoryStruct:
     def __copy__(self) -> TaoCmdHistoryStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCmdHistoryStruct:
+        ...
+    def __eq__(self, arg0: TaoCmdHistoryStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, cmd: str | None = None, ix: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -15088,6 +15560,10 @@ class TaoCommonStruct:
     def __copy__(self) -> TaoCommonStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCommonStruct:
+        ...
+    def __eq__(self, arg0: TaoCommonStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, covar: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, alpha: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, dummy_target: typing.SupportsFloat | typing.SupportsIndex | None = None, n_alias: typing.SupportsInt | typing.SupportsIndex | None = None, cmd_file_level: typing.SupportsInt | typing.SupportsIndex | None = None, ix_key_bank: typing.SupportsInt | typing.SupportsIndex | None = None, ix_history: typing.SupportsInt | typing.SupportsIndex | None = None, n_history: typing.SupportsInt | typing.SupportsIndex | None = None, lev_loop: typing.SupportsInt | typing.SupportsIndex | None = None, n_err_messages_printed: typing.SupportsInt | typing.SupportsIndex | None = None, n_universes: typing.SupportsInt | typing.SupportsIndex | None = None, ix_beam_track_active_element: typing.SupportsInt | typing.SupportsIndex | None = None, cmd_file_paused: bool | None = None, use_cmd_here: bool | None = None, cmd_from_cmd_file: bool | None = None, use_saved_beam_in_tracking: bool | None = None, single_mode: bool | None = None, combine_consecutive_elements_of_like_name: bool | None = None, have_tracked_beam: bool | None = None, init_plot_needed: bool | None = None, init_beam: bool | None = None, init_var: bool | None = None, init_read_lat_info: bool | None = None, optimizer_running: bool | None = None, have_datums_using_expressions: bool | None = None, print_to_terminal: bool | None = None, lattice_calc_done: bool | None = None, add_measurement_noise: bool | None = None, is_err_message_printed: collections.abc.Sequence[bool] | None = None, command_arg_has_been_executed: bool | None = None, all_merit_weights_positive: bool | None = None, multi_turn_orbit_is_plotted: bool | None = None, force_chrom_calc: bool | None = None, force_rad_int_calc: bool | None = None, rad_int_ri_calc_on: bool | None = None, rad_int_6d_calc_on: bool | None = None, single_mode_buffer: str | None = None, cmd: str | None = None) -> None:
         ...
@@ -15343,6 +15819,10 @@ class TaoCurveColorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCurveColorStruct:
         ...
+    def __eq__(self, arg0: TaoCurveColorStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, data_type: str | None = None, is_on: bool | None = None, min: typing.SupportsFloat | typing.SupportsIndex | None = None, max: typing.SupportsFloat | typing.SupportsIndex | None = None, autoscale: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -15394,6 +15874,10 @@ class TaoCurveOrbitStruct:
     def __copy__(self) -> TaoCurveOrbitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCurveOrbitStruct:
+        ...
+    def __eq__(self, arg0: TaoCurveOrbitStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x: typing.SupportsFloat | typing.SupportsIndex | None = None, y: typing.SupportsFloat | typing.SupportsIndex | None = None, t: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -15452,6 +15936,10 @@ class TaoCurveStruct:
     def __copy__(self) -> TaoCurveStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoCurveStruct:
+        ...
+    def __eq__(self, arg0: TaoCurveStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, name: str | None = None, data_source: str | None = None, data_index: str | None = None, data_type_x: str | None = None, data_type: str | None = None, ele_ref_name: str | None = None, legend_text: str | None = None, message_text: str | None = None, component: str | None = None, why_invalid: str | None = None, g: TaoGraphStruct | None = None, hist: TaoHistogramStruct | None = None, z_color: TaoCurveColorStruct | None = None, x_line: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, y_line: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, y2_line: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, ix_line: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, x_symb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, y_symb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, z_symb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, err_symb: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, symb_size: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, ix_symb: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, y_axis_scale_factor: typing.SupportsFloat | typing.SupportsIndex | None = None, line: QpLineStruct | None = None, symbol: QpSymbolStruct | None = None, orbit: TaoCurveOrbitStruct | None = None, ix_universe: typing.SupportsInt | typing.SupportsIndex | None = None, symbol_every: typing.SupportsInt | typing.SupportsIndex | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_bunch: typing.SupportsInt | typing.SupportsIndex | None = None, n_turn: typing.SupportsInt | typing.SupportsIndex | None = None, use_y2: bool | None = None, draw_line: bool | None = None, draw_symbols: bool | None = None, draw_symbol_index: bool | None = None, draw_error_bars: bool | None = None, smooth_line_calc: bool | None = None, valid: bool | None = None) -> None:
         ...
@@ -15819,6 +16307,10 @@ class TaoD1DataStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoD1DataStruct:
         ...
+    def __eq__(self, arg0: TaoD1DataStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, d2: TaoD2DataStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -15915,6 +16407,10 @@ class TaoD2DataStruct:
     def __copy__(self) -> TaoD2DataStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoD2DataStruct:
+        ...
+    def __eq__(self, arg0: TaoD2DataStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, name: str | None = None, data_file_name: str | None = None, ref_file_name: str | None = None, data_date: str | None = None, ref_date: str | None = None, ix_universe: typing.SupportsInt | typing.SupportsIndex | None = None, ix_d2_data: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ref: typing.SupportsInt | typing.SupportsIndex | None = None, data_read_in: bool | None = None, ref_read_in: bool | None = None) -> None:
         ...
@@ -16082,6 +16578,10 @@ class TaoDataStruct:
     def __copy__(self) -> TaoDataStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoDataStruct:
+        ...
+    def __eq__(self, arg0: TaoDataStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ele_name: str | None = None, ele_start_name: str | None = None, ele_ref_name: str | None = None, data_type: str | None = None, merit_type: str | None = None, id: str | None = None, data_source: str | None = None, why_invalid: str | None = None, ix_uni: typing.SupportsInt | typing.SupportsIndex | None = None, ix_bunch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele_start: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele_ref: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele_merit: typing.SupportsInt | typing.SupportsIndex | None = None, ix_d1: typing.SupportsInt | typing.SupportsIndex | None = None, ix_data: typing.SupportsInt | typing.SupportsIndex | None = None, ix_dModel: typing.SupportsInt | typing.SupportsIndex | None = None, eval_point: typing.SupportsInt | typing.SupportsIndex | None = None, meas_value: typing.SupportsFloat | typing.SupportsIndex | None = None, ref_value: typing.SupportsFloat | typing.SupportsIndex | None = None, model_value: typing.SupportsFloat | typing.SupportsIndex | None = None, design_value: typing.SupportsFloat | typing.SupportsIndex | None = None, old_value: typing.SupportsFloat | typing.SupportsIndex | None = None, base_value: typing.SupportsFloat | typing.SupportsIndex | None = None, error_rms: typing.SupportsFloat | typing.SupportsIndex | None = None, delta_merit: typing.SupportsFloat | typing.SupportsIndex | None = None, weight: typing.SupportsFloat | typing.SupportsIndex | None = None, invalid_value: typing.SupportsFloat | typing.SupportsIndex | None = None, merit: typing.SupportsFloat | typing.SupportsIndex | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None, s_offset: typing.SupportsFloat | typing.SupportsIndex | None = None, ref_s_offset: typing.SupportsFloat | typing.SupportsIndex | None = None, err_message_printed: bool | None = None, exists: bool | None = None, good_model: bool | None = None, good_base: bool | None = None, good_design: bool | None = None, good_meas: bool | None = None, good_ref: bool | None = None, good_user: bool | None = None, good_opt: bool | None = None, good_plot: bool | None = None, useit_plot: bool | None = None, useit_opt: bool | None = None, spin_map: TaoSpinMapStruct | None = None, d1: TaoD1DataStruct | None = None) -> None:
         ...
@@ -16527,6 +17027,10 @@ class TaoDataVarComponentStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoDataVarComponentStruct:
         ...
+    def __eq__(self, arg0: TaoDataVarComponentStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, sign: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -16652,6 +17156,10 @@ class TaoDrawingStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoDrawingStruct:
         ...
+    def __eq__(self, arg0: TaoDrawingStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self) -> None:
         ...
     def __repr__(self) -> str:
@@ -16667,6 +17175,10 @@ class TaoDynamicApertureStruct:
     def __copy__(self) -> TaoDynamicApertureStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoDynamicApertureStruct:
+        ...
+    def __eq__(self, arg0: TaoDynamicApertureStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, param: ApertureParamStruct | None = None, pz: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, ellipse_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, a_emit: typing.SupportsFloat | typing.SupportsIndex | None = None, b_emit: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -16731,6 +17243,10 @@ class TaoElePointerStruct:
     def __copy__(self) -> TaoElePointerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoElePointerStruct:
+        ...
+    def __eq__(self, arg0: TaoElePointerStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, n_loc: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -16839,6 +17355,10 @@ class TaoEleShapeStruct:
     def __copy__(self) -> TaoEleShapeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoEleShapeStruct:
+        ...
+    def __eq__(self, arg0: TaoEleShapeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ele_id: str | None = None, shape: str | None = None, color: str | None = None, size: typing.SupportsFloat | typing.SupportsIndex | None = None, label: str | None = None, draw: bool | None = None, multi: bool | None = None, line_width: typing.SupportsInt | typing.SupportsIndex | None = None, offset: typing.SupportsFloat | typing.SupportsIndex | None = None, ix_key: typing.SupportsInt | typing.SupportsIndex | None = None, name_ele: str | None = None) -> None:
         ...
@@ -17024,6 +17544,10 @@ class TaoEvalNodeStruct:
     def __copy__(self) -> TaoEvalNodeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoEvalNodeStruct:
+        ...
+    def __eq__(self, arg0: TaoEvalNodeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, type: typing.SupportsInt | typing.SupportsIndex | None = None, name: str | None = None, scale: typing.SupportsFloat | typing.SupportsIndex | None = None, value: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -17282,6 +17806,10 @@ class TaoExpressionInfoStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoExpressionInfoStruct:
         ...
+    def __eq__(self, arg0: TaoExpressionInfoStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, good: bool | None = None, ele: EleStruct | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -17391,6 +17919,10 @@ class TaoFloorPlanStruct:
     def __copy__(self) -> TaoFloorPlanStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoFloorPlanStruct:
+        ...
+    def __eq__(self, arg0: TaoFloorPlanStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, view: str | None = None, rotation: typing.SupportsFloat | typing.SupportsIndex | None = None, correct_distortion: bool | None = None, flip_label_side: bool | None = None, size_is_absolute: bool | None = None, draw_only_first_pass: bool | None = None, draw_building_wall: bool | None = None, orbit_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, orbit_color: str | None = None, orbit_pattern: str | None = None, orbit_lattice: str | None = None, orbit_width: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -17549,6 +18081,10 @@ class TaoGlobalStruct:
     def __copy__(self) -> TaoGlobalStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoGlobalStruct:
+        ...
+    def __eq__(self, arg0: TaoGlobalStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, beam_dead_cutoff: typing.SupportsFloat | typing.SupportsIndex | None = None, lm_opt_deriv_reinit: typing.SupportsFloat | typing.SupportsIndex | None = None, de_lm_step_ratio: typing.SupportsFloat | typing.SupportsIndex | None = None, de_var_to_population_factor: typing.SupportsFloat | typing.SupportsIndex | None = None, lmdif_eps: typing.SupportsFloat | typing.SupportsIndex | None = None, lmdif_negligible_merit: typing.SupportsFloat | typing.SupportsIndex | None = None, svd_cutoff: typing.SupportsFloat | typing.SupportsIndex | None = None, unstable_penalty: typing.SupportsFloat | typing.SupportsIndex | None = None, merit_stop_value: typing.SupportsFloat | typing.SupportsIndex | None = None, dmerit_stop_value: typing.SupportsFloat | typing.SupportsIndex | None = None, random_sigma_cutoff: typing.SupportsFloat | typing.SupportsIndex | None = None, delta_e_chrom: typing.SupportsFloat | typing.SupportsIndex | None = None, max_plot_time: typing.SupportsFloat | typing.SupportsIndex | None = None, default_universe: typing.SupportsInt | typing.SupportsIndex | None = None, default_branch: typing.SupportsInt | typing.SupportsIndex | None = None, n_opti_cycles: typing.SupportsInt | typing.SupportsIndex | None = None, n_opti_loops: typing.SupportsInt | typing.SupportsIndex | None = None, n_threads: typing.SupportsInt | typing.SupportsIndex | None = None, phase_units: typing.SupportsInt | typing.SupportsIndex | None = None, bunch_to_plot: typing.SupportsInt | typing.SupportsIndex | None = None, random_seed: typing.SupportsInt | typing.SupportsIndex | None = None, n_top10_merit: typing.SupportsInt | typing.SupportsIndex | None = None, srdt_gen_n_slices: typing.SupportsInt | typing.SupportsIndex | None = None, datum_err_messages_max: typing.SupportsInt | typing.SupportsIndex | None = None, srdt_sxt_n_slices: typing.SupportsInt | typing.SupportsIndex | None = None, srdt_use_cache: bool | None = None, quiet: str | None = None, random_engine: str | None = None, random_gauss_converter: str | None = None, track_type: str | None = None, lat_sigma_calc_uses_emit_from: str | None = None, prompt_string: str | None = None, prompt_color: str | None = None, optimizer: str | None = None, print_command: str | None = None, var_out_file: str | None = None, history_file: str | None = None, beam_timer_on: bool | None = None, box_plots: bool | None = None, blank_line_between_commands: bool | None = None, cmd_file_abort_on_error: bool | None = None, concatenate_maps: bool | None = None, derivative_recalc: bool | None = None, derivative_uses_design: bool | None = None, disable_smooth_line_calc: bool | None = None, draw_curve_off_scale_warn: bool | None = None, external_plotting: bool | None = None, label_lattice_elements: bool | None = None, label_keys: bool | None = None, lattice_calc_on: bool | None = None, only_limit_opt_vars: bool | None = None, opt_with_ref: bool | None = None, opt_with_base: bool | None = None, opt_match_auto_recalc: bool | None = None, opti_write_var_file: bool | None = None, optimizer_allow_user_abort: bool | None = None, optimizer_var_limit_warn: bool | None = None, plot_on: bool | None = None, rad_int_user_calc_on: bool | None = None, rf_on: bool | None = None, single_step: bool | None = None, stop_on_error: bool | None = None, svd_retreat_on_merit_increase: bool | None = None, var_limits_on: bool | None = None, wait_for_CR_in_single_mode: bool | None = None, symbol_import: bool | None = None, debug_on: bool | None = None, expression_tree_on: bool | None = None, verbose_on: bool | None = None) -> None:
         ...
@@ -18100,6 +18636,10 @@ class TaoGraphStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoGraphStruct:
         ...
+    def __eq__(self, arg0: TaoGraphStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, type: str | None = None, title: str | None = None, title_suffix: str | None = None, why_invalid: str | None = None, p: TaoPlotStruct | None = None, floor_plan: TaoFloorPlanStruct | None = None, text_legend_origin: QpPointStruct | None = None, curve_legend_origin: QpPointStruct | None = None, curve_legend: QpLegendStruct | None = None, x: QpAxisStruct | None = None, y: QpAxisStruct | None = None, x2: QpAxisStruct | None = None, y2: QpAxisStruct | None = None, margin: QpRectStruct | None = None, scale_margin: QpRectStruct | None = None, x_axis_scale_factor: typing.SupportsFloat | typing.SupportsIndex | None = None, symbol_size_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, box: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_universe: typing.SupportsInt | typing.SupportsIndex | None = None, clip: bool | None = None, y2_mirrors_y: bool | None = None, limited: bool | None = None, draw_axes: bool | None = None, draw_curve_legend: bool | None = None, draw_grid: bool | None = None, draw_title: bool | None = None, draw_only_good_user_data_or_vars: bool | None = None, allow_wrap_around: bool | None = None, is_valid: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -18383,6 +18923,10 @@ class TaoHistogramStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoHistogramStruct:
         ...
+    def __eq__(self, arg0: TaoHistogramStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, density_normalized: bool | None = None, weight_by_charge: bool | None = None, minimum: typing.SupportsFloat | typing.SupportsIndex | None = None, maximum: typing.SupportsFloat | typing.SupportsIndex | None = None, width: typing.SupportsFloat | typing.SupportsIndex | None = None, center: typing.SupportsFloat | typing.SupportsIndex | None = None, number: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -18444,6 +18988,10 @@ class TaoInitStruct:
     def __copy__(self) -> TaoInitStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoInitStruct:
+        ...
+    def __eq__(self, arg0: TaoInitStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, parse_cmd_args: bool | None = None, debug_switch: bool | None = None, external_plotting_switch: bool | None = None, init_name: str | None = None, hook_init_file: str | None = None, hook_lat_file: str | None = None, hook_beam_file: str | None = None, hook_data_file: str | None = None, hook_plot_file: str | None = None, hook_startup_file: str | None = None, hook_var_file: str | None = None, hook_building_wall_file: str | None = None, init_file_arg_path: str | None = None, lattice_file_arg: str | None = None, hook_init_file_arg: str | None = None, init_file_arg: str | None = None, beam_file_arg: str | None = None, beam_init_position_file_arg: str | None = None, command_arg: str | None = None, data_file_arg: str | None = None, plot_file_arg: str | None = None, startup_file_arg: str | None = None, var_file_arg: str | None = None, building_wall_file_arg: str | None = None, geometry_arg: str | None = None, slice_lattice_arg: str | None = None, start_branch_at_arg: str | None = None, log_startup_arg: str | None = None, no_stopping_arg: str | None = None, noplot_arg: str | None = None, no_rad_int_arg: str | None = None, reverse_arg: str | None = None, debug_arg: str | None = None, disable_smooth_line_calc_arg: str | None = None, rf_on_arg: str | None = None, prompt_color_arg: str | None = None, quiet_arg: str | None = None, noinit_arg: str | None = None, nostartup_arg: str | None = None, symbol_import_arg: str | None = None, unique_name_suffix: str | None = None) -> None:
         ...
@@ -18803,6 +19351,10 @@ class TaoLatSigmaStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoLatSigmaStruct:
         ...
+    def __eq__(self, arg0: TaoLatSigmaStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, mat: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -18892,6 +19444,10 @@ class TaoLatticeBranchStruct:
     def __copy__(self) -> TaoLatticeBranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoLatticeBranchStruct:
+        ...
+    def __eq__(self, arg0: TaoLatticeBranchStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, tao_lat: TaoLatticeStruct | None = None, spin: TaoSpinPolarizationStruct | None = None, srdt: SummationRdtStruct | None = None, orb0: CoordStruct | None = None, modes_ri: NormalModesStruct | None = None, modes_6d: NormalModesStruct | None = None, ptc_normal_form: PtcNormalFormStruct | None = None, bmad_normal_form: BmadNormalFormStruct | None = None, cache_x_min: typing.SupportsFloat | typing.SupportsIndex | None = None, cache_x_max: typing.SupportsFloat | typing.SupportsIndex | None = None, comb_ds_save: typing.SupportsFloat | typing.SupportsIndex | None = None, ix_ref_taylor: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele_taylor: typing.SupportsInt | typing.SupportsIndex | None = None, track_state: typing.SupportsInt | typing.SupportsIndex | None = None, cache_n_pts: typing.SupportsInt | typing.SupportsIndex | None = None, ix_rad_int_cache: typing.SupportsInt | typing.SupportsIndex | None = None, has_open_match_element: bool | None = None, plot_cache_valid: bool | None = None, spin_map_valid: bool | None = None, twiss_valid: bool | None = None, mode_flip_here: bool | None = None, chrom_calc_ok: bool | None = None, rad_int_calc_ok: bool | None = None, emit_6d_calc_ok: bool | None = None, sigma_track_ok: bool | None = None) -> None:
         ...
@@ -19142,6 +19698,10 @@ class TaoLatticeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoLatticeStruct:
         ...
+    def __eq__(self, arg0: TaoLatticeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, lat: LatStruct | None = None, high_E_lat: LatStruct | None = None, low_E_lat: LatStruct | None = None, rad_int_by_ele_ri: RadIntAllEleStruct | None = None, rad_int_by_ele_6d: RadIntAllEleStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -19238,6 +19798,10 @@ class TaoModelBranchStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoModelBranchStruct:
         ...
+    def __eq__(self, arg0: TaoModelBranchStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, beam: TaoBeamBranchStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -19318,6 +19882,10 @@ class TaoModelElementStruct:
     def __copy__(self) -> TaoModelElementStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoModelElementStruct:
+        ...
+    def __eq__(self, arg0: TaoModelElementStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, beam: BeamStruct | None = None, save_beam_internally: bool | None = None, save_beam_to_file: bool | None = None) -> None:
         ...
@@ -19544,6 +20112,10 @@ class TaoPingScaleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPingScaleStruct:
         ...
+    def __eq__(self, arg0: TaoPingScaleStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, a_mode_meas: typing.SupportsFloat | typing.SupportsIndex | None = None, a_mode_ref: typing.SupportsFloat | typing.SupportsIndex | None = None, b_mode_meas: typing.SupportsFloat | typing.SupportsIndex | None = None, b_mode_ref: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -19587,6 +20159,10 @@ class TaoPlotCacheStruct:
     def __copy__(self) -> TaoPlotCacheStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotCacheStruct:
+        ...
+    def __eq__(self, arg0: TaoPlotCacheStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ele_to_s: EleStruct | None = None, orbit: CoordStruct | None = None, err: bool | None = None) -> None:
         ...
@@ -19667,6 +20243,10 @@ class TaoPlotPageStruct:
     def __copy__(self) -> TaoPlotPageStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotPageStruct:
+        ...
+    def __eq__(self, arg0: TaoPlotPageStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, title: TaoTitleStruct | None = None, subtitle: TaoTitleStruct | None = None, border: QpRectStruct | None = None, floor_plan: TaoDrawingStruct | None = None, lat_layout: TaoDrawingStruct | None = None, plot_display_type: str | None = None, size: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, text_height: typing.SupportsFloat | typing.SupportsIndex | None = None, main_title_text_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, graph_title_text_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, axis_number_text_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, axis_label_text_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, legend_text_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, key_table_text_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, floor_plan_shape_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, floor_plan_text_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, lat_layout_shape_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, lat_layout_text_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, n_curve_pts: typing.SupportsInt | typing.SupportsIndex | None = None, id_window: typing.SupportsInt | typing.SupportsIndex | None = None, delete_overlapping_plots: bool | None = None, draw_graph_title_suffix: bool | None = None) -> None:
         ...
@@ -19853,6 +20433,10 @@ class TaoPlotRegionStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotRegionStruct:
         ...
+    def __eq__(self, arg0: TaoPlotRegionStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, plot: TaoPlotStruct | None = None, location: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, visible: bool | None = None, list_with_show_plot_command: bool | None = None, setup_done: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -19976,6 +20560,10 @@ class TaoPlotStruct:
     def __copy__(self) -> TaoPlotStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoPlotStruct:
+        ...
+    def __eq__(self, arg0: TaoPlotStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, name: str | None = None, description: str | None = None, r: TaoPlotRegionStruct | None = None, ix_plot: typing.SupportsInt | typing.SupportsIndex | None = None, n_curve_pts: typing.SupportsInt | typing.SupportsIndex | None = None, type: str | None = None, x_axis_type: str | None = None, autoscale_x: bool | None = None, autoscale_y: bool | None = None, autoscale_gang_x: bool | None = None, autoscale_gang_y: bool | None = None, list_with_show_plot_command: bool | None = None, phantom: bool | None = None, default_plot: bool | None = None) -> None:
         ...
@@ -20350,6 +20938,10 @@ class TaoShapePatternPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoShapePatternPointStruct:
         ...
+    def __eq__(self, arg0: TaoShapePatternPointStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, s: typing.SupportsFloat | typing.SupportsIndex | None = None, y: typing.SupportsFloat | typing.SupportsIndex | None = None, radius: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -20444,6 +21036,10 @@ class TaoShapePatternStruct:
     def __copy__(self) -> TaoShapePatternStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoShapePatternStruct:
+        ...
+    def __eq__(self, arg0: TaoShapePatternStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, name: str | None = None, line: QpLineStruct | None = None) -> None:
         ...
@@ -20543,6 +21139,10 @@ class TaoSpinDnDpzStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSpinDnDpzStruct:
         ...
+    def __eq__(self, arg0: TaoSpinDnDpzStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, vec: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, partial: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, partial2: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -20586,6 +21186,10 @@ class TaoSpinEleStruct:
     def __copy__(self) -> TaoSpinEleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSpinEleStruct:
+        ...
+    def __eq__(self, arg0: TaoSpinEleStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, dn_dpz: TaoSpinDnDpzStruct | None = None, orb_eigen_val: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, orb_eigen_vec: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, spin_eigen_vec: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, valid: bool | None = None) -> None:
         ...
@@ -20681,6 +21285,10 @@ class TaoSpinMapStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSpinMapStruct:
         ...
+    def __eq__(self, arg0: TaoSpinMapStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, valid: bool | None = None, map1: SpinOrbitMap1Struct | None = None, axis_input: SpinAxisStruct | None = None, axis0: SpinAxisStruct | None = None, axis1: SpinAxisStruct | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ref: typing.SupportsInt | typing.SupportsIndex | None = None, ix_uni: typing.SupportsInt | typing.SupportsIndex | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, mat8: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -20747,6 +21355,10 @@ class TaoSpinPolarizationStruct:
     def __copy__(self) -> TaoSpinPolarizationStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSpinPolarizationStruct:
+        ...
+    def __eq__(self, arg0: TaoSpinPolarizationStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, tune: typing.SupportsFloat | typing.SupportsIndex | None = None, pol_limit_st: typing.SupportsFloat | typing.SupportsIndex | None = None, pol_limit_dk: typing.SupportsFloat | typing.SupportsIndex | None = None, pol_limit_dk_partial: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, pol_limit_dk_partial2: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, pol_rate_bks: typing.SupportsFloat | typing.SupportsIndex | None = None, depol_rate: typing.SupportsFloat | typing.SupportsIndex | None = None, depol_rate_partial: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, depol_rate_partial2: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, integral_bn: typing.SupportsFloat | typing.SupportsIndex | None = None, integral_bdn: typing.SupportsFloat | typing.SupportsIndex | None = None, integral_1ns: typing.SupportsFloat | typing.SupportsIndex | None = None, integral_dn2: typing.SupportsFloat | typing.SupportsIndex | None = None, valid: bool | None = None, q_1turn: SpinOrbitMap1Struct | None = None) -> None:
         ...
@@ -20905,6 +21517,10 @@ class TaoSuperUniverseStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoSuperUniverseStruct:
         ...
+    def __eq__(self, arg0: TaoSuperUniverseStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, global_: TaoGlobalStruct | None = None, init: TaoInitStruct | None = None, com: TaoCommonStruct | None = None, plot_page: TaoPlotPageStruct | None = None, key: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, building_wall: TaoBuildingWallStruct | None = None, wave: TaoWaveStruct | None = None, n_var_used: typing.SupportsInt | typing.SupportsIndex | None = None, n_v1_var_used: typing.SupportsInt | typing.SupportsIndex | None = None, initialized: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -20994,6 +21610,10 @@ class TaoTitleStruct:
     def __copy__(self) -> TaoTitleStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoTitleStruct:
+        ...
+    def __eq__(self, arg0: TaoTitleStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, string: str | None = None, x: typing.SupportsFloat | typing.SupportsIndex | None = None, y: typing.SupportsFloat | typing.SupportsIndex | None = None, units: str | None = None, justify: str | None = None, draw_it: bool | None = None) -> None:
         ...
@@ -21096,6 +21716,10 @@ class TaoUniverseCalcStruct:
     def __copy__(self) -> TaoUniverseCalcStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoUniverseCalcStruct:
+        ...
+    def __eq__(self, arg0: TaoUniverseCalcStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, srdt_for_data: typing.SupportsInt | typing.SupportsIndex | None = None, rad_int_for_data: bool | None = None, rad_int_for_plotting: bool | None = None, chrom_for_data: bool | None = None, chrom_for_plotting: bool | None = None, lat_sigma_for_data: bool | None = None, lat_sigma_for_plotting: bool | None = None, dynamic_aperture: bool | None = None, one_turn_map: bool | None = None, lattice: bool | None = None, twiss: bool | None = None, track: bool | None = None, spin_matrices: bool | None = None) -> None:
         ...
@@ -21219,6 +21843,10 @@ class TaoUniversePointerStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoUniversePointerStruct:
         ...
+    def __eq__(self, arg0: TaoUniversePointerStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, u: TaoUniverseStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -21304,6 +21932,10 @@ class TaoUniverseStruct:
     def __copy__(self) -> TaoUniverseStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoUniverseStruct:
+        ...
+    def __eq__(self, arg0: TaoUniverseStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, model: TaoLatticeStruct | None = None, design: TaoLatticeStruct | None = None, base: TaoLatticeStruct | None = None, beam: TaoBeamUniStruct | None = None, dynamic_aperture: TaoDynamicApertureStruct | None = None, ping_scale: TaoPingScaleStruct | None = None, scratch_lat: LatStruct | None = None, calc: TaoUniverseCalcStruct | None = None, ele_order: LatEleOrderStruct | None = None, spin_map: TaoSpinMapStruct | None = None, dModel_dVar: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None, ix_uni: typing.SupportsInt | typing.SupportsIndex | None = None, n_d2_data_used: typing.SupportsInt | typing.SupportsIndex | None = None, n_data_used: typing.SupportsInt | typing.SupportsIndex | None = None, is_on: bool | None = None, design_same_as_previous: bool | None = None, picked_uni: bool | None = None) -> None:
         ...
@@ -21494,6 +22126,10 @@ class TaoV1VarStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoV1VarStruct:
         ...
+    def __eq__(self, arg0: TaoV1VarStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, ix_v1_var: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -21590,6 +22226,10 @@ class TaoVarSlaveStruct:
     def __copy__(self) -> TaoVarSlaveStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoVarSlaveStruct:
+        ...
+    def __eq__(self, arg0: TaoVarSlaveStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ix_uni: typing.SupportsInt | typing.SupportsIndex | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, model_value: typing.SupportsFloat | typing.SupportsIndex | None = None, base_value: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -21704,6 +22344,10 @@ class TaoVarStruct:
     def __copy__(self) -> TaoVarStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoVarStruct:
+        ...
+    def __eq__(self, arg0: TaoVarStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, ele_name: str | None = None, attrib_name: str | None = None, id: str | None = None, ix_v1: typing.SupportsInt | typing.SupportsIndex | None = None, ix_var: typing.SupportsInt | typing.SupportsIndex | None = None, ix_dvar: typing.SupportsInt | typing.SupportsIndex | None = None, ix_attrib: typing.SupportsInt | typing.SupportsIndex | None = None, ix_key_table: typing.SupportsInt | typing.SupportsIndex | None = None, model_value: typing.SupportsFloat | typing.SupportsIndex | None = None, base_value: typing.SupportsFloat | typing.SupportsIndex | None = None, design_value: typing.SupportsFloat | typing.SupportsIndex | None = None, scratch_value: typing.SupportsFloat | typing.SupportsIndex | None = None, old_value: typing.SupportsFloat | typing.SupportsIndex | None = None, meas_value: typing.SupportsFloat | typing.SupportsIndex | None = None, ref_value: typing.SupportsFloat | typing.SupportsIndex | None = None, correction_value: typing.SupportsFloat | typing.SupportsIndex | None = None, high_lim: typing.SupportsFloat | typing.SupportsIndex | None = None, low_lim: typing.SupportsFloat | typing.SupportsIndex | None = None, step: typing.SupportsFloat | typing.SupportsIndex | None = None, weight: typing.SupportsFloat | typing.SupportsIndex | None = None, delta_merit: typing.SupportsFloat | typing.SupportsIndex | None = None, merit: typing.SupportsFloat | typing.SupportsIndex | None = None, dMerit_dVar: typing.SupportsFloat | typing.SupportsIndex | None = None, key_val0: typing.SupportsFloat | typing.SupportsIndex | None = None, key_delta: typing.SupportsFloat | typing.SupportsIndex | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None, extend_val: typing.SupportsFloat | typing.SupportsIndex | None = None, merit_type: str | None = None, exists: bool | None = None, good_var: bool | None = None, good_user: bool | None = None, good_opt: bool | None = None, good_plot: bool | None = None, useit_opt: bool | None = None, useit_plot: bool | None = None, key_bound: bool | None = None, v1: TaoV1VarStruct | None = None) -> None:
         ...
@@ -22080,6 +22724,10 @@ class TaoWaveKickPtStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoWaveKickPtStruct:
         ...
+    def __eq__(self, arg0: TaoWaveKickPtStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, phi_s: typing.SupportsFloat | typing.SupportsIndex | None = None, phi_r: typing.SupportsFloat | typing.SupportsIndex | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None, amp: typing.SupportsFloat | typing.SupportsIndex | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None, ix_dat_before_kick: typing.SupportsInt | typing.SupportsIndex | None = None, ele: EleStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -22198,6 +22846,10 @@ class TaoWaveStruct:
     def __copy__(self) -> TaoWaveStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaoWaveStruct:
+        ...
+    def __eq__(self, arg0: TaoWaveStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, data_type: str | None = None, rms_rel_a: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_rel_b: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_rel_as: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_rel_bs: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_rel_ar: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_rel_br: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_rel_k: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_rel_ks: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_rel_kr: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_phi: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_phi_s: typing.SupportsFloat | typing.SupportsIndex | None = None, rms_phi_r: typing.SupportsFloat | typing.SupportsIndex | None = None, amp_ba_s: typing.SupportsFloat | typing.SupportsIndex | None = None, amp_ba_r: typing.SupportsFloat | typing.SupportsIndex | None = None, chi_a: typing.SupportsFloat | typing.SupportsIndex | None = None, chi_c: typing.SupportsFloat | typing.SupportsIndex | None = None, chi_ba: typing.SupportsFloat | typing.SupportsIndex | None = None, amp_a: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, amp_b: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, amp_ba: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, coef_a: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, coef_b: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, coef_ba: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, n_func: typing.SupportsInt | typing.SupportsIndex | None = None, ix_a1: typing.SupportsInt | typing.SupportsIndex | None = None, ix_a2: typing.SupportsInt | typing.SupportsIndex | None = None, ix_b1: typing.SupportsInt | typing.SupportsIndex | None = None, ix_b2: typing.SupportsInt | typing.SupportsIndex | None = None, i_a1: typing.SupportsInt | typing.SupportsIndex | None = None, i_a2: typing.SupportsInt | typing.SupportsIndex | None = None, i_b1: typing.SupportsInt | typing.SupportsIndex | None = None, i_b2: typing.SupportsInt | typing.SupportsIndex | None = None, n_a: typing.SupportsInt | typing.SupportsIndex | None = None, n_b: typing.SupportsInt | typing.SupportsIndex | None = None, i_curve_wrap_pt: typing.SupportsInt | typing.SupportsIndex | None = None, ix_data: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None, n_kick: typing.SupportsInt | typing.SupportsIndex | None = None, base_graph: TaoGraphStruct | None = None, region: TaoPlotRegionStruct | None = None, d1_dat: TaoD1DataStruct | None = None) -> None:
         ...
@@ -22492,6 +23144,10 @@ class TargetPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TargetPointStruct:
         ...
+    def __eq__(self, arg0: TargetPointStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, r: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -22590,6 +23246,10 @@ class TaylorStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaylorStruct:
         ...
+    def __eq__(self, arg0: TaylorStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ref: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -22674,6 +23334,10 @@ class TaylorTermStruct:
     def __copy__(self) -> TaylorTermStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TaylorTermStruct:
+        ...
+    def __eq__(self, arg0: TaylorTermStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, coef: typing.SupportsFloat | typing.SupportsIndex | None = None, expn: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -23030,6 +23694,10 @@ class TestSubStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TestSubStruct:
         ...
+    def __eq__(self, arg0: TestSubStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, sr: TestSubSubStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -23138,6 +23806,10 @@ class TestSubSubStruct:
     def __copy__(self) -> TestSubSubStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TestSubSubStruct:
+        ...
+    def __eq__(self, arg0: TestSubSubStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, aaa: typing.SupportsInt | typing.SupportsIndex | None = None, bbb: typing.SupportsInt | typing.SupportsIndex | None = None, file: str | None = None, t_ref: typing.SupportsFloat | typing.SupportsIndex | None = None, freq_spread: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -23402,6 +24074,10 @@ class TrackPointStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TrackPointStruct:
         ...
+    def __eq__(self, arg0: TrackPointStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, s_lab: typing.SupportsFloat | typing.SupportsIndex | None = None, s_body: typing.SupportsFloat | typing.SupportsIndex | None = None, orb: CoordStruct | None = None, field: EmFieldStruct | None = None, strong_beam: StrongBeamStruct | None = None, vec0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, mat6: collections.abc.Sequence[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex]] | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -23528,6 +24204,10 @@ class TrackStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TrackStruct:
         ...
+    def __eq__(self, arg0: TrackStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, ds_save: typing.SupportsFloat | typing.SupportsIndex | None = None, n_pt: typing.SupportsInt | typing.SupportsIndex | None = None, n_bad: typing.SupportsInt | typing.SupportsIndex | None = None, n_ok: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -23618,6 +24298,10 @@ class TricubicCmplxCoefStruct:
     def __copy__(self) -> TricubicCmplxCoefStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TricubicCmplxCoefStruct:
+        ...
+    def __eq__(self, arg0: TricubicCmplxCoefStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, coef: collections.abc.Sequence[collections.abc.Sequence[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex]]] | None = None, i_box: collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -23761,6 +24445,10 @@ class TwissStruct:
     def __copy__(self) -> TwissStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> TwissStruct:
+        ...
+    def __eq__(self, arg0: TwissStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, beta: typing.SupportsFloat | typing.SupportsIndex | None = None, alpha: typing.SupportsFloat | typing.SupportsIndex | None = None, gamma: typing.SupportsFloat | typing.SupportsIndex | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None, eta: typing.SupportsFloat | typing.SupportsIndex | None = None, etap: typing.SupportsFloat | typing.SupportsIndex | None = None, deta_ds: typing.SupportsFloat | typing.SupportsIndex | None = None, sigma: typing.SupportsFloat | typing.SupportsIndex | None = None, sigma_p: typing.SupportsFloat | typing.SupportsIndex | None = None, emit: typing.SupportsFloat | typing.SupportsIndex | None = None, norm_emit: typing.SupportsFloat | typing.SupportsIndex | None = None, chrom: typing.SupportsFloat | typing.SupportsIndex | None = None, dbeta_dpz: typing.SupportsFloat | typing.SupportsIndex | None = None, dalpha_dpz: typing.SupportsFloat | typing.SupportsIndex | None = None, deta_dpz: typing.SupportsFloat | typing.SupportsIndex | None = None, detap_dpz: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -23957,6 +24645,10 @@ class WakeLrModeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeLrModeStruct:
         ...
+    def __eq__(self, arg0: WakeLrModeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, freq: typing.SupportsFloat | typing.SupportsIndex | None = None, freq_in: typing.SupportsFloat | typing.SupportsIndex | None = None, R_over_Q: typing.SupportsFloat | typing.SupportsIndex | None = None, Q: typing.SupportsFloat | typing.SupportsIndex | None = None, damp: typing.SupportsFloat | typing.SupportsIndex | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None, angle: typing.SupportsFloat | typing.SupportsIndex | None = None, b_sin: typing.SupportsFloat | typing.SupportsIndex | None = None, b_cos: typing.SupportsFloat | typing.SupportsIndex | None = None, a_sin: typing.SupportsFloat | typing.SupportsIndex | None = None, a_cos: typing.SupportsFloat | typing.SupportsIndex | None = None, m: typing.SupportsInt | typing.SupportsIndex | None = None, polarized: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -24132,6 +24824,10 @@ class WakeLrStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeLrStruct:
         ...
+    def __eq__(self, arg0: WakeLrStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, file: str | None = None, t_ref: typing.SupportsFloat | typing.SupportsIndex | None = None, freq_spread: typing.SupportsFloat | typing.SupportsIndex | None = None, amp_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, time_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, self_wake_on: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -24192,6 +24888,10 @@ class WakeSrModeStruct:
     def __copy__(self) -> WakeSrModeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeSrModeStruct:
+        ...
+    def __eq__(self, arg0: WakeSrModeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, amp: typing.SupportsFloat | typing.SupportsIndex | None = None, damp: typing.SupportsFloat | typing.SupportsIndex | None = None, k: typing.SupportsFloat | typing.SupportsIndex | None = None, phi: typing.SupportsFloat | typing.SupportsIndex | None = None, b_sin: typing.SupportsFloat | typing.SupportsIndex | None = None, b_cos: typing.SupportsFloat | typing.SupportsIndex | None = None, a_sin: typing.SupportsFloat | typing.SupportsIndex | None = None, a_cos: typing.SupportsFloat | typing.SupportsIndex | None = None, polarization: typing.SupportsInt | typing.SupportsIndex | None = None, position_dependence: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -24345,6 +25045,10 @@ class WakeSrStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeSrStruct:
         ...
+    def __eq__(self, arg0: WakeSrStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, file: str | None = None, z_long: WakeSrZLongStruct | None = None, z_ref_long: typing.SupportsFloat | typing.SupportsIndex | None = None, z_ref_trans: typing.SupportsFloat | typing.SupportsIndex | None = None, z_max: typing.SupportsFloat | typing.SupportsIndex | None = None, amp_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, z_scale: typing.SupportsFloat | typing.SupportsIndex | None = None, scale_with_length: bool | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -24410,6 +25114,10 @@ class WakeSrZLongStruct:
     def __copy__(self) -> WakeSrZLongStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeSrZLongStruct:
+        ...
+    def __eq__(self, arg0: WakeSrZLongStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, w: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, fw: collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex] | None = None, fbunch: collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex] | None = None, w_out: collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex] | None = None, dz: typing.SupportsFloat | typing.SupportsIndex | None = None, z0: typing.SupportsFloat | typing.SupportsIndex | None = None, smoothing_sigma: typing.SupportsFloat | typing.SupportsIndex | None = None, position_dependence: typing.SupportsInt | typing.SupportsIndex | None = None, time_based: bool | None = None) -> None:
         ...
@@ -24495,6 +25203,10 @@ class WakeStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> WakeStruct:
         ...
+    def __eq__(self, arg0: WakeStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, sr: WakeSrStruct | None = None, lr: WakeLrStruct | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -24528,6 +25240,10 @@ class Wall3DSectionStruct:
     def __copy__(self) -> Wall3DSectionStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> Wall3DSectionStruct:
+        ...
+    def __eq__(self, arg0: Wall3DSectionStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, name: str | None = None, material: str | None = None, surface: PhotonReflectSurfaceStruct | None = None, type: typing.SupportsInt | typing.SupportsIndex | None = None, n_vertex_input: typing.SupportsInt | typing.SupportsIndex | None = None, ix_ele: typing.SupportsInt | typing.SupportsIndex | None = None, ix_branch: typing.SupportsInt | typing.SupportsIndex | None = None, vertices_state: typing.SupportsInt | typing.SupportsIndex | None = None, patch_in_region: bool | None = None, thickness: typing.SupportsFloat | typing.SupportsIndex | None = None, s: typing.SupportsFloat | typing.SupportsIndex | None = None, r0: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, dx0_ds: typing.SupportsFloat | typing.SupportsIndex | None = None, dy0_ds: typing.SupportsFloat | typing.SupportsIndex | None = None, x0_coef: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, y0_coef: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, dr_ds: typing.SupportsFloat | typing.SupportsIndex | None = None, p1_coef: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None, p2_coef: collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex] | None = None) -> None:
         ...
@@ -24765,6 +25481,10 @@ class Wall3DStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> Wall3DStruct:
         ...
+    def __eq__(self, arg0: Wall3DStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
     def __init__(self, name: str | None = None, type: typing.SupportsInt | typing.SupportsIndex | None = None, ix_wall3d: typing.SupportsInt | typing.SupportsIndex | None = None, n_link: typing.SupportsInt | typing.SupportsIndex | None = None, thickness: typing.SupportsFloat | typing.SupportsIndex | None = None, clear_material: str | None = None, opaque_material: str | None = None, superimpose: bool | None = None, ele_anchor_pt: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
     def __repr__(self) -> str:
@@ -24893,6 +25613,10 @@ class Wall3DVertexStruct:
     def __copy__(self) -> Wall3DVertexStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> Wall3DVertexStruct:
+        ...
+    def __eq__(self, arg0: Wall3DVertexStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, x: typing.SupportsFloat | typing.SupportsIndex | None = None, y: typing.SupportsFloat | typing.SupportsIndex | None = None, radius_x: typing.SupportsFloat | typing.SupportsIndex | None = None, radius_y: typing.SupportsFloat | typing.SupportsIndex | None = None, tilt: typing.SupportsFloat | typing.SupportsIndex | None = None, angle: typing.SupportsFloat | typing.SupportsIndex | None = None, x0: typing.SupportsFloat | typing.SupportsIndex | None = None, y0: typing.SupportsFloat | typing.SupportsIndex | None = None, type: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
         ...
@@ -25196,6 +25920,10 @@ class XyDispStruct:
     def __copy__(self) -> XyDispStruct:
         ...
     def __deepcopy__(self, arg0: dict) -> XyDispStruct:
+        ...
+    def __eq__(self, arg0: XyDispStruct) -> bool:
+        ...
+    def __hash__(self) -> int:
         ...
     def __init__(self, eta: typing.SupportsFloat | typing.SupportsIndex | None = None, etap: typing.SupportsFloat | typing.SupportsIndex | None = None, deta_ds: typing.SupportsFloat | typing.SupportsIndex | None = None, sigma: typing.SupportsFloat | typing.SupportsIndex | None = None, deta_dpz: typing.SupportsFloat | typing.SupportsIndex | None = None, detap_dpz: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
         ...
@@ -25807,7 +26535,7 @@ def apply_rampers_to_slave(slave: EleStruct) -> bool:
     err_flag : bool
         Set true if there is an error. False otherwise.
     """
-def array_re_str(arr: RealArray1D, str_out: str, parens_in: str | None = None) -> None:
+def array_re_str(arr: RealArray1D, parens_in: str | None = None) -> str:
     """
     Wrapper for Fortran routine array_re_str
     
@@ -25815,9 +26543,11 @@ def array_re_str(arr: RealArray1D, str_out: str, parens_in: str | None = None) -
     ----------
     arr : 1D array of float
     
-    str_out : str
-    
     parens_in : str, optional
+    
+    Returns
+    -------
+    str_out : str
     """
 def asinc(x: typing.SupportsFloat | typing.SupportsIndex, nd: typing.SupportsInt | typing.SupportsIndex | None = None) -> float:
     """
@@ -25836,7 +26566,7 @@ def asinc(x: typing.SupportsFloat | typing.SupportsIndex, nd: typing.SupportsInt
     y : float
         nd^th derivative. of arcsin(x)/x
     """
-def assert_equal(int_arr: IntArray1D, err_str: str, ival: typing.SupportsInt | typing.SupportsIndex) -> None:
+def assert_equal(int_arr: IntArray1D, err_str: str) -> int:
     """
     Wrapper for Fortran routine assert_equal
     
@@ -25846,9 +26576,11 @@ def assert_equal(int_arr: IntArray1D, err_str: str, ival: typing.SupportsInt | t
     
     err_str : str
     
+    Returns
+    -------
     ival : int
     """
-def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct) -> float:
     """
     Wrapper for Fortran routine astra_max_field_reference
     
@@ -25858,6 +26590,8 @@ def astra_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_val
     
     ele : EleStruct
     
+    Returns
+    -------
     field_value : float
     """
 def at_this_ele_end(now_at: typing.SupportsInt | typing.SupportsIndex, where_at: typing.SupportsInt | typing.SupportsIndex) -> bool:
@@ -27053,7 +27787,7 @@ def bin_index(x: typing.SupportsFloat | typing.SupportsIndex, bin1_x_min: typing
     ix_bin : int
         Index of bin x is in.
     """
-def bin_x_center(ix_bin: typing.SupportsInt | typing.SupportsIndex, bin1_x_min: typing.SupportsFloat | typing.SupportsIndex, bin_delta: typing.SupportsFloat | typing.SupportsIndex, x_center: typing.SupportsFloat | typing.SupportsIndex) -> BinXCenter:
+def bin_x_center(ix_bin: typing.SupportsInt | typing.SupportsIndex, bin1_x_min: typing.SupportsFloat | typing.SupportsIndex, bin_delta: typing.SupportsFloat | typing.SupportsIndex) -> BinXCenter:
     """
     Function bin_x_center (ix_bin, bin1_x_min, bin_delta) result(x_center)
     
@@ -27652,7 +28386,7 @@ def cesr_getarg(i_arg: typing.SupportsInt | typing.SupportsIndex) -> str:
     arg : str
         i'th command line argument. If i_arg > number_of_args then arg is a blank string.
     """
-def cesr_iargc(func_retval__: typing.SupportsInt | typing.SupportsIndex) -> None:
+def cesr_iargc() -> int:
     """
     Function cesr_iargc ()
     
@@ -28014,7 +28748,7 @@ def closed_orbit_from_tracking(lat: LatStruct, i_dim: typing.SupportsInt | typin
     err_flag : bool, optional
         Set True if there is an error. False otherwise.
     """
-def cmplx_re_str(cmp: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex, str_out: str) -> None:
+def cmplx_re_str(cmp: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex) -> str:
     """
     Wrapper for Fortran routine cmplx_re_str
     
@@ -28022,6 +28756,8 @@ def cmplx_re_str(cmp: typing.SupportsComplex | typing.SupportsFloat | typing.Sup
     ----------
     cmp : complex
     
+    Returns
+    -------
     str_out : str
     """
 def coarse_frequency_estimate(data: RealArray1D, error: bool | None = None) -> float:
@@ -28080,7 +28816,7 @@ def complex_taylor_clean(complex_taylor: ComplexTaylorStruct) -> None:
     complex_taylor : ComplexTaylorStruct
     """
 @typing.overload
-def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, exp: IntArray1D, coef: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex) -> None:
+def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, exp: IntArray1D) -> complex:
     """
     Function complex_taylor_coef (complex_taylor, exp)
     Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
@@ -28113,7 +28849,7 @@ def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, exp: IntArray1D, co
       i1, ..., i9 -- Integer, optional: indexes (each between 1 and 6).
     """
 @typing.overload
-def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, coef: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex, i1: typing.SupportsInt | typing.SupportsIndex | None = None, i2: typing.SupportsInt | typing.SupportsIndex | None = None, i3: typing.SupportsInt | typing.SupportsIndex | None = None, i4: typing.SupportsInt | typing.SupportsIndex | None = None, i5: typing.SupportsInt | typing.SupportsIndex | None = None, i6: typing.SupportsInt | typing.SupportsIndex | None = None, i7: typing.SupportsInt | typing.SupportsIndex | None = None, i8: typing.SupportsInt | typing.SupportsIndex | None = None, i9: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def complex_taylor_coef(complex_taylor: ComplexTaylorStruct, i1: typing.SupportsInt | typing.SupportsIndex | None = None, i2: typing.SupportsInt | typing.SupportsIndex | None = None, i3: typing.SupportsInt | typing.SupportsIndex | None = None, i4: typing.SupportsInt | typing.SupportsIndex | None = None, i5: typing.SupportsInt | typing.SupportsIndex | None = None, i6: typing.SupportsInt | typing.SupportsIndex | None = None, i7: typing.SupportsInt | typing.SupportsIndex | None = None, i8: typing.SupportsInt | typing.SupportsIndex | None = None, i9: typing.SupportsInt | typing.SupportsIndex | None = None) -> complex:
     """
     Function complex_taylor_coef (complex_taylor, exp)
     Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
@@ -28883,7 +29619,7 @@ def cosc(x: typing.SupportsFloat | typing.SupportsIndex, nd: typing.SupportsInt 
     y : float
         nd^th derivative of (1 - cos(x)) / x^2
     """
-def coulombfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def coulombfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine coulombfun
     
@@ -28897,6 +29633,8 @@ def coulombfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.Support
     
     gam : float
     
+    Returns
+    -------
     res : float
     """
 def count_lines_in_file(file_name: str) -> int:
@@ -29311,7 +30049,7 @@ def custom_ele_attrib_name_list() -> CustomEleAttribNameList:
     name_list : 1D array of str
         List of custom attributes.
     """
-def damping_matrix_d(gamma: typing.SupportsFloat | typing.SupportsIndex, g_tot: typing.SupportsFloat | typing.SupportsIndex, B0: typing.SupportsFloat | typing.SupportsIndex, B1: typing.SupportsFloat | typing.SupportsIndex, delta: typing.SupportsFloat | typing.SupportsIndex, species: typing.SupportsInt | typing.SupportsIndex, mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
+def damping_matrix_d(gamma: typing.SupportsFloat | typing.SupportsIndex, g_tot: typing.SupportsFloat | typing.SupportsIndex, B0: typing.SupportsFloat | typing.SupportsIndex, B1: typing.SupportsFloat | typing.SupportsIndex, delta: typing.SupportsFloat | typing.SupportsIndex, species: typing.SupportsInt | typing.SupportsIndex) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
     Wrapper for Fortran routine damping_matrix_d
     
@@ -29329,6 +30067,8 @@ def damping_matrix_d(gamma: typing.SupportsFloat | typing.SupportsIndex, g_tot: 
     
     species : int
     
+    Returns
+    -------
     mat : 2D array of float (shape: 6,6)
     """
 def date_and_time_stamp(string: str, numeric_month: bool | None = None, include_zone: bool | None = None) -> None:
@@ -29453,7 +30193,7 @@ def diffraction_plate_or_mask_hit_spot(ele: EleStruct, orbit: CoordStruct) -> in
     ix_section : int
         integer, Set to index of clear section hit. Set to zero if photon is outside all clear areas.
     """
-def diffusion_matrix_b(gamma: typing.SupportsFloat | typing.SupportsIndex, g_tot: typing.SupportsFloat | typing.SupportsIndex, species: typing.SupportsInt | typing.SupportsIndex, mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
+def diffusion_matrix_b(gamma: typing.SupportsFloat | typing.SupportsIndex, g_tot: typing.SupportsFloat | typing.SupportsIndex, species: typing.SupportsInt | typing.SupportsIndex) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
     Wrapper for Fortran routine diffusion_matrix_b
     
@@ -29465,6 +30205,8 @@ def diffusion_matrix_b(gamma: typing.SupportsFloat | typing.SupportsIndex, g_tot
     
     species : int
     
+    Returns
+    -------
     mat : 2D array of float (shape: 6,6)
     """
 def display_size_and_resolution(ix_screen: typing.SupportsInt | typing.SupportsIndex, x_size: typing.SupportsFloat | typing.SupportsIndex, y_size: typing.SupportsFloat | typing.SupportsIndex, x_res: typing.SupportsFloat | typing.SupportsIndex, y_res: typing.SupportsFloat | typing.SupportsIndex) -> None:
@@ -29522,7 +30264,7 @@ def dj_bessel(m: typing.SupportsInt | typing.SupportsIndex, arg: typing.Supports
     dj_bes : float
         Bessel value.
     """
-def djb_hash(str: str, hash: typing.SupportsInt | typing.SupportsIndex, old_hash: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def djb_hash(str: str, old_hash: typing.SupportsInt | typing.SupportsIndex | None = None) -> int:
     """
     Wrapper for Fortran routine djb_hash
     
@@ -29530,11 +30272,13 @@ def djb_hash(str: str, hash: typing.SupportsInt | typing.SupportsIndex, old_hash
     ----------
     str : str
     
-    hash : int
-    
     old_hash : int, optional
+    
+    Returns
+    -------
+    hash : int
     """
-def djb_str_hash(in_str: str, hash_str: str) -> None:
+def djb_str_hash(in_str: str) -> str:
     """
     Wrapper for Fortran routine djb_str_hash
     
@@ -29542,6 +30286,8 @@ def djb_str_hash(in_str: str, hash_str: str) -> None:
     ----------
     in_str : str
     
+    Returns
+    -------
     hash_str : str
     """
 def do_mode_flip(ele: EleStruct) -> bool:
@@ -29568,7 +30314,7 @@ def downcase_string(string: str) -> None:
     ----------
     string : str
     """
-def dpc_given_de(pc_old: typing.SupportsFloat | typing.SupportsIndex, mass: typing.SupportsFloat | typing.SupportsIndex, dE: typing.SupportsFloat | typing.SupportsIndex, dpc: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def dpc_given_de(pc_old: typing.SupportsFloat | typing.SupportsIndex, mass: typing.SupportsFloat | typing.SupportsIndex, dE: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine dpc_given_de
     
@@ -29580,6 +30326,8 @@ def dpc_given_de(pc_old: typing.SupportsFloat | typing.SupportsIndex, mass: typi
     
     dE : float
     
+    Returns
+    -------
     dpc : float
     """
 def drift_and_pipe_track_methods_adjustment(lat: LatStruct) -> None:
@@ -29988,7 +30736,7 @@ def ele_has_constant_ds_dt_ref(ele: EleStruct) -> bool:
     is_const : bool
         True if reference velocity must be a constant.
     """
-def ele_has_nonzero_kick(ele: EleStruct, has_kick: bool) -> None:
+def ele_has_nonzero_kick(ele: EleStruct) -> bool:
     """
     Wrapper for Fortran routine ele_has_nonzero_kick
     
@@ -29999,6 +30747,8 @@ def ele_has_nonzero_kick(ele: EleStruct, has_kick: bool) -> None:
         This parameter is an input/output and is modified in-place.
         As an output, ele: Element with no kicks.
     
+    Returns
+    -------
     has_kick : bool
     """
 def ele_has_nonzero_offset(ele: EleStruct) -> bool:
@@ -30671,7 +31421,7 @@ def em_field_kick_vector_time(ele: EleStruct, param: LatParamStruct, rf_time: ty
     dvec_dt : 1D array of float (shape: 10)
         Derivatives.
     """
-def em_field_plus_em_field(field1: EmFieldStruct, field2: EmFieldStruct, field_tot: EmFieldStruct) -> None:
+def em_field_plus_em_field(field1: EmFieldStruct, field2: EmFieldStruct) -> EmFieldStruct:
     """
     Wrapper for Fortran routine em_field_plus_em_field
     
@@ -30681,6 +31431,8 @@ def em_field_plus_em_field(field1: EmFieldStruct, field2: EmFieldStruct, field_t
     
     field2 : EmFieldStruct
     
+    Returns
+    -------
     field_tot : EmFieldStruct
     """
 def emit_6d(ele_ref: EleStruct, include_opening_angle: bool, closed_orbit: CoordStructArray1D | None = None) -> Emit6d:
@@ -30815,7 +31567,7 @@ def envelope_radints_ibs(Lambda: typing.Annotated[collections.abc.Sequence[typin
     emit : 1D array of float (shape: 3)
         Normal mode emittances.
     """
-def eq_ac_kicker(f1: AcKickerStruct, f2: AcKickerStruct, is_eq: bool) -> None:
+def eq_ac_kicker(f1: AcKickerStruct, f2: AcKickerStruct) -> bool:
     """
     Wrapper for Fortran routine eq_ac_kicker
     
@@ -30825,9 +31577,11 @@ def eq_ac_kicker(f1: AcKickerStruct, f2: AcKickerStruct, is_eq: bool) -> None:
     
     f2 : AcKickerStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct, is_eq: bool) -> None:
+def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct) -> bool:
     """
     Wrapper for Fortran routine eq_ac_kicker_freq
     
@@ -30837,9 +31591,11 @@ def eq_ac_kicker_freq(f1: AcKickerFreqStruct, f2: AcKickerFreqStruct, is_eq: boo
     
     f2 : AcKickerFreqStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_ac_kicker_time(f1: AcKickerTimeStruct, f2: AcKickerTimeStruct, is_eq: bool) -> None:
+def eq_ac_kicker_time(f1: AcKickerTimeStruct, f2: AcKickerTimeStruct) -> bool:
     """
     Wrapper for Fortran routine eq_ac_kicker_time
     
@@ -30849,9 +31605,11 @@ def eq_ac_kicker_time(f1: AcKickerTimeStruct, f2: AcKickerTimeStruct, is_eq: boo
     
     f2 : AcKickerTimeStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct, is_eq: bool) -> None:
+def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct) -> bool:
     """
     Wrapper for Fortran routine eq_anormal_mode
     
@@ -30861,9 +31619,11 @@ def eq_anormal_mode(f1: AnormalModeStruct, f2: AnormalModeStruct, is_eq: bool) -
     
     f2 : AnormalModeStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_aperture_param(f1: ApertureParamStruct, f2: ApertureParamStruct, is_eq: bool) -> None:
+def eq_aperture_param(f1: ApertureParamStruct, f2: ApertureParamStruct) -> bool:
     """
     Wrapper for Fortran routine eq_aperture_param
     
@@ -30873,9 +31633,11 @@ def eq_aperture_param(f1: ApertureParamStruct, f2: ApertureParamStruct, is_eq: b
     
     f2 : ApertureParamStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct, is_eq: bool) -> None:
+def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct) -> bool:
     """
     Wrapper for Fortran routine eq_aperture_point
     
@@ -30885,9 +31647,11 @@ def eq_aperture_point(f1: AperturePointStruct, f2: AperturePointStruct, is_eq: b
     
     f2 : AperturePointStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_aperture_scan(f1: ApertureScanStruct, f2: ApertureScanStruct, is_eq: bool) -> None:
+def eq_aperture_scan(f1: ApertureScanStruct, f2: ApertureScanStruct) -> bool:
     """
     Wrapper for Fortran routine eq_aperture_scan
     
@@ -30897,9 +31661,11 @@ def eq_aperture_scan(f1: ApertureScanStruct, f2: ApertureScanStruct, is_eq: bool
     
     f2 : ApertureScanStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_beam(f1: BeamStruct, f2: BeamStruct, is_eq: bool) -> None:
+def eq_beam(f1: BeamStruct, f2: BeamStruct) -> bool:
     """
     Wrapper for Fortran routine eq_beam
     
@@ -30909,9 +31675,11 @@ def eq_beam(f1: BeamStruct, f2: BeamStruct, is_eq: bool) -> None:
     
     f2 : BeamStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_beam_init(f1: BeamInitStruct, f2: BeamInitStruct, is_eq: bool) -> None:
+def eq_beam_init(f1: BeamInitStruct, f2: BeamInitStruct) -> bool:
     """
     Wrapper for Fortran routine eq_beam_init
     
@@ -30921,9 +31689,11 @@ def eq_beam_init(f1: BeamInitStruct, f2: BeamInitStruct, is_eq: bool) -> None:
     
     f2 : BeamInitStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct, is_eq: bool) -> None:
+def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct) -> bool:
     """
     Wrapper for Fortran routine eq_bmad_common
     
@@ -30933,9 +31703,11 @@ def eq_bmad_common(f1: BmadCommonStruct, f2: BmadCommonStruct, is_eq: bool) -> N
     
     f2 : BmadCommonStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_bookkeeping_state(f1: BookkeepingStateStruct, f2: BookkeepingStateStruct, is_eq: bool) -> None:
+def eq_bookkeeping_state(f1: BookkeepingStateStruct, f2: BookkeepingStateStruct) -> bool:
     """
     Wrapper for Fortran routine eq_bookkeeping_state
     
@@ -30945,9 +31717,11 @@ def eq_bookkeeping_state(f1: BookkeepingStateStruct, f2: BookkeepingStateStruct,
     
     f2 : BookkeepingStateStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct, is_eq: bool) -> None:
+def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct) -> bool:
     """
     Wrapper for Fortran routine eq_bpm_phase_coupling
     
@@ -30957,9 +31731,11 @@ def eq_bpm_phase_coupling(f1: BpmPhaseCouplingStruct, f2: BpmPhaseCouplingStruct
     
     f2 : BpmPhaseCouplingStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_branch(f1: BranchStruct, f2: BranchStruct, is_eq: bool) -> None:
+def eq_branch(f1: BranchStruct, f2: BranchStruct) -> bool:
     """
     Wrapper for Fortran routine eq_branch
     
@@ -30969,9 +31745,11 @@ def eq_branch(f1: BranchStruct, f2: BranchStruct, is_eq: bool) -> None:
     
     f2 : BranchStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_bunch(f1: BunchStruct, f2: BunchStruct, is_eq: bool) -> None:
+def eq_bunch(f1: BunchStruct, f2: BunchStruct) -> bool:
     """
     Wrapper for Fortran routine eq_bunch
     
@@ -30981,9 +31759,11 @@ def eq_bunch(f1: BunchStruct, f2: BunchStruct, is_eq: bool) -> None:
     
     f2 : BunchStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_bunch_params(f1: BunchParamsStruct, f2: BunchParamsStruct, is_eq: bool) -> None:
+def eq_bunch_params(f1: BunchParamsStruct, f2: BunchParamsStruct) -> bool:
     """
     Wrapper for Fortran routine eq_bunch_params
     
@@ -30993,9 +31773,11 @@ def eq_bunch_params(f1: BunchParamsStruct, f2: BunchParamsStruct, is_eq: bool) -
     
     f2 : BunchParamsStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct, is_eq: bool) -> None:
+def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct) -> bool:
     """
     Wrapper for Fortran routine eq_cartesian_map
     
@@ -31005,9 +31787,11 @@ def eq_cartesian_map(f1: CartesianMapStruct, f2: CartesianMapStruct, is_eq: bool
     
     f2 : CartesianMapStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_cartesian_map_term(f1: CartesianMapTermStruct, f2: CartesianMapTermStruct, is_eq: bool) -> None:
+def eq_cartesian_map_term(f1: CartesianMapTermStruct, f2: CartesianMapTermStruct) -> bool:
     """
     Wrapper for Fortran routine eq_cartesian_map_term
     
@@ -31017,9 +31801,11 @@ def eq_cartesian_map_term(f1: CartesianMapTermStruct, f2: CartesianMapTermStruct
     
     f2 : CartesianMapTermStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Struct, is_eq: bool) -> None:
+def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Struct) -> bool:
     """
     Wrapper for Fortran routine eq_cartesian_map_term1
     
@@ -31029,9 +31815,11 @@ def eq_cartesian_map_term1(f1: CartesianMapTerm1Struct, f2: CartesianMapTerm1Str
     
     f2 : CartesianMapTerm1Struct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_complex_taylor(f1: ComplexTaylorStruct, f2: ComplexTaylorStruct, is_eq: bool) -> None:
+def eq_complex_taylor(f1: ComplexTaylorStruct, f2: ComplexTaylorStruct) -> bool:
     """
     Wrapper for Fortran routine eq_complex_taylor
     
@@ -31041,9 +31829,11 @@ def eq_complex_taylor(f1: ComplexTaylorStruct, f2: ComplexTaylorStruct, is_eq: b
     
     f2 : ComplexTaylorStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStruct, is_eq: bool) -> None:
+def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStruct) -> bool:
     """
     Wrapper for Fortran routine eq_complex_taylor_term
     
@@ -31053,9 +31843,11 @@ def eq_complex_taylor_term(f1: ComplexTaylorTermStruct, f2: ComplexTaylorTermStr
     
     f2 : ComplexTaylorTermStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_control(f1: ControlStruct, f2: ControlStruct, is_eq: bool) -> None:
+def eq_control(f1: ControlStruct, f2: ControlStruct) -> bool:
     """
     Wrapper for Fortran routine eq_control
     
@@ -31065,9 +31857,11 @@ def eq_control(f1: ControlStruct, f2: ControlStruct, is_eq: bool) -> None:
     
     f2 : ControlStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct, is_eq: bool) -> None:
+def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct) -> bool:
     """
     Wrapper for Fortran routine eq_control_ramp1
     
@@ -31077,9 +31871,11 @@ def eq_control_ramp1(f1: ControlRamp1Struct, f2: ControlRamp1Struct, is_eq: bool
     
     f2 : ControlRamp1Struct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_control_var1(f1: ControlVar1Struct, f2: ControlVar1Struct, is_eq: bool) -> None:
+def eq_control_var1(f1: ControlVar1Struct, f2: ControlVar1Struct) -> bool:
     """
     Wrapper for Fortran routine eq_control_var1
     
@@ -31089,9 +31885,11 @@ def eq_control_var1(f1: ControlVar1Struct, f2: ControlVar1Struct, is_eq: bool) -
     
     f2 : ControlVar1Struct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_controller(f1: ControllerStruct, f2: ControllerStruct, is_eq: bool) -> None:
+def eq_controller(f1: ControllerStruct, f2: ControllerStruct) -> bool:
     """
     Wrapper for Fortran routine eq_controller
     
@@ -31101,9 +31899,11 @@ def eq_controller(f1: ControllerStruct, f2: ControllerStruct, is_eq: bool) -> No
     
     f2 : ControllerStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_coord(f1: CoordStruct, f2: CoordStruct, is_eq: bool) -> None:
+def eq_coord(f1: CoordStruct, f2: CoordStruct) -> bool:
     """
     Wrapper for Fortran routine eq_coord
     
@@ -31113,9 +31913,11 @@ def eq_coord(f1: CoordStruct, f2: CoordStruct, is_eq: bool) -> None:
     
     f2 : CoordStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct, is_eq: bool) -> None:
+def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct) -> bool:
     """
     Wrapper for Fortran routine eq_coord_array
     
@@ -31125,9 +31927,11 @@ def eq_coord_array(f1: CoordArrayStruct, f2: CoordArrayStruct, is_eq: bool) -> N
     
     f2 : CoordArrayStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_cylindrical_map(f1: CylindricalMapStruct, f2: CylindricalMapStruct, is_eq: bool) -> None:
+def eq_cylindrical_map(f1: CylindricalMapStruct, f2: CylindricalMapStruct) -> bool:
     """
     Wrapper for Fortran routine eq_cylindrical_map
     
@@ -31137,9 +31941,11 @@ def eq_cylindrical_map(f1: CylindricalMapStruct, f2: CylindricalMapStruct, is_eq
     
     f2 : CylindricalMapStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTermStruct, is_eq: bool) -> None:
+def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTermStruct) -> bool:
     """
     Wrapper for Fortran routine eq_cylindrical_map_term
     
@@ -31149,9 +31955,11 @@ def eq_cylindrical_map_term(f1: CylindricalMapTermStruct, f2: CylindricalMapTerm
     
     f2 : CylindricalMapTermStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_cylindrical_map_term1(f1: CylindricalMapTerm1Struct, f2: CylindricalMapTerm1Struct, is_eq: bool) -> None:
+def eq_cylindrical_map_term1(f1: CylindricalMapTerm1Struct, f2: CylindricalMapTerm1Struct) -> bool:
     """
     Wrapper for Fortran routine eq_cylindrical_map_term1
     
@@ -31161,9 +31969,11 @@ def eq_cylindrical_map_term1(f1: CylindricalMapTerm1Struct, f2: CylindricalMapTe
     
     f2 : CylindricalMapTerm1Struct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_ele(f1: EleStruct, f2: EleStruct, is_eq: bool) -> None:
+def eq_ele(f1: EleStruct, f2: EleStruct) -> bool:
     """
     Wrapper for Fortran routine eq_ele
     
@@ -31173,9 +31983,11 @@ def eq_ele(f1: EleStruct, f2: EleStruct, is_eq: bool) -> None:
     
     f2 : EleStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_ellipse_beam_init(f1: EllipseBeamInitStruct, f2: EllipseBeamInitStruct, is_eq: bool) -> None:
+def eq_ellipse_beam_init(f1: EllipseBeamInitStruct, f2: EllipseBeamInitStruct) -> bool:
     """
     Wrapper for Fortran routine eq_ellipse_beam_init
     
@@ -31185,9 +31997,11 @@ def eq_ellipse_beam_init(f1: EllipseBeamInitStruct, f2: EllipseBeamInitStruct, i
     
     f2 : EllipseBeamInitStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct, is_eq: bool) -> None:
+def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct) -> bool:
     """
     Wrapper for Fortran routine eq_em_field
     
@@ -31197,9 +32011,11 @@ def eq_em_field(f1: EmFieldStruct, f2: EmFieldStruct, is_eq: bool) -> None:
     
     f2 : EmFieldStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_expression_atom(f1: ExpressionAtomStruct, f2: ExpressionAtomStruct, is_eq: bool) -> None:
+def eq_expression_atom(f1: ExpressionAtomStruct, f2: ExpressionAtomStruct) -> bool:
     """
     Wrapper for Fortran routine eq_expression_atom
     
@@ -31209,9 +32025,11 @@ def eq_expression_atom(f1: ExpressionAtomStruct, f2: ExpressionAtomStruct, is_eq
     
     f2 : ExpressionAtomStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct, is_eq: bool) -> None:
+def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct) -> bool:
     """
     Wrapper for Fortran routine eq_floor_position
     
@@ -31221,9 +32039,11 @@ def eq_floor_position(f1: FloorPositionStruct, f2: FloorPositionStruct, is_eq: b
     
     f2 : FloorPositionStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_gen_grad1(f1: GenGrad1Struct, f2: GenGrad1Struct, is_eq: bool) -> None:
+def eq_gen_grad1(f1: GenGrad1Struct, f2: GenGrad1Struct) -> bool:
     """
     Wrapper for Fortran routine eq_gen_grad1
     
@@ -31233,9 +32053,11 @@ def eq_gen_grad1(f1: GenGrad1Struct, f2: GenGrad1Struct, is_eq: bool) -> None:
     
     f2 : GenGrad1Struct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct, is_eq: bool) -> None:
+def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct) -> bool:
     """
     Wrapper for Fortran routine eq_gen_grad_map
     
@@ -31245,9 +32067,11 @@ def eq_gen_grad_map(f1: GenGradMapStruct, f2: GenGradMapStruct, is_eq: bool) -> 
     
     f2 : GenGradMapStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_gg_taylor(f1: GgTaylorStruct, f2: GgTaylorStruct, is_eq: bool) -> None:
+def eq_gg_taylor(f1: GgTaylorStruct, f2: GgTaylorStruct) -> bool:
     """
     Wrapper for Fortran routine eq_gg_taylor
     
@@ -31257,9 +32081,11 @@ def eq_gg_taylor(f1: GgTaylorStruct, f2: GgTaylorStruct, is_eq: bool) -> None:
     
     f2 : GgTaylorStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_gg_taylor_term(f1: GgTaylorTermStruct, f2: GgTaylorTermStruct, is_eq: bool) -> None:
+def eq_gg_taylor_term(f1: GgTaylorTermStruct, f2: GgTaylorTermStruct) -> bool:
     """
     Wrapper for Fortran routine eq_gg_taylor_term
     
@@ -31269,9 +32095,11 @@ def eq_gg_taylor_term(f1: GgTaylorTermStruct, f2: GgTaylorTermStruct, is_eq: boo
     
     f2 : GgTaylorTermStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_grid_beam_init(f1: GridBeamInitStruct, f2: GridBeamInitStruct, is_eq: bool) -> None:
+def eq_grid_beam_init(f1: GridBeamInitStruct, f2: GridBeamInitStruct) -> bool:
     """
     Wrapper for Fortran routine eq_grid_beam_init
     
@@ -31281,9 +32109,11 @@ def eq_grid_beam_init(f1: GridBeamInitStruct, f2: GridBeamInitStruct, is_eq: boo
     
     f2 : GridBeamInitStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct, is_eq: bool) -> None:
+def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct) -> bool:
     """
     Wrapper for Fortran routine eq_grid_field
     
@@ -31293,9 +32123,11 @@ def eq_grid_field(f1: GridFieldStruct, f2: GridFieldStruct, is_eq: bool) -> None
     
     f2 : GridFieldStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_grid_field_pt(f1: GridFieldPtStruct, f2: GridFieldPtStruct, is_eq: bool) -> None:
+def eq_grid_field_pt(f1: GridFieldPtStruct, f2: GridFieldPtStruct) -> bool:
     """
     Wrapper for Fortran routine eq_grid_field_pt
     
@@ -31305,9 +32137,11 @@ def eq_grid_field_pt(f1: GridFieldPtStruct, f2: GridFieldPtStruct, is_eq: bool) 
     
     f2 : GridFieldPtStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct, is_eq: bool) -> None:
+def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct) -> bool:
     """
     Wrapper for Fortran routine eq_grid_field_pt1
     
@@ -31317,9 +32151,11 @@ def eq_grid_field_pt1(f1: GridFieldPt1Struct, f2: GridFieldPt1Struct, is_eq: boo
     
     f2 : GridFieldPt1Struct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_high_energy_space_charge(f1: HighEnergySpaceChargeStruct, f2: HighEnergySpaceChargeStruct, is_eq: bool) -> None:
+def eq_high_energy_space_charge(f1: HighEnergySpaceChargeStruct, f2: HighEnergySpaceChargeStruct) -> bool:
     """
     Wrapper for Fortran routine eq_high_energy_space_charge
     
@@ -31329,9 +32165,11 @@ def eq_high_energy_space_charge(f1: HighEnergySpaceChargeStruct, f2: HighEnergyS
     
     f2 : HighEnergySpaceChargeStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct, is_eq: bool) -> None:
+def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct) -> bool:
     """
     Wrapper for Fortran routine eq_interval1_coef
     
@@ -31341,9 +32179,11 @@ def eq_interval1_coef(f1: Interval1CoefStruct, f2: Interval1CoefStruct, is_eq: b
     
     f2 : Interval1CoefStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_kv_beam_init(f1: KvBeamInitStruct, f2: KvBeamInitStruct, is_eq: bool) -> None:
+def eq_kv_beam_init(f1: KvBeamInitStruct, f2: KvBeamInitStruct) -> bool:
     """
     Wrapper for Fortran routine eq_kv_beam_init
     
@@ -31353,9 +32193,11 @@ def eq_kv_beam_init(f1: KvBeamInitStruct, f2: KvBeamInitStruct, is_eq: bool) -> 
     
     f2 : KvBeamInitStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_lat(f1: LatStruct, f2: LatStruct, is_eq: bool) -> None:
+def eq_lat(f1: LatStruct, f2: LatStruct) -> bool:
     """
     Wrapper for Fortran routine eq_lat
     
@@ -31365,9 +32207,11 @@ def eq_lat(f1: LatStruct, f2: LatStruct, is_eq: bool) -> None:
     
     f2 : LatStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_lat_ele_loc(f1: LatEleLocStruct, f2: LatEleLocStruct, is_eq: bool) -> None:
+def eq_lat_ele_loc(f1: LatEleLocStruct, f2: LatEleLocStruct) -> bool:
     """
     Wrapper for Fortran routine eq_lat_ele_loc
     
@@ -31377,9 +32221,11 @@ def eq_lat_ele_loc(f1: LatEleLocStruct, f2: LatEleLocStruct, is_eq: bool) -> Non
     
     f2 : LatEleLocStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct, is_eq: bool) -> None:
+def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct) -> bool:
     """
     Wrapper for Fortran routine eq_lat_param
     
@@ -31389,9 +32235,11 @@ def eq_lat_param(f1: LatParamStruct, f2: LatParamStruct, is_eq: bool) -> None:
     
     f2 : LatParamStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_linac_normal_mode(f1: LinacNormalModeStruct, f2: LinacNormalModeStruct, is_eq: bool) -> None:
+def eq_linac_normal_mode(f1: LinacNormalModeStruct, f2: LinacNormalModeStruct) -> bool:
     """
     Wrapper for Fortran routine eq_linac_normal_mode
     
@@ -31401,9 +32249,11 @@ def eq_linac_normal_mode(f1: LinacNormalModeStruct, f2: LinacNormalModeStruct, i
     
     f2 : LinacNormalModeStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_mode3(f1: Mode3Struct, f2: Mode3Struct, is_eq: bool) -> None:
+def eq_mode3(f1: Mode3Struct, f2: Mode3Struct) -> bool:
     """
     Wrapper for Fortran routine eq_mode3
     
@@ -31413,9 +32263,11 @@ def eq_mode3(f1: Mode3Struct, f2: Mode3Struct, is_eq: bool) -> None:
     
     f2 : Mode3Struct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_mode_info(f1: ModeInfoStruct, f2: ModeInfoStruct, is_eq: bool) -> None:
+def eq_mode_info(f1: ModeInfoStruct, f2: ModeInfoStruct) -> bool:
     """
     Wrapper for Fortran routine eq_mode_info
     
@@ -31425,9 +32277,11 @@ def eq_mode_info(f1: ModeInfoStruct, f2: ModeInfoStruct, is_eq: bool) -> None:
     
     f2 : ModeInfoStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct, is_eq: bool) -> None:
+def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct) -> bool:
     """
     Wrapper for Fortran routine eq_normal_modes
     
@@ -31437,9 +32291,11 @@ def eq_normal_modes(f1: NormalModesStruct, f2: NormalModesStruct, is_eq: bool) -
     
     f2 : NormalModesStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_photon_element(f1: PhotonElementStruct, f2: PhotonElementStruct, is_eq: bool) -> None:
+def eq_photon_element(f1: PhotonElementStruct, f2: PhotonElementStruct) -> bool:
     """
     Wrapper for Fortran routine eq_photon_element
     
@@ -31449,9 +32305,11 @@ def eq_photon_element(f1: PhotonElementStruct, f2: PhotonElementStruct, is_eq: b
     
     f2 : PhotonElementStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct, is_eq: bool) -> None:
+def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct) -> bool:
     """
     Wrapper for Fortran routine eq_photon_material
     
@@ -31461,9 +32319,11 @@ def eq_photon_material(f1: PhotonMaterialStruct, f2: PhotonMaterialStruct, is_eq
     
     f2 : PhotonMaterialStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_photon_reflect_surface(f1: PhotonReflectSurfaceStruct, f2: PhotonReflectSurfaceStruct, is_eq: bool) -> None:
+def eq_photon_reflect_surface(f1: PhotonReflectSurfaceStruct, f2: PhotonReflectSurfaceStruct) -> bool:
     """
     Wrapper for Fortran routine eq_photon_reflect_surface
     
@@ -31473,9 +32333,11 @@ def eq_photon_reflect_surface(f1: PhotonReflectSurfaceStruct, f2: PhotonReflectS
     
     f2 : PhotonReflectSurfaceStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTableStruct, is_eq: bool) -> None:
+def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTableStruct) -> bool:
     """
     Wrapper for Fortran routine eq_photon_reflect_table
     
@@ -31485,9 +32347,11 @@ def eq_photon_reflect_table(f1: PhotonReflectTableStruct, f2: PhotonReflectTable
     
     f2 : PhotonReflectTableStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_photon_target(f1: PhotonTargetStruct, f2: PhotonTargetStruct, is_eq: bool) -> None:
+def eq_photon_target(f1: PhotonTargetStruct, f2: PhotonTargetStruct) -> bool:
     """
     Wrapper for Fortran routine eq_photon_target
     
@@ -31497,9 +32361,11 @@ def eq_photon_target(f1: PhotonTargetStruct, f2: PhotonTargetStruct, is_eq: bool
     
     f2 : PhotonTargetStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct, is_eq: bool) -> None:
+def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct) -> bool:
     """
     Wrapper for Fortran routine eq_pixel_detec
     
@@ -31509,9 +32375,11 @@ def eq_pixel_detec(f1: PixelDetecStruct, f2: PixelDetecStruct, is_eq: bool) -> N
     
     f2 : PixelDetecStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_pixel_pt(f1: PixelPtStruct, f2: PixelPtStruct, is_eq: bool) -> None:
+def eq_pixel_pt(f1: PixelPtStruct, f2: PixelPtStruct) -> bool:
     """
     Wrapper for Fortran routine eq_pixel_pt
     
@@ -31521,9 +32389,11 @@ def eq_pixel_pt(f1: PixelPtStruct, f2: PixelPtStruct, is_eq: bool) -> None:
     
     f2 : PixelPtStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct, is_eq: bool) -> None:
+def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct) -> bool:
     """
     Wrapper for Fortran routine eq_pre_tracker
     
@@ -31533,9 +32403,11 @@ def eq_pre_tracker(f1: PreTrackerStruct, f2: PreTrackerStruct, is_eq: bool) -> N
     
     f2 : PreTrackerStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_rad_int1(f1: RadInt1Struct, f2: RadInt1Struct, is_eq: bool) -> None:
+def eq_rad_int1(f1: RadInt1Struct, f2: RadInt1Struct) -> bool:
     """
     Wrapper for Fortran routine eq_rad_int1
     
@@ -31545,9 +32417,11 @@ def eq_rad_int1(f1: RadInt1Struct, f2: RadInt1Struct, is_eq: bool) -> None:
     
     f2 : RadInt1Struct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct, is_eq: bool) -> None:
+def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct) -> bool:
     """
     Wrapper for Fortran routine eq_rad_int_all_ele
     
@@ -31557,9 +32431,11 @@ def eq_rad_int_all_ele(f1: RadIntAllEleStruct, f2: RadIntAllEleStruct, is_eq: bo
     
     f2 : RadIntAllEleStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_rad_int_branch(f1: RadIntBranchStruct, f2: RadIntBranchStruct, is_eq: bool) -> None:
+def eq_rad_int_branch(f1: RadIntBranchStruct, f2: RadIntBranchStruct) -> bool:
     """
     Wrapper for Fortran routine eq_rad_int_branch
     
@@ -31569,9 +32445,11 @@ def eq_rad_int_branch(f1: RadIntBranchStruct, f2: RadIntBranchStruct, is_eq: boo
     
     f2 : RadIntBranchStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct, is_eq: bool) -> None:
+def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct) -> bool:
     """
     Wrapper for Fortran routine eq_rad_map
     
@@ -31581,9 +32459,11 @@ def eq_rad_map(f1: RadMapStruct, f2: RadMapStruct, is_eq: bool) -> None:
     
     f2 : RadMapStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_rad_map_ele(f1: RadMapEleStruct, f2: RadMapEleStruct, is_eq: bool) -> None:
+def eq_rad_map_ele(f1: RadMapEleStruct, f2: RadMapEleStruct) -> bool:
     """
     Wrapper for Fortran routine eq_rad_map_ele
     
@@ -31593,9 +32473,11 @@ def eq_rad_map_ele(f1: RadMapEleStruct, f2: RadMapEleStruct, is_eq: bool) -> Non
     
     f2 : RadMapEleStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct, is_eq: bool) -> None:
+def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct) -> bool:
     """
     Wrapper for Fortran routine eq_ramper_lord
     
@@ -31605,9 +32487,11 @@ def eq_ramper_lord(f1: RamperLordStruct, f2: RamperLordStruct, is_eq: bool) -> N
     
     f2 : RamperLordStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_space_charge_common(f1: SpaceChargeCommonStruct, f2: SpaceChargeCommonStruct, is_eq: bool) -> None:
+def eq_space_charge_common(f1: SpaceChargeCommonStruct, f2: SpaceChargeCommonStruct) -> bool:
     """
     Wrapper for Fortran routine eq_space_charge_common
     
@@ -31617,9 +32501,11 @@ def eq_space_charge_common(f1: SpaceChargeCommonStruct, f2: SpaceChargeCommonStr
     
     f2 : SpaceChargeCommonStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct, is_eq: bool) -> None:
+def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct) -> bool:
     """
     Wrapper for Fortran routine eq_spin_polar
     
@@ -31629,9 +32515,11 @@ def eq_spin_polar(f1: SpinPolarStruct, f2: SpinPolarStruct, is_eq: bool) -> None
     
     f2 : SpinPolarStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_spline(f1: SplineStruct, f2: SplineStruct, is_eq: bool) -> None:
+def eq_spline(f1: SplineStruct, f2: SplineStruct) -> bool:
     """
     Wrapper for Fortran routine eq_spline
     
@@ -31641,9 +32529,11 @@ def eq_spline(f1: SplineStruct, f2: SplineStruct, is_eq: bool) -> None:
     
     f2 : SplineStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct, is_eq: bool) -> None:
+def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct) -> bool:
     """
     Wrapper for Fortran routine eq_strong_beam
     
@@ -31653,9 +32543,11 @@ def eq_strong_beam(f1: StrongBeamStruct, f2: StrongBeamStruct, is_eq: bool) -> N
     
     f2 : StrongBeamStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_surface_curvature(f1: SurfaceCurvatureStruct, f2: SurfaceCurvatureStruct, is_eq: bool) -> None:
+def eq_surface_curvature(f1: SurfaceCurvatureStruct, f2: SurfaceCurvatureStruct) -> bool:
     """
     Wrapper for Fortran routine eq_surface_curvature
     
@@ -31665,9 +32557,11 @@ def eq_surface_curvature(f1: SurfaceCurvatureStruct, f2: SurfaceCurvatureStruct,
     
     f2 : SurfaceCurvatureStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplacementStruct, is_eq: bool) -> None:
+def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplacementStruct) -> bool:
     """
     Wrapper for Fortran routine eq_surface_displacement
     
@@ -31677,9 +32571,11 @@ def eq_surface_displacement(f1: SurfaceDisplacementStruct, f2: SurfaceDisplaceme
     
     f2 : SurfaceDisplacementStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_surface_displacement_pt(f1: SurfaceDisplacementPtStruct, f2: SurfaceDisplacementPtStruct, is_eq: bool) -> None:
+def eq_surface_displacement_pt(f1: SurfaceDisplacementPtStruct, f2: SurfaceDisplacementPtStruct) -> bool:
     """
     Wrapper for Fortran routine eq_surface_displacement_pt
     
@@ -31689,9 +32585,11 @@ def eq_surface_displacement_pt(f1: SurfaceDisplacementPtStruct, f2: SurfaceDispl
     
     f2 : SurfaceDisplacementPtStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct, is_eq: bool) -> None:
+def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct) -> bool:
     """
     Wrapper for Fortran routine eq_surface_h_misalign
     
@@ -31701,9 +32599,11 @@ def eq_surface_h_misalign(f1: SurfaceHMisalignStruct, f2: SurfaceHMisalignStruct
     
     f2 : SurfaceHMisalignStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_surface_h_misalign_pt(f1: SurfaceHMisalignPtStruct, f2: SurfaceHMisalignPtStruct, is_eq: bool) -> None:
+def eq_surface_h_misalign_pt(f1: SurfaceHMisalignPtStruct, f2: SurfaceHMisalignPtStruct) -> bool:
     """
     Wrapper for Fortran routine eq_surface_h_misalign_pt
     
@@ -31713,9 +32613,11 @@ def eq_surface_h_misalign_pt(f1: SurfaceHMisalignPtStruct, f2: SurfaceHMisalignP
     
     f2 : SurfaceHMisalignPtStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct, is_eq: bool) -> None:
+def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct) -> bool:
     """
     Wrapper for Fortran routine eq_surface_segmented
     
@@ -31725,9 +32627,11 @@ def eq_surface_segmented(f1: SurfaceSegmentedStruct, f2: SurfaceSegmentedStruct,
     
     f2 : SurfaceSegmentedStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_surface_segmented_pt(f1: SurfaceSegmentedPtStruct, f2: SurfaceSegmentedPtStruct, is_eq: bool) -> None:
+def eq_surface_segmented_pt(f1: SurfaceSegmentedPtStruct, f2: SurfaceSegmentedPtStruct) -> bool:
     """
     Wrapper for Fortran routine eq_surface_segmented_pt
     
@@ -31737,9 +32641,11 @@ def eq_surface_segmented_pt(f1: SurfaceSegmentedPtStruct, f2: SurfaceSegmentedPt
     
     f2 : SurfaceSegmentedPtStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct, is_eq: bool) -> None:
+def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct) -> bool:
     """
     Wrapper for Fortran routine eq_target_point
     
@@ -31749,9 +32655,11 @@ def eq_target_point(f1: TargetPointStruct, f2: TargetPointStruct, is_eq: bool) -
     
     f2 : TargetPointStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_taylor(f1: TaylorStruct, f2: TaylorStruct, is_eq: bool) -> None:
+def eq_taylor(f1: TaylorStruct, f2: TaylorStruct) -> bool:
     """
     Wrapper for Fortran routine eq_taylor
     
@@ -31761,9 +32669,11 @@ def eq_taylor(f1: TaylorStruct, f2: TaylorStruct, is_eq: bool) -> None:
     
     f2 : TaylorStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct, is_eq: bool) -> None:
+def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct) -> bool:
     """
     Wrapper for Fortran routine eq_taylor_term
     
@@ -31773,9 +32683,11 @@ def eq_taylor_term(f1: TaylorTermStruct, f2: TaylorTermStruct, is_eq: bool) -> N
     
     f2 : TaylorTermStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_track(f1: TrackStruct, f2: TrackStruct, is_eq: bool) -> None:
+def eq_track(f1: TrackStruct, f2: TrackStruct) -> bool:
     """
     Wrapper for Fortran routine eq_track
     
@@ -31785,9 +32697,11 @@ def eq_track(f1: TrackStruct, f2: TrackStruct, is_eq: bool) -> None:
     
     f2 : TrackStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct, is_eq: bool) -> None:
+def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct) -> bool:
     """
     Wrapper for Fortran routine eq_track_point
     
@@ -31797,9 +32711,11 @@ def eq_track_point(f1: TrackPointStruct, f2: TrackPointStruct, is_eq: bool) -> N
     
     f2 : TrackPointStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_twiss(f1: TwissStruct, f2: TwissStruct, is_eq: bool) -> None:
+def eq_twiss(f1: TwissStruct, f2: TwissStruct) -> bool:
     """
     Wrapper for Fortran routine eq_twiss
     
@@ -31809,9 +32725,11 @@ def eq_twiss(f1: TwissStruct, f2: TwissStruct, is_eq: bool) -> None:
     
     f2 : TwissStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wake(f1: WakeStruct, f2: WakeStruct, is_eq: bool) -> None:
+def eq_wake(f1: WakeStruct, f2: WakeStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wake
     
@@ -31821,9 +32739,11 @@ def eq_wake(f1: WakeStruct, f2: WakeStruct, is_eq: bool) -> None:
     
     f2 : WakeStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wake_lr(f1: WakeLrStruct, f2: WakeLrStruct, is_eq: bool) -> None:
+def eq_wake_lr(f1: WakeLrStruct, f2: WakeLrStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wake_lr
     
@@ -31833,9 +32753,11 @@ def eq_wake_lr(f1: WakeLrStruct, f2: WakeLrStruct, is_eq: bool) -> None:
     
     f2 : WakeLrStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct, is_eq: bool) -> None:
+def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wake_lr_mode
     
@@ -31845,9 +32767,11 @@ def eq_wake_lr_mode(f1: WakeLrModeStruct, f2: WakeLrModeStruct, is_eq: bool) -> 
     
     f2 : WakeLrModeStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wake_sr(f1: WakeSrStruct, f2: WakeSrStruct, is_eq: bool) -> None:
+def eq_wake_sr(f1: WakeSrStruct, f2: WakeSrStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wake_sr
     
@@ -31857,9 +32781,11 @@ def eq_wake_sr(f1: WakeSrStruct, f2: WakeSrStruct, is_eq: bool) -> None:
     
     f2 : WakeSrStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct, is_eq: bool) -> None:
+def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wake_sr_mode
     
@@ -31869,9 +32795,11 @@ def eq_wake_sr_mode(f1: WakeSrModeStruct, f2: WakeSrModeStruct, is_eq: bool) -> 
     
     f2 : WakeSrModeStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wake_sr_z_long(f1: WakeSrZLongStruct, f2: WakeSrZLongStruct, is_eq: bool) -> None:
+def eq_wake_sr_z_long(f1: WakeSrZLongStruct, f2: WakeSrZLongStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wake_sr_z_long
     
@@ -31881,9 +32809,11 @@ def eq_wake_sr_z_long(f1: WakeSrZLongStruct, f2: WakeSrZLongStruct, is_eq: bool)
     
     f2 : WakeSrZLongStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct, is_eq: bool) -> None:
+def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wall3d
     
@@ -31893,9 +32823,11 @@ def eq_wall3d(f1: Wall3DStruct, f2: Wall3DStruct, is_eq: bool) -> None:
     
     f2 : Wall3dStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wall3d_section(f1: Wall3DSectionStruct, f2: Wall3DSectionStruct, is_eq: bool) -> None:
+def eq_wall3d_section(f1: Wall3DSectionStruct, f2: Wall3DSectionStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wall3d_section
     
@@ -31905,9 +32837,11 @@ def eq_wall3d_section(f1: Wall3DSectionStruct, f2: Wall3DSectionStruct, is_eq: b
     
     f2 : Wall3dSectionStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct, is_eq: bool) -> None:
+def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct) -> bool:
     """
     Wrapper for Fortran routine eq_wall3d_vertex
     
@@ -31917,9 +32851,11 @@ def eq_wall3d_vertex(f1: Wall3DVertexStruct, f2: Wall3DVertexStruct, is_eq: bool
     
     f2 : Wall3dVertexStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def eq_xy_disp(f1: XyDispStruct, f2: XyDispStruct, is_eq: bool) -> None:
+def eq_xy_disp(f1: XyDispStruct, f2: XyDispStruct) -> bool:
     """
     Wrapper for Fortran routine eq_xy_disp
     
@@ -31929,9 +32865,11 @@ def eq_xy_disp(f1: XyDispStruct, f2: XyDispStruct, is_eq: bool) -> None:
     
     f2 : XyDispStruct
     
+    Returns
+    -------
     is_eq : bool
     """
-def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> None:
+def equal_sign_here(ele: EleStruct, delim: str) -> bool:
     """
     Wrapper for Fortran routine equal_sign_here
     
@@ -31941,6 +32879,8 @@ def equal_sign_here(ele: EleStruct, delim: str, is_here: bool) -> None:
     
     delim : str
     
+    Returns
+    -------
     is_here : bool
     """
 def equivalent_taylor_attributes(ele_taylor: EleStruct, ele2: EleStruct) -> bool:
@@ -32067,7 +33007,7 @@ def exact_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typ
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
     """
-def exp_bessi0(t: typing.SupportsFloat | typing.SupportsIndex, B1: typing.SupportsFloat | typing.SupportsIndex, B2: typing.SupportsFloat | typing.SupportsIndex, func_retval__: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def exp_bessi0(t: typing.SupportsFloat | typing.SupportsIndex, B1: typing.SupportsFloat | typing.SupportsIndex, B2: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Function exp_bessi0(t, B1, B2)
     
@@ -32088,7 +33028,7 @@ def exp_bessi0(t: typing.SupportsFloat | typing.SupportsIndex, B1: typing.Suppor
     B2 : float
         Scalar value.  Eq. 34 from Piwinski's paper.
     """
-def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim: str, delim_found: bool, is_ok: bool) -> ExpectOneOf:
+def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim: str, delim_found: bool) -> ExpectOneOf:
     """
     Function expect_one_of (delim_list, check_input_delim, ele_name, delim, delim_found) result (is_ok)
     
@@ -32123,7 +33063,7 @@ def expect_one_of(delim_list: str, check_input_delim: bool, ele_name: str, delim
         This parameter is an input/output and is modified in-place.
         As an output, delim: Next delim if check_input_delim = False.
     """
-def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: str, ele: EleStruct, is_ok: bool) -> ExpectThis:
+def expect_this(expecting: str, check_delim: bool, call_check: bool, err_str: str, ele: EleStruct) -> ExpectThis:
     """
     Function expect_this (expecting, check_delim, call_check, err_str, ele, delim, delim_found) result (is_ok)
     
@@ -32599,7 +33539,7 @@ def find_fwhm(bound: typing.SupportsFloat | typing.SupportsIndex, args: typing.A
         Full width at half max of psi(t)
     """
 @typing.overload
-def find_location(arr: IntArray1D, value: typing.SupportsInt | typing.SupportsIndex, ix_match: typing.SupportsInt | typing.SupportsIndex) -> None:
+def find_location(arr: IntArray1D, value: typing.SupportsInt | typing.SupportsIndex) -> int:
     """
     Wrapper for Fortran routine find_location_int
     
@@ -32609,10 +33549,12 @@ def find_location(arr: IntArray1D, value: typing.SupportsInt | typing.SupportsIn
     
     value : int
     
+    Returns
+    -------
     ix_match : int
     """
 @typing.overload
-def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt | typing.SupportsIndex) -> None:
+def find_location(arr: BoolAlloc1D, value: bool) -> int:
     """
     Wrapper for Fortran routine find_location_logic
     
@@ -32622,6 +33564,8 @@ def find_location(arr: BoolAlloc1D, value: bool, ix_match: typing.SupportsInt | 
     
     value : bool
     
+    Returns
+    -------
     ix_match : int
     """
 @typing.overload
@@ -32643,7 +33587,7 @@ def find_location(arr: RealArray1D, value: typing.SupportsFloat | typing.Support
         Index of match. Zero if no match found.
     """
 @typing.overload
-def find_location(arr: CharacterAlloc1D, value: str, ix_match: typing.SupportsInt | typing.SupportsIndex) -> None:
+def find_location(arr: CharacterAlloc1D, value: str) -> int:
     """
     Wrapper for Fortran routine find_location_str
     
@@ -32653,6 +33597,8 @@ def find_location(arr: CharacterAlloc1D, value: str, ix_match: typing.SupportsIn
     
     value : str
     
+    Returns
+    -------
     ix_match : int
     """
 def find_matching_fieldmap(file_name: str, ele: EleStruct, fm_type: typing.SupportsInt | typing.SupportsIndex, ignore_slaves: bool | None = None) -> FindMatchingFieldmap:
@@ -32723,7 +33669,7 @@ def fine_frequency_estimate(data: RealArray1D) -> float:
     frequency : float
         Frequency corresponding to the largest FFT amplitude
     """
-def fixedwindowls(ynew: typing.SupportsFloat | typing.SupportsIndex, id: typing.SupportsInt | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def fixedwindowls(ynew: typing.SupportsFloat | typing.SupportsIndex, id: typing.SupportsInt | typing.SupportsIndex) -> float:
     """
     Function fixedWindowLS
     
@@ -33042,7 +33988,7 @@ def gen_grad_at_s_to_gg_taylor(ele: EleStruct, gen_grad: GenGradMapStruct, s_pos
     gg_taylor : 1D array of GgTaylorStruct (shape: 3)
         Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
     """
-def gen_grad_field(deriv: RealArray1D, gg: GenGrad1Struct, rho: typing.SupportsFloat | typing.SupportsIndex, theta: typing.SupportsFloat | typing.SupportsIndex, field: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(3)"]) -> None:
+def gen_grad_field(deriv: RealArray1D, gg: GenGrad1Struct, rho: typing.SupportsFloat | typing.SupportsIndex, theta: typing.SupportsFloat | typing.SupportsIndex) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
     Wrapper for Fortran routine gen_grad_field
     
@@ -33056,6 +34002,8 @@ def gen_grad_field(deriv: RealArray1D, gg: GenGrad1Struct, rho: typing.SupportsF
     
     theta : float
     
+    Returns
+    -------
     field : 1D array of float (shape: 3)
     """
 def get_a_char(wait: bool, ignore_this: CharacterAlloc1D | None = None) -> str:
@@ -33331,7 +34279,7 @@ def gpt_field_grid_scaling(ele: EleStruct, dimensions: typing.SupportsInt | typi
     
     ref_time : float
     """
-def gpt_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def gpt_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct) -> float:
     """
     Wrapper for Fortran routine gpt_max_field_reference
     
@@ -33341,6 +34289,8 @@ def gpt_max_field_reference(pt0: GridFieldPt1Struct, ele: EleStruct, field_value
     
     ele : EleStruct
     
+    Returns
+    -------
     field_value : float
     """
 def gpt_to_particle_bunch(gpt_file: str, ele: EleStruct) -> GptToParticleBunch:
@@ -33467,7 +34417,7 @@ def hard_multipole_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at:
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is False.
     """
-def has_attribute(ele: EleStruct, attrib: str, has_it: bool) -> None:
+def has_attribute(ele: EleStruct, attrib: str) -> bool:
     """
     Wrapper for Fortran routine has_attribute
     
@@ -33477,6 +34427,8 @@ def has_attribute(ele: EleStruct, attrib: str, has_it: bool) -> None:
     
     attrib : str
     
+    Returns
+    -------
     has_it : bool
     """
 def has_curvature(phot_ele: PhotonElementStruct) -> bool:
@@ -33544,7 +34496,7 @@ def hdf5_write_grid_field(file_name: str, ele: EleStruct, g_field: GridFieldStru
     
     err_flag : bool
     """
-def hom_voltage(lr_wake: WakeLrModeStruct, voltage: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def hom_voltage(lr_wake: WakeLrModeStruct) -> float:
     """
     Wrapper for Fortran routine hom_voltage
     
@@ -33552,6 +34504,8 @@ def hom_voltage(lr_wake: WakeLrModeStruct, voltage: typing.SupportsFloat | typin
     ----------
     lr_wake : WakeLrModeStruct
     
+    Returns
+    -------
     voltage : float
     """
 def hwang_bend_edge_kick(ele: EleStruct, param: LatParamStruct, particle_at: typing.SupportsInt | typing.SupportsIndex, orb: CoordStruct, mat6: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(6)"]], "FixedSize(6)"] | None = None, make_matrix: bool | None = None) -> None:
@@ -33623,7 +34577,7 @@ def i_bessel_extended(m: typing.SupportsInt | typing.SupportsIndex, arg: typing.
     i_bes : complex
         Bessel value.
     """
-def ibs_matrix_c(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(6)"]], "FixedSize(6)"], tail_cut: bool, tau: typing.SupportsFloat | typing.SupportsIndex, energy: typing.SupportsFloat | typing.SupportsIndex, n_part: typing.SupportsFloat | typing.SupportsIndex, species: typing.SupportsInt | typing.SupportsIndex, ibs_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(6)"]], "FixedSize(6)"]) -> None:
+def ibs_matrix_c(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(6)"]], "FixedSize(6)"], tail_cut: bool, tau: typing.SupportsFloat | typing.SupportsIndex, energy: typing.SupportsFloat | typing.SupportsIndex, n_part: typing.SupportsFloat | typing.SupportsIndex, species: typing.SupportsInt | typing.SupportsIndex) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
     Wrapper for Fortran routine ibs_matrix_c
     
@@ -33641,9 +34595,11 @@ def ibs_matrix_c(sigma_mat: typing.Annotated[collections.abc.Sequence[typing.Ann
     
     species : int
     
+    Returns
+    -------
     ibs_mat : 2D array of float (shape: 6,6)
     """
-def igfcoulombfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex, dz: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def igfcoulombfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex, dz: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine igfcoulombfun
     
@@ -33663,9 +34619,11 @@ def igfcoulombfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.Supp
     
     dz : float
     
+    Returns
+    -------
     res : float
     """
-def igfexfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex, dz: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def igfexfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex, dz: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine igfexfun
     
@@ -33685,9 +34643,11 @@ def igfexfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsF
     
     dz : float
     
+    Returns
+    -------
     res : float
     """
-def igfeyfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex, dz: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def igfeyfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex, dz: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine igfeyfun
     
@@ -33707,9 +34667,11 @@ def igfeyfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsF
     
     dz : float
     
+    Returns
+    -------
     res : float
     """
-def igfezfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex, dz: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def igfezfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex, dz: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine igfezfun
     
@@ -33729,6 +34691,8 @@ def igfezfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsF
     
     dz : float
     
+    Returns
+    -------
     res : float
     """
 def increment_file_number(file_name: str, digits: typing.SupportsInt | typing.SupportsIndex, number: typing.SupportsInt | typing.SupportsIndex, cnumber: str) -> None:
@@ -33745,7 +34709,7 @@ def increment_file_number(file_name: str, digits: typing.SupportsInt | typing.Su
     
     cnumber : str
     """
-def index_nocase(string1: str, string2: str, indx: typing.SupportsInt | typing.SupportsIndex) -> None:
+def index_nocase(string1: str, string2: str) -> int:
     """
     Wrapper for Fortran routine index_nocase
     
@@ -33755,6 +34719,8 @@ def index_nocase(string1: str, string2: str, indx: typing.SupportsInt | typing.S
     
     string2 : str
     
+    Returns
+    -------
     indx : int
     """
 def init_attribute_name1(is_ok: bool, ix_key: typing.SupportsInt | typing.SupportsIndex, ix_attrib: typing.SupportsInt | typing.SupportsIndex, name: str, attrib_state: typing.SupportsInt | typing.SupportsIndex | None = None, override: bool | None = None) -> InitAttributeName1:
@@ -34370,7 +35336,7 @@ def init_wake(n_sr_long: typing.SupportsInt | typing.SupportsIndex, n_sr_trans: 
     wake : WakeStruct, optional
         Initialized structure.
     """
-def initfixedwindowls(N: typing.SupportsInt | typing.SupportsIndex, dt: typing.SupportsFloat | typing.SupportsIndex, order: typing.SupportsInt | typing.SupportsIndex, der: typing.SupportsInt | typing.SupportsIndex, id: typing.SupportsInt | typing.SupportsIndex) -> None:
+def initfixedwindowls(N: typing.SupportsInt | typing.SupportsIndex, dt: typing.SupportsFloat | typing.SupportsIndex, order: typing.SupportsInt | typing.SupportsIndex, der: typing.SupportsInt | typing.SupportsIndex) -> int:
     """
     Function initFixedWindowLS
     
@@ -34432,17 +35398,19 @@ def insert_phase_trombone(branch: BranchStruct) -> None:
         This parameter is an input/output and is modified in-place.
         As an output, branch: Lattice branch with trumbone at branch.ele(1).
     """
-def int_str(int_: typing.SupportsInt | typing.SupportsIndex, str: str, width: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def int_str(int_: typing.SupportsInt | typing.SupportsIndex, width: typing.SupportsInt | typing.SupportsIndex | None = None) -> str:
     """
     Wrapper for Fortran routine int_str
     
     Parameters
     ----------
-    str : str
-    
     width : int, optional
+    
+    Returns
+    -------
+    str : str
     """
-def integrand_base(t: typing.SupportsFloat | typing.SupportsIndex, args: RealArray1D, func_retval__: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def integrand_base(t: typing.SupportsFloat | typing.SupportsIndex, args: RealArray1D) -> float:
     """
     Function integrand_base(t)
     
@@ -34559,7 +35527,7 @@ def integration_timer(a_fibre: Fibre, orbit: typing.Annotated[collections.abc.Se
     
     tol_dp : float
     """
-def interpolated_fft(cdata: ComplexArray1D, calc_ok: bool, this_fft: typing.SupportsFloat | typing.SupportsIndex, opt_dump_spectrum: typing.SupportsInt | typing.SupportsIndex | None = None, opt_dump_index: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def interpolated_fft(cdata: ComplexArray1D, calc_ok: bool, opt_dump_spectrum: typing.SupportsInt | typing.SupportsIndex | None = None, opt_dump_index: typing.SupportsInt | typing.SupportsIndex | None = None) -> float:
     """
     Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
     
@@ -34567,7 +35535,7 @@ def interpolated_fft(cdata: ComplexArray1D, calc_ok: bool, this_fft: typing.Supp
     The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
     available.
     """
-def interpolated_fft_gsl(cdata: ComplexArray1D, calc_ok: bool, this_fft: typing.SupportsFloat | typing.SupportsIndex, opt_dump_spectrum: typing.SupportsInt | typing.SupportsIndex | None = None, opt_dump_index: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def interpolated_fft_gsl(cdata: ComplexArray1D, calc_ok: bool, opt_dump_spectrum: typing.SupportsInt | typing.SupportsIndex | None = None, opt_dump_index: typing.SupportsInt | typing.SupportsIndex | None = None) -> float:
     """
     function interpolated_fft_gsl
     
@@ -34604,7 +35572,7 @@ def ion_kick(orbit: CoordStruct, r_beam: typing.Annotated[collections.abc.Sequen
     kick : 1D array of float (shape: 3)
         (x, y, s) kick in m/sec.
     """
-def is_alphabetic(string: str, is_alpha: bool, valid_chars: str | None = None) -> None:
+def is_alphabetic(string: str, valid_chars: str | None = None) -> bool:
     """
     no longer exists
     function inverse_prob (val) result (prob)
@@ -34690,7 +35658,7 @@ def is_increasing_sequence(array: RealArray1D, strict: bool | None = None) -> bo
     is_increasing : bool
         Set True if sequence is increasing.
     """
-def is_integer(string: str, valid: bool, int_: typing.SupportsInt | typing.SupportsIndex | None = None, delims: str | None = None, ix_word: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def is_integer(string: str, int_: typing.SupportsInt | typing.SupportsIndex | None = None, delims: str | None = None, ix_word: typing.SupportsInt | typing.SupportsIndex | None = None) -> bool:
     """
     Wrapper for Fortran routine is_integer
     
@@ -34698,13 +35666,15 @@ def is_integer(string: str, valid: bool, int_: typing.SupportsInt | typing.Suppo
     ----------
     string : str
     
-    valid : bool
-    
     delims : str, optional
     
     ix_word : int, optional
+    
+    Returns
+    -------
+    valid : bool
     """
-def is_logical(string: str, valid: bool, ignore: bool | None = None) -> None:
+def is_logical(string: str, ignore: bool | None = None) -> bool:
     """
     Wrapper for Fortran routine is_logical
     
@@ -34712,11 +35682,13 @@ def is_logical(string: str, valid: bool, ignore: bool | None = None) -> None:
     ----------
     string : str
     
-    valid : bool
-    
     ignore : bool, optional
+    
+    Returns
+    -------
+    valid : bool
     """
-def is_real(string: str, valid: bool, ignore: bool | None = None, real_num: typing.SupportsFloat | typing.SupportsIndex | None = None) -> None:
+def is_real(string: str, ignore: bool | None = None, real_num: typing.SupportsFloat | typing.SupportsIndex | None = None) -> bool:
     """
     Wrapper for Fortran routine is_real
     
@@ -34724,11 +35696,13 @@ def is_real(string: str, valid: bool, ignore: bool | None = None, real_num: typi
     ----------
     string : str
     
-    valid : bool
-    
     ignore : bool, optional
     
     real_num : float, optional
+    
+    Returns
+    -------
+    valid : bool
     """
 def is_subatomic_species(species: typing.SupportsInt | typing.SupportsIndex) -> bool:
     """
@@ -34943,7 +35917,7 @@ def knot_interpolate(x_knot: RealArray1D, y_knot: RealArray1D, x_pt: typing.Supp
     y_pt : float
         Interpolated y-value.
     """
-def knots_to_string(x_knot: RealArray1D, y_knot: RealArray1D, str: str) -> None:
+def knots_to_string(x_knot: RealArray1D, y_knot: RealArray1D) -> str:
     """
     Wrapper for Fortran routine knots_to_string
     
@@ -34953,9 +35927,11 @@ def knots_to_string(x_knot: RealArray1D, y_knot: RealArray1D, str: str) -> None:
     
     y_knot : 1D array of float
     
+    Returns
+    -------
     str : str
     """
-def lafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def lafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine lafun
     
@@ -34967,6 +35943,8 @@ def lafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloa
     
     z : float
     
+    Returns
+    -------
     res : float
     """
 def lat_compute_ref_energy_and_time(lat: LatStruct) -> bool:
@@ -35264,7 +36242,7 @@ def load_parse_line(action: str, ix_start: typing.SupportsInt | typing.SupportsI
     err_flag : bool, optional
         Set True if there is an error. False otherwise
     """
-def logic_str(logic: bool, str: str) -> None:
+def logic_str(logic: bool) -> str:
     """
     Wrapper for Fortran routine logic_str
     
@@ -35272,9 +36250,11 @@ def logic_str(logic: bool, str: str) -> None:
     ----------
     logic : bool
     
+    Returns
+    -------
     str : str
     """
-def logical_to_python(logic: bool, string: str) -> None:
+def logical_to_python(logic: bool) -> str:
     """
     Wrapper for Fortran routine logical_to_python
     
@@ -35282,6 +36262,8 @@ def logical_to_python(logic: bool, string: str) -> None:
     ----------
     logic : bool
     
+    Returns
+    -------
     string : str
     """
 def lord_edge_aligned(slave: EleStruct, slave_edge: typing.SupportsInt | typing.SupportsIndex, lord: EleStruct) -> bool:
@@ -35333,7 +36315,7 @@ def low_energy_z_correction(orbit: CoordStruct, ele: EleStruct, ds: typing.Suppo
     dz : float
         Change in z.
     """
-def lunget(func_retval__: typing.SupportsInt | typing.SupportsIndex) -> None:
+def lunget() -> int:
     """
     Wrapper for Fortran routine lunget
     
@@ -36195,7 +37177,7 @@ def map1_make_unit() -> SpinOrbitMap1Struct:
     map1 : SpinOrbitMap1Struct
         Unit map.
     """
-def map1_times_map1(map2: SpinOrbitMap1Struct, map1: SpinOrbitMap1Struct, map_out: SpinOrbitMap1Struct) -> None:
+def map1_times_map1(map2: SpinOrbitMap1Struct, map1: SpinOrbitMap1Struct) -> SpinOrbitMap1Struct:
     """
     Wrapper for Fortran routine map1_times_map1
     
@@ -36205,6 +37187,8 @@ def map1_times_map1(map2: SpinOrbitMap1Struct, map1: SpinOrbitMap1Struct, map_ou
     
     map1 : SpinOrbitMap1Struct
     
+    Returns
+    -------
     map_out : SpinOrbitMap1Struct
     """
 def map_to_angle_coords(t_canon: TaylorStructArray1D) -> TaylorStructArray1D:
@@ -36417,7 +37401,7 @@ def match_ele_to_mat6(ele: EleStruct, start_orb: CoordStruct, include_delta_time
     err_flag : bool
         Set true if there is an error. False otherwise. Note: Currently err_flag is never set True.
     """
-def match_reg(str: str, pat: str, is_match: bool) -> None:
+def match_reg(str: str, pat: str) -> bool:
     """
     Wrapper for Fortran routine match_reg
     
@@ -36427,9 +37411,11 @@ def match_reg(str: str, pat: str, is_match: bool) -> None:
     
     pat : str
     
+    Returns
+    -------
     is_match : bool
     """
-def match_wild(string: str, template_: str, is_match: bool) -> None:
+def match_wild(string: str, template_: str) -> bool:
     """
     Wrapper for Fortran routine match_wild
     
@@ -36437,6 +37423,8 @@ def match_wild(string: str, template_: str, is_match: bool) -> None:
     ----------
     string : str
     
+    Returns
+    -------
     is_match : bool
     """
 def match_word(string: str, names: CharacterAlloc1D, ix: typing.SupportsInt | typing.SupportsIndex, exact_case: bool | None = None, can_abbreviate: bool | None = None, matched_name: str | None = None) -> None:
@@ -36457,7 +37445,7 @@ def match_word(string: str, names: CharacterAlloc1D, ix: typing.SupportsInt | ty
     
     matched_name : str, optional
     """
-def maximize_projection(seed: typing.SupportsFloat | typing.SupportsIndex, cdata: ComplexArray1D, func_retval__: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def maximize_projection(seed: typing.SupportsFloat | typing.SupportsIndex, cdata: ComplexArray1D) -> float:
     """
     function maximize_projection
     
@@ -36993,7 +37981,7 @@ def multipole_spin_tracking(ele: EleStruct, param: LatParamStruct, orbit: CoordS
     orbit : CoordStruct
         Particle coordinates.
     """
-def mytan(y: typing.SupportsFloat | typing.SupportsIndex, x: typing.SupportsFloat | typing.SupportsIndex, arg: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def mytan(y: typing.SupportsFloat | typing.SupportsIndex, x: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine mytan
     
@@ -37003,6 +37991,8 @@ def mytan(y: typing.SupportsFloat | typing.SupportsIndex, x: typing.SupportsFloa
     
     x : float
     
+    Returns
+    -------
     arg : float
     """
 def n_attrib_string_max_len() -> int:
@@ -37017,7 +38007,7 @@ def n_attrib_string_max_len() -> int:
     max_len : int
         Maximum number of characters in any attribute name.
     """
-def n_bins_automatic(n_data: typing.SupportsInt | typing.SupportsIndex, n: typing.SupportsInt | typing.SupportsIndex) -> None:
+def n_bins_automatic(n_data: typing.SupportsInt | typing.SupportsIndex) -> int:
     """
     Function to automatically select the number of bins
     """
@@ -37082,7 +38072,7 @@ def nametable_add(nametable: NametableStruct, name: str, ix_name: typing.Support
     
     ix_name : int
     """
-def nametable_bracket_indexx(nametable: NametableStruct, name: str, ix_max: typing.SupportsInt | typing.SupportsIndex, n_match: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def nametable_bracket_indexx(nametable: NametableStruct, name: str, n_match: typing.SupportsInt | typing.SupportsIndex | None = None) -> int:
     """
     Wrapper for Fortran routine nametable_bracket_indexx
     
@@ -37092,9 +38082,11 @@ def nametable_bracket_indexx(nametable: NametableStruct, name: str, ix_max: typi
     
     name : str
     
-    ix_max : int
-    
     n_match : int, optional
+    
+    Returns
+    -------
+    ix_max : int
     """
 def nametable_change1(nametable: NametableStruct, name: str, ix_name: typing.SupportsInt | typing.SupportsIndex) -> None:
     """
@@ -37130,7 +38122,7 @@ def nametable_remove(nametable: NametableStruct, ix_name: typing.SupportsInt | t
     
     ix_name : int
     """
-def negative_ampsquared(frequency: typing.SupportsFloat | typing.SupportsIndex, amp: typing.SupportsFloat | typing.SupportsIndex, status: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def negative_ampsquared(frequency: typing.SupportsFloat | typing.SupportsIndex, status: typing.SupportsInt | typing.SupportsIndex | None = None) -> float:
     """
     Wrapper for Fortran routine negative_ampsquared
     
@@ -37138,11 +38130,13 @@ def negative_ampsquared(frequency: typing.SupportsFloat | typing.SupportsIndex, 
     ----------
     frequency : float
     
-    amp : float
-    
     status : int, optional
+    
+    Returns
+    -------
+    amp : float
     """
-def negative_dampsquared(frequency: typing.SupportsFloat | typing.SupportsIndex, damp: typing.SupportsFloat | typing.SupportsIndex, status: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def negative_dampsquared(frequency: typing.SupportsFloat | typing.SupportsIndex, status: typing.SupportsInt | typing.SupportsIndex | None = None) -> float:
     """
     Wrapper for Fortran routine negative_dampsquared
     
@@ -37150,9 +38144,11 @@ def negative_dampsquared(frequency: typing.SupportsFloat | typing.SupportsIndex,
     ----------
     frequency : float
     
-    damp : float
-    
     status : int, optional
+    
+    Returns
+    -------
+    damp : float
     """
 def new_control(lat: LatStruct, ele_name: str | None = None) -> int:
     """
@@ -37833,7 +38829,7 @@ def order_super_lord_slaves(lat: LatStruct, ix_lord: typing.SupportsInt | typing
     ix_lord : int
         Index of lord element.
     """
-def ordinal_str(n: typing.SupportsInt | typing.SupportsIndex, str: str) -> None:
+def ordinal_str(n: typing.SupportsInt | typing.SupportsIndex) -> str:
     """
     Wrapper for Fortran routine ordinal_str
     
@@ -37841,6 +38837,8 @@ def ordinal_str(n: typing.SupportsInt | typing.SupportsIndex, str: str) -> None:
     ----------
     n : int
     
+    Returns
+    -------
     str : str
     """
 def osc_alloc_freespace_array(nlo: typing.Annotated[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex], "FixedSize(3)"], nhi: typing.Annotated[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex], "FixedSize(3)"], npad: typing.Annotated[collections.abc.Sequence[typing.SupportsInt | typing.SupportsIndex], "FixedSize(3)"]) -> None:
@@ -38038,14 +39036,14 @@ def out_io(level: typing.SupportsInt | typing.SupportsIndex, routine_name: str, 
     
     insert_tag_line : bool, optional
     """
-def out_io_buffer_get_line(ix_line: typing.SupportsInt | typing.SupportsIndex, line: str) -> None:
+def out_io_buffer_get_line(ix_line: typing.SupportsInt | typing.SupportsIndex) -> str:
     """
     Function out_io_buffer_get_line(ix_line) result (line)
     
     Routine to return the nuber of lines in the internal buffer.
     See the output_direct documentation for more details.
     """
-def out_io_buffer_num_lines(n_lines: typing.SupportsInt | typing.SupportsIndex) -> None:
+def out_io_buffer_num_lines() -> int:
     """
     Function out_io_buffer_num_lines() result (n_lines)
     
@@ -38183,7 +39181,7 @@ def parse_grid_field(g_field: GridFieldStruct, ele: EleStruct, lat: LatStruct, d
     
     err_flag : bool
     """
-def parse_integer_list(err_str: str, lat: LatStruct, int_array: IntArray1D, exact_size: bool, delim: str, delim_found: bool, is_ok: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def parse_integer_list(err_str: str, lat: LatStruct, int_array: IntArray1D, exact_size: bool, delim: str, delim_found: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsInt | typing.SupportsIndex | None = None) -> bool:
     """
     Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
                                           separator, close_delim, default_value) result (is_ok)
@@ -38231,7 +39229,7 @@ def parse_integer_list2(err_str: str, lat: LatStruct, int_array: IntAlloc1D, num
     is_ok : bool
         Set True if everything is ok.
     """
-def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact_size: bool, is_ok: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsFloat | typing.SupportsIndex | None = None) -> ParseRealList:
+def parse_real_list(lat: LatStruct, err_str: str, real_array: RealArray1D, exact_size: bool, open_delim: str | None = None, separator: str | None = None, close_delim: str | None = None, default_value: typing.SupportsFloat | typing.SupportsIndex | None = None) -> ParseRealList:
     """
     Function parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, open_delim,
                                    separator, close_delim, default_value, num_found) result (is_ok)
@@ -38358,7 +39356,7 @@ def parser_fast_complex_read(cmplx_vec: ComplexArray1D, ele: EleStruct, err_str:
     is_ok : bool
         True if everything OK. False otherwise.
     """
-def parser_fast_integer_read(int_vec: IntArray1D, ele: EleStruct, delim_wanted: str, err_str: str, is_ok: bool) -> None:
+def parser_fast_integer_read(int_vec: IntArray1D, ele: EleStruct, delim_wanted: str, err_str: str) -> bool:
     """
     Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
     """
@@ -39641,7 +40639,7 @@ def poly_eval(poly: RealArray1D, x: typing.SupportsFloat | typing.SupportsIndex,
     y : float
         Value of polynomial.
     """
-def probability_funct(x: typing.SupportsFloat | typing.SupportsIndex, prob: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def probability_funct(x: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine probability_funct
     
@@ -39650,9 +40648,11 @@ def probability_funct(x: typing.SupportsFloat | typing.SupportsIndex, prob: typi
     x : float
         Function argument.
     
+    Returns
+    -------
     prob : float
     """
-def projdd(a: ComplexArray1D, b: ComplexArray1D, func_retval__: typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex) -> None:
+def projdd(a: ComplexArray1D, b: ComplexArray1D) -> complex:
     """
     Wrapper for Fortran routine projdd
     
@@ -40306,7 +41306,7 @@ def query_string(query_str: str, upcase: bool, return_str: str, ix: typing.Suppo
     
     ios : int
     """
-def quote(str: str, q_str: str) -> None:
+def quote(str: str) -> str:
     """
     Wrapper for Fortran routine quote
     
@@ -40314,9 +41314,11 @@ def quote(str: str, q_str: str) -> None:
     ----------
     str : str
     
+    Returns
+    -------
     q_str : str
     """
-def quoten(str: CharacterAlloc1D, q_str: str, delim: str | None = None) -> None:
+def quoten(str: CharacterAlloc1D, delim: str | None = None) -> str:
     """
     Wrapper for Fortran routine quoten
     
@@ -40324,9 +41326,11 @@ def quoten(str: CharacterAlloc1D, q_str: str, delim: str | None = None) -> None:
     ----------
     str : 1D array of str
     
-    q_str : str
-    
     delim : str, optional
+    
+    Returns
+    -------
+    q_str : str
     """
 def rad1_damp_and_stoc_mats(ele: EleStruct, include_opening_angle: bool, orb_in: CoordStruct, orb_out: CoordStruct, g2_tol: typing.SupportsFloat | typing.SupportsIndex, g3_tol: typing.SupportsFloat | typing.SupportsIndex, ele0: EleStruct | None = None) -> Rad1DampAndStocMats:
     """
@@ -40794,7 +41798,7 @@ def rcelbd(mc: typing.SupportsFloat | typing.SupportsIndex, elb: typing.Supports
     
     eld : float
     """
-def rchomp(rel: typing.SupportsFloat | typing.SupportsIndex, plc: typing.SupportsInt | typing.SupportsIndex, out: str) -> None:
+def rchomp(rel: typing.SupportsFloat | typing.SupportsIndex, plc: typing.SupportsInt | typing.SupportsIndex) -> str:
     """
     Wrapper for Fortran routine rchomp
     
@@ -40804,6 +41808,8 @@ def rchomp(rel: typing.SupportsFloat | typing.SupportsIndex, plc: typing.Support
     
     plc : int
     
+    Returns
+    -------
     out : str
     """
 @typing.overload
@@ -40873,7 +41879,7 @@ def re_associate_node_array(tree: ExpressionTreeStruct, n: typing.SupportsInt | 
         Default is False. If False, the size of the output array is permitted to be larger than n.
     """
 @typing.overload
-def re_str(rel: typing.SupportsFloat | typing.SupportsIndex, str_out: str) -> None:
+def re_str(rel: typing.SupportsFloat | typing.SupportsIndex) -> str:
     """
     Wrapper for Fortran routine re_str_qp
     
@@ -40881,10 +41887,12 @@ def re_str(rel: typing.SupportsFloat | typing.SupportsIndex, str_out: str) -> No
     ----------
     rel : float
     
+    Returns
+    -------
     str_out : str
     """
 @typing.overload
-def re_str(rel: typing.SupportsFloat | typing.SupportsIndex, str_out: str) -> None:
+def re_str(rel: typing.SupportsFloat | typing.SupportsIndex) -> str:
     """
     Wrapper for Fortran routine re_str_rp
     
@@ -40892,6 +41900,8 @@ def re_str(rel: typing.SupportsFloat | typing.SupportsIndex, str_out: str) -> No
     ----------
     rel : float
     
+    Returns
+    -------
     str_out : str
     """
 def read_a_line(prompt: str, trim_prompt: bool | None = None, prompt_color: str | None = None, prompt_bold: bool | None = None, history_file: str | None = None) -> str:
@@ -41145,7 +42155,7 @@ def readline_write_history(history_file: str) -> int:
     status : int
         0 = Success, otherwise failure.
     """
-def real_num_fortran_format(number: typing.SupportsFloat | typing.SupportsIndex, width: typing.SupportsInt | typing.SupportsIndex, fmt_str: str, n_blanks: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def real_num_fortran_format(number: typing.SupportsFloat | typing.SupportsIndex, width: typing.SupportsInt | typing.SupportsIndex, n_blanks: typing.SupportsInt | typing.SupportsIndex | None = None) -> str:
     """
     Wrapper for Fortran routine real_num_fortran_format
     
@@ -41155,11 +42165,13 @@ def real_num_fortran_format(number: typing.SupportsFloat | typing.SupportsIndex,
     
     width : int
     
-    fmt_str : str
-    
     n_blanks : int, optional
+    
+    Returns
+    -------
+    fmt_str : str
     """
-def real_path(path_in: str, path_out: str, is_ok: bool) -> None:
+def real_path(path_in: str, path_out: str) -> bool:
     """
     Wrapper for Fortran routine real_path
     
@@ -41169,9 +42181,11 @@ def real_path(path_in: str, path_out: str, is_ok: bool) -> None:
     
     path_out : str
     
+    Returns
+    -------
     is_ok : bool
     """
-def real_str(r_num: typing.SupportsFloat | typing.SupportsIndex, str: str, n_signif: typing.SupportsInt | typing.SupportsIndex | None = None, n_decimal: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def real_str(r_num: typing.SupportsFloat | typing.SupportsIndex, n_signif: typing.SupportsInt | typing.SupportsIndex | None = None, n_decimal: typing.SupportsInt | typing.SupportsIndex | None = None) -> str:
     """
     Wrapper for Fortran routine real_str
     
@@ -41179,13 +42193,15 @@ def real_str(r_num: typing.SupportsFloat | typing.SupportsIndex, str: str, n_sig
     ----------
     r_num : float
     
-    str : str
-    
     n_signif : int, optional
     
     n_decimal : int, optional
+    
+    Returns
+    -------
+    str : str
     """
-def real_to_string(real_num: typing.SupportsFloat | typing.SupportsIndex, width: typing.SupportsInt | typing.SupportsIndex, str: str, n_signif: typing.SupportsInt | typing.SupportsIndex | None = None, n_decimal: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def real_to_string(real_num: typing.SupportsFloat | typing.SupportsIndex, width: typing.SupportsInt | typing.SupportsIndex, n_signif: typing.SupportsInt | typing.SupportsIndex | None = None, n_decimal: typing.SupportsInt | typing.SupportsIndex | None = None) -> str:
     """
     Wrapper for Fortran routine real_to_string
     
@@ -41195,11 +42211,13 @@ def real_to_string(real_num: typing.SupportsFloat | typing.SupportsIndex, width:
     
     width : int
     
-    str : str
-    
     n_signif : int, optional
     
     n_decimal : int, optional
+    
+    Returns
+    -------
+    str : str
     """
 def reallocate_beam(beam: BeamStruct, n_bunch: typing.SupportsInt | typing.SupportsIndex, n_particle: typing.SupportsInt | typing.SupportsIndex | None = None, extend: bool | None = None) -> None:
     """
@@ -41394,7 +42412,7 @@ def rel_tracking_charge_to_mass(orbit: CoordStruct, ref_species: typing.Supports
     rel_charge : float
         Relative charge/mass
     """
-def relative_mode_flip(ele1: EleStruct, ele2: EleStruct, func_retval__: bool) -> None:
+def relative_mode_flip(ele1: EleStruct, ele2: EleStruct) -> bool:
     """
     Wrapper for Fortran routine relative_mode_flip
     
@@ -41642,7 +42660,7 @@ def rf_ref_time_offset(ele: EleStruct, ds: typing.SupportsFloat | typing.Support
     time : float
         Offset time.
     """
-def rfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, a: typing.SupportsFloat | typing.SupportsIndex, b: typing.SupportsFloat | typing.SupportsIndex, hz: typing.SupportsFloat | typing.SupportsIndex, i: typing.SupportsInt | typing.SupportsIndex, j: typing.SupportsInt | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def rfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat | typing.SupportsIndex, w: typing.SupportsFloat | typing.SupportsIndex, gam: typing.SupportsFloat | typing.SupportsIndex, a: typing.SupportsFloat | typing.SupportsIndex, b: typing.SupportsFloat | typing.SupportsIndex, hz: typing.SupportsFloat | typing.SupportsIndex, i: typing.SupportsInt | typing.SupportsIndex, j: typing.SupportsInt | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine rfun
     
@@ -41666,6 +42684,8 @@ def rfun(u: typing.SupportsFloat | typing.SupportsIndex, v: typing.SupportsFloat
     
     j : int
     
+    Returns
+    -------
     res : float
     """
 def rgelbd(phi: typing.SupportsFloat | typing.SupportsIndex, mc: typing.SupportsFloat | typing.SupportsIndex, elb: typing.SupportsFloat | typing.SupportsIndex, eld: typing.SupportsFloat | typing.SupportsIndex) -> None:
@@ -41775,7 +42795,7 @@ def rot_2d(vec_in: typing.Annotated[collections.abc.Sequence[typing.SupportsFloa
     vec_out : 1D array of float (shape: 2)
         Rotated vec.
     """
-def rotate3(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(3)"], angle: typing.SupportsFloat | typing.SupportsIndex, rvec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(3)"]) -> None:
+def rotate3(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(3)"], angle: typing.SupportsFloat | typing.SupportsIndex) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
     Wrapper for Fortran routine rotate3
     
@@ -41785,6 +42805,8 @@ def rotate3(vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat 
     
     angle : float
     
+    Returns
+    -------
     rvec : 1D array of float (shape: 3)
     """
 def rotate_em_field(field: EmFieldStruct, w_mat: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(3)"]], "FixedSize(3)"], w_inv: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(3)"]], "FixedSize(3)"], calc_dfield: bool | None = None, calc_potential: bool | None = None) -> None:
@@ -42715,7 +43737,7 @@ def set_orbit_to_zero(orbit: CoordStructArray1D, n1: typing.SupportsInt | typing
         If present then orbit(ix_noset) will not be zeroed.
     """
 @typing.overload
-def set_parameter(param_val: typing.SupportsInt | typing.SupportsIndex, set_val: typing.SupportsInt | typing.SupportsIndex, save_val: typing.SupportsInt | typing.SupportsIndex) -> None:
+def set_parameter(param_val: typing.SupportsInt | typing.SupportsIndex, set_val: typing.SupportsInt | typing.SupportsIndex) -> int:
     """
     Wrapper for Fortran routine set_parameter_int
     
@@ -42725,10 +43747,12 @@ def set_parameter(param_val: typing.SupportsInt | typing.SupportsIndex, set_val:
     
     set_val : int
     
+    Returns
+    -------
     save_val : int
     """
 @typing.overload
-def set_parameter(param_val: bool, set_val: bool, save_val: bool) -> None:
+def set_parameter(param_val: bool, set_val: bool) -> bool:
     """
     Wrapper for Fortran routine set_parameter_logic
     
@@ -42738,10 +43762,12 @@ def set_parameter(param_val: bool, set_val: bool, save_val: bool) -> None:
     
     set_val : bool
     
+    Returns
+    -------
     save_val : bool
     """
 @typing.overload
-def set_parameter(param_val: typing.SupportsFloat | typing.SupportsIndex, set_val: typing.SupportsFloat | typing.SupportsIndex, save_val: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def set_parameter(param_val: typing.SupportsFloat | typing.SupportsIndex, set_val: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine set_parameter_real
     
@@ -42751,6 +43777,8 @@ def set_parameter(param_val: typing.SupportsFloat | typing.SupportsIndex, set_va
     
     set_val : float
     
+    Returns
+    -------
     save_val : float
     """
 def set_ptc(e_tot: typing.SupportsFloat | typing.SupportsIndex | None = None, particle: typing.SupportsInt | typing.SupportsIndex | None = None, taylor_order: typing.SupportsInt | typing.SupportsIndex | None = None, integ_order: typing.SupportsInt | typing.SupportsIndex | None = None, n_step: typing.SupportsInt | typing.SupportsIndex | None = None, no_cavity: bool | None = None, force_init: bool | None = None) -> None:
@@ -43200,7 +44228,7 @@ def sinhx_x(x: typing.SupportsFloat | typing.SupportsIndex, nd: typing.SupportsI
     y : float
         nd^th derivative of sinh(x) / x.
     """
-def skip_ele_blender(ele: EleStruct, skip: bool) -> None:
+def skip_ele_blender(ele: EleStruct) -> bool:
     """
     Wrapper for Fortran routine skip_ele_blender
     
@@ -43208,6 +44236,8 @@ def skip_ele_blender(ele: EleStruct, skip: bool) -> None:
     ----------
     ele : EleStruct
     
+    Returns
+    -------
     skip : bool
     """
 def skip_header(ix_unit: typing.SupportsInt | typing.SupportsIndex, error_flag: bool) -> None:
@@ -43392,7 +44422,7 @@ def sort_complex_taylor_terms(complex_taylor_in: ComplexTaylorStruct) -> Complex
     complex_taylor_sorted : ComplexTaylorStruct
         Sorted complex_taylor series.
     """
-def special_projection(f: typing.SupportsFloat | typing.SupportsIndex, func_retval__: typing.SupportsFloat | typing.SupportsIndex, status: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def special_projection(f: typing.SupportsFloat | typing.SupportsIndex, status: typing.SupportsInt | typing.SupportsIndex | None = None) -> float:
     """
     function special_projection
     
@@ -43611,7 +44641,7 @@ def spin_of(species: typing.SupportsInt | typing.SupportsIndex, non_subatomic_de
     spin : float
         Particle spin.
     """
-def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.SupportsInt | typing.SupportsIndex, omega: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(3)"], phase_space_coords: bool | None = None) -> None:
+def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.SupportsInt | typing.SupportsIndex, phase_space_coords: bool | None = None) -> typing.Annotated[list[float], "FixedSize(3)"]:
     """
     Wrapper for Fortran routine spin_omega
     
@@ -43623,9 +44653,11 @@ def spin_omega(field: EmFieldStruct, orbit: CoordStruct, sign_z_vel: typing.Supp
     
     sign_z_vel : int
     
-    omega : 1D array of float (shape: 3)
-    
     phase_space_coords : bool, optional
+    
+    Returns
+    -------
+    omega : 1D array of float (shape: 3)
     """
 def spin_quat_resonance_strengths(orb_evec: typing.Annotated[collections.abc.Sequence[typing.SupportsComplex | typing.SupportsFloat | typing.SupportsIndex], "FixedSize(6)"], spin_q: typing.Annotated[collections.abc.Sequence[typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(7)"]], "FixedSize(4)"]) -> SpinQuatResonanceStrengths:
     """
@@ -43954,7 +44986,7 @@ def sqrt_alpha(alpha: typing.SupportsFloat | typing.SupportsIndex, x: typing.Sup
     y : float
         Result.
     """
-def sqrt_one(x: typing.SupportsFloat | typing.SupportsIndex, ds1: typing.SupportsFloat | typing.SupportsIndex, nd: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def sqrt_one(x: typing.SupportsFloat | typing.SupportsIndex, nd: typing.SupportsInt | typing.SupportsIndex | None = None) -> float:
     """
     Wrapper for Fortran routine sqrt_one
     
@@ -43963,11 +44995,13 @@ def sqrt_one(x: typing.SupportsFloat | typing.SupportsIndex, ds1: typing.Support
     x : float
         Number
     
-    ds1 : float
-    
     nd : int, optional
         Derivative order. nd = 0 (default) -> compute Sqrt[1+x] - 1. NOTE: Currently only nd = 0 and nd = 1 are
         implemented.
+    
+    Returns
+    -------
+    ds1 : float
     """
 def sr_longitudinal_wake_particle(ele: EleStruct, orbit: CoordStruct) -> None:
     """
@@ -44120,7 +45154,7 @@ def start_branch_at(lat: LatStruct, ele_start: str, move_end_marker: bool) -> bo
     error : bool
         Set True if there is an error Set False if not.
     """
-def str_count(str: str, match_: str, num: typing.SupportsInt | typing.SupportsIndex) -> None:
+def str_count(str: str, match_: str) -> int:
     """
     Wrapper for Fortran routine str_count
     
@@ -44130,6 +45164,8 @@ def str_count(str: str, match_: str, num: typing.SupportsInt | typing.SupportsIn
     
     match : str
     
+    Returns
+    -------
     num : int
     """
 def str_downcase(src: str) -> str:
@@ -44144,7 +45180,7 @@ def str_downcase(src: str) -> str:
     -------
     dst : str
     """
-def str_first_in_set(line: str, set: str, ix_match: typing.SupportsInt | typing.SupportsIndex, ignore_clauses: bool | None = None) -> None:
+def str_first_in_set(line: str, set: str, ignore_clauses: bool | None = None) -> int:
     """
     Wrapper for Fortran routine str_first_in_set
     
@@ -44154,11 +45190,13 @@ def str_first_in_set(line: str, set: str, ix_match: typing.SupportsInt | typing.
     
     set : str
     
-    ix_match : int
-    
     ignore_clauses : bool, optional
+    
+    Returns
+    -------
+    ix_match : int
     """
-def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt | typing.SupportsIndex) -> None:
+def str_first_not_in_set(line: str, set: str) -> int:
     """
     Wrapper for Fortran routine str_first_not_in_set
     
@@ -44168,9 +45206,11 @@ def str_first_not_in_set(line: str, set: str, ix_match: typing.SupportsInt | typ
     
     set : str
     
+    Returns
+    -------
     ix_match : int
     """
-def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt | typing.SupportsIndex) -> None:
+def str_last_in_set(line: str, set: str) -> int:
     """
     Wrapper for Fortran routine str_last_in_set
     
@@ -44180,9 +45220,11 @@ def str_last_in_set(line: str, set: str, ix_match: typing.SupportsInt | typing.S
     
     set : str
     
+    Returns
+    -------
     ix_match : int
     """
-def str_last_not_in_set(line: str, set: str, ix_match: typing.SupportsInt | typing.SupportsIndex) -> None:
+def str_last_not_in_set(line: str, set: str) -> int:
     """
     Wrapper for Fortran routine str_last_not_in_set
     
@@ -44192,9 +45234,11 @@ def str_last_not_in_set(line: str, set: str, ix_match: typing.SupportsInt | typi
     
     set : str
     
+    Returns
+    -------
     ix_match : int
     """
-def str_match_wild(str: str, pat: str, a_match: bool) -> None:
+def str_match_wild(str: str, pat: str) -> bool:
     """
     Wrapper for Fortran routine str_match_wild
     
@@ -44204,6 +45248,8 @@ def str_match_wild(str: str, pat: str, a_match: bool) -> None:
     
     pat : str
     
+    Returns
+    -------
     a_match : bool
     """
 def str_substitute(string: str, str_match: str | None = None, str_replace: str | None = None, do_trim: bool | None = None, ignore_escaped: bool | None = None) -> None:
@@ -44275,7 +45321,7 @@ def string_attrib(attrib_name: str, ele: EleStruct) -> str:
     attrib_value : str
         The string associated with the attribute.
     """
-def string_to_int(line: str, default_: typing.SupportsInt | typing.SupportsIndex, err_flag: bool, value: typing.SupportsInt | typing.SupportsIndex, err_print_flag: bool | None = None) -> None:
+def string_to_int(line: str, default_: typing.SupportsInt | typing.SupportsIndex, err_flag: bool, err_print_flag: bool | None = None) -> int:
     """
     Wrapper for Fortran routine string_to_int
     
@@ -44285,11 +45331,13 @@ def string_to_int(line: str, default_: typing.SupportsInt | typing.SupportsIndex
     
     err_flag : bool
     
-    value : int
-    
     err_print_flag : bool, optional
+    
+    Returns
+    -------
+    value : int
     """
-def string_to_real(line: str, default_: typing.SupportsFloat | typing.SupportsIndex, err_flag: bool, value: typing.SupportsFloat | typing.SupportsIndex, err_print_flag: bool | None = None) -> None:
+def string_to_real(line: str, default_: typing.SupportsFloat | typing.SupportsIndex, err_flag: bool, err_print_flag: bool | None = None) -> float:
     """
     Wrapper for Fortran routine string_to_real
     
@@ -44299,9 +45347,11 @@ def string_to_real(line: str, default_: typing.SupportsFloat | typing.SupportsIn
     
     err_flag : bool
     
-    value : float
-    
     err_print_flag : bool, optional
+    
+    Returns
+    -------
+    value : float
     """
 def string_trim(in_string: str, out_string: str, word_len: typing.SupportsInt | typing.SupportsIndex) -> None:
     """
@@ -44988,7 +46038,7 @@ def tao_change_z_tune(branch_str: str, dq_str: str) -> bool:
     err_flag : bool
         logical, Set true if there is an error, false otherwise.
     """
-def tao_chrom_calc_needed(data_type: str, data_source: str, do_chrom: bool) -> None:
+def tao_chrom_calc_needed(data_type: str, data_source: str) -> bool:
     """
     Wrapper for Fortran routine tao_chrom_calc_needed
     
@@ -44998,6 +46048,8 @@ def tao_chrom_calc_needed(data_type: str, data_source: str, do_chrom: bool) -> N
     
     data_source : str
     
+    Returns
+    -------
     do_chrom : bool
     """
 def tao_clear_cmd(cmd_line: str) -> None:
@@ -45202,7 +46254,7 @@ def tao_curve_datum_calc(eles: ElePointerStructAlloc1D, plot: TaoPlotStruct, cur
     who : str
         Where to put the data. Either: "SYMBOL" or "LINE".
     """
-def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool, ele_track: EleStruct) -> None:
+def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool) -> EleStruct | None:
     """
     Wrapper for Fortran routine tao_curve_ele_ref
     
@@ -45213,6 +46265,8 @@ def tao_curve_ele_ref(curve: TaoCurveStruct, point_to_ele_ref: bool, ele_track: 
     
     point_to_ele_ref : bool
     
+    Returns
+    -------
     ele_track : EleStruct
     """
 def tao_curve_ix_uni(curve: TaoCurveStruct) -> int:
@@ -46864,7 +47918,7 @@ def tao_lat_emit_calc(plane: typing.SupportsInt | typing.SupportsIndex, emit_typ
     emit : float
         emittance.
     """
-def tao_lat_sigma_calc_needed(data_type: str, data_source: str, do_lat_sigma: bool) -> None:
+def tao_lat_sigma_calc_needed(data_type: str, data_source: str) -> bool:
     """
     Wrapper for Fortran routine tao_lat_sigma_calc_needed
     
@@ -46874,6 +47928,8 @@ def tao_lat_sigma_calc_needed(data_type: str, data_source: str, do_lat_sigma: bo
     
     data_source : str
     
+    Returns
+    -------
     do_lat_sigma : bool
     """
 def tao_lat_sigma_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt | typing.SupportsIndex, print_err: bool | None = None, force_calc: bool | None = None) -> bool:
@@ -47154,7 +48210,7 @@ def tao_next_word(line: str) -> TaoNextWord:
     word : str
         First word of line.
     """
-def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_map: bool) -> None:
+def tao_one_turn_map_calc_needed(data_type: str, data_source: str) -> bool:
     """
     Wrapper for Fortran routine tao_one_turn_map_calc_needed
     
@@ -47164,6 +48220,8 @@ def tao_one_turn_map_calc_needed(data_type: str, data_source: str, do_one_turn_m
     
     data_source : str
     
+    Returns
+    -------
     do_one_turn_map : bool
     """
 def tao_open_file(file: str, file_name: str, error_severity: typing.SupportsInt | typing.SupportsIndex, binary: bool | None = None) -> int:
@@ -47841,7 +48899,7 @@ def tao_quiet_set(set: str) -> None:
     set : str
         True is silent running is wanted.
     """
-def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) -> None:
+def tao_rad_int_calc_needed(data_type: str, data_source: str) -> bool:
     """
     Wrapper for Fortran routine tao_rad_int_calc_needed
     
@@ -47851,6 +48909,8 @@ def tao_rad_int_calc_needed(data_type: str, data_source: str, do_rad_int: bool) 
     
     data_source : str
     
+    Returns
+    -------
     do_rad_int : bool
     """
 def tao_re_allocate_expression_info(info: TaoExpressionInfoStructAlloc1D, n: typing.SupportsInt | typing.SupportsIndex, exact: bool | None = None) -> None:
@@ -48956,7 +50016,7 @@ def tao_single_track(tao_lat: TaoLatticeStruct, ix_branch: typing.SupportsInt | 
     calc_ok : bool
         Set True if there were no problems, False otherwise.
     """
-def tao_spin_matrices_calc_needed(data_type: str, data_source: str, do_calc: bool) -> None:
+def tao_spin_matrices_calc_needed(data_type: str, data_source: str) -> bool:
     """
     Wrapper for Fortran routine tao_spin_matrices_calc_needed
     
@@ -48966,6 +50026,8 @@ def tao_spin_matrices_calc_needed(data_type: str, data_source: str, do_calc: boo
     
     data_source : str
     
+    Returns
+    -------
     do_calc : bool
     """
 def tao_spin_tracking_turn_on() -> None:
@@ -48989,7 +50051,7 @@ def tao_split_component(comp_str: str) -> TaoSplitComponent:
     err : bool
         Set True if there is an error, False otherwise.
     """
-def tao_srdt_calc_needed(data_type: str, data_source: str, do_srdt: typing.SupportsInt | typing.SupportsIndex) -> None:
+def tao_srdt_calc_needed(data_type: str, data_source: str) -> int:
     """
     Wrapper for Fortran routine tao_srdt_calc_needed
     
@@ -48999,6 +50061,8 @@ def tao_srdt_calc_needed(data_type: str, data_source: str, do_srdt: typing.Suppo
     
     data_source : str
     
+    Returns
+    -------
     do_srdt : int
     """
 def tao_subin_uni_number(name_in: str, ix_uni: typing.SupportsInt | typing.SupportsIndex) -> TaoSubinUniNumber:
@@ -49112,7 +50176,7 @@ def tao_to_real(expression: str) -> TaoToReal:
     err_flag : bool
         TRUE on error.
     """
-def tao_too_many_particles_lost(beam: BeamStruct, no_beam: bool) -> None:
+def tao_too_many_particles_lost(beam: BeamStruct) -> bool:
     """
     Wrapper for Fortran routine tao_too_many_particles_lost
     
@@ -49120,6 +50184,8 @@ def tao_too_many_particles_lost(beam: BeamStruct, no_beam: bool) -> None:
     ----------
     beam : BeamStruct
     
+    Returns
+    -------
     no_beam : bool
     """
 def tao_top10_derivative_print() -> None:
@@ -50299,7 +51365,7 @@ def to_photon_angle_coords(orb_in: CoordStruct, ele: EleStruct) -> CoordStruct:
     orb_out : CoordStruct
         Transformed coordinates.
     """
-def to_str(num: typing.SupportsFloat | typing.SupportsIndex, string: str, max_signif: typing.SupportsInt | typing.SupportsIndex | None = None) -> None:
+def to_str(num: typing.SupportsFloat | typing.SupportsIndex, max_signif: typing.SupportsInt | typing.SupportsIndex | None = None) -> str:
     """
     no longer exists
     subroutine test_tune_tracker_lock (tracker_locked)
@@ -53572,12 +54638,15 @@ def verify_valid_name(name: str, ix_name: typing.SupportsInt | typing.SupportsIn
     is_valid : bool
         True if name is well formed. False otherwise.
     """
-def virtual_memory_usage(usage: typing.SupportsInt | typing.SupportsIndex) -> None:
+def virtual_memory_usage() -> int:
     """
     Wrapper for Fortran routine virtual_memory_usage
     
     Parameters
     ----------
+    
+    Returns
+    -------
     usage : int
     """
 def w_mat_for_bend_angle(angle: typing.SupportsFloat | typing.SupportsIndex, ref_tilt: typing.SupportsFloat | typing.SupportsIndex, r_vec: typing.Annotated[collections.abc.Sequence[typing.SupportsFloat | typing.SupportsIndex], "FixedSize(3)"] | None = None) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(3)"]], "FixedSize(3)"]:
@@ -53803,7 +54872,7 @@ def wall3d_to_position(orbit: CoordStruct, ele: EleStruct) -> typing.Annotated[l
     position : 1D array of float (shape: 6)
         Position used in wall3d_d_radius call.
     """
-def word_len(wording: str, wlen: typing.SupportsInt | typing.SupportsIndex) -> None:
+def word_len(wording: str) -> int:
     """
     Wrapper for Fortran routine word_len
     
@@ -53811,6 +54880,8 @@ def word_len(wording: str, wlen: typing.SupportsInt | typing.SupportsIndex) -> N
     ----------
     wording : str
     
+    Returns
+    -------
     wlen : int
     """
 def word_read(in_str: str, delim_list: str, word: str, ix_word: typing.SupportsInt | typing.SupportsIndex, delim: str, delim_found: bool, out_str: str, ignore_interior: bool | None = None) -> None:
@@ -54568,7 +55639,7 @@ def x0_radiation_length(species: typing.SupportsInt | typing.SupportsIndex) -> f
         Radiation length in kg/m^2. Set to real_garbage$ if species is not atomic or has atomic index greater than
         92.
     """
-def xlafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def xlafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine xlafun
     
@@ -54580,6 +55651,8 @@ def xlafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFlo
     
     z : float
     
+    Returns
+    -------
     res : float
     """
 def xraylib_nist_compound(name: str) -> int:
@@ -54599,7 +55672,7 @@ def xraylib_nist_compound(name: str) -> int:
     indx : int
         Compound index. -1 if not found.
     """
-def ylafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def ylafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine ylafun
     
@@ -54611,6 +55684,8 @@ def ylafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFlo
     
     z : float
     
+    Returns
+    -------
     res : float
     """
 def z_at_surface(ele: EleStruct, x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, extend_grid: bool | None = None) -> ZAtSurface:
@@ -54688,7 +55763,7 @@ def zig_table_init() -> None:
     Based on Marsaglia & Tsang (2000), "The Ziggurat Method for Generating
     Random Variables", Journal of Statistical Software 5(8).
     """
-def zlafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex, res: typing.SupportsFloat | typing.SupportsIndex) -> None:
+def zlafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, z: typing.SupportsFloat | typing.SupportsIndex) -> float:
     """
     Wrapper for Fortran routine zlafun
     
@@ -54700,5 +55775,7 @@ def zlafun(x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFlo
     
     z : float
     
+    Returns
+    -------
     res : float
     """

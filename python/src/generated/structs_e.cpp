@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_e.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -64,6 +67,21 @@ void init_ele_pointer_struct(py::module &m, py::class_<ElePointerStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const ElePointerStruct &self, py::dict &memo) { return ElePointerStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const ElePointerStruct &self, const ElePointerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ElePointerStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -785,6 +803,21 @@ void init_ele_struct(py::module &m, py::class_<EleStruct> &cls) {
           }
       )
       .def("__deepcopy__", [](const EleStruct &self, py::dict &memo) { return EleStruct(self); })
+      .def(
+          "__eq__",
+          [](const EleStruct &self, const EleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const EleStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -852,6 +885,21 @@ void init_ellipse_beam_init_struct(py::module &m, py::class_<EllipseBeamInitStru
           "__deepcopy__",
           [](const EllipseBeamInitStruct &self, py::dict &memo) {
             return EllipseBeamInitStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const EllipseBeamInitStruct &self, const EllipseBeamInitStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const EllipseBeamInitStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -956,6 +1004,21 @@ void init_em_field_struct(py::module &m, py::class_<EmFieldStruct> &cls) {
           "__deepcopy__",
           [](const EmFieldStruct &self, py::dict &memo) { return EmFieldStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const EmFieldStruct &self, const EmFieldStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const EmFieldStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -1013,6 +1076,21 @@ void init_expression_atom_struct(py::module &m, py::class_<ExpressionAtomStruct>
           "__deepcopy__",
           [](const ExpressionAtomStruct &self, py::dict &memo) {
             return ExpressionAtomStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const ExpressionAtomStruct &self, const ExpressionAtomStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ExpressionAtomStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1077,6 +1155,21 @@ void init_expression_tree_struct(py::module &m, py::class_<ExpressionTreeStruct>
           "__deepcopy__",
           [](const ExpressionTreeStruct &self, py::dict &memo) {
             return ExpressionTreeStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const ExpressionTreeStruct &self, const ExpressionTreeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ExpressionTreeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

@@ -151,10 +151,9 @@ add_switch : bool
   );
   m.def(
       "find_location",
-      py::overload_cast<FArray1D<Int> &, int, int>(&SimUtils::find_location),
+      py::overload_cast<FArray1D<Int> &, int>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
-      py::arg("ix_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine find_location_int
 
@@ -164,15 +163,16 @@ arr : 1D array of int
 
 value : int
 
+Returns
+-------
 ix_match : int
 )"""
   );
   m.def(
       "find_location",
-      py::overload_cast<BoolAlloc1D &, bool, int>(&SimUtils::find_location),
+      py::overload_cast<BoolAlloc1D &, bool>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
-      py::arg("ix_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine find_location_logic
 
@@ -182,6 +182,8 @@ arr : 1D array of bool
 
 value : bool
 
+Returns
+-------
 ix_match : int
 )"""
   );
@@ -209,10 +211,9 @@ ix_match : int
   );
   m.def(
       "find_location",
-      py::overload_cast<CharacterAlloc1D &, std::string, int>(&SimUtils::find_location),
+      py::overload_cast<CharacterAlloc1D &, std::string>(&SimUtils::find_location),
       py::arg("arr"),
       py::arg("value"),
-      py::arg("ix_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine find_location_str
 
@@ -222,6 +223,8 @@ arr : 1D array of str
 
 value : str
 
+Returns
+-------
 ix_match : int
 )"""
   );
@@ -251,7 +254,6 @@ frequency : float
       &SimUtils::fixedwindowls,
       py::arg("ynew"),
       py::arg("id"),
-      py::arg("z"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function fixedWindowLS
 

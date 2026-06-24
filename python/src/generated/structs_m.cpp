@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_m.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -69,6 +72,21 @@ void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
           "__deepcopy__",
           [](const Mode3Struct &self, py::dict &memo) { return Mode3Struct(self); }
       )
+      .def(
+          "__eq__",
+          [](const Mode3Struct &self, const Mode3Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const Mode3Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -133,6 +151,21 @@ void init_mode_info_struct(py::module &m, py::class_<ModeInfoStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const ModeInfoStruct &self, py::dict &memo) { return ModeInfoStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const ModeInfoStruct &self, const ModeInfoStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ModeInfoStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -199,6 +232,21 @@ void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
           "__deepcopy__",
           [](const MadEnergyStruct &self, py::dict &memo) { return MadEnergyStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const MadEnergyStruct &self, const MadEnergyStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const MadEnergyStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -249,6 +297,21 @@ void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const MadMapStruct &self, py::dict &memo) { return MadMapStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const MadMapStruct &self, const MadMapStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const MadMapStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

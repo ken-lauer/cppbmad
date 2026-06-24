@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_b.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -98,6 +101,21 @@ void init_bbu_beam_struct(py::module &m, py::class_<BbuBeamStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const BbuBeamStruct &self, py::dict &memo) { return BbuBeamStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const BbuBeamStruct &self, const BbuBeamStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BbuBeamStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -400,6 +418,21 @@ void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &cls) {
           "__deepcopy__",
           [](const BbuParamStruct &self, py::dict &memo) { return BbuParamStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const BbuParamStruct &self, const BbuParamStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BbuParamStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -528,6 +561,21 @@ void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const BbuStageStruct &self, py::dict &memo) { return BbuStageStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const BbuStageStruct &self, const BbuStageStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BbuStageStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -823,6 +871,21 @@ void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &cls) {
           "__deepcopy__",
           [](const BeamInitStruct &self, py::dict &memo) { return BeamInitStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const BeamInitStruct &self, const BeamInitStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BeamInitStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -846,6 +909,21 @@ void init_beam_struct(py::module &m, py::class_<BeamStruct> &cls) {
           }
       )
       .def("__deepcopy__", [](const BeamStruct &self, py::dict &memo) { return BeamStruct(self); })
+      .def(
+          "__eq__",
+          [](const BeamStruct &self, const BeamStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BeamStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -1218,6 +1296,21 @@ void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &cls) {
           "__deepcopy__",
           [](const BmadCommonStruct &self, py::dict &memo) { return BmadCommonStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const BmadCommonStruct &self, const BmadCommonStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BmadCommonStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -1283,6 +1376,21 @@ void init_bmad_normal_form_struct(py::module &m, py::class_<BmadNormalFormStruct
           "__deepcopy__",
           [](const BmadNormalFormStruct &self, py::dict &memo) {
             return BmadNormalFormStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const BmadNormalFormStruct &self, const BmadNormalFormStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BmadNormalFormStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1384,6 +1492,21 @@ void init_bookkeeping_state_struct(py::module &m, py::class_<BookkeepingStateStr
           "__deepcopy__",
           [](const BookkeepingStateStruct &self, py::dict &memo) {
             return BookkeepingStateStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const BookkeepingStateStruct &self, const BookkeepingStateStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BookkeepingStateStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1493,6 +1616,21 @@ void init_bpm_phase_coupling_struct(py::module &m, py::class_<BpmPhaseCouplingSt
           "__deepcopy__",
           [](const BpmPhaseCouplingStruct &self, py::dict &memo) {
             return BpmPhaseCouplingStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const BpmPhaseCouplingStruct &self, const BpmPhaseCouplingStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BpmPhaseCouplingStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1640,6 +1778,21 @@ void init_branch_struct(py::module &m, py::class_<BranchStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const BranchStruct &self, py::dict &memo) { return BranchStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const BranchStruct &self, const BranchStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BranchStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -1862,6 +2015,21 @@ void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &cls)
           "__deepcopy__",
           [](const BunchParamsStruct &self, py::dict &memo) { return BunchParamsStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const BunchParamsStruct &self, const BunchParamsStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BunchParamsStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -2013,6 +2181,21 @@ void init_bunch_struct(py::module &m, py::class_<BunchStruct> &cls) {
           "__deepcopy__",
           [](const BunchStruct &self, py::dict &memo) { return BunchStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const BunchStruct &self, const BunchStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BunchStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -2078,6 +2261,21 @@ void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &cls) {
           "__deepcopy__",
           [](const BunchTrackStruct &self, py::dict &memo) { return BunchTrackStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const BunchTrackStruct &self, const BunchTrackStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BunchTrackStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -2125,6 +2323,21 @@ void init_bicubic_cmplx_coef_struct(py::module &m, py::class_<BicubicCmplxCoefSt
           "__deepcopy__",
           [](const BicubicCmplxCoefStruct &self, py::dict &memo) {
             return BicubicCmplxCoefStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const BicubicCmplxCoefStruct &self, const BicubicCmplxCoefStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BicubicCmplxCoefStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

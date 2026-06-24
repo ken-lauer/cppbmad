@@ -238,7 +238,6 @@ y_pt : float
       &Bmad::knots_to_string,
       py::arg("x_knot"),
       py::arg("y_knot"),
-      py::arg("str"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine knots_to_string
 
@@ -248,6 +247,8 @@ x_knot : 1D array of float
 
 y_knot : 1D array of float
 
+Returns
+-------
 str : str
 )"""
   );

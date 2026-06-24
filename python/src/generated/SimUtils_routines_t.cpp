@@ -16,7 +16,6 @@ void init_SimUtils_routines_t(py::module &m) {
       "to_str",
       &SimUtils::to_str,
       py::arg("num"),
-      py::arg("string"),
       py::arg("max_signif") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(no longer exists

@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_r.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -116,6 +119,21 @@ void init_rad_int1_struct(py::module &m, py::class_<RadInt1Struct> &cls) {
           "__deepcopy__",
           [](const RadInt1Struct &self, py::dict &memo) { return RadInt1Struct(self); }
       )
+      .def(
+          "__eq__",
+          [](const RadInt1Struct &self, const RadInt1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RadInt1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -149,6 +167,21 @@ void init_rad_int_all_ele_struct(py::module &m, py::class_<RadIntAllEleStruct> &
       .def(
           "__deepcopy__",
           [](const RadIntAllEleStruct &self, py::dict &memo) { return RadIntAllEleStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const RadIntAllEleStruct &self, const RadIntAllEleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RadIntAllEleStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -194,6 +227,21 @@ void init_rad_int_branch_struct(py::module &m, py::class_<RadIntBranchStruct> &c
       .def(
           "__deepcopy__",
           [](const RadIntBranchStruct &self, py::dict &memo) { return RadIntBranchStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const RadIntBranchStruct &self, const RadIntBranchStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RadIntBranchStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -244,6 +292,21 @@ void init_rad_map_ele_struct(py::module &m, py::class_<RadMapEleStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const RadMapEleStruct &self, py::dict &memo) { return RadMapEleStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const RadMapEleStruct &self, const RadMapEleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RadMapEleStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -312,6 +375,21 @@ void init_rad_map_struct(py::module &m, py::class_<RadMapStruct> &cls) {
           "__deepcopy__",
           [](const RadMapStruct &self, py::dict &memo) { return RadMapStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const RadMapStruct &self, const RadMapStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RadMapStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -375,6 +453,21 @@ void init_ramper_lord_struct(py::module &m, py::class_<RamperLordStruct> &cls) {
           "__deepcopy__",
           [](const RamperLordStruct &self, py::dict &memo) { return RamperLordStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const RamperLordStruct &self, const RamperLordStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RamperLordStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -435,6 +528,21 @@ void init_resonance_h_struct(py::module &m, py::class_<ResonanceHStruct> &cls) {
           "__deepcopy__",
           [](const ResonanceHStruct &self, py::dict &memo) { return ResonanceHStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const ResonanceHStruct &self, const ResonanceHStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ResonanceHStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -474,6 +582,21 @@ void init_rf_ele_struct(py::module &m, py::class_<RfEleStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const RfEleStruct &self, py::dict &memo) { return RfEleStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const RfEleStruct &self, const RfEleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RfEleStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -589,6 +712,21 @@ void init_rf_stair_step_struct(py::module &m, py::class_<RfStairStepStruct> &cls
           "__deepcopy__",
           [](const RfStairStepStruct &self, py::dict &memo) { return RfStairStepStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const RfStairStepStruct &self, const RfStairStepStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RfStairStepStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -676,6 +814,21 @@ void init_random_state_struct(py::module &m, py::class_<RandomStateStruct> &cls)
       .def(
           "__deepcopy__",
           [](const RandomStateStruct &self, py::dict &memo) { return RandomStateStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const RandomStateStruct &self, const RandomStateStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RandomStateStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

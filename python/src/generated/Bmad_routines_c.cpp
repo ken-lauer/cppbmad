@@ -934,7 +934,6 @@ err_flag : bool, optional
       "cmplx_re_str",
       &Bmad::cmplx_re_str,
       py::arg("cmp"),
-      py::arg("str_out"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine cmplx_re_str
 
@@ -942,6 +941,8 @@ Parameters
 ----------
 cmp : complex
 
+Returns
+-------
 str_out : str
 )"""
   );
@@ -979,12 +980,9 @@ complex_taylor : ComplexTaylorStruct
   );
   m.def(
       "complex_taylor_coef",
-      py::overload_cast<ComplexTaylorStruct &, FArray1D<Int> &, std::complex<double>>(
-          &Bmad::complex_taylor_coef
-      ),
+      py::overload_cast<ComplexTaylorStruct &, FArray1D<Int> &>(&Bmad::complex_taylor_coef),
       py::arg("complex_taylor"),
       py::arg("exp"),
-      py::arg("coef"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function complex_taylor_coef (complex_taylor, exp)
 Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
@@ -1021,7 +1019,6 @@ Input (complex_taylor_coef2):
       "complex_taylor_coef",
       py::overload_cast<
           ComplexTaylorStruct &,
-          std::complex<double>,
           std::optional<int>,
           std::optional<int>,
           std::optional<int>,
@@ -1032,7 +1029,6 @@ Input (complex_taylor_coef2):
           std::optional<int>,
           std::optional<int>>(&Bmad::complex_taylor_coef),
       py::arg("complex_taylor"),
-      py::arg("coef"),
       py::arg("i1") = py::none(),
       py::arg("i2") = py::none(),
       py::arg("i3") = py::none(),
@@ -2244,7 +2240,6 @@ floor1 : FloorPositionStruct
       py::arg("v"),
       py::arg("w"),
       py::arg("gam"),
-      py::arg("res"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine coulombfun
 
@@ -2258,6 +2253,8 @@ w : float
 
 gam : float
 
+Returns
+-------
 res : float
 )"""
   );

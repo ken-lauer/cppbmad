@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_f.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -66,6 +69,21 @@ void init_floor_position_struct(py::module &m, py::class_<FloorPositionStruct> &
       .def(
           "__deepcopy__",
           [](const FloorPositionStruct &self, py::dict &memo) { return FloorPositionStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const FloorPositionStruct &self, const FloorPositionStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const FloorPositionStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -151,6 +169,21 @@ void init_fibre(py::module &m, py::class_<Fibre> &cls) {
           }
       )
       .def("__deepcopy__", [](const Fibre &self, py::dict &memo) { return Fibre(self); })
+      .def(
+          "__eq__",
+          [](const Fibre &self, const Fibre &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const Fibre &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 

@@ -35,7 +35,6 @@ void init_Bmad_routines_l(py::module &m) {
       py::arg("x"),
       py::arg("y"),
       py::arg("z"),
-      py::arg("res"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lafun
 
@@ -47,6 +46,8 @@ y : float
 
 z : float
 
+Returns
+-------
 res : float
 )"""
   );

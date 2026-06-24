@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_g.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -64,6 +67,21 @@ void init_gen_grad1_struct(py::module &m, py::class_<GenGrad1Struct> &cls) {
       .def(
           "__deepcopy__",
           [](const GenGrad1Struct &self, py::dict &memo) { return GenGrad1Struct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const GenGrad1Struct &self, const GenGrad1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GenGrad1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -186,6 +204,21 @@ void init_gen_grad_map_struct(py::module &m, py::class_<GenGradMapStruct> &cls) 
           "__deepcopy__",
           [](const GenGradMapStruct &self, py::dict &memo) { return GenGradMapStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const GenGradMapStruct &self, const GenGradMapStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GenGradMapStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -234,6 +267,21 @@ void init_gg_taylor_struct(py::module &m, py::class_<GgTaylorStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const GgTaylorStruct &self, py::dict &memo) { return GgTaylorStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const GgTaylorStruct &self, const GgTaylorStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GgTaylorStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -288,6 +336,21 @@ void init_gg_taylor_term_struct(py::module &m, py::class_<GgTaylorTermStruct> &c
       .def(
           "__deepcopy__",
           [](const GgTaylorTermStruct &self, py::dict &memo) { return GgTaylorTermStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const GgTaylorTermStruct &self, const GgTaylorTermStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GgTaylorTermStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -383,6 +446,21 @@ void init_grid_beam_init_struct(py::module &m, py::class_<GridBeamInitStruct> &c
           "__deepcopy__",
           [](const GridBeamInitStruct &self, py::dict &memo) { return GridBeamInitStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const GridBeamInitStruct &self, const GridBeamInitStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GridBeamInitStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -428,6 +506,21 @@ void init_grid_field_pt1_struct(py::module &m, py::class_<GridFieldPt1Struct> &c
           "__deepcopy__",
           [](const GridFieldPt1Struct &self, py::dict &memo) { return GridFieldPt1Struct(self); }
       )
+      .def(
+          "__eq__",
+          [](const GridFieldPt1Struct &self, const GridFieldPt1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GridFieldPt1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -469,6 +562,21 @@ void init_grid_field_pt_struct(py::module &m, py::class_<GridFieldPtStruct> &cls
       .def(
           "__deepcopy__",
           [](const GridFieldPtStruct &self, py::dict &memo) { return GridFieldPtStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const GridFieldPtStruct &self, const GridFieldPtStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GridFieldPtStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -615,6 +723,21 @@ void init_grid_field_struct(py::module &m, py::class_<GridFieldStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const GridFieldStruct &self, py::dict &memo) { return GridFieldStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const GridFieldStruct &self, const GridFieldStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GridFieldStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

@@ -9,7 +9,6 @@ void init_bsim_routines_h(py::module &m) {
       "hom_voltage",
       &bsim::hom_voltage,
       py::arg("lr_wake"),
-      py::arg("voltage"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine hom_voltage
 
@@ -17,6 +16,8 @@ Parameters
 ----------
 lr_wake : WakeLrModeStruct
 
+Returns
+-------
 voltage : float
 )"""
   );

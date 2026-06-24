@@ -458,7 +458,6 @@ err_flag : bool
       &Tao::tao_chrom_calc_needed,
       py::arg("data_type"),
       py::arg("data_source"),
-      py::arg("do_chrom"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_chrom_calc_needed
 
@@ -468,6 +467,8 @@ data_type : str
 
 data_source : str
 
+Returns
+-------
 do_chrom : bool
 )"""
   );
@@ -747,7 +748,6 @@ who : str
       &Tao::tao_curve_ele_ref,
       py::arg("curve"),
       py::arg("point_to_ele_ref"),
-      py::arg("ele_track"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_curve_ele_ref
 
@@ -758,6 +758,8 @@ curve : TaoCurveStruct
 
 point_to_ele_ref : bool
 
+Returns
+-------
 ele_track : EleStruct
 )"""
   );
@@ -3383,7 +3385,6 @@ emit : float
       &Tao::tao_lat_sigma_calc_needed,
       py::arg("data_type"),
       py::arg("data_source"),
-      py::arg("do_lat_sigma"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_lat_sigma_calc_needed
 
@@ -3393,6 +3394,8 @@ data_type : str
 
 data_source : str
 
+Returns
+-------
 do_lat_sigma : bool
 )"""
   );
@@ -3857,7 +3860,6 @@ word : str
       &Tao::tao_one_turn_map_calc_needed,
       py::arg("data_type"),
       py::arg("data_source"),
-      py::arg("do_one_turn_map"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_one_turn_map_calc_needed
 
@@ -3867,6 +3869,8 @@ data_type : str
 
 data_source : str
 
+Returns
+-------
 do_one_turn_map : bool
 )"""
   );
@@ -4944,7 +4948,6 @@ set : str
       &Tao::tao_rad_int_calc_needed,
       py::arg("data_type"),
       py::arg("data_source"),
-      py::arg("do_rad_int"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_rad_int_calc_needed
 
@@ -4954,6 +4957,8 @@ data_type : str
 
 data_source : str
 
+Returns
+-------
 do_rad_int : bool
 )"""
   );
@@ -6585,7 +6590,6 @@ calc_ok : bool
       &Tao::tao_spin_matrices_calc_needed,
       py::arg("data_type"),
       py::arg("data_source"),
-      py::arg("do_calc"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_spin_matrices_calc_needed
 
@@ -6595,6 +6599,8 @@ data_type : str
 
 data_source : str
 
+Returns
+-------
 do_calc : bool
 )"""
   );
@@ -6648,7 +6654,6 @@ err : bool
       &Tao::tao_srdt_calc_needed,
       py::arg("data_type"),
       py::arg("data_source"),
-      py::arg("do_srdt"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_srdt_calc_needed
 
@@ -6658,6 +6663,8 @@ data_type : str
 
 data_source : str
 
+Returns
+-------
 do_srdt : int
 )"""
   );
@@ -6868,7 +6875,6 @@ err_flag : bool
       "tao_too_many_particles_lost",
       &Tao::tao_too_many_particles_lost,
       py::arg("beam"),
-      py::arg("no_beam"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine tao_too_many_particles_lost
 
@@ -6876,6 +6882,8 @@ Parameters
 ----------
 beam : BeamStruct
 
+Returns
+-------
 no_beam : bool
 )"""
   );

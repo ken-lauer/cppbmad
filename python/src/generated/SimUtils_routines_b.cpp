@@ -4,9 +4,9 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 using namespace Pybmad;
 
-PyBinXCenter python_bin_x_center(int ix_bin, double bin1_x_min, double bin_delta, double x_center) {
-  SimUtils::bin_x_center(ix_bin, bin1_x_min, bin_delta, x_center);
-  auto py_result{PyBinXCenter{ix_bin}};
+PyBinXCenter python_bin_x_center(int ix_bin, double bin1_x_min, double bin_delta) {
+  auto _result = SimUtils::bin_x_center(ix_bin, bin1_x_min, bin_delta);
+  auto py_result{PyBinXCenter{_result, ix_bin}};
   return py_result;
 }
 PyBitSet python_bit_set(int word, int pos, bool set_to_1) {
@@ -108,12 +108,15 @@ ix_bin : int
       "BinXCenter",
       "bin_x_center return type"
   )
+      .def_readonly("x_center", &PyBinXCenter::x_center)
       .def_readonly("ix_bin", &PyBinXCenter::ix_bin)
-      .def("__len__", [](const PyBinXCenter &) { return 1; })
+      .def("__len__", [](const PyBinXCenter &) { return 2; })
       .def("__getitem__", [](const PyBinXCenter &s, int i) -> py::object {
         if (i < 0)
-          i += 1;
+          i += 2;
         if (i == 0)
+          return py::cast(s.x_center);
+        if (i == 1)
           return py::cast(s.ix_bin);
         throw py::index_error();
       });
@@ -123,7 +126,6 @@ ix_bin : int
       py::arg("ix_bin"),
       py::arg("bin1_x_min"),
       py::arg("bin_delta"),
-      py::arg("x_center"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function bin_x_center (ix_bin, bin1_x_min, bin_delta) result(x_center)
 

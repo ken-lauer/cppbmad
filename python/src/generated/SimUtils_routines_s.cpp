@@ -59,10 +59,9 @@ err_flag : bool
   );
   m.def(
       "set_parameter",
-      py::overload_cast<int, int, int>(&SimUtils::set_parameter),
+      py::overload_cast<int, int>(&SimUtils::set_parameter),
       py::arg("param_val"),
       py::arg("set_val"),
-      py::arg("save_val"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_parameter_int
 
@@ -72,15 +71,16 @@ param_val : int
 
 set_val : int
 
+Returns
+-------
 save_val : int
 )"""
   );
   m.def(
       "set_parameter",
-      py::overload_cast<bool, bool, bool>(&SimUtils::set_parameter),
+      py::overload_cast<bool, bool>(&SimUtils::set_parameter),
       py::arg("param_val"),
       py::arg("set_val"),
-      py::arg("save_val"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_parameter_logic
 
@@ -90,15 +90,16 @@ param_val : bool
 
 set_val : bool
 
+Returns
+-------
 save_val : bool
 )"""
   );
   m.def(
       "set_parameter",
-      py::overload_cast<double, double, double>(&SimUtils::set_parameter),
+      py::overload_cast<double, double>(&SimUtils::set_parameter),
       py::arg("param_val"),
       py::arg("set_val"),
-      py::arg("save_val"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine set_parameter_real
 
@@ -108,6 +109,8 @@ param_val : float
 
 set_val : float
 
+Returns
+-------
 save_val : float
 )"""
   );
@@ -277,7 +280,6 @@ error_flag : bool
       "special_projection",
       &SimUtils::special_projection,
       py::arg("f"),
-      py::arg("func_retval__"),
       py::arg("status") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(function special_projection
@@ -626,7 +628,6 @@ y : float
       "sqrt_one",
       &SimUtils::sqrt_one,
       py::arg("x"),
-      py::arg("ds1"),
       py::arg("nd") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine sqrt_one
@@ -636,11 +637,13 @@ Parameters
 x : float
     Number
 
-ds1 : float
-
 nd : int, optional
     Derivative order. nd = 0 (default) -> compute Sqrt[1+x] - 1. NOTE: Currently only nd = 0 and nd = 1 are
     implemented.
+
+Returns
+-------
+ds1 : float
 )"""
   );
   m.def(
@@ -648,7 +651,6 @@ nd : int, optional
       &SimUtils::str_count,
       py::arg("str"),
       py::arg("match_"),
-      py::arg("num"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine str_count
 
@@ -658,6 +660,8 @@ str : str
 
 match : str
 
+Returns
+-------
 num : int
 )"""
   );
@@ -682,7 +686,6 @@ dst : str
       &SimUtils::str_first_in_set,
       py::arg("line"),
       py::arg("set"),
-      py::arg("ix_match"),
       py::arg("ignore_clauses") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine str_first_in_set
@@ -693,9 +696,11 @@ line : str
 
 set : str
 
-ix_match : int
-
 ignore_clauses : bool, optional
+
+Returns
+-------
+ix_match : int
 )"""
   );
   m.def(
@@ -703,7 +708,6 @@ ignore_clauses : bool, optional
       &SimUtils::str_first_not_in_set,
       py::arg("line"),
       py::arg("set"),
-      py::arg("ix_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine str_first_not_in_set
 
@@ -713,6 +717,8 @@ line : str
 
 set : str
 
+Returns
+-------
 ix_match : int
 )"""
   );
@@ -721,7 +727,6 @@ ix_match : int
       &SimUtils::str_last_in_set,
       py::arg("line"),
       py::arg("set"),
-      py::arg("ix_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine str_last_in_set
 
@@ -731,6 +736,8 @@ line : str
 
 set : str
 
+Returns
+-------
 ix_match : int
 )"""
   );
@@ -739,7 +746,6 @@ ix_match : int
       &SimUtils::str_last_not_in_set,
       py::arg("line"),
       py::arg("set"),
-      py::arg("ix_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine str_last_not_in_set
 
@@ -749,6 +755,8 @@ line : str
 
 set : str
 
+Returns
+-------
 ix_match : int
 )"""
   );
@@ -757,7 +765,6 @@ ix_match : int
       &SimUtils::str_match_wild,
       py::arg("str"),
       py::arg("pat"),
-      py::arg("a_match"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine str_match_wild
 
@@ -767,6 +774,8 @@ str : str
 
 pat : str
 
+Returns
+-------
 a_match : bool
 )"""
   );
@@ -816,7 +825,6 @@ dst : str
       py::arg("line"),
       py::arg("default_"),
       py::arg("err_flag"),
-      py::arg("value"),
       py::arg("err_print_flag") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine string_to_int
@@ -827,9 +835,11 @@ line : str
 
 err_flag : bool
 
-value : int
-
 err_print_flag : bool, optional
+
+Returns
+-------
+value : int
 )"""
   );
   m.def(
@@ -838,7 +848,6 @@ err_print_flag : bool, optional
       py::arg("line"),
       py::arg("default_"),
       py::arg("err_flag"),
-      py::arg("value"),
       py::arg("err_print_flag") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine string_to_real
@@ -849,9 +858,11 @@ line : str
 
 err_flag : bool
 
-value : float
-
 err_print_flag : bool, optional
+
+Returns
+-------
+value : float
 )"""
   );
   m.def(

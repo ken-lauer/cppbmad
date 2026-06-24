@@ -670,7 +670,6 @@ err_flag : bool
       "array_re_str",
       &Bmad::array_re_str,
       py::arg("arr"),
-      py::arg("str_out"),
       py::arg("parens_in") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine array_re_str
@@ -679,9 +678,11 @@ Parameters
 ----------
 arr : 1D array of float
 
-str_out : str
-
 parens_in : str, optional
+
+Returns
+-------
+str_out : str
 )"""
   );
   m.def(
@@ -689,7 +690,6 @@ parens_in : str, optional
       &Bmad::astra_max_field_reference,
       py::arg("pt0"),
       py::arg("ele"),
-      py::arg("field_value"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine astra_max_field_reference
 
@@ -699,6 +699,8 @@ pt0 : GridFieldPt1Struct
 
 ele : EleStruct
 
+Returns
+-------
 field_value : float
 )"""
   );

@@ -14,7 +14,6 @@ void init_Bmad_routines_d(py::module &m) {
       py::arg("B1"),
       py::arg("delta"),
       py::arg("species"),
-      py::arg("mat"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine damping_matrix_d
 
@@ -32,6 +31,8 @@ delta : float
 
 species : int
 
+Returns
+-------
 mat : 2D array of float (shape: 6,6)
 )"""
   );
@@ -164,7 +165,6 @@ ix_section : int
       py::arg("gamma"),
       py::arg("g_tot"),
       py::arg("species"),
-      py::arg("mat"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine diffusion_matrix_b
 
@@ -176,6 +176,8 @@ g_tot : float
 
 species : int
 
+Returns
+-------
 mat : 2D array of float (shape: 6,6)
 )"""
   );
@@ -251,7 +253,6 @@ err_flag : bool, optional
       py::arg("pc_old"),
       py::arg("mass"),
       py::arg("dE"),
-      py::arg("dpc"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine dpc_given_de
 
@@ -263,6 +264,8 @@ mass : float
 
 dE : float
 
+Returns
+-------
 dpc : float
 )"""
   );

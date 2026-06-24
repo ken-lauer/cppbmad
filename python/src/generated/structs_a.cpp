@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_a.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -48,6 +51,21 @@ void init_ac_kicker_freq_struct(py::module &m, py::class_<AcKickerFreqStruct> &c
           "__deepcopy__",
           [](const AcKickerFreqStruct &self, py::dict &memo) { return AcKickerFreqStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const AcKickerFreqStruct &self, const AcKickerFreqStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const AcKickerFreqStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -84,6 +102,21 @@ void init_ac_kicker_struct(py::module &m, py::class_<AcKickerStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const AcKickerStruct &self, py::dict &memo) { return AcKickerStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const AcKickerStruct &self, const AcKickerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const AcKickerStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -136,6 +169,21 @@ void init_ac_kicker_time_struct(py::module &m, py::class_<AcKickerTimeStruct> &c
       .def(
           "__deepcopy__",
           [](const AcKickerTimeStruct &self, py::dict &memo) { return AcKickerTimeStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const AcKickerTimeStruct &self, const AcKickerTimeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const AcKickerTimeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -224,6 +272,21 @@ void init_anormal_mode_struct(py::module &m, py::class_<AnormalModeStruct> &cls)
       .def(
           "__deepcopy__",
           [](const AnormalModeStruct &self, py::dict &memo) { return AnormalModeStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const AnormalModeStruct &self, const AnormalModeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const AnormalModeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -317,6 +380,21 @@ void init_aperture_param_struct(py::module &m, py::class_<ApertureParamStruct> &
           "__deepcopy__",
           [](const ApertureParamStruct &self, py::dict &memo) { return ApertureParamStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const ApertureParamStruct &self, const ApertureParamStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ApertureParamStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -399,6 +477,21 @@ void init_aperture_point_struct(py::module &m, py::class_<AperturePointStruct> &
           "__deepcopy__",
           [](const AperturePointStruct &self, py::dict &memo) { return AperturePointStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const AperturePointStruct &self, const AperturePointStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const AperturePointStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -463,6 +556,21 @@ void init_aperture_scan_struct(py::module &m, py::class_<ApertureScanStruct> &cl
       .def(
           "__deepcopy__",
           [](const ApertureScanStruct &self, py::dict &memo) { return ApertureScanStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const ApertureScanStruct &self, const ApertureScanStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ApertureScanStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -972,6 +1080,21 @@ void init_all_encompassing_struct(py::module &m, py::class_<AllEncompassingStruc
           "__deepcopy__",
           [](const AllEncompassingStruct &self, py::dict &memo) {
             return AllEncompassingStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const AllEncompassingStruct &self, const AllEncompassingStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const AllEncompassingStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

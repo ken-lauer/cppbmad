@@ -197,9 +197,9 @@ bool tao_change_z_tune(std::string branch_str, std::string dq_str);
 extern "C" bool fortran_tao_chrom_calc_needed(
     const char *data_type /* 0D_NOT_character in */,
     const char *data_source /* 0D_NOT_character in */,
-    bool &do_chrom /* 0D_NOT_logical in */
+    bool &do_chrom /* 0D_NOT_logical out */
 );
-void tao_chrom_calc_needed(std::string data_type, std::string data_source, bool do_chrom);
+bool tao_chrom_calc_needed(std::string data_type, std::string data_source);
 extern "C" void fortran_tao_clear_cmd(const char *cmd_line /* 0D_NOT_character in */);
 void tao_clear_cmd(std::string cmd_line);
 extern "C" void fortran_tao_clip_cmd(
@@ -282,9 +282,9 @@ void tao_curve_datum_calc(
 extern "C" bool fortran_tao_curve_ele_ref(
     void *curve /* 0D_NOT_type in */,
     bool &point_to_ele_ref /* 0D_NOT_logical in */,
-    void *ele_track /* 0D_PTR_type inout */
+    void *ele_track /* 0D_PTR_type out */
 );
-void tao_curve_ele_ref(TaoCurveStruct &curve, bool point_to_ele_ref, EleStruct &ele_track);
+std::optional<EleStruct> tao_curve_ele_ref(TaoCurveStruct &curve, bool point_to_ele_ref);
 extern "C" bool
 fortran_tao_curve_ix_uni(void *curve /* 0D_NOT_type in */, int &ix_uni /* 0D_NOT_integer out */);
 int tao_curve_ix_uni(TaoCurveStruct &curve);
@@ -1223,9 +1223,9 @@ double tao_lat_emit_calc(int plane, int emit_type, EleStruct &ele, NormalModesSt
 extern "C" bool fortran_tao_lat_sigma_calc_needed(
     const char *data_type /* 0D_NOT_character in */,
     const char *data_source /* 0D_NOT_character in */,
-    bool &do_lat_sigma /* 0D_NOT_logical in */
+    bool &do_lat_sigma /* 0D_NOT_logical out */
 );
-void tao_lat_sigma_calc_needed(std::string data_type, std::string data_source, bool do_lat_sigma);
+bool tao_lat_sigma_calc_needed(std::string data_type, std::string data_source);
 extern "C" void fortran_tao_lat_sigma_track(
     void *tao_lat /* 0D_NOT_type in */,
     bool &calc_ok /* 0D_NOT_logical out */,
@@ -1369,13 +1369,9 @@ std::string tao_next_word(std::string &line);
 extern "C" bool fortran_tao_one_turn_map_calc_needed(
     const char *data_type /* 0D_NOT_character in */,
     const char *data_source /* 0D_NOT_character in */,
-    bool &do_one_turn_map /* 0D_NOT_logical in */
+    bool &do_one_turn_map /* 0D_NOT_logical out */
 );
-void tao_one_turn_map_calc_needed(
-    std::string data_type,
-    std::string data_source,
-    bool do_one_turn_map
-);
+bool tao_one_turn_map_calc_needed(std::string data_type, std::string data_source);
 extern "C" void fortran_tao_open_file(
     const char *file /* 0D_NOT_character in */,
     int &iunit /* 0D_NOT_integer out */,
@@ -1716,9 +1712,9 @@ void tao_quiet_set(std::string set);
 extern "C" bool fortran_tao_rad_int_calc_needed(
     const char *data_type /* 0D_NOT_character in */,
     const char *data_source /* 0D_NOT_character in */,
-    bool &do_rad_int /* 0D_NOT_logical in */
+    bool &do_rad_int /* 0D_NOT_logical out */
 );
-void tao_rad_int_calc_needed(std::string data_type, std::string data_source, bool do_rad_int);
+bool tao_rad_int_calc_needed(std::string data_type, std::string data_source);
 extern "C" void fortran_tao_re_allocate_expression_info(
     void *info /* 1D_ALLOC_type inout */,
     int &n /* 0D_NOT_integer in */,
@@ -2257,9 +2253,9 @@ bool tao_single_track(
 extern "C" bool fortran_tao_spin_matrices_calc_needed(
     const char *data_type /* 0D_NOT_character in */,
     const char *data_source /* 0D_NOT_character in */,
-    bool &do_calc /* 0D_NOT_logical in */
+    bool &do_calc /* 0D_NOT_logical out */
 );
-void tao_spin_matrices_calc_needed(std::string data_type, std::string data_source, bool do_calc);
+bool tao_spin_matrices_calc_needed(std::string data_type, std::string data_source);
 
 // Skipped unusable routine tao_spin_matrix_calc:
 // - Routine in configuration skip list
@@ -2281,9 +2277,9 @@ Tao::TaoSplitComponent tao_split_component(std::string comp_str);
 extern "C" bool fortran_tao_srdt_calc_needed(
     const char *data_type /* 0D_NOT_character in */,
     const char *data_source /* 0D_NOT_character in */,
-    int &do_srdt /* 0D_NOT_integer in */
+    int &do_srdt /* 0D_NOT_integer out */
 );
-void tao_srdt_calc_needed(std::string data_type, std::string data_source, int do_srdt);
+int tao_srdt_calc_needed(std::string data_type, std::string data_source);
 extern "C" bool fortran_tao_subin_uni_number(
     const char *name_in /* 0D_NOT_character in */,
     int &ix_uni /* 0D_NOT_integer in */,
@@ -2358,9 +2354,9 @@ Tao::TaoToReal tao_to_real(std::string expression);
 // - Untranslated type: tao_top10_struct (1D)
 extern "C" bool fortran_tao_too_many_particles_lost(
     void *beam /* 0D_NOT_type inout */,
-    bool &no_beam /* 0D_NOT_logical in */
+    bool &no_beam /* 0D_NOT_logical out */
 );
-void tao_too_many_particles_lost(BeamStruct &beam, bool no_beam);
+bool tao_too_many_particles_lost(BeamStruct &beam);
 extern "C" void fortran_tao_top10_derivative_print();
 void tao_top10_derivative_print();
 extern "C" void fortran_tao_top10_merit_categories_print(int &iunit /* 0D_NOT_integer in */);

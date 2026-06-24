@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_t.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -46,6 +49,21 @@ void init_target_point_struct(py::module &m, py::class_<TargetPointStruct> &cls)
           "__deepcopy__",
           [](const TargetPointStruct &self, py::dict &memo) { return TargetPointStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TargetPointStruct &self, const TargetPointStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TargetPointStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -91,6 +109,21 @@ void init_taylor_struct(py::module &m, py::class_<TaylorStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TaylorStruct &self, py::dict &memo) { return TaylorStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaylorStruct &self, const TaylorStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaylorStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -145,6 +178,21 @@ void init_taylor_term_struct(py::module &m, py::class_<TaylorTermStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TaylorTermStruct &self, py::dict &memo) { return TaylorTermStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaylorTermStruct &self, const TaylorTermStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaylorTermStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -248,6 +296,21 @@ void init_track_point_struct(py::module &m, py::class_<TrackPointStruct> &cls) {
           "__deepcopy__",
           [](const TrackPointStruct &self, py::dict &memo) { return TrackPointStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TrackPointStruct &self, const TrackPointStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TrackPointStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -316,6 +379,21 @@ void init_track_struct(py::module &m, py::class_<TrackStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TrackStruct &self, py::dict &memo) { return TrackStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TrackStruct &self, const TrackStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TrackStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -392,6 +470,21 @@ void init_twiss_struct(py::module &m, py::class_<TwissStruct> &cls) {
           "__deepcopy__",
           [](const TwissStruct &self, py::dict &memo) { return TwissStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TwissStruct &self, const TwissStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TwissStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -435,6 +528,21 @@ void init_tricubic_cmplx_coef_struct(py::module &m, py::class_<TricubicCmplxCoef
           "__deepcopy__",
           [](const TricubicCmplxCoefStruct &self, py::dict &memo) {
             return TricubicCmplxCoefStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TricubicCmplxCoefStruct &self, const TricubicCmplxCoefStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TricubicCmplxCoefStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -536,6 +644,21 @@ void init_tao_beam_branch_struct(py::module &m, py::class_<TaoBeamBranchStruct> 
           "__deepcopy__",
           [](const TaoBeamBranchStruct &self, py::dict &memo) { return TaoBeamBranchStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoBeamBranchStruct &self, const TaoBeamBranchStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoBeamBranchStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -587,6 +710,21 @@ void init_tao_beam_uni_struct(py::module &m, py::class_<TaoBeamUniStruct> &cls) 
           "__deepcopy__",
           [](const TaoBeamUniStruct &self, py::dict &memo) { return TaoBeamUniStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoBeamUniStruct &self, const TaoBeamUniStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoBeamUniStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -635,6 +773,22 @@ void init_tao_building_wall_orientation_struct(
           "__deepcopy__",
           [](const TaoBuildingWallOrientationStruct &self, py::dict &memo) {
             return TaoBuildingWallOrientationStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoBuildingWallOrientationStruct &self,
+             const TaoBuildingWallOrientationStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoBuildingWallOrientationStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -724,6 +878,21 @@ void init_tao_building_wall_point_struct(
             return TaoBuildingWallPointStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoBuildingWallPointStruct &self, const TaoBuildingWallPointStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoBuildingWallPointStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -792,6 +961,21 @@ void init_tao_building_wall_section_struct(
             return TaoBuildingWallSectionStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoBuildingWallSectionStruct &self, const TaoBuildingWallSectionStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoBuildingWallSectionStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -833,6 +1017,21 @@ void init_tao_building_wall_struct(py::module &m, py::class_<TaoBuildingWallStru
           "__deepcopy__",
           [](const TaoBuildingWallStruct &self, py::dict &memo) {
             return TaoBuildingWallStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoBuildingWallStruct &self, const TaoBuildingWallStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoBuildingWallStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -886,6 +1085,21 @@ void init_tao_cmd_history_struct(py::module &m, py::class_<TaoCmdHistoryStruct> 
       .def(
           "__deepcopy__",
           [](const TaoCmdHistoryStruct &self, py::dict &memo) { return TaoCmdHistoryStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoCmdHistoryStruct &self, const TaoCmdHistoryStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoCmdHistoryStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -1208,6 +1422,21 @@ void init_tao_common_struct(py::module &m, py::class_<TaoCommonStruct> &cls) {
           "__deepcopy__",
           [](const TaoCommonStruct &self, py::dict &memo) { return TaoCommonStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoCommonStruct &self, const TaoCommonStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoCommonStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -1270,6 +1499,21 @@ void init_tao_curve_color_struct(py::module &m, py::class_<TaoCurveColorStruct> 
           "__deepcopy__",
           [](const TaoCurveColorStruct &self, py::dict &memo) { return TaoCurveColorStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoCurveColorStruct &self, const TaoCurveColorStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoCurveColorStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -1302,6 +1546,21 @@ void init_tao_curve_orbit_struct(py::module &m, py::class_<TaoCurveOrbitStruct> 
       .def(
           "__deepcopy__",
           [](const TaoCurveOrbitStruct &self, py::dict &memo) { return TaoCurveOrbitStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoCurveOrbitStruct &self, const TaoCurveOrbitStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoCurveOrbitStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -1639,6 +1898,21 @@ void init_tao_curve_struct(py::module &m, py::class_<TaoCurveStruct> &cls) {
           "__deepcopy__",
           [](const TaoCurveStruct &self, py::dict &memo) { return TaoCurveStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoCurveStruct &self, const TaoCurveStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoCurveStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -1698,6 +1972,21 @@ void init_tao_d1_data_struct(py::module &m, py::class_<TaoD1DataStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TaoD1DataStruct &self, py::dict &memo) { return TaoD1DataStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoD1DataStruct &self, const TaoD1DataStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoD1DataStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -1834,6 +2123,21 @@ void init_tao_d2_data_struct(py::module &m, py::class_<TaoD2DataStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TaoD2DataStruct &self, py::dict &memo) { return TaoD2DataStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoD2DataStruct &self, const TaoD2DataStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoD2DataStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -2236,6 +2540,21 @@ void init_tao_data_struct(py::module &m, py::class_<TaoDataStruct> &cls) {
           "__deepcopy__",
           [](const TaoDataStruct &self, py::dict &memo) { return TaoDataStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoDataStruct &self, const TaoDataStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoDataStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -2298,6 +2617,21 @@ void init_tao_data_var_component_struct(py::module &m, py::class_<TaoDataVarComp
             return TaoDataVarComponentStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoDataVarComponentStruct &self, const TaoDataVarComponentStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoDataVarComponentStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -2330,6 +2664,21 @@ void init_tao_drawing_struct(py::module &m, py::class_<TaoDrawingStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TaoDrawingStruct &self, py::dict &memo) { return TaoDrawingStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoDrawingStruct &self, const TaoDrawingStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoDrawingStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -2400,6 +2749,21 @@ void init_tao_dynamic_aperture_struct(py::module &m, py::class_<TaoDynamicApertu
             return TaoDynamicApertureStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoDynamicApertureStruct &self, const TaoDynamicApertureStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoDynamicApertureStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -2444,6 +2808,21 @@ void init_tao_ele_pointer_struct(py::module &m, py::class_<TaoElePointerStruct> 
       .def(
           "__deepcopy__",
           [](const TaoElePointerStruct &self, py::dict &memo) { return TaoElePointerStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoElePointerStruct &self, const TaoElePointerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoElePointerStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -2583,6 +2962,21 @@ void init_tao_ele_shape_struct(py::module &m, py::class_<TaoEleShapeStruct> &cls
           "__deepcopy__",
           [](const TaoEleShapeStruct &self, py::dict &memo) { return TaoEleShapeStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoEleShapeStruct &self, const TaoEleShapeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoEleShapeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -2659,6 +3053,21 @@ void init_tao_eval_node_struct(py::module &m, py::class_<TaoEvalNodeStruct> &cls
           "__deepcopy__",
           [](const TaoEvalNodeStruct &self, py::dict &memo) { return TaoEvalNodeStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoEvalNodeStruct &self, const TaoEvalNodeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoEvalNodeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -2726,6 +3135,21 @@ void init_tao_expression_info_struct(py::module &m, py::class_<TaoExpressionInfo
           "__deepcopy__",
           [](const TaoExpressionInfoStruct &self, py::dict &memo) {
             return TaoExpressionInfoStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoExpressionInfoStruct &self, const TaoExpressionInfoStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoExpressionInfoStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2846,6 +3270,21 @@ void init_tao_floor_plan_struct(py::module &m, py::class_<TaoFloorPlanStruct> &c
       .def(
           "__deepcopy__",
           [](const TaoFloorPlanStruct &self, py::dict &memo) { return TaoFloorPlanStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoFloorPlanStruct &self, const TaoFloorPlanStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoFloorPlanStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -3421,6 +3860,21 @@ void init_tao_global_struct(py::module &m, py::class_<TaoGlobalStruct> &cls) {
           "__deepcopy__",
           [](const TaoGlobalStruct &self, py::dict &memo) { return TaoGlobalStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoGlobalStruct &self, const TaoGlobalStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoGlobalStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -3709,6 +4163,21 @@ void init_tao_graph_struct(py::module &m, py::class_<TaoGraphStruct> &cls) {
           "__deepcopy__",
           [](const TaoGraphStruct &self, py::dict &memo) { return TaoGraphStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoGraphStruct &self, const TaoGraphStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoGraphStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -3778,6 +4247,21 @@ void init_tao_histogram_struct(py::module &m, py::class_<TaoHistogramStruct> &cl
       .def(
           "__deepcopy__",
           [](const TaoHistogramStruct &self, py::dict &memo) { return TaoHistogramStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoHistogramStruct &self, const TaoHistogramStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoHistogramStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -4132,6 +4616,21 @@ void init_tao_init_struct(py::module &m, py::class_<TaoInitStruct> &cls) {
           "__deepcopy__",
           [](const TaoInitStruct &self, py::dict &memo) { return TaoInitStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoInitStruct &self, const TaoInitStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoInitStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -4176,6 +4675,21 @@ void init_tao_lat_sigma_struct(py::module &m, py::class_<TaoLatSigmaStruct> &cls
       .def(
           "__deepcopy__",
           [](const TaoLatSigmaStruct &self, py::dict &memo) { return TaoLatSigmaStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoLatSigmaStruct &self, const TaoLatSigmaStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoLatSigmaStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -4455,6 +4969,21 @@ void init_tao_lattice_branch_struct(py::module &m, py::class_<TaoLatticeBranchSt
             return TaoLatticeBranchStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoLatticeBranchStruct &self, const TaoLatticeBranchStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoLatticeBranchStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -4536,6 +5065,21 @@ void init_tao_lattice_struct(py::module &m, py::class_<TaoLatticeStruct> &cls) {
           "__deepcopy__",
           [](const TaoLatticeStruct &self, py::dict &memo) { return TaoLatticeStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoLatticeStruct &self, const TaoLatticeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoLatticeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -4586,6 +5130,21 @@ void init_tao_model_branch_struct(py::module &m, py::class_<TaoModelBranchStruct
           "__deepcopy__",
           [](const TaoModelBranchStruct &self, py::dict &memo) {
             return TaoModelBranchStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoModelBranchStruct &self, const TaoModelBranchStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoModelBranchStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -4657,6 +5216,21 @@ void init_tao_model_element_struct(py::module &m, py::class_<TaoModelElementStru
             return TaoModelElementStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoModelElementStruct &self, const TaoModelElementStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoModelElementStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -4715,6 +5289,21 @@ void init_tao_ping_scale_struct(py::module &m, py::class_<TaoPingScaleStruct> &c
       .def(
           "__deepcopy__",
           [](const TaoPingScaleStruct &self, py::dict &memo) { return TaoPingScaleStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoPingScaleStruct &self, const TaoPingScaleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoPingScaleStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -4775,6 +5364,21 @@ void init_tao_plot_cache_struct(py::module &m, py::class_<TaoPlotCacheStruct> &c
       .def(
           "__deepcopy__",
           [](const TaoPlotCacheStruct &self, py::dict &memo) { return TaoPlotCacheStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoPlotCacheStruct &self, const TaoPlotCacheStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoPlotCacheStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -4992,6 +5596,21 @@ void init_tao_plot_page_struct(py::module &m, py::class_<TaoPlotPageStruct> &cls
           "__deepcopy__",
           [](const TaoPlotPageStruct &self, py::dict &memo) { return TaoPlotPageStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoPlotPageStruct &self, const TaoPlotPageStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoPlotPageStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -5081,6 +5700,21 @@ void init_tao_plot_region_struct(py::module &m, py::class_<TaoPlotRegionStruct> 
       .def(
           "__deepcopy__",
           [](const TaoPlotRegionStruct &self, py::dict &memo) { return TaoPlotRegionStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoPlotRegionStruct &self, const TaoPlotRegionStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoPlotRegionStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -5240,6 +5874,21 @@ void init_tao_plot_struct(py::module &m, py::class_<TaoPlotStruct> &cls) {
           "__deepcopy__",
           [](const TaoPlotStruct &self, py::dict &memo) { return TaoPlotStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoPlotStruct &self, const TaoPlotStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoPlotStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -5299,6 +5948,21 @@ void init_tao_shape_pattern_point_struct(
           "__deepcopy__",
           [](const TaoShapePatternPointStruct &self, py::dict &memo) {
             return TaoShapePatternPointStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoShapePatternPointStruct &self, const TaoShapePatternPointStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoShapePatternPointStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -5362,6 +6026,21 @@ void init_tao_shape_pattern_struct(py::module &m, py::class_<TaoShapePatternStru
             return TaoShapePatternStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoShapePatternStruct &self, const TaoShapePatternStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoShapePatternStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -5417,6 +6096,21 @@ void init_tao_spin_dn_dpz_struct(py::module &m, py::class_<TaoSpinDnDpzStruct> &
       .def(
           "__deepcopy__",
           [](const TaoSpinDnDpzStruct &self, py::dict &memo) { return TaoSpinDnDpzStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoSpinDnDpzStruct &self, const TaoSpinDnDpzStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoSpinDnDpzStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -5492,6 +6186,21 @@ void init_tao_spin_ele_struct(py::module &m, py::class_<TaoSpinEleStruct> &cls) 
       .def(
           "__deepcopy__",
           [](const TaoSpinEleStruct &self, py::dict &memo) { return TaoSpinEleStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoSpinEleStruct &self, const TaoSpinEleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoSpinEleStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -5576,6 +6285,21 @@ void init_tao_spin_map_struct(py::module &m, py::class_<TaoSpinMapStruct> &cls) 
       .def(
           "__deepcopy__",
           [](const TaoSpinMapStruct &self, py::dict &memo) { return TaoSpinMapStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoSpinMapStruct &self, const TaoSpinMapStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoSpinMapStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -5731,6 +6455,21 @@ void init_tao_spin_polarization_struct(py::module &m, py::class_<TaoSpinPolariza
             return TaoSpinPolarizationStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoSpinPolarizationStruct &self, const TaoSpinPolarizationStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoSpinPolarizationStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -5855,6 +6594,21 @@ void init_tao_super_universe_struct(py::module &m, py::class_<TaoSuperUniverseSt
             return TaoSuperUniverseStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoSuperUniverseStruct &self, const TaoSuperUniverseStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoSuperUniverseStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -5919,6 +6673,21 @@ void init_tao_title_struct(py::module &m, py::class_<TaoTitleStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TaoTitleStruct &self, py::dict &memo) { return TaoTitleStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoTitleStruct &self, const TaoTitleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoTitleStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -6053,6 +6822,21 @@ void init_tao_universe_calc_struct(py::module &m, py::class_<TaoUniverseCalcStru
             return TaoUniverseCalcStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const TaoUniverseCalcStruct &self, const TaoUniverseCalcStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoUniverseCalcStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -6098,6 +6882,21 @@ void init_tao_universe_pointer_struct(py::module &m, py::class_<TaoUniversePoint
           "__deepcopy__",
           [](const TaoUniversePointerStruct &self, py::dict &memo) {
             return TaoUniversePointerStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoUniversePointerStruct &self, const TaoUniversePointerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoUniversePointerStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6290,6 +7089,21 @@ void init_tao_universe_struct(py::module &m, py::class_<TaoUniverseStruct> &cls)
           "__deepcopy__",
           [](const TaoUniverseStruct &self, py::dict &memo) { return TaoUniverseStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoUniverseStruct &self, const TaoUniverseStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoUniverseStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -6354,6 +7168,21 @@ void init_tao_v1_var_struct(py::module &m, py::class_<TaoV1VarStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TaoV1VarStruct &self, py::dict &memo) { return TaoV1VarStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoV1VarStruct &self, const TaoV1VarStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoV1VarStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -6435,6 +7264,21 @@ void init_tao_var_slave_struct(py::module &m, py::class_<TaoVarSlaveStruct> &cls
       .def(
           "__deepcopy__",
           [](const TaoVarSlaveStruct &self, py::dict &memo) { return TaoVarSlaveStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoVarSlaveStruct &self, const TaoVarSlaveStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoVarSlaveStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -6762,6 +7606,21 @@ void init_tao_var_struct(py::module &m, py::class_<TaoVarStruct> &cls) {
           "__deepcopy__",
           [](const TaoVarStruct &self, py::dict &memo) { return TaoVarStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoVarStruct &self, const TaoVarStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoVarStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -6838,6 +7697,21 @@ void init_tao_wave_kick_pt_struct(py::module &m, py::class_<TaoWaveKickPtStruct>
       .def(
           "__deepcopy__",
           [](const TaoWaveKickPtStruct &self, py::dict &memo) { return TaoWaveKickPtStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoWaveKickPtStruct &self, const TaoWaveKickPtStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoWaveKickPtStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -7048,6 +7922,21 @@ void init_tao_wave_struct(py::module &m, py::class_<TaoWaveStruct> &cls) {
           "__deepcopy__",
           [](const TaoWaveStruct &self, py::dict &memo) { return TaoWaveStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const TaoWaveStruct &self, const TaoWaveStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoWaveStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -7092,6 +7981,21 @@ void init_test_sub_struct(py::module &m, py::class_<TestSubStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const TestSubStruct &self, py::dict &memo) { return TestSubStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TestSubStruct &self, const TestSubStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TestSubStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -7149,6 +8053,21 @@ void init_test_sub_sub_struct(py::module &m, py::class_<TestSubSubStruct> &cls) 
       .def(
           "__deepcopy__",
           [](const TestSubSubStruct &self, py::dict &memo) { return TestSubSubStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TestSubSubStruct &self, const TestSubSubStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TestSubSubStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

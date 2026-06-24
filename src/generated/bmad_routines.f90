@@ -6644,7 +6644,7 @@ subroutine fortran_damping_matrix_d (gamma, g_tot, B0, B1, delta, species, mat) 
   f_delta = delta
   ! in: f_species 0D_NOT_integer
   f_species = species
-  !! general array (2D_NOT_real) inout
+  !! general array (2D_NOT_real) out
   if (c_associated(mat%data_ptr)) then
     call c_f_pointer(mat%data_ptr, f_mat_ptr, [product(mat%dims(1:mat%rank))])
     ! output-only
@@ -6850,7 +6850,7 @@ subroutine fortran_diffusion_matrix_b (gamma, g_tot, species, mat) bind(c)
   f_g_tot = g_tot
   ! in: f_species 0D_NOT_integer
   f_species = species
-  !! general array (2D_NOT_real) inout
+  !! general array (2D_NOT_real) out
   if (c_associated(mat%data_ptr)) then
     call c_f_pointer(mat%data_ptr, f_mat_ptr, [product(mat%dims(1:mat%rank))])
     ! output-only
@@ -13050,7 +13050,7 @@ subroutine fortran_gen_grad_field (deriv, gg, rho, theta, field) bind(c)
   f_rho = rho
   ! in: f_theta 0D_NOT_real
   f_theta = theta
-  !! general array (1D_NOT_real) inout
+  !! general array (1D_NOT_real) out
   if (c_associated(field%data_ptr)) then
     call c_f_pointer(field%data_ptr, f_field_ptr, [field%dims(1)])
     ! output-only
@@ -14019,7 +14019,7 @@ subroutine fortran_ibs_matrix_c (sigma_mat, tail_cut, tau, energy, n_part, speci
   f_n_part = n_part
   ! in: f_species 0D_NOT_integer
   f_species = species
-  !! general array (2D_NOT_real) inout
+  !! general array (2D_NOT_real) out
   if (c_associated(ibs_mat%data_ptr)) then
     call c_f_pointer(ibs_mat%data_ptr, f_ibs_mat_ptr, [product(ibs_mat%dims(1:ibs_mat%rank))])
     ! output-only
@@ -26335,7 +26335,7 @@ subroutine fortran_rotate3 (vec, angle, rvec) bind(c)
   endif
   ! in: f_angle 0D_NOT_real
   f_angle = angle
-  !! general array (1D_NOT_real) inout
+  !! general array (1D_NOT_real) out
   if (c_associated(rvec%data_ptr)) then
     call c_f_pointer(rvec%data_ptr, f_rvec_ptr, [rvec%dims(1)])
     ! output-only
@@ -28909,7 +28909,7 @@ subroutine fortran_spin_omega (field, orbit, sign_z_vel, phase_space_coords, ome
   else
     f_phase_space_coords_native_ptr => null()
   endif
-  !! general array (1D_NOT_real) inout
+  !! general array (1D_NOT_real) out
   if (c_associated(omega%data_ptr)) then
     call c_f_pointer(omega%data_ptr, f_omega_ptr, [omega%dims(1)])
     ! output-only

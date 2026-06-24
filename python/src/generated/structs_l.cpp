@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_l.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -45,6 +48,21 @@ void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const LatEleLocStruct &self, py::dict &memo) { return LatEleLocStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const LatEleLocStruct &self, const LatEleLocStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LatEleLocStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -106,6 +124,21 @@ void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &c
           "__deepcopy__",
           [](const LatEleOrder1Struct &self, py::dict &memo) { return LatEleOrder1Struct(self); }
       )
+      .def(
+          "__eq__",
+          [](const LatEleOrder1Struct &self, const LatEleOrder1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LatEleOrder1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -156,6 +189,21 @@ void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayS
             return LatEleOrderArrayStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const LatEleOrderArrayStruct &self, const LatEleOrderArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LatEleOrderArrayStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -188,6 +236,21 @@ void init_lat_ele_order_struct(py::module &m, py::class_<LatEleOrderStruct> &cls
       .def(
           "__deepcopy__",
           [](const LatEleOrderStruct &self, py::dict &memo) { return LatEleOrderStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const LatEleOrderStruct &self, const LatEleOrderStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LatEleOrderStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -353,6 +416,21 @@ void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const LatParamStruct &self, py::dict &memo) { return LatParamStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const LatParamStruct &self, const LatParamStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LatParamStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -610,6 +688,21 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
           }
       )
       .def("__deepcopy__", [](const LatStruct &self, py::dict &memo) { return LatStruct(self); })
+      .def(
+          "__eq__",
+          [](const LatStruct &self, const LatStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LatStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -697,6 +790,21 @@ void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStru
           "__deepcopy__",
           [](const LinacNormalModeStruct &self, py::dict &memo) {
             return LinacNormalModeStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const LinacNormalModeStruct &self, const LinacNormalModeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LinacNormalModeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -805,6 +913,21 @@ void init_layout(py::module &m, py::class_<Layout> &cls) {
           }
       )
       .def("__deepcopy__", [](const Layout &self, py::dict &memo) { return Layout(self); })
+      .def(
+          "__eq__",
+          [](const Layout &self, const Layout &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const Layout &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 

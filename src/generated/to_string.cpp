@@ -3171,7 +3171,9 @@ std::string to_string(const Bmad::ExpectThis &self) {
   return repr(
       &self,
       "Bmad::ExpectThis",
-      {std::pair{"delim", self.delim}, std::pair{"delim_found", to_string(self.delim_found)}}
+      {std::pair{"delim", self.delim},
+       std::pair{"delim_found", to_string(self.delim_found)},
+       std::pair{"is_ok", to_string(self.is_ok)}}
   );
 }
 std::string to_string(const Bmad::ExpressionStackValue &self) {
@@ -3616,7 +3618,8 @@ std::string to_string(const Bmad::ParseRealList &self) {
       "Bmad::ParseRealList",
       {std::pair{"delim", self.delim},
        std::pair{"delim_found", to_string(self.delim_found)},
-       std::pair{"num_found", to_string(self.num_found)}}
+       std::pair{"num_found", to_string(self.num_found)},
+       std::pair{"is_ok", to_string(self.is_ok)}}
   );
 }
 std::string to_string(const Bmad::ParseRealList2 &self) {

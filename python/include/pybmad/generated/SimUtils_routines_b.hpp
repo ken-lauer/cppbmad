@@ -12,6 +12,7 @@ namespace py = pybind11;
 void init_SimUtils_routines_b(py::module &m);
 
 struct PyBinXCenter {
+  double x_center;
   int ix_bin;
 };
 struct PyBitSet {

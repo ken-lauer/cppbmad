@@ -88,7 +88,6 @@ arg : str
   m.def(
       "cesr_iargc",
       &SimUtils::cesr_iargc,
-      py::arg("func_retval__"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function cesr_iargc ()
 

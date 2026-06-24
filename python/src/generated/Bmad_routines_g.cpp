@@ -179,7 +179,6 @@ gg_taylor : 1D array of GgTaylorStruct (shape: 3)
       py::arg("gg"),
       py::arg("rho"),
       py::arg("theta"),
-      py::arg("field"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gen_grad_field
 
@@ -193,6 +192,8 @@ rho : float
 
 theta : float
 
+Returns
+-------
 field : 1D array of float (shape: 3)
 )"""
   );
@@ -517,7 +518,6 @@ ref_time : float
       &Bmad::gpt_max_field_reference,
       py::arg("pt0"),
       py::arg("ele"),
-      py::arg("field_value"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine gpt_max_field_reference
 
@@ -527,6 +527,8 @@ pt0 : GridFieldPt1Struct
 
 ele : EleStruct
 
+Returns
+-------
 field_value : float
 )"""
   );

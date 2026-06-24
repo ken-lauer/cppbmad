@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_c.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -89,6 +92,21 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
           "__deepcopy__",
           [](const CartesianMapStruct &self, py::dict &memo) { return CartesianMapStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const CartesianMapStruct &self, const CartesianMapStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const CartesianMapStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -174,6 +192,21 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
             return CartesianMapTerm1Struct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const CartesianMapTerm1Struct &self, const CartesianMapTerm1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const CartesianMapTerm1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -225,6 +258,21 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
             return CartesianMapTermStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const CartesianMapTermStruct &self, const CartesianMapTermStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const CartesianMapTermStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -269,6 +317,21 @@ void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &
       .def(
           "__deepcopy__",
           [](const ComplexTaylorStruct &self, py::dict &memo) { return ComplexTaylorStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const ComplexTaylorStruct &self, const ComplexTaylorStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ComplexTaylorStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -324,6 +387,21 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
           "__deepcopy__",
           [](const ComplexTaylorTermStruct &self, py::dict &memo) {
             return ComplexTaylorTermStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const ComplexTaylorTermStruct &self, const ComplexTaylorTermStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ComplexTaylorTermStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -407,6 +485,21 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
       .def(
           "__deepcopy__",
           [](const ControlRamp1Struct &self, py::dict &memo) { return ControlRamp1Struct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const ControlRamp1Struct &self, const ControlRamp1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ControlRamp1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -513,6 +606,21 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
           "__deepcopy__",
           [](const ControlStruct &self, py::dict &memo) { return ControlStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const ControlStruct &self, const ControlStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ControlStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -565,6 +673,21 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
           "__deepcopy__",
           [](const ControlVar1Struct &self, py::dict &memo) { return ControlVar1Struct(self); }
       )
+      .def(
+          "__eq__",
+          [](const ControlVar1Struct &self, const ControlVar1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ControlVar1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -613,6 +736,21 @@ void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
           "__deepcopy__",
           [](const ControllerStruct &self, py::dict &memo) { return ControllerStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const ControllerStruct &self, const ControllerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ControllerStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -656,6 +794,21 @@ void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const CoordArrayStruct &self, py::dict &memo) { return CoordArrayStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const CoordArrayStruct &self, const CoordArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const CoordArrayStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -859,6 +1012,21 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
           "__deepcopy__",
           [](const CoordStruct &self, py::dict &memo) { return CoordStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const CoordStruct &self, const CoordStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const CoordStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -986,6 +1154,21 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
             return CylindricalMapStruct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const CylindricalMapStruct &self, const CylindricalMapStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const CylindricalMapStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -1046,6 +1229,21 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
             return CylindricalMapTerm1Struct(self);
           }
       )
+      .def(
+          "__eq__",
+          [](const CylindricalMapTerm1Struct &self, const CylindricalMapTerm1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const CylindricalMapTerm1Struct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -1095,6 +1293,21 @@ void init_cylindrical_map_term_struct(py::module &m, py::class_<CylindricalMapTe
           "__deepcopy__",
           [](const CylindricalMapTermStruct &self, py::dict &memo) {
             return CylindricalMapTermStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const CylindricalMapTermStruct &self, const CylindricalMapTermStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const CylindricalMapTermStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

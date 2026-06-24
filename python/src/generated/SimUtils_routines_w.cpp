@@ -72,7 +72,6 @@ quat : 1D array of float (shape: 0:3)
       "word_len",
       &SimUtils::word_len,
       py::arg("wording"),
-      py::arg("wlen"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine word_len
 
@@ -80,6 +79,8 @@ Parameters
 ----------
 wording : str
 
+Returns
+-------
 wlen : int
 )"""
   );

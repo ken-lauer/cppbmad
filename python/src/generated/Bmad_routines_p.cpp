@@ -109,7 +109,6 @@ err_flag : bool
       py::arg("exact_size"),
       py::arg("delim"),
       py::arg("delim_found"),
-      py::arg("is_ok"),
       py::arg("open_delim") = py::none(),
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
@@ -204,16 +203,19 @@ is_ok : bool
       .def_readonly("delim", &Bmad::ParseRealList::delim)
       .def_readonly("delim_found", &Bmad::ParseRealList::delim_found)
       .def_readonly("num_found", &Bmad::ParseRealList::num_found)
-      .def("__len__", [](const Bmad::ParseRealList &) { return 3; })
+      .def_readonly("is_ok", &Bmad::ParseRealList::is_ok)
+      .def("__len__", [](const Bmad::ParseRealList &) { return 4; })
       .def("__getitem__", [](const Bmad::ParseRealList &s, int i) -> py::object {
         if (i < 0)
-          i += 3;
+          i += 4;
         if (i == 0)
           return py::cast(s.delim);
         if (i == 1)
           return py::cast(s.delim_found);
         if (i == 2)
           return py::cast(s.num_found);
+        if (i == 3)
+          return py::cast(s.is_ok);
         throw py::index_error();
       });
   m.def(
@@ -223,7 +225,6 @@ is_ok : bool
       py::arg("err_str"),
       py::arg("real_array"),
       py::arg("exact_size"),
-      py::arg("is_ok"),
       py::arg("open_delim") = py::none(),
       py::arg("separator") = py::none(),
       py::arg("close_delim") = py::none(),
@@ -435,7 +436,6 @@ is_ok : bool
       py::arg("ele"),
       py::arg("delim_wanted"),
       py::arg("err_str"),
-      py::arg("is_ok"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
 )"""

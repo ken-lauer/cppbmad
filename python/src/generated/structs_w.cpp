@@ -1,5 +1,8 @@
 #include "pybmad/generated/structs_w.hpp"
 
+#include <cstdint>
+#include <functional>
+
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
@@ -146,6 +149,21 @@ void init_wake_lr_mode_struct(py::module &m, py::class_<WakeLrModeStruct> &cls) 
           "__deepcopy__",
           [](const WakeLrModeStruct &self, py::dict &memo) { return WakeLrModeStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const WakeLrModeStruct &self, const WakeLrModeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const WakeLrModeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -221,6 +239,21 @@ void init_wake_lr_struct(py::module &m, py::class_<WakeLrStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const WakeLrStruct &self, py::dict &memo) { return WakeLrStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const WakeLrStruct &self, const WakeLrStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const WakeLrStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -334,6 +367,21 @@ void init_wake_sr_mode_struct(py::module &m, py::class_<WakeSrModeStruct> &cls) 
           "__deepcopy__",
           [](const WakeSrModeStruct &self, py::dict &memo) { return WakeSrModeStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const WakeSrModeStruct &self, const WakeSrModeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const WakeSrModeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -430,6 +478,21 @@ void init_wake_sr_struct(py::module &m, py::class_<WakeSrStruct> &cls) {
       .def(
           "__deepcopy__",
           [](const WakeSrStruct &self, py::dict &memo) { return WakeSrStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const WakeSrStruct &self, const WakeSrStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const WakeSrStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;
@@ -530,6 +593,21 @@ void init_wake_sr_z_long_struct(py::module &m, py::class_<WakeSrZLongStruct> &cl
           "__deepcopy__",
           [](const WakeSrZLongStruct &self, py::dict &memo) { return WakeSrZLongStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const WakeSrZLongStruct &self, const WakeSrZLongStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const WakeSrZLongStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -568,6 +646,21 @@ void init_wake_struct(py::module &m, py::class_<WakeStruct> &cls) {
           }
       )
       .def("__deepcopy__", [](const WakeStruct &self, py::dict &memo) { return WakeStruct(self); })
+      .def(
+          "__eq__",
+          [](const WakeStruct &self, const WakeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const WakeStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -768,6 +861,21 @@ void init_wall3d_section_struct(py::module &m, py::class_<Wall3dSectionStruct> &
           "__deepcopy__",
           [](const Wall3dSectionStruct &self, py::dict &memo) { return Wall3dSectionStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const Wall3dSectionStruct &self, const Wall3dSectionStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const Wall3dSectionStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -879,6 +987,21 @@ void init_wall3d_struct(py::module &m, py::class_<Wall3dStruct> &cls) {
           "__deepcopy__",
           [](const Wall3dStruct &self, py::dict &memo) { return Wall3dStruct(self); }
       )
+      .def(
+          "__eq__",
+          [](const Wall3dStruct &self, const Wall3dStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const Wall3dStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
 
       ;
 
@@ -986,6 +1109,21 @@ void init_wall3d_vertex_struct(py::module &m, py::class_<Wall3dVertexStruct> &cl
       .def(
           "__deepcopy__",
           [](const Wall3dVertexStruct &self, py::dict &memo) { return Wall3dVertexStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const Wall3dVertexStruct &self, const Wall3dVertexStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          py::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const Wall3dVertexStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
       )
 
       ;

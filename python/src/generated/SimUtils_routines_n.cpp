@@ -9,7 +9,6 @@ void init_SimUtils_routines_n(py::module &m) {
       "n_bins_automatic",
       &SimUtils::n_bins_automatic,
       py::arg("n_data"),
-      py::arg("n"),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Function to automatically select the number of bins
 )"""
@@ -106,7 +105,6 @@ ix_name : int
       &SimUtils::nametable_bracket_indexx,
       py::arg("nametable"),
       py::arg("name"),
-      py::arg("ix_max"),
       py::arg("n_match") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine nametable_bracket_indexx
@@ -117,9 +115,11 @@ nametable : NametableStruct
 
 name : str
 
-ix_max : int
-
 n_match : int, optional
+
+Returns
+-------
+ix_max : int
 )"""
   );
   m.def(
@@ -177,7 +177,6 @@ ix_name : int
       "negative_ampsquared",
       &SimUtils::negative_ampsquared,
       py::arg("frequency"),
-      py::arg("amp"),
       py::arg("status") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine negative_ampsquared
@@ -186,16 +185,17 @@ Parameters
 ----------
 frequency : float
 
-amp : float
-
 status : int, optional
+
+Returns
+-------
+amp : float
 )"""
   );
   m.def(
       "negative_dampsquared",
       &SimUtils::negative_dampsquared,
       py::arg("frequency"),
-      py::arg("damp"),
       py::arg("status") = py::none(),
       py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine negative_dampsquared
@@ -204,9 +204,11 @@ Parameters
 ----------
 frequency : float
 
-damp : float
-
 status : int, optional
+
+Returns
+-------
+damp : float
 )"""
   );
 }
