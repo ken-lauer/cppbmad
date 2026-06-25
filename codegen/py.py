@@ -438,6 +438,43 @@ def generate_pybmad_header(template: str) -> str:
     return tpl.substitute(forward_declarations="\n".join(forward_decls))
 
 
+def generate_member_property_binding(cpp_class: str, arg: Argument, tpl) -> str:
+    """Generate the nanobind property binding for a single struct member.
+
+    Returns the ``.def_prop_ro``/``.def_prop_rw`` expression with no leading
+    indentation or trailing newline; the caller owns the surrounding ``cls``
+    chain and indentation.
+
+    Parameters
+    ----------
+    cpp_class : str
+        Name of the C++ proxy class the member belongs to.
+    arg : Argument
+        The struct member to bind.
+    tpl : ProxyTemplate
+        Proxy template for ``arg.full_type``; used to decide whether a Fortran
+        setter (and thus a read-write property) exists.
+    """
+    comment = arg.comment.replace('"', "'") if arg.comment else ""
+    comment = comment.replace("\n", "\\n")
+    docstring = f', "{comment}"' if comment else ""
+
+    getter = f"&{cpp_class}::{arg.c_name}"
+
+    # The getter returns a container/proxy by value that points into the
+    # parent's Fortran memory, so the result must keep the parent (self) alive.
+    # reference_internal (nanobind's default getter policy) drops its keep-alive
+    # when a by-value return is promoted to move, so attach an explicit
+    # keep_alive<0, 1> post-call hook instead.
+    if tpl.fortran_setter:
+        keepalive = ", nb::for_getter(nb::keep_alive<0, 1>())" if arg.needs_python_keepalive else ""
+        setter = f"&{cpp_class}::set_{arg.c_name}"
+        return f'.def_prop_rw("{arg.python_name}", {getter}, {setter}{keepalive}{docstring})'
+
+    keepalive = ", nb::keep_alive<0, 1>()" if arg.needs_python_keepalive else ""
+    return f'.def_prop_ro("{arg.python_name}", {getter}{keepalive}{docstring})'
+
+
 def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[int]) -> list[str]:
     code_lines = [""]
     code_lines.append("// =============================================================================")
@@ -505,15 +542,20 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
 
         getter = f"&{struct.cpp_class}::{arg.c_name}"
 
-        rv_policy = ", nb::rv_policy::reference_internal" if arg.needs_python_keepalive else ""
-
+        # The getter returns a container/proxy by value that points into the
+        # parent's Fortran memory, so the result must keep the parent (self)
+        # alive. reference_internal (nanobind's default getter policy) drops its
+        # keep-alive when a by-value return is promoted to move, so attach an
+        # explicit keep_alive<0, 1> post-call hook instead.
         if tpl.fortran_setter:
+            keepalive = ", nb::for_getter(nb::keep_alive<0, 1>())" if arg.needs_python_keepalive else ""
             setter = f"&{struct.cpp_class}::set_{arg.c_name}"
             code_lines.append(
-                f'        .def_prop_rw("{arg.python_name}", {getter}, {setter}{rv_policy}{docstring})'
+                f'        .def_prop_rw("{arg.python_name}", {getter}, {setter}{keepalive}{docstring})'
             )
         else:
-            code_lines.append(f'        .def_prop_ro("{arg.python_name}", {getter}{rv_policy}{docstring})')
+            keepalive = ", nb::keep_alive<0, 1>()" if arg.needs_python_keepalive else ""
+            code_lines.append(f'        .def_prop_ro("{arg.python_name}", {getter}{keepalive}{docstring})')
 
     if 1 in used_array_dims:
         container_cls = f"{struct.cpp_class}Alloc1D"
@@ -552,7 +594,7 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
             }})
             .def("__eq__", [](const {struct.cpp_class} &self, const {struct.cpp_class} &other){{
                 return self.get_fortran_ptr() == other.get_fortran_ptr();
-            }}, py::is_operator())
+            }}, nb::is_operator())
             .def("__hash__", [](const {struct.cpp_class} &self){{
                 return std::hash<std::uintptr_t>{{}}(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
             }})
