@@ -812,8 +812,7 @@ def generate_init_dot_py(
     submodule_lines = []
     for sub in submodule_names:
         add_name(sub)
-        # This ensures that 'import pybmad.sub' works as-is
-        submodule_lines.append(f'_sys.modules[f"{__name__}.{sub}"] = {sub}')
+        submodule_lines.append(f'_sys.modules[f"{{__name__}}.{sub}"] = {sub}')
 
     imports.append("")
     imports.append("# Functions")
