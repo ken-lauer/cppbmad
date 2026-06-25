@@ -439,11 +439,8 @@ def generate_pybmad_header(template: str) -> str:
 
 
 def generate_member_property_binding(cpp_class: str, arg: Argument, tpl) -> str:
-    """Generate the nanobind property binding for a single struct member.
-
-    Returns the ``.def_prop_ro``/``.def_prop_rw`` expression with no leading
-    indentation or trailing newline; the caller owns the surrounding ``cls``
-    chain and indentation.
+    """
+    Generate the nanobind property binding for a single struct member.
 
     Parameters
     ----------
@@ -536,26 +533,7 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
             code_lines.append(f"        // {arg.full_type} {arg.c_name} proxy support missing")
             continue
 
-        comment = arg.comment.replace('"', "'") if arg.comment else ""
-        comment = comment.replace("\n", "\\n")
-        docstring = f', "{comment}"' if comment else ""
-
-        getter = f"&{struct.cpp_class}::{arg.c_name}"
-
-        # The getter returns a container/proxy by value that points into the
-        # parent's Fortran memory, so the result must keep the parent (self)
-        # alive. reference_internal (nanobind's default getter policy) drops its
-        # keep-alive when a by-value return is promoted to move, so attach an
-        # explicit keep_alive<0, 1> post-call hook instead.
-        if tpl.fortran_setter:
-            keepalive = ", nb::for_getter(nb::keep_alive<0, 1>())" if arg.needs_python_keepalive else ""
-            setter = f"&{struct.cpp_class}::set_{arg.c_name}"
-            code_lines.append(
-                f'        .def_prop_rw("{arg.python_name}", {getter}, {setter}{keepalive}{docstring})'
-            )
-        else:
-            keepalive = ", nb::keep_alive<0, 1>()" if arg.needs_python_keepalive else ""
-            code_lines.append(f'        .def_prop_ro("{arg.python_name}", {getter}{keepalive}{docstring})')
+        code_lines.append(f"        {generate_member_property_binding(struct.cpp_class, arg, tpl)}")
 
     if 1 in used_array_dims:
         container_cls = f"{struct.cpp_class}Alloc1D"
