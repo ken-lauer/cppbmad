@@ -39,6 +39,8 @@ class RoutineSettings(pydantic.BaseModel):
     fortran_output_filename: str
     cpp_output_filename: str
     cpp_namespace: str
+    python_submodule: str = ""
+    python_top_level: bool = True
     # interface_path: pathlib.Path | None
     source_paths: list[NormalizedPath]
     skip_files: set[str]

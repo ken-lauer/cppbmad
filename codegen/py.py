@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import os
 import pathlib
 import string
+import subprocess
 import textwrap
 
 from .arg import CodegenStructure
@@ -508,6 +510,11 @@ def _group_structures_by_char(
     return structs_by_char
 
 
+def _submodule_var(submodule: str) -> str:
+    """C++ variable name holding the pybind submodule for ``submodule``."""
+    return f"m_{submodule}"
+
+
 def _group_routines_by_source_and_char(
     routines_by_name: dict[str, FortranRoutine],
 ) -> dict[str, dict[str, list[FortranRoutine]]]:
@@ -608,15 +615,21 @@ def _generate_structure_files(
 def _generate_routine_files(
     files: dict[pathlib.Path, str],
     routines_map: dict[str, dict[str, list[FortranRoutine]]],
+    submodule_map: dict[str, str],
 ) -> tuple[list[str], list[str]]:
     """
     Generate the split C++ files ({source}_routines_{letter}) for routines.
     Returns the list of generated headers and initialization function calls.
+
+    Routines whose C++ namespace has a ``submodule_map`` entry are bound into
+    that pybind submodule; the rest bind onto the top-level module ``m``.
     """
     headers: list[str] = ["#pragma once"]
     init_calls: list[str] = []
 
     for src, chars_dict in sorted(routines_map.items()):
+        submodule = submodule_map.get(src, "")
+        module_var = _submodule_var(submodule) if submodule else "m"
         for char, routine_list in sorted(chars_dict.items()):
             if not routine_list:
                 continue
@@ -649,7 +662,7 @@ def _generate_routine_files(
             """)
 
             headers.append(f'#include "pybmad/generated/{header_name}"')
-            init_calls.append(f"{init_fn_name}(m);")
+            init_calls.append(f"{init_fn_name}({module_var});")
 
             defs_block = generate_py_routine_defs(subset_routines)
             # defs_block_indented = textwrap.indent(defs_block, "  ")
@@ -691,6 +704,7 @@ def _generate_main_module_file(
     enums: dict[str, dict[str, EnumValue]],
     struct_inits: list[str],
     routine_inits: list[str],
+    submodule_decls: list[str],
 ) -> None:
     """Generate the main _pybmad.cpp file aggregating all bindings."""
     template_text = (CODEGEN_ROOT / "pybind_mod.tpl.cpp").read_text()
@@ -707,6 +721,9 @@ def _generate_main_module_file(
 
         // Hand-written bindings
         init_common_structs(m);
+
+        // Routine submodules (one per C++ namespace)
+        {newline.join(f"    {s}" for s in submodule_decls)}
 
         // Routine initializers
         {newline.join(f"    {s}" for s in routine_inits)}
@@ -726,6 +743,26 @@ def _generate_main_module_file(
     files[PYBMAD_LIB / "_enums.py"] = generate_enum_wrapper_code(enums)
 
 
+def _pybmad_version() -> str:
+    """Version for the generated package.
+
+    Defaults to the ``UPSTREAM_TAG`` env var (set by the track-upstream
+    workflow to the Bmad release being wrapped); otherwise falls back to
+    ``git describe`` of this repo.
+    """
+    tag = os.environ.get("UPSTREAM_TAG")
+    if tag:
+        return tag
+    try:
+        return subprocess.check_output(
+            ["git", "describe", "--tags", "--no-dirty"],
+            cwd=CODEGEN_ROOT,
+            text=True,
+        ).strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "0.0.0"
+
+
 def generate_init_dot_py(
     config: CodegenConfig,
     structs: list[CodegenStructure],
@@ -735,6 +772,19 @@ def generate_init_dot_py(
 ) -> str:
     imports = []
     all_ = []
+
+    # Map each C++ namespace that has usable routines to its Python submodule
+    # name, preserving config order for the submodule import block.
+    present_namespaces = {rt.cpp_namespace for rt in routines_by_name.values() if rt.usable}
+    namespace_to_submodule: dict[str, str] = {}
+    namespace_top_level: dict[str, bool] = {}
+    submodule_names: list[str] = []
+    for r in config.routines:
+        if r.python_submodule and r.cpp_namespace in present_namespaces:
+            namespace_to_submodule[r.cpp_namespace] = r.python_submodule
+            namespace_top_level[r.cpp_namespace] = r.python_top_level
+            if r.python_submodule not in submodule_names:
+                submodule_names.append(r.python_submodule)
 
     def add_name(name: str, mod: str = config.python_module_name):
         import_line = f"from .{mod} import {name}"
@@ -759,12 +809,31 @@ def generate_init_dot_py(
                 if n == 1:
                     add_name(f"{struct.python_class_name}Alloc{n}D")
 
+    submodule_lines = []
+    for sub in submodule_names:
+        add_name(sub)
+        # This ensures that 'import pybmad.sub' works as-is
+        submodule_lines.append(f'_sys.modules[f"{__name__}.{sub}"] = {sub}')
+
     imports.append("")
     imports.append("# Functions")
     all_.append("")
     all_.append("    # Functions")
     for _, rt in sorted(routines_by_name.items(), key=lambda item: item[0]):
-        if rt.usable:
+        if not rt.usable:
+            continue
+        sub = namespace_to_submodule.get(rt.cpp_namespace)
+        if sub and not namespace_top_level.get(rt.cpp_namespace, True):
+            # Reachable only as pybmad.<sub>.<name>, not at the top level.
+            continue
+        if sub:
+            # Top-level alias preserving the historic flat API; canonical
+            # binding lives in the submodule.
+            alias_line = f"{rt.overloaded_name} = {sub}.{rt.overloaded_name}"
+            if alias_line not in imports:
+                imports.append(alias_line)
+                all_.append(f'    "{rt.overloaded_name}",')
+        else:
             add_name(rt.overloaded_name)
 
     imports.append("")
@@ -779,12 +848,19 @@ def generate_init_dot_py(
     add_name("EleKey", "_enums")
 
     nl = "\n"
+    version = _pybmad_version()
     return f"""
 from __future__ import annotations
+import sys as _sys
 
-__version__ = "0.0.1"
+__version__ = "{version}"
 
 {nl.join(imports)}
+
+# Submodules
+{nl.join(submodule_lines)}
+
+del _sys
 
 __all__ = [
 {nl.join(all_)}
@@ -823,16 +899,26 @@ def generate_pybmad(
     structs_by_char = _group_structures_by_char(structs)
     routines_map = _group_routines_by_source_and_char(routines_by_name)
 
+    submodule_map = {r.cpp_namespace: r.python_submodule for r in config.routines if r.python_submodule}
+
     struct_headers = _generate_structure_files(files, structs_by_char, array_usage)
     struct_inits = _generate_struct_init(structs)
 
-    routine_headers, routine_inits = _generate_routine_files(files, routines_map)
+    routine_headers, routine_inits = _generate_routine_files(files, routines_map, submodule_map)
+
+    # Declare one submodule per namespace that actually has routines.
+    submodule_decls = [
+        f"auto {_submodule_var(submodule_map[src])} = "
+        f'm.def_submodule("{submodule_map[src]}", "{src} routines");'
+        for src in sorted(routines_map)
+        if src in submodule_map
+    ]
 
     files[PYBMAD_INCLUDE / "pybmad" / "generated" / "structs.hpp"] = "\n".join(struct_headers)
     files[PYBMAD_INCLUDE / "pybmad" / "generated" / "routines.hpp"] = "\n".join(routine_headers)
     files[PYBMAD_ROOT / "pybmad" / "__init__.py"] = init_dot_py
 
-    _generate_main_module_file(files, enums, struct_inits, routine_inits)
+    _generate_main_module_file(files, enums, struct_inits, routine_inits, submodule_decls)
 
     files[PYBMAD_INCLUDE / "pybmad" / "generated" / "init.hpp"] = generate_pybmad_header(
         template=(CODEGEN_ROOT / "pybind.tpl.hpp").read_text(),

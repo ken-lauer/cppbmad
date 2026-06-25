@@ -2,9 +2,8 @@ from __future__ import annotations
 
 import sys
 
-import pytest
-
 import pybmad
+import pytest
 
 
 def container_create(container_cls, values: list):
@@ -45,7 +44,7 @@ def test_integer_scalar(use_in_opt: bool, use_inout_opt: bool):
     val_in_opt = 5 if use_in_opt else None
     val_inout_opt = 50 if use_inout_opt else None
 
-    res = pybmad.test_integer_scalar(
+    res = pybmad.test.test_integer_scalar(
         val_in=val_in, val_inout=val_inout, val_in_opt=val_in_opt, val_inout_opt=val_inout_opt
     )
 
@@ -88,7 +87,7 @@ def test_integer_array(use_in_opt: bool, use_inout_opt: bool):
         arr_inout_opt = container_create(pybmad.IntAlloc1D, [100, 100, 100])
         kw_args["arr_inout_opt"] = arr_inout_opt.view()
 
-    res = pybmad.test_integer_array(**kw_args)
+    res = pybmad.test.test_integer_array(**kw_args)
 
     expected_out_vals = [x + (5 if use_in_opt else 0) for x in input_data]
     assert list(res.arr_out) == expected_out_vals
@@ -124,7 +123,7 @@ def test_integer8_array(use_in_opt: bool, use_inout_opt: bool):
     if use_inout_opt:
         kw_args["arr_inout_opt"] = inout.view()
 
-    res = pybmad.test_integer8_array(**kw_args)
+    res = pybmad.test.test_integer8_array(**kw_args)
 
     expected_add = 1 if use_in_opt else 0
     assert list(res.arr_out) == [x + expected_add for x in input_data]
@@ -144,7 +143,7 @@ def test_real_scalar(use_in_opt: bool, use_inout_opt: bool):
         "val_inout_opt": 9.5 if use_inout_opt else None,
     }
 
-    res = pybmad.test_real_scalar(**kw)
+    res = pybmad.test.test_real_scalar(**kw)
 
     expected_out = 1.5 + (0.5 if use_in_opt else 0.0)
     assert res.val_out == pytest.approx(expected_out)
@@ -167,7 +166,7 @@ def test_real_array(use_in_opt: bool, use_inout_opt: bool):
     if use_inout_opt:
         kw["arr_inout_opt"] = inout_opt.view()
 
-    res = pybmad.test_real_array(**kw)
+    res = pybmad.test.test_real_array(**kw)
 
     out_vals = list(res.arr_out)
     expected_add = 10.0 if use_in_opt else 0.0
@@ -184,7 +183,7 @@ def test_real_array(use_in_opt: bool, use_inout_opt: bool):
 @optionals
 def test_real16_scalar(use_in_opt: bool, use_inout_opt: bool):
     """Testing extended precision scalar mapping."""
-    res = pybmad.test_real16_scalar(
+    res = pybmad.test.test_real16_scalar(
         val_in=100.0,
         val_inout=200.0,
         val_in_opt=50.0 if use_in_opt else None,
@@ -212,7 +211,7 @@ def test_real16_array(use_in_opt: bool, use_inout_opt: bool):
     if use_inout_opt:
         kw["arr_inout_opt"] = inout_opt.view()
 
-    res = pybmad.test_real16_array(**kw)
+    res = pybmad.test.test_real16_array(**kw)
 
     out = res.arr_out[0]
     expected = 1.0 + (0.5 if use_in_opt else 0.0)
@@ -236,7 +235,7 @@ def test_complex_array(use_in_opt: bool, use_inout_opt: bool):
     if use_inout_opt:
         kw["arr_inout_opt"] = arr_inout_opt.view()
 
-    res = pybmad.test_complex_array(**kw)
+    res = pybmad.test.test_complex_array(**kw)
 
     # Fortran: arr_out + (if opt: arr_in_opt)
     add_val = complex(1, 1) if use_in_opt else complex(0, 0)
@@ -263,7 +262,7 @@ def test_logical_scalar(use_in_opt: bool, use_inout_opt: bool):
         "val_inout_opt": False if use_inout_opt else None,
     }
 
-    res = pybmad.test_logical_scalar(**kw)
+    res = pybmad.test.test_logical_scalar(**kw)
 
     expected_out = True
     if use_in_opt:
@@ -292,7 +291,7 @@ def test_logical_array(use_in_opt: bool, use_inout_opt: bool):
     if use_inout_opt:
         kw["arr_inout_opt"] = arr_inout_opt
 
-    res = pybmad.test_logical_array(**kw)
+    res = pybmad.test.test_logical_array(**kw)
 
     if use_in_opt:
         # [T, F] eqv [F, T] -> [F, F]
@@ -318,7 +317,7 @@ def test_character_scalar(use_in_opt: bool, use_inout_opt: bool):
         "val_inout_opt": "baz" if use_inout_opt else None,
     }
 
-    res = pybmad.test_character_scalar(**kw)
+    res = pybmad.test.test_character_scalar(**kw)
 
     expected_out = "foo"
     if use_in_opt:
@@ -360,7 +359,7 @@ def test_bunch_struct_scalar(use_in_opt: bool, use_inout_opt: bool):
         s_io_opt.ix_ele = 100
         kw["val_inout_opt"] = s_io_opt
 
-    res = pybmad.test_bunch_struct_scalar(**kw)
+    res = pybmad.test.test_bunch_struct_scalar(**kw)
 
     # Check InOut Modification in place
     # ix_ele + 1 -> 6
