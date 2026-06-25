@@ -15,15 +15,21 @@ echo "Output directory: $OUTPUT_DIR"
 
 "$STUBGEN_EXECUTABLE" -o "$OUTPUT_DIR" "$MODULE_NAME" --ignore-all-errors
 
-# Post-processing: Replace "_pybmad." with ""
-STUB_FILE=$OUTPUT_DIR/$MODULE_NAME.pyi
+# Post-processing workaround for https://github.com/sizmailov/pybind11-stubgen/pull/272 :
+strip_self_prefix() {
+  local f=$1
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' "s/${MODULE_NAME}\.//g" "$f"
+  else
+    sed -i "s/${MODULE_NAME}\.//g" "$f"
+  fi
+}
 
-# actual fix pending: https://github.com/sizmailov/pybind11-stubgen/pull/272
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  sed -i '' 's/_pybmad\.//g' "$STUB_FILE"
+if [[ -f "$OUTPUT_DIR/$MODULE_NAME/__init__.pyi" ]]; then
+  strip_self_prefix "$OUTPUT_DIR/$MODULE_NAME/__init__.pyi"
 else
-  sed -i 's/_pybmad\.//g' "$STUB_FILE"
+  echo "ERROR: no stub output found for $MODULE_NAME under $OUTPUT_DIR" >&2
+  exit 1
 fi
 
 echo "Stub generation complete."

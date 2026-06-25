@@ -36,10 +36,10 @@ repos:
       - id: ruff-check
         args: ["--extend-select=I", "--fix"]
         types_or: [python, pyi]
-        exclude: "^(python/pybmad/_pybmad.pyi|python/pybmad/_.*.py)$"
+        exclude: "^(python/pybmad/_pybmad/.*.pyi|python/pybmad/_.*.py)$"
       - id: ruff-format
         types_or: [python, pyi]
-        exclude: "^(python/pybmad/_pybmad.pyi|python/pybmad/_.*.py)$"
+        exclude: "^(python/pybmad/_pybmad/.*.pyi|python/pybmad/_.*.py)$"
 
   - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: v21.1.8
