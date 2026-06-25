@@ -156,7 +156,8 @@ orbit : CoordStruct
 Returns
 -------
 ix_section : int
-    integer, Set to index of clear section hit. Set to zero if photon is outside all clear areas.
+    integer, Set to index of the section where the particle is. Set to zero if the photon is outside all clear
+    areas.
 )"""
   );
   m.def(

@@ -30191,7 +30191,8 @@ def diffraction_plate_or_mask_hit_spot(ele: EleStruct, orbit: CoordStruct) -> in
     Returns
     -------
     ix_section : int
-        integer, Set to index of clear section hit. Set to zero if photon is outside all clear areas.
+        integer, Set to index of the section where the particle is. Set to zero if the photon is outside all clear
+        areas.
     """
 def diffusion_matrix_b(gamma: typing.SupportsFloat | typing.SupportsIndex, g_tot: typing.SupportsFloat | typing.SupportsIndex, species: typing.SupportsInt | typing.SupportsIndex) -> typing.Annotated[list[typing.Annotated[list[float], "FixedSize(6)"]], "FixedSize(6)"]:
     """
