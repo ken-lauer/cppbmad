@@ -115,6 +115,11 @@ struct_list = [
   "expression_tree_struct",
   "nametable_struct",
 
+  # Parsing / attribute setting helpers:
+  "all_pointer_struct",
+  "parser_ele_struct",
+  "parser_controller_struct",
+
   # sim_utils
   # "qp_axis_struct",
   # "qp_plot_struct",
@@ -547,5 +552,13 @@ cpp_output_filename = "cppbmad_test_routines.cpp"
 cpp_namespace = "CppBmadTest"
 # interface_path = "src/tests/routines/cppbmad_tests.f90"
 source_paths = ["src/tests/routines"]
+skip_files = []
+skip_procedures = []
+
+[[routines]]
+fortran_output_filename = "cppbmad_extra_routines.f90"
+cpp_output_filename = "cppbmad_extra_routines.cpp"
+cpp_namespace = "CppBmadExtra"
+source_paths = ["src/extra"]
 skip_files = []
 skip_procedures = []
