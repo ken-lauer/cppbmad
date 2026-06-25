@@ -151,6 +151,15 @@ void bind_1D_array_pair(
         },
         nb::keep_alive<0, 1>()
     );
+
+    alloc_cls.def("__array__", [](nb::handle_t<AllocClass> self, nb::kwargs kwargs) {
+      auto &a = nb::cast<AllocClass &>(self);
+      auto &v = a.view();
+      if (!v.is_valid())
+        throw std::runtime_error("Invalid Fortran array access");
+      size_t shape[1] = {(size_t)v.size()};
+      return nb::ndarray<nb::numpy, T>(v.data(), 1, shape, nb::handle(self));
+    });
   } else {
     alloc_cls.def("__iter__", [](AllocClass &self) {
       nb::list result;

@@ -6,7 +6,7 @@ import string
 import subprocess
 import textwrap
 
-from .arg import CodegenStructure
+from .arg import Argument, CodegenStructure
 from .context import SUPPORTED_ARRAY_DIMS, CodegenConfig
 from .cpp import CppWrapperArgument
 from .enums import EnumValue, get_ele_attributes, get_ele_keys
@@ -444,22 +444,48 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
     code_lines.append(f"// {struct.f_name}")
     code_lines.append(f"void init_{struct.f_name}(nb::module_ &m, nb::class_<{struct.cpp_class}> &cls) {{")
 
-    ctor_args: list[str] = []
-    ctor_types: list[str] = []
+    ctor_entries: list[tuple[Argument, str]] = []
 
     for arg in struct.arg:
         (ctor_type, _ctor_body) = _generate_proxy_constructor_arg(struct, arg)
         if ctor_type is not None:
-            ctor_args.append(f'nb::arg("{arg.python_name}") = nb::none()')
-            ctor_types.append(ctor_type)
+            ctor_entries.append((arg, ctor_type))
 
-    if ctor_args:
-        types_str = ", ".join(ctor_types)
-        args_str = ", ".join(ctor_args)
+    has_optional_ref = any(ct.startswith("optional_ref") for _, ct in ctor_entries)
 
-        # cls.def(nb::init<T1, T2>(), nb::arg("x")=none, nb::arg("y")=none);
-        code_lines.append(f"    cls.def(nb::init<{types_str}>(),")
-        code_lines.append(f"        {args_str})")
+    if ctor_entries:
+        if has_optional_ref:
+            # nanobind cannot bind optional_ref<T> (std::optional<std::reference_wrapper<T>>)
+            # in nb::init<>(), so use a placement-new __init__ lambda that takes T* instead.
+            lambda_params = [f"{struct.cpp_class} *self"]
+            call_args = []
+            nb_args = []
+            for arg, ctor_type in ctor_entries:
+                if ctor_type.startswith("optional_ref"):
+                    inner = remove_optional(ctor_type)
+                    lambda_params.append(f"{inner} *{arg.c_name}")
+                    call_args.append(f"ptr_to_opt_ref({arg.c_name})")
+                else:
+                    lambda_params.append(f"{ctor_type} {arg.c_name}")
+                    call_args.append(arg.c_name)
+                nb_args.append(f'nb::arg("{arg.python_name}") = nb::none()')
+
+            params_str = ", ".join(lambda_params)
+            call_str = ", ".join(call_args)
+            args_str = ", ".join(nb_args)
+
+            code_lines.append('    cls.def("__init__",')
+            code_lines.append(f"        []({params_str}) {{")
+            code_lines.append(f"            new (self) {struct.cpp_class}({call_str});")
+            code_lines.append("        },")
+            code_lines.append(f"        {args_str})")
+        else:
+            types_str = ", ".join(ct for _, ct in ctor_entries)
+            args_str = ", ".join(f'nb::arg("{arg.python_name}") = nb::none()' for arg, _ in ctor_entries)
+
+            # cls.def(nb::init<T1, T2>(), nb::arg("x")=none, nb::arg("y")=none);
+            code_lines.append(f"    cls.def(nb::init<{types_str}>(),")
+            code_lines.append(f"        {args_str})")
     else:
         code_lines.append("    cls.def(nb::init<>())")
 
@@ -479,15 +505,15 @@ def generate_pybmad_struct_code(struct: CodegenStructure, used_array_dims: set[i
 
         getter = f"&{struct.cpp_class}::{arg.c_name}"
 
-        keepalive = ", nb::keep_alive<0, 1>()" if arg.needs_python_keepalive else ""
+        rv_policy = ", nb::rv_policy::reference_internal" if arg.needs_python_keepalive else ""
 
         if tpl.fortran_setter:
             setter = f"&{struct.cpp_class}::set_{arg.c_name}"
             code_lines.append(
-                f'        .def_prop_rw("{arg.python_name}", {getter}, {setter}{keepalive}{docstring})'
+                f'        .def_prop_rw("{arg.python_name}", {getter}, {setter}{rv_policy}{docstring})'
             )
         else:
-            code_lines.append(f'        .def_prop_ro("{arg.python_name}", {getter}{keepalive}{docstring})')
+            code_lines.append(f'        .def_prop_ro("{arg.python_name}", {getter}{rv_policy}{docstring})')
 
     if 1 in used_array_dims:
         container_cls = f"{struct.cpp_class}Alloc1D"
@@ -652,6 +678,7 @@ def _generate_structure_files(
             '#include "pybmad/arrays.hpp"',
             "#include <cstdint>",
             "#include <functional>",
+            '#include "pybmad/util.hpp"',
             "",
             "using namespace Pybmad;",
             "namespace nb = nanobind;",
