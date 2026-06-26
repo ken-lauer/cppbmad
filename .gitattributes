@@ -1,0 +1,18 @@
+# Generated code (see generated-manifest.txt):
+
+# C++ / Fortran generated sources and headers
+include/bmad/generated/**            linguist-generated=true
+src/generated/**                     linguist-generated=true
+python/include/pybmad/generated/**   linguist-generated=true
+python/src/generated/**              linguist-generated=true
+
+# Generated Python package surface
+python/pybmad/__init__.py            linguist-generated=true
+python/pybmad/_*.py                  linguist-generated=true
+python/pybmad/_pybmad/*.pyi          linguist-generated=true
+
+# Generated docs and coverage report
+python/docs/source/api/*.md          linguist-generated=true
+python/docs/source/coverage.html     linguist-generated=true
+
+generated-manifest.txt               linguist-generated=true

@@ -1,10 +1,5 @@
 #!/bin/bash
-# List all generated files tracked by git.
-# Used by commit-generated.sh, revert-generated.sh, and CI workflows.
-echo $(git ls-files | grep generated) \
-  python/pybmad/_*.pyi \
-  python/pybmad/_pybmad/*.pyi \
-  python/pybmad/__init__.py \
-  python/pybmad/_*.py \
-  python/docs/source/coverage.html \
-  python/docs/source/api/*.md
+# List all generated files, one per line, from the manifest emitted by
+# `python -m codegen`. Used by commit-generated.sh, revert-generated.sh,
+# .check_untracked.sh, and CI workflows.
+grep -v -e '^#' -e '^[[:space:]]*$' generated-manifest.txt
