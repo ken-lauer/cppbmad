@@ -5,7 +5,7 @@
 ! (x_offset, y_offset, z_offset, x_pitch, y_pitch, tilt).
 !
 ! Usage:
-!   if (.not. set_ele_misalignments_(ele, dx, dy, dz, xp, yp, tlt)) cycle  ! skip
+!   if (.not. set_ele_misalignments(ele, dx, dy, dz, xp, yp, tlt)) cycle  ! skip
 !   ...
 !   call lattice_bookkeeper(lat)                                            ! once at end
 !
@@ -24,12 +24,12 @@ use bmad
 implicit none
 
 private :: attr_ok, can_set_ele_misalignments
-public :: set_ele_misalignments_
+public :: set_ele_misalignments
 
 contains
 
 !+
-! Function set_ele_misalignments_ (ele, x_offset, y_offset, z_offset, x_pitch, y_pitch, tilt, check_free) result (ok)
+! Function set_ele_misalignments (ele, x_offset, y_offset, z_offset, x_pitch, y_pitch, tilt, check_free) result (ok)
 !
 ! Set the six misalignment attributes on ele in one call and mark bookkeeping
 ! flags once at the end. Equivalent to six set_ele_attribute calls minus the
@@ -61,7 +61,7 @@ contains
 !                  non-standard or non-free attribute.
 !-
 
-function set_ele_misalignments_ (ele, x_offset, y_offset, z_offset, x_pitch, y_pitch, tilt, check_free) result (ok)
+function set_ele_misalignments (ele, x_offset, y_offset, z_offset, x_pitch, y_pitch, tilt, check_free) result (ok)
 
 type (ele_struct), target :: ele
 real(rp), intent(in) :: x_offset, y_offset, z_offset
@@ -110,7 +110,7 @@ endif
 
 ok = .true.
 
-end function set_ele_misalignments_
+end function set_ele_misalignments
 
 !--------------------------------------------------------------
 ! Private: check if the element misalignments can be set.
