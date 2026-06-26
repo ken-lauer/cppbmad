@@ -1,0 +1,73 @@
+{% extends "_base/function.html.jinja" %}
+
+{#- Render overloaded functions whose root heading is hidden.
+
+Pages here suppress the root heading (`show_root_heading: false`) to supply their
+own `###` heading plus "Fortran sources" links. The stock template only emits the
+signature block alongside the root heading, so it gets discarded; and even when
+shown, mkdocstrings renders only the overload *signatures*, never their individual
+parameters/docstrings.
+
+For overload-only functions (nanobind stubs have no implementation), this override
+renders all signatures, then the docstring sections shared by every overload once,
+and finally only the sections that differ between overloads (typically parameters),
+grouped under each signature. The common/unique split is precomputed by the
+`griffe_expose_overloads` extension and stashed in `function.extra`. -#}
+{% block contents scoped %}
+  {% set ov = function.extra.get("expose_overloads") if function.extra else None %}
+  {% if root and not config.show_root_heading and ov and ov.enabled %}
+
+    <div class="doc-overloads">
+      {% for overload in function.overloads %}
+        {% filter format_signature(overload, config.line_length, annotations=True, crossrefs=config.signature_crossrefs) %}
+          {{ overload.name }}
+        {% endfilter %}
+      {% endfor %}
+    </div>
+
+    {% if ov.common_top %}
+      <div class="doc doc-contents">
+        {% with obj = function, html_id = function.path, docstring_sections = ov.common_top %}
+          {% include "docstring.html.jinja" with context %}
+        {% endwith %}
+      </div>
+    {% endif %}
+
+    {% for entry in ov.per_overload %}
+      {% if entry.unique %}
+        {% with obj = entry.func, html_id = function.path ~ "--overload-" ~ loop.index, docstring_sections = entry.unique %}
+          <div class="doc doc-overload">
+            <div class="doc-overloads">
+              {% filter format_signature(entry.func, config.line_length, annotations=True, crossrefs=config.signature_crossrefs) %}
+                {{ entry.func.name }}
+              {% endfilter %}
+            </div>
+            <div class="doc doc-contents">
+              {% include "docstring.html.jinja" with context %}
+            </div>
+          </div>
+        {% endwith %}
+      {% endif %}
+    {% endfor %}
+
+    {% if ov.common_bottom %}
+      <div class="doc doc-contents">
+        {% with obj = function, html_id = function.path, docstring_sections = ov.common_bottom %}
+          {% include "docstring.html.jinja" with context %}
+        {% endwith %}
+      </div>
+    {% endif %}
+
+  {% elif root and not config.show_root_heading and config.separate_signature %}
+
+    {#- Single (non-overloaded) function with a hidden root heading: the stock
+    template would drop its signature too, so emit it before the contents. -#}
+    {% filter format_signature(function, config.line_length, crossrefs=config.signature_crossrefs) %}
+      {{ function.name }}
+    {% endfilter %}
+    {{ super() }}
+
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock contents %}

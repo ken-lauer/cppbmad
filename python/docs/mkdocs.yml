@@ -22,7 +22,6 @@ theme:
     repo: fontawesome/brands/github
   name: readthedocs
 
-  # custom_dir: docs/overrides
   features:
     - navigation.top
     - navigation.tabs
@@ -63,13 +62,18 @@ plugins:
 
   - mkdocstrings:
       default_handler: python
+      custom_templates: overrides
       handlers:
         python:
           # With this, pybmad is never found in site-packages and Griffe may fail on
           # locating the first overloaded function (attribute_free typically).
           # For local docs building without a pip install, uncomment this:
-          # paths: [".."]  # resolves to python/ so griffe finds pybmad + _pybmad.pyi
+          # paths: [".."] # resolves to python/ so griffe finds pybmad + _pybmad.pyi
           options:
+            extensions:
+              # Expose overload-only functions that griffe otherwise drops when
+              # a .pyi stub has no implementation def.
+              - griffe_expose_overloads.py
             filters:
               - "!^_" # exclude all members starting with _
               - "^__init__$" # but always include __init__ modules and methods
@@ -97,3 +101,6 @@ plugins:
             unwrap_annotated: true
             force_inspection: false
             allow_inspection: true
+            # overloads
+            show_overloads: true
+            overloads_only: true
